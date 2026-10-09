@@ -1,0 +1,27 @@
+{
+  "tool": "/usr/bin/grep -R -n -w -F; untruncated",
+  "members": [
+    {
+      "symbol": "SchoolStringTable",
+      "action": "no-retirement",
+      "reason": "Already absent; no cache/src/tests consumers or re-addition in pinned master/queued branches."
+    },
+    {
+      "symbol": "MAX_BLACKLIST_BATTLEGROUNDS",
+      "action": "no-retirement",
+      "reason": "Source says relocation to PVPUI, not removal; no cache/src/tests consumer. No restoration/removal based on historical load-order scope."
+    }
+  ],
+  "scans": {
+    "cache": {
+      "path": "prose-retirement-cache.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "prose-retirement-callers.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  }
+}

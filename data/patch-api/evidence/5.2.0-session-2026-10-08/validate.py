@@ -10,7 +10,7 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / 'tools'))
-from patch_audit_validation import historical_registers
+from patch_audit_validation import historical_registers, historical_sweep_tests
 
 
 def read(name):
@@ -38,6 +38,12 @@ def validate():
     reproduced = read('reproduction.json')
     assert {p.relative_to(ROOT).as_posix() for p in historical} == {r['path'] for r in reproduced}
     assert all(r['register_identical'] for r in reproduced)
+    for path in historical_sweep_tests(ROOT, final['revision']):
+        source = blob(final['revision'], path.relative_to(ROOT).as_posix()).decode()
+        if '#![cfg(feature = "client-retail")]' not in source:
+            continue
+        if re.search(r'out_env: "([A-Z0-9_]+)"', source):
+            assert (HERE / (path.stem + '-results.json')).is_file(), path.name
     assert {r['patch'] for r in reproduced if not r['extract_identical']} == {'12.0.5', '12.0.7', '12.1.0'}
     for receipt_name, expected_exit in final['receipts'].items():
         proof = read(receipt_name)
@@ -53,6 +59,13 @@ def validate():
     assert len({r['source_id'] for r in ledger['source_rows']}) == len(ledger['source_rows'])
     assert {r['source_id'] for r in ledger['source_rows'] if r['source_id'].startswith('diff-wt-')} == set(observed)
     assert all(r['note'] for r in ledger['source_rows'])
+    extractor = {'__name__': 'historical_extractor', '__file__': str(ROOT / 'tools/extract_patch_non_inventory.py')}
+    exec(compile(blob(final['revision'], 'tools/extract_patch_non_inventory.py'), 'historical_extractor', 'exec'), extractor)
+    prose = extractor['seed_rows'](blob(final['revision'], 'data/patch-api/sources/5.2.0-api-changes.txt').decode(), '5.2.0')
+    captions = {f'diff-caption-{number:03}' for number, line in enumerate(
+        blob(final['revision'], 'data/patch-api/sources/5.2.0-api-changes-diff.wikitext').decode().splitlines(), 1)
+        if line.startswith('|+')}
+    assert {row['source_id'] for row in ledger['source_rows']} == set(observed) | {row['source_id'] for row in prose} | captions
     assert all(c['header_count'] == c['parsed_count'] for c in register['header_counts'])
     negative = read('negative-results.json')
     assert {k for k, v in negative.items() if not v['ok']} == set(fixture) | {final['negative_id']}
@@ -66,11 +79,21 @@ def validate():
             assert digest(data) == record['sha256']
             assert len(data.decode().splitlines()) == record['matching_lines']
     later = read('later-register-scan.json')
+    for revision in later['pins'].values():
+        paths = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision,
+                                         'data/patch-api/sources'], cwd=ROOT, text=True).splitlines()
+        required = {name for name in paths if name.endswith('-wikitext-register.json')
+                    and json.loads(blob(revision, name)).get('client_line', 'retail') == 'retail'}
+        assert required == {row['register'] for row in later['registers'] if row['revision'] == revision}
     for row in later['registers']:
         assert digest(blob(row['revision'], row['register'])) == row['sha256']
         data = json.loads(blob(row['revision'], row['register']))
         assert data.get('client_line', 'retail') == 'retail'
-        assert not row['readditions']
+        removed_symbols = {entry['symbol'] for entry in register['entries'] if entry['direction'] == 'removed'}
+        additions = {entry['symbol'] for entry in data['entries'] if entry['direction'] == 'added'}
+        assert not (removed_symbols & additions)
+        assert not row['readditions'] and not row['prose_readditions']
+        assert not additions.intersection({'SchoolStringTable', 'MAX_BLACKLIST_BATTLEGROUNDS'})
     baseline = read('wiki-baseline.json')
     for name, count in baseline.items():
         assert len(blob(final['revision'], name).decode().splitlines()) >= count
@@ -78,6 +101,13 @@ def validate():
     warnings = re.findall(r'^warning: (.*)$', mists, flags=re.M)
     assert all(message.startswith(('iced-wgpu-patched/', '`iced_wgpu` (manifest)')) for message in warnings), warnings
     assert final['runtime_source_changed'] is False
+    assert not subprocess.check_output(['git', 'diff', '--name-only', final['base_revision'],
+                                        final['revision'], '--', 'src'], cwd=ROOT)
+    summary = read('accounting-summary.json')
+    assert summary['inventory'] == len(observed) and summary['publication_gaps'] == len(fixture)
+    assert summary['total_ids'] == len(ledger['source_rows'])
+    assert {status: sum(row['status'] == status for row in ledger['source_rows'])
+            for status in summary['statuses']} == summary['statuses']
     print(json.dumps({'status': 'PASS', 'inventory': len(observed), 'publication_gaps': len(fixture),
                       'accounted_ids': len(ledger['source_rows']), 'retirement_scans': len(scans),
                       'registers': len(reproduced), 'retirements': 0}))
