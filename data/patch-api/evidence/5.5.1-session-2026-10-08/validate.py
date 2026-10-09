@@ -185,8 +185,18 @@ def verify_receipts(context):
     assert read('results/patch_5_5_4_publication_sweep-MISTS_LINE_CONTROL_OUT-results.json')['own']['ok'] is False
 
 
+def verify_prior_set(base):
+    receipt = read('prior-validator-set.json')
+    command = ['git', 'ls-tree', '-r', '--name-only', base, 'data/patch-api/evidence']
+    expected = [name for name in git(*command[1:]).decode().splitlines()
+                if name.endswith('/validate.py')]
+    assert receipt['revision'] == base and receipt['command'] == command
+    assert receipt['validators'] == expected and receipt['count'] == len(expected)
+
+
 def main():
     context = read('context.json')
+    verify_prior_set(context['master_revision'])
     for name, expected in context['session_sha256'].items():
         path = HERE / name
         assert '..' not in Path(name).parts and path.is_relative_to(HERE)
