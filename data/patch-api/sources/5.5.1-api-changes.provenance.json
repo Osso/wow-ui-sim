@@ -1,0 +1,21 @@
+{
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=686954&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+  "retrieved": "2026-10-09T00:21:17.179120+00:00",
+  "pageid": 686954,
+  "title": "Patch 5.5.1/API changes",
+  "revid": 6778077,
+  "timestamp": "2026-07-22T05:39:04Z",
+  "sha256": "419c7a7a6f8b0f8feaf1584cb727f4e964c50b7fc2227fa7ab97d2b8e4b2a4f3",
+  "wikitext_sha256": "f791ec0e8af293c6837e2dc2b069c747868bacce07290757826f4ac24f828008",
+  "classification": "resources-only-stub",
+  "client_line": "mists-classic",
+  "redirect": false,
+  "audit_status": "resolved-current-mists-profile",
+  "generator_flags": [
+    "--client-line",
+    "mists-classic"
+  ],
+  "extractor_flags": [
+    "--canonical-patch-navigation"
+  ]
+}

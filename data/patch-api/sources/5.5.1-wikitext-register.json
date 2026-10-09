@@ -1,0 +1,12 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.5.1",
+  "source": {
+    "path": "data/patch-api/sources/5.5.1-api-changes.wikitext",
+    "revid": 6778077,
+    "sha256": "f791ec0e8af293c6837e2dc2b069c747868bacce07290757826f4ac24f828008"
+  },
+  "header_counts": [],
+  "entries": [],
+  "client_line": "mists-classic"
+}
