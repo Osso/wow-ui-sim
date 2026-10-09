@@ -12,7 +12,7 @@ from pathlib import Path
 import re
 
 HEADER = re.compile(r'^(={2,})\s*(.*?)\s*\1$')
-CALL = re.compile(r'\b([A-Za-z_][\w]*(?:[.:][A-Za-z_][\w]*)*)\s*\(')
+CALL = re.compile(r'\b([A-Za-z_][\w]*(?:[.:][A-Za-z_][\w]*)*)\(')
 EVENT = re.compile(r'\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*(?:_\*|\*)|\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+')
 COMMAND = re.compile(r'(?<![\w:/<.])/[a-z]+\*?')
 HANDLER = re.compile(r'\b(?:On[A-Z][A-Za-z]+|PreClick|PostClick)\b')
@@ -69,6 +69,7 @@ def find_occurrences(line, number, heading, qualifier):
             'direction': direction_at(line, start), 'heading': heading,
             'patch_qualifier': qualifier, 'literal': line,
             'signature': signature, 'signature_status': signature_status,
+            'declaration_literal': line,
             'status': 'UNPROVEN', 'capabilities': [],
             'limit': 'Literal mention/fragment only; publication, full signature, execution and native behavior unmeasured.',
         })
@@ -93,7 +94,12 @@ def find_occurrences(line, number, heading, qualifier):
                 'event-family' if '*' in symbol else 'event')
         append(match, kind)
     for match in COMMAND.finditer(line):
-        append(match, 'command-family' if '*' in match[0] else 'command')
+        code_start = line.rfind('<code>', 0, match.start())
+        code_end = line.find('</code>', match.end())
+        inside_code = code_start >= 0 and '</code>' not in line[code_start:match.start()]
+        fragment = line[match.start():code_end] if inside_code and code_end >= 0 else None
+        append(match, 'command-family' if '*' in match[0] else 'command', fragment,
+               'literal-command-fragment' if fragment is not None else 'unspecified')
     for match in HANDLER.finditer(line):
         # Named wrappers already have an occurrence at the function fragment.
         if re.match(r'\*\*\s*' + re.escape(match[0]) + r'\s*:\s*function\(', line):
