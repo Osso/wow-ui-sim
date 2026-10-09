@@ -8,7 +8,7 @@ Account only frozen page 44655/revision 6055877, timestamp 2024-06-04T05:03:50Z.
 - [x] Retain every nonblank source row, heading, explicit labeled occurrence, rename endpoint, typo, NOTE, consolidated identity and literal call/command syntax without expanding links or inferring additions from consolidated membership.
 - [x] Retain precise prose/signature limits, duplicates and unknowns; reject omitted rows, invented runtime/native/model credit and foreign or unapplied successor registers.
 - [x] Leave shared generator/extractor/default bytes unchanged; use page-owned source accounting and the retained canonical-navigation text extractor.
-- [ ] Replay exact serialized register/ledger/text and sealed logs in a relocated copied root without Git/target; reject serialized ledger/log tampering and restore original bytes.
+- [x] Replay exact serialized register/ledger/text and sealed logs in a relocated copied root without Git/target; reject serialized ledger/log tampering and restore original bytes.
 
 ## How it works
 
@@ -24,7 +24,7 @@ Account only frozen page 44655/revision 6055877, timestamp 2024-06-04T05:03:50Z.
 ## Tests asserting this spec
 
 - Owned `test_source_accounting.py`: targeted RED/GREEN for mixed labels, return prefixes, optional arguments, full raw/header/prose/link accounting, omission and invented-credit controls; references are not publication changes.
-- Owned `validate.py`: frozen manifest/registry/identity/hash and serialized-byte assertions; replay receipt pending.
+- Owned `validate.py` and `replay_controls.py`: original/copied replay exit 0 at `ffda99b11`, 22 historical seals; both disk tamper controls exit 1 at their exact seals and restore bytes/hashes. Archive 727040 bytes, no Git/target/cache dependencies.
 
 ## Known gaps (current cycle)
 

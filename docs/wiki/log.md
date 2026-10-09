@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Historical retail Patch 2.3.0 source accounting
 
-[Audit](investigations/patch-2-3-0-api-audit.md): pinned manifest/101-page registry/response/body validated before copy; page-owned parser preserves mixed labels, UDPATED typo, NOTE behavior, rename endpoints and 82 unexpanded consolidated links without shared tool changes. Owned source fixtures 6/6 GREEN with 593 omission controls. Source-only counts/limits retained; no runtime/native/model/successor credit or broad/final gates. Compact sealed replay follows source commit.
+[Audit](investigations/patch-2-3-0-api-audit.md): pinned manifest/101-page registry/response/body validated before copy; page-owned parser preserves mixed labels, UDPATED typo, NOTE behavior, rename endpoints and 82 unexpanded consolidated links without shared tool changes. Owned source fixtures 6/6 GREEN with 593 omission controls. Source-only counts/limits retained; no runtime/native/model/successor credit or broad/final gates. Source commit `766a7343c`; sealed control commit `ffda99b11`. Original/copied no-Git/no-target/no-cache replay exit 0, 22 seals/727040-byte archive; serialized ledger/log controls exit 1 at exact seals and restore original bytes/hashes. Exact receipts linked in audit; historical tested bytes unchanged.
 
 ## [2026-10-09] proof status | Retail 3.3.5/3.3.3 and Wrath 3.4.2 follow-up
 
