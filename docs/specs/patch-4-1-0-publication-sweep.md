@@ -9,6 +9,8 @@ Account for the pinned historical retail [source](../../data/patch-api/sources/4
 - [ ] The sweep applies only later retail registers, ordered 4.2.0, 4.3.0, 4.3.4 then 5.0.1 onward; queued pages receive no fabricated successor credit.
 - [ ] Evidence validation derives counts from sealed source/accounting files and rejects tampering.
 
+- [ ] Retail raw and ordinary `GetPetHappiness` lookups are absent; non-retail default/seeded pet-state outputs are unchanged.
+
 ## How it works
 
 - [Audit](../wiki/investigations/patch-4-1-0-api-audit.md).
@@ -23,6 +25,8 @@ Account for the pinned historical retail [source](../../data/patch-api/sources/4
 ## Tests asserting this spec
 
 - `tools/test_patch_4_1_register.py`.
+- `tests/pet_stats.rs`: retail absence and non-retail pet-state behavior.
+- `tests/patch_4_1_0_publication_sweep.rs`: cached retail publication/absence.
 
 ## Known gaps (current cycle)
 

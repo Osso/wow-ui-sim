@@ -10,10 +10,9 @@
 //! - `GetPetTimeInCombat()`  → `pet.time_in_combat`
 //! - `GetPetSpellBonusDamage()` → explicit `pet.spell_bonus_damage`, 0 when unset.
 //!
-//! The happiness / loyalty APIs were removed from retail in Cataclysm
-//! and addons that still probe them expect zeros or nil. The default
-//! `PetState::default()` matches that — tests can seed the struct to
-//! exercise classic code paths.
+//! Patch 4.1.0 removed happiness from retail. Its registration and handler
+//! remain available to non-retail profiles; existing pet state is preserved.
+//! Loyalty is outside that page's removal list and unchanged.
 
 use crate::c_api::c_secrets::push_stat_number;
 use crate::lua_api::methods::{borrow_state, create_string};
@@ -27,6 +26,7 @@ fn get_pet_experience(state: &mut LuaState) -> LuaResult<u32> {
     Ok(2)
 }
 
+#[cfg(not(feature = "client-retail"))]
 fn get_pet_happiness(state: &mut LuaState) -> LuaResult<u32> {
     let pet = borrow_state(state)?.pet.clone();
     state.push(Val::Num(pet.happiness as f64));
@@ -69,6 +69,7 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     #[cfg(feature = "client-retail")]
     LuaApiMut::register_function(lua, "GetPetMeleeHaste", get_pet_melee_haste)?;
     LuaApiMut::register_function(lua, "GetPetExperience", get_pet_experience)?;
+    #[cfg(not(feature = "client-retail"))]
     LuaApiMut::register_function(lua, "GetPetHappiness", get_pet_happiness)?;
     LuaApiMut::register_function(lua, "GetPetLoyalty", get_pet_loyalty)?;
     LuaApiMut::register_function(lua, "GetPetTimeInCombat", get_pet_time_in_combat)?;

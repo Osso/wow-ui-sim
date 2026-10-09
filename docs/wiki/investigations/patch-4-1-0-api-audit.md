@@ -16,3 +16,7 @@ Existing flags produce an empty register for the page's `API changes` / `Event c
 
 - [[patch-5-0-1-api-audit]] — first already-integrated later retail page.
 - [[patch-5-0-4-api-audit]] — next substantive retail successor.
+
+## Bounded retirement
+
+`GetPetHappiness` is incorrectly registered in retail despite explicit 4.1.0 removal. Full cached-retail/source/tests whole-word scans are retained in [retirement scans](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/retirement-scans.json). Zero cached consumers; three test references become Classic-only and a retail raw/lookup absence case is added. Qualified and bare identities are identical for this unnamespaced global. Registration/handler are gated only under `client-retail`; pet state and non-retail behavior remain intact. No Blizzard wrapper or cache edit. Unit RED reproduces publication; GREEN pending. `Transform` and `END_REFUND` have cached bare matches, so no additional retirement changes.

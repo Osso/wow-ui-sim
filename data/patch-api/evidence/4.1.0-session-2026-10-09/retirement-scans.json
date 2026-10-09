@@ -1,0 +1,159 @@
+{
+  "retail-cache": {
+    "root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+    "files_scanned": 4044,
+    "matches": {
+      "CanTransform": [],
+      "Transform": [
+        {
+          "path": "Blizzard_ProfessionsCustomerOrders/Blizzard_ProfessionsCustomerOrdersForm.lua",
+          "line": 40,
+          "text": "\t\t\tlocal itemIDs = TableUtil.Transform(self.transaction:CreateCraftingReagentInfoTbl(), function(craftingReagentInfo)"
+        },
+        {
+          "path": "Blizzard_SharedXML/ScrollingMessageFrame.lua",
+          "line": 46,
+          "text": "\tlocal function Transform(entry)"
+        },
+        {
+          "path": "Blizzard_SharedXML/ScrollingMessageFrame.lua",
+          "line": 49,
+          "text": "\tif self.historyBuffer:RemoveIf(predicate, Transform) then"
+        },
+        {
+          "path": "Blizzard_SharedXMLBase/TableUtil.lua",
+          "line": 319,
+          "text": "function TableUtil.Transform(tbl, op)"
+        }
+      ],
+      "GetPetHappiness": [],
+      "RenameEquipmentSet": [],
+      "END_REFUND": [
+        {
+          "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+          "line": 1479,
+          "text": "\ttext = END_REFUND,"
+        },
+        {
+          "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+          "line": 2100,
+          "text": "\ttext = END_REFUND,"
+        },
+        {
+          "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+          "line": 2748,
+          "text": "\ttext = END_REFUND,"
+        },
+        {
+          "path": "Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua",
+          "line": 477,
+          "text": "\ttext = END_REFUND,"
+        },
+        {
+          "path": "Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua",
+          "line": 483,
+          "text": "\t\t\tdialog:SetText(END_REFUND .. \"|n|n\" .. warning);"
+        },
+        {
+          "path": "Blizzard_UIPanels_Game/Mainline/BankFrame.lua",
+          "line": 207,
+          "text": "\ttext = END_REFUND,"
+        }
+      ],
+      "HONOR_CURRENCY_UPDATE": [],
+      "INSPECT_TALENT_READY": [],
+      "KNOWN_CURRENCY_TYPES_UPDATE": []
+    }
+  },
+  "src": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p410-source/src",
+    "files_scanned": 1652,
+    "matches": {
+      "CanTransform": [],
+      "Transform": [
+        {
+          "path": "loader/lua_file.rs",
+          "line": 243,
+          "text": "/// Transform path to WoW-style chunk name for debugstack."
+        },
+        {
+          "path": "render/shader/quad.wgsl",
+          "line": 79,
+          "text": "    // Transform position from screen coords to clip space"
+        }
+      ],
+      "GetPetHappiness": [
+        {
+          "path": "lua_api/globals/real/pet_stats.rs",
+          "line": 6,
+          "text": "//! - `GetPetHappiness()`     \u2192 `(pet.happiness, pet.damage_percent,"
+        },
+        {
+          "path": "lua_api/globals/real/pet_stats.rs",
+          "line": 72,
+          "text": "    LuaApiMut::register_function(lua, \"GetPetHappiness\", get_pet_happiness)?;"
+        },
+        {
+          "path": "lua_api/globals/stubs/global_stubs.rs",
+          "line": 206,
+          "text": "    // GetPetExperience / GetPetHappiness / GetPetLoyalty /"
+        },
+        {
+          "path": "lua_api/sim_substates/mod.rs",
+          "line": 251,
+          "text": "/// probes (`GetPetExperience` / `GetPetHappiness` / `GetPetLoyalty` /"
+        },
+        {
+          "path": "lua_api/sim_substates/mod.rs",
+          "line": 275,
+          "text": "    /// 3 = Happy). Drives `GetPetHappiness` (first return). 0 = no pet."
+        },
+        {
+          "path": "lua_api/sim_substates/mod.rs",
+          "line": 278,
+          "text": "    /// happiness). Drives `GetPetHappiness` (second return)."
+        },
+        {
+          "path": "lua_api/sim_substates/mod.rs",
+          "line": 281,
+          "text": "    /// `GetPetHappiness` (third return)."
+        }
+      ],
+      "RenameEquipmentSet": [],
+      "END_REFUND": [],
+      "HONOR_CURRENCY_UPDATE": [],
+      "INSPECT_TALENT_READY": [],
+      "KNOWN_CURRENCY_TYPES_UPDATE": []
+    }
+  },
+  "tests": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p410-source/tests",
+    "files_scanned": 2150,
+    "matches": {
+      "CanTransform": [],
+      "Transform": [],
+      "GetPetHappiness": [
+        {
+          "path": "pet_stats.rs",
+          "line": 38,
+          "text": "// \u2500\u2500 GetPetHappiness \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+        },
+        {
+          "path": "pet_stats.rs",
+          "line": 44,
+          "text": "        env.eval(\"return GetPetHappiness()\").unwrap();"
+        },
+        {
+          "path": "pet_stats.rs",
+          "line": 60,
+          "text": "        env.eval(\"return GetPetHappiness()\").unwrap();"
+        }
+      ],
+      "RenameEquipmentSet": [],
+      "END_REFUND": [],
+      "HONOR_CURRENCY_UPDATE": [],
+      "INSPECT_TALENT_READY": [],
+      "KNOWN_CURRENCY_TYPES_UPDATE": []
+    }
+  }
+}

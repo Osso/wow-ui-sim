@@ -37,6 +37,17 @@ fn get_pet_experience_reads_pet_state() {
 
 // ── GetPetHappiness ───────────────────────────────────────────────────────────
 
+#[cfg(feature = "client-retail")]
+#[test]
+fn get_pet_happiness_absent_after_4_1_0() {
+    let env = env();
+    let absent: bool = env
+        .eval("return rawget(_G, 'GetPetHappiness') == nil and GetPetHappiness == nil")
+        .unwrap();
+    assert!(absent);
+}
+
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn get_pet_happiness_defaults_zero() {
     let env = env();
@@ -47,6 +58,7 @@ fn get_pet_happiness_defaults_zero() {
     assert_eq!(loyalty_rate, 0);
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn get_pet_happiness_reads_pet_state() {
     let env = env();
