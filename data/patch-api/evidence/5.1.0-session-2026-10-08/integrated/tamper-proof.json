@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "validator": "data/patch-api/evidence/5.1.0-session-2026-10-08/validate.py",
+      "log": "data/patch-api/evidence/5.1.0-session-2026-10-08/p510-all-sweeps.log",
+      "exit": 1,
+      "expected_error": "own input changed",
+      "restored_sha256": "5711ae4ffc31a2358f442391c170913905b1f0ec93d2c1a527ee97261b3d1ad1",
+      "restored": true
+    },
+    {
+      "validator": "data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/validate.py",
+      "log": "data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/own-sweep.txt",
+      "exit": 1,
+      "expected_error": "integrated artifact drift",
+      "restored_sha256": "653d1f46659a29fb4a850c2d7a9309881e026e5906187c2c64e81f3b57f9fe09",
+      "restored": true
+    }
+  ]
+}

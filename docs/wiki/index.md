@@ -1,6 +1,6 @@
 ## [2026-10-08] integration | Retail Patch 5.1.0 API refresh
 
-[Audit](investigations/patch-5-1-0-api-audit.md): rebased onto 7c3bbbfd3; real 5.2.0–5.4.1 successors change no observation or gap (17 remain). Eleven own/four external identities preserved; exact historical invariants pass with all fifteen originals blocked. Retail sweeps 63/63, own prefork/integration 3/1, affected callers and Mists sweeps 6/6 pass; Python 101/101, format and warning-clean non-vendor Mists. 67 registers/64 extracts reproduce, three inherited failures unchanged; negative 17 → 18. Master comparisons and portable/tamper acceptance pending.
+[Audit](investigations/patch-5-1-0-api-audit.md): rebased onto 7c3bbbfd3; real 5.2.0–5.4.1 successors change no observation or gap (17 remain). Eleven own/four external identities preserved; exact historical invariants pass with all fifteen originals blocked. Retail sweeps 63/63, own prefork/integration 3/1, affected callers and Mists sweeps 6/6 pass; Python 101/101, format and warning-clean non-vendor Mists. 67 registers/64 extracts reproduce, three inherited failures unchanged; negative 17 → 18. All 66 other pages/10,153 observations equal master; retail master 62/62 and affected controls pass. Portable gate at 79d15621c PASS 58/58 clean and 59/59 later, zero failures; both owned-log tamper controls reject and restore bytes. Mapping 24,005 bytes; largest session file 1,215,071 bytes.
 
 ## [2026-10-08] investigation | Patch 5.5.0 Mists Classic launch API audit
 

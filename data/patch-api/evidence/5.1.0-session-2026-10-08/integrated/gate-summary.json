@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "revision": "79d15621c07df93096a7ad11e4ff1da16ab9a910",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 58
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 59
+    }
+  },
+  "gate_command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py"
+  ],
+  "gate_exit": 0,
+  "gate_log_sha256": "49046af4d59e3cace24dab7cf0a723e23335ed7dda63b88cbd4c1c52fa6e0de2",
+  "original_pin_independence": true,
+  "tamper": {
+    "status": "PASS",
+    "controls": [
+      {
+        "validator": "data/patch-api/evidence/5.1.0-session-2026-10-08/validate.py",
+        "log": "data/patch-api/evidence/5.1.0-session-2026-10-08/p510-all-sweeps.log",
+        "exit": 1,
+        "expected_error": "own input changed",
+        "restored_sha256": "5711ae4ffc31a2358f442391c170913905b1f0ec93d2c1a527ee97261b3d1ad1",
+        "restored": true
+      },
+      {
+        "validator": "data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/validate.py",
+        "log": "data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/own-sweep.txt",
+        "exit": 1,
+        "expected_error": "integrated artifact drift",
+        "restored_sha256": "653d1f46659a29fb4a850c2d7a9309881e026e5906187c2c64e81f3b57f9fe09",
+        "restored": true
+      }
+    ]
+  },
+  "prior_validators": 56,
+  "rebase_mapping_bytes": 24005,
+  "largest_session_file_bytes": 1215071,
+  "historical_artifacts": 311
+}
