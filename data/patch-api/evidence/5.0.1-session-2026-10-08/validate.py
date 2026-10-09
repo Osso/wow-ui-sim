@@ -46,6 +46,9 @@ def check_seals(context):
     tracked = names(context['evidence_revision'], HERE.relative_to(ROOT).as_posix())
     for name in context['session_sha256']:
         assert (HERE / name).relative_to(ROOT).as_posix() in tracked, name
+    assert set(tracked) == {(HERE / name).relative_to(ROOT).as_posix()
+                            for name in context['session_sha256']} | {
+                                (HERE / 'validate.py').relative_to(ROOT).as_posix()}
     assert all((HERE / name).stat().st_size < 5_000_000 for name in context['session_sha256'])
 
 
@@ -62,6 +65,7 @@ def check_source(context):
     assert raw.decode() == fetched['slots']['main']['*'] == '#REDIRECT [[Patch 5.0.4/API changes]]'
     assert digest(raw) == provenance['sha256'] == read_json(HERE / 'source-pin.json')['wikitext_sha256']
     assert provenance['classification'] == 'redirect-only' and provenance['redirect'] is True
+    assert provenance['redirect_target'] == 'Patch 5.0.4/API changes'
     assert provenance['generator_flags'] == provenance['extractor_flags'] == []
     register = historical_json(revision, PREFIX + 'wikitext-register.json')
     assert register['source']['revid'] == 5344081 and register['source']['sha256'] == digest(raw)
