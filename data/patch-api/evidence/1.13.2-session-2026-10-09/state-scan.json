@@ -1,0 +1,560 @@
+{
+  "CastingInfo": [
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 1131,
+      "text": "                type(UnitCastingInfo),"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 1132,
+      "text": "                UnitCastingInfo(\"player\") == nil,"
+    },
+    {
+      "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+      "line": 1,
+      "text": "//! Spell-related globals: UnitHealth, UnitPower, UnitCastingInfo, CastSpellBy*."
+    },
+    {
+      "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+      "line": 575,
+      "text": "    LuaApiMut::register_function(lua, \"UnitCastingInfo\", unit_casting_info)?;"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 16,
+      "text": "            row.queryBarID = select(10, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 49,
+      "text": "        assert(UnitCastingInfo(\"player\") ~= nil)"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 63,
+      "text": "        assert(stop.queryBarID == nil and UnitCastingInfo(\"player\") == nil)"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 72,
+      "text": "    env.exec(\"assert(#cancellationEvents == 3); assert(UnitCastingInfo('player') == nil)\")"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 99,
+      "text": "        assert(select(9, UnitCastingInfo(\"player\")) == 82326)"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 100,
+      "text": "        assert(select(10, UnitCastingInfo(\"player\")) == replacement[4])"
+    },
+    {
+      "path": "src/iced_app/casting/tests.rs",
+      "line": 14,
+      "text": "            row.queryID = select(10, UnitCastingInfo('player'))"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 17,
+      "text": "            row.bar = select(10, UnitCastingInfo('player'))"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 18,
+      "text": "            row.delay = select(11, UnitCastingInfo('player'))"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 43,
+      "text": "        original = {UnitCastingInfo('player')}"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 46,
+      "text": "        local updated = {UnitCastingInfo('player')}"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 61,
+      "text": "        assert(select(11, UnitCastingInfo('player')) == 750 and #inputEvents == 3)"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 73,
+      "text": "    env.exec(\"assert(UnitCastingInfo('player') == nil); assert(A_Admin.DelayCasting(1) == false)\")"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 92,
+      "text": "                assert(UnitCastingInfo('player') ~= nil and #inputEvents == 1)"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 105,
+      "text": "                assert(select(9, UnitCastingInfo('player')) == 82326)"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 106,
+      "text": "                assert(select(10, UnitCastingInfo('player')) ~= inputEvents[1][4])"
+    }
+  ],
+  "ChannelInfo": [
+    {
+      "path": "src/lua_api/globals/channel_verbs.rs",
+      "line": 22,
+      "text": "//! - `C_ChatInfo.GetChannelInfoFromIdentifier(idOrName)` \u2014 returns metadata."
+    },
+    {
+      "path": "src/lua_api/globals/channel_verbs.rs",
+      "line": 384,
+      "text": "        \"GetChannelInfoFromIdentifier\","
+    },
+    {
+      "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+      "line": 576,
+      "text": "    LuaApiMut::register_function(lua, \"UnitChannelInfo\", unit_channel_info)?;"
+    }
+  ],
+  "nameplateMaxDistance": [
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs",
+      "line": 17,
+      "text": "                    {\"nameplateMaxDistance\", \"60.000000\"},"
+    }
+  ],
+  "chatClassColorOverride": [],
+  "minimumAutomaticUiScale": [],
+  "SendWho": [],
+  "SetCVar": [
+    {
+      "path": "src/iced_app/resize_event_tests.rs",
+      "line": 105,
+      "text": "                SetCVar(cvarName, requestedValue)"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 601,
+      "text": "if type(SetCVar) == \"function\" and (GetCVar == nil or GetCVar(\"voiceChatMode\") == nil) then"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 602,
+      "text": "  SetCVar(\"voiceChatMode\", \"0\")"
+    },
+    {
+      "path": "src/c_api/cvar_combat_policy.rs",
+      "line": 2,
+      "text": "//! This is C_CVar backing policy shared with the legacy SetCVar entry points."
+    },
+    {
+      "path": "src/lua_api/hot_literals.rs",
+      "line": 85,
+      "text": "    b\"SetCVar\","
+    },
+    {
+      "path": "src/loader/tests/wow_api.rs",
+      "line": 627,
+      "text": "    let ty: String = env.eval(\"return type(C_CVar.SetCVar)\").unwrap();"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 885,
+      "text": "            SetCVar(\"discordClientEnabled\", \"1\")"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 887,
+      "text": "            SetCVar(\"discordClientEnabled\", \"0\")"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 1,
+      "text": "//! `SetCVar` / `GetCVar` globals + `C_CVar.{Set,Get,GetDefault}CVar`."
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 8,
+      "text": "//! Previously `SetCVar` was registered only on the `A_Admin` path and"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 34,
+      "text": "    (\"SetCVar\", set_cvar),"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 39,
+      "text": "    (\"SetCVarBitfield\", set_cvar_bitfield),"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 76,
+      "text": "/// `SetCVar(name, value)` \u2014 write `value` (stringified) to"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 143,
+      "text": "            \"SetCVar({name}) is protected from insecure code in combat\""
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 263,
+      "text": "/// `SetCVarBitfield(name, index, enabled)` \u2014 mutate the same printable"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 344,
+      "text": "    LuaApiMut::register_function(lua, \"SetCVar\", set_cvar)?;"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 350,
+      "text": "    LuaApiMut::register_function(lua, \"SetCVarBitfield\", set_cvar_bitfield)?;"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/callback_registry_defaults.rs",
+      "line": 101,
+      "text": "if type(CVarCallbackRegistry.SetCVarCachable) ~= \"function\" then"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/callback_registry_defaults.rs",
+      "line": 102,
+      "text": "  function CVarCallbackRegistry:SetCVarCachable(name)"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/callback_registry_defaults.rs",
+      "line": 260,
+      "text": "                if type(CVarCallbackRegistry.SetCVarCachable) ~= \"function\" then return \"cvar\" end"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/callback_registry_defaults.rs",
+      "line": 282,
+      "text": "                CVarCallbackRegistry:SetCVarCachable(\"testCVar\")"
+    },
+    {
+      "path": "src/lua_api/workarounds/editmode/setup_layout_info.lua",
+      "line": 448,
+      "text": "    if SetCVarBitfield and Enum and Enum.FrameTutorialAccount"
+    },
+    {
+      "path": "src/lua_api/workarounds/editmode/setup_layout_info.lua",
+      "line": 451,
+      "text": "            SetCVarBitfield,"
+    }
+  ],
+  "GetCVar": [
+    {
+      "path": "src/iced_app/resize_event_tests.rs",
+      "line": 88,
+      "text": "                local oldValue = GetCVar(cvarName)"
+    },
+    {
+      "path": "src/iced_app/resize_event_tests.rs",
+      "line": 94,
+      "text": "                    local pairStateMatches = GetCVar(cvarName) == oldValue"
+    },
+    {
+      "path": "src/iced_app/resize_event_tests.rs",
+      "line": 98,
+      "text": "                        and GetCVar(cvarName) == tostring(requestedValue)"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 328,
+      "text": "if GetCVarMin == nil then"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 329,
+      "text": "  function GetCVarMin()"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 428,
+      "text": "if rawget(_G, \"GetCVarMax\") == nil then"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 429,
+      "text": "  function GetCVarMax(name)"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 596,
+      "text": "-- BlizzardOptionsPanel_GetCVarSafe and immediately does `voiceChatMode + 1`"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 601,
+      "text": "if type(SetCVar) == \"function\" and (GetCVar == nil or GetCVar(\"voiceChatMode\") == nil) then"
+    },
+    {
+      "path": "src/lua_api/hot_literals.rs",
+      "line": 84,
+      "text": "    b\"GetCVar\","
+    },
+    {
+      "path": "src/lua_api/chat_init.rs",
+      "line": 216,
+      "text": "        local fmt = GetCVar and GetCVar(\"showTimestamps\")"
+    },
+    {
+      "path": "src/mists/compat_bootstrap.lua",
+      "line": 986,
+      "text": "if rawget(_G, \"GetCVarValueBool\") == nil then"
+    },
+    {
+      "path": "src/mists/compat_bootstrap.lua",
+      "line": 987,
+      "text": "  function GetCVarValueBool(name) return false end"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_adv_fly_cvar_values.rs",
+      "line": 21,
+      "text": "                    local value = GetCVar(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_adv_fly_cvar_values.rs",
+      "line": 22,
+      "text": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_changed_startup_values.rs",
+      "line": 33,
+      "text": "                    local value = GetCVar(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_changed_startup_values.rs",
+      "line": 34,
+      "text": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs",
+      "line": 39,
+      "text": "                    local value = GetCVar(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs",
+      "line": 40,
+      "text": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 9,
+      "text": "                if GetCVar(\"ForceAllowAero\") ~= nil then"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 10,
+      "text": "                    return \"value=\" .. tostring(GetCVar(\"ForceAllowAero\"))"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 12,
+      "text": "                if GetCVarDefault(\"ForceAllowAero\") ~= nil then"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 13,
+      "text": "                    return \"default=\" .. tostring(GetCVarDefault(\"ForceAllowAero\"))"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 167,
+      "text": "                    local value = GetCVar(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 169,
+      "text": "                        return name .. \":GetCVar=\" .. tostring(value)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 171,
+      "text": "                    local default = GetCVarDefault(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 173,
+      "text": "                        return name .. \":GetCVarDefault=\" .. tostring(default)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_mount_journal_nameplate_cvar_values.rs",
+      "line": 20,
+      "text": "                    local value = GetCVar(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_mount_journal_nameplate_cvar_values.rs",
+      "line": 21,
+      "text": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 488,
+      "text": "            return type(GetCVar(\"accessibilityScreenNarrationEnabled\")),"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 489,
+      "text": "                type(GetCVar(\"discordClientEnabled\")),"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 490,
+      "text": "                type(GetCVar(\"pingTarget\")),"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 523,
+      "text": "            if GetCVar(\"lastLockedDelvesCompanionAbilities\") ~= nil then return \"delves-cvar\" end"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 524,
+      "text": "            if GetCVar(\"SlugSupersampling\") ~= nil then return \"slug-cvar\" end"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_pet_journal_overlay_tracker_cvar_values.rs",
+      "line": 23,
+      "text": "                    local value = GetCVar(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_pet_journal_overlay_tracker_cvar_values.rs",
+      "line": 24,
+      "text": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs",
+      "line": 473,
+      "text": "                    local value = GetCVar(name)"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs",
+      "line": 477,
+      "text": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 1,
+      "text": "//! `SetCVar` / `GetCVar` globals + `C_CVar.{Set,Get,GetDefault}CVar`."
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 9,
+      "text": "//! the retail-facing global was `stub_nil`; `GetCVar` came from"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 33,
+      "text": "    (\"GetCVar\", get_cvar),"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 35,
+      "text": "    (\"GetCVarBool\", get_cvar_bool),"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 36,
+      "text": "    (\"GetCVarDefault\", get_cvar_default),"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 38,
+      "text": "    (\"GetCVarBitfield\", get_cvar_bitfield),"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 185,
+      "text": "/// previously unknown CVar visible to later `GetCVar*` reads."
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 201,
+      "text": "/// `GetCVar(name)` \u2014 read `SimState.cvars[name]` (override \u2192 default)."
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 208,
+      "text": "/// `GetCVarDefault(name)` \u2014 read the YAML/factory default for `name`,"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 232,
+      "text": "/// `GetCVarBool(name)` \u2014 `true` iff the stored value is `\"1\"`."
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 243,
+      "text": "/// `GetCVarBitfield(name, index)` \u2014 decode the printable 6-bit packed CVar"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 345,
+      "text": "    LuaApiMut::register_function(lua, \"GetCVar\", get_cvar)?;"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 346,
+      "text": "    LuaApiMut::register_function(lua, \"GetCVarDefault\", get_cvar_default)?;"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 347,
+      "text": "    LuaApiMut::register_function(lua, \"GetCVarBool\", get_cvar_bool)?;"
+    },
+    {
+      "path": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 349,
+      "text": "    LuaApiMut::register_function(lua, \"GetCVarBitfield\", get_cvar_bitfield)?;"
+    },
+    {
+      "path": "src/lua_api/globals/stubs/global_stubs.rs",
+      "line": 108,
+      "text": "    \"GetCVarBool\","
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/callback_registry_defaults.rs",
+      "line": 108,
+      "text": "function CVarCallbackRegistry:GetCVarValueBool(name)"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/callback_registry_defaults.rs",
+      "line": 109,
+      "text": "  return GetCVarBool(name) == true"
+    }
+  ],
+  "ShowCloak": [
+    {
+      "path": "src/lua_api/globals/real/publication_12_0_0.rs",
+      "line": 102,
+      "text": "    LuaApiMut::register_function(lua, \"ShowCloak\", show_cloak)?;"
+    }
+  ],
+  "ShowingCloak": [
+    {
+      "path": "src/lua_api/globals/real/publication_12_0_0.rs",
+      "line": 104,
+      "text": "    LuaApiMut::register_function(lua, \"ShowingCloak\", showing_cloak)?;"
+    }
+  ],
+  "BuyStableSlot": [],
+  "GetCraftInfo": [
+    {
+      "path": "src/lua_api/globals/missing_surface/professions_legacy_craft.rs",
+      "line": 39,
+      "text": "    (\"GetCraftInfo\", get_craft_info),"
+    }
+  ],
+  "DoCraft": [
+    {
+      "path": "src/lua_api/globals/missing_surface/professions_legacy_craft.rs",
+      "line": 52,
+      "text": "    (\"DoCraft\", do_craft),"
+    }
+  ],
+  "SetCraftItem": []
+}

@@ -1,0 +1,115 @@
+[
+  {
+    "contract": "Classic provenance and baselines",
+    "paths": [
+      "src/client_profile.rs",
+      "Cargo.toml"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Era/Anniversary configured11507, not11302; 8.1.0 prose/8.1.5 diff and demo7.3.5 distinct literal foreign references, no imported models."
+  },
+  {
+    "contract": "focus token removal",
+    "paths": [
+      "src/lua_api/globals/unit_probes.rs",
+      "state-scan.json"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Current resolve_unit_is_player still resolves current_focus. Historical focus removal and failure/security semantics not established; do not alter all current profiles from this source alone."
+  },
+  {
+    "contract": "Quest/Spell chat hyperlink rejection",
+    "paths": [
+      "src/lua_api/globals/message_verbs.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Outbound messaging state is not a historical server/parser/routing rejection model. No native server evidence; no guessed return shape."
+  },
+  {
+    "contract": "50-yard combat log and zero Spell IDs",
+    "paths": [
+      "src/lua_api/workarounds/temporary/combat_log_state.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Current temporary combat-log state/filter functions are not spatial50-yard delivery or SpellID-zero payload proof. No range metric/boundary equality/event-specific field positions sourced."
+  },
+  {
+    "contract": "Crafting UI",
+    "paths": [
+      "src/lua_api/globals/missing_surface/professions_legacy_craft.rs",
+      "state-scan.json"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Legacy crafting wraps current recipes and crafting_execution, with fixed Anvil focus and craft_is_enchanting=false; default Blacksmithing. Not native Enchanting/Beast Training behavior; no historical recipe/reagent/signature import."
+  },
+  {
+    "contract": "Deprecated API removal and hardware SendWho",
+    "paths": [
+      "state-scan.json",
+      "src/lua_api/globals/security/mod.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "No SendWho literal source registration found in owned scan. Hardware lifetime/rejection unspecified; no fabricated aliases or broad retirements from deprecated prose."
+  },
+  {
+    "contract": "CastingInfo/ChannelInfo downgrade",
+    "paths": [
+      "src/lua_api/globals/utility_system_spell/spell_api.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Registers UnitCastingInfo/UnitChannelInfo. No standalone CastingInfo/ChannelInfo implementation hit; player-cast-durations not enabled by bare Era. No player tuple or alias signature invented from Idem."
+  },
+  {
+    "contract": "nameplateMaxDistance lock",
+    "paths": [
+      "src/cvars.rs",
+      "src/c_api/cvar_combat_policy.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Current generic CVar store is not a modeled20-yard effective clamp. Prose says lock, not default; no invented setter failure."
+  },
+  {
+    "contract": "chatClassColorOverride and minimumAutomaticUiScale",
+    "paths": [
+      "src/cvars.rs",
+      "src/lua_api/globals/set_cvar_verb.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Source default1/prior0 and UI scale0.9/prior0.64 retained separately from current YAML defaults. Generic storage does not prove class coloring or automatic scale algorithm."
+  },
+  {
+    "contract": "Player-only UNIT_SPELLCAST_*",
+    "paths": [
+      "src/lua_api/cast_success.rs",
+      "src/lua_api/channeling"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "fire_cast_success suppresses nonplayer only if instant AND secret; nonplayer nonsecret completions still dispatch. Historical player-only wildcard requirement unproven; full wildcard/payload/order unspecified, no guessed global suppression."
+  },
+  {
+    "contract": "Cloak/helm candidate rejected for bare Era",
+    "paths": [
+      "src/lua_api/globals/real/publication_12_0_0.rs",
+      "src/lua_api/globals/register.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Real cloak/helm inputs exist but register_world_state_probes gates registration on retail-12-0-0, absent in bare Era. Name factory cannot promote these into Era model credit. No runtime edit/foreign feature activation."
+  },
+  {
+    "contract": "Complete global/widget/event/CVar inventory",
+    "paths": [
+      "state-scan.json"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "Each ledger item retains exact identity and precise category gap. Names, placeholders, permissive event registration and factory resolutions cannot establish modeled historical behavior. No broad publication sweep or linked declarations imported."
+  },
+  {
+    "contract": "Existing current Era generic CVar mutation/query subset",
+    "paths": [
+      "src/cvars.rs",
+      "src/lua_api/globals/set_cvar_verb.rs"
+    ],
+    "status": "UNPROVEN",
+    "assessment": "SetCVar/GetCVar/GetCVarBool use existing mutable storage. Test explicit seeded non-default transitions of two literal added CVar identities separately from effects/source defaults/signatures/native parity. Own TMPDIR keeps persisted test state owned."
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "formatter": "Python ast.parse/unparse canonical source formatter",
+  "files": [
+    "audit.py",
+    "test_source_accounting.py"
+  ],
+  "scope": "page-local Python only; no lint/check"
+}

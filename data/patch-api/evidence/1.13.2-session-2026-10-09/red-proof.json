@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "9252c6cc93c087518f25e64987e095ed76312a51",
+  "scope": "8 SOURCE fixtures against RED scaffold; no runtime/native proof",
+  "exit_code": 1
+}
