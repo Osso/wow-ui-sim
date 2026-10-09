@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Patch 5.5.0 Mists Classic launch API audit
+
+[Audit](investigations/patch-5-5-0-api-audit.md): pinned current revision 6303391, ancestor TOC 50500. Zero identities/removals, five metadata IDs and one problematic Mainline-through-11.1.7 synchronization assertion. Mists empty-inventory discovery uses real cached SharedXML; no positive publication, full-Game or native parity credit. Only Classic 5.5.1–5.5.4 successors. Verification receipts pending; publisher-specific guidance retained for Classic Era identities.
+
 ## [2026-10-08] investigation | Patch 5.5.1 Mists Classic API audit
 
 [Audit](investigations/patch-5-5-1-api-audit.md): pinned revision 6778077, ancestor TOC 50501 in the Mists Classic 505xx line. Zero inventory/four metadata IDs; no positive API credit, gaps or retirements. Only Classic 5.5.2/5.5.3/5.5.4 successors; real cached SharedXML harness. Branch/fresh-master sweeps 57/57 each; all 9,749 observations on 56 retail pages identical. Mists page/line cases 5/5, retail controls 3/3, non-vendor warning-clean Mists check, injected-row negative 1 → 0, Python 87/87 and formatting pass. All 60 registers/57 extracts reproduce, three exact inherited failures unchanged. Own validator passes with 157 sealed inputs; source and sealed-log tampering rejected/restored. Branch gate at ea5fb94cd: 45/45 clean and 46/46 later PASS, exact Git-pinned prior sets preserved. No shared runtime/vendor changes, positive API/full-Game/native parity claim, push, merge or delegation.

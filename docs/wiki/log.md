@@ -519,3 +519,8 @@ Pinned API revision 2150406 and parent 6428967: 2013 retail, not Classic. [Audit
 [2026-10-08] 5.4.1 integration refresh: master 279a38f3d, seven rebased identities/three external pins and 205 historical files archived; master parser replaces copied provenance, only lowercase-reflist remains new. Reproduction 61 registers/58 extracts, three unchanged inherited failures. Logged acceptance ongoing.
 
 [2026-10-08] 5.4.1 integration complete: two gaps unchanged, no replacements/runtime edits; 60 other retail/Classic pages equal master 279a38f3d. All requested command results in integrated/command-results.json. Portable gate PASS at 1abffe22473b501b1fceed6c5d38fd5988cb76e4: clean 48/48, synthetic later audit 49/49; zero failures. Historical/integrated own-log tampering rejects the exact seal and restores all bytes. Relocated replay passes with all ten original pre-rebase objects absent.
+
+## [2026-10-08] investigation | Patch 5.5.0 Mists Classic launch API audit
+
+[Audit](investigations/patch-5-5-0-api-audit.md): pinned current revision 6303391, ancestor TOC 50500. Zero identities/removals, five metadata IDs and one problematic Mainline-through-11.1.7 synchronization assertion. Mists empty-inventory discovery uses real cached SharedXML; no positive publication, full-Game or native parity credit. Only Classic 5.5.1–5.5.4 successors. Verification receipts pending; publisher-specific guidance retained for Classic Era identities.
+
