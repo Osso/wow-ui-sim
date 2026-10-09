@@ -64,3 +64,11 @@ The initial cold-target launch lacked an output path and preceded the first comm
 - [[patch-audit-validator-portability]] — historical proof gate.
 
 Runtime code is unchanged, so the conditional master-relative library and addons-enabled startup comparison was not triggered. Targeted integration/prefork/lib coverage still passed. Index/log grew from their recorded baselines; no bytecode cache or ignored scratch input is used. No push, merge or agents were run.
+
+## Rebased integration (2026-10-08)
+
+[Integrated receipts](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/integrated/) pin master `a82b8eb1c` and preserve every historical session artifact. The compact mapping records original/rebased patch IDs, rebased commit trees and directory tree IDs, not per-file inventories. Parser-copy removal and wiki insertion conflicts retain their original patches. No `src/` or vendor changes.
+
+All 65 registers and 62 main-page extracts reproduce with recorded flags; the three inherited extraction failures remain unchanged. The supplemental 5.4.0 diff extract also reproduces. Branch retail publication/factory cases pass 61/61 versus master 60/60. All 64 other retail and Classic Mists sweep observations are byte-equivalent JSON values versus the pinned master; Mists cases pass 6/6 on both revisions, including the retail-exclusion control. Own prefork/integration cases pass 2/2 each, Python fixtures 96/96, format and Mists check pass with zero non-vendor warnings. The negative control introduces exactly one missing GetPVPRoles observation: 15 → 16 gaps, all other observations unchanged.
+
+No supersession or known-gap edits were needed. Historical publication and prose limits remain pending. One pre-commit driver launch is explicitly diagnostic; committed-input acceptance replaces it. Shared compaction work is excluded; every file written for this integration is below 5 MB.
