@@ -1,0 +1,1 @@
+{"accounting": {"gaps": 0, "inventory": 0, "metadata": 4}, "reproduction": {"extracts": 57, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"], "registers": 60}, "retail": {"differences": 0, "observations": 9749, "pages": 56}, "status": "PASS"}

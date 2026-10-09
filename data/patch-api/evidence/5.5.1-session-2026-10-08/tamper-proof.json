@@ -1,0 +1,35 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p551-page/data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py"
+  ],
+  "revision": "cb0b146e7899833f6749a325906cce3c90509b93",
+  "tampered_input": "all-sweeps.txt",
+  "tampered_exit": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p551-page/data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py\", line 221, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p551-page/data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py\", line 203, in main\n    assert digest(path.read_bytes()) == expected, name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: all-sweeps.txt\n",
+  "original_sha256": "00c51aedaa83893ca5ad07981dc17c9a9fb2f74284fb2f9d4004f8040b1d6920",
+  "restored_sha256": "00c51aedaa83893ca5ad07981dc17c9a9fb2f74284fb2f9d4004f8040b1d6920",
+  "positive_output": {
+    "accounting": {
+      "gaps": 0,
+      "inventory": 0,
+      "metadata": 4
+    },
+    "reproduction": {
+      "extracts": 57,
+      "inherited_extract_failures": [
+        "12.0.5",
+        "12.0.7",
+        "12.1.0"
+      ],
+      "registers": 60
+    },
+    "retail": {
+      "differences": 0,
+      "observations": 9749,
+      "pages": 56
+    },
+    "status": "PASS"
+  }
+}
