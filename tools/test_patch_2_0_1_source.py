@@ -59,6 +59,16 @@ class SourceTests(unittest.TestCase):
         self.assertEqual(audit['headers'][0]['title'], 'Interface AddOn Kit')
         self.assertEqual(audit['headers'][-1]['title'], 'Bug Fixes 2.0.6')
 
+    def test_prose_parentheses_are_not_apis_and_command_arguments_stay_literal(self):
+        audit = self.audit('==Slash Commands==\n'
+                           '* Spell casting and targetting (including focus) are restricted.\n'
+                           '* <code>/equipslot \'\'&lt;slot&gt;\'\' \'\'&lt;itemname&gt;\'\'</code>\n')
+        self.assertFalse(any(r['kind'] == 'global-api' for r in audit['occurrences']))
+        command = next(r for r in audit['occurrences'] if r['symbol'] == '/equipslot')
+        self.assertEqual(command['signature'],
+                         "/equipslot ''&lt;slot&gt;'' ''&lt;itemname&gt;''")
+        self.assertEqual(command['declaration_literal'], command['literal'])
+
     def test_malformed_signature_is_preserved_not_completed(self):
         audit = self.audit('* NEW ExampleCall("unterminated)\n')
         row = audit['occurrences'][0]
