@@ -42,7 +42,8 @@ use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 const LANE_ADDONS_BASE_TO_CONSUMER: &[&str] = &[
@@ -144,7 +145,6 @@ fn lane_dep_edges_pin_canonical_chain() {
         "Blizzard_UIParentPanelManager",
         "Blizzard_SettingsDefinitions_Frame",
         "Blizzard_ItemButton",
-        "Blizzard_UnitPopup",
         "Blizzard_FrameXMLUtil",
         "Blizzard_RaidWarning",
         "Blizzard_UIPanelTemplates",
@@ -154,7 +154,6 @@ fn lane_dep_edges_pin_canonical_chain() {
         "Blizzard_TransmogShared",
         "Blizzard_LFGUtil",
         "Blizzard_ManagedFrameSystem",
-        "Blizzard_MirrorTimer",
     ];
     assert_eq!(
         frame_xml_deps,
@@ -162,10 +161,9 @@ fn lane_dep_edges_pin_canonical_chain() {
             .iter()
             .map(|s| s.to_string())
             .collect::<Vec<_>>(),
-        "FrameXML must preserve all 17 current dependencies in retail TOC order, including \
-         Blizzard_UIParentPanelManager but no direct Blizzard_UIParent dependency, and \
-         Blizzard_UnitPopup between Blizzard_ItemButton and Blizzard_FrameXMLUtil. Got: \
-         {frame_xml_deps:?}"
+        "FrameXML must preserve its 15 Retail-applicable dependencies in TOC order. \
+         Classic-only Blizzard_UnitPopup and Blizzard_MirrorTimer declarations are \
+         excluded by their AllowLoadGameType annotations. Got: {frame_xml_deps:?}"
     );
 }
 

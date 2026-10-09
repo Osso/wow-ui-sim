@@ -1,3 +1,7 @@
+## [2026-10-09] fix | Retail TOC fixture premises
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#retail-toc-fixtures--targeted-verification-pending) records dependency filtering at metadata insertion and unsupported Classic-only Retail discovery. Three test assertions corrected; no loader/cache/vendor edits. Original failure epochs preserved; fresh targeted proof pending.
+
 ## [2026-10-09] investigation | Completed prefork migration suite failure comparison
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) records completed `3de874658` FAIL versus `dd710c6fc`, unchanged failure identities, and an unresolved difference between prefork listing and full-suite totals. Independent comparison artifacts retained without rerunning tests; prior submission-only notes updated. Later fixture corrections remain distinct epochs.

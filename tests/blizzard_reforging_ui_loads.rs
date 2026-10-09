@@ -51,16 +51,12 @@ fn load_reforging_ui(env: &WowLuaEnv) {
 }
 
 #[test]
-fn find_toc_file_resolves_classic_suffix_via_fallthrough() {
-    let resolved =
-        find_toc_file(&reforging_ui_dir()).expect("Blizzard_ReforgingUI TOC should resolve");
-    assert_eq!(
-        resolved,
-        reforging_ui_toc(),
-        "Blizzard_ReforgingUI ships ONLY a `_Classic` suffixed TOC — no Mainline or bare \
-         variant. find_toc_file (src/loader/mod.rs:65) tries Mainline first, then bare, then \
-         falls through to any non-{{_Cata,_Wrath,_TBC,_Vanilla,_Mists}}-suffixed TOC. `_Classic` \
-         is NOT in that skip list, so the fallthrough returns Blizzard_ReforgingUI_Classic.toc"
+#[cfg(feature = "client-retail")]
+fn retail_toc_selection_excludes_classic_only_reforging() {
+    assert!(
+        find_toc_file(&reforging_ui_dir()).is_none(),
+        "Retail selects Mainline, generic or Standard TOCs, not the Classic-only \
+         Blizzard_ReforgingUI TOC"
     );
 }
 

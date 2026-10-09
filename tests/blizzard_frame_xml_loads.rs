@@ -70,7 +70,6 @@ fn blizzard_frame_xml_toc_is_load_first_with_current_dependencies() {
             "Blizzard_UIParentPanelManager".to_string(),
             "Blizzard_SettingsDefinitions_Frame".to_string(),
             "Blizzard_ItemButton".to_string(),
-            "Blizzard_UnitPopup".to_string(),
             "Blizzard_FrameXMLUtil".to_string(),
             "Blizzard_RaidWarning".to_string(),
             "Blizzard_UIPanelTemplates".to_string(),
@@ -80,9 +79,9 @@ fn blizzard_frame_xml_toc_is_load_first_with_current_dependencies() {
             "Blizzard_TransmogShared".to_string(),
             "Blizzard_LFGUtil".to_string(),
             "Blizzard_ManagedFrameSystem".to_string(),
-            "Blizzard_MirrorTimer".to_string(),
         ],
-        "Blizzard_FrameXML declares its current 17 dependencies in TOC order"
+        "Blizzard_FrameXML retains its 15 Retail-applicable dependencies in TOC order; \
+         classic-only UnitPopup and MirrorTimer declarations are filtered"
     );
     assert!(
         !toc.is_game_type_restricted(),
@@ -94,8 +93,8 @@ fn blizzard_frame_xml_toc_is_load_first_with_current_dependencies() {
          transient and rebuild on every login"
     );
 
-    let toc_text = std::fs::read_to_string(frame_xml_toc())
-        .expect("Blizzard_FrameXML TOC should read");
+    let toc_text =
+        std::fs::read_to_string(frame_xml_toc()).expect("Blizzard_FrameXML TOC should read");
     assert!(
         toc_text.contains("## LoadFirst: 1"),
         "Blizzard_FrameXML declares `## LoadFirst: 1` — the loader gives this addon \
