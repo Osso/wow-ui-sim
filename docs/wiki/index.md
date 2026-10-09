@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 5.5.2 Mists Classic API audit
 
-[Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx client line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Python 87/87, formatting and all 59 register reproductions pass; three inherited extract failures unchanged. Pinned-master validator gate passes 43/43 clean and 44/44 later, not covering the new validator. Rust acceptance and branch gate pending.
+[Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx Mists Classic line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Branch/master sweeps pass 57/57; all 9,749 observations on 56 retail pages identical. Mists cases 4/4, retail controls 3/3, warning-clean non-vendor Mists check, injected-row negative 1 → 0, format and Python 87/87 pass. All 59 registers/56 extracts reproduce; three inherited failures unchanged. Own validator seals 151 inputs; sealed-log tampering rejected/restored. Branch gate PASS at 0a030682a: 44/44 clean and 45/45 later, exact pinned prior set preserved. SharedXML-only/empty-inventory limits remain explicit; no runtime/vendor changes, push, merge or delegation.
 
 ## [2026-10-08] investigation | Patch 5.5.3 Mists Classic API audit
 

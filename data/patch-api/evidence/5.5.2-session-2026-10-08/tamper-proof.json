@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p552-page/data/patch-api/evidence/5.5.2-session-2026-10-08/validate.py"
+  ],
+  "revision": "0a030682af62a34e89e3227dddba3a86fbe00990",
+  "exit": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p552-page/data/patch-api/evidence/5.5.2-session-2026-10-08/validate.py\", line 211, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p552-page/data/patch-api/evidence/5.5.2-session-2026-10-08/validate.py\", line 193, in main\n    assert digest(path.read_bytes()) == expected, name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: mists-pages.txt\n",
+  "protected_input": "mists-pages.txt",
+  "original_sha256": "6695ccee9dedb8d00372ec872c2649f3dd4b0dce039dedee9ae32415bdb91d29",
+  "injected": "One trailing newline",
+  "rejected": true,
+  "restored_byte_identical": true
+}

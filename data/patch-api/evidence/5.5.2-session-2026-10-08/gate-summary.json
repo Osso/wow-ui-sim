@@ -1,0 +1,22 @@
+{
+  "revision": "0a030682af62a34e89e3227dddba3a86fbe00990",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 44
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 45
+    }
+  },
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "0a030682af62a34e89e3227dddba3a86fbe00990"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p552-page",
+  "exit": 0
+}

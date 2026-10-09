@@ -9,7 +9,7 @@ Audit the pinned Warcraft Wiki page 686956 revision 6778080 as Mists Classic, no
 - [x] Load real cached Mists SharedXMLBase and SharedXML without Lua errors.
 - [x] Use only 5.5.3 and 5.5.4 as later same-line registers; leave retail chains untouched.
 - [x] Reject an injected inventory row against the empty-inventory count.
-- [ ] Preserve all retail publication observations and pass the portable validator gate.
+- [x] Preserve all retail publication observations and pass the portable validator gate.
 
 ## How it works
 
@@ -30,7 +30,7 @@ Audit the pinned Warcraft Wiki page 686956 revision 6778080 as Mists Classic, no
 
 ## Known gaps (current cycle)
 
-- [ ] Requested verification pending.
+None in the source-listed inventory. Committed proof at `0a030682a` passes the [branch gate](../../data/patch-api/evidence/5.5.2-session-2026-10-08/gate-summary.json): 44/44 clean and 45/45 after the synthetic later audit. All requested tests/checks and both negative controls pass within the documented boundaries.
 
 ## Out of scope
 
