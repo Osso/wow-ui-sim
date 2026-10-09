@@ -1,0 +1,30 @@
+{
+  "src/lua_api/globals/real/pet_stats.rs": [
+    {
+      "historical_blob": "067ae20d9d423cef3566750362cef55fc757b0be",
+      "historical_sha256": "ddd57754c811ee69171af4531ea799d87c030d1e7255b981d579ac3a73299159",
+      "current_sha256": "5a94b3fad13708a8c473cbf64bdbf85416b3f530c4947515fcbd4a9e8aa3b308",
+      "byte_identical": false
+    },
+    {
+      "historical_blob": "b198f8abb254dc1a76fc7f33d310f8862bf90908",
+      "historical_sha256": "5a94b3fad13708a8c473cbf64bdbf85416b3f530c4947515fcbd4a9e8aa3b308",
+      "current_sha256": "5a94b3fad13708a8c473cbf64bdbf85416b3f530c4947515fcbd4a9e8aa3b308",
+      "byte_identical": true
+    }
+  ],
+  "tests/pet_stats.rs": [
+    {
+      "historical_blob": "b12e82bf779a254b93ec0e6692b3aaf6619adb27",
+      "historical_sha256": "ed11c81bd23cad25f7e0f77b98d11fdf65247bc1ed94a42f183f1e7156f0d866",
+      "current_sha256": "a0c1583369b22fbe57101b20810f288678af5f75c88fe5ca2c9f0ceb690a05ad",
+      "byte_identical": false
+    },
+    {
+      "historical_blob": "f211afd1a2c14b3787520a5d6ebaf2b278e78f3e",
+      "historical_sha256": "a0c1583369b22fbe57101b20810f288678af5f75c88fe5ca2c9f0ceb690a05ad",
+      "current_sha256": "a0c1583369b22fbe57101b20810f288678af5f75c88fe5ca2c9f0ceb690a05ad",
+      "byte_identical": true
+    }
+  ]
+}

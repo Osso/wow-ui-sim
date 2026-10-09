@@ -1,0 +1,5 @@
+# Integrated4.1 acceptance
+
+81inventoryobservations:51matches30gaps. Historical50/31andnegative32 unchanged. Currentnegative30→31expectedexit1. All69sweepspass; retailbuild/startup[]exit0. OriginalMistscheckfailedmissingtestfileduringcheckoutrebase; preservedinvalidreceipt. Stablecheckoutretryexit0, no suppression.
+
+Independentproof: fmt+73Pythonfixturespass; originalpetGREENhashesapplicable; 73registeroutputsbyte-identical,71subprocessexitsnotcaptured(notclaimed0);76extractreplaysretainexact3inheritedmismatches. Sharedgatea6caca403PASS68clean/69syntheticlater,zero failures. Subsequentdocs/receipt-onlychangesleaveproofinputsunchanged. No native/fullsuite/CIacceptanceinferred.

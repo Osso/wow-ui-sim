@@ -1,0 +1,17 @@
+{
+  "requested_revision": "287c1fc455c78df7ff4bed12c302c08083e19b99",
+  "final_observed_revision": "61689f258ca48c585e7a864e08ea412454b3e1bb",
+  "files": {
+    "src/lua_api/globals/real/pet_stats.rs": "5a94b3fad13708a8c473cbf64bdbf85416b3f530c4947515fcbd4a9e8aa3b308",
+    "tests/pet_stats.rs": "a0c1583369b22fbe57101b20810f288678af5f75c88fe5ca2c9f0ceb690a05ad",
+    "tests/patch_4_1_0_publication_sweep.rs": "3eb1fd0b19194142a78b4c27341ac235e9149854505206e4ce4f4af77f7afc3c",
+    "tools/gen_patch_wikitext_register.py": "7b57bddaf0e3a9d3ef01af805faaecb22aa7e8e1051c800852ca419073dcded3",
+    "tools/extract_patch_non_inventory.py": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+    "tools/test_gen_patch_wikitext_register.py": "c8986ee8937bdd9cce3ccf33aed92bc175231ce7a9cf16d26cbad90b90b327d4",
+    "tools/test_extract_patch_non_inventory.py": "0d30c3a57868c0e80d2b7bce0656970d474593363b558219a7569757bf556276",
+    "tools/test_patch_4_1_register.py": "6f6cfd8dbf6b6e42f9cef7e736bd1cf39351e7006fb91221e1932e3aeb5753a0",
+    "tools/test_patch_4_1_validator.py": "b137531288f947b509fbddb8fdebdae84048da2523ef165140d98ef5e619ea46",
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/validate.py": "ecea04b69c9b13309439cba4629386234ef21025940fd69333ffb55bb9c4e03b"
+  },
+  "delta_since_requested": ""
+}

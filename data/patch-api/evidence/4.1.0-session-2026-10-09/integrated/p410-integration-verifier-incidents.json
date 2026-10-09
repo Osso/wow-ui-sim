@@ -1,0 +1,17 @@
+{
+  "incorrect_concurrency_attribution_retracted": true,
+  "initial_replay_error": {
+    "type": "FileNotFoundError",
+    "path": "/home/osso/.worktrees/wow-ui-sim-p410-source/data/patch-api/sources/4.4.0-api-changes.provenance.json",
+    "reason": "Incorrect universal provenance location; source-only audit uses evidence layout",
+    "mutation_evidence": null,
+    "before_hash": null,
+    "after_hash": null
+  },
+  "second_data_replay_error": "ValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}; subsequent bounded replay retains error as inherited failure",
+  "bytecode_incident": {
+    "path": "/home/osso/.worktrees/wow-ui-sim-p410-source/tools/__pycache__/extract_patch_non_inventory.cpython-314.pyc",
+    "removed_only_verifier_created_file": true
+  },
+  "command_exit_capture_loss": "71 original successful artifact regenerations have saved exact outputs but null exit telemetry; no broad command rerun"
+}

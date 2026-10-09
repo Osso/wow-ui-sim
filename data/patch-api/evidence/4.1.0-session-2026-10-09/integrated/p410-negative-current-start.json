@@ -1,0 +1,17 @@
+{
+  "revision": "a6caca403fa104ed00a963aff3c84627e942f750",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "patch_4_1_0_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p410-source",
+  "env": {
+    "P410_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p410-source/data/patch-api/evidence/4.1.0-session-2026-10-09/negative-register.json",
+    "P410_SWEEP_OUT": "/tmp/p410-current-negative-results.json"
+  }
+}
