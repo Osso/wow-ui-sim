@@ -1,0 +1,74 @@
+{
+  "schema": "source-proof/v1",
+  "scope": "Patch 2.5.4 literal SOURCE/contract/configuration only",
+  "base_revision": "acf7fbfe9b07dc342b8078cb1c54b702151a23d6",
+  "accounting_revision": "80a50f32cdb6e77728fe3e4f48401adf02fc8a76",
+  "source_scope_sha256": {
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/.gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/Cargo.toml": "ab2ab0841487d02b44ebc2a05eed884944ae9d10982c0becfb2892bc17dd27fb",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/data/blizzard-ui-files/mists.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/data/blizzard-ui-files/ptr.txt": "854540ee3daec8355ed1d4ffb72d244a07f1fcf14cfb4c323abe9c1231369216",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/data/blizzard-ui-files/retail.txt": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/data/blizzard-ui-files/wowforever.txt": "36b9f64e39e4031c28218865516635e85e7bdd1042fcf3ef9db0f347037e5c24",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/data/blizzard-ui-files/wrath.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/configured-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/historical-extract_patch_non_inventory.py": "a8db3187a691118b7e1a66db8e0e9262bfdb3d2de1fb4775abfb10f9026c9d11",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/historical-gen_patch_wikitext_register.py": "e97ca12a0e265bfd5724efcd2363efefe396a044fee1a778ddcb2b91e36c4d72",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/materialize.py": "29aca2e32d5baffa92c47c6e863597ebfdfba54880f5b222519920f04965eb31",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/profile-observation.json": "19323506fc3d7c76ac07928d70a780e72c70cccf768b327632baae3db8f7f67a",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/source-pin.json": "16b0a0dd0a15e75555190803ca2d729200dbc4c1409d888cb749dc4bbf011dc0",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/source-response.json": "e72b07ad6e287743b2f2d17b1d2ad200442cd893cbe6bfa83ba71203a272ffbc",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/test_source_accounting.py": "239012e2ee1f9d7dc9be5fabf79ff893c0c56a4756e308079cf0f784aa9d091f",
+    "data/patch-api/evidence/2.5.4-session-2026-10-09/validate.py": "5b8d330bb70dd4f6d7ea8fa6ab02abf037d2b877a3b2b4618aa7bf72c35e5b24",
+    "data/patch-api/sources/2.5.4-api-changes.txt": "704b6df9f4a87fc7169a3c909017a58a9189879d60375c8e673bbeb4d9abcd63",
+    "data/patch-api/sources/2.5.4-api-changes.wikitext": "c4e57ba61e46af02c1f0fb48d6b6048d540898f2eea08694b95b5321f2b47766",
+    "data/patch-api/sources/2.5.4-page-coverage.json": "39ac71f5e38ccaf00fc37ba0da85823107eed1b6814e540dfc51bef1c5d763f6"
+  },
+  "commands": [
+    {
+      "revision": "c7c560d4fca37de891b25007447c558786bc4793",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p254-source/data/patch-api/evidence/2.5.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p254-source",
+      "exit": 1,
+      "scope": "461 literal rows / 414 UNPROVEN contracts missing in seed ledger; source-only RED"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p254-source/data/patch-api/evidence/2.5.4-session-2026-10-09/materialize.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p254-source",
+      "exit": 0,
+      "scope": "own historical generation"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p254-source/data/patch-api/evidence/2.5.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p254-source",
+      "exit": 0,
+      "scope": "8 targeted SOURCE tests; every one of 461 rows and 414 contracts required; precise contract field mutation rejection",
+      "exact_revision": "80a50f32cdb6e77728fe3e4f48401adf02fc8a76",
+      "run_order": "targeted implementation GREEN immediately before commit; all scoped bytes identical to accounting revision",
+      "log": "green.log",
+      "tests": 8
+    }
+  ],
+  "later_changes_invalidate": "Changes to listed source/tool/config/ledger/test bytes invalidate source GREEN. Receipt/docs additions alone do not.",
+  "models": 0,
+  "runtime_observations": 0,
+  "native_observations": 0,
+  "integration_owner": "main",
+  "native_gate_owner": "main"
+}

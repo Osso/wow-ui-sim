@@ -1,0 +1,13 @@
+test_complete_literal_inventory_and_rows (__main__.SourceAccounting.test_complete_literal_inventory_and_rows) ... ok
+test_every_api_and_linked_contract_required (__main__.SourceAccounting.test_every_api_and_linked_contract_required) ... ok
+test_every_nonblank_literal_row_required (__main__.SourceAccounting.test_every_nonblank_literal_row_required) ... ok
+test_foreign_history_supersession_and_credit_rejected (__main__.SourceAccounting.test_foreign_history_supersession_and_credit_rejected) ... ok
+test_header_default_scope_and_description_retained (__main__.SourceAccounting.test_header_default_scope_and_description_retained) ... ok
+test_identity_plaintext_registry_and_configuration (__main__.SourceAccounting.test_identity_plaintext_registry_and_configuration) ... ok
+test_literal_identity_hash_and_plaintext_mutation (__main__.SourceAccounting.test_literal_identity_hash_and_plaintext_mutation) ... ok
+test_precise_state_signature_and_native_limits (__main__.SourceAccounting.test_precise_state_signature_and_native_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 42.967s
+
+OK
