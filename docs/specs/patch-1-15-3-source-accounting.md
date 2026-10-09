@@ -9,7 +9,7 @@ Account for the frozen Warcraft Wiki page without importing linked APIs or nativ
 - [x] Keep unspecified Dragonflight10.2.7/Cataclysm4.4.0 subset references unexpanded; preserve differing Gethe4.4.0 and Ketho1.15.2 comparison bases.
 - [x] Keep configured11507 separate from source11503 and preserve six same-Era successor boundaries without semantic supersession.
 - [x] Reject omission, fabricated credit and collapsed comparison bases.
-- [ ] Replay copied historical inputs without Git/target/current tools; reject serialized ledger/log tampering and restore exact originals. Keep original seals immutable, later receipts separate.
+- [x] Replay copied historical inputs without Git/target/current tools; reject serialized ledger/log tampering and restore exact originals. Keep original seals immutable, later receipts separate.
 
 ## How it works
 

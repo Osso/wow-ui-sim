@@ -22,11 +22,17 @@ Own copies of Cargo/client-profile and Era/Anniversary manifests retain configur
 
 Own SOURCE RED10 expected failures and portable RED3 expected failures retained against empty-accounting scaffold. Implementation committed before targeted GREEN. SOURCE GREEN10/10 at `4b957a6cf`; historical default generator flags `[]` produces an empty register (not linked-content/API proof). Original 50 seals / 736246 bytes, map SHA256 `9b1bbd99e9d8ca2625b3d8b7cf60fbf418f1d9f8a297c05afcb11bdb03e83111` created once. Exact commands/revisions/results in own proof-ledger.json; later portable receipts remain separate. Extractor copied unexecuted; no shared-tool/all-flags proof. Completed read-only1.15.5 sibling supplies structure only; no evidence/results copied from it. Shared tools unchanged; own historical generator copied from this branch with default flags. No broad/check/lint/type/final gates.
 
+## Copied historical SOURCE proof
+
+At `7621e4627`, own portable GREEN3/3: copied SOURCE10/10, validator exit0, historical default register byte-identical. Archive51 members /117053 bytes, SHA256 `6e3a88888282f8e3db4d2fbe9285741ec5008708ebd575dd3a1dacd2133bda6f`. No copied Git/target/current-tools/runtime/vendor/cache inputs; fresh absolute Python subprocesses use empty PATH. Harness cwd remains explicitly this worktree; copied adapter/generator inputs resolve from copied files, not cwd. Standalone replay commands and this harness constraint are documented in REPLAY.md.
+
+Serialized ledger contract omission rejects at `seal: ledger.json`; fabricated GREEN log rejects at `seal: green.log`. Both exact bytes restored; validators exit0 afterward and all original50 seals remain unchanged. Original seal map never rewritten. Six later archive/receipt/replay files sealed separately in receipt-seals.json; receipts retain exact commands/cwd/revision/output. No linked-content, native/security/loaded-UI/integration/final acceptance credit. Main owns actual ordered successor application and final gates.
+
 ## Sources
 
 - [Spec](../../specs/patch-1-15-3-source-accounting.md).
 - [Frozen pin](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/source-pin.json), [source](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/source.wikitext), [attribution](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/source-attribution.md) — Warcraft Wiki CC BY-SA4.0; exact frozen request in pin.
-- [Fixtures](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py) — SOURCE only.
+- [Fixtures](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py), [original proof ledger](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/proof-ledger.json), [portable proof](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/portable-proof.json), [replay](../../../data/patch-api/evidence/1.15.3-session-2026-10-09/REPLAY.md) — SOURCE only.
 
 ## See Also
 
