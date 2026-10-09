@@ -14,7 +14,7 @@ Complete 197-symbol expected-absence scans cover 2,551 cached retail Lua files p
 
 Only CollapseSkillHeader/ExpandSkillHeader are retired: explicit source removals, no cached retail/test callers, only two no-op registrations. Factory RED proves both were callable. A separate 4.0.1 list gates modern-retail registration exclusion; Classic unchanged. Targeted GREEN at d2dfdb4a4: retail factory 1/1, retail prefork 2/2 (own sweep plus cached retirement), Mists factory 1/1. Only the two expected source rows change; gaps 119 → 117. Mists cached prefork is blocked by the target's required client-retail feature, not executed; no other Classic runtime proof.
 
-The remaining 117 publication gaps have individual observations and domain/consumer reasons in the page ledger. Current consumers preserve GetQuestLogRewardHonor and later-retired CVar bitfield aliases; existing state APIs with tests are not swept into the unused-no-op change. Inventory identities alone provide no primary call signatures or state contracts for adding missing gameplay models. No new constants, aliases, shims or fallback behavior.
+The historical 117 publication gaps have individual observations and domain/consumer reasons in the sealed page ledger; current accounting after actual 4.x successor integration is 304 matches/115 gaps across the same 419 rows. Current consumers preserve GetQuestLogRewardHonor and later-retired CVar bitfield aliases; existing state APIs with tests are not swept into the unused-no-op change. Inventory identities alone provide no primary call signatures or state contracts for adding missing gameplay models. No new constants, aliases, shims or fallback behavior.
 
 Four historical breaking statements remain separate native limits: implicit script globals; legacy per-power event non-emission and replacement payload/order; numeric-only GetItemCooldown; protected buff/weapon-enchant cancellation. C_Item.GetItemCooldown currently ignores its itemInfo and returns constants: no item cooldown backing model exists here, so narrowing its current retail input based on a 2010 statement would be unsound. Dedicated signature row preserves this gap. No native client, structure or enum parity claim.
 
@@ -30,7 +30,15 @@ Dedicated own `validate.py` uses [compact historical pins](../../../data/patch-a
 
 ## Successor boundary
 
-Four explicit pending 4.1.0/4.2.0/4.3.0/4.3.4 placeholders precede actual 5.0.1 and later retail registers. Main replaces placeholders on integration. Classic 5.5.x is excluded. [Source intersections](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/source-overlaps.json) enumerate every overlap with available later retail registers; pending 4.x sources are not present in this worktree, so their exact intersections are unverified. Main must reconcile all four registers, especially any readdition of the two retired skill-header names and retained historical event/global expectations. Shared generator/extractor edits are additive opt-in branches; potential parallel tooling edits require normal integration reconciliation. No native historical behavioral credit follows from modern retail publication or deprecation wrappers.
+Actual retail 4.1.0/4.2.0/4.3.0/4.3.4 registers replace the placeholders before 5.0.1 and later retail registers; Classic successors remain excluded. Only CanTransform/Transform additions become superseded by 4.1 removal, producing 304 current matches/115 gaps across 419 rows. Supersession is not model credit. CollapseSkillHeader/ExpandSkillHeader retirement remains modern-retail only; Mists registration is unchanged. Four source breaking statements and the separate GetItemCooldown numeric-only signature remain UNPROVEN. [Historical source intersections](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/source-overlaps.json) retain their captured scope, not current successor coverage. No native historical behavioral credit follows from modern retail publication or deprecation wrappers.
+
+## Current integration receipts (2026-10-09)
+
+[Current discovery receipts](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/integrated/) are separate from historical receipts: sealed 302/117 accounting and negative 118 remain unchanged, as do 42 archive/evidence seals. Main publication passes 70/70; Mists check/build exit 0. Built startup is not yet checked.
+
+Independent formatting scope covers 212 files; Python fixtures 75/75 and own v2 validator fixtures 5/5 pass. All 74/74 register outputs reproduce with every process exit captured; 74/77 extracts reproduce. Three known inherited failures remain: 12.0.5/12.0.7 mismatch and 12.1.0 error/no output. Shared portable gate, current negative control, runtime smoke, CI and full suite remain pending; these receipts do not establish all-green acceptance.
+
+[Portable validator v2 note](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/portable-validator-v2.md) records the minimal removal of the ROOT/target temporary-workspace dependency. Fresh-root/no-target/no-Git fixtures pass 5/5. Exact v1 validator/context bytes remain preserved; current self-seal metadata is new, not a retroactive rewrite of historical invocations or results.
 
 ## Sources
 
@@ -40,5 +48,6 @@ Four explicit pending 4.1.0/4.2.0/4.3.0/4.3.4 placeholders precede actual 5.0.1 
 
 ## See Also
 
-- [[patch-5-0-1-api-audit]] — actual next integrated retail register.
+- [[patch-4-1-0-api-audit]] — actual first retail successor; CanTransform/Transform removal supersession.
+- [[patch-5-0-1-api-audit]] — later integrated retail register.
 - [[patch-5-0-4-api-audit]] — substantive later retail publication.

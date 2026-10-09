@@ -8,7 +8,7 @@ Account for the complete pinned historical retail page, revision 1271877, in `da
 - [x] Keep default generator/extractor behavior unchanged; new Cataclysm handling is opt-in.
 - [x] Retain all four breaking statements, navigation and both generated-build contexts outside inventory.
 - [x] Probe publication/absence in cached retail Game after retail-only successors; require exact known-gap equality.
-- [ ] Keep pending 4.1.0, 4.2.0, 4.3.0 and 4.3.4 placeholders in order before actual 5.0.1/later retail registers; main replaces on integration.
+- [x] Use actual retail 4.1.0, 4.2.0, 4.3.0 and 4.3.4 successor registers in order before 5.0.1/later retail registers; exclude Classic successors.
 
 - [x] Validate sealed historical source, Git commit/tree/blob pins, own recorded commands, complete row/gap accounting and own byte reproduction without resolving old Git commits.
 - [x] Reject source-response, own-log and historical-archive tampering; ignore unrelated later inventories without expanding proof scope.
@@ -41,7 +41,13 @@ Account for the complete pinned historical retail page, revision 1271877, in `da
 
 ## Known gaps (current cycle)
 
-- [ ] Four breaking statements and one historical numeric-only input contract remain native/model limits; 117 publication mismatches retained in exact gap ledger.
+- [ ] Four source breaking statements and the separate GetItemCooldown numeric-only signature remain UNPROVEN. Current accounting: 419 publication rows, 304 current matches and 115 gaps. Only CanTransform/Transform additions are superseded by 4.1 removal; this earns no model credit. Sealed historical accounting remains 302/117, with negative 118.
+
+## Current receipts and acceptance boundary
+
+[Integrated discovery receipts](../../data/patch-api/evidence/4.0.1-session-2026-10-09/integrated/) are separate from [historical evidence](../../data/patch-api/evidence/4.0.1-session-2026-10-09/). [Portable validator v2](../../data/patch-api/evidence/4.0.1-session-2026-10-09/portable-validator-v2.md) removes only the repository-target temporary-workspace dependency; exact v1 validator/context and historical archive/evidence seals remain preserved.
+
+Main publication passes 70/70; Mists check/build exit 0, but built startup is not yet checked. Independent formatting scope covers 212 files; Python fixtures 75/75 and own v2 fresh-root/no-target/no-Git fixtures 5/5 pass. Register outputs reproduce 74/74 with all process exits captured; extracts reproduce 74/77, with three known inherited failures (12.0.5/12.0.7 mismatch, 12.1.0 error/no output). Shared portable gate, current negative control, runtime smoke, CI and full suite remain pending; no all-green acceptance claim.
 
 ## Out of scope
 

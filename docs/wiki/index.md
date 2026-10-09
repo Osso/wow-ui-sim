@@ -14,7 +14,7 @@
 
 ## [2026-10-09] investigation | Retail Patch 4.0.1 API audit
 
-[Audit](investigations/patch-4-0-1-api-audit.md): pinned revision 1271877; 419 publication occurrences/428 ledger IDs. Two unused modern-retail no-op retirements, gaps 119 → 117; four prose/one signature limits. Own retail factory 1/1 and prefork 2/2, Mists factory 1/1, parser fixtures 75/75; negative 117 → 118. Own historical validator fixtures 5/5 with source/log/archive tampers and Git unavailable; compact pins below 5 MB per file. Four pending retail successors; no native or final acceptance claim.
+[Audit](investigations/patch-4-0-1-api-audit.md): pinned revision 1271877; 419 publication occurrences/428 ledger IDs. Two unused modern-retail no-op retirements, gaps 119 → 117; four prose/one signature limits. Own retail factory 1/1 and prefork 2/2, Mists factory 1/1, parser fixtures 75/75; negative 117 → 118. Own historical validator fixtures 5/5 with source/log/archive tampers and Git unavailable; compact pins below 5 MB per file. Historical receipts preserved; actual four retail 4.x successors now yield 304 current matches/115 gaps across 419 rows, only CanTransform/Transform superseded (no model credit). Main publication 70/70 and Mists check/build exit 0; built startup and shared acceptance gates pending. Separate current receipts and portable v2 note linked in audit; fresh-root/no-target/no-Git fixtures 5/5. No native or final acceptance claim.
 
 ## [2026-10-08] investigation | Patch 5.5.0 Mists Classic launch API audit
 

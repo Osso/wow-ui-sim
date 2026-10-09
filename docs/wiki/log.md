@@ -692,4 +692,8 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 
 ## 2026-10-09 — Retail Patch 4.0.1 validator targeted GREEN/handoff
 
-[[patch-4-0-1-api-audit]]: own validator fixtures 5/5 with Git unavailable, source/log/archive tamper copies rejected and later-state scope preserved. 84 compact inputs, 40 own evidence seals, 2,083,184 archive bytes; no file over 5 MB. Four pending retail successors/native limits and final gates stay main-owned.
+[[patch-4-0-1-api-audit]]: own validator fixtures 5/5 with Git unavailable, source/log/archive tamper copies rejected and later-state scope preserved. 84 compact inputs, 40 own evidence seals, 2,083,184 archive bytes; no file over 5 MB. At this historical handoff, four retail successors were pending; native limits and final gates stayed main-owned.
+
+## 2026-10-09 — Retail Patch 4.0.1 current documentation reconciliation
+
+[[patch-4-0-1-api-audit]]: actual four retail 4.x successors replace placeholders; 419 rows now have 304 current matches/115 gaps. Only CanTransform/Transform additions are superseded by 4.1 removal, without model credit. Sealed historical 302/117, negative 118 and 42 archive/evidence seals unchanged. Four breaking statements and separate GetItemCooldown numeric-only signature remain UNPROVEN; skill-header retirements remain retail-only, Mists registration unchanged. Separate current receipts and portable-v2 note cross-linked. Main publication 70/70, Mists check/build exit 0; built startup not checked. Independent 212-file formatting, 75 Python fixtures and v2 fresh-root/no-target/no-Git fixtures 5/5 pass; 74/74 registers reproduce with exits captured, 74/77 extracts reproduce with three inherited failures. Exact v1 validator/context preserved; v2 removes only ROOT/target temporary dependency and updates self-seal metadata. Shared portable gate/current negative/runtime smoke/CI/full suite pending; no all-green acceptance claim. Docs-only reconciliation.
