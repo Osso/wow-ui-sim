@@ -1,0 +1,87 @@
+{
+  "historical_gaps": 159,
+  "integrated_gaps": 157,
+  "new_gaps": [],
+  "replacements": [
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetSummonedPetID-102",
+      "before": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": "diff-wt-global-api-C_PetJournal.GetSummonedPetID-36",
+          "symbol": "C_PetJournal.GetSummonedPetID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "after": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": "diff-wt-global-api-C_PetJournal.GetSummonedPetID-36",
+          "symbol": "C_PetJournal.GetSummonedPetID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cause": "Merged retail 5.1.0 retirement markers in src/c_api/patch_retired_members.rs at 1c9984d2e"
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SummonPetByID-128",
+      "before": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": "diff-wt-global-api-C_PetJournal.SummonPetByID-37",
+          "symbol": "C_PetJournal.SummonPetByID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "after": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": "diff-wt-global-api-C_PetJournal.SummonPetByID-37",
+          "symbol": "C_PetJournal.SummonPetByID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      },
+      "cause": "Merged retail 5.1.0 retirement markers in src/c_api/patch_retired_members.rs at 1c9984d2e"
+    }
+  ]
+}

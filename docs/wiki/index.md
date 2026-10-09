@@ -2795,3 +2795,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-08] investigation | Cataclysm Classic 4.4.1 source accounting
 
 [Audit](investigations/patch-4-4-1-api-audit.md): page 608915/revision 6234252, TOC 40401. Nineteen exact source rows: seventeen metadata/markup, two API occurrences UNPROVEN without a Cata profile. Direction 4.4.0 → 4.4.1, four literal x counts and incomplete date preserved. Source/serialized-ledger tests include negative controls; no runtime, shared tooling, register, retail retirement or supersession changes. [Receipt](../../data/patch-api/evidence/4.4.1-session-2026-10-08/source-proof.json): four tests/19 negative cases, extractor pass, clean 60/60 and later 61/61 at 8c93152af; zero failures.
+
+## [2026-10-09] integration | Retail Patch 5.0.4 refresh
+
+[Audit](investigations/patch-5-0-4-api-audit.md): pinned master 1c9984d2e; two merged 5.1.0 pet-ID retirements resolve 159 → 157 gaps, no new gaps or retirements. Historical tree/blob receipts preserved; bounded acceptance refresh in progress.

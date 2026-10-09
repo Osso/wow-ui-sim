@@ -25,6 +25,10 @@ def main():
     original_subprocess = sys.modules['subprocess']
     native_check_output = subprocess.check_output
     prior = {ROOT / path: blob for path, blob in pins['prior_validators'].items()}
+    # Integration legitimately closes two historical gaps; replay their old ledger
+    # and fixture through the exact original pins, not today's replacement bytes.
+    prior[ROOT / 'data/patch-api/sources/5.0.4-page-coverage.json'] = pins['source_tree'] + ':5.0.4-page-coverage.json'
+    prior[ROOT / 'tests/data/patch_5_0_4_sweep_known_gaps.json'] = pins['historical_blobs']['tests/data/patch_5_0_4_sweep_known_gaps.json']
     denied = set(json.loads((HERE / 'rebase-mapping.json').read_text())['original_commits'])
 
     def pinned_read(path):

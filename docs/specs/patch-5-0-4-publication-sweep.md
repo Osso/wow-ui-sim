@@ -10,7 +10,7 @@
 
 ## Current boundary
 
-626 current observations: 467 bounded publication/absence rows, 159 exact mismatches. All 73 extract rows and five separate signatures are classified; 704 total IDs. Mismatches include probe-category limitations, not just missing APIs. One new [pet-type state read](pet-battle-pet-type.md) has concrete RED/GREEN proof. No retirements; current consumers and four later readditions preserved. Source TOC is 50001, not 50004.
+626 current observations: 469 bounded publication/absence rows, 157 exact mismatches. Merged 5.1.0 pet-ID retirements resolve two historical gaps (159 → 157), without new retirements or gap silencing. All 73 extract rows and five separate signatures are classified; 704 total IDs. Mismatches include probe-category limitations, not just missing APIs. One new [pet-type state read](pet-battle-pet-type.md) has concrete RED/GREEN proof. No retirements; current consumers and four later readditions preserved. Source TOC is 50001, not 50004.
 
 ## Tests
 
@@ -21,4 +21,4 @@
 
 ## Out of scope
 
-Native 2012 gameplay parity, vendor edits, shims, coordinator integration/migration, push and merge.
+Native 2012 gameplay parity, vendor edits, shims, full suite, push and merge. Coordinator owns final integration and CI.

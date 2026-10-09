@@ -1273,9 +1273,9 @@
     },
     {
       "source_id": "diff-wt-global-api-C_PetJournal.GetSummonedPetID-102",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "C_PetJournal.GetSummonedPetID: raw=nil; lookup=function. Later 5.1.0 removal expects absence, but namespace lookup synthesizes a function. Integrated 5.1.0 retirement fix is not in this worktree base; coordinator owns integration. No new retirement here."
+      "status": "bounded-coverage",
+      "capabilities": ["publication-absence"],
+      "note": "C_PetJournal.GetSummonedPetID: raw=nil; lookup=nil. Merged 5.1.0 retirement at pinned master 1c9984d2e resolves the historical synthesized-function gap. Current absence only; no new 5.0.4 retirement or native 2012 behavior credit."
     },
     {
       "source_id": "diff-wt-global-api-C_PetJournal.IsFindBattleEnabled-103",
@@ -1461,9 +1461,9 @@
     },
     {
       "source_id": "diff-wt-global-api-C_PetJournal.SummonPetByID-128",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "C_PetJournal.SummonPetByID: raw=nil; lookup=function. Later 5.1.0 removal expects absence, but namespace lookup synthesizes a function. Integrated 5.1.0 retirement fix is not in this worktree base; coordinator owns integration. No new retirement here."
+      "status": "bounded-coverage",
+      "capabilities": ["publication-absence"],
+      "note": "C_PetJournal.SummonPetByID: raw=nil; lookup=nil. Merged 5.1.0 retirement at pinned master 1c9984d2e resolves the historical synthesized-function gap. Current absence only; no new 5.0.4 retirement or native 2012 behavior credit."
     },
     {
       "source_id": "diff-wt-global-api-C_Scenario.GetCriteriaInfo-129",
