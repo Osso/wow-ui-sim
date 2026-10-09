@@ -1,0 +1,52 @@
+{
+  "scope": "direct retention metadata review, not independent final acceptance or test rerun",
+  "observed": "2026-10-09T19:42:36.059578+00:00",
+  "actual_revision": "5b3aec9850412327e539bbf251f2188ee91faa81",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+  "original_seals": 50,
+  "original_files_hashes_unchanged": true,
+  "original_map_hash_unchanged": true,
+  "original_archive_hash_unchanged": true,
+  "archive_bytes": 64435,
+  "archive_members": 51,
+  "later_rows": [
+    {
+      "label": "historical-replay",
+      "actual_revision": "5b3aec9850412327e539bbf251f2188ee91faa81",
+      "streams_match": true,
+      "hash_scope_files": 53
+    },
+    {
+      "label": "copied-source-green",
+      "actual_revision": "5b3aec9850412327e539bbf251f2188ee91faa81",
+      "streams_match": true,
+      "hash_scope_files": 53
+    },
+    {
+      "label": "portable-green",
+      "actual_revision": "5b3aec9850412327e539bbf251f2188ee91faa81",
+      "streams_match": true,
+      "hash_scope_files": 53
+    }
+  ],
+  "serialized_tamper_and_exact_restoration": [
+    "ledger.json",
+    "source-green.log"
+  ],
+  "later_artifacts_separate": true,
+  "credential_pattern_hits": 0,
+  "credential_scan_limit": "bounded private-key/provider-token/bearer patterns, not exhaustive",
+  "environment_key_only_inspection": "environment-keys.json; no credential values retained",
+  "non_proof_commands": [
+    "default-extractor --help",
+    "setup/exploration",
+    "formatter"
+  ],
+  "current_model_candidate_count": 1,
+  "current_candidate_executed_here": false,
+  "historical_model_runtime_native_credit": [
+    0,
+    0,
+    0
+  ]
+}

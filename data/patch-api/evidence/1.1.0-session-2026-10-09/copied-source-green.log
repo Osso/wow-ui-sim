@@ -1,0 +1,12 @@
+test_every_occurrence_count_and_identity_required (__main__.FrozenSource.test_every_occurrence_count_and_identity_required) ... ok
+test_historical_default_bytes_and_errors (__main__.FrozenSource.test_historical_default_bytes_and_errors) ... ok
+test_identity_and_frozen_source_mutations (__main__.FrozenSource.test_identity_and_frozen_source_mutations) ... ok
+test_invented_defaults_signatures_proof_and_expansion_rejected (__main__.FrozenSource.test_invented_defaults_signatures_proof_and_expansion_rejected) ... ok
+test_literal_rows_links_headers_navigation (__main__.FrozenSource.test_literal_rows_links_headers_navigation) ... ok
+test_precise_unspecified_contracts (__main__.FrozenSource.test_precise_unspecified_contracts) ... ok
+test_queued_history_separate_without_invented_120 (__main__.FrozenSource.test_queued_history_separate_without_invented_120) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.060s
+
+OK

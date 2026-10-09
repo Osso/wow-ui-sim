@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.1.0 literal SOURCE audit
 
-[Audit](investigations/patch-1-1-0-api-audit.md): frozen271516/5913060,701bytes;17physical/15nonblank rows,11API additions/11unspecified signatures,12links/13UNPROVEN contracts,2headers/1template/1attribution. Own RED7/portableRED3 retained; SOURCE GREEN7/7 at515c84bd6 with66omission controls; default generator0 entries/extractor106bytes unchanged. Current CVar default/override lifecycle candidate grounded but unexecuted; ranged-attack level approximation rejected. Queue1.3/1.4/1.5 separately unapplied; navigation1.2 has no registry pin. Main owns integration/acceptance.
+[Audit](investigations/patch-1-1-0-api-audit.md): frozen271516/5913060,701bytes;17physical/15nonblank rows,11API additions/11unspecified signatures,12links/13UNPROVEN contracts,2headers/1template/1attribution. Own RED7/portableRED3 retained; SOURCE GREEN7/7 at515c84bd6 with66omission controls; default generator0 entries/extractor106bytes unchanged. Current CVar default/override lifecycle candidate grounded but unexecuted; ranged-attack level approximation rejected. Queue1.3/1.4/1.5 separately unapplied; navigation1.2 has no registry pin. Copied SOURCE7/portable3/default-byte/error replay at5b3aec985 retains both serialized tamper rejections/exact restoration;50original seals/51-member64,435byte archive unchanged, later receipts separate. Main owns integration/acceptance.
 
 ## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
 
