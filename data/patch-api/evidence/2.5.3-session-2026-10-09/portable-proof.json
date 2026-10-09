@@ -1,0 +1,83 @@
+{
+  "schema": "bounded-portable-source-proof/v1",
+  "patch": "2.5.3",
+  "tested_revision": "c3336abed",
+  "scope": "Original frozen SOURCE/configuration/tool/ledger/log replay only; no runtime/profile/shared classification, native or final gates.",
+  "source_proof": "source-proof.json",
+  "historical_source_receipt": "historical-replay-proof.json",
+  "controls_log": "portable-controls.log",
+  "archive": "replay-archive.tar.gz",
+  "archive_sha256": "6faa69e050dd6bf9d2de0198ba8133a8d972ea1fb2a6f0ff0d33a02b9bbdb506",
+  "archive_bytes": 244231,
+  "historical_seal_count": 39,
+  "archive_members": 40,
+  "original_seal_map_sha256": "ebe1a4e1587f2d07310cc7b67f41700d239d494ed9c857a56caff475d7bb66b1",
+  "final_appended_seal_count": 42,
+  "proof_ledger": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.5.3-session-2026-10-09/replay_controls.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p253-source",
+      "revision": "c3336abed",
+      "phase": "SOURCE portable development controls",
+      "exit": 0,
+      "invalidated_by": null
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p253-source",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py\", line 293, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py\", line 279, in main\n    sealed_inputs = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py\", line 26, in check_seals\n    assert digest((ROOT / path).read_bytes()) == expected, f'seal: {path}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: data/patch-api/sources/2.5.3-page-coverage.json\n",
+      "PATH": "/nonexistent",
+      "original_sha256": "a54fca760866d956e255d1b2697600f2c86f82c7953129fb01605875bb71e6cb",
+      "tampered_sha256": "72a581559e7e77ee4f58953a374f07e7ba2c16a9495b25d1379ed12b2afa6228",
+      "restored_sha256": "a54fca760866d956e255d1b2697600f2c86f82c7953129fb01605875bb71e6cb",
+      "phase": "ledger_tamper",
+      "revision": "c3336abed",
+      "invalidated_by": null
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p253-source",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py\", line 293, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py\", line 279, in main\n    sealed_inputs = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py\", line 26, in check_seals\n    assert digest((ROOT / path).read_bytes()) == expected, f'seal: {path}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: data/patch-api/evidence/2.5.3-session-2026-10-09/green.log\n",
+      "PATH": "/nonexistent",
+      "original_sha256": "b364f35b46cc92ac32a4b3d2f58b95e5aa74ffd0ba2a72cb5217763f9adb69e3",
+      "tampered_sha256": "477e4ed2ea041d8174ee930245fa7c824620401a3a1958525e2efb4639ff1be3",
+      "restored_sha256": "b364f35b46cc92ac32a4b3d2f58b95e5aa74ffd0ba2a72cb5217763f9adb69e3",
+      "phase": "log_tamper",
+      "revision": "c3336abed",
+      "invalidated_by": null
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p253-source/.p253-replay-4varfg0q/relocated/data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p253-source/.p253-replay-4varfg0q/relocated",
+      "exit": 0,
+      "stdout": "{\"configured_profiles\": 7, \"contracts\": 50, \"cvar_defaults\": 15, \"explicit_signatures\": 0, \"headers\": 8, \"inventory_occurrences\": 49, \"linked_contracts\": 4, \"model_observations\": 0, \"native_observations\": 0, \"runtime_observations\": 0, \"sealed_inputs\": 39, \"source_rows\": 103, \"statuses\": {\"UNPROVEN\": 50, \"metadata-only\": 53}, \"summary_contracts\": 1, \"transclusions\": 0, \"unspecified_callable_signatures\": 25}\n",
+      "stderr": "",
+      "PATH": "/nonexistent",
+      "phase": "relocated_replay",
+      "revision": "c3336abed",
+      "invalidated_by": null
+    }
+  ],
+  "later_changes": "Only docs and append-only portable receipts/seal entries. Original source, tools, validator, tests, ledger, configuration, RED/GREEN logs and archive unchanged. Do not rerun collector to replace original archive; replay its frozen member tree with validate.py.",
+  "main_owned": "Same-history 2.5.4/2.5.5/2.5.6 integration and correctly scoped runtime/native/final gates. No push/merge/deploy/delegation/model CLI/ops."
+}

@@ -4,11 +4,11 @@ Account for frozen Warcraft Wiki page 53568/revision 523812 as separate TBC Clas
 
 ## What it must do
 
-- [ ] Validate committed manifest/registry identity, response/content hashes and timestamp before copying frozen inputs; preserve full registry through 1.0.0.
-- [ ] Account for every nonblank raw row, API occurrence, header, summary, signature absence, inline CVar default/description/scope and unexpanded linked resource. Reject omissions and invented credit.
-- [ ] Preserve literal TBC TOC independently from configured interfaces. Anniversary 11507 is not TBC 205xx proof; profile absence is not an unsupported-API conclusion.
-- [ ] Permit only pending 2.5.4/2.5.5/2.5.6 main-integration references; frozen successor inputs must not depend on sibling availability or establish positive supersession credit.
-- [ ] Replay original sealed source/tools/ledger/logs from a fresh archive without Git, target, current tools/runtime/configuration files. Reject serialized ledger/log tampering and restore exact hashes.
+- [x] Validate committed manifest/registry identity, response/content hashes and timestamp before copying frozen inputs; preserve full registry through 1.0.0.
+- [x] Account for every nonblank raw row, API occurrence, header, summary, signature absence, inline CVar default/description/scope and unexpanded linked resource. Reject omissions and invented credit.
+- [x] Preserve literal TBC TOC independently from configured interfaces. Anniversary 11507 is not TBC 205xx proof; profile absence is not an unsupported-API conclusion.
+- [x] Permit only pending 2.5.4/2.5.5/2.5.6 main-integration references; frozen successor inputs must not depend on sibling availability or establish positive supersession credit.
+- [x] Replay original sealed source/tools/ledger/logs from a fresh archive without Git, target, current tools/runtime/configuration files. Reject serialized ledger/log tampering and restore exact hashes.
 
 ## How it works
 
@@ -21,7 +21,7 @@ Account for frozen Warcraft Wiki page 53568/revision 523812 as separate TBC Clas
 
 ## Tests asserting this spec
 
-`test_source_accounting.py` in the evidence directory tests exact counts, all-row omissions/literal credit, all inventory/header omissions and contract mutations, history isolation, identity/plaintext and configured-profile proof boundaries. `replay_controls.py` tests serialized tamper/restore and fresh archive replay. [Source proof ledger](../../data/patch-api/evidence/2.5.3-session-2026-10-09/source-proof.json) records exact revisions and commands; only targeted SOURCE development is authorized.
+`test_source_accounting.py` in the evidence directory tests exact counts, all-row omissions/literal credit, all inventory/header omissions and contract mutations, history isolation, identity/plaintext and configured-profile proof boundaries. `replay_controls.py` tests serialized tamper/restore and fresh archive replay. [Original SOURCE proof ledger](../../data/patch-api/evidence/2.5.3-session-2026-10-09/source-proof.json), [historical reproduction receipt](../../data/patch-api/evidence/2.5.3-session-2026-10-09/historical-replay-proof.json) and [portable proof ledger](../../data/patch-api/evidence/2.5.3-session-2026-10-09/portable-proof.json) record exact revisions/commands: GREEN 7/7 at `a2f9ca391`, two serialized seal rejections/restorations and fresh isolated replay at `c3336abed`. Only SOURCE development proof, not final/native acceptance.
 
 ## Known gaps (current cycle)
 
