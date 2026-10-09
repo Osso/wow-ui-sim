@@ -2807,3 +2807,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-08] verification | Patch 5.0.1 redirect boundary
 
 [Audit](investigations/patch-5-0-1-api-audit.md): own 1/1 and retail publication/factory 64/64 pass; fabricated-entry 1 → 0 rejection. Both own outputs `{}` are harness evidence only. Python 119/119, 68 registers/65 extracts plus supplemental diff, format and zero-non-vendor-warning Mists pass; three inherited extraction failures unchanged. Historical sealing and clean/later gates pending.
+
+## [2026-10-08] complete | Patch 5.0.1 redirect audit
+
+[Audit](investigations/patch-5-0-1-api-audit.md): historical redirect to separately owned 5.0.4 complete. Empty inventory and metadata-only context; own `{}` observations give no positive API proof. Own 1/1, publication/factory 64/64, Python 119/119, format and non-vendor-warning-clean Mists pass; 68 registers/65 extracts plus supplemental diff reproduce with three inherited failures unchanged. Historical validator seals 112 own records and 58 prior identities. Clean/later gate at `4de10030584362eb4c1fe37a6e512b4e6e5d555a` PASS 59/59 and 60/60, zero failures; source/log tampering rejected and restored. No runtime, retirement, vendor, push/merge or full-suite changes.

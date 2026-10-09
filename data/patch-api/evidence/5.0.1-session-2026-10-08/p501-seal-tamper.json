@@ -1,0 +1,36 @@
+{
+  "revision": "4de10030584362eb4c1fe37a6e512b4e6e5d555a",
+  "controls": [
+    {
+      "path": "source-response.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py\", line 194, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py\", line 182, in main\n    check_seals(context)\n    ~~~~~~~~~~~^^^^^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py\", line 42, in check_seals\n    assert digest((HERE / name).read_bytes()) == expected, 'session seal: ' + name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: session seal: source-response.json\n",
+      "original_sha256": "6e3be4e754eb2653b4ce7ec5f228eaedf5b4a82d59c79fe615adc7475a125c2c",
+      "restored_byte_identically": true
+    },
+    {
+      "path": "p501-own.log",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py\", line 194, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py\", line 182, in main\n    check_seals(context)\n    ~~~~~~~~~~~^^^^^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p501-page/data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py\", line 42, in check_seals\n    assert digest((HERE / name).read_bytes()) == expected, 'session seal: ' + name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: session seal: p501-own.log\n",
+      "original_sha256": "e90ec59d141e6eb8b98a8631b7cb8f19a315e2e6c578044a5ef30865523a14f5",
+      "restored_byte_identically": true
+    }
+  ],
+  "restored_validator": {
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.0.1\", \"classification\": \"redirect-only\", \"inventory\": 0, \"positive_api_proof\": false, \"registers\": 68, \"extracts\": 65, \"sweep_cases\": 64, \"prior_validators\": 58, \"result\": \"PASS\"}\n",
+    "stderr": ""
+  }
+}

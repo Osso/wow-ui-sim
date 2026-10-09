@@ -1,0 +1,30 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "4de10030584362eb4c1fe37a6e512b4e6e5d555a"
+  ],
+  "proof_revision": "4de10030584362eb4c1fe37a6e512b4e6e5d555a",
+  "later_revision": "01f9d32581538149d9f02b2674c7b8af9e8a153c",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 59
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 60
+    }
+  },
+  "oversized_evidence": {
+    "clean": [],
+    "later_audit": []
+  },
+  "report_sha256": "58937ea0b56e2ed1895d3db09067bbe3d8a011f5910c1fdbc60d10c1553de602",
+  "receipt_sha256": "a8223d4809510dc5766b9b2ae74f98e3f342dcb07bb3b9c1f1849b293e353fc3",
+  "own_validator_sha256": "d52ae411125effc42e5e78ab49e496503ecb1cf712255bf2939d0911739adaed",
+  "tamper_receipt_sha256": "436b824901cffc9a10ec072ea4c9b7e15fde5a99e0f553a46ca5be7a2c23d99b",
+  "scope": "historical redirect-only; no positive API proof"
+}
