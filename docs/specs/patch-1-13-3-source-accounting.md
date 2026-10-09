@@ -25,7 +25,8 @@ Bounded Classic Era page audit from the [immutable source pin](../../data/patch-
 ## Tests asserting this spec
 
 - `data/patch-api/evidence/1.13.3-session-2026-10-09/test_source_accounting.py`: nine literal SOURCE fixtures.
-- Portable serialized controls and directenv NPC health fixture remain pending implementation/proof.
+- `patch-tests/patch_1_13_3_npc_health.rs`: existing current bare Era health reads across three NPC snapshot mutations; not native/signature parity.
+- Portable serialized controls remain pending implementation/proof.
 
 ## Known gaps (current cycle)
 

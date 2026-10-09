@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+  "epoch": "63501af73f4ef6bd5719ddc773b81b1cfe5e4f9f",
+  "scope": "own nine SOURCE fixtures; includes occurrence controls; no runtime/native",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_all_occurrence_omissions_and_fabricated_credit_rejected (__main__.SourceAccounting.test_all_occurrence_omissions_and_fabricated_credit_rejected) ... ok\ntest_current_state_and_successor_limits (__main__.SourceAccounting.test_current_state_and_successor_limits) ... ok\ntest_every_raw_row_and_historical_default_boundary (__main__.SourceAccounting.test_every_raw_row_and_historical_default_boundary) ... ok\ntest_exact_frozen_identity (__main__.SourceAccounting.test_exact_frozen_identity) ... ok\ntest_heading_counts_captions_navigation (__main__.SourceAccounting.test_heading_counts_captions_navigation) ... ok\ntest_identity_and_content_tamper_rejected (__main__.SourceAccounting.test_identity_and_content_tamper_rejected) ... ok\ntest_literal_inventory_not_truncated_default_register (__main__.SourceAccounting.test_literal_inventory_not_truncated_default_register) ... ok\ntest_prose_and_reference_boundaries (__main__.SourceAccounting.test_prose_and_reference_boundaries) ... ok\ntest_signature_fragments_do_not_invent_parameters (__main__.SourceAccounting.test_signature_fragments_do_not_invent_parameters) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 12.434s\n\nOK\n"
+}
