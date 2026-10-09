@@ -4,13 +4,13 @@ Bounded Classic Era page audit from the [immutable source pin](../../data/patch-
 
 ## What it must do
 
-- [ ] Validate exact frozen page/revision/timestamp, response/content hashes and manifest-linked remaining registry.
-- [ ] Preserve every nonblank raw row, all literal inventory/signature fragments, prose, headings/counts/captions/navigation and template/link/reference boundaries.
-- [ ] Replay historical default bytes/error unchanged, including 22-entry default register versus 27 literal inventory occurrences; never invent omitted signatures, defaults or aliases.
-- [ ] Derive totals/statuses/omission controls from source and fixtures; reject omission and fabricated credit.
+- [x] Validate exact frozen page/revision/timestamp, response/content hashes and manifest-linked remaining registry.
+- [x] Preserve every nonblank raw row, all literal inventory/signature fragments, prose, headings/counts/captions/navigation and template/link/reference boundaries.
+- [x] Replay historical default bytes/error unchanged, including 22-entry default register versus 27 literal inventory occurrences; never invent omitted signatures, defaults or aliases.
+- [x] Derive totals/statuses/omission controls from source and fixtures; reject omission and fabricated credit.
 - [ ] Replay copied historical source with no Git/target/current tools; reject serialized ledger/log tampering and restore exact bytes under unchanged original seals.
 - [ ] Keep original seals immutable and later GREEN receipts separate.
-- [ ] Test only the grounded current Era NPC health-values subset separately from SOURCE/native credit.
+- [x] Test only the grounded current Era NPC health-values subset separately from SOURCE/native credit.
 
 ## How it works
 
@@ -26,11 +26,11 @@ Bounded Classic Era page audit from the [immutable source pin](../../data/patch-
 
 - `data/patch-api/evidence/1.13.3-session-2026-10-09/test_source_accounting.py`: nine literal SOURCE fixtures.
 - `patch-tests/patch_1_13_3_npc_health.rs`: existing current bare Era health reads across three NPC snapshot mutations; not native/signature parity.
-- Portable serialized controls remain pending implementation/proof.
+- `data/patch-api/evidence/1.13.3-session-2026-10-09/test_portable.py`: copied SOURCE/default replay and serialized ledger/log rejection/exact restoration.
 
 ## Known gaps (current cycle)
 
-- [ ] SOURCE GREEN, historical replay/seal controls and current grounded health test pending.
+- [ ] Historical copied replay/seal controls pending; SOURCE9/9 and existing current Era NPC-health1/1 passed at separately retained revisions.
 - [ ] All historical runtime/native/signature/security/default contracts remain UNPROVEN.
 
 ## Out of scope

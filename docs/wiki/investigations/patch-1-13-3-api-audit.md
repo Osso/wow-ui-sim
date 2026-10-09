@@ -1,6 +1,6 @@
 # Patch 1.13.3 literal frozen Classic Era audit
 
-Bounded own `p1133-page` audit at base `3de87465828db7cc7f6f900d4b63e24f1b399825`. Frozen page455918/revision6472111/timestamp2025-09-13T22:49:36Z, retrieved2026-10-09T08:51:36.400448+00:00. SOURCE RED9 retained; GREEN/replay/current health proof pending. No native credit or runtime edits.
+Bounded own `p1133-page` audit at base `3de87465828db7cc7f6f900d4b63e24f1b399825`. Frozen page455918/revision6472111/timestamp2025-09-13T22:49:36Z, retrieved2026-10-09T08:51:36.400448+00:00. SOURCE RED9 retained; SOURCE GREEN9/9 at63501af73, current Era NPC-health1/1 atbd091cd6d. Historical copied replay/seals pending. No native credit or runtime edits.
 
 ## Coverage matrix
 
@@ -9,14 +9,14 @@ Bounded own `p1133-page` audit at base `3de87465828db7cc7f6f900d4b63e24f1b399825
 | Inventory |22 globals (12 added/10 removed), one event, four CVars|27 identity-only contracts; arguments/returns/defaults unspecified|
 | Signature fragments |27 unspecified identities; four prose `()` fragments|Empty parentheses not zero-argument signatures|
 | Structure |2568bytes,62physical/56nonblank rows; eight headings/two counts/two captions|Counts12/10 reconcile; source TOC11303 not current11507|
-| Prose |Keyring, hardware-event restriction, addon channel transition, NPC health values|Grounded existing health subset test planned; other model contracts UNPROVEN|
+| Prose |Keyring, hardware-event restriction, addon channel transition, NPC health values|Existing current Era health subset1/1; other model contracts UNPROVEN|
 | References |7links/35templates/2citations|Exact literals retained, no target/transclusion expansion|
 
 RawSHA256 `5aac9c7ecacf17d3d3f2961045252ac27b91884a4a2abde60f817ee2f099e85b`; responseSHA256 `cfb09f0cb2d6daf49671b3aa4f1e400eaff90a7ba012dc55ec41191a5660f107`. Caption1.13.2/build32421→1.13.3/build32790, navigation1.13.2→1.13.3→1.13.4. Citation dates2019-12-09/2020-02-18 are not frozen revision/retrieval/native identity dates. Remaining registry101 ends1.0.0.
 
 ## Actual model assessment before changes
 
-Own [model review](../../../data/patch-api/evidence/1.13.3-session-2026-10-09/model-review.json) and complete owned src rs/lua [term scan](../../../data/patch-api/evidence/1.13.3-session-2026-10-09/state-scan.json) distinguish state-backed code from placeholders. Current `lookup_unit_vitals` reads NPC snapshot health/max directly. Concrete transition test is justified by “return health values for NPCs again instead of percentages”; no historical token/signature/default inferred. Current Era11507 differs from source11303, so this can close only a bounded modeled subset, never native parity.
+Own [model review](../../../data/patch-api/evidence/1.13.3-session-2026-10-09/model-review.json) and complete owned src rs/lua [term scan](../../../data/patch-api/evidence/1.13.3-session-2026-10-09/state-scan.json) distinguish state-backed code from placeholders. Current `lookup_unit_vitals` reads NPC snapshot health/max directly. Concrete transition test is justified by “return health values for NPCs again instead of percentages”; no historical token/signature/default inferred. Current Era11507 differs from source11303. Own standalone directenv test proves existing state-backed pairs7501/16003→93/24005→18007/24005, not percentages or max100. Raw registered globals checked without name-factory lookup. One modeled prose subset/two numeric outputs closed, not historical signature/native/loaded-UI parity; no runtime fix needed.
 
 Era HasKey is a false stub; real keyring membership exists under Forever only. Page lacks key eligibility, slot mapping, capacities and query signatures. No cross-history copy/promotion. Legacy SendChatMessage lacks hardware-event checks; legacy SendAddonMessage logs arbitrary CHANNEL and queues CHAT_MSG_ADDON. Page gives no restriction-failure shape/lifetime/routing, so no invented guard/channel model. Summon/totem/voice and rating identities have no declared lifecycle/formulas/signatures. Current CVar value/defaults and permissive Classic event registration would not prove historical defaults/effects or corpse event production/payload/order.
 
@@ -28,7 +28,7 @@ Same-Era integrated inputs1.13.5/6/7 and1.14.0–1.15.9 are copied with exact fr
 
 ## Development proof
 
-Own SOURCE RED9 assertion failures at the initial input/fixture commit. Targeted SOURCE GREEN, original seals and copied replay pending; no broad/check/lint/readability/coverage/final gates. No network/cache-copy/vendor/Wowless edits, suppression, delegation or operations. Source ledger remains zero runtime/model/native observations; later health measurements must stay separate.
+Own SOURCE RED9 assertion failures at2fcc53014 retained; SOURCE GREEN9/9 at63501af73 includes266 per-occurrence omission controls and fabricated defaults/signatures/aliases/history/native-credit rejection. Original seals and copied replay pending. Own locked/offline `cargo test --no-default-features --features client-era --test patch_1_13_3_npc_health -- --nocapture` atbd091cd6d passes1/1 with owned `target/p1133-headless`, no cache copy/Blizzard load or iced aggregate. Existing behavior test passed first run; no fabricated runtime RED/fix. No broad/check/lint/readability/coverage/final gates. No network/cache-copy/vendor/Wowless edits, suppression, delegation or operations. Source ledger remains zero runtime/model/native observations; [current NPC observations](../../../data/patch-api/evidence/1.13.3-session-2026-10-09/current-model-observations.json) and [command/epoch](../../../data/patch-api/evidence/1.13.3-session-2026-10-09/current-model-proof.json) stay separate. Python tests emit no warnings. Cargo retains six inherited iced manifest deprecations and seven headless source warnings: PROVENANCE_SCHEMA, CacheProvenance::new, remove_missing_marker, ensure_known_asset_cached, encoding_key_hex, two cooldown helper methods (one warning), SavedVariablesManager import. All outside new target; not suppressed or fixed by adjacent scope. No warning-free Rust claim.
 
 ## Sources
 
