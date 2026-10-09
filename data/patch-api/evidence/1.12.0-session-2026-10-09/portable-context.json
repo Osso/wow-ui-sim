@@ -1,0 +1,64 @@
+{
+  "source_commit": "361348ba1",
+  "log_retention_commit": "a14e7e536",
+  "archive_commit": "3364a24c8",
+  "archive_sha256": "e7b3a4315adedb8b3131a6621ea35f7cbafaeb501d5b0816fb5296f5470be09a",
+  "archive_members": 24,
+  "original_seals": 23,
+  "original_seals_sha256": "2fb061e0938283a66f5db1d44804a532082fd27a99d1d4fbc5fd4dbfc79fb4df",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/env",
+        "PATH=/nonexistent",
+        "PYTHONNOUSERSITE=1",
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/.p1120-replay-agthzhgs/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1120-page",
+      "code_scope": "3364a24c8 frozen archive",
+      "log": "historical-replay.log",
+      "exit_code": 0,
+      "fresh_process": true,
+      "git_target_current_tools_absent_from_copy": true
+    },
+    {
+      "argv": [
+        "/usr/bin/env",
+        "PATH=/nonexistent",
+        "PYTHONNOUSERSITE=1",
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/.p1120-replay-agthzhgs/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1120-page",
+      "code_scope": "3364a24c8 frozen archive",
+      "log": "copied-source-green.log",
+      "exit_code": 0,
+      "fresh_process": true,
+      "git_target_current_tools_absent_from_copy": true
+    },
+    {
+      "argv": [
+        "/usr/bin/env",
+        "PATH=/nonexistent",
+        "PYTHONNOUSERSITE=1",
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/.p1120-replay-agthzhgs/test_portable.py",
+        "/home/osso/.worktrees/wow-ui-sim-p1120-page/data/patch-api/evidence/1.12.0-session-2026-10-09/portable-proof.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1120-page",
+      "code_scope": "3364a24c8 frozen archive",
+      "log": "portable-green.log",
+      "exit_code": 0,
+      "fresh_process": true,
+      "git_target_current_tools_absent_from_copy": true
+    }
+  ],
+  "scope": "targeted portable SOURCE development; no native/final acceptance"
+}

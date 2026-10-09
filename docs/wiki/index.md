@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Historical Retail 1.12.0 frozen redirect
 
-[Audit](investigations/patch-1-12-0-api-audit.md): frozen326189/3145618,45 exact bytes; one metadata redirect/one UNPROVEN linked contract, zero local API/signature/default/prose/header/template declarations. SOURCE RED5/GREEN5 preserves registry101 and historical default bytes. No grounded model/native subset; original Retail2.0.1+ references separate from Classic/Forever, queued1.13.2 order only. Main owns integration/native/final gates.
+[Audit](investigations/patch-1-12-0-api-audit.md): frozen326189/3145618,45 exact bytes; one metadata redirect/one UNPROVEN linked contract, zero local API/signature/default/prose/header/template declarations. SOURCE RED5/GREEN5 preserves registry101 and historical default bytes. Portable GREEN3 and fresh copied SOURCE5 at3364a24c8 retain23original seals/24archive members, both serialized tamper rejections and exact restoration. No grounded model/native subset; original Retail2.0.1+ references separate from Classic/Forever, queued1.13.2 order only. Main owns integration/native/final gates.
 
 ## [2026-10-09] investigation | Patch 1.13.4 frozen Era audit
 

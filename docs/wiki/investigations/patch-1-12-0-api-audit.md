@@ -36,7 +36,11 @@ Initial scaffold retained RED4+ERROR1; corrected omission precondition retained 
 
 Unchanged historical generator CLI defaults produce exact retained register bytes (`source.path` is `source.wikitext` in the portable tool layout). Unchanged extractor function `extract_text(raw)` with all defaults produces exact `#REDIRECT API change summaries/Historical\n` bytes. This is a function-default replay, not a claim of legacy extractor CLI coverage-ledger success. Canonical shared tools are untouched; no new flags or alternate paths.
 
-Portable seal/replay epoch follows separately; original seal map must never be updated by later receipts. No compiler warnings measured because no compilation; no suppressions or vendor/cache edits.
+Source epoch `361348ba1`; log-retention cleanup `a14e7e536` removed an accidentally staged Python cache and retained ignored logs. Archive epoch `3364a24c8`: 23 original seals, 24 archive members, 47,289 compressed bytes. Original map/archive are immutable; later receipts are separately sealed.
+
+Portable RED3/3 retained before seal creation. Fresh copied historical validator passed; copied SOURCE GREEN5/5 and portable GREEN3/3 passed with `PATH=/nonexistent`, isolated Python, and no Git/target/current-tool files in the copy. Both serialized ledger omission and log fabrication rejected by original seals, then exact bytes and map restored; no resealing. Tests use only copied historical tools/standard library. [Portable receipts](../../../data/patch-api/evidence/1.12.0-session-2026-10-09/portable-proof.json) and [command context](../../../data/patch-api/evidence/1.12.0-session-2026-10-09/portable-context.json) retain hashes, tested revisions and bounded scope. Later documentation does not invalidate source proof or rewrite the original epoch.
+
+No compiler warnings measured because no compilation; targeted Python GREEN logs have no warnings. No suppressions or vendor/cache edits. No parent/final/native acceptance.
 
 ## Sources
 
