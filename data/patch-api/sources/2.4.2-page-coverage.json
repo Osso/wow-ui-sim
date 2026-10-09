@@ -1,0 +1,436 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "2.4.2",
+  "client_line": "retail",
+  "scope": "Historical retail literal source; supported current bare factory publication separately measured. No native acceptance.",
+  "source_rows": [
+    {
+      "source_id": "raw-001",
+      "wikitext_line": 1,
+      "literal": "{{apichanges|2.4.2|next=3.0.2|prev=2.4.0}}",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation/editorial heading/reference list; no runtime credit."
+    },
+    {
+      "source_id": "raw-003",
+      "wikitext_line": 3,
+      "literal": "== New APIs ==",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation/editorial heading/reference list; no runtime credit."
+    },
+    {
+      "source_id": "raw-005",
+      "wikitext_line": 5,
+      "literal": "* [[API AcceptLevelGrant|AcceptLevelGrant]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Level-grant acceptance lacks a modeled pending grant/level lifecycle; signature unspecified."
+    },
+    {
+      "source_id": "raw-006",
+      "wikitext_line": 6,
+      "literal": "* [[API CombatLog_Object_IsA|CombatLog_Object_IsA]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Object-filter helper has no bare retail publication; temporary combat-log compatibility is not loaded here and is not historical parity."
+    },
+    {
+      "source_id": "raw-007",
+      "wikitext_line": 7,
+      "literal": "* [[API DeclineLevelGrant|DeclineLevelGrant]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Level-grant decline lacks a modeled pending grant lifecycle; signature unspecified."
+    },
+    {
+      "source_id": "raw-008",
+      "wikitext_line": 8,
+      "literal": "* [[API GetCoinText|GetCoinText]](amount, \"separator\")",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy GetCoinText is absent in the bare factory. Current C_CurrencyInfo amount/separator behavior passes separately; no historical alias or native output credit."
+    },
+    {
+      "source_id": "raw-009",
+      "wikitext_line": 9,
+      "literal": "* [[API GetQuestLogSpellLink|GetQuestLogSpellLink]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Quest-log spell rewards lack established spell-link identity and return contracts."
+    },
+    {
+      "source_id": "raw-010",
+      "wikitext_line": 10,
+      "literal": "* [[API GetQuestSpellLink|GetQuestSpellLink]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Selected quest spell rewards lack established spell-link identity and return contracts."
+    },
+    {
+      "source_id": "raw-011",
+      "wikitext_line": 11,
+      "literal": "* [[API strreplace|strreplace]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "strreplace has no stated signature, replacement rule, or error contract; no guessed alias."
+    },
+    {
+      "source_id": "raw-013",
+      "wikitext_line": 13,
+      "literal": "=== New plural selector ===",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation/editorial heading/reference list; no runtime credit."
+    },
+    {
+      "source_id": "raw-015",
+      "wikitext_line": 15,
+      "literal": "<code>|4</code> added to [[UI escape codes]], to toggle singular and plural forms: <code>I have %d |4apple:apples;.</code>. The \"|4<small>singular</small>:<small>plural</small>;\" operator looks at the last seen number in the string and selects the appropriate form based on it, e.g. \"I have 1 apple.\" / \"I have 2 apples.\".  Most constants for plural forms (<CONSTANT_NAME>_P1) are eliminated, and singular ones updated to use new escape sequence.",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Last-number singular/plural rendering and elimination of unspecified *_P1 constants lack runtime proof; preserve both examples and placeholder literally."
+    },
+    {
+      "source_id": "raw-017",
+      "wikitext_line": 17,
+      "literal": "== Changed APIs ==",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation/editorial heading/reference list; no runtime credit."
+    },
+    {
+      "source_id": "raw-018",
+      "wikitext_line": 18,
+      "literal": "* Constants GOLD,SILVER and COPPER changed to GOLD_AMOUNT, SILVER_AMOUNT and COPPER_AMOUNT <ref>http://forums.worldofwarcraft.com/thread.html?topicId=6440785021&sid=1</ref>",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Six literal constant names retained separately; callable classifier does not measure constant values, retirement or plural-localization migrations."
+    },
+    {
+      "source_id": "raw-019",
+      "wikitext_line": 19,
+      "literal": "* {{api|GuildRosterSetOfficerNote}}() - escape characters are now strictly evaluated and require escaping <ref>http://code.google.com/p/epgp/issues/detail?id=162</ref>",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Strict officer-note escape evaluation lacks literal escape grammar and roster write/backend proof."
+    },
+    {
+      "source_id": "raw-020",
+      "wikitext_line": 20,
+      "literal": "* {{api|t=w|Minimap:PingLocation}}(x,y) is now protected while you are targeting an area of effect spell.<ref>{{Ref web|author={{blizz}}[[slouken]]|date=2008-05-14 06:08 PST|url=http://forums.worldofwarcraft.com/thread.html?topicId=6440985857&sid=1&pageNo=1#1|archiveurl=https://www.bluetracker.gg/wow/topic/us-en/6440985857-minimap-ping-macros-disabled-/|title=Re: Minimap Ping Macros Disabled?}}</ref>",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PingLocation publication is not protected-call behavior; targeting AoE security transition unproven."
+    },
+    {
+      "source_id": "raw-021",
+      "wikitext_line": 21,
+      "literal": "* {{api|CombatLogSetCurrentEntry}}() behavior for negative and zero ids is shifted by 1 position. Newest is at 0 (was at -1), oldest is at <code>-CombatLogGetNumEntries() + 1</code> (was at -CombatLogGetNumEntries())",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Negative/zero combat-log cursor shift lacks real retained-log history/native indexing proof; no placeholder model credit."
+    },
+    {
+      "source_id": "raw-022",
+      "wikitext_line": 22,
+      "literal": "* {{api|t=w|ScrollingMessageFrame:AddMessage}}() has an additional argument, ''addToStart'', that appends messages to the opposite end of the message frame.",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AddMessage publication is not addToStart behavior; frozen page does not give argument position/default, so no guessed stack slot."
+    },
+    {
+      "source_id": "raw-024",
+      "wikitext_line": 24,
+      "literal": "=== Name resolution queue ===",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation/editorial heading/reference list; no runtime credit."
+    },
+    {
+      "source_id": "raw-026",
+      "wikitext_line": 26,
+      "literal": "Internally, the WoW client is usually fed a bunch of player GUIDs rather than names, which it then has to resolve and keep a cache of.  The rate at which these queries are sent out is now artificially throttled to 128 queries every 30 seconds (queued).",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GUID/name request throttle (128 per 30 seconds, queued) lacks resolver, clock and network lifecycle model."
+    },
+    {
+      "source_id": "raw-028",
+      "wikitext_line": 28,
+      "literal": "This affects for instance AH \"getall\" scans (see [[API QueryAuctionItems]] and [[API GetAuctionItemInfo]]). Such a query followed by looping all records in the AH (15000+ for a medium pop server) results in the name resolver queue being tied up for 5-10 minutes.  I.e. if you hearth to Shattrath immediately after doing such a scan, everyone you see (that you have not previously seen that session), will be named \"Unknown\" for the next 5-10 minutes.",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AH getall resolver saturation and 5-10 minute Unknown names are workload/context observations, not exact timing proof; no auction/resolver integration."
+    },
+    {
+      "source_id": "raw-030",
+      "wikitext_line": 30,
+      "literal": "== References ==",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation/editorial heading/reference list; no runtime credit."
+    },
+    {
+      "source_id": "raw-031",
+      "wikitext_line": 31,
+      "literal": "{{reflist}}",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation/editorial heading/reference list; no runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-AcceptLevelGrant-5",
+      "wikitext_line": 5,
+      "literal": "* [[API AcceptLevelGrant|AcceptLevelGrant]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Level-grant acceptance lacks a modeled pending grant/level lifecycle; signature unspecified."
+    },
+    {
+      "source_id": "signature-AcceptLevelGrant-5",
+      "wikitext_line": 5,
+      "literal": "AcceptLevelGrant [signature unspecified]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-CombatLog_Object_IsA-6",
+      "wikitext_line": 6,
+      "literal": "* [[API CombatLog_Object_IsA|CombatLog_Object_IsA]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Object-filter helper has no bare retail publication; temporary combat-log compatibility is not loaded here and is not historical parity."
+    },
+    {
+      "source_id": "signature-CombatLog_Object_IsA-6",
+      "wikitext_line": 6,
+      "literal": "CombatLog_Object_IsA [signature unspecified]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-DeclineLevelGrant-7",
+      "wikitext_line": 7,
+      "literal": "* [[API DeclineLevelGrant|DeclineLevelGrant]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Level-grant decline lacks a modeled pending grant lifecycle; signature unspecified."
+    },
+    {
+      "source_id": "signature-DeclineLevelGrant-7",
+      "wikitext_line": 7,
+      "literal": "DeclineLevelGrant [signature unspecified]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetCoinText-8",
+      "wikitext_line": 8,
+      "literal": "* [[API GetCoinText|GetCoinText]](amount, \"separator\")",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy GetCoinText is absent in the bare factory. Current C_CurrencyInfo amount/separator behavior passes separately; no historical alias or native output credit."
+    },
+    {
+      "source_id": "signature-GetCoinText-8",
+      "wikitext_line": 8,
+      "literal": "GetCoinText(amount, \"separator\")",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogSpellLink-9",
+      "wikitext_line": 9,
+      "literal": "* [[API GetQuestLogSpellLink|GetQuestLogSpellLink]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Quest-log spell rewards lack established spell-link identity and return contracts."
+    },
+    {
+      "source_id": "signature-GetQuestLogSpellLink-9",
+      "wikitext_line": 9,
+      "literal": "GetQuestLogSpellLink [signature unspecified]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestSpellLink-10",
+      "wikitext_line": 10,
+      "literal": "* [[API GetQuestSpellLink|GetQuestSpellLink]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Selected quest spell rewards lack established spell-link identity and return contracts."
+    },
+    {
+      "source_id": "signature-GetQuestSpellLink-10",
+      "wikitext_line": 10,
+      "literal": "GetQuestSpellLink [signature unspecified]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-strreplace-11",
+      "wikitext_line": 11,
+      "literal": "* [[API strreplace|strreplace]]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "strreplace has no stated signature, replacement rule, or error contract; no guessed alias."
+    },
+    {
+      "source_id": "signature-strreplace-11",
+      "wikitext_line": 11,
+      "literal": "strreplace [signature unspecified]",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-GuildRosterSetOfficerNote-19",
+      "wikitext_line": 19,
+      "literal": "* {{api|GuildRosterSetOfficerNote}}() - escape characters are now strictly evaluated and require escaping <ref>http://code.google.com/p/epgp/issues/detail?id=162</ref>",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Strict officer-note escape evaluation lacks literal escape grammar and roster write/backend proof."
+    },
+    {
+      "source_id": "signature-GuildRosterSetOfficerNote-19",
+      "wikitext_line": 19,
+      "literal": "GuildRosterSetOfficerNote()",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-Minimap:PingLocation-20",
+      "wikitext_line": 20,
+      "literal": "* {{api|t=w|Minimap:PingLocation}}(x,y) is now protected while you are targeting an area of effect spell.<ref>{{Ref web|author={{blizz}}[[slouken]]|date=2008-05-14 06:08 PST|url=http://forums.worldofwarcraft.com/thread.html?topicId=6440985857&sid=1&pageNo=1#1|archiveurl=https://www.bluetracker.gg/wow/topic/us-en/6440985857-minimap-ping-macros-disabled-/|title=Re: Minimap Ping Macros Disabled?}}</ref>",
+      "capabilities": [
+        "current-retail-factory-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Supported current bare-retail factory callable publication only; no signature, model, cached Game or historical native credit."
+    },
+    {
+      "source_id": "signature-Minimap:PingLocation-20",
+      "wikitext_line": 20,
+      "literal": "Minimap:PingLocation(x,y)",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-CombatLogSetCurrentEntry-21",
+      "wikitext_line": 21,
+      "literal": "* {{api|CombatLogSetCurrentEntry}}() behavior for negative and zero ids is shifted by 1 position. Newest is at 0 (was at -1), oldest is at <code>-CombatLogGetNumEntries() + 1</code> (was at -CombatLogGetNumEntries())",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Negative/zero combat-log cursor shift lacks real retained-log history/native indexing proof; no placeholder model credit."
+    },
+    {
+      "source_id": "signature-CombatLogSetCurrentEntry-21",
+      "wikitext_line": 21,
+      "literal": "CombatLogSetCurrentEntry()",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-ScrollingMessageFrame:AddMessage-22",
+      "wikitext_line": 22,
+      "literal": "* {{api|t=w|ScrollingMessageFrame:AddMessage}}() has an additional argument, ''addToStart'', that appends messages to the opposite end of the message frame.",
+      "capabilities": [
+        "current-retail-factory-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Supported current bare-retail factory callable publication only; no signature, model, cached Game or historical native credit."
+    },
+    {
+      "source_id": "signature-ScrollingMessageFrame:AddMessage-22",
+      "wikitext_line": 22,
+      "literal": "ScrollingMessageFrame:AddMessage()",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal abbreviated/partial signature only; return arity, types, defaults, errors and native acceptance remain unproven."
+    },
+    {
+      "source_id": "constant-GOLD-18",
+      "wikitext_line": 18,
+      "literal": "GOLD",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal removed constant name; value/localization and current-publication/retirement unmeasured."
+    },
+    {
+      "source_id": "constant-SILVER-18",
+      "wikitext_line": 18,
+      "literal": "SILVER",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal removed constant name; value/localization and current-publication/retirement unmeasured."
+    },
+    {
+      "source_id": "constant-COPPER-18",
+      "wikitext_line": 18,
+      "literal": "COPPER",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal removed constant name; value/localization and current-publication/retirement unmeasured."
+    },
+    {
+      "source_id": "constant-GOLD_AMOUNT-18",
+      "wikitext_line": 18,
+      "literal": "GOLD_AMOUNT",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal added constant name; value/localization and current-publication/retirement unmeasured."
+    },
+    {
+      "source_id": "constant-SILVER_AMOUNT-18",
+      "wikitext_line": 18,
+      "literal": "SILVER_AMOUNT",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal added constant name; value/localization and current-publication/retirement unmeasured."
+    },
+    {
+      "source_id": "constant-COPPER_AMOUNT-18",
+      "wikitext_line": 18,
+      "literal": "COPPER_AMOUNT",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal added constant name; value/localization and current-publication/retirement unmeasured."
+    },
+    {
+      "source_id": "context-api-CombatLogGetNumEntries-21",
+      "wikitext_line": 21,
+      "literal": "CombatLogGetNumEntries",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Contextual API reference, not a new/changed publication occurrence; linked documentation not expanded."
+    },
+    {
+      "source_id": "context-api-QueryAuctionItems-28",
+      "wikitext_line": 28,
+      "literal": "QueryAuctionItems",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Contextual API reference, not a new/changed publication occurrence; linked documentation not expanded."
+    },
+    {
+      "source_id": "context-api-GetAuctionItemInfo-28",
+      "wikitext_line": 28,
+      "literal": "GetAuctionItemInfo",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Contextual API reference, not a new/changed publication occurrence; linked documentation not expanded."
+    }
+  ]
+}
