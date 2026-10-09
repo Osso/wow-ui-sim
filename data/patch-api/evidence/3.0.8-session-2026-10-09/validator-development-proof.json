@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "tools/test_patch_3_0_8_validator.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+  "exit": 0,
+  "revision": "98800469b5fb2f57272a308ed9bdaa9384d226bd",
+  "scope": "fresh-process portable replay, synthetic current drift, all sealed-file and manifest tamper/restoration, gap deletion",
+  "artifact": "validator-green.log",
+  "proof_inputs": {
+    "data/patch-api/evidence/3.0.8-session-2026-10-09/validate.py": {
+      "sha256": "8f7170d47cc13a78545dfa73e6919a0b764a1343e12a4c2ae0f6c1cf133d554f",
+      "bytes": 10040
+    },
+    "data/patch-api/evidence/3.0.8-session-2026-10-09/historical-inputs.json": {
+      "sha256": "df0531fa57238692c4db1e851f69173950679d05890352b7850f34ab1d9c97d1",
+      "bytes": 3839
+    },
+    "tools/test_patch_3_0_8_validator.py": {
+      "sha256": "20552cfe34d26547efc52da459202decbc71ab6af9d37bdcb68c67137d618945",
+      "bytes": 3082
+    },
+    "data/patch-api/evidence/3.0.8-session-2026-10-09/validator-green.log": {
+      "sha256": "b48b094367dfc444384dde26c0ea1fc4d201034082a1def4404cf45809ea87e5",
+      "bytes": 98
+    }
+  }
+}
