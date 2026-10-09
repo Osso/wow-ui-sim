@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p542-page/data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/validate.py"
+  ],
+  "revision": "f06bcc1e2a24833298b1dd65b88ae9191af0215f",
+  "scope": "integrated-validator",
+  "cwd": ".",
+  "target": "dedicated p542-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "integrated-validator.txt",
+  "log_sha256": "7418f5cc5faed7c74a1a10e97740cca760436bff7a98c2639f8b805af5a1c55c",
+  "seconds": 2.8587380180033506,
+  "invalidated": false
+}

@@ -1,0 +1,1 @@
+{"tamper_controls": 2, "rejected": 2, "restored": true}

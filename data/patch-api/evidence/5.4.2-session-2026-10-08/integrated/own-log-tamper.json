@@ -1,0 +1,18 @@
+[
+  {
+    "case": "historical",
+    "exit": 1,
+    "diagnostic": "AssertionError: p542-own.log",
+    "restored_sha256": "38fca038736aa9fba817c7ab63d8d4c3474b32607c744a8a66908f62c2344efd",
+    "log": "historical-tamper-validator.txt",
+    "log_sha256": "6b20ff4fa37321ae118499f0d0b953bc01bddf27099a438c7a22e20ba05fe100"
+  },
+  {
+    "case": "integrated",
+    "exit": 1,
+    "diagnostic": "own evidence tamper: all-sweeps.txt",
+    "restored_sha256": "2cd2311704cdededff911100837ac35b76025c1b5e6def24221ddf35a7bec0f7",
+    "log": "integrated-tamper-validator.txt",
+    "log_sha256": "5c9a6f42d15c32f0f7e335b538ef8a9cbb63e81cea31f5aa833539c84f1357e8"
+  }
+]
