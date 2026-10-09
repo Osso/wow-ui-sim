@@ -273,10 +273,20 @@ local function classify()
         -- Older handler links include an owner; unqualified movie handlers retain their owner.
         local owner, script = string.match(symbol, '^([^:]+):([^:]+)$')
         if not owner then owner, script = string.match(symbol, '^(%S+)%s+(%S+)$') end
-        owner, script = owner or 'MovieFrame', script or symbol
+        -- Literal OnTooltip handlers belong to GameTooltip, not MovieFrame.
+        owner = owner or (string.match(symbol, '^OnTooltip') and 'GameTooltip' or 'MovieFrame')
+        script = script or symbol
         local object = create_object(owner)
         local supported = object:HasScript(script)
         return result('widget-script', owner .. ' HasScript=' .. tostring(supported), supported ~= removed)
+    end
+    if entryKind == 'click-modifier' then
+        local value = GetModifiedClick(symbol)
+        local unknown = GetModifiedClick('PUBLICATION_SWEEP_UNKNOWN_CLICK_MODIFIER')
+        -- The temporary input defaults return NONE for unknown actions too.
+        -- No catalog discriminates existence; this is not a console command.
+        return result('unprobeable', 'click-modifier value=' .. tostring(value)
+            .. '; unknown=' .. tostring(unknown) .. '; no discriminating catalog', false)
     end
     if entryKind == 'command' then return probe_command() end
     if section == 'events' then return probe_event() end
@@ -364,7 +374,13 @@ fn parse_register(source: &str, row_count: Option<usize>) -> Register {
     for entry in &register.entries {
         assert!(matches!(
             entry.section.as_str(),
-            "global-api" | "framexml" | "scriptobjects" | "widgets" | "events" | "cvars"
+            "global-api"
+                | "framexml"
+                | "scriptobjects"
+                | "widgets"
+                | "events"
+                | "cvars"
+                | "commands"
         ));
         assert!(matches!(
             entry.direction.as_str(),
@@ -515,8 +531,8 @@ pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     run_sweep(env, spec, || read_deprecated_aliases(env));
 }
 
-/// Bare Wrath factory measurement: no cached publisher/deprecation files are consulted.
-#[cfg(feature = "client-wrath")]
+/// Bare factory measurement: no cached publisher/deprecation files are consulted.
+#[cfg(any(feature = "client-wrath", feature = "client-retail"))]
 pub(crate) fn run_factory_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     run_sweep(env, spec, BTreeMap::new);
 }
