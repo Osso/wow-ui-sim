@@ -1,0 +1,178 @@
+[
+  {
+    "label": "state",
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566407.0592408,
+    "end": 1791566407.074865,
+    "exit": 0
+  },
+  {
+    "label": "revision",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566407.074974,
+    "end": 1791566407.076116,
+    "exit": 0
+  },
+  {
+    "label": "diff",
+    "argv": [
+      "git",
+      "show",
+      "--format=fuller",
+      "--find-renames",
+      "b6f8d508b",
+      "9252c6cc9"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566407.0762918,
+    "end": 1791566407.0788572,
+    "exit": 0
+  },
+  {
+    "label": "ancestry",
+    "argv": [
+      "git",
+      "rev-parse",
+      "b6f8d508b^",
+      "b6f8d508b",
+      "9252c6cc9"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566436.2768252,
+    "end": 1791566436.278345,
+    "exit": 0
+  },
+  {
+    "label": "combined-stat",
+    "argv": [
+      "git",
+      "diff",
+      "--stat",
+      "b6f8d508b^",
+      "9252c6cc9"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566436.278445,
+    "end": 1791566436.280875,
+    "exit": 0
+  },
+  {
+    "label": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566436.281053,
+    "end": 1791566447.4480717,
+    "exit": 0
+  },
+  {
+    "label": "lib-build",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--lib",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566447.4482658,
+    "end": 1791566579.1321857,
+    "exit": 0
+  },
+  {
+    "label": "c_chat_info_defaults",
+    "argv": [
+      "timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "c_chat_info_defaults",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566593.9536996,
+    "end": 1791566594.2460768,
+    "exit": 0
+  },
+  {
+    "label": "scenario_defaults",
+    "argv": [
+      "timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "scenario_defaults",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566594.246306,
+    "end": 1791566594.4876015,
+    "exit": 0
+  },
+  {
+    "label": "housing_catalog_state",
+    "argv": [
+      "timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "housing_catalog_state",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566594.4878469,
+    "end": 1791566594.6526325,
+    "exit": 0
+  },
+  {
+    "label": "final-revision",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566594.6528337,
+    "end": 1791566594.6541424,
+    "exit": 0
+  },
+  {
+    "label": "final-state",
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "env": {},
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "start": 1791566594.654411,
+    "end": 1791566594.6725283,
+    "exit": 0
+  }
+]

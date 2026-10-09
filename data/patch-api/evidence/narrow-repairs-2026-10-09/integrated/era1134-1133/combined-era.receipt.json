@@ -1,0 +1,33 @@
+{
+  "label": "combined-era",
+  "argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-era",
+    "--test",
+    "patch_1_13_4_totems",
+    "--test",
+    "patch_1_13_3_npc_health",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "9252c6cc93c087518f25e64987e095ed76312a51",
+  "start_epoch": 1791566531.6891332,
+  "end_epoch": 1791566608.3245497,
+  "exit_code": 0,
+  "environment_file": "combined-era.env.json",
+  "environment_sha256": "2fb2143307a1410c5c294dd18a6db30b4af46876a8313f484405c4917d66cbd8",
+  "overrides": {
+    "CARGO_NET_OFFLINE": "true",
+    "WOW_SIM_NO_ADDONS": "1",
+    "WOW_SIM_NO_SAVED_VARS": "1",
+    "WOW_SIM_P1133_HEALTH_OUT": "/tmp/era1134-1133-independent/npc-health-observations.json"
+  },
+  "stdout": "combined-era.stdout",
+  "stderr": "combined-era.stderr"
+}

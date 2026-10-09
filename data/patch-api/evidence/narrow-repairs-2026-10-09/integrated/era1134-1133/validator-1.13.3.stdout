@@ -1,0 +1,45 @@
+{
+  "seals": 84,
+  "totals": {
+    "physical_lines": 62,
+    "source_rows": 56,
+    "extracted_rows": 0,
+    "inventory": 27,
+    "default_inventory": 22,
+    "default_omissions": 5,
+    "signatures": 31,
+    "headers": 8,
+    "inventory_headers": 2,
+    "captions": 2,
+    "prose": 4,
+    "links": 7,
+    "templates": 35,
+    "references": 2,
+    "contracts": 38,
+    "configured_profiles": 2,
+    "successors": 18,
+    "model_review": 7,
+    "source_statuses": {
+      "metadata-only": 23,
+      "UNPROVEN": 33
+    },
+    "inventory_by_section": {
+      "global-api": 22,
+      "events": 1,
+      "cvars": 4
+    },
+    "inventory_by_direction": {
+      "added": 17,
+      "removed": 10
+    },
+    "contract_statuses": {
+      "UNPROVEN": 38
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 266
+  }
+}

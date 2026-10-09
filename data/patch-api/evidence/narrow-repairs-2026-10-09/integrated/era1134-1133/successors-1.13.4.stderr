@@ -1,0 +1,8 @@
+test_frozen_queue_and_source_ledger_unchanged (__main__.SuccessorAccounting.test_frozen_queue_and_source_ledger_unchanged) ... ok
+test_omission_reordering_and_foreign_credit_rejected (__main__.SuccessorAccounting.test_omission_reordering_and_foreign_credit_rejected) ... ok
+test_serialized_exact_precedence (__main__.SuccessorAccounting.test_serialized_exact_precedence) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.357s
+
+OK

@@ -1,0 +1,132 @@
+commit b6f8d508ba9d3a502eeca4f6d5797b8451440891
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 12:18:02 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 12:18:02 2026 -0500
+
+    Remove obsolete chat and scenario source-shape assertions
+
+diff --git a/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md b/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
+index 17eba66e3..d650ebdc4 100644
+--- a/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
++++ b/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
+@@ -4,6 +4,10 @@
+ 
+ Main-provided integration identifiers: p303 `4470912f5`, p302 `16b9658da`, p242 `0b3144090`, p240 `923b0c986`, p230 `48691e5a8`, p220 `c2481c4c5`, p210 `8877566d2`, p201 `88217d328`, p1601 `861e7ae5e`, p1159 `60524271c`, p1158 `dd710c6fc`. Integration alone gives no execution or native credit. Existing per-page source ledgers, immutable source/factory seals and counts remain authoritative; new source slices remain source-only unless explicit bounded proof says otherwise.
+ 
++## Obsolete structural assertions — scoped verification pending
++
++Two source-only chat/scenario placement tests were removed: broad module-name matches falsely rejected legitimate state-backed C API modules, while their remaining check read a deleted legacy shim file and could pass vacuously. Existing return-value and provider-preservation tests in `c_chat_info_defaults.rs` and `scenario_defaults.rs` remain unchanged. No runtime module moved or behavior changed; removal follows the prohibition on substituting source shape for behavior. This does not repair unrelated structural tests or establish a passing overall suite.
++
+ ## Bare Retail factory: bounded PASS, mixed checkout
+ 
+ [Independent report](../../../data/patch-api/evidence/3.0.2-factory-2026-10-09/integrated/p30x-integrated-independent-report.md) records ten tests passing: p302 7/7, p303 3/3. Exact observations: p302 **373 rows / 185 matches / 188 gaps**; p303 **3 CVars / 1 match / 2 gaps**. Every observation equals retained GREEN JSON. `syncronizeConfig` and `synchronizeMacros` are nil/nil; `synchronizeBindings` is `"1"`/`"1"`. These are present factory observations, not historical defaults or synchronization semantics.
+diff --git a/tests/c_api_surface.rs b/tests/c_api_surface.rs
+index a3d9e1dee..d2c792263 100644
+--- a/tests/c_api_surface.rs
++++ b/tests/c_api_surface.rs
+@@ -590,21 +590,6 @@ fn paper_doll_stagger_default_is_not_c_api_temporary_shim() {
+     );
+ }
+ 
+-#[test]
+-fn chat_info_no_state_defaults_are_not_c_api_temporary_shims() {
+-    let temporary_shims = c_api_temporary_shims_source();
+-    let c_api = include_str!("../src/c_api/mod.rs");
+-
+-    assert!(
+-        !temporary_shims.contains("c_chat_info"),
+-        "unmodeled C_ChatInfo emote/caution/chat-line defaults belong in lua_api::workarounds::temporary"
+-    );
+-    assert!(
+-        !c_api.contains("c_chat_info"),
+-        "C_ChatInfo no-state defaults should not be wired through c_api registration"
+-    );
+-}
+-
+ #[test]
+ fn container_no_state_defaults_are_not_c_api_temporary_shims() {
+     let temporary_shims = c_api_temporary_shims_source();
+@@ -843,21 +828,6 @@ fn trade_info_defaults_are_not_c_api_temporary_shims() {
+     );
+ }
+ 
+-#[test]
+-fn scenario_defaults_are_not_c_api_temporary_shims() {
+-    let temporary_shims = c_api_temporary_shims_source();
+-    let c_api = include_str!("../src/c_api/mod.rs");
+-
+-    assert!(
+-        !temporary_shims.contains("c_scenario"),
+-        "unmodeled C_Scenario not-in-scenario defaults belong in lua_api::workarounds::temporary"
+-    );
+-    assert!(
+-        !c_api.contains("c_scenario"),
+-        "C_Scenario not-in-scenario defaults should not be wired through c_api registration"
+-    );
+-}
+-
+ #[test]
+ fn gossip_poi_defaults_are_not_c_api_temporary_shims() {
+     let temporary_shims = c_api_temporary_shims_source();
+
+commit 9252c6cc93c087518f25e64987e095ed76312a51
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 12:18:16 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 12:18:16 2026 -0500
+
+    Align housing compatibility probe with empty catalog model
+
+diff --git a/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md b/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
+index d650ebdc4..8cad4a097 100644
+--- a/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
++++ b/docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
+@@ -8,6 +8,8 @@ Main-provided integration identifiers: p303 `4470912f5`, p302 `16b9658da`, p242
+ 
+ Two source-only chat/scenario placement tests were removed: broad module-name matches falsely rejected legitimate state-backed C API modules, while their remaining check read a deleted legacy shim file and could pass vacuously. Existing return-value and provider-preservation tests in `c_chat_info_defaults.rs` and `scenario_defaults.rs` remain unchanged. No runtime module moved or behavior changed; removal follows the prohibition on substituting source shape for behavior. This does not repair unrelated structural tests or establish a passing overall suite.
+ 
++The housing compatibility probe now expects its separately modeled catalog searcher to start with count zero, rather than requiring invented variants. Type and count failures have separate sentinels; other compatibility assertions remain unchanged. Catalog registration is unconditional across profiles, and the existing catalog spec defines empty host-backed inputs. This is a test-expectation correction, not a runtime seed/fallback or native owned-instance-count claim; targeted verification remains pending.
++
+ ## Bare Retail factory: bounded PASS, mixed checkout
+ 
+ [Independent report](../../../data/patch-api/evidence/3.0.2-factory-2026-10-09/integrated/p30x-integrated-independent-report.md) records ten tests passing: p302 7/7, p303 3/3. Exact observations: p302 **373 rows / 185 matches / 188 gaps**; p303 **3 CVars / 1 match / 2 gaps**. Every observation equals retained GREEN JSON. `syncronizeConfig` and `synchronizeMacros` are nil/nil; `synchronizeBindings` is `"1"`/`"1"`. These are present factory observations, not historical defaults or synchronization semantics.
+diff --git a/src/lua_api/workarounds/temporary/housing_catalog_state.rs b/src/lua_api/workarounds/temporary/housing_catalog_state.rs
+index 47761afd5..00fba27a3 100644
+--- a/src/lua_api/workarounds/temporary/housing_catalog_state.rs
++++ b/src/lua_api/workarounds/temporary/housing_catalog_state.rs
+@@ -1,8 +1,7 @@
+-//! Temporary housing/catalog seeded state surface.
++//! Temporary housing compatibility surface.
+ //!
+-//! The housing service flag is Rust-backed, but catalog/decor/neighborhood
+-//! data is still a seeded UI fixture. Keep those compatibility namespaces out
+-//! of the generic runtime surface until housing has a real backing subsystem.
++//! Catalog variants/search are state-backed and start empty. Remaining legacy
++//! decor/neighborhood fixtures stay isolated here until their backing models exist.
+ 
+ const HOUSING_CATALOG_STATE_LUA: &str = include_str!("housing_catalog_state.lua");
+ 
+@@ -26,7 +25,7 @@ mod tests {
+     use crate::lua_api::WowLuaEnv;
+ 
+     #[test]
+-    fn installs_seeded_housing_catalog_surface() {
++    fn installs_housing_catalog_surface() {
+         let env = WowLuaEnv::new().expect("lua env should initialize");
+ 
+         let result: String = env
+@@ -49,8 +48,11 @@ mod tests {
+                     return "bad_featured"
+                 end
+                 local searcher = C_HousingCatalog.CreateCatalogSearcher()
+-                if type(searcher) ~= "table" or searcher:GetSearchCount() == 0 then
+-                    return "bad_searcher"
++                if type(searcher) ~= "table" then
++                    return "bad_searcher_type"
++                end
++                if searcher:GetSearchCount() ~= 0 then
++                    return "searcher_count_not_empty"
+                 end
+                 return "ok"
+                 "#,

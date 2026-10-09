@@ -4,11 +4,19 @@
 
 Main-provided integration identifiers: p303 `4470912f5`, p302 `16b9658da`, p242 `0b3144090`, p240 `923b0c986`, p230 `48691e5a8`, p220 `c2481c4c5`, p210 `8877566d2`, p201 `88217d328`, p1601 `861e7ae5e`, p1159 `60524271c`, p1158 `dd710c6fc`. Integration alone gives no execution or native credit. Existing per-page source ledgers, immutable source/factory seals and counts remain authoritative; new source slices remain source-only unless explicit bounded proof says otherwise.
 
-## Obsolete structural assertions — scoped verification pending
+## Fixture corrections — bounded PASS at `9252c6cc9`
 
 Two source-only chat/scenario placement tests were removed: broad module-name matches falsely rejected legitimate state-backed C API modules, while their remaining check read a deleted legacy shim file and could pass vacuously. Existing return-value and provider-preservation tests in `c_chat_info_defaults.rs` and `scenario_defaults.rs` remain unchanged. No runtime module moved or behavior changed; removal follows the prohibition on substituting source shape for behavior. This does not repair unrelated structural tests or establish a passing overall suite.
 
-The housing compatibility probe now expects its separately modeled catalog searcher to start with count zero, rather than requiring invented variants. Type and count failures have separate sentinels; other compatibility assertions remain unchanged. Catalog registration is unconditional across profiles, and the existing catalog spec defines empty host-backed inputs. This is a test-expectation correction, not a runtime seed/fallback or native owned-instance-count claim; targeted verification remains pending.
+The housing compatibility probe now expects its separately modeled catalog searcher to start with count zero, rather than requiring invented variants. Type and count failures have separate sentinels; other compatibility assertions remain unchanged. Catalog registration is unconditional across profiles, and the existing catalog spec defines empty host-backed inputs. This is a test-expectation correction, not a runtime seed/fallback or native owned-instance-count claim.
+
+[Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/report.md) records default-Retail library tests **2/2 chat + 2/2 scenario + 1/1 housing**, workspace formatting and changed-Rust readability at `9252c6cc9`. Six existing manifest deprecation warnings remain. Integration-test deletion was source-inspected, not freshly compiled/listed; no full-suite or alternate-profile acceptance. [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/main-retention.json) preserves 30 top-level artifacts byte-for-byte; no commands rerun.
+
+## Era1.13.4 / 1.13.3 integration — bounded PASS
+
+[Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1134-1133/report.md) at `9252c6cc9`: SOURCE **8/8 + 9/9**, separate successors **3/3**, portable **3/3 each**, original/separate seals **112+9 / 84+12**, and 1,873 scoped hashes unchanged. One combined offline/locked Cargo invocation passed each bare-Era target **1/1**. Totem replacement changes the existing slot name; expiry uses an already-expired slot. NPC absolute-health observations cover three explicit host mutations with percentage controls. No production behavior changed; all 30/38 historical contracts remain UNPROVEN.
+
+Four literal 1.13.4 overlaps with 1.13.3 are retained separately; frozen queue/source ledgers remain untouched. Historical 1.13.3 extractor rejection is preserved, not repaired. Source worktrees remained present; empty-PATH copied-input proof is not an OS sandbox or deletion-portability proof. Existing manifest, dead-code and unused-import warnings remain. [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1134-1133/main-retention.json) preserves 66 top-level artifacts byte-for-byte, excluding scratch/copy subdirectories. No broad or full-suite rerun, native parity or parent-completion credit.
 
 ## Bare Retail factory: bounded PASS, mixed checkout
 

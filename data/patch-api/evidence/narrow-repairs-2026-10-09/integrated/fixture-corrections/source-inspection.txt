@@ -1,0 +1,48 @@
+src/c_api/c_housing.rs:58: 
+src/c_api/c_housing.rs:59: pub(crate) fn register_c_housing_surface(state: &mut LuaState) -> LuaResult<()> {
+src/c_api/c_housing.rs:60:     // Replaces an unconditional temporary surface, including non-retail profiles.
+src/c_api/c_housing.rs:61:     catalog::register(state)?;
+src/c_api/c_housing.rs:62:     #[cfg(feature = "retail-12-0-0")]
+src/c_api/c_housing.rs:63:     editor::register(state)?;
+src/c_api/c_housing.rs:64:     #[cfg(feature = "retail-12-0-0")]
+
+src/c_api/c_housing/catalog/queries.rs:51:     state.push(Val::Function(publisher));
+src/c_api/c_housing/catalog/queries.rs:52:     state.call_function(call_base, 1)?;
+src/c_api/c_housing/catalog/queries.rs:53:     let create_searcher = state.stack_get(call_base);
+src/c_api/c_housing/catalog/queries.rs:54:     table_set_static(state, namespace, "CreateCatalogSearcher", create_searcher);
+src/c_api/c_housing/catalog/queries.rs:55:     state.top = call_base;
+src/c_api/c_housing/catalog/queries.rs:56:     Ok(())
+src/c_api/c_housing/catalog/queries.rs:57: }
+
+src/c_api/mod.rs:58: pub mod c_character_services;
+src/c_api/mod.rs:59: pub mod c_chat_bubbles;
+src/c_api/mod.rs:60: #[cfg(feature = "retail-12-0-5")]
+src/c_api/mod.rs:61: pub(crate) mod c_chat_info;
+src/c_api/mod.rs:62: pub mod c_chromie_time;
+src/c_api/mod.rs:63: pub(crate) mod c_click_bindings;
+src/c_api/mod.rs:64: #[cfg(feature = "retail-12-0-5")]
+
+src/c_api/mod.rs:155: pub mod c_reputation;
+src/c_api/mod.rs:156: pub(crate) mod c_roleset;
+src/c_api/mod.rs:157: #[cfg(feature = "client-retail")]
+src/c_api/mod.rs:158: pub(crate) mod c_scenario_bonus;
+src/c_api/mod.rs:159: pub mod c_scenario_info;
+src/c_api/mod.rs:160: pub mod c_secrets;
+src/c_api/mod.rs:161: pub mod c_settings_util;
+
+src/c_api/mod.rs:156: pub(crate) mod c_roleset;
+src/c_api/mod.rs:157: #[cfg(feature = "client-retail")]
+src/c_api/mod.rs:158: pub(crate) mod c_scenario_bonus;
+src/c_api/mod.rs:159: pub mod c_scenario_info;
+src/c_api/mod.rs:160: pub mod c_secrets;
+src/c_api/mod.rs:161: pub mod c_settings_util;
+src/c_api/mod.rs:162: pub mod c_social;
+
+src/c_api/mod.rs:333:     c_loot_history::register_c_loot_history(state)?;
+src/c_api/mod.rs:334:     c_date_and_time::register(state)?;
+src/c_api/mod.rs:335:     #[cfg(feature = "retail-12-0-5")]
+src/c_api/mod.rs:336:     c_chat_info::register(state)?;
+src/c_api/mod.rs:337:     #[cfg(feature = "retail-12-0-5")]
+src/c_api/mod.rs:338:     c_navigation::register(state)?;
+src/c_api/mod.rs:339:     c_weather::register(state)?;
+Legacy shim exists: False

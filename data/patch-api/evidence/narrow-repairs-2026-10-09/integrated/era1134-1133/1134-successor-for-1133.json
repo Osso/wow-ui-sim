@@ -1,0 +1,66 @@
+{
+  "scope": "Separate actual integrated 1.13.4 exact-name/section publication precedence over 1.13.3; not persisted into frozen queue",
+  "earlier_source_head": "8af171b49d8646cb989e5b00ff8a092d96a9c261",
+  "later_source_head": "426a3eadfdfd0c5010973cec401a5cc5b8c221ba",
+  "count": 4,
+  "overlaps": [
+    {
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "section": "global-api",
+      "prior_line": 24,
+      "prior_direction": "added",
+      "prior_literal": ": {{api|C_SummonInfo.ConfirmSummon}}",
+      "later_line": 21,
+      "later_direction": "added",
+      "later_literal": ": {{api|C_SummonInfo.ConfirmSummon}}",
+      "semantic_status": "UNPROVEN",
+      "model_credit": false,
+      "native_credit": false
+    },
+    {
+      "symbol": "GetTotemInfo",
+      "section": "global-api",
+      "prior_line": 43,
+      "prior_direction": "removed",
+      "prior_literal": ": {{api|GetTotemInfo}}",
+      "later_line": 25,
+      "later_direction": "added",
+      "later_literal": ": {{api|GetTotemInfo}}",
+      "semantic_status": "UNPROVEN",
+      "model_credit": false,
+      "native_credit": false
+    },
+    {
+      "symbol": "GetTotemTimeLeft",
+      "section": "global-api",
+      "prior_line": 44,
+      "prior_direction": "removed",
+      "prior_literal": ": {{api|GetTotemTimeLeft}}",
+      "later_line": 26,
+      "later_direction": "added",
+      "later_literal": ": {{api|GetTotemTimeLeft}}",
+      "semantic_status": "UNPROVEN",
+      "model_credit": false,
+      "native_credit": false
+    },
+    {
+      "symbol": "TargetTotem",
+      "section": "global-api",
+      "prior_line": 46,
+      "prior_direction": "removed",
+      "prior_literal": ": {{api|TargetTotem}}",
+      "later_line": 34,
+      "later_direction": "added",
+      "later_literal": ": {{api|TargetTotem}}",
+      "semantic_status": "UNPROVEN",
+      "model_credit": false,
+      "native_credit": false
+    }
+  ],
+  "foreign_history_credit": false,
+  "historical_signature_credit": false,
+  "contracts_remaining_unproven": {
+    "1.13.3": 38,
+    "1.13.4": 30
+  }
+}

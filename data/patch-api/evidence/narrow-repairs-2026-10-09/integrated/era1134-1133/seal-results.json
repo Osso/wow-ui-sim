@@ -1,0 +1,38 @@
+{
+  "1.13.4": {
+    "seals.json": {
+      "count": 112,
+      "failures": [],
+      "map_sha256": "543edf3bd874f54ae190e2df92254db6f808a986728512098a8ad8620171f66f"
+    },
+    "receipt-seals.json": {
+      "count": 9,
+      "failures": [],
+      "map_sha256": "528a8ff833c682fb4b08e60165ca0975594957ceed6430edda6c5e9b2327ed71"
+    },
+    "archive": {
+      "members": 113,
+      "sealed_count": 112,
+      "failures": [],
+      "map_matches_original": true
+    }
+  },
+  "1.13.3": {
+    "seals.json": {
+      "count": 84,
+      "failures": [],
+      "map_sha256": "8325cb7578f6007d1533fa06360001be6a0b2667ce3100925814e5e7c623ed9e"
+    },
+    "receipt-seals.json": {
+      "count": 12,
+      "failures": [],
+      "map_sha256": "aec7cf31ea19144f1f3bb2c0b5629843cd3ad657c1e253af642956bb96e5a9be"
+    },
+    "archive": {
+      "members": 85,
+      "sealed_count": 84,
+      "failures": [],
+      "map_matches_original": true
+    }
+  }
+}

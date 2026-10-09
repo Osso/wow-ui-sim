@@ -1,0 +1,187 @@
+{
+  "retained_at": "2026-10-09T17:27:27.512001+00:00",
+  "proof_revision": "9252c6cc93c087518f25e64987e095ed76312a51",
+  "scope": "All top-level verifier artifacts, byte-identical. Scratch/copy subdirectories excluded; original sealed source inputs remain in their separate committed evidence trees. No commands rerun. Environment key names and credential-value patterns inspected before retention; no secret fields found.",
+  "files": [
+    {
+      "source": "/tmp/fixture-corrections-independent/ancestry.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/ancestry.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/ancestry.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/ancestry.stdout",
+      "sha256": "377124a688ebca62805df98586c84ba1d5cd8e8c26fb3a51412c75a655b03acb",
+      "bytes": 123
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/binary.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/binary.json",
+      "sha256": "190c8e0be4fe3e621fed83570450c2bd3b14a828161d169b8bc300b858a46f9b",
+      "bytes": 1579
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/c_chat_info_defaults.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/c_chat_info_defaults.stderr",
+      "sha256": "0752fce32d035e870e42d8bfc52704f47464b2e0792216413584b1d9b2dab9b7",
+      "bytes": 1280
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/c_chat_info_defaults.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/c_chat_info_defaults.stdout",
+      "sha256": "52dece402611956924cc5583f712fe0ceb7fae96b26b976c77f79d503db2eb88",
+      "bytes": 339
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/combined-stat.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/combined-stat.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/combined-stat.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/combined-stat.stdout",
+      "sha256": "8dcb82599ae4c341b5657c69b87dfcd09f4d9fb15daaba6fc7a802834bfb81f8",
+      "bytes": 265
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/commands.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/commands.json",
+      "sha256": "069e168f24db19bac3e0c167d0d1b3c48b8bbfeaf086fc27de87124c5e91fa6a",
+      "bytes": 3613
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/diff.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/diff.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/diff.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/diff.stdout",
+      "sha256": "f6bbab3d19bdf5731eadefdfb25f73fe915bd0ed18fbe69c3d842a8e1fe3039b",
+      "bytes": 8182
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/environment.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/environment.json",
+      "sha256": "80a6a6bb5d0c45ba1c45db91fe5e9694137540bc98757b9b9890d48f73e1cdff",
+      "bytes": 954
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/final-revision.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/final-revision.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/final-revision.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/final-revision.stdout",
+      "sha256": "b20bf40467e6412000a49a1762886b837724920accf90323dc3706b5def44fed",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/final-state.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/final-state.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/final-state.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/final-state.stdout",
+      "sha256": "afbbaa89fd2dd18e916d24c76db7f59cecba0e0cefc23e3b9745ec5bed252acb",
+      "bytes": 18
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/fmt.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/fmt.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/fmt.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/fmt.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/housing_catalog_state.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/housing_catalog_state.stderr",
+      "sha256": "b78e2bdba69ba28b90585b137f331aeb7bd39a91cd8c16514646ba23bd1864bc",
+      "bytes": 640
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/housing_catalog_state.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/housing_catalog_state.stdout",
+      "sha256": "73f97c0a8dc00173881d41b5eae14b254c7496588c213dd71cc8435077b6b271",
+      "bytes": 223
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/lib-build.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/lib-build.stderr",
+      "sha256": "52acf1b586ea98bb34a145e55e69d96dd67f48ff0abb526ef00f1a6adca93d9c",
+      "bytes": 1275
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/lib-build.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/lib-build.stdout",
+      "sha256": "1624dc75fc1461bdc5ae515c2b13224a5ea82cd8d43cfb6a35972427cb372b8d",
+      "bytes": 565216
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/proof.py",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/proof.py",
+      "sha256": "1edc25986fe5e137060213b40cdc8a9a49b068977aa2a6001bd5b33add5d7818",
+      "bytes": 779
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/report.md",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/report.md",
+      "sha256": "e66f57a8cae18b160128b2cb40fcf6098d92a394834663e09e7fd087d69d3ca4",
+      "bytes": 594430
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/revision.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/revision.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/revision.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/revision.stdout",
+      "sha256": "b20bf40467e6412000a49a1762886b837724920accf90323dc3706b5def44fed",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/scenario_defaults.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/scenario_defaults.stderr",
+      "sha256": "b6c896ae410a7ced5f21c38e7155d7fe911097ce22e36c6c1bc96cf954abc110",
+      "bytes": 1278
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/scenario_defaults.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/scenario_defaults.stdout",
+      "sha256": "c0661faa77dea635fd094c6ef0c7b3203d88c1346da1b5433596b670ac4af8ab",
+      "bytes": 322
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/source-inspection.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/source-inspection.txt",
+      "sha256": "334c16520d08ef3a245b04c206f620159e2760db3e9ee25b24986326b016b3be",
+      "bytes": 2533
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/state.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/state.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/fixture-corrections-independent/state.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/state.stdout",
+      "sha256": "afbbaa89fd2dd18e916d24c76db7f59cecba0e0cefc23e3b9745ec5bed252acb",
+      "bytes": 18
+    }
+  ]
+}

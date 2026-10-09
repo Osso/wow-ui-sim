@@ -1,0 +1,21 @@
+{
+  "label": "integration-parents",
+  "argv": [
+    "git",
+    "show",
+    "--no-patch",
+    "--format=%H %P %s",
+    "03fa877e6",
+    "0c5cecbf9"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "9252c6cc93c087518f25e64987e095ed76312a51",
+  "start_epoch": 1791566507.9985795,
+  "end_epoch": 1791566508.0022225,
+  "exit_code": 0,
+  "environment_file": "integration-parents.env.json",
+  "environment_sha256": "f9a1d36f45ea0ca0d6d467d78ad19a6d7b0cfa61b116fb0c42dee321833a682a",
+  "overrides": {},
+  "stdout": "integration-parents.stdout",
+  "stderr": "integration-parents.stderr"
+}

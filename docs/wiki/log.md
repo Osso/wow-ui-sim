@@ -1,3 +1,7 @@
+## [2026-10-09] ingest | Era1.13.4/1.13.3 and fixture-correction proof
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#fixture-corrections--bounded-pass-at-9252c6cc9) links independent bounded results at `9252c6cc9` and 96 byte-identical top-level artifacts. Copied scratch subdirectories excluded; sealed originals remain separate. Environment keys and credential patterns inspected before retention. No reruns, production changes, full-suite acceptance or parent closure.
+
 ## [2026-10-09] ingest | Independent Era1.14.1/1.14.0 and Forever standalone epochs
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#era11411era1140-independent-bounded-epoch) retains Era SOURCE8/10, portable3/3 each, getter1/1 and unchanged160+10/92+5 seals. [Forever function gates](investigations/forever-cfg-failure-and-function-gates.md#independent-standalone-proof-epoch) retains3/3 ordered records/one-way environment isolation, two rejection results with one shared final snapshot, exact raw/public/legacy getter nil, fmt/manual readability PASS and14 warnings. Separate integrated `era1141-1140` and `forever-runtime` manifests bind95 files/1,449,178 bytes and14 files/933,071 bytes; all hashes match, original seals unchanged. Actual045e396b0 compiled scope equals requestedf611a6752; later SOURCE merges earn no latest prefork acceptance. Historical unproven epochs preserved. No tests/code edits/native/security/inbound-delivery/Retail restriction or migration credit; existing pages only, index unchanged.

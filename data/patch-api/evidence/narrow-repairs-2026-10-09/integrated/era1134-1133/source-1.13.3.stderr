@@ -1,0 +1,14 @@
+test_all_occurrence_omissions_and_fabricated_credit_rejected (__main__.SourceAccounting.test_all_occurrence_omissions_and_fabricated_credit_rejected) ... ok
+test_current_state_and_successor_limits (__main__.SourceAccounting.test_current_state_and_successor_limits) ... ok
+test_every_raw_row_and_historical_default_boundary (__main__.SourceAccounting.test_every_raw_row_and_historical_default_boundary) ... ok
+test_exact_frozen_identity (__main__.SourceAccounting.test_exact_frozen_identity) ... ok
+test_heading_counts_captions_navigation (__main__.SourceAccounting.test_heading_counts_captions_navigation) ... ok
+test_identity_and_content_tamper_rejected (__main__.SourceAccounting.test_identity_and_content_tamper_rejected) ... ok
+test_literal_inventory_not_truncated_default_register (__main__.SourceAccounting.test_literal_inventory_not_truncated_default_register) ... ok
+test_prose_and_reference_boundaries (__main__.SourceAccounting.test_prose_and_reference_boundaries) ... ok
+test_signature_fragments_do_not_invent_parameters (__main__.SourceAccounting.test_signature_fragments_do_not_invent_parameters) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 6.864s
+
+OK

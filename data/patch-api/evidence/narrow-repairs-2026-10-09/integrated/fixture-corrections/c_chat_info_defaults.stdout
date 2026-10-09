@@ -1,0 +1,7 @@
+
+running 2 tests
+test lua_api::workarounds::temporary::c_chat_info_defaults::tests::installs_chat_info_no_state_defaults ... ok
+test lua_api::workarounds::temporary::c_chat_info_defaults::tests::preserves_existing_chat_info_provider ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.28s
+

@@ -1,0 +1,13 @@
+test_each_omission_and_invented_contract_rejected (__main__.SourceAccounting.test_each_omission_and_invented_contract_rejected) ... ok
+test_headers_counts_caption_and_navigation (__main__.SourceAccounting.test_headers_counts_caption_and_navigation) ... ok
+test_identity_and_response (__main__.SourceAccounting.test_identity_and_response) ... ok
+test_inventory_and_unspecified_signatures_defaults (__main__.SourceAccounting.test_inventory_and_unspecified_signatures_defaults) ... ok
+test_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract) ... ok
+test_model_and_history_credit_separate (__main__.SourceAccounting.test_model_and_history_credit_separate) ... ok
+test_prose_links_templates_and_client_limits (__main__.SourceAccounting.test_prose_links_templates_and_client_limits) ... ok
+test_source_tamper_rejected (__main__.SourceAccounting.test_source_tamper_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 3.300s
+
+OK

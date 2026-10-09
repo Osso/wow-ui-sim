@@ -1,0 +1,4 @@
+ ...tegrated-source-and-factory-proof-2026-10-09.md |  6 +++++
+ .../workarounds/temporary/housing_catalog_state.rs | 16 +++++++-----
+ tests/c_api_surface.rs                             | 30 ----------------------
+ 3 files changed, 15 insertions(+), 37 deletions(-)

@@ -1,0 +1,28 @@
+{
+  "label": "portable-1.13.3",
+  "argv": [
+    "python3",
+    "-B",
+    "/tmp/era1134-1133-independent/evidence-1.13.3/test_portable.py",
+    "--archive",
+    "/tmp/era1134-1133-independent/evidence-1.13.3/originals.tar.gz",
+    "--scratch",
+    "/tmp/era1134-1133-independent/scratch-1.13.3",
+    "--receipts",
+    "/tmp/era1134-1133-independent/portable-1.13.3.json",
+    "--cwd",
+    "/home/osso/Projects/wow/wow-ui-sim"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "9252c6cc93c087518f25e64987e095ed76312a51",
+  "start_epoch": 1791566525.1607034,
+  "end_epoch": 1791566531.6280293,
+  "exit_code": 0,
+  "environment_file": "portable-1.13.3.env.json",
+  "environment_sha256": "e74967377c6a385f9d82f9cbff6e1c1e11bb26589e57990f67de3784648f67d5",
+  "overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "stdout": "portable-1.13.3.stdout",
+  "stderr": "portable-1.13.3.stderr"
+}

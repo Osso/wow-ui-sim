@@ -1,0 +1,12 @@
+
+running 1 test
+test current_era_npc_health_reads_values_across_state_changes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+
+running 1 test
+test existing_era_totem_info_tracks_slot_replacement_expiry_and_removal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+

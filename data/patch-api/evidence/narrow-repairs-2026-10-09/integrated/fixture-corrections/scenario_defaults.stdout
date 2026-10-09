@@ -1,0 +1,7 @@
+
+running 2 tests
+test lua_api::workarounds::temporary::scenario_defaults::tests::installs_scenario_defaults ... ok
+test lua_api::workarounds::temporary::scenario_defaults::tests::preserves_existing_scenario_provider ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.23s
+
