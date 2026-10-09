@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "revision": "ea5fb94cd2aa46e4f077966bdf932f9443fef4d9",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 45
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 46
+    }
+  },
+  "prior_set_count": 44,
+  "exact_prior_sets": true,
+  "own_validator": "data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py",
+  "sealed_session_inputs": 157
+}
