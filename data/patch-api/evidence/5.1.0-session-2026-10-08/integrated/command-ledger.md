@@ -53,3 +53,9 @@ Pinned master: `7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a`. Every invocation uses
 Retirement scans are retained in `retirement-scans.json`, with eight complete whole-word qualified/bare rg logs. No cache consumers; src/tests hits are only the marker and absence assertions. Fifteen original Git pins can be denied without weakening any historical invariant.
 
 Known host limit: no WoW installation. CASC texture tests are outside this requested bounded run; no asset/host remediation or native-2012/full-integration claim. Historical addons-enabled startup failures remain documented, not erased.
+
+## Post-seal gates
+
+`python3 -B tools/check_patch_validators.py` runs the clean and synthetic-later-audit phases; exact tested revision, exits and log hash are in `validator-gate.proof.json` and `gate-summary.json`. Its disposable gate checkout uses TMPDIR under this worktree's `target/`, not an existing sibling checkout.
+
+`python3 -B data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/check_tamper.py` rejects mutations of the historical `p510-all-sweeps.log` and integrated `own-sweep.txt`; `tamper-proof.json` records rejection and byte-exact restoration. These post-seal reports are committed separately; the earlier proof ledger and historical receipts stay immutable.
