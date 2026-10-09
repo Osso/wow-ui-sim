@@ -1,0 +1,17 @@
+{
+  "scope": "own SOURCE only; zero runtime/model/native proof",
+  "base": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+  "red_revision": "fe64d92ca",
+  "green_revision": "d69734cebe8d3edad5b64cc10b9a60285c1a3eaf",
+  "source_tests": 7,
+  "result": "GREEN",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1136-page",
+  "later_changes_invalidate": "audit or source-test changes invalidate SOURCE result",
+  "omission_controls": 55,
+  "invalidated_prior": "3161bc991: additional prose omission control; production audit unchanged"
+}

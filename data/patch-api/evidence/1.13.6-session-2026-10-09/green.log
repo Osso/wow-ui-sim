@@ -1,0 +1,13 @@
+omission controls: 55
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok
+test_exact_response_identity_and_content (__main__.SourceAccounting.test_exact_response_identity_and_content) ... ok
+test_headers_and_navigation (__main__.SourceAccounting.test_headers_and_navigation) ... ok
+test_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... ok
+test_profiles_and_separate_successors (__main__.SourceAccounting.test_profiles_and_separate_successors) ... ok
+test_prose_links_and_templates (__main__.SourceAccounting.test_prose_links_and_templates) ... ok
+test_three_cvars_no_invented_defaults (__main__.SourceAccounting.test_three_cvars_no_invented_defaults) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.134s
+
+OK
