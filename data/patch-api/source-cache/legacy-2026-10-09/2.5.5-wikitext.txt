@@ -1,0 +1,7 @@
+{{apichanges|2.5.5|prev=2.5.4}}
+
+This is the pre-patch for [[World of Warcraft: Burning Crusade Classic Anniversary Edition|Burning Crusade Classic Anniversary Edition]].
+
+==Resources==
+* TOC: <code>20505</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/2.5.4..2.5.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/2.5.4..2.5.5 BlizzardInterfaceResources]

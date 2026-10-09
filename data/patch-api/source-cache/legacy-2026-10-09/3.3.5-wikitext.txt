@@ -1,0 +1,136 @@
+{{apichanges|3.3.5|prev=3.3.3}}
+
+== New API functions ==
+: [[API BNAcceptFriendInvite|BNAcceptFriendInvite]](inviteId)
+: isConnected = [[API BNConnected|BNConnected]]()
+: [[API BNCreateConversation|BNCreateConversation]](player1, player2)
+: [[API BNDeclineFriendInvite|BNDeclineFriendInvite]](inviteId)
+: isEnabled = [[API BNFeaturesEnabled|BNFeaturesEnabled]]
+: isEnabledAndConnected = [[API BNFeaturesEnabledAndConnected|BNFeaturesEnabledAndConnected]]()
+: presenceId, blockName = [[API BNGetBlockedInfo|BNGetBlockedInfo]](blockId)
+: blockID, blockName = [[API BNGetBlockedToonInfo|BNGetBlockedToonInfo]](blockId or index)
+: conversationType = [[API BNGetConversationInfo|BNGetConversationInfo]](conversationId)
+: accountId, toonId, name = [[API BNGetConversationMemberInfo|BNGetConversationMemberInfo]](conversationId, participantId)
+: BNetBroadcasts, numOnlineBroadcasts, numOfflineBroadcasts = [[API BNGetCustomMessageTable|BNGetCustomMessageTable]]([BNetBroadcasts])
+: friendID, givenName, surname, isMutual = [[API BNGetFOFInfo|BNGetFOFInfo]](presenceId, showMutual, showPotential, friendsIndex)
+: presenceID, givenName, surname = [[API BNGetFriendInfo|BNGetFriendInfo]](friendId)
+: presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText = [[API BNGetFriendInfoByID|BNGetFriendInfoByID]](presenceID)
+: inviteId, name, surname, message, timeSent, days = [[API BNGetFriendInviteInfo|BNGetFriendInviteInfo]](offset);
+: hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText = [[API BNGetFriendToonInfo|BNGetFriendToonInfo]](friendId, toonIdx)
+: presenceID, toonID, broadcastText, bnetAFK, bnetDND = [[API BNGetInfo|BNGetInfo]]()
+: isEnabled = [[API BNGetMatureLanguageFilter|BNGetMatureLanguageFilter]]()
+: maxPlayers = [[API BNGetMaxPlayersInConversation|BNGetMaxPlayersInConversation]]();
+: numBlocks = [[API BNGetNumBlocked|BNGetNumBlocked]]();
+: numToonBlocks = [[API BNGetNumBlockedToons|BNGetNumBlockedToons]]()
+: numMembers = [[API BNGetNumConversationMembers|BNGetNumConversationMembers]](conversationId)
+: numMutual, numPotential = [[API BNGetNumFOF|BNGetNumFOF]](presenceId)
+: numPendingInvites = [[API BNGetNumFriendInvites|BNGetNumFriendInvites]]();
+: numToons = [[API BNGetNumFriendToons|BNGetNumFriendToons]](friendId)
+: numTotal, numOnline = [[API BNGetNumFriends|BNGetNumFriends]]();
+: friendId = [[API BNGetSelectedFriend|BNGetSelectedFriend]]();
+: blockIndex = [[API BNGetSelectedToonBlock|BNGetSelectedToonBlock]]();
+: hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText, broadcastText, broadcastTime, ? = [[API BNGetToonInfo|BNGetToonInfo]](toonId);
+: [[API BNInviteToConversation|BNInviteToConversation]](conversationId, player)
+: [[API BNIsBlocked|BNIsBlocked]]
+: isFriend = [[API BNIsFriend|BNIsFriend]](presenceId)
+: isSelf = [[API BNIsSelf|BNIsSelf]](presenceId)
+: isBlocked = [[API BNIsToonBlocked|BNIsToonBlocked]](presenceId)
+: [[API BNLeaveConversation|BNLeaveConversation]](conversationId)
+: [[API BNListConversation|BNListConversation]](conversationId)
+: [[API BNRemoveFriend|BNRemoveFriend]](presenceId)
+: [[API BNReportFriendInvite|BNReportFriendInvite]](inviteId)
+: [[API BNReportPlayer|BNReportPlayer]](presenceId, reportType, comments)
+: [[API BNRequestFOFInfo|BNRequestFOFInfo]](presenceId)
+: [[API BNSendConversationMessage|BNSendConversationMessage]](target, text)
+: [[API BNSendFriendInvite|BNSendFriendInvite]](name, note)
+: [[API BNSendFriendInviteByID|BNSendFriendInviteByID]](presenceId, note)
+: [[API BNSendWhisper|BNSendWhisper]](presenceId, text)
+: [[API BNSetAFK|BNSetAFK]](isAFK)
+: [[API BNSetBlocked|BNSetBlocked]](presenceId, isBlocked)
+: [[API BNSetCustomMessage|BNSetCustomMessage]](text)
+: [[API BNSetDND|BNSetDND]](isDND)
+: [[API BNSetFocus|BNSetFocus]]
+: [[API BNSetFriendNote|BNSetFriendNote]](presenceId, note)
+: [[API BNSetMatureLanguageFilter|BNSetMatureLanguageFilter]](enable)
+: [[API BNSetSelectedFriend|BNSetSelectedFriend]](id)
+: [[API BNSetSelectedToonBlock|BNSetSelectedToonBlock]](id)
+: [[API BNSetToonBlocked|BNSetToonBlocked]](presenceId, block)
+: [[API CommentatorGetSkirmishMode|CommentatorGetSkirmishMode]]
+: [[API CommentatorGetSkirmishQueueCount|CommentatorGetSkirmishQueueCount]]
+: [[API CommentatorGetSkirmishQueuePlayerInfo|CommentatorGetSkirmishQueuePlayerInfo]]
+: [[API CommentatorRequestSkirmishMode|CommentatorRequestSkirmishMode]]
+: [[API CommentatorRequestSkirmishQueueData|CommentatorRequestSkirmishQueueData]]
+: [[API CommentatorSetSkirmishMatchmakingMode|CommentatorSetSkirmishMatchmakingMode]]
+: [[API CommentatorStartSkirmishMatch|CommentatorStartSkirmishMatch]]
+: [[API GetAutoCompletePresenceID|GetAutoCompletePresenceID]](name)
+: width, height = [[API GetChatWindowSavedDimensions|GetChatWindowSavedDimensions]](chatFrameId)
+: point, xOfs, yOfs = [[API GetChatWindowSavedPosition|GetChatWindowSavedPosition]](chatFrameId)
+: [[API IsBNLogin|IsBNLogin]]
+: [[API SendSystemMessage|SendSystemMessage]](message)
+: [[API SetChatWindowSavedDimensions|SetChatWindowSavedDimensions]](chatFrameId, width, height)
+: [[API SetChatWindowSavedPosition|SetChatWindowSavedPosition]](chatFrameId, point, xOfs, yOfs)
+
+== New FrameXML API ==
+: ignoreId = [[API BNGetSelectedBlock|BNGetSelectedBlock]]()
+: [[API BNSetSelectedBlock|BNSetSelectedBlock]](id)
+: [[API CanCooperateWithToon|CanCooperateWithToon]](toonId)
+: [[API SynchronizeBNetStatus|SynchronizeBNetStatus]]()
+: [[API BetterDate|BetterDate]](format, time)
+: link = [[API GetFixedLink|GetFixedLink]](text)
+
+
+== New Events ==
+: {{api|BN_BLOCK_LIST_UPDATED|t=e}}
+: {{api|BN_CHAT_CHANNEL_CLOSED|t=e}}
+: {{api|BN_CHAT_CHANNEL_CREATE_FAILED|t=e}}
+: {{api|BN_CHAT_CHANNEL_CREATE_SUCCEEDED|t=e}}
+: {{api|BN_CHAT_CHANNEL_INVITE_FAILED|t=e}}
+: {{api|BN_CHAT_CHANNEL_INVITE_SUCCEEDED|t=e}}
+: {{api|BN_CHAT_CHANNEL_JOINED|t=e}}
+: {{api|BN_CHAT_CHANNEL_LEFT|t=e}}
+: {{api|BN_CHAT_CHANNEL_MEMBER_JOINED|t=e}}
+: {{api|BN_CHAT_CHANNEL_MEMBER_LEFT|t=e}}
+: {{api|BN_CHAT_CHANNEL_MEMBER_UPDATED|t=e}}
+: {{api|BN_CHAT_CHANNEL_MESSAGE_BLOCKED|t=e}}
+: {{api|BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE|t=e}}
+: {{api|BN_CHAT_WHISPER_UNDELIVERABLE|t=e}}
+: {{api|BN_CONNECTED|t=e}}
+: {{api|BN_CUSTOM_MESSAGE_CHANGED|t=e}}(presenceId)
+: {{api|BN_CUSTOM_MESSAGE_LOADED|t=e}}
+: {{api|BN_DISCONNECTED|t=e}}
+: {{api|BN_FRIEND_ACCOUNT_OFFLINE|t=e}}(presenceId)
+: {{api|BN_FRIEND_ACCOUNT_ONLINE|t=e}}(presenceId)
+: {{api|BN_FRIEND_INFO_CHANGED|t=e}}(presenceId)
+: {{api|BN_FRIEND_INVITE_ADDED|t=e}}
+: {{api|BN_FRIEND_INVITE_LIST_INITIALIZED|t=e}}
+: {{api|BN_FRIEND_INVITE_REMOVED|t=e}}
+: {{api|BN_FRIEND_INVITE_SEND_RESULT|t=e}}
+: {{api|BN_FRIEND_LIST_SIZE_CHANGED|t=e}}
+: {{api|BN_FRIEND_TOON_OFFLINE|t=e}}
+: {{api|BN_FRIEND_TOON_ONLINE|t=e}}
+: {{api|BN_MATURE_LANGUAGE_FILTER|t=e}}
+: {{api|BN_NEW_PRESENCE|t=e}}(presenceId, name)
+: {{api|BN_REQUEST_FOF_FAILED|t=e}}
+: {{api|BN_REQUEST_FOF_SUCCEEDED|t=e}}
+: {{api|BN_SELF_OFFLINE|t=e}}
+: {{api|BN_SELF_ONLINE|t=e}}
+: {{api|BN_SYSTEM_MESSAGE|t=e}}
+: {{api|BN_TOON_NAME_UPDATED|t=e}}(presenceId, name)
+: {{api|CHAT_MSG_BN_CONVERSATION|t=e}}
+: {{api|CHAT_MSG_BN_CONVERSATION_LIST|t=e}}
+: {{api|CHAT_MSG_BN_CONVERSATION_NOTICE|t=e}}
+: {{api|CHAT_MSG_BN_INLINE_TOAST_ALERT|t=e}}
+: {{api|CHAT_MSG_BN_INLINE_TOAST_BROADCAST|t=e}}
+: {{api|CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM|t=e}}
+: {{api|CHAT_MSG_BN_INLINE_TOAST_CONVERSATION|t=e}}
+: {{api|CHAT_MSG_BN_WHISPER|t=e}}
+: {{api|CHAT_MSG_BN_WHISPER_INFORM|t=e}}
+: {{api|COMMENTATOR_SKIRMISH_MODE_REQUEST|t=e}}
+: {{api|COMMENTATOR_SKIRMISH_QUEUE_REQUEST|t=e}}
+
+== API Changes ==
+* It is no longer guaranteed that the server will provide inventory information for every {{api|NotifyInspect}} request; should the server choose to throttle a particular request, events indicating availability of inspection data will not fire.
+
+== Removed FrameXML API==
+: [[API UIFrameFlashSwitch|UIFrameFlashSwitch]]
+: [[API ToggleCombatLog|ToggleCombatLog]]
