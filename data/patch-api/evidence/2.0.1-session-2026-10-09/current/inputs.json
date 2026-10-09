@@ -1,0 +1,46 @@
+{
+  "schema": "patch-api-source-current-inputs/v1",
+  "sealed_files": {
+    "auditor.py": {
+      "sha256": "fdf00cb36cd44c981423b3e210bb4b6c1121481f689bfb24450f08fffd1fb3cb",
+      "bytes": 8818
+    },
+    "command-ledger.json": {
+      "sha256": "fd293e8657a7b7d505d4fe66f23046ce2b9eb9644e574868711649bd6cd58fee",
+      "bytes": 2191
+    },
+    "current-replay-red.log": {
+      "sha256": "6ed7c3a22295459ee48f0de7f922ad3b086006e583f5d0a82120a524c9ba7123",
+      "bytes": 1032
+    },
+    "known-gaps.json": {
+      "sha256": "e403240b60603678a2f43cb1462373412e603052605d0f2254afcb65909f4b7d",
+      "bytes": 227172
+    },
+    "literal-boundary-green.log": {
+      "sha256": "338ed3a98e05e1c0a837158f909b5ab8e3874a35f132237e4e13201cd4cdde59",
+      "bytes": 1122
+    },
+    "literal-boundary-red.log": {
+      "sha256": "3c0f364a016bd248775ed701fe9a69b78e8efcf8ecfe275d5534772872898085",
+      "bytes": 2644
+    },
+    "page-coverage.json": {
+      "sha256": "8f3ddd79c1986e96f85ee1a0bfba82c48441d3b82e1559e84da812b5dae52cc1",
+      "bytes": 559661
+    },
+    "replay-green.log": {
+      "sha256": "991fdc1745116d4d2e89b3c182c82549b9c8f58052b5bfde9b20f6df890255c6",
+      "bytes": 459
+    },
+    "source-fixtures.py": {
+      "sha256": "bcd4175469574df84c16fa65846e7d241fb5fe6fb8ed17227e5cf95a91fbdf8e",
+      "bytes": 6270
+    }
+  },
+  "original_outer_sha256": {
+    "historical-inputs.json": "804da368022a4c27435e9d03d41321d8fb30b946f825cc3a9c028f3125560d41",
+    "validate.py": "bfd1f0fbd7176bb7622d92b7e75bf50422af0710c4f14fc31f2c7aac2d035ef3"
+  },
+  "scope": "Separate corrected literal accounting; no changes to original 18-file seals/114 snapshots."
+}

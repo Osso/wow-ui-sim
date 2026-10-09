@@ -1,0 +1,19 @@
+{
+  "title": "Patch 2.0.1/API changes",
+  "version": "2.0.1",
+  "pageid": 324401,
+  "revid": 3129557,
+  "timestamp": "2019-06-15T12:04:30Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3129557&format=json",
+  "retrieved": "2026-10-09T08:51:36.394506+00:00",
+  "response_sha256": "5f702e6671d16de64f15bc48711ac2bc9ff19dde314e469273b334e98828ea67",
+  "wikitext_sha256": "2c932b03d47af4668069840292c2b523e70deb52a1402a724a532ac71e40ad86",
+  "wikitext_bytes": 27891,
+  "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.0.1-response.json",
+  "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.0.1-wikitext.txt",
+  "client_line": "historical-retail",
+  "source_only": true,
+  "auditor": "tools/audit_patch_2_0_1_source.py",
+  "generator_flags": [],
+  "extractor_flags": []
+}

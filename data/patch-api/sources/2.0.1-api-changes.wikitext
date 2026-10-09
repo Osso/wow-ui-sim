@@ -1,0 +1,368 @@
+{{apichanges|2.0.1|prev=1.12.0|next=2.1.0|misc=This list is based on [http://forums.worldofwarcraft.com/thread.html?topicId=64187212&sid=1 Iriel's post] on the official forums.}}
+
+This is a consolidated list of the announced (and sometimes observed) changes in the [[User Interface]] [[API]]'s and functionality for the [[Burning Crusade]] expansion (2.0) release. Please note that this thread is to discuss the upcoming changes and any clarifications or features that are a direct result of those changes, or things which we've been asked to remind [[slouken]] of.
+
+WoW 2.0 represents a major change in the UI code, and as such ALL [[AddOn]]s will need to be updated before they will work, if for no other reason than the [[Lua]] 5.0 to Lua 5.1 changes. Some AddOns will be more seriously affected, and a few will have to be redesigned.
+
+
+==Interface AddOn Kit==
+The 2.0 Live Interface AddOn Kit is available for download [http://ftp.blizzard.com/pub/WoW/other/InterfaceAddOnKit_Win.zip Windows] [http://ftp.blizzard.com/pub/WoW/other/InterfaceAddOnKit_OSX.zip Mac]
+
+The Burning Crusade BETA Interface AddOn Kit can be found [http://www.worldofwarcraft.com/downloads/expansion-bc/addonkit.zip here (Mac version)]
+
+==Significant Changes==
+* WoW 2.0 has upgraded to Lua 5.1.1 as it provides a number of benefits (notably incremental garbage collection and efficient varargs). There ARE some incompatible changes from Lua 5.0, authors should read the [http://www.lua.org/manual/5.1 Lua manual]; main points include:
+** Iteration over tables in a for loop now requires use of the pairs function: thus, <code>for k,v in table do</code> becomes <code>for k,v in pairs(table) do</code>
+** Size of the array portion of the table is no longer stored in the ''n'' key: thus, <code> size = t.n or table.getn(t)</code> becomes <code> size = #t</code> using the new # size operator.
+** Functions may now use the vararg argument (...) to take a variable number of arguments without having to declare them in the function signature.
+* There is a new unit "focus" which behaves like target, the "PLAYER_FOCUS_CHANGED" event is fired when it is changed, and you receive unit events for this unit.
+* The protected code mechanism introduced in 1.10 has been extended to cover more functions. Blizzard code is considered secure, all other code is untrusted.
+
+== Protected Code ==
+The following function types are restricted for AddOns;
+* Movement is never allowed.
+* Spell casting and targetting (including focus) are only allowed using secure templates or special slash commands (not /script).
+* Programatic modification of macros, key bindings, and the action bar page only allowed outside of combat.
+* Trading, placing auction bids, querying LFG, crafting, and reloading the UI are only allowed interactively.
+* Action buttons and targeting frames are now "protected". Protected frames cannot be programmatically moved, shown or hidden, or have their attributes (unit, action, etc) changed during combat.
+
+* Dueling, dismissing your pet, and abandoning your pet are no longer protected functions. *2.0.3* - Possibly not working right
+
+In addition:
+* Script handlers defined in SecureXML templates remain secure when they are inherited, unless overridden by AddOn code.
+* The parent of a protected frame is implicitly protected also, as are any frames which it is anchored to. 
+
+
+==Lua environment==
+* The Lua coroutine library is now available - Coroutines create a new Lua state and should be used sparingly to conserve memory.
+
+
+==UI Performance==
+Performance of some elements of the UI engine has been improved:
+* Frame method invocation is significantly faster (more than twice as fast in some cases!)
+* Handler dispatch has been optimized, especially for simple handlers such as OnUpdate.
+
+
+==Slash Commands==
+The following new slash commands will be available:
+* Targeting: <code>/targetlasttarget</code>, <code>/cleartarget</code>, <code>/clearfocus</code>
+* Target Cycling: <code>/targetenemy</code>, <code>/targetfriend</code>, <code>/targetparty</code>, <code>/targetraid</code> - All work using the TargetNearest* API's and enemy/friend may only be called once per macro. An optional argument of '1' can be used to reverse direction.
+* Items and equipment: <code>/use ''&lt;itemname&gt;''</code>, <code>/use ''&lt;slot&gt;''</code>, <code>/use ''&lt;bagid&gt;'' ''&lt;bagslot&gt;''</code>, <code>/equip ''&lt;itemname&gt;''</code>, <code>/equipslot ''&lt;slot&gt;'' ''&lt;itemname&gt;''</code>, <code>/userandom ''&lt;item1&gt;'', ''&lt;item2&gt;'', ''&lt;item3&gt;''</code> will attempt to use a randomly selected one of the specified items
+* Pet control: <code>/petattack</code>, <code>/petfollow</code>, <code>/petstay</code>, <code>/petpassive</code>, <code>/petdefensive</code>, <code>/petaggressive</code>, <code>/petautocaston ''&lt;spell&gt;''</code>, <code>/petautocastoff ''&lt;spell&gt;''</code>
+* Casting: <code>/stopcasting</code> will cancel the spell that is currently being cast, <code>/castrandom ''&lt;spell1&gt;'', ''&lt;spell2&gt;'', ''&lt;spell3&gt;''</code> will attempt to cast a randomly selected one of the specified spells
+* Action bar: <code>/changeactionbar ''&lt;num&gt;''</code> and <code>/swapactionbar ''&lt;num1&gt;'' ''&lt;num2&gt;''</code>
+* Attacking: <code>/startattack ''&#91;unit&#93;''</code>, <code>/stopattack</code>
+* Buffs/Auras: <code>/cancelaura ''&lt;name&gt;''</code> - cancels an aura as if it were right clicked
+* Buttons: <code>/click ButtonName ''&#91;mousebutton&#93;''</code>
+* Macros: <code>/stopmacro</code>
+* Dismounting: <code>/dismount</code> '''*2.0.3*''' 
+
+Also note the following clarifications and details:
+* <code>/target</code>, <code>/focus</code>, and <code>/startattack</code> take all valid unit ids (as well as entity names in the case of <code>/target</code>) Where applicable they default to target if no unit is specified.
+* In WoW 2.0, feeding your pet, poisons, etc. will be even easier to macro: <code>/cast Feed Pet</code> then <code>/use Dry Pork Ribs</code>. You will also be able to click on food in your action bar when you are targeting Feed Pet and other item targeting spells.
+* The first cast in a macro that fails will prevent further casts in the macro as if the 1.5 second global cooldown had been triggered.
+* Item names can be used interchangably with spell names in <code>/cast</code>, <code>/castrandom</code>, and <code>/castsequence</code>
+* <code>/startattack</code> and <code>/petattack</code> will work like normal with no arguments, but if they're given arguments its interpreted and used as a unit ID or name to attack (you will not attack if the target cannot be found). '''*2.0.3*'''
+* If a unit is passed to <code>/petattack</code> YOUR target will not be changed. '''*2.0.3*'''
+
+
+==Conditional Macro Commands==
+The <code>/startattack</code>, <code>/stopattack</code>, <code>/stopcasting</code>, <code>/cast*</code>, <code>/use*</code>, <code>/cancelaura</code>, <code>/changeactionbar</code>, <code>/equip*</code>, <code>/pet*</code>, <code>/target*</code>, <code>/cleartarget</code>, <code>/focus</code>, <code>/clearfocus</code>, <code>/assist</code> and <code>/click</code> commands can be given multiple actions and conditions on which to use those actions. The first matching action will be used. 
+
+The <code>/startattack</code>, <code>/petattack</code> commands also support the <code>&#91;target=unit&#93;</code> option syntax. '''*2.0.3*''' 
+
+The syntax is as follows:
+
+<code>/command &#91;''option''&#93; ''action''; &#91;''option1,option2''&#93; ''action''</code>
+
+If multiple conditions are provided for an action, they must all be met before the action will happen. The conditions supported are as follows:
+* target=unit - Run the command and perform tests on the specified unit (only applicable to spell casting or item use). You can specify 'none' as a target unit to act as if you have no target.
+* help/harm - Choose depending on whether target is assistable or attackable
+* combat - Choose depending on whether you're in combat or not
+* stance or stance:# - Choose depending on your stance/shapeshift ("stance" alone matches any stance)
+* stealth - Choose depending on whether you are stealthed
+* mounted - Choose depending on whether you are mounted
+* swimming - Choose depending on whether you are swimming
+* flying - Choose depending on whether you are flying
+* indoors - Choose depending on whether you are indoors
+* outdoors - Choose depending on whether you are outdoors
+* modifier or modifier:shift|ctrl|alt - Choose depending on any modifier keys you're holding at the time the macro runs
+* equipped:''&lt;invslot&gt;''|''&lt;itemclass&gt;''|''&lt;itemsubclass&gt;'' - Choose if you have the specific item type equipped
+* actionbar:<bar> - Choose if a specific actionbar is shown
+* button:Z - Choose if the specified button is held down
+* pet:''&lt;name&gt;''|''&lt;family&gt;'' - Choose if your current active pet has the specified name or family (e.g. pet:bear/wolf)
+* channeling or channeling:spell - Choose if you are channeling (possibly a specific spell)
+* exists - Choose if the target exists
+* dead - Choose if the target is dead
+
+For stance and modifier you can list multiple matching values separated by the / character for the condition to be true if ANY of them are true. For example <code>modifier:shift/ctrl</code> matches if shift or control is held down.
+Any condition can be prefixed with 'no' to select if it does NOT match. For example <code>[nocombat]</code>
+
+* There is a new <code>/stopmacro ''&#91;condition,...&#93;''</code> command that stops macro execution if the specified conditions are met. e.g. <code>/stopmacro &#91;''stealth''&#93;</code>.
+* The pet action commands (<code>/petattack</code> etc) also allow for conditional execution as above.
+* As a special case, if you <code>/focus</code> with the <code>target=focus</code>, or <code>/target</code> with the <code>target=target</code>, it will use the argument as the target instead. e.g. <code>/focus [target=focus,noexists] pet</code> will focus on the pet if the focus doesn't exist. '''*2.0.3*'''
+* For the player, pet, party members and pets, and raid members and pets, you can now substitute the name of the unit anywhere a unit token is normally used. '''*2.0.3*'''
+* In battlegrounds you can suffix the name with -<realm> (e.g. -Silver Hand) to reference a player from a specific realm. '''*2.0.3*'''
+* You can suffix name or unit ID with -target to get the unit's target, and (for party and raid members) -pet to get the unit's pet. '''*2.0.3*'''
+
+==Sequenced Casting==
+* A new command <code>/castsequence reset=N/''target''/''combat''/''shift''/alt/ctrl ''&lt;spell1&gt;'', ''&lt;spell2&gt;'', ''&lt;spell3&gt;''</code>
+* The reset line can specify a number of seconds after which a sequence resets, or if it should reset on target change or leaving combat.
+* The sequence tracks the 'next' spell in the sequence until it resets, the next spell only advances on a successful cast.
+* You can specify a conditional at the start of the command before the reset to filter whether the sequence is used (You cannot use per-spell conditionals)
+* You can specify items as well as spells
+* It will equip items if they need to be equipped, and use them otherwise. '''*2.0.3*'''
+
+==Macro Feedback==
+* <code>#</code> and <code>-</code> are comment prefixes in macros
+* A macro that starts with <code># show ''&lt;item or spell&gt;''</code> shows feedback for that spell, <code># show none</code> shows no feedback.
+* A macro that starts with <code># showtooltip ''&lt;item or spell&gt;''</code> shows the tooltip for that spell, <code># showtooltip none</code> shows no feedback. '''*2.0.3*'''
+*: ''Note:'' <code>showtooltip</code> should come before <code>show</code>
+* Otherwise the first <code>/cast</code>, <code>/randomcast</code>, <code>/castsequence</code>, <code>/use</code>, or <code>/randomuse</code> command is used to select the feedback spell
+* Sequences will cycle the item/spell they show feedback for to match the next in sequence.
+* A new question mark macro icon is available, selecting that will cause the feedback spell/item's icon to be used.
+
+==Spell Casting==
+* When casting a ranked buff spell that's too high a level for a friendly target the game will automatically use the highest appropriate rank of the spell instead.
+* Toggleable abilities will have a 1.5 second delay after being cast before they can be cancelled by clicking on them, to prevent accidentally canceling them. You can still right click a buff to cancel it anytime.
+
+==Secure Templates==
+There are several secure templates that AddOns can use to create new functional buttons. Many of them have extensive documentation in the FrameXML .lua files.:
+* SecureActionButtonTemplate
+* SecureUnitButtonTemplate
+* SecureRaidGroupHeaderTemplate
+* SecurePartyHeaderTemplate
+* SecureStateHeaderTemplate
+* SecureStanceStateDriverTemplate
+* SecureAnchorButtonTemplate
+* SecureAnchorEnterTemplate
+* SecureAnchorUpDownTemplate
+* The secure button templates have support for pre-loaded items which are used as spell targets for feeding, poisoning, etc.
+* Added an action type "attribute" to secure action buttons which sets an arbitrary attribute on an arbitrary frame. '''*2.0.3*'''
+* Added support for state header resizing and re-parenting on state changes. '''*2.0.3*'''
+
+==Actions==
+* The old <code>CURRENT_ACTIONBAR_PAGE</code> variable is no longer used. There's a new slash command <code>/changeactionbar ''&lt;num&gt;''</code>. Macros that used to do <code>/script CURRENT_ACTIONBAR_PAGE=2 ChangeActionBarChange()</code> can now simply do <code>/changeactionbar 2</code>
+* Action buttons no longer use shift-click to pick up actions, but instead use shift-drag. This frees up the shift modifier for use in macros or as a self-cast modifier. '''*2.0.3*'''
+
+==API Changes==
+* You no longer need to strip special codes from item links before passing them to item information functions.
+* Item information functions accept an item ID, an item link, or the name of an item in your inventory.
+* Inventory functions will accept a slot name in addition to a slot number.
+* Spell information functions take a spell name, or the spell ID followed by "pet" or "spell"; e.g. <code>IsSpellInRange("Growl")</code> or <code>IsSpellInRange(2, "pet")</code>; (Updated 10/13)
+
+==API Changes: Strings==
+* NEW <code>... = strsplit("''delimiters''", "''string''" &#91;,"''limit''"&#93;)</code> -- Split a string on any of the delimiter characters.
+* NEW <code>''string'' = strjoin("''separator''", ...)</code> -- Join strings with a separator
+* NEW <code>''string'' = strconcat(...)</code> -- Join strings without a separator
+* NEW <code>''string'' = strtrim("''string''"&#91;,"''characters''"&#93;)</code> -- Trim characters from the ends of a string (defaults to whitespace charaters)
+* <code>''string''.trim</code>, <code>''string''.split</code>, and <code>''string''.join</code> are also references to the new functions.
+
+==API Changes: Bindings==
+* NEW SetBindingSpell("KEY", "Spell Name") -- Set a key binding directly to a spell, uses the same spell name syntax as <code>/cast</code>
+* NEW SetBindingClick("KEY", "ButtonName" [,"mouseButton"]) -- Set a key binding directly to a Button object. The click sends a mouse down when the key is pressed, and a mouse up when it is released.
+* NEW SetBindingItem("KEY", "itemname")
+* NEW SetBindingMacro("KEY", "macroname"|macroid)
+* NEW SetOverrideBinding(owner, isPriority, "KEY" [,"COMMAND"]) -- Set (or clear) an override key binding.
+* NEW SetOverrideBindingSpell(owner, isPriority, "KEY", "spellname")
+* NEW SetOverrideBindingClick(owner, isPriority, "KEY", "ButtoName"[,"mouseButton"])
+* NEW SetOverrideBindingItem(owner, isPriority, "KEY", "itemname")
+* NEW SetOverrideBindingMacro(owner, isPriority, "KEY", "macroname"|macroid)
+* NEW ClearOverrideBindings(owner) -- Reset all overrides belonging to an owner.
+* NEW SetMouselookOverrideBinding("KEY" [,"COMMAND"])
+* UPDATED action = GetBindingAction("KEY" [,checkOverride])
+* NEW IsModifierKeyDown() -- equivalent to (IsShiftKeyDown() or IsControlKeyDown() or IsAltKeyDown())
+* NEW IsMouseButtonDown([button or "button"])
+* NEW button = GetMouseButtonClicked() -- Returns the name of the button that triggered a mouse down/up/click/doubleclick event. '''*2.0.3*'''
+* NEW hasMacro = CursorHasMacro() '''*2.0.3*'''
+* NEW type, detail[,subdetail] = GetCursorInfo() -- one of "item",id,link / "spell",slot,"spell"|"pet" / "macro",index / "money",amount '''*2.0.3*'''
+
+==API Changes: Security and Protection==
+* NEW isSecure = issecure() -- Determine if the current environment is secure
+* NEW isSecure = issecurevariable([table,] "name") -- Determine if the specified variable is secure.
+* NEW ... = securecall(function or "functionName", ...) -- Call a function from a secure environment without risking secure status.
+* NEW hooksecurefunc([table,] "functionName", hookfunc) -- Creates a secure 'post hook' for the named function. The hookfunc is invoked after the original function, and receives the same parameters. Return values from hookfunc are discarded. This is the only safe way to hook functions that execute protected functionality.
+* NEW locked = InCombatLockdown() -- Returns true if the in-combat AddOn restrictions are active.
+
+==API Changes: Information==
+* NEW GetCritChance()
+* NEW GetRangedCritChance()
+* NEW GetSpellCritChance(school)
+* UPDATED itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, invTexture = GetItemInfo(itemID|"itemLink") -- Now returns item level WARNING - This change is not backward compatible
+* NEW count = GetItemCount(itemID|"itemLink")
+* NEW spell, rank, displayName, icon, startTime, endTime, isTradeSkill = UnitCastingInfo("unit")
+* NEW spell, rank, displayName, icon, startTime, endTime, isTradeSkill = UnitChannelInfo("unit")
+* NEW type, id, subtype = GetActionInfo(slot)
+* NEW startTime, duration, enable = GetItemCooldown(item)
+* NEW usable, noMana = IsUsableItem(item)
+* NEW consumable = IsConsumableItem(item)
+* NEW equipped = IsEquippedItem(item)
+* NEW casting = IsCurrentItem(item)
+* NEW hasRange = ItemHasRange(item)
+* NEW result = IsItemInRange(item, [unit]) - nil for no valid target, 0 for out of range, 1 for in range
+* UPDATED result = IsActionInRange(slot,[unit])
+* NEW isEquipped = IsEquippedItemType("type") - where "type" is any valid inventory type, item class, or item subclass
+* NEW swimming = IsSwimming()
+* NEW flying = IsFlying()
+* NEW mounted = IsMounted()
+* NEW afk = UnitIsAFK("unit") -- Only works for friendly units
+* NEW dnd = UnitIsDND("unit")
+
+==API Changes: Spell Information==
+* RENAMED isPassive = IsPassiveSpell(spell) -- Formerly IsSpellPassive(spell)
+* NEW isAttack = IsAttackSpell(spell)
+* NEW isAutoRepeating = IsAutoRepeatSpell(spell)
+* NEW usable, noMana = IsUsableSpell(spell)
+* NEW hasRange = SpellHasRange(spell)
+* NEW result = IsSpellInRange(spell, [unit]) - is nil for no valid target, 0 for out of range, 1 for in range
+* NEW name, rank = GetItemSpell(item)
+* NEW index, item, spell = QueryCastSequence(sequence)
+
+==API Changes: Spell Casting==
+* NEW SetActionSelfCastKey("SHIFT" or "CTRL" or "ALT")
+* NEW key = GetActionSelfCastKey()
+* NEW down = IsActionSelfCastKeyDown()
+
+==API Changes: Auto Looting==
+* NEW SetAutoLootDefault(enabled)
+* NEW enabled = GetAutoLootDefault()
+* NEW SetAutoLootToggleKey("SHIFT" or "CTRL" or "ALT")
+* NEW key = GetAutoLootToggleKey()
+* NEW down = IsAutoLootKeyDown()
+
+==API Changes: Attacking==
+* NEW StopAttack()
+
+==API Changes: Active Buffs/Auras==
+* NEW name, rank = GetPlayerBuffName(id or "name"[,"rank"]);
+* UPDATED texture = GetPlayerBuffTexture(id or "name"[,"rank"]) - Added name/rank
+* UPDATED type = GetPlayerBuffDispelType(id or "name"[,"rank"]) - as above
+* UPDATED count = GetPlayerBuffApplications(id or "name"[,"rank"]) - as above
+* UPDATED CancelPlayerBuff(id or "name"[,"rank"]) - as above
+* UPDATED name,rank,icon,count = UnitBuff("unit", id or "name"[,"rank"]) - as above
+* UPDATED name,rank,icon,count,type = UnitDebuff("unit", id or "name"[,"rank"]) - as above
+
+==API Changes: Party Management==
+* NEW InviteUnit("unit" or "name") - Replaces InviteByName/InviteToParty
+* NEW UninviteUnit("unit" or "name") - Replaces UninviteByName/UninviteFromParty
+
+==API Changes: Macros==
+* UPDATED name,texture,body,isLocal = GetMacroInfo(id|"name") - Now takes ID or name
+* UPDATED DeleteMacro() -- as above
+* UPDATED EditMacro() -- as above
+* UPDATED PickupMacro() -- as above 
+
+==Frame Features==
+* Frames can now specify multiple comma separated templates in the inherits XML attribute, and will inherit each of them in the order they appear
+* Frame handlers now are passed parameters in addition to setting the global variables when executed. Accessing these parameters locally is faster than accessing the globals, and is recommended.
+* Frames no longer share a single virtual metatable, instead each type has its own metatable with a pre-populated index for faster method lookups.
+* In addition to OnClick, Button frames also have PreClick and PostClick handlers, invoked before and after the OnClick respectively.
+* GameTooltips now automatically create new lines as needed.
+* Script handlers defined in XML are implicitly wrapped with a function declaration (and trailing end) as follows (NOTE: AddOns that hook script handlers must now pass these parameters):
+** default: function(self)
+** OnAttributeChanged: function(self,name,value)
+** OnChar: function(self,text)
+** OnCharComposition: function(self,text)
+** OnClick: function(self,button,down)
+** OnColorSelect: function(self,r,g,b)
+** OnCursorChanged: function(self,x,y,w,h)
+** OnDoubleClick: function(self,button)
+** OnDragStart: function(self,button)
+** OnEnter: function(self, motion)
+** OnEvent: function(self,event,...)
+** OnHorizontalScroll: function(self,offset)
+** OnHyperlinkClick: function(self,link,text,button)
+** OnHyperlinkEnter: function(self,link,text)
+** OnHyperlinkLeave: function(self,link,text)
+** OnInputLanguageChanged: function(self,language)
+** OnKeyDown: function(self,key)
+** OnKeyUp: function(self,key)
+** OnLeave: function(self, motion)
+** OnMouseDown: function(self,button)
+** OnMouseUp: function(self,button)
+** OnMouseWheel: function(self,delta)
+** OnMovieShowSubtitle: function(self,text)
+** OnScrollRangeChanged: function(self,xrange,yrange)
+** OnSizeChanged: function(self,w,h)
+** OnTooltipAddMoney: function(self,cost)
+** OnUpdate: function(self,elapsed)
+** OnValueChanged: function(self,value)
+** OnVerticalScroll: function(self,offset)
+** PostClick: function(self,button,down)
+** PreClick: function(self,button,down)
+* GameTooltip objects have the following new script handlers
+** NEW OnTooltipSetUnit - Triggered when a Tooltip shows a unit '''*2.0.3*'''
+** NEW OnTooltipSetItem - Triggered when a Tooltip shows an item '''*2.0.3*'''
+** NEW OnTooltipSetSpell - Triggered when a Tooltip shows a spell '''*2.0.3*'''
+
+==Frame Methods==
+* NEW minx,miny,width,height = Region:GetRect()
+* NEW minx,miny,width,height = Frame:GetBoundsRect()
+* NEW isProtected = Frame:IsProtected()
+* NEW canChange = Frame:CanChangeProtectedState()
+* NEW Frame:SetAttribute("name", value) -- Set an attribute on a frame, for protected frames this method is protected in combat.
+* NEW value = Frame:GetAttribute("name")
+* NEW Frame:AllowAttributeChanges() -- Temporarily allow attribute changes during combat, this function is protected.
+* UPDATED Button:RegisterForClicks("button"[,"button"...]) -- Now accepts "AnyUp" and "AnyDown" to receive all buttons' up and downs.
+
+==XML Improvements==
+* You can set initial attributes on frames from frames from XML: <Attributes><Attribute name="foo" type="nil|boolean|number|string" value="bar"/></Attributes>
+
+==Event Changes==
+There are a number of new events:
+* UNIT_TARGET, "unit" is fired when a unit's target changes (primary units only)
+* PLAYER_FOCUS_CHANGED is fired when the focus unit is changed
+* UNIT_SPELLCAST_SENT, "player", spell, rank, target
+* UNIT_SPELLCAST_START, unit
+* UNIT_SPELLCAST_STOP, unit
+* UNIT_SPELLCAST_FAILED, unit
+* UNIT_SPELLCAST_INTERRUPTED, unit
+* UNIT_SPELLCAST_DELAYED, unit
+* UNIT_SPELLCAST_SUCCEEDED, "player", spell, rank
+* UNIT_SPELLCAST_CHANNEL_START, unit
+* UNIT_SPELLCAST_CHANNEL_UPDATE, unit
+* UNIT_SPELLCAST_CHANNEL_STOP, unit
+* The old SPELLCAST_* and SPELLCAST_CHANNEL_* events are obsolete.
+* PLAYER_REGEN_DISABLED is sent before protected frames are locked down
+* PLAYER_REGEN_ENABLED is sent after protected frames are unlocked
+* MACRO_ACTION_FORBIDDEN: sent when a macro tries use actions that are always forbidden (movement, targeting, etc.). The first argument is the name of the protected function that was called.
+* ADDON_ACTION_FORBIDDEN: sent when an addon tries use actions that are always forbidden (movement, targeting, etc.). The first argument is the name of the addon that was last involved in the execution path, and the second argument is the protected function that was called.
+* MACRO_ACTION_BLOCKED: sent when a macro tries use actions that are blocked in combat or require interactive input (spell casting, trading, etc.). The first argument is the name of the protected function that was called.
+* ADDON_ACTION_BLOCKED: sent when an addon tries use actions that are blocked in combat or require interactive input (spell casting, trading, etc.). The first argument is the name of the addon that was last involved in the execution path, and the second argument is the protected function that was called.
+* MODIFIER_STATE_CHANGED, key, state: Sent whenever a modifier key's state changed, modifier is one of "SHIFT" "CTRL" or "ALT", state is 1 for down, 0 for up.
+
+==Protected Frame Features==
+* If the mouse is over a protected frame with the 'unit' attribute set, then the "mouseover" unit will refer to the frame's unit.
+
+== Key Bindings ==
+* Holding down ctrl, alt, shift, x will check keybindings in the following order: ALT-CTRL-SHIFT-X, CTRL-SHIFT-X, ALT-SHIFT-X, ALT-CTRL-X, SHIFT-X, CTRL-X, ALT-X, X '''*2.0.3*'''
+* Key bindings that directly cast spells or use items now respect the self-cast modifier. '''*2.0.3*'''
+
+== Saved Variables ==
+* Arrays that are stored as saved variables are now saved using lua's array initializer syntax for optimal memory usage and performance on load. 
+
+== Bug Fixes 2.0.1 ==
+* Fixed missing CHAT_MSG_SPELL_SELF_BUFF messages (Mining, Gathering), containers correctly do NOT fire the event. 
+
+== Bug Fixes 2.0.3 ==
+* /click now works with secure action buttons
+* Fixed taint issues with CloseLoot()
+* Fixed taint issues with PickupContainerItem()
+* MovePad will work again
+* The raid pullout positions will *Still NOT* be saved and restored between sessions
+* Fixed a bug where raid composition changes can incorrectly change the units referenced by the pullouts.
+* Fixed taint issue with social frame/raid tab not showing in combat (buttons in main social/raid tab are no longer secure unit buttons)
+* Fixed /reply in macros
+* Fixed issue whereby creating Textures/FontStrings from a template used the template name instead of the specified region name.
+* Fixed bug where /petattack would target the nearest unit, not nearest live enemy unit 
+
+== Bug Fixes 2.0.4 ==
+* Fixed problem with name matching of players in the party or raid (affected promote, follow, etc.)
+* Allow dueling option in tainted unit menus (moved up from 2.0.5 - Jan 11)
+* Fixed /equip 
+
+== Bug Fixes 2.0.6 ==
+* /petattack will treat target=pettarget, and /startattack will treat target=target the same way /focus treats target=focus 
+* Improved robustness of pet action bar display, now less likely to be accidentally blocked by addons.
+* The RaidUI will no longer pop up a previously existing class window after it has been closed.
+* Incessant gong sounds no longer play when you are in a Battleground/Arena queue.

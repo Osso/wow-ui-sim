@@ -1,0 +1,1 @@
+CommandResult(stdout='', stderr='test_current_closure_copied_source_and_log_seals (__main__.ReplayTests.test_current_closure_copied_source_and_log_seals) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 5.682s\n\nOK\n', exit_code=0, upstream_results=())

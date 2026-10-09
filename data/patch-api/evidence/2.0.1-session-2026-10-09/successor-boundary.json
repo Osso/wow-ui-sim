@@ -1,0 +1,588 @@
+{
+  "actual_later_retail_registers": [
+    "data/patch-api/sources/3.1.0-wikitext-register.json",
+    "data/patch-api/sources/3.2.0-wikitext-register.json",
+    "data/patch-api/sources/3.3.0-wikitext-register.json",
+    "data/patch-api/sources/3.3.3-wikitext-register.json",
+    "data/patch-api/sources/3.3.5-wikitext-register.json",
+    "data/patch-api/sources/4.0.1-wikitext-register.json",
+    "data/patch-api/sources/4.1.0-wikitext-register.json",
+    "data/patch-api/sources/4.2.0-wikitext-register.json",
+    "data/patch-api/sources/4.3.0-wikitext-register.json",
+    "data/patch-api/sources/4.3.4-wikitext-register.json",
+    "data/patch-api/sources/5.0.1-wikitext-register.json",
+    "data/patch-api/sources/5.0.4-wikitext-register.json",
+    "data/patch-api/sources/5.1.0-wikitext-register.json",
+    "data/patch-api/sources/5.2.0-wikitext-register.json",
+    "data/patch-api/sources/5.3.0-wikitext-register.json",
+    "data/patch-api/sources/5.4.0-wikitext-register.json",
+    "data/patch-api/sources/5.4.1-wikitext-register.json",
+    "data/patch-api/sources/5.4.2-wikitext-register.json",
+    "data/patch-api/sources/5.4.7-wikitext-register.json",
+    "data/patch-api/sources/5.4.8-wikitext-register.json",
+    "data/patch-api/sources/6.0.1-wikitext-register.json",
+    "data/patch-api/sources/6.0.2-wikitext-register.json",
+    "data/patch-api/sources/6.1.0-wikitext-register.json",
+    "data/patch-api/sources/6.2.0-wikitext-register.json",
+    "data/patch-api/sources/6.2.2-wikitext-register.json",
+    "data/patch-api/sources/6.2.4-wikitext-register.json",
+    "data/patch-api/sources/7.0.1-wikitext-register.json",
+    "data/patch-api/sources/7.0.3-wikitext-register.json",
+    "data/patch-api/sources/7.1.0-wikitext-register.json",
+    "data/patch-api/sources/7.2.0-wikitext-register.json",
+    "data/patch-api/sources/7.2.5-wikitext-register.json",
+    "data/patch-api/sources/7.3.0-wikitext-register.json",
+    "data/patch-api/sources/7.3.2-wikitext-register.json",
+    "data/patch-api/sources/8.0.1-wikitext-register.json",
+    "data/patch-api/sources/8.1.0-wikitext-register.json",
+    "data/patch-api/sources/8.1.5-wikitext-register.json",
+    "data/patch-api/sources/8.2.0-wikitext-register.json",
+    "data/patch-api/sources/8.2.5-wikitext-register.json",
+    "data/patch-api/sources/8.3.0-wikitext-register.json",
+    "data/patch-api/sources/8.3.7-wikitext-register.json",
+    "data/patch-api/sources/9.0.1-wikitext-register.json",
+    "data/patch-api/sources/9.0.2-wikitext-register.json",
+    "data/patch-api/sources/9.0.5-wikitext-register.json",
+    "data/patch-api/sources/9.1.0-wikitext-register.json",
+    "data/patch-api/sources/9.1.5-wikitext-register.json",
+    "data/patch-api/sources/9.2.0-wikitext-register.json",
+    "data/patch-api/sources/9.2.5-wikitext-register.json",
+    "data/patch-api/sources/9.2.7-wikitext-register.json",
+    "data/patch-api/sources/10.0.0-wikitext-register.json",
+    "data/patch-api/sources/10.0.2-wikitext-register.json",
+    "data/patch-api/sources/10.0.5-wikitext-register.json",
+    "data/patch-api/sources/10.0.7-wikitext-register.json",
+    "data/patch-api/sources/10.1.0-wikitext-register.json",
+    "data/patch-api/sources/10.1.5-wikitext-register.json",
+    "data/patch-api/sources/10.1.7-wikitext-register.json",
+    "data/patch-api/sources/10.2.0-wikitext-register.json",
+    "data/patch-api/sources/10.2.5-wikitext-register.json",
+    "data/patch-api/sources/10.2.6-wikitext-register.json",
+    "data/patch-api/sources/10.2.7-wikitext-register.json",
+    "data/patch-api/sources/11.0.0-wikitext-register.json",
+    "data/patch-api/sources/11.0.2-wikitext-register.json",
+    "data/patch-api/sources/11.0.5-wikitext-register.json",
+    "data/patch-api/sources/11.0.7-wikitext-register.json",
+    "data/patch-api/sources/11.1.0-wikitext-register.json",
+    "data/patch-api/sources/11.1.5-wikitext-register.json",
+    "data/patch-api/sources/11.1.7-wikitext-register.json",
+    "data/patch-api/sources/11.2.0-wikitext-register.json",
+    "data/patch-api/sources/11.2.5-wikitext-register.json",
+    "data/patch-api/sources/11.2.7-wikitext-register.json",
+    "data/patch-api/sources/12.0.0-wikitext-register.json",
+    "data/patch-api/sources/12.0.1-wikitext-register.json",
+    "data/patch-api/sources/12.0.5-wikitext-register.json",
+    "data/patch-api/sources/12.0.7-wikitext-register.json",
+    "data/patch-api/sources/12.1.0-wikitext-register.json"
+  ],
+  "actual_same_symbol_mentions": [
+    {
+      "path": "data/patch-api/sources/3.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitBuff-168",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitBuff",
+        "annotation": "name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitBuff(\"unit\", index or [\"name\", \"rank\"][, \"filter\"])",
+        "wikitext_line": 168
+      }
+    },
+    {
+      "path": "data/patch-api/sources/3.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitDebuff-169",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitDebuff",
+        "annotation": "name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitDebuff(\"unit\", index or [\"name\", \"rank\"][, \"filter\"])",
+        "wikitext_line": 169
+      }
+    },
+    {
+      "path": "data/patch-api/sources/3.2.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitCastingInfo-41",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitCastingInfo",
+        "annotation": "* ''updated'' {{api|UnitCastingInfo(unit)}} -- ''added interrupt result''<ref name=\"Iriel\" />",
+        "wikitext_line": 41,
+        "source_signature": "UnitCastingInfo(unit)",
+        "source_change": "updated"
+      }
+    },
+    {
+      "path": "data/patch-api/sources/3.2.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitChannelInfo-42",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitChannelInfo",
+        "annotation": "* ''updated'' {{api|UnitChannelInfo(unit)}} -- ''added interrupt result''<ref name=\"Iriel\" />",
+        "wikitext_line": 42,
+        "source_signature": "UnitChannelInfo(unit)",
+        "source_change": "updated"
+      }
+    },
+    {
+      "path": "data/patch-api/sources/3.3.3-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UninviteUnit-40",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UninviteUnit",
+        "annotation": "* {{api|UninviteUnit}}(\"name\" [, \"reason\"]) added reason argument for LFD kick votes.",
+        "wikitext_line": 40
+      }
+    },
+    {
+      "path": "data/patch-api/sources/4.0.1-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetItemCooldown-6",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "GetItemCooldown",
+        "annotation": "* {{api|GetItemCooldown}} now only accepts numeric item IDs as its argument.",
+        "wikitext_line": 6
+      }
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-InCombatLockdown-27",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "InCombatLockdown",
+        "annotation": "**{{api|InCombatLockdown|InCombatLockdown}}()",
+        "wikitext_line": 27
+      }
+    },
+    {
+      "path": "data/patch-api/sources/7.0.3-wikitext-register.json",
+      "entry": {
+        "id": "wt-widgets-Frame:AllowAttributeChanges-120",
+        "section": "widgets",
+        "direction": "removed",
+        "symbol": "Frame:AllowAttributeChanges",
+        "annotation": "* Frame method: [[API Frame AllowAttributeChanges|Frame:AllowAttributeChanges]]()",
+        "wikitext_line": 120
+      }
+    },
+    {
+      "path": "data/patch-api/sources/7.1.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetItemInfo-19",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "GetItemInfo",
+        "annotation": "* [[API_GetItemInfo|GetItemInfo]] has four new returns: 14: bindType, 15: expacID, 16: itemSetID, 17: isCraftingReagent",
+        "wikitext_line": 19
+      }
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-InviteUnit-158",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "InviteUnit",
+        "annotation": "",
+        "wikitext_line": 158
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-PickupContainerItem-369",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "PickupContainerItem",
+        "annotation": "",
+        "wikitext_line": 369
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-widgets-OnMovieShowSubtitle-203",
+        "section": "widgets",
+        "direction": "removed",
+        "symbol": "OnMovieShowSubtitle",
+        "annotation": "",
+        "wikitext_line": 203,
+        "kind": "widget-script"
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitBuff-122",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "UnitBuff",
+        "annotation": "",
+        "wikitext_line": 122
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitDebuff-123",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "UnitDebuff",
+        "annotation": "",
+        "wikitext_line": 123
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetItemCooldown-166",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetItemCooldown",
+        "annotation": "",
+        "wikitext_line": 166
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetItemCount-167",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetItemCount",
+        "annotation": "",
+        "wikitext_line": 167
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetItemInfo-173",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetItemInfo",
+        "annotation": "",
+        "wikitext_line": 173
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetItemSpell-178",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "GetItemSpell",
+        "annotation": "",
+        "wikitext_line": 178
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsConsumableItem-196",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsConsumableItem",
+        "annotation": "",
+        "wikitext_line": 196
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsCurrentItem-199",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsCurrentItem",
+        "annotation": "",
+        "wikitext_line": 199
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsEquippedItemType-202",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsEquippedItemType",
+        "annotation": "",
+        "wikitext_line": 202
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsEquippedItem-203",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsEquippedItem",
+        "annotation": "",
+        "wikitext_line": 203
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsItemInRange-206",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsItemInRange",
+        "annotation": "",
+        "wikitext_line": 206
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsUsableItem-210",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsUsableItem",
+        "annotation": "",
+        "wikitext_line": 210
+      }
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-ItemHasRange-212",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "ItemHasRange",
+        "annotation": "",
+        "wikitext_line": 212
+      }
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsAttackSpell-457",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsAttackSpell",
+        "annotation": "",
+        "wikitext_line": 457
+      }
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsAutoRepeatSpell-458",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsAutoRepeatSpell",
+        "annotation": "",
+        "wikitext_line": 458
+      }
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsPassiveSpell-463",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsPassiveSpell",
+        "annotation": "",
+        "wikitext_line": 463
+      }
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsSpellInRange-466",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsSpellInRange",
+        "annotation": "",
+        "wikitext_line": 466
+      }
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsUsableSpell-468",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsUsableSpell",
+        "annotation": "",
+        "wikitext_line": 468
+      }
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-SpellHasRange-478",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "SpellHasRange",
+        "annotation": "",
+        "wikitext_line": 478
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-IsActionInRange-597",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "IsActionInRange",
+        "annotation": "",
+        "wikitext_line": 597
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitCastingInfo-661",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitCastingInfo",
+        "annotation": "# ret 8: notInterruptible, Nilable: false -> true\n+ ret 10: castBarID",
+        "wikitext_line": 661
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitChannelInfo-664",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitChannelInfo",
+        "annotation": "# arg 1: unitToken -> unit\n# ret 7: notInterruptible, Nilable: false -> true\n+ ret 11: castBarID",
+        "wikitext_line": 664
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-events-UNIT_SPELLCAST_SENT-801",
+        "section": "events",
+        "direction": "added",
+        "symbol": "UNIT_SPELLCAST_SENT",
+        "annotation": "",
+        "wikitext_line": 801
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "entry": {
+        "id": "wt-events-UNIT_SPELLCAST_SENT-819",
+        "section": "events",
+        "direction": "removed",
+        "symbol": "UNIT_SPELLCAST_SENT",
+        "annotation": "",
+        "wikitext_line": 819
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UnitCastingInfo-339",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "UnitCastingInfo",
+        "annotation": "+ ret 11: delayTimeMs",
+        "wikitext_line": 339
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetCritChance-551",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "GetCritChance",
+        "annotation": "+ SecretWhenUnitStatsRestricted",
+        "wikitext_line": 551
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetRangedCritChance-597",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "GetRangedCritChance",
+        "annotation": "+ SecretWhenUnitStatsRestricted",
+        "wikitext_line": 597
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-GetSpellCritChance-609",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "GetSpellCritChance",
+        "annotation": "+ SecretWhenUnitStatsRestricted",
+        "wikitext_line": 609
+      }
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "entry": {
+        "id": "wt-global-api-UninviteUnit-185",
+        "section": "global-api",
+        "direction": "removed",
+        "symbol": "UninviteUnit",
+        "annotation": "",
+        "wikitext_line": 185
+      }
+    }
+  ],
+  "supersession_credit": 0,
+  "limits": "Same-name mentions only, no tuple semantics or indirect-change/native proof.",
+  "queued_main_owned": [
+    {
+      "patch": "2.1.0",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    },
+    {
+      "patch": "2.2.0",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    },
+    {
+      "patch": "2.3.0",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    },
+    {
+      "patch": "2.4.0",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    },
+    {
+      "patch": "2.4.2",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    },
+    {
+      "patch": "3.0.2",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    },
+    {
+      "patch": "3.0.3",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    },
+    {
+      "patch": "3.0.8",
+      "client_line": "historical-retail",
+      "state": "main-owned-not-used-for-supersession",
+      "supersession_credit": false
+    }
+  ]
+}

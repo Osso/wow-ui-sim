@@ -1,0 +1,110 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "9276337aeb5e6a7991cc344115752e66fdd9dae1",
+    "exit_code": 1,
+    "log": "source-red.log",
+    "scope_snapshots": [
+      "revisions/9276337aeb5e6a7991cc344115752e66fdd9dae1/tools/test_patch_2_0_1_source.py"
+    ],
+    "later_changes": "Earlier subset proofs retained historically; final expanded SOURCE scope proven at 615a5cf74."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "19b90446ea0832e8cdcd8e11bd5a67b7f6003f02",
+    "exit_code": 0,
+    "log": "source-green.log",
+    "scope_snapshots": [
+      "revisions/19b90446ea0832e8cdcd8e11bd5a67b7f6003f02/tools/test_patch_2_0_1_source.py",
+      "revisions/19b90446ea0832e8cdcd8e11bd5a67b7f6003f02/tools/audit_patch_2_0_1_source.py"
+    ],
+    "later_changes": "Earlier subset proofs retained historically; final expanded SOURCE scope proven at 615a5cf74."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "c2f1531e10e2f388ec7d6861a83717882d9a9ca8",
+    "exit_code": 1,
+    "log": "signature-red.log",
+    "scope_snapshots": [
+      "revisions/c2f1531e10e2f388ec7d6861a83717882d9a9ca8/tools/test_patch_2_0_1_source.py",
+      "revisions/c2f1531e10e2f388ec7d6861a83717882d9a9ca8/tools/audit_patch_2_0_1_source.py"
+    ],
+    "later_changes": "Earlier subset proofs retained historically; final expanded SOURCE scope proven at 615a5cf74."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "24f756e3e432ee0827588228ef5fb6504b09c0f9",
+    "exit_code": 0,
+    "log": "signature-green.log",
+    "scope_snapshots": [
+      "revisions/24f756e3e432ee0827588228ef5fb6504b09c0f9/tools/test_patch_2_0_1_source.py",
+      "revisions/24f756e3e432ee0827588228ef5fb6504b09c0f9/tools/audit_patch_2_0_1_source.py"
+    ],
+    "later_changes": "Earlier subset proofs retained historically; final expanded SOURCE scope proven at 615a5cf74."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "68c7d540e901c3b1d23410771993520d122a0bc7",
+    "exit_code": 1,
+    "log": "identity-red.log",
+    "scope_snapshots": [
+      "revisions/68c7d540e901c3b1d23410771993520d122a0bc7/tools/test_patch_2_0_1_source.py",
+      "revisions/68c7d540e901c3b1d23410771993520d122a0bc7/tools/audit_patch_2_0_1_source.py"
+    ],
+    "later_changes": "Earlier subset proofs retained historically; final expanded SOURCE scope proven at 615a5cf74."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "615a5cf74067f46223f8028abfc6365757236433",
+    "exit_code": 0,
+    "log": "identity-green.log",
+    "scope_snapshots": [
+      "revisions/615a5cf74067f46223f8028abfc6365757236433/tools/test_patch_2_0_1_source.py",
+      "revisions/615a5cf74067f46223f8028abfc6365757236433/tools/audit_patch_2_0_1_source.py"
+    ],
+    "later_changes": "Earlier subset proofs retained historically; final expanded SOURCE scope proven at 615a5cf74."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_replay.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "edb2fca5b08e135931ccdc3bd43d189601dd01a1",
+    "exit_code": 1,
+    "log": "replay-red.log",
+    "scope_snapshots": [],
+    "scope": "Own missing-validator RED; validator absent at this revision."
+  }
+]
