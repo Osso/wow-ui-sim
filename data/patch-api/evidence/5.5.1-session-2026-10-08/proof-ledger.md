@@ -15,3 +15,5 @@ Additional independent proof: run the pinned-master validator gate once for the 
 Gate-output recovery: session continuation orphaned the already-running pinned-master gate (PID 2785718, PPID 1) and removed its original Pyrun pipe reader before a result was saved. recover_gate_output.py drains that same process stdout into master-gate-report.json; the gate is not rerun. Build workers already had file-backed output and remain intact.
 
 Pinned-master gate completed PASS: clean/later counts derived from its report and exact git ls-tree receipt sets (44/45 validators), zero failures. Original-process stdout recovery completed; no command was repeated.
+
+Completed runtime proof: retail publication sweeps 57/57 and Mists 5.5.1–5.5.4 page/line tests 5/5 pass at d56ab0593. Retail client-line compilation, Mists --tests check and negative control, then fresh-master sweep remain active; final comparison and branch gate still pending.

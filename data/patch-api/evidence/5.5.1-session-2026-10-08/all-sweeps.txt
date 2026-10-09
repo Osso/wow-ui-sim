@@ -1,0 +1,770 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling quote v1.0.43
+   Compiling proc-macro2 v1.0.105
+   Compiling unicode-ident v1.0.22
+   Compiling cfg-if v1.0.4
+   Compiling libc v0.2.180
+   Compiling log v0.4.29
+   Compiling bitflags v2.10.0
+   Compiling smallvec v1.15.1
+   Compiling libm v0.2.15
+   Compiling once_cell v1.21.3
+   Compiling syn v2.0.114
+   Compiling autocfg v1.5.0
+   Compiling pin-project-lite v0.2.16
+   Compiling scopeguard v1.2.0
+   Compiling lock_api v0.4.14
+   Compiling find-msvc-tools v0.1.7
+   Compiling shlex v1.3.0
+   Compiling pkg-config v0.3.32
+   Compiling jobserver v0.1.34
+   Compiling cc v1.2.52
+   Compiling num-traits v0.2.19
+   Compiling memchr v2.7.6
+   Compiling crossbeam-utils v0.8.21
+   Compiling slab v0.4.11
+   Compiling arrayvec v0.7.6
+   Compiling futures-core v0.3.31
+   Compiling parking_lot_core v0.9.12
+   Compiling rustix v1.1.3
+   Compiling thiserror v2.0.17
+   Compiling version_check v0.9.5
+   Compiling linux-raw-sys v0.11.0
+   Compiling stable_deref_trait v1.2.1
+   Compiling parking_lot v0.12.5
+   Compiling libloading v0.8.9
+   Compiling errno v0.3.14
+   Compiling bytes v1.11.0
+   Compiling bytemuck_derive v1.10.2
+   Compiling thiserror-impl v2.0.17
+   Compiling signal-hook-registry v1.4.8
+   Compiling zerocopy v0.8.33
+   Compiling bytemuck v1.24.0
+   Compiling futures-io v0.3.31
+   Compiling zerocopy-derive v0.8.33
+   Compiling simd-adler32 v0.3.8
+   Compiling tokio-macros v2.6.0
+   Compiling socket2 v0.6.1
+   Compiling mio v1.1.1
+   Compiling tokio v1.49.0
+   Compiling crc32fast v1.5.0
+   Compiling futures-sink v0.3.31
+   Compiling adler2 v2.0.1
+   Compiling miniz_oxide v0.8.9
+   Compiling tracing-core v0.1.36
+   Compiling serde v1.0.228
+   Compiling tracing-attributes v0.1.31
+   Compiling flate2 v1.1.9
+   Compiling futures-channel v0.3.31
+   Compiling serde_derive v1.0.228
+   Compiling tracing v0.1.44
+   Compiling futures-macro v0.3.31
+   Compiling dlib v0.5.2
+   Compiling synstructure v0.13.2
+   Compiling wayland-sys v0.31.8
+   Compiling futures-task v0.3.31
+   Compiling pin-utils v0.1.0
+   Compiling futures-util v0.3.31
+   Compiling wayland-backend v0.3.12
+   Compiling serde_core v1.0.228
+   Compiling zerofrom-derive v0.1.6
+   Compiling crossbeam-epoch v0.9.18
+   Compiling anyhow v1.0.100
+   Compiling rayon-core v1.13.0
+   Compiling downcast-rs v1.2.1
+   Compiling scoped-tls v1.0.1
+   Compiling zerofrom v0.1.7
+   Compiling quick-xml v0.38.4
+   Compiling crossbeam-deque v0.8.6
+   Compiling yoke-derive v0.8.1
+   Compiling num-integer v0.1.46
+   Compiling wayland-client v0.31.12
+   Compiling yoke v0.8.1
+   Compiling wayland-scanner v0.31.8
+   Compiling spin v0.9.8
+   Compiling memmap2 v0.9.9
+   Compiling either v1.15.0
+   Compiling cfg_aliases v0.2.1
+   Compiling half v2.7.1
+   Compiling displaydoc v0.2.5
+   Compiling zerovec-derive v0.11.2
+   Compiling core_maths v0.1.1
+   Compiling foldhash v0.2.0
+   Compiling zerovec v0.11.5
+   Compiling hashbrown v0.16.1
+   Compiling rayon v1.11.0
+   Compiling lazy_static v1.5.0
+   Compiling equivalent v1.0.2
+   Compiling itoa v1.0.17
+   Compiling zeroize v1.8.2
+   Compiling typenum v1.19.0
+   Compiling writeable v0.6.3
+   Compiling indexmap v2.13.0
+   Compiling profiling-procmacros v1.0.17
+   Compiling generic-array v0.14.7
+   Compiling profiling v1.0.17
+   Compiling polling v3.11.0
+   Compiling equator-macro v0.4.2
+   Compiling getrandom v0.2.16
+   Compiling num_cpus v1.17.0
+   Compiling winnow v0.7.14
+   Compiling const-oid v0.9.6
+   Compiling vcpkg v0.2.15
+   Compiling futures-executor v0.3.31
+   Compiling equator v0.4.2
+   Compiling tinystr v0.8.2
+   Compiling num-bigint v0.4.6
+   Compiling weezl v0.1.12
+   Compiling litemap v0.8.2
+   Compiling raw-window-handle v0.6.2
+   Compiling fastrand v2.3.0
+   Compiling num-rational v0.4.2
+   Compiling icu_locale_core v2.1.1
+   Compiling aligned-vec v0.6.4
+   Compiling toml_parser v1.0.6+spec-1.1.0
+   Compiling futures v0.3.31
+   Compiling potential_utf v0.1.4
+   Compiling toml_datetime v0.7.5+spec-1.1.0
+   Compiling zerotrie v0.2.3
+   Compiling euclid v0.22.13
+   Compiling smol_str v0.2.2
+   Compiling bitflags v1.3.2
+   Compiling icu_provider v2.1.1
+   Compiling icu_collections v2.1.1
+   Compiling v_frame v0.3.9
+   Compiling ttf-parser v0.25.1
+   Compiling fdeflate v0.3.7
+   Compiling as-slice v0.2.1
+   Compiling parking v2.2.1
+   Compiling av-scenechange v0.14.1
+   Compiling built v0.8.0
+   Compiling paste v1.0.15
+   Compiling color_quant v1.1.0
+   Compiling rustc-hash v1.1.0
+   Compiling atomic-waker v1.1.2
+   Compiling rav1e v0.8.1
+   Compiling aligned v0.4.3
+   Compiling crypto-common v0.1.7
+   Compiling zune-inflate v0.2.54
+   Compiling font-types v0.10.1
+   Compiling arg_enum_proc_macro v0.3.4
+   Compiling concurrent-queue v2.5.0
+   Compiling core2 v0.4.0
+   Compiling nom v8.0.0
+   Compiling encoding_rs v0.8.35
+   Compiling web-time v1.1.0
+   Compiling rustc-hash v2.1.2
+   Compiling pastey v0.1.1
+   Compiling percent-encoding v2.3.2
+   Compiling y4m v0.8.0
+   Compiling quick-error v2.0.1
+   Compiling bit_field v0.10.3
+   Compiling foldhash v0.1.5
+   Compiling lebe v0.5.3
+   Compiling exr v1.74.0
+   Compiling av1-grain v0.2.5
+   Compiling hashbrown v0.15.5
+   Compiling lilt v0.8.1
+   Compiling bitstream-io v4.9.0
+   Compiling read-fonts v0.35.0
+   Compiling maybe-rayon v0.1.1
+   Compiling wayland-protocols v0.32.10
+   Compiling itertools v0.14.0
+   Compiling qoi v0.4.1
+   Compiling num-derive v0.4.2
+   Compiling fax_derive v0.2.0
+   Compiling slotmap v1.1.1
+   Compiling simd_helpers v0.1.0
+   Compiling icu_properties_data v2.1.2
+   Compiling new_debug_unreachable v1.0.6
+   Compiling noop_proc_macro v0.3.0
+   Compiling imgref v1.12.0
+   Compiling zune-core v0.4.12
+   Compiling glam v0.25.0
+   Compiling zune-jpeg v0.4.21
+   Compiling loop9 v0.1.5
+   Compiling iced_core v0.14.0
+   Compiling fax v0.2.6
+   Compiling symphonia-core v0.5.5
+   Compiling lyon_geom v1.0.18
+   Compiling block-buffer v0.10.4
+   Compiling http v1.4.0
+   Compiling avif-serialize v0.8.6
+   Compiling ring v0.17.14
+   Compiling pxfm v0.1.27
+   Compiling icu_normalizer_data v2.1.1
+   Compiling roxmltree v0.20.0
+   Compiling rgb v0.8.52
+   Compiling tinyvec_macros v0.1.1
+   Compiling byteorder-lite v0.1.0
+   Compiling zune-core v0.5.0
+   Compiling zune-jpeg v0.5.8
+   Compiling image-webp v0.2.4
+   Compiling tinyvec v1.10.0
+   Compiling ravif v0.12.0
+   Compiling moxcms v0.7.11
+   Compiling fontconfig-parser v0.5.8
+   Compiling digest v0.10.7
+   Compiling lyon_path v1.0.16
+   Compiling tiff v0.10.3
+   Compiling skrifa v0.37.0
+   Compiling gif v0.14.1
+   Compiling png v0.18.0
+   Compiling toml_edit v0.23.10+spec-1.0.0
+   Compiling rustls-pki-types v1.14.1
+   Compiling naga v27.0.3
+   Compiling enumflags2_derive v0.7.12
+   Compiling owo-colors v4.3.0
+   Compiling bit-vec v0.8.0
+   Compiling ash v0.38.0+1.3.281
+   Compiling yazi v0.2.1
+   Compiling zeno v0.3.3
+   Compiling utf8_iter v1.0.4
+   Compiling khronos-egl v6.0.0
+   Compiling hex v0.4.3
+   Compiling as-raw-xcb-connection v1.0.1
+   Compiling unicode-width v0.2.2
+   Compiling codespan-reporting v0.12.0
+   Compiling swash v0.2.6
+   Compiling bit-set v0.8.0
+   Compiling proc-macro-crate v3.4.0
+   Compiling image v0.25.9
+   Compiling icu_properties v2.1.2
+   Compiling fontdb v0.23.0
+   Compiling http-body v1.0.1
+   Compiling zvariant_utils v3.3.0
+   Compiling iced_futures v0.14.0
+   Compiling harfrust v0.3.2
+   Compiling event-listener v5.4.1
+   Compiling openssl-sys v0.9.117
+   Compiling wgpu-hal v27.0.4
+   Compiling tokio-util v0.7.18
+   Compiling gethostname v1.1.0
+   Compiling gpu-descriptor-types v0.2.0
+   Compiling gpu-alloc-types v0.3.0
+   Compiling spirv v0.3.0+sdk-1.3.268.0
+   Compiling thiserror v1.0.69
+   Compiling hexf-parse v0.2.1
+   Compiling linebender_resource_handle v0.1.1
+   Compiling unicode-script v0.5.8
+   Compiling write16 v1.0.0
+   Compiling xkeysym v0.2.1
+   Compiling untrusted v0.9.0
+   Compiling self_cell v1.2.2
+   Compiling unicode-linebreak v0.1.5
+   Compiling x11rb-protocol v0.13.2
+   Compiling xcursor v0.3.10
+   Compiling alloc-no-stdlib v2.0.4
+   Compiling unicode-bidi v0.3.18
+   Compiling cursor-icon v1.2.0
+   Compiling fnv v1.0.7
+   Compiling binrw_derive v0.15.2
+   Compiling rangemap v1.7.1
+   Compiling unicode-segmentation v1.12.0
+   Compiling sys-locale v0.3.2
+   Compiling utf16_iter v1.0.5
+   Compiling httparse v1.10.1
+   Compiling base64ct v1.8.3
+   Compiling pem-rfc7468 v0.7.0
+   Compiling icu_normalizer v2.1.1
+   Compiling cosmic-text v0.15.0
+   Compiling wayland-csd-frame v0.3.0
+   Compiling alloc-stdlib v0.2.4
+   Compiling wayland-cursor v0.31.12
+   Compiling x11rb v0.13.2
+   Compiling gpu-alloc v0.6.0
+   Compiling gpu-descriptor v0.3.2
+   Compiling event-listener-strategy v0.5.4
+   Compiling zvariant_derive v5.9.2
+   Compiling symphonia-metadata v0.5.5
+   Compiling wayland-protocols-wlr v0.3.10
+   Compiling futures-lite v2.6.1
+   Compiling inout v0.1.4
+   Compiling rand_core v0.6.4
+   Compiling wgpu-types v27.0.1
+   Compiling der_derive v0.7.3
+   Compiling thiserror-impl v1.0.69
+   Compiling ordered-float v5.1.0
+   Compiling zmij v1.0.14
+   Compiling subtle v2.6.1
+   Compiling renderdoc-sys v1.1.0
+   Compiling base64 v0.22.1
+   Compiling rustix v0.38.44
+   Compiling glow v0.16.0
+   Compiling tower-service v0.3.3
+   Compiling try-lock v0.2.5
+   Compiling binrw v0.15.2
+   Compiling mutate_once v0.1.2
+   Compiling openssl-probe v0.2.1
+   Compiling rustls v0.23.40
+   Compiling arrayref v0.3.9
+   Compiling strict-num v0.1.1
+   Compiling flagset v0.4.7
+   Compiling der v0.7.10
+   Compiling tiny-skia-path v0.11.4
+   Compiling kamadak-exif v0.6.1
+   Compiling want v0.3.1
+   Compiling cipher v0.4.4
+   Compiling rustls-webpki v0.103.13
+   Compiling brotli-decompressor v5.0.3
+   Compiling h2 v0.4.15
+   Compiling wgpu-core v27.0.3
+   Compiling ppv-lite86 v0.2.21
+   Compiling async-io v2.6.0
+   Compiling litrs v1.0.0
+   Compiling getrandom v0.3.4
+   Compiling array-init v2.1.0
+   Compiling serde_json v1.0.149
+   Compiling linux-raw-sys v0.4.15
+   Compiling hyper v1.9.0
+   Compiling document-features v0.2.12
+   Compiling rand_chacha v0.3.1
+   Compiling brotli v8.0.4
+   Compiling wgpu-core-deps-windows-linux-android v27.0.0
+   Compiling salsa20 v0.10.2
+   Compiling iced_graphics v0.14.0
+   Compiling tiny-skia v0.11.4
+   Compiling spki v0.7.3
+   Compiling idna_adapter v1.2.1
+   Compiling enumflags2 v0.7.12
+   Compiling md-5 v0.10.6
+   Compiling form_urlencoded v1.2.2
+   Compiling calloop v0.14.3
+   Compiling wgpu v27.0.1
+   Compiling async-trait v0.1.89
+   Compiling tiny-xlib v0.2.4
+   Compiling async-task v4.7.1
+   Compiling compression-core v0.4.32
+   Compiling foreign-types-shared v0.1.1
+   Compiling endi v1.1.1
+   Compiling svg_fmt v0.4.5
+   Compiling ipnet v2.12.0
+   Compiling smithay-client-toolkit v0.20.0
+   Compiling openssl v0.10.81
+   Compiling twox-hash v2.1.2
+   Compiling lz4_flex v0.12.1
+   Compiling hyper-util v0.1.20
+   Compiling zvariant v5.9.2
+   Compiling foreign-types v0.3.2
+   Compiling compression-codecs v0.4.38
+   Compiling calloop-wayland-source v0.4.1
+   Compiling cascette-crypto v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling idna v1.1.0
+   Compiling rand v0.8.5
+   Compiling calloop v0.13.0
+   Compiling symphonia-utils-xiph v0.5.5
+   Compiling async-channel v2.5.0
+   Compiling iced_debug v0.14.0
+   Compiling http-body-util v0.1.3
+   Compiling wayland-protocols-experimental v20250721.0.1
+   Compiling wayland-protocols-misc v0.3.10
+   Compiling openssl-macros v0.1.1
+   Compiling sync_wrapper v1.0.2
+   Compiling ctor-lite v0.1.1
+   Compiling rand_core v0.10.1
+   Compiling getrandom v0.4.3
+   Compiling tower-layer v0.3.3
+   Compiling hashbrown v0.14.5
+   Compiling icu_locale_data v2.1.2
+   Compiling smithay-client-toolkit v0.19.2
+   Compiling md5 v0.8.0
+   Compiling static_assertions v1.1.0
+   Compiling float_next_after v1.0.0
+   Compiling native-tls v0.2.18
+   Compiling dashmap v6.1.0
+   Compiling lyon_tessellation v1.0.16
+   Compiling cascette-formats v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling tower v0.5.3
+   Compiling calloop-wayland-source v0.3.0
+   Compiling async-signal v0.2.13
+   Compiling url v2.5.8
+   Compiling zbus_names v4.3.1
+   Compiling async-compression v0.4.42
+   Compiling etagere v0.2.15
+   Compiling tokio-rustls v0.26.4
+   Compiling async-lock v3.4.2
+   Compiling webpki-roots v1.0.7
+   Compiling lyon_algorithms v1.0.16
+   Compiling owned_ttf_parser v0.25.1
+   Compiling piper v0.2.4
+   Compiling ahash v0.8.12
+   Compiling x11-dl v2.21.0
+   Compiling alsa-sys v0.3.1
+   Compiling num-bigint-dig v0.8.6
+   Compiling ryu v1.0.23
+   Compiling android-build v0.1.3
+   Compiling utf8parse v0.2.2
+   Compiling cpufeatures v0.3.0
+   Compiling ab_glyph_rasterizer v0.1.10
+   Compiling lru v0.16.3
+   Compiling cryoglyph v0.1.0
+   Compiling ab_glyph v0.2.32
+   Compiling chacha20 v0.10.1
+   Compiling mundy v0.2.2
+   Compiling anstyle-parse v0.2.7
+   Compiling prost-derive v0.14.4
+   Compiling blocking v1.6.2
+   Compiling lyon v1.0.16
+   Compiling async-process v2.5.0
+   Compiling hyper-rustls v0.27.9
+   Compiling tower-http v0.6.10
+   Compiling zbus_macros v5.13.2
+   Compiling smithay-clipboard v0.7.3
+   Compiling softbuffer v0.4.8
+   Compiling guillotiere v0.6.2
+   Compiling async-executor v1.13.3
+   Compiling pkcs8 v0.10.2
+   Compiling rustls-native-certs v0.8.4
+   Compiling async-broadcast v0.7.2
+   Compiling libsqlite3-sys v0.33.0
+   Compiling serde_spanned v1.1.1
+   Compiling winit v0.30.12
+   Compiling uuid v1.20.0
+   Compiling num-iter v0.1.45
+   Compiling serde_repr v0.1.20
+   Compiling ordered-stream v0.2.0
+   Compiling kurbo v0.10.4
+   Compiling aho-corasick v1.1.4
+   Compiling siphasher v1.0.2
+   Compiling mime v0.3.17
+   Compiling glob v0.3.3
+   Compiling colorchoice v1.0.4
+   Compiling cpufeatures v0.2.17
+   Compiling anstyle v1.0.13
+   Compiling anstyle-query v1.1.5
+   Compiling regex-syntax v0.8.8
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling prometheus v0.14.0
+   Compiling anstream v0.6.21
+   Compiling regex-automata v0.4.13
+   Compiling phf_shared v0.11.3
+   Compiling sha2 v0.10.9
+   Compiling libwebp-sys v0.9.6
+   Compiling iced_tiny_skia v0.14.0
+   Compiling zbus v5.13.2
+   Compiling toml v0.9.11+spec-1.1.0
+   Compiling rustls-platform-verifier v0.6.2
+   Compiling pkcs1 v0.7.5
+   Compiling iced_wgpu v0.14.0 (/home/osso/.worktrees/wow-ui-sim-p551-page/iced-wgpu-patched)
+   Compiling rand v0.10.1
+   Compiling icu_locale v2.1.1
+   Compiling tokio-native-tls v0.3.1
+   Compiling clipboard_wayland v0.2.2
+   Compiling sctk-adwaita v0.10.1
+   Compiling prost v0.14.4
+   Compiling x509-cert v0.2.5
+   Compiling signature v2.2.0
+   Compiling clipboard_x11 v0.4.3
+   Compiling xkbcommon-dl v0.4.2
+   Compiling iced_runtime v0.14.0
+   Compiling wayland-protocols-plasma v0.3.10
+   Compiling hashify v0.2.9
+   Compiling jpeg-decoder v0.3.2
+   Compiling asn1_derive v0.23.1
+   Compiling rmp v0.8.15
+   Compiling heck v0.5.0
+   Compiling dpi v0.1.2
+   Compiling cpal v0.16.0
+   Compiling icu_collator_data v2.1.1
+   Compiling strsim v0.11.1
+   Compiling icu_segmenter_data v2.1.1
+   Compiling extended v0.1.0
+   Compiling clap_lex v0.7.7
+   Compiling icu_plurals_data v2.1.1
+   Compiling icu_casemap_data v2.1.1
+   Compiling clap_builder v4.5.56
+   Compiling symphonia-format-riff v0.5.5
+   Compiling clap_derive v4.5.55
+   Compiling rmp-serde v1.3.1
+   Compiling asn1 v0.23.1
+   Compiling tiff v0.9.1
+   Compiling mail-parser v0.11.4
+   Compiling iced_program v0.14.0
+   Compiling window_clipboard v0.5.1
+   Compiling rsa v0.9.10
+   Compiling cms v0.2.3
+   Compiling alsa v0.9.1
+   Compiling cascette-client-storage v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling hyper-tls v0.6.0
+   Compiling cascette-cache v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling iced_renderer v0.14.0
+   Compiling reqwest v0.13.1
+   Compiling winresource v0.1.30
+   Compiling phf_generator v0.11.3
+   Compiling serde_urlencoded v0.7.1
+   Compiling symphonia-format-isomp4 v0.5.5
+   Compiling symphonia-bundle-flac v0.5.5
+   Compiling symphonia-format-ogg v0.5.5
+   Compiling symphonia-codec-vorbis v0.5.5
+   Compiling symphonia-bundle-mp3 v0.5.5
+   Compiling symphonia-codec-aac v0.5.5
+   Compiling symphonia-codec-pcm v0.5.5
+   Compiling hashlink v0.10.0
+   Compiling gif v0.13.3
+   Compiling png v0.17.16
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling fallible-iterator v0.3.0
+   Compiling option-ext v0.2.0
+   Compiling minimal-lexical v0.2.1
+   Compiling dasp_sample v0.11.0
+   Compiling byteorder v1.5.0
+   Compiling winapi v0.3.9
+   Compiling image v0.24.9
+   Compiling nom v7.1.3
+   Compiling dirs-sys v0.4.1
+   Compiling rusqlite v0.35.0
+   Compiling symphonia v0.5.5
+   Compiling reqwest v0.12.28
+   Compiling cascette-protocol v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling phf_macros v0.11.3
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p551-page)
+   Compiling iced_widget v0.14.2
+   Compiling iced_winit v0.14.0
+   Compiling peercred-ipc v0.1.0 (https://github.com/Osso/peercred-ipc.git?tag=v0.2.0#dc0093cf)
+   Compiling clap v4.5.56
+   Compiling matchers v0.2.0
+   Compiling fixed_decimal v0.7.0
+   Compiling texpresso v2.0.2
+   Compiling sharded-slab v0.1.7
+   Compiling tracing-log v0.2.0
+   Compiling xattr v1.6.1
+   Compiling filetime v0.2.28
+   Compiling thread_local v1.1.9
+   Compiling same-file v1.0.6
+   Compiling nu-ansi-term v0.50.3
+   Compiling tracing-subscriber v0.3.22
+   Compiling iced-layout-inspector v0.1.0 (https://github.com/Osso/iced-layout-inspector.git?tag=v0.2.0#c1f1dd2c)
+   Compiling walkdir v2.5.0
+   Compiling tar v0.4.45
+   Compiling image-blp v1.2.0
+   Compiling icu_plurals v2.1.1
+   Compiling phf_codegen v0.11.3
+   Compiling icu_casemap v2.1.1
+   Compiling icu_segmenter v2.1.1
+   Compiling icu_collator v2.1.1
+   Compiling casc-extract v0.1.0 (https://github.com/Osso/casc-extract?rev=bbfb184066531b6eb674b50b63a6052eb871ab2f#bbfb1840)
+   Compiling iced v0.14.0
+   Compiling phf v0.11.3
+   Compiling webp v0.3.1
+   Compiling asset-resolver v0.1.0 (https://github.com/world-of-osso/asset-resolver?rev=462097bba2aa72d1afed8e0ca5b7c7315096427d#462097bb)
+   Compiling rodio v0.21.1
+   Compiling dirs v5.0.1
+   Compiling regex v1.12.2
+   Compiling quick-xml v0.37.5
+   Compiling rilua v0.1.21 (https://github.com/Osso/rilua.git?rev=842e4d3ff8592af45a5a93058eddf93419d29012#842e4d3f)
+   Compiling httpdate v1.0.3
+   Compiling pollster v0.4.0
+   Compiling unicode-blocks v0.1.10
+   Compiling tempfile v3.24.0
+   Compiling console v0.15.11
+   Compiling similar v2.7.0
+   Compiling insta v1.46.0
+    Finished `test` profile [optimized + debuginfo] target(s) in 17m 06s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p551-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.006s] [Startup] SimState::default complete in 6.04ms
+[  0.006s] [Startup] rilua VM created in 234.73µs
+[  0.007s] [Startup] builtin frames initialized in 174.90µs
+[  0.007s] [Startup] template registry cleared in 18.84µs
+[  0.007s] [Startup] intrinsic templates registered in 17.40µs
+[  0.007s] [Startup] initial app_data lua handle installed in 1.05µs
+[  0.481s] [Startup] init_lua_state complete in 474.61ms
+[  0.481s] [Startup] final app_data lua handle installed in 441.00ns
+[  0.482s] [Startup] initial screen globals installed in 490.59µs
+[  0.482s] [Startup] WowLuaEnv::new complete
+[  5.282s] [Startup] apply_post_load_workarounds: begin
+[  5.282s] [Workarounds] starting patch_edit_mode_manager
+[  5.283s] [Workarounds] finished patch_edit_mode_manager in 597.60µs
+[  5.283s] [Workarounds] starting init_edit_mode_layout
+[  5.283s] [EditMode] starting setup_layout_info
+[  5.293s] [EditMode] finished setup_layout_info in 10.00ms
+[  5.293s] [EditMode] starting apply_system_anchors
+[  5.631s] [EditMode] finished apply_system_anchors in 338.24ms
+[  5.631s] [EditMode] starting finalize_action_bar_positions
+[  5.636s] [EditMode] finished finalize_action_bar_positions in 4.15ms
+[  5.636s] [EditMode] starting invoke_anchor_changed_hooks
+[  5.636s] [EditMode] finished invoke_anchor_changed_hooks in 752.42µs
+[  5.636s] [EditMode] starting fix_action_bar_nan_size
+[  5.636s] [EditMode] finished fix_action_bar_nan_size in 73.41µs
+[  5.636s] [EditMode] starting fix_action_bar_scale
+[  5.636s] [EditMode] finished fix_action_bar_scale in 5.96µs
+[  5.636s] [Workarounds] finished init_edit_mode_layout in 353.39ms
+[  5.636s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  5.637s] [Workarounds] finished patch_ui_parent_panel_toggles in 340.40µs
+[  5.637s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  5.637s] [Workarounds] finished patch_uiparent_onupdate_worklists in 137.95µs
+[  5.637s] [Workarounds] starting init_chat_type_colors
+[  5.637s] [Workarounds] finished init_chat_type_colors in 187.94µs
+[  5.637s] [Workarounds] starting patch_chat_voice_button_surface
+[  5.637s] [Workarounds] finished patch_chat_voice_button_surface in 239.12µs
+[  5.637s] [Workarounds] starting patch_item_socketing_tooltips
+[  5.637s] [Workarounds] finished patch_item_socketing_tooltips in 92.56µs
+[  5.637s] [Workarounds] starting patch_character_select_selected_name
+[  5.637s] [Workarounds] finished patch_character_select_selected_name in 42.89µs
+[  5.637s] [Workarounds] starting patch_character_create_defaults
+[  5.638s] [Workarounds] finished patch_character_create_defaults in 358.01µs
+[  5.638s] [Workarounds] starting patch_character_frame_title_refresh
+[  5.647s] [Workarounds] finished patch_character_frame_title_refresh in 9.45ms
+[  5.647s] [Workarounds] starting patch_vignette_pin_template
+[  5.648s] [Workarounds] finished patch_vignette_pin_template in 210.65µs
+[  5.648s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  5.649s] [Workarounds] finished patch_fog_of_war_pin_mixin in 1.35ms
+[  5.649s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  5.659s] [Workarounds] finished patch_map_exploration_pin_mixin in 9.62ms
+[  5.659s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  5.659s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 154.11µs
+[  5.659s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  5.660s] [Workarounds] finished ensure_adventure_map_frame_surface in 915.48µs
+[  5.660s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  5.660s] [Workarounds] finished patch_action_bar_button_event_fanout in 252.00µs
+[  5.660s] [Workarounds] starting patch_paging_controls_page_text
+[  5.660s] [Workarounds] finished patch_paging_controls_page_text in 67.34µs
+[  5.660s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  5.660s] [Workarounds] finished patch_talent_edge_frame_level_sync in 40.24µs
+[  5.660s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  5.660s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 98.07µs
+[  5.660s] [Workarounds] starting patch_game_time_defaults
+[  5.660s] [Workarounds] finished patch_game_time_defaults in 19.69µs
+[  5.660s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  5.660s] [Workarounds] finished patch_tooltip_nineslice_surface in 79.01µs
+[  5.660s] [Workarounds] starting patch_container_frame_token_tracker
+[  5.660s] [Workarounds] finished patch_container_frame_token_tracker in 63.73µs
+[  5.660s] [Workarounds] starting patch_achievement_display_set_achievements
+[  5.660s] [Workarounds] finished patch_achievement_display_set_achievements in 12.50µs
+[  5.660s] [Workarounds] starting patch_housing_dashboard_preload
+[  5.661s] [Workarounds] finished patch_housing_dashboard_preload in 256.74µs
+[  5.661s] [Workarounds] starting patch_lfg_lock_list
+[  5.661s] [Workarounds] finished patch_lfg_lock_list in 60.85µs
+[  5.661s] [Workarounds] starting patch_auction_house_browse_results_event
+[  5.661s] [Workarounds] finished patch_auction_house_browse_results_event in 92.00µs
+[  5.661s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  5.661s] [Workarounds] finished patch_auction_house_search_context_aliases in 42.87µs
+[  5.661s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  5.661s] [Workarounds] finished patch_auth_challenge_frame_parent in 116.46µs
+[  5.661s] [Workarounds] starting patch_settings_surface_defaults
+[  5.662s] [Workarounds] finished patch_settings_surface_defaults in 670.75µs
+[  5.662s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  5.662s] [Workarounds] finished patch_settings_canvas_layout_visibility in 178.17µs
+[  5.662s] [Startup] apply_post_load_workarounds: workarounds complete
+[  5.807s] [Startup] apply_post_load_workarounds: globals restored
+[  5.808s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  5.808s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  6.256s] [Startup] begin login sequence
+[  6.256s] [Startup] Firing ADDON_LOADED
+[  6.257s] [Startup] Firing VARIABLES_LOADED
+[  6.539s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  6.638s] [Startup] Firing UI_SCALE_CHANGED
+[  6.640s] [Startup] Firing PLAYER_LOGIN
+[  6.640s] [Startup] end login sequence in 383.77ms
+[  6.640s] [Startup] begin world enter sequence
+[  6.640s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  6.640s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  6.640s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  7.207s] [EditMode] starting setup_layout_info
+[  7.218s] [EditMode] finished setup_layout_info in 11.23ms
+[  7.218s] [EditMode] starting apply_system_anchors
+[  7.533s] [EditMode] finished apply_system_anchors in 315.24ms
+[  7.533s] [EditMode] starting finalize_action_bar_positions
+[  7.541s] [EditMode] finished finalize_action_bar_positions in 8.18ms
+[  7.541s] [EditMode] starting invoke_anchor_changed_hooks
+[  7.557s] [EditMode] finished invoke_anchor_changed_hooks in 15.69ms
+[  7.557s] [EditMode] starting fix_action_bar_nan_size
+[  7.557s] [EditMode] finished fix_action_bar_nan_size in 194.99µs
+[  7.557s] [EditMode] starting fix_action_bar_scale
+[  7.557s] [EditMode] finished fix_action_bar_scale in 12.21µs
+[  7.557s] [EditMode] starting reapply_player_frame_anchor
+[  7.561s] [EditMode] finished reapply_player_frame_anchor in 3.32ms
+[  7.581s] [Startup] end world enter sequence in 940.36ms
+[  7.581s] [Startup] begin post-login events
+[  7.583s] [Startup] Firing UNIT_AURA
+[  7.585s] [Startup] Firing PET_UI_UPDATE
+[  7.591s] [Startup] Firing BAG_UPDATE_DELAYED
+[  7.595s] [Startup] Firing QUEST_LOG_UPDATE
+[  7.597s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  7.856s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  7.856s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  7.859s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  7.886s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  7.886s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  7.886s] [Startup] Firing UPDATE_BINDINGS
+[  7.891s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  7.896s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  7.898s] [Startup] end post-login events in 317.78ms
+[  7.898s] [Startup] begin close startup special windows
+[  7.899s] [Startup] end close startup special windows in 549.38µs
+[  7.899s] [Startup] begin FIRST_FRAME_RENDERED
+[  7.899s] [Startup] Firing FIRST_FRAME_RENDERED
+[  7.899s] [Startup] end FIRST_FRAME_RENDERED in 387.99µs
+[  7.899s] [Startup] begin unblock hidden splash alerts
+[  7.899s] [Startup] end unblock hidden splash alerts in 28.48µs
+[  7.899s] [Startup] begin post-event workarounds
+[  7.899s] [Startup] end post-event workarounds in 1.47µs
+running 57 tests
+test patch_10_0_0_publication_sweep::patch_10_0_0_animation_probe_factories ... ok
+test patch_10_0_2_publication_sweep::patch_10_0_2_publication_sweep ... ok
+test patch_10_0_0_publication_sweep::patch_10_0_0_publication_sweep ... ok
+test patch_10_0_5_publication_sweep::patch_10_0_5_publication_sweep ... ok
+test patch_10_0_7_publication_sweep::patch_10_0_7_publication_sweep ... ok
+test patch_10_1_0_publication_sweep::patch_10_1_0_publication_sweep ... ok
+test patch_10_1_7_publication_sweep::patch_10_1_7_publication_sweep ... ok
+test patch_10_1_5_publication_sweep::patch_10_1_5_publication_sweep ... ok
+test patch_10_2_5_publication_sweep::patch_10_2_5_publication_sweep ... ok
+test patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep ... ok
+test patch_10_2_7_publication_sweep::patch_10_2_7_publication_sweep ... ok
+test patch_10_2_6_publication_sweep::patch_10_2_6_publication_sweep ... ok
+test patch_11_0_2_publication_sweep::patch_11_0_2_publication_sweep ... ok
+test patch_11_0_5_publication_sweep::patch_11_0_5_publication_sweep ... ok
+test patch_11_0_0_publication_sweep::patch_11_0_0_publication_sweep ... ok
+test patch_11_0_7_publication_sweep::patch_11_0_7_publication_sweep ... ok
+test patch_11_1_0_publication_sweep::patch_11_1_0_publication_sweep ... ok
+test patch_11_1_5_publication_sweep::patch_11_1_5_publication_sweep ... ok
+test patch_11_1_7_publication_sweep::patch_11_1_7_publication_sweep ... ok
+test patch_11_2_0_publication_sweep::patch_11_2_0_publication_sweep ... ok
+test patch_11_2_5_publication_sweep::patch_11_2_5_publication_sweep ... ok
+test patch_11_2_7_publication_sweep::patch_11_2_7_publication_sweep ... ok
+test patch_12_0_0_publication_sweep::patch_12_0_0_publication_sweep ... ok
+test patch_12_0_1_publication_sweep::patch_12_0_1_publication_sweep ... ok
+test patch_12_0_7_publication_sweep::patch_12_0_7_publication_sweep ... ok
+test patch_12_0_5_publication_sweep::patch_12_0_5_publication_sweep ... ok
+test patch_5_4_7_publication_sweep::patch_5_4_7_publication_sweep ... ok
+test patch_5_4_8_publication_sweep::patch_5_4_8_publication_sweep ... ok
+test patch_6_0_1_publication_sweep::patch_6_0_1_publication_sweep ... ok
+test patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep ... ok
+test patch_6_1_0_publication_sweep::patch_6_1_0_publication_sweep ... ok
+test patch_6_2_0_publication_sweep::patch_6_2_0_publication_sweep ... ok
+test patch_6_2_2_publication_sweep::patch_6_2_2_publication_sweep ... ok
+test patch_6_0_2_publication_sweep::patch_6_0_2_publication_sweep ... ok
+test patch_6_2_4_publication_sweep::patch_6_2_4_publication_sweep ... ok
+test patch_7_0_1_publication_sweep::patch_7_0_1_publication_sweep ... ok
+test patch_7_1_0_publication_sweep::patch_7_1_0_publication_sweep ... ok
+test patch_7_0_3_publication_sweep::patch_7_0_3_publication_sweep ... ok
+test patch_7_2_0_publication_sweep::patch_7_2_0_publication_sweep ... ok
+test patch_7_2_5_publication_sweep::patch_7_2_5_publication_sweep ... ok
+test patch_7_3_0_publication_sweep::patch_7_3_0_publication_sweep ... ok
+test patch_7_3_2_publication_sweep::patch_7_3_2_publication_sweep ... ok
+test patch_8_0_1_publication_sweep::patch_8_0_1_publication_sweep ... ok
+test patch_8_1_0_publication_sweep::patch_8_1_0_publication_sweep ... ok
+test patch_8_1_5_publication_sweep::patch_8_1_5_publication_sweep ... ok
+test patch_8_2_0_publication_sweep::patch_8_2_0_publication_sweep ... ok
+test patch_8_2_5_publication_sweep::patch_8_2_5_publication_sweep ... ok
+test patch_8_3_7_publication_sweep::patch_8_3_7_publication_sweep ... ok
+test patch_8_3_0_publication_sweep::patch_8_3_0_publication_sweep ... ok
+test patch_9_0_2_publication_sweep::patch_9_0_2_publication_sweep ... ok
+test patch_9_0_5_publication_sweep::patch_9_0_5_publication_sweep ... ok
+test patch_9_0_1_publication_sweep::patch_9_0_1_publication_sweep ... ok
+test patch_9_1_0_publication_sweep::patch_9_1_0_publication_sweep ... ok
+test patch_9_1_5_publication_sweep::patch_9_1_5_publication_sweep ... ok
+test patch_9_2_0_publication_sweep::patch_9_2_0_publication_sweep ... ok
+test patch_9_2_5_publication_sweep::patch_9_2_5_publication_sweep ... ok
+test patch_9_2_7_publication_sweep::patch_9_2_7_publication_sweep ... ok
+
+test result: ok. 57 passed; 0 failed; 57 total
