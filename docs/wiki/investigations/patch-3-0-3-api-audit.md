@@ -30,6 +30,10 @@ The post-implementation GREEN receipt remains separate from the original sealed 
 
 Rebased source slice retains both 3.0.8 labeled-summary and 3.0.3 CVar-definition opt-in parsers. [Actual successor comparison](../../../data/patch-api/evidence/3.0.3-session-2026-10-09/integrated/successor-closure.json) pins 3.0.8/3.1.0/3.2.0/3.3.0 registers and finds zero exact symbol overlap. Original 16 seals and six UNPROVEN records remain unchanged. Independent merged-tool/source replay and supported publication measurement are pending; no native synchronization/model credit.
 
+## Separate supported retail factory measurement — 2026-10-09
+
+Standalone retail-only factory target and exact copied three-name inventory added in `p303-factory`, base `1ba5b6673`. Discovery starts with empty gaps; result pending. Shared factory classifier skips cached publishers/deprecation aliases. Fabricated unknown-CVar control requires absent value/default. Fresh evidence lives in [3.0.3-factory-2026-10-09](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/), separate from original 16 seals/eight historical IDs. No runtime changes, source spelling correction, guessed default, model semantics or loaded-UI/native/server/persistence credit. Main owns integration/native acceptance.
+
 ## Sources
 
 - [Exact page](../../../data/patch-api/sources/3.0.3-api-changes.wikitext).

@@ -1,3 +1,11 @@
+# Patch 3.0.3 factory goal
+
+- [ ] Measure exact three supported retail bare-factory CVars; finish with reviewed concrete observations or retained exact compile blocker, targeted development proof and commits. No runtime/model/native/full-UI acceptance.
+- [ ] Commit standalone discovery test with empty gaps, own inventory and fabricated unknown boundary.
+- [ ] Run only own offline no-default-features/client-retail targeted discovery; archive revision/cwd/env/argv/full streams/hashes.
+- [ ] Review observations, commit exact regression/default assertions and run targeted GREEN if compile succeeds.
+- [ ] Record separate measurement ledger and docs; preserve original 16 seals/eight source IDs. Main owns integration/native gates.
+
 # Goal
 
 - [ ] Continue full historical handoff through registry endpoint 1.0.0, including outstanding prefork follow-up, integration, asynchronous full-suite comparison and CI.

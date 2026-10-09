@@ -2908,6 +2908,10 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] development | Retail 3.2.0 portable original replay
 
 [Audit](investigations/patch-3-2-0-api-audit.md#original-receipt-replay): accounting fixtures 3/3 at 106630826, fresh-process clean replay without Git/target/tools or PATH executables. Current future-closure files ignored; serialized source/own-log/ledger/gap tampering rejected at exact seals, bytes restored and clean replay repeated. Original 145-ID/30-match/13-gap history and archive remain frozen. No new models, runtime mutation or independent/final acceptance claim; main owns ordered successor integration.
+## [2026-10-09] measurement | Retail 3.0.3 bare factory
+
+[Separate factory measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): exact three source names, retail-only standalone target; discovery pending. No native/synchronization/default inference; original 16 seals/eight source IDs unchanged.
+
 ## [2026-10-09] investigation | Historical retail Patch 3.0.3 source accounting
 
 [Audit](investigations/patch-3-0-3-api-audit.md): frozen page560990/revision5407654, three literal CVar definitions and eight IDs; two metadata/six UNPROVEN publication/semantic records, zero signatures/models/runtime edits. Own source GREEN3/3 and original Git-free copied replay GREEN2/2; 16 seals/93 archived snapshots, 17 serialized tamper/restoration controls. Full101-page handoff registry through1.0.0 retained. Queued retail3.0.8/3.1.0/3.2.0/3.3.0 remain ordered placeholders; no Classic supersession or native/final acceptance.

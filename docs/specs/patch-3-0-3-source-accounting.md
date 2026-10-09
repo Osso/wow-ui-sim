@@ -24,6 +24,14 @@ Bounded audit of frozen page 560990/revision 5407654 (2010-03-28T14:26:47Z), fro
 - `tools/test_patch_3_0_3_source.py`: literal serialized contracts, malformed-definition boundary and bounded recorded-output compatibility.
 - `tools/test_patch_3_0_3_validator.py`: copied historical replay and tamper/restoration boundary.
 
+## Separate supported retail factory measurement
+
+- [x] Add standalone `tests/patch_3_0_3_factory.rs`, retail-only target, exact own three-name inventory and fabricated unknown-CVar boundary using the shared classifier. No spelling correction or aliases.
+- [ ] Discover with empty known gaps, then retain reviewed concrete publication/value/default results or exact compile blocker in [fresh evidence](../../data/patch-api/evidence/3.0.3-factory-2026-10-09/).
+- [ ] Run only targeted offline `--no-default-features --features client-retail` development RED/GREEN; no loaded UI/cache or native acceptance.
+
+Original 16 seals and eight ledger IDs remain historical source accounting. Separate current factory results cannot prove 0/1 synchronization, server/native/persistence effects or source defaults; arbitrary local CVar assignment is not synchronization.
+
 ## Known gaps (current cycle)
 
 - [ ] Three publication observations UNPROVEN: source accounting is not runtime measurement.
