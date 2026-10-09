@@ -1,0 +1,18 @@
+[
+  {
+    "case": "historical",
+    "exit": 1,
+    "diagnostic": "own evidence drift: own-green.txt",
+    "restored_sha256": "1129d03c824a436183b9b4f6debe899e72d0d8eed0a1e4143f9004296861f30f",
+    "log": "historical-tamper-validator.txt",
+    "log_sha256": "c461aa3186b25b7547a0c8c00131dae652c582db60f008e811c7125b0fde315c"
+  },
+  {
+    "case": "integrated",
+    "exit": 1,
+    "diagnostic": "own evidence tamper: all-sweeps.txt",
+    "restored_sha256": "224567b313e5f8225cd0ff57db84b55a4b77d55e427014aedbf5e479ad662a4f",
+    "log": "integrated-tamper-validator.txt",
+    "log_sha256": "4e02782462bb4d3176d958cf706bf9fb921837fc1ebc3b9593d3ad2458ababaa"
+  }
+]
