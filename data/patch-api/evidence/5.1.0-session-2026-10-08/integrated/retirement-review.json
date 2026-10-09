@@ -1,0 +1,10 @@
+{
+  "members": [
+    "C_PetJournal.GetSummonedPetID",
+    "C_PetJournal.SummonPetByID"
+  ],
+  "cache_consumers": 0,
+  "caller_matches": "Only the existing retirement marker and dedicated absence-test literals; no production invocation, function-value call or conditional guard. All src/tests scanned untruncated, including Lua strings.",
+  "readds": [],
+  "profile_gate": "retail-12-0-0 module declaration and registration; client-mists does not load retirement registry."
+}

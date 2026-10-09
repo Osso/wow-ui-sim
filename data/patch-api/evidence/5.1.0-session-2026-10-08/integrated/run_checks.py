@@ -23,7 +23,6 @@ def outputs(directory):
 def main():
     outputs(HERE)
     jobs = [
-        ('own-sweep', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_5_1_0_publication_sweep']),
         ('all-sweeps', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'publication_sweep']),
         ('prefork-patch_5_1_0', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_5_1_0']),
         ('integration-patch_5_1_0', ['cargo', 'test', '--test', 'integration', '--', 'patch_5_1_0']),

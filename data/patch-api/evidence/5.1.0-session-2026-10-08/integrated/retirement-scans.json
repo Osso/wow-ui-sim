@@ -1,0 +1,182 @@
+[
+  {
+    "member": "GetSummonedPetID",
+    "scope": "cache",
+    "form": "qualified",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "C_PetJournal.GetSummonedPetID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "!*Documentation*/**",
+      "--glob",
+      "!*Documentation*"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 1,
+    "matches": 0,
+    "log": "GetSummonedPetID-cache-qualified.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "GetSummonedPetID",
+    "scope": "cache",
+    "form": "bare",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "GetSummonedPetID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "!*Documentation*/**",
+      "--glob",
+      "!*Documentation*"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 1,
+    "matches": 0,
+    "log": "GetSummonedPetID-cache-bare.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "GetSummonedPetID",
+    "scope": "callers",
+    "form": "qualified",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "C_PetJournal.GetSummonedPetID",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 1,
+    "matches": 0,
+    "log": "GetSummonedPetID-callers-qualified.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "GetSummonedPetID",
+    "scope": "callers",
+    "form": "bare",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "GetSummonedPetID",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 0,
+    "matches": 2,
+    "log": "GetSummonedPetID-callers-bare.txt",
+    "sha256": "b6c16240a5bc85fb97514f06386ab68c616f123e5cacde0527259ec2a7f0187c"
+  },
+  {
+    "member": "SummonPetByID",
+    "scope": "cache",
+    "form": "qualified",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "C_PetJournal.SummonPetByID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "!*Documentation*/**",
+      "--glob",
+      "!*Documentation*"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 1,
+    "matches": 0,
+    "log": "SummonPetByID-cache-qualified.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "SummonPetByID",
+    "scope": "cache",
+    "form": "bare",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "SummonPetByID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--glob",
+      "!*Documentation*/**",
+      "--glob",
+      "!*Documentation*"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 1,
+    "matches": 0,
+    "log": "SummonPetByID-cache-bare.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "SummonPetByID",
+    "scope": "callers",
+    "form": "qualified",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "C_PetJournal.SummonPetByID",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 1,
+    "matches": 0,
+    "log": "SummonPetByID-callers-qualified.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "SummonPetByID",
+    "scope": "callers",
+    "form": "bare",
+    "command": [
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep/bin/rg",
+      "--hidden",
+      "--no-ignore",
+      "-n",
+      "-w",
+      "-F",
+      "SummonPetByID",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p510-page",
+    "exit": 0,
+    "matches": 2,
+    "log": "SummonPetByID-callers-bare.txt",
+    "sha256": "b6c16240a5bc85fb97514f06386ab68c616f123e5cacde0527259ec2a7f0187c"
+  }
+]
