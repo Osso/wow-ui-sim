@@ -1,0 +1,429 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.3.0",
+  "source": {
+    "path": "data/patch-api/sources/5.3.0-api-changes.wikitext",
+    "revid": 4065122,
+    "sha256": "62da2d403ebc3027b12e47145329e459a903ef5f5779f2079bf1d6339a6013fe"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 14,
+      "parsed_count": 14
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "framexml",
+      "direction": "added",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "framexml",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 8,
+      "parsed_count": 8
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 14,
+      "parsed_count": 14
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    }
+  ],
+  "entries": [
+    {
+      "id": "diff-wt-global-api-AcknowledgeSurvey-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "AcknowledgeSurvey",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "diff-wt-global-api-C_PetBattles.CanAcceptQueuedPVPMatch-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetBattles.CanAcceptQueuedPVPMatch",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "diff-wt-global-api-C_Scenario.GetBonusCriteriaInfo-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Scenario.GetBonusCriteriaInfo",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "diff-wt-global-api-C_Scenario.GetBonusStepInfo-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Scenario.GetBonusStepInfo",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "diff-wt-global-api-CanTrackBattlePets-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanTrackBattlePets",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "diff-wt-global-api-GetBattlegroundPoints-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBattlegroundPoints",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "diff-wt-global-api-GetItemUpgradeEffect-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetItemUpgradeEffect",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "diff-wt-global-api-GetLFGRoleUpdateBattlegroundInfo-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGRoleUpdateBattlegroundInfo",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "diff-wt-global-api-GetLootSpecialization-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLootSpecialization",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "diff-wt-global-api-GetNumItemUpgradeEffects-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumItemUpgradeEffects",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "diff-wt-global-api-GetPVPRoles-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P530MissingNegativeControl",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "diff-wt-global-api-GetWebTicket-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetWebTicket",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "diff-wt-global-api-SetLootSpecialization-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetLootSpecialization",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "diff-wt-global-api-SetPVPRoles-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetPVPRoles",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-28",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PrepVoidStorageForTransmogrify",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "diff-wt-framexml-HideKnowledgeBase-39",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "HideKnowledgeBase",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "diff-wt-framexml-PrintLootSpecialization-40",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "PrintLootSpecialization",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "diff-wt-framexml-ShowKnowledgeBase-41",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "ShowKnowledgeBase",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "diff-wt-events-BATTLEGROUND_POINTS_UPDATE-55",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEGROUND_POINTS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "diff-wt-events-BONUS_ROLL_ACTIVATE-56",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BONUS_ROLL_ACTIVATE",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "diff-wt-events-BONUS_ROLL_DEACTIVATE-57",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BONUS_ROLL_DEACTIVATE",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "diff-wt-events-PLAYER_LOOT_SPEC_UPDATED-58",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_LOOT_SPEC_UPDATED",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "diff-wt-events-PVP_ROLE_UPDATE-59",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PVP_ROLE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "diff-wt-events-SIMPLE_BROWSER_WEB_ERROR-60",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SIMPLE_BROWSER_WEB_ERROR",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "diff-wt-events-SIMPLE_BROWSER_WEB_PROXY_FAILED-61",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SIMPLE_BROWSER_WEB_PROXY_FAILED",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "diff-wt-events-UPDATE_WEB_TICKET-62",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_WEB_TICKET",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "diff-wt-events-UNIT_DYNAMIC_FLAGS-65",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UNIT_DYNAMIC_FLAGS",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "diff-wt-widgets-Browser:ClearCache-76",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:ClearCache",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "diff-wt-widgets-Browser:ClearFocus-77",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:ClearFocus",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "diff-wt-widgets-Browser:CopyExternalLink-78",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:CopyExternalLink",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "diff-wt-widgets-Browser:DeleteCookies-79",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:DeleteCookies",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "diff-wt-widgets-Browser:HasConnection-80",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:HasConnection",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "diff-wt-widgets-Browser:NavigateBack-81",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:NavigateBack",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "diff-wt-widgets-Browser:NavigateForward-82",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:NavigateForward",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "diff-wt-widgets-Browser:NavigateHome-83",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:NavigateHome",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "diff-wt-widgets-Browser:NavigateReload-84",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:NavigateReload",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "diff-wt-widgets-Browser:NavigateStop-85",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:NavigateStop",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "diff-wt-widgets-Browser:OpenExternalLink-86",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:OpenExternalLink",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "diff-wt-widgets-Browser:OpenTicket-87",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:OpenTicket",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "diff-wt-widgets-Browser:SetFocus-88",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:SetFocus",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "diff-wt-widgets-Browser:SetZoom-89",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser:SetZoom",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "diff-wt-widgets-Browser OnEditFocusGained-103",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser OnEditFocusGained",
+      "annotation": "",
+      "wikitext_line": 103,
+      "kind": "widget-script"
+    },
+    {
+      "id": "diff-wt-widgets-Browser OnEditFocusLost-104",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser OnEditFocusLost",
+      "annotation": "",
+      "wikitext_line": 104,
+      "kind": "widget-script"
+    },
+    {
+      "id": "diff-wt-widgets-Browser OnEscapePressed-105",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Browser OnEscapePressed",
+      "annotation": "",
+      "wikitext_line": 105,
+      "kind": "widget-script"
+    }
+  ],
+  "client_line": "retail"
+}
