@@ -39,7 +39,7 @@ Own development RED fails the missing 333-occurrence result against a temporary 
 
 ## Portable negative-control fixture
 
-[Own controls](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py) mutate the serialized ledger and sealed GREEN log separately, require exact seal rejection, restore/hash-check original bytes, then export only sealed inputs into a relocated archive with no `.git`. The archived validator executes with the owned worktree cwd; paths resolve solely from its relocated file. This is source/log replay, never runtime/native replay. Control receipts are pending fixture execution.
+[Own controls](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py) mutate the serialized ledger and sealed GREEN log separately, require exact seal rejection, restore/hash-check original bytes, then export only sealed inputs into a relocated archive with no `.git`. The archived validator executes with the owned worktree cwd; paths resolve solely from its relocated file. This is source/log replay, never runtime/native replay. At `e6ed237fa5a2972643be17103131e5ca2d3369a2`, serialized ledger tampering exits 1 at its exact seal; GREEN-log tampering exits 1 at its exact seal; both originals are byte-restored/hash-checked. Relocated Git-free archive replay exits 0 with 17 historical sealed inputs, deriving the same source summary. Archive SHA-256 `2aa54c026c0694b8517f055e312bf34fcbe035d63eba1eb850c92f587755b338`; full member hash mapping and exact subprocess receipts retained in `portable-controls.log`. Later receipt/doc/seal-entry additions do not alter tested source/validator/test/historical-tool/profile/control bytes.
 
 ## Sources
 

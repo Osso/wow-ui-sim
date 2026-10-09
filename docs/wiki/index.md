@@ -4,7 +4,7 @@
 
 ## [2026-10-09] investigation | Patch 3.4.1 Wrath Classic bounded API audit
 
-[Audit](investigations/patch-3-4-1-api-audit.md): frozen page 379792/revision 3656581, TOC 30401. 333 inventory occurrences (211 globals, 44 events, 77 CVars, one command), six reconciled headers, 376 nonblank source rows, two prose limits and 211 unspecified signatures. All 335 substantive source rows UNPROVEN; supported Wrath interface 38001 is not native/runtime proof. Own source-accounting RED/GREEN 7/7 and exact extraction/replay pass. Raw widget-equivalence prose preserved despite stock extractor omission. Only Wrath 3.4.2/3.4.3 queued; no retail/Cata supersession, runtime changes or broad/final gates. Parent integrates after 3.4.2.
+[Audit](investigations/patch-3-4-1-api-audit.md): frozen page 379792/revision 3656581, TOC 30401. 333 inventory occurrences (211 globals, 44 events, 77 CVars, one command), six reconciled headers, 376 nonblank source rows, two prose limits and 211 unspecified signatures. All 335 substantive source rows UNPROVEN; supported Wrath interface 38001 is not native/runtime proof. Own source-accounting RED/GREEN 7/7 and exact extraction/replay pass. Raw widget-equivalence prose preserved despite stock extractor omission. Only Wrath 3.4.2/3.4.3 queued; no retail/Cata supersession, runtime changes or broad/final gates. Serialized ledger/log tamper controls each reject at exact seals and restore hashes; relocated Git-free replay exits 0 at `e6ed237fa`. Parent integrates after 3.4.2.
 
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 

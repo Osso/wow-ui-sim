@@ -20,7 +20,7 @@
 
 ## [2026-10-09] ingest | Patch 3.4.1 Wrath Classic frozen source accounting
 
-[Audit](investigations/patch-3-4-1-api-audit.md): verified literal identity/hash before copy; 333 inventory/376 raw rows, two prose limits, 211 absent signatures, 62 literal CVar defaults. Headers 146/65, 35/9, 63/15 reconcile; CVar added includes LogFps command. Own serialized source-accounting RED then GREEN 7/7; exact extraction and sealed historical replay exit 0. No native/runtime publication, behavior or removal proof; no runtime/vendor/cache edits or broad/final gate. Parent integrates after separate 3.4.2.
+[Audit](investigations/patch-3-4-1-api-audit.md): verified literal identity/hash before copy; 333 inventory/376 raw rows, two prose limits, 211 absent signatures, 62 literal CVar defaults. Headers 146/65, 35/9, 63/15 reconcile; CVar added includes LogFps command. Own serialized source-accounting RED then GREEN 7/7; exact extraction and sealed historical replay exit 0. No native/runtime publication, behavior or removal proof; no runtime/vendor/cache edits or broad/final gate. At `e6ed237fa`, serialized ledger/log controls exit 1 at exact seals, restore/hash-check originals; relocated archive replay exits 0 without Git, retaining full member hashes. Parent integrates after separate 3.4.2.
 
 ## [2026-10-09] maintenance | Patch 4.3.4 modeled client clock
 

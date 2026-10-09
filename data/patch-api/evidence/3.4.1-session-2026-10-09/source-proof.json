@@ -102,8 +102,28 @@
       "log": "validator.log",
       "result": "Derived 333 occurrences, 376 source rows, two prose and 211 signature limits.",
       "invalidated_by": null
+    },
+    {
+      "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "phase": "own serialized tamper and relocated archive fixtures",
+      "revision": "e6ed237fa5a2972643be17103131e5ca2d3369a2",
+      "exit": 0,
+      "log": "portable-controls.log",
+      "results": {
+        "source_tamper_exit": 1,
+        "log_tamper_exit": 1,
+        "relocated_archive_exit": 0,
+        "git_present": false,
+        "archive_sha256": "2aa54c026c0694b8517f055e312bf34fcbe035d63eba1eb850c92f587755b338"
+      },
+      "scope": "Sealed historical member hashes in portable-controls.log; source and GREEN-log mutations rejected at exact seals, original bytes/hash restored; archived validator has no Git dependency.",
+      "invalidated_by": null
     }
   ],
   "formatting": "Python manually formatted; ruff/black unavailable. No Rust changes or cargo formatter.",
-  "excluded_gates": "No publication/check/build/readability/smoke/startup/final gate or native/runtime replay."
+  "excluded_gates": "No publication/check/build/readability/smoke/startup/final gate or native/runtime replay.",
+  "tested_content_commit": "5cf137f8154da400d860e4dd9549d47a136486d3",
+  "portable_control_execution_commit": "e6ed237fa5a2972643be17103131e5ca2d3369a2",
+  "later_changes": "Receipt/docs/seal-entry additions only; exact tested source, validator, tests, historical tools, profile and portable-control bytes unchanged."
 }

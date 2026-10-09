@@ -1,19 +1,21 @@
 {
-  "data/patch-api/evidence/3.4.1-session-2026-10-09/PLAN.md": "86d1a29a87866d45cd7f123deb0c1bffe6252fdad668aa5de7861ce219ad5ea5",
+  "data/patch-api/evidence/3.4.1-session-2026-10-09/PLAN.md": "02a772cc6fadc87528b132194738b3bbc921fbf899c50e4f9084a8d862e79c32",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/extractor.log": "b7c7f6ea2d19445e7cb0235e056f1034596e1cec5710de2e3997a1b2d9a9f517",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/green.log": "fa9d18f56cd1783fc9493e878c6fe821df3cf6ca27ad9f953b7cb4e4114de474",
+  "data/patch-api/evidence/3.4.1-session-2026-10-09/handoff.md": "a3a50d9cab31c2545244cf7cd548e2138baf70ea8d6910c36e9b1c37773fabf2",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/historical-extract_patch_non_inventory.py": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/historical-gen_patch_wikitext_register.py": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+  "data/patch-api/evidence/3.4.1-session-2026-10-09/portable-controls.log": "316bd1430517915306fe8b6484aa2df384c9c74d096a69dbf2c994b94ed15ed1",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/profile-observation.json": "f45aebbcec3c849800a49e7064a029afea234443c727eaa731208043f0ef9768",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/red.log": "179e2d257ebb52a7f64b25ff280a232ba01c86ec64204e04c0317353d5a228e0",
+  "data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py": "025db6f88bf353a3a3d15edb62e0df76a44b5ff3ca12de1ca324ee4308273bbb",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/source-pin.json": "4ae14e3288b409f2feba02c0b20c48ba8b3faac2dbcbd6b7329e5547478cf995",
-  "data/patch-api/evidence/3.4.1-session-2026-10-09/source-proof.json": "1e6f7cd71a77339bc17cd810d55ab4d9291f5688c84016e3b932a3298571d89f",
+  "data/patch-api/evidence/3.4.1-session-2026-10-09/source-proof.json": "556892fb2dd81245461c36c7f2c9716a06d94907c6d9ecdb6e3146c58ed62492",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/source-response.json": "8fd09b4b807c4191b62843d4e2dbfc18a5313e15796a6e284e24016694e99afe",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py": "413b436f849aee13b8c81528244d1e2aeab4459f4b451fc00b29196789669a43",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/validate.py": "62bfbef5cb2f157fdd88a9905eccbfc75a2e53bab9409aa1fcd5850afa95cea3",
   "data/patch-api/evidence/3.4.1-session-2026-10-09/validator.log": "4d206abd5ff2e1c494bcfa536db964ed32730f93295b0942e37efdcd68bd9264",
   "data/patch-api/sources/3.4.1-api-changes.txt": "9ff94a5562b6a17dd9e55de6c038b06612abe6a72fdffe722472be89b664cd0e",
   "data/patch-api/sources/3.4.1-api-changes.wikitext": "b336b152bea05e3609de06ac3971a98e7d2584129e4e3b74a5c333c6fc060ed1",
-  "data/patch-api/sources/3.4.1-page-coverage.json": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
-  "data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py": "025db6f88bf353a3a3d15edb62e0df76a44b5ff3ca12de1ca324ee4308273bbb"
+  "data/patch-api/sources/3.4.1-page-coverage.json": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db"
 }

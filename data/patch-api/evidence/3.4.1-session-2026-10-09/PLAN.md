@@ -5,5 +5,5 @@ Scope: frozen Wrath Classic 3.4.1 source inventory/prose/signature accounting on
 - [x] Verify identity/hash before copying source; record supported Wrath profile separately.
 - [x] Account 333 inventory occurrences, two prose limits, 211 unspecified signatures and every nonblank raw row.
 - [x] Implement own validator and targeted source-accounting RED/GREEN tests.
-- [ ] Preserve serialized source/log tamper and relocated archive replay receipts.
-- [ ] Commit exact handoff report for parent integration after 3.4.2.
+- [x] Preserve serialized source/log tamper and relocated archive replay receipts.
+- [x] Commit exact handoff report for parent integration after 3.4.2.

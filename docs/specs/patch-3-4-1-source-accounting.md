@@ -24,7 +24,7 @@ Account frozen Warcraft Wiki page `379792`/revision `3656581` as Wrath Classic T
 
 `python3 data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py`: seven targeted serialized accounting tests. Own `validate.py`: sealed historical replay. `python3 tools/extract_patch_non_inventory.py --patch 3.4.1 --text-only --canonical-patch-navigation --check`: exact recorded flags, no runtime proof. [Proof ledger](../../data/patch-api/evidence/3.4.1-session-2026-10-09/source-proof.json).
 
-`python3 data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py` exercises serialized source/log tampering and relocated Git-free archive replay; receipts pending fixture execution.
+`python3 data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py`: at `e6ed237fa`, both serialized ledger/log tamper controls reject at exact seals with exit 1, restore original bytes/hashes, and relocated Git-free archive replay exits 0. Exact receipts/member hashes in `portable-controls.log`; source/test/tool/validator bytes remain unchanged.
 
 ## Known gaps (current cycle)
 
