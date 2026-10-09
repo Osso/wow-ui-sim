@@ -105,6 +105,20 @@ class HistoricalValidationTests(unittest.TestCase):
     def test_log_tamper(self):
         self.reject_restore(lambda: (self.page / "own.log").write_bytes(b"forged log"), "sealed artifact")
 
+    def test_receipt_log_hash_tamper(self):
+        def mutate():
+            (self.page / "own.log").write_bytes(b"forged log")
+            self.reseal()
+        self.reject_restore(mutate, "receipt log summary")
+
+    def test_reproduction_command_tamper(self):
+        def mutate():
+            proof = self.load("reproduction.proof.json")
+            proof["proofs"][0]["command"].append("--simple-api-list")
+            self.save("reproduction.proof.json", proof)
+            self.reseal()
+        self.reject_restore(mutate, "reproduction receipt commands")
+
     def test_same_cardinality_negative_tamper(self):
         def mutate():
             results = self.load("negative-results.json")

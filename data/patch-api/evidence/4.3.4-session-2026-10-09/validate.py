@@ -190,9 +190,12 @@ def validate_receipts(page, archive, pins):
     for name, exit_code in [("discovery", 1), ("own", 0), ("negative", 1)]:
         proof = load(page, name + ".proof.json")
         require(proof["command"] == sweep, "receipt command")
-        environment = {"CARGO_TARGET_DIR": cwd + "/target", "P434_SWEEP_OUT": cwd + "/data/patch-api/evidence/" + page.name + "/" + name + "-results.json"}
         # Relocation affects the validator path, never the original receipt cwd.
-        environment["P434_SWEEP_OUT"] = cwd + "/data/patch-api/evidence/4.3.4-session-2026-10-09/" + name + "-results.json"
+        evidence = cwd + "/data/patch-api/evidence/4.3.4-session-2026-10-09/"
+        environment = {
+            "CARGO_TARGET_DIR": cwd + "/target",
+            "P434_SWEEP_OUT": evidence + name + "-results.json",
+        }
         if name == "negative":
             environment["P434_SWEEP_REGISTER"] = cwd + "/data/patch-api/evidence/4.3.4-session-2026-10-09/negative-register.json"
         require(proof["environment"] == environment, "receipt environment")
@@ -205,13 +208,53 @@ def validate_receipts(page, archive, pins):
     require(reproduction["generator_flags"] == reproduction["extractor_flags"] == [], "reproduction flags")
     for kind, suffix in [("register", "wikitext-register.json"), ("extract", "api-changes.txt")]:
         require(reproduction[kind + "_byte_identical"] is True and reproduction[kind + "_sha256"] == sha(archive[SOURCE + suffix].encode()), "reproduction identity")
-    require(len(reproduction["proofs"]) == 2 and all(p["exit"] == 0 for p in reproduction["proofs"]), "reproduction receipt exits")
-    require(load(page, "format.proof.json")["exit"] == 0, "format receipt exit")
+    expected_commands = [
+        [
+            "python3", cwd + "/tools/gen_patch_wikitext_register.py", "4.3.4",
+            cwd + "/" + SOURCE + "api-changes.wikitext", "3743181",
+            evidence + "reproduced-register.json",
+        ],
+        [
+            "python3", cwd + "/tools/extract_patch_non_inventory.py",
+            "--patch", "4.3.4", "--text-only", "--check",
+        ],
+    ]
+    require(
+        [proof["command"] for proof in reproduction["proofs"]] == expected_commands,
+        "reproduction receipt commands",
+    )
+    require(
+        all(proof["exit"] == 0 for proof in reproduction["proofs"]),
+        "reproduction receipt exits",
+    )
+    formatter = load(page, "format.proof.json")
+    require(formatter["exit"] == 0, "format receipt exit")
+    require(
+        formatter["command"] == [
+            "rustfmt", "--edition", "2024",
+            cwd + "/tests/patch_4_3_4_publication_sweep.rs",
+        ],
+        "format receipt command",
+    )
+    require(
+        all(proof["revision"] == pins["revision_label"]
+            for proof in reproduction["proofs"] + [formatter]),
+        "reproduction/format receipt revision",
+    )
     for filename in ("own.proof.json", "negative.proof.json", "discovery.proof.json", "format.proof.json", "reproduction.proof.json"):
         container = load(page, filename)
         for proof in container.get("proofs", [container]):
             require(proof["cwd"] == cwd, "receipt cwd")
-            require(Path(proof["log"]).name == proof["log"] and sha((page / proof["log"]).read_bytes()) == proof["log_sha256"], "receipt log hash")
+            expected_log = (
+                f"reproduction-{reproduction['proofs'].index(proof)}.log"
+                if filename == "reproduction.proof.json"
+                else filename.replace(".proof.json", ".log")
+            )
+            require(proof["log"] == expected_log, "receipt log name")
+            require(
+                sha((page / proof["log"]).read_bytes()) == proof["log_sha256"],
+                "receipt log hash",
+            )
             require(bool(proof["command"]) and re.fullmatch(r"[0-9a-f]{40}", proof["revision"]), "receipt schema")
 
 

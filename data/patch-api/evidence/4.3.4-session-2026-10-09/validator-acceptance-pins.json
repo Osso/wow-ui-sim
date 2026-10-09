@@ -3,12 +3,12 @@
   "scope": "Artifact/test scope only; no fresh runtime or coordinator acceptance proof",
   "files": {
     "validate.py": {
-      "sha256": "287a86a817a149b8a3bbffcea820085eae2c8e96f4c86944e5b90137d36ef755",
-      "bytes": 14872
+      "sha256": "a362985b58b011e479ca79092fb0d0d83058c50cd80975cef4157ca3c6035365",
+      "bytes": 16081
     },
     "test_validate.py": {
-      "sha256": "5d4601b18f5a946ea5d0715a243995c4643941b03ffd68662be3ee61021ab35c",
-      "bytes": 5814
+      "sha256": "90528639578196b4f0a3a2f36026e1196a5bcdd09aa3af69ab18c912dcc6d686",
+      "bytes": 6378
     },
     "session-seals.json": {
       "sha256": "b00a065b7f1feaa9e9448f8e75fb93976b3b2e8b5934e3a7a6c5ad0ac890c0b7",
