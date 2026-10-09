@@ -14,6 +14,21 @@
       "exit": 1,
       "artifact": "parser-red.log",
       "proof": "RED: unrecognized --historical-api-headings"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools/test_patch_3_3_3_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p333-source",
+      "revision": "ac338fe2d",
+      "scope": "3.3.3 full source and negative unrelated-section fixtures; default bytes",
+      "exit": 0,
+      "artifact": "parser-green.txt",
+      "proof": "GREEN"
     }
   ]
 }

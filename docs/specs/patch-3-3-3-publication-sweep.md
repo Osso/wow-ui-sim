@@ -4,7 +4,7 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 
 ## What it must do
 
-- [ ] Opt-in heading parsing retains all 36 named occurrences and original lines; without the flag previous output bytes remain unchanged.
+- [x] Opt-in heading parsing retains all 36 named occurrences and original lines; without the flag previous output bytes remain unchanged.
 - [ ] Full source, rendered extract, signatures, prose and editorial headers receive explicit dispositions.
 - [ ] Only actual later retail registers supersede, with 3.3.5 then 4.0.1 placeholders preceding actual 4.1.0 onward; never Wrath Classic 3.4.x or other Classic histories.
 - [ ] Portable historical replay derives counts and validates sealed source/log receipts without Git, target or mutable current accounting inputs.
@@ -20,7 +20,8 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 
 ## Tests asserting this spec
 
-- `tools/test_patch_3_3_3_source.py`: full pinned page and unrelated-section exclusion.
+- `tools/test_patch_3_3_3_source.py`: full pinned page and unrelated-section exclusion, GREEN 2/2.
+- `tests/patch_3_3_3_publication_sweep.rs`: own cached-retail publication discovery; no current execution credit.
 
 ## Known gaps (current cycle)
 

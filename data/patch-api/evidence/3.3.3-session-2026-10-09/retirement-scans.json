@@ -1,0 +1,20 @@
+{
+  "cache": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+  "cache_exists": true,
+  "method": "all cached retail Lua, qualified and bare whole-word; Python because rg unavailable",
+  "matches": {
+    "ShowBattlefieldList": {
+      "qualified": [],
+      "bare": []
+    },
+    "Texture:GetTexCoordModifiesRect": {
+      "qualified": [],
+      "bare": []
+    },
+    "Texture:SetTexCoordModifiesRect": {
+      "qualified": [],
+      "bare": []
+    }
+  },
+  "retirement_decision": "No runtime change: no src/tests implementation or consumers for any source-removed identity; actual runtime absence still requires own sweep."
+}

@@ -1,0 +1,543 @@
+{
+  "scope": [
+    "all src/",
+    "all tests/"
+  ],
+  "method": "Python whole-word scan: rg unavailable on PATH",
+  "matches": {
+    "CancelSell": [
+      {
+        "path": "src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs",
+        "line": 191,
+        "text": "    (\"CancelSell\", c_auction_house_cancel_sell),"
+      },
+      {
+        "path": "src/lua_api/state_types/auction_house.rs",
+        "line": 174,
+        "text": "/// finalizes the listing using the pending quote. `CancelSell` clears"
+      },
+      {
+        "path": "tests/c_auction_house_sell_cancel.rs",
+        "line": 4,
+        "text": "//! `CancelSell`, `CancelAuction`. Each covers the"
+      },
+      {
+        "path": "tests/c_auction_house_sell_cancel.rs",
+        "line": 194,
+        "text": "        C_AuctionHouse.CancelSell()"
+      },
+      {
+        "path": "tests/c_auction_house_sell_cancel.rs",
+        "line": 206,
+        "text": "        \"CancelSell must not fire OWNED_AUCTIONS_UPDATED\""
+      },
+      {
+        "path": "tests/c_auction_house_sell_cancel.rs",
+        "line": 216,
+        "text": "    env.eval::<()>(\"C_AuctionHouse.CancelSell()\").unwrap();"
+      }
+    ],
+    "ForceGossip": [
+      {
+        "path": "tests/data/patch_9_0_1_sweep_known_gaps.json",
+        "line": 87,
+        "text": "  \"wt-global-api-C_GossipInfo.ForceGossip-303\","
+      }
+    ],
+    "GetAllowLowLevelRaid": [],
+    "GetAvailableQuestInfo": [
+      {
+        "path": "src/lua_api/globals/quest_surface/register.rs",
+        "line": 128,
+        "text": "    (\"GetAvailableQuestInfo\", get_available_quest_info),"
+      },
+      {
+        "path": "tests/test_sim_commands.rs",
+        "line": 350,
+        "text": "            local _, _, _, _, availableQuestID = GetAvailableQuestInfo(1)"
+      }
+    ],
+    "GetContainerItemQuestInfo": [
+      {
+        "path": "src/loader/tests/wow_api.rs",
+        "line": 468,
+        "text": "        \"GetContainerItemQuestInfo\","
+      },
+      {
+        "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+        "line": 17,
+        "text": "if rawget(C_Container, \"GetContainerItemQuestInfo\") == nil then"
+      },
+      {
+        "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+        "line": 18,
+        "text": "    function C_Container.GetContainerItemQuestInfo(_bag, _slot)"
+      },
+      {
+        "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+        "line": 65,
+        "text": "                local questInfo = C_Container.GetContainerItemQuestInfo(0, 1)"
+      },
+      {
+        "path": "tests/bags.rs",
+        "line": 164,
+        "text": "            local questInfo = C_Container.GetContainerItemQuestInfo(0, 1)"
+      },
+      {
+        "path": "tests/c_item_api/c_container.rs",
+        "line": 269,
+        "text": "            local questInfo = C_Container.GetContainerItemQuestInfo(0, 1)"
+      }
+    ],
+    "GetHolidayBGHonorCurrencyBonuses": [],
+    "GetLFGDeserterExpiration": [
+      {
+        "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+        "line": 171,
+        "text": "if GetLFGDeserterExpiration == nil then"
+      },
+      {
+        "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+        "line": 172,
+        "text": "    function GetLFGDeserterExpiration() return 0 end"
+      },
+      {
+        "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+        "line": 332,
+        "text": "            GetLFGDeserterExpiration = nil"
+      },
+      {
+        "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+        "line": 376,
+        "text": "                if GetLFGDeserterExpiration() ~= 0 then return \"deserter\" end"
+      },
+      {
+        "path": "tests/recent_runtime_bootstrap_boundaries.rs",
+        "line": 447,
+        "text": "            \"function GetLFGDeserterExpiration\","
+      }
+    ],
+    "GetLFGRandomCooldownExpiration": [
+      {
+        "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+        "line": 629,
+        "text": "        \"GetLFGRandomCooldownExpiration\","
+      },
+      {
+        "path": "tests/battlefield_lfg_probes.rs",
+        "line": 120,
+        "text": "    let expiration: i32 = env.eval(\"return GetLFGRandomCooldownExpiration()\").unwrap();"
+      }
+    ],
+    "GetPetSpellBonusDamage": [
+      {
+        "path": "src/lua_api/globals/real/pet_stats.rs",
+        "line": 11,
+        "text": "//! - `GetPetSpellBonusDamage()` \u2192 explicit `pet.spell_bonus_damage`, 0 when unset."
+      },
+      {
+        "path": "src/lua_api/globals/real/pet_stats.rs",
+        "line": 76,
+        "text": "    LuaApiMut::register_function(lua, \"GetPetSpellBonusDamage\", get_pet_spell_bonus_damage)?;"
+      },
+      {
+        "path": "tests/character_stats/explicit_inputs.rs",
+        "line": 60,
+        "text": "    (\"GetPetSpellBonusDamage()\", 41.5),"
+      },
+      {
+        "path": "tests/character_stats/explicit_inputs.rs",
+        "line": 127,
+        "text": "    assert_outputs(&env, \"GetPetSpellBonusDamage()\", &[41.5]);"
+      },
+      {
+        "path": "tests/character_stats/explicit_inputs.rs",
+        "line": 129,
+        "text": "    assert_outputs(&env, \"GetPetSpellBonusDamage()\", &[41.5]);"
+      },
+      {
+        "path": "tests/character_stats/explicit_inputs.rs",
+        "line": 131,
+        "text": "    assert_outputs(&env, \"GetPetSpellBonusDamage()\", &[63.0]);"
+      },
+      {
+        "path": "tests/character_stats/explicit_inputs.rs",
+        "line": 133,
+        "text": "    assert_outputs(&env, \"GetPetSpellBonusDamage()\", &[0.0]);"
+      },
+      {
+        "path": "tests/character_stats/explicit_inputs.rs",
+        "line": 156,
+        "text": "        {'GetPetSpellBonusDamage', {41.5}},"
+      },
+      {
+        "path": "tests/character_stats/stat_restriction_fixtures.lua",
+        "line": 22,
+        "text": "    {'GetPetSpellBonusDamage', {}, {0}},"
+      },
+      {
+        "path": "tests/pet_stats.rs",
+        "line": 124,
+        "text": "// \u2500\u2500 GetPetSpellBonusDamage \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+      },
+      {
+        "path": "tests/pet_stats.rs",
+        "line": 129,
+        "text": "    let bonus: i32 = env.eval(\"return GetPetSpellBonusDamage()\").unwrap();"
+      }
+    ],
+    "GetQuestWatchIndex": [
+      {
+        "path": "src/lua_api/globals/quest_surface/register.rs",
+        "line": 102,
+        "text": "    (\"GetQuestWatchIndex\", get_quest_watch_index),"
+      },
+      {
+        "path": "tests/data/patch_9_0_1_sweep_known_gaps.json",
+        "line": 236,
+        "text": "  \"wt-global-api-GetQuestWatchIndex-649\","
+      }
+    ],
+    "GetRandomBGHonorCurrencyBonuses": [],
+    "QuestIsDaily": [],
+    "QuestIsWeekly": [],
+    "SetAllowLowLevelRaid": [],
+    "SetAuctionsTabShowing": [
+      {
+        "path": "src/lua_api/globals/auction_verbs.rs",
+        "line": 611,
+        "text": "    LuaApiMut::register_function(lua, \"SetAuctionsTabShowing\", set_auctions_tab_showing)?;"
+      }
+    ],
+    "ShiftQuestWatches": [],
+    "SortBGList": [],
+    "SortQuestWatches": [
+      {
+        "path": "src/lua_api/globals/quest_surface/register.rs",
+        "line": 30,
+        "text": "    (\"SortQuestWatches\", noop),"
+      },
+      {
+        "path": "src/lua_api/globals/quest_surface/register.rs",
+        "line": 170,
+        "text": "    (\"SortQuestWatches\", noop),"
+      },
+      {
+        "path": "tests/data/patch_9_0_1_sweep_known_gaps.json",
+        "line": 255,
+        "text": "  \"wt-global-api-SortQuestWatches-687\","
+      },
+      {
+        "path": "tests/startup_api_stubs.rs",
+        "line": 144,
+        "text": "                SortQuestWatches()"
+      }
+    ],
+    "SummonRandomCritter": [],
+    "UnitHasLFGDeserter": [
+      {
+        "path": "src/lua_api/globals/group_queries.rs",
+        "line": 120,
+        "text": "    set_global(state, \"UnitHasLFGDeserter\", always_false);"
+      }
+    ],
+    "UnitHasLFGRandomCooldown": [
+      {
+        "path": "src/lua_api/globals/group_queries.rs",
+        "line": 123,
+        "text": "        \"UnitHasLFGRandomCooldown\","
+      },
+      {
+        "path": "tests/lfd_random_globals.rs",
+        "line": 135,
+        "text": "            if type(UnitHasLFGRandomCooldown) ~= \"function\" then"
+      },
+      {
+        "path": "tests/lfd_random_globals.rs",
+        "line": 136,
+        "text": "                return \"type=\" .. type(UnitHasLFGRandomCooldown)"
+      },
+      {
+        "path": "tests/lfd_random_globals.rs",
+        "line": 138,
+        "text": "            if UnitHasLFGRandomCooldown(\"player\") ~= false then"
+      },
+      {
+        "path": "tests/lfd_random_globals.rs",
+        "line": 139,
+        "text": "                return \"player=\" .. tostring(UnitHasLFGRandomCooldown(\"player\"))"
+      },
+      {
+        "path": "tests/lfd_random_globals.rs",
+        "line": 141,
+        "text": "            if UnitHasLFGRandomCooldown(\"party1\") ~= false then"
+      },
+      {
+        "path": "tests/lfd_random_globals.rs",
+        "line": 142,
+        "text": "                return \"party1=\" .. tostring(UnitHasLFGRandomCooldown(\"party1\"))"
+      },
+      {
+        "path": "tests/lfd_random_globals.rs",
+        "line": 148,
+        "text": "    assert_eq!(result, \"ok\", \"UnitHasLFGRandomCooldown: {result}\");"
+      }
+    ],
+    "AUCTION_HOUSE_DISABLED": [
+      {
+        "path": "src/event/valid_events_a.rs",
+        "line": 107,
+        "text": "    \"AUCTION_HOUSE_DISABLED\","
+      }
+    ],
+    "AUCTION_MULTISELL_FAILURE": [
+      {
+        "path": "src/event/valid_events_a.rs",
+        "line": 126,
+        "text": "    \"AUCTION_MULTISELL_FAILURE\","
+      }
+    ],
+    "AUCTION_MULTISELL_START": [
+      {
+        "path": "src/event/valid_events_a.rs",
+        "line": 127,
+        "text": "    \"AUCTION_MULTISELL_START\","
+      }
+    ],
+    "AUCTION_MULTISELL_UPDATE": [
+      {
+        "path": "src/event/valid_events_a.rs",
+        "line": 128,
+        "text": "    \"AUCTION_MULTISELL_UPDATE\","
+      }
+    ],
+    "DISABLE_LOW_LEVEL_RAID": [
+      {
+        "path": "src/event/valid_events_a.rs",
+        "line": 564,
+        "text": "    \"DISABLE_LOW_LEVEL_RAID\","
+      }
+    ],
+    "ENABLE_LOW_LEVEL_RAID": [
+      {
+        "path": "src/event/valid_events_a.rs",
+        "line": 585,
+        "text": "    \"ENABLE_LOW_LEVEL_RAID\","
+      }
+    ],
+    "LFG_OPEN_FROM_GOSSIP": [
+      {
+        "path": "src/event/valid_events_b.rs",
+        "line": 195,
+        "text": "    \"LFG_OPEN_FROM_GOSSIP\","
+      }
+    ],
+    "PET_SPELL_POWER_UPDATE": [
+      {
+        "path": "src/event/valid_events_b.rs",
+        "line": 418,
+        "text": "    \"PET_SPELL_POWER_UPDATE\","
+      }
+    ],
+    "VOTE_KICK_REASON_NEEDED": [
+      {
+        "path": "src/event/valid_events_c.rs",
+        "line": 542,
+        "text": "    \"VOTE_KICK_REASON_NEEDED\","
+      }
+    ],
+    "AcceptProposal": [
+      {
+        "path": "src/lua_api/globals/battlefield_lfg_probes/queue.rs",
+        "line": 488,
+        "text": "/// `AcceptProposal()` consumes the active proposal and reports success."
+      },
+      {
+        "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+        "line": 720,
+        "text": "    LuaApiMut::register_function(lua, \"AcceptProposal\", queue::accept_proposal)?;"
+      },
+      {
+        "path": "tests/lfd_globals.rs",
+        "line": 511,
+        "text": "            if type(AcceptProposal) ~= \"function\" then"
+      },
+      {
+        "path": "tests/lfd_globals.rs",
+        "line": 512,
+        "text": "                return \"missing_accept=\" .. type(AcceptProposal)"
+      },
+      {
+        "path": "tests/lfd_globals.rs",
+        "line": 518,
+        "text": "            AcceptProposal()"
+      },
+      {
+        "path": "tests/lfd_globals.rs",
+        "line": 528,
+        "text": "    assert_eq!(result, \"ok\", \"AcceptProposal clears proposal: {result}\");"
+      }
+    ],
+    "GetLFGBootProposal": [],
+    "UninviteUnit": [
+      {
+        "path": "src/c_api/c_party_info.rs",
+        "line": 5,
+        "text": "//! `UninviteUnit` mutate the same roster paths as their legacy globals. Static"
+      },
+      {
+        "path": "src/c_api/c_party_info.rs",
+        "line": 77,
+        "text": "    table_set_rust_fn_static(state, table_ref, \"UninviteUnit\", c_party_info_uninvite_unit)?;"
+      },
+      {
+        "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+        "line": 293,
+        "text": "            C_PartyInfo.UninviteUnit(\"party1\")"
+      },
+      {
+        "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+        "line": 346,
+        "text": "                \"UninviteUnit\","
+      },
+      {
+        "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+        "line": 396,
+        "text": "        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil\""
+      },
+      {
+        "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+        "line": 401,
+        "text": "        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=nil,C_ClickBindings.MakeModifiers=nil,C_Spell.GetMawPowerBorderAtlasBySpellID=nil,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=nil,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=nil,GetAutoCompleteRealms=nil,IsRecognizedName=nil\""
+      },
+      {
+        "path": "src/lua_api/globals/group_verbs.rs",
+        "line": 15,
+        "text": "//! - `UninviteUnit(unit)`      \u2014 remove by unit token (partyN or name),"
+      },
+      {
+        "path": "src/lua_api/globals/group_verbs.rs",
+        "line": 17,
+        "text": "//! - `KickUnit(unit)`          \u2014 alias of `UninviteUnit`."
+      },
+      {
+        "path": "src/lua_api/globals/group_verbs.rs",
+        "line": 137,
+        "text": "/// `UninviteUnit(unit)` \u2014 drop by unit token (`party1`..`party4`) or by"
+      },
+      {
+        "path": "src/lua_api/globals/group_verbs.rs",
+        "line": 162,
+        "text": "/// `KickUnit(unit)` \u2014 alias for `UninviteUnit`."
+      },
+      {
+        "path": "src/lua_api/globals/group_verbs.rs",
+        "line": 239,
+        "text": "    LuaApiMut::register_function(lua, \"UninviteUnit\", uninvite_unit)?;"
+      },
+      {
+        "path": "tests/group_verbs.rs",
+        "line": 134,
+        "text": "// \u2500\u2500 UninviteUnit / KickUnit \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+      },
+      {
+        "path": "tests/group_verbs.rs",
+        "line": 145,
+        "text": "    env.exec(r#\"UninviteUnit(\"party1\")\"#).unwrap();"
+      },
+      {
+        "path": "tests/group_verbs.rs",
+        "line": 147,
+        "text": "    env.exec(r#\"assert(rawget(_G, \"UninviteUnit\") == nil); C_PartyInfo.UninviteUnit(\"party1\")\"#)"
+      },
+      {
+        "path": "tests/group_verbs.rs",
+        "line": 167,
+        "text": "    env.exec(&format!(r#\"UninviteUnit(\"{second_name}\")\"#))"
+      },
+      {
+        "path": "tests/group_verbs.rs",
+        "line": 170,
+        "text": "    env.exec(&format!(r#\"assert(rawget(_G, \"UninviteUnit\") == nil); C_PartyInfo.UninviteUnit(\"{second_name}\")\"#))"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 46,
+        "text": "        assert(select('#', C_PartyInfo.UninviteUnit('player')) == 0)"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 146,
+        "text": "        C_PartyInfo.UninviteUnit('Ada', 'fixture removal', false)"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 148,
+        "text": "        C_PartyInfo.UninviteUnit('Nobody', nil, true)"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 149,
+        "text": "        C_PartyInfo.UninviteUnit('player')"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 152,
+        "text": "        C_PartyInfo.UninviteUnit('Cy-Realm', nil, true)"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 245,
+        "text": "        C_PartyInfo.UninviteUnit(SName, SReason, SExact, SExtra)"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 267,
+        "text": "            {C_PartyInfo.UninviteUnit, {'party2', 'reason', false}},"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 329,
+        "text": "        assert(not pcall(C_PartyInfo.UninviteUnit, 'party2', {}, false))"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 330,
+        "text": "        assert(not pcall(C_PartyInfo.UninviteUnit, 'party2', nil, 4))"
+      },
+      {
+        "path": "tests/party_1207_audit.rs",
+        "line": 345,
+        "text": "        assert(not pcall(C_PartyInfo.UninviteUnit, 'party2'))"
+      },
+      {
+        "path": "tests/patch_12_0_7_removed_native_surface.rs",
+        "line": 137,
+        "text": "    assert_native_absent(&env, \"UninviteUnit\");"
+      },
+      {
+        "path": "tests/patch_12_0_7_removed_native_surface.rs",
+        "line": 295,
+        "text": "        \"UninviteUnit\","
+      },
+      {
+        "path": "tests/patch_12_0_7_removed_native_surface.rs",
+        "line": 334,
+        "text": "        function C_PartyInfo.UninviteUnit(unit, reason, exact, ...)"
+      },
+      {
+        "path": "tests/patch_12_0_7_removed_native_surface.rs",
+        "line": 366,
+        "text": "        assert(select('#', UninviteUnit('party1', 'fixture reason', true, 'discarded')) == 0)"
+      },
+      {
+        "path": "tests/patch_12_0_7_removed_native_surface.rs",
+        "line": 524,
+        "text": "    \"UninviteUnit\","
+      }
+    ],
+    "ShowBattlefieldList": [],
+    "GetTexCoordModifiesRect": [],
+    "SetTexCoordModifiesRect": []
+  }
+}
