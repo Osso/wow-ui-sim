@@ -1,0 +1,113 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 57,\n  \"totals\": {\n    \"physical_lines\": 11,\n    \"nonblank_rows\": 9,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 5,\n    \"api_occurrences\": 2,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 4,\n    \"contracts\": 7,\n    \"headers\": 2,\n    \"templates\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_concrete_alias_not_invented_value (__main__.SourceAccounting.test_concrete_alias_not_invented_value) ... ok\ntest_configuration_successors_not_native_credit (__main__.SourceAccounting.test_configuration_successors_not_native_credit) ... ok\ntest_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... ok\ntest_fabricated_credit_values_foreign_supersession_rejected (__main__.SourceAccounting.test_fabricated_credit_values_foreign_supersession_rejected) ... ok\ntest_identity_and_source_tampering (__main__.SourceAccounting.test_identity_and_source_tampering) ... ok\ntest_inventory_and_signature_limits (__main__.SourceAccounting.test_inventory_and_signature_limits) ... ok\ntest_links_headers_and_template (__main__.SourceAccounting.test_links_headers_and_template) ... ok\ntest_literal_rows (__main__.SourceAccounting.test_literal_rows) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.068s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.1",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e/source.wikitext",
+        "5998991",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpcy7hb58e",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpic_l61p1/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpic_l61p1",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpic_l61p1/audit.py\", line 110, in <module>\n    print(json.dumps({'historical_seals': check_seals(), 'totals': validate_ledger(read_json('ledger.json'))}, indent=2))\n                                          ~~~~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpic_l61p1/audit.py\", line 102, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpic_l61p1/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpic_l61p1",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 57,\n  \"totals\": {\n    \"physical_lines\": 11,\n    \"nonblank_rows\": 9,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 5,\n    \"api_occurrences\": 2,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 4,\n    \"contracts\": 7,\n    \"headers\": 2,\n    \"templates\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "ad60adbab94fbb7e35d7d44c506d8e6d6f66b0398df3bda02cebe2f7a26c73e1",
+      "all_original_seals": 57
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpvymvw5tt/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpvymvw5tt",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpvymvw5tt/audit.py\", line 110, in <module>\n    print(json.dumps({'historical_seals': check_seals(), 'totals': validate_ledger(read_json('ledger.json'))}, indent=2))\n                                          ~~~~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpvymvw5tt/audit.py\", line 102, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpvymvw5tt/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch/tmpvymvw5tt",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 57,\n  \"totals\": {\n    \"physical_lines\": 11,\n    \"nonblank_rows\": 9,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 5,\n    \"api_occurrences\": 2,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 4,\n    \"contracts\": 7,\n    \"headers\": 2,\n    \"templates\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "2e6fbfb00b587aab61c9173e6d8478959aa050177ebbe457d21a8b7f313fe9d6",
+      "all_original_seals": 57
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

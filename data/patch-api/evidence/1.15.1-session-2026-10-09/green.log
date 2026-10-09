@@ -1,0 +1,13 @@
+test_concrete_alias_not_invented_value (__main__.SourceAccounting.test_concrete_alias_not_invented_value) ... ok
+test_configuration_successors_not_native_credit (__main__.SourceAccounting.test_configuration_successors_not_native_credit) ... ok
+test_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... ok
+test_fabricated_credit_values_foreign_supersession_rejected (__main__.SourceAccounting.test_fabricated_credit_values_foreign_supersession_rejected) ... ok
+test_identity_and_source_tampering (__main__.SourceAccounting.test_identity_and_source_tampering) ... ok
+test_inventory_and_signature_limits (__main__.SourceAccounting.test_inventory_and_signature_limits) ... ok
+test_links_headers_and_template (__main__.SourceAccounting.test_links_headers_and_template) ... ok
+test_literal_rows (__main__.SourceAccounting.test_literal_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.066s
+
+OK

@@ -1,0 +1,115 @@
+test_concrete_alias_not_invented_value (__main__.SourceAccounting.test_concrete_alias_not_invented_value) ... FAIL
+test_configuration_successors_not_native_credit (__main__.SourceAccounting.test_configuration_successors_not_native_credit) ... FAIL
+test_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... FAIL
+test_fabricated_credit_values_foreign_supersession_rejected (__main__.SourceAccounting.test_fabricated_credit_values_foreign_supersession_rejected) ... FAIL
+test_identity_and_source_tampering (__main__.SourceAccounting.test_identity_and_source_tampering) ... FAIL
+test_inventory_and_signature_limits (__main__.SourceAccounting.test_inventory_and_signature_limits) ... FAIL
+test_links_headers_and_template (__main__.SourceAccounting.test_links_headers_and_template) ... FAIL
+test_literal_rows (__main__.SourceAccounting.test_literal_rows) ... FAIL
+
+======================================================================
+FAIL: test_concrete_alias_not_invented_value (__main__.SourceAccounting.test_concrete_alias_not_invented_value)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 24, in test_concrete_alias_not_invented_value
+    self.assertEqual(ledger.get('alias'), {'name': 'Enum.SeasonID.Placeholder', 'target': 'Enum.SeasonID.SeasonOfDiscovery', 'literal_contract': 'continue working as-is for detecting Season of Discovery realms', 'numeric_value': None, 'status': 'UNPROVEN'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'name': 'Enum.SeasonID.Placeholder', 'ta[168 chars]VEN'}
+
+======================================================================
+FAIL: test_configuration_successors_not_native_credit (__main__.SourceAccounting.test_configuration_successors_not_native_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 48, in test_configuration_successors_not_native_credit
+    self.assertEqual(ledger.get('source_toc'), 11501)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 11501
+
+======================================================================
+FAIL: test_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 59, in test_every_omission_rejected
+    self.assertIn('contracts', expected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+======================================================================
+FAIL: test_fabricated_credit_values_foreign_supersession_rejected (__main__.SourceAccounting.test_fabricated_credit_values_foreign_supersession_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 69, in test_fabricated_credit_values_foreign_supersession_rejected
+    self.assertIn('alias', expected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: 'alias' not found in {}
+
+======================================================================
+FAIL: test_identity_and_source_tampering (__main__.SourceAccounting.test_identity_and_source_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 38, in test_identity_and_source_tampering
+    self.assertEqual(audit.build().get('source', {}).get('revid'), 5998991)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 5998991
+
+======================================================================
+FAIL: test_inventory_and_signature_limits (__main__.SourceAccounting.test_inventory_and_signature_limits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 16, in test_inventory_and_signature_limits
+    self.assertEqual(ledger.get('api_occurrences'), [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {'line': 5, 'name': 'Enum.SeasonID.SeasonOfDiscovery', 'role': 'added-finite-enum-member', 'numeric_value': None, 'status': 'UNPROVEN'},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {'line': 6, 'name': 'Enum.SeasonID.Placeholder', 'role': 'deprecated-alias', 'numeric_value': None, 'status': 'UNPROVEN'}])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != [{'line': 5, 'name': 'Enum.SeasonID.Seaso[214 chars]EN'}]
+
+======================================================================
+FAIL: test_links_headers_and_template (__main__.SourceAccounting.test_links_headers_and_template)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 29, in test_links_headers_and_template
+    self.assertEqual([(c['line'], c['target']) for c in ledger.get('contracts', []) if c['kind'].startswith('unexpanded')], [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (4, 'Patch 10.2.5/API changes'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (10, 'https://github.com/Gethe/wow-ui-source/compare/1.15.0..classic_era_ptr'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (10, 'https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.0..1.15.1'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (11, 'https://github.com/Gethe/wow-ui-source/tree/classic_era_ptr/Interface/AddOns/Blizzard_Deprecated/Deprecated_1_15_1.lua')])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(4, 'Patch 10.2.5/API changes'), (10, 'ht[278 chars]ua')]
+
+Second list contains 4 additional elements.
+First extra element 0:
+(4, 'Patch 10.2.5/API changes')
+
+- []
++ [(4, 'Patch 10.2.5/API changes'),
++  (10, 'https://github.com/Gethe/wow-ui-source/compare/1.15.0..classic_era_ptr'),
++  (10,
++   'https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.0..1.15.1'),
++  (11,
++   'https://github.com/Gethe/wow-ui-source/tree/classic_era_ptr/Interface/AddOns/Blizzard_Deprecated/Deprecated_1_15_1.lua')]
+
+======================================================================
+FAIL: test_literal_rows (__main__.SourceAccounting.test_literal_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py", line 12, in test_literal_rows
+    self.assertEqual([(x['line'], x['literal']) for x in audit.build().get('source_rows', [])], expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|1.15.1|prev=1.15.0|next[861 chars]d]')]
+
+Second list contains 9 additional elements.
+First extra element 0:
+(1, '{{apichanges|1.15.1|prev=1.15.0|next=1.15.2}}')
+
+Diff is 1030 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+FAILED (failures=8)

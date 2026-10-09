@@ -1,0 +1,59 @@
+{
+  "revision": "71427714747ac3840d38dd5a1a88a8e905fe936d",
+  "frozen_page_expansion": false,
+  "original_SOURCE_ledger_unchanged": true,
+  "contracts": [
+    {
+      "id": "subset-004",
+      "status": "UNPROVEN",
+      "proof": null,
+      "limit": "Dragonflight subset unspecified; no imported 10.2.5 members/signatures/behavior."
+    },
+    {
+      "id": "retail-link-004",
+      "status": "UNPROVEN",
+      "proof": null,
+      "limit": "Retail attribution only, not an Era successor or expanded contract."
+    },
+    {
+      "id": "addition-005",
+      "status": "bounded-direct-existing-state",
+      "proof": "headless-alias-proof.json",
+      "limit": "Current simulator finite value2 only; native numeric correspondence unproven."
+    },
+    {
+      "id": "alias-006",
+      "status": "bounded-direct-existing-state",
+      "proof": "headless-alias-proof.json",
+      "limit": "Direct official public-build alias equality2=2 only; full addon loading/realm seasonal state/non-public branch unproven."
+    },
+    {
+      "id": "diff-010-1",
+      "status": "UNPROVEN",
+      "proof": null,
+      "limit": "wow-ui-source: linked body unexpanded; no changes/signatures/state inferred."
+    },
+    {
+      "id": "diff-010-2",
+      "status": "UNPROVEN",
+      "proof": null,
+      "limit": "BlizzardInterfaceResources: linked body unexpanded; no changes/signatures/state inferred."
+    },
+    {
+      "id": "deprecated-link-011",
+      "status": "UNPROVEN",
+      "proof": null,
+      "limit": "Blizzard_Deprecated: body unexpanded; not permission to import aliases beyond literal line6."
+    }
+  ],
+  "totals": {
+    "contracts": 7,
+    "bounded_direct_existing_state": 2,
+    "unproven": 5,
+    "behavioral_fixtures": 1,
+    "new_models": 0,
+    "native": 0,
+    "full_addon_loading": 0
+  },
+  "measurements": "Direct existing-state execution, not seasonal-state/native implementation; SOURCE ledger is historical zero-measurement receipt."
+}
