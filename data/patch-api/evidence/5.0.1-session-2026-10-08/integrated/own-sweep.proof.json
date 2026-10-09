@@ -1,0 +1,19 @@
+{
+  "revision": "4cfd86bb2f7692959697983ee62e4f11a212fda3",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "patch_5_0_1_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p501-page",
+  "exit": null,
+  "exit_note": "CommandResult was not retained after a mistaken .spawn() on terminal combined_to_file return. No duplicate execution. Full log confirms 1 passed, 0 failed; command exit is not claimed.",
+  "passed": 1,
+  "failed": 0,
+  "log": "own-sweep.log",
+  "log_sha256": "ef79fc0a1324baf13343a6d85f74d1b173b5a525dfcf9fc8ca90fe3eb43b1593"
+}

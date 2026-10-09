@@ -1,0 +1,24 @@
+{
+  "revision": "a0ca448c4c4d6b89b478847167d6eafe0a830bd2",
+  "argv": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "a0ca448c4c4d6b89b478847167d6eafe0a830bd2"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p501-page",
+  "exit": 0,
+  "log": "/tmp/p501-integrated-validator-gate.log",
+  "log_sha256": "fe5fb5353c88e3b212f0d3c1496ae35a479a6cc6159a967f909d085f27370d33",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 64
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 65
+    }
+  },
+  "status": "PASS"
+}
