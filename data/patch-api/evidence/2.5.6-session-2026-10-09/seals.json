@@ -25,5 +25,8 @@
   "data/patch-api/sources/2.5.6-api-changes.wikitext": "9ea30f11808982a5c3f0a051b5a41bd8f7472ec7450c8e3576cdb515a4f9978a",
   "data/patch-api/sources/2.5.6-page-coverage.json": "86981595adcc1f2cf04a797812bf9c8f11814c9e76c700d443fc55f323f73387",
   "data/patch-api/evidence/2.5.6-session-2026-10-09/.gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
-  "data/patch-api/evidence/2.5.6-session-2026-10-09/red-validator.txt": "8daa285400ce42d55438f036cc3b03e41a40fdd50848a5ec769c9b0ab1209c6c"
+  "data/patch-api/evidence/2.5.6-session-2026-10-09/red-validator.txt": "8daa285400ce42d55438f036cc3b03e41a40fdd50848a5ec769c9b0ab1209c6c",
+  "data/patch-api/evidence/2.5.6-session-2026-10-09/source-proof.json": "c190ee4c930f1d0faa73d95c7bad6e09f40c48a03928c601a9cfa76f58ef4e17",
+  "data/patch-api/evidence/2.5.6-session-2026-10-09/green.log": "e9ecf8d16ad39e3bdedd216d6f696abc152580c3438050d99be9a44471a0c9d0",
+  "data/patch-api/evidence/2.5.6-session-2026-10-09/validator.log": "5a4b7845c1d993f1e1d9c7abd279423615c5dbeb58af486cda871cad7bf3a7b0"
 }

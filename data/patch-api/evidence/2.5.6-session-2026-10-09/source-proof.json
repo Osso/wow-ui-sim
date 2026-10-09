@@ -1,0 +1,61 @@
+{
+  "revision": "c77aab4642ad2986916ed628a61d6d52038243f6",
+  "scope": "SOURCE/configured snapshots only; native/model/runtime/full UI unperformed. No broad/final gates.",
+  "input_seals": {
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/Cargo.toml": "ab2ab0841487d02b44ebc2a05eed884944ae9d10982c0becfb2892bc17dd27fb",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/data/blizzard-ui-files/mists.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/data/blizzard-ui-files/ptr.txt": "854540ee3daec8355ed1d4ffb72d244a07f1fcf14cfb4c323abe9c1231369216",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/data/blizzard-ui-files/retail.txt": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/data/blizzard-ui-files/wowforever.txt": "36b9f64e39e4031c28218865516635e85e7bdd1042fcf3ef9db0f347037e5c24",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/data/blizzard-ui-files/wrath.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/configured-inputs/tests/common/publication_sweep.rs": "26babc6f764fb17d008b040c7141bbc790b9c3b998f04bad07f0ff06b7ac1701",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/historical-extract_patch_non_inventory.py": "870b77ccaebed678d7044b3002ccec8b7ace8fee3c077cd1867c17b0354932da",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/historical-gen_patch_wikitext_register.py": "9947b580f94fd3f7ea331dc37ceab4b09cf1df9c2c57e18324ef43c00ad54bd6",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/profile-observation.json": "3beaf2186742d22f97de3cd1991b909e5a30c6c39cd0e84ce5bb82315f4bb2a7",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/red-scope.json": "e5fae3031d124fb3b623b680102fa51edd5a745ba3fe1987c1c15910d7899778",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/red.log": "96b8efa61163e91fba2cdbae1d539f7c59b83c2893cbd6041712c3bf685f89a0",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/replay_controls.py": "81061179953bc722f199119a222eb5dffaf8016db71646a3c1d78dc5418f73e6",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/source-pin.json": "765f8395e8bcefd228ea8c798c0a4126406027227425e5a3e6815362ba62a1da",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/source-response.json": "4b5c835e8f549a1e578be9a57b31c995c455d1f35560dffb44d74989d3a711f0",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/test_source_accounting.py": "6b6ebf4b505b73be82dd4137b62d0e03d712a3bd8471930682673f4c604103ba",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/validate.py": "42c010057ec8a03fb54083ddca5d7381aa59a7098414da2426562af26e397d5b",
+    "data/patch-api/sources/2.5.6-api-changes.txt": "d962df6c23ecfb75b8905ad7274b33db28f025b7edfaf5d8c41e4661dd0ef4d0",
+    "data/patch-api/sources/2.5.6-api-changes.wikitext": "9ea30f11808982a5c3f0a051b5a41bd8f7472ec7450c8e3576cdb515a4f9978a",
+    "data/patch-api/sources/2.5.6-page-coverage.json": "86981595adcc1f2cf04a797812bf9c8f11814c9e76c700d443fc55f323f73387",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/.gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+    "data/patch-api/evidence/2.5.6-session-2026-10-09/red-validator.txt": "8daa285400ce42d55438f036cc3b03e41a40fdd50848a5ec769c9b0ab1209c6c"
+  },
+  "commands": [
+    {
+      "name": "green",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p256-source/data/patch-api/evidence/2.5.6-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p256-source",
+      "exit": 0,
+      "log": "green.log",
+      "log_sha256": "e9ecf8d16ad39e3bdedd216d6f696abc152580c3438050d99be9a44471a0c9d0",
+      "invalidated_by_later_changes": false
+    },
+    {
+      "name": "validator",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p256-source/data/patch-api/evidence/2.5.6-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p256-source",
+      "exit": 0,
+      "log": "validator.log",
+      "log_sha256": "5a4b7845c1d993f1e1d9c7abd279423615c5dbeb58af486cda871cad7bf3a7b0",
+      "invalidated_by_later_changes": false
+    }
+  ]
+}
