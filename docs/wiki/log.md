@@ -16,7 +16,7 @@
 
 ## [2026-10-09] ingest | Wrath Classic Patch 3.4.3 source audit
 
-[Audit](investigations/patch-3-4-3-api-audit.md): frozen identity/hash validated before copying; seven rows, five metadata/two UNPROVEN prose limits. Supported Wrath profile and 42 documentation-only cached files observed separately from source TOC 30403/configured 38001; no runtime/native claim. Existing extractor flags reused, own historical tools sealed, no linked-page or shared-classifier expansion. Targeted RED recorded; GREEN pending.
+[Audit](investigations/patch-3-4-3-api-audit.md): frozen identity/hash validated before copying; seven rows, five metadata/two UNPROVEN prose limits. Supported Wrath profile and 42 documentation-only cached files observed separately from source TOC 30403/configured 38001; no runtime/native claim. Existing extractor flags reused, own historical tools sealed, no linked-page or shared-classifier expansion. Targeted RED recorded; GREEN 7/7 plus extraction/source replay pass at 84274cf67. Sealed proof-log tampering rejected and bytes restored; receipt/docs-only additions preserve tested source/tool/validator scope. Broad gates remain main-owned.
 
 ## [2026-10-08] maintenance | Compact patch-audit evidence
 

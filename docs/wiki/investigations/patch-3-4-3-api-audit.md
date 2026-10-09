@@ -40,6 +40,12 @@ Frozen response/wikitext identity and both manifest hashes were validated **befo
 
 [Targeted tests](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/test_source_accounting.py) exercise exact external serialized accounting and reject changed revision/source, each omitted row, fabricated prose credit, wrong client/profile, foreign successor, invented API count and native/runtime credit. These are source-accounting tests, not simulator compatibility tests. [Proof ledger](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/source-proof.json) records exact revision/scope, commands, exits and sealed logs after implementation. Main owns broad sweeps/check/lint/readability/coverage/startup/final gates; none run here. No push, merge, deployment, delegation, provider/model/retry change, or other-worktree edit.
 
+## Targeted proof ledger
+
+At `84274cf675b7e9cf7f8048d758ad07297beb5023`: source-accounting GREEN **7/7** (22 mutation subcases), recorded-flag extraction exit 0, and own historical replay exit 0. Development RED first failed the missing derived accounting assertion against a temporary empty validator; exact log retained. Altering the sealed GREEN log later fails the exact seal with exit 1; original bytes restored and hash checked. Receipt/docs/seal-entry additions leave the tested source, historical tools, validator, test fixture and profile observation bytes unchanged. Replay derives seven rows/five metadata/two UNPROVEN, no runtime observations; its sealed-input count grows with retained receipts and is not fixed acceptance data.
+
+No Rust changes or Cargo formatting; Python manually formatted because ruff/black are unavailable. No formatter installation, lint or broad gate attempted. All commands used the owned absolute worktree cwd. Main still owns integration and final verification, not this bounded source audit.
+
 ## Sources
 
 - [Frozen source](../../../data/patch-api/sources/3.4.3-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/3.4.3-api-changes.txt), [pin](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/source-pin.json), [response](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/source-response.json).

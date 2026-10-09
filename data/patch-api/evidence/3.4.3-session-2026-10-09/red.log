@@ -1,0 +1,30 @@
+test_exact_source_accounting_derives_counts (__main__.SourceAccounting.test_exact_source_accounting_derives_counts) ... FAIL
+
+======================================================================
+FAIL: test_exact_source_accounting_derives_counts (__main__.SourceAccounting.test_exact_source_accounting_derives_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p343-source/data/patch-api/evidence/3.4.3-session-2026-10-09/test_source_accounting.py", line 29, in test_exact_source_accounting_derives_counts
+    self.assertEqual(self.check(), {
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+        'source_rows': 7, 'statuses': {'metadata-only': 5, 'UNPROVEN': 2},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'enumerated_api_occurrences': 0, 'header_counts': [],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'removals': 0, 'runtime_observations': 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    })
+    ^^
+AssertionError: {} != {'source_rows': 7, 'statuses': {'metadata-[116 chars]': 0}
+- {}
++ {'enumerated_api_occurrences': 0,
++  'header_counts': [],
++  'removals': 0,
++  'runtime_observations': 0,
++  'source_rows': 7,
++  'statuses': {'UNPROVEN': 2, 'metadata-only': 5}}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

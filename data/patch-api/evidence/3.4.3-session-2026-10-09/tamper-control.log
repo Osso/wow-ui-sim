@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p343-source/data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py", line 120, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p343-source/data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py", line 107, in main
+    sealed_inputs = check_seals()
+  File "/home/osso/.worktrees/wow-ui-sim-p343-source/data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py", line 21, in check_seals
+    assert digest((ROOT / path).read_bytes()) == expected, f'seal: {path}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: data/patch-api/evidence/3.4.3-session-2026-10-09/green.log

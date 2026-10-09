@@ -1,0 +1,93 @@
+{
+  "schema": "bounded-source-proof/v1",
+  "patch": "3.4.3",
+  "tested_revision": "84274cf675b7e9cf7f8048d758ad07297beb5023",
+  "scope": [
+    "data/patch-api/sources/3.4.3-*",
+    "data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py",
+    "data/patch-api/evidence/3.4.3-session-2026-10-09/test_source_accounting.py",
+    "own historical tooling and profile observation"
+  ],
+  "summary": {
+    "enumerated_api_occurrences": 0,
+    "header_counts": [],
+    "removals": 0,
+    "runtime_observations": 0,
+    "source_rows": 7,
+    "statuses": {
+      "UNPROVEN": 2,
+      "metadata-only": 5
+    }
+  },
+  "proof_ledger": [
+    {
+      "command": "python3 data/patch-api/evidence/3.4.3-session-2026-10-09/test_source_accounting.py SourceAccounting.test_exact_source_accounting_derives_counts",
+      "phase": "RED",
+      "revision": "pre-84274cf67 development fixture",
+      "scope": "Final test fixture against temporary validate(**inputs): return {} stub",
+      "exit": 1,
+      "log": "red.log",
+      "result": "One assertion failure: derived accounting missing; not import/setup failure",
+      "invalidated_by": "Implementation replaces stub; expected RED retained"
+    },
+    {
+      "command": "python3 data/patch-api/evidence/3.4.3-session-2026-10-09/test_source_accounting.py",
+      "phase": "GREEN",
+      "revision": "84274cf675b7e9cf7f8048d758ad07297beb5023",
+      "exit": 0,
+      "log": "green.log",
+      "tests": 7,
+      "result": "All targeted source/profile serialized accounting tests pass",
+      "invalidated_by": null
+    },
+    {
+      "command": "python3 tools/extract_patch_non_inventory.py --patch 3.4.3 --text-only --canonical-patch-navigation --check",
+      "phase": "source reproduction",
+      "revision": "84274cf675b7e9cf7f8048d758ad07297beb5023",
+      "exit": 0,
+      "log": "extractor.log",
+      "result": {
+        "patch": "3.4.3",
+        "rows": 7,
+        "statuses": {
+          "metadata-only": 5,
+          "audit-pending": 2
+        }
+      },
+      "invalidated_by": null
+    },
+    {
+      "command": "python3 data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py",
+      "phase": "historical source accounting",
+      "revision": "84274cf675b7e9cf7f8048d758ad07297beb5023",
+      "exit": 0,
+      "log": "validator.log",
+      "result": {
+        "enumerated_api_occurrences": 0,
+        "header_counts": [],
+        "removals": 0,
+        "runtime_observations": 0,
+        "sealed_inputs": 11,
+        "source_rows": 7,
+        "statuses": {
+          "UNPROVEN": 2,
+          "metadata-only": 5
+        }
+      },
+      "invalidated_by": null
+    },
+    {
+      "command": "python3 data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py",
+      "phase": "sealed-proof negative",
+      "revision": "84274cf675b7e9cf7f8048d758ad07297beb5023",
+      "exit": 1,
+      "log": "tamper-control.log",
+      "scope": "Append fabricated receipt to green.log under expanded log seals",
+      "result": "Rejected exact green.log seal; original bytes restored and hash checked",
+      "invalidated_by": null
+    }
+  ],
+  "later_changes": "Docs, receipts and added seal entries only; source/validator/test/historical-tool/profile bytes unchanged. Sealed-input total is dynamic, not a fixed acceptance assertion.",
+  "excluded_gates": "No broad sweeps/check/lint/readability/coverage/startup/final gates, compilation, runtime/native probes, push/merge/deploy or delegation.",
+  "formatting": "No Rust changes; no Cargo formatter invoked. Python manually formatted; ruff/black unavailable on PATH; no installation or lint attempted."
+}

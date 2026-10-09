@@ -4,7 +4,7 @@
 
 ## [2026-10-09] investigation | Wrath Classic Patch 3.4.3 source audit
 
-[Audit](investigations/patch-3-4-3-api-audit.md): frozen page 152751/revision 5983024, TOC 30403. Seven source rows: five metadata, two UNPROVEN summary contracts; no explicit APIs, linked-page reconstruction or positive parity credit. Supported Wrath profile/configured 38001 distinguished from documentation-only local cache. Own profile-aware source ledger and historical validator; targeted proof pending. No shared runtime/classifier edits or cross-client successors.
+[Audit](investigations/patch-3-4-3-api-audit.md): frozen page 152751/revision 5983024, TOC 30403. Seven source rows: five metadata, two UNPROVEN summary contracts; no explicit APIs, linked-page reconstruction or positive parity credit. Supported Wrath profile/configured 38001 distinguished from documentation-only local cache. Own profile-aware source ledger and historical validator; seven targeted tests, extraction and source replay pass at 84274cf67; altered proof-log seal rejected/restored. No shared runtime/classifier edits or cross-client successors.
 
 ## [2026-10-08] integration | Retail Patch 5.1.0 API refresh
 

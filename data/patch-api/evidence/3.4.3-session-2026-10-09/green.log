@@ -1,0 +1,12 @@
+test_all_nonblank_rows_required (__main__.SourceAccounting.test_all_nonblank_rows_required) ... ok
+test_exact_source_accounting_derives_counts (__main__.SourceAccounting.test_exact_source_accounting_derives_counts) ... ok
+test_injected_inventory_rejected (__main__.SourceAccounting.test_injected_inventory_rejected) ... ok
+test_profile_support_not_native_credit (__main__.SourceAccounting.test_profile_support_not_native_credit) ... ok
+test_prose_publication_or_behavior_credit_rejected (__main__.SourceAccounting.test_prose_publication_or_behavior_credit_rejected) ... ok
+test_revision_and_source_tampering_rejected (__main__.SourceAccounting.test_revision_and_source_tampering_rejected) ... ok
+test_wrong_client_line_and_foreign_successor_rejected (__main__.SourceAccounting.test_wrong_client_line_and_foreign_successor_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.023s
+
+OK

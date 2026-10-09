@@ -9,5 +9,10 @@
   "data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py": "f0fe151506f54ed57995c33ffa521be183a982072c70c90aa6442bdd935abe3e",
   "data/patch-api/sources/3.4.3-api-changes.txt": "288903874f44a46594f7521dd4b9d51b94cd7bd431bdd9e45bfd333d5eac488f",
   "data/patch-api/sources/3.4.3-api-changes.wikitext": "1849b20140e6c83b62c4a1b5a14adba2143de8ce01d9a368b7a52d166d0f5e6e",
-  "data/patch-api/sources/3.4.3-page-coverage.json": "af45e812c7c7897ab1792c26f01db84c150f9ebeb244ed0af9e8becea92deeba"
+  "data/patch-api/sources/3.4.3-page-coverage.json": "af45e812c7c7897ab1792c26f01db84c150f9ebeb244ed0af9e8becea92deeba",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/green.log": "16a72ba4a81c97ff58a829fa67d768c349341e10f6023ad266bdcbcb227f5f9c",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/extractor.log": "72bce43d3c39400f3ac1c67ee2ab9fd6dccb3c3d65b6fe73bb20bfc71d2b8377",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/validator.log": "63fc531a626047a08f7992a6ba41a1995759c3957f6cb6a50b28a570aba9670b",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/source-proof.json": "c310a95e1ca1001015420c4bdc3c6725fc7a9049b3351f65b107fbadedf08495",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/tamper-control.log": "315b8d5d00620a9597921e1b4cf4b5d99e3f6f26be6e7949ba8d1afd61c1ef86"
 }
