@@ -1,0 +1,17 @@
+{
+  "exit": 0,
+  "argv": [
+    "timeout",
+    "90",
+    "/home/osso/.worktrees/wow-ui-sim-p420-source/target/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "binary_build_revision": "566ce85d7",
+  "current_revision": "39d076c31995878450d8622825d3cc6128fb2d8e",
+  "code_scope": "Runtime unchanged across historical validator/docs/evidence additions and rebase onto equivalent 4.3.0 runtime.",
+  "binary_sha256": "cd97d33277770df20fee1e4f092d9e3c690b5dee5e58322b91fc849f3a4deddb",
+  "stdout": "[]\n",
+  "stderr_sha256": "ecc4f6896b6bc29761de03112f7f5da34543604bb633e65bb2b5f1c90ff81b64"
+}
