@@ -2,6 +2,10 @@
 
 Frozen Warcraft Wiki page267043/revision2581777/timestamp `2023-07-19T19:32:56Z`, retrieved `2026-10-09T08:51:36.398825+00:00`. Own base `0b64e636c16c59e90e3406e7ff557e94cd7732a8`. SOURCE development only; zero runtime/model/native observations or compatibility credit.
 
+## Current integration status — 2026-10-09
+
+Integrated source artifacts; [proof guide](integrated-source-and-factory-proof-2026-10-09.md#era1144-integrated-source-retained-development-proof-only) distinguishes retained development PASS from an unperformed later independent replay. Historical queued/in-flight notes below are not current integration status. Linked inclusion/subset contracts remain UNPROVEN, without native/model/runtime credit. [Broader full-suite FAIL/open gates](integrated-source-and-factory-proof-2026-10-09.md#saved-full-suite-fail-broader-goal-open) remain separate.
+
 ## Source identity
 
 Exact legacy-2026-10-09 manifest,101-page registry ending1.0.0, response and returned wikitext verified **before derivation**. Raw775 bytes, SHA256 `0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42`; response SHA256 `6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a`. Frozen originals copied unchanged into own evidence. Canonical1.15.3/4 read-only structure references, not semantic credit or copied receipts. No network/source repair/expansion.

@@ -2,6 +2,10 @@
 
 Frozen page577687/revision5998991/timestamp `2024-04-03T08:43:49Z`, verified2026-10-09. Exact legacy response/raw/manifest/registry identity retained. No linked retail or deprecated-file body imported into the frozen ledger. [Spec](../../specs/patch-1-15-1-source-accounting.md).
 
+## Current integration status — 2026-10-09
+
+Integrated; [proof guide](integrated-source-and-factory-proof-2026-10-09.md#era1154–1150-integration-bounded-source-pass) owns current SOURCE/portable counts and preservation. [Official Lua alias proof is REUSED](integrated-source-and-factory-proof-2026-10-09.md#official-lua-alias-retained-11-reused), not a fresh Cargo execution. Historical loading/successor observations below retain their original epoch. Native/pre-vendor/full-UI/C_Seasons/non-public gaps remain; [broader goal is open](integrated-source-and-factory-proof-2026-10-09.md#saved-full-suite-fail-broader-goal-open).
+
 ## Literal coverage matrix
 
 | Source feature | Accounting | Behavior proof |

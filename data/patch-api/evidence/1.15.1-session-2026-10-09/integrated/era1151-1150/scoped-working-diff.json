@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "HEAD",
+    "--name-status",
+    "--",
+    "src/",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    ".cargo/",
+    "build/",
+    "native/",
+    "xtask/",
+    "patch-tests/patch_1_15_1_alias.rs",
+    "data/blizzard-ui-files/era.txt",
+    "data/patch-api/evidence/1.15.1-session-2026-10-09/",
+    "data/patch-api/evidence/1.15.0-session-2026-10-09/"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "time": 1791559248.4932077,
+  "stdout": "",
+  "stderr": "",
+  "exit": 0
+}

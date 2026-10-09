@@ -1,0 +1,113 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp2s0f_mhq/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 50,\n  \"totals\": {\n    \"physical_lines\": 8,\n    \"nonblank_rows\": 6,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 2,\n    \"contracts\": 5,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 1,\n    \"unexpanded_linked_contracts\": 4,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp2s0f_mhq/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_collapsed_compare_base_rejected (__main__.SourceAccounting.test_collapsed_compare_base_rejected) ... ok\ntest_comparison_bases_remain_distinct (__main__.SourceAccounting.test_comparison_bases_remain_distinct) ... ok\ntest_configured_and_successors_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_successors_not_native_or_supersession) ... ok\ntest_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok\ntest_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok\ntest_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok\ntest_headers_and_unexpanded_template (__main__.SourceAccounting.test_headers_and_unexpanded_template) ... ok\ntest_literal_toc_navigation_and_client_context (__main__.SourceAccounting.test_literal_toc_navigation_and_client_context) ... ok\ntest_omissions_and_fabricated_credit_rejected (__main__.SourceAccounting.test_omissions_and_fabricated_credit_rejected) ... ok\ntest_subset_summary_and_internal_links_not_backfilled (__main__.SourceAccounting.test_subset_summary_and_internal_links_not_backfilled) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.077s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp2s0f_mhq/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.3",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp2s0f_mhq/source.wikitext",
+        "6114194",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp2s0f_mhq/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmpuz6wrhua/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmpuz6wrhua/audit.py\", line 125, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmpuz6wrhua/audit.py\", line 121, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmpuz6wrhua/audit.py\", line 113, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmpuz6wrhua/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 50,\n  \"totals\": {\n    \"physical_lines\": 8,\n    \"nonblank_rows\": 6,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 2,\n    \"contracts\": 5,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 1,\n    \"unexpanded_linked_contracts\": 4,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0",
+      "all_original_seals": 50
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp5vj0hap5/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp5vj0hap5/audit.py\", line 125, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp5vj0hap5/audit.py\", line 121, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp5vj0hap5/audit.py\", line 113, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/tmp5vj0hap5/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 50,\n  \"totals\": {\n    \"physical_lines\": 8,\n    \"nonblank_rows\": 6,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 2,\n    \"contracts\": 5,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 1,\n    \"unexpanded_linked_contracts\": 4,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "125f73eadcba414feed9770db10f223235f5766dffc506fbd95698221196122d",
+      "all_original_seals": 50
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

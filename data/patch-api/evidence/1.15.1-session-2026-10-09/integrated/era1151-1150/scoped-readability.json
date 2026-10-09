@@ -1,0 +1,11 @@
+{
+  "scope": "Actual executable Rust introduced by 9717f867d: patch-tests/patch_1_15_1_alias.rs. Other .rs additions are immutable evidence snapshots, not new compiled implementations. 17cc9b0f2 adds no Rust implementation.",
+  "file_sha256": "f7c53553e0fa35dd1f399e6cc083f30be4855281687a40520bdd5fe5f18851d0",
+  "manual_full_changed_file_review": true,
+  "function": "official_public_build_deprecation_preserves_numeric_season_alias",
+  "nesting": "no conditional/loop nesting",
+  "params": 0,
+  "suppressions": 0,
+  "observations": "Named sequential precondition/execution/postcondition stages share env/DEPRECATED; concrete tuples and explicit failures; no mock, synthetic public-build flag, or enum writes before official Lua. Test length below 200-line test threshold.",
+  "violations": []
+}

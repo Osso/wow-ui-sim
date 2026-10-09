@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "714277147",
+    "HEAD",
+    "--name-status",
+    "--",
+    "src/",
+    "Cargo.toml",
+    "Cargo.lock",
+    "patch-tests/",
+    "build.rs",
+    ".cargo/"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "time": 1791559071.5102022,
+  "stdout": "",
+  "stderr": "",
+  "exit": 0
+}

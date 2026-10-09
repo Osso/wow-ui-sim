@@ -1,0 +1,32 @@
+[
+  {
+    "source": "/tmp/era1152-independent-20261009-150332/final-status.json",
+    "retained": "data/patch-api/evidence/1.15.2-session-2026-10-09/integrated/final-status.json",
+    "bytes": 175,
+    "sha256": "7026f429c7cd40c6dc7b2816714e35f22f483b52348d04da840ffb69cfb6ea88"
+  },
+  {
+    "source": "/tmp/era1152-independent-20261009-150332/integration-history.json",
+    "retained": "data/patch-api/evidence/1.15.2-session-2026-10-09/integrated/integration-history.json",
+    "bytes": 2227,
+    "sha256": "97bdb6405ba2a52f85057170ca69fe264b59be7860fcd5d56be6e3d41aaa1e46"
+  },
+  {
+    "source": "/tmp/era1152-independent-20261009-150332/report.json",
+    "retained": "data/patch-api/evidence/1.15.2-session-2026-10-09/integrated/report.json",
+    "bytes": 70463,
+    "sha256": "4adc71dce80d38a1a40e1788025b795508d15fe8611e96fbf2df2b3d83273db7"
+  },
+  {
+    "source": "/tmp/era1152-independent-20261009-150332/successor-git-evidence.json",
+    "retained": "data/patch-api/evidence/1.15.2-session-2026-10-09/integrated/successor-git-evidence.json",
+    "bytes": 8182,
+    "sha256": "2d8001eb7609be67b49de673e5fcf9549b4f0690cd0b355926b11c38047a8c49"
+  },
+  {
+    "source": "/tmp/era1152-independent-20261009-150332/summary.md",
+    "retained": "data/patch-api/evidence/1.15.2-session-2026-10-09/integrated/summary.md",
+    "bytes": 3075,
+    "sha256": "ce874effbe90636a97ef2df82f6c4ca0384a5f9da47f07341f29182d75ac81ca"
+  }
+]

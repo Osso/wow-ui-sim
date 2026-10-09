@@ -1,0 +1,4 @@
+  File "/tmp/era1154-1153-independent-c2w7roqf/portable-wrapper.py", line 23
+    sys.exit(0 if r.wasSuccessful() else 1)"} مط tool output? centralized. continue. bad text? actual tool return next.  
+                                           ^
+SyntaxError: unterminated string literal (detected at line 23)

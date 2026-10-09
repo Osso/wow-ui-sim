@@ -1,0 +1,72 @@
+{
+  "scope": "1.15.4 SOURCE only",
+  "runs": [
+    {
+      "phase": "RED",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1154-page",
+      "revision": "35365c846cc8cbedcd31f5b86c8328adc29f578d + own fixtures/scaffold",
+      "exit_code": 1,
+      "result": "9 expected assertion failures; accounting absent",
+      "log": "red.log",
+      "invalidated_by": "implementation; retained negative control only"
+    },
+    {
+      "phase": "GREEN",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1154-page",
+      "revision": "8bb569247197c10839dea4f317e5de0033a5cbef",
+      "exit_code": 0,
+      "result": "SOURCE9/9",
+      "log": "green.log",
+      "invalidated_by": null
+    },
+    {
+      "phase": "historical-default-generator",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.4",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/source.wikitext",
+        "6172581",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/default-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1154-page",
+      "revision": "8bb569247197c10839dea4f317e5de0033a5cbef",
+      "flags": [],
+      "exit_code": 0,
+      "output": "default-register.json",
+      "log": "default-generator.log",
+      "invalidated_by": null
+    },
+    {
+      "phase": "portable-RED",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/replay-archive.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/target/p1154-source-replay",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/portable-red-controls.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1154-page",
+      "revision": "35365c846cc8cbedcd31f5b86c8328adc29f578d + own portable fixtures",
+      "exit_code": 1,
+      "result": "3 expected assertion failures; archive absent",
+      "log": "portable-red.log",
+      "invalidated_by": "archive creation; retained negative control only"
+    }
+  ]
+}

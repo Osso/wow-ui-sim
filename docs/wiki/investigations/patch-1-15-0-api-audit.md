@@ -2,6 +2,10 @@
 
 Frozen Warcraft Wiki **page564510/revision5950848**, timestamp `2024-01-30T19:36:35Z`, retrieved `2026-10-09T08:51:36.398773+00:00`. Base `0b64e636c16c59e90e3406e7ff557e94cd7732a8`; exact manifest/response/raw/registry verified before derivation. SOURCE development only; zero runtime/model/native observations or compatibility credit.
 
+## Current integration status — 2026-10-09
+
+Integrated; bounded SOURCE/portable proof PASS, without runtime/model credit. [Integrated proof guide](integrated-source-and-factory-proof-2026-10-09.md#era1154–1150-integration-bounded-source-pass) owns current counts and canonical-cwd controls. Frozen successor notes below remain historical; reconciliation does not establish semantic closure. The separate alias proof belongs to 1.15.1, not this page. [Full-suite FAIL/open gates](integrated-source-and-factory-proof-2026-10-09.md#saved-full-suite-fail-broader-goal-open) remain.
+
 ## Literal coverage matrix
 
 | Scope | Accounting | Proof boundary |

@@ -1,0 +1,21 @@
+{
+  "historical_seals": 50,
+  "totals": {
+    "physical_lines": 8,
+    "nonblank_rows": 6,
+    "metadata_rows": 4,
+    "unproven_rows": 2,
+    "contracts": 5,
+    "headers": 2,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 1,
+    "unexpanded_linked_contracts": 4,
+    "unexpanded_transclusions": 1
+  }
+}

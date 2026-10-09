@@ -2,6 +2,10 @@
 
 Frozen Warcraft Wiki **page600355/revision6172581**, timestamp `2024-11-13T21:59:45Z`. Base `35365c846cc8cbedcd31f5b86c8328adc29f578d`; offline SOURCE accounting only. Zero runtime/model/native observations or compatibility credit.
 
+## Current integration status — 2026-10-09
+
+Integrated; bounded SOURCE/canonical-cwd replay PASS. [Integrated proof guide](integrated-source-and-factory-proof-2026-10-09.md#era1154–1150-integration-bounded-source-pass) is the current count/status SSOT. Successor notes below describe frozen historical epochs, not current integration status. No semantic/native acceptance; [saved full-suite FAIL and open gates](integrated-source-and-factory-proof-2026-10-09.md#saved-full-suite-fail-broader-goal-open) remain separate.
+
 ## Source identity
 
 [Own source pin](../../../data/patch-api/evidence/1.15.4-session-2026-10-09/source-pin.json): **439 bytes**, raw SHA256 `e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba`; response SHA256 `c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633`. Retrieval `2026-10-09T08:51:36.398568+00:00`. Own exact frozen legacy manifest/101-page registry ending1.0.0 validate returned content/identity/hashes. No network, normalization, source repair or expansion.

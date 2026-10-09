@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env": {
+    "HOME": "/home/osso",
+    "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+  "start": 1791559090.4730918,
+  "end": 1791559090.5770705,
+  "stdout": "",
+  "stderr": "test_concrete_alias_not_invented_value (__main__.SourceAccounting.test_concrete_alias_not_invented_value) ... ok\ntest_configuration_successors_not_native_credit (__main__.SourceAccounting.test_configuration_successors_not_native_credit) ... ok\ntest_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... ok\ntest_fabricated_credit_values_foreign_supersession_rejected (__main__.SourceAccounting.test_fabricated_credit_values_foreign_supersession_rejected) ... ok\ntest_identity_and_source_tampering (__main__.SourceAccounting.test_identity_and_source_tampering) ... ok\ntest_inventory_and_signature_limits (__main__.SourceAccounting.test_inventory_and_signature_limits) ... ok\ntest_links_headers_and_template (__main__.SourceAccounting.test_links_headers_and_template) ... ok\ntest_literal_rows (__main__.SourceAccounting.test_literal_rows) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.070s\n\nOK\n",
+  "exit": 0
+}

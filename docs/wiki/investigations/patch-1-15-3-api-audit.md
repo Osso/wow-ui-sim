@@ -2,6 +2,10 @@
 
 Frozen Warcraft Wiki **593663 / revision6114194**, timestamp `2024-08-30T01:06:01Z`, retrieved `2026-10-09T08:51:36.398616+00:00`. Own branch base `35365c846cc8cbedcd31f5b86c8328adc29f578d`. Development accounting only; no runtime/model/native credit.
 
+## Current integration status — 2026-10-09
+
+Integrated; bounded SOURCE/canonical-cwd replay PASS. [Integrated proof guide](integrated-source-and-factory-proof-2026-10-09.md#era1154–1150-integration-bounded-source-pass) owns current counts/status. Frozen in-flight/queued notes below remain historical; actual successor identity reconciliation gives no semantic supersession or runtime/native credit. [Full-suite FAIL/open gates](integrated-source-and-factory-proof-2026-10-09.md#saved-full-suite-fail-broader-goal-open) are not closed.
+
 ## Literal coverage matrix
 
 | Scope | Accounting | Proof boundary |

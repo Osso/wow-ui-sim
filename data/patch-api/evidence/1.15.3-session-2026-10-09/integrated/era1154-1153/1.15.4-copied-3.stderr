@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/era1154-1153-independent-c2w7roqf/1.15.4-copied/tmp8zh17_9m/audit.py", line 122, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/era1154-1153-independent-c2w7roqf/1.15.4-copied/tmp8zh17_9m/audit.py", line 118, in main
+    count = check_seals()
+  File "/tmp/era1154-1153-independent-c2w7roqf/1.15.4-copied/tmp8zh17_9m/audit.py", line 110, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: ledger.json

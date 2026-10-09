@@ -1,0 +1,8 @@
+test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok
+test_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok
+test_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.267s
+
+OK

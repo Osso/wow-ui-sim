@@ -1,0 +1,26 @@
+[
+  {
+    "control": "copy-replay",
+    "pass": true,
+    "originals_restored": true,
+    "seal_count": 64,
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "copy": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-copy-replay"
+  },
+  {
+    "control": "ledger-tamper",
+    "pass": true,
+    "originals_restored": true,
+    "seal_count": 64,
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "copy": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-ledger-tamper"
+  },
+  {
+    "control": "log-tamper",
+    "pass": true,
+    "originals_restored": true,
+    "seal_count": 64,
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "copy": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-log-tamper"
+  }
+]

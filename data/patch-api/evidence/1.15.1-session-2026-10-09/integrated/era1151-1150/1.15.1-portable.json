@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.1-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.1-session-2026-10-09/replay-archive.tar.gz",
+    "--scratch",
+    "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-scratch",
+    "--receipts",
+    "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-portable-receipts.json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env": {
+    "HOME": "/home/osso",
+    "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+  "start": 1791559090.5773,
+  "end": 1791559090.8748865,
+  "stdout": "",
+  "stderr": "test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok\ntest_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok\ntest_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.261s\n\nOK\n",
+  "exit": 0
+}

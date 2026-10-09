@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "rustfmt",
+    "--check",
+    "--edition",
+    "2024",
+    "/home/osso/Projects/wow/wow-ui-sim/patch-tests/patch_1_15_1_alias.rs"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "start": 1791559213.5582883,
+  "end": 1791559213.5673451,
+  "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+  "env_overrides": {},
+  "stdout": "",
+  "stderr": "",
+  "exit": 0
+}

@@ -1,0 +1,23 @@
+import importlib.util, sys, json, os, unittest, datetime, hashlib
+from pathlib import Path
+from types import SimpleNamespace
+harness,archive,scratch,receipts,revision = sys.argv[1:]
+spec=importlib.util.spec_from_file_location('own_portable',harness)
+m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+original_cwd=m.CWD
+m.CWD='/home/osso/Projects/wow/wow-ui-sim'
+m.OPTIONS=SimpleNamespace(archive=Path(archive),scratch=Path(scratch),receipts=Path(receipts))
+m.OPTIONS.scratch.mkdir(parents=True,exist_ok=True)
+execute=m.PortableSource.execute
+hashes=lambda p:{str(x.relative_to(p)):hashlib.sha256(x.read_bytes()).hexdigest() for x in p.rglob('*') if x.is_file()}
+def recorded(self,*args):
+ before=hashes(self.copied)
+ start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+ result=execute(self,*args)
+ m.RECEIPTS[-1].update(start=start,end=datetime.datetime.now(datetime.timezone.utc).isoformat(),env=dict(os.environ,PATH='',PYTHONDONTWRITEBYTECODE='1'),revision=revision,hash_scope_before=before,hash_scope_after=hashes(self.copied))
+ return result
+m.PortableSource.execute=recorded
+suite=unittest.defaultTestLoader.loadTestsFromTestCase(m.PortableSource)
+r=unittest.TextTestRunner(verbosity=2).run(suite)
+Path(receipts).write_text(json.dumps({'harness':harness,'harness_sha256':hashlib.sha256(Path(harness).read_bytes()).hexdigest(),'original_harness_cwd':original_cwd,'explicit_execution_cwd':m.CWD,'only_adjustment':'CWD override and receipt instrumentation in scratch wrapper; no source fixture edits','scope':'copied historical SOURCE only','runs':m.RECEIPTS,'tests_run':r.testsRun,'failures':len(r.failures),'errors':len(r.errors)},indent=2)+'\n')
+sys.exit(0 if r.wasSuccessful() else 1)"} مط tool output? centralized. continue. bad text? actual tool return next.  

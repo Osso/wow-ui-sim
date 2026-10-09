@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "git",
+    "log",
+    "--first-parent",
+    "-20",
+    "--format=%H %cI %s",
+    "bf0e83720"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exit_code": 0,
+  "stdout": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c 2026-10-09T10:00:52-05:00 Merge branch 'p1152-page'\n0b64e636c16c59e90e3406e7ff557e94cd7732a8 2026-10-09T09:52:34-05:00 Merge branch 'p1153-page'\n7ad66791e64f01dd6dc61d29d3aa48faccdce3b8 2026-10-09T09:50:54-05:00 Merge branch 'p1154-page'\n7c3e2fa52cb9d66557f9105b89839a1e13272cb7 2026-10-09T09:50:44-05:00 Retain independent older-source and Era integration receipts\n65b94c05023dc5e1e8422de0cea99c0e7bda9c10 2026-10-09T09:40:24-05:00 Merge branch 'p1155-page'\nf3275801488519ea64a2fa6a6750240cf799924d 2026-10-09T09:39:08-05:00 Merge branch 'p1156-page'\n35365c846cc8cbedcd31f5b86c8328adc29f578d 2026-10-09T09:37:53-05:00 Retain integrated factory and cross-profile repair proof\nd9a00a294ee35c414e0527ea5d34d1d6c09207e9 2026-10-09T09:34:26-05:00 Merge branch 'p1157-page'\ndd710c6fc469a53e3b77b97aa6340993ae83e46e 2026-10-09T09:29:43-05:00 Merge branch 'p1158-source'\n60524271c44d40568e60dc90ffea5bb258325105 2026-10-09T09:29:33-05:00 Merge branch 'p1159-source'\n861e7ae5ee6a6ab820ee0d58e63e324786724c18 2026-10-09T09:29:14-05:00 Merge branch 'p1601-source'\n1044215d0386dd809c51cb8f7b47e08bbf4016a1 2026-10-09T09:27:54-05:00 Keep Retail-only message and combat-log bodies profile-gated\n88217d328e88c908a9f5f34f4ac00f5483515e8f 2026-10-09T09:27:31-05:00 Merge branch 'p201-source'\n8877566d26df0d89b8923b04d51c6c1954e9796f 2026-10-09T09:26:53-05:00 Merge branch 'p210-source'\nc2481c4c50d04489b081f35fafccc929ba0b9b73 2026-10-09T09:26:25-05:00 Merge branch 'p220-source'\n48691e5a88df0338f20007e6fb8cf63070d0f21e 2026-10-09T09:25:59-05:00 Merge branch 'p230-source'\n923b0c98680b7af18166217de4a918d7c6f8c98c 2026-10-09T09:25:14-05:00 Merge branch 'p240-source'\n0b31440904988badd674a11fa39d8ad029690ae8 2026-10-09T09:24:29-05:00 Merge branch 'p242-source'\n2d83b9b8088e110e6e170473ed59650d1821612e 2026-10-09T09:23:03-05:00 Retain full narrow validator discovery logs\n16b9658da2a0b476bba25776f5091c22b69c44ae 2026-10-09T09:22:42-05:00 Merge branch 'p302-factory'\n",
+  "stderr": ""
+}

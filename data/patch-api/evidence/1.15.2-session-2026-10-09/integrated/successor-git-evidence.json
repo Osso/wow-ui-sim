@@ -1,0 +1,226 @@
+[
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--error-unmatch",
+      "--",
+      "data/patch-api/evidence/1.15.3-session-2026-10-09/source-pin.json",
+      "data/patch-api/evidence/1.15.3-session-2026-10-09/source.wikitext",
+      "data/patch-api/evidence/1.15.3-session-2026-10-09/source-response.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "started": "2026-10-09T15:03:50.680961+00:00",
+    "finished": "2026-10-09T15:03:50.683467+00:00",
+    "exit_code": 0,
+    "stdout": "data/patch-api/evidence/1.15.3-session-2026-10-09/source-pin.json\ndata/patch-api/evidence/1.15.3-session-2026-10-09/source-response.json\ndata/patch-api/evidence/1.15.3-session-2026-10-09/source.wikitext\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %cI %s",
+      "bf0e83720",
+      "--",
+      "data/patch-api/evidence/1.15.3-session-2026-10-09/source-pin.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "exit_code": 0,
+    "stdout": "b6457c8e6a2792b8ba440c806a9d95fce292b5ab 2026-10-09T09:41:40-05:00 Pin Era 1.15.3 source and failing accounting fixtures\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--error-unmatch",
+      "--",
+      "data/patch-api/evidence/1.15.4-session-2026-10-09/source-pin.json",
+      "data/patch-api/evidence/1.15.4-session-2026-10-09/source.wikitext",
+      "data/patch-api/evidence/1.15.4-session-2026-10-09/source-response.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "started": "2026-10-09T15:03:50.685557+00:00",
+    "finished": "2026-10-09T15:03:50.687287+00:00",
+    "exit_code": 0,
+    "stdout": "data/patch-api/evidence/1.15.4-session-2026-10-09/source-pin.json\ndata/patch-api/evidence/1.15.4-session-2026-10-09/source-response.json\ndata/patch-api/evidence/1.15.4-session-2026-10-09/source.wikitext\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %cI %s",
+      "bf0e83720",
+      "--",
+      "data/patch-api/evidence/1.15.4-session-2026-10-09/source-pin.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "exit_code": 0,
+    "stdout": "8bb569247197c10839dea4f317e5de0033a5cbef 2026-10-09T09:45:20-05:00 Account frozen 1.15.4 subset and unexpanded source boundaries\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--error-unmatch",
+      "--",
+      "data/patch-api/evidence/1.15.5-session-2026-10-09/source-pin.json",
+      "data/patch-api/evidence/1.15.5-session-2026-10-09/source.wikitext",
+      "data/patch-api/evidence/1.15.5-session-2026-10-09/source-response.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "started": "2026-10-09T15:03:50.688802+00:00",
+    "finished": "2026-10-09T15:03:50.690673+00:00",
+    "exit_code": 0,
+    "stdout": "data/patch-api/evidence/1.15.5-session-2026-10-09/source-pin.json\ndata/patch-api/evidence/1.15.5-session-2026-10-09/source-response.json\ndata/patch-api/evidence/1.15.5-session-2026-10-09/source.wikitext\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %cI %s",
+      "bf0e83720",
+      "--",
+      "data/patch-api/evidence/1.15.5-session-2026-10-09/source-pin.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "exit_code": 0,
+    "stdout": "3c08633ed71ad499d00529b89753056ef33a9afd 2026-10-09T09:34:39-05:00 Pin frozen 1.15.5 source and literal accounting controls\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--error-unmatch",
+      "--",
+      "data/patch-api/evidence/1.15.6-session-2026-10-09/source-pin.json",
+      "data/patch-api/evidence/1.15.6-session-2026-10-09/source.wikitext",
+      "data/patch-api/evidence/1.15.6-session-2026-10-09/source-response.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "started": "2026-10-09T15:03:50.692119+00:00",
+    "finished": "2026-10-09T15:03:50.693683+00:00",
+    "exit_code": 0,
+    "stdout": "data/patch-api/evidence/1.15.6-session-2026-10-09/source-pin.json\ndata/patch-api/evidence/1.15.6-session-2026-10-09/source-response.json\ndata/patch-api/evidence/1.15.6-session-2026-10-09/source.wikitext\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %cI %s",
+      "bf0e83720",
+      "--",
+      "data/patch-api/evidence/1.15.6-session-2026-10-09/source-pin.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "exit_code": 0,
+    "stdout": "b9fbf5e9d78a398c7359cca847854ee9d9aa76ea 2026-10-09T09:26:09-05:00 test: freeze 1.15.6 source inputs and RED fixtures\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--error-unmatch",
+      "--",
+      "data/patch-api/evidence/1.15.7-session-2026-10-09/source-pin.json",
+      "data/patch-api/evidence/1.15.7-session-2026-10-09/source.wikitext",
+      "data/patch-api/evidence/1.15.7-session-2026-10-09/source-response.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "started": "2026-10-09T15:03:50.695331+00:00",
+    "finished": "2026-10-09T15:03:50.696583+00:00",
+    "exit_code": 0,
+    "stdout": "data/patch-api/evidence/1.15.7-session-2026-10-09/source-pin.json\ndata/patch-api/evidence/1.15.7-session-2026-10-09/source-response.json\ndata/patch-api/evidence/1.15.7-session-2026-10-09/source.wikitext\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %cI %s",
+      "bf0e83720",
+      "--",
+      "data/patch-api/evidence/1.15.7-session-2026-10-09/source-pin.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "exit_code": 0,
+    "stdout": "123136120c3343ab08cc7d773e3d0fe572132569 2026-10-09T09:26:50-05:00 Pin 1.15.7 literal source and failing accounting fixtures\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--error-unmatch",
+      "--",
+      "data/patch-api/evidence/1.15.8-session-2026-10-09/source-pin.json",
+      "data/patch-api/evidence/1.15.8-session-2026-10-09/source.wikitext",
+      "data/patch-api/evidence/1.15.8-session-2026-10-09/source-response.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "started": "2026-10-09T15:03:50.698373+00:00",
+    "finished": "2026-10-09T15:03:50.700051+00:00",
+    "exit_code": 0,
+    "stdout": "data/patch-api/evidence/1.15.8-session-2026-10-09/source-pin.json\ndata/patch-api/evidence/1.15.8-session-2026-10-09/source-response.json\ndata/patch-api/evidence/1.15.8-session-2026-10-09/source.wikitext\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %cI %s",
+      "bf0e83720",
+      "--",
+      "data/patch-api/evidence/1.15.8-session-2026-10-09/source-pin.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "exit_code": 0,
+    "stdout": "384699f1160b41b3017c68adf96e39b197e5001f 2026-10-09T08:58:56-05:00 Account frozen Patch 1.15.8 literal SOURCE contracts\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "ls-files",
+      "--error-unmatch",
+      "--",
+      "data/patch-api/evidence/1.15.9-session-2026-10-09/source-pin.json",
+      "data/patch-api/evidence/1.15.9-session-2026-10-09/source.wikitext",
+      "data/patch-api/evidence/1.15.9-session-2026-10-09/source-response.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "started": "2026-10-09T15:03:50.701600+00:00",
+    "finished": "2026-10-09T15:03:50.702650+00:00",
+    "exit_code": 0,
+    "stdout": "data/patch-api/evidence/1.15.9-session-2026-10-09/source-pin.json\ndata/patch-api/evidence/1.15.9-session-2026-10-09/source-response.json\ndata/patch-api/evidence/1.15.9-session-2026-10-09/source.wikitext\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "log",
+      "-1",
+      "--format=%H %cI %s",
+      "bf0e83720",
+      "--",
+      "data/patch-api/evidence/1.15.9-session-2026-10-09/source-pin.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "exit_code": 0,
+    "stdout": "07c93b3b576669917886f7db762e14472e6d520d 2026-10-09T08:46:35-05:00 Account frozen Patch 1.15.9 literal source contracts\n",
+    "stderr": ""
+  }
+]

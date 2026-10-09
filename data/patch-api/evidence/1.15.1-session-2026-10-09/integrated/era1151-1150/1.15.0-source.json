@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.0-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env": {
+    "HOME": "/home/osso",
+    "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+  "start": 1791559090.8764615,
+  "end": 1791559091.0393283,
+  "stdout": "",
+  "stderr": "test_configuration_and_successors (__main__.SourceAccounting.test_configuration_and_successors) ... ok\ntest_distinct_inclusion_claims (__main__.SourceAccounting.test_distinct_inclusion_claims) ... ok\ntest_each_omission_rejected (__main__.SourceAccounting.test_each_omission_rejected) ... ok\ntest_exact_rows (__main__.SourceAccounting.test_exact_rows) ... ok\ntest_fabricated_credit_and_history_collapse_rejected (__main__.SourceAccounting.test_fabricated_credit_and_history_collapse_rejected) ... ok\ntest_full_counts (__main__.SourceAccounting.test_full_counts) ... ok\ntest_identity_and_content_tamper (__main__.SourceAccounting.test_identity_and_content_tamper) ... ok\ntest_inventory_headers_and_navigation (__main__.SourceAccounting.test_inventory_headers_and_navigation) ... ok\ntest_links_exact_unexpanded (__main__.SourceAccounting.test_links_exact_unexpanded) ... ok\ntest_namespace_not_callable_or_modeled (__main__.SourceAccounting.test_namespace_not_callable_or_modeled) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.129s\n\nOK\n",
+  "exit": 0
+}

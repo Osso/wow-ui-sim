@@ -1,0 +1,175 @@
+test_collapsed_compare_base_rejected (__main__.SourceAccounting.test_collapsed_compare_base_rejected) ... FAIL
+test_comparison_bases_remain_distinct (__main__.SourceAccounting.test_comparison_bases_remain_distinct) ... FAIL
+test_configured_and_successors_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_successors_not_native_or_supersession) ... FAIL
+test_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... FAIL
+test_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... FAIL
+test_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... FAIL
+test_headers_and_unexpanded_template (__main__.SourceAccounting.test_headers_and_unexpanded_template) ... FAIL
+test_literal_toc_navigation_and_client_context (__main__.SourceAccounting.test_literal_toc_navigation_and_client_context) ... FAIL
+test_omissions_and_fabricated_credit_rejected (__main__.SourceAccounting.test_omissions_and_fabricated_credit_rejected) ... FAIL
+test_subset_summary_and_internal_links_not_backfilled (__main__.SourceAccounting.test_subset_summary_and_internal_links_not_backfilled) ... FAIL
+
+======================================================================
+FAIL: test_collapsed_compare_base_rejected (__main__.SourceAccounting.test_collapsed_compare_base_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 91, in test_collapsed_compare_base_rejected
+    self.assertIn('contracts', changed)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+======================================================================
+FAIL: test_comparison_bases_remain_distinct (__main__.SourceAccounting.test_comparison_bases_remain_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 46, in test_comparison_bases_remain_distinct
+    self.assertEqual([(c['label'], c['target'], c['compare_base'], c['compare_head']) for c in diffs], [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('wow-ui-source', 'https://github.com/Gethe/wow-ui-source/compare/4.4.0..1.15.3', '4.4.0', '1.15.3'),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('BlizzardInterfaceResources', 'https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.2..1.15.3', '1.15.2', '1.15.3')])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('wow-ui-source', 'https://github.com/Get[185 chars].3')]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('wow-ui-source', 'https://github.com/Gethe/wow-ui-source/compare/4.4.0..1.15.3', '4.4.0', '1.15.3')
+
+- []
++ [('wow-ui-source',
++   'https://github.com/Gethe/wow-ui-source/compare/4.4.0..1.15.3',
++   '4.4.0',
++   '1.15.3'),
++  ('BlizzardInterfaceResources',
++   'https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.2..1.15.3',
++   '1.15.2',
++   '1.15.3')]
+
+======================================================================
+FAIL: test_configured_and_successors_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_successors_not_native_or_supersession)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 61, in test_configured_and_successors_not_native_or_supersession
+    self.assertEqual([(p['feature'], p['configured_interface']) for p in ledger.get('configured_profiles', [])], [('client-era', 11507), ('client-anniversary', 11507)])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('client-era', 11507), ('client-anniversary', 11507)]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('client-era', 11507)
+
+- []
++ [('client-era', 11507), ('client-anniversary', 11507)]
+
+======================================================================
+FAIL: test_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 14, in test_exact_literal_rows
+    self.assertEqual([(r['line'], r['literal']) for r in rows],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [(n, s) for n, s in enumerate((EVIDENCE / 'source.wikitext').read_text().splitlines(), 1) if s.strip()])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|1.15.3|prev=1.15.2|next[452 chars]s]')]
+
+Second list contains 6 additional elements.
+First extra element 0:
+(1, '{{apichanges|1.15.3|prev=1.15.2|next=1.15.4}}')
+
+- []
++ [(1, '{{apichanges|1.15.3|prev=1.15.2|next=1.15.4}}'),
++  (3, '==Summary=='),
++  (4,
++   '* A subset of Dragonflight API changes from [[Patch 10.2.7/API '
++   'changes|Patch 10.2.7]] are included, as well as Cataclysm [[Patch 4.4.0/API '
++   'changes|Patch 4.4.0]].'),
++  (6, '==Resources=='),
++  (7, '* TOC: <code>11503</code>'),
++  (8,
++   '* Diffs: [https://github.com/Gethe/wow-ui-source/compare/4.4.0..1.15.3 '
++   'wow-ui-source], '
++   '[https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.2..1.15.3 '
++   'BlizzardInterfaceResources]')]
+
+======================================================================
+FAIL: test_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 97, in test_frozen_identity_and_content_tampering
+    self.assertIn('source', audit.build())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source' not found in {}
+
+======================================================================
+FAIL: test_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 19, in test_full_scope_counts
+    self.assertEqual(audit.build().get('totals'), {
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'physical_lines': 8, 'nonblank_rows': 6, 'metadata_rows': 4,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        'signature_declarations': 0, 'prose_contracts': 1,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'unexpanded_linked_contracts': 4, 'unexpanded_transclusions': 1})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'physical_lines': 8, 'nonblank_rows': 6,[342 chars]': 1}
+
+======================================================================
+FAIL: test_headers_and_unexpanded_template (__main__.SourceAccounting.test_headers_and_unexpanded_template)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 52, in test_headers_and_unexpanded_template
+    self.assertEqual(ledger.get('headers'), [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+        {'line': 3, 'literal': '==Summary==', 'label': 'Summary', 'numerical_count': None, 'status': 'metadata-only'},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {'line': 6, 'literal': '==Resources==', 'label': 'Resources', 'numerical_count': None, 'status': 'metadata-only'}])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != [{'line': 3, 'literal': '==Summary==', 'l[180 chars]ly'}]
+
+======================================================================
+FAIL: test_literal_toc_navigation_and_client_context (__main__.SourceAccounting.test_literal_toc_navigation_and_client_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 30, in test_literal_toc_navigation_and_client_context
+    self.assertEqual(ledger.get('source_toc'), 11503)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 11503
+
+======================================================================
+FAIL: test_omissions_and_fabricated_credit_rejected (__main__.SourceAccounting.test_omissions_and_fabricated_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 71, in test_omissions_and_fabricated_credit_rejected
+    self.assertIn('contracts', expected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+======================================================================
+FAIL: test_subset_summary_and_internal_links_not_backfilled (__main__.SourceAccounting.test_subset_summary_and_internal_links_not_backfilled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py", line 37, in test_subset_summary_and_internal_links_not_backfilled
+    self.assertEqual([c['kind'] for c in ledger.get('contracts', [])],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ['summary-prose', 'unexpanded-wiki-link', 'unexpanded-wiki-link', 'unexpanded-linked-diff', 'unexpanded-linked-diff'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['summary-prose', 'unexpanded-wiki-link', [70 chars]iff']
+
+Second list contains 5 additional elements.
+First extra element 0:
+'summary-prose'
+
+- []
++ ['summary-prose',
++  'unexpanded-wiki-link',
++  'unexpanded-wiki-link',
++  'unexpanded-linked-diff',
++  'unexpanded-linked-diff']
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+FAILED (failures=10)

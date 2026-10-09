@@ -1,0 +1,200 @@
+[
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-own-portable-controls.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.0-own-portable-controls.json",
+    "bytes": 769,
+    "sha256": "549c4c9d09aa7135d7f63d317a310309eb614d71c1d8ec3bc65c7b4d5d7fdb99"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-portable-receipts.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.0-portable-receipts.json",
+    "bytes": 8255,
+    "sha256": "eaa170d240ae980e5524019ad556c642a477a78037d832494ff469dd26151008"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-portable.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.0-portable.json",
+    "bytes": 1408,
+    "sha256": "42e36bdcd0647f7aa82486c72ca45873951664e7ebce7b4fac427490e7a273b2"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-seals.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.0-seals.json",
+    "bytes": 16871,
+    "sha256": "3970878bf343ef89d89d4385344786b8af076c6220cfe91a777bd9f2908bfa33"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-source.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.0-source.json",
+    "bytes": 1689,
+    "sha256": "d5ff5208cbf70cecd785249da6a7ea56863486e4873bc8f494ae6465f15467bc"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-own-portable-controls.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.1-own-portable-controls.json",
+    "bytes": 769,
+    "sha256": "a4fc8c41f25ed7b0ec6e3916ef7b8d513c19cac636115b2754aae8af2d3da2ff"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-portable-receipts.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.1-portable-receipts.json",
+    "bytes": 7460,
+    "sha256": "642379bd8ae082b7a3045467f57867eb5a0736a0c73608b3081115fd0ace23c0"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-portable.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.1-portable.json",
+    "bytes": 1405,
+    "sha256": "98ab98e6b49c311ca186bace36b20fac2e1967ca53df9f9052cac1606af11bcb"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-seals.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.1-seals.json",
+    "bytes": 16072,
+    "sha256": "13ed084541b042a9f576acd0b1e63689bc1a4f5943820e0226165572a3db0179"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-source.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1.15.1-source.json",
+    "bytes": 1576,
+    "sha256": "4645b7009c5cfe551ce4a36ed112a44a5be57c0e142a8d759e04931503511846"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1151-retained-revision.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1151-retained-revision.json",
+    "bytes": 322,
+    "sha256": "f215a0496d8e552ad007a4652d357ee5575cdc280391b3d4e0c865b60554e180"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/1151.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/1151.json",
+    "bytes": 5278,
+    "sha256": "e6d26c6530826e7493796c3cab0ed8857dedb8e437d0387c4534c53ed5680c86"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/REPORT.md",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/REPORT.md",
+    "bytes": 7873,
+    "sha256": "760096cd1dc52a02646ede460ab79e05692ce8dfd26d67e39614c769943fa1b1"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/all-runtime-revision-changes.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/all-runtime-revision-changes.json",
+    "bytes": 17602,
+    "sha256": "b094f21f7b0ff719b6f5cd3daf1dd0befd409a7e3997e01fe4c6b63e4eff9b3e"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/dependencies.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/dependencies.json",
+    "bytes": 12271,
+    "sha256": "05ca9be513e40a3ed0e06fd966f15bd068cee85e391a74576c59cde03038f36f"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/end-head.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/end-head.json",
+    "bytes": 222,
+    "sha256": "f3ad91a4618f47c0f096a3ce5f096dd5f08eb732ec2d636f576813fdc5a16f74"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/final-seal-recheck.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/final-seal-recheck.json",
+    "bytes": 664,
+    "sha256": "f926fc61eeac15fd609b2bdb525275f649e29cc592628c6bc0a974315e8b3f1a"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/final-status.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/final-status.json",
+    "bytes": 6750,
+    "sha256": "52b01afbf8859b0d37e9430eef312f3b46bcf467524848b9cc291c020775f595"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/fmt.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/fmt.json",
+    "bytes": 386,
+    "sha256": "76f8aa9670491eef9c81cf260532fdb58554d22e12ed368616d857a5a5de663f"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/head.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/head.json",
+    "bytes": 222,
+    "sha256": "f69b3acb9cba6c580dbec44d74d4f9e10485ff5503d21974aebbf6ceb63246b4"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/independent-source-derivation.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/independent-source-derivation.json",
+    "bytes": 5384,
+    "sha256": "b868fc743ac916248469e8eb52c80f9a1e87fe1099d1efa0a079289248b23320"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/own-portable-raw-streams.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/own-portable-raw-streams.json",
+    "bytes": 16036,
+    "sha256": "89cd21169811c5126d8e6be78e76213b40074cf91bc09b9e29052b4c81bb1e9e"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/retained-runtime-log.txt",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/retained-runtime-log.txt",
+    "bytes": 13623,
+    "sha256": "f9892c18d9d094bc432b4b72f18b9c9b77e8ab4bc60e29010cd55966aee96d91"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/runtime-diff.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/runtime-diff.json",
+    "bytes": 322,
+    "sha256": "ef6c49bd0b54250c20a45f735d2cea193d5a6fa9102a4e56eac28dc9d7dca016"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/runtime-reuse-input-hashes.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/runtime-reuse-input-hashes.json",
+    "bytes": 555998,
+    "sha256": "e82cc2f9eb0714cd0c481419e59a6ef486713afd5311e1e1036de6e6aff9073a"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/rust.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/rust.json",
+    "bytes": 743,
+    "sha256": "5180dc1674bce08d6e072579f8b478a8e12b826a0bf8d715f71d87cb12ccb30c"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/scoped-readability.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/scoped-readability.json",
+    "bytes": 796,
+    "sha256": "c541b4e7959d599d8092cedc61e911cea08483cbb30bd6ed5c0370ce5a5edbbb"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/scoped-working-diff.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/scoped-working-diff.json",
+    "bytes": 523,
+    "sha256": "f6a88f704ae1df1c6f5e10479d58a62b9bf2ad5f47f4cf79d430c904c19e572d"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/status.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/status.json",
+    "bytes": 199,
+    "sha256": "54cdff604c740ac2cd8dc9a4b3234b8cc4ddd5ff8af59872a7115ee21727fbae"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/successor-history.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/successor-history.json",
+    "bytes": 1968,
+    "sha256": "e048989099040aa568fd0dfef21708345e6a03240765e8172ca38d5ab1a5e173"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/successor-reconciliation.json",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/successor-reconciliation.json",
+    "bytes": 23427,
+    "sha256": "ee346e0ee12eac597fda40bcd9bd7bb9c6d744baeadc5ceb150b9f9dd2a006f8"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/tree-714277147.txt",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/tree-714277147.txt",
+    "bytes": 2789732,
+    "sha256": "a4dcbc77b11b51f9dfa540a480c304cad4ce6a81d45f5ef2c7954f22a346211f"
+  },
+  {
+    "source": "/tmp/era1151-1150-independent-1791559037070539270/tree-HEAD.txt",
+    "retained": "data/patch-api/evidence/1.15.1-session-2026-10-09/integrated/era1151-1150/tree-HEAD.txt",
+    "bytes": 2817020,
+    "sha256": "d600a791e0385e9b0b02e666d221aa2d6ac912c707d4103a7a867b2009b18159"
+  }
+]

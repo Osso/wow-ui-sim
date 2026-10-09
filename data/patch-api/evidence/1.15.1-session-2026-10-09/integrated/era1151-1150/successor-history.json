@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "git",
+    "log",
+    "--format=%h %s",
+    "-20",
+    "--",
+    "docs/specs/patch-1-15-2-source-accounting.md",
+    "docs/specs/patch-1-15-3-source-accounting.md",
+    "docs/specs/patch-1-15-4-source-accounting.md",
+    "docs/specs/patch-1-15-5-source-accounting.md",
+    "docs/specs/patch-1-15-6-source-accounting.md",
+    "docs/specs/patch-1-15-7-source-accounting.md",
+    "docs/specs/patch-1-15-8-source-accounting.md",
+    "docs/specs/patch-1-15-9-source-accounting.md"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "start": 1791559213.567411,
+  "end": 1791559213.571928,
+  "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+  "env_overrides": {},
+  "stdout": "bf0e83720 Merge branch 'p1152-page'\n6039cdae5 Retain copied Era 1.15.2 replay and exact tamper restoration receipts\n7724baf8a Seal Era 1.15.2 SOURCE proof and portable historical inputs\n24f83c282 Account frozen Era 1.15.2 literal source boundaries\n0b64e636c Merge branch 'p1153-page'\n7ad66791e Merge branch 'p1154-page'\nc327f2a0c Retain 1.15.4 copied replay and serialized tamper receipts\nb6edd861e Seal 1.15.4 SOURCE proof and isolated historical replay inputs\n0e2153937 Record copied Era 1.15.3 tamper restoration and separate receipts\n8bb569247 Account frozen 1.15.4 subset and unexpanded source boundaries\nd53c81fe8 Seal Era 1.15.3 original SOURCE proof and default register\n4b957a6cf Account for literal Era 1.15.3 subset and distinct diff histories\n65b94c050 Merge branch 'p1155-page'\nf32758014 Merge branch 'p1156-page'\n2fc13c5ce Record isolated 1.15.5 replay receipts and literal audit limits\n3c08633ed Pin frozen 1.15.5 source and literal accounting controls\nd9a00a294 Merge branch 'p1157-page'\n22ed76b96 Retain 1.15.7 copied replay and serialized tamper receipts\nd1547a609 audit: retain 1.15.6 copied replay and tamper restoration receipts\nac1465079 Seal 1.15.7 SOURCE proof and add portable replay controls\n",
+  "stderr": "",
+  "exit": 0
+}

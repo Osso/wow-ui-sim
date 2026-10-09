@@ -1,0 +1,26 @@
+{
+  "1.15.1": {
+    "seals.json": {
+      "count": 57,
+      "map_sha256": "04d439833589c828af58dd758f3378aa875d299d7707d216218045496c60159b",
+      "pass": true
+    },
+    "receipt-seals.json": {
+      "count": 9,
+      "map_sha256": "acc083bf39a4ad4510480cae5802ff1e3c74a0a3a631a7c7541dee49cdf308a5",
+      "pass": true
+    }
+  },
+  "1.15.0": {
+    "seals.json": {
+      "count": 64,
+      "map_sha256": "3c3c95d9e23ce4f7b9ace7e4b95a4c4802321020f1bf08c835f9ed591d978dd2",
+      "pass": true
+    },
+    "receipt-seals.json": {
+      "count": 5,
+      "map_sha256": "4181846cb17a40a10d0b16a3107aef4e228b680f88893e3c361dffd1e2122635",
+      "pass": true
+    }
+  }
+}

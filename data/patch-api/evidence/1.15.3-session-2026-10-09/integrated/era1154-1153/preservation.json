@@ -1,0 +1,46 @@
+{
+  "1.15.4": {
+    "all_directory_files_unchanged": 51,
+    "original_seals": 44,
+    "separate_receipt_seals": 6,
+    "seal_map_sha256": "3a3f862cae3d7ccedc524f92615ddb71128254b2dbd1705f7772a4b046de1e30",
+    "receipt_map_sha256": "d05b0bb6b4340d8208a290f4893e8f346b74cf4e528f459b0af8e32ae8e3c897",
+    "archive_members": 45,
+    "restorations": [
+      {
+        "restored": "ledger.json",
+        "sha256": "f3aa9280a2c56d358756109b52cdc0a817dd0a94eedf904d8126a6b76df71b6d",
+        "all_original_seals": 44
+      },
+      {
+        "restored": "green.log",
+        "sha256": "4b200234446b2265e5720a19ba9887709b1b11a9a646b9c3d20aef89bc7074a7",
+        "all_original_seals": 44
+      }
+    ],
+    "original_receipts_preserved": true,
+    "copied_default_byte_equal": true
+  },
+  "1.15.3": {
+    "all_directory_files_unchanged": 58,
+    "original_seals": 50,
+    "separate_receipt_seals": 6,
+    "seal_map_sha256": "9b1bbd99e9d8ca2625b3d8b7cf60fbf418f1d9f8a297c05afcb11bdb03e83111",
+    "receipt_map_sha256": "bb7ef0f65cf6aaf996ce95a9b074ce25eadd8c1b3a5395f3d71c2db734d29a3b",
+    "archive_members": 51,
+    "restorations": [
+      {
+        "restored": "ledger.json",
+        "sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0",
+        "all_original_seals": 50
+      },
+      {
+        "restored": "green.log",
+        "sha256": "125f73eadcba414feed9770db10f223235f5766dffc506fbd95698221196122d",
+        "all_original_seals": 50
+      }
+    ],
+    "original_receipts_preserved": true,
+    "copied_default_byte_equal": true
+  }
+}

@@ -1,0 +1,1274 @@
+{
+  "started": "2026-10-09T15:03:32.261926+00:00",
+  "canonical": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+  "environment": {
+    "PATH": "",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "LANG": "C.UTF-8"
+  },
+  "scope": "Era 1.15.2 SOURCE only; no inventory/supersession/model/runtime/native/parity credit",
+  "runs": [],
+  "originals_before": {
+    "seals.json": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/seals.json",
+      "bytes": 5730,
+      "sha256": "f2bd6c1e49c59b00bcc573a246bde14659f9820b984dba1bcb47837acdb4000b",
+      "entries": [
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/audit.py",
+          "bytes": 9564,
+          "sha256": "52baf5b51ef40ffdc4ba6a918a8b3ab773cd4af1437c405942da6a5ccb7ff8e8"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/capture.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/Cargo.toml",
+          "bytes": 11133,
+          "sha256": "c0eda4b7303a9472f2059eea940d5b9b10a2bd4c47009078b3b1cd8b100277b1"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/data/blizzard-ui-files/anniversary.txt",
+          "bytes": 219034,
+          "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/data/blizzard-ui-files/era.txt",
+          "bytes": 219034,
+          "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/src/client_profile.rs",
+          "bytes": 15029,
+          "sha256": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/default-generator.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/default-register.json",
+          "bytes": 263,
+          "sha256": "fbfa352ed7512af407fb327f87d931b4df0b3542995cafc7303e84a591f6f24d"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/frozen-manifest.json",
+          "bytes": 51323,
+          "sha256": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/frozen-registry.json",
+          "bytes": 17701,
+          "sha256": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/green.log",
+          "bytes": 1231,
+          "sha256": "b55f96c2c260d958301b8a8c9454883fe0aa42e6d31959919e2e69ac612f9f7d"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/historical-tools/extract_patch_non_inventory.py",
+          "bytes": 25063,
+          "sha256": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+          "bytes": 72712,
+          "sha256": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/ledger.json",
+          "bytes": 14473,
+          "sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-red-controls.json",
+          "bytes": 138,
+          "sha256": "5c03ddae0de167055904da0941233fb40d5e8ebb9c362dc4c55c3c8adbb2c5ed"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-red.log",
+          "bytes": 2501,
+          "sha256": "606c52c4e63c7b23154eedc51c76cc09dd1a67338dee6333b1748b0f3cc5014f"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/proof-ledger.json",
+          "bytes": 3150,
+          "sha256": "f4230e5a3484e2294cffd72d40b8250fdb3141e45b14d0e8cad57f12c2add62b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source-pin.json",
+          "bytes": 729,
+          "sha256": "d333eb3d5bf7a0820b7717593abdca468b778d1558645fa8110247a2fbb295f4"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source-response.json",
+          "bytes": 736,
+          "sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source.wikitext",
+          "bytes": 452,
+          "sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/status.json",
+          "bytes": 198,
+          "sha256": "e6f0d442817ffb90677b87af2ea4ffe8756096df00fe9ae3e3882c248c5738f1"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source-pin.json",
+          "bytes": 729,
+          "sha256": "f54517609cd214ff8ad10c5b0748b6f16dc36c92430cf3a0f2b52d0b579aa6b5"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source-response.json",
+          "bytes": 723,
+          "sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source.wikitext",
+          "bytes": 439,
+          "sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/status.json",
+          "bytes": 205,
+          "sha256": "86fc4567b2f77802f4ff3f7aced63157f8597ccbe71f94ceaab3b5d7d1991d29"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source-pin.json",
+          "bytes": 729,
+          "sha256": "c25dd5cfa4c500b0d09b40546ee8fa320db418f88e2e5a679e92927d11b5f340"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source-response.json",
+          "bytes": 559,
+          "sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source.wikitext",
+          "bytes": 278,
+          "sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/status.json",
+          "bytes": 198,
+          "sha256": "16d025ef5fc1fe0e9c462dd9035dc723397a6a3ee5ff65221852f0b462f136c6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source-pin.json",
+          "bytes": 729,
+          "sha256": "808dfec0a0228d7471e8384ac1199f52bdaca81ce79e078248f8b83abf9fa4a0"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source-response.json",
+          "bytes": 559,
+          "sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source.wikitext",
+          "bytes": 278,
+          "sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/status.json",
+          "bytes": 198,
+          "sha256": "1501d2b30b3b5caa507f43b654aafed7b54b2addc519afa84c1eb7e4f658c644"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source-pin.json",
+          "bytes": 729,
+          "sha256": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source-response.json",
+          "bytes": 559,
+          "sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source.wikitext",
+          "bytes": 278,
+          "sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/status.json",
+          "bytes": 205,
+          "sha256": "a5c8766b40ac7c983a270e5820fb92a6c273b41380d8ea5647829063631599a9"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source-pin.json",
+          "bytes": 729,
+          "sha256": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source-response.json",
+          "bytes": 554,
+          "sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source.wikitext",
+          "bytes": 279,
+          "sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/status.json",
+          "bytes": 205,
+          "sha256": "369f601d06884deaaba26a5a800c0d3d49357e175fe8348af58a79ae6dbacfc5"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source-pin.json",
+          "bytes": 730,
+          "sha256": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source-response.json",
+          "bytes": 4458,
+          "sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source.wikitext",
+          "bytes": 4085,
+          "sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/status.json",
+          "bytes": 205,
+          "sha256": "db48e2673926679b14e62467d1bde43b6be1a48e7cb7ff9f3108c1b1dcde8b6b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/red-scaffold.py",
+          "bytes": 183,
+          "sha256": "f8c7d338f172ec34fa70bcdf0235a60070fd0d2c68439144fcc97b562123b04a"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/red.log",
+          "bytes": 10668,
+          "sha256": "ba509be6509fe19d37f5e46cfd5d34a26ec8adc28c1c96ff394755c914b1fd7b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/reference-boundaries.json",
+          "bytes": 267,
+          "sha256": "3e22980dd8db76f4133ce7c7da09653a9cd87ebbd8336834c346c7fa17f81cb6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source-attribution.md",
+          "bytes": 264,
+          "sha256": "99af1ac682cf51267a0e876d0edcad0ae72e73e5f65dce92bac52e21593a8e1e"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "27f82f3457760074fcfd7ecfd36074dd3cdfa7756fb21b62bba1401fbb545c14"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source-response.json",
+          "bytes": 675,
+          "sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source.wikitext",
+          "bytes": 391,
+          "sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/test_portable.py",
+          "bytes": 4699,
+          "sha256": "fbfaa91e00c5ecdd447d6fcdc8067fd89036a15eb8f059b5bf222822bdfeaa4a"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/test_source_accounting.py",
+          "bytes": 6299,
+          "sha256": "d15985e03b37fc2556d021310a74da15aa6e0dd5db58ac674602f47e43f05d12"
+        }
+      ]
+    },
+    "receipt-seals.json": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/receipt-seals.json",
+      "bytes": 549,
+      "sha256": "49f543e6037e472054bf6a42a758f7e7523b98464a0e39960ff68e8927e0e465",
+      "entries": [
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/seals.json",
+          "bytes": 5730,
+          "sha256": "f2bd6c1e49c59b00bcc573a246bde14659f9820b984dba1bcb47837acdb4000b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/replay-archive.tar.gz",
+          "bytes": 109266,
+          "sha256": "c313939cc05d72dc0f24cf5ab056f509ffb3a79f3bc5357db50806691c11a7a3"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/REPLAY.md",
+          "bytes": 1868,
+          "sha256": "8ce4e2a1e77b68f149749505fea4a8224b507619f3fb36ed6b4f206bd4d27a3c"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-controls.json",
+          "bytes": 8147,
+          "sha256": "6f8e9372b66ecd55b00b386e45015ac252b4ffe6374350b86abc7c7eef0d9ec0"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-controls.log",
+          "bytes": 493,
+          "sha256": "370cc10fd9153fee3664b9dc7ba8baaf37301c40ca41627cbd04927efc23d3fa"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-proof.json",
+          "bytes": 1295,
+          "sha256": "a9e14270f29bdcc9b4dc5cb91c36200c0183cc6a9eae9340be113fc116b1e315"
+        }
+      ]
+    },
+    "replay-archive.tar.gz": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/replay-archive.tar.gz",
+      "bytes": 109266,
+      "sha256": "c313939cc05d72dc0f24cf5ab056f509ffb3a79f3bc5357db50806691c11a7a3"
+    },
+    "portable-proof.json": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-proof.json",
+      "bytes": 1295,
+      "sha256": "a9e14270f29bdcc9b4dc5cb91c36200c0183cc6a9eae9340be113fc116b1e315"
+    }
+  },
+  "portable": {
+    "tests_run": 3,
+    "failures": 0,
+    "errors": 0,
+    "runs": [
+      {
+        "test": "independent_portable_module.PortableSource.test_copied_source_and_default_register",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/audit.py"
+        ],
+        "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 0,
+        "stdout": "{\n  \"historical_seals\": 54,\n  \"totals\": {\n    \"physical_lines\": 8,\n    \"nonblank_rows\": 6,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 2,\n    \"contracts\": 4,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 1,\n    \"unexpanded_linked_contracts\": 3,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+        "stderr": "",
+        "started": "2026-10-09T15:03:32.288832+00:00",
+        "finished": "2026-10-09T15:03:32.307793+00:00",
+        "environment": {
+          "PATH": "",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "LANG": "C.UTF-8"
+        },
+        "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+        "input_hash_scope": [
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/audit.py",
+            "sha256": "52baf5b51ef40ffdc4ba6a918a8b3ab773cd4af1437c405942da6a5ccb7ff8e8",
+            "bytes": 9564
+          }
+        ]
+      },
+      {
+        "test": "independent_portable_module.PortableSource.test_copied_source_and_default_register",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/test_source_accounting.py"
+        ],
+        "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "test_configured_and_queued_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_queued_not_native_or_supersession) ... ok\ntest_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok\ntest_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok\ntest_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok\ntest_headers_and_unexpanded_navigation_preserved (__main__.SourceAccounting.test_headers_and_unexpanded_navigation_preserved) ... ok\ntest_link_occurrences_do_not_expand_into_api_contracts (__main__.SourceAccounting.test_link_occurrences_do_not_expand_into_api_contracts) ... ok\ntest_literal_toc_does_not_invent_client_name (__main__.SourceAccounting.test_literal_toc_does_not_invent_client_name) ... ok\ntest_omissions_fabricated_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_omissions_fabricated_credit_and_foreign_history_rejected) ... ok\ntest_subset_summary_does_not_import_foreign_contracts (__main__.SourceAccounting.test_subset_summary_does_not_import_foreign_contracts) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.074s\n\nOK\n",
+        "started": "2026-10-09T15:03:32.307864+00:00",
+        "finished": "2026-10-09T15:03:32.413849+00:00",
+        "environment": {
+          "PATH": "",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "LANG": "C.UTF-8"
+        },
+        "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+        "input_hash_scope": [
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/test_source_accounting.py",
+            "sha256": "d15985e03b37fc2556d021310a74da15aa6e0dd5db58ac674602f47e43f05d12",
+            "bytes": 6299
+          }
+        ]
+      },
+      {
+        "test": "independent_portable_module.PortableSource.test_copied_source_and_default_register",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/historical-tools/gen_patch_wikitext_register.py",
+          "1.15.2",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/source.wikitext",
+          "6061806",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/reproduced-register.json"
+        ],
+        "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "",
+        "started": "2026-10-09T15:03:32.413990+00:00",
+        "finished": "2026-10-09T15:03:32.444609+00:00",
+        "environment": {
+          "PATH": "",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "LANG": "C.UTF-8"
+        },
+        "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+        "input_hash_scope": [
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/historical-tools/gen_patch_wikitext_register.py",
+            "sha256": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+            "bytes": 72712
+          },
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/source.wikitext",
+            "sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+            "bytes": 391
+          },
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmp_k_4ftgh/reproduced-register.json",
+            "sha256": "fbfa352ed7512af407fb327f87d931b4df0b3542995cafc7303e84a591f6f24d",
+            "bytes": 263
+          }
+        ]
+      },
+      {
+        "test": "independent_portable_module.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmpx8882dbf/audit.py"
+        ],
+        "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1152-independent-20261009-150332/scratch/tmpx8882dbf/audit.py\", line 122, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1152-independent-20261009-150332/scratch/tmpx8882dbf/audit.py\", line 118, in main\n    count = check_seals()\n  File \"/tmp/era1152-independent-20261009-150332/scratch/tmpx8882dbf/audit.py\", line 110, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n",
+        "started": "2026-10-09T15:03:32.451640+00:00",
+        "finished": "2026-10-09T15:03:32.476739+00:00",
+        "environment": {
+          "PATH": "",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "LANG": "C.UTF-8"
+        },
+        "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+        "input_hash_scope": [
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmpx8882dbf/audit.py",
+            "sha256": "52baf5b51ef40ffdc4ba6a918a8b3ab773cd4af1437c405942da6a5ccb7ff8e8",
+            "bytes": 9564
+          }
+        ]
+      },
+      {
+        "test": "independent_portable_module.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmpx8882dbf/audit.py"
+        ],
+        "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 0,
+        "stdout": "{\n  \"historical_seals\": 54,\n  \"totals\": {\n    \"physical_lines\": 8,\n    \"nonblank_rows\": 6,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 2,\n    \"contracts\": 4,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 1,\n    \"unexpanded_linked_contracts\": 3,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+        "stderr": "",
+        "started": "2026-10-09T15:03:32.477617+00:00",
+        "finished": "2026-10-09T15:03:32.495497+00:00",
+        "environment": {
+          "PATH": "",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "LANG": "C.UTF-8"
+        },
+        "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+        "input_hash_scope": [
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmpx8882dbf/audit.py",
+            "sha256": "52baf5b51ef40ffdc4ba6a918a8b3ab773cd4af1437c405942da6a5ccb7ff8e8",
+            "bytes": 9564
+          }
+        ]
+      },
+      {
+        "restored": "ledger.json",
+        "sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417",
+        "all_original_seals": 54
+      },
+      {
+        "test": "independent_portable_module.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmpr9ccdv0j/audit.py"
+        ],
+        "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1152-independent-20261009-150332/scratch/tmpr9ccdv0j/audit.py\", line 122, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1152-independent-20261009-150332/scratch/tmpr9ccdv0j/audit.py\", line 118, in main\n    count = check_seals()\n  File \"/tmp/era1152-independent-20261009-150332/scratch/tmpr9ccdv0j/audit.py\", line 110, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n",
+        "started": "2026-10-09T15:03:32.501487+00:00",
+        "finished": "2026-10-09T15:03:32.526441+00:00",
+        "environment": {
+          "PATH": "",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "LANG": "C.UTF-8"
+        },
+        "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+        "input_hash_scope": [
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmpr9ccdv0j/audit.py",
+            "sha256": "52baf5b51ef40ffdc4ba6a918a8b3ab773cd4af1437c405942da6a5ccb7ff8e8",
+            "bytes": 9564
+          }
+        ]
+      },
+      {
+        "test": "independent_portable_module.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1152-independent-20261009-150332/scratch/tmpr9ccdv0j/audit.py"
+        ],
+        "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 0,
+        "stdout": "{\n  \"historical_seals\": 54,\n  \"totals\": {\n    \"physical_lines\": 8,\n    \"nonblank_rows\": 6,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 2,\n    \"contracts\": 4,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 1,\n    \"unexpanded_linked_contracts\": 3,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+        "stderr": "",
+        "started": "2026-10-09T15:03:32.527304+00:00",
+        "finished": "2026-10-09T15:03:32.546978+00:00",
+        "environment": {
+          "PATH": "",
+          "PYTHONDONTWRITEBYTECODE": "1",
+          "LANG": "C.UTF-8"
+        },
+        "revision": "bf0e8372057bfdcd3751c9cb62a371fb00ac4b7c",
+        "input_hash_scope": [
+          {
+            "path": "/tmp/era1152-independent-20261009-150332/scratch/tmpr9ccdv0j/audit.py",
+            "sha256": "52baf5b51ef40ffdc4ba6a918a8b3ab773cd4af1437c405942da6a5ccb7ff8e8",
+            "bytes": 9564
+          }
+        ]
+      },
+      {
+        "restored": "green.log",
+        "sha256": "b55f96c2c260d958301b8a8c9454883fe0aa42e6d31959919e2e69ac612f9f7d",
+        "all_original_seals": 54
+      }
+    ],
+    "harness_sha256": "fbfaa91e00c5ecdd447d6fcdc8067fd89036a15eb8f059b5bf222822bdfeaa4a",
+    "adaptation": "unmodified harness loaded with runpy; CWD redirected to canonical; execute instrumented only for metadata"
+  },
+  "originals_after": {
+    "seals.json": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/seals.json",
+      "bytes": 5730,
+      "sha256": "f2bd6c1e49c59b00bcc573a246bde14659f9820b984dba1bcb47837acdb4000b",
+      "entries": [
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/audit.py",
+          "bytes": 9564,
+          "sha256": "52baf5b51ef40ffdc4ba6a918a8b3ab773cd4af1437c405942da6a5ccb7ff8e8"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/capture.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/Cargo.toml",
+          "bytes": 11133,
+          "sha256": "c0eda4b7303a9472f2059eea940d5b9b10a2bd4c47009078b3b1cd8b100277b1"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/data/blizzard-ui-files/anniversary.txt",
+          "bytes": 219034,
+          "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/data/blizzard-ui-files/era.txt",
+          "bytes": 219034,
+          "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/configured-inputs/src/client_profile.rs",
+          "bytes": 15029,
+          "sha256": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/default-generator.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/default-register.json",
+          "bytes": 263,
+          "sha256": "fbfa352ed7512af407fb327f87d931b4df0b3542995cafc7303e84a591f6f24d"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/frozen-manifest.json",
+          "bytes": 51323,
+          "sha256": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/frozen-registry.json",
+          "bytes": 17701,
+          "sha256": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/green.log",
+          "bytes": 1231,
+          "sha256": "b55f96c2c260d958301b8a8c9454883fe0aa42e6d31959919e2e69ac612f9f7d"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/historical-tools/extract_patch_non_inventory.py",
+          "bytes": 25063,
+          "sha256": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+          "bytes": 72712,
+          "sha256": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/ledger.json",
+          "bytes": 14473,
+          "sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-red-controls.json",
+          "bytes": 138,
+          "sha256": "5c03ddae0de167055904da0941233fb40d5e8ebb9c362dc4c55c3c8adbb2c5ed"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-red.log",
+          "bytes": 2501,
+          "sha256": "606c52c4e63c7b23154eedc51c76cc09dd1a67338dee6333b1748b0f3cc5014f"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/proof-ledger.json",
+          "bytes": 3150,
+          "sha256": "f4230e5a3484e2294cffd72d40b8250fdb3141e45b14d0e8cad57f12c2add62b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source-pin.json",
+          "bytes": 729,
+          "sha256": "d333eb3d5bf7a0820b7717593abdca468b778d1558645fa8110247a2fbb295f4"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source-response.json",
+          "bytes": 736,
+          "sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source.wikitext",
+          "bytes": 452,
+          "sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/status.json",
+          "bytes": 198,
+          "sha256": "e6f0d442817ffb90677b87af2ea4ffe8756096df00fe9ae3e3882c248c5738f1"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source-pin.json",
+          "bytes": 729,
+          "sha256": "f54517609cd214ff8ad10c5b0748b6f16dc36c92430cf3a0f2b52d0b579aa6b5"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source-response.json",
+          "bytes": 723,
+          "sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source.wikitext",
+          "bytes": 439,
+          "sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/status.json",
+          "bytes": 205,
+          "sha256": "86fc4567b2f77802f4ff3f7aced63157f8597ccbe71f94ceaab3b5d7d1991d29"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source-pin.json",
+          "bytes": 729,
+          "sha256": "c25dd5cfa4c500b0d09b40546ee8fa320db418f88e2e5a679e92927d11b5f340"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source-response.json",
+          "bytes": 559,
+          "sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source.wikitext",
+          "bytes": 278,
+          "sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/status.json",
+          "bytes": 198,
+          "sha256": "16d025ef5fc1fe0e9c462dd9035dc723397a6a3ee5ff65221852f0b462f136c6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source-pin.json",
+          "bytes": 729,
+          "sha256": "808dfec0a0228d7471e8384ac1199f52bdaca81ce79e078248f8b83abf9fa4a0"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source-response.json",
+          "bytes": 559,
+          "sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source.wikitext",
+          "bytes": 278,
+          "sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/status.json",
+          "bytes": 198,
+          "sha256": "1501d2b30b3b5caa507f43b654aafed7b54b2addc519afa84c1eb7e4f658c644"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source-pin.json",
+          "bytes": 729,
+          "sha256": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source-response.json",
+          "bytes": 559,
+          "sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source.wikitext",
+          "bytes": 278,
+          "sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/status.json",
+          "bytes": 205,
+          "sha256": "a5c8766b40ac7c983a270e5820fb92a6c273b41380d8ea5647829063631599a9"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source-pin.json",
+          "bytes": 729,
+          "sha256": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source-response.json",
+          "bytes": 554,
+          "sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source.wikitext",
+          "bytes": 279,
+          "sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/status.json",
+          "bytes": 205,
+          "sha256": "369f601d06884deaaba26a5a800c0d3d49357e175fe8348af58a79ae6dbacfc5"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source-pin.json",
+          "bytes": 730,
+          "sha256": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source-response.json",
+          "bytes": 4458,
+          "sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source.wikitext",
+          "bytes": 4085,
+          "sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/status.json",
+          "bytes": 205,
+          "sha256": "db48e2673926679b14e62467d1bde43b6be1a48e7cb7ff9f3108c1b1dcde8b6b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/red-scaffold.py",
+          "bytes": 183,
+          "sha256": "f8c7d338f172ec34fa70bcdf0235a60070fd0d2c68439144fcc97b562123b04a"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/red.log",
+          "bytes": 10668,
+          "sha256": "ba509be6509fe19d37f5e46cfd5d34a26ec8adc28c1c96ff394755c914b1fd7b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/reference-boundaries.json",
+          "bytes": 267,
+          "sha256": "3e22980dd8db76f4133ce7c7da09653a9cd87ebbd8336834c346c7fa17f81cb6"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source-attribution.md",
+          "bytes": 264,
+          "sha256": "99af1ac682cf51267a0e876d0edcad0ae72e73e5f65dce92bac52e21593a8e1e"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "27f82f3457760074fcfd7ecfd36074dd3cdfa7756fb21b62bba1401fbb545c14"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source-response.json",
+          "bytes": 675,
+          "sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/source.wikitext",
+          "bytes": 391,
+          "sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/test_portable.py",
+          "bytes": 4699,
+          "sha256": "fbfaa91e00c5ecdd447d6fcdc8067fd89036a15eb8f059b5bf222822bdfeaa4a"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/test_source_accounting.py",
+          "bytes": 6299,
+          "sha256": "d15985e03b37fc2556d021310a74da15aa6e0dd5db58ac674602f47e43f05d12"
+        }
+      ]
+    },
+    "receipt-seals.json": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/receipt-seals.json",
+      "bytes": 549,
+      "sha256": "49f543e6037e472054bf6a42a758f7e7523b98464a0e39960ff68e8927e0e465",
+      "entries": [
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/seals.json",
+          "bytes": 5730,
+          "sha256": "f2bd6c1e49c59b00bcc573a246bde14659f9820b984dba1bcb47837acdb4000b"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/replay-archive.tar.gz",
+          "bytes": 109266,
+          "sha256": "c313939cc05d72dc0f24cf5ab056f509ffb3a79f3bc5357db50806691c11a7a3"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/REPLAY.md",
+          "bytes": 1868,
+          "sha256": "8ce4e2a1e77b68f149749505fea4a8224b507619f3fb36ed6b4f206bd4d27a3c"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-controls.json",
+          "bytes": 8147,
+          "sha256": "6f8e9372b66ecd55b00b386e45015ac252b4ffe6374350b86abc7c7eef0d9ec0"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-controls.log",
+          "bytes": 493,
+          "sha256": "370cc10fd9153fee3664b9dc7ba8baaf37301c40ca41627cbd04927efc23d3fa"
+        },
+        {
+          "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-proof.json",
+          "bytes": 1295,
+          "sha256": "a9e14270f29bdcc9b4dc5cb91c36200c0183cc6a9eae9340be113fc116b1e315"
+        }
+      ]
+    },
+    "replay-archive.tar.gz": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/replay-archive.tar.gz",
+      "bytes": 109266,
+      "sha256": "c313939cc05d72dc0f24cf5ab056f509ffb3a79f3bc5357db50806691c11a7a3"
+    },
+    "portable-proof.json": {
+      "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-proof.json",
+      "bytes": 1295,
+      "sha256": "a9e14270f29bdcc9b4dc5cb91c36200c0183cc6a9eae9340be113fc116b1e315"
+    }
+  },
+  "successors": [
+    {
+      "version": "1.15.3",
+      "original_queued_status": {
+        "patch": "1.15.3",
+        "state": "queued-pending-main-integration",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "main_gates": "unperformed-for-this-page"
+      },
+      "current_canonical": "source-only integrated in canonical first-parent history at bf0e83720; exact frozen source pin/raw/response bytes match queued copy; not applied by 1.15.2 historical ledger",
+      "frozen_identity": {
+        "title": "Patch 1.15.3/API changes",
+        "version": "1.15.3",
+        "pageid": 593663,
+        "revid": 6114194,
+        "timestamp": "2024-08-30T01:06:01Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+        "retrieved": "2026-10-09T08:51:36.398616+00:00",
+        "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+        "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+        "wikitext_bytes": 452,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+      },
+      "files": [
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source-pin.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.3-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "d333eb3d5bf7a0820b7717593abdca468b778d1558645fa8110247a2fbb295f4",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source.wikitext",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.3-session-2026-10-09/source.wikitext",
+          "bytes": 452,
+          "sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.3/source-response.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.3-session-2026-10-09/source-response.json",
+          "bytes": 736,
+          "sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+          "exact_bytes_equal": true
+        }
+      ],
+      "tracked_at_revision": true,
+      "last_pin_commit": "b6457c8e6a2792b8ba440c806a9d95fce292b5ab 2026-10-09T09:41:40-05:00 Pin Era 1.15.3 source and failing accounting fixtures",
+      "integration_commit": "0b64e636c16c59e90e3406e7ff557e94cd7732a8",
+      "integration_history_line": "0b64e636c16c59e90e3406e7ff557e94cd7732a8 2026-10-09T09:52:34-05:00 Merge branch 'p1153-page'"
+    },
+    {
+      "version": "1.15.4",
+      "original_queued_status": {
+        "patch": "1.15.4",
+        "state": "integrated-canonical-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "main_gates": "unperformed-for-this-page"
+      },
+      "current_canonical": "source-only integrated in canonical first-parent history at bf0e83720; exact frozen source pin/raw/response bytes match queued copy; not applied by 1.15.2 historical ledger",
+      "frozen_identity": {
+        "title": "Patch 1.15.4/API changes",
+        "version": "1.15.4",
+        "pageid": 600355,
+        "revid": 6172581,
+        "timestamp": "2024-11-13T21:59:45Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+        "retrieved": "2026-10-09T08:51:36.398568+00:00",
+        "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+        "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+        "wikitext_bytes": 439,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+      },
+      "files": [
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source-pin.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.4-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "f54517609cd214ff8ad10c5b0748b6f16dc36c92430cf3a0f2b52d0b579aa6b5",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source.wikitext",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.4-session-2026-10-09/source.wikitext",
+          "bytes": 439,
+          "sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.4/source-response.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.4-session-2026-10-09/source-response.json",
+          "bytes": 723,
+          "sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+          "exact_bytes_equal": true
+        }
+      ],
+      "tracked_at_revision": true,
+      "last_pin_commit": "8bb569247197c10839dea4f317e5de0033a5cbef 2026-10-09T09:45:20-05:00 Account frozen 1.15.4 subset and unexpanded source boundaries",
+      "integration_commit": "7ad66791e64f01dd6dc61d29d3aa48faccdce3b8",
+      "integration_history_line": "7ad66791e64f01dd6dc61d29d3aa48faccdce3b8 2026-10-09T09:50:54-05:00 Merge branch 'p1154-page'"
+    },
+    {
+      "version": "1.15.5",
+      "original_queued_status": {
+        "patch": "1.15.5",
+        "state": "queued-pending-main-integration",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "main_gates": "unperformed-for-this-page"
+      },
+      "current_canonical": "source-only integrated in canonical first-parent history at bf0e83720; exact frozen source pin/raw/response bytes match queued copy; not applied by 1.15.2 historical ledger",
+      "frozen_identity": {
+        "title": "Patch 1.15.5/API changes",
+        "version": "1.15.5",
+        "pageid": 610284,
+        "revid": 6235411,
+        "timestamp": "2025-02-09T17:32:34Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+        "retrieved": "2026-10-09T08:51:36.398521+00:00",
+        "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+        "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+      },
+      "files": [
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source-pin.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.5-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "c25dd5cfa4c500b0d09b40546ee8fa320db418f88e2e5a679e92927d11b5f340",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source.wikitext",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.5-session-2026-10-09/source.wikitext",
+          "bytes": 278,
+          "sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.5/source-response.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.5-session-2026-10-09/source-response.json",
+          "bytes": 559,
+          "sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+          "exact_bytes_equal": true
+        }
+      ],
+      "tracked_at_revision": true,
+      "last_pin_commit": "3c08633ed71ad499d00529b89753056ef33a9afd 2026-10-09T09:34:39-05:00 Pin frozen 1.15.5 source and literal accounting controls",
+      "integration_commit": "65b94c05023dc5e1e8422de0cea99c0e7bda9c10",
+      "integration_history_line": "65b94c05023dc5e1e8422de0cea99c0e7bda9c10 2026-10-09T09:40:24-05:00 Merge branch 'p1155-page'"
+    },
+    {
+      "version": "1.15.6",
+      "original_queued_status": {
+        "patch": "1.15.6",
+        "state": "queued-pending-main-integration",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "main_gates": "unperformed-for-this-page"
+      },
+      "current_canonical": "source-only integrated in canonical first-parent history at bf0e83720; exact frozen source pin/raw/response bytes match queued copy; not applied by 1.15.2 historical ledger",
+      "frozen_identity": {
+        "title": "Patch 1.15.6/API changes",
+        "version": "1.15.6",
+        "pageid": 619994,
+        "revid": 6281951,
+        "timestamp": "2025-04-04T10:14:39Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+        "retrieved": "2026-10-09T08:51:36.398475+00:00",
+        "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+        "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+      },
+      "files": [
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source-pin.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.6-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "808dfec0a0228d7471e8384ac1199f52bdaca81ce79e078248f8b83abf9fa4a0",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source.wikitext",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.6-session-2026-10-09/source.wikitext",
+          "bytes": 278,
+          "sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.6/source-response.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.6-session-2026-10-09/source-response.json",
+          "bytes": 559,
+          "sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+          "exact_bytes_equal": true
+        }
+      ],
+      "tracked_at_revision": true,
+      "last_pin_commit": "b9fbf5e9d78a398c7359cca847854ee9d9aa76ea 2026-10-09T09:26:09-05:00 test: freeze 1.15.6 source inputs and RED fixtures",
+      "integration_commit": "f3275801488519ea64a2fa6a6750240cf799924d",
+      "integration_history_line": "f3275801488519ea64a2fa6a6750240cf799924d 2026-10-09T09:39:08-05:00 Merge branch 'p1156-page'"
+    },
+    {
+      "version": "1.15.7",
+      "original_queued_status": {
+        "patch": "1.15.7",
+        "state": "integrated-canonical-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "main_gates": "unperformed-for-this-page"
+      },
+      "current_canonical": "source-only integrated in canonical first-parent history at bf0e83720; exact frozen source pin/raw/response bytes match queued copy; not applied by 1.15.2 historical ledger",
+      "frozen_identity": {
+        "title": "Patch 1.15.7/API changes",
+        "version": "1.15.7",
+        "pageid": 626071,
+        "revid": 6778069,
+        "timestamp": "2026-07-22T05:34:20Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+        "retrieved": "2026-10-09T08:51:36.398418+00:00",
+        "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+        "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+      },
+      "files": [
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source-pin.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.7-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source.wikitext",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.7-session-2026-10-09/source.wikitext",
+          "bytes": 278,
+          "sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.7/source-response.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.7-session-2026-10-09/source-response.json",
+          "bytes": 559,
+          "sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+          "exact_bytes_equal": true
+        }
+      ],
+      "tracked_at_revision": true,
+      "last_pin_commit": "123136120c3343ab08cc7d773e3d0fe572132569 2026-10-09T09:26:50-05:00 Pin 1.15.7 literal source and failing accounting fixtures",
+      "integration_commit": "d9a00a294ee35c414e0527ea5d34d1d6c09207e9",
+      "integration_history_line": "d9a00a294ee35c414e0527ea5d34d1d6c09207e9 2026-10-09T09:34:26-05:00 Merge branch 'p1157-page'"
+    },
+    {
+      "version": "1.15.8",
+      "original_queued_status": {
+        "patch": "1.15.8",
+        "state": "integrated-canonical-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "main_gates": "unperformed-for-this-page"
+      },
+      "current_canonical": "source-only integrated in canonical first-parent history at bf0e83720; exact frozen source pin/raw/response bytes match queued copy; not applied by 1.15.2 historical ledger",
+      "frozen_identity": {
+        "title": "Patch 1.15.8/API changes",
+        "version": "1.15.8",
+        "pageid": 686952,
+        "revid": 6778071,
+        "timestamp": "2026-07-22T05:34:51Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+        "retrieved": "2026-10-09T08:51:36.398359+00:00",
+        "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+        "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+        "wikitext_bytes": 279,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+      },
+      "files": [
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source-pin.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.8-session-2026-10-09/source-pin.json",
+          "bytes": 729,
+          "sha256": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source.wikitext",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.8-session-2026-10-09/source.wikitext",
+          "bytes": 279,
+          "sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.8/source-response.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.8-session-2026-10-09/source-response.json",
+          "bytes": 554,
+          "sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+          "exact_bytes_equal": true
+        }
+      ],
+      "tracked_at_revision": true,
+      "last_pin_commit": "384699f1160b41b3017c68adf96e39b197e5001f 2026-10-09T08:58:56-05:00 Account frozen Patch 1.15.8 literal SOURCE contracts",
+      "integration_commit": "dd710c6fc469a53e3b77b97aa6340993ae83e46e",
+      "integration_history_line": "dd710c6fc469a53e3b77b97aa6340993ae83e46e 2026-10-09T09:29:43-05:00 Merge branch 'p1158-source'"
+    },
+    {
+      "version": "1.15.9",
+      "original_queued_status": {
+        "patch": "1.15.9",
+        "state": "integrated-canonical-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "main_gates": "unperformed-for-this-page"
+      },
+      "current_canonical": "source-only integrated in canonical first-parent history at bf0e83720; exact frozen source pin/raw/response bytes match queued copy; not applied by 1.15.2 historical ledger",
+      "frozen_identity": {
+        "title": "Patch 1.15.9/API changes",
+        "version": "1.15.9",
+        "pageid": 685352,
+        "revid": 6780591,
+        "timestamp": "2026-07-24T15:29:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+        "retrieved": "2026-10-09T08:51:36.398273+00:00",
+        "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+        "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+        "wikitext_bytes": 4085,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+      },
+      "files": [
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source-pin.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.9-session-2026-10-09/source-pin.json",
+          "bytes": 730,
+          "sha256": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source.wikitext",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.9-session-2026-10-09/source.wikitext",
+          "bytes": 4085,
+          "sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+          "exact_bytes_equal": true
+        },
+        {
+          "queued_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/queued-successors/1.15.9/source-response.json",
+          "canonical_path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.9-session-2026-10-09/source-response.json",
+          "bytes": 4458,
+          "sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+          "exact_bytes_equal": true
+        }
+      ],
+      "tracked_at_revision": true,
+      "last_pin_commit": "07c93b3b576669917886f7db762e14472e6d520d 2026-10-09T08:46:35-05:00 Account frozen Patch 1.15.9 literal source contracts",
+      "integration_commit": "60524271c44d40568e60dc90ffea5bb258325105",
+      "integration_history_line": "60524271c44d40568e60dc90ffea5bb258325105 2026-10-09T09:29:33-05:00 Merge branch 'p1159-source'"
+    }
+  ],
+  "finished": "2026-10-09T15:03:32.548678+00:00",
+  "retention": {
+    "main_owned": "retain independent report and command/history receipts listed in summary.md; original canonical seals and receipt maps remain untouched",
+    "scratch": "per-test copied directories removed by harness cleanup; empty scratch directory retained",
+    "parent1151": "not accessed; Cargo proof remains in parent-owned worktree",
+    "repo_changes": "none; pre-existing untracked .code-index.db unchanged"
+  },
+  "verifier_script_sha256": "c7bbf59eabaea052d10bb5f857891b44f74ba4e5e8b879efe1d1bcb813311f48"
+}

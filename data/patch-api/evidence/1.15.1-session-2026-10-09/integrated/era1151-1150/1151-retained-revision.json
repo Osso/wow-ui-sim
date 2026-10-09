@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "9717f867d",
+    "HEAD",
+    "--name-status",
+    "--",
+    "data/patch-api/evidence/1.15.1-session-2026-10-09/",
+    "patch-tests/patch_1_15_1_alias.rs"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "time": 1791559239.1857874,
+  "stdout": "",
+  "stderr": "",
+  "exit": 0
+}

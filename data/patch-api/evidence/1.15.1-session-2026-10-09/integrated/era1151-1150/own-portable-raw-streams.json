@@ -1,0 +1,276 @@
+[
+  {
+    "label": "1.15.1-copy-replay-audit.py",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-copy-replay/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.3376706,
+    "end": 1791559177.3563187,
+    "stdout": "{\n  \"historical_seals\": 57,\n  \"totals\": {\n    \"physical_lines\": 11,\n    \"nonblank_rows\": 9,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 5,\n    \"api_occurrences\": 2,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 4,\n    \"contracts\": 7,\n    \"headers\": 2,\n    \"templates\": 1\n  }\n}\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "label": "1.15.1-copy-replay-test_source_accounting.py",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-copy-replay/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.3563442,
+    "end": 1791559177.4515111,
+    "stdout": "",
+    "stderr": "test_concrete_alias_not_invented_value (__main__.SourceAccounting.test_concrete_alias_not_invented_value) ... ok\ntest_configuration_successors_not_native_credit (__main__.SourceAccounting.test_configuration_successors_not_native_credit) ... ok\ntest_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... ok\ntest_fabricated_credit_values_foreign_supersession_rejected (__main__.SourceAccounting.test_fabricated_credit_values_foreign_supersession_rejected) ... ok\ntest_identity_and_source_tampering (__main__.SourceAccounting.test_identity_and_source_tampering) ... ok\ntest_inventory_and_signature_limits (__main__.SourceAccounting.test_inventory_and_signature_limits) ... ok\ntest_links_headers_and_template (__main__.SourceAccounting.test_links_headers_and_template) ... ok\ntest_literal_rows (__main__.SourceAccounting.test_literal_rows) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.065s\n\nOK\n",
+    "exit": 0
+  },
+  {
+    "label": "1.15.1-default",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-copy-replay/historical-tools/gen_patch_wikitext_register.py",
+      "1.15.1",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-copy-replay/source.wikitext",
+      "5998991",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-copy-replay/own-register.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.4515424,
+    "end": 1791559177.4819932,
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "label": "1.15.1-ledger-tamper",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-ledger-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.4900236,
+    "end": 1791559177.5129476,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-ledger-tamper/audit.py\", line 110, in <module>\n    print(json.dumps({'historical_seals': check_seals(), 'totals': validate_ledger(read_json('ledger.json'))}, indent=2))\n                                          ~~~~~~~~~~~^^\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-ledger-tamper/audit.py\", line 102, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n",
+    "exit": 1
+  },
+  {
+    "label": "1.15.1-restored-ledger.json",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-ledger-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.5137017,
+    "end": 1791559177.5306273,
+    "stdout": "{\n  \"historical_seals\": 57,\n  \"totals\": {\n    \"physical_lines\": 11,\n    \"nonblank_rows\": 9,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 5,\n    \"api_occurrences\": 2,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 4,\n    \"contracts\": 7,\n    \"headers\": 2,\n    \"templates\": 1\n  }\n}\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "label": "1.15.1-log-tamper",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-log-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.5383372,
+    "end": 1791559177.5623043,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-log-tamper/audit.py\", line 110, in <module>\n    print(json.dumps({'historical_seals': check_seals(), 'totals': validate_ledger(read_json('ledger.json'))}, indent=2))\n                                          ~~~~~~~~~~~^^\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-log-tamper/audit.py\", line 102, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n",
+    "exit": 1
+  },
+  {
+    "label": "1.15.1-restored-green.log",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.1-independent-log-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.563014,
+    "end": 1791559177.5797064,
+    "stdout": "{\n  \"historical_seals\": 57,\n  \"totals\": {\n    \"physical_lines\": 11,\n    \"nonblank_rows\": 9,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 5,\n    \"api_occurrences\": 2,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 4,\n    \"contracts\": 7,\n    \"headers\": 2,\n    \"templates\": 1\n  }\n}\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "label": "1.15.0-copy-replay-audit.py",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-copy-replay/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.589735,
+    "end": 1791559177.6099734,
+    "stdout": "{\n  \"historical_seals\": 64,\n  \"totals\": {\n    \"physical_lines\": 12,\n    \"nonblank_rows\": 10,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 6,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 1,\n    \"namespace_occurrences\": 1,\n    \"callable_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"unspecified_signature_records\": 1,\n    \"prose_contracts\": 4,\n    \"unexpanded_linked_contracts\": 7,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "label": "1.15.0-copy-replay-test_source_accounting.py",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-copy-replay/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.6099937,
+    "end": 1791559177.7677615,
+    "stdout": "",
+    "stderr": "test_configuration_and_successors (__main__.SourceAccounting.test_configuration_and_successors) ... ok\ntest_distinct_inclusion_claims (__main__.SourceAccounting.test_distinct_inclusion_claims) ... ok\ntest_each_omission_rejected (__main__.SourceAccounting.test_each_omission_rejected) ... ok\ntest_exact_rows (__main__.SourceAccounting.test_exact_rows) ... ok\ntest_fabricated_credit_and_history_collapse_rejected (__main__.SourceAccounting.test_fabricated_credit_and_history_collapse_rejected) ... ok\ntest_full_counts (__main__.SourceAccounting.test_full_counts) ... ok\ntest_identity_and_content_tamper (__main__.SourceAccounting.test_identity_and_content_tamper) ... ok\ntest_inventory_headers_and_navigation (__main__.SourceAccounting.test_inventory_headers_and_navigation) ... ok\ntest_links_exact_unexpanded (__main__.SourceAccounting.test_links_exact_unexpanded) ... ok\ntest_namespace_not_callable_or_modeled (__main__.SourceAccounting.test_namespace_not_callable_or_modeled) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.127s\n\nOK\n",
+    "exit": 0
+  },
+  {
+    "label": "1.15.0-default",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-copy-replay/historical-tools/gen_patch_wikitext_register.py",
+      "1.15.0",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-copy-replay/source.wikitext",
+      "5950848",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-copy-replay/own-register.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.7678182,
+    "end": 1791559177.7982228,
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "label": "1.15.0-ledger-tamper",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-ledger-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.8082538,
+    "end": 1791559177.8371205,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-ledger-tamper/audit.py\", line 135, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-ledger-tamper/audit.py\", line 131, in main\n    count = check_seals()\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-ledger-tamper/audit.py\", line 123, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n",
+    "exit": 1
+  },
+  {
+    "label": "1.15.0-restored-ledger.json",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-ledger-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.8379633,
+    "end": 1791559177.857534,
+    "stdout": "{\n  \"historical_seals\": 64,\n  \"totals\": {\n    \"physical_lines\": 12,\n    \"nonblank_rows\": 10,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 6,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 1,\n    \"namespace_occurrences\": 1,\n    \"callable_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"unspecified_signature_records\": 1,\n    \"prose_contracts\": 4,\n    \"unexpanded_linked_contracts\": 7,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "label": "1.15.0-log-tamper",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-log-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.8671598,
+    "end": 1791559177.892264,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-log-tamper/audit.py\", line 135, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-log-tamper/audit.py\", line 131, in main\n    count = check_seals()\n  File \"/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-log-tamper/audit.py\", line 123, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n",
+    "exit": 1
+  },
+  {
+    "label": "1.15.0-restored-green.log",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/tmp/era1151-1150-independent-1791559037070539270/1.15.0-independent-log-tamper/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PATH": "",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+    "start": 1791559177.893203,
+    "end": 1791559177.9125674,
+    "stdout": "{\n  \"historical_seals\": 64,\n  \"totals\": {\n    \"physical_lines\": 12,\n    \"nonblank_rows\": 10,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 6,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 1,\n    \"namespace_occurrences\": 1,\n    \"callable_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"unspecified_signature_records\": 1,\n    \"prose_contracts\": 4,\n    \"unexpanded_linked_contracts\": 7,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+    "stderr": "",
+    "exit": 0
+  }
+]

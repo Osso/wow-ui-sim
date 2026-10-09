@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "git",
+    "status",
+    "--short"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exit_code": 0,
+  "stdout": "?? .code-index.db\n",
+  "stderr": ""
+}
