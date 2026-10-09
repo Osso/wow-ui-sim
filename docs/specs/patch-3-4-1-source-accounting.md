@@ -31,6 +31,10 @@ Account frozen Warcraft Wiki page `379792`/revision `3656581` as Wrath Classic T
 - [ ] Runtime/native publication/removal for 333 enumerated occurrences; 211 signatures, 44 event payload/dispatch contracts, 77 CVar persistence/effect contracts and one command grammar/output contract unproven.
 - [ ] Unspecified retail 10.0.2 subset and linked retail 10.0.0 widget equivalence remain UNPROVEN.
 
+## Current integration status — 2026-10-09
+
+Integrated `4e3eee3b85`; [retained reports and current proof scope](../wiki/investigations/patch-3-4-1-api-audit.md#integrated-proof-status--2026-10-09). Original 7/7 source-accounting proof remains applicable; independent historical replay checks 19 seals. Integration does not establish native/loaded-UI parity or final acceptance. New portable gate and latest CI remain pending.
+
 ## Out of scope
 
-Linked documentation reconstruction, shared classifier expansion, native/runtime probes, cache/vendor/Wowless writes, speculative modeled behavior, shims/fallbacks, retirement, other audits, provider/model/retry changes, broad/final gates and operational integration. Parent integrates after independently owned 3.4.2.
+Linked documentation reconstruction, shared classifier expansion, native/runtime probes, cache/vendor/Wowless writes, speculative modeled behavior, shims/fallbacks, retirement, other audits, provider/model/retry changes, broad/final gates and operational integration. Parent integrated after independently owned 3.4.2.

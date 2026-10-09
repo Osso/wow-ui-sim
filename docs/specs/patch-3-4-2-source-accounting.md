@@ -42,6 +42,10 @@ Account for frozen Warcraft Wiki page `355030` / revision `3422177`, TOC `30402`
 - [ ] Generator remains unchanged; shared test classifier now accepts `wrath-classic`. Coordinator owns integration, broader gates and any publisher-loaded measurement after 3.4.3 integration.
 - [ ] No explicit call signatures, event payloads or detailed widget/API state transitions supplied; linked contracts deliberately unexpanded.
 
+## Current integration status — 2026-10-09
+
+Integrated `4137b59948`; [retained reports and current proof scope](../wiki/investigations/patch-3-4-2-api-audit.md#integrated-proof-status--2026-10-09). Original 6/6 bare-factory proof remains applicable; independent historical replay checks 23 seals. Integration does not establish native/loaded-UI parity or final acceptance. New portable gate and latest CI remain pending.
+
 ## Out of scope
 
-Other page edits, linked API reconstruction, retail/Cata supersession, runtime retirements, shims/fallbacks, vendor/Wowless/cache mutation, broad publication/build/check/smoke/readability/final gates, push/merge/delegation. Actual 3.4.3 Wrath successor is retained as reference only; its empty inventory cannot supersede any named member or establish parity. Main integrates after 3.4.3. Factory publication proof is not loaded Blizzard UI, native Wrath Classic parity or justification for production API changes.
+Other page edits, linked API reconstruction, retail/Cata supersession, runtime retirements, shims/fallbacks, vendor/Wowless/cache mutation, broad publication/build/check/smoke/readability/final gates, push/merge/delegation. Actual 3.4.3 Wrath successor is retained as reference only; its empty inventory cannot supersede any named member or establish parity. Main integrated after 3.4.3; follow-up profile compilation proof remains pending. Factory publication proof is not loaded Blizzard UI, native Wrath Classic parity or justification for production API changes.

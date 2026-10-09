@@ -29,7 +29,7 @@ Shared [publication classifier](../../../tests/common/publication_sweep.rs) acce
 
 ## Actual successor and integration order
 
-Actual **3.4.3 Wrath Classic** source is retained and identity/hash checked in own reference evidence: page 152751/revision 5983024, TOC 30403. Its audit at `48ab8e1c3` is completed but unmerged, and enumerates no explicit API members. Consequently no named 3.4.2 supersession can be derived from it. `later_registers` stays empty; a separate historical successor record queues integration **after 3.4.3**. Retail 10.1.0/10.1.7 references and Cata 4.4.0 navigation are not Wrath member-level proof. Successor empty inventory creates no positive runtime/publication credit.
+Actual **3.4.3 Wrath Classic** source is retained and identity/hash checked in own reference evidence: page 152751/revision 5983024, TOC 30403. Its historical audit at `48ab8e1c3` was then unmerged; it is now integrated at `80a3fb104` and and enumerates no explicit API members. Consequently no named 3.4.2 supersession can be derived from it. `later_registers` stays empty; a separate historical successor record queues integration **after 3.4.3**. Retail 10.1.0/10.1.7 references and Cata 4.4.0 navigation are not Wrath member-level proof. Successor empty inventory creates no positive runtime/publication credit.
 
 ## Historical source proof
 
@@ -66,6 +66,14 @@ For 26 added CVars, 14 lack current value/default, 12 are published: 11 defaults
 
 Main default-retail publication and Mists `--tests` checks reproduced E0432: generated aggregate test modules included the Wrath factory file even though its standalone Cargo target required `client-wrath`. Its import of the Wrath-only factory helper therefore failed under other profiles. A file-level `client-wrath` guard excludes the complete test module at that aggregation boundary; no runtime method, historical receipt or Wrath measurement changes. Follow-up compilation proof is separate from the retained original 6/6 factory run. Current profile checks/CI remain pending; failed commands are retained, not suppressed.
 
+## Integrated proof status — 2026-10-09
+
+Integrated `4137b59948`. Retained [independent report](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/integrated/p342-independent-report.md) and [receipt](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/integrated/p342-independent-receipt.json) distinguish fresh historical replay (23 seals) from applicable original 6/6 bare-factory execution. Tested bytes/seals remain unchanged; the fresh replay is not a fresh execution of retained tests.
+
+At coordinator snapshot `3992639881dfacf3ad5a23df4b54b2348b92070b`, integration is present, not queued. Historical capture revisions, seals and log statements remain unchanged. New global job `p34x-p33x-portable-gate` is running at `399263988`; no PASS yet. Latest CI is pending; inherited full-suite Garrison/prefork, integration and library failures remain unresolved. No full handoff or native completion claim.
+
+Retained factory proof measures 155 observations: 72 matches/83 publication mismatches plus the separate published `TargetAutoLock` default difference. No native 30402 or loaded-UI proof. Independent fresh `cargo fmt --check` passed; historical replay is source-only. Readability findings are deferred adjacent cleanup, not functional counterexamples. Aggregate default-retail prefork and Mists integration compilation was RED (E0432 missing `run_factory` from an ungated Wrath file). Main applied file guard `f1adc06a5` before follow-up verification. Jobs `p342-retail-publication-v2` and `p342-mists-check-v2` run at `f1adc06a5` in the 3.4.2 worktree; neither has PASS yet.
+
 ## Sources
 
 - [Frozen wikitext](../../../data/patch-api/sources/3.4.2-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/3.4.2-api-changes.txt), [source inventory](../../../data/patch-api/sources/3.4.2-source-inventory.json), [ledger](../../../data/patch-api/sources/3.4.2-page-coverage.json).
@@ -73,5 +81,5 @@ Main default-retail publication and Mists `--tests` checks reproduced E0432: gen
 
 ## See Also
 
-- [[patch-3-4-3-api-audit]] — actual Wrath successor, queued unmerged integration; not member-level supersession.
+- [[patch-3-4-3-api-audit]] — actual integrated Wrath successor; not member-level supersession.
 - [[client-profiles]] — profile/cache selection distinct from historical native parity.

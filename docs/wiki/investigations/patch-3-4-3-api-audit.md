@@ -50,7 +50,15 @@ No Rust changes or Cargo formatting; Python manually formatted because ruff/blac
 
 Independent verifier 216 reports fresh historical replay PASS: **16 seals**, **seven rows/five metadata/two UNPROVEN summary contracts**, **zero explicit API occurrences and zero runtime observations**. Original `48ab8e1c3` sealed inputs are unchanged; retained **7/7 GREEN** and proof-log tamper evidence remain applicable to their original source-accounting scope. This is bounded independent source replay, not native/current-runtime proof or positive empty-API parity.
 
-Main-owned shared portable gate, integration onto actual master and CI remain pending. This docs-only clarification adds no evidence or gate run and does not claim full handoff completion.
+At that historical handoff, main-owned shared portable gate, integration onto actual master and CI remained pending; current integration status follows below. This docs-only clarification adds no evidence or gate run and does not claim full handoff completion.
+
+## Integrated proof status — 2026-10-09
+
+Integrated `80a3fb104`. Retained [independent report](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/integrated/p343-independent-report.md) and [receipt](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/integrated/p343-independent-receipt.json) distinguish fresh historical replay (16 seals) from applicable original 7/7 source-accounting execution. Tested bytes/seals remain unchanged; the fresh replay is not a fresh execution of retained tests.
+
+At coordinator snapshot `3992639881dfacf3ad5a23df4b54b2348b92070b`, integration is present, not queued. Historical capture revisions, seals and log statements remain unchanged. New global job `p34x-p33x-portable-gate` is running at `399263988`; no PASS yet. Latest CI is pending; inherited full-suite Garrison/prefork, integration and library failures remain unresolved. No full handoff or native completion claim.
+
+Earlier [portable gate](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/integrated/portable-gate-result.json) at `80a3fb104` records PASS 70/70 clean and 71/71 synthetic-later audit. This retained integrated gate does not cover subsequent 3.4.2–3.4.0 integration or the new global job.
 
 ## Sources
 

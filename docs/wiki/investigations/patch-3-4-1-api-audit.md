@@ -27,7 +27,7 @@ Stock extraction with `--text-only --canonical-patch-navigation` reproduces six 
 
 [Client profile](../../../src/client_profile.rs) supplies supported `client-wrath`, `Wrath`, `wrath/AddOns`, configured interface **38001**. Source TOC **30401** is distinct. [Historical observation](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/profile-observation.json) pins the base code hash; no cache inspection/sync, native probe, runtime load or compilation occurred. Supported profile is not absent; this bounded audit does not establish publisher coverage or native behavior.
 
-Only Wrath Classic 3.4.2 and 3.4.3 are queued. Agent196 owns separate 3.4.2; parent integrates it before this audit. Unmerged 3.4.3 reference `48ab8e1c3` establishes no explicit member-level contract/supersession (zero enumerated APIs). `later_registers` stays empty. Retail 10.0.2/10.0.0 links are not Wrath successors; Cata Classic 4.4.x is a separate client transition. No default-retail publication register/harness is used: existing shared classifier/generator client-line support is not extended merely for source accounting.
+Wrath Classic 3.4.2 and 3.4.3 are now integrated before this audit; the capture-time queue remains historical evidence. Historical 3.4.3 reference `48ab8e1c3` establishes no explicit member-level contract/supersession (zero enumerated APIs). `later_registers` stays empty. Retail 10.0.2/10.0.0 links are not Wrath successors; Cata Classic 4.4.x is a separate client transition. No default-retail publication register/harness is used: existing shared classifier/generator client-line support is not extended merely for source accounting.
 
 ## Historical proof boundary
 
@@ -40,6 +40,14 @@ Own development RED fails the missing 333-occurrence result against a temporary 
 ## Portable negative-control fixture
 
 [Own controls](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py) mutate the serialized ledger and sealed GREEN log separately, require exact seal rejection, restore/hash-check original bytes, then export only sealed inputs into a relocated archive with no `.git`. The archived validator executes with the owned worktree cwd; paths resolve solely from its relocated file. This is source/log replay, never runtime/native replay. At `e6ed237fa5a2972643be17103131e5ca2d3369a2`, serialized ledger tampering exits 1 at its exact seal; GREEN-log tampering exits 1 at its exact seal; both originals are byte-restored/hash-checked. Relocated Git-free archive replay exits 0 with 17 historical sealed inputs, deriving the same source summary. Archive SHA-256 `2aa54c026c0694b8517f055e312bf34fcbe035d63eba1eb850c92f587755b338`; full member hash mapping and exact subprocess receipts retained in `portable-controls.log`. Later receipt/doc/seal-entry additions do not alter tested source/validator/test/historical-tool/profile/control bytes.
+
+## Integrated proof status — 2026-10-09
+
+Integrated `4e3eee3b85`. Retained [independent report](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/integrated/p341-independent-report.md) and [receipt](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/integrated/p341-independent-receipt.json) distinguish fresh historical replay (19 seals) from applicable original 7/7 source-accounting execution. Tested bytes/seals remain unchanged; the fresh replay is not a fresh execution of retained tests.
+
+At coordinator snapshot `3992639881dfacf3ad5a23df4b54b2348b92070b`, integration is present, not queued. Historical capture revisions, seals and log statements remain unchanged. New global job `p34x-p33x-portable-gate` is running at `399263988`; no PASS yet. Latest CI is pending; inherited full-suite Garrison/prefork, integration and library failures remain unresolved. No full handoff or native completion claim.
+
+No factory measurements, loaded UI, runtime or native closure for this page. Fresh replay covers only serialized historical source accounting; retained tests were not rerun.
 
 ## Sources
 

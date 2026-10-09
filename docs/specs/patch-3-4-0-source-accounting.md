@@ -27,6 +27,10 @@ Account only the frozen Wrath Classic [page](../../data/patch-api/sources/3.4.0-
 
 - [ ] Runtime/native contracts remain UNPROVEN and parent-owned; source fixtures/portable controls satisfy this bounded slice.
 
+## Current integration status — 2026-10-09
+
+Integrated `9b932d3f89`; [retained reports and current proof scope](../wiki/investigations/patch-3-4-0-api-audit.md#integrated-proof-status--2026-10-09). Original 8/8 source-accounting proof remains applicable; independent historical replay checks 21 seals. Integration does not establish native/loaded-UI parity or final acceptance. New portable gate and latest CI remain pending.
+
 ## Out of scope
 
 Runtime/factory/publication measurement, native TOC30400 parity, shared tooling changes, linked-page reconstruction, retail/Cata supersession, runtime shims/retirements, caches/vendor/Wowless writes and final gates. Configured Wrath38001 is not a native Classic30400 target. `-WOTLKC` is a static candidate gap for parent integration; UnitAura consolidation state and exact tuple position are not established.
