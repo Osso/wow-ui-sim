@@ -69,6 +69,17 @@ class SourceTests(unittest.TestCase):
                          "/equipslot ''&lt;slot&gt;'' ''&lt;itemname&gt;''")
         self.assertEqual(command['declaration_literal'], command['literal'])
 
+    def test_replacement_names_and_wrapper_name_have_literal_positions(self):
+        audit = self.audit('* NEW InviteUnit("unit" or "name") - Replaces InviteByName/InviteToParty\n'
+                           '** OnEvent: function(self,event,...)\n')
+        self.assertEqual([(r['symbol'], r['direction']) for r in audit['occurrences']
+                          if r['kind'] == 'global-api-reference'],
+                         [('InviteByName', 'replaced-name'), ('InviteToParty', 'replaced-name')])
+        wrappers = [r for r in audit['occurrences'] if r['symbol'] == 'OnEvent']
+        self.assertEqual(len(wrappers), 1)
+        self.assertEqual(wrappers[0]['column'], 3)
+        self.assertEqual(wrappers[0]['signature'], 'function(self,event,...)')
+
     def test_malformed_signature_is_preserved_not_completed(self):
         audit = self.audit('* NEW ExampleCall("unterminated)\n')
         row = audit['occurrences'][0]
