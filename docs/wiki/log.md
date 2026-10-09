@@ -22,6 +22,10 @@ Owned specs/audits/index updated from queued to integrated: 3.4.3 `80a3fb104`, 3
 
 [Audit](investigations/patch-3-3-3-api-audit.md): manifest identity/content/hashes validated before copying revision 2531935. Opt-in heading parser preserves 36 inventory occurrences and annotations; two RED source fixtures fail on the missing flag. No runtime/vendor/Classic change; bounded development proof pending.
 
+## [2026-10-09] investigation | Retail Patch 3.1.0 bounded source audit
+
+[Audit](investigations/patch-3-1-0-api-audit.md) pins supplied response/revision 2259594, retains 110 inventory occurrences and complete nonblank/signature source boundaries. Parser fixtures 2/2; first headless prefork compilation failed on existing GUI registry references, no publication credit. No runtime/vendor/cache changes; own sealed replay and default-feature discovery in progress, coordinator final gates separate.
+
 ## [2026-10-09] maintenance | Patch 4.2.0 proof boundaries
 
 [Audit status](investigations/patch-4-2-0-api-audit.md#integrated-proof-status--2026-10-09) links coordinator-owned integrated receipts and historical archive replay without rewriting original evidence. Model placement clarified in [Lua API](../lua-api.md); successor cross-links added. Portability/verifier remain pending; no final/CI/full-suite acceptance claim. Docs-only update.
