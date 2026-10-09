@@ -39,9 +39,9 @@ def outcome(extract, raw, flags):
 
 
 def reproduce(extractor, revision):
-    prior = json.loads(git('show', BASE + ':data/patch-api/evidence/5.5.3-session-2026-10-08/p553-reproduction.json'))
+    prior = json.loads(git('show', BASE + ':data/patch-api/evidence/5.3.0-session-2026-10-08/integrated/p530-register-reproduction.json'))
     recipes = {r['patch']: {'verified_flags': r['verified_flags']} for r in prior}
-    extracts = {r['patch']: r for r in json.loads(git('show', BASE + ':data/patch-api/evidence/5.4.0-session-2026-10-08/integrated/p540-saved-extract-reproduction.json'))}
+    extracts = {r['patch']: r for r in json.loads(git('show', BASE + ':data/patch-api/evidence/5.3.0-session-2026-10-08/integrated/p530-saved-extract-reproduction.json'))}
     registers, saved = [], []
     with tempfile.TemporaryDirectory(prefix='p520-reproduction-') as temporary:
         for path in sorted(SOURCES.glob('*-wikitext-register.json')):

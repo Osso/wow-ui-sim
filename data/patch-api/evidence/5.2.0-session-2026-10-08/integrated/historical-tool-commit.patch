@@ -1,0 +1,2791 @@
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/context.json b/data/patch-api/evidence/5.2.0-session-2026-10-08/context.json
+new file mode 100644
+index 000000000..0e0689ab8
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/context.json
+@@ -0,0 +1,7 @@
++{
++  "base_revision": "896086537a2b3c1ead5886d5ae3e430d56e7ef20",
++  "parser_origin": "c237c344eb1e2fb008be02cdd8c44e72f51c40c4",
++  "copied_hunks": "git diff 896086537 p530-page -- tools/gen_patch_wikitext_register.py; applied byte-identically",
++  "additional_behavior": "--mists-bare-widget-handlers normalizes bare owner/On-handler removals before the copied handler parser",
++  "constraints": "No Classic 5.5.x supersession; queued retail pages not integrated yet."
++}
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/diff-fetch.json b/data/patch-api/evidence/5.2.0-session-2026-10-08/diff-fetch.json
+new file mode 100644
+index 000000000..a11596e1c
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/diff-fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"normalized":[{"from":"Patch_5.2.0/API_changes/diff","to":"Patch 5.2.0/API changes/diff"}],"pages":{"471131":{"pageid":471131,"ns":0,"title":"Patch 5.2.0/API changes/diff","revisions":[{"revid":4529204,"parentid":4529199,"timestamp":"2017-04-07T07:59:05Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"<noinclude>{{Transclude}}</noinclude>\n=== Global API ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Global API (5.1.0.16309 &rarr; 5.2.0.16650)\n|- class=\"mw-customtoggle-global-c\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 36 new functions\n! style=\"width: 50%; padding-right: 1em\"| 30 removed functions\n|- class=\"mw-collapsible mw-collapsed\" id=\"mw-customcollapsible-global-c\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|C_MapBar.BarIsShown}}\n: {{api|C_MapBar.GetCurrentValue}}\n: {{api|C_MapBar.GetMaxValue}}\n: {{api|C_MapBar.GetParticipationPercentage}}\n: {{api|C_MapBar.GetPhaseIndex}}\n: {{api|C_MapBar.GetTag}}\n: {{api|C_PetBattles.GetForfeitPenalty}}\n: {{api|C_PetJournal.GetPetCooldownByGUID}}\n: {{api|DeclineChannelInvite}}\n: {{api|DevTest1}}\n: {{api|GetArenaTeamIndexBySize}}\n: {{api|GetBlacklistMapName}}\n: {{api|GetDifficultyInfo}}\n: {{api|GetHolidayBGInfo}}\n: {{api|GetLFGBonusFactionID}}\n: {{api|GetQuestChoiceInfo}}\n: {{api|GetQuestChoiceOptionInfo}}\n: {{api|GetQuestChoiceRewardCurrency}}\n: {{api|GetQuestChoiceRewardFaction}}\n: {{api|GetQuestChoiceRewardInfo}}\n: {{api|GetQuestChoiceRewardItem}}\n: {{api|GetRaidDifficultyID}}\n: {{api|GetRandomBGInfo}}\n: {{api|GetSchoolString}}\n: {{api|GetSpellLossOfControlCooldown}}\n: {{api|IsAllowedToUserTeleport}}\n: {{api|IsTradeSkillReady}}\n: {{api|PrepVoidStorageForTransmogrify}}\n: {{api|RequestRandomBattlegroundInstanceInfo}}\n: {{api|SendQuestChoiceResponse}}\n: {{api|SetLFGBonusFactionID}}\n: {{api|SetRaidDifficultyID}}\n: {{api|UnitGetTotalAbsorbs}}\n: {{api|UnitStagger}}\n: {{api|UpdateWorldMapArrow}}\n: {{api|UseVoidItemForTransmogrify}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: ClearChannelWatch\n: CommentatorAddPlayer\n: CommentatorGetPartyInfo\n: CommentatorGetSkirmishMode\n: CommentatorGetSkirmishQueueCount\n: CommentatorGetSkirmishQueuePlayerInfo\n: CommentatorRemovePlayer\n: CommentatorRequestSkirmishMode\n: CommentatorRequestSkirmishQueueData\n: CommentatorSetPlayerIndex\n: CommentatorSetSkirmishMatchmakingMode\n: CommentatorStartInstance\n: CommentatorStartSkirmishMatch\n: CreateMiniWorldMapArrowFrame\n: CreateWorldMapArrowFrame\n: DeclineInvite\n: GetCurrentRaidDifficulty\n: GetInstanceDifficulty\n: GetMinigameState\n: GetMinigameType\n: GetRaidDifficulty\n: MakeMinigameMove\n: PlayDance\n: PositionMiniWorldMapArrowFrame\n: PositionWorldMapArrowFrame\n: SetChannelWatch\n: SetRaidDifficulty\n: ShowMiniWorldMapArrowFrame\n: ShowWorldMapArrowFrame\n: UpdateWorldMapArrowFrames\n</div>\n|}\n=== FrameXML ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ FrameXML (5.1.0.16309 &rarr; 5.2.0.16650)\n|- class=\"mw-customtoggle-global-fxml\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 3 new functions\n! style=\"width: 50%; padding-right: 1em\"| 5 removed functions\n|- class=\"mw-collapsible mw-collapsed\" id=\"mw-customcollapsible-global-fxml\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|ControlGetActiveCvarValue}}\n: {{api|GetApplicableMultisampleSetting}}\n: {{api|TogglePVPUI}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: BattlegroundShineFadeIn\n: BattlegroundShineFadeOut\n: IsAlreadyInQueue\n: IsPvPFrameSelected\n: TogglePVPFrame\n</div>\n|}\n=== Events ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Events (5.1.0.16309 &rarr; 5.2.0.16650)\n|- class=\"mw-customtoggle-events\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 7 new events\n! style=\"width: 50%; padding-right: 1em\"| 4 removed events\n|- class=\"mw-collapsible mw-collapsed\" id=\"mw-customcollapsible-events\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=e|BATTLEPET_FORCE_NAME_DECLENSION}}\n: {{api|t=e|LFG_BONUS_FACTION_ID_UPDATED}}\n: {{api|t=e|LOADING_SCREEN_DISABLED}}\n: {{api|t=e|LOADING_SCREEN_ENABLED}}\n: {{api|t=e|MAP_BAR_UPDATE}}\n: {{api|t=e|QUEST_CHOICE_UPDATE}}\n: {{api|t=e|UNIT_ABSORB_AMOUNT_CHANGED}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: COMMENTATOR_SKIRMISH_MODE_REQUEST\n: COMMENTATOR_SKIRMISH_QUEUE_REQUEST\n: MINIGAME_UPDATE\n: START_MINIGAME\n</div>\n|}\n=== Widget API ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Widget API (5.1.0.16309 &rarr; 5.2.0.16650)\n|- class=\"mw-customtoggle-widgets\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 37 new methods\n! style=\"width: 50%; padding-right: 1em\"| 37 removed methods\n|- class=\"mw-collapsible mw-collapsed\" id=\"mw-customcollapsible-widgets\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=w|Cooldown:GetCooldownDuration}}\n: {{api|t=w|Cooldown:SetBlingDuration}}\n: {{api|t=w|PlayerModel:AdvanceTime}}\n: {{api|t=w|PlayerModel:ClearFog}}\n: {{api|t=w|PlayerModel:ClearModel}}\n: {{api|t=w|PlayerModel:GetCameraDistance}}\n: {{api|t=w|PlayerModel:GetCameraFacing}}\n: {{api|t=w|PlayerModel:GetCameraPosition}}\n: {{api|t=w|PlayerModel:GetCameraTarget}}\n: {{api|t=w|PlayerModel:GetFacing}}\n: {{api|t=w|PlayerModel:GetFogColor}}\n: {{api|t=w|PlayerModel:GetFogFar}}\n: {{api|t=w|PlayerModel:GetFogNear}}\n: {{api|t=w|PlayerModel:GetLight}}\n: {{api|t=w|PlayerModel:GetModel}}\n: {{api|t=w|PlayerModel:GetModelScale}}\n: {{api|t=w|PlayerModel:GetPosition}}\n: {{api|t=w|PlayerModel:GetWorldScale}}\n: {{api|t=w|PlayerModel:HasCustomCamera}}\n: {{api|t=w|PlayerModel:ReplaceIconTexture}}\n: {{api|t=w|PlayerModel:SetCamera}}\n: {{api|t=w|PlayerModel:SetCameraDistance}}\n: {{api|t=w|PlayerModel:SetCameraFacing}}\n: {{api|t=w|PlayerModel:SetCameraPosition}}\n: {{api|t=w|PlayerModel:SetCameraTarget}}\n: {{api|t=w|PlayerModel:SetCustomCamera}}\n: {{api|t=w|PlayerModel:SetFacing}}\n: {{api|t=w|PlayerModel:SetFogColor}}\n: {{api|t=w|PlayerModel:SetFogFar}}\n: {{api|t=w|PlayerModel:SetFogNear}}\n: {{api|t=w|PlayerModel:SetGlow}}\n: {{api|t=w|PlayerModel:SetLight}}\n: {{api|t=w|PlayerModel:SetModel}}\n: {{api|t=w|PlayerModel:SetModelScale}}\n: {{api|t=w|PlayerModel:SetPosition}}\n: {{api|t=w|PlayerModel:SetSequence}}\n: {{api|t=w|PlayerModel:SetSequenceTime}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: Minimap:SetPlayerTextureHeight\n: Minimap:SetPlayerTextureWidth\n: Model:AdvanceTime\n: Model:ClearFog\n: Model:ClearModel\n: Model:GetCameraDistance\n: Model:GetCameraFacing\n: Model:GetCameraPosition\n: Model:GetCameraTarget\n: Model:GetFacing\n: Model:GetFogColor\n: Model:GetFogFar\n: Model:GetFogNear\n: Model:GetLight\n: Model:GetModel\n: Model:GetModelScale\n: Model:GetPosition\n: Model:GetWorldScale\n: Model:HasCustomCamera\n: Model:ReplaceIconTexture\n: Model:SetCamera\n: Model:SetCameraDistance\n: Model:SetCameraFacing\n: Model:SetCameraPosition\n: Model:SetCameraTarget\n: Model:SetCustomCamera\n: Model:SetFacing\n: Model:SetFogColor\n: Model:SetFogFar\n: Model:SetFogNear\n: Model:SetGlow\n: Model:SetLight\n: Model:SetModel\n: Model:SetModelScale\n: Model:SetPosition\n: Model:SetSequence\n: Model:SetSequenceTime\n</div>\n|}\n=== Widget Handlers ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Widget Handlers (5.1.0.16309 &rarr; 5.2.0.16650)\n|- class=\"mw-customtoggle-widget-handlers\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 2 new handlers\n! style=\"width: 50%; padding-right: 1em\"| 2 removed handlers\n|- class=\"mw-collapsible mw-collapsed\" id=\"mw-customcollapsible-widget-handlers\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=wh|PlayerModel OnAnimFinished}}\n: {{api|t=wh|PlayerModel OnUpdateModel}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: Model OnAnimFinished\n: Model OnUpdateModel\n</div>\n|}"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/diff.wikitext b/data/patch-api/evidence/5.2.0-session-2026-10-08/diff.wikitext
+new file mode 100644
+index 000000000..9d3158b63
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/diff.wikitext
+@@ -0,0 +1,224 @@
++<noinclude>{{Transclude}}</noinclude>
++=== Global API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Global API (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-global-c" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 36 new functions
++! style="width: 50%; padding-right: 1em"| 30 removed functions
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-c"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|C_MapBar.BarIsShown}}
++: {{api|C_MapBar.GetCurrentValue}}
++: {{api|C_MapBar.GetMaxValue}}
++: {{api|C_MapBar.GetParticipationPercentage}}
++: {{api|C_MapBar.GetPhaseIndex}}
++: {{api|C_MapBar.GetTag}}
++: {{api|C_PetBattles.GetForfeitPenalty}}
++: {{api|C_PetJournal.GetPetCooldownByGUID}}
++: {{api|DeclineChannelInvite}}
++: {{api|DevTest1}}
++: {{api|GetArenaTeamIndexBySize}}
++: {{api|GetBlacklistMapName}}
++: {{api|GetDifficultyInfo}}
++: {{api|GetHolidayBGInfo}}
++: {{api|GetLFGBonusFactionID}}
++: {{api|GetQuestChoiceInfo}}
++: {{api|GetQuestChoiceOptionInfo}}
++: {{api|GetQuestChoiceRewardCurrency}}
++: {{api|GetQuestChoiceRewardFaction}}
++: {{api|GetQuestChoiceRewardInfo}}
++: {{api|GetQuestChoiceRewardItem}}
++: {{api|GetRaidDifficultyID}}
++: {{api|GetRandomBGInfo}}
++: {{api|GetSchoolString}}
++: {{api|GetSpellLossOfControlCooldown}}
++: {{api|IsAllowedToUserTeleport}}
++: {{api|IsTradeSkillReady}}
++: {{api|PrepVoidStorageForTransmogrify}}
++: {{api|RequestRandomBattlegroundInstanceInfo}}
++: {{api|SendQuestChoiceResponse}}
++: {{api|SetLFGBonusFactionID}}
++: {{api|SetRaidDifficultyID}}
++: {{api|UnitGetTotalAbsorbs}}
++: {{api|UnitStagger}}
++: {{api|UpdateWorldMapArrow}}
++: {{api|UseVoidItemForTransmogrify}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: ClearChannelWatch
++: CommentatorAddPlayer
++: CommentatorGetPartyInfo
++: CommentatorGetSkirmishMode
++: CommentatorGetSkirmishQueueCount
++: CommentatorGetSkirmishQueuePlayerInfo
++: CommentatorRemovePlayer
++: CommentatorRequestSkirmishMode
++: CommentatorRequestSkirmishQueueData
++: CommentatorSetPlayerIndex
++: CommentatorSetSkirmishMatchmakingMode
++: CommentatorStartInstance
++: CommentatorStartSkirmishMatch
++: CreateMiniWorldMapArrowFrame
++: CreateWorldMapArrowFrame
++: DeclineInvite
++: GetCurrentRaidDifficulty
++: GetInstanceDifficulty
++: GetMinigameState
++: GetMinigameType
++: GetRaidDifficulty
++: MakeMinigameMove
++: PlayDance
++: PositionMiniWorldMapArrowFrame
++: PositionWorldMapArrowFrame
++: SetChannelWatch
++: SetRaidDifficulty
++: ShowMiniWorldMapArrowFrame
++: ShowWorldMapArrowFrame
++: UpdateWorldMapArrowFrames
++</div>
++|}
++=== FrameXML ===
++{| class="wikitable" style="min-width: 600px"
++|+ FrameXML (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 3 new functions
++! style="width: 50%; padding-right: 1em"| 5 removed functions
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-fxml"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|ControlGetActiveCvarValue}}
++: {{api|GetApplicableMultisampleSetting}}
++: {{api|TogglePVPUI}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: BattlegroundShineFadeIn
++: BattlegroundShineFadeOut
++: IsAlreadyInQueue
++: IsPvPFrameSelected
++: TogglePVPFrame
++</div>
++|}
++=== Events ===
++{| class="wikitable" style="min-width: 600px"
++|+ Events (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-events" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 7 new events
++! style="width: 50%; padding-right: 1em"| 4 removed events
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-events"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=e|BATTLEPET_FORCE_NAME_DECLENSION}}
++: {{api|t=e|LFG_BONUS_FACTION_ID_UPDATED}}
++: {{api|t=e|LOADING_SCREEN_DISABLED}}
++: {{api|t=e|LOADING_SCREEN_ENABLED}}
++: {{api|t=e|MAP_BAR_UPDATE}}
++: {{api|t=e|QUEST_CHOICE_UPDATE}}
++: {{api|t=e|UNIT_ABSORB_AMOUNT_CHANGED}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: COMMENTATOR_SKIRMISH_MODE_REQUEST
++: COMMENTATOR_SKIRMISH_QUEUE_REQUEST
++: MINIGAME_UPDATE
++: START_MINIGAME
++</div>
++|}
++=== Widget API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget API (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-widgets" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 37 new methods
++! style="width: 50%; padding-right: 1em"| 37 removed methods
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widgets"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=w|Cooldown:GetCooldownDuration}}
++: {{api|t=w|Cooldown:SetBlingDuration}}
++: {{api|t=w|PlayerModel:AdvanceTime}}
++: {{api|t=w|PlayerModel:ClearFog}}
++: {{api|t=w|PlayerModel:ClearModel}}
++: {{api|t=w|PlayerModel:GetCameraDistance}}
++: {{api|t=w|PlayerModel:GetCameraFacing}}
++: {{api|t=w|PlayerModel:GetCameraPosition}}
++: {{api|t=w|PlayerModel:GetCameraTarget}}
++: {{api|t=w|PlayerModel:GetFacing}}
++: {{api|t=w|PlayerModel:GetFogColor}}
++: {{api|t=w|PlayerModel:GetFogFar}}
++: {{api|t=w|PlayerModel:GetFogNear}}
++: {{api|t=w|PlayerModel:GetLight}}
++: {{api|t=w|PlayerModel:GetModel}}
++: {{api|t=w|PlayerModel:GetModelScale}}
++: {{api|t=w|PlayerModel:GetPosition}}
++: {{api|t=w|PlayerModel:GetWorldScale}}
++: {{api|t=w|PlayerModel:HasCustomCamera}}
++: {{api|t=w|PlayerModel:ReplaceIconTexture}}
++: {{api|t=w|PlayerModel:SetCamera}}
++: {{api|t=w|PlayerModel:SetCameraDistance}}
++: {{api|t=w|PlayerModel:SetCameraFacing}}
++: {{api|t=w|PlayerModel:SetCameraPosition}}
++: {{api|t=w|PlayerModel:SetCameraTarget}}
++: {{api|t=w|PlayerModel:SetCustomCamera}}
++: {{api|t=w|PlayerModel:SetFacing}}
++: {{api|t=w|PlayerModel:SetFogColor}}
++: {{api|t=w|PlayerModel:SetFogFar}}
++: {{api|t=w|PlayerModel:SetFogNear}}
++: {{api|t=w|PlayerModel:SetGlow}}
++: {{api|t=w|PlayerModel:SetLight}}
++: {{api|t=w|PlayerModel:SetModel}}
++: {{api|t=w|PlayerModel:SetModelScale}}
++: {{api|t=w|PlayerModel:SetPosition}}
++: {{api|t=w|PlayerModel:SetSequence}}
++: {{api|t=w|PlayerModel:SetSequenceTime}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: Minimap:SetPlayerTextureHeight
++: Minimap:SetPlayerTextureWidth
++: Model:AdvanceTime
++: Model:ClearFog
++: Model:ClearModel
++: Model:GetCameraDistance
++: Model:GetCameraFacing
++: Model:GetCameraPosition
++: Model:GetCameraTarget
++: Model:GetFacing
++: Model:GetFogColor
++: Model:GetFogFar
++: Model:GetFogNear
++: Model:GetLight
++: Model:GetModel
++: Model:GetModelScale
++: Model:GetPosition
++: Model:GetWorldScale
++: Model:HasCustomCamera
++: Model:ReplaceIconTexture
++: Model:SetCamera
++: Model:SetCameraDistance
++: Model:SetCameraFacing
++: Model:SetCameraPosition
++: Model:SetCameraTarget
++: Model:SetCustomCamera
++: Model:SetFacing
++: Model:SetFogColor
++: Model:SetFogFar
++: Model:SetFogNear
++: Model:SetGlow
++: Model:SetLight
++: Model:SetModel
++: Model:SetModelScale
++: Model:SetPosition
++: Model:SetSequence
++: Model:SetSequenceTime
++</div>
++|}
++=== Widget Handlers ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget Handlers (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-widget-handlers" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 2 new handlers
++! style="width: 50%; padding-right: 1em"| 2 removed handlers
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widget-handlers"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=wh|PlayerModel OnAnimFinished}}
++: {{api|t=wh|PlayerModel OnUpdateModel}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: Model OnAnimFinished
++: Model OnUpdateModel
++</div>
++|}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/fetch.json b/data/patch-api/evidence/5.2.0-session-2026-10-08/fetch.json
+new file mode 100644
+index 000000000..6cf75ca54
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"pages":{"422312":{"pageid":422312,"ns":0,"title":"Patch 5.2.0/API changes","revisions":[{"revid":4057299,"parentid":4057294,"timestamp":"2018-11-26T23:09:55Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"{{apichanges|5.2.0|prev=5.1.0|next=5.3.0}}\n\n==New features==\n* Display both text/percent on status bars option\n* Monk [[Stagger]] bar displays the amount of staggered damage the monk will take in the next 10 seconds.\n* Absorption effects are now displayed over the default UI's health bars; it is possible for addons to retrieve the total amount of absorption stacked on a unit.\n* [[SecureActionButtonTemplate]] has a new \"togglemenu\" action type, which (securely) opens a unit popup menu for the unit specified by the action button.\n* Items in void storage can now be used to transmogrify items in your inventory. (API calls implemented, but no UI added: {{api|PrepVoidStorageForTransmogrify}}() and {{api|UseVoidItemForTransmogrify}}())\n\n== Global API changes ==\n* Raid difficulty functions <code>SetRaidDifficulty</code> and <code>GetRaidDifficulty</code> were renamed to {{api|SetRaidDifficultyID}} and {{api|GetRaidDifficultyID}} respectively.\n* New {{api|GetDifficultyInfo}} API exposes basic information about difficulty IDs.\n* Battle pet cooldowns are now exposed through {{api|C_PetJournal.GetPetCooldownByGUID}}.\n* {{api|GetSchoolString}} replaces the global <code>SchoolStringTable</code>.\n* Almost all (if not all) C_PetJournal functions have had their \"isWild\" argument removed.\n* Passing a nil PetID to a C_PetJournal function will now cause a Lua error. Previously, the function would just return nil.\n* {{api|GetCurrencyInfo}} now returns a full texture path.\n* {{api|GetTradeSkillReagentItemLink}} is broken and always returns nil.\n* {{api|IsConsumableItem}} appears to always return nil.\n\n== FrameXML changes ==\n* Global <code>MAX_BLACKLIST_BATTLEGROUNDS</code> has moved from [[FrameXML]] into the addon Blizzard_PVPUI. Addons relying on <code>MAX_BLACKLIST_BATTLEGROUNDS</code> will have to find a workaround (it's a constant value, 2 right now, so you can use that) or watch \"ADDON_LOADED\" for the PVPUI.\n* The global values in the form <code>\"MAP_BAR_\"..tag..stringType..phase</code> are now more easily accessed through {{api|MapBarFrame_GetString}}(stringType, tag, phase).\n\n==Automated diff==\nClick on the headers to expand the tables below.\n\n{{:Patch 5.2.0/API changes/diff}}"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/p530-page-tools.diff b/data/patch-api/evidence/5.2.0-session-2026-10-08/p530-page-tools.diff
+new file mode 100644
+index 000000000..697b08bac
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/p530-page-tools.diff
+@@ -0,0 +1,93 @@
++diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
++index 4901f7397..405efadfb 100644
++--- a/tools/gen_patch_wikitext_register.py
+++++ b/tools/gen_patch_wikitext_register.py
++@@ -644,6 +644,46 @@ def parse_combat_restriction_bullets(text):
++     return entries
++ 
++ 
+++def parse_mists_automated_diff(text):
+++    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
+++    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
+++                'Events': 'events', 'Widget API': 'widgets'}
+++    entries, counts = [], []
+++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
+++        lines = table[1].splitlines()
+++        caption = next((line for line in lines if line.startswith('|+ ')), '')
+++        section = next((value for name, value in sections.items()
+++                        if caption.startswith('|+ ' + name + ' ')), None)
+++        if section is None:
+++            continue
+++        first_line = text[:table.start(1)].count('\n') + 1
+++        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
+++                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
+++                      else (first_line + offset, line)
+++                      for offset, line in enumerate(lines)]
+++        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
+++        entries.extend(rows)
+++        counts.extend(headers)
+++    return entries, counts
+++
+++
+++def parse_mists_widget_handlers(text):
+++    """Keep Browser handler owner/name pairs in the dedicated 2013 table."""
+++    entries, counts = [], []
+++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
+++        lines = table[1].splitlines()
+++        if not any(line.startswith('|+ Widget Handlers ') for line in lines):
+++            continue
+++        first_line = text[:table.start(1)].count('\n') + 1
+++        rows, headers = parse_section(
+++            'widgets', list(enumerate(lines, first_line)), legacy_column_headers=True)
+++        for row in rows:
+++            row['kind'] = 'widget-script'
+++        entries.extend(rows)
+++        counts.extend(headers)
+++    return entries, counts
+++
+++
++ def main():
++     parser = argparse.ArgumentParser(description=__doc__)
++     for name in ("patch", "path", "revid", "out"):
++@@ -700,11 +740,18 @@ def main():
++                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
++     parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
++                         help='Label the client history for isolated supersession; opt-in')
+++    parser.add_argument('--mists-automated-diff', action='store_true',
+++                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
+++    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
+++    parser.add_argument('--mists-widget-handlers', action='store_true',
+++                        help='Retain captioned Mists widget handler ownership; opt-in')
++     args = parser.parse_args()
++     patch, path, revid, out = args.patch, args.path, args.revid, args.out
++     raw = Path(path).read_bytes()
++     buckets = split_sections(raw.decode("utf-8"),
++                              separate_inline_structures=args.separate_inline_structures)
+++    if args.mists_automated_diff:
+++        buckets = {}
++     entries, counts = [], []
++     for section in SECTIONS.values():
++         entry_section = "cvars" if section == "commands" else section
++@@ -758,6 +805,22 @@ def main():
++         counts.extend(diff_counts)
++     if args.combat_restriction_bullets:
++         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
+++    if args.mists_automated_diff:
+++        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
+++    if args.mists_diff:
+++        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
+++        for entry in diff_entries:
+++            entry['id'] = 'diff-' + entry['id']
+++        entries.extend(diff_entries)
+++        counts.extend(diff_counts)
+++    if args.mists_widget_handlers:
+++        handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
+++        handler_entries, handler_counts = parse_mists_widget_handlers(handler_raw)
+++        if args.mists_diff:
+++            for entry in handler_entries:
+++                entry['id'] = 'diff-' + entry['id']
+++        entries.extend(handler_entries)
+++        counts.extend(handler_counts)
++     if args.inventory_only:
++         for entry in entries:
++             for key in ("kind", "page_default", "test_inline"):
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/p540-page-tools.diff b/data/patch-api/evidence/5.2.0-session-2026-10-08/p540-page-tools.diff
+new file mode 100644
+index 000000000..e4c0d01b6
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/p540-page-tools.diff
+@@ -0,0 +1,182 @@
++diff --git a/tools/extract_patch_non_inventory.py b/tools/extract_patch_non_inventory.py
++index f49f1af63..85f5cc120 100644
++--- a/tools/extract_patch_non_inventory.py
+++++ b/tools/extract_patch_non_inventory.py
++@@ -100,23 +100,31 @@ def render_patch_diff_reference(raw):
++                   r'[Transcluded source: Patch \1/API changes/diff; not expanded]', raw)
++ 
++ 
++-def canonicalize_patch_navigation(raw):
++-    """Render the positional patch, even when named navigation parameters precede it."""
++-    def replace(match):
++-        patches = [part.strip() for part in match[1].split('|') if '=' not in part]
++-        if len(patches) != 1 or not re.fullmatch(r'\d+(?:\.\d+)+', patches[0]):
++-            raise ValueError('expected one positional patch in apichanges navigation')
++-        return f'Patch {patches[0]} API changes'
++-    return re.sub(r'\{\{apichanges\|([^{}]+)\}\}', replace, raw)
+++def strip_mists_automated_inventories(raw):
+++    """Keep 2013 prose and enum values; omit API tables already in the register."""
+++    raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|FrameXML|Widget API|Events) [\s\S]*?^\|\}\n?',
+++                 '', raw, flags=re.M)
+++    return '\n'.join(line for line in raw.splitlines()
+++                     if not line.startswith(('{|', '|+', '|-', '!', '| valign', '</div>', '|}'))) + '\n'
+++
+++
+++def render_mists_source_markup(raw):
+++    """Retain Elink fields and omit only the non-transcluded wrapper."""
+++    raw = raw.replace('<noinclude>{{Transclude|}}</noinclude>', '')
+++    return re.sub(r'\{\{Elink\|site=([^{}|]+)\|link=([^{}|]+)\|desc=([^{}|]+)\}\}',
+++                  r'[External link: \1; \2; \3]', raw)
++ 
++ 
++ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
++                  retain_reference_notes=False, legacy_api_tables=False,
++                  legacy_api_bullets=False, legacy_cvar_tables=False,
++                  bfa_prepatch=False, legion_prepatch=False,
++-                 retain_patch_diff_reference=False, canonical_patch_navigation=False):
++-    if canonical_patch_navigation:
++-        raw = canonicalize_patch_navigation(raw)
+++                 retain_patch_diff_reference=False, mists_automated_diff=False,
+++                 mists_source_markup=False):
+++    if mists_source_markup:
+++        raw = render_mists_source_markup(raw)
+++    if mists_automated_diff:
+++        raw = strip_mists_automated_inventories(raw)
++     if retain_patch_diff_reference:
++         raw = render_patch_diff_reference(raw)
++     if legion_prepatch:
++@@ -342,8 +350,10 @@ def main():
++                         help='Strip pure nested Legion inventories, retaining summaries and renames; opt-in')
++     parser.add_argument('--retain-patch-diff-reference', action='store_true',
++                         help='Retain transcluded patch diffs as unexpanded source references; opt-in')
++-    parser.add_argument('--canonical-patch-navigation', action='store_true',
++-                        help='Render positional apichanges patch after named parameters; opt-in')
+++    parser.add_argument('--mists-automated-diff', action='store_true',
+++                        help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
+++    parser.add_argument('--mists-source-markup', action='store_true',
+++                        help='Retain Mists external-link fields and omit noinclude wrappers; opt-in')
++     args = parser.parse_args()
++     if args.self_test:
++         check_examples()
++@@ -362,7 +372,8 @@ def main():
++                         bfa_prepatch=args.bfa_prepatch,
++                         legion_prepatch=args.legion_prepatch,
++                         retain_patch_diff_reference=args.retain_patch_diff_reference,
++-                        canonical_patch_navigation=args.canonical_patch_navigation)
+++                        mists_automated_diff=args.mists_automated_diff,
+++                        mists_source_markup=args.mists_source_markup)
++     rows = seed_rows(text, args.patch)
++     if args.text_only:
++         if args.check:
++diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
++index 4901f7397..2442dda44 100644
++--- a/tools/gen_patch_wikitext_register.py
+++++ b/tools/gen_patch_wikitext_register.py
++@@ -29,11 +29,6 @@ FONT = re.compile(r"</?font[^>]*>")
++ COUNT = re.compile(r"<small>\((\d+)\)</small>")
++ 
++ 
++-def with_client_line(register, client_line):
++-    """Keep legacy bytes by default; explicitly label separate client histories."""
++-    return register if client_line is None else dict(register, client_line=client_line)
++-
++-
++ def parse_symbol(text):
++     """Return (symbol, params) for the inventory reference on one line."""
++     match = TEMPLATE.search(text)
++@@ -644,6 +639,49 @@ def parse_combat_restriction_bullets(text):
++     return entries
++ 
++ 
+++def parse_mists_automated_diff(text):
+++    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
+++    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
+++                'Events': 'events', 'Widget API': 'widgets'}
+++    entries, counts = [], []
+++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
+++        lines = table[1].splitlines()
+++        caption = next((line for line in lines if line.startswith('|+ ')), '')
+++        section = next((value for name, value in sections.items()
+++                        if caption.startswith('|+ ' + name + ' ')), None)
+++        if section is None:
+++            continue
+++        first_line = text[:table.start(1)].count('\n') + 1
+++        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
+++                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
+++                      else (first_line + offset, line)
+++                      for offset, line in enumerate(lines)]
+++        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
+++        entries.extend(rows)
+++        counts.extend(headers)
+++    return entries, counts
+++
+++
+++def parse_mists_summary(text):
+++    """Keep explicit 5.4.0 prose references without inferring historical removals."""
+++    entries = []
+++    section = None
+++    for number, line in enumerate(text.splitlines(), 1):
+++        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+++        if heading:
+++            section = heading[1]
+++        elif section in ('Breaking changes', 'Modified API', 'Bugs', 'New features'):
+++            for match in TEMPLATE.finditer(line):
+++                category = 'widgets' if '|t=w|' in match[0] else (
+++                    'events' if '|t=e|' in match[0] else 'global-api')
+++                direction = 'added' if section == 'New features' else 'changed'
+++                symbol = next(part for part in match[2].split('|') if '=' not in part)
+++                entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+++                entry['annotation'] = line
+++                entries.append(entry)
+++    return entries
+++
+++
++ def main():
++     parser = argparse.ArgumentParser(description=__doc__)
++     for name in ("patch", "path", "revid", "out"):
++@@ -698,13 +736,18 @@ def main():
++     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
++     parser.add_argument('--combat-restriction-bullets', action='store_true',
++                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
++-    parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
++-                        help='Label the client history for isolated supersession; opt-in')
+++    parser.add_argument('--mists-automated-diff', action='store_true',
+++                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
+++    parser.add_argument('--mists-summary', action='store_true',
+++                        help='Retain explicit 5.4.0 summary API occurrences; opt-in')
+++    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
++     args = parser.parse_args()
++     patch, path, revid, out = args.patch, args.path, args.revid, args.out
++     raw = Path(path).read_bytes()
++     buckets = split_sections(raw.decode("utf-8"),
++                              separate_inline_structures=args.separate_inline_structures)
+++    if args.mists_automated_diff:
+++        buckets = {}
++     entries, counts = [], []
++     for section in SECTIONS.values():
++         entry_section = "cvars" if section == "commands" else section
++@@ -758,6 +801,16 @@ def main():
++         counts.extend(diff_counts)
++     if args.combat_restriction_bullets:
++         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
+++    if args.mists_automated_diff:
+++        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
+++    if args.mists_summary:
+++        entries.extend(parse_mists_summary(raw.decode('utf-8')))
+++    if args.mists_diff:
+++        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
+++        for entry in diff_entries:
+++            entry['id'] = 'diff-' + entry['id']
+++        entries.extend(diff_entries)
+++        counts.extend(diff_counts)
++     if args.inventory_only:
++         for entry in entries:
++             for key in ("kind", "page_default", "test_inline"):
++@@ -770,7 +823,6 @@ def main():
++         "header_counts": counts,
++         "entries": entries,
++     }
++-    register = with_client_line(register, args.client_line)
++     with open(out, "w") as handle:
++         json.dump(register, handle, indent=2, ensure_ascii=False)
++         handle.write("\n")
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/p542-page-tools.diff b/data/patch-api/evidence/5.2.0-session-2026-10-08/p542-page-tools.diff
+new file mode 100644
+index 000000000..cb26fa295
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/p542-page-tools.diff
+@@ -0,0 +1,108 @@
++diff --git a/tools/extract_patch_non_inventory.py b/tools/extract_patch_non_inventory.py
++index f49f1af63..df668caa4 100644
++--- a/tools/extract_patch_non_inventory.py
+++++ b/tools/extract_patch_non_inventory.py
++@@ -110,13 +110,24 @@ def canonicalize_patch_navigation(raw):
++     return re.sub(r'\{\{apichanges\|([^{}]+)\}\}', replace, raw)
++ 
++ 
+++def strip_mists_automated_inventories(raw):
+++    """Keep 2013 prose and enum values; omit API tables already in the register."""
+++    raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|FrameXML|Widget API|Events) [\s\S]*?^\|\}\n?',
+++                 '', raw, flags=re.M)
+++    return '\n'.join(line for line in raw.splitlines()
+++                     if not line.startswith(('{|', '|+', '|-', '!', '| valign', '</div>', '|}'))) + '\n'
+++
+++
++ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
++                  retain_reference_notes=False, legacy_api_tables=False,
++                  legacy_api_bullets=False, legacy_cvar_tables=False,
++                  bfa_prepatch=False, legion_prepatch=False,
++-                 retain_patch_diff_reference=False, canonical_patch_navigation=False):
+++                 retain_patch_diff_reference=False, canonical_patch_navigation=False,
+++                 mists_automated_diff=False):
++     if canonical_patch_navigation:
++         raw = canonicalize_patch_navigation(raw)
+++    if mists_automated_diff:
+++        raw = strip_mists_automated_inventories(raw)
++     if retain_patch_diff_reference:
++         raw = render_patch_diff_reference(raw)
++     if legion_prepatch:
++@@ -344,6 +355,8 @@ def main():
++                         help='Retain transcluded patch diffs as unexpanded source references; opt-in')
++     parser.add_argument('--canonical-patch-navigation', action='store_true',
++                         help='Render positional apichanges patch after named parameters; opt-in')
+++    parser.add_argument('--mists-automated-diff', action='store_true',
+++                        help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
++     args = parser.parse_args()
++     if args.self_test:
++         check_examples()
++@@ -362,7 +375,8 @@ def main():
++                         bfa_prepatch=args.bfa_prepatch,
++                         legion_prepatch=args.legion_prepatch,
++                         retain_patch_diff_reference=args.retain_patch_diff_reference,
++-                        canonical_patch_navigation=args.canonical_patch_navigation)
+++                        canonical_patch_navigation=args.canonical_patch_navigation,
+++                        mists_automated_diff=args.mists_automated_diff)
++     rows = seed_rows(text, args.patch)
++     if args.text_only:
++         if args.check:
++diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
++index 4901f7397..c90c36c28 100644
++--- a/tools/gen_patch_wikitext_register.py
+++++ b/tools/gen_patch_wikitext_register.py
++@@ -644,6 +644,29 @@ def parse_combat_restriction_bullets(text):
++     return entries
++ 
++ 
+++def parse_mists_automated_diff(text):
+++    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
+++    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
+++                'Events': 'events', 'Widget API': 'widgets'}
+++    entries, counts = [], []
+++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
+++        lines = table[1].splitlines()
+++        caption = next((line for line in lines if line.startswith('|+ ')), '')
+++        section = next((value for name, value in sections.items()
+++                        if caption.startswith('|+ ' + name + ' ')), None)
+++        if section is None:
+++            continue
+++        first_line = text[:table.start(1)].count('\n') + 1
+++        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
+++                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
+++                      else (first_line + offset, line)
+++                      for offset, line in enumerate(lines)]
+++        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
+++        entries.extend(rows)
+++        counts.extend(headers)
+++    return entries, counts
+++
+++
++ def main():
++     parser = argparse.ArgumentParser(description=__doc__)
++     for name in ("patch", "path", "revid", "out"):
++@@ -700,11 +723,15 @@ def main():
++                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
++     parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
++                         help='Label the client history for isolated supersession; opt-in')
+++    parser.add_argument('--mists-automated-diff', action='store_true',
+++                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
++     args = parser.parse_args()
++     patch, path, revid, out = args.patch, args.path, args.revid, args.out
++     raw = Path(path).read_bytes()
++     buckets = split_sections(raw.decode("utf-8"),
++                              separate_inline_structures=args.separate_inline_structures)
+++    if args.mists_automated_diff:
+++        buckets = {}
++     entries, counts = [], []
++     for section in SECTIONS.values():
++         entry_section = "cvars" if section == "commands" else section
++@@ -758,6 +785,8 @@ def main():
++         counts.extend(diff_counts)
++     if args.combat_restriction_bullets:
++         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
+++    if args.mists_automated_diff:
+++        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
++     if args.inventory_only:
++         for entry in entries:
++             for key in ("kind", "page_default", "test_inline"):
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/parent-fetch.json b/data/patch-api/evidence/5.2.0-session-2026-10-08/parent-fetch.json
+new file mode 100644
+index 000000000..c05d4dd1f
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/parent-fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"normalized":[{"from":"Patch_5.2.0","to":"Patch 5.2.0"}],"pages":{"79898":{"pageid":79898,"ns":0,"title":"Patch 5.2.0","revisions":[{"revid":6902261,"parentid":6901616,"timestamp":"2026-10-07T03:54:13Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"{{Patchbox\n|Patchname = The Thunder King\n|Image = [[Image:Chapter25.png|265px|]]\n|Caption = \n|Release = March 5, 2013\n|Latest = April 9, 2013\n|Version = 16650\n|Latestv = 16826\n|toc = 50200\n|api = 1\n|Highlights = \n|Related = \n* [https://web.archive.org/web/20131116170039/http://us.battle.net/wow/en/blog/8896363 Official 5.2 patch notes]\n* [http://us.battle.net/wow/en/blog/8713870 Patch 5.2 round-up]\n* [http://us.battle.net/wow/en/forum/topic/8517692906 Small Client Patches]\n|Prev = 5.1.0a\n|Current = 5.2.0\n|Next = 5.3.0\n}}{{tocright}}\n[[File:Lei Shen Full.jpg|thumb|The Thunder King key art]]\n\n'''Patch 5.2.0: The Thunder King''' is the first ''[[World of Warcraft: Mists of Pandaria]]'' patch of 2013 that focuses on the return of the [[Thunder King]]. It was targeted to be released February 26,<ref>{{ref web|url=http://us.battle.net//wow/en/blog/8608452|title=Preparing to Kill a King|date=2013-02-11|author={{blizz}} [[Bashiok]]|accessdate=2013-02-11|archiveurl=http://blue.mmo-champion.com/topic/253491-preparing-to-kill-a-king/|archivedate=2013-02-11}}</ref> but was delayed for March 5.<ref>[https://twitter.com/CM_Zarhym/status/308071948896845824 Zarhym on Twitter]: \"That's still the plan.\"</ref> This patch includes a massive new raid dungeon, a multi-faceted new quest hub, Pet Battle improvements, new world bosses, significant class balance changes, brand new pets and mounts, assorted bug fixes, and more.\n\nTen client patches all called \"Patch 5.2.0\" have been released so far, all to fix minor bugs. See the [[#Client patches|patch list]] for more information.\n\n==[[The Thunder King trailer|Trailer]]==\n{{#ev:youtube|Q51B6M70QBs}}\n\n==General==\n===New Daily Quest Hub: [[Isle of Thunder]]===\n*Here players can join the assault to conquer the [[Lei Shen|Thunder King's]] island stronghold, unlock [[Isle of Thunder storyline|new questlines]] and daily quest hubs, participate in special events, earn the right to visit the fabled [[Troves of the Thunder King|Treasure Room]], lay claim to an arsenal of powerful mogu artifacts for their faction, and more.\n*Each faction's finest are spearheading the assault: the [[Kirin Tor Offensive]] led by [[Jaina Proudmoore]] and the [[Sunreaver Onslaught]] led by [[Lor'themar Theron]]. Earning reputation with these new factions offers heroes the opportunity to receive new quests and reputation rewards, including powerful items and an intimidating new mount.\n*After both the [[Alliance]] and the [[Horde]] have eked out a foothold on the isle, players can choose to perform quests that are PvE or PvP focused. PvP quests will direct players against opposing faction NPCs, but slaying opposing players will grant credit as well.\n*As the heroes conquer the Isle, they will unlock the powerful [[Thunder Forges|Thunder Forge]], which will allow [[Blacksmithing|Blacksmiths]] to forge mighty raid-worthy items, as well as classic weapons from the past.\n*'''Heroes can join the war effort and find transportation to [[Isle of Thunder]] by visiting the [[Shado-Pan Garrison]] in [[Townlong Steppes]] on the western shores of [[Pandaria]].''' The Isle of Thunder will be unlocked progressively, based on each realms' participation in the war effort; initially only some of the Isle's features will be unlocked. Future unlocked content will include the [[Stormsea Landing]] and the outdoor raid boss, [[Nalak]], the Storm Lord.\n*Heroes fortunate enough to acquire a \"[[Key to the Palace of Lei Shen]]\" can bring it to the [[Shado-Pan]] on the Isle of Thunder and use it to infiltrate the fabled [[Troves of the Thunder King|treasure vaults of the first emperor]]. Heroes are tasked with grabbing as much loot as they can within five minutes. Larger chests will have the most loot, including special keys that can be used at the end of the run for a chance at epic gear and other major rewards. Keys are awarded from rare bosses, hidden chests around the island, and from award satchels obtained by completing daily quests.\n\n===New Raid: [[Throne of Thunder]]===\n*[[Lei Shen]], the Thunder King, has returned to wreak his vengeance on [[Pandaria]]. It falls to the heroes of the Alliance and the Horde to stop the newly resurrected tyrant and his [[Zandalar tribe|Zandalari]] allies in the massive new raid: Throne of Thunder.\n*Throne of Thunder is a sprawling citadel housing 12 new raid encounters, and players that defeat Lei Shen in [[Heroic mode]] can earn the opportunity to face an additional 13th foe.\n*The [[Raid Finder]] version of the Throne of Thunder is divided into 4 different sections, Last Stand of the Zandalari, Forgotten Depths, Halls of Flesh-Shaping, and Pinnacle of Storms.\n*Join the [[Shado-Pan Assault]] in their singular drive to see Lei Shen defeated once and for all, and gain access to impressive [[Valor Points|Valor]] reward items. Reputation with this faction can be earned only within the Throne of Thunder raid dungeon.\n*[[Ao Pye]] at [[Niuzao Temple]] in [[Townlong Steppes]] is offering to sell [[Shado-Pan Assault]] faction gear to adventurers for Valor points. [[Teng of the Flying Daggers|Another NPC]] will also be selling those items in or near [[Bleak Hollow|the entrance]] to the Throne of Thunder on Isle of Thunder.\n\n===The Legendary Quest Continues===\n*[[Wrathion]] is determined to know the origin and source of Mogu power, and Azeroth's mightiest heroes will aid the Black Prince in finding out what it is. The search for information will take players into the depths of the Thunder King's Palace, and pit them against trials of perseverance and skill. Along the way, they'll unlock the secrets to a new legendary metagem, the [[The Crown of Heaven|Crown of the Heavens]].\n*Players seeking to re-acquire previous Legendary quest rewards (Such as gems for Sha-touched weapons) can now speak with the Blacktalon Quartermaster, the surly-looking Pandaren standing in the first floor of the [[Tavern in the Mists]].\n\n===New World Bosses: Nalak, the Storm Lord and Oondasta===\n*[[Nalak, the Storm Lord]]\n**After the [[Isle of Thunder]] has been conquered, the gate guardian of the Thunder King's citadel will appear: Nalak, the Storm Lord. Players will frequently have the opportunity to test their mettle against him.\n*[[Oondasta]]\n**Found in a place that has been lost in time, the great [[devilsaur]] lord Oondasta has been outfitted for battle with weaponry and armor by the [[Zandalar tribe|Zandalari]], and awaits players brave enough (or foolhardy enough) to seek him out on the mysterious [[Isle of Giants]] found in the seas north of [[Kun-Lai Summit]].\n\n===Taking Over The Farm===\n*Players that have grown attached to working the land at [[Sunsong Ranch]] can now acquire the farm from [[Farmer Yoon]] via a quest. The farmhouse becomes a [[rest]] point like an [[Inn]], where the player can bind and instantly log out. Work orders will pour into the farm from factions across [[Pandaria]], and completing a work order will earn a reputation boost with the issuing faction.\n*The option to take over the farm is available to characters that are {{rep|exalted}} with the [[Tillers]] and have unlocked all 16 farm plots.\n\n===New World Boss System===\n*All world bosses ([[Sha of Anger]], [[Galleon]], [[Nalak]] the Storm Lord, and [[Oondasta]]) are now [[Tap to Faction]]. This new system offers every eligible player of the same faction that engages a boss the chance to earn loot. Under the new system, players will only be able to earn loot from each world boss once per week.\n\n==Classes==\n===General===\n*[[Area damage caps|Area Damage Cap]]: The area damage cap is now 20 targets (was 10). This means area of effect damage spells now reach their maximum damage when striking 20 targets. If more than 20 targets are struck, then the total damage done is spread evenly over the actual number of targets present.\n\n===Death Knight===\n*[[Death Siphon]] now heals for 150% of the damage dealt (was 100%).\n*[[Conversion]] now costs 5 [[Runic Power]] plus 5 per second thereafter, down from 10 Runic Power plus 10 per second.\n*Death Knights now maintain the same health percentage when switching into and out of [[Blood Presence]].\n*[[Blood Plague (Wrath Classic)]] now deals 15% more damage.\n*[[Frost Fever (Wrath Classic)]] now deals 15% more damage.\n*[[Strangulate]]'s cooldown has been reduced to 60 seconds (was 2 minutes).\n*[[Asphyxiate]]'s cooldown has been reduced to 30 seconds (was 1 minute).\n*[[Blood Parasite]] now summons Bloodworms with 15% of the Death Knight's health (was 18%) and Blood Burst now heals for 25% per stack of Blood Gorged (was 30% per stack).\n*Frost\n**[[Howling Blast]] now deals 8% more damage to the primary target. Damage to other enemies in the area-of-effect remains unchanged.\n**[[Icy Talons]] now increases attack speed by 25% (was 20%).\n**[[Might of the Frozen Wastes]] now increases melee damage by 15% (was 10%).\n*Unholy\n**[[Reaping (Wrath Classic)]] now also applies to [[Icy Touch]].\n**[[Summon Gargoyle]] no longer costs [[Runic Power]].\n**[[Gargoyle Strike]] now also deals Shadow damage, in addition to Nature damage.\n**[[Ebon Plaguebringer]] now causes [[Plague Strike]] to inflict [[Frost Fever (Wrath Classic)]], in addition to its other effects.\n**[[Scourge Strike]] now deals 3.8% more damage.\n*Frost and Unholy Tier-14 2-piece set bonus has been reduced to 4% (was 10%) increased damage on [[Frost Strike]], [[Obliterate]], and [[Scourge Strike]].\n\n===Druid===\n*[[Cyclone]] now has a 20-second cooldown for Feral Druids.\n*[[Symbiosis]]\n**[[Dispersion (Symbiosis)]] now has a 3-minute cooldown for Druids (was 2 minutes).\n**[[Shattering Blow]] now has a 1.5-second cast time to align correctly with the Warrior version of this ability.\n*[[Displacer Beast]] has been redesigned. It now triggers [[Cat Form]] and grants 50% increased movement speed for 4 seconds after teleporting, and no longer activates [[Prowl]].\n*The healing granted by [[Cenarion Ward]] when a target takes damage has been increased by 100%.\n*[[Frenzied Regeneration]] now scales 10% more efficiently with attack power.\n*[[Maim]] had its damage increased by 100%.\n*[[Tooth and Claw]] now scales 10% more efficiently.\n*[[Mastery: Nature's Guardian]] now provides 20% more armor per Mastery rating.\n*[[Rejuvenation]] now costs approximately 9% less mana.\n*[[Revive]] and [[Mark of the Wild]] now cost 55% less mana.\n*[[Faerie Swarm]] can now snare more than one target at a time.\n*[[Mass Entanglement]] now has a 30-second cooldown (was 2 minutes).\n*[[Typhoon]] now has a 30-second cooldown (was 20 seconds).\n*The [[Treant]]s summoned by [[Force of Nature]] now deal more damage and healing, and the Force of Nature tooltip will report the capabilities of these summoned pets.\n*[[Soul of the Forest]]\n**Balance: Now generates 40 Lunar or Solar energy upon leaving [[Eclipse]].\n**Feral: Unchanged.\n**Guardian: Generates 3 additional Rage per [[Mangle]].\n**Restoration: Now grants 75% Haste on the next spell cast after the Druid casts [[Swiftmend]].\n*[[Nature's Vigil]] now has a 90-second cooldown (was 3 minutes), and now increases damage and healing done by 10% (was 20%).\n*[[Glyph of Cyclone]] now increases the range of [[Cyclone]] by 5 yards (was 4 yards).\n*[[Wrath]] damage has been increased by 9%.\n*Balance\n**[[Starfire]] damage has been increased by 9%.\n**[[Starsurge]] damage has been increased by 9%.\n**[[Starfall]] will no longer strike targets that are affected by crowd control effects.\n*Guardian\n**[[Thick Hide (druid talent)]] now reduces critical strike chance from all types of attacks made against the Guardian Druid, instead of just melee.\n*Restoration\n**[[Naturalist]]: This new passive learned at level 10 by Restoration Druids increases all healing done by the Druid by 10%.\n**[[Wild Mushroom]]s will now each gain 25% of the overhealing performed by the Druid's [[Rejuvenation]] effects, up to a maximum of 33% of the Druid's health in bonus healing, and growing larger as they do so. When [[Wild Mushroom: Bloom]] is cast, this bonus healing will be divided evenly amongst targets in the area-of-effect.\n*Feral Druid PvP Gloves now also increases the duration of [[Bear Hug (druid ability)]] by 1 second.\n*Feral Druid PvP 2-piece increase to movement speed by 15% while outdoors for Druids in [[Bear Form]], [[Cat Form]], or [[Travel Form]] no longer stacks with the Druid talent [[Feline Swiftness]].\n*Feral Druid PvP 4-piece bonus also causes successful interrupts with [[Skull Bash]] to reset the cooldown of [[Enrage (druid ability)]].\n\n===Hunter===\n*Targeting for [[Glaive Toss]] and [[Powershot]] has been improved. These abilities will now always hit the primary target and are much more responsive about which secondary targets they hit.\n*[[Aimed Shot]] cast time has been reduced to 2.5 seconds (was 2.9 seconds).\n*[[Bestial Wrath]] may now be activated when there is no line of sight to the Hunter's pet.\n*[[Dismiss Pet]] now has a cast time of 3 seconds (was 2 seconds).\n*[[Powershot]] now cancels [[Camouflage]] when the cast begins.\n*[[Silencing Shot]] now has a 24-second cooldown (was 20 seconds).\n*[[Stampede (pet ability)]] now has a range of 40 yards (was 30 yards).\n*[[Steady Shot]] now deals 20% more damage.\n*[[Binding Shot]] no longer has a [[Focus]] cost.\n*[[Wyvern Sting]] no longer has a Focus cost, and its cooldown is now 45 seconds (was 60 seconds).\n*[[Glyph of Marked For Death]] has been removed and its effects are now baseline.\n*The [[Fetch]] ability from [[Glyph of Fetch]] no longer requires a target. When activated, the pet will automatically choose a nearby corpse to loot.\n*New Glyph: [[Glyph of Liberation]]. This glyph now causes [[Disengage]] to heal the Hunter for 5% of maximum health when used.\n*Beast Mastery\n**[[Beast Cleave]] now causes the pet to strike all other nearby targets for 50% damage (was 30%).\n*Marksmanship\n**[[Aimed Shot]] now deals 10% more damage and cast time has been reduced to 2.5 seconds (was 2.9 seconds).\n**[[Chimera Shot]] now deals 25% more damage and heals the Hunter for 5% (was 3%) of their total health.\n*Survival\n**[[Black Arrow]] now deals 10% more damage.\n**[[Explosive Shot]] now deals 10% more damage.\n\n===Mage===\n*[[Invocation]] now removes [[Evocation]]'s cooldown, and reduces its channeling time and duration by 50%. A completed Evocation now grants 15% increased damage for 1 minute after an Evocation is completed, instead of 25% increased damage for 40 seconds. Passive mana regeneration is reduced by 50% only while Invoker's Energy is active.\n*[[Glyph of Evocation]] now causes the Invocation talent to restore 10% (was 20%) health after completing an Evocation.\n*[[Greater Invisibility]] now has a 90-second cooldown (was 2.5 minutes).\n*[[Frostbolt]] cast by [[Mirror Image]]s now deals 50% more damage.\n*[[Glyph of Fire Blast]] has been replaced with [[Glyph of Inferno Blast]]. Glyph of Inferno Blast causes damage-over-time effects spread by [[Inferno Blast]] to spread to 1 additional target.\n*[[Blazing Speed]] is now a level-15 talent, replacing [[Scorch]].\n*[[Flameglow]], a new talent is available at level 30 and replaces [[Blazing Speed]]. The passive ability encases the Mage in fiery energy, absorbing damage from each attack made against the Mage equal to 20% of their spellpower, up to a maximum of 30% of the attack.\n*[[Ice Floes]] now has a 45-second cooldown (was 1 minute) and its duration has been increased to 15 seconds (was 10 seconds).\n*[[Incanter's Ward]] can now be removed by magic dispels.\n*[[Ring of Frost]] cast instantly through [[Presence of Mind]] now has a 2-second arming period before the Freeze effect is activated against targets in the area of effect. The 2-second arming period can be reduced by Haste.\n*Temporal Ripples from [[Temporal Shield]] can no longer be dispelled.\n*[[Deep Freeze]] now stuns the target for 5 seconds (was 4 seconds).\n*[[Rune of Power]] increases the Mage's mana regeneration by 75% (was 100%) while standing inside the rune.\n*[[Glyph of Deep Freeze]] now removes it from global cooldown but also reduces its duration by 1 second.\n*Mage PvP 2-piece bonus now requires [[Counterspell]] to successfully interrupt a spell before applying the 4 second cooldown reduction to Counterspell.\n*Arcane\n**For Arcane Mages, [[Evocation]] now restores 40% (was 60%) of total mana over 6 seconds, and consumes all [[Arcane Charge]]s. For each Arcane Charge consumed, the total amount of mana regenerated is increased by 10%, up to a maximum of 80% over 6 seconds. Evocation remains the same for Fire and Frost.\n**[[Arcane Blast]]'s damage has been reduced by 22.9% and mana cost has been increased to 1.66667% of base mana (was 1.5%).\n**[[Arcane Missiles]]' damage has been reduced by 22.1%.\n**[[Arcane Barrage]]'s damage has been reduced by 16.1%.\n**[[Arcane Charge]]s now stacks up to 4 times (was 6), increases damage by 50% (was 25%), and increases mana cost by 150% (was 75%).\n*Fire\n**[[Pyroblast]] has its direct damage reduced by 10%.\n**[[Scorch]] is no longer a talent and is now available to all Fire Mages.\n*Frost\n**[[Fingers of Frost]] now has a 15% (was 12%) chance to activate from [[Frostbolt]], [[Frostfire Bolt]] and [[Frozen Orb]], and a 5% (was 4%) chance to activate from [[Blizzard]].\n**[[Glyph of Ice Lance]] now causes Ice Lance to deal 50% damage to 1 additional target, up from 40%.\n**[[Frostbolt]] now deals 32% more damage.\n**[[Summon Water Elemental|Water Elemental]]\n***[[Freeze]] no longer does damage and only provides [[Fingers of Frost]] on a successful freeze.\n\n===Monk===\n*New Level-60 Talent: [[Ring of Peace]]\n**Ring of Peace forms an 8 yard Sanctuary around a friendly target for 8 seconds, disabling enemy player auto-attacks in PvP, and causing all enemies (both players and NPCs) in the area of effect to be disarmed for the duration. In addition, enemies that cast a damaging spell while within the area of effect will be silenced for 3 seconds. The ability has a 45-second cooldown.\n*New Windwalker and Brewmaster ability added at level 30: [[Nimble Brew (MoP Classic)]]\n**Nimble Brew removes all [[stun]], [[fear effect|fear]], and [[root]] effects, and reduces the duration of those effects if they are reapplied by 60% for 6 seconds. It has a 2-minute cooldown.\n*[[Chi Wave]] now does 100% more damage and 14% less healing, and no longer costs [[Chi]], and has a 15-second cooldown.\n*[[Zen Sphere]] now has a limit of 2 (was 1), detonates when either the recipient reaches 35% health or the Zen Sphere is dispelled, no longer costs Chi, and has a 10-second cooldown. Its periodic damage has been increased by 22%, periodic healing has been reduced by 61%, its detonation healing has been reduced by 62%.\n*[[Chi Burst]] now does 380% more damage, 69% more healing, no longer costs Chi, and has a 30-second cooldown.\n*[[Deadly Reach (monk talent)]] has been removed.\n*[[Path of Blossoms]] has been removed.\n*[[Glyph of Path of Blossoms]] is now [[Glyph of Paralysis]]. This glyph causes the Monk's Paralysis ability to remove all damage-over-time effects on the target.\n*[[Paralysis]] is now a physical, non-magical effect, can no longer be dispelled, grounded or reflected, and its base range has been increased to 20 yards. The Paralysis effect lasts 40 seconds (was 30 seconds) for non-player targets, 4 seconds when used against other players, and lasts 50% (was 200%) longer when used from behind a target.\n*[[Spear Hand Strike]], used on a target that's facing the Monk silences them for 2 seconds (was 4 seconds).\n*[[Tiger's Lust]] and [[Touch of Karma]] no longer have a Chi cost.\n*Tiger's Lust can no longer be used on targets that have other temporary speed increases active.\n*[[Charging Ox Wave]] now has a 30-second cooldown (was 60 seconds).\n*[[Dampen Harm]] can now be used while stunned, and its cooldown will now begin when used, not when the effect ends.\n*[[Healing Elixirs]] now heals the Monk for 15% of maximum health (was 10%).\n*[[Chi Torpedo]] now deals 15% more damage.\n*[[Healing Sphere]]s now have a duration of 1 minute. Healing Spheres generated by [[Mastery: Gift of the Serpent]] have a duration of 30 seconds.\n*[[Invoke Xuen, the White Tiger|Xuen]] will now fixate on the Monk's original target for Brewmasters.\n*Mistweaver\n**[[Jab]] now costs 8% (was 4%) of base mana to use.\n**The [[Glyph of Uplift|Glyphed]] version of [[Uplift]] now costs 16% of base mana (was 6.6%) to cast.\n**[[Life Cocoon]] can no longer be dispelled.\n**Zen Focus, the 4-piece Mistweaver set bonus, is now more responsive.\n**It is no longer possible to use [[Thunder Focus Tea]] while silenced.\n**[[Renewing Mist]] had its mana cost reduced by 10%.\n**[[Soothing Mist]] now generates chi more consistently and average generation rate is slightly higher.\n**[[Summon Jade Serpent Statue]] no longer costs mana.\n**[[Healing Sphere]]s will now heal for 50% of their original value if they expire without being picked up. This healing will factor in relevant Mastery.\n**[[Stance of the Wise Serpent|Eminence]] now heals for 25% of the damage done (was 50%).\n**[[Serpent's Zeal]] no longer stacks and heals for 25% of the damage that had been dealt.\n**[[Teachings of the Monastery]] now provides additional benefits.\n***[[Tiger Palm]] damage increased by 100%.\n***[[Crackling Jade Lightning]] damage increased by 100%.\n***[[Blackout Kick]] now hits 4 additional nearby targets for 50% damage.\n**[[Muscle Memory]] is a new passive ability for Mistweaver Monks. Successful Jabs and Spinning Crane Kicks which damages at least 3 enemies cause Muscle Memory. Muscle Memory causes the Monk's next Tiger Palm or Blackout Kick to deal 150% more damage and restore 4% mana.\n*Windwalker\n**New Level-75 Ability: [[Storm, Earth, and Fire]]\n***The Windwalker can summon up to 2 elemental duplicates that mirror damaging abilities that the monk uses while they are active. For each spirit summoned, the Monk's damage is reduced: 1 spirit causes the Monk and the spirit to deal 60% of the Monk's normal damage, while 2 spirits will cause the Monk and both active spirits to deal 45% of the Monk's normal damage. Each spirit lasts until the ability is canceled, that spirit's target dies or otherwise becomes unavailable, or they're killed (they can be targeted and have 10% of the Monk's health).\n****When using [[Fists of Fury]], the stun effect will only apply from the Monk (not the spirits).\n**[[Spinning Fire Blossom]]s' damage has been adjusted to scale from weapon damage rather than attack power.\n**[[Combo Breaker]] is now a passive ability granted at level 15 that grants a 12% chance to make the Monk's next [[Blackout Kick]] or [[Tiger Palm]] cost no Chi.\n**New Mastery: [[Mastery: Bottled Fury|Bottled Fury]]\n***Bottled Fury increases the damage bonus provided by [[Tigereye Brew (MoP Classic)]] by .2% per Mastery per stack.\n**[[Brewing: Tigereye Brew]] now gains 1 charge after spending 3 Chi (was 4 Chi), increases damage by 1% per stack (was 2%), can stack to 20 but only 10 charges can be consumed per activation, and a user interface alert displays upon reaching 10 charges. Stacks of Tigereye Brew are cleared at the start of a raid encounter. This ability is improved by [[Mastery: Bottled Fury|Bottled Fury]].\n**[[Rising Sun Kick]] now causes the Monk's abilities to inflict an additional 10% damage (was 15%) on the target.\n*Brewmaster\n**[[Black Ox Statue]]\n***The damage requirement to activate Sanctuary of the Ox has been increased by 100%. The spell tooltip has been updated to reflect the change.\n**[[Elusive Brew]] now has a 6-second cooldown (was 9 seconds).\n**[[Mastery: Elusive Brawler]] now provides 25% more [[Stagger]] per Mastery rating.\n*Windwalker Monk PvP 2-piece bonus now also increases the range of [[Keg Smash]].\n\n===Paladin===\n*[[Avenging Wrath]] now has a cooldown of 2 minutes for Retribution Paladins (was 3 minutes). The cooldown remains unchanged for Holy and Protection Paladins.\n*[[Light's Hammer (paladin ability)]] now also applies a 50% snare for 2 seconds to targets that take damage from the area of effect.\n*[[Hand of Purity]] now reduces all incoming damage by 10% in addition to its other effects.\n*[[Eternal Flame (paladin ability)]]'s periodic heal now provides 100% more healing when self-cast.\n*[[Judgment]] now costs 5% of base mana.\n*[[Repentance]] now has a cast time of 1.7 seconds (was 1.5 seconds).\n*[[Sacred Shield]]'s periodic effect can no longer be dispelled. Each individual absorb effect can be dispelled instead.\n*[[Seal of Righteousness]] now causes melee attacks to deal 9% damage (was 6%) to targets in the area-of-effect.\n*[[Selfless Healer]] now boosts [[Flash of Light]] by 20/40/60% (was 33/66/100%).\n*[[Glyph of Blessed Life]] no longer requires [[Seal of Insight]] to be active.\n*[[Glyph of Templar's Verdict]] can also activate from [[Exorcism (paladin ability)]].\n*Holy\n**[[Blinding Light]] now has a 1.8-second cast time for Holy Paladins. It remains instant cast for Retribution and Protection.\n**Holy 4-piece PvP set bonus now grants Holy Power when casting Flash of Light, instead of Word of Glory.\n*Protection\n**The base damage of [[Consecration]] has been increased by 789%, and it now scales less efficiently with attack power by approximately 11%.\n**[[Grand Crusader (paladin talent)]] now has a chance to activate when the Paladin doges or parries a melee attack in addition to having a 12% chance (was 20%) to activate from [[Crusader Strike]] or [[Hammer of the Righteous]].\n*Retribution\n**[[Seal of Justice]] now causes melee attacks to deal an additional 20% (was 16%) as Holy damage.\n**[[Sword of Light]] now increases [[Flash of Light]] by 100% (was 30%) and increases the Paladin's damage with two-handed melee weapons by 15% (was 10%).\n**[[Absolve]] is a new passive ability for Retribution Paladins. Absolve removes all harmful magic effects when [[Hand of Sacrifice]] is cast on a party member.\n**Retribution 2-piece PvP set bonus now grants 1000 [[PvP Power]] (was 800).\n**Tier-14 Retribution 4-piece set bonus has been changed to increase damage on all Seals and Judgment by 10%.\n\n===Priest===\n*The amount of healing done by [[Flash Heal]], [[Binding Heal]], [[Renew]], and [[Prayer of Mending]] have been reduced by 20%.\n*[[Spiritual Healing (priest talent)]] is a new passive ability obtained by Discipline and Holy Priests at level 10. This ability increases the amount of healing done by [[Flash Heal]], [[Binding Heal]], [[Renew]], and [[Prayer of Mending]] by 25%. For Holy and Discipline Priests, there is no decrease to the amount of healing done by those four spells.\n*[[Evangelism (Cataclysm Classic)]]'s stacking effect now also increases the healing of [[Penance]].\n*[[Halo]] will no longer hit enemies that are in Stealth.\n*[[Angelic Bulwark]] can no longer be dispelled.\n*[[Mind Control|Dominate Mind]] now has a 1.8-second cast time (was 2.5 seconds).\n*[[Angelic Feather]] now has a 6-second duration (was 4 seconds).\n*[[Focused Will]] is now a passive for Holy Priests, as well as Discipline Priests.\n*[[Power Word: Solace]] has been replaced with a new talent: [[Solace and Insanity]]\n**For Holy and Discipline, Power Word: Solace replaces [[Holy Fire]]. It deals the same damage, and interacts with other spells and abilities in the same manner but does not trigger [[Atonement]], is instant, costs no mana, and restores 1% of maximum mana on each cast. Damage dealt by Power Word: Solace will heal a nearby friendly player within 40 yards of the target for 100% of the damage dealt (50% when healing the Priest).\n**For Shadow, this ability causes [[Mind Flay]] to gain the Insanity effect on a target affected by Devouring Plague. Insanity increases the damage of Mind Flay by 33% per Shadow Orb consumed.\n*[[Glyph of Mind Spike]] only works from [[Mind Spike]]s that aren't instant casts from [[Surge of Darkness]].\n*[[Glyph of Desperation]] has been replaced with [[Glyph of Binding Heal]]. [[Pain Suppression]] and [[Guardian Spirit]] can now always be cast while stunned.\n*New Glyph: [[Glyph of Binding Heal]] applies [[Binding Heal]] a third nearby friendly target, but costs 35% more mana.\n*[[Glyph of Inner Focus]] has been replaced with [[Glyph of Weakened Soul]]. Casting [[Inner Focus]] now always grants 5 seconds of immunity to [[silence effect|silences]], [[interrupt]]s, and [[dispel]]s.\n*New Glyph: [[Glyph of Weakened Soul]] reduces the duration of Weakened Soul by 2 seconds.\n*[[Holy Fire]] is now an instant cast ability.\n*[[Glyph of Holy Fire]] has been redesigned. It now increases the range of [[Holy Fire]], [[Smite]], and [[Power Word: Solace]] by 10 yards.\n*[[Power Infusion]] now increases the Priest's damage by 5% in addition to current effects.\n*[[Phantasm]] no longer makes the Priest untargetable by ranged attacks, and the movement impairing immunity effect is now 5 seconds (was 3 seconds).\n*[[Psyfiend (priest talent)]] belonging to an individual Priest will no longer cast Psychic Horror on the same target twice.\n*Discipline\n**[[Mastery: Shield Discipline|Shield Discipline]] now also increases all healing done by a lesser amount, but the bonus provided by Mastery has been reduced by 36%.\n**[[Penance]] damage and healing has been increased by 20%, now a cooldown of 9 seconds (was 10 seconds), and has a range of 40 yards for both friendly and hostile targets (was 40 yards for friendly and 30 yards for hostile targets).\n**[[Focused Will]] now reduces damage taken by 15% per stack, with a limit of 2 stacks.\n**[[Spirit Shell]] can no longer be dispelled and now provides an absorb shield equal to the average healing and absorb of the triggering spell, including criticals and Divine Aegis.\n**[[Rapture]] now reduces the cost of [[Power Word: Shield]] by 25% and provides mana equal to 150% (was 200%) of the priest's Spirit, but no longer benefits from Spirit provided by short-duration bonuses.\n**[[Divine Aegis]] now causes critical heals to apply an absorb shield on the target for 100% of the amount healed instead of healing for twice as much. In addition, it grants Power Word: Shield a chance equal to the Priest's critical chance for the shield to absorb twice as much damage.\n*Shadow\n**[[Dispersion]] now belongs to the Shadow spell school.\n**[[Shadowform]] now increases the Priest's Shadow damage by 25% (was 20%).\n*The 2-piece Holy/Discipline PvP set bonus has been replaced by the now the previous 4-piece set bonus.\n*The 4-piece Holy/Discipline PvP set bonus has been redesigned. It now reduces the cooldown of [[Chakra]] by 25 seconds. When [[Spirit Shell]] is active, the mana cost of [[Flash Heal]] is reduced by 50%.\n*Tier-14 Holy/Discipline 4-piece set bonus now reduces the cooldown of Penance by 3 seconds (was 4 seconds).\n\n===Rogue===\n*[[Preparation]] is now a baseline ability learned at level 68 and no longer resets the cooldown on [[Cloak of Shadows]].\n*[[Versatility (rogue talent)]] has been removed.\n*New Level-90 Talent: [[Marked for Death]]\n**Marks a target and instantly generates 5 combo points. When that target dies, Marked for Death's cooldown is reset. This talent has a 1-minute cooldown.\n*New Level-60 Talent: [[Cloak and Dagger]]\n**[[Ambush]], [[Garrote]], and [[Cheap Shot]] now have a 30-yard range, and will cause the Rogue to teleport behind the target.\n*[[Burst of Speed]] now costs 30 Energy (was 50 Energy), can be used in Stealth, and always grants increased movement speed in addition to breaking [[snare]] effects, but no longer breaks [[root]] effects.\n*[[Shuriken Toss]] now causes the Rogue to throw ranged shurikens coated in [[Lethal Poison]] and auto-attack at 75% damage (was 80%) for up to 10 seconds if the enemy is farther than 10 yards away.\n*[[Deadly Throw]] can now interrupt spellcasting when used at 3, 4 and 5 combo points, and upon interrupt prevents any spell in that school from being cast for 4, 5 and 6 seconds respectively, instead of 5 combo points and 6 seconds.\n*[[Blind]] now has a cooldown of 2 minutes (was 1.5 minutes).\n*[[Cloak of Shadows]] now has a cooldown of 1 minute (was 2 minutes).\n*[[Smoke Bomb]] now reduces damage taken by allies in the area of effect by 20%, in addition to current effects.\n*[[Nerve Strike]] now reduces the effectiveness of healing provided by the target by 10% in addition to existing effects.\n*[[Shadow Focus]] now reduces ability energy costs by 75% while stealthed (was 100%).\n*PvP set bonuses have been changed:\n**Vigor is now the 4-piece set bonus and increases maximum energy by 30 (was 10).\n**Deadly Brew is now the 2-piece set bonus and its effects remain unchanged.\n*Assassination\n**[[Dispatch (MoP Classic)]] now deals 15% more damage.\n**[[Envenom]] now deals 20% more damage.\n*Combat\n**[[Vitality]] now increases attack power by 30% (was 25%).\n**[[Blade Flurry]] has been changed. It now strikes up to 4 additional nearby targets for 40% of normal damage.\n*Subtlety\n**[[Sanguinary Vein]] now increases the damage the target takes by 20% (was 16%).\n\n===Shaman===\n*[[Chain Lightning]] will now deal the same damage to subsequent targets as it does to the first.\n*[[Lava Beam]]'s damage now increases with jumps. Each jump increases the damage by 10%.\n*[[Elemental Mastery]] now has a 90-second cooldown (was 2 minutes).\n*[[Shamanistic Rage]] is now available to Elemental Shaman as well as Enhancement Shaman.\n*[[Conductivity (shaman talent)]] no longer requires that the target be within the area of effect of [[Healing Rain]].\n*[[Healing Rain]] had its mana cost reduced by 15%.\n*[[Ancestral Swiftness (shaman talent)]] now increases spell haste by 5% and melee haste by 10%, instead of 5% each.\n*[[Glyph of Purge]] now adds a 6-second cooldown to [[Purge]].\n*[[Stone Bulwark Totem]] now absorbs 25% more damage.\n*[[Primal Earth Elemental]] and [[Primal Fire Elemental]] now deal 20% more damage.\n*[[Elemental Blast]] now has a chance to increase the caster's Agility for Enhancement Shaman.\n*[[Glyph of Flame Shock]] has been redesigned. This glyph now causes the Shaman to heal for 30% of the damage dealt by [[Flame Shock]].\n*[[Unleashed Fury (shaman talent)]] Flametongue now increases [[Lightning Bolt]] damage by 20% (was 30%), and [[Lava Burst]] damage by 10%.\n*[[Flame Shock]]'s duration has been increased by 25%.\n*[[Lava Burst]] base damage has been reduced by 33% but now always deals a critical strike. When cast on targets affected by Flame Shock, it now deals 50% more damage.\n*[[Totemic Restoration]] no longer allows the Shaman to instantly destroy a totem to obtain a full 50% refund on cooldown. Any totems that have been destroyed or replaced behave as if the totem had been active for at least 1 second.\n*When summoned, the [[Stone Bulwark Totem]] has health equal to 10% of the casting Shaman's health.\n*The talent [[Nature's Guardian]] now preserves the player's health percentage when its maximum health boosting effect expires.\n*[[Ancestral Guidance]] now copies 60% (was 40%) of the amount healed.\n*[[Conductivity (shaman talent)]] now shares 30% (was 20%) of the healing received from Healing Wave, Greater Healing Wave, or Healing Surge.\n*Elemental\n**[[Elemental Focus]] now increases the Shaman's spell damage by 15% (was 10%).\n**[[Shamanism (Wrath Classic)]] now increases the damage of Lightning Bolt by 70% (was 50%).\n*Enhancement\n**[[Mental Quickness]] now lowers the cost of shocks by 90% (still lowers the cost of other \"beneficial, instant, damaging and totem spells\" by 75%).\n**[[Spirit Walk (shaman ability)]] now has a 1-minute cooldown (was 2 minutes).\n\n===Warlock===\n*[[Fel Armor (BC Classic)]] now reduces damage taken by 10%, instead of increasing the Warlock's armor.\n*[[Blood Fear]] has been replaced by [[Blood Horror]]. Blood Horror costs 5% health, has 1 charge, and lasts 60 seconds with a 30-second cooldown. While Blood Horror is active, melee attacks that strike the Warlock will cause the attacker to be horrified for 4 seconds.\n*[[Burning Rush]] now also prevents movement-impairing effects from reducing the Warlock's movement speed below 100% of normal, in addition to its other effects.\n*The Imp ability [[Blood Pact]] has been removed.\n*[[Dark Intent]] now increases Stamina in addition to Spell Power.\n*[[Immolate]] now deals 15% more damage.\n*[[Shadow Bolt]] now deals 15% more damage.\n*[[Soul Leech]] now provides an absorption shield instead of healing.\n*[[Dark Pact|Sacrificial Pact]] now requires the pet to sacrifice 25% of its health to activate (was 50%).\n*[[Kil'jaeden's Cunning]] is now a passive talent, and its activated ability has been removed.\n*The passive damage from [[Archimonde's Vengeance]] no longer has a visual effect.\n*[[Grimoire of Sacrifice]] now increases the damage of abilities by 15% (was 25%) for Destruction Warlocks and 25% (was 50%) for Affliction Warlocks. In addition, it now provides the spell [[Whiplash]] instead of [[Seduction]] when a Succubus is sacrificed.\n*[[Glyph of Burning Embers]] has been removed and its effects are now baseline for Destruction Warlocks.\n*[[Glyph of Soul Shards]] has been removed and its effects are now baseline for Affliction Warlocks.\n*New Glyph: [[Glyph of Ember Tap]]. This glyph increases the healing gained from Ember Tap by 33%, but the health is restored over 10 seconds.\n*New Glyph: [[Glyph of Drain Life]]. This glyph increases the healing gained from Drain Life by 30%.\n*[[Glyph of Unstable Affliction]] has been redesigned. This glyph now reduces the cast time of Unstable Affliction by 25%.\n*Affliction\n**[[Haunt (warlock talent)]] now causes the target to receive an additional 30% damage (was 25%) from Warlock's spells.\n**[[Unstable Affliction]]'s Backlash effect is now always a critical hit and deals approximately 15% more damage.\n*Demonology\n**[[Chaos Wave]] now has a new visual.\n**[[Hand of Gul'dan]] now deals 15% more damage.\n**[[Hand of Gul'dan|Shadowflame]] now deals 15% more damage.\n**[[Soul Fire]] now deals 22% more damage.\n**[[Touch of Chaos]] now deals 15% more damage.\n**Wild Imp's Firebolt now deals 15% more damage.\n*Destruction\n**[[Conflagrate]] now deals 15% more damage.\n**[[Fire and Brimstone]] now has a radius of 10 yards (was 15 yards).\n**[[Incinerate]] now deals 10% more damage.\n\n===Warrior===\n*The benefit of [[Haste]] from items and consumables has been increased by 50% for all Warriors.\n*[[Bladestorm]] now provides immunity to Disarm while active.\n*[[Defensive Stance]] now reduces damage by 15% (was 25%).\n*[[Execute]] now deals 15% less damage.\n*[[Shockwave]] now has a 40-second cooldown (was 20 seconds), and striking 3 or more targets will reduce its cooldown by 20 seconds.\n*[[Second Wind]] now generates 15 rage (was 20 rage) over 10 seconds.\n*[[Warbringer (Wrath Classic)]] now reduces the target's movement by 50% for 15 seconds (8 seconds in PvP), in addition to its other effects. The 3-second stun/knockdown is now in the diminishing returns category for stuns (same as [[Shockwave]] and [[Storm Bolt]]), and not the proc stun diminishing returns category.\n*[[Shield Barrier]] now scales approximately 10% less efficiently with attack power.\n*[[Storm Bolt]] now deals 125% weapon damage (was 100%).\n*[[Enraged Regeneration]] now costs 30 Rage (was 60 Rage).\n*[[Deadly Calm]] has been removed from the game.\n*[[Glyph of Incite]] no longer activates from [[Deadly Calm]], and now activates from [[Demoralizing Shout]] instead.\n*[[Glyph of Overpower]] is now [[Glyph of Die by the Sword]]. It increases the duration of [[Die by the Sword]] whenever [[Overpower]] or [[Wild Strike]] are used.\n*[[Glyph of Death From Above]] no longer increases the damage dealt by [[Heroic Leap]].\n*[[Impending Victory]] will now heal the Warrior for 15% of maximum health when they have not slain an enemy (was 10%).\n*Arms\n**[[Taste for Blood (warrior talent)]] has been redesigned. It now causes the Warrior to gain 2 stacks of [[Overpower]] (maximum of 5 stacks) when [[Mortal Strike]] deals damage, 1 stack when the target dodges, and no longer interacts with [[Heroic Strike]]. It now requires level 20 (used to require level 50).\n**[[Slam]] now deals 220% weapon damage (was 190%) and now costs 20 rage (was 30 rage).\n**[[Deep Wounds]] damage has been increased by 100% for Arms Warriors.\n**[[Whirlwind]] now costs 20 rage (was 30) for Arms Warriors. The cost is unchanged for Fury Warriors.\n**[[Overpower]] now costs 10 rage and reduces Mortal Strike's remaining cooldown by 0.5 seconds.\n**[[Sudden Death]] now has a 10% (was 20%) chance to activate from auto attacks or [[Strikes of Opportunity]]. In addition, using [[Execute]] makes Overpower free for 10 seconds.\n*Fury\n**[[Bloodsurge (Wrath Classic)]] now reduces the Rage cost of [[Wild Strike]] by 30 (was 20), and its duration has been increased to 15 seconds (was 10 seconds).\n*Protection\n**The base damage of [[Shield Slam]] and [[Revenge]] has been increased by 150%, but these abilities now scale approximately 10% less efficiently with attack power.\n**[[Unwavering Sentinel]] now improves the damage reduction of [[Defensive Stance]] by 10% for Protection Warriors.\n\n==Quests==\n*[[Warlock]]s can now undertake a solo adventure that culminates with the ability to change the color of their Fire spells to appear Fel green. The quest begins for those Warlocks determined or fortunate enough to have laid their hands on the fabled [[The Codex of Xerrath|Codex of Xerrath]].\n*Upon reaching level 20 and level 60, characters will automatically receive a new quest directing them to visit the racial riding trainer and mount vendors.\n\n==Creatures==\n*[[Zandalar tribe|Zandalari]] forces have begun scouting the shores of Pandaria, searching for the perfect invasion point. The Zandalari can be found in [[Krasarang Wilds]], [[Dread Wastes]], [[Townlong Steppes]], [[Jade Forest]], and [[Kun-Lai Summit]]. [[Zandalari Warscout|Zandalari Scouts]] can be handled by 1 or 2 players, while elite [[Zandalari Warbringer]]s will likely require a full party of 5 heroes. Defeat Warbringers to gain special drops, including crafting materials, reputation gains, an achievement, and even the chance to get one of three new rare mounts!\n*[[Galleon]] now respawns much more frequently, but players can only receive loot from him once per week.\n*Fite spectral [[porcupine]] fite! Three new spectral porcupine spirit beasts have appeared across Pandaria as tamable beasts, though taming them may provide quite a challenge.\n*[[Direhorn]]s have been added as a tamable species for Hunters that have learned the required skill. Aspiring Direhorn owners should seek out clues regarding these auspicious beasts.\n\n==Pet Battles==\n*Many new Battle Pets and Battle Pet abilities have been added.\n*Players may now participate in pet battle duels while in the [[Throne of Thunder]] instance.\n*Master Trainers in Northrend, Cataclysm, and [[Courageous Yon]] will no longer field pets with higher than intended stats.\n*[[Brilliant Kaliri]], [[Jade Tentacle]], [[Tirisfal Batling]], [[Firefly]], [[Jade Crane Chick]], [[Gilnean Raven]], and [[Shore Crawler]] are no longer available in multiple breeds.\n*[[Reflection (pet battle ability)]] has been replaced with [[Deflection]], an ability that always attempts to go first and causes the pet to avoid all attacks for that round.\n*[[Anubisath Idol]]: [[Sandstorm]] and Deflection have swapped ability positions.\n*[[Thunderbolt]] has been redesigned. It is now a powerful team-damage spell.\n*[[Mr. Bigglesworth]]'s [[Prowl (pet battle ability)]] has been replaced with a new ability, [[Ice Barrier (pet battle ability)]], which blocks two attacks.\n*[[Fluxfire Feline]]'s [[Wind-Up]] has been replaced with a new ability, [[Flux (pet battle ability)]], which deals damage to the enemy team.\n*The [[Tuskarr Kite]] has a new set of abilities that's more appropriate for a Tuskarr Kite.\n*Pets that had been affected by a crowd-control ability will now be granted Resilience, making them immune to crowd control for a short while.\n*[[Volcano]]'s damage has been reduced by 15%.\n*[[Ice Tomb]], [[Elementium Bolt]], and [[Stun Seed]]'s damage has been reduced by 25%.\n*[[Geyser]]'s damage has been reduced by 12.5%.\n*[[Conflagrate (pet battle ability)]]'s base damage has been increased by 20% and its bonus damage has been reduced by 60%.\n*[[Siphon Life (pet battle ability)]] now heals for a flat amount instead of a percentage of the damage that had been dealt.\n*[[Arcane Explosion (pet battle ability)]]'s damage to back-line pets has been increased by 20%.\n*[[Supercharge]] now provides a 125% damage bonus, down from 150%, and lasts for 1 round.\n*[[Frost Shock (pet battle ability)]] now properly chills targets for 2 rounds (was 4 rounds).\n*[[Deep Freeze (pet battle ability)]] now has a cooldown of 4 rounds (was 3 rounds).\n*[[Ghostly Bite]]'s damage has been reduced by 20%.\n*[[Ghostly Skull]]: Ghostly Bite and Siphon Life have swapped ability positions.\n*[[Call Darkness]] now lasts for 5 rounds (was 9 rounds).\n*Blocking abilities that last for 2 turns like [[Decoy]], now have a cooldown of 8 rounds.\n*[[Feign Death (pet battle ability)]] now has a cooldown of 8 rounds (was 5 rounds).\n*[[Prowl (pet battle ability)]] now lasts for 2 rounds (was 1 round).\n*[[Crystal Overload]] now lasts for 2 rounds (was 1 round).\n*[[Focus Chi]] now lasts for 1 round.\n*[[Sprite Darter Hatchling]] and [[Nether Faerie Dragon]]: [[Evanescence]] and [[Arcane Blast (pet battle ability)]] have swapped ability positions.\n*[[Nether Roach]] is now a ''real'' roach and can now survive the [[Apocalypse  (pet battle ability)|apocalypse]].\n*[[Battle Pet Bandage]]s now stack to 25 and are [[Bind to Account]].\n*[[Battle-Stone]]s now have a chance to be awarded from PvP Pet Battles.\n*Pets whose color schemes change each time they are summoned have returned. Older pets with this behavior now have it back, as well as some newcomers.\n*Level-capped players will now have a chance to earn [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]] after winning a pet battle versus a pet within 5 levels of the highest level pet on their team. Higher-level pets will offer a better chance to earn a charm.\n*Winning a pet battle versus a team within 5 levels of the player's highest-level pet will now award player experience.\n*Fleeing a pet battle will no longer despawn the pet that was being battled, but doing so will now inflict some damage on the fleeing pet battle team.\n*Disconnecting from a pet battle will once again respawn the pets you were fighting.\n*Elite Battle Pets have been added to the game world. These rare pets will spawn alone against an entire team. The Beasts of Fable taming quest will now become available from [[Gentle San]] or [[Sara Finkleswitch]] once [[Aki the Chosen]] has been defeated.\n\n==Raids, Dungeons and Scenarios==\n*Throne of Thunder raid bosses in Normal and Heroic difficulties have a chance of dropping items with the [[Thunderforged]] designation. Thunderforged items are 6 [[item level]]s higher than their Normal or Heroic counterparts and will drop more frequently in 25-player raids. For a more in-depth look at this change, check out [http://us.battle.net/wow/en/forum/topic/7709282055 this discussion thread].\n*To encourage [[Raid Finder]] groups to persevere, each time an Raid Finder group wipes on a boss fight all players in the group receives a stacking buff that increases health, damage dealt, and healing done by 5% (up to a maximum of 10 stacks). This buff is cleared once the boss has been killed.\n*Satchels obtained via the [[Raid Finder]] now have a chance to contain additional rewards, including: consumables, Spirits of Harmony, rare pets or mounts, and Raid Finder versions of Normal and Heroic difficulty zone drops that were previously unavailable from Raid Finder encounters!\n*You can now earn bonus reputation for your first dungeon and scenario of the day. You can select which reputation you choose to champion by selecting it from the reputation panel on the character screen. When you queue for a dungeon or scenario, the UI will remind you which reputation you are championing and allow you to change the reputation from there. (You cannot change that reputation once you are in the dungeon or scenario.)\n*On Normal and Heroic mode, zone-wide auras have been activated in [[Mogu'shan Vaults]], [[Heart of Fear]], and [[Terrace of Endless Spring]], reducing the health and damage of all enemies therein by 10%. A NPC near the entrance within each zone explains this, and offers to deactivate the buff for the benefit of brave/foolhardy adventurers.\n*All players who have defeated [[Will of the Emperor]], [[Grand Empress Shek'zeer]], and/or [[Sha of Fear]] prior to the release of Patch 5.2 will receive a Feat of Strength, \"Ahead of the Curve,\" to mark their accomplishments.\n*[[Elder Lin|Elders Lin]] and [[Elder Liao|Liao]] in the [[Vale of Eternal Blossoms]] now offer [[Mogu Rune of Fate|Mogu Runes of Fate]] in exchange for [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]]. Mogu Runes of Fate allow for a bonus loot roll for [[Throne of Thunder]] raid bosses, [[Nalak]] the Storm Lord, and [[Oondasta]].\n*The maximum number of [[Elder Charm of Good Fortune|Elder Charms of Good Fortune]] a character can hold has been increased to 20 (was 10).\n*The chance of getting personal loot in [[Raid Finder]] and the chance of a successful [[bonus roll]] in Raid Finder have been greatly increased for the following raids, [[Mogu'shan Vaults]], [[Heart of Fear]], and [[Terrace of Endless Spring]].\n*[[Lorewalker Cho]] has two new tales to tell: [[Dagger in the Dark]] and [[A Little Patience]]. Though his mystical story-weaving magic (and well, the [[Dungeon Finder]]), both Alliance and Horde characters are now able run these previously faction-specific Scenarios.\n*Level 90 players that use [[Dungeon Finder]] to look for a random Dungeon or Scenario will receive additional bonus [[Valor Points]] upon completing specific Dungeons or Scenarios.\n**Dungeons\t\t\n***[[Siege of Niuzao Temple]]: 5 bonus Valor Points\n***[[Scholomance]]: 10 bonus Valor Points\n***[[Shado-Pan Monastery]]: 15 bonus Valor Points\n**Scenarios\n***[[Brewmoon Festival]], [[Greenstone Village (scenario)|Greenstone Village]], [[A Little Patience]], and [[Theramore's Fall]]: 5 bonus Valor Points.\n*Heroic Pandaria dungeons now award 100 [[Justice Points]] per boss. Gold drops for those bosses have also been changed from a static 50 gold to a 40-60 gold range. Less gold will drop in groups consisting of fewer than 5 players.\n*[[Scenarios]] now award 50 Justice Points (was 25).\n*[[Sunwell Plateau]]\n**The [[Kalecgos (tactics)|Kalecgos]] encounter in The Sunwell can now be completed by a single player.\n\n==PvP==\n*[[Season 13]] has begun! With the start of the new season, [[Tyrannical]] and Tyrannical Elite gear are now available for purchase.\n*[[Tyrannical Primal Diamond]] is now available for purchase with [[Conquest Points]]. This new PvP-oriented metagem offers [[PvP Power]] and [[PvP Resilience|Resilience]].\n*Characters who have earned over 27,000 Conquest points during Season 13 will gain access to new vendors that sell Conquest PvP gear for Honor. These vendors can be found near existing Pandaria PvP vendors.\n*''Mists of Pandaria'' [[Season 12]] Malevolent Gladiator's PvP gear can now be purchased with [[Honor Points]] instead of [[Conquest Points]], including weapons.\n*All newly purchased Season 12 Malevolent Gladiator's armor, off-hands and shields will have an [[item level]] of 476 (was 483). Existing Malevolent items are unaffected.\n*[[Druid abilities#Specializations|Balance]], [[Druid abilities#Specializations|Feral]], [[Monk abilities#Specializations|Windwalker]], [[Paladin abilities#Specializations|Retribution]], [[Priest abilities#Specializations|Shadow]], [[Shaman abilities#Specializations|Enhancement]] and [[Shaman abilities#Specializations|Elemental]] now gain 25% of the bonus healing provided by [[PvP Power]] (was 0). Dedicated healers will continue to gain 50% of the bonus healing, and no bonus damage, from PvP Power.\n*[[PvP trinket]]s that clear loss-of-control effects will now also clear these effects from the player's pet as well.\n*For casters and healers, PvP Power is now split evenly between main-hand and off-hand in a manner similar to a dual-wield melee class. This change is retroactive, affecting Season 12 Malevolent and Malevolent Elite items. There should be no net change for any character already using a main-hand/off-hand combination.\n*Season 13 caster weapons cost 2250 Conquest Points (was 2500 in Season 12) and shields/off-hands cost 1250 (was 1000), to reflect the increased value of the off-hand slot for classes that use it in this manner. This change is not retroactive and applies only to Season 13 items.\n*Characters that have attained requisite title levels ([[Centurion (achievement)]], [[Knight-Captain (achievement)]], [[Grand Marshal (achievement)]], [[High Warlord (achievement)]], etc.) through the [[Rated battlegrounds|Rated Battleground]] system will be able to purchase old PVP items requiring those titles.\n\n===Battlegrounds===\n*Players in low-level [[Battlegrounds]] will have their effective level raised to the maximum level allowed in that Battleground bracket. Players' base stats and spells are scaled accordingly, and are treated as the same level when determining hits, misses, and critical effect chance.\n*Rated Battlegrounds now award Conquest to the losing team based on their final score. The losing team can earn up to 200 Conquest Points from a very close match.\n*Players can obtain a new title \"[[Khan (achievement)|Khan]]\", by completing the following Battleground achievements: [[Master of the Battle for Gilneas]], [[Master of Twin Peaks]], [[Master of Temple of Kotmogu]], [[Master of Isle of Conquest]], and [[Master of Silvershard Mines]].\n\n==Professions==\n*[[Archaeology]]\n**[[Archaeology rewards#Mantid artifacts|Mantid Archaeology]] has been added. Players will be able to uncover common and rare Mantid artifacts.\n**Players can purchase a [[Mantid Artifact Sonic Locator]] to focus exclusively on Mantid digsites.\n**The [[Lorewalker's Map]] now randomizes all digsites in [[Pandaria]], rather than just 1.\n**Updates have been made to the \"museum\" at the [[Seat of Knowledge]].\n*[[Blacksmithing]]\n**New raid and PvP blacksmithing plans have been added, and can be acquired through daily research of [[Lightning Steel Ingot]]s.\n**Seasoned Blacksmiths will be able to [[Lightning Steel|find a way]] to create Lightning Steel Ingots once their realm has unlocked the [[Thunder Forges]] on the [[Isle of Thunder]]. These ingots will allow blacksmiths to recreate powerful weapons from the past, updated for ''[[World of Warcraft: Mists of Pandaria|Mists of Pandaria]]''. These power weapons will be [[Bind on Equip|bind-on-equip]] and making them will take a significant amount of dedication.\n**For blacksmiths who have lapsed in their trade (i.e., haven't practiced blacksmithing since the ''[[World of Warcraft: The Burning Crusade|Burning Crusade]]''), there is a (not necessarily cost efficient) way to catch-up. Blacksmiths at your faction's shrines in the [[Vale of Eternal Blossoms]] will be able to teach you training plans for crafting common household items using [[Ghost Iron]].\n*[[Fishing]]\n**The chance to fish up [[Flying Tiger Gourami]], [[Spinefish Alpha]] and [[Mimic Octopus]] has been increased.\n**Reputation gains from bringing rare Pandarian fish for [[Nat Pagle]] to examine has been increased.\n**Players with a high fishing skill have a chance to fish up new pets. The Pet Journal has clues on where these elusive pets could be found.\n**Fish of the Day: On any given day, there is a location in Pandaria teeming with a type of Pandaren fishing pool.\n**[[Ben of the Booming Voice]], located near the [[Halfhill Market]] area will inform players what the \"Fish of the Day\" is and mark the location on their map.\n*[[Jewelcrafting]]\n**Jewelcrafters may find the designs for [[Serpent's Heart]] and uncut [[Primal Diamond]]s during the course of their adventures (world drops).\n**Serpent's Heart is a daily cooldown that consumes several [[Serpent's Eye]]s to create a random rare quality Pandaren gem. In addition, there is a small chance that a player will discover the design for the [[Sapphire Cub]] or [[Jade Owl]].\n**The design for uncut [[Primal Diamond]]s requires [[Spirit of Harmony|Spirits of Harmony]] and large quantities of uncommon gems.\n*[[Leatherworking]]\n**New raid and PvP patterns have been added. Leatherworkers can acquire these new patterns via the daily [[Magnificence of Leather]] or [[Magnificence of Scales]] cooldown.\n**Patterns for Magnificence of Leather and Magnificence of Scales could be found via world drops. These patterns allow the leatherworker to create [[Magnificent Hide]]s more economically and share a daily cooldown.\n**A new 36 slot leather bag ([[Magnificent Hide Pack]]) can now be created through Leatherworking.\n*[[Tailoring]]\n**New raid and PvP patterns have been added, and tailors can acquire these new patterns via the daily [[Imperial Silk]] cooldown.\n\n==Items==\n*General\n**[[Transmogrification]] rules have been broadened for several weapon types.\n***Two-handed axes, maces, and swords can be Transmogrified to each other.\n***One-handed axes, maces, and swords can be Transmogrified to each other.\n***Staves and polearms can be transmogrified to each other.\n**The [[ethereal]]s that offered to [[item upgrade|upgrade items]] using Valor or Justice Points have departed Azeroth for the moment. They may yet return in a future patch.\n**The cost of Valor Point gear introduced in patch 5.0 has been reduced by 50%.\n**The cost of Valor Point gear introduced in patch 5.1 has been reduced by 25%.\n**[[Skyshard]]s are now [[Bind on Account]].\n**Adventurers can now upgrade old [[heirloom]]s by turning in the item and paying [[Justice Points]] or [[Darkmoon Prize Ticket]]s, converting them into versions that provide benefits up to level 85. Note, the upgrade process will remove all enhancements on the heirloom.\n*Item Enhancements\n**[[Enchant Weapon - Dancing Steel|Dancing Steel]] now has a 15% increased chance to activate.\n\n==Sunsong Ranch==\n*Seed bags have been added that allow planting of crops 4 plots at a time.\n*Yoon's Mailbox has been renamed to Sunsong Ranch Mailbox.\n*The yield from special crops has been improved to make farming them competitive with gathering these items out in the world.\n*Running the [[Master Plow]] across underground Virmen will cause them to pop out of the ground at 30% health and stunned.\n*Wild Crops will now occur less often.\n\n==UI==\n*The Reputation panel on the character screen will now let players know which reputations they have purchased and used [[Grand Commendation]]s for.\n*There is now an option to show absorb effects (such as [[Power Word: Shield]]) on player, target, party and raid frames. This feature is currently enabled if you turn on the predictive healing option. Unlike predictive healing, absorb effects will display for enemy targets.\n\n==Bug Fixes==\n*Classes\n**Druid\n***It is no longer possible for a weaker application of [[Living Seed]] to overwrite a stronger one.\n**Paladin\n***It is no longer possible to refresh [[Inquisition (Cataclysm Classic)]] to a lower duration.\n**Mage\n***The cooldown of [[Cauterize]] will now properly reset upon entering an Arena.\n**Warlock\n***[[Grimoire of Service]] now describes its special abilities on the tooltip.\n***[[Demonic Circle: Teleport]] now correctly shares the same cooldown when in [[Metamorphosis (warlock ability)]].\n*Pet Battles\n**[[Taming the World]] now lists its reward correctly in the Achievements pane.\n*Items\n**[[Teebu's Blazing Longsword]] once again appropriately illuminates its surroundings.\n**Effects for the following trinkets should no longer activate while outside of combat: [[Spirits of the Sun]], [[Qin-xi's Polarizing Seal]], and [[Relic of Chi-Ji]].\n*Mac\n**Fixed an issue that would cause command-left-click to occur as right-click while using trackpad functionality.\n**The Logitech LCD applet for G19/G15 keyboards will now launch with the 64-bit client.\n\n==Client patches==\n{|class=darktable\n!Build !! Date !! Notes\n|-\n| 16826 || 2013-04-09 || Durumu maze effects tweaks\n|-\n| 16769 || 2013-03-25 || Fixing login for 32-bit client\n|-\n| 16760 || 2013-03-25 || Unspecified bug fixes\n|-\n| 16733 || 2013-03-20 || Unspecified bug fixes\n|-\n| 16716 || 2013-03-19 || Unspecified bug fixes\n|-\n| 16709 || 2013-03-15 || Unspecified bug fixes\n|-\n| 16701 || 2013-03-14 || Fixed premature closing of dialog boxes\n|-\n| 16685 || 2013-03-12 || Fixed an exploit with mining/herbalism resource nodes\n|-\n| 16683 || 2013-03-11 || Fixed a compatibility issue with ''Starcraft 2: Heart of the Swarm''\n|-\n| 16669 || 2013-03-08 || Fixed a Battle.net exploit\n|-\n| 16650 || 2013-03-05 || Initial release\n|}\n\n==References==\n{{reflist}}\n\n{{Patches}}\n\n[[Category:World of Warcraft patches|5.2.0]]\n[[Category:Named patches|The Thunder King]]"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/parser-green.txt b/data/patch-api/evidence/5.2.0-session-2026-10-08/parser-green.txt
+new file mode 100644
+index 000000000..bbf64a994
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/parser-green.txt
+@@ -0,0 +1,5 @@
++..
++----------------------------------------------------------------------
++Ran 2 tests in 0.001s
++
++OK
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/parser-red.txt b/data/patch-api/evidence/5.2.0-session-2026-10-08/parser-red.txt
+new file mode 100644
+index 000000000..4d35e61e5
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/parser-red.txt
+@@ -0,0 +1,23 @@
++EE
++======================================================================
++ERROR: test_bare_handler_owner_and_direction (__main__.Mists520RegisterTest.test_bare_handler_owner_and_direction)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/home/osso/.worktrees/wow-ui-sim-p520-page/tools/test_patch_mists_520_register.py", line 26, in test_bare_handler_owner_and_direction
++    rows, counts = GEN.parse_mists_bare_widget_handlers(raw)
++                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++AttributeError: module 'generator' has no attribute 'parse_mists_bare_widget_handlers'. Did you mean: 'parse_mists_widget_handlers'?
++
++======================================================================
++ERROR: test_pinned_transclusion_counts (__main__.Mists520RegisterTest.test_pinned_transclusion_counts)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/home/osso/.worktrees/wow-ui-sim-p520-page/tools/test_patch_mists_520_register.py", line 36, in test_pinned_transclusion_counts
++    handlers, handler_counts = GEN.parse_mists_bare_widget_handlers(raw)
++                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++AttributeError: module 'generator' has no attribute 'parse_mists_bare_widget_handlers'. Did you mean: 'parse_mists_widget_handlers'?
++
++----------------------------------------------------------------------
++Ran 2 tests in 0.001s
++
++FAILED (errors=2)
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/run_proof.py b/data/patch-api/evidence/5.2.0-session-2026-10-08/run_proof.py
+new file mode 100644
+index 000000000..a6c83fcab
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/run_proof.py
+@@ -0,0 +1,47 @@
++"""Retain a streamed command log and receipt; --start launches without waiting."""
++import hashlib
++import json
++import os
++from pathlib import Path
++import subprocess
++import sys
++import time
++
++ROOT = Path(__file__).resolve().parents[4]
++EVIDENCE = Path(__file__).resolve().parent
++TARGET = '/home/osso/.cache/wow-ui-sim-targets/p520-page'
++
++
++def run_proof(name, command):
++    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
++    started = time.monotonic()
++    log = EVIDENCE / f'{name}.txt'
++    environment = {key: value for key, value in os.environ.items()
++                   if key.startswith(('P520_', 'PATCH_', 'WOW_SIM_', 'PREFORK_'))
++                   or key.endswith('_SWEEP_OUT')}
++    with log.open('w') as output:
++        result = subprocess.run(command, cwd=ROOT,
++                                env=dict(os.environ, CARGO_TARGET_DIR=TARGET,
++                                         PYTHONDONTWRITEBYTECODE='1'),
++                                stdout=output, stderr=subprocess.STDOUT)
++    receipt = {'command': command, 'revision': revision, 'scope': name,
++               'cwd': '.', 'target': 'dedicated p520-page target (external to repository)',
++               'environment': environment, 'exit': result.returncode,
++               'log': log.name, 'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest(),
++               'seconds': time.monotonic() - started, 'invalidated': False}
++    (EVIDENCE / f'{name}.proof.json').write_text(json.dumps(receipt, indent=2) + '\n')
++    print(name, result.returncode)
++    return result.returncode
++
++
++if __name__ == '__main__':
++    arguments = sys.argv[1:]
++    if arguments[0] == '--start':
++        name, *command = arguments[1:]
++        with (EVIDENCE / f'{name}.launcher.txt').open('w') as output:
++            process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), name, *command],
++                                       cwd=ROOT, stdout=output, stderr=subprocess.STDOUT,
++                                       start_new_session=True)
++        print(json.dumps({'name': name, 'pid': process.pid, 'log': f'{name}.txt'}))
++    else:
++        sys.exit(run_proof(arguments[0], arguments[1:]))
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/source.wikitext b/data/patch-api/evidence/5.2.0-session-2026-10-08/source.wikitext
+new file mode 100644
+index 000000000..1f6b9bceb
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/source.wikitext
+@@ -0,0 +1,28 @@
++{{apichanges|5.2.0|prev=5.1.0|next=5.3.0}}
++
++==New features==
++* Display both text/percent on status bars option
++* Monk [[Stagger]] bar displays the amount of staggered damage the monk will take in the next 10 seconds.
++* Absorption effects are now displayed over the default UI's health bars; it is possible for addons to retrieve the total amount of absorption stacked on a unit.
++* [[SecureActionButtonTemplate]] has a new "togglemenu" action type, which (securely) opens a unit popup menu for the unit specified by the action button.
++* Items in void storage can now be used to transmogrify items in your inventory. (API calls implemented, but no UI added: {{api|PrepVoidStorageForTransmogrify}}() and {{api|UseVoidItemForTransmogrify}}())
++
++== Global API changes ==
++* Raid difficulty functions <code>SetRaidDifficulty</code> and <code>GetRaidDifficulty</code> were renamed to {{api|SetRaidDifficultyID}} and {{api|GetRaidDifficultyID}} respectively.
++* New {{api|GetDifficultyInfo}} API exposes basic information about difficulty IDs.
++* Battle pet cooldowns are now exposed through {{api|C_PetJournal.GetPetCooldownByGUID}}.
++* {{api|GetSchoolString}} replaces the global <code>SchoolStringTable</code>.
++* Almost all (if not all) C_PetJournal functions have had their "isWild" argument removed.
++* Passing a nil PetID to a C_PetJournal function will now cause a Lua error. Previously, the function would just return nil.
++* {{api|GetCurrencyInfo}} now returns a full texture path.
++* {{api|GetTradeSkillReagentItemLink}} is broken and always returns nil.
++* {{api|IsConsumableItem}} appears to always return nil.
++
++== FrameXML changes ==
++* Global <code>MAX_BLACKLIST_BATTLEGROUNDS</code> has moved from [[FrameXML]] into the addon Blizzard_PVPUI. Addons relying on <code>MAX_BLACKLIST_BATTLEGROUNDS</code> will have to find a workaround (it's a constant value, 2 right now, so you can use that) or watch "ADDON_LOADED" for the PVPUI.
++* The global values in the form <code>"MAP_BAR_"..tag..stringType..phase</code> are now more easily accessed through {{api|MapBarFrame_GetString}}(stringType, tag, phase).
++
++==Automated diff==
++Click on the headers to expand the tables below.
++
++{{:Patch 5.2.0/API changes/diff}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/wiki-baseline.json b/data/patch-api/evidence/5.2.0-session-2026-10-08/wiki-baseline.json
+new file mode 100644
+index 000000000..0073f9a07
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/wiki-baseline.json
+@@ -0,0 +1,4 @@
++{
++  "docs/wiki/index.md": 2739,
++  "docs/wiki/log.md": 491
++}
+diff --git a/data/patch-api/sources/5.2.0-api-changes-diff.wikitext b/data/patch-api/sources/5.2.0-api-changes-diff.wikitext
+new file mode 100644
+index 000000000..9d3158b63
+--- /dev/null
++++ b/data/patch-api/sources/5.2.0-api-changes-diff.wikitext
+@@ -0,0 +1,224 @@
++<noinclude>{{Transclude}}</noinclude>
++=== Global API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Global API (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-global-c" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 36 new functions
++! style="width: 50%; padding-right: 1em"| 30 removed functions
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-c"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|C_MapBar.BarIsShown}}
++: {{api|C_MapBar.GetCurrentValue}}
++: {{api|C_MapBar.GetMaxValue}}
++: {{api|C_MapBar.GetParticipationPercentage}}
++: {{api|C_MapBar.GetPhaseIndex}}
++: {{api|C_MapBar.GetTag}}
++: {{api|C_PetBattles.GetForfeitPenalty}}
++: {{api|C_PetJournal.GetPetCooldownByGUID}}
++: {{api|DeclineChannelInvite}}
++: {{api|DevTest1}}
++: {{api|GetArenaTeamIndexBySize}}
++: {{api|GetBlacklistMapName}}
++: {{api|GetDifficultyInfo}}
++: {{api|GetHolidayBGInfo}}
++: {{api|GetLFGBonusFactionID}}
++: {{api|GetQuestChoiceInfo}}
++: {{api|GetQuestChoiceOptionInfo}}
++: {{api|GetQuestChoiceRewardCurrency}}
++: {{api|GetQuestChoiceRewardFaction}}
++: {{api|GetQuestChoiceRewardInfo}}
++: {{api|GetQuestChoiceRewardItem}}
++: {{api|GetRaidDifficultyID}}
++: {{api|GetRandomBGInfo}}
++: {{api|GetSchoolString}}
++: {{api|GetSpellLossOfControlCooldown}}
++: {{api|IsAllowedToUserTeleport}}
++: {{api|IsTradeSkillReady}}
++: {{api|PrepVoidStorageForTransmogrify}}
++: {{api|RequestRandomBattlegroundInstanceInfo}}
++: {{api|SendQuestChoiceResponse}}
++: {{api|SetLFGBonusFactionID}}
++: {{api|SetRaidDifficultyID}}
++: {{api|UnitGetTotalAbsorbs}}
++: {{api|UnitStagger}}
++: {{api|UpdateWorldMapArrow}}
++: {{api|UseVoidItemForTransmogrify}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: ClearChannelWatch
++: CommentatorAddPlayer
++: CommentatorGetPartyInfo
++: CommentatorGetSkirmishMode
++: CommentatorGetSkirmishQueueCount
++: CommentatorGetSkirmishQueuePlayerInfo
++: CommentatorRemovePlayer
++: CommentatorRequestSkirmishMode
++: CommentatorRequestSkirmishQueueData
++: CommentatorSetPlayerIndex
++: CommentatorSetSkirmishMatchmakingMode
++: CommentatorStartInstance
++: CommentatorStartSkirmishMatch
++: CreateMiniWorldMapArrowFrame
++: CreateWorldMapArrowFrame
++: DeclineInvite
++: GetCurrentRaidDifficulty
++: GetInstanceDifficulty
++: GetMinigameState
++: GetMinigameType
++: GetRaidDifficulty
++: MakeMinigameMove
++: PlayDance
++: PositionMiniWorldMapArrowFrame
++: PositionWorldMapArrowFrame
++: SetChannelWatch
++: SetRaidDifficulty
++: ShowMiniWorldMapArrowFrame
++: ShowWorldMapArrowFrame
++: UpdateWorldMapArrowFrames
++</div>
++|}
++=== FrameXML ===
++{| class="wikitable" style="min-width: 600px"
++|+ FrameXML (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 3 new functions
++! style="width: 50%; padding-right: 1em"| 5 removed functions
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-fxml"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|ControlGetActiveCvarValue}}
++: {{api|GetApplicableMultisampleSetting}}
++: {{api|TogglePVPUI}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: BattlegroundShineFadeIn
++: BattlegroundShineFadeOut
++: IsAlreadyInQueue
++: IsPvPFrameSelected
++: TogglePVPFrame
++</div>
++|}
++=== Events ===
++{| class="wikitable" style="min-width: 600px"
++|+ Events (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-events" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 7 new events
++! style="width: 50%; padding-right: 1em"| 4 removed events
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-events"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=e|BATTLEPET_FORCE_NAME_DECLENSION}}
++: {{api|t=e|LFG_BONUS_FACTION_ID_UPDATED}}
++: {{api|t=e|LOADING_SCREEN_DISABLED}}
++: {{api|t=e|LOADING_SCREEN_ENABLED}}
++: {{api|t=e|MAP_BAR_UPDATE}}
++: {{api|t=e|QUEST_CHOICE_UPDATE}}
++: {{api|t=e|UNIT_ABSORB_AMOUNT_CHANGED}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: COMMENTATOR_SKIRMISH_MODE_REQUEST
++: COMMENTATOR_SKIRMISH_QUEUE_REQUEST
++: MINIGAME_UPDATE
++: START_MINIGAME
++</div>
++|}
++=== Widget API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget API (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-widgets" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 37 new methods
++! style="width: 50%; padding-right: 1em"| 37 removed methods
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widgets"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=w|Cooldown:GetCooldownDuration}}
++: {{api|t=w|Cooldown:SetBlingDuration}}
++: {{api|t=w|PlayerModel:AdvanceTime}}
++: {{api|t=w|PlayerModel:ClearFog}}
++: {{api|t=w|PlayerModel:ClearModel}}
++: {{api|t=w|PlayerModel:GetCameraDistance}}
++: {{api|t=w|PlayerModel:GetCameraFacing}}
++: {{api|t=w|PlayerModel:GetCameraPosition}}
++: {{api|t=w|PlayerModel:GetCameraTarget}}
++: {{api|t=w|PlayerModel:GetFacing}}
++: {{api|t=w|PlayerModel:GetFogColor}}
++: {{api|t=w|PlayerModel:GetFogFar}}
++: {{api|t=w|PlayerModel:GetFogNear}}
++: {{api|t=w|PlayerModel:GetLight}}
++: {{api|t=w|PlayerModel:GetModel}}
++: {{api|t=w|PlayerModel:GetModelScale}}
++: {{api|t=w|PlayerModel:GetPosition}}
++: {{api|t=w|PlayerModel:GetWorldScale}}
++: {{api|t=w|PlayerModel:HasCustomCamera}}
++: {{api|t=w|PlayerModel:ReplaceIconTexture}}
++: {{api|t=w|PlayerModel:SetCamera}}
++: {{api|t=w|PlayerModel:SetCameraDistance}}
++: {{api|t=w|PlayerModel:SetCameraFacing}}
++: {{api|t=w|PlayerModel:SetCameraPosition}}
++: {{api|t=w|PlayerModel:SetCameraTarget}}
++: {{api|t=w|PlayerModel:SetCustomCamera}}
++: {{api|t=w|PlayerModel:SetFacing}}
++: {{api|t=w|PlayerModel:SetFogColor}}
++: {{api|t=w|PlayerModel:SetFogFar}}
++: {{api|t=w|PlayerModel:SetFogNear}}
++: {{api|t=w|PlayerModel:SetGlow}}
++: {{api|t=w|PlayerModel:SetLight}}
++: {{api|t=w|PlayerModel:SetModel}}
++: {{api|t=w|PlayerModel:SetModelScale}}
++: {{api|t=w|PlayerModel:SetPosition}}
++: {{api|t=w|PlayerModel:SetSequence}}
++: {{api|t=w|PlayerModel:SetSequenceTime}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: Minimap:SetPlayerTextureHeight
++: Minimap:SetPlayerTextureWidth
++: Model:AdvanceTime
++: Model:ClearFog
++: Model:ClearModel
++: Model:GetCameraDistance
++: Model:GetCameraFacing
++: Model:GetCameraPosition
++: Model:GetCameraTarget
++: Model:GetFacing
++: Model:GetFogColor
++: Model:GetFogFar
++: Model:GetFogNear
++: Model:GetLight
++: Model:GetModel
++: Model:GetModelScale
++: Model:GetPosition
++: Model:GetWorldScale
++: Model:HasCustomCamera
++: Model:ReplaceIconTexture
++: Model:SetCamera
++: Model:SetCameraDistance
++: Model:SetCameraFacing
++: Model:SetCameraPosition
++: Model:SetCameraTarget
++: Model:SetCustomCamera
++: Model:SetFacing
++: Model:SetFogColor
++: Model:SetFogFar
++: Model:SetFogNear
++: Model:SetGlow
++: Model:SetLight
++: Model:SetModel
++: Model:SetModelScale
++: Model:SetPosition
++: Model:SetSequence
++: Model:SetSequenceTime
++</div>
++|}
++=== Widget Handlers ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget Handlers (5.1.0.16309 &rarr; 5.2.0.16650)
++|- class="mw-customtoggle-widget-handlers" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 2 new handlers
++! style="width: 50%; padding-right: 1em"| 2 removed handlers
++|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widget-handlers"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=wh|PlayerModel OnAnimFinished}}
++: {{api|t=wh|PlayerModel OnUpdateModel}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: Model OnAnimFinished
++: Model OnUpdateModel
++</div>
++|}
+\ No newline at end of file
+diff --git a/data/patch-api/sources/5.2.0-api-changes.provenance.json b/data/patch-api/sources/5.2.0-api-changes.provenance.json
+new file mode 100644
+index 000000000..7a1c76f51
+--- /dev/null
++++ b/data/patch-api/sources/5.2.0-api-changes.provenance.json
+@@ -0,0 +1,33 @@
++{
++  "pageid": 422312,
++  "title": "Patch 5.2.0/API changes",
++  "revid": 4057299,
++  "timestamp": "2018-11-26T23:09:55Z",
++  "sha256": "3feae2c6e4d1d07dfdf77e714f904f5b76226a7bd7b7cdabd0e92e7bb8566568",
++  "fetched": "2026-10-08",
++  "fetch_url": "https://warcraft.wiki.gg/api.php",
++  "extractor_flags": [
++    "--retain-patch-diff-reference"
++  ],
++  "generator_flags": [
++    "--mists-diff",
++    "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
++    "--mists-bare-widget-handlers",
++    "--client-line",
++    "retail"
++  ],
++  "client_line": "retail",
++  "toc": 50200,
++  "source_kind": "substantive-page",
++  "toc_source": {
++    "pageid": 79898,
++    "revid": 6902261,
++    "evidence": "data/patch-api/evidence/5.2.0-session-2026-10-08/parent-fetch.json"
++  },
++  "diff_source": {
++    "pageid": 471131,
++    "revid": 4529204,
++    "path": "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
++    "sha256": "93008d3af7c34e697a0165709a3a87bcea9fde23fde50a59b11234feef52215d"
++  }
++}
+diff --git a/data/patch-api/sources/5.2.0-api-changes.txt b/data/patch-api/sources/5.2.0-api-changes.txt
+new file mode 100644
+index 000000000..93cd2d192
+--- /dev/null
++++ b/data/patch-api/sources/5.2.0-api-changes.txt
+@@ -0,0 +1,28 @@
++Patch 5.2.0 API changes
++
++== New features ==
++* Display both text/percent on status bars option
++* Monk Stagger bar displays the amount of staggered damage the monk will take in the next 10 seconds.
++* Absorption effects are now displayed over the default UI's health bars; it is possible for addons to retrieve the total amount of absorption stacked on a unit.
++* SecureActionButtonTemplate has a new "togglemenu" action type, which (securely) opens a unit popup menu for the unit specified by the action button.
++* Items in void storage can now be used to transmogrify items in your inventory. (API calls implemented, but no UI added: PrepVoidStorageForTransmogrify() and UseVoidItemForTransmogrify())
++
++== Global API changes ==
++* Raid difficulty functions SetRaidDifficulty and GetRaidDifficulty were renamed to SetRaidDifficultyID and GetRaidDifficultyID respectively.
++* New GetDifficultyInfo API exposes basic information about difficulty IDs.
++* Battle pet cooldowns are now exposed through C_PetJournal.GetPetCooldownByGUID.
++* GetSchoolString replaces the global SchoolStringTable.
++* Almost all (if not all) C_PetJournal functions have had their "isWild" argument removed.
++* Passing a nil PetID to a C_PetJournal function will now cause a Lua error. Previously, the function would just return nil.
++* GetCurrencyInfo now returns a full texture path.
++* GetTradeSkillReagentItemLink is broken and always returns nil.
++* IsConsumableItem appears to always return nil.
++
++== FrameXML changes ==
++* Global MAX_BLACKLIST_BATTLEGROUNDS has moved from FrameXML into the addon Blizzard_PVPUI. Addons relying on MAX_BLACKLIST_BATTLEGROUNDS will have to find a workaround (it's a constant value, 2 right now, so you can use that) or watch "ADDON_LOADED" for the PVPUI.
++* The global values in the form "MAP_BAR_"..tag..stringType..phase are now more easily accessed through MapBarFrame_GetString(stringType, tag, phase).
++
++== Automated diff ==
++Click on the headers to expand the tables below.
++
++[Transcluded source: Patch 5.2.0/API changes/diff; not expanded]
+diff --git a/data/patch-api/sources/5.2.0-api-changes.wikitext b/data/patch-api/sources/5.2.0-api-changes.wikitext
+new file mode 100644
+index 000000000..1f6b9bceb
+--- /dev/null
++++ b/data/patch-api/sources/5.2.0-api-changes.wikitext
+@@ -0,0 +1,28 @@
++{{apichanges|5.2.0|prev=5.1.0|next=5.3.0}}
++
++==New features==
++* Display both text/percent on status bars option
++* Monk [[Stagger]] bar displays the amount of staggered damage the monk will take in the next 10 seconds.
++* Absorption effects are now displayed over the default UI's health bars; it is possible for addons to retrieve the total amount of absorption stacked on a unit.
++* [[SecureActionButtonTemplate]] has a new "togglemenu" action type, which (securely) opens a unit popup menu for the unit specified by the action button.
++* Items in void storage can now be used to transmogrify items in your inventory. (API calls implemented, but no UI added: {{api|PrepVoidStorageForTransmogrify}}() and {{api|UseVoidItemForTransmogrify}}())
++
++== Global API changes ==
++* Raid difficulty functions <code>SetRaidDifficulty</code> and <code>GetRaidDifficulty</code> were renamed to {{api|SetRaidDifficultyID}} and {{api|GetRaidDifficultyID}} respectively.
++* New {{api|GetDifficultyInfo}} API exposes basic information about difficulty IDs.
++* Battle pet cooldowns are now exposed through {{api|C_PetJournal.GetPetCooldownByGUID}}.
++* {{api|GetSchoolString}} replaces the global <code>SchoolStringTable</code>.
++* Almost all (if not all) C_PetJournal functions have had their "isWild" argument removed.
++* Passing a nil PetID to a C_PetJournal function will now cause a Lua error. Previously, the function would just return nil.
++* {{api|GetCurrencyInfo}} now returns a full texture path.
++* {{api|GetTradeSkillReagentItemLink}} is broken and always returns nil.
++* {{api|IsConsumableItem}} appears to always return nil.
++
++== FrameXML changes ==
++* Global <code>MAX_BLACKLIST_BATTLEGROUNDS</code> has moved from [[FrameXML]] into the addon Blizzard_PVPUI. Addons relying on <code>MAX_BLACKLIST_BATTLEGROUNDS</code> will have to find a workaround (it's a constant value, 2 right now, so you can use that) or watch "ADDON_LOADED" for the PVPUI.
++* The global values in the form <code>"MAP_BAR_"..tag..stringType..phase</code> are now more easily accessed through {{api|MapBarFrame_GetString}}(stringType, tag, phase).
++
++==Automated diff==
++Click on the headers to expand the tables below.
++
++{{:Patch 5.2.0/API changes/diff}}
+\ No newline at end of file
+diff --git a/data/patch-api/sources/5.2.0-wikitext-register.json b/data/patch-api/sources/5.2.0-wikitext-register.json
+new file mode 100644
+index 000000000..8c5408fdb
+--- /dev/null
++++ b/data/patch-api/sources/5.2.0-wikitext-register.json
+@@ -0,0 +1,1382 @@
++{
++  "schema": "patch-api-wikitext-register/v1",
++  "patch": "5.2.0",
++  "source": {
++    "path": "data/patch-api/sources/5.2.0-api-changes.wikitext",
++    "revid": 4057299,
++    "sha256": "3feae2c6e4d1d07dfdf77e714f904f5b76226a7bd7b7cdabd0e92e7bb8566568"
++  },
++  "header_counts": [
++    {
++      "section": "global-api",
++      "direction": "added",
++      "header_count": 36,
++      "parsed_count": 36
++    },
++    {
++      "section": "global-api",
++      "direction": "removed",
++      "header_count": 30,
++      "parsed_count": 30
++    },
++    {
++      "section": "framexml",
++      "direction": "added",
++      "header_count": 3,
++      "parsed_count": 3
++    },
++    {
++      "section": "framexml",
++      "direction": "removed",
++      "header_count": 5,
++      "parsed_count": 5
++    },
++    {
++      "section": "events",
++      "direction": "added",
++      "header_count": 7,
++      "parsed_count": 7
++    },
++    {
++      "section": "events",
++      "direction": "removed",
++      "header_count": 4,
++      "parsed_count": 4
++    },
++    {
++      "section": "widgets",
++      "direction": "added",
++      "header_count": 37,
++      "parsed_count": 37
++    },
++    {
++      "section": "widgets",
++      "direction": "removed",
++      "header_count": 37,
++      "parsed_count": 37
++    },
++    {
++      "section": "widgets",
++      "direction": "added",
++      "header_count": 2,
++      "parsed_count": 2
++    },
++    {
++      "section": "widgets",
++      "direction": "removed",
++      "header_count": 2,
++      "parsed_count": 2
++    }
++  ],
++  "entries": [
++    {
++      "id": "diff-wt-global-api-C_MapBar.BarIsShown-10",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_MapBar.BarIsShown",
++      "annotation": "",
++      "wikitext_line": 10
++    },
++    {
++      "id": "diff-wt-global-api-C_MapBar.GetCurrentValue-11",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_MapBar.GetCurrentValue",
++      "annotation": "",
++      "wikitext_line": 11
++    },
++    {
++      "id": "diff-wt-global-api-C_MapBar.GetMaxValue-12",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_MapBar.GetMaxValue",
++      "annotation": "",
++      "wikitext_line": 12
++    },
++    {
++      "id": "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_MapBar.GetParticipationPercentage",
++      "annotation": "",
++      "wikitext_line": 13
++    },
++    {
++      "id": "diff-wt-global-api-C_MapBar.GetPhaseIndex-14",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_MapBar.GetPhaseIndex",
++      "annotation": "",
++      "wikitext_line": 14
++    },
++    {
++      "id": "diff-wt-global-api-C_MapBar.GetTag-15",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_MapBar.GetTag",
++      "annotation": "",
++      "wikitext_line": 15
++    },
++    {
++      "id": "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_PetBattles.GetForfeitPenalty",
++      "annotation": "",
++      "wikitext_line": 16
++    },
++    {
++      "id": "diff-wt-global-api-C_PetJournal.GetPetCooldownByGUID-17",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_PetJournal.GetPetCooldownByGUID",
++      "annotation": "",
++      "wikitext_line": 17
++    },
++    {
++      "id": "diff-wt-global-api-DeclineChannelInvite-18",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "DeclineChannelInvite",
++      "annotation": "",
++      "wikitext_line": 18
++    },
++    {
++      "id": "diff-wt-global-api-DevTest1-19",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "DevTest1",
++      "annotation": "",
++      "wikitext_line": 19
++    },
++    {
++      "id": "diff-wt-global-api-GetArenaTeamIndexBySize-20",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetArenaTeamIndexBySize",
++      "annotation": "",
++      "wikitext_line": 20
++    },
++    {
++      "id": "diff-wt-global-api-GetBlacklistMapName-21",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetBlacklistMapName",
++      "annotation": "",
++      "wikitext_line": 21
++    },
++    {
++      "id": "diff-wt-global-api-GetDifficultyInfo-22",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetDifficultyInfo",
++      "annotation": "",
++      "wikitext_line": 22
++    },
++    {
++      "id": "diff-wt-global-api-GetHolidayBGInfo-23",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetHolidayBGInfo",
++      "annotation": "",
++      "wikitext_line": 23
++    },
++    {
++      "id": "diff-wt-global-api-GetLFGBonusFactionID-24",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetLFGBonusFactionID",
++      "annotation": "",
++      "wikitext_line": 24
++    },
++    {
++      "id": "diff-wt-global-api-GetQuestChoiceInfo-25",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetQuestChoiceInfo",
++      "annotation": "",
++      "wikitext_line": 25
++    },
++    {
++      "id": "diff-wt-global-api-GetQuestChoiceOptionInfo-26",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetQuestChoiceOptionInfo",
++      "annotation": "",
++      "wikitext_line": 26
++    },
++    {
++      "id": "diff-wt-global-api-GetQuestChoiceRewardCurrency-27",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetQuestChoiceRewardCurrency",
++      "annotation": "",
++      "wikitext_line": 27
++    },
++    {
++      "id": "diff-wt-global-api-GetQuestChoiceRewardFaction-28",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetQuestChoiceRewardFaction",
++      "annotation": "",
++      "wikitext_line": 28
++    },
++    {
++      "id": "diff-wt-global-api-GetQuestChoiceRewardInfo-29",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetQuestChoiceRewardInfo",
++      "annotation": "",
++      "wikitext_line": 29
++    },
++    {
++      "id": "diff-wt-global-api-GetQuestChoiceRewardItem-30",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetQuestChoiceRewardItem",
++      "annotation": "",
++      "wikitext_line": 30
++    },
++    {
++      "id": "diff-wt-global-api-GetRaidDifficultyID-31",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetRaidDifficultyID",
++      "annotation": "",
++      "wikitext_line": 31
++    },
++    {
++      "id": "diff-wt-global-api-GetRandomBGInfo-32",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetRandomBGInfo",
++      "annotation": "",
++      "wikitext_line": 32
++    },
++    {
++      "id": "diff-wt-global-api-GetSchoolString-33",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetSchoolString",
++      "annotation": "",
++      "wikitext_line": 33
++    },
++    {
++      "id": "diff-wt-global-api-GetSpellLossOfControlCooldown-34",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetSpellLossOfControlCooldown",
++      "annotation": "",
++      "wikitext_line": 34
++    },
++    {
++      "id": "diff-wt-global-api-IsAllowedToUserTeleport-35",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "IsAllowedToUserTeleport",
++      "annotation": "",
++      "wikitext_line": 35
++    },
++    {
++      "id": "diff-wt-global-api-IsTradeSkillReady-36",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "IsTradeSkillReady",
++      "annotation": "",
++      "wikitext_line": 36
++    },
++    {
++      "id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-37",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "PrepVoidStorageForTransmogrify",
++      "annotation": "",
++      "wikitext_line": 37
++    },
++    {
++      "id": "diff-wt-global-api-RequestRandomBattlegroundInstanceInfo-38",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "RequestRandomBattlegroundInstanceInfo",
++      "annotation": "",
++      "wikitext_line": 38
++    },
++    {
++      "id": "diff-wt-global-api-SendQuestChoiceResponse-39",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "SendQuestChoiceResponse",
++      "annotation": "",
++      "wikitext_line": 39
++    },
++    {
++      "id": "diff-wt-global-api-SetLFGBonusFactionID-40",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "SetLFGBonusFactionID",
++      "annotation": "",
++      "wikitext_line": 40
++    },
++    {
++      "id": "diff-wt-global-api-SetRaidDifficultyID-41",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "SetRaidDifficultyID",
++      "annotation": "",
++      "wikitext_line": 41
++    },
++    {
++      "id": "diff-wt-global-api-UnitGetTotalAbsorbs-42",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "UnitGetTotalAbsorbs",
++      "annotation": "",
++      "wikitext_line": 42
++    },
++    {
++      "id": "diff-wt-global-api-UnitStagger-43",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "UnitStagger",
++      "annotation": "",
++      "wikitext_line": 43
++    },
++    {
++      "id": "diff-wt-global-api-UpdateWorldMapArrow-44",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "UpdateWorldMapArrow",
++      "annotation": "",
++      "wikitext_line": 44
++    },
++    {
++      "id": "diff-wt-global-api-UseVoidItemForTransmogrify-45",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "UseVoidItemForTransmogrify",
++      "annotation": "",
++      "wikitext_line": 45
++    },
++    {
++      "id": "diff-wt-global-api-ClearChannelWatch-48",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "ClearChannelWatch",
++      "annotation": "",
++      "wikitext_line": 48
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorAddPlayer-49",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorAddPlayer",
++      "annotation": "",
++      "wikitext_line": 49
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorGetPartyInfo-50",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorGetPartyInfo",
++      "annotation": "",
++      "wikitext_line": 50
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorGetSkirmishMode-51",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorGetSkirmishMode",
++      "annotation": "",
++      "wikitext_line": 51
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorGetSkirmishQueueCount-52",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorGetSkirmishQueueCount",
++      "annotation": "",
++      "wikitext_line": 52
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-53",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorGetSkirmishQueuePlayerInfo",
++      "annotation": "",
++      "wikitext_line": 53
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorRemovePlayer-54",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorRemovePlayer",
++      "annotation": "",
++      "wikitext_line": 54
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorRequestSkirmishMode-55",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorRequestSkirmishMode",
++      "annotation": "",
++      "wikitext_line": 55
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorRequestSkirmishQueueData-56",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorRequestSkirmishQueueData",
++      "annotation": "",
++      "wikitext_line": 56
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorSetPlayerIndex-57",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorSetPlayerIndex",
++      "annotation": "",
++      "wikitext_line": 57
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorSetSkirmishMatchmakingMode-58",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorSetSkirmishMatchmakingMode",
++      "annotation": "",
++      "wikitext_line": 58
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorStartInstance-59",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorStartInstance",
++      "annotation": "",
++      "wikitext_line": 59
++    },
++    {
++      "id": "diff-wt-global-api-CommentatorStartSkirmishMatch-60",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CommentatorStartSkirmishMatch",
++      "annotation": "",
++      "wikitext_line": 60
++    },
++    {
++      "id": "diff-wt-global-api-CreateMiniWorldMapArrowFrame-61",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CreateMiniWorldMapArrowFrame",
++      "annotation": "",
++      "wikitext_line": 61
++    },
++    {
++      "id": "diff-wt-global-api-CreateWorldMapArrowFrame-62",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "CreateWorldMapArrowFrame",
++      "annotation": "",
++      "wikitext_line": 62
++    },
++    {
++      "id": "diff-wt-global-api-DeclineInvite-63",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "DeclineInvite",
++      "annotation": "",
++      "wikitext_line": 63
++    },
++    {
++      "id": "diff-wt-global-api-GetCurrentRaidDifficulty-64",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "GetCurrentRaidDifficulty",
++      "annotation": "",
++      "wikitext_line": 64
++    },
++    {
++      "id": "diff-wt-global-api-GetInstanceDifficulty-65",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "GetInstanceDifficulty",
++      "annotation": "",
++      "wikitext_line": 65
++    },
++    {
++      "id": "diff-wt-global-api-GetMinigameState-66",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "GetMinigameState",
++      "annotation": "",
++      "wikitext_line": 66
++    },
++    {
++      "id": "diff-wt-global-api-GetMinigameType-67",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "GetMinigameType",
++      "annotation": "",
++      "wikitext_line": 67
++    },
++    {
++      "id": "diff-wt-global-api-GetRaidDifficulty-68",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "GetRaidDifficulty",
++      "annotation": "",
++      "wikitext_line": 68
++    },
++    {
++      "id": "diff-wt-global-api-MakeMinigameMove-69",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "MakeMinigameMove",
++      "annotation": "",
++      "wikitext_line": 69
++    },
++    {
++      "id": "diff-wt-global-api-PlayDance-70",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "PlayDance",
++      "annotation": "",
++      "wikitext_line": 70
++    },
++    {
++      "id": "diff-wt-global-api-PositionMiniWorldMapArrowFrame-71",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "PositionMiniWorldMapArrowFrame",
++      "annotation": "",
++      "wikitext_line": 71
++    },
++    {
++      "id": "diff-wt-global-api-PositionWorldMapArrowFrame-72",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "PositionWorldMapArrowFrame",
++      "annotation": "",
++      "wikitext_line": 72
++    },
++    {
++      "id": "diff-wt-global-api-SetChannelWatch-73",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "SetChannelWatch",
++      "annotation": "",
++      "wikitext_line": 73
++    },
++    {
++      "id": "diff-wt-global-api-SetRaidDifficulty-74",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "SetRaidDifficulty",
++      "annotation": "",
++      "wikitext_line": 74
++    },
++    {
++      "id": "diff-wt-global-api-ShowMiniWorldMapArrowFrame-75",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "ShowMiniWorldMapArrowFrame",
++      "annotation": "",
++      "wikitext_line": 75
++    },
++    {
++      "id": "diff-wt-global-api-ShowWorldMapArrowFrame-76",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "ShowWorldMapArrowFrame",
++      "annotation": "",
++      "wikitext_line": 76
++    },
++    {
++      "id": "diff-wt-global-api-UpdateWorldMapArrowFrames-77",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "UpdateWorldMapArrowFrames",
++      "annotation": "",
++      "wikitext_line": 77
++    },
++    {
++      "id": "diff-wt-framexml-ControlGetActiveCvarValue-88",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "ControlGetActiveCvarValue",
++      "annotation": "",
++      "wikitext_line": 88
++    },
++    {
++      "id": "diff-wt-framexml-GetApplicableMultisampleSetting-89",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "GetApplicableMultisampleSetting",
++      "annotation": "",
++      "wikitext_line": 89
++    },
++    {
++      "id": "diff-wt-framexml-TogglePVPUI-90",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "TogglePVPUI",
++      "annotation": "",
++      "wikitext_line": 90
++    },
++    {
++      "id": "diff-wt-framexml-BattlegroundShineFadeIn-93",
++      "section": "framexml",
++      "direction": "removed",
++      "symbol": "BattlegroundShineFadeIn",
++      "annotation": "",
++      "wikitext_line": 93
++    },
++    {
++      "id": "diff-wt-framexml-BattlegroundShineFadeOut-94",
++      "section": "framexml",
++      "direction": "removed",
++      "symbol": "BattlegroundShineFadeOut",
++      "annotation": "",
++      "wikitext_line": 94
++    },
++    {
++      "id": "diff-wt-framexml-IsAlreadyInQueue-95",
++      "section": "framexml",
++      "direction": "removed",
++      "symbol": "IsAlreadyInQueue",
++      "annotation": "",
++      "wikitext_line": 95
++    },
++    {
++      "id": "diff-wt-framexml-IsPvPFrameSelected-96",
++      "section": "framexml",
++      "direction": "removed",
++      "symbol": "IsPvPFrameSelected",
++      "annotation": "",
++      "wikitext_line": 96
++    },
++    {
++      "id": "diff-wt-framexml-TogglePVPFrame-97",
++      "section": "framexml",
++      "direction": "removed",
++      "symbol": "TogglePVPFrame",
++      "annotation": "",
++      "wikitext_line": 97
++    },
++    {
++      "id": "diff-wt-events-BATTLEPET_FORCE_NAME_DECLENSION-108",
++      "section": "events",
++      "direction": "added",
++      "symbol": "BATTLEPET_FORCE_NAME_DECLENSION",
++      "annotation": "",
++      "wikitext_line": 108
++    },
++    {
++      "id": "diff-wt-events-LFG_BONUS_FACTION_ID_UPDATED-109",
++      "section": "events",
++      "direction": "added",
++      "symbol": "LFG_BONUS_FACTION_ID_UPDATED",
++      "annotation": "",
++      "wikitext_line": 109
++    },
++    {
++      "id": "diff-wt-events-LOADING_SCREEN_DISABLED-110",
++      "section": "events",
++      "direction": "added",
++      "symbol": "LOADING_SCREEN_DISABLED",
++      "annotation": "",
++      "wikitext_line": 110
++    },
++    {
++      "id": "diff-wt-events-LOADING_SCREEN_ENABLED-111",
++      "section": "events",
++      "direction": "added",
++      "symbol": "LOADING_SCREEN_ENABLED",
++      "annotation": "",
++      "wikitext_line": 111
++    },
++    {
++      "id": "diff-wt-events-MAP_BAR_UPDATE-112",
++      "section": "events",
++      "direction": "added",
++      "symbol": "MAP_BAR_UPDATE",
++      "annotation": "",
++      "wikitext_line": 112
++    },
++    {
++      "id": "diff-wt-events-QUEST_CHOICE_UPDATE-113",
++      "section": "events",
++      "direction": "added",
++      "symbol": "QUEST_CHOICE_UPDATE",
++      "annotation": "",
++      "wikitext_line": 113
++    },
++    {
++      "id": "diff-wt-events-UNIT_ABSORB_AMOUNT_CHANGED-114",
++      "section": "events",
++      "direction": "added",
++      "symbol": "UNIT_ABSORB_AMOUNT_CHANGED",
++      "annotation": "",
++      "wikitext_line": 114
++    },
++    {
++      "id": "diff-wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-117",
++      "section": "events",
++      "direction": "removed",
++      "symbol": "COMMENTATOR_SKIRMISH_MODE_REQUEST",
++      "annotation": "",
++      "wikitext_line": 117
++    },
++    {
++      "id": "diff-wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-118",
++      "section": "events",
++      "direction": "removed",
++      "symbol": "COMMENTATOR_SKIRMISH_QUEUE_REQUEST",
++      "annotation": "",
++      "wikitext_line": 118
++    },
++    {
++      "id": "diff-wt-events-MINIGAME_UPDATE-119",
++      "section": "events",
++      "direction": "removed",
++      "symbol": "MINIGAME_UPDATE",
++      "annotation": "",
++      "wikitext_line": 119
++    },
++    {
++      "id": "diff-wt-events-START_MINIGAME-120",
++      "section": "events",
++      "direction": "removed",
++      "symbol": "START_MINIGAME",
++      "annotation": "",
++      "wikitext_line": 120
++    },
++    {
++      "id": "diff-wt-widgets-Cooldown:GetCooldownDuration-131",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Cooldown:GetCooldownDuration",
++      "annotation": "",
++      "wikitext_line": 131
++    },
++    {
++      "id": "diff-wt-widgets-Cooldown:SetBlingDuration-132",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Cooldown:SetBlingDuration",
++      "annotation": "",
++      "wikitext_line": 132
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:AdvanceTime-133",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:AdvanceTime",
++      "annotation": "",
++      "wikitext_line": 133
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:ClearFog-134",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:ClearFog",
++      "annotation": "",
++      "wikitext_line": 134
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:ClearModel-135",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:ClearModel",
++      "annotation": "",
++      "wikitext_line": 135
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetCameraDistance-136",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetCameraDistance",
++      "annotation": "",
++      "wikitext_line": 136
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetCameraFacing-137",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetCameraFacing",
++      "annotation": "",
++      "wikitext_line": 137
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetCameraPosition-138",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetCameraPosition",
++      "annotation": "",
++      "wikitext_line": 138
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetCameraTarget-139",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetCameraTarget",
++      "annotation": "",
++      "wikitext_line": 139
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetFacing-140",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetFacing",
++      "annotation": "",
++      "wikitext_line": 140
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetFogColor-141",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetFogColor",
++      "annotation": "",
++      "wikitext_line": 141
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetFogFar-142",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetFogFar",
++      "annotation": "",
++      "wikitext_line": 142
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetFogNear-143",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetFogNear",
++      "annotation": "",
++      "wikitext_line": 143
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetLight-144",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetLight",
++      "annotation": "",
++      "wikitext_line": 144
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetModel-145",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetModel",
++      "annotation": "",
++      "wikitext_line": 145
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetModelScale-146",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetModelScale",
++      "annotation": "",
++      "wikitext_line": 146
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetPosition-147",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetPosition",
++      "annotation": "",
++      "wikitext_line": 147
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:GetWorldScale-148",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:GetWorldScale",
++      "annotation": "",
++      "wikitext_line": 148
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:HasCustomCamera-149",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:HasCustomCamera",
++      "annotation": "",
++      "wikitext_line": 149
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:ReplaceIconTexture-150",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:ReplaceIconTexture",
++      "annotation": "",
++      "wikitext_line": 150
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetCamera-151",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetCamera",
++      "annotation": "",
++      "wikitext_line": 151
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetCameraDistance-152",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetCameraDistance",
++      "annotation": "",
++      "wikitext_line": 152
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetCameraFacing-153",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetCameraFacing",
++      "annotation": "",
++      "wikitext_line": 153
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetCameraPosition-154",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetCameraPosition",
++      "annotation": "",
++      "wikitext_line": 154
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetCameraTarget-155",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetCameraTarget",
++      "annotation": "",
++      "wikitext_line": 155
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetCustomCamera-156",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetCustomCamera",
++      "annotation": "",
++      "wikitext_line": 156
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetFacing-157",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetFacing",
++      "annotation": "",
++      "wikitext_line": 157
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetFogColor-158",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetFogColor",
++      "annotation": "",
++      "wikitext_line": 158
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetFogFar-159",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetFogFar",
++      "annotation": "",
++      "wikitext_line": 159
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetFogNear-160",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetFogNear",
++      "annotation": "",
++      "wikitext_line": 160
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetGlow-161",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetGlow",
++      "annotation": "",
++      "wikitext_line": 161
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetLight-162",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetLight",
++      "annotation": "",
++      "wikitext_line": 162
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetModel-163",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetModel",
++      "annotation": "",
++      "wikitext_line": 163
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetModelScale-164",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetModelScale",
++      "annotation": "",
++      "wikitext_line": 164
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetPosition-165",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetPosition",
++      "annotation": "",
++      "wikitext_line": 165
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetSequence-166",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetSequence",
++      "annotation": "",
++      "wikitext_line": 166
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel:SetSequenceTime-167",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel:SetSequenceTime",
++      "annotation": "",
++      "wikitext_line": 167
++    },
++    {
++      "id": "diff-wt-widgets-Minimap:SetPlayerTextureHeight-170",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Minimap:SetPlayerTextureHeight",
++      "annotation": "",
++      "wikitext_line": 170
++    },
++    {
++      "id": "diff-wt-widgets-Minimap:SetPlayerTextureWidth-171",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Minimap:SetPlayerTextureWidth",
++      "annotation": "",
++      "wikitext_line": 171
++    },
++    {
++      "id": "diff-wt-widgets-Model:AdvanceTime-172",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:AdvanceTime",
++      "annotation": "",
++      "wikitext_line": 172
++    },
++    {
++      "id": "diff-wt-widgets-Model:ClearFog-173",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:ClearFog",
++      "annotation": "",
++      "wikitext_line": 173
++    },
++    {
++      "id": "diff-wt-widgets-Model:ClearModel-174",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:ClearModel",
++      "annotation": "",
++      "wikitext_line": 174
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetCameraDistance-175",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetCameraDistance",
++      "annotation": "",
++      "wikitext_line": 175
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetCameraFacing-176",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetCameraFacing",
++      "annotation": "",
++      "wikitext_line": 176
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetCameraPosition-177",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetCameraPosition",
++      "annotation": "",
++      "wikitext_line": 177
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetCameraTarget-178",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetCameraTarget",
++      "annotation": "",
++      "wikitext_line": 178
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetFacing-179",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetFacing",
++      "annotation": "",
++      "wikitext_line": 179
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetFogColor-180",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetFogColor",
++      "annotation": "",
++      "wikitext_line": 180
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetFogFar-181",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetFogFar",
++      "annotation": "",
++      "wikitext_line": 181
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetFogNear-182",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetFogNear",
++      "annotation": "",
++      "wikitext_line": 182
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetLight-183",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetLight",
++      "annotation": "",
++      "wikitext_line": 183
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetModel-184",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetModel",
++      "annotation": "",
++      "wikitext_line": 184
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetModelScale-185",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetModelScale",
++      "annotation": "",
++      "wikitext_line": 185
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetPosition-186",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetPosition",
++      "annotation": "",
++      "wikitext_line": 186
++    },
++    {
++      "id": "diff-wt-widgets-Model:GetWorldScale-187",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:GetWorldScale",
++      "annotation": "",
++      "wikitext_line": 187
++    },
++    {
++      "id": "diff-wt-widgets-Model:HasCustomCamera-188",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:HasCustomCamera",
++      "annotation": "",
++      "wikitext_line": 188
++    },
++    {
++      "id": "diff-wt-widgets-Model:ReplaceIconTexture-189",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:ReplaceIconTexture",
++      "annotation": "",
++      "wikitext_line": 189
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetCamera-190",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetCamera",
++      "annotation": "",
++      "wikitext_line": 190
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetCameraDistance-191",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetCameraDistance",
++      "annotation": "",
++      "wikitext_line": 191
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetCameraFacing-192",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetCameraFacing",
++      "annotation": "",
++      "wikitext_line": 192
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetCameraPosition-193",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetCameraPosition",
++      "annotation": "",
++      "wikitext_line": 193
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetCameraTarget-194",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetCameraTarget",
++      "annotation": "",
++      "wikitext_line": 194
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetCustomCamera-195",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetCustomCamera",
++      "annotation": "",
++      "wikitext_line": 195
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetFacing-196",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetFacing",
++      "annotation": "",
++      "wikitext_line": 196
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetFogColor-197",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetFogColor",
++      "annotation": "",
++      "wikitext_line": 197
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetFogFar-198",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetFogFar",
++      "annotation": "",
++      "wikitext_line": 198
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetFogNear-199",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetFogNear",
++      "annotation": "",
++      "wikitext_line": 199
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetGlow-200",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetGlow",
++      "annotation": "",
++      "wikitext_line": 200
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetLight-201",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetLight",
++      "annotation": "",
++      "wikitext_line": 201
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetModel-202",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetModel",
++      "annotation": "",
++      "wikitext_line": 202
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetModelScale-203",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetModelScale",
++      "annotation": "",
++      "wikitext_line": 203
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetPosition-204",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetPosition",
++      "annotation": "",
++      "wikitext_line": 204
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetSequence-205",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetSequence",
++      "annotation": "",
++      "wikitext_line": 205
++    },
++    {
++      "id": "diff-wt-widgets-Model:SetSequenceTime-206",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model:SetSequenceTime",
++      "annotation": "",
++      "wikitext_line": 206
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel OnAnimFinished-217",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel OnAnimFinished",
++      "annotation": "",
++      "wikitext_line": 217,
++      "kind": "widget-script"
++    },
++    {
++      "id": "diff-wt-widgets-PlayerModel OnUpdateModel-218",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "PlayerModel OnUpdateModel",
++      "annotation": "",
++      "wikitext_line": 218,
++      "kind": "widget-script"
++    },
++    {
++      "id": "diff-wt-widgets-Model OnAnimFinished-221",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model OnAnimFinished",
++      "annotation": "",
++      "wikitext_line": 221,
++      "kind": "widget-script"
++    },
++    {
++      "id": "diff-wt-widgets-Model OnUpdateModel-222",
++      "section": "widgets",
++      "direction": "removed",
++      "symbol": "Model OnUpdateModel",
++      "annotation": "",
++      "wikitext_line": 222,
++      "kind": "widget-script"
++    }
++  ],
++  "client_line": "retail"
++}
+diff --git a/tests/data/patch_5_2_0_sweep_known_gaps.json b/tests/data/patch_5_2_0_sweep_known_gaps.json
+new file mode 100644
+index 000000000..fe51488c7
+--- /dev/null
++++ b/tests/data/patch_5_2_0_sweep_known_gaps.json
+@@ -0,0 +1 @@
++[]
+diff --git a/tests/patch_5_2_0_publication_sweep.rs b/tests/patch_5_2_0_publication_sweep.rs
+new file mode 100644
+index 000000000..92fec4029
+--- /dev/null
++++ b/tests/patch_5_2_0_publication_sweep.rs
+@@ -0,0 +1,83 @@
++//! Publication/absence only: no signature, output, security, or behavior parity claim.
++#![cfg(feature = "client-retail")]
++
++#[path = "common/publication_sweep.rs"]
++mod sweep;
++
++use wow_ui_sim::lua_api::WowLuaEnv;
++
++prefork_full_ui_case! {
++fn patch_5_2_0_publication_sweep(env: &WowLuaEnv) {
++    let register = include_str!("../data/patch-api/sources/5.2.0-wikitext-register.json");
++    let rows: serde_json::Value = serde_json::from_str(register).expect("parse register");
++    sweep::run_publication_sweep(env, &sweep::SweepSpec {
++        register,
++        known_gaps: include_str!("data/patch_5_2_0_sweep_known_gaps.json"),
++        row_count: rows["entries"].as_array().expect("inventory rows").len(),
++        register_env: "P520_SWEEP_REGISTER",
++        out_env: "P520_SWEEP_OUT",
++        later_registers: &[
++            // Queued retail 5.3.0: p530-page.
++            // Queued retail 5.4.0: p540-page.
++            // Queued retail 5.4.1: p541-page.
++            // Queued retail 5.4.2: p542-page.
++            include_str!("../data/patch-api/sources/5.4.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/5.4.8-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.2.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.2.4-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.0.3-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.3.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.3.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.3.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.3.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.2.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.1.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.6-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.1.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.2.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.1.0-wikitext-register.json"),
++        ],
++    });
++}
++}
+diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
+index 4901f7397..9fd780885 100644
+--- a/tools/gen_patch_wikitext_register.py
++++ b/tools/gen_patch_wikitext_register.py
+@@ -644,6 +644,53 @@ def parse_combat_restriction_bullets(text):
+     return entries
+ 
+ 
++def parse_mists_automated_diff(text):
++    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
++    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
++                'Events': 'events', 'Widget API': 'widgets'}
++    entries, counts = [], []
++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
++        lines = table[1].splitlines()
++        caption = next((line for line in lines if line.startswith('|+ ')), '')
++        section = next((value for name, value in sections.items()
++                        if caption.startswith('|+ ' + name + ' ')), None)
++        if section is None:
++            continue
++        first_line = text[:table.start(1)].count('\n') + 1
++        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
++                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
++                      else (first_line + offset, line)
++                      for offset, line in enumerate(lines)]
++        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
++        entries.extend(rows)
++        counts.extend(headers)
++    return entries, counts
++
++
++def parse_mists_widget_handlers(text):
++    """Keep Browser handler owner/name pairs in the dedicated 2013 table."""
++    entries, counts = [], []
++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
++        lines = table[1].splitlines()
++        if not any(line.startswith('|+ Widget Handlers ') for line in lines):
++            continue
++        first_line = text[:table.start(1)].count('\n') + 1
++        rows, headers = parse_section(
++            'widgets', list(enumerate(lines, first_line)), legacy_column_headers=True)
++        for row in rows:
++            row['kind'] = 'widget-script'
++        entries.extend(rows)
++        counts.extend(headers)
++    return entries, counts
++
++
++def parse_mists_bare_widget_handlers(text):
++    """Normalize bare owner/handler removals without changing source line numbers."""
++    normalized = re.sub(r'^: ([A-Za-z_][A-Za-z0-9_]* On[A-Za-z0-9_]+)$',
++                        r': {{api|t=wh|\1}}', text, flags=re.M)
++    return parse_mists_widget_handlers(normalized)
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     for name in ("patch", "path", "revid", "out"):
+@@ -700,11 +747,20 @@ def main():
+                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
+     parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
+                         help='Label the client history for isolated supersession; opt-in')
++    parser.add_argument('--mists-automated-diff', action='store_true',
++                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
++    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
++    parser.add_argument('--mists-widget-handlers', action='store_true',
++                        help='Retain captioned Mists widget handler ownership; opt-in')
++    parser.add_argument('--mists-bare-widget-handlers', action='store_true',
++                        help='Retain bare Mists owner/handler removals; opt-in')
+     args = parser.parse_args()
+     patch, path, revid, out = args.patch, args.path, args.revid, args.out
+     raw = Path(path).read_bytes()
+     buckets = split_sections(raw.decode("utf-8"),
+                              separate_inline_structures=args.separate_inline_structures)
++    if args.mists_automated_diff:
++        buckets = {}
+     entries, counts = [], []
+     for section in SECTIONS.values():
+         entry_section = "cvars" if section == "commands" else section
+@@ -758,6 +814,30 @@ def main():
+         counts.extend(diff_counts)
+     if args.combat_restriction_bullets:
+         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
++    if args.mists_automated_diff:
++        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
++    if args.mists_diff:
++        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
++        for entry in diff_entries:
++            entry['id'] = 'diff-' + entry['id']
++        entries.extend(diff_entries)
++        counts.extend(diff_counts)
++    if args.mists_widget_handlers:
++        handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
++        handler_entries, handler_counts = parse_mists_widget_handlers(handler_raw)
++        if args.mists_diff:
++            for entry in handler_entries:
++                entry['id'] = 'diff-' + entry['id']
++        entries.extend(handler_entries)
++        counts.extend(handler_counts)
++    if args.mists_bare_widget_handlers:
++        handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
++        handler_entries, handler_counts = parse_mists_bare_widget_handlers(handler_raw)
++        if args.mists_diff:
++            for entry in handler_entries:
++                entry['id'] = 'diff-' + entry['id']
++        entries.extend(handler_entries)
++        counts.extend(handler_counts)
+     if args.inventory_only:
+         for entry in entries:
+             for key in ("kind", "page_default", "test_inline"):
+diff --git a/tools/test_patch_mists_520_register.py b/tools/test_patch_mists_520_register.py
+new file mode 100644
+index 000000000..35a26d7e1
+--- /dev/null
++++ b/tools/test_patch_mists_520_register.py
+@@ -0,0 +1,45 @@
++"""2013 retail transclusion and bare widget-handler inventory behavior."""
++import importlib.util
++from pathlib import Path
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++SPEC = importlib.util.spec_from_file_location('generator', ROOT / 'tools/gen_patch_wikitext_register.py')
++GEN = importlib.util.module_from_spec(SPEC)
++SPEC.loader.exec_module(GEN)
++
++
++class Mists520RegisterTest(unittest.TestCase):
++    def test_bare_handler_owner_and_direction(self):
++        raw = '''{| class="wikitable"
++|+ Widget Handlers (5.1.0.16309 &rarr; 5.2.0.16650)
++! style="width: 50%"| 1 new handlers
++! style="width: 50%"| 1 removed handlers
++| valign="top" |
++: {{api|t=wh|PlayerModel OnAnimFinished}}
++</div>
++| valign="top" |
++: Model OnAnimFinished
++</div>
++|}
++'''
++        rows, counts = GEN.parse_mists_bare_widget_handlers(raw)
++        self.assertEqual([(r['symbol'], r['direction'], r['kind']) for r in rows], [
++            ('PlayerModel OnAnimFinished', 'added', 'widget-script'),
++            ('Model OnAnimFinished', 'removed', 'widget-script')])
++        self.assertEqual([c['parsed_count'] for c in counts], [1, 1])
++        self.assertEqual([r['wikitext_line'] for r in rows], [6, 9])
++
++    def test_pinned_transclusion_counts(self):
++        raw = (ROOT / 'data/patch-api/sources/5.2.0-api-changes-diff.wikitext').read_text()
++        rows, counts = GEN.parse_mists_automated_diff(raw)
++        handlers, handler_counts = GEN.parse_mists_bare_widget_handlers(raw)
++        self.assertEqual(len(rows), 159)
++        self.assertEqual(len(handlers), 4)
++        self.assertTrue(all(c['header_count'] == c['parsed_count'] for c in counts + handler_counts))
++        self.assertEqual(rows[0]['symbol'], 'C_MapBar.BarIsShown')
++        self.assertIn(('GetRaidDifficulty', 'removed'), [(r['symbol'], r['direction']) for r in rows])
++
++
++if __name__ == '__main__':
++    unittest.main()

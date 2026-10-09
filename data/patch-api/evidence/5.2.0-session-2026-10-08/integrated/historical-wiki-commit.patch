@@ -1,0 +1,108 @@
+diff --git a/data/patch-api/evidence/5.2.0-session-2026-10-08/readability.md b/data/patch-api/evidence/5.2.0-session-2026-10-08/readability.md
+new file mode 100644
+index 000000000..a94152a57
+--- /dev/null
++++ b/data/patch-api/evidence/5.2.0-session-2026-10-08/readability.md
+@@ -0,0 +1,3 @@
++# Changed Rust readability
++
++Reviewed tests/patch_5_2_0_publication_sweep.rs and tests/patch_5_2_0_backing_behavior.rs. No violations: flat declarative register chain, named backing assertion, two concrete difficulty values, no warning suppressions or opaque branches. Runtime source is unchanged.
+diff --git a/docs/wiki/index.md b/docs/wiki/index.md
+index ed51e511c..0fef93531 100644
+--- a/docs/wiki/index.md
++++ b/docs/wiki/index.md
+@@ -2737,3 +2737,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
+ ## [2026-10-08] investigation | Patch 6.0.2 API audit
+ 
+ [Audit](investigations/patch-6-0-2-api-audit.md): 657 API occurrences, 100 prose rows and 79 enum members; two scenario-backed queries and three consumer-free retirements. 382 bounded/275 API gaps; 51 sweeps, 3 cached/2 bare cases and 11 scenario regressions pass; 50 registers/47 extracts reproduce with three inherited failures. Both addons-enabled startups []; Mists warning-clean outside vendor; portability gate clean 29/29, later 30/30.
++
++## [2026-10-08] investigation | Retail Patch 5.2.0 API audit
++
++[Audit](investigations/patch-5-2-0-api-audit.md): pinned retail TOC 50200 source and transclusion; 163 inventory occurrences, whole-word retirement scans, separate prose accounting and queued 5.3.0–5.4.2 placeholders.
+diff --git a/docs/wiki/investigations/patch-5-2-0-api-audit.md b/docs/wiki/investigations/patch-5-2-0-api-audit.md
+new file mode 100644
+index 000000000..d1b67d7ac
+--- /dev/null
++++ b/docs/wiki/investigations/patch-5-2-0-api-audit.md
+@@ -0,0 +1,39 @@
++# Retail Patch 5.2.0 API audit
++
++Verified source: 2026-10-08. API pageid 422312 revision 4057299; transcluded diff pageid 471131 revision 4529204. Parent states TOC 50200, build 16650 and March 5, 2013 release. This is the retail Mists line, not Mists Classic 5.5.x.
++
++## Coverage and limits
++
++The transclusion contains 163 inventory occurrences, including four widget handlers. All numerical table headers match parsed counts. Main prose remains separate: new features, global API changes and FrameXML changes are not silently replaced by inventory publication credit.
++
++Parser hunks came byte-identically from the pinned p530-page generator; the separate opt-in `--mists-bare-widget-handlers` normalizes `Model OnAnimFinished` / `Model OnUpdateModel` removals without changing source lines. Main prose extraction uses existing `--retain-patch-diff-reference`; no extractor changes.
++
++Retail 5.3.0, 5.4.0, 5.4.1 and 5.4.2 remain queued placeholders, in that order. The merged chain begins 5.4.7 then 5.4.8 and 6.0.1. No 5.5.x Classic register is included. Prefork publication observes SharedXML/bootstrap, not every load-on-demand Game addon or 2013 client behavior.
++
++## Retirement safety
++
++Every removed occurrence has a retained whole-word `/usr/bin/grep -R -n -w -F` cache and src/tests scan, including indirect calls (`pcall(Name, ...)`) and guards (`and Name then`) because the bare identifier is searched independently. Cache scans exclude `*Documentation*`. Output is untruncated. Pinned master and all four queued branch register sets are checked for re-additions; no matches found.
++
++No simulator retirement is implemented. Existing cache/caller consumers are retained; Model/PlayerModel 3D methods remain intentionally unsupported rather than being removed from the common frame-method surface. Historical absence assertions do not authorize breaking current callers.
++
++## Existing backing behavior
++
++`GetRaidDifficultyID` reads `SimState.world.instance_difficulty`. New integration and prefork cases exercise distinct values 14 and 16. Existing cooldown tests assert stateful millisecond duration reads and clear transitions. School-name mapping belongs to `C_Spell`, with the cached legacy global alias handled by Blizzard's unmodified deprecated wrapper.
++
++`UnitGetTotalAbsorbs` still returns a fixed zero, `UnitStagger` is a temporary default and pet cooldown queries are defaults. These are publication only, not modeled behavior credit. The 2013 absorption/stagger/cooldown producer contracts remain pending.
++
++## Verification
++
++Discovery/accounting and final historical gate are in progress. Final receipts and per-row reasons live in the session evidence; no complete-parity claim.
++
++## Sources
++
++- [Pinned source/provenance](../../../data/patch-api/sources/5.2.0-api-changes.provenance.json).
++- [Evidence](../../../data/patch-api/evidence/5.2.0-session-2026-10-08/context.json) — base and parser-origin revisions.
++- [Spec](../../specs/patch-5-2-0-publication-sweep.md).
++- [Sweep](../../../tests/patch_5_2_0_publication_sweep.rs).
++
++## See Also
++
++- [[patch-5-4-7-api-audit]] — next merged retail register.
++- [[patch-audit-validator-portability]] — historical-scope and clean/later-audit gates.
+diff --git a/docs/wiki/log.md b/docs/wiki/log.md
+index 8d98b807b..a230d2c35 100644
+--- a/docs/wiki/log.md
++++ b/docs/wiki/log.md
+@@ -489,3 +489,7 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
+ ## 2026-10-08 — Patch 5.5.3 acceptance proof complete
+ 
+ - [[patch-5-5-3-api-audit]]: all requested proof retained; clean/later validator gate 41/41 and 42/42 PASS at 1882e7c99, own-log tamper rejected/restored. Retail observations unchanged; no runtime changes, API coverage credit, push or merge.
++
++## 2026-10-08 — Retail Patch 5.2.0 API audit
++
++Pinned page/transclusion and confirmed 2013 retail TOC 50200. Added opt-in parser reuse, owner-preserving handler normalization, discovery sweep and whole-word retirement evidence. [Audit](investigations/patch-5-2-0-api-audit.md).
+diff --git a/tests/patch_5_2_0_backing_behavior.rs b/tests/patch_5_2_0_backing_behavior.rs
+new file mode 100644
+index 000000000..53bc869c1
+--- /dev/null
++++ b/tests/patch_5_2_0_backing_behavior.rs
+@@ -0,0 +1,24 @@
++//! Bounded current backing behavior, not full 2013 API parity.
++#![cfg(feature = "client-retail")]
++
++use wow_ui_sim::lua_api::WowLuaEnv;
++
++fn assert_raid_difficulty_backing(env: &WowLuaEnv) {
++    for difficulty in [14, 16] {
++        env.state().borrow_mut().world.instance_difficulty = difficulty;
++        let observed: i32 = env.eval("return GetRaidDifficultyID()").unwrap();
++        assert_eq!(observed, difficulty);
++    }
++}
++
++#[test]
++fn patch_5_2_0_raid_difficulty_backing_integration() {
++    let env = WowLuaEnv::new().unwrap();
++    assert_raid_difficulty_backing(&env);
++}
++
++prefork_full_ui_case! {
++fn patch_5_2_0_raid_difficulty_backing_prefork(env: &WowLuaEnv) {
++    assert_raid_difficulty_backing(env);
++}
++}

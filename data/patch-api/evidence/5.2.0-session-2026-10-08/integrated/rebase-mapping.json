@@ -1,0 +1,316 @@
+{
+  "base_revision": "5e4e82ef66b239da8ae23a8dbb6b276213e50c71",
+  "commits": [
+    {
+      "recorded_revision": "50ce62db5cef2ccf4ecbb4e125af262da7429d3c",
+      "rebased_revision": "1267cb19757918424695f5dfa9c14bcf0e5d982d",
+      "subject": "Pin retail 5.2.0 transclusion and add discovery sweep",
+      "recorded_patch_id": "24210173de8924c5780bc3622b336189c2276bda",
+      "rebased_patch_id": "30d5cb11b44dfcedc2b5e6002dad8cee2043639d",
+      "rebased_tree": "97a402d0adeabb8ca7e7e487e874e45e5ddf3c34",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "7edaf16d8aadfed5afaf7a59b396642c45faea84",
+          "rebased_tree": "d47c985ec60f2581300c39dca35de0bfbbe2acd0"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "472c06ffca84ab90e951813ac92c3686126357b2",
+          "rebased_tree": "ef05b48771e1d05e6d23a4b86e5113fba9b9daf1"
+        },
+        "docs/wiki": {
+          "recorded_tree": "728d7e94eeaf94ec4a81bdfcdeae7a8bfff623cd",
+          "rebased_tree": "a4a7eb96bd276065e9d00e8e6487cf342c257289"
+        }
+      },
+      "historical_patch": "historical-tool-commit.patch",
+      "conflict_reason": "Shared parser copies dropped in favor of merged master; retain only --mists-bare-widget-handlers."
+    },
+    {
+      "recorded_revision": "af5e6586348c19441e56af0267f9714770143942",
+      "rebased_revision": "25506066e3c0a6e80535dfd134b94877820f69a7",
+      "subject": "Record whole-word retirement scans and reproduction procedure",
+      "recorded_patch_id": "3eb7f53de885ea69ba86e20b1e72e2ecb09fac70",
+      "rebased_patch_id": "3eb7f53de885ea69ba86e20b1e72e2ecb09fac70",
+      "rebased_tree": "ba781c804c23000fa62550e90e301baf7042e719",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "7edaf16d8aadfed5afaf7a59b396642c45faea84",
+          "rebased_tree": "d47c985ec60f2581300c39dca35de0bfbbe2acd0"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "472c06ffca84ab90e951813ac92c3686126357b2",
+          "rebased_tree": "ef05b48771e1d05e6d23a4b86e5113fba9b9daf1"
+        },
+        "docs/wiki": {
+          "recorded_tree": "728d7e94eeaf94ec4a81bdfcdeae7a8bfff623cd",
+          "rebased_tree": "a4a7eb96bd276065e9d00e8e6487cf342c257289"
+        }
+      }
+    },
+    {
+      "recorded_revision": "a624340098203be0fc63ff9c48a520a90f83b25f",
+      "rebased_revision": "940d1b12eb5ff6d3e1095119632c0295b0cd372e",
+      "subject": "Document retail audit limits and probe raid difficulty backing",
+      "recorded_patch_id": "acf13973c36b680abb5e0442f2ccd6274b5dd532",
+      "rebased_patch_id": "9729c238d36e3e01db5608674eecdac876b3a243",
+      "rebased_tree": "196d29876f45efcbc6c54e8e7222b36e7400ae2f",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "fa4e448ecfcddf21e2fbbd591a495ba5597768b7",
+          "rebased_tree": "3f9348de850c87f48c6ede0d5f15ae41baaa8f75"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "472c06ffca84ab90e951813ac92c3686126357b2",
+          "rebased_tree": "ef05b48771e1d05e6d23a4b86e5113fba9b9daf1"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b50bfd3117f607db2920e68738f3236336d6b10e",
+          "rebased_tree": "847ac96018341472a2592622e0f1ddea3b3cb84e"
+        }
+      },
+      "historical_patch": "historical-wiki-commit.patch",
+      "conflict_reason": "Preserve integrated master wiki entries while replaying own audit documentation."
+    },
+    {
+      "recorded_revision": "28b436c0ecf1fd08de3b935ec649c851125f24cd",
+      "rebased_revision": "9ea1e3568a071298baf0db5f2e3910eb1a7eb53a",
+      "subject": "Account for 5.2.0 gaps and preserve retirement decisions",
+      "recorded_patch_id": "620509c5bf6103a27a88bfa14a15c6d537dec012",
+      "rebased_patch_id": "620509c5bf6103a27a88bfa14a15c6d537dec012",
+      "rebased_tree": "1e6b7874e4ce83c0c9d04cbedb42bac98309f7e8",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b50bfd3117f607db2920e68738f3236336d6b10e",
+          "rebased_tree": "847ac96018341472a2592622e0f1ddea3b3cb84e"
+        }
+      }
+    },
+    {
+      "recorded_revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+      "rebased_revision": "8e97af944fb99f46db3c3ddb693505b0d6840f2e",
+      "subject": "Pin validator scope and seal historical audit accounting",
+      "recorded_patch_id": "41edf7f8d483171d0033b036f16fed3b6908c2e9",
+      "rebased_patch_id": "41edf7f8d483171d0033b036f16fed3b6908c2e9",
+      "rebased_tree": "6e88faeb5e4c25bd5a9b9e9770872f881da7856d",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b50bfd3117f607db2920e68738f3236336d6b10e",
+          "rebased_tree": "847ac96018341472a2592622e0f1ddea3b3cb84e"
+        }
+      }
+    },
+    {
+      "recorded_revision": "b9a25bcaae2b44098ba9486c59b73d462fd051ca",
+      "rebased_revision": "ddf1b2ee325dcb0f44954e2b0c77febb8f323258",
+      "subject": "Record bounded backing proof and source identity invariants",
+      "recorded_patch_id": "4c7c60b0bd55935707dccc85acb8ea67c482b85c",
+      "rebased_patch_id": "4c7c60b0bd55935707dccc85acb8ea67c482b85c",
+      "rebased_tree": "ce4b096b7ef23b6321ab6d7a3ec6b63a7e3885e3",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "5a4953160e6ee5bb9f1436492919d0e03e284e13",
+          "rebased_tree": "f218c244b06e5d59c74e18027abfaa27b42e560c"
+        }
+      }
+    },
+    {
+      "recorded_revision": "ca2f38412c27d68a8b05457e28ef2fe0e0e5b4a6",
+      "rebased_revision": "4cf92832b61d59b62f697a530af2f9721f176c80",
+      "subject": "Bind reproduction receipts to pinned source blobs",
+      "recorded_patch_id": "0af6f63e07ea7454edb9810eeb82bc9b037481a5",
+      "rebased_patch_id": "0af6f63e07ea7454edb9810eeb82bc9b037481a5",
+      "rebased_tree": "429be25cb6e57f0325d407c0d8329e4cffa0bbe1",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "75370d96ddc153060e2ec7897748265b55ec3306",
+          "rebased_tree": "d75d5f316f3e3df3453c2596a324239ccb5880db"
+        }
+      }
+    },
+    {
+      "recorded_revision": "535d333104de9330b6c163297d5db84a4d56b418",
+      "rebased_revision": "79bf401ca0c32f1d0800b787af9aba40a4593f93",
+      "subject": "Retain completed targeted checks and publication observations",
+      "recorded_patch_id": "635596f8ed2149706181d4d4a7412e5b3c9a1ce0",
+      "rebased_patch_id": "635596f8ed2149706181d4d4a7412e5b3c9a1ce0",
+      "rebased_tree": "b3ed4f6d2e78b103bec356755840585d29dbd791",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "d35f7cf676ba448f34dc9cef775e175159922132",
+          "rebased_tree": "33b7c73e1bd5227366d54c22779b6cac4b0102d6"
+        }
+      }
+    },
+    {
+      "recorded_revision": "676fb8b24a8820bc7f649d323c8432c4a762ff77",
+      "rebased_revision": "123e8d59f257f573660aaaf7e10c21a96dd2f2ea",
+      "subject": "Seal portable 5.2.0 historical evidence",
+      "recorded_patch_id": "344f667bddf95c301a87d909d313dbb8d9ae5636",
+      "rebased_patch_id": "344f667bddf95c301a87d909d313dbb8d9ae5636",
+      "rebased_tree": "a1fb15848659e802600c91b7161b6d8d07a70b7e",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "d35f7cf676ba448f34dc9cef775e175159922132",
+          "rebased_tree": "33b7c73e1bd5227366d54c22779b6cac4b0102d6"
+        }
+      }
+    },
+    {
+      "recorded_revision": "c38a57fa5ff1570cdaf5493d66ddf9076f81d8e5",
+      "rebased_revision": "d09fdaea485ef1247ac0c2a64c4f8e936cb50516",
+      "subject": "Record portable gate and finalize retail 5.2.0 audit",
+      "recorded_patch_id": "0ed39ec135467f8a4999539affd62c54d5dec93c",
+      "rebased_patch_id": "0ed39ec135467f8a4999539affd62c54d5dec93c",
+      "rebased_tree": "0e57b555f851022c24212d813b9f22bd69762787",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "61890b019a2c546a5ba78d8ab5807f9cc52e4456",
+          "rebased_tree": "c3714fcf81460c0576ddcb34e759ba1815b93074"
+        }
+      }
+    }
+  ],
+  "parser_provenance": {
+    "historical_origin": "c237c344eb1e2fb008be02cdd8c44e72f51c40c4",
+    "shared_origin": "merged master 5.4.2/5.4.0/5.3.0",
+    "shared_revision": "5e4e82ef66b239da8ae23a8dbb6b276213e50c71",
+    "shared_tools_tree": "285b9d56ae59bd8fde89d9392d880db3f928cad0",
+    "own_extension": "--mists-bare-widget-handlers, after --mists-widget-handlers"
+  }
+}
