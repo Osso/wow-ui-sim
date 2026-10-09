@@ -28,7 +28,7 @@ def finalize():
     assert not git('diff', '--name-only', base, revision, '--', 'src')
     expected = {name + '.proof.json': 0 for name in (
         'all-sweeps', 'own-prefork', 'raid-integration', 'cooldown-integration',
-        'school-integration', 'register-lib', 'format', 'mists',
+        'school-integration', 'school-alias-prefork', 'register-lib', 'format', 'mists',
         'python-fixtures', 'reproduction', 'targeted-driver')}
     expected.update({'discovery.proof.json': 1, 'negative.proof.json': 1})
     for name, code in expected.items():

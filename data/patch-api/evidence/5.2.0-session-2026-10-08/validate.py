@@ -50,6 +50,18 @@ def validate():
         assert proof['exit'] == expected_exit and not proof['invalidated'], receipt_name
         assert digest((HERE / proof['log']).read_bytes()) == proof['log_sha256']
         subprocess.check_call(['git', 'cat-file', '-e', proof['revision'] + '^{commit}'], cwd=ROOT)
+    provenance = json.loads(blob(final['revision'], 'data/patch-api/sources/5.2.0-api-changes.provenance.json'))
+    page = read('fetch.json')['query']['pages'][str(provenance['pageid'])]
+    revision = page['revisions'][0]
+    assert revision['revid'] == provenance['revid']
+    assert revision['slots']['main']['*'].encode() == blob(final['revision'], 'data/patch-api/sources/5.2.0-api-changes.wikitext')
+    diff = read('diff-fetch.json')['query']['pages'][str(provenance['diff_source']['pageid'])]['revisions'][0]
+    assert diff['revid'] == provenance['diff_source']['revid']
+    assert diff['slots']['main']['*'].encode() == blob(final['revision'], provenance['diff_source']['path'])
+    parent = read('parent-fetch.json')['query']['pages'][str(provenance['toc_source']['pageid'])]['revisions'][0]
+    assert parent['revid'] == provenance['toc_source']['revid']
+    assert re.search(r'^\|toc\s*=\s*50200\s*$', parent['slots']['main']['*'], re.M)
+    assert provenance['client_line'] == 'retail'
     register = json.loads(blob(final['revision'], 'data/patch-api/sources/5.2.0-wikitext-register.json'))
     ledger = json.loads(blob(final['revision'], 'data/patch-api/sources/5.2.0-page-coverage.json'))
     fixture = json.loads(blob(final['revision'], 'tests/data/patch_5_2_0_sweep_known_gaps.json'))

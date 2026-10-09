@@ -109,8 +109,6 @@ def main():
         elif row['status'] == 'audit-pending':
             assert suffix in notes, row
             row['note'] = notes[suffix]
-        elif suffix == '027':
-            row['note'] = 'Transclusion is separately fetched/pinned and all inventory rows are accounted above; this main-page reference is metadata, not an omitted inventory.'
     rows.extend(prose)
     for number, line in enumerate((SOURCES / '5.2.0-api-changes-diff.wikitext').read_text().splitlines(), 1):
         if line.startswith('|+'):

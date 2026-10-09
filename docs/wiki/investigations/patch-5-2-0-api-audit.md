@@ -16,6 +16,16 @@ Every removed occurrence has a retained whole-word `/usr/bin/grep -R -n -w -F` c
 
 No simulator retirement is implemented. Existing cache/caller consumers are retained; Model/PlayerModel 3D methods remain intentionally unsupported rather than being removed from the common frame-method surface. Historical absence assertions do not authorize breaking current callers.
 
+## Coverage matrix
+
+| Scope | Accounted | Proof / limit |
+|---|---:|---|
+| Inventory publication/absence | 106 of 163 | Retail prefork sweep; no domain-parity credit |
+| Inventory gaps | 57 | 20 API/FrameXML additions, 35 retained Model methods, 2 PlayerModel handlers |
+| Existing meaningful backing | 3 occurrences | Raid difficulty state, cooldown duration transitions, school-name mapping plus cached alias identity |
+| Substantive prose | 16 pending | Precise per-line reasons; historical bugs and uncertain universal claims not imposed on current runtime |
+| Source metadata | 12 | Seven main-page context rows and five pinned build captions; total 191 unique accounted IDs |
+
 ## Existing backing behavior
 
 `GetRaidDifficultyID` reads `SimState.world.instance_difficulty`. New integration and prefork cases exercise distinct values 14 and 16. Existing cooldown tests assert stateful millisecond duration reads and clear transitions. School-name mapping belongs to `C_Spell`, with the cached legacy global alias handled by Blizzard's unmodified deprecated wrapper.
@@ -24,7 +34,9 @@ No simulator retirement is implemented. Existing cache/caller consumers are reta
 
 ## Verification
 
-Discovery/accounting and final historical gate are in progress. Final receipts and per-row reasons live in the session evidence; no complete-parity claim.
+Publication/factory cases pass 58/58; own prefork 2/2, raid integration 1/1, cooldown integration 13/13, school integration 1/1 and cached school-alias prefork 1/1 pass. Negative control changes 57 → 58 gaps and fails as required. All 89 Python fixtures pass. All 59 registers reproduce byte-identically; 56 saved extracts reproduce, with inherited 12.0.5/12.0.7/12.1.0 failures unchanged. No `src/` runtime edits: master-runtime/lib/startup comparison is therefore not triggered. Scoped lib, Mists/format and historical portability gates remain in progress.
+
+[Accounting](../../../data/patch-api/evidence/5.2.0-session-2026-10-08/accounting-summary.json), [gap reasons](../../../data/patch-api/evidence/5.2.0-session-2026-10-08/gap-review.json) and [retirement decisions](../../../data/patch-api/evidence/5.2.0-session-2026-10-08/retirement-decisions.json) retain the limits. No full integration suite, new runtime shim or vendor change.
 
 ## Sources
 

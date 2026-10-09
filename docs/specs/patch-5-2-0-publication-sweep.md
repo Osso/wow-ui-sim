@@ -5,9 +5,10 @@ Audit the pinned [API page](../../data/patch-api/sources/5.2.0-api-changes.wikit
 ## What it must do
 
 - [x] Preserve bare removed widget handler owners, directions and source lines; match the transclusion's numerical inventory headers.
-- [ ] Probe every inventory occurrence against the retail prefork SharedXML surface, separating exact known gaps from publication/absence credit.
-- [ ] Apply only later retail registers, oldest first; keep queued 5.3.0/5.4.0/5.4.1/5.4.2 placeholders ahead of 5.4.7.
-- [ ] Account separately for every retained prose statement and transclusion build caption.
+- [x] Probe every inventory occurrence against the retail prefork SharedXML surface, separating exact known gaps from publication/absence credit.
+- [x] Apply only later retail registers, oldest first; keep queued 5.3.0/5.4.0/5.4.1/5.4.2 placeholders ahead of 5.4.7.
+- [x] Account separately for every retained prose statement and transclusion build caption.
+- [x] Keep behavioral credit bounded: raid difficulty reads distinct state values, cooldown duration follows timing updates/clear, and school mapping remains linked to its cached deprecated alias.
 - [ ] Preserve historical proof in fresh checkouts and after unrelated later audits; reject own evidence tampering.
 
 ## How it works
@@ -25,11 +26,14 @@ Audit the pinned [API page](../../data/patch-api/sources/5.2.0-api-changes.wikit
 ## Tests asserting this spec
 
 - `tools/test_patch_mists_520_register.py`: concrete owner/direction/source-line fixture and complete pinned table counts.
-- `tests/patch_5_2_0_publication_sweep.rs`: prefork publication/absence discovery.
+- `tests/patch_5_2_0_publication_sweep.rs`: prefork publication/absence discovery and exact negative-control rejection.
+- `tests/patch_5_2_0_backing_behavior.rs`: integration and prefork raid-difficulty state reads.
+- `tests/cooldown_widget.rs`, `tests/spell_api.rs`, `tests/blizzard_deprecated_spell_script_loads.rs`: existing duration, school mapping and alias-identity behavior.
 
 ## Known gaps (current cycle)
 
-- [ ] Finish discovery accounting and historical validator proof.
+- [ ] Pass historical validator portability and own-evidence tamper controls.
+- [ ] 57 publication gaps and 16 historical prose contracts remain documented, not replaced with shims. Queued retail register integration may supersede some later.
 
 ## Out of scope
 
