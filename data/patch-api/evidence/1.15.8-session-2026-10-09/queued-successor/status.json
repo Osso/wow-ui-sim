@@ -1,0 +1,9 @@
+{
+  "patch": "1.15.9",
+  "state": "queued-placeholder-awaiting-main-integration",
+  "audit_context": "Classic Era, Season of Discovery, Hardcore literal wording in successor only",
+  "source_audit_report": "07c93b3b5 / 308aeda25 (read-only sibling docs; not own native proof)",
+  "native_proof": false,
+  "main_gates": "unperformed",
+  "applied": false
+}

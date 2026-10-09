@@ -1,0 +1,19 @@
+{
+  "scope": "1.15.8 SOURCE only",
+  "runs": [
+    {
+      "phase": "RED",
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/1.15.8-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "worktree",
+      "revision": "fcdf1d151371e894aa19d800eeaaf17aa0a3674a + own frozen fixtures and RED scaffold",
+      "exit_code": 1,
+      "result": "8 expected assertion failures: accounting missing",
+      "log": "red.log",
+      "invalidated_by": "implementation will replace scaffold; retained negative control only"
+    }
+  ]
+}
