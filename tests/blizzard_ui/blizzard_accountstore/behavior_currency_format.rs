@@ -49,10 +49,12 @@
 //!    (no offsets supplied), the actual markup is
 //!    `|T<icon>:12:12:0:0|t` — four numbers, not one zero. Additionally
 //!    the amount is passed through `BreakUpLargeNumbers` (a thousands-
-//!    separator helper, stubbed in `runtime_surface_bootstrap.lua:190-194`
-//!    to plain `tostring(value)` under the simulator), so the literal
-//!    return for `FormatCurrencyDisplay(1234, 5)` with `icon = 999` is
-//!    `"1234 |T999:12:12:0:0|t"`.
+//!    separator helper modeled locally in
+//!    `src/lua_api/globals/real/break_up_large_numbers.rs` using locale-aware
+//!    Decimal formatting). With the fixture locale asserted as `enUS`, the
+//!    local model returns `"1,234 |T999:12:12:0:0|t"` for
+//!    `FormatCurrencyDisplay(1234, 5)` with `icon = 999`. This pins local
+//!    modeled behavior, not a native-client capture.
 //!
 //! 4. **PLAN-omitted nil-icon fallback.** When
 //!    `C_AccountStore.GetCurrencyInfo(currencyID).icon` is nil
@@ -79,8 +81,8 @@
 //! - `format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero`
 //!   stubs GetCurrencyInfo to return `{icon = 9_999_777}`; calls
 //!   `FormatCurrencyDisplay(1234, ANY_CURRENCY_ID)`; asserts the result
-//!   is exactly `"1234 |T9999777:12:12:0:0|t"` (proving width=12,
-//!   height=12, xOffset=0, yOffset=0 — five numeric fields total, NOT
+//!   is exactly `"1,234 |T9999777:12:12:0:0|t"` in the asserted `enUS`
+//!   fixture (proving width=12, height=12, xOffset=0, yOffset=0, NOT
 //!   the PLAN-shaped single-`:0` shape).
 //! - `format_currency_display_returns_empty_string_when_currency_info_icon_is_nil`
 //!   stubs GetCurrencyInfo to return `{icon = nil}`; calls
@@ -191,6 +193,11 @@ fn format_currency_display_returns_amount_space_texture_markup_with_size_twelve_
         const CURRENCY_ID: i64 = 7;
         const ICON_FILE_ID: i64 = 9_999_777;
 
+        let locale: String = env
+            .eval("return GetLocale()")
+            .expect("fixture locale probe");
+        assert_eq!(locale, "enUS", "currency format fixture requires enUS");
+
         seed_get_currency_info_with_icon_stub(env, ICON_FILE_ID);
 
         let result: String = env
@@ -199,23 +206,26 @@ fn format_currency_display_returns_amount_space_texture_markup_with_size_twelve_
                 return AccountStoreUtil.FormatCurrencyDisplay({AMOUNT}, {CURRENCY_ID})
                 "#
             ))
-            .expect("FormatCurrencyDisplay must return a string concatenation under the stub");
+            .expect(
+                "FormatCurrencyDisplay must concatenate the locally formatted amount and stub icon",
+            );
 
-        let expected = format!("{AMOUNT} |T{ICON_FILE_ID}:12:12:0:0|t");
+        let expected = format!("1,234 |T{ICON_FILE_ID}:12:12:0:0|t");
 
         assert_eq!(
             result, expected,
             "Expected the literal output `{expected}` for amount={AMOUNT}, icon={ICON_FILE_ID}. \
              The body at line 62 returns \
              `BreakUpLargeNumbers(currencyAmount) .. \" \" .. CreateSimpleTextureMarkup(\
-             currencyInfo.icon, 12, 12)`. Under the simulator, `BreakUpLargeNumbers` (stubbed at \
-             `runtime_surface_bootstrap.lua:190-194` to `tostring(value)`) produces \"{AMOUNT}\" \
-             with no thousands separator, and `CreateSimpleTextureMarkup` from \
+             currencyInfo.icon, 12, 12)`. The local `BreakUpLargeNumbers` model in \
+             `src/lua_api/globals/real/break_up_large_numbers.rs` uses locale-aware Decimal \
+             formatting and produces \"1,234\" for the asserted enUS fixture; this is not \
+             native-client capture evidence. `CreateSimpleTextureMarkup` from \
              `Blizzard_SharedXMLBase/TextureUtil.lua:247-255` formats \
              `\"|T%s:%d:%d:%d:%d|t\"` with the args (file, height||width, width, xOffset||0, \
-             yOffset||0) — five numeric fields, NOT the PLAN-shaped single-`:0` shape. Different \
-             output proves either the markup format changed (e.g. width/height became dynamic) \
-             or BreakUpLargeNumbers is no longer a passthrough."
+             yOffset||0) — an icon id plus four size/offset fields, NOT the PLAN-shaped \
+             single-`:0` shape. Different output indicates changed markup or local \
+             locale-aware amount formatting."
         );
 
         teardown_get_currency_info_arg_tracker(env);

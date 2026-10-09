@@ -90,6 +90,9 @@ fn search_box_text_changed_calls_set_achievement_search_string_when_query_meets_
                     "AchievementFrame.HeaderDetails.Filters.SearchBox must exist (xml:1709)")
 
                 local search_box = AchievementFrame.HeaderDetails.Filters.SearchBox
+                local original_text_changed = search_box:GetScript("OnTextChanged")
+                -- Drive the handler explicitly; SetText must not also invoke the XML binding.
+                search_box:SetScript("OnTextChanged", nil)
 
                 local original_template = _G.SearchBoxTemplate_OnTextChanged
                 _G.SearchBoxTemplate_OnTextChanged = function(self) end
@@ -134,6 +137,7 @@ fn search_box_text_changed_calls_set_achievement_search_string_when_query_meets_
                 _G.AchievementFrame_UpdateSearchPreview = original_update
                 _G.AchievementFrame_ShowSearchPreviewResults = original_show
                 _G.SetAchievementSearchString = original_set
+                search_box:SetScript("OnTextChanged", original_text_changed)
 
                 return type(_G.AchievementFrameSearchBox_OnTextChanged),
                        type(_G.AchievementFullSearchResults),
@@ -141,7 +145,7 @@ fn search_box_text_changed_calls_set_achievement_search_string_when_query_meets_
                        at_threshold_signature
                 "#,
             )
-            .expect("setup + double-drive must run cleanly");
+            .expect("setup + explicit handler drives must run cleanly");
 
         let (
             text_changed_type,
