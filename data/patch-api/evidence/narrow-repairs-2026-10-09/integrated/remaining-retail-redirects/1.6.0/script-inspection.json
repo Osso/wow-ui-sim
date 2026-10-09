@@ -1,0 +1,69 @@
+[
+  {
+    "file": "audit.py",
+    "forbidden_calls": [],
+    "imports": [
+      "import hashlib",
+      "import importlib.util",
+      "import json",
+      "from pathlib import Path",
+      "import re",
+      "import sys",
+      "import tempfile"
+    ],
+    "sha256": "6e1f51217bfc2d9650c1a00bea45578324392b00de13063df76fdd5531d55c09"
+  },
+  {
+    "file": "test_source_accounting.py",
+    "forbidden_calls": [],
+    "imports": [
+      "import copy",
+      "import importlib.util",
+      "import json",
+      "from pathlib import Path",
+      "import unittest"
+    ],
+    "sha256": "02611b669147e58b3403830a2fe6598d31a341967e0561181edd827182b62030"
+  },
+  {
+    "file": "test_portable.py",
+    "forbidden_calls": [],
+    "imports": [
+      "import importlib.util",
+      "import json",
+      "from pathlib import Path",
+      "import shutil",
+      "import tempfile",
+      "import unittest",
+      "import sys"
+    ],
+    "sha256": "d0ac2185bbfe4adb7bb385854e7bbdaf400216442ff04bedf8e4e124fa3ad21a"
+  },
+  {
+    "file": "historical-tools/gen_patch_wikitext_register.py",
+    "forbidden_calls": [],
+    "imports": [
+      "import argparse",
+      "import hashlib",
+      "import json",
+      "import os",
+      "import re",
+      "from pathlib import Path"
+    ],
+    "sha256": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6"
+  },
+  {
+    "file": "historical-tools/extract_patch_non_inventory.py",
+    "forbidden_calls": [],
+    "imports": [
+      "import argparse",
+      "import hashlib",
+      "import html",
+      "import json",
+      "import re",
+      "from collections import Counter",
+      "from pathlib import Path"
+    ],
+    "sha256": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+  }
+]

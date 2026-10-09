@@ -1,0 +1,333 @@
+{
+  "archive_bytes": 53161,
+  "archive_equals_integrated_originals": true,
+  "archive_members": 31,
+  "archive_sha256": "f25bd16c4f07ff7abc04e73bd2547353ce7614c33cf9e2945fc9bbe9f1089bde",
+  "end": "2026-10-09T19:42:36.035196+00:00",
+  "fresh_portable_receipt_sha256": "0f17aa50185e12bda4cd501c48ced07ca4801a34c404dfbd195bbca0cea304bb",
+  "identity_pins": {
+    "archive_bytes": 53161,
+    "archive_members": 31,
+    "archive_sha256": "f25bd16c4f07ff7abc04e73bd2547353ce7614c33cf9e2945fc9bbe9f1089bde",
+    "copy_has_git_target_addons_current_tools": false,
+    "copy_root": "/home/osso/.worktrees/wow-ui-sim-p160-page/data/patch-api/evidence/1.6.0-session-2026-10-09/portable-160-a6ms4x1i",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p160-page",
+    "members": [
+      {
+        "bytes": 9322,
+        "name": "audit.py"
+      },
+      {
+        "bytes": 1530,
+        "name": "capture_defaults.py"
+      },
+      {
+        "bytes": 402,
+        "name": "default-capture.log"
+      },
+      {
+        "bytes": 322,
+        "name": "default-errors.json"
+      },
+      {
+        "bytes": 42,
+        "name": "default-extract.txt"
+      },
+      {
+        "bytes": 15,
+        "name": "default-generator.log"
+      },
+      {
+        "bytes": 262,
+        "name": "default-register.json"
+      },
+      {
+        "bytes": 51323,
+        "name": "frozen-manifest.json"
+      },
+      {
+        "bytes": 17701,
+        "name": "frozen-registry.json"
+      },
+      {
+        "bytes": 764,
+        "name": "green.log"
+      },
+      {
+        "bytes": 25063,
+        "name": "historical-tools/extract_patch_non_inventory.py"
+      },
+      {
+        "bytes": 72712,
+        "name": "historical-tools/gen_patch_wikitext_register.py"
+      },
+      {
+        "bytes": 15,
+        "name": "ledger-capture.log"
+      },
+      {
+        "bytes": 12849,
+        "name": "ledger.json"
+      },
+      {
+        "bytes": 1812,
+        "name": "original-docs/HANDOFF.md"
+      },
+      {
+        "bytes": 1384,
+        "name": "original-docs/REPLAY.md"
+      },
+      {
+        "bytes": 3631,
+        "name": "original-docs/audit.md"
+      },
+      {
+        "bytes": 2563,
+        "name": "original-docs/spec.md"
+      },
+      {
+        "bytes": 2663,
+        "name": "portable-red.log"
+      },
+      {
+        "bytes": 22017,
+        "name": "proof-ledger.json"
+      },
+      {
+        "bytes": 764,
+        "name": "red-scaffold.py"
+      },
+      {
+        "bytes": 4952,
+        "name": "red-test_source_accounting.py"
+      },
+      {
+        "bytes": 4919,
+        "name": "red.log"
+      },
+      {
+        "bytes": 532,
+        "name": "reference-provenance.json"
+      },
+      {
+        "bytes": 1308,
+        "name": "retention-review.json"
+      },
+      {
+        "bytes": 2832,
+        "name": "seals.json"
+      },
+      {
+        "bytes": 724,
+        "name": "source-pin.json"
+      },
+      {
+        "bytes": 315,
+        "name": "source-response.json"
+      },
+      {
+        "bytes": 45,
+        "name": "source.wikitext"
+      },
+      {
+        "bytes": 4559,
+        "name": "test_portable.py"
+      },
+      {
+        "bytes": 4952,
+        "name": "test_source_accounting.py"
+      }
+    ],
+    "method": "Fresh stdlib tarfile extraction, file-only bounded paths; isolated Python -I -B with PATH=/nonexistent. CLI cwd remains owned worktree by explicit instruction; copied modules load only own archived historical tools.",
+    "original_map_archive_files_unchanged": true,
+    "original_seals": 30,
+    "original_seals_sha256": "b193b6752c7fb6e2686f27aef28b7bd2321f7a8c18846c23198e27bf8aa7702f",
+    "revision": "a0e7ba9016e7c2034ada53e1c3d029599c192e28",
+    "temporary_copy_removed_after_execution": true
+  },
+  "integrated_scope_unchanged": true,
+  "original_map_sha256": "b193b6752c7fb6e2686f27aef28b7bd2321f7a8c18846c23198e27bf8aa7702f",
+  "original_seals": 30,
+  "pass": true,
+  "receipt_seals": 7,
+  "runs": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/tmp/remaining-redirects-integrated-independent/1.6.0/archive-copy/audit.py"
+      ],
+      "capture_loss": false,
+      "copied_inputs_unchanged": true,
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "end": "2026-10-09T19:42:35.854390+00:00",
+      "environment_assignments": {
+        "PATH": "/nonexistent",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "exit": 0,
+      "integrated_inputs_unchanged": true,
+      "post_copy_scope_sha256": "bc6e1cdf6df61a100d5314c241a009829f2ece3d735a3e4843b219fac214d3d2",
+      "post_scope_sha256": "baa85e10614c9c9f3f418776f4a0cb9951f78694ebcaca5378a61939d15038ef",
+      "pre_copy_scope_sha256": "bc6e1cdf6df61a100d5314c241a009829f2ece3d735a3e4843b219fac214d3d2",
+      "pre_scope_sha256": "baa85e10614c9c9f3f418776f4a0cb9951f78694ebcaca5378a61939d15038ef",
+      "revision_post": "e20c472caa43b2a422cef615579d03b22bf51866",
+      "revision_pre": "e20c472caa43b2a422cef615579d03b22bf51866",
+      "start": "2026-10-09T19:42:35.800441+00:00",
+      "stderr": "/tmp/remaining-redirects-integrated-independent/1.6.0/1-audit.stderr",
+      "stdout": "/tmp/remaining-redirects-integrated-independent/1.6.0/1-audit.stdout"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/tmp/remaining-redirects-integrated-independent/1.6.0/archive-copy/test_source_accounting.py"
+      ],
+      "capture_loss": false,
+      "copied_inputs_unchanged": true,
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "end": "2026-10-09T19:42:35.931945+00:00",
+      "environment_assignments": {
+        "PATH": "/nonexistent",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "exit": 0,
+      "integrated_inputs_unchanged": true,
+      "post_copy_scope_sha256": "bc6e1cdf6df61a100d5314c241a009829f2ece3d735a3e4843b219fac214d3d2",
+      "post_scope_sha256": "baa85e10614c9c9f3f418776f4a0cb9951f78694ebcaca5378a61939d15038ef",
+      "pre_copy_scope_sha256": "bc6e1cdf6df61a100d5314c241a009829f2ece3d735a3e4843b219fac214d3d2",
+      "pre_scope_sha256": "baa85e10614c9c9f3f418776f4a0cb9951f78694ebcaca5378a61939d15038ef",
+      "revision_post": "e20c472caa43b2a422cef615579d03b22bf51866",
+      "revision_pre": "e20c472caa43b2a422cef615579d03b22bf51866",
+      "start": "2026-10-09T19:42:35.862171+00:00",
+      "stderr": "/tmp/remaining-redirects-integrated-independent/1.6.0/2-test_source_accounting.stderr",
+      "stdout": "/tmp/remaining-redirects-integrated-independent/1.6.0/2-test_source_accounting.stdout"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/tmp/remaining-redirects-integrated-independent/1.6.0/archive-copy/test_portable.py",
+        "/tmp/remaining-redirects-integrated-independent/1.6.0/fresh-portable-proof.json"
+      ],
+      "capture_loss": false,
+      "copied_inputs_unchanged": true,
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "end": "2026-10-09T19:42:36.029499+00:00",
+      "environment_assignments": {
+        "PATH": "/nonexistent",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1"
+      },
+      "exit": 0,
+      "integrated_inputs_unchanged": true,
+      "post_copy_scope_sha256": "bc6e1cdf6df61a100d5314c241a009829f2ece3d735a3e4843b219fac214d3d2",
+      "post_scope_sha256": "baa85e10614c9c9f3f418776f4a0cb9951f78694ebcaca5378a61939d15038ef",
+      "pre_copy_scope_sha256": "bc6e1cdf6df61a100d5314c241a009829f2ece3d735a3e4843b219fac214d3d2",
+      "pre_scope_sha256": "baa85e10614c9c9f3f418776f4a0cb9951f78694ebcaca5378a61939d15038ef",
+      "revision_post": "e20c472caa43b2a422cef615579d03b22bf51866",
+      "revision_pre": "e20c472caa43b2a422cef615579d03b22bf51866",
+      "start": "2026-10-09T19:42:35.940298+00:00",
+      "stderr": "/tmp/remaining-redirects-integrated-independent/1.6.0/3-test_portable.stderr",
+      "stdout": "/tmp/remaining-redirects-integrated-independent/1.6.0/3-test_portable.stdout"
+    }
+  ],
+  "scope_post": {
+    ".gitignore": "13ce62fde36523b736022d611190681f458b0ed3713ddef0d71e0642ed51a9e1",
+    "HANDOFF.md": "276f12af0920ba9bb031995e4283737cfcd0a1a19346dd7e3e11e3e0165aaeb4",
+    "REPLAY.md": "d7dc2dd0a14f8064853b5e7099ea5dc570d58a2acbc5ce3a9ff85750cd347449",
+    "audit.py": "6e1f51217bfc2d9650c1a00bea45578324392b00de13063df76fdd5531d55c09",
+    "capture_defaults.py": "8ea4962eab45f765d1eed8a0dde464c1f5ce17201f6cc402073e2b25e1a3be6d",
+    "copied-source-green.log": "5861e84a517c50d78b224051b4a61322f6e4985bb9fb5f40aa1f04b165a67df9",
+    "default-capture.log": "a8e79a1c1769d052406541ac3e8b4c63539c6ee5340318a13d4149e5aec137df",
+    "default-errors.json": "ccde64154a9ba56727908f233f0fccde2ab080d6ff411dfddb00a188481c9328",
+    "default-extract.txt": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f",
+    "default-generator.log": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72",
+    "default-register.json": "178d2fdb45505dd23aa98e2e064409b5ef8e4e17106d2a172fd070b7e49c8269",
+    "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+    "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+    "green.log": "4140b3e60c619e75f309cfdd2cf77de02e82cc7f2ba9705ddd9691df1f413355",
+    "historical-replay.log": "f7acaeb7c31152ad95baf4e7ae7cd110234f6376af7428f09c8e8d8b0210313e",
+    "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532",
+    "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+    "later-proof-ledger.json": "91aa0158a10cf892cf4aa6678d62c842347c0bfbc3b99ee4b9dba92fde9f5c19",
+    "later-retention-review.json": "3b29951d6ca7326c0bf07651b5e9e73405ae13c4f732bb89394f2ab9c288e109",
+    "ledger-capture.log": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72",
+    "ledger.json": "e2161af0c0d2e35024eef4e130d423f62c48dda4de6c61f142ca8e229887b300",
+    "original-docs/HANDOFF.md": "32ada390da41b59c5e7024c8974961816235c4ae935bccdac31fe9f76bbf7b8d",
+    "original-docs/REPLAY.md": "540450347227045aab3b50343d5ce2507a47ac182c57a8f9eee5a610c8e02d00",
+    "original-docs/audit.md": "3288ddd26cf4194abf13c5621e229966de08f4eb8e7a6fc9f06b084597b7fc76",
+    "original-docs/spec.md": "5c0d5430edce338eb909f1d951aad0f116f7a81200d9e4f8c15e3920fccd677c",
+    "portable-context.json": "65b48cadd1d808cdc017f005c9f4ee9cc43d4c50d4e2f52bd5d217b866497643",
+    "portable-green.log": "2cb0dfa8339ccb0dee9ff9d6d20e084cf905ee2a78f7e0c3244cefcb9ea31215",
+    "portable-proof.json": "0f17aa50185e12bda4cd501c48ced07ca4801a34c404dfbd195bbca0cea304bb",
+    "portable-red.log": "aff5f0412490a79c8200c5e2b3031e914d90066cfd4359065ba5c8ce5ad6f02c",
+    "proof-ledger.json": "3e961c9ad48741e3f2cdc39a7fa1c60a4f8e6c60cc0adba8d6d48cfe270ee4ca",
+    "receipt-seals.json": "cdfb7611947a93101baa9fade0140ba4969b89eb1c852aeda10d78ed4b419891",
+    "red-scaffold.py": "cea22a36e0ea2bcb19df7463b97b2a01d854a756c7be004270fe921f4fd83ef3",
+    "red-test_source_accounting.py": "02611b669147e58b3403830a2fe6598d31a341967e0561181edd827182b62030",
+    "red.log": "8ddcdf73c3f078d7c1fe4cf592e8f4bd2d65a7bfb8c185677173544659e5f14e",
+    "reference-provenance.json": "9c6ac9beb515cab4f4da7aacda6017b3cfaff135a7354afd5b53d3dc2ae6a277",
+    "replay-archive.tar.gz": "f25bd16c4f07ff7abc04e73bd2547353ce7614c33cf9e2945fc9bbe9f1089bde",
+    "retention-review.json": "f7c46bfb2bc16536a8027de123069c9738fef518a602d338d2d2be32f9decc61",
+    "seals.json": "b193b6752c7fb6e2686f27aef28b7bd2321f7a8c18846c23198e27bf8aa7702f",
+    "source-pin.json": "527217f6fdb81cf1fa676241a84eeebf04043b25c8c03687fe0fffbba3bff1c8",
+    "source-response.json": "6ceb530c971d28be469ee57c2a8843436a3fde78325351533f88778292f8deb7",
+    "source.wikitext": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+    "test_portable.py": "d0ac2185bbfe4adb7bb385854e7bbdaf400216442ff04bedf8e4e124fa3ad21a",
+    "test_source_accounting.py": "02611b669147e58b3403830a2fe6598d31a341967e0561181edd827182b62030"
+  },
+  "scope_pre": {
+    ".gitignore": "13ce62fde36523b736022d611190681f458b0ed3713ddef0d71e0642ed51a9e1",
+    "HANDOFF.md": "276f12af0920ba9bb031995e4283737cfcd0a1a19346dd7e3e11e3e0165aaeb4",
+    "REPLAY.md": "d7dc2dd0a14f8064853b5e7099ea5dc570d58a2acbc5ce3a9ff85750cd347449",
+    "audit.py": "6e1f51217bfc2d9650c1a00bea45578324392b00de13063df76fdd5531d55c09",
+    "capture_defaults.py": "8ea4962eab45f765d1eed8a0dde464c1f5ce17201f6cc402073e2b25e1a3be6d",
+    "copied-source-green.log": "5861e84a517c50d78b224051b4a61322f6e4985bb9fb5f40aa1f04b165a67df9",
+    "default-capture.log": "a8e79a1c1769d052406541ac3e8b4c63539c6ee5340318a13d4149e5aec137df",
+    "default-errors.json": "ccde64154a9ba56727908f233f0fccde2ab080d6ff411dfddb00a188481c9328",
+    "default-extract.txt": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f",
+    "default-generator.log": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72",
+    "default-register.json": "178d2fdb45505dd23aa98e2e064409b5ef8e4e17106d2a172fd070b7e49c8269",
+    "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+    "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+    "green.log": "4140b3e60c619e75f309cfdd2cf77de02e82cc7f2ba9705ddd9691df1f413355",
+    "historical-replay.log": "f7acaeb7c31152ad95baf4e7ae7cd110234f6376af7428f09c8e8d8b0210313e",
+    "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532",
+    "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+    "later-proof-ledger.json": "91aa0158a10cf892cf4aa6678d62c842347c0bfbc3b99ee4b9dba92fde9f5c19",
+    "later-retention-review.json": "3b29951d6ca7326c0bf07651b5e9e73405ae13c4f732bb89394f2ab9c288e109",
+    "ledger-capture.log": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72",
+    "ledger.json": "e2161af0c0d2e35024eef4e130d423f62c48dda4de6c61f142ca8e229887b300",
+    "original-docs/HANDOFF.md": "32ada390da41b59c5e7024c8974961816235c4ae935bccdac31fe9f76bbf7b8d",
+    "original-docs/REPLAY.md": "540450347227045aab3b50343d5ce2507a47ac182c57a8f9eee5a610c8e02d00",
+    "original-docs/audit.md": "3288ddd26cf4194abf13c5621e229966de08f4eb8e7a6fc9f06b084597b7fc76",
+    "original-docs/spec.md": "5c0d5430edce338eb909f1d951aad0f116f7a81200d9e4f8c15e3920fccd677c",
+    "portable-context.json": "65b48cadd1d808cdc017f005c9f4ee9cc43d4c50d4e2f52bd5d217b866497643",
+    "portable-green.log": "2cb0dfa8339ccb0dee9ff9d6d20e084cf905ee2a78f7e0c3244cefcb9ea31215",
+    "portable-proof.json": "0f17aa50185e12bda4cd501c48ced07ca4801a34c404dfbd195bbca0cea304bb",
+    "portable-red.log": "aff5f0412490a79c8200c5e2b3031e914d90066cfd4359065ba5c8ce5ad6f02c",
+    "proof-ledger.json": "3e961c9ad48741e3f2cdc39a7fa1c60a4f8e6c60cc0adba8d6d48cfe270ee4ca",
+    "receipt-seals.json": "cdfb7611947a93101baa9fade0140ba4969b89eb1c852aeda10d78ed4b419891",
+    "red-scaffold.py": "cea22a36e0ea2bcb19df7463b97b2a01d854a756c7be004270fe921f4fd83ef3",
+    "red-test_source_accounting.py": "02611b669147e58b3403830a2fe6598d31a341967e0561181edd827182b62030",
+    "red.log": "8ddcdf73c3f078d7c1fe4cf592e8f4bd2d65a7bfb8c185677173544659e5f14e",
+    "reference-provenance.json": "9c6ac9beb515cab4f4da7aacda6017b3cfaff135a7354afd5b53d3dc2ae6a277",
+    "replay-archive.tar.gz": "f25bd16c4f07ff7abc04e73bd2547353ce7614c33cf9e2945fc9bbe9f1089bde",
+    "retention-review.json": "f7c46bfb2bc16536a8027de123069c9738fef518a602d338d2d2be32f9decc61",
+    "seals.json": "b193b6752c7fb6e2686f27aef28b7bd2321f7a8c18846c23198e27bf8aa7702f",
+    "source-pin.json": "527217f6fdb81cf1fa676241a84eeebf04043b25c8c03687fe0fffbba3bff1c8",
+    "source-response.json": "6ceb530c971d28be469ee57c2a8843436a3fde78325351533f88778292f8deb7",
+    "source.wikitext": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+    "test_portable.py": "d0ac2185bbfe4adb7bb385854e7bbdaf400216442ff04bedf8e4e124fa3ad21a",
+    "test_source_accounting.py": "02611b669147e58b3403830a2fe6598d31a341967e0561181edd827182b62030"
+  },
+  "seal_failures": [],
+  "start": "2026-10-09T19:42:35.731968+00:00",
+  "version": "1.6.0"
+}

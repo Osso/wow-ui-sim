@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "/tmp/remaining-redirects-integrated-independent/1.10.0/archive-copy/audit.py"
+  ],
+  "capture_loss": false,
+  "copied_inputs_unchanged": true,
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "end": "2026-10-09T19:42:34.665260+00:00",
+  "environment_assignments": {
+    "PATH": "/nonexistent",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "exit": 0,
+  "integrated_inputs_unchanged": true,
+  "post_copy_scope_sha256": "b85329cbc6e22c2c7b4bd16584d9b79794f4996064b967f13d337a6bf64ccbb8",
+  "post_scope_sha256": "7bd916fadd64ccc66cda32483f04ed1b2c5c4d7de309e952cc3f2699277592e2",
+  "pre_copy_scope_sha256": "b85329cbc6e22c2c7b4bd16584d9b79794f4996064b967f13d337a6bf64ccbb8",
+  "pre_scope_sha256": "7bd916fadd64ccc66cda32483f04ed1b2c5c4d7de309e952cc3f2699277592e2",
+  "revision_post": "e20c472caa43b2a422cef615579d03b22bf51866",
+  "revision_pre": "e20c472caa43b2a422cef615579d03b22bf51866",
+  "start": "2026-10-09T19:42:34.614248+00:00",
+  "stderr": "/tmp/remaining-redirects-integrated-independent/1.10.0/1-audit.stderr",
+  "stdout": "/tmp/remaining-redirects-integrated-independent/1.10.0/1-audit.stdout"
+}

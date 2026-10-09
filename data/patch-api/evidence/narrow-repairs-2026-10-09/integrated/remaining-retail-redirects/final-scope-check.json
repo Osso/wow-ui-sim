@@ -1,0 +1,44 @@
+[
+  {
+    "version": "1.10.1",
+    "time": "2026-10-09T19:43:30.722216+00:00",
+    "final_scope_sha256": "6b8f48afcdad1e0ec144747fd09d658b3a41cf824bbb214cc454dc307ca0bbdf",
+    "equal_page_pre_and_post": true
+  },
+  {
+    "version": "1.10.0",
+    "time": "2026-10-09T19:43:30.722990+00:00",
+    "final_scope_sha256": "7bd916fadd64ccc66cda32483f04ed1b2c5c4d7de309e952cc3f2699277592e2",
+    "equal_page_pre_and_post": true
+  },
+  {
+    "version": "1.9.0",
+    "time": "2026-10-09T19:43:30.723748+00:00",
+    "final_scope_sha256": "83ac03f317bc42addc0a3a2bb96f8a82d4b97977589ae5b5d06eeb5f529e0c6d",
+    "equal_page_pre_and_post": true
+  },
+  {
+    "version": "1.8.0",
+    "time": "2026-10-09T19:43:30.724682+00:00",
+    "final_scope_sha256": "e6c375a1d8ada5d91262d8eb3ae171c1fc0eaf252b131db8c3bb7a79cef6c9cb",
+    "equal_page_pre_and_post": true
+  },
+  {
+    "version": "1.7.0",
+    "time": "2026-10-09T19:43:30.725710+00:00",
+    "final_scope_sha256": "1bad17c8f54cd28ccb59c57d1c106319058f758b07ec72694dbd87c928dc7be3",
+    "equal_page_pre_and_post": true
+  },
+  {
+    "version": "1.6.0",
+    "time": "2026-10-09T19:43:30.726447+00:00",
+    "final_scope_sha256": "baa85e10614c9c9f3f418776f4a0cb9951f78694ebcaca5378a61939d15038ef",
+    "equal_page_pre_and_post": true
+  },
+  {
+    "version": "1.5.0",
+    "time": "2026-10-09T19:43:30.727168+00:00",
+    "final_scope_sha256": "dffadc05c25658ebfed61076364995bb21ca28cc3090bd898c9dd4db75fbfdc1",
+    "equal_page_pre_and_post": true
+  }
+]

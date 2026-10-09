@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--name-status",
+    "0d687a77b8d241fc616a9e85321195842cc04f7c",
+    "e20c472caa43b2a422cef615579d03b22bf51866",
+    "--",
+    "data/patch-api/evidence/1.10.1-session-2026-10-09",
+    "data/patch-api/evidence/1.10.0-session-2026-10-09",
+    "data/patch-api/evidence/1.9.0-session-2026-10-09",
+    "data/patch-api/evidence/1.8.0-session-2026-10-09",
+    "data/patch-api/evidence/1.7.0-session-2026-10-09",
+    "data/patch-api/evidence/1.6.0-session-2026-10-09",
+    "data/patch-api/evidence/1.5.0-session-2026-10-09"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "start": "2026-10-09T19:43:30.727257+00:00",
+  "end": "2026-10-09T19:43:30.729377+00:00",
+  "exit": 0,
+  "stdout": "epochs/requested-to-actual-scope.stdout",
+  "stderr": "epochs/requested-to-actual-scope.stderr"
+}

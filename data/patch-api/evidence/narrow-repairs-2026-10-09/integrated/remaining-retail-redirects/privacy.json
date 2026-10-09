@@ -1,0 +1,9 @@
+{
+  "environment_key_count": 31,
+  "environment_values_inspected": false,
+  "inspected_at": "2026-10-09T19:42:34.239760+00:00",
+  "limits": "Heuristic, not exhaustive; no secret values requested or retained.",
+  "patterns": "private-key headers, provider/GitHub token shapes, long Bearer tokens, AWS access-key shape",
+  "retained_environment_values": "explicit replay assignments only",
+  "sensitive_environment_key_count": 0
+}

@@ -1,0 +1,600 @@
+[
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:12.306242+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:12.305002+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/initial-head.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/initial-head.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:12.326898+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:12.306406+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/initial-status.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/initial-status.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.309718+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.307788+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.365804+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.364435+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.369079+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.368274+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.442160+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.440918+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.445309+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.444264+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.542150+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.541028+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.614000+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.612688+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.668431+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.666756+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.671796+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.670920+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.741213+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.740002+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.744284+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.743401+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.835207+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.833811+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.10.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.910760+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.909258+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.964686+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.963436+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:34.967785+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:34.966872+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.045067+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.043365+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.050027+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.048667+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.133272+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.131778+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.9.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.203322+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.201861+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.255930+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.254509+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.259363+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.258485+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.327926+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.326386+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.331735+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.330618+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.422336+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.421154+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.8.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.500018+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.498259+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.552125+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.550884+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.556426+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.555294+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.627788+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.626512+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.632105+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.630717+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.725180+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.723903+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.7.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.799921+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.798666+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.857701+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.856148+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.861385+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.860211+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.935540+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.934198+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:35.939871+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:35.938928+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.033077+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.031743+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.6.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.116095+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.115033+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.174241+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.173261+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.177569+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.176733+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.248350+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.247153+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.252158+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.250788+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.340557+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.339379+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/1.5.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.346256+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.345264+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/final-head.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/final-head.stdout"
+  },
+  {
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "end": "2026-10-09T19:42:36.366989+00:00",
+    "exit": 0,
+    "start": "2026-10-09T19:42:36.347206+00:00",
+    "stderr": "/tmp/remaining-redirects-integrated-independent/epochs/final-status.stderr",
+    "stdout": "/tmp/remaining-redirects-integrated-independent/epochs/final-status.stdout"
+  }
+]

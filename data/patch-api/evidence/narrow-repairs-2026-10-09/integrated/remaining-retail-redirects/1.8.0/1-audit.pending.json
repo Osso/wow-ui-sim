@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "/tmp/remaining-redirects-integrated-independent/1.8.0/archive-copy/audit.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "environment_assignments": {
+    "PATH": "/nonexistent",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "exit": null,
+  "pre_copy_scope_sha256": "e6d3d48a3687535c9973faf203c2e33bf259e9e6e357b728861e9e3fa8eefdc6",
+  "pre_scope_sha256": "e6c375a1d8ada5d91262d8eb3ae171c1fc0eaf252b131db8c3bb7a79cef6c9cb",
+  "revision_pre": "e20c472caa43b2a422cef615579d03b22bf51866",
+  "start": "2026-10-09T19:42:35.203737+00:00"
+}

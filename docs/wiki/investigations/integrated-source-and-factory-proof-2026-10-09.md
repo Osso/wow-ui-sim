@@ -52,6 +52,12 @@ Python proof ran at `f8da74e31`; Cargo ran from `43d9ce02` through `f2eebd359` i
 
 [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/main-retention.json) preserves 191 root/command artifacts byte-for-byte; build targets, copied inputs, scratch and TMPDIR excluded. No proof commands rerun for retention. This does not cover later 1.10.1/1.10.0/1.9/1.8 audits or close the parent.
 
+## Seven remaining Retail redirects — integrated SOURCE PASS only
+
+[Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/remaining-retail-redirects/report.md) at actual `e20c472ca`: 1.10.1/1.10.0/1.9.0/1.8.0/1.7.0/1.6.0/1.5.0 copied SOURCE **38/38**, portable **21/21**, seven validators exit0. **231 original +70 separate seals**, 238 archive members intact; 14 serialized tamper rejections and exact restorations. All 21 proof commands ran once; evidence-scope hashes unchanged, requested-to-actual evidence diff empty. Each exact redirect keeps one UNPROVEN target contract and zero local declarations/model/runtime/native credit.
+
+[Retention](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/remaining-retail-redirects/main-retention.json) preserves 249 artifacts byte-identically, excluding archive copies/scratch. Actual setup capture losses disclosed; no proof-command exit/stream loss. Target research, native/meaningful behavior, newer literal-page independent gates, full suites and parent acceptance remain separate. No Cargo or broad rerun.
+
 ## Era1.13.4 / 1.13.3 integration — bounded PASS
 
 [Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1134-1133/report.md) at `9252c6cc9`: SOURCE **8/8 + 9/9**, separate successors **3/3**, portable **3/3 each**, original/separate seals **112+9 / 84+12**, and 1,873 scoped hashes unchanged. One combined offline/locked Cargo invocation passed each bare-Era target **1/1**. Totem replacement changes the existing slot name; expiry uses an already-expired slot. NPC absolute-health observations cover three explicit host mutations with percentage controls. No production behavior changed; all 30/38 historical contracts remain UNPROVEN.

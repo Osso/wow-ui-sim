@@ -1,0 +1,29 @@
+{
+  "proof_invocation_capture_losses": 0,
+  "proof_invocations": 21,
+  "setup_only": [
+    {
+      "operation": "Initial rg --files discovery",
+      "observed_error": "[Errno 2] No such file or directory: rg",
+      "exit": null,
+      "timestamp": "not captured",
+      "scope": "not proof; filesystem discovery replaced unavailable executable"
+    },
+    {
+      "operation": "functions.find /tmp",
+      "observed_error": "fd is not available on PATH",
+      "exit": null,
+      "timestamp": "not captured",
+      "scope": "not proof"
+    },
+    {
+      "operation": "First orchestration wrapper",
+      "observed_error": "Pi returned empty Error: Error: with no traceback or numeric exit",
+      "exit": null,
+      "timestamp": "exact wrapper end not captured; initial metadata starts 2026-10-09T19:42:12.305002+00:00",
+      "scope": "Stopped before archive extraction or any of 21 proof invocations. portable-context 1.10.1 uses seals_sha256; controller subsequently accepted this actual page-specific pin field. Initial metadata preserved; no successful checks repeated."
+    }
+  ],
+  "read_output_limits": "Some exploration tool displays truncated; subsequent targeted reads/diff inspection covered HANDOFF/REPLAY and active scripts. Proof stdout/stderr retained untruncated with capture().run(), then read in full. No chronological stream interleaving claimed.",
+  "in_memory_checks": "Hash/archive/privacy/restoration assertions ran inside Pyrun; no invented subprocess exit attached to these assertions."
+}
