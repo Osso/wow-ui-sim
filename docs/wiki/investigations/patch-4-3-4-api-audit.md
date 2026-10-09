@@ -20,7 +20,17 @@ Pinned historical retail page **389302**, revision **3743181**, timestamp **2021
 
 Own discovery at `5c3bccdf7` fails at the expected empty-gap boundary: seven missing globals. [Results](../../../data/patch-api/evidence/4.3.4-session-2026-10-09/discovery-results.json) account for every inventory row. [Coverage ledger](../../../data/patch-api/sources/4.3.4-page-coverage.json) records exact missing backing systems: account parental-control deadline, login-session clock, restoration service, ticket availability/throttle and report submission/target lifecycle. Page supplies no units, reset/sentinel semantics or signatures; no source-backed cheap real model was established.
 
-`GetNumSoRRemaining` is superseded by 8.2.5; `GMSubmitBug` and `GMSubmitSuggestion` by 9.0.1. Unqualified `ReportPlayer`/`SetPendingReportTarget` are not their similarly named retired C_* members. `ComplainChat` is absent without any new retirement. Reviewed seven-ID fixture committed before GREEN. No broad publication/check/lint/type/readability/coverage/startup/full-suite or final acceptance gate run by implementer.
+`GetNumSoRRemaining` is superseded by 8.2.5; `GMSubmitBug` and `GMSubmitSuggestion` by 9.0.1. Unqualified `ReportPlayer`/`SetPendingReportTarget` are not their similarly named retired C_* members. `ComplainChat` is absent without any new retirement. Reviewed seven-ID fixture committed before GREEN.
+
+| Targeted proof | Revision | Result |
+|---|---|---|
+| Own publication sweep | `04f6f5ce1` | 1 passed, 0 failed; seven reviewed gaps, no positive types |
+| Same-cardinality fabricated-global control | `04f6f5ce1` | Expected failure: exactly one new gap, 7 → 8 |
+| Own register/extract reproduction | `04f6f5ce1` | Both exit 0; byte-identical, default flags |
+
+[Proof ledger](../../../data/patch-api/evidence/4.3.4-session-2026-10-09/README.md) retains exact argv/revisions/log seals. [Data-derived accounting](../../../data/patch-api/evidence/4.3.4-session-2026-10-09/accounting.json): **12 ledger IDs = 7 publication gaps + 3 superseded-publication + 1 absence-only + 1 metadata-only**, zero prose/signature contracts, fixes or retirements. No unmodeled parity claim. No broad publication/check/lint/type/readability/coverage/startup/full-suite or final acceptance gate run by implementer; coordinator owns those gates. No dedicated validator added.
+
+[Compact historical pins](../../../data/patch-api/evidence/4.3.4-session-2026-10-09/historical-input-pins.json) archive the sparse own inputs and **64 retail successors** as exact gzip JSON bytes (**274,982 bytes**), with SHA-256/Git blob IDs. Runtime tree IDs identify code only; no historical executable/relocated-runtime proof. Later audits may add coordinator receipts without overwriting sealed historical evidence.
 
 ## Sources
 

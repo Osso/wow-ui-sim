@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_3_4_publication_sweep",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+  "revision": "04f6f5ce145d21a00f3537af19446c7d09b5f3a5",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p434-source/target",
+    "P434_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p434-source/data/patch-api/evidence/4.3.4-session-2026-10-09/negative-register.json",
+    "P434_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p434-source/data/patch-api/evidence/4.3.4-session-2026-10-09/negative-results.json"
+  },
+  "exit": 1,
+  "log": "negative.log",
+  "log_sha256": "7d40345bf3a2c41b4533748be254e0fbf9f9b2e66ea888def5bc4165486b945f",
+  "scope": "Replace successful ComplainChat absence with missing fabricated global, retain row count; expected seven to eight gaps"
+}

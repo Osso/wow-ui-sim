@@ -1,0 +1,14 @@
+{
+  "command": [
+    "rustfmt",
+    "--edition",
+    "2024",
+    "/home/osso/.worktrees/wow-ui-sim-p434-source/tests/patch_4_3_4_publication_sweep.rs"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+  "revision": "04f6f5ce145d21a00f3537af19446c7d09b5f3a5",
+  "exit": 0,
+  "log": "format.log",
+  "log_sha256": "a9f982d8cb8dbc81e6965814c7d33f2249d63fbd3467f8331ddca475f7e4377e",
+  "scope": "Own new sweep file formatter only; no readability/check gate"
+}

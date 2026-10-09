@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_3_4_publication_sweep",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+  "revision": "04f6f5ce145d21a00f3537af19446c7d09b5f3a5",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p434-source/target",
+    "P434_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p434-source/data/patch-api/evidence/4.3.4-session-2026-10-09/own-results.json"
+  },
+  "exit": 0,
+  "log": "own.log",
+  "log_sha256": "be7b84a8e0209697da51419359ab47af546e2614629c00542dacfb2487cbbf06",
+  "scope": "Only own cached-retail publication/absence against reviewed seven-gap fixture; not behavioral parity"
+}

@@ -17,7 +17,7 @@ Audit only historical retail page 389302, revision 3743181 (2021-08-22T03:09:40Z
 
 ## Tests
 
-Own prefork filter `patch_4_3_4_publication_sweep`, followed by a scratch-register negative control. Discovery RED records seven missing globals, three superseded removals and one absence; reviewed-gap GREEN pending. No runtime implementation changes.
+Own prefork filter `patch_4_3_4_publication_sweep`, followed by a scratch-register negative control. Discovery RED records seven missing globals, three superseded removals and one absence; reviewed-gap GREEN passes 1/1. Same-cardinality fabricated-global control fails at exactly seven → eight gaps. Own default register/extract replay is byte-identical. No runtime implementation changes; coordinator owns final acceptance.
 
 ## Exclusions
 

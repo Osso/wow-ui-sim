@@ -1,0 +1,7 @@
+{
+  "recorded_revision": "04f6f5ce145d21a00f3537af19446c7d09b5f3a5",
+  "unchanged_historical_input_files": 74,
+  "invalidated_inputs": [],
+  "later_changes": "Only proof/accounting/docs artifacts; runtime, sweep, fixture, tools and successor inputs unchanged",
+  "warning": "Administrative byte identity proof; not a new test/check/acceptance invocation"
+}

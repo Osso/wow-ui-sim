@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 
-[Audit](investigations/patch-4-3-4-api-audit.md): pinned revision 3743181; 11 inventory rows and one navigation context, no prose/signature contracts. Existing default parsers; literal 5.0.1 and separate 5.0.4 successors exclude Classic. Own discovery RED: seven missing globals, three superseded removals, one current absence. Exact model limits recorded; no runtime models or retirements.
+[Audit](investigations/patch-4-3-4-api-audit.md): pinned revision 3743181; 11 inventory rows and one navigation context, no prose/signature contracts. Existing default parsers; literal 5.0.1 and separate 5.0.4 successors exclude Classic. Own discovery RED: seven missing globals, three superseded removals, one current absence; 12 ledger IDs. Reviewed GREEN 1/1, negative 7 → 8, own default register/extract replay byte-identical. Exact model limits and compact 64-successor pins retained; no runtime models/retirements or native parity. Coordinator owns final gates.
 
 ## [2026-10-08] integration | Retail Patch 5.1.0 API refresh
 

@@ -1,0 +1,101 @@
+{
+  "schema": "bounded-patch-audit-seals/v1",
+  "scope": "Explicit historical own-page artifact set only; additional coordinator receipts allowed. Integrity seals, not a final validator or fresh proof run.",
+  "files": {
+    "README.md": {
+      "sha256": "061734518cd90acf7ca88aa1155d4d7af7d0365f2e5483200f2c74582f9717de",
+      "bytes": 3538
+    },
+    "accounting.json": {
+      "sha256": "9035aed50f699cad35573eba2cbddd4198be9562ee217b17ed45dbf315648ab3",
+      "bytes": 15651
+    },
+    "caller-scans.json": {
+      "sha256": "8c8ef1ed909932d8512e564171d532eac3a47a866ce0cbe7ef0305a0acb53119",
+      "bytes": 2851
+    },
+    "discovery-results.json": {
+      "sha256": "263d096cc4b3006201f24a945dba6b5684447f058d742dce308bd4a8497040ad",
+      "bytes": 4979
+    },
+    "discovery.log": {
+      "sha256": "6867af6cd54fb8077c8be453ec49089afbf7d3917d0f47e4fdfc74d00710ee19",
+      "bytes": 30955
+    },
+    "discovery.proof.json": {
+      "sha256": "2868cfe3463fd13e0842161e4dc2ec9217a83e50a513a3b603ac3a166f8c3a88",
+      "bytes": 756
+    },
+    "format.log": {
+      "sha256": "a9f982d8cb8dbc81e6965814c7d33f2249d63fbd3467f8331ddca475f7e4377e",
+      "bytes": 10
+    },
+    "format.proof.json": {
+      "sha256": "64828b727b67ec84be500809b3ca6f5484eb9d0bcc0b64209f31a768d8cf4fa8",
+      "bytes": 467
+    },
+    "historical-input-pins.json": {
+      "sha256": "eb912d4c443ddea78524ae20cf4be259dedcd5733b27a073aa37156ab0559031",
+      "bytes": 16142
+    },
+    "historical-inputs.json.gz": {
+      "sha256": "e430620b62386a93299ee41318967347af5166b1e01f2fa82e182cf7bd7f191d",
+      "bytes": 274982
+    },
+    "negative-register.json": {
+      "sha256": "89d024fb0bdf3dbcf9466de8bf4f7eba5157e45b6284f494c455f490aeeed29c",
+      "bytes": 2932
+    },
+    "negative-results.json": {
+      "sha256": "33e71d4a3a20a50dfb5c38f12626e294043d1c816151f671367a16169005a946",
+      "bytes": 4990
+    },
+    "negative.log": {
+      "sha256": "7d40345bf3a2c41b4533748be254e0fbf9f9b2e66ea888def5bc4165486b945f",
+      "bytes": 12245
+    },
+    "negative.proof.json": {
+      "sha256": "b16bb70a812fd6ce7a70c58156ade0f6cf38d9d9a1f48a442d963869621c21bd",
+      "bytes": 910
+    },
+    "own-results.json": {
+      "sha256": "263d096cc4b3006201f24a945dba6b5684447f058d742dce308bd4a8497040ad",
+      "bytes": 4979
+    },
+    "own.log": {
+      "sha256": "be7b84a8e0209697da51419359ab47af546e2614629c00542dacfb2487cbbf06",
+      "bytes": 10288
+    },
+    "own.proof.json": {
+      "sha256": "f802545041319ff18ec3ab5c727f951d067c06979095d2e44acfbb79f0fff022",
+      "bytes": 735
+    },
+    "proof-scope.json": {
+      "sha256": "3ec3ec64e8e8a345d215d4358d28e8aded816f2970b311ce8582786cab9b2032",
+      "bytes": 357
+    },
+    "reproduction-0.log": {
+      "sha256": "a9f982d8cb8dbc81e6965814c7d33f2249d63fbd3467f8331ddca475f7e4377e",
+      "bytes": 10
+    },
+    "reproduction-1.log": {
+      "sha256": "f44c0da5849fa51cf0f177de3a9d34a4966da12a5b943ca7dfa36957e8b65251",
+      "bytes": 74
+    },
+    "reproduction.proof.json": {
+      "sha256": "4b637b03ef3f6d10180b08b6090df7b103860bc3a3e515600b6b7bffcb4cf70e",
+      "bytes": 1588
+    },
+    "source-pin.json": {
+      "sha256": "2cf43ee4ecf9cd56105f76e0c7c9097c0a7a435d12f31c4f3fdd57e3774685f7",
+      "bytes": 550
+    },
+    "source-response.json": {
+      "sha256": "e9f53579481fdce620bcf80567a1fd38debf0c1daa2e24b8d3689ba7c7ef3b81",
+      "bytes": 1185
+    }
+  },
+  "artifact_count": 23,
+  "total_sealed_bytes": 391174,
+  "max_artifact_bytes": 274982
+}

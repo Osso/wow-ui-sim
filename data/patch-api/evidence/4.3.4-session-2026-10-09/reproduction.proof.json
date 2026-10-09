@@ -1,0 +1,41 @@
+{
+  "scope": "Own page only; no other saved extracts/registers or broad fixture suites rerun",
+  "proofs": [
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p434-source/tools/gen_patch_wikitext_register.py",
+        "4.3.4",
+        "/home/osso/.worktrees/wow-ui-sim-p434-source/data/patch-api/sources/4.3.4-api-changes.wikitext",
+        "3743181",
+        "/home/osso/.worktrees/wow-ui-sim-p434-source/data/patch-api/evidence/4.3.4-session-2026-10-09/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+      "revision": "04f6f5ce145d21a00f3537af19446c7d09b5f3a5",
+      "exit": 0,
+      "log": "reproduction-0.log",
+      "log_sha256": "a9f982d8cb8dbc81e6965814c7d33f2249d63fbd3467f8331ddca475f7e4377e"
+    },
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p434-source/tools/extract_patch_non_inventory.py",
+        "--patch",
+        "4.3.4",
+        "--text-only",
+        "--check"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+      "revision": "04f6f5ce145d21a00f3537af19446c7d09b5f3a5",
+      "exit": 0,
+      "log": "reproduction-1.log",
+      "log_sha256": "f44c0da5849fa51cf0f177de3a9d34a4966da12a5b943ca7dfa36957e8b65251"
+    }
+  ],
+  "generator_flags": [],
+  "extractor_flags": [],
+  "register_byte_identical": true,
+  "extract_byte_identical": true,
+  "register_sha256": "0e9cd6e45cb995566422e9cf1245745a9ff3506a4a15d60a163f6ede55b6e25b",
+  "extract_sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184"
+}

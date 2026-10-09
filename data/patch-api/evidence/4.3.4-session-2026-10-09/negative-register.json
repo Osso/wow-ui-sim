@@ -1,0 +1,113 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "4.3.4",
+  "source": {
+    "path": "data/patch-api/sources/4.3.4-api-changes.wikitext",
+    "revid": 3743181,
+    "sha256": "37d7e34b52398cfe7ccb9e90114d1cd2bb414841b9e654e91af2d08b7c25c19f"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 10,
+      "parsed_count": 10
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-GetNumSoRRemaining-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumSoRRemaining",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-GetSecondsUntilParentalControlsKick-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSecondsUntilParentalControlsKick",
+      "annotation": "",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-GetSessionTime-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSessionTime",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-GMItemRestorationButtonEnabled-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GMItemRestorationButtonEnabled",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-GMQuickTicketSystemEnabled-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GMQuickTicketSystemEnabled",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-GMQuickTicketSystemThrottled-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GMQuickTicketSystemThrottled",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-GMSubmitBug-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GMSubmitBug",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-GMSubmitSuggestion-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GMSubmitSuggestion",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-ReportPlayer-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ReportPlayer",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-SetPendingReportTarget-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetPendingReportTarget",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "negative-fabricated-global",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P434FabricatedMissingAPI",
+      "annotation": "",
+      "wikitext_line": 22
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+{
+  "revision_label": "04f6f5ce145d21a00f3537af19446c7d09b5f3a5",
+  "base_revision_label": "3d64fedad",
+  "format": "gzip JSON path-to-UTF8-bytes; no historical Git checkout required for the bounded saved inputs",
+  "archive": "historical-inputs.json.gz",
+  "archive_sha256": "e430620b62386a93299ee41318967347af5166b1e01f2fa82e182cf7bd7f191d",
+  "paths": {
+    "data/patch-api/sources/10.0.0-wikitext-register.json": {
+      "sha256": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca",
+      "blob": "69a4650c1dbbac1fca1d260590565da856082afc"
+    },
+    "data/patch-api/sources/10.0.2-wikitext-register.json": {
+      "sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059",
+      "blob": "44edd156a980d06e03c5946ad8a67c44f099d78a"
+    },
+    "data/patch-api/sources/10.0.5-wikitext-register.json": {
+      "sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+      "blob": "2c37c1608afd64673711fdb206d8fb1c453ddc23"
+    },
+    "data/patch-api/sources/10.0.7-wikitext-register.json": {
+      "sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e",
+      "blob": "9c1e25db11a1d9b2a74fffbf16e3f94d9d33ab2d"
+    },
+    "data/patch-api/sources/10.1.0-wikitext-register.json": {
+      "sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+      "blob": "f418d2ad9739f7e01480796130309c13c934f978"
+    },
+    "data/patch-api/sources/10.1.5-wikitext-register.json": {
+      "sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+      "blob": "3574d7906aa2bb2ecbb1fcdd0608f1c83f09bb5e"
+    },
+    "data/patch-api/sources/10.1.7-wikitext-register.json": {
+      "sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+      "blob": "086ea72e95a48ee97ecceb3a0122be6d6dcde681"
+    },
+    "data/patch-api/sources/10.2.0-wikitext-register.json": {
+      "sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+      "blob": "50fd94740c792308aaddf39d2efd867588d469c5"
+    },
+    "data/patch-api/sources/10.2.5-wikitext-register.json": {
+      "sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
+      "blob": "14bcf836bc3d2fb8c2ce640534eaa4bdd8656e6d"
+    },
+    "data/patch-api/sources/10.2.6-wikitext-register.json": {
+      "sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+      "blob": "4dfed2c82a3944e0083c041e443024c850e2e9fb"
+    },
+    "data/patch-api/sources/10.2.7-wikitext-register.json": {
+      "sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+      "blob": "da67b3322ac5e6de04f414323fbb31ba1f58702c"
+    },
+    "data/patch-api/sources/11.0.0-wikitext-register.json": {
+      "sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186",
+      "blob": "c15f23978f4f6dc11055dab95530c47da07a4e9e"
+    },
+    "data/patch-api/sources/11.0.2-wikitext-register.json": {
+      "sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+      "blob": "48d91a41048d764fae0b79dd113d842197cfa116"
+    },
+    "data/patch-api/sources/11.0.5-wikitext-register.json": {
+      "sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd",
+      "blob": "a27e5245f491e317b99615a4c1eadbee53d727f7"
+    },
+    "data/patch-api/sources/11.0.7-wikitext-register.json": {
+      "sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+      "blob": "49f7e8283c3c778a7d94ce7ee7debfda6eff09df"
+    },
+    "data/patch-api/sources/11.1.0-wikitext-register.json": {
+      "sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280",
+      "blob": "e4ad6f9dc10291d210c20cd2eba21365b35bdaa4"
+    },
+    "data/patch-api/sources/11.1.5-wikitext-register.json": {
+      "sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703",
+      "blob": "336755a7f9604e2feda51dcac91d7f6883eb280d"
+    },
+    "data/patch-api/sources/11.1.7-wikitext-register.json": {
+      "sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439",
+      "blob": "b71093a6098f66e253933ea5d0350a57b9e3b8cb"
+    },
+    "data/patch-api/sources/11.2.0-wikitext-register.json": {
+      "sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+      "blob": "4a9a57ee278508c4c55ba6e20690f7dcb68b3f15"
+    },
+    "data/patch-api/sources/11.2.5-wikitext-register.json": {
+      "sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+      "blob": "3ad77eae00fd1e17b41c9cfb897f0983a3a94a9b"
+    },
+    "data/patch-api/sources/11.2.7-wikitext-register.json": {
+      "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+      "blob": "9de8f78f4d93cff4b244412914103b3aaa17e0dd"
+    },
+    "data/patch-api/sources/12.0.0-wikitext-register.json": {
+      "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+      "blob": "0fc0570ca8d885da07517adde6255a9f8d7a2a39"
+    },
+    "data/patch-api/sources/12.0.1-wikitext-register.json": {
+      "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb",
+      "blob": "c75b2accfa50df7a0eb4798706b1f7749907afad"
+    },
+    "data/patch-api/sources/12.0.5-wikitext-register.json": {
+      "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+      "blob": "3b6cffec0c3af3674f539d818febefa35e4f8fe4"
+    },
+    "data/patch-api/sources/12.0.7-wikitext-register.json": {
+      "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+      "blob": "2f76c4a41be222c96a96fc91e9e9842ef067b49d"
+    },
+    "data/patch-api/sources/12.1.0-wikitext-register.json": {
+      "sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311",
+      "blob": "c19f00cc9379a96720c5d9a1ad47028ba1943ad3"
+    },
+    "data/patch-api/sources/4.3.4-api-changes.provenance.json": {
+      "sha256": "95d407e0d73e8f43b147fcc8c1cc3a2a579f5e29fc3dcdd4a50415df2f3aad64",
+      "blob": "f554614d1bba18d053063f2ca51abba271ef4b82"
+    },
+    "data/patch-api/sources/4.3.4-api-changes.txt": {
+      "sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184",
+      "blob": "1db6cb01c15e3b429227eba1314aad2744262eef"
+    },
+    "data/patch-api/sources/4.3.4-api-changes.wikitext": {
+      "sha256": "37d7e34b52398cfe7ccb9e90114d1cd2bb414841b9e654e91af2d08b7c25c19f",
+      "blob": "4ff6eff0f536a7e87647f9f0d3297fa768710e9d"
+    },
+    "data/patch-api/sources/4.3.4-page-coverage.json": {
+      "sha256": "723cd5ffa5705e77e6b7020d2a8de490ee05187638b5007b7bc97ce20809c76a",
+      "blob": "2eb6f5edf1a6f29995743c81f825ec5a09c7195b"
+    },
+    "data/patch-api/sources/4.3.4-wikitext-register.json": {
+      "sha256": "0e9cd6e45cb995566422e9cf1245745a9ff3506a4a15d60a163f6ede55b6e25b",
+      "blob": "a468a9aaf36580a8683ddc7b7619062ef2b22fee"
+    },
+    "data/patch-api/sources/5.0.1-wikitext-register.json": {
+      "sha256": "2e9a294c4c1f984b039f61abcad1f787d39f179471ebfb83375499343e204431",
+      "blob": "1f6998e867563d1921892c52e210d0d6a5de9a90"
+    },
+    "data/patch-api/sources/5.0.4-wikitext-register.json": {
+      "sha256": "11dc172ca4569ca08b2c3bc0a542e840be5d2f88a9f28f23ca6f355a4e290e4e",
+      "blob": "84aa2709d18e12a41993f46e46721f80a6c3b642"
+    },
+    "data/patch-api/sources/5.1.0-wikitext-register.json": {
+      "sha256": "cbff1b9930302a83a78f9fb9c58dbeef8fa80769e08919f4833cee792992fe52",
+      "blob": "ae0a6b5af5f4b2113b33cf791404bba6558b9d2e"
+    },
+    "data/patch-api/sources/5.2.0-wikitext-register.json": {
+      "sha256": "6cc143520773f5902a580d84379845ce9291c34dd6c3a8f4932853ffde2fe93f",
+      "blob": "8c5408fdb7c4eb60b6498365c5a8d364cf6e2f48"
+    },
+    "data/patch-api/sources/5.3.0-wikitext-register.json": {
+      "sha256": "562d9a12ac47de6d7c64275ab049e5dad16c6bb7521d7eda14481f4a035e8b4c",
+      "blob": "4fe464e80e8be11d052ce52cc3508b2a7fb8642a"
+    },
+    "data/patch-api/sources/5.4.0-wikitext-register.json": {
+      "sha256": "913268dda4b67403586fd5c76f922f37e423ddeb208e493314792a9841f95da1",
+      "blob": "1c3ad9e2ff2f902132d010b65581483f0d0ffee4"
+    },
+    "data/patch-api/sources/5.4.1-wikitext-register.json": {
+      "sha256": "c24d0f45a77aa4123ac9af977ad75bd710aa272657aa3e15f5e2b2128ad593d5",
+      "blob": "fb3169047e346befbcbe6ef5a2b5d5a6189889f0"
+    },
+    "data/patch-api/sources/5.4.2-wikitext-register.json": {
+      "sha256": "d079278f9323c1139b7772224e40b28fa482206f3fc7400e70fb969cc672fc87",
+      "blob": "6b199c35f6bdc38c0945fbb006ee683beff5ea14"
+    },
+    "data/patch-api/sources/5.4.7-wikitext-register.json": {
+      "sha256": "4a7912b4684667480123d7ebc2004832405e7ba37bedcfad7485fa09b911bf09",
+      "blob": "b1434a74f893f33f606f475595d1d0a236eeb363"
+    },
+    "data/patch-api/sources/5.4.8-wikitext-register.json": {
+      "sha256": "bff0a33a4df525cac8e73899cb318947358d699ffacbb2e736fed948b21c49e5",
+      "blob": "ed7a9915077bf6e5c5d3e66e41d14f992d8084ed"
+    },
+    "data/patch-api/sources/6.0.1-wikitext-register.json": {
+      "sha256": "32a4b6b7db6b7fbb2bc3156514dce47e8679d057b8d911264430d81e5d0186c7",
+      "blob": "4912ccbd2fbb643cb855a4622c8ca7f407ebd4ee"
+    },
+    "data/patch-api/sources/6.0.2-wikitext-register.json": {
+      "sha256": "9c4e83c1306ca3e8143840afbc5c3981a64fa37ed332e05dadc0457faa1566e0",
+      "blob": "5d0407944f94e55fa05eab2d74f0080bd8182460"
+    },
+    "data/patch-api/sources/6.1.0-wikitext-register.json": {
+      "sha256": "707e1512c0591afe8037d53c79f21ca197b01a8922ee3eb377a636ce4dd05418",
+      "blob": "48c5cda81ae67442cfb0dccd63a67399ea0a5e6b"
+    },
+    "data/patch-api/sources/6.2.0-wikitext-register.json": {
+      "sha256": "b4662f1f6b4abbed24dee47d8fe8f50de184788f93e6798c8e853c011a91e76c",
+      "blob": "c3aa565f5400060de477ec5a2621ce2b4c29d33d"
+    },
+    "data/patch-api/sources/6.2.2-wikitext-register.json": {
+      "sha256": "4eee04950b20e3bd79f4fd3b724b5c0d4d531c796534e810c090c168f6cbd6f0",
+      "blob": "ca54c1bf01ee9e655cd06095d290129fabdec057"
+    },
+    "data/patch-api/sources/6.2.4-wikitext-register.json": {
+      "sha256": "ddcdfcec25740fed9c531a2a602323d9534ef3a44aa02edf045a7ad338bb6d64",
+      "blob": "c6c6f84be87e029d3b662c8ffcfeb9062ecf1afb"
+    },
+    "data/patch-api/sources/7.0.1-wikitext-register.json": {
+      "sha256": "0e3321174be76f59454f4257cd2a69b2c878d58409c4a003ee63d004371bcc16",
+      "blob": "5a5917c51088bd9d7a9eb2d698b93b4677d8020b"
+    },
+    "data/patch-api/sources/7.0.3-wikitext-register.json": {
+      "sha256": "7c10a7a2a07b37ab1f92792de89ee28913aed9d12cf37c967f91d1f6fc026660",
+      "blob": "eac08c5332bf344a451ff407687a414c8153c9f1"
+    },
+    "data/patch-api/sources/7.1.0-wikitext-register.json": {
+      "sha256": "b7e2779fc45c104a7ca6a33e321a2672b0a2d5b1844d98595f189db7c9b25e83",
+      "blob": "547124abb9615d167d706e80e28053dbaa47aa03"
+    },
+    "data/patch-api/sources/7.2.0-wikitext-register.json": {
+      "sha256": "2b0589b9d07639b02e420dce174f8e373758bb6d86475c5305de745499a32973",
+      "blob": "77dadb6ec47c433c4ea79686876a9715fc872c1f"
+    },
+    "data/patch-api/sources/7.2.5-wikitext-register.json": {
+      "sha256": "753351c0b4616c5259fd9ec2ef3980248c83f0e3de88ae5c40a88b4ad8399bdd",
+      "blob": "fe9d8de4adaabf9845f84186c7b2428e689adc1c"
+    },
+    "data/patch-api/sources/7.3.0-wikitext-register.json": {
+      "sha256": "b0f06f6e0f8ce4fd8be89845fce0fa0ef5ac2ddf71de7885b8adcd49af3daa10",
+      "blob": "213d7b4865dd8f5921b6b799f09235a781b991aa"
+    },
+    "data/patch-api/sources/7.3.2-wikitext-register.json": {
+      "sha256": "32b35ec0157db219051eeddc58d5e8d0ab34afe0f7d99690c1c3e112bfac1a35",
+      "blob": "d8e2dbda1af317ec69baf0176ee370aa43715d43"
+    },
+    "data/patch-api/sources/8.0.1-wikitext-register.json": {
+      "sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83",
+      "blob": "42f9781b177de5dfe3cc353102386ba93d8c2ebd"
+    },
+    "data/patch-api/sources/8.1.0-wikitext-register.json": {
+      "sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147",
+      "blob": "069d1b3827fa6c82d73ebfc8b42b5fc852aa3d99"
+    },
+    "data/patch-api/sources/8.1.5-wikitext-register.json": {
+      "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+      "blob": "c9ded99eeda2b03e7e49621e1ea49a42710bc45c"
+    },
+    "data/patch-api/sources/8.2.0-wikitext-register.json": {
+      "sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203",
+      "blob": "144192531015d8fc8d488a145b5bc76b72f19bca"
+    },
+    "data/patch-api/sources/8.2.5-wikitext-register.json": {
+      "sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c",
+      "blob": "f3a4ccc64d37d204d0d1204ca45553bc84512a6c"
+    },
+    "data/patch-api/sources/8.3.0-wikitext-register.json": {
+      "sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef",
+      "blob": "cd198c23c6dba7c5ce9a93ca8d058af70672877c"
+    },
+    "data/patch-api/sources/8.3.7-wikitext-register.json": {
+      "sha256": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175",
+      "blob": "a8c05db5715a0861f7c8a0b4fab9de766774cef5"
+    },
+    "data/patch-api/sources/9.0.1-wikitext-register.json": {
+      "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+      "blob": "2a247086362ea23f0daa295a983ce1d975f5b0c9"
+    },
+    "data/patch-api/sources/9.0.2-wikitext-register.json": {
+      "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+      "blob": "964f583535f342a0ccd0c34866507213e1eb656e"
+    },
+    "data/patch-api/sources/9.0.5-wikitext-register.json": {
+      "sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+      "blob": "af58507dfab1646344bd5ab5832a5cf55449e6b5"
+    },
+    "data/patch-api/sources/9.1.0-wikitext-register.json": {
+      "sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb",
+      "blob": "3313d3073af15a1dadfef86d9e3a0608b4164268"
+    },
+    "data/patch-api/sources/9.1.5-wikitext-register.json": {
+      "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+      "blob": "6fbafff5298ae884fca5dbf4074477b51d163d37"
+    },
+    "data/patch-api/sources/9.2.0-wikitext-register.json": {
+      "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+      "blob": "cf3021228f7354286ae8882c0825888331f779f6"
+    },
+    "data/patch-api/sources/9.2.5-wikitext-register.json": {
+      "sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0",
+      "blob": "66b38248f4fc30f027eeb38aaf71e24502b2fc39"
+    },
+    "data/patch-api/sources/9.2.7-wikitext-register.json": {
+      "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+      "blob": "8c62bd02b21eec395881830c301e2001e7d81850"
+    },
+    "tests/common/publication_sweep.rs": {
+      "sha256": "9806ecce8fad716f3c3c0e3faaec53573b881c8630da8f6b2fe8caebc2247837",
+      "blob": "bb8c1fd0dc35a23ee7dc416cb7c60086ac18dd63"
+    },
+    "tests/data/patch_4_3_4_sweep_known_gaps.json": {
+      "sha256": "0a9e6553520220eef41a619ed84152834d8ecc8d48d2876a78848b76ff99c364",
+      "blob": "d20810a760e390e36df02f9bde48b4eaffcd5f2c"
+    },
+    "tests/patch_4_3_4_publication_sweep.rs": {
+      "sha256": "1842465890b329e36697083f13651a74a327735f9832db87ca4461774cf0881d",
+      "blob": "32da2269b1e7dd1d410c293abb2e6540b058ecd2"
+    },
+    "tools/extract_patch_non_inventory.py": {
+      "sha256": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+      "blob": "6fcc1724827c7588b91d23e3c815324d86a33b97"
+    },
+    "tools/gen_patch_wikitext_register.py": {
+      "sha256": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+      "blob": "ea2c96f5f808f397da51f5a5253b5b34966e1d1c"
+    }
+  },
+  "runtime_tree_ids": {
+    "src": "338c07704ad0a2405547d560f976f1070dc6f2ea",
+    "tests": "1e251d985385d4ea8d1db3371c235d0d3dcdafbf",
+    "data/patch-api/sources": "b2ed02d492920214e477612aafa49b2c934b9106"
+  },
+  "scope": "Sparse source/accounting/probe/successor bytes only; runtime tree IDs are identities, not executable archives or fresh acceptance proof"
+}
