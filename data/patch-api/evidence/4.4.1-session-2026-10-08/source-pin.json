@@ -1,0 +1,10 @@
+{
+  "pageid": 608915,
+  "title": "Patch 4.4.1/API changes",
+  "revid": 6234252,
+  "timestamp": "2025-02-08T13:53:50Z",
+  "retrieved": "2026-10-08",
+  "wikitext_sha256": "076080f53193f5c8808f255e5630b9e83db8e9e284c53eff7a7ed7b84623284a",
+  "method": "MediaWiki revisions API",
+  "scope": "source pin only; no Cataclysm runtime coverage claim"
+}

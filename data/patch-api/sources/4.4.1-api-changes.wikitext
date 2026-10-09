@@ -1,0 +1,21 @@
+{{apichanges|4.4.1|prev=4.4.0|next=4.4.2}}
+
+==Resources==
+* TOC: <code>40401</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/4.4.0..4.4.1 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/4.4.0..4.4.1 BlizzardInterfaceResources]
+
+==Consolidated diffs==
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|+ 4.4.0 (x) &rarr; 4.4.1 (x) xxx xx 2024
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(x)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(x)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_SpecializationInfo.GetNumSpecializationsForClassID}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|GetNumSpecializationsForClassID}}
+</div>
+|}
