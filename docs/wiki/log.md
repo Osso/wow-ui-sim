@@ -1,3 +1,7 @@
+## [2026-10-09] maintenance | Patch 4.3.4 modeled client clock
+
+[Audit](investigations/patch-4-3-4-api-audit.md#coordinator-client-clock-model): retail-only `GetSessionTime` uses existing client-state elapsed clock; primary API 254254/revision 6809914 supplies numeric seconds/client-open origin, not locale gating or integer granularity. Behavioral RED nil-call, GREEN 2/2 at `160f8209c`; binding/tests unchanged at `575a93e30`. Current six-gap fixture distinguished from sealed historical seven-gap evidence. No native uptime equivalence or global acceptance claim; broader publication/Mists/check/build gates remain coordinator-owned and pending. Docs-only update.
+
 ## [2026-10-09] ingest | Patch 4.3.4 pinned source
 
 [Audit](investigations/patch-4-3-4-api-audit.md): complete default-parser inventory (10 additions, one removal), one metadata context, zero prose/signatures; full caller scans retained. Registered own retail discovery case with actual 5.0.1/5.0.4 successors; no runtime changes. Targeted discovery RED at 5c3bccdf7: seven gaps, three superseded removals, one absence. Reviewed fixture/precise model limits recorded before GREEN; coordinator owns final gates.

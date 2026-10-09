@@ -213,6 +213,10 @@ patch_string_format
 - **getmetatable** -- Returns fake metatable with widget-filtered `__index` methods; direct userdata calls still resolve through the shared `FrameRef` registration path
 - **string.format** -- Converts `%F` -> `%f` (WoW LuaJIT vs standard Lua 5.1)
 
+### Retail client clock
+
+`GetSessionTime()` is retail-only (`client-retail`) and returns elapsed numeric seconds from the existing `SimState.start_time` clock. Login/character-screen transitions retain its origin; a new client state starts fresh. `GetTime` is unchanged; shared simulator backing does not establish native uptime equivalence. See [4.3.4 clock model and bounded behavioral proof](wiki/investigations/patch-4-3-4-api-audit.md#coordinator-client-clock-model); native precision and warning-event delivery remain unproven.
+
 ### Build identity
 **File:** `src/lua_api/workarounds/temporary/client_info_defaults.rs`
 

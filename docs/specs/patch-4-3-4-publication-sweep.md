@@ -14,11 +14,11 @@ Audit only historical retail page 389302, revision 3743181 (2021-08-22T03:09:40Z
 
 ## Implementation inventory
 
-`data/patch-api/sources/4.3.4-*`, `tests/patch_4_3_4_publication_sweep.rs`, `tests/data/patch_4_3_4_sweep_known_gaps.json`, and `data/patch-api/evidence/4.3.4-session-2026-10-09/`.
+`data/patch-api/sources/4.3.4-*`, `tests/patch_4_3_4_publication_sweep.rs`, `tests/data/patch_4_3_4_sweep_known_gaps.json`, and `data/patch-api/evidence/4.3.4-session-2026-10-09/`. Retail clock binding: `src/lua_api/globals/register.rs`; behavioral tests: `tests/patch_4_3_4_session_clock.rs`.
 
 ## Tests
 
-Own prefork filter `patch_4_3_4_publication_sweep`, followed by a scratch-register negative control. Discovery RED records seven missing globals, three superseded removals and one absence; reviewed-gap GREEN passes 1/1. Same-cardinality fabricated-global control fails at exactly seven → eight gaps. Own default register/extract replay is byte-identical. Those receipts preserve pre-model discovery. Coordinator adds behavioral client-clock tests and refreshes current publication evidence separately; historical seven-gap receipts remain immutable.
+Own prefork filter `patch_4_3_4_publication_sweep`, followed by a scratch-register negative control. Discovery RED records seven missing globals, three superseded removals and one absence; reviewed-gap GREEN passes 1/1. Same-cardinality fabricated-global control fails at exactly seven → eight gaps. Own default register/extract replay is byte-identical. Those receipts preserve pre-model discovery. The two client-clock behavioral tests reproduce nil-call RED and pass GREEN 2/2 at pre-rebase `160f8209c`; their code is unchanged at `575a93e30`. [Audit and receipts](../wiki/investigations/patch-4-3-4-api-audit.md#coordinator-client-clock-model) bound this proof to the modeled clock, not function identity or native parity. Current fixture has six remaining publication gaps and one modeled clock. Coordinator owns pending broad publication/Mists/check/build acceptance; historical seven-gap receipts remain immutable.
 
 ## Exclusions
 
