@@ -149,13 +149,16 @@ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=F
                  retain_patch_diff_reference=False, canonical_patch_navigation=False,
                  mists_automated_diff=False, lowercase_reflist=False,
                  mists_source_markup=False, cataclysm_labeled_inventory=False,
-                 wrath_summary_markup=False):
+                 wrath_summary_markup=False, numbered_reflist=False):
     if cataclysm_labeled_inventory:
         raw = '\n'.join(line for line in raw.splitlines()
                         if not re.fullmatch(r': (NEW|REMOVED) \{\{api\|[^{}]+\}\}', line)) + '\n'
         raw = canonicalize_patch_navigation(raw)
     if wrath_summary_markup:
         raw = render_wrath_summary_markup(raw)
+    if numbered_reflist:
+        raw = re.sub(r'\{\{Reflist\|(\d+)\}\}',
+                     r'[References list; columns=\1; not expanded]', raw)
     if mists_source_markup:
         raw = render_mists_source_markup(raw)
     if lowercase_reflist:
@@ -401,6 +404,8 @@ def main():
                         help='Retain Mists external-link fields and omit noinclude wrappers; opt-in')
     parser.add_argument('--wrath-summary-markup', action='store_true',
                         help='Keep 2009 summary attribution and inline Button XML; opt-in')
+    parser.add_argument('--numbered-reflist', action='store_true',
+                        help='Retain numbered Reflist markers without expanding citations; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -424,7 +429,8 @@ def main():
                         lowercase_reflist=args.lowercase_reflist,
                         mists_source_markup=args.mists_source_markup,
                         cataclysm_labeled_inventory=args.cataclysm_labeled_inventory,
-                        wrath_summary_markup=args.wrath_summary_markup)
+                        wrath_summary_markup=args.wrath_summary_markup,
+                        numbered_reflist=args.numbered_reflist)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

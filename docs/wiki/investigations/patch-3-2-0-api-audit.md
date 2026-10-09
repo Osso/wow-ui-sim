@@ -4,7 +4,7 @@ Pinned supplied page 499137, revision 4812266, timestamp 2020-09-04T21:33:02Z. R
 
 ## Source format
 
-Opt-in `--wrath-retail-change-bullets` retains labelled function/event/quoted-array occurrences and literal source signatures. Source spelling `GetDifficutlyColor` remains unchanged. `UnitIsPlusMob` is **changed**, not removed: source says “updated or removed” and explicitly questions removal. Undocumented functions receive changed publication expectations, not invented addition dates. Whole-page extraction uses existing default behavior; no extractor modification.
+Opt-in `--wrath-retail-change-bullets` retains labelled function/event/quoted-array occurrences and literal source signatures. Source spelling `GetDifficutlyColor` remains unchanged. `UnitIsPlusMob` is **changed**, not removed: source says “updated or removed” and explicitly questions removal. Undocumented functions receive changed publication expectations, not invented addition dates. Default whole-page extraction fails on `{{Reflist|2}}`. New opt-in `--numbered-reflist` preserves its column count and unexpanded-citation boundary without changing default behavior.
 
 Queued retail successor slots are 3.3.0, 3.3.3, 3.3.5 and 4.0.1, in that order. Actual 4.1.0 onward is used now. Wrath Classic 3.4.x is a separate history, not a successor.
 

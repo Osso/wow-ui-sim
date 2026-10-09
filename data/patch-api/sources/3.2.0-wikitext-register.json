@@ -1,0 +1,426 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "3.2.0",
+  "source": {
+    "path": "data/patch-api/sources/3.2.0-api-changes.wikitext",
+    "revid": 4812266,
+    "sha256": "5a6674fd08ffd867e894196ed1abf2a599a3a25d32d5db5819387dcda0ad9f71"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-GetSavedInstanceInfo-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSavedInstanceInfo",
+      "annotation": "* ''updated'' {{api|GetSavedInstanceInfo(index)}} -- added two bools to return: instanceIDMostSig, isRaid<ref name=\"Iriel\" />",
+      "wikitext_line": 7,
+      "source_signature": "GetSavedInstanceInfo(index)",
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-global-api-GetInstanceLockTimeRemaining-8",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetInstanceLockTimeRemaining",
+      "annotation": "* ''updated'' {{api|GetInstanceLockTimeRemaining()}} -- Added Bool isPreviousInstance to return (part of the extend instance stuff)<ref name=\"Iriel\" />",
+      "wikitext_line": 8,
+      "source_signature": "GetInstanceLockTimeRemaining()",
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-global-api-GetDifficutlyColor-12",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDifficutlyColor",
+      "annotation": "* ''removed'' {{api|GetDifficutlyColor(level)}} -- Replaced by GetQuestDifficultyColor(level)<ref name=\"Speeddymon\">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=180295262370#180295262370 Speeddymon  on Wow 3.2 API Changes topic]</ref>",
+      "wikitext_line": 12,
+      "source_signature": "GetDifficutlyColor(level)",
+      "source_change": "removed"
+    },
+    {
+      "id": "wt-global-api-GetQuestDifficultyColor-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestDifficultyColor",
+      "annotation": "* ''new'' {{api|GetQuestDifficultyColor(level)}} -- exact replacement for GetDifficutlyColor(level)<ref name=\"Speeddymon\" />",
+      "wikitext_line": 13,
+      "source_signature": "GetQuestDifficultyColor(level)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-QuestDifficultyColor-17",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "QuestDifficultyColor",
+      "annotation": "* ''removed'' \"QuestDifficultyColor\" array -- Replaced by \"QuestDifficultyColors\" array",
+      "wikitext_line": 17,
+      "kind": "table",
+      "source_change": "removed"
+    },
+    {
+      "id": "wt-global-api-QuestDifficultyColors-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QuestDifficultyColors",
+      "annotation": "* ''new'' \"QuestDifficultyColors\"array -- exact replacement for \"QuestDifficultyColor\" array",
+      "wikitext_line": 18,
+      "kind": "table",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-UnitIsPlusMob-21",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitIsPlusMob",
+      "annotation": "* ''updated'' or ''removed'' {{api|UnitIsPlusMob(unitID)}} -- (not 100% sure, but believed to have been removed)",
+      "wikitext_line": 21,
+      "source_signature": "UnitIsPlusMob(unitID)",
+      "source_change": "updated or removed"
+    },
+    {
+      "id": "wt-global-api-QuestMapUpdateQuest-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QuestMapUpdateQuest",
+      "annotation": "* ''new'' {{api|QuestMapUpdateQuest(index)}} -- Is 'index' the normal quest log index?<ref name=\"Iriel\" />",
+      "wikitext_line": 25,
+      "source_signature": "QuestMapUpdateQuest(index)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-QuestMapGetQuestName-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QuestMapGetQuestName",
+      "annotation": "* ''new'' {{api|QuestMapGetQuestName(index)}}<ref name=\"Iriel\" />",
+      "wikitext_line": 26,
+      "source_signature": "QuestMapGetQuestName(index)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-QuestMapGetPOIInfoForQuest-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QuestMapGetPOIInfoForQuest",
+      "annotation": "* ''new'' {{api|QuestMapGetPOIInfoForQuest(questIndex, poiIndex)}}<ref name=\"Iriel\" />",
+      "wikitext_line": 27,
+      "source_signature": "QuestMapGetPOIInfoForQuest(questIndex, poiIndex)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-GetAbandonedQuestName-30",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetAbandonedQuestName",
+      "annotation": "* ''undocumented'' {{api|GetAbandonedQuestName()}}",
+      "wikitext_line": 30,
+      "source_signature": "GetAbandonedQuestName()",
+      "source_change": "undocumented"
+    },
+    {
+      "id": "wt-global-api-GetAbandonQuestItems-31",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetAbandonQuestItems",
+      "annotation": "* ''undocumented'' {{api|GetAbandonQuestItems()}}",
+      "wikitext_line": 31,
+      "source_signature": "GetAbandonQuestItems()",
+      "source_change": "undocumented"
+    },
+    {
+      "id": "wt-global-api-GetQuestLogSpellLink-32",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetQuestLogSpellLink",
+      "annotation": "* ''undocumented'' {{api|GetQuestLogSpellLink()}} ",
+      "wikitext_line": 32,
+      "source_signature": "GetQuestLogSpellLink()",
+      "source_change": "undocumented"
+    },
+    {
+      "id": "wt-events-UNIT_SPELLCAST_INTERRUPTIBLE-37",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_SPELLCAST_INTERRUPTIBLE",
+      "annotation": "* ''new'' {{api|t=e|UNIT_SPELLCAST_INTERRUPTIBLE}}<ref name=\"Iriel\" />",
+      "wikitext_line": 37,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-UNIT_SPELLCAST_NOT_INTERRUPTIBLE-38",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_SPELLCAST_NOT_INTERRUPTIBLE",
+      "annotation": "* ''new'' {{api|t=e|UNIT_SPELLCAST_NOT_INTERRUPTIBLE}}<ref name=\"Iriel\" />",
+      "wikitext_line": 38,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-UnitCastingInfo-41",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitCastingInfo",
+      "annotation": "* ''updated'' {{api|UnitCastingInfo(unit)}} -- ''added interrupt result''<ref name=\"Iriel\" />",
+      "wikitext_line": 41,
+      "source_signature": "UnitCastingInfo(unit)",
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-global-api-UnitChannelInfo-42",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitChannelInfo",
+      "annotation": "* ''updated'' {{api|UnitChannelInfo(unit)}} -- ''added interrupt result''<ref name=\"Iriel\" />",
+      "wikitext_line": 42,
+      "source_signature": "UnitChannelInfo(unit)",
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-global-api-CalendarGetDayEvent-46",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "CalendarGetDayEvent",
+      "annotation": "* ''updated'' {{api|CalendarGetDayEvent()}}",
+      "wikitext_line": 46,
+      "source_signature": "CalendarGetDayEvent()",
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-global-api-CalendarGetDayEventSequenceInfo-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetDayEventSequenceInfo",
+      "annotation": "* ''new'' {{api|CalendarGetDayEventSequenceInfo()}}",
+      "wikitext_line": 47,
+      "source_signature": "CalendarGetDayEventSequenceInfo()",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-GetInboxNumItems-51",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetInboxNumItems",
+      "annotation": "* ''updated'' {{api|GetInboxNumItems()}} -- ''added totalItems''",
+      "wikitext_line": 51,
+      "source_signature": "GetInboxNumItems()",
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-global-api-GMResponseNeedMoreHelp-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GMResponseNeedMoreHelp",
+      "annotation": "* ''new''  {{api|GMResponseNeedMoreHelp(text)}}",
+      "wikitext_line": 54,
+      "source_signature": "GMResponseNeedMoreHelp(text)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-END_REFUND-57",
+      "section": "events",
+      "direction": "added",
+      "symbol": "END_REFUND",
+      "annotation": "* ''new'' {{api|t=e|END_REFUND}} -- triggered when a returnable item's refund period ends (or maybe would end if action performed?)<ref name=\"Iriel\" />",
+      "wikitext_line": 57,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-END_BOUND_TRADEABLE-58",
+      "section": "events",
+      "direction": "added",
+      "symbol": "END_BOUND_TRADEABLE",
+      "annotation": "* ''new'' {{api|t=e|END_BOUND_TRADEABLE}} -- Not 100% sure of this is the right event name<ref name=\"Iriel\" />",
+      "wikitext_line": 58,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-EndBoundTradeable-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EndBoundTradeable",
+      "annotation": "* ''new'' {{api|EndBoundTradeable(someVar)}} -- inferred from staticPopupDialogs.lua<ref name=\"Iriel\" />",
+      "wikitext_line": 59,
+      "source_signature": "EndBoundTradeable(someVar)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-GetSocketItemBoundTradeable-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSocketItemBoundTradeable",
+      "annotation": "* ''new'' {{api|GetSocketItemBoundTradeable()}}<ref name=\"Nafe\">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=180295297941#180295297941 Nafe on Wow 3.2 API Changes topic]</ref>",
+      "wikitext_line": 60,
+      "source_signature": "GetSocketItemBoundTradeable()",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-GetPlayerInfoByGUID-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPlayerInfoByGUID",
+      "annotation": "* ''new'' {{api|GetPlayerInfoByGUID(string)}} - Returns basic information about another player from their GUID<ref name=\"Iriel\" />",
+      "wikitext_line": 63,
+      "source_signature": "GetPlayerInfoByGUID(string)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-FillLocalizedClassList-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "FillLocalizedClassList",
+      "annotation": "* ''new'' {{api|FillLocalizedClassList(table, boolean)}}",
+      "wikitext_line": 64,
+      "source_signature": "FillLocalizedClassList(table, boolean)",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-IsXPUserDisabled-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsXPUserDisabled",
+      "annotation": "* ''new'' {{api|IsXPUserDisabled()}}",
+      "wikitext_line": 65,
+      "source_signature": "IsXPUserDisabled()",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-CanQueueForWintergrasp-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanQueueForWintergrasp",
+      "annotation": "* ''new'' {{api|CanQueueForWintergrasp()}}",
+      "wikitext_line": 66,
+      "source_signature": "CanQueueForWintergrasp()",
+      "source_change": "new"
+    },
+    {
+      "id": "wt-global-api-IsFlyableArea-67",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "IsFlyableArea",
+      "annotation": "* ''updated'' {{api|IsFlyableArea()}} -- updated to work properly in dalaran (returning 1 in Karsus landing)<ref name=\"Gello\">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=182652553198#182652553198 Gello on Wow 3.2 API Changes topic]</ref>",
+      "wikitext_line": 67,
+      "source_signature": "IsFlyableArea()",
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-events-COMBAT_LOG_EVENT-71",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "COMBAT_LOG_EVENT",
+      "annotation": "* ''updated'' {{api|t=e|COMBAT_LOG_EVENT}}",
+      "wikitext_line": 71,
+      "source_change": "updated"
+    },
+    {
+      "id": "wt-events-UPDATE_CHAT_COLOR_NAME_BY_CLASS-73",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_CHAT_COLOR_NAME_BY_CLASS",
+      "annotation": "* ''new'' {{api|t=e|UPDATE_CHAT_COLOR_NAME_BY_CLASS}}<ref name=\"Nafe\" />",
+      "wikitext_line": 73,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-EQUIPMENT_SWAP_FINISHED-75",
+      "section": "events",
+      "direction": "added",
+      "symbol": "EQUIPMENT_SWAP_FINISHED",
+      "annotation": "* ''new'' {{api|t=e|EQUIPMENT_SWAP_FINISHED}}<ref name=\"Iriel\" />",
+      "wikitext_line": 75,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-UNIT_DISSIPATES-77",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_DISSIPATES",
+      "annotation": "* ''new'' {{api|t=e|UNIT_DISSIPATES}}",
+      "wikitext_line": 77,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-GMRESPONSE_RECEIVED-79",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GMRESPONSE_RECEIVED",
+      "annotation": "* ''new'' {{api|t=e|GMRESPONSE_RECEIVED}}",
+      "wikitext_line": 79,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE-81",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE",
+      "annotation": "* ''new'' {{api|t=e|BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE}}",
+      "wikitext_line": 81,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_QUEUE_INVITE-82",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_MGR_QUEUE_INVITE",
+      "annotation": "* ''new'' {{api|t=e|BATTLEFIELD_MGR_QUEUE_INVITE}}",
+      "wikitext_line": 82,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_ENTRY_INVITE-83",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_MGR_ENTRY_INVITE",
+      "annotation": "* ''new'' {{api|t=e|BATTLEFIELD_MGR_ENTRY_INVITE}}",
+      "wikitext_line": 83,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_EJECT_PENDING-84",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_MGR_EJECT_PENDING",
+      "annotation": "* ''new'' {{api|t=e|BATTLEFIELD_MGR_EJECT_PENDING}}",
+      "wikitext_line": 84,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_EJECTED-85",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_MGR_EJECTED",
+      "annotation": "* ''new'' {{api|t=e|BATTLEFIELD_MGR_EJECTED}}",
+      "wikitext_line": 85,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-NPC_PVPQUEUE_ANYWHERE-86",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NPC_PVPQUEUE_ANYWHERE",
+      "annotation": "* ''new'' {{api|t=e|NPC_PVPQUEUE_ANYWHERE}}",
+      "wikitext_line": 86,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-ENABLE_XP_GAIN-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ENABLE_XP_GAIN",
+      "annotation": "* ''new'' {{api|t=e|ENABLE_XP_GAIN}}",
+      "wikitext_line": 89,
+      "source_change": "new"
+    },
+    {
+      "id": "wt-events-DISABLE_XP_GAIN-90",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DISABLE_XP_GAIN",
+      "annotation": "* ''new'' {{api|t=e|DISABLE_XP_GAIN}}",
+      "wikitext_line": 90,
+      "source_change": "new"
+    }
+  ],
+  "client_line": "retail"
+}
