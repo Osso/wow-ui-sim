@@ -4,7 +4,7 @@ Frozen page 261776, revision 2531935, timestamp 2010-05-13T22:15:52Z. Local mani
 
 ## Source format
 
-Existing heading/bullet parsers produce no inventory or misclassify all identities as changes. `--historical-api-headings` is opt-in and retains 36 occurrences: 21 new globals, nine new events, three changed globals, one removed global and two removed Texture methods. Original signature/prose lines remain annotations. Default extraction can retain the full page; no extractor change. Two concrete output fixtures first fail on the missing flag, then pass 2/2 at `ac338fe2d`. Default output bytes restored identically. Own retail discovery test includes actual retail 4.1.0 onward with separate ordered 3.3.5 / 4.0.1 placeholders; known gaps are initially empty for discovery, not a zero-gap claim.
+Existing heading/bullet parsers produce no inventory or misclassify all identities as changes. `--historical-api-headings` is opt-in and retains 36 occurrences: 21 new globals, nine new events, three changed globals, one removed global and two removed Texture methods. Original signature/prose lines remain annotations. Default extraction can retain the full page; no extractor change. Two concrete output fixtures first fail on the missing flag, then pass 2/2 at `ac338fe2d`. Default output bytes restored identically. Original retail discovery included actual retail 4.1.0 onward with ordered 3.3.5 / 4.0.1 placeholders; known gaps were initially empty for discovery, not a zero-gap claim. Main added actual 3.3.5 / 4.0.1 inputs after rebase onto `81ee0471d`; neither has section/symbol overlap with the 36 own occurrences. Historical source/accounting/seals remain unchanged; current acceptance is separate.
 
 ## Removal boundary
 
@@ -38,4 +38,4 @@ Own portability fixture first fails because the validator is missing, then passe
 
 ## See Also
 
-- [[patch-4-1-0-api-audit]] — first already-integrated actual retail successor; 3.3.5 and 4.0.1 are coordinator-owned placeholders.
+- [[patch-3-3-5-api-audit]], [[patch-4-0-1-api-audit]], [[patch-4-1-0-api-audit]] — actual integrated retail successors, separate from Wrath Classic history.

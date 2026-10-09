@@ -17,8 +17,8 @@ fn patch_3_3_3_publication_sweep(env: &WowLuaEnv) {
         register_env: "P333_SWEEP_REGISTER",
         out_env: "P333_SWEEP_OUT",
         later_registers: &[
-            // Pending retail 3.3.5 register: coordinator adds after integration.
-            // Pending retail 4.0.1 register: coordinator adds after integration.
+            include_str!("../data/patch-api/sources/3.3.5-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/4.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.3.0-wikitext-register.json"),

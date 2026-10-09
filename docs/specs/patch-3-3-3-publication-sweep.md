@@ -6,7 +6,7 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 
 - [x] Opt-in heading parsing retains all 36 named occurrences and original lines; without the flag previous output bytes remain unchanged.
 - [x] Full source, rendered extract, signatures, prose and editorial headers receive explicit dispositions.
-- [x] Only actual later retail registers supersede, with 3.3.5 then 4.0.1 placeholders preceding actual 4.1.0 onward; never Wrath Classic 3.4.x or other Classic histories.
+- [x] Only actual later retail registers supersede, with actual 3.3.5 then 4.0.1 preceding 4.1.0 onward; both added registers have no section/symbol overlap with the 36 own occurrences; never Wrath Classic 3.4.x or other Classic histories.
 - [x] Existing pet scalar has one return and tracks two explicit seeded values after full cached-retail UI loading; no new model/native credit.
 - [x] Portable historical replay derives counts and validates sealed source/log receipts without Git, target or mutable current accounting inputs.
 
