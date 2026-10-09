@@ -93,6 +93,26 @@ def validate(payload):
         'extractor_flags': ['--text-only', '--canonical-patch-navigation']}, 'extract receipt'
 
 
+def validate_acceptance(payload):
+    """Seal owned historical command results without binding later shared state."""
+    raw = payload['acceptance.json']
+    assert hashlib.sha256(raw).hexdigest() == 'a7fb0bf6ab2a45db22c1a191cee1ed347fc4f669f77db417ea02b4a2d04b7118', 'acceptance seal'
+    receipt = json.loads(raw)
+    assert receipt['tested_revision'] == 'aa465cba4bf6b33535207c9e0d2956ae7b2f0fe7', 'tested revision'
+    for name, expected in receipt['owned_sha256'].items():
+        assert hashlib.sha256(payload[name]).hexdigest() == expected, f'{name} seal'
+    report = json.loads(payload['validator-gate.json'])
+    assert report['revision'] == receipt['tested_revision'] and report['status'] == 'PASS'
+    assert report['summary'] == {'clean': {'passed': 60, 'failed': 0},
+                                 'later_audit': {'passed': 61, 'failed': 0}}
+    for phase, rows in report['phases'].items():
+        assert len(rows) == report['summary'][phase]['passed']
+        assert all(row['exit'] == 0 for row in rows), 'historical gate exits'
+    results = json.loads(payload['source-results.json'])
+    assert [row['exit'] for row in results] == [0, 0, 1, 1], 'source command exits'
+    assert all(row['byte_exact_restoration'] for row in results[2:]), 'restoration'
+
+
 class SourceProof(unittest.TestCase):
     def setUp(self):
         self.payload = {key: (ROOT / path).read_bytes() for key, path in PATHS.items()}
@@ -109,6 +129,21 @@ class SourceProof(unittest.TestCase):
         for tree in TREES.values():
             result = subprocess.check_output(['git', 'cat-file', '-t', tree], cwd=ROOT, text=True)
             self.assertEqual(result.strip(), 'tree')
+
+    def acceptance_payload(self):
+        names = ['acceptance.json', 'source-results.json', 'validator-gate.json',
+                 'check-clone-gate.py', 'source-proof.json']
+        return {name: (EVIDENCE / name).read_bytes() for name in names}
+
+    def test_committed_acceptance_receipt_and_logs(self):
+        validate_acceptance(self.acceptance_payload())
+
+    def test_acceptance_receipt_and_log_tamper_rejected(self):
+        payload = self.acceptance_payload()
+        for name in ('acceptance.json', 'source-results.json', 'validator-gate.json'):
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(AssertionError, 'seal'):
+                    validate_acceptance({**payload, name: payload[name] + b' '})
 
     def test_plaintext_reproduction(self):
         spec = importlib.util.spec_from_file_location('extract_440', ROOT / 'tools/extract_patch_non_inventory.py')

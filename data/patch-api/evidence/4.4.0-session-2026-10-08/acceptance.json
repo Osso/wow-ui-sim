@@ -1,0 +1,64 @@
+{
+  "schema": "patch-source-acceptance/v1",
+  "tested_revision": "aa465cba4bf6b33535207c9e0d2956ae7b2f0fe7",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/4.4.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "tests": 9
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "4.4.0",
+        "--text-only",
+        "--canonical-patch-navigation",
+        "--check"
+      ],
+      "exit": 0,
+      "rows": 12
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/4.4.0-session-2026-10-08/check-clone-gate.py",
+        "aa465cba4"
+      ],
+      "shared_gate": "tools/check_patch_validators.py",
+      "exit": 0,
+      "clean": {
+        "passed": 60,
+        "failed": 0
+      },
+      "later_audit": {
+        "passed": 61,
+        "failed": 0
+      }
+    }
+  ],
+  "disk_tamper_controls": {
+    "source": {
+      "exit": 1,
+      "restored": true
+    },
+    "source_receipt": {
+      "exit": 1,
+      "restored": true
+    }
+  },
+  "owned_sha256": {
+    "source-results.json": "b319bc5a720d631b0e6c6c18415832e77610b86134aec8ae90d508a88d23736b",
+    "validator-gate.json": "7489ed020b00d2436ff9d77af75962292f6cb250277bd2d156435338481016d3",
+    "check-clone-gate.py": "8f3c2678c49b819a52542a1598ae2ad9e35a2b73def0de0c479b6c76c33bef9a",
+    "source-proof.json": "56490e71986cf5913ae2847b537ee306024cfd35b9753d75512283c8de5dedbc"
+  },
+  "proof_limit": "Source accounting only; seven native contracts remain UNPROVEN. Later acceptance/docs additions do not alter the nine-test source-accounting scope. Final current-HEAD replay is reported separately."
+}

@@ -24,7 +24,7 @@ Account only for pinned CLASSIC4.4.0 page `580953`, revision `6163701`, literal 
 
 ## Tests asserting this spec
 
-`python3 -B data/patch-api/evidence/4.4.0-session-2026-10-08/validate.py`: nine source-proof tests, including all twelve omission controls and plaintext reproduction. `python3 -B tools/extract_patch_non_inventory.py --patch 4.4.0 --text-only --canonical-patch-navigation --check`: exact plaintext check. Neither tests runtime compatibility. Final committed-revision gate results live in the audit's acceptance receipt.
+`python3 -B data/patch-api/evidence/4.4.0-session-2026-10-08/validate.py`: eleven source-proof/receipt tests, including all twelve omission controls, plaintext reproduction and sealed acceptance-log tampering. `python3 -B tools/extract_patch_non_inventory.py --patch 4.4.0 --text-only --canonical-patch-navigation --check`: exact plaintext check. Neither tests runtime compatibility. Committed source-revision gate results live in the audit's acceptance receipt; final current-HEAD replay is reported separately.
 
 ## Known gaps (current cycle)
 

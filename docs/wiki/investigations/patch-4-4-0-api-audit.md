@@ -37,6 +37,12 @@ At the source commit, [TocFile::interface_versions](../../../src/toc/mod.rs) spl
 
 External references retained only where literally present: TOC format, linked 10.2.7 messaging, Classic Era and both GitHub comparisons. None fetched or expanded. No unlisted enum/API members introduced. Navigation does not establish supersession; pending 4.4.1 integrates newer-first under coordinator ownership. No rebase/push/merge here.
 
+## Committed acceptance
+
+[Receipt](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/acceptance.json) records source-accounting revision `aa465cba4bf6b33535207c9e0d2956ae7b2f0fe7`: nine source tests and extractor check pass; on-disk source and source-receipt tampering exit 1 and restore byte-exactly. [Shared gate output](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/validator-gate.json): **60/60 clean, 61/61 synthetic later audit**, no failures/oversized evidence. [Clone adapter](../../../data/patch-api/evidence/4.4.0-session-2026-10-08/check-clone-gate.py) invokes unchanged `tools/check_patch_validators.py` checks, substituting disposable shared clones for prohibited temporary worktrees; synthetic mutations occur only inside the disposable clone. No other worktree touched.
+
+Final validator adds two acceptance tests (eleven total) that seal this receipt and owned historical logs and reject receipt/log tampering; shared files remain historical tree pins, not live hashes. The earlier nine-test evidence is not relabeled as eleven tests. Current committed-HEAD clean/later replay follows the proof-results commit and is reported separately. Largest own proof artifact is 113,415 bytes, below 5 MB. Source accounting is complete; native contracts remain open.
+
 ## Sources
 
 - [Wikitext](../../../data/patch-api/sources/4.4.0-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/4.4.0-api-changes.txt), [ledger](../../../data/patch-api/sources/4.4.0-page-coverage.json).

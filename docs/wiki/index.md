@@ -2471,7 +2471,7 @@ The six retail 12.0.0 `Enum.EncounterTimelineEventSource.*` and `Enum.EncounterT
 
 ## [2026-10-08] source audit | Cataclysm Classic 4.4.0
 
-[Audit](investigations/patch-4-4-0-api-audit.md): CLASSIC4.4.0 page 580953/revision 6163701, TOC 40400. Twelve literal rows: six metadata, six UNPROVEN prose rows/seven contracts. Cata/Classic/Vanilla suffixes, comma Interface and per-prefix messaging/enum failure accounted; no native/runtime credit or external-link expansion. Nine source-proof tests pass; owned seals and compact context tree pins. Pending 4.4.1 integration stays coordinator-owned, newer-first.
+[Audit](investigations/patch-4-4-0-api-audit.md): CLASSIC4.4.0 page 580953/revision 6163701, TOC 40400. Twelve literal rows: six metadata, six UNPROVEN prose rows/seven contracts. Cata/Classic/Vanilla suffixes, comma Interface and per-prefix messaging/enum failure accounted; no native/runtime credit or external-link expansion. Nine source tests pass at aa465cba4; two final acceptance/log tests added. Shared gate 60/60 clean, 61/61 later; owned seals and compact context tree pins. Pending 4.4.1 integration stays coordinator-owned, newer-first.
 
 ## [2026-10-08] source audit | Cataclysm Classic 4.4.2
 
