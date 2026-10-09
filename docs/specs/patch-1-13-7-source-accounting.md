@@ -9,7 +9,7 @@ Account frozen page46829/revision458410/timestamp `2021-09-04T08:55:38Z` offline
 - [x] Retain three sections/two nonnumeric Added headers, two unexpanded diff links and six unexpanded templates; TOC11307 and navigation1.13.6→1.13.7→1.14.0 remain literal.
 - [x] Separate configured Era/Anniversary11507 from historical11307. Freeze unapplied same-history successors:1.14.0/1 completed-queued,1.14.2–1.15.9 integrated-not-applied.
 - [x] Reject omissions, invented signatures/defaults/client names, foreign supersession and fabricated model/native credit.
-- [ ] Preserve immutable originals with independent copied no-Git/no-target replay; reject serialized ledger/log tampering and restore exact bytes.
+- [x] Preserve immutable originals with independent copied no-Git/no-target replay; reject serialized ledger/log tampering and restore exact bytes.
 
 ## How it works
 
@@ -21,7 +21,7 @@ Account frozen page46829/revision458410/timestamp `2021-09-04T08:55:38Z` offline
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: eight SOURCE fixtures, omission and fabrication controls. Original RED eight assertion failures retained; current GREEN pending. Portable proof pending. Main owns integration/native/final gates.
+Own `test_source_accounting.py`: SOURCE RED8 assertion failures retained; GREEN8/8 at `0b39afb17`, 77 omission controls plus fabrication/source tamper rejection. Portable RED3 retained; GREEN3/3 at `7fe5edac1`: copied SOURCE8/default generator/extractor byte replay, both serialized seal rejections and exact restorations. Original55 seals unchanged,56-member/139,940-byte archive; five separate receipt seals. Main owns integration/native/final gates.
 
 ## Known gaps (current cycle)
 

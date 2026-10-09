@@ -26,7 +26,9 @@ Copied current configuration selects Era/Anniversary11507, distinct from source1
 
 ## Own proof
 
-SOURCE RED eight assertion failures retained; implementation committed before GREEN. GREEN and portable receipts pending. Historical generator/extractor defaults unchanged, flags `[]`; no shared tool edits. Later observations/receipts remain separate from original source seals. No final gates, broad suites, Cargo/dependency/toolchain/cache updates or production operations.
+SOURCE RED8 retained at `51f1f9cc2`; GREEN8/8 at `0b39afb17`, including77 per-occurrence omission controls and invented signature/default/credit/history rejection. Portable RED3 (archive absent) retained; GREEN3/3 at `7fe5edac1` runs fresh copied SOURCE8/8, default generator byte replay and validator/extractor byte equality with empty PATH and no Git/target/current tools. Both serialized ledger omission and fabricated GREEN log reject by seal, then exact restorations pass.
+
+Original55 seals/map unchanged;56-member/139,940-byte archive, largest sealed file219,034 bytes. Five later receipt seals separately cover portable proof/log/current proof/archive/original map; never backfilled into original GREEN. Historical generator/extractor defaults unchanged, flags `[]`; no shared tool edits. No final gates, broad suites, Cargo/dependency/toolchain/cache updates or production operations. [Original proof ledger](../../../data/patch-api/evidence/1.13.7-session-2026-10-09/proof-ledger.json) and [portable proof](../../../data/patch-api/evidence/1.13.7-session-2026-10-09/portable-proof.json) preserve exact scopes/commands/results.
 
 ## Sources
 
