@@ -1,0 +1,181 @@
+{
+  "scope": "5.0.1 own historical validator portability only",
+  "verified_revision": "cfabf6b3b0ee1e12ec0d89cb5a087e4cd5ee0190",
+  "own_validator": {
+    "command": [
+      "python3",
+      "-B",
+      "data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py"
+    ],
+    "revision": "cfabf6b3b0ee1e12ec0d89cb5a087e4cd5ee0190",
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.0.1\", \"classification\": \"redirect-only\", \"inventory\": 0, \"positive_api_proof\": false, \"registers\": 68, \"extracts\": 65, \"sweep_cases\": 64, \"prior_validators\": 58, \"result\": \"PASS\"}\n",
+    "stderr": ""
+  },
+  "fresh_clone": {
+    "clone": {
+      "command": [
+        "git",
+        "clone",
+        "--no-local",
+        "--depth=32",
+        "--single-branch",
+        "--no-tags",
+        "--branch",
+        "p501-page",
+        "/home/osso/.worktrees/wow-ui-sim-p501-page",
+        "/tmp/p501-fresh-clone-k_wzoib0/repo"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Cloning into '/tmp/p501-fresh-clone-k_wzoib0/repo'...\n"
+    },
+    "revision": "cfabf6b3b0ee1e12ec0d89cb5a087e4cd5ee0190",
+    "command": [
+      "python3",
+      "-B",
+      "data/patch-api/evidence/5.0.1-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.0.1\", \"classification\": \"redirect-only\", \"inventory\": 0, \"positive_api_proof\": false, \"registers\": 68, \"extracts\": 65, \"sweep_cases\": 64, \"prior_validators\": 58, \"result\": \"PASS\"}\n",
+    "stderr": "",
+    "unavailable_before": [
+      {
+        "object": "09a832bbbe148257bce6fa7efff55528cd82dc76",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "09a832bbbe148257bce6fa7efff55528cd82dc76^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "59140d35dc3a63ea2e9cb771029c5f49641e4e5b",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "59140d35dc3a63ea2e9cb771029c5f49641e4e5b^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "83e5d3c3b2643a360bf32e73f343faa987eeb39b",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "83e5d3c3b2643a360bf32e73f343faa987eeb39b^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "e1653e5c79bcbdb1844a406ea5e332fef04afbe4",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "e1653e5c79bcbdb1844a406ea5e332fef04afbe4^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "f86fe61ebef0c9cbcff753ae83ef607656e736da",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "f86fe61ebef0c9cbcff753ae83ef607656e736da^{commit}"
+        ],
+        "exit": 128
+      }
+    ],
+    "unavailable_after": [
+      {
+        "object": "09a832bbbe148257bce6fa7efff55528cd82dc76",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "09a832bbbe148257bce6fa7efff55528cd82dc76^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "59140d35dc3a63ea2e9cb771029c5f49641e4e5b",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "59140d35dc3a63ea2e9cb771029c5f49641e4e5b^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "83e5d3c3b2643a360bf32e73f343faa987eeb39b",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "83e5d3c3b2643a360bf32e73f343faa987eeb39b^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "e1653e5c79bcbdb1844a406ea5e332fef04afbe4",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "e1653e5c79bcbdb1844a406ea5e332fef04afbe4^{commit}"
+        ],
+        "exit": 128
+      },
+      {
+        "object": "f86fe61ebef0c9cbcff753ae83ef607656e736da",
+        "command": [
+          "git",
+          "cat-file",
+          "-e",
+          "f86fe61ebef0c9cbcff753ae83ef607656e736da^{commit}"
+        ],
+        "exit": 128
+      }
+    ],
+    "log_sha256": "d52ae411125effc42e5e78ab49e496503ecb1cf712255bf2939d0911739adaed"
+  },
+  "historical_preservation": {
+    "compared_to": "4cfd86bb2f7692959697983ee62e4f11a212fda3",
+    "unchanged_existing_files": 119,
+    "changed_existing_files": [
+      "validate.py"
+    ],
+    "original_validator_sha256": "79b72b7404388238958ce2e8a89b2c18bca74b65bd00b0f5a82ffbb3c773d03d",
+    "preserved_original_validator": "historical-validator.py.txt"
+  },
+  "artifacts": {
+    "historical-blobs/136645e3eab845f7ea414fa040a08c9eb48a5b31.gz": 9176,
+    "historical-blobs/3b2c42b5738e040b436754e6edf841478801e7e1.gz": 157788,
+    "historical-blobs/3bf73f0b4c9cdc085ef88e8f5f7877780d70d26d.gz": 158038,
+    "historical-blobs/7f9d98cae9a1d751a60e9404adc69e4ee3b68587.gz": 157892,
+    "historical-blobs/9b8806c7a2d00d7459c6c5cb949ba3be8208e473.gz": 21234,
+    "historical-blobs/ada607c38c2bb60d2d4d0dad789cb230beddc7bc.gz": 539,
+    "historical-blobs/b9692dfb0b164b26299a7394260e8eef00a88b2a.gz": 21116,
+    "historical-blobs/fa91f822f66c41e3b4f0fb862cfd878c18d6d53f.gz": 21039,
+    "historical-validator.py.txt": 10396,
+    "pins.json": 1577,
+    "portability.md": 1958,
+    "rebase-mapping.json": 12837,
+    "validate.py": 10711
+  },
+  "artifact_bytes_excluding_this_receipt": 584301,
+  "mapping_bytes": 12837,
+  "archive_bytes": 546822,
+  "missing_required_historical_inputs": [],
+  "boundaries": [
+    "Historical 68 registers/65 extracts, 64 sweep cases and 58 prior validator blobs are validated records, not commands rerun here.",
+    "Three inherited extraction failures remain; no positive API or native parity proof.",
+    "No current runtime, integrated Rust, source-generation replay, predecessor validation, shared gate, lint/check or broad-suite execution."
+  ]
+}
