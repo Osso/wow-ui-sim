@@ -1,0 +1,113 @@
+{
+  "scope": "copied SOURCE only",
+  "runs": [
+    {
+      "test": "__main__.Portable.test_copied_source_and_default_bytes",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmp7nwpafe0/audit.py"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "path": "empty",
+      "exit_code": 0,
+      "stdout": "{\"extracted_rows\": 6, \"header_ledger\": 14, \"inventory\": 412, \"inventory_counts\": {\"cvars/added\": 15, \"cvars/removed\": 9, \"events/added\": 200, \"global-api/added\": 187, \"widgets/added\": 1}, \"measurements\": {\"model\": 0, \"native\": 0, \"runtime\": 0}, \"original_seals\": 54, \"prose_ledger\": 14, \"reference_ledger\": 27, \"signature_ledger\": 188, \"source_rows\": 463}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.Portable.test_copied_source_and_default_bytes",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmp7nwpafe0/test_source.py"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "path": "empty",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_default_extract_and_raw_rows_are_both_accounted (__main__.SourceAccounting.test_default_extract_and_raw_rows_are_both_accounted) ... ok\ntest_every_accounting_omission_rejected (__main__.SourceAccounting.test_every_accounting_omission_rejected) ... ok\ntest_every_row_and_inventory_occurrence (__main__.SourceAccounting.test_every_row_and_inventory_occurrence) ... ok\ntest_exact_identity_and_response_body (__main__.SourceAccounting.test_exact_identity_and_response_body) ... ok\ntest_false_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_false_credit_and_foreign_history_rejected) ... ok\ntest_links_summary_and_successors_do_not_import_behavior (__main__.SourceAccounting.test_links_summary_and_successors_do_not_import_behavior) ... ok\ntest_repeated_literal_occurrences_are_not_deduplicated (__main__.SourceAccounting.test_repeated_literal_occurrences_are_not_deduplicated) ... ok\ntest_signatures_headers_and_literal_cvar_effects (__main__.SourceAccounting.test_signatures_headers_and_literal_cvar_effects) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.083s\n\nOK\n"
+    },
+    {
+      "test": "__main__.Portable.test_copied_source_and_default_bytes",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmp7nwpafe0/historical-tools/gen_patch_wikitext_register.py",
+        "1.14.3",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmp7nwpafe0/original/source.wikitext",
+        "4615755",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmp7nwpafe0/reproduced.json"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "path": "empty",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.Portable.test_disk_ledger_omission_rejects_and_restores",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmpyw4qs18s/audit.py"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "path": "empty",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/era-helper-integration-independent/1.14.3-scratch/tmpyw4qs18s/audit.py\", line 217, in <module>\n    print(json.dumps(replay(EVIDENCE), sort_keys=True))\n                     ~~~~~~^^^^^^^^^^\n  File \"/tmp/era-helper-integration-independent/1.14.3-scratch/tmpyw4qs18s/audit.py\", line 206, in replay\n    assert len(data) < 5_000_000 and digest(data) == expected, 'seal: ' + name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: original/ledger.json\n"
+    },
+    {
+      "test": "__main__.Portable.test_disk_ledger_omission_rejects_and_restores",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmpyw4qs18s/audit.py"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "path": "empty",
+      "exit_code": 0,
+      "stdout": "{\"extracted_rows\": 6, \"header_ledger\": 14, \"inventory\": 412, \"inventory_counts\": {\"cvars/added\": 15, \"cvars/removed\": 9, \"events/added\": 200, \"global-api/added\": 187, \"widgets/added\": 1}, \"measurements\": {\"model\": 0, \"native\": 0, \"runtime\": 0}, \"original_seals\": 54, \"prose_ledger\": 14, \"reference_ledger\": 27, \"signature_ledger\": 188, \"source_rows\": 463}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "original/ledger.json",
+      "sha256": "4f69fecb88c7b4201898cea4c15a84f91708c2232dfcf48df3cd021af257cee6",
+      "original_seals": 54
+    },
+    {
+      "test": "__main__.Portable.test_disk_log_fabrication_rejects_and_restores",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmp8je7m015/audit.py"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "path": "empty",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/era-helper-integration-independent/1.14.3-scratch/tmp8je7m015/audit.py\", line 217, in <module>\n    print(json.dumps(replay(EVIDENCE), sort_keys=True))\n                     ~~~~~~^^^^^^^^^^\n  File \"/tmp/era-helper-integration-independent/1.14.3-scratch/tmp8je7m015/audit.py\", line 206, in replay\n    assert len(data) < 5_000_000 and digest(data) == expected, 'seal: ' + name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.Portable.test_disk_log_fabrication_rejects_and_restores",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era-helper-integration-independent/1.14.3-scratch/tmp8je7m015/audit.py"
+      ],
+      "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+      "path": "empty",
+      "exit_code": 0,
+      "stdout": "{\"extracted_rows\": 6, \"header_ledger\": 14, \"inventory\": 412, \"inventory_counts\": {\"cvars/added\": 15, \"cvars/removed\": 9, \"events/added\": 200, \"global-api/added\": 187, \"widgets/added\": 1}, \"measurements\": {\"model\": 0, \"native\": 0, \"runtime\": 0}, \"original_seals\": 54, \"prose_ledger\": 14, \"reference_ledger\": 27, \"signature_ledger\": 188, \"source_rows\": 463}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "69ccf517536bfc19b0b1da36bd9566c63aac4a9c2f8eb1e5effe92b6349a2e25",
+      "original_seals": 54
+    }
+  ],
+  "tests": 3,
+  "failures": 0,
+  "errors": 0
+}

@@ -1,0 +1,200 @@
+{
+  "source": "/tmp/era-helper-integration-independent",
+  "selection": "All top-level report, receipts, comparisons, scopes, observations and streams; scratch fixture trees and recording helper excluded. Original seals unmodified.",
+  "files": [
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-portable-controls-fixed.json",
+      "retained": "1.14.2-portable-controls-fixed.json",
+      "bytes": 7126,
+      "sha256": "536c154be2b6412fe323564018b3429d11b2d2d34487b203aea1fee22f64ee3e"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-portable-controls.json",
+      "retained": "1.14.2-portable-controls.json",
+      "bytes": 138,
+      "sha256": "f82ea6a5d9f1495892376e171e4ffae2cba94df3672fbf2ee0a07269cc7567e1"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-portable-fixed.stderr",
+      "retained": "1.14.2-portable-fixed.stderr",
+      "bytes": 493,
+      "sha256": "f2e4ce314d2223ea38c62f7affb668db7099ae07dcf467f93c763bcb88cd7e4f"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-portable-fixed.stdout",
+      "retained": "1.14.2-portable-fixed.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-portable.stderr",
+      "retained": "1.14.2-portable.stderr",
+      "bytes": 2364,
+      "sha256": "c5669629011b29ef19c01be68756ad1954542b73d2efe42e90e5d848bb532d99"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-portable.stdout",
+      "retained": "1.14.2-portable.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-source.stderr",
+      "retained": "1.14.2-source.stderr",
+      "bytes": 912,
+      "sha256": "820d27c5d85e41561778af2977594fc47aa31c22f1d036447f72e3a0ee87583d"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.2-source.stdout",
+      "retained": "1.14.2-source.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-portable-controls-fixed.json",
+      "retained": "1.14.3-portable-controls-fixed.json",
+      "bytes": 6765,
+      "sha256": "c0fac4a5134423195ac502749d958184c0c29185627c5832c8f0aefce6296b23"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-portable-controls.json",
+      "retained": "1.14.3-portable-controls.json",
+      "bytes": 96,
+      "sha256": "1e048133ee7382e6f5fb7d2d605c520aad647f8f5a757ecd9d67521f526f03cc"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-portable-fixed.stderr",
+      "retained": "1.14.3-portable-fixed.stderr",
+      "bytes": 441,
+      "sha256": "468bb5af829427a815e28a9b66bd69fa18b3aa87f3c2a354486b7e611db5fae6"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-portable-fixed.stdout",
+      "retained": "1.14.3-portable-fixed.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-portable.stderr",
+      "retained": "1.14.3-portable.stderr",
+      "bytes": 2179,
+      "sha256": "419c096ee7b84aef95d0c0bd08179a93b6d10a1b3cf4baa3c7cf69307dc290f3"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-portable.stdout",
+      "retained": "1.14.3-portable.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-source.stderr",
+      "retained": "1.14.3-source.stderr",
+      "bytes": 1136,
+      "sha256": "fe8ad819467b128a22d189c5a5fd4ffc257f6f3710f3a87259cbecc0f53d41c8"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/1.14.3-source.stdout",
+      "retained": "1.14.3-source.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/comparison.json",
+      "retained": "comparison.json",
+      "bytes": 357,
+      "sha256": "8f900f6f2f5ea3bf8c8c5ab88a392b58ae0467dc7956d062f1a36d5391020f40"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/era.stderr",
+      "retained": "era.stderr",
+      "bytes": 5928,
+      "sha256": "bbd64c9b5ca839507619f61c81b52469a61aa317506cff65e0b9afbc7670df79"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/era.stdout",
+      "retained": "era.stdout",
+      "bytes": 416,
+      "sha256": "e80d5f382cf6383e14e45c22bbbf0706f57492f61c52690c200b9447b4281166"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/factory-observations.json",
+      "retained": "factory-observations.json",
+      "bytes": 174954,
+      "sha256": "4912414a6d9a602502d1ddbf4670bce2fea0abe5bacb2a7a22a1bca3c2cc7127"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/fmt.stderr",
+      "retained": "fmt.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/fmt.stdout",
+      "retained": "fmt.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/proof-summary.json",
+      "retained": "proof-summary.json",
+      "bytes": 1255,
+      "sha256": "b81426cf1bf0a42d395482630c241a45d196da77096558d257a94acca13bac3a"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/publication-probe-patch_10_2_5_vertex_color_probe_reaches_missing_endpoint_methods.log",
+      "retained": "publication-probe-patch_10_2_5_vertex_color_probe_reaches_missing_endpoint_methods.log",
+      "bytes": 944,
+      "sha256": "96553b78cd9f958c79e123941824ca6cbdce3762bb79999d9d32445df48d2d6e"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/publication-probe-patch_3_0_3_factory.log",
+      "retained": "publication-probe-patch_3_0_3_factory.log",
+      "bytes": 2963,
+      "sha256": "d22ec9e0a433d7aa0ee438636dbf9e899423bc64d94c5f08cdb4067ff74bcc9b"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/receipts.json",
+      "retained": "receipts.json",
+      "bytes": 9526,
+      "sha256": "ef27ade887070221754e51c681f9e6c615c99364e82e507ed43d9b06db2b241d"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/report.md",
+      "retained": "report.md",
+      "bytes": 5830,
+      "sha256": "177babf20cd47da226093eaf078dfa5ab1534ac836d79742718ace2f6f1facdf"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/retail-publication.stderr",
+      "retained": "retail-publication.stderr",
+      "bytes": 14184,
+      "sha256": "2830acd96581d7a6417aa93f05679213625993d830bec4586b1472629c1c8ea1"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/retail-publication.stdout",
+      "retained": "retail-publication.stdout",
+      "bytes": 5839,
+      "sha256": "a80a061a3f50dc39c85d0c37c2b34534f7cd80619b07a1561fbfd9186896cabc"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/scope-after.json",
+      "retained": "scope-after.json",
+      "bytes": 455534,
+      "sha256": "8f3d3a69ea1c264bde6463bb1d1f33d94950c134f4abff73fec73fe829c82a37"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/scope-before.json",
+      "retained": "scope-before.json",
+      "bytes": 455534,
+      "sha256": "8f3d3a69ea1c264bde6463bb1d1f33d94950c134f4abff73fec73fe829c82a37"
+    },
+    {
+      "source": "/tmp/era-helper-integration-independent/seal-successor-checks.json",
+      "retained": "seal-successor-checks.json",
+      "bytes": 990,
+      "sha256": "7753d1a18a31aeba590f834236b0e415889ff32fb5ce9c39a8ce1aeda7c80e4c"
+    }
+  ],
+  "preserved_files": 32,
+  "preserved_bytes": 1155904
+}

@@ -1,0 +1,18 @@
+{
+  "entire_json_equal": true,
+  "exact_row_id_order_equal": true,
+  "rows": 412,
+  "match": 286,
+  "mismatch": 126,
+  "model_credit": 0,
+  "native_credit": 0,
+  "nonsense_event_accepted": true,
+  "extractions": {
+    "CLASSIFIER": true,
+    "tuple": true,
+    "quote_lua": true,
+    "probe_entry": true,
+    "Entry": true,
+    "legacy_reexport": true
+  }
+}

@@ -1,0 +1,190 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/Projects/wow/wow-ui-sim)
+    Finished `test` profile [optimized + debuginfo] target(s) in 23.16s
+     Running tests/prefork_full_ui.rs (target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.02ms
+[  0.002s] [Startup] rilua VM created in 79.79µs
+[  0.002s] [Startup] builtin frames initialized in 57.01µs
+[  0.002s] [Startup] template registry cleared in 5.44µs
+[  0.002s] [Startup] intrinsic templates registered in 4.66µs
+[  0.002s] [Startup] initial app_data lua handle installed in 290.00ns
+[  0.094s] [Startup] init_lua_state complete in 91.73ms
+[  0.094s] [Startup] final app_data lua handle installed in 160.00ns
+[  0.094s] [Startup] initial screen globals installed in 53.19µs
+[  0.094s] [Startup] WowLuaEnv::new complete
+[  1.884s] [Startup] apply_post_load_workarounds: begin
+[  1.884s] [Workarounds] starting patch_edit_mode_manager
+[  1.885s] [Workarounds] finished patch_edit_mode_manager in 248.97µs
+[  1.885s] [Workarounds] starting init_edit_mode_layout
+[  1.885s] [EditMode] starting setup_layout_info
+[  1.887s] [EditMode] finished setup_layout_info in 2.49ms
+[  1.887s] [EditMode] starting apply_system_anchors
+[  1.991s] [EditMode] finished apply_system_anchors in 103.44ms
+[  1.991s] [EditMode] starting finalize_action_bar_positions
+[  1.992s] [EditMode] finished finalize_action_bar_positions in 1.32ms
+[  1.992s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.992s] [EditMode] finished invoke_anchor_changed_hooks in 315.17µs
+[  1.992s] [EditMode] starting fix_action_bar_nan_size
+[  1.992s] [EditMode] finished fix_action_bar_nan_size in 31.66µs
+[  1.992s] [EditMode] starting fix_action_bar_scale
+[  1.992s] [EditMode] finished fix_action_bar_scale in 3.57µs
+[  1.992s] [Workarounds] finished init_edit_mode_layout in 107.63ms
+[  1.992s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  1.992s] [Workarounds] finished patch_ui_parent_panel_toggles in 184.57µs
+[  1.992s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  1.993s] [Workarounds] finished patch_uiparent_onupdate_worklists in 75.73µs
+[  1.993s] [Workarounds] starting init_chat_type_colors
+[  1.993s] [Workarounds] finished init_chat_type_colors in 93.52µs
+[  1.993s] [Workarounds] starting patch_chat_voice_button_surface
+[  1.993s] [Workarounds] finished patch_chat_voice_button_surface in 85.56µs
+[  1.993s] [Workarounds] starting patch_item_socketing_tooltips
+[  1.993s] [Workarounds] finished patch_item_socketing_tooltips in 44.49µs
+[  1.993s] [Workarounds] starting patch_character_select_selected_name
+[  1.993s] [Workarounds] finished patch_character_select_selected_name in 23.84µs
+[  1.993s] [Workarounds] starting patch_character_create_defaults
+[  1.993s] [Workarounds] finished patch_character_create_defaults in 170.21µs
+[  1.993s] [Workarounds] starting patch_character_frame_title_refresh
+[  1.997s] [Workarounds] finished patch_character_frame_title_refresh in 4.51ms
+[  1.997s] [Workarounds] starting patch_vignette_pin_template
+[  1.998s] [Workarounds] finished patch_vignette_pin_template in 69.32µs
+[  1.998s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  1.998s] [Workarounds] finished patch_fog_of_war_pin_mixin in 204.36µs
+[  1.998s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.002s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.20ms
+[  2.002s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.002s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 48.24µs
+[  2.002s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.002s] [Workarounds] finished ensure_adventure_map_frame_surface in 327.19µs
+[  2.002s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.002s] [Workarounds] finished patch_action_bar_button_event_fanout in 78.39µs
+[  2.002s] [Workarounds] starting patch_paging_controls_page_text
+[  2.002s] [Workarounds] finished patch_paging_controls_page_text in 29.32µs
+[  2.002s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.002s] [Workarounds] finished patch_talent_edge_frame_level_sync in 23.13µs
+[  2.002s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.003s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 47.42µs
+[  2.003s] [Workarounds] starting patch_game_time_defaults
+[  2.003s] [Workarounds] finished patch_game_time_defaults in 5.27µs
+[  2.003s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.003s] [Workarounds] finished patch_tooltip_nineslice_surface in 33.27µs
+[  2.003s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.003s] [Workarounds] finished patch_container_frame_token_tracker in 30.63µs
+[  2.003s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.003s] [Workarounds] finished patch_achievement_display_set_achievements in 6.78µs
+[  2.003s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.003s] [Workarounds] finished patch_housing_dashboard_preload in 123.02µs
+[  2.003s] [Workarounds] starting patch_lfg_lock_list
+[  2.003s] [Workarounds] finished patch_lfg_lock_list in 24.47µs
+[  2.003s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.003s] [Workarounds] finished patch_auction_house_browse_results_event in 50.00µs
+[  2.003s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.003s] [Workarounds] finished patch_auction_house_search_context_aliases in 22.40µs
+[  2.003s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.003s] [Workarounds] finished patch_auth_challenge_frame_parent in 50.88µs
+[  2.003s] [Workarounds] starting patch_settings_surface_defaults
+[  2.003s] [Workarounds] finished patch_settings_surface_defaults in 262.06µs
+[  2.003s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.003s] [Workarounds] finished patch_settings_canvas_layout_visibility in 84.46µs
+[  2.003s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.048s] [Startup] apply_post_load_workarounds: globals restored
+[  2.048s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.049s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.166s] [Startup] begin login sequence
+[  2.166s] [Startup] Firing ADDON_LOADED
+[  2.166s] [Startup] Firing VARIABLES_LOADED
+[  2.240s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.276s] [Startup] Firing UI_SCALE_CHANGED
+[  2.277s] [Startup] Firing PLAYER_LOGIN
+[  2.277s] [Startup] end login sequence in 111.63ms
+[  2.277s] [Startup] begin world enter sequence
+[  2.277s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.277s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.277s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.452s] [EditMode] starting setup_layout_info
+[  2.455s] [EditMode] finished setup_layout_info in 2.95ms
+[  2.455s] [EditMode] starting apply_system_anchors
+[  2.549s] [EditMode] finished apply_system_anchors in 93.85ms
+[  2.549s] [EditMode] starting finalize_action_bar_positions
+[  2.551s] [EditMode] finished finalize_action_bar_positions in 1.58ms
+[  2.551s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.555s] [EditMode] finished invoke_anchor_changed_hooks in 4.33ms
+[  2.555s] [EditMode] starting fix_action_bar_nan_size
+[  2.555s] [EditMode] finished fix_action_bar_nan_size in 47.62µs
+[  2.555s] [EditMode] starting fix_action_bar_scale
+[  2.555s] [EditMode] finished fix_action_bar_scale in 3.36µs
+[  2.555s] [EditMode] starting reapply_player_frame_anchor
+[  2.556s] [EditMode] finished reapply_player_frame_anchor in 1.08ms
+[  2.563s] [Startup] end world enter sequence in 285.77ms
+[  2.563s] [Startup] begin post-login events
+[  2.564s] [Startup] Firing UNIT_AURA
+[  2.564s] [Startup] Firing PET_UI_UPDATE
+[  2.565s] [Startup] Firing BAG_UPDATE_DELAYED
+[  2.566s] [Startup] Firing QUEST_LOG_UPDATE
+[  2.567s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  2.631s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  2.631s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  2.632s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  2.640s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  2.640s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  2.640s] [Startup] Firing UPDATE_BINDINGS
+[  2.643s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  2.645s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  2.646s] [Startup] end post-login events in 82.64ms
+[  2.646s] [Startup] begin close startup special windows
+[  2.646s] [Startup] end close startup special windows in 200.11µs
+[  2.646s] [Startup] begin FIRST_FRAME_RENDERED
+[  2.646s] [Startup] Firing FIRST_FRAME_RENDERED
+[  2.646s] [Startup] end FIRST_FRAME_RENDERED in 118.08µs
+[  2.646s] [Startup] begin unblock hidden splash alerts
+[  2.646s] [Startup] end unblock hidden splash alerts in 10.23µs
+[  2.646s] [Startup] begin post-event workarounds
+[  2.646s] [Startup] end post-event workarounds in 471.00ns
+CVar default mismatch wt-cvars-CMAA2HalfFloat-814: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-luaErrorExceptions-835: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-minimapTrackedInfov3-837: page=Some("1006319"), observed=None
+CVar default mismatch wt-cvars-SoftTargetEnemyRange-857: page=Some("45"), observed=Some("45.000000")
+CVar default mismatch wt-cvars-SoftTargetFriendRange-861: page=Some("45"), observed=Some("45.000000")
+CVar default mismatch wt-cvars-SoftTargetInteractRange-869: page=Some("10"), observed=Some("10.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextFarDist-884: page=Some("40"), observed=Some("40.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextNearDist-885: page=Some("4"), observed=Some("4.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextNearScale-886: page=Some("1"), observed=Some("1.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextSize-887: page=Some("32"), observed=Some("32.000000")
+CVar default mismatch wt-cvars-WorldTextMinSize-901: page=Some("0"), observed=Some("0.000000")
+CVar default mismatch wt-cvars-vrsValarEnvLuma-109: page=Some("0.05"), observed=None
+CVar default mismatch wt-cvars-vrsValarK-110: page=Some("2.13"), observed=None
+CVar default mismatch wt-cvars-vrsValarSensitivityThreshold-111: page=Some("0.31"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseAsyncCompute-112: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseMotionVectors-113: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseWeberFechner-114: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarWeberFechnerConstant-115: page=Some("1.0"), observed=None
+CVar default mismatch wt-cvars-nameplateGameObjectMaxDistance-400: page=Some("30"), observed=Some("30.000000")
+CVar default mismatch wt-cvars-wmoPortalInteriorFade-168: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-advFlyKeyboardMaxPitchFactor-245: page=Some("5.0"), observed=Some("5.000000")
+CVar default mismatch wt-cvars-advFlyKeyboardMaxTurnFactor-246: page=Some("8.0"), observed=Some("8.000000")
+CVar default mismatch wt-cvars-advFlyKeyboardMinPitchFactor-247: page=Some("2.5"), observed=Some("2.500000")
+CVar default mismatch wt-cvars-advFlyKeyboardMinTurnFactor-248: page=Some("5.0"), observed=Some("5.000000")
+CVar default mismatch wt-cvars-advFlyPitchControlCameraChase-249: page=Some("20.0"), observed=Some("20.000000")
+CVar default mismatch wt-cvars-gxMTDecals-249: page=Some("1"), observed=Some("0")
+CVar default mismatch wt-cvars-AllowSoftwareRendererDX12-653: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-AllowWinRT-655: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-cameraIndirectOffset-658: page=Some("1.500000"), observed=Some("6.000000")
+CVar default mismatch wt-cvars-questPOILocalStory-692: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-showPhotosensitivityWarning-700: page=Some("0"), observed=Some("-1")
+CVar default mismatch wt-cvars-showTempMaxHealthLoss-703: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-vrsValarAlwaysOn-714: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarLPUseCornerSampling-716: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-graphicsComputeEffects-219: page=Some("4"), observed=Some("1")
+CVar default mismatch wt-cvars-RAIDVolumeFog-224: page=Some("1"), observed=Some("0")
+CVar default mismatch wt-cvars-CameraFollowGamepadAdjustDelay-208: page=Some("1.0"), observed=Some("1.000000")
+CVar default mismatch wt-cvars-CameraFollowGamepadAdjustEaseIn-209: page=Some("1.0"), observed=Some("1.000000")
+CVar default mismatch wt-cvars-TTSUseCharacterSettings-227: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-CMAA2Quality-137: page=Some("2"), observed=Some("3")
+CVar default mismatch wt-cvars-cameraFov-242: page=Some("90"), observed=Some("90.000000")
+CVar default mismatch wt-cvars-enableSourceLocationLookup-243: page=Some("0"), observed=Some("1")

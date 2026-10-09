@@ -1,0 +1,13 @@
+test_default_extract_and_raw_rows_are_both_accounted (__main__.SourceAccounting.test_default_extract_and_raw_rows_are_both_accounted) ... ok
+test_every_accounting_omission_rejected (__main__.SourceAccounting.test_every_accounting_omission_rejected) ... ok
+test_every_row_and_inventory_occurrence (__main__.SourceAccounting.test_every_row_and_inventory_occurrence) ... ok
+test_exact_identity_and_response_body (__main__.SourceAccounting.test_exact_identity_and_response_body) ... ok
+test_false_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_false_credit_and_foreign_history_rejected) ... ok
+test_links_summary_and_successors_do_not_import_behavior (__main__.SourceAccounting.test_links_summary_and_successors_do_not_import_behavior) ... ok
+test_repeated_literal_occurrences_are_not_deduplicated (__main__.SourceAccounting.test_repeated_literal_occurrences_are_not_deduplicated) ... ok
+test_signatures_headers_and_literal_cvar_effects (__main__.SourceAccounting.test_signatures_headers_and_literal_cvar_effects) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.086s
+
+OK

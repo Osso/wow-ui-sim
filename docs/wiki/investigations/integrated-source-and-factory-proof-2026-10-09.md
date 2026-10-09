@@ -64,13 +64,21 @@ Real WowLuaEnv, existing `IsPublicBuild=true`, raw SeasonOfDiscovery numeric2 an
 
 [1.14.4 audit](patch-1-14-4-api-audit.md#copied-historical-proof) retains SOURCE11/11 at `183437dc5`, portable3/3 at `fb6e6ba53`, 67 original + four separate receipt seals. Integration is not a fresh independent replay: no such later report is included in the selected retention. All eleven linked/prose contracts remain UNPROVEN; no native/model/runtime or foreign-history supersession credit.
 
+## Era narrow-helper integration: bounded PASS
+
+[Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-helper/report.md) records Era **2/2 + 1/1** and Retail **78/78** at report HEAD `5b12dac256abc0ffaf541df2bc445e8381612d2d`; relevant source hash scopes unchanged across concurrent docs/data commits. All **412** factory observations equal retained inventory, including IDs/order/details/values/defaults/classifications: **286** direction matches / **126** reviewed mismatches unchanged. The original **18** target warnings are absent; baseline **7 simulator** (6 library + 1 binary) and **6 vendor manifest** warnings remain. No suppressions or visibility expansion.
+
+Copied SOURCE **8/8 each**, corrected portable **3/3 each**; original/current seals **54+21** (1.14.3) and **72+17** (1.14.2) unchanged. Initial portable harness setup failures remain retained, not passing proof. First combined Era streams were transcribed verbatim from the tool result, not independently captured raw streams; exact start/end timestamps unavailable. Later receipts retain direct captures and timestamps. No native/model/event-producer credit: all observation native/model credit fields false; accepting a nonsense event name proves no producer.
+
+[Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-helper/main-retention.json) preserves 32 original files / 1,155,904 bytes byte-identically, including report, receipts, both hash scopes, comparison, observations, successful and failed streams, and reused consumer logs. Original seals untouched; scratch fixture trees and recording helper excluded. These are bounded proof epochs, not latest-HEAD blanket acceptance.
+
 ## Saved full suite: FAIL, broader goal open
 
 [Full-suite report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-dd/fullsuite-dd-independent-report.md) and [exact comparison](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-dd/fullsuite-dd-independent-comparison.json) retain **FAIL at `dd710c6fc`**: 23 integration + one Garrison prefork + six library failures, same identities/boundaries as `614402d56`. 29/30 raw assertion payloads equal; the remaining payload differs only a random missing-directory suffix. No newly failing identity against that baseline; no root-cause repair inferred. This is saved-run proof, not execution at later HEAD.
 
 Twelve new integration cases and two new prefork cases PASS. Exactly 75 executed publication sweeps plus three helpers PASS; selected-name inventories are not extra sweep credit. Excluded Era/Forever profile targets receive no credit. The runner's `new_failures` flag is not the direct `614` comparison; its precise baseline selection remains unproven.
 
-Main's four partial-startup cases remain in ordinary integration. The new Cargo/shared-helper refactor is in flight and not yet proven by this retained suite; ignored, untracked PLAN is not acceptance evidence. No fresh tests or broad gates run here. **Broader goal remains open**, including native/full-UI and final integration gaps.
+Main's four partial-startup cases remain in ordinary integration. The new Cargo/shared-helper refactor was in flight and not proven by this retained suite; the later bounded Era-helper proof above is separate, not full-suite acceptance; ignored, untracked PLAN is not acceptance evidence. No fresh tests or broad gates run here. **Broader goal remains open**, including native/full-UI and final integration gaps.
 
 ## Sources
 

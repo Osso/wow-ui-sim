@@ -1,0 +1,19 @@
+{
+  "revision_at_report": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+  "time": "2026-10-09T16:05:30.599760+00:00",
+  "code_scope_unchanged": true,
+  "retained_consumer_proofs": [
+    {
+      "path": "/tmp/era-helper-integration-independent/publication-probe-patch_3_0_3_factory.log",
+      "sha256": "d22ec9e0a433d7aa0ee438636dbf9e899423bc64d94c5f08cdb4067ff74bcc9b",
+      "claimed_revision": "d512bdd4e",
+      "scope_validation": "Shared helper and all src/tests unchanged since d512bdd4e; intervening changes are Era patch targets and their Cargo entries plus docs/data. Claim of originating revision supplied by caller; raw retained logs themselves contain no revision metadata."
+    },
+    {
+      "path": "/tmp/era-helper-integration-independent/publication-probe-patch_10_2_5_vertex_color_probe_reaches_missing_endpoint_methods.log",
+      "sha256": "96553b78cd9f958c79e123941824ca6cbdce3762bb79999d9d32445df48d2d6e",
+      "claimed_revision": "d512bdd4e",
+      "scope_validation": "Shared helper and all src/tests unchanged since d512bdd4e; intervening changes are Era patch targets and their Cargo entries plus docs/data. Claim of originating revision supplied by caller; raw retained logs themselves contain no revision metadata."
+    }
+  ]
+}

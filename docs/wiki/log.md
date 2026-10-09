@@ -970,3 +970,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] evidence | Era1.14.1 portable and current getter proof
 
 [Audit](investigations/patch-1-14-1-api-audit.md): at `a6d38f864`, portable GREEN3/3 includes copied SOURCE8/default-byte register+extract replay and both serialized tamper/restorations;160 original seals unchanged. Offline headlessEra standalone getter-state GREEN1/1, no runtime edits/native/signature/default credit. Actual tested code and later receipts separate; main owns integration/native/final gates.
+
+## [2026-10-09] retention | Bounded Era narrow-helper integration
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#era-narrow-helper-integration-bounded-pass) links retained independent report, receipts/hash scopes/comparison and streams; 32 original files / 1,155,904 bytes preserved byte-identically, original seals untouched. First Era transcript/no-timestamps caveat retained; no native/model/event-producer credit. Existing page only: index unchanged. No tests or runtime changes.

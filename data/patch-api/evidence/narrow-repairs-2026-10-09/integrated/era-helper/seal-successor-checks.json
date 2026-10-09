@@ -1,0 +1,61 @@
+{
+  "1.14.3": {
+    "seals.json": {
+      "count": 54,
+      "mismatches": []
+    },
+    "receipt-seals.json": {
+      "count": 21,
+      "mismatches": []
+    },
+    "successor_versions": [
+      "1.14.4",
+      "1.15.0",
+      "1.15.1",
+      "1.15.2",
+      "1.15.3",
+      "1.15.4",
+      "1.15.5",
+      "1.15.6",
+      "1.15.7",
+      "1.15.8",
+      "1.15.9"
+    ],
+    "later_registers": [],
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    }
+  },
+  "1.14.2": {
+    "seals.json": {
+      "count": 72,
+      "mismatches": []
+    },
+    "receipt-seals.json": {
+      "count": 17,
+      "mismatches": []
+    },
+    "successor_versions": [
+      "1.14.3",
+      "1.14.4",
+      "1.15.0",
+      "1.15.1",
+      "1.15.2",
+      "1.15.3",
+      "1.15.4",
+      "1.15.5",
+      "1.15.6",
+      "1.15.7",
+      "1.15.8",
+      "1.15.9"
+    ],
+    "later_registers": [],
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    }
+  }
+}

@@ -1,0 +1,221 @@
+[
+  {
+    "label": "1.14.3-source",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/tmp/era-helper-integration-independent/1.14.3/test_source.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:00:52.318601+00:00",
+    "end": "2026-10-09T16:00:52.439706+00:00",
+    "exit": 0,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "fe8ad819467b128a22d189c5a5fd4ffc257f6f3710f3a87259cbecc0f53d41c8"
+  },
+  {
+    "label": "1.14.3-portable",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-c",
+      "import runpy,sys,textwrap; g=runpy.run_path(sys.argv[1]); g['Portable' if 'Portable' in g else 'PortableSource'].execute.__globals__['CWD']=sys.argv[2]; sys.argv=sys.argv[:1]+sys.argv[3:]; tail=open(g['__file__']).read().split(\"if __name__ == '__main__':\")[1]; exec(compile(textwrap.dedent(tail),g['__file__'],'exec'),g)",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.3-session-2026-10-09/test_portable.py",
+      "/home/osso/Projects/wow/wow-ui-sim",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.3-session-2026-10-09/replay.tar.gz",
+      "--scratch",
+      "/tmp/era-helper-integration-independent/1.14.3-scratch",
+      "--receipts",
+      "/tmp/era-helper-integration-independent/1.14.3-portable-controls.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:00:52.439838+00:00",
+    "end": "2026-10-09T16:00:52.473860+00:00",
+    "exit": 1,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "419c096ee7b84aef95d0c0bd08179a93b6d10a1b3cf4baa3c7cf69307dc290f3"
+  },
+  {
+    "label": "1.14.2-source",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/tmp/era-helper-integration-independent/1.14.2/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:00:52.479128+00:00",
+    "end": "2026-10-09T16:00:52.704030+00:00",
+    "exit": 0,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "820d27c5d85e41561778af2977594fc47aa31c22f1d036447f72e3a0ee87583d"
+  },
+  {
+    "label": "1.14.2-portable",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-c",
+      "import runpy,sys,textwrap; g=runpy.run_path(sys.argv[1]); g['Portable' if 'Portable' in g else 'PortableSource'].execute.__globals__['CWD']=sys.argv[2]; sys.argv=sys.argv[:1]+sys.argv[3:]; tail=open(g['__file__']).read().split(\"if __name__ == '__main__':\")[1]; exec(compile(textwrap.dedent(tail),g['__file__'],'exec'),g)",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.2-session-2026-10-09/test_portable.py",
+      "/home/osso/Projects/wow/wow-ui-sim",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.2-session-2026-10-09/replay-archive.tar.gz",
+      "--scratch",
+      "/tmp/era-helper-integration-independent/1.14.2-scratch",
+      "--receipts",
+      "/tmp/era-helper-integration-independent/1.14.2-portable-controls.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:00:52.704255+00:00",
+    "end": "2026-10-09T16:00:52.737445+00:00",
+    "exit": 1,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "c5669629011b29ef19c01be68756ad1954542b73d2efe42e90e5d848bb532d99"
+  },
+  {
+    "label": "fmt",
+    "argv": [
+      "/usr/bin/cargo",
+      "fmt",
+      "--check"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:00:52.737606+00:00",
+    "end": "2026-10-09T16:01:02.475279+00:00",
+    "exit": 0,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "1.14.3-portable-fixed",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-c",
+      "import sys; p=sys.argv.pop(1); cwd=sys.argv.pop(1); text=open(p).read(); import re; text=re.sub(r'^CWD = .+$', 'CWD = '+repr(cwd), text, flags=re.M); exec(compile(text,p,'exec'),dict(__file__=p,__name__='__main__'))",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.3-session-2026-10-09/test_portable.py",
+      "/home/osso/Projects/wow/wow-ui-sim",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.3-session-2026-10-09/replay.tar.gz",
+      "--scratch",
+      "/tmp/era-helper-integration-independent/1.14.3-scratch",
+      "--receipts",
+      "/tmp/era-helper-integration-independent/1.14.3-portable-controls-fixed.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:01:38.400040+00:00",
+    "end": "2026-10-09T16:01:38.785394+00:00",
+    "exit": 0,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "468bb5af829427a815e28a9b66bd69fa18b3aa87f3c2a354486b7e611db5fae6"
+  },
+  {
+    "label": "1.14.2-portable-fixed",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-c",
+      "import sys; p=sys.argv.pop(1); cwd=sys.argv.pop(1); text=open(p).read(); import re; text=re.sub(r'^CWD = .+$', 'CWD = '+repr(cwd), text, flags=re.M); exec(compile(text,p,'exec'),dict(__file__=p,__name__='__main__'))",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.2-session-2026-10-09/test_portable.py",
+      "/home/osso/Projects/wow/wow-ui-sim",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.2-session-2026-10-09/replay-archive.tar.gz",
+      "--scratch",
+      "/tmp/era-helper-integration-independent/1.14.2-scratch",
+      "--receipts",
+      "/tmp/era-helper-integration-independent/1.14.2-portable-controls-fixed.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:01:38.785555+00:00",
+    "end": "2026-10-09T16:01:39.200185+00:00",
+    "exit": 0,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "f2e4ce314d2223ea38c62f7affb668db7099ae07dcf467f93c763bcb88cd7e4f"
+  },
+  {
+    "label": "retail-publication",
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+    "start": "2026-10-09T16:01:55.908464+00:00",
+    "end": "2026-10-09T16:02:28.635681+00:00",
+    "exit": 0,
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json",
+    "stdout_sha256": "a80a061a3f50dc39c85d0c37c2b34534f7cd80619b07a1561fbfd9186896cabc",
+    "stderr_sha256": "2830acd96581d7a6417aa93f05679213625993d830bec4586b1472629c1c8ea1"
+  },
+  {
+    "label": "era-combined",
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "client-era",
+      "--test",
+      "patch_1_14_3_factory",
+      "--test",
+      "patch_1_14_2_cvars",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {
+      "WOW_SIM_P1143_FACTORY_OUT": "/tmp/era-helper-integration-independent/factory-observations.json"
+    },
+    "inherited_build_env": {
+      "CARGO_BUILD_JOBS": "12"
+    },
+    "revision_at_start": "a3c66ef5e75f41223efc9f7c271d629374244096",
+    "exit": 0,
+    "start": null,
+    "time_note": "Exact start/end wall times were not captured for first command; output file modification time recorded. Streams transcribed verbatim from tool CommandResult; no rerun to recover logs.",
+    "observation_mtime_utc": "2026-10-09T16:00:27.912185+00:00",
+    "stdout_sha256": "e80d5f382cf6383e14e45c22bbbf0706f57492f61c52690c200b9447b4281166",
+    "stderr_sha256": "bbd64c9b5ca839507619f61c81b52469a61aa317506cff65e0b9afbc7670df79",
+    "scope_file": "/tmp/era-helper-integration-independent/scope-before.json"
+  }
+]
