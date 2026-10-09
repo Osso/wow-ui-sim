@@ -45,6 +45,10 @@ Evidence `original/` preserves response/raw/manifest/registry, original ledger/g
 
 At `6027d1349`, expanded parser GREEN 4/4 and complete-accounting GREEN 4/4. All 1,292 single-row omission controls reject; false credit and Classic successor reject. Relocated replay has no Git/target/current files; four serialized source/ledger/log/tool tamper controls reject at their exact seal and restore bytes, with successful fresh-process replay after each. Original 36 seals plus one closure seal remain unchanged; two subsequent GREEN logs have separate receipt seals. No broad/check/lint/readability/profile/startup/full-suite/final gates are run by this bounded agent. [Handoff](../../../data/patch-api/evidence/3.0.2-session-2026-10-09/handoff.md) records exact revisions and command proof ledger after targeted tests.
 
+## Main successor integration — 2026-10-09
+
+[Actual retail closure pins](../../../data/patch-api/evidence/3.0.2-session-2026-10-09/integrated/successor-closure.json) now include 3.0.3/3.0.8/3.1.0/3.2.0/3.3.0/3.3.3/3.3.5/4.0.1. Comparisons retain duplicate occurrences: 18 matching row pairs with 3.1.0, one changed `CalendarGetDayEvent` with 3.2.0, seven 4.0.1 removals, zero pairs with the other five pages. These are identity/direction comparisons, not measured publication or model closures. Merged generator keeps both the 3.2.0 retail-change and 3.0.2 launch-inventory opt-in paths. Original 36 seals, closure seal and separate receipts stay unchanged. Independent source/replay and supported publication measurements pending; no runtime changes or native acceptance.
+
 ## Sources
 - [Frozen raw](../../../data/patch-api/source-cache/legacy-2026-10-09/3.0.2-wikitext.txt), [response](../../../data/patch-api/source-cache/legacy-2026-10-09/3.0.2-response.json), [capture manifest](../../../data/patch-api/source-cache/legacy-2026-10-09/manifest.json).
 - [Ledger](../../../data/patch-api/sources/3.0.2-page-coverage.json) and [spec](../../specs/patch-3-0-2-publication-sweep.md).

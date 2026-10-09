@@ -1,0 +1,238 @@
+{
+  "scope": "actual retail identity/direction comparison only; no runtime/native/model credit",
+  "rows": [
+    {
+      "patch": "3.0.3",
+      "path": "data/patch-api/sources/3.0.3-wikitext-register.json",
+      "sha256": "3257d2c52611bd8e8fbf869a8001edb36291a9af1a453f772c9e0c74738203ca",
+      "overlap": []
+    },
+    {
+      "patch": "3.0.8",
+      "path": "data/patch-api/sources/3.0.8-wikitext-register.json",
+      "sha256": "b6e630ea3023a11c7dcd856a8037f417efcc5b1a18f49575a37b8dd4b82c8b4b",
+      "overlap": []
+    },
+    {
+      "patch": "3.1.0",
+      "path": "data/patch-api/sources/3.1.0-wikitext-register.json",
+      "sha256": "5d7489ea5c5aee9e66b3e34b3d99e479a14e3d2b16802c0dd047f81c7b40143e",
+      "overlap": [
+        {
+          "symbol": "UnitAura",
+          "own_direction": "changed",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-UnitAura-30",
+          "later_id": "wt-global-api-UnitAura-167"
+        },
+        {
+          "symbol": "UnitBuff",
+          "own_direction": "changed",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-UnitBuff-32",
+          "later_id": "wt-global-api-UnitBuff-168"
+        },
+        {
+          "symbol": "UnitDebuff",
+          "own_direction": "changed",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-UnitDebuff-32",
+          "later_id": "wt-global-api-UnitDebuff-169"
+        },
+        {
+          "symbol": "UnitAura",
+          "own_direction": "changed",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-UnitAura-32",
+          "later_id": "wt-global-api-UnitAura-167"
+        },
+        {
+          "symbol": "GetInventoryItemsForSlot",
+          "own_direction": "changed",
+          "later_direction": "added",
+          "own_id": "wt-global-api-GetInventoryItemsForSlot-81",
+          "later_id": "wt-global-api-GetInventoryItemsForSlot-233"
+        },
+        {
+          "symbol": "CollapseAllHeaders",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-CollapseAllHeaders-107",
+          "later_id": "wt-global-api-CollapseAllHeaders-123"
+        },
+        {
+          "symbol": "ExpandAllHeaders",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-ExpandAllHeaders-109",
+          "later_id": "wt-global-api-ExpandAllHeaders-130"
+        },
+        {
+          "symbol": "GetTrackedAchievement",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-GetTrackedAchievement-187",
+          "later_id": "wt-global-api-GetTrackedAchievement-42"
+        },
+        {
+          "symbol": "SetTrackedAchievement",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-SetTrackedAchievement-188",
+          "later_id": "wt-global-api-SetTrackedAchievement-46"
+        },
+        {
+          "symbol": "UnitAura",
+          "own_direction": "added",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-UnitAura-260",
+          "later_id": "wt-global-api-UnitAura-167"
+        },
+        {
+          "symbol": "UnitBuff",
+          "own_direction": "changed",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-UnitBuff-261",
+          "later_id": "wt-global-api-UnitBuff-168"
+        },
+        {
+          "symbol": "UnitDebuff",
+          "own_direction": "changed",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-UnitDebuff-262",
+          "later_id": "wt-global-api-UnitDebuff-169"
+        },
+        {
+          "symbol": "CalendarContextEventIsGuildWide",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-CalendarContextEventIsGuildWide-282",
+          "later_id": "wt-global-api-CalendarContextEventIsGuildWide-49"
+        },
+        {
+          "symbol": "CalendarEventIsGuildWide",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-CalendarEventIsGuildWide-309",
+          "later_id": "wt-global-api-CalendarEventIsGuildWide-56"
+        },
+        {
+          "symbol": "CalendarNewArenaTeamEvent",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-CalendarNewArenaTeamEvent-346",
+          "later_id": "wt-global-api-CalendarNewArenaTeamEvent-58"
+        },
+        {
+          "symbol": "CalendarNewGuildWideEvent",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-CalendarNewGuildWideEvent-349",
+          "later_id": "wt-global-api-CalendarNewGuildWideEvent-62"
+        },
+        {
+          "symbol": "GetGlyphSocketInfo",
+          "own_direction": "added",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-GetGlyphSocketInfo-371",
+          "later_id": "wt-global-api-GetGlyphSocketInfo-24"
+        },
+        {
+          "symbol": "GameTooltip:SetGlyph",
+          "own_direction": "added",
+          "later_direction": "changed",
+          "own_id": "wt-widgets-GameTooltip:SetGlyph-463",
+          "later_id": "wt-widgets-GameTooltip:SetGlyph-236"
+        }
+      ]
+    },
+    {
+      "patch": "3.2.0",
+      "path": "data/patch-api/sources/3.2.0-wikitext-register.json",
+      "sha256": "69aa203697a58b43c936098568b7c44d051e9be045156c5b266ce2789552b21b",
+      "overlap": [
+        {
+          "symbol": "CalendarGetDayEvent",
+          "own_direction": "added",
+          "later_direction": "changed",
+          "own_id": "wt-global-api-CalendarGetDayEvent-330",
+          "later_id": "wt-global-api-CalendarGetDayEvent-46"
+        }
+      ]
+    },
+    {
+      "patch": "3.3.0",
+      "path": "data/patch-api/sources/3.3.0-wikitext-register.json",
+      "sha256": "e6c6f0097c2a85229e2eb9c3569f41ec548de8818fd3ada059d2c2a48eed13ef",
+      "overlap": []
+    },
+    {
+      "patch": "3.3.3",
+      "path": "data/patch-api/sources/3.3.3-wikitext-register.json",
+      "sha256": "32b76babc1e45c765e59bb4aa10d8343148089a7d888f9ccedac869e993bd72e",
+      "overlap": []
+    },
+    {
+      "patch": "3.3.5",
+      "path": "data/patch-api/sources/3.3.5-wikitext-register.json",
+      "sha256": "8a60b88b2d15dc0943e7359947fa072ad2489caf4e485e754a3f20468d77fb7c",
+      "overlap": []
+    },
+    {
+      "patch": "4.0.1",
+      "path": "data/patch-api/sources/4.0.1-wikitext-register.json",
+      "sha256": "cfdef52eb38da73f43f015b1b44486a0e0aa0ac31cd567cd281e83d7f34b5123",
+      "overlap": [
+        {
+          "symbol": "GetKnownSlotFromHighestRankSlot",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-GetKnownSlotFromHighestRankSlot-110",
+          "later_id": "wt-global-api-GetKnownSlotFromHighestRankSlot-41"
+        },
+        {
+          "symbol": "RestoreVideoEffectsDefaults",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-RestoreVideoEffectsDefaults-128",
+          "later_id": "wt-global-api-RestoreVideoEffectsDefaults-72"
+        },
+        {
+          "symbol": "RestoreVideoResolutionDefaults",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-RestoreVideoResolutionDefaults-129",
+          "later_id": "wt-global-api-RestoreVideoResolutionDefaults-73"
+        },
+        {
+          "symbol": "GetCVarAbsoluteMax",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-GetCVarAbsoluteMax-437",
+          "later_id": "wt-global-api-GetCVarAbsoluteMax-33"
+        },
+        {
+          "symbol": "GetCVarAbsoluteMin",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-GetCVarAbsoluteMin-438",
+          "later_id": "wt-global-api-GetCVarAbsoluteMin-34"
+        },
+        {
+          "symbol": "GetCVarMax",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-GetCVarMax-441",
+          "later_id": "wt-global-api-GetCVarMax-35"
+        },
+        {
+          "symbol": "GetCVarMin",
+          "own_direction": "added",
+          "later_direction": "removed",
+          "own_id": "wt-global-api-GetCVarMin-442",
+          "later_id": "wt-global-api-GetCVarMin-36"
+        }
+      ]
+    }
+  ]
+}
