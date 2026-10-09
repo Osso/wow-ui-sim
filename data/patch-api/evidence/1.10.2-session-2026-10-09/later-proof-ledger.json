@@ -1,0 +1,69 @@
+[
+  {
+    "argv": [
+      "/usr/bin/env",
+      "PATH=/nonexistent",
+      "PYTHONNOUSERSITE=1",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/copied-source-v9mqz8sd/audit.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "4e34482d24ade273e4abf83552f4367c6bcfba91",
+    "scope": "fresh archive copy audit.py; original sealed bytes unchanged; no Git/target/current-tools",
+    "started": "2026-10-09T17:38:52.644790+00:00",
+    "finished": "2026-10-09T17:38:52.698061+00:00",
+    "exit_code": 0,
+    "stdout": "{\n  \"scope\": \"SOURCE-only historical replay\",\n  \"seals\": 26,\n  \"totals\": {\n    \"physical_lines\": 1,\n    \"nonblank_rows\": 1,\n    \"metadata_rows\": 1,\n    \"unproven_source_rows\": 0,\n    \"references\": 1,\n    \"unproven_contracts\": 1,\n    \"inventory\": 0,\n    \"signatures\": 0,\n    \"defaults\": 0,\n    \"prose\": 0,\n    \"headers\": 0,\n    \"templates\": 0\n  }\n}\n",
+    "stderr": "",
+    "stream_sha256": "6692fa43392701d83f9397da972618d540f7e51f00b2237bf246361fb1fc0866",
+    "input_archive_sha256": "4fb9f82549447aad5aa054152d9ecac4e3656379be3f1df14eb53f56f79d0111",
+    "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+  },
+  {
+    "argv": [
+      "/usr/bin/env",
+      "PATH=/nonexistent",
+      "PYTHONNOUSERSITE=1",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/copied-source-v9mqz8sd/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "4e34482d24ade273e4abf83552f4367c6bcfba91",
+    "scope": "fresh archive copy test_source_accounting.py; original sealed bytes unchanged; no Git/target/current-tools",
+    "started": "2026-10-09T17:38:52.699036+00:00",
+    "finished": "2026-10-09T17:38:52.758716+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... ok\ntest_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... ok\ntest_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... ok\ntest_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... ok\ntest_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.017s\n\nOK\n",
+    "stream_sha256": "44e63c925a5c1b92877da439b83ce3e5a012470cb2ae4d90e713c7780618f760",
+    "input_archive_sha256": "4fb9f82549447aad5aa054152d9ecac4e3656379be3f1df14eb53f56f79d0111",
+    "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+  },
+  {
+    "argv": [
+      "/usr/bin/env",
+      "PATH=/nonexistent",
+      "PYTHONNOUSERSITE=1",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/copied-source-v9mqz8sd/test_portable.py",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/copied-source-v9mqz8sd/new-portable-proof.json"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "4e34482d24ade273e4abf83552f4367c6bcfba91",
+    "scope": "fresh archive copy test_portable.py; original sealed bytes unchanged; no Git/target/current-tools",
+    "started": "2026-10-09T17:38:52.759161+00:00",
+    "finished": "2026-10-09T17:38:52.847703+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay) ... ok\ntest_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored) ... ok\ntest_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.049s\n\nOK\n",
+    "stream_sha256": "7366e06aedcf52a85fb990ddaf568ec5289cb09b33ff4bf7178e2d4a729c4a33",
+    "input_archive_sha256": "4fb9f82549447aad5aa054152d9ecac4e3656379be3f1df14eb53f56f79d0111",
+    "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+  }
+]

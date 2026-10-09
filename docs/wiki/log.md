@@ -1033,4 +1033,4 @@ Ingested [audit](investigations/patch-1-13-4-api-audit.md): literal SOURCE bound
 
 ## [2026-10-09] investigation | Patch 1.10.2 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-10-2-api-audit.md): frozen465540/4475520, exact45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero API/signature/default/model/runtime/native subset. Own SOURCE RED five failures retained; GREEN/portable epochs pending actual executions. Queued1.11.0 behind1.13.2/1.12.0 unapplied; separate histories. Main owns integration/native/final gates.
+[Audit](investigations/patch-1-10-2-api-audit.md): frozen465540/4475520, exact45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero API/signature/default/model/runtime/native subset. Own SOURCE RED5/GREEN5 atd69bbfdcc; copied SOURCE5 and portable3 at4e34482d2, exact default-byte/error replay and both serialized tamper rejections/restorations. Original26 seals/27-member50,127-byte archive unchanged; six later receipt seals separate. Queued1.11.0 behind1.13.2/1.12.0 unapplied; separate histories. Main owns integration/native/final gates.
