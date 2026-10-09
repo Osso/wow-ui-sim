@@ -1,0 +1,97 @@
+test_all_literal_declarations_and_old_rename_identity (__main__.FrozenPage.test_all_literal_declarations_and_old_rename_identity) ... FAIL
+test_each_omission_and_count_mutation_rejected (__main__.FrozenPage.test_each_omission_and_count_mutation_rejected) ... FAIL
+test_every_row_header_link_template_prose_and_default_limit (__main__.FrozenPage.test_every_row_header_link_template_prose_and_default_limit) ... FAIL
+test_exact_frozen_body_response_identity_mutations_rejected (__main__.FrozenPage.test_exact_frozen_body_response_identity_mutations_rejected) ... FAIL
+test_invented_alias_default_expansion_or_native_credit_rejected (__main__.FrozenPage.test_invented_alias_default_expansion_or_native_credit_rejected) ... FAIL
+test_manifest_registry_identity_mutations_rejected (__main__.FrozenPage.test_manifest_registry_identity_mutations_rejected) ... FAIL
+test_own_base_default_bytes_and_error_replay (__main__.FrozenPage.test_own_base_default_bytes_and_error_replay) ... FAIL
+test_queued_successors_separate_and_foreign_histories_not_applied (__main__.FrozenPage.test_queued_successors_separate_and_foreign_histories_not_applied) ... FAIL
+
+======================================================================
+FAIL: test_all_literal_declarations_and_old_rename_identity (__main__.FrozenPage.test_all_literal_declarations_and_old_rename_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 22, in test_all_literal_declarations_and_old_rename_identity
+    ledger = self.ledger()
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 18, in ledger
+    self.assertEqual(ledger.get("patch"), "1.3.0", "own source accounting absent")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '1.3.0' : own source accounting absent
+
+======================================================================
+FAIL: test_each_omission_and_count_mutation_rejected (__main__.FrozenPage.test_each_omission_and_count_mutation_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 57, in test_each_omission_and_count_mutation_rejected
+    ledger = self.ledger()
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 18, in ledger
+    self.assertEqual(ledger.get("patch"), "1.3.0", "own source accounting absent")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '1.3.0' : own source accounting absent
+
+======================================================================
+FAIL: test_every_row_header_link_template_prose_and_default_limit (__main__.FrozenPage.test_every_row_header_link_template_prose_and_default_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 36, in test_every_row_header_link_template_prose_and_default_limit
+    ledger = self.ledger()
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 18, in ledger
+    self.assertEqual(ledger.get("patch"), "1.3.0", "own source accounting absent")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '1.3.0' : own source accounting absent
+
+======================================================================
+FAIL: test_exact_frozen_body_response_identity_mutations_rejected (__main__.FrozenPage.test_exact_frozen_body_response_identity_mutations_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 97, in test_exact_frozen_body_response_identity_mutations_rejected
+    self.assertIsNotNone(validated, "own source identity absent")
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : own source identity absent
+
+======================================================================
+FAIL: test_invented_alias_default_expansion_or_native_credit_rejected (__main__.FrozenPage.test_invented_alias_default_expansion_or_native_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 71, in test_invented_alias_default_expansion_or_native_credit_rejected
+    ledger = self.ledger()
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 18, in ledger
+    self.assertEqual(ledger.get("patch"), "1.3.0", "own source accounting absent")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '1.3.0' : own source accounting absent
+
+======================================================================
+FAIL: test_manifest_registry_identity_mutations_rejected (__main__.FrozenPage.test_manifest_registry_identity_mutations_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 115, in test_manifest_registry_identity_mutations_rejected
+    self.assertIsNotNone(audit.validate_source(), "own manifest identity absent")
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : own manifest identity absent
+
+======================================================================
+FAIL: test_own_base_default_bytes_and_error_replay (__main__.FrozenPage.test_own_base_default_bytes_and_error_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 135, in test_own_base_default_bytes_and_error_replay
+    audit.replay_defaults()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/audit.py", line 9, in replay_defaults
+    raise AssertionError("own default replay absent")
+AssertionError: own default replay absent
+
+======================================================================
+FAIL: test_queued_successors_separate_and_foreign_histories_not_applied (__main__.FrozenPage.test_queued_successors_separate_and_foreign_histories_not_applied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 127, in test_queued_successors_separate_and_foreign_histories_not_applied
+    ledger = self.ledger()
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py", line 18, in ledger
+    self.assertEqual(ledger.get("patch"), "1.3.0", "own source accounting absent")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != '1.3.0' : own source accounting absent
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+FAILED (failures=8)

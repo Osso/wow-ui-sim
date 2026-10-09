@@ -85,8 +85,13 @@ def is_retail_successor(version):
     return major >= 2 and (major, minor) not in {(2, 5), (3, 4), (4, 4), (5, 5)}
 
 
-def append_literal(records, category, line, literal, **fields):
-    row = dict(id=f"{category}-1.3.0-{len(records) + 1:03}", line=line, literal=literal, **fields)
+def append_literal(records, prefix, line, literal, **fields):
+    row = dict(
+        id=f"{prefix}-1.3.0-{len(records) + 1:03}",
+        line=line,
+        literal=literal,
+        **fields,
+    )
     records.append(row)
     return row
 

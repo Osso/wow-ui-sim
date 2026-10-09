@@ -22,7 +22,7 @@ Original Retail is distinct from Era/Forever and other Classic histories.1.4.0 `
 
 ## Development epochs
 
-Own SOURCE RED8 and portable RED3 at base `b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f` retained exact fixtures/full streams/hash scopes. Accounting/default replay and immutable copied replay pending targeted GREEN. No Rust builds, clients, checks, broad suites or final gates.
+Own SOURCE RED8 and portable RED3 at base `b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f` retained exact fixtures/full streams/hash scopes. Initial ledger capture retained a TypeError from a helper parameter colliding with the literal category field; renamed helper parameter without changing source categories. Accounting/default replay and immutable copied replay pending targeted GREEN. No Rust builds, clients, checks, broad suites or final gates.
 
 ## Sources
 
