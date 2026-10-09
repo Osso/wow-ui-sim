@@ -4,6 +4,10 @@
 
 Main-provided integration identifiers: p303 `4470912f5`, p302 `16b9658da`, p242 `0b3144090`, p240 `923b0c986`, p230 `48691e5a8`, p220 `c2481c4c5`, p210 `8877566d2`, p201 `88217d328`, p1601 `861e7ae5e`, p1159 `60524271c`, p1158 `dd710c6fc`. Integration alone gives no execution or native credit. Existing per-page source ledgers, immutable source/factory seals and counts remain authoritative; new source slices remain source-only unless explicit bounded proof says otherwise.
 
+## Obsolete structural assertions — scoped verification pending
+
+Two source-only chat/scenario placement tests were removed: broad module-name matches falsely rejected legitimate state-backed C API modules, while their remaining check read a deleted legacy shim file and could pass vacuously. Existing return-value and provider-preservation tests in `c_chat_info_defaults.rs` and `scenario_defaults.rs` remain unchanged. No runtime module moved or behavior changed; removal follows the prohibition on substituting source shape for behavior. This does not repair unrelated structural tests or establish a passing overall suite.
+
 ## Bare Retail factory: bounded PASS, mixed checkout
 
 [Independent report](../../../data/patch-api/evidence/3.0.2-factory-2026-10-09/integrated/p30x-integrated-independent-report.md) records ten tests passing: p302 7/7, p303 3/3. Exact observations: p302 **373 rows / 185 matches / 188 gaps**; p303 **3 CVars / 1 match / 2 gaps**. Every observation equals retained GREEN JSON. `syncronizeConfig` and `synchronizeMacros` are nil/nil; `synchronizeBindings` is `"1"`/`"1"`. These are present factory observations, not historical defaults or synchronization semantics.

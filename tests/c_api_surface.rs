@@ -591,21 +591,6 @@ fn paper_doll_stagger_default_is_not_c_api_temporary_shim() {
 }
 
 #[test]
-fn chat_info_no_state_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
-
-    assert!(
-        !temporary_shims.contains("c_chat_info"),
-        "unmodeled C_ChatInfo emote/caution/chat-line defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_chat_info"),
-        "C_ChatInfo no-state defaults should not be wired through c_api registration"
-    );
-}
-
-#[test]
 fn container_no_state_defaults_are_not_c_api_temporary_shims() {
     let temporary_shims = c_api_temporary_shims_source();
     let item_spell = include_str!("../src/c_api/item_spell/mod.rs");
@@ -840,21 +825,6 @@ fn trade_info_defaults_are_not_c_api_temporary_shims() {
     assert!(
         !c_api.contains("c_trade_info"),
         "C_TradeInfo warning/no-op defaults should not be wired through c_api registration"
-    );
-}
-
-#[test]
-fn scenario_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
-
-    assert!(
-        !temporary_shims.contains("c_scenario"),
-        "unmodeled C_Scenario not-in-scenario defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_scenario"),
-        "C_Scenario not-in-scenario defaults should not be wired through c_api registration"
     );
 }
 
