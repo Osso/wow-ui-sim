@@ -151,6 +151,8 @@ fn register_frame_foundation_globals(lua: &mut rilua::Lua) -> crate::Result<()> 
     #[cfg(feature = "retail-12-0-5")]
     super::real::break_up_large_numbers::register_all(lua)?;
     super::real::net_stats::register_all(lua)?;
+    #[cfg(feature = "client-retail")]
+    super::real::bnet_friend_index::register_all(lua)?;
     super::real::template_queries::register_all(lua)?;
     LuaApiMut::register_function(
         lua,

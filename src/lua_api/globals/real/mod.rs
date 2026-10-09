@@ -7,6 +7,8 @@
 pub mod action_bar_state;
 pub mod action_highlights;
 pub(crate) mod ambiguate;
+#[cfg(feature = "client-retail")]
+pub(crate) mod bnet_friend_index;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod break_up_large_numbers;
 pub mod combat_probes;

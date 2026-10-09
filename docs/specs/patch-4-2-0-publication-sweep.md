@@ -4,6 +4,8 @@ Account for the pinned historical retail page without inventing missing signatur
 
 ## What it must do
 
+- [ ] Retail `BNGetFriendIndex(accountID)` reads the existing ordered Battle.net friend list and tracks reorder/removal; unknown IDs return nil (inferred, native parity unproven).
+
 - [ ] Reproduce all 65 inventory IDs and both source counts using recorded existing flags.
 - [ ] Account for the sole navigation metadata row and zero prose/signatures.
 - [ ] Probe every inventory occurrence; require the exact retained gap set.
@@ -17,12 +19,14 @@ Account for the pinned historical retail page without inventing missing signatur
 
 - `data/patch-api/sources/4.2.0-*` — pinned inventory, provenance, extract and per-ID ledger.
 - `tests/patch_4_2_0_publication_sweep.rs` — own retail prefork case.
+- `tests/patch_4_2_0_behavior.rs` — concrete friend-list mutation tests.
+- `src/lua_api/globals/real/bnet_friend_index.rs` — modeled legacy global, retail-only registration via `real/mod.rs` and `globals/register.rs`.
 - `tests/data/patch_4_2_0_sweep_known_gaps.json` — exact development-observed mismatch set.
 - `data/patch-api/evidence/4.2.0-session-2026-10-09/` — compact source and development receipts.
 
 ## Tests asserting this spec
 
-Own prefork filter `patch_4_2_0_publication_sweep`; source accounting development fixture.
+Own prefork filter `patch_4_2_0_publication_sweep`; `tools/test_patch_4_2_0_accounting.py`; integration filter `patch_4_2_0_friend_index`.
 
 ## Known gaps (current cycle)
 

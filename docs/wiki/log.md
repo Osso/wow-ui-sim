@@ -636,3 +636,7 @@ Pinned source retained; default generator handles 83 identities, both headers ma
 ## 2026-10-09 — Patch 4.2.0 source accounting
 
 Pinned revision 3045158: 63 additions/two removals, one navigation metadata row, no prose/signatures. Existing flags; own retail sweep with two pending successors. [Audit](investigations/patch-4-2-0-api-audit.md).
+
+## 2026-10-09 — Patch 4.2.0 friend index model
+
+Retail-only `BNGetFriendIndex` reads the existing ordered friend list; two missing-global RED cases retained. No native parity; unknown-ID nil inferred. [Audit](investigations/patch-4-2-0-api-audit.md).
