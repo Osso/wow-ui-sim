@@ -1,0 +1,47 @@
+{
+  "scope": "actual same-TBC source inventory comparison only; zero modeled/native credit",
+  "rows": [
+    {
+      "patch": "2.5.3",
+      "path": "data/patch-api/sources/2.5.3-page-coverage.json",
+      "sha256": "a54fca760866d956e255d1b2697600f2c86f82c7953129fb01605875bb71e6cb",
+      "overlap": [
+        {
+          "symbol": "AcknowledgeAADCAlert",
+          "section": "global-api",
+          "own_direction": "added",
+          "later_direction": "removed"
+        },
+        {
+          "symbol": "SHOW_AADC_ALERT",
+          "section": "events",
+          "own_direction": "added",
+          "later_direction": "removed"
+        },
+        {
+          "symbol": "seenAADCAlert",
+          "section": "cvars",
+          "own_direction": "added",
+          "later_direction": "removed"
+        }
+      ]
+    },
+    {
+      "patch": "2.5.4",
+      "path": "data/patch-api/sources/2.5.4-page-coverage.json",
+      "sha256": "39ac71f5e38ccaf00fc37ba0da85823107eed1b6814e540dfc51bef1c5d763f6",
+      "overlap": [
+        {
+          "symbol": "RAIDVolumeFog",
+          "section": "cvars",
+          "own_direction": "added",
+          "later_direction": "removed"
+        }
+      ]
+    }
+  ],
+  "other_same_line_sources": {
+    "2.5.5": "zero explicit API identities",
+    "2.5.6": "zero explicit API identities"
+  }
+}

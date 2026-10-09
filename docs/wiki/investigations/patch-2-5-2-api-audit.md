@@ -38,6 +38,10 @@ Targeted RED at `3fbb148fa`: initial required inventory assertion fails against 
 
 Main owns integration, matching native measurement and final gates. This audit closes only its literal SOURCE accounting/replay slice, not full registry accounting or simulator compatibility.
 
+## Main integration — 2026-10-09
+
+[Actual same-TBC comparison](../../../data/patch-api/evidence/2.5.2-session-2026-10-09/integrated/successor-comparison.json): 2.5.3 removes `AcknowledgeAADCAlert`, `SHOW_AADC_ALERT` and `seenAADCAlert`; 2.5.4 removes `RAIDVolumeFog`. Integrated 2.5.5/2.5.6 have zero explicit API identities. These are source directions only, not runtime retirements or native/model closures. Original 57 historical inputs and 61 outer seals stay unchanged. Independent SOURCE replay pending; no surrogate Anniversary 11507 credit for source TOC 20502.
+
 ## Sources
 
 - [Raw](../../../data/patch-api/sources/2.5.2-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/2.5.2-api-changes.txt), [ledger](../../../data/patch-api/sources/2.5.2-page-coverage.json).
