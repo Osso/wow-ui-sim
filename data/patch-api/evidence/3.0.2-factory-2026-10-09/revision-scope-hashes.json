@@ -1,0 +1,46 @@
+[
+  {
+    "command_receipt": "discovery-command.json",
+    "revision": "982ccc3d99158084db17660463e0ecac21c967b5",
+    "code_and_expectation_sha256": {
+      "Cargo.toml": "7903a555221106c36b1e018035afd9b047463b2a71a1919415f40862e35fd11d",
+      "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "tests/patch_3_0_2_factory.rs": "46d78b8cfe06dba966e6d45ce74c0f95a2373f4aedb038ae0ca9c6bd9760cb40",
+      "tests/common/publication_sweep.rs": "de75b250433163ea114d025db0d4b53f8a6b86d573e4a71746c925833726ba8e",
+      "data/patch-api/evidence/3.0.2-factory-2026-10-09/known-gaps.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    }
+  },
+  {
+    "command_receipt": "green-command.json",
+    "revision": "1fdb73aa66b95e738af0bde956b47113ed334128",
+    "code_and_expectation_sha256": {
+      "Cargo.toml": "7903a555221106c36b1e018035afd9b047463b2a71a1919415f40862e35fd11d",
+      "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "tests/patch_3_0_2_factory.rs": "2de84ce99e56e2f5478ca34b5cc5bedb75d805db5e30d4ba5521a9a9b4eb0d15",
+      "tests/common/publication_sweep.rs": "de75b250433163ea114d025db0d4b53f8a6b86d573e4a71746c925833726ba8e",
+      "data/patch-api/evidence/3.0.2-factory-2026-10-09/known-gaps.json": "39f52feccd3626a25dd0de9c64755ed8d7701d559c0867dc255e59718c85470b"
+    }
+  },
+  {
+    "command_receipt": "negative-command.json",
+    "revision": "1fdb73aa66b95e738af0bde956b47113ed334128",
+    "code_and_expectation_sha256": {
+      "Cargo.toml": "7903a555221106c36b1e018035afd9b047463b2a71a1919415f40862e35fd11d",
+      "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "tests/patch_3_0_2_factory.rs": "2de84ce99e56e2f5478ca34b5cc5bedb75d805db5e30d4ba5521a9a9b4eb0d15",
+      "tests/common/publication_sweep.rs": "de75b250433163ea114d025db0d4b53f8a6b86d573e4a71746c925833726ba8e",
+      "data/patch-api/evidence/3.0.2-factory-2026-10-09/known-gaps.json": "39f52feccd3626a25dd0de9c64755ed8d7701d559c0867dc255e59718c85470b"
+    }
+  },
+  {
+    "command_receipt": "green-corrected-command.json",
+    "revision": "57c9f73e3c3c48cb261031009eab2d4adf918280",
+    "code_and_expectation_sha256": {
+      "Cargo.toml": "7903a555221106c36b1e018035afd9b047463b2a71a1919415f40862e35fd11d",
+      "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "tests/patch_3_0_2_factory.rs": "78e614b10a370ed6d21c5ae8ac6465a14adabfd2166ae9299f39d5d0b992b0dd",
+      "tests/common/publication_sweep.rs": "de75b250433163ea114d025db0d4b53f8a6b86d573e4a71746c925833726ba8e",
+      "data/patch-api/evidence/3.0.2-factory-2026-10-09/known-gaps.json": "39f52feccd3626a25dd0de9c64755ed8d7701d559c0867dc255e59718c85470b"
+    }
+  }
+]

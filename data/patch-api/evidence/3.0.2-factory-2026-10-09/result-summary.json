@@ -1,0 +1,40 @@
+{
+  "rows": 373,
+  "matches": 185,
+  "published_or_accepted_matches": 69,
+  "absent_matches": 116,
+  "gaps": 188,
+  "retail_interface": 120100,
+  "own_tests_passed": 7,
+  "native_claims": 0,
+  "historical_behavior_claims": 0,
+  "meaningful_model_claims": 0,
+  "source_raw_rows_unproven": 431,
+  "signature_fragments_unproven": 367,
+  "prose_unproven": 80,
+  "negative_rows": 373,
+  "negative_gaps": 189,
+  "negative_changed_ids": [
+    "wt-global-api-AutoLootMailItem-103"
+  ],
+  "all_discovery_observations_identical": true,
+  "original_seals_counts": {
+    "seals.json": 36,
+    "closure-seals.json": 1,
+    "receipt-seals.json": 2
+  },
+  "historical_seals_unchanged": true,
+  "runtime_src_tree_unchanged": {
+    "efbe97f20": "ae453e3709a335ac3caecb272fde6772407e04d2",
+    "HEAD": "ae453e3709a335ac3caecb272fde6772407e04d2"
+  },
+  "omitted_gates": [
+    "check",
+    "lint",
+    "readability",
+    "coverage",
+    "broad suites",
+    "startup",
+    "final acceptance"
+  ]
+}

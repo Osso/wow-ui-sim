@@ -7,7 +7,7 @@
 
 ## [2026-10-09] measurement | Separate Patch 3.0.2 current-retail bare factories
 
-[Bounded factory measurement](investigations/patch-3-0-2-api-audit.md#separate-current-retail-factory-measurement--2026-10-09): exact 373 occurrences, 76 actual ordered retail successors, empty-gap discovery at `982ccc3d9`: 185 matches / 188 gaps. Handler/click/template/console/event limits explicit. Separate reviewed GREEN/negative controls pending; original 36+1+2 seals unchanged. Historical/native/model claims zero; no runtime changes or source-accounting rewrite credit.
+[Bounded factory measurement](investigations/patch-3-0-2-api-audit.md#separate-current-retail-factory-measurement--2026-10-09): exact 373 occurrences, 76 actual ordered retail successors, empty-gap discovery at `982ccc3d9`: 185 matches / 188 gaps. Handler/click/template/console/event limits explicit. Corrected own targeted GREEN 7/7 at `57c9f73e3`, all 373 observations identical to discovery; same-373 fabricated-global negative 188 → 189 at `1fdb73aa6`. First 6/7 console-control RED retained; current retail catalog has 14 Command records distinct from CVars. Original 36+1+2 seals unchanged. Historical/native/model claims zero; no runtime changes or source-accounting rewrite credit.
 
 ## [2026-10-09] investigation | Patch 3.4.2 Wrath Classic source audit
 

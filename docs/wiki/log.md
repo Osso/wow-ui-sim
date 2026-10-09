@@ -798,7 +798,7 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 
 ## [2026-10-09] evidence | Patch 3.0.2 separate current-retail factory discovery
 
-[Measurement](investigations/patch-3-0-2-api-audit.md#separate-current-retail-factory-measurement--2026-10-09): empty-gap discovery at `982ccc3d9` retains all 373 observations, 185 matches/188 gaps. Exact reviewed identities and classifier limits separate from original 36+1+2 historical seals. No runtime/model/native credit; reviewed GREEN and fabricated unknown control pending.
+[Measurement](investigations/patch-3-0-2-api-audit.md#separate-current-retail-factory-measurement--2026-10-09): empty-gap discovery at `982ccc3d9` retains all 373 observations, 185 matches/188 gaps. Exact reviewed identities and classifier limits separate from original 36+1+2 historical seals. Corrected targeted GREEN 7/7 at `57c9f73e3`, all 373 observations identical; negative 188 → 189 at `1fdb73aa6`, same 373 rows/one changed observation. First 6/7 console-control RED retained; corrected current-retail observation is 14 Command records, distinct from CVars. Historical 36+1+2 seals unchanged. No runtime/model/native credit or broad/final acceptance.
 
 ## [2026-10-09] evidence | Patch 3.0.3 bounded source development proof
 

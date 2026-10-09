@@ -108,5 +108,40 @@
     },
     "proof_scope": "373 exact current-retail publication observations and reviewed gap identities",
     "later_change_invalidates": "console-control assertion only; factory observations and negative control unchanged by console-test correction"
+  },
+  {
+    "command_receipt": "green-corrected-command.json",
+    "revision": "57c9f73e3c3c48cb261031009eab2d4adf918280",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p302-factory",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "client-retail",
+      "--test",
+      "patch_3_0_2_factory",
+      "--",
+      "--nocapture"
+    ],
+    "env_overrides": {
+      "CARGO_TARGET_DIR": "/tmp/wow-ui-sim-p302-factory-target",
+      "CARGO_NET_OFFLINE": "true",
+      "WOW_SIM_P302_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p302-factory/data/patch-api/evidence/3.0.2-factory-2026-10-09/green-corrected-observations.json"
+    },
+    "inherited_relevant_env": {
+      "CARGO_BUILD_JOBS": "12"
+    },
+    "stage": "targeted corrected GREEN; console control assertion changed; not final acceptance",
+    "exit_code": 0,
+    "sha256": {
+      "green-corrected.stdout": "40dde5badff0a8581f2fd67dc5e398daaea452d30e54656274c0f50dc65a349b",
+      "green-corrected.stderr": "5e5b603f426e780edf1a7a548131d3cf40e64c2ffced6edcfe0576a2ea90478f",
+      "green-corrected-observations.json": "fba1e29951db3d1bbfec84c75ce730e8944e2960df779960e731a7717a75e3c1"
+    },
+    "proof_scope": "Standalone client-retail target: seven own tests, 373 unchanged classifier observations, exact 188 reviewed gaps; no historical/native/model claim",
+    "later_change_invalidates": false
   }
 ]

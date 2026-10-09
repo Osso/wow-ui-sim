@@ -1,0 +1,12 @@
+
+running 7 tests
+test literal_register_keeps_all_373_original_occurrences ... ok
+test factory_rejects_classic_before_reading_cache - should panic ... ok
+test bare_framexml_and_tooltip_handler_have_precise_limits ... ok
+test retail_event_registration_rejects_unknown_but_not_source_events ... ok
+test click_modifier_default_does_not_discriminate_unknown_actions ... ok
+test console_catalog_distinguishes_cvar_records_from_commands ... ok
+test patch_3_0_2_exact_factory_publication_gaps ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
