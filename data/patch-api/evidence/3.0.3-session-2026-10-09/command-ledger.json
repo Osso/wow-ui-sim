@@ -12,6 +12,19 @@
       "exit": 1,
       "artifact": "source-red.log",
       "invalidated_by": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_3_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+      "revision": "ce0a0e863dbdd148c99d1c21d23bd4c996bcc0f9",
+      "scope": "Own exact-name/definition output, section/malformed boundaries and integrated 3.3.3/3.3.5/4.0.1 register/extract byte reproduction; 3/3 source tests only.",
+      "exit": 0,
+      "artifact": "source-green.log",
+      "invalidated_by": null
     }
   ]
 }
