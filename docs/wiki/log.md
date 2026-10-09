@@ -689,3 +689,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## 2026-10-09 — Retail Patch 4.0.1 historical validator implementation
 
 [[patch-4-0-1-api-audit]]: compact own source/tool/successor and cryptographic code-scope pins, historical-only validator and five concrete acceptance/tamper fixtures. Validator RED retained before implementation; no old-object or broad-gate dependency. GREEN pending.
+
+## 2026-10-09 — Retail Patch 4.0.1 validator targeted GREEN/handoff
+
+[[patch-4-0-1-api-audit]]: own validator fixtures 5/5 with Git unavailable, source/log/archive tamper copies rejected and later-state scope preserved. 84 compact inputs, 40 own evidence seals, 2,083,184 archive bytes; no file over 5 MB. Four pending retail successors/native limits and final gates stay main-owned.

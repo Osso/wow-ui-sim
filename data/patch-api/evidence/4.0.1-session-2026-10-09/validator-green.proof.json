@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_4_0_1_validator.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "revision": "a0a29ee21c354194e8fafa1bb107c3514b37ff0b",
+  "scope": "own validator behavioral GREEN/tamper fixtures only; Git absent from child PATH",
+  "context_sha256": "a7ae9cdfb4506ff99f15e4254ddc464fe11723b9563aa662f7d26b446c7c92c0",
+  "test_sha256": "bf547d730b112c1d751cb3431416ae06c66ff7711db1df3577d28a57ed27a5c7",
+  "exit": 0,
+  "log": "validator-green.log",
+  "log_sha256": "5d86d188a0e0f6f9bc9535669dd149da1db6be7a61dc993b50562b15e7a64789"
+}
