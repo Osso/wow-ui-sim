@@ -1,0 +1,47 @@
+{
+  "scope": "Own targeted development; SOURCE != native/runtime. Immutable historical source proof; later receipts separate.",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page",
+      "revision": "pre-3045ff2a9 red-scaffold.py SHA256 6ae1003cdce485a8624c53fe0dd9412825e2c662446984c95793269d1c960dd9",
+      "result": "RED8 assertion failures",
+      "log": "red.log",
+      "scope": "empty source accounting"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page",
+      "revision": "3045ff2a9",
+      "result": "GREEN8/8;29 omission controls",
+      "log": "green.log",
+      "scope": "audit.py/frozen source accounting; later test-only Rust/portable work does not invalidate"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/replay-archive.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/scratch",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1151-page/data/patch-api/evidence/1.15.1-session-2026-10-09/portable-red-controls.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page",
+      "revision": "3045ff2a9 plus test_portable.py",
+      "result": "RED3 assertions: archive absent",
+      "log": "portable-red.log",
+      "scope": "archive absence; GREEN pending"
+    }
+  ]
+}

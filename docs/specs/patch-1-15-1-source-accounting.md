@@ -4,10 +4,10 @@ Account frozen Warcraft Wiki page577687/revision5998991/timestamp `2024-04-03T08
 
 ## What it must do
 
-- [ ] Validate response/raw identity, frozen manifest hashes and 101-page registry ending1.0.0.
-- [ ] Preserve all nine nonblank rows, two named enum occurrences, three prose contracts, four unexpanded links, two headers and navigation template; invent no signatures/numeric values/subset membership.
-- [ ] Preserve concrete Placeholder → SeasonOfDiscovery alias-continuity contract, separate from unspecified Dragonflight10.2.5 subset and deprecated-file link.
-- [ ] Separate configured Era/Anniversary11507, in-flight1.15.2, queued1.15.3 and integrated1.15.4–9 inputs from native/integration proof.
+- [x] Validate response/raw identity, frozen manifest hashes and 101-page registry ending1.0.0.
+- [x] Preserve all nine nonblank rows, two named enum occurrences, three prose contracts, four unexpanded links, two headers and navigation template; invent no signatures/numeric values/subset membership.
+- [x] Preserve concrete Placeholder → SeasonOfDiscovery alias-continuity contract, separate from unspecified Dragonflight10.2.5 subset and deprecated-file link.
+- [x] Separate configured Era/Anniversary11507, in-flight1.15.2, queued1.15.3 and integrated1.15.4–9 inputs from native/integration proof.
 - [ ] Reject omissions, invented credit/values/foreign supersession and disk tampering; replay copied historical inputs without Git/target/current tools, retaining immutable original seals.
 
 ## How it works
@@ -20,7 +20,7 @@ Account frozen Warcraft Wiki page577687/revision5998991/timestamp `2024-04-03T08
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: eight fixtures, initial RED8/8 retained. Portable fixtures pending. Exact revision/scope proof ledger in evidence directory.
+Own `test_source_accounting.py`: RED8/8 retained; SOURCE GREEN8/8 at `3045ff2a9`, 29 omission controls and fabricated-credit/value/supersession rejection. `test_portable.py` RED3 retained; GREEN pending. `patch-tests/patch_1_15_1_alias.rs`: unchanged pinned official deprecation against existing headless Era enum/public-build state, raw numeric values and alias equality; execution pending. No native numerical contract asserted.
 
 ## Known gaps (current cycle)
 
