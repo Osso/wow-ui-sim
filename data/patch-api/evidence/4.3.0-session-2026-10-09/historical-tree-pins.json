@@ -1,0 +1,24 @@
+{
+  "schema": "bounded-historical-tree-pins/v1",
+  "policy": "Git tree/blob identity manifests only; no original commit/object lookup required for identity replay. Not historical compilation or source-byte replay.",
+  "scopes": [
+    {
+      "revision": "2ffd97c5ea6b04da887ce88c79ed084202b016d5",
+      "tree": "6bd19503b3b2d8ffba56cfd0743cb090417879c5",
+      "manifest": "tree-6bd19503b3b2d8ffba56cfd0743cb090417879c5.json.gz",
+      "manifest_sha256": "ce26acd272159d871ec6e9a3a27632c7d09dea37f80fab9ef17b541af781e81c"
+    },
+    {
+      "revision": "df53a1b9e5ee834483b414a49e6911b13a397c07",
+      "tree": "92e0a11b01701bd0295df4706d7131dd2086ea0c",
+      "manifest": "tree-92e0a11b01701bd0295df4706d7131dd2086ea0c.json.gz",
+      "manifest_sha256": "a6e4792b19065bd49c6649373b474576725e703dc35addbb6125b90844fe729d"
+    },
+    {
+      "revision": "eff4fbe2e47d3e60fa549f73057362b67ce79edd",
+      "tree": "5815dee0856c8c22b14aa0c1f78ac7d7edf7a27f",
+      "manifest": "tree-5815dee0856c8c22b14aa0c1f78ac7d7edf7a27f.json.gz",
+      "manifest_sha256": "aa1db2363d0a57506647d5aac1b191e5a2f0d828d321b905fb5eeb0c08d28972"
+    }
+  ]
+}

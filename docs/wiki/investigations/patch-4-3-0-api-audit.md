@@ -26,7 +26,7 @@ Own prefork discovery at `2ffd97c5e` intentionally fails against the initial emp
 
 Actual 5.0.1 and newer retail registers are included; Classic 5.5.x is excluded. **Queued 4.3.4 placeholder is first** in `later_registers`, for coordinator replacement. Its source/register is unavailable here: possible supersession remains unassessed, not invented.
 
-[Evidence](../../../data/patch-api/evidence/4.3.0-session-2026-10-09/) contains exact command logs and compact revision/tree/hash receipts. Own accounting-validator fixtures are in development. No check/lint/type/readability/coverage, all-publication sweep, smoke/full-suite or final gate run; coordinator owns acceptance. No push/merge/deploy/delegation.
+[Evidence](../../../data/patch-api/evidence/4.3.0-session-2026-10-09/) contains exact command logs and compact revision/tree/hash receipts. Own accounting/source/log-seal fixtures pass **8/8** at `eff4fbe2e`; targeted publication negative changes gaps **25 → 26** and fails exactly as required. [Command ledger](../../../data/patch-api/evidence/4.3.0-session-2026-10-09/p430-command-ledger.md) records exact scopes. Three compressed historical Git tree/blob identity manifests preserve root identities without requiring original Git objects; these are identity receipts, not historical compilation/source-byte replay. Tree-pin fixtures are in development. No check/lint/type/readability/coverage, all-publication sweep, smoke/full-suite or final gate run; coordinator owns acceptance. No push/merge/deploy/delegation.
 
 ## Sources
 

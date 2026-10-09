@@ -4,10 +4,10 @@ Audit the pinned historical retail pageid 167555, revision 1639407. [Audit](../w
 
 ## What it must do
 
-- [ ] Account every inventory identity with existing generator; retain non-inventory context separately.
-- [ ] Probe current cached retail publication after actual retail successors, excluding Classic. Queued 4.3.4 placeholder is coordinator-owned.
-- [ ] Require exact reviewed gap IDs and derive counts from inputs/results, not frozen receipts.
-- [ ] Distinguish publication from behavior, signature, output and native parity.
+- [x] Account every inventory identity with existing generator; retain non-inventory context separately.
+- [x] Probe current cached retail publication after actual retail successors, excluding Classic. Queued 4.3.4 placeholder is coordinator-owned.
+- [x] Require exact reviewed gap IDs and derive counts from inputs/results, not frozen receipts.
+- [x] Distinguish publication from behavior, signature, output and native parity.
 
 ## How it works
 
@@ -21,11 +21,12 @@ Audit the pinned historical retail pageid 167555, revision 1639407. [Audit](../w
 
 ## Tests asserting this spec
 
-Own prefork filter `patch_4_3_0`; targeted source-accounting tests.
+Own prefork filter `patch_4_3_0` GREEN and scratch missing-publication negative; `tools/test_patch_4_3_0_accounting.py` source/accounting/seal fixtures.
 
 ## Known gaps (current cycle)
 
-- [ ] Discovery and coordinator acceptance pending.
+- [ ] Retain 25 individually reasoned publication gaps; no proved cheap backing-model closure.
+- [ ] Coordinator replaces queued 4.3.4 placeholder and owns integrated final acceptance.
 
 ## Out of scope
 

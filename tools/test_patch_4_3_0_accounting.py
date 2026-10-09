@@ -2,6 +2,7 @@
 """Focused behavioral fixtures for the bounded 4.3.0 accounting contract."""
 import copy
 import importlib.util
+import gzip
 import json
 from pathlib import Path
 import tempfile
@@ -30,6 +31,27 @@ class AccountingTests(unittest.TestCase):
     def validate(self):
         return VALIDATE.validate_accounting(
             self.register, self.ledger, self.results, self.known)
+
+    def test_historical_tree_pins_replay_without_git_objects(self):
+        pins = read_json(HERE / 'historical-tree-pins.json')
+        self.assertEqual(len(pins['scopes']), VALIDATE.validate_tree_pins())
+
+    def test_historical_tree_entry_tampering_is_rejected(self):
+        pins = read_json(HERE / 'historical-tree-pins.json')
+        scope = copy.deepcopy(pins['scopes'][0])
+        entries = json.loads(gzip.decompress((HERE / scope['manifest']).read_bytes()))
+        first = next(iter(entries))
+        entries[first][2] = '0' * 40
+        with tempfile.TemporaryDirectory(dir=HERE) as directory:
+            root = Path(directory)
+            archive = root / scope['manifest']
+            archive.write_bytes(gzip.compress(json.dumps(entries).encode(), mtime=0))
+            scope['manifest_sha256'] = VALIDATE.digest(archive)
+            (root / 'historical-tree-pins.json').write_text(
+                json.dumps({'scopes': [scope]}))
+            with patch.object(VALIDATE, 'HERE', root):
+                with self.assertRaisesRegex(AssertionError, 'historical tree identity'):
+                    VALIDATE.validate_tree_pins()
 
     def test_pinned_source_reproduces_register_and_retained_context(self):
         VALIDATE.validate_sources()

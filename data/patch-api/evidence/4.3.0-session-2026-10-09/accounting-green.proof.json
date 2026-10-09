@@ -1,0 +1,14 @@
+{
+  "schema": "bounded-patch-development-proof/v1",
+  "revision": "eff4fbe2e",
+  "tree": "5815dee0856c8c22b14aa0c1f78ac7d7edf7a27f",
+  "command": [
+    "python3",
+    "tools/test_patch_4_3_0_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p430-source",
+  "exit_code": 0,
+  "scope": "eight original focused accounting/source/seal fixtures; excludes subsequently added tree-pin cases",
+  "log": "accounting-green.log",
+  "log_sha256": "789ed8a229ad160a442fa5d273a5f9dd72a82a434a4d587b54df3b65d8796f4e"
+}

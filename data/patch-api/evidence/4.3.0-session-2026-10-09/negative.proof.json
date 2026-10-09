@@ -1,0 +1,28 @@
+{
+  "schema": "bounded-patch-development-proof/v1",
+  "revision": "eff4fbe2e47d3e60fa549f73057362b67ce79edd",
+  "tree": "5815dee0856c8c22b14aa0c1f78ac7d7edf7a27f",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_3_0",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p430-source",
+  "environment": {
+    "P430_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p430-source/data/patch-api/evidence/4.3.0-session-2026-10-09/negative-results.json",
+    "P430_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p430-source/data/patch-api/evidence/4.3.0-session-2026-10-09/negative-register.json"
+  },
+  "exit_code": 1,
+  "scope": "targeted missing-publication negative control; scratch symbol replaces CanReplaceGuildMaster without changing row count",
+  "log": "negative.log",
+  "log_sha256": "f95bd58c6e1eda8f516ebae492b8c8fcd9a0138fe7ddcfd4dd244ef694f67e88",
+  "results": "negative-results.json",
+  "results_sha256": "fba2b8bda0f41ae7f9de6252ba5401d4a331b807577636f0daa4b1861ec02cd2",
+  "inputs": {
+    "negative-register.json": "01c23aad702e1eeb90f8b2ab3d8050cab5ad13a6a4ced189a54e7926e7a05eba"
+  }
+}

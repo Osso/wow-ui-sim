@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Bounded 4.3.0 source/accounting replay. Not a current-head acceptance gate."""
 from collections import Counter
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -13,6 +14,7 @@ SOURCES = ROOT / 'data/patch-api/sources'
 sys.path.insert(0, str(ROOT / 'tools'))
 import gen_patch_wikitext_register as generator
 import extract_patch_non_inventory as extractor
+from patch_audit_pin_trees import tree_id
 
 
 def read_json(path):
@@ -109,15 +111,28 @@ def validate_receipts():
             f'evidence artifact exceeds 5 MB: {path.name}'
 
 
+def validate_tree_pins():
+    scopes = read_json(HERE / 'historical-tree-pins.json')['scopes']
+    assert scopes, 'missing historical scopes'
+    for scope in scopes:
+        archive = HERE / scope['manifest']
+        assert digest(archive) == scope['manifest_sha256'], 'tree manifest seal'
+        entries = json.loads(gzip.decompress(archive.read_bytes()))
+        assert tree_id(entries) == scope['tree'], 'historical tree identity'
+    return len(scopes)
+
+
 def main():
     validate_sources()
     validate_receipts()
+    pinned_scopes = validate_tree_pins()
     summary = validate_accounting(
         read_json(SOURCES / '4.3.0-wikitext-register.json'),
         read_json(SOURCES / '4.3.0-page-coverage.json'),
         read_json(HERE / 'reviewed-results.json'),
         read_json(ROOT / 'tests/data/patch_4_3_0_sweep_known_gaps.json'))
-    print(json.dumps({'scope': 'recorded bounded development evidence only', **summary}, indent=2))
+    print(json.dumps({'scope': 'recorded bounded development evidence only',
+                      'historical_tree_scopes': pinned_scopes, **summary}, indent=2))
 
 
 if __name__ == '__main__':
