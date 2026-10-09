@@ -1,0 +1,2 @@
+{"status": "PASS", "inventory": 114, "extract_rows": 45, "retained_gaps": 22, "registers_reproduced": 56, "extracts_reproduced": 53, "removal_scans": 31}
+{"external_commits": 3, "extracts": 60, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"], "mapped_commits": 14, "prior_validators": 49, "publication_gaps": 21, "receipts": 22, "registers": 63, "status": "PASS", "sweep_pages": 63}

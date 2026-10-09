@@ -1,0 +1,18 @@
+[
+  {
+    "case": "historical",
+    "exit": 1,
+    "diagnostic": "p540-all-sweeps.txt",
+    "restored_sha256": "0a4fcdc5d14f5c7addbd51a3b947d7f02d93a7783e6cf1c857d871a24263fd32",
+    "log": "historical-tamper-validator.txt",
+    "log_sha256": "190f779c417cf9cc9843b166ad8a70188b2a4f1c196792872423c743b13b6070"
+  },
+  {
+    "case": "integrated",
+    "exit": 1,
+    "diagnostic": "own evidence tamper: all-sweeps.txt",
+    "restored_sha256": "f2c91ee338c5d5893c47b4ac0c151bec343046af9b7f32d4a50f77c1eb64a0e5",
+    "log": "integrated-tamper-validator.txt",
+    "log_sha256": "2b9822f09c9450e1b769f32930ddae293a9c2d5bcb64eea63ea95acc27056b3f"
+  }
+]

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/integrated/validate.py", line 277, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/integrated/validate.py", line 263, in main
+    assert digest(target.read_bytes()) == expected, 'own evidence tamper: ' + path
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: own evidence tamper: all-sweeps.txt
