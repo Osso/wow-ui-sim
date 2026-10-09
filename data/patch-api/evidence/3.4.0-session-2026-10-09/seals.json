@@ -15,5 +15,9 @@
   "data/patch-api/evidence/3.4.0-session-2026-10-09/green.log": "81d9495a394e7a5971cb61e44b0b3b653b61392ea52119bd4eeefa50c9204f8e",
   "data/patch-api/evidence/3.4.0-session-2026-10-09/source-proof.json": "f5b537e42b5b36e20e7df36043ad5b02bde0e2b7f855dd50f37ddd2879e8df83",
   "data/patch-api/evidence/3.4.0-session-2026-10-09/validator.log": "bbb46a87728dc1a6e921a4ad987eedd28fa38b8d8e0bc89f572ef50cf09bba52",
-  "data/patch-api/evidence/3.4.0-session-2026-10-09/extractor.log": "0ddc41fcfcbf94ed87c29f67e959c71ae1d75a7e58c8317abd2f6dc6fcdc699c"
+  "data/patch-api/evidence/3.4.0-session-2026-10-09/extractor.log": "0ddc41fcfcbf94ed87c29f67e959c71ae1d75a7e58c8317abd2f6dc6fcdc699c",
+  "data/patch-api/evidence/3.4.0-session-2026-10-09/portable-controls.log": "0ce18e5e50ac6662f6216e33c607797a74ca17a35eba7f75a7b2089aa581e885",
+  "data/patch-api/evidence/3.4.0-session-2026-10-09/portable-proof.json": "812978b6026f538c059639ab4c37b02b0734f523a160dcf560147540bb31ad2f",
+  "data/patch-api/evidence/3.4.0-session-2026-10-09/handoff.md": "d1ff77cae47214f646cb2665148279f86e0e6f239d5eeef56836477f691cb41f",
+  "data/patch-api/evidence/3.4.0-session-2026-10-09/registry-observation.json": "71c71adb41384fa3f0c147d937051c80b900a9977a59811d57ef3e472996cadc"
 }

@@ -1,0 +1,12 @@
+{
+  "registry_path": "data/patch-api/sources/api-change-pages-remaining.json",
+  "registry_sha256": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+  "row": {
+    "title": "Patch 3.4.0/API changes",
+    "version": "3.4.0",
+    "pageid": 16896,
+    "revid": 165668,
+    "timestamp": "2022-11-19T13:43:58Z"
+  },
+  "scope": "Registry static identity checked after ingestion; known literal registry identity and manifest/response/content/hashes were checked before source copy. No claim that this later registry-file check preceded ingestion."
+}

@@ -8,7 +8,7 @@
 
 ## [2026-10-09] investigation | Patch 3.4.0 Wrath Classic source contracts
 
-[Audit](investigations/patch-3-4-0-api-audit.md): frozen revision 165668; 331 inventory/four summary contracts, 386 raw rows. Command and bare CVar removal retained; partial UnitAura return placement explicitly limited. Wrath38001 static model is not Classic30400 native proof; no runtime changes, parent owns measurement/integration. Source fixtures GREEN 8/8 with 987 omission controls; portability pending.
+[Audit](investigations/patch-3-4-0-api-audit.md): frozen revision 165668; 331 inventory/four summary contracts, 386 raw rows. Command and bare CVar removal retained; partial UnitAura return placement explicitly limited. Wrath38001 static model is not Classic30400 native proof; no runtime changes, parent owns measurement/integration. Source fixtures GREEN 8/8 with 987 omission controls; two seal tamper rejections/restorations and relocated no-Git replay pass at30071d654 (509611 bytes).
 
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 

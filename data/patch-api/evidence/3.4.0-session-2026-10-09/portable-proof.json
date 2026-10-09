@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/replay_controls.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p340-source",
+  "revision": "30071d654b69f7377cfbe4a9690ff1a0c0fce167",
+  "scope": "Owned serialized-source and GREEN-log tamper/restore plus relocated Git-free historical replay; no API/runtime/native/factory execution",
+  "exit": 0,
+  "log": "portable-controls.log",
+  "log_sha256": "0ce18e5e50ac6662f6216e33c607797a74ca17a35eba7f75a7b2089aa581e885",
+  "source_tamper_exit": 1,
+  "log_tamper_exit": 1,
+  "relocated_exit": 0,
+  "restored_hashes": [
+    "4cafec8e8e0f382b2539af01477c1755ef13866656b29bef1c4341fc06becb09",
+    "81d9495a394e7a5971cb61e44b0b3b653b61392ea52119bd4eeefa50c9204f8e"
+  ],
+  "historical_sealed_inputs": 17,
+  "archive_sha256": "af8cb1165ea0f7b79e42d5f48c5a60583b7ce770f74248ace9c8d8f23cc5f606",
+  "git_present": false,
+  "bytes_at_control": 509611,
+  "later_changes": "Receipt/doc/seal additions only; tested content scope unchanged."
+}

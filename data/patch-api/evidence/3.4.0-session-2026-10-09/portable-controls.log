@@ -1,0 +1,120 @@
+{
+  "source_tamper": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py\", line 199, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py\", line 186, in main\n    sealed = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py\", line 30, in check_seals\n    assert digest((ROOT / path).read_bytes()) == expected, f\"seal: {path}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: data/patch-api/sources/3.4.0-page-coverage.json\n",
+    "restored_sha256": "4cafec8e8e0f382b2539af01477c1755ef13866656b29bef1c4341fc06becb09"
+  },
+  "log_tamper": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py\", line 199, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py\", line 186, in main\n    sealed = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py\", line 30, in check_seals\n    assert digest((ROOT / path).read_bytes()) == expected, f\"seal: {path}\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: data/patch-api/evidence/3.4.0-session-2026-10-09/green.log\n",
+    "restored_sha256": "81d9495a394e7a5971cb61e44b0b3b653b61392ea52119bd4eeefa50c9204f8e"
+  },
+  "relocated_replay": {
+    "exit": 0,
+    "stdout": "{\"cvar_defaults\": 18, \"directions\": {\"added\": 300, \"removed\": 31}, \"explicit_signatures\": 0, \"header_counts\": [{\"direction\": \"added\", \"header_count\": 228, \"parsed_count\": 228, \"section\": \"global-api\"}, {\"direction\": \"removed\", \"header_count\": 27, \"parsed_count\": 27, \"section\": \"global-api\"}, {\"direction\": \"added\", \"header_count\": 10, \"parsed_count\": 10, \"section\": \"widgets\"}, {\"direction\": \"removed\", \"header_count\": 0, \"parsed_count\": 0, \"section\": \"widgets\"}, {\"direction\": \"added\", \"header_count\": 43, \"parsed_count\": 43, \"section\": \"events\"}, {\"direction\": \"removed\", \"header_count\": 3, \"parsed_count\": 3, \"section\": \"events\"}, {\"direction\": \"added\", \"header_count\": 19, \"parsed_count\": 19, \"section\": \"cvars\"}, {\"direction\": \"removed\", \"header_count\": 1, \"parsed_count\": 1, \"section\": \"cvars\"}], \"inventory_occurrences\": 331, \"kinds\": {\"command\": 1, \"cvars\": 19, \"events\": 46, \"global-api\": 255, \"widgets\": 10}, \"native_observations\": 0, \"partial_signatures\": 1, \"prose_limits\": 4, \"removal_occurrences\": 31, \"runtime_observations\": 0, \"sealed_inputs\": 17, \"signature_limits\": 266, \"source_rows\": 386, \"statuses\": {\"UNPROVEN\": 335, \"metadata-only\": 51}}\n",
+    "stderr": ""
+  },
+  "archive_member_hashes": {
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/historical-extract_patch_non_inventory.py": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/historical-gen_patch_wikitext_register.py": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/model-context.json": "9414b5a82986d213ccaa03978098123d6dd58437b2a5588968771f992305d478",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/profile-observation.json": "b9c992d3a5863760a1959046ff73783fcd216949913a0e912f8db44e2e14f598",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/red.log": "ff1057630bb1affc2f3ae430e0a3b2a35a64279b6f601565c032f742217fdddb",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/replay_controls.py": "a0d0f16c8a4984f682675038f96d76ff6677e1ad1f26e8cf0ac3b8ed544e1608",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/source-pin.json": "f054478703ff015ca05eecc8afc4d3a3e2672265e375c581246fc209c05846b0",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/source-response.json": "750bc9d2a3e9d3605718488f73890051308671bd612c385b5372914ce79f359e",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/test_source_accounting.py": "23b89a83decfbd97dd7399cfff0e0fd8547bc43b5be0ea47f7ff9a4bc298c673",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py": "035cd87e5c7b829463af5ba680768531c55f133ce7f8873e4881d7dde593ee6b",
+    "data/patch-api/sources/3.4.0-api-changes.txt": "601607afe53d4cccfbc3677fe92d7ebd514e66bfeb9f241b2b6dc72a0157de58",
+    "data/patch-api/sources/3.4.0-api-changes.wikitext": "080a68a5f4f24e10962f4a63f3db6cb025038729c83ddb9c081735943b6a6ac2",
+    "data/patch-api/sources/3.4.0-page-coverage.json": "4cafec8e8e0f382b2539af01477c1755ef13866656b29bef1c4341fc06becb09",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/green.log": "81d9495a394e7a5971cb61e44b0b3b653b61392ea52119bd4eeefa50c9204f8e",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/source-proof.json": "f5b537e42b5b36e20e7df36043ad5b02bde0e2b7f855dd50f37ddd2879e8df83",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/validator.log": "bbb46a87728dc1a6e921a4ad987eedd28fa38b8d8e0bc89f572ef50cf09bba52",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/extractor.log": "0ddc41fcfcbf94ed87c29f67e959c71ae1d75a7e58c8317abd2f6dc6fcdc699c"
+  },
+  "archive_sha256": "af8cb1165ea0f7b79e42d5f48c5a60583b7ce770f74248ace9c8d8f23cc5f606",
+  "git_present": false,
+  "source_summary": {
+    "cvar_defaults": 18,
+    "directions": {
+      "added": 300,
+      "removed": 31
+    },
+    "explicit_signatures": 0,
+    "header_counts": [
+      {
+        "direction": "added",
+        "header_count": 228,
+        "parsed_count": 228,
+        "section": "global-api"
+      },
+      {
+        "direction": "removed",
+        "header_count": 27,
+        "parsed_count": 27,
+        "section": "global-api"
+      },
+      {
+        "direction": "added",
+        "header_count": 10,
+        "parsed_count": 10,
+        "section": "widgets"
+      },
+      {
+        "direction": "removed",
+        "header_count": 0,
+        "parsed_count": 0,
+        "section": "widgets"
+      },
+      {
+        "direction": "added",
+        "header_count": 43,
+        "parsed_count": 43,
+        "section": "events"
+      },
+      {
+        "direction": "removed",
+        "header_count": 3,
+        "parsed_count": 3,
+        "section": "events"
+      },
+      {
+        "direction": "added",
+        "header_count": 19,
+        "parsed_count": 19,
+        "section": "cvars"
+      },
+      {
+        "direction": "removed",
+        "header_count": 1,
+        "parsed_count": 1,
+        "section": "cvars"
+      }
+    ],
+    "inventory_occurrences": 331,
+    "kinds": {
+      "command": 1,
+      "cvars": 19,
+      "events": 46,
+      "global-api": 255,
+      "widgets": 10
+    },
+    "native_observations": 0,
+    "partial_signatures": 1,
+    "prose_limits": 4,
+    "removal_occurrences": 31,
+    "runtime_observations": 0,
+    "sealed_inputs": 17,
+    "signature_limits": 266,
+    "source_rows": 386,
+    "statuses": {
+      "UNPROVEN": 335,
+      "metadata-only": 51
+    }
+  },
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p340-source",
+  "limit": "Historical source/log accounting only; no runtime/native replay."
+}
