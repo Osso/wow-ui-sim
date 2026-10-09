@@ -644,6 +644,69 @@ def parse_combat_restriction_bullets(text):
     return entries
 
 
+def normalize_mists_code_inventory(text):
+    """Replace code-wrapped inventory names without moving original source lines."""
+    return re.sub(r'^: <code>([A-Za-z_][A-Za-z0-9_:.]*)</code>$',
+                  r': {{api|\1}}', text, flags=re.M)
+
+
+def mists_prepatch_category(symbol, params, section):
+    if section == 'FrameXML':
+        return 'framexml'
+    if params.get('t') == 'w':
+        return 'widgets'
+    if params.get('t') == 'e' or (symbol.isupper() and not symbol.startswith('LE_')):
+        return 'events'
+    return 'global-api'
+
+
+def mists_prepatch_references(line):
+    """Keep code names and API references in their original occurrence order."""
+    references = []
+    for match in re.finditer(r'<code>([A-Za-z_][A-Za-z0-9_, :.]*)</code>', line):
+        for symbol in match[1].split(', '):
+            references.append((match.start(), match.end(), symbol, {}))
+    for match in TEMPLATE.finditer(line):
+        symbol, params = parse_symbol(match[0])
+        references.append((match.start(), match.end(), symbol, params))
+    for match in re.finditer(r'\bLE_PARTY_CATEGORY_(?:HOME|INSTANCE)\b', line):
+        references.append((match.start(), match.end(), match[0], {}))
+    return sorted(references, key=lambda reference: reference[0])
+
+
+def parse_mists_prepatch(text):
+    """Keep 5.0.4 prose identities; only explicit rename/removal clauses retire names."""
+    entries = []
+    section = None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section = heading[1]
+            continue
+        if not line.startswith('*') or section == 'Automated diff':
+            continue
+        rename = re.search(r'&rarr;| is renamed(?:/merged)? to ', line)
+        removal = re.search(r' is removed\b', line)
+        successor_seen = False
+        for start, end, symbol, params in mists_prepatch_references(line):
+            direction = 'added' if re.match(r'\* NEW\b', line) else 'changed'
+            if rename:
+                if end <= rename.start():
+                    direction = 'removed'
+                elif not successor_seen:
+                    direction, successor_seen = 'added', True
+            elif removal and end <= removal.start():
+                direction = 'removed'
+            category = mists_prepatch_category(symbol, params, section)
+            entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+            entry['annotation'] = line
+            signature = re.match(r'\([^\n)]*\)', line[end:])
+            if signature:
+                entry['signature'] = signature[0]
+            entries.append(entry)
+    return entries
+
+
 def parse_mists_automated_diff(text):
     """Parse 2013 captioned inventories; enum values stay in the prose extract."""
     sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
@@ -775,6 +838,8 @@ def main():
                         help='Label the client history for isolated supersession; opt-in')
     parser.add_argument('--mists-automated-diff', action='store_true',
                         help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
+    parser.add_argument('--mists-prepatch', action='store_true',
+                        help='Retain 5.0.4 prose/rename identities and code-wrapped diff names; opt-in')
     parser.add_argument('--mists-summary', action='store_true',
                         help='Retain explicit 5.4.0 summary API occurrences; opt-in')
     parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
@@ -846,12 +911,16 @@ def main():
         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
     if args.mists_automated_diff:
         entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
+    if args.mists_prepatch:
+        entries, counts = parse_mists_prepatch(raw.decode('utf-8')), []
     if args.mists_summary:
         entries.extend(parse_mists_summary(raw.decode('utf-8')))
     if args.mists_diff:
         diff_raw = Path(args.mists_diff).read_text()
         if args.mists_code_removals:
             diff_raw = normalize_mists_code_removals(diff_raw)
+        if args.mists_prepatch:
+            diff_raw = normalize_mists_code_inventory(diff_raw)
         diff_entries, diff_counts = parse_mists_automated_diff(diff_raw)
         for entry in diff_entries:
             entry['id'] = 'diff-' + entry['id']
