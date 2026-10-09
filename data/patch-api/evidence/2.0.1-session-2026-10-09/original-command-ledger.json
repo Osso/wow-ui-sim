@@ -93,5 +93,18 @@
       "revisions/615a5cf74067f46223f8028abfc6365757236433/tools/audit_patch_2_0_1_source.py"
     ],
     "later_changes": "Earlier subset proofs retained historically; final expanded SOURCE scope proven at 615a5cf74."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_replay.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "edb2fca5b08e135931ccdc3bd43d189601dd01a1",
+    "exit_code": 1,
+    "log": "replay-red.log",
+    "scope_snapshots": [],
+    "scope": "Own missing-validator RED; validator absent at this revision."
   }
 ]
