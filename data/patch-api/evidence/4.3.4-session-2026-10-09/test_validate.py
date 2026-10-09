@@ -1,7 +1,7 @@
 """Bounded historical artifact tests; no runtime or Git-object dependency."""
 import gzip
 import hashlib
-import importlib.util
+import types
 import json
 from pathlib import Path
 import shutil
@@ -16,9 +16,12 @@ RAW = "data/patch-api/sources/4.3.4-api-changes.wikitext"
 class HistoricalValidationTests(unittest.TestCase):
     def setUp(self):
         self.assertTrue((PAGE / "validate.py").is_file(), "historical validator missing")
-        spec = importlib.util.spec_from_file_location("p434_validator", PAGE / "validate.py")
-        self.validator = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(self.validator)
+        self.validator = types.ModuleType("p434_validator")
+        self.validator.__file__ = str(PAGE / "validate.py")
+        exec(
+            compile((PAGE / "validate.py").read_bytes(), str(PAGE / "validate.py"), "exec"),
+            self.validator.__dict__,
+        )
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.page = Path(self.temp.name) / "evidence"
