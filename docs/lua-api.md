@@ -13,6 +13,8 @@ The WoW UI Simulator provides a Lua API that mirrors World of Warcraft's frame, 
 - `src/lua_api/globals/real/` - Modeled non-`C_*` globals and mixins
 - `src/c_api/` - First-class `C_*` namespace contracts and backing models
 
+Retail `GetPetHappiness` is removed: raw and ordinary global lookups are absent. Non-retail profiles, including Mists, preserve the real legacy global and its default/seeded pet backing state. This non-`C_*` global is not a C API namespace or a temporary shim; retail removal does not delete the shared pet model. [Patch 4.1.0 audit](wiki/investigations/patch-4-1-0-api-audit.md#integration-boundary) separates historical behavior proof from pending current acceptance.
+
 Retail `BNGetFriendIndex` is a modeled legacy global over the existing ordered Battle.net friend list, not a shim or a separate friend model. Placement, mutation proof and inferred unknown-ID behavior are documented in the [Patch 4.2.0 audit](wiki/investigations/patch-4-2-0-api-audit.md#bounded-model-fix).
 
 ---

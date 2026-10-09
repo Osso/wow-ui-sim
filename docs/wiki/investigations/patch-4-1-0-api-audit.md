@@ -21,7 +21,7 @@ Existing flags produce an empty register for the page's `API changes` / `Event c
 
 `GetPetHappiness` is incorrectly registered in retail despite explicit 4.1.0 removal. Full cached-retail/source/tests whole-word scans are retained in [retirement scans](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/retirement-scans.json). Zero cached consumers; three test references become Classic-only and a retail raw/lookup absence case is added. Qualified and bare identities are identical for this unnamespaced global. Registration/handler are gated only under `client-retail`; pet state and non-retail behavior remain intact. No Blizzard wrapper or cache edit. Unit RED reproduces publication; retail and supported Mists GREEN results are recorded below. `Transform` and `END_REFUND` have cached bare matches, so no additional retirement changes.
 
-## Capability matrix — implementation evidence
+## Capability matrix — historical implementation evidence
 
 | Statements/cases | Closed/accounted | Still missing | Proof |
 |---|---|---|---|
@@ -37,10 +37,14 @@ Existing flags produce an empty register for the page's `API changes` / `Event c
 
 ## Integration boundary
 
-Three ordered comments reserve 4.2.0, 4.3.0, 4.3.4 before the actual 5.0.1+ retail successor chain. Main reports 4.3.4 runtime acceptance committed October 9, 2026; integration replaces the comment using its real register. No queued-page supersession credit, rebase, Classic successor, or future GetSessionTime closure is incorporated here. Historical observations must remain preserved if main changes later expectations.
+Current integration uses actual retail [4.2.0](patch-4-2-0-api-audit.md), [4.3.0](patch-4-3-0-api-audit.md) and [4.3.4](patch-4-3-4-api-audit.md) successors before 5.0.1 onward. The sole overlap is 4.3.0's `IsIPv6Available` removal: current publication accounting becomes **51 matches / 30 gaps** across the same 81 occurrences. This is removal/supersession credit only, not an IPv6 backing model, historical signature proof or native parity. Historical 50/31 observations and 171-ID ledger remain frozen at their capture boundary.
+
+Main reports 69 current sweeps pass. The Mists check failed because a file was missing during main's rebase; retry, main runtime build, portability and independent verifier remain pending. Historical targeted Mists results do not close that current acceptance boundary. Native parity, full-suite and CI are unproven; no all-green acceptance claim.
 
 ## Own historical receipt preservation
 
 Dedicated [validator](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/validate.py) derives publication, extraction, signature, gap/status and command-summary counts from sealed inputs. [Compact pins](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/historical-inputs.json) archive 78 deduplicated blobs in three selected Git trees, including the exact 64 real later-retail registers at development time. Gzip archive is 333,799 bytes; 23 source/evidence inputs are SHA-sealed, each under 5 MB. Original commit objects are not needed for receipt replay. The selected trees are not a complete native runtime replay and never prove current-head acceptance. No shared validator or prior audit receipt is modified. Own RED fixture requires missing validator implementation. [Targeted GREEN receipt](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/validator-development-proof.json) at `b6b86d223`: one unittest passes clean replay in a copied no-`.git` fixture, rejects source and own-log tampering at exact seals, restores both byte-identically, and confirms clean replay again. This is development proof, not main-thread final acceptance. Registers/extracts reproduce byte-identically with frozen flags against archived parser/extractor blobs; counts are derived, not receipts hard-coded into the validator.
 
-Queued 4.2.0/4.3.0/4.3.4 sources/registers are absent in this owned snapshot, so possible additional named supersessions cannot be independently determined here. Main must insert its actual records and recapture only affected integration expectations. No historical proof is rewritten or replaced.
+Historical validation now uses explicit [frozen ledger](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/historical-page-coverage.json) and [gap fixture](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/historical-known-gaps.json) sidecars with exact hashes recorded at `216568b5e`. Original 23 manifest seals, archive and logs remain unchanged; historical negative control remains 31 → 32. Current acceptance evidence is main-owned and separate from historical replay.
+
+`GetPetHappiness` is a real legacy non-`C_*` global over preserved pet backing state, not a `C_*` namespace or compatibility shim. Retail publication is removed; non-retail, including Mists, retains that state-backed behavior. See [Lua API classification](../../lua-api.md).

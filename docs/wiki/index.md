@@ -2838,4 +2838,9 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] development | Seal retail 4.1.0 receipts
 
-[Audit](investigations/patch-4-1-0-api-audit.md): own validator fixture passes clean copied/no-Git replay and restored source/own-log tamper controls; 23 sealed files, three selected trees, 78 deduplicated blobs in 333,799-byte archive. Frozen register/extract reproduce. Historical proof only; main retains final-gate and queued successor integration ownership.
+[Audit](investigations/patch-4-1-0-api-audit.md): own validator fixture passes clean copied/no-Git replay and restored source/own-log tamper controls; 23 sealed files, three selected trees, 78 deduplicated blobs in 333,799-byte archive. Frozen register/extract reproduce. Historical proof only; at this capture boundary, main retained final-gate and queued successor integration ownership.
+
+## [2026-10-09] integration | Current retail Patch 4.1.0 accounting
+
+[Audit](investigations/patch-4-1-0-api-audit.md#integration-boundary): actual 4.2.0/4.3.0/4.3.4 successors; sole overlap is 4.3.0 IsIPv6Available removal, 51 matches / 30 gaps, no IPv6 model/native credit. Historical 81 inventory, 50/31 observations, 86 extract rows (78 metadata/eight prose), four signatures and 171 IDs (50 bounded/43 pending/78 metadata) remain frozen; negative 31 → 32 unchanged. Explicit sidecar hashes at 216568b5e preserve all 23 original seals, archive and logs. Retail GetPetHappiness absent; non-retail/Mists state retained. Main reports 69 sweeps pass; Mists missing-file rebase failure awaits retry, runtime build, portability and independent verifier. Native/full-suite/CI unproven. Earlier queued descriptions record historical capture boundaries, not current successor state.
+
