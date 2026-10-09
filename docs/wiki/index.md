@@ -2989,3 +2989,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] proof | Patch 1.15.6 frozen SOURCE replay
 
 [Audit](investigations/patch-1-15-6-api-audit.md): SOURCE8/8 at `910fefc68`; portable3/3 at `d01aae433`, fresh copied SOURCE8/8 and default register byte replay. Serialized ledger/log seal controls reject and restore exactly. Original34 seals/map unchanged; 35-member/101,120-byte archive and six separately sealed later artifacts/map. Four rows/two UNPROVEN links, no runtime/model/native/final credit. Pending same-Era1.15.7 inflight/1.15.8/1.15.9 remain unapplied; main integration/gates separate.
+
+## [2026-10-09] investigation | Patch1.15.1 frozen source and alias boundary
+
+[Audit](investigations/patch-1-15-1-api-audit.md): page577687/revision5998991;9 rows,2 enum occurrences,7 contracts. Concrete Placeholder alias contract, no source numeric value. Separate pinned official deprecation file; loading/public-build boundary, not established defect. Own SOURCE RED8 retained; further proof pending. Main owns integration/native/final gates.

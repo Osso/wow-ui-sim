@@ -1,0 +1,28 @@
+{
+  "revision": "7ad66791e64f01dd6dc61d29d3aa48faccdce3b8",
+  "existing_enum": {
+    "path": "src/lua_api/globals/enum_data/missing_enums.lua",
+    "lines": [
+      12378,
+      12386
+    ],
+    "SeasonOfDiscovery": 2,
+    "Placeholder": "absent-in-this-initializer",
+    "native_numeric_value": "UNPROVEN"
+  },
+  "enum_init": "src/lua_api/env_init/enums.rs init_enum_globals executes MISSING_ENUMS_LUA",
+  "public_build": "src/lua_api/globals/utility_system_spell/mod.rs:380-384 is_public_build pushes true; registration at689",
+  "era_cache": {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/era/AddOns",
+    "exists": false,
+    "definitions": "UNPROVEN"
+  },
+  "era_manifest": {
+    "deprecated_toc_line": 1316,
+    "historical_deprecation_file_present": false
+  },
+  "C_Seasons": "src scan found only hot_literals.rs interned namespace, no modeled implementation established",
+  "external_source": "external-primary-source/; separate pinned 1.15.1 mirrored Blizzard Lua, public-build guarded alias assignment, not frozen wiki content",
+  "counterexample_limit": "Bare Placeholder absence not established defect: loading/public-build boundary; no production edit proposed without full-loading proof.",
+  "proposal": "Execute unchanged pinned Lua using existing initialized enum/public-build state; do not mock flags or invent numeric/native contracts. Main owns full loading/native proof."
+}

@@ -1,0 +1,11 @@
+{
+  "tag": "1.15.1",
+  "commit": "967711a33ee9d3db2e7262e0bc0b49f4ef5a0013",
+  "tag_response": "/tmp/p1151-vendor-tag-response.json",
+  "url": "https://raw.githubusercontent.com/Gethe/wow-ui-source/967711a33ee9d3db2e7262e0bc0b49f4ef5a0013/Interface/AddOns/Blizzard_Deprecated/Deprecated_1_15_1.lua",
+  "retrieved_utc": "2026-10-09T14:56:06.423169+00:00",
+  "path": "Interface/AddOns/Blizzard_Deprecated/Deprecated_1_15_1.lua",
+  "bytes": 267,
+  "sha256": "aa34e2aa7b244efde499f8eb4767cb3b29bc7cbb4a583947c90996256ce512b3",
+  "scope": "Primary Blizzard Lua distribution mirrored by Gethe, separate from frozen wiki page; public-build guarded deprecated alias only, no native/profile loading proof."
+}
