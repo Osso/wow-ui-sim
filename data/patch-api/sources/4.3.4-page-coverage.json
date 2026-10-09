@@ -1,0 +1,84 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "4.3.4",
+  "source_sha256": "0e9cd6e45cb995566422e9cf1245745a9ff3506a4a15d60a163f6ede55b6e25b",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/4.3.4-api-changes.txt",
+    "sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184"
+  },
+  "proof_policy": "Publication/absence only, never signature/output/security/behavior parity. No external linked-page contracts or Classic credit. Discovery pending.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-GetNumSoRRemaining-10",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-GetSecondsUntilParentalControlsKick-11",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-GetSessionTime-12",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-GMItemRestorationButtonEnabled-13",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-GMQuickTicketSystemEnabled-14",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-GMQuickTicketSystemThrottled-15",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-GMSubmitBug-16",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-GMSubmitSuggestion-17",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-ReportPlayer-18",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-SetPendingReportTarget-19",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "wt-global-api-ComplainChat-22",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Patch navigation; links to 4.3.0 and 5.0.4 are not expanded. No prose/signature statements in this pinned page."
+    }
+  ]
+}

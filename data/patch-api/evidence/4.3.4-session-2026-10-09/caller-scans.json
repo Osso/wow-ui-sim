@@ -1,0 +1,86 @@
+[
+  {
+    "scope": "src",
+    "root": "/home/osso/.worktrees/wow-ui-sim-p434-source/src",
+    "files_scanned": 1652,
+    "search": "whole-word full identity and bare name (identical for these unqualified globals); entire files, including Lua strings",
+    "hits": [
+      {
+        "symbol": "ReportPlayer",
+        "path": "c_api/patch_retired_members.rs",
+        "line": 64,
+        "text": "    (\"C_ChatInfo\", &[\"ReportPlayer\"]),"
+      },
+      {
+        "symbol": "ReportPlayer",
+        "path": "c_api/patch_retired_members.rs",
+        "line": 71,
+        "text": "    (\"C_ReportSystem\", &[\"ReportPlayer\"]),"
+      },
+      {
+        "symbol": "SetPendingReportTarget",
+        "path": "c_api/patch_retired_members.rs",
+        "line": 244,
+        "text": "            \"SetPendingReportTarget\","
+      }
+    ]
+  },
+  {
+    "scope": "tests",
+    "root": "/home/osso/.worktrees/wow-ui-sim-p434-source/tests",
+    "files_scanned": 2150,
+    "search": "whole-word full identity and bare name (identical for these unqualified globals); entire files, including Lua strings",
+    "hits": [
+      {
+        "symbol": "ReportPlayer",
+        "path": "patch_8_1_5_publication_fixes.rs",
+        "line": 5,
+        "text": "    \"C_ChatInfo.ReportPlayer\","
+      },
+      {
+        "symbol": "ReportPlayer",
+        "path": "patch_8_1_5_publication_fixes.rs",
+        "line": 11,
+        "text": "    \"C_ReportSystem.ReportPlayer\","
+      },
+      {
+        "symbol": "SetPendingReportTarget",
+        "path": "patch_9_2_5_classic_surfaces.rs",
+        "line": 17,
+        "text": "    {'C_ReportSystem', 'SetPendingReportTarget'},"
+      },
+      {
+        "symbol": "SetPendingReportTarget",
+        "path": "patch_9_2_5_publication_fixes.rs",
+        "line": 14,
+        "text": "    {'C_ReportSystem', 'SetPendingReportTarget'},"
+      }
+    ]
+  },
+  {
+    "scope": "retail-cache",
+    "root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+    "files_scanned": 2551,
+    "search": "whole-word full identity and bare name (identical for these unqualified globals); entire files, including Lua strings",
+    "hits": [
+      {
+        "symbol": "GetSecondsUntilParentalControlsKick",
+        "path": "Blizzard_APIDocumentationGenerated/ParentalControlsDocumentation.lua",
+        "line": 10,
+        "text": "\t\t\tName = \"GetSecondsUntilParentalControlsKick\","
+      },
+      {
+        "symbol": "GetSessionTime",
+        "path": "Blizzard_APIDocumentationGenerated/SystemTimeDocumentation.lua",
+        "line": 39,
+        "text": "\t\t\tName = \"GetSessionTime\","
+      },
+      {
+        "symbol": "GetSessionTime",
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 362,
+        "text": "\tself.Text:SetFormattedText(TIME_PLAYED_ALERT, SecondsToTime(GetSessionTime(), true, true));"
+      }
+    ]
+  }
+]

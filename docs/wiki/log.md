@@ -1,3 +1,7 @@
+## [2026-10-09] ingest | Patch 4.3.4 pinned source
+
+[Audit](investigations/patch-4-3-4-api-audit.md): complete default-parser inventory (10 additions, one removal), one metadata context, zero prose/signatures; full caller scans retained. Registered own retail discovery case with actual 5.0.1/5.0.4 successors; no runtime changes. Targeted discovery pending, coordinator owns final gates.
+
 ## [2026-10-08] maintenance | Compact patch-audit evidence
 
 [Portability investigation](investigations/patch-audit-validator-portability.md): seven rebase mappings reduced from 179,843,580 to 1,306,144 bytes using tree/blob pins, exact sparse inventory reconstruction and retained historical exceptions; four mappings without `pinned_inputs` unchanged. Subsequent-rebase labels resolve through master-ancestor snapshots, with missing bytes/patches hash-preserved. Gate at `e434bdf22` PASS: clean 52/52, later audit 53/53, no evidence file over 5 MB. All eight tool-test files pass (105 tests). Tampered recorded `src` tree rejected by both artifact seal and tree-content check; restored validator PASS. Reachable-only clone passes all 14 affected entrypoints with 166 absent historical-commit checks. Only changed artifact seals refreshed; original large mappings remain at `a82b8eb1c`. Index unchanged; existing log bytes preserved; no runtime/vendor edits, bytecode caches, push, merge or delegation.
