@@ -1,0 +1,132 @@
+{
+  "verified": "2026-10-09",
+  "scope": "Selected literal source lines only; whole-file hashes identify read snapshots, not native runtime acceptance.",
+  "sources": [
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimerunningUtil/Blizzard_TimerunningUtil.toc",
+      "sha256": "dc331b27ebdbcb32494760e220264a07b68b97ad6ecb61f41d5f76cd6e868484",
+      "lines": [
+        {
+          "line": 5,
+          "text": "## AllowLoadGameType: mainline"
+        }
+      ]
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingMarketCart/Blizzard_HousingMarketCart.toc",
+      "sha256": "5f75cbf2dfee9d655f4f3e86a29cc76a634fd4126496f0a6399a1272840127d3",
+      "lines": [
+        {
+          "line": 4,
+          "text": "## AllowLoadGameType: standard"
+        }
+      ]
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CombatLogBase/Blizzard_CombatLogBase.toc",
+      "sha256": "ca59e674d987154f83e5caf4969c032e09736b2160c012d92f4346e808fb08f8",
+      "lines": [
+        {
+          "line": 7,
+          "text": "Vanilla\\CombatLogColors.lua             [AllowLoadGameType vanilla, tbc]"
+        },
+        {
+          "line": 8,
+          "text": "Wrath\\CombatLogColors.lua               [AllowLoadGameType wrath, cata, mists]"
+        }
+      ]
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EndOfMatchUI/Blizzard_EndMatchUI.toc",
+      "sha256": "5d4cfe86fbe958f02c05a545d2ea3eae558ae10f7ad82309787a0b7bb9a72c48",
+      "lines": [
+        {
+          "line": 4,
+          "text": "## AllowLoadGameType: plunderstorm"
+        }
+      ]
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HUDInventoryTemplates/Blizzard_HUDInventoryTemplates.toc",
+      "sha256": "19bea257eb15d3899daab65149e0972ae35a03ae92494b4fdce00eb4f6c4c185",
+      "lines": [
+        {
+          "line": 4,
+          "text": "## AllowLoadGameType: plunderstorm, wowhack"
+        }
+      ]
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/Blizzard_BuffFrame.toc",
+      "sha256": "a64c918c9f25f5757fa9871c734e1c619cebc7ba226ea560bf061c602f5e8608",
+      "lines": [
+        {
+          "line": 8,
+          "text": "[Family]/BuffFrame.lua [AllowLoadGameType classic]"
+        }
+      ]
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/Blizzard_TokenUI/Blizzard_TokenUI.toc",
+      "sha256": "10423ceed4db235e080dc36beb7c756ee60c3d42b3520e33ab0590925358e053",
+      "lines": [
+        {
+          "line": 6,
+          "text": "Camelot/Blizzard_TokenUI.lua [AllowLoadGameType camelot]"
+        }
+      ]
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/Blizzard_AccountStore/Blizzard_AccountStore.toc",
+      "sha256": "ff653f32245d98a8fde2ab318d8823b03930b5b35ad1888ef46ceeab2703316d",
+      "lines": [
+        {
+          "line": 7,
+          "text": "## AllowLoadGameType: standard, wowlabs"
+        }
+      ]
+    }
+  ],
+  "cache_metadata": [
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/.wow-ui-sim-blizzard-ui-provenance",
+      "sha256": "b2731aefb37aa23ae78853d4b6159745131048b4bb57dc8c7376e99bfad2e0a4",
+      "text": "schema=1\nprofile=retail\nproduct=wow\nversion=12.1.0.69933\nbuild_key=dcfc90fffd79ba00406ae46f5f657592\ninstall_key=\nmanifest_sha256=aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd\nsource=casc-local-or-cdn\nfallback=none\n"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/.wow-ui-sim-blizzard-ui-complete",
+      "sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+      "text": "ok\n"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/.wow-ui-sim-blizzard-ui-provenance",
+      "sha256": "5407cf5f5ca63387ab9b9f26529e5f1179b152577aac744cef83cc2cf75d6c9d",
+      "text": "schema=2\nprofile=ptr\nproduct=wowxptr\nversion=12.1.5.69594\nbuild_key=4a9973f37906f8cfb344f8a9fe6777e0\ninstall_key=06feedbc851542370f3d2081fce81e19\ncdn_key=3aa83893a3ce9b722a5f51328ad9a552\ngethe_revision=49b69918fcdc77e109813281e4f537d45ec7dcbf\nmanifest_sha256=854540ee3daec8355ed1d4ffb72d244a07f1fcf14cfb4c323abe9c1231369216\ncontent_index_sha256=a04031c7e9bc9e7f8b585e3b5186f331cdf12789946620089bce878b935f482c\nsource=blizzard-cdn-pinned\nfallback=none\n"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/.wow-ui-sim-blizzard-ui-complete",
+      "sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+      "text": "ok\n"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/.wow-ui-sim-blizzard-ui-provenance",
+      "sha256": "b438a39f32a84b7ff75e5c45bccf32944a1a948efa148bc324e83ee42918b7e4",
+      "text": "profile=mists\nsource=casc-primary\nfallback=wow-ui-source\n"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/.wow-ui-sim-blizzard-ui-complete",
+      "sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+      "text": "ok\n"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/.wow-ui-sim-blizzard-ui-provenance",
+      "sha256": "d2accd74879a9f82ed29f00097ad9f34085a9216803ab7e124c54d998fb97262",
+      "text": "schema=1\nprofile=wowforever\nproduct=wow_classic_beta\nversion=1.60.1.69977\nbuild_key=3bd89ce2721f7c75e7525dc83741076f\ninstall_key=\nmanifest_sha256=36b9f64e39e4031c28218865516635e85e7bdd1042fcf3ef9db0f347037e5c24\nsource=casc-local-or-cdn\nfallback=none\n"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/.wow-ui-sim-blizzard-ui-complete",
+      "sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+      "text": "ok\n"
+    }
+  ]
+}

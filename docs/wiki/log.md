@@ -1190,3 +1190,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] fixture correction | Preserve actual ManagedAura phases
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md): exactnativephaseRED flags18 retained. Fixture removes syntheticphase replacement/counters, usesUpdateAllAuras whilehidden, thenassertsarmed/dirty throughhidden tickandclean/Disabled acrossvisibleticks. Runtime/vendorunchanged; correctedexecutionpending.
+
+## [2026-10-09] reference | Preserve observed TOC game-type tokens
+
+[[toc-game-type-tokens]] preserves twelve observed literals with exact local TOC lines, selected-source SHA-256 identities, and cache metadata. Separates filename suffixes, simulator aliases, native recognition, and annotation grammar; BCC and unknown-token semantics remain unproven. Documentation/source-capture only; no inventory rerun, tests, builds, network, vendor/cache mutation, or commit.

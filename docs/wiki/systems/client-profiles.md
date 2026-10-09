@@ -92,6 +92,8 @@ Cached Carbonite ships Retail `Carbonite.toc` alongside `Carbonite-Camelot.toc` 
 
 ### TOC content (`src/toc/mod.rs`)
 
+The table below is **simulator policy**, not native-confirmed vocabulary. See [[toc-game-type-tokens]] for the separately bounded native-source observations, filename/filter distinction, and recognition/grammar limits.
+
 `is_allowed_game_type()` reads inline `[AllowLoadGameType <type>]` annotations and matches against the active profile's allow-list:
 
 | Profile     | Accepted gametypes                                |

@@ -23,6 +23,8 @@ Client profile bundles select the runtime cache and API epoch exposed by wow-ui-
 
 ## How it works
 
+- [Observed TOC game-type tokens](../wiki/reference/toc-game-type-tokens.md) — bounded source inventory, not a native acceptance contract; filename suffixes and filter strings remain separate.
+
 - [Client profile architecture](../wiki/systems/client-profiles.md)
 - [Lua API registration](../wiki/systems/lua-api.md)
 
