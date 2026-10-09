@@ -1,0 +1,1493 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "12.0.7",
+  "source": {
+    "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+    "revid": 6794100,
+    "sha256": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 35,
+      "parsed_count": 35
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 17,
+      "parsed_count": 17
+    },
+    {
+      "section": "scriptobjects",
+      "direction": "added",
+      "header_count": 36,
+      "parsed_count": 36
+    },
+    {
+      "section": "scriptobjects",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 20,
+      "parsed_count": 20
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 5,
+      "parsed_count": 5
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_BattleNet.InviteFriend-132",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.InviteFriend",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-global-api-C_Container.CalculateTotalNumberOfFreeBagSlots-133",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Container.CalculateTotalNumberOfFreeBagSlots",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-global-api-C_DelvesUI.GetDelveEntranceTitleString-134",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DelvesUI.GetDelveEntranceTitleString",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-global-api-C_DelvesUI.GetWorldTierDifficultyForActivePlayer-135",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DelvesUI.GetWorldTierDifficultyForActivePlayer",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-global-api-C_DurationUtil.CreateDurationTextBinding-136",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DurationUtil.CreateDurationTextBinding",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-global-api-C_DurationUtil.CreateManualClock-137",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DurationUtil.CreateManualClock",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-C_EncounterTimeline.GetEventColor-138",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EncounterTimeline.GetEventColor",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-global-api-C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames-139",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-C_HousingCustomizeMode.RoomConnectionSupportsDoorType-140",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingCustomizeMode.RoomConnectionSupportsDoorType",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.CanSetViewedFloor-141",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HousingLayout.CanSetViewedFloor",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-global-api-C_MerchantFrame.GetMerchantCurrencies-142",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MerchantFrame.GetMerchantCurrencies",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.ConfirmReadyCheck-143",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.ConfirmReadyCheck",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.DemoteAssistant-144",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.DemoteAssistant",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.DoReadyCheck-145",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.DoReadyCheck",
+      "annotation": "",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.IsGUIDInGroup-146",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.IsGUIDInGroup",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.PromoteToAssistant-147",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.PromoteToAssistant",
+      "annotation": "",
+      "wikitext_line": 147
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.PromoteToLeader-148",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.PromoteToLeader",
+      "annotation": "",
+      "wikitext_line": 148
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.SetEveryoneIsAssistant-149",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.SetEveryoneIsAssistant",
+      "annotation": "",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.UninviteUnit-150",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.UninviteUnit",
+      "annotation": "",
+      "wikitext_line": 150
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer-151",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer",
+      "annotation": "",
+      "wikitext_line": 151
+    },
+    {
+      "id": "wt-global-api-C_QuestInfoSystem.GetQuestHasShortExpirationWarning-152",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestInfoSystem.GetQuestHasShortExpirationWarning",
+      "annotation": "",
+      "wikitext_line": 152
+    },
+    {
+      "id": "wt-global-api-C_ScenarioInfo.GetScenarioIconInfo-153",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ScenarioInfo.GetScenarioIconInfo",
+      "annotation": "",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-global-api-C_Spell.GetMawPowerRarityInfoBySpellID-154",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Spell.GetMawPowerRarityInfoBySpellID",
+      "annotation": "",
+      "wikitext_line": 154
+    },
+    {
+      "id": "wt-global-api-C_StringUtil.EscapeDecimalNonPrintables-155",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StringUtil.EscapeDecimalNonPrintables",
+      "annotation": "",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-global-api-C_UIFileAsset.GetFileID-156",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIFileAsset.GetFileID",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "wt-global-api-C_UIFileAsset.IsKnownFile-157",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIFileAsset.IsKnownFile",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-global-api-C_UIFileAsset.IsLooseFile-158",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIFileAsset.IsLooseFile",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-global-api-GetBaseDifficultyID-159",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBaseDifficultyID",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-global-api-GetBuildOption-160",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBuildOption",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-global-api-GetEventCPUUsage-161",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetEventCPUUsage",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-global-api-GetFunctionCPUUsage-162",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetFunctionCPUUsage",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-global-api-GetProtocolTypes-163",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetProtocolTypes",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-global-api-GetScriptCPUUsage-164",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetScriptCPUUsage",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-global-api-GetStringFromModifiers-165",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetStringFromModifiers",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-global-api-MakeModifiers-166",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "MakeModifiers",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-global-api-BNInviteFriend-169",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNInviteFriend",
+      "annotation": "",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.GetStringFromModifiers-170",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ClickBindings.GetStringFromModifiers",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.MakeModifiers-171",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ClickBindings.MakeModifiers",
+      "annotation": "",
+      "wikitext_line": 171
+    },
+    {
+      "id": "wt-global-api-C_DurationUtil.GetCurrentTime-172",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_DurationUtil.GetCurrentTime",
+      "annotation": "",
+      "wikitext_line": 172
+    },
+    {
+      "id": "wt-global-api-C_HousingLayout.IsDraggingStairwell-173",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_HousingLayout.IsDraggingStairwell",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-global-api-C_Minimap.GetObjectIconTextureCoords-174",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Minimap.GetObjectIconTextureCoords",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-global-api-C_Scenario.GetScenarioIconInfo-175",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Scenario.GetScenarioIconInfo",
+      "annotation": "",
+      "wikitext_line": 175
+    },
+    {
+      "id": "wt-global-api-C_Spell.GetMawPowerBorderAtlasBySpellID-176",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Spell.GetMawPowerBorderAtlasBySpellID",
+      "annotation": "",
+      "wikitext_line": 176
+    },
+    {
+      "id": "wt-global-api-ConfirmReadyCheck-177",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConfirmReadyCheck",
+      "annotation": "",
+      "wikitext_line": 177
+    },
+    {
+      "id": "wt-global-api-DemoteAssistant-178",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "DemoteAssistant",
+      "annotation": "",
+      "wikitext_line": 178
+    },
+    {
+      "id": "wt-global-api-DoReadyCheck-179",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "DoReadyCheck",
+      "annotation": "",
+      "wikitext_line": 179
+    },
+    {
+      "id": "wt-global-api-GetMerchantCurrencies-180",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMerchantCurrencies",
+      "annotation": "",
+      "wikitext_line": 180
+    },
+    {
+      "id": "wt-global-api-IsGUIDInGroup-181",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsGUIDInGroup",
+      "annotation": "",
+      "wikitext_line": 181
+    },
+    {
+      "id": "wt-global-api-PromoteToAssistant-182",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PromoteToAssistant",
+      "annotation": "",
+      "wikitext_line": 182
+    },
+    {
+      "id": "wt-global-api-PromoteToLeader-183",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PromoteToLeader",
+      "annotation": "",
+      "wikitext_line": 183
+    },
+    {
+      "id": "wt-global-api-SetEveryoneIsAssistant-184",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetEveryoneIsAssistant",
+      "annotation": "",
+      "wikitext_line": 184
+    },
+    {
+      "id": "wt-global-api-UninviteUnit-185",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UninviteUnit",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-global-api-C_Club.AssignMemberRole-188",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.AssignMemberRole",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-global-api-C_Club.GetAssignableRoles-190",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.GetAssignableRoles",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 190
+    },
+    {
+      "id": "wt-global-api-C_Club.GetClubMembers-192",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.GetClubMembers",
+      "annotation": "# ret1.InnerType number -> ClubMemberOpaqueId",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-global-api-C_Club.GetMemberInfo-194",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.GetMemberInfo",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-global-api-C_Club.KickMember-196",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.KickMember",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 196
+    },
+    {
+      "id": "wt-global-api-C_Club.RevokeInvitation-198",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.RevokeInvitation",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 198
+    },
+    {
+      "id": "wt-global-api-C_Club.SendBattleTagFriendRequest-200",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.SendBattleTagFriendRequest",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 200
+    },
+    {
+      "id": "wt-global-api-C_Club.SendInvitation-202",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.SendInvitation",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 202
+    },
+    {
+      "id": "wt-global-api-C_Club.SetClubMemberNote-204",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.SetClubMemberNote",
+      "annotation": "# arg2.Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 204
+    },
+    {
+      "id": "wt-global-api-C_CombatText.GetActiveUnit-206",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_CombatText.GetActiveUnit",
+      "annotation": "- ret1.ConditionalSecret\n# ret1.Nilable true -> false\n+ MayReturnNothing",
+      "wikitext_line": 206
+    },
+    {
+      "id": "wt-global-api-C_CombatText.SetActiveUnit-210",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_CombatText.SetActiveUnit",
+      "annotation": "+ RequiresDeclassifiedUnitIdentity",
+      "wikitext_line": 210
+    },
+    {
+      "id": "wt-global-api-C_DelvesUI.GetTieredEntranceType-212",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_DelvesUI.GetTieredEntranceType",
+      "annotation": "# ret1.Type number -> TieredEntranceType",
+      "wikitext_line": 212
+    },
+    {
+      "id": "wt-global-api-C_EncounterEvents.GetEventColor-214",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_EncounterEvents.GetEventColor",
+      "annotation": "# ret1.Type colorRGB -> colorRGBA\n+ arg2 = trigger",
+      "wikitext_line": 214
+    },
+    {
+      "id": "wt-global-api-C_EncounterEvents.SetEventColor-217",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_EncounterEvents.SetEventColor",
+      "annotation": "+ arg3 = trigger",
+      "wikitext_line": 217
+    },
+    {
+      "id": "wt-global-api-C_EncounterWarnings.GetColorForSeverity-219",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_EncounterWarnings.GetColorForSeverity",
+      "annotation": "# ret1.Type colorRGB -> colorRGBA",
+      "wikitext_line": 219
+    },
+    {
+      "id": "wt-global-api-GetInstanceInfo-221",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetInstanceInfo",
+      "annotation": "+ ret11 = hasWorldTier",
+      "wikitext_line": 221
+    },
+    {
+      "id": "wt-global-api-SimulateMouseClick-223",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SimulateMouseClick",
+      "annotation": "+ MouseFocusValidForLimitedInput",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-global-api-SimulateMouseDown-225",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SimulateMouseDown",
+      "annotation": "+ MouseFocusValidForLimitedInput",
+      "wikitext_line": 225
+    },
+    {
+      "id": "wt-global-api-SimulateMouseUp-227",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SimulateMouseUp",
+      "annotation": "+ MouseFocusValidForLimitedInput",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-global-api-SimulateMouseWheel-229",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SimulateMouseWheel",
+      "annotation": "+ MouseFocusValidForLimitedInput",
+      "wikitext_line": 229
+    },
+    {
+      "id": "wt-scriptobjects-DurationClock:GetTime-239",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationClock:GetTime",
+      "annotation": "",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-scriptobjects-DurationManualClock:AdvanceTime-240",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationManualClock:AdvanceTime",
+      "annotation": "",
+      "wikitext_line": 240
+    },
+    {
+      "id": "wt-scriptobjects-DurationManualClock:ResetTime-241",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationManualClock:ResetTime",
+      "annotation": "",
+      "wikitext_line": 241
+    },
+    {
+      "id": "wt-scriptobjects-DurationManualClock:RewindTime-242",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationManualClock:RewindTime",
+      "annotation": "",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-scriptobjects-DurationManualClock:SetTime-243",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationManualClock:SetTime",
+      "annotation": "",
+      "wikitext_line": 243
+    },
+    {
+      "id": "wt-scriptobjects-DurationObject:GetClock-244",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationObject:GetClock",
+      "annotation": "",
+      "wikitext_line": 244
+    },
+    {
+      "id": "wt-scriptobjects-DurationObject:HasExpired-245",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationObject:HasExpired",
+      "annotation": "",
+      "wikitext_line": 245
+    },
+    {
+      "id": "wt-scriptobjects-DurationObject:HasStarted-246",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationObject:HasStarted",
+      "annotation": "",
+      "wikitext_line": 246
+    },
+    {
+      "id": "wt-scriptobjects-DurationObject:IsActive-247",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationObject:IsActive",
+      "annotation": "",
+      "wikitext_line": 247
+    },
+    {
+      "id": "wt-scriptobjects-DurationObject:SetClock-248",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationObject:SetClock",
+      "annotation": "",
+      "wikitext_line": 248
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:CanFormatText-249",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:CanFormatText",
+      "annotation": "",
+      "wikitext_line": 249
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:CanUpdateFontString-250",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:CanUpdateFontString",
+      "annotation": "",
+      "wikitext_line": 250
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:Disable-251",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:Disable",
+      "annotation": "",
+      "wikitext_line": 251
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:Enable-252",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:Enable",
+      "annotation": "",
+      "wikitext_line": 252
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:GetDuration-253",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:GetDuration",
+      "annotation": "",
+      "wikitext_line": 253
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:GetExpiredText-254",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:GetExpiredText",
+      "annotation": "",
+      "wikitext_line": 254
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:GetFontString-255",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:GetFontString",
+      "annotation": "",
+      "wikitext_line": 255
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:GetFormattedText-256",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:GetFormattedText",
+      "annotation": "",
+      "wikitext_line": 256
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:GetTimeModifier-257",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:GetTimeModifier",
+      "annotation": "",
+      "wikitext_line": 257
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:GetUpdateInterval-258",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:GetUpdateInterval",
+      "annotation": "",
+      "wikitext_line": 258
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:GetZeroDurationText-259",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:GetZeroDurationText",
+      "annotation": "",
+      "wikitext_line": 259
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:HasSecretValues-260",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:HasSecretValues",
+      "annotation": "",
+      "wikitext_line": 260
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:IsEnabled-261",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:IsEnabled",
+      "annotation": "",
+      "wikitext_line": 261
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetDuration-262",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetDuration",
+      "annotation": "",
+      "wikitext_line": 262
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetEnabled-263",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetEnabled",
+      "annotation": "",
+      "wikitext_line": 263
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetExpiredText-264",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetExpiredText",
+      "annotation": "",
+      "wikitext_line": 264
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetFontString-265",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetFontString",
+      "annotation": "",
+      "wikitext_line": 265
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetFormatter-266",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetFormatter",
+      "annotation": "",
+      "wikitext_line": 266
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetTextFormat-267",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetTextFormat",
+      "annotation": "",
+      "wikitext_line": 267
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetTimeModifier-268",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetTimeModifier",
+      "annotation": "",
+      "wikitext_line": 268
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetToDefaults-269",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetToDefaults",
+      "annotation": "",
+      "wikitext_line": 269
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetUpdateInterval-270",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetUpdateInterval",
+      "annotation": "",
+      "wikitext_line": 270
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:SetZeroDurationText-271",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:SetZeroDurationText",
+      "annotation": "",
+      "wikitext_line": 271
+    },
+    {
+      "id": "wt-scriptobjects-DurationTextBinding:UpdateFontString-272",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "DurationTextBinding:UpdateFontString",
+      "annotation": "",
+      "wikitext_line": 272
+    },
+    {
+      "id": "wt-scriptobjects-HousingLayoutPinFrame:IsConnectedToDraggingRoom-273",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "HousingLayoutPinFrame:IsConnectedToDraggingRoom",
+      "annotation": "",
+      "wikitext_line": 273
+    },
+    {
+      "id": "wt-scriptobjects-HousingLayoutPinFrame:IsPartOfDraggingRoom-274",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "HousingLayoutPinFrame:IsPartOfDraggingRoom",
+      "annotation": "",
+      "wikitext_line": 274
+    },
+    {
+      "id": "wt-scriptobjects-SecondsFormatter:Format-279",
+      "section": "scriptobjects",
+      "direction": "changed",
+      "symbol": "SecondsFormatter:Format",
+      "annotation": "# arg2.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation",
+      "wikitext_line": 279
+    },
+    {
+      "id": "wt-scriptobjects-SecondsFormatter:FormatZero-281",
+      "section": "scriptobjects",
+      "direction": "changed",
+      "symbol": "SecondsFormatter:FormatZero",
+      "annotation": "# arg1.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation",
+      "wikitext_line": 281
+    },
+    {
+      "id": "wt-scriptobjects-SecondsFormatter:GetDefaultAbbreviation-283",
+      "section": "scriptobjects",
+      "direction": "changed",
+      "symbol": "SecondsFormatter:GetDefaultAbbreviation",
+      "annotation": "# ret1.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation",
+      "wikitext_line": 283
+    },
+    {
+      "id": "wt-scriptobjects-SecondsFormatter:SetDefaultAbbreviation-285",
+      "section": "scriptobjects",
+      "direction": "changed",
+      "symbol": "SecondsFormatter:SetDefaultAbbreviation",
+      "annotation": "# arg1.Type SecondsFormatterAbbrevation -> SecondsFormatterAbbreviation",
+      "wikitext_line": 285
+    },
+    {
+      "id": "wt-widgets-Minimap:SetBlipTexture-297",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetBlipTexture",
+      "annotation": "",
+      "wikitext_line": 297
+    },
+    {
+      "id": "wt-widgets-Minimap:SetCorpsePOIArrowTexture-298",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetCorpsePOIArrowTexture",
+      "annotation": "",
+      "wikitext_line": 298
+    },
+    {
+      "id": "wt-widgets-Minimap:SetIconTexture-299",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetIconTexture",
+      "annotation": "",
+      "wikitext_line": 299
+    },
+    {
+      "id": "wt-widgets-Minimap:SetPOIArrowTexture-300",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetPOIArrowTexture",
+      "annotation": "",
+      "wikitext_line": 300
+    },
+    {
+      "id": "wt-widgets-Minimap:SetPlayerTexture-301",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetPlayerTexture",
+      "annotation": "",
+      "wikitext_line": 301
+    },
+    {
+      "id": "wt-widgets-Minimap:SetStaticPOIArrowTexture-302",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetStaticPOIArrowTexture",
+      "annotation": "",
+      "wikitext_line": 302
+    },
+    {
+      "id": "wt-widgets-Button:GetButtonState-305",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Button:GetButtonState",
+      "annotation": "+ SecretReturnsForAspect",
+      "wikitext_line": 305
+    },
+    {
+      "id": "wt-widgets-Button:IsEnabled-307",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Button:IsEnabled",
+      "annotation": "+ SecretReturnsForAspect",
+      "wikitext_line": 307
+    },
+    {
+      "id": "wt-widgets-Button:SetButtonState-309",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Button:SetButtonState",
+      "annotation": "+ SecretArgumentsAddAspect",
+      "wikitext_line": 309
+    },
+    {
+      "id": "wt-widgets-Button:SetEnabled-311",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Button:SetEnabled",
+      "annotation": "+ SecretArgumentsAddAspect\n# SecretArguments NotAllowed -> AllowedWhenUntainted",
+      "wikitext_line": 311
+    },
+    {
+      "id": "wt-widgets-EditBox:SetFont-314",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "EditBox:SetFont",
+      "annotation": "+ RequiresValidFontHeight\n+ RequiresValidFontAsset",
+      "wikitext_line": 314
+    },
+    {
+      "id": "wt-widgets-Font:SetFont-317",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Font:SetFont",
+      "annotation": "+ RequiresValidFontHeight\n+ RequiresValidFontAsset",
+      "wikitext_line": 317
+    },
+    {
+      "id": "wt-widgets-FontString:SetFont-320",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "FontString:SetFont",
+      "annotation": "+ RequiresValidFontHeight\n+ RequiresValidFontAsset\n# arg2.Type number -> uiFontHeight",
+      "wikitext_line": 320
+    },
+    {
+      "id": "wt-widgets-MessageFrame:SetFont-324",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "MessageFrame:SetFont",
+      "annotation": "+ RequiresValidFontHeight\n+ RequiresValidFontAsset",
+      "wikitext_line": 324
+    },
+    {
+      "id": "wt-widgets-ModelSceneActorBase:GetModelUnitGUID-327",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ModelSceneActorBase:GetModelUnitGUID",
+      "annotation": "- ret1.ConditionalSecret",
+      "wikitext_line": 327
+    },
+    {
+      "id": "wt-widgets-ScrollFrame:GetHorizontalScroll-329",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScrollFrame:GetHorizontalScroll",
+      "annotation": "+ SecretReturnsForAspect",
+      "wikitext_line": 329
+    },
+    {
+      "id": "wt-widgets-ScrollFrame:GetVerticalScroll-331",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScrollFrame:GetVerticalScroll",
+      "annotation": "+ SecretReturnsForAspect",
+      "wikitext_line": 331
+    },
+    {
+      "id": "wt-widgets-ScrollFrame:SetHorizontalScroll-333",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScrollFrame:SetHorizontalScroll",
+      "annotation": "# SecretArguments NotAllowed -> AllowedWhenUntainted\n+ SecretArgumentsAddAspect",
+      "wikitext_line": 333
+    },
+    {
+      "id": "wt-widgets-ScrollFrame:SetVerticalScroll-336",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScrollFrame:SetVerticalScroll",
+      "annotation": "# SecretArguments NotAllowed -> AllowedWhenUntainted\n+ SecretArgumentsAddAspect",
+      "wikitext_line": 336
+    },
+    {
+      "id": "wt-widgets-SimpleHTML:SetFont-339",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "SimpleHTML:SetFont",
+      "annotation": "+ RequiresValidFontHeight\n+ RequiresValidFontAsset",
+      "wikitext_line": 339
+    },
+    {
+      "id": "wt-events-ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED-350",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED",
+      "annotation": "",
+      "wikitext_line": 350
+    },
+    {
+      "id": "wt-events-URL_TEXTURE_REQUEST_RESULT-351",
+      "section": "events",
+      "direction": "added",
+      "symbol": "URL_TEXTURE_REQUEST_RESULT",
+      "annotation": "",
+      "wikitext_line": 351
+    },
+    {
+      "id": "wt-events-CHAT_MSG_COMBAT_FACTION_CHANGE-356",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_COMBAT_FACTION_CHANGE",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 356
+    },
+    {
+      "id": "wt-events-CHAT_MSG_COMBAT_HONOR_GAIN-358",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_COMBAT_HONOR_GAIN",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 358
+    },
+    {
+      "id": "wt-events-CHAT_MSG_COMBAT_MISC_INFO-360",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_COMBAT_MISC_INFO",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 360
+    },
+    {
+      "id": "wt-events-CHAT_MSG_COMBAT_XP_GAIN-362",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_COMBAT_XP_GAIN",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 362
+    },
+    {
+      "id": "wt-events-CHAT_MSG_CURRENCY-364",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_CURRENCY",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 364
+    },
+    {
+      "id": "wt-events-CHAT_MSG_FILTERED-366",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_FILTERED",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 366
+    },
+    {
+      "id": "wt-events-CHAT_MSG_LOOT-368",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_LOOT",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 368
+    },
+    {
+      "id": "wt-events-CHAT_MSG_MONEY-370",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_MONEY",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 370
+    },
+    {
+      "id": "wt-events-CHAT_MSG_RESTRICTED-372",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CHAT_MSG_RESTRICTED",
+      "annotation": "- SecretInChatMessagingLockdown",
+      "wikitext_line": 372
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_ADDED-374",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CLUB_MEMBER_ADDED",
+      "annotation": "# [2](memberId).Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 374
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_PRESENCE_UPDATED-376",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CLUB_MEMBER_PRESENCE_UPDATED",
+      "annotation": "# [2](memberId).Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 376
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_REMOVED-378",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CLUB_MEMBER_REMOVED",
+      "annotation": "# [2](memberId).Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 378
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_ROLE_UPDATED-380",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CLUB_MEMBER_ROLE_UPDATED",
+      "annotation": "# [2](memberId).Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 380
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_UPDATED-382",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CLUB_MEMBER_UPDATED",
+      "annotation": "# [2](memberId).Type number -> ClubMemberOpaqueId",
+      "wikitext_line": 382
+    },
+    {
+      "id": "wt-events-ENCOUNTER_END-384",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "ENCOUNTER_END",
+      "annotation": "+ encounterUnitStatus",
+      "wikitext_line": 384
+    },
+    {
+      "id": "wt-cvars-assistedCombatReduceHighlights-394",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "assistedCombatReduceHighlights",
+      "annotation": "",
+      "wikitext_line": 394,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-developerLogFilterDebug-395",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLogFilterDebug",
+      "annotation": "",
+      "wikitext_line": 395,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-developerLogFilterError-396",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLogFilterError",
+      "annotation": "",
+      "wikitext_line": 396,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-developerLogFilterFatal-397",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLogFilterFatal",
+      "annotation": "",
+      "wikitext_line": 397,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-developerLogFilterNormal-398",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLogFilterNormal",
+      "annotation": "",
+      "wikitext_line": 398,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-developerLogFilterSpam-399",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLogFilterSpam",
+      "annotation": "",
+      "wikitext_line": 399,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-developerLogFilterWarning-400",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLogFilterWarning",
+      "annotation": "",
+      "wikitext_line": 400,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-developerLogWriteToFile-401",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLogWriteToFile",
+      "annotation": "",
+      "wikitext_line": 401,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-developerLog-402",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "developerLog",
+      "annotation": "",
+      "wikitext_line": 402,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-housingDecorLightRadiusIndicatorsEnabled-403",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingDecorLightRadiusIndicatorsEnabled",
+      "annotation": "",
+      "wikitext_line": 403,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-housingOtherDecorLightRadiusIndicatorType-404",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingOtherDecorLightRadiusIndicatorType",
+      "annotation": "",
+      "wikitext_line": 404,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-housingSelectedDecorLightRadiusIndicatorType-405",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "housingSelectedDecorLightRadiusIndicatorType",
+      "annotation": "",
+      "wikitext_line": 405,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-ThreadPoolPerThreadAllocator-406",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ThreadPoolPerThreadAllocator",
+      "annotation": "",
+      "wikitext_line": 406,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-unlockedExpansionLandingPages-407",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "unlockedExpansionLandingPages",
+      "annotation": "",
+      "wikitext_line": 407
+    },
+    {
+      "id": "wt-cvars-useBLEEP-408",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "useBLEEP",
+      "annotation": "",
+      "wikitext_line": 408,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-fetchBleepProxies-409",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "fetchBleepProxies",
+      "annotation": "",
+      "wikitext_line": 409,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-Aftermath-410",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "Aftermath",
+      "annotation": "",
+      "wikitext_line": 410,
+      "page_default": "1",
+      "test_inline": true
+    },
+    {
+      "id": "wt-cvars-AftermathCallstacks-411",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "AftermathCallstacks",
+      "annotation": "",
+      "wikitext_line": 411,
+      "page_default": "0",
+      "test_inline": true
+    },
+    {
+      "id": "wt-cvars-enableMemoryTrap-412",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "enableMemoryTrap",
+      "annotation": "",
+      "wikitext_line": 412,
+      "page_default": "1",
+      "test_inline": true
+    },
+    {
+      "id": "wt-cvars-MemUsageStackTrace-413",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "MemUsageStackTrace",
+      "annotation": "",
+      "wikitext_line": 413,
+      "kind": "command",
+      "test_inline": true
+    },
+    {
+      "id": "wt-cvars-debugGameEvents-416",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "debugGameEvents",
+      "annotation": "",
+      "wikitext_line": 416,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-frontendMatchingModes_WowLabs-417",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "frontendMatchingModes_WowLabs",
+      "annotation": "",
+      "wikitext_line": 417,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-last_matchmaking_party_size-418",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "last_matchmaking_party_size",
+      "annotation": "",
+      "wikitext_line": 418,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lastCharacterGuid-419",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "lastCharacterGuid",
+      "annotation": "",
+      "wikitext_line": 419,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-skipStartGear-420",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "skipStartGear",
+      "annotation": "",
+      "wikitext_line": 420,
+      "page_default": "0"
+    }
+  ]
+}

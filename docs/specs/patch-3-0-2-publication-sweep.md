@@ -12,6 +12,7 @@ Frozen page 482353/revision 4638841 (`2020-02-23T21:55:29Z`) is historical retai
 ## How it works
 - [Audit and coverage matrix](../wiki/investigations/patch-3-0-2-api-audit.md)
 - [Bounded handoff](../../data/patch-api/evidence/3.0.2-session-2026-10-09/handoff.md)
+- [Separate current-retail factory measurement](patch-3-0-2-factory.md): does not change the original source-only accounting or behavioral/native status.
 
 ## Implementation inventory
 - `tools/gen_patch_wikitext_register.py`: opt-in `--wrath-launch-inventory`.

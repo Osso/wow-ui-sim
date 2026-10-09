@@ -5,9 +5,9 @@
 ## Active TODO
 
 - [x] Read worktree instructions, audit/spec and shared classifier; confirm clean p302-factory at efbe97f20.
-- [ ] Commit standalone retail discovery probe, exact oldest-first retail successors and separate evidence/spec.
-- [ ] Retain empty-gap discovery for all 373 occurrences; review exact gaps and classifier limits.
-- [ ] Commit reviewed expectations/controls before targeted GREEN and negative unknown-global runs.
+- [x] Commit standalone retail discovery probe, exact oldest-first retail successors and separate evidence/spec: d3903d884, plan 982ccc3d9.
+- [x] Retain empty-gap discovery for all 373 occurrences: 185 matches/188 gaps; review exact gaps and classifier limits.
+- [ ] Commit reviewed expectations/controls before targeted GREEN (seven own tests) and negative unknown-global run (same 373 rows; expected 189 gaps).
 - [ ] Seal revisions/argv/env/full streams/hashes, confirm historical 36+1+2 seals unchanged; update wiki/index/log/spec and report counts/commits.
 
 ## Exclusions

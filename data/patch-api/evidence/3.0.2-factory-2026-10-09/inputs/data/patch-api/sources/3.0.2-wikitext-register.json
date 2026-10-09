@@ -1,0 +1,3003 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "3.0.2",
+  "source": {
+    "path": "data/patch-api/sources/3.0.2-api-changes.wikitext",
+    "revid": 4638841,
+    "sha256": "378d50cd422c48559714b2ddfe5f04942615d87cc131cc49eaf3e8622b326f2d"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-SetAutoLootDefault-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetAutoLootDefault",
+      "annotation": "* The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault(), ShowNameplates(), HideNameplates(), ShowFriendNameplates(), HideFriendNameplates() ",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-GetAutoLootDefault-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAutoLootDefault",
+      "annotation": "* The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault(), ShowNameplates(), HideNameplates(), ShowFriendNameplates(), HideFriendNameplates() ",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-ShowNameplates-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowNameplates",
+      "annotation": "* The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault(), ShowNameplates(), HideNameplates(), ShowFriendNameplates(), HideFriendNameplates() ",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-HideNameplates-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "HideNameplates",
+      "annotation": "* The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault(), ShowNameplates(), HideNameplates(), ShowFriendNameplates(), HideFriendNameplates() ",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-ShowFriendNameplates-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowFriendNameplates",
+      "annotation": "* The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault(), ShowNameplates(), HideNameplates(), ShowFriendNameplates(), HideFriendNameplates() ",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-HideFriendNameplates-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "HideFriendNameplates",
+      "annotation": "* The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault(), ShowNameplates(), HideNameplates(), ShowFriendNameplates(), HideFriendNameplates() ",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-UploadSettings-17",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UploadSettings",
+      "annotation": "* Saving the settings on the server can be disabled by setting the \"synchronizeSettings\" cvar to 0. You can then use the new UploadSettings() and DownloadSettings() functions to manage synchronization manually. ",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-DownloadSettings-17",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "DownloadSettings",
+      "annotation": "* Saving the settings on the server can be disabled by setting the \"synchronizeSettings\" cvar to 0. You can then use the new UploadSettings() and DownloadSettings() functions to manage synchronization manually. ",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-cvars-synchronizeSettings-17",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "synchronizeSettings",
+      "annotation": "* Saving the settings on the server can be disabled by setting the \"synchronizeSettings\" cvar to 0. You can then use the new UploadSettings() and DownloadSettings() functions to manage synchronization manually. ",
+      "wikitext_line": 17,
+      "kind": "cvar"
+    },
+    {
+      "id": "wt-global-api-GetCVarBool-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarBool",
+      "annotation": "* NEW value = GetCVarBool(\"cvar\") - Returns the value of the cvar as 1 or nil instead of requiring you to compare the cvar value with \"0\" or \"1\" ",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-GetCVarInfo-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarInfo",
+      "annotation": "* NEW name, defaultValue, serverStoredAccountWide, serverStoredPerCharacter = GetCVarInfo(\"cvar\") - Returns information about the named cvar ",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-commands-FOCUSCAST-20",
+      "section": "commands",
+      "direction": "added",
+      "symbol": "FOCUSCAST",
+      "annotation": "* There is a new FOCUSCAST click modifier (with no default value) which will cause spells to be cast on your focus. ",
+      "wikitext_line": 20,
+      "kind": "click-modifier"
+    },
+    {
+      "id": "wt-global-api-BackupMacros-23",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "BackupMacros",
+      "annotation": "* You can now maintain a backup copy of your macros and restore them at any time with the following functions: BackupMacros(), RestoreMacros(). These functions can not be called by AddOns while you are in combat. ",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-RestoreMacros-23",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "RestoreMacros",
+      "annotation": "* You can now maintain a backup copy of your macros and restore them at any time with the following functions: BackupMacros(), RestoreMacros(). These functions can not be called by AddOns while you are in combat. ",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-UnitAura-30",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitAura",
+      "annotation": "name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitAura(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]) ",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-UnitBuff-32",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitBuff",
+      "annotation": "UnitBuff() and UnitDebuff() are aliases for UnitAura() with built in helpful/harmful filters. ",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-UnitDebuff-32",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitDebuff",
+      "annotation": "UnitBuff() and UnitDebuff() are aliases for UnitAura() with built in helpful/harmful filters. ",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-UnitAura-32",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitAura",
+      "annotation": "UnitBuff() and UnitDebuff() are aliases for UnitAura() with built in helpful/harmful filters. ",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-CancelPlayerBuff-34",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "CancelPlayerBuff",
+      "annotation": "CancelPlayerBuff([index] or [\"name\", \"rank\"][, \"filter\"]); ",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitAura-36",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "GameTooltip:SetUnitAura",
+      "annotation": "GameTooltip:SetUnitAura(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]); ",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitBuff-37",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "GameTooltip:SetUnitBuff",
+      "annotation": "GameTooltip:SetUnitBuff(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]); ",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitDebuff-38",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "GameTooltip:SetUnitDebuff",
+      "annotation": "GameTooltip:SetUnitDebuff(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]); ",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-GetNumCompanions-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumCompanions",
+      "annotation": "* NEW count = GetNumCompanions(type) -- Gets the number of a specific type of companion (type is \"CRITTER\" or \"MOUNT\") ",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-GetCompanionInfo-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCompanionInfo",
+      "annotation": "* NEW creatureID, creatureName, spellID, icon, active = GetCompanionInfo(type, index) -- Gets information abotu a specific companiion ",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-PickupCompanion-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PickupCompanion",
+      "annotation": "* NEW PickupCompanion(type, index) -- Load a companion onto the cursor for placement into an action bar ",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-CallCompanion-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CallCompanion",
+      "annotation": "* NEW CallCompanion(type, index) -- Summon a specific companion ",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-widgets-PlayerModel:SetCreature-54",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCreature",
+      "annotation": "* NEW PlayerModel:SetCreature(creatureID) -- Show the model for the specified creature ",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-events-COMPANION_UPDATE-56",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMPANION_UPDATE",
+      "annotation": "Finally, there's a new event COMPANION_UPDATE which has a single argument, type - If this is nil then the UI should update the current companion, if it's non il then it'll be \"CRITTER\" or \"MOUNT\" and indicates that the active companion of that type has changed. ",
+      "wikitext_line": 56,
+      "kind": "event"
+    },
+    {
+      "id": "wt-global-api-UnitThreatSituation-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatSituation",
+      "annotation": "* NEW state = UnitThreatSituation(unit[, mob]) -- Determine a unit's threat situation with respect to the given mob (or the mob which has the highest threat for the unit if omitted), the result is one of: ",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-UnitDetailedThreatSituation-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitDetailedThreatSituation",
+      "annotation": "* NEW isTanking, state, scaledPercent, rawPercent, threatValue = UnitDetailedThreatSituation(unit, mob) -- Returns detailed information about the unit's state on a mob's threat list. ",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-GetThreatStatusColor-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetThreatStatusColor",
+      "annotation": "* NEW r, g, b = GetThreatStatusColor(state) -- Gets the color to use in the standard UI for a threat situation state ",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_LIST_UPDATE-75",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_LIST_UPDATE",
+      "annotation": "There are also two new events, UNIT_THREAT_LIST_UPDATE is fired when a mob unit's threat list changes, the unit id of the mob is the first event argument. UNIT_THREAT_SITUATION_UPDATE fires when a unit's threat situation changes, the unit in question is the first event argument (Note this only fires for status value changes, not raw threat changes) ",
+      "wikitext_line": 75,
+      "kind": "event"
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_SITUATION_UPDATE-75",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_SITUATION_UPDATE",
+      "annotation": "There are also two new events, UNIT_THREAT_LIST_UPDATE is fired when a mob unit's threat list changes, the unit id of the mob is the first event argument. UNIT_THREAT_SITUATION_UPDATE fires when a unit's threat situation changes, the unit in question is the first event argument (Note this only fires for status value changes, not raw threat changes) ",
+      "wikitext_line": 75,
+      "kind": "event"
+    },
+    {
+      "id": "wt-global-api-UnitExists-78",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitExists",
+      "annotation": "* The unit functions (such as UnitExists) now work for unit names that begin with otherwise valid unit tokens (e.g. for a player named \"Petlover\") ",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-GetInventoryItemsForSlot-81",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetInventoryItemsForSlot",
+      "annotation": "* The GetInventoryItemsForSlot function now correctly finds and returns information for relics, and properly returns the flags for items in bank bags. ",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-widgets-Texture:SetTexture-86",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetTexture",
+      "annotation": "* UPDATED - exists = Texture:SetTexture(path[, tiled]) -- Added a new tiled parameter, if this is true then the texture is tiled in each direction rather than the edge stretching to infinity. ",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-widgets-Slider:Disable-89",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:Disable",
+      "annotation": "* NEW - Slider:Disable() -- Disables the slider ",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-widgets-Slider:Enable-90",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:Enable",
+      "annotation": "* NEW - Slider:Enable() -- Enables the slider ",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-widgets-Slider:IsEnabled-91",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:IsEnabled",
+      "annotation": "* NEW - isEnabled = Slider:IsEnabled() -- Returns the status of the slider (1 or nil) ",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-framexml-InterfaceOptionsFrame_OpenToPage-96",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "InterfaceOptionsFrame_OpenToPage",
+      "annotation": "* InterfaceOptionsFrame_OpenToPage has been renamed InterfaceOptionsFrame_OpenToCategory !!! ",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-framexml-InterfaceOptionsFrame_OpenToCategory-96",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "InterfaceOptionsFrame_OpenToCategory",
+      "annotation": "* InterfaceOptionsFrame_OpenToPage has been renamed InterfaceOptionsFrame_OpenToCategory !!! ",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-AutoLootMailItem-103",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "AutoLootMailItem",
+      "annotation": "* NEW - AutoLootMailItem(index) ",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-CanCancelAuction-104",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanCancelAuction",
+      "annotation": "* NEW - canCancel = CanCancelAuction(item) ",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-CanEditGuildEvent-105",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanEditGuildEvent",
+      "annotation": "* NEW - canEdit = CanEditGuildEvent() ",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-CanHearthAndRessurectFromArea-106",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanHearthAndRessurectFromArea",
+      "annotation": "* NEW - CanHearthAndRessurectFromArea ?? ",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-CollapseAllHeaders-107",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CollapseAllHeaders",
+      "annotation": "* NEW - CollapseAllHeaders ?? ",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-CombatTextSetActiveUnit-108",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatTextSetActiveUnit",
+      "annotation": "* NEW - CombatTextSetActiveUnit(\"unit\") ",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-ExpandAllHeaders-109",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ExpandAllHeaders",
+      "annotation": "* NEW - ExpandAllHeaders ?? ",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-GetKnownSlotFromHighestRankSlot-110",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetKnownSlotFromHighestRankSlot",
+      "annotation": "* NEW - slot = GetKnownSlotFromHighestRankSlot(slot) ",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-GetMaxCombatRatingBonus-111",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMaxCombatRatingBonus",
+      "annotation": "* NEW - maxRatingBonus = GetMaxCombatRatingBonus(lowestRating) ",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-GetPreviousArenaSeason-112",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPreviousArenaSeason",
+      "annotation": "* NEW - season = GetPreviousArenaSeason() ",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-GetQuestLogRewardTalents-113",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogRewardTalents",
+      "annotation": "* NEW - talents = GetQuestLogRewardTalents() ",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-global-api-GetRewardTalents-114",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRewardTalents",
+      "annotation": "* NEW - talents = GetRewardTalents() ",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-GetTradeSkillDescription-115",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTradeSkillDescription",
+      "annotation": "* NEW - GetTradeSkillDescription ?? ",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-GetTradeSkillListLink-116",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTradeSkillListLink",
+      "annotation": "* NEW - link = GetTradeSkillListLink() ",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-GetUnitPitch-117",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitPitch",
+      "annotation": "* NEW - ?? = GetUnitPitch(\"unit\") ",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-GetUnitSpeed-118",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitSpeed",
+      "annotation": "* NEW - ?? = GetUnitSpeed(\"unit\") ",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-HearthAndRessurectFromArea-119",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HearthAndRessurectFromArea",
+      "annotation": "* NEW - HearthAndRessurectFromArea ?? ",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-IsDebugBuild-120",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsDebugBuild",
+      "annotation": "* NEW - isDebug = IsDebugBuild() ",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-IsDesaturateSupported-121",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsDesaturateSupported",
+      "annotation": "* NEW - isSupported = IsDesaturateSupported() ",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-global-api-IsInArenaTeam-122",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsInArenaTeam",
+      "annotation": "* NEW - inTeam = IsInArenaTeam() ",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-IsPVPTimerRunning-123",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsPVPTimerRunning",
+      "annotation": "* NEW - isRunning = IsPVPTimerRunning() ",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-global-api-IsTradeSkillLinked-124",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTradeSkillLinked",
+      "annotation": "* NEW - isLinked, skillPlayer = IsTradeSkillLinked() -- skillPlayer is thename of the player owning the skill if it's linked ",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-PlayDance-125",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PlayDance",
+      "annotation": "* NEW - PlayDance ?? ",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-global-api-QuestBagButtonIDToInvSlotID-126",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QuestBagButtonIDToInvSlotID",
+      "annotation": "* NEW - QuestBagButtonIDToInvSlotID ",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-QuestFlagsPVP-127",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QuestFlagsPVP",
+      "annotation": "* NEW - flagsPVP = QuestFlagsPVP() ",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-global-api-RestoreVideoEffectsDefaults-128",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RestoreVideoEffectsDefaults",
+      "annotation": "* NEW - RestoreVideoEffectsDefaults() ",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-RestoreVideoResolutionDefaults-129",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RestoreVideoResolutionDefaults",
+      "annotation": "* NEW - RestoreVideoResolutionDefaults() ",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-UnitSelectionColor-130",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitSelectionColor",
+      "annotation": "* NEW - UnitSelectionColor ?? ",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-UnitHealth-131",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitHealth",
+      "annotation": "* UPDATED - UnitHealth(\"unit\") -- No longer masks value as 0-100 on enemy units ",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-global-api-UnitHealthMax-132",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitHealthMax",
+      "annotation": "* UPDATED - UnitHealthMax(\"unit\") -- No longer masks value as 0-100 on enemy units ",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-global-api-UnitMana-133",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitMana",
+      "annotation": "* UPDATED - UnitMana(\"unit\") -- No longer masks value as 0-100 on enemy units ",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-global-api-UnitManaMax-134",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitManaMax",
+      "annotation": "* UPDATED - UnitManaMax(\"unit\") -- No longer masks value as 0-100 on enemy units ",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-global-api-GetGuildRecruitmentMode-136",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetGuildRecruitmentMode",
+      "annotation": "* REMOVED - GetGuildRecruitmentMode ",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-global-api-GetTradeSkillItemStatus-137",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTradeSkillItemStatus",
+      "annotation": "* REMOVED - GetTradeSkillItemStatus ",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-RestoreVideoDefaults-138",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RestoreVideoDefaults",
+      "annotation": "* REMOVED - RestoreVideoDefaults ",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-global-api-SetGuildRecruitmentMode-139",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetGuildRecruitmentMode",
+      "annotation": "* REMOVED - SetGuildRecruitmentMode ",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-forceinsecure-142",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "forceinsecure",
+      "annotation": "* NEW - forceinsecure() ",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-global-api-print-143",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "print",
+      "annotation": "* NEW - print(...) ",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-global-api-scrub-144",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "scrub",
+      "annotation": "* NEW - ... = scrub(...) - nil's non-simple input values ",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-global-api-setprinthandler-145",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "setprinthandler",
+      "annotation": "* NEW - setprinthandler(func) ",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-global-api-getprinthandler-146",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "getprinthandler",
+      "annotation": "* NEW - func = getprinthandler() ",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-global-api-tostringall-147",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "tostringall",
+      "annotation": "* NEW - ... = tostringall(...) ",
+      "wikitext_line": 147
+    },
+    {
+      "id": "wt-global-api-table.wipe-148",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "table.wipe",
+      "annotation": "* NEW - tbl = table.wipe(tbl) - removes all entries from table ",
+      "wikitext_line": 148
+    },
+    {
+      "id": "wt-global-api-wipe-149",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "wipe",
+      "annotation": "* NEW - tbl = wipe(tbl) - alias for table.wipe ",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-global-api-GetThreatStatusColor-152",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetThreatStatusColor",
+      "annotation": "* NEW r, g, b = GetThreatStatusColor(state) ",
+      "wikitext_line": 152
+    },
+    {
+      "id": "wt-global-api-IsThreatWarningEnabled-153",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsThreatWarningEnabled",
+      "annotation": "* NEW - isEnabled = IsThreatWarningEnabled() ",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-global-api-UnitDetailedThreatSituation-154",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitDetailedThreatSituation",
+      "annotation": "* NEW - isTanking, state, scaledPercent, rawPercent, threatValue = UnitDetailedThreatSituation(\"unit\", \"mob\") ",
+      "wikitext_line": 154
+    },
+    {
+      "id": "wt-global-api-UnitThreatSituation-155",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatSituation",
+      "annotation": "* NEW - state = UnitThreatSituation(\"unit\" [, \"mob\"])) ",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-global-api-CanShowAchievementUI-158",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanShowAchievementUI",
+      "annotation": "* NEW - canShow = {{api|CanShowAchievementUI}}() ",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-global-api-ClearAchievementComparisonUnit-159",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClearAchievementComparisonUnit",
+      "annotation": "* NEW - {{api|ClearAchievementComparisonUnit}}() ",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-global-api-GetAchievementCategory-160",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementCategory",
+      "annotation": "* NEW - category = {{api|GetAchievementCategory}}(id) ",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-global-api-GetAchievementComparisonInfo-161",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementComparisonInfo",
+      "annotation": "* NEW - completed, month, day, year = {{api|GetAchievementComparisonInfo}}(id) ",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-global-api-GetAchievementComparisonUnitInfo-162",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementComparisonUnitInfo",
+      "annotation": "* NEW - name, ??, ??, ??, ?? = {{api|GetAchievementComparisonUnitInfo}}() ",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-global-api-GetAchievementCriteriaInfo-163",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementCriteriaInfo",
+      "annotation": "* NEW - string, type, complted, quantity, totalQuantity, name, flags, assetID, quantityString, criteriaID = {{api|GetAchievementCriteriaInfo}}(achievementId, index) ",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-global-api-GetAchievementInfo-164",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementInfo",
+      "annotation": "* NEW - id, name, points, completed, month, day, year, description, flags, icon = {{api|GetAchievementInfo}}(id or category [,index]) ",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-global-api-GetAchievementInfoFromCriteria-165",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementInfoFromCriteria",
+      "annotation": "* NEW - id, name, points, completed, month, day, year, description, flags, icon = {{api|GetAchievementInfoFromCriteria}}(category) ",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-global-api-GetAchievementLink-166",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementLink",
+      "annotation": "* NEW - ?? = {{api|GetAchievementLink}}(id) ",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-global-api-GetAchievementNumCriteria-167",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementNumCriteria",
+      "annotation": "* NEW - count = {{api|GetAchievementNumCriteria}}(id) ",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-global-api-GetAchievementNumRewards-168",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementNumRewards",
+      "annotation": "* NEW - count = {{api|GetAchievementNumRewards}}(id) ",
+      "wikitext_line": 168
+    },
+    {
+      "id": "wt-global-api-GetCategoryInfo-169",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCategoryInfo",
+      "annotation": "* NEW - categoryName, parentId, flags = {{api|GetCategoryInfo}}(id) -- Get information on an achievement category ",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-global-api-GetCategoryList-170",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCategoryList",
+      "annotation": "* NEW - rootCat = {{api|GetCategoryList}}() ",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-global-api-GetCategoryNumAchievements-171",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCategoryNumAchievements",
+      "annotation": "* NEW - num, numCompleted = {{api|GetCategoryNumAchievements}}(category) ",
+      "wikitext_line": 171
+    },
+    {
+      "id": "wt-global-api-GetComparisonAchievementPoints-172",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetComparisonAchievementPoints",
+      "annotation": "* NEW - points = {{api|GetComparisonAchievementPoints}}() ",
+      "wikitext_line": 172
+    },
+    {
+      "id": "wt-global-api-GetComparisonCategoryNumAchievements-173",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetComparisonCategoryNumAchievements",
+      "annotation": "* NEW - completed = {{api|GetComparisonCategoryNumAchievements}}(id) ",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-global-api-GetComparisonStatistic-174",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetComparisonStatistic",
+      "annotation": "* NEW - quantity = {{api|GetComparisonStatistic}}(id) ",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-global-api-GetCriteriaComparisonInfo-175",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCriteriaComparisonInfo",
+      "annotation": "* NEW - ?? = {{api|GetCriteriaComparisonInfo}}(id, criteriaIndex, compareIndex) ",
+      "wikitext_line": 175
+    },
+    {
+      "id": "wt-global-api-GetLatestCompletedAchievements-176",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestCompletedAchievements",
+      "annotation": "* NEW - id1, id2, ... = {{api|GetLatestCompletedAchievements}}() ",
+      "wikitext_line": 176
+    },
+    {
+      "id": "wt-global-api-GetLatestCompletedComparisonAchievements-177",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestCompletedComparisonAchievements",
+      "annotation": "* NEW - id1, id2, ... = {{api|GetLatestCompletedComparisonAchievements}}() ",
+      "wikitext_line": 177
+    },
+    {
+      "id": "wt-global-api-GetLatestUpdatedComparisonStats-178",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestUpdatedComparisonStats",
+      "annotation": "* NEW - id1, id2, ... = {{api|GetLatestUpdatedComparisonStats}}() ",
+      "wikitext_line": 178
+    },
+    {
+      "id": "wt-global-api-GetLatestUpdatedStats-179",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestUpdatedStats",
+      "annotation": "* NEW - id1, id2, ... = {{api|GetLatestUpdatedStats}}() ",
+      "wikitext_line": 179
+    },
+    {
+      "id": "wt-global-api-GetNextAchievement-180",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNextAchievement",
+      "annotation": "* NEW - nextId, nextCompleted = {{api|GetNextAchievement}}(id) ",
+      "wikitext_line": 180
+    },
+    {
+      "id": "wt-global-api-GetNumComparisonCompletedAchievements-181",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumComparisonCompletedAchievements",
+      "annotation": "* NEW - ?? = {{api|GetNumComparisonCompletedAchievements}}() ",
+      "wikitext_line": 181
+    },
+    {
+      "id": "wt-global-api-GetNumCompletedAchievements-182",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumCompletedAchievements",
+      "annotation": "* NEW - total, completed = {{api|GetNumCompletedAchievements}}() ",
+      "wikitext_line": 182
+    },
+    {
+      "id": "wt-global-api-GetPreviousAchievement-183",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPreviousAchievement",
+      "annotation": "* NEW - prevId = {{api|GetPreviousAchievement}}(id) ",
+      "wikitext_line": 183
+    },
+    {
+      "id": "wt-global-api-GetStatistic-184",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetStatistic",
+      "annotation": "* NEW - quantity = {{api|GetStatistic}}(id) ",
+      "wikitext_line": 184
+    },
+    {
+      "id": "wt-global-api-GetStatisticsCategoryList-185",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetStatisticsCategoryList",
+      "annotation": "* NEW - rootCat = {{api|GetStatisticsCategoryList}}() ",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-global-api-GetTotalAchievementPoints-186",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTotalAchievementPoints",
+      "annotation": "* NEW - points = {{api|GetTotalAchievementPoints}}() ",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-global-api-GetTrackedAchievement-187",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTrackedAchievement",
+      "annotation": "* NEW - id = {{api|GetTrackedAchievement}}() ",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-global-api-SetTrackedAchievement-188",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetTrackedAchievement",
+      "annotation": "* NEW - {{api|SetTrackedAchievement}}(id)",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-global-api-CanExitVehicle-191",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanExitVehicle",
+      "annotation": "* NEW - canExit = CanExitVehicle() ",
+      "wikitext_line": 191
+    },
+    {
+      "id": "wt-global-api-CanSwitchVehicleSeats-192",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanSwitchVehicleSeats",
+      "annotation": "* NEW - canSwitch = CanSwitchVehicleSeats() ",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-global-api-GetBattlefieldVehicleInfo-193",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBattlefieldVehicleInfo",
+      "annotation": "* NEW - x, y, name, isPosessed, type, orientation = GetBattlefieldVehicleInfo(index) ",
+      "wikitext_line": 193
+    },
+    {
+      "id": "wt-global-api-GetNumBattlefieldVehicles-194",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumBattlefieldVehicles",
+      "annotation": "* NEW - count = GetNumBattlefieldVehicles() ",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-global-api-IsUsingVehicleControls-195",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsUsingVehicleControls",
+      "annotation": "* NEW - inUse = IsUsingVehicleControls() ",
+      "wikitext_line": 195
+    },
+    {
+      "id": "wt-global-api-IsVehicleAimAngleAdjustable-196",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsVehicleAimAngleAdjustable",
+      "annotation": "* NEW - isAdjustable = IsVehicleAimAngleAdjustable() ",
+      "wikitext_line": 196
+    },
+    {
+      "id": "wt-global-api-IsVehicleAimPowerAdjustable-197",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsVehicleAimPowerAdjustable",
+      "annotation": "* NEW - isAdjustable = IsVehicleAimPowerAdjustable()",
+      "wikitext_line": 197
+    },
+    {
+      "id": "wt-global-api-UnitControllingVehicle-198",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitControllingVehicle",
+      "annotation": "* NEW - isControlling = UnitControllingVehicle(\"unit\") ",
+      "wikitext_line": 198
+    },
+    {
+      "id": "wt-global-api-UnitHasVehicleUI-199",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitHasVehicleUI",
+      "annotation": "* NEW - hasUI = UnitHasVehicleUI(\"unit\") ",
+      "wikitext_line": 199
+    },
+    {
+      "id": "wt-global-api-UnitInVehicle-200",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitInVehicle",
+      "annotation": "* NEW - inVehicle = UnitInVehicle(\"unit\") ",
+      "wikitext_line": 200
+    },
+    {
+      "id": "wt-global-api-UnitInVehicleControlSeat-201",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitInVehicleControlSeat",
+      "annotation": "* NEW - inSeat = UnitInVehicleControlSeat(\"unit\") ",
+      "wikitext_line": 201
+    },
+    {
+      "id": "wt-global-api-UnitSwitchToVehicleSeat-202",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitSwitchToVehicleSeat",
+      "annotation": "* NEW - UnitSwitchToVehicleSeat(\"unit\", seatId) ",
+      "wikitext_line": 202
+    },
+    {
+      "id": "wt-global-api-UnitTargetsVehicleInRaidUI-203",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitTargetsVehicleInRaidUI",
+      "annotation": "* NEW - UnitTargetsVehicleInRaidUI ",
+      "wikitext_line": 203
+    },
+    {
+      "id": "wt-global-api-UnitVehicleSeatCount-204",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitVehicleSeatCount",
+      "annotation": "* NEW - count = UnitVehicleSeatCount(\"unit\") ",
+      "wikitext_line": 204
+    },
+    {
+      "id": "wt-global-api-UnitVehicleSeatInfo-205",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitVehicleSeatInfo",
+      "annotation": "* NEW - controlType, occupantName = UnitVehicleSeatInfo(\"unit\", seatId) ",
+      "wikitext_line": 205
+    },
+    {
+      "id": "wt-global-api-UnitVehicleSkin-206",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitVehicleSkin",
+      "annotation": "* NEW - vehicleType = UnitVehicleSkin(\"unit\") ",
+      "wikitext_line": 206
+    },
+    {
+      "id": "wt-global-api-VehicleAimDecrement-207",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimDecrement",
+      "annotation": "* NEW - VehicleAimDecrement(amount) ",
+      "wikitext_line": 207
+    },
+    {
+      "id": "wt-global-api-VehicleAimDownStart-208",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimDownStart",
+      "annotation": "* NEW - VehicleAimDownStart() ",
+      "wikitext_line": 208
+    },
+    {
+      "id": "wt-global-api-VehicleAimDownStop-209",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimDownStop",
+      "annotation": "* NEW - VehicleAimDownStop() ",
+      "wikitext_line": 209
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetAngle-210",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimGetAngle",
+      "annotation": "* NEW - angle = VehicleAimGetAngle() ",
+      "wikitext_line": 210
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetNormAngle-211",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimGetNormAngle",
+      "annotation": "* NEW - angle = VehicleAimGetNormAngle() ",
+      "wikitext_line": 211
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetNormPower-212",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimGetNormPower",
+      "annotation": "* NEW - power = VehicleAimGetNormPower() ",
+      "wikitext_line": 212
+    },
+    {
+      "id": "wt-global-api-VehicleAimIncrement-213",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimIncrement",
+      "annotation": "* NEW - VehicleAimIncrement(amount) ",
+      "wikitext_line": 213
+    },
+    {
+      "id": "wt-global-api-VehicleAimRequestAngle-214",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimRequestAngle",
+      "annotation": "* NEW - VehicleAimRequestAngle(angle) ",
+      "wikitext_line": 214
+    },
+    {
+      "id": "wt-global-api-VehicleAimRequestNormAngle-215",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimRequestNormAngle",
+      "annotation": "* NEW - VehicleAimRequestNormAngle(angle) ",
+      "wikitext_line": 215
+    },
+    {
+      "id": "wt-global-api-VehicleAimSetNormPower-216",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimSetNormPower",
+      "annotation": "* NEW - VehicleAimSetNormPower(power) ",
+      "wikitext_line": 216
+    },
+    {
+      "id": "wt-global-api-VehicleAimUpStart-217",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimUpStart",
+      "annotation": "* NEW - VehicleAimUpStart() ",
+      "wikitext_line": 217
+    },
+    {
+      "id": "wt-global-api-VehicleAimUpStop-218",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimUpStop",
+      "annotation": "* NEW - VehicleAimUpStop() ",
+      "wikitext_line": 218
+    },
+    {
+      "id": "wt-global-api-VehicleCameraZoomIn-219",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleCameraZoomIn",
+      "annotation": "* NEW - VehicleCameraZoomIn(amount) ",
+      "wikitext_line": 219
+    },
+    {
+      "id": "wt-global-api-VehicleCameraZoomOut-220",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleCameraZoomOut",
+      "annotation": "* NEW - VehicleCameraZoomOut(amount) ",
+      "wikitext_line": 220
+    },
+    {
+      "id": "wt-global-api-VehicleExit-221",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleExit",
+      "annotation": "* NEW - VehicleExit() ",
+      "wikitext_line": 221
+    },
+    {
+      "id": "wt-global-api-VehicleNextSeat-222",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleNextSeat",
+      "annotation": "* NEW - VehicleNextSeat() ",
+      "wikitext_line": 222
+    },
+    {
+      "id": "wt-global-api-VehiclePrevSeat-223",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehiclePrevSeat",
+      "annotation": "* NEW - VehiclePrevSeat() ",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-global-api-BackupMacros-226",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BackupMacros",
+      "annotation": "* NEW - BackupMacros() ",
+      "wikitext_line": 226
+    },
+    {
+      "id": "wt-global-api-DownloadSettings-227",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DownloadSettings",
+      "annotation": "* NEW - DownloadSettings() ",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-global-api-RestoreMacros-228",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RestoreMacros",
+      "annotation": "* NEW - RestoreMacros() ",
+      "wikitext_line": 228
+    },
+    {
+      "id": "wt-global-api-UploadSettings-229",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UploadSettings",
+      "annotation": "* NEW - UploadSettings() ",
+      "wikitext_line": 229
+    },
+    {
+      "id": "wt-global-api-ApplyBarberShopStyle-232",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ApplyBarberShopStyle",
+      "annotation": "* NEW - ApplyBarberShopStyle() ",
+      "wikitext_line": 232
+    },
+    {
+      "id": "wt-global-api-BarberShopReset-233",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BarberShopReset",
+      "annotation": "* NEW - BarberShopReset() ",
+      "wikitext_line": 233
+    },
+    {
+      "id": "wt-global-api-CancelBarberShop-234",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CancelBarberShop",
+      "annotation": "* NEW - CancelBarberShop() ",
+      "wikitext_line": 234
+    },
+    {
+      "id": "wt-global-api-GetBarberShopStyleInfo-235",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBarberShopStyleInfo",
+      "annotation": "* NEW - name, ??, ??, isCurrent = GetBarberShopStyleInfo(index) ",
+      "wikitext_line": 235
+    },
+    {
+      "id": "wt-global-api-GetBarberShopTotalCost-236",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBarberShopTotalCost",
+      "annotation": "* NEW - cost = GetBarberShopTotalCost() ",
+      "wikitext_line": 236
+    },
+    {
+      "id": "wt-global-api-GetFacialHairCustomization-237",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetFacialHairCustomization",
+      "annotation": "* NEW - type = GetFacialHairCustomization() ",
+      "wikitext_line": 237
+    },
+    {
+      "id": "wt-global-api-GetHairCustomization-238",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetHairCustomization",
+      "annotation": "* NEW - type = GetHairCustomization() ",
+      "wikitext_line": 238
+    },
+    {
+      "id": "wt-global-api-SetNextBarberShopStyle-239",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetNextBarberShopStyle",
+      "annotation": "* NEW - SetNextBarberShopStyle(id [,prev]) ",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-global-api-GetPetTalentPoints-242",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPetTalentPoints",
+      "annotation": "* NEW - points = GetPetTalentPoints() ",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-global-api-PetCanBeDismissed-243",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PetCanBeDismissed",
+      "annotation": "* NEW - canDismiss = PetCanBeDismissed() ",
+      "wikitext_line": 243
+    },
+    {
+      "id": "wt-global-api-GetPetActionSlotUsable-244",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPetActionSlotUsable",
+      "annotation": "* NEW - isUsable = GetPetActionSlotUsable(slot) ",
+      "wikitext_line": 244
+    },
+    {
+      "id": "wt-global-api-GetPetLoyalty-247",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPetLoyalty",
+      "annotation": "* REMOVED - GetPetLoyalty ",
+      "wikitext_line": 247
+    },
+    {
+      "id": "wt-global-api-GetPetTrainingPoints-248",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPetTrainingPoints",
+      "annotation": "* REMOVED - GetPetTrainingPoints ",
+      "wikitext_line": 248
+    },
+    {
+      "id": "wt-global-api-CallCompanion-251",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CallCompanion",
+      "annotation": "* NEW - CallCompanion(type, index) -- Summon a specific companion ",
+      "wikitext_line": 251
+    },
+    {
+      "id": "wt-global-api-DismissCompanion-252",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DismissCompanion",
+      "annotation": "* NEW - DismissCompanion(type) ",
+      "wikitext_line": 252
+    },
+    {
+      "id": "wt-global-api-GetNumCompanions-253",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumCompanions",
+      "annotation": "* NEW - count = GetNumCompanions(type) -- Gets the number of a specific type of companion (type is \"CRITTER\" or \"MOUNT\") ",
+      "wikitext_line": 253
+    },
+    {
+      "id": "wt-global-api-GetCompanionInfo-254",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCompanionInfo",
+      "annotation": "* NEW - creatureID, creatureName, spellID, icon, active = GetCompanionInfo(type, index) -- Gets information abotu a specific companiion ",
+      "wikitext_line": 254
+    },
+    {
+      "id": "wt-global-api-GetCompanionCooldown-255",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCompanionCooldown",
+      "annotation": "* NEW - start, duration, enable = GetCompanionCooldown(type, index) ",
+      "wikitext_line": 255
+    },
+    {
+      "id": "wt-global-api-PickupCompanion-256",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PickupCompanion",
+      "annotation": "* NEW - PickupCompanion(type, index) -- Load a companion onto the cursor for placement into an action bar ",
+      "wikitext_line": 256
+    },
+    {
+      "id": "wt-global-api-CancelUnitBuff-259",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CancelUnitBuff",
+      "annotation": "* NEW - CancelUnitBuff(\"unit\", index or \"spell\" [,\"filter\" or \"rank\"]) ",
+      "wikitext_line": 259
+    },
+    {
+      "id": "wt-global-api-UnitAura-260",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitAura",
+      "annotation": "* NEW - name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitAura(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]) ",
+      "wikitext_line": 260
+    },
+    {
+      "id": "wt-global-api-UnitBuff-261",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitBuff",
+      "annotation": "* MODIFIED - name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitBuff(\"unit\", [index] or [\"name\", \"rank\"]) ",
+      "wikitext_line": 261
+    },
+    {
+      "id": "wt-global-api-UnitDebuff-262",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitDebuff",
+      "annotation": "* UPDATED - name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitDebuff(\"unit\", [index] or [\"name\", \"rank\"]) ",
+      "wikitext_line": 262
+    },
+    {
+      "id": "wt-global-api-CancelPlayerBuff-264",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelPlayerBuff",
+      "annotation": "* REMOVED - CancelPlayerBuff ",
+      "wikitext_line": 264
+    },
+    {
+      "id": "wt-global-api-GetPlayerBuff-265",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerBuff",
+      "annotation": "* REMOVED - GetPlayerBuff ",
+      "wikitext_line": 265
+    },
+    {
+      "id": "wt-global-api-GetPlayerBuffApplications-266",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerBuffApplications",
+      "annotation": "* REMOVED - GetPlayerBuffApplications ",
+      "wikitext_line": 266
+    },
+    {
+      "id": "wt-global-api-GetPlayerBuffDispellType-267",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerBuffDispellType",
+      "annotation": "* REMOVED - GetPlayerBuffDispellType ",
+      "wikitext_line": 267
+    },
+    {
+      "id": "wt-global-api-GetPlayerBuffName-268",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerBuffName",
+      "annotation": "* REMOVED - GetPlayerBuffName ",
+      "wikitext_line": 268
+    },
+    {
+      "id": "wt-global-api-GetPlayerBuffTexture-269",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerBuffTexture",
+      "annotation": "* REMOVED - GetPlayerBuffTexture ",
+      "wikitext_line": 269
+    },
+    {
+      "id": "wt-global-api-GetPlayerBuffTimeLeft-270",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerBuffTimeLeft",
+      "annotation": "* REMOVED - GetPlayerBuffTimeLeft ",
+      "wikitext_line": 270
+    },
+    {
+      "id": "wt-global-api-CalendarAddEvent-273",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarAddEvent",
+      "annotation": "* NEW - CalendarAddEvent() ",
+      "wikitext_line": 273
+    },
+    {
+      "id": "wt-global-api-CalendarCanAddEvent-274",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarCanAddEvent",
+      "annotation": "* NEW - canAdd = CalendarCanAddEvent() ",
+      "wikitext_line": 274
+    },
+    {
+      "id": "wt-global-api-CalendarCanSendInvite-275",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarCanSendInvite",
+      "annotation": "* NEW - canSend = CalendarCanSendInvite() ",
+      "wikitext_line": 275
+    },
+    {
+      "id": "wt-global-api-CalendarCloseEvent-276",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarCloseEvent",
+      "annotation": "* NEW - CalendarCloseEvent() ",
+      "wikitext_line": 276
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventCanComplain-277",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventCanComplain",
+      "annotation": "* NEW - canComplain = CalendarContextEventCanComplain(monthOffset, day, evIndex) ",
+      "wikitext_line": 277
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventCanEdit-278",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventCanEdit",
+      "annotation": "* NEW - canEdit = CalendarContextEventCanEdit(monthOffset, day, evIndex) ",
+      "wikitext_line": 278
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventClipboard-279",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventClipboard",
+      "annotation": "* NEW - holdsEvent = CalendarContextEventClipboard() ",
+      "wikitext_line": 279
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventComplain-280",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventComplain",
+      "annotation": "* NEW - CalendarContextEventComplain(monthOffset, day, evIndex) ",
+      "wikitext_line": 280
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventCopy-281",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventCopy",
+      "annotation": "* NEW - CalendarContextEventCopy(monthOffset, day, evIndex) ",
+      "wikitext_line": 281
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventIsGuildWide-282",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventIsGuildWide",
+      "annotation": "* NEW - guildWide = CalendarContextEventIsGuildWide(monthOffset, day, evIndex) ",
+      "wikitext_line": 282
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventPaste-283",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventPaste",
+      "annotation": "* NEW - CalendarContextEventPaste(monthOffset, day) ",
+      "wikitext_line": 283
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventRemove-284",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventRemove",
+      "annotation": "* NEW - CalendarContextEventRemove(monthOffset, day, evIndex) ",
+      "wikitext_line": 284
+    },
+    {
+      "id": "wt-global-api-CalendarContextInviteAvailable-285",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextInviteAvailable",
+      "annotation": "* NEW - CalendarContextInviteAvailable(monthoffset, day, evIndex) - Accepts an invite ",
+      "wikitext_line": 285
+    },
+    {
+      "id": "wt-global-api-CalendarContextInviteDecline-286",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextInviteDecline",
+      "annotation": "* NEW - CalendarContextInviteDecline(monthOffset, day, evIndex) ",
+      "wikitext_line": 286
+    },
+    {
+      "id": "wt-global-api-CalendarContextInviteIsPending-287",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextInviteIsPending",
+      "annotation": "* NEW - ?? = CalendarContextInviteIsPending(monthOffset, day, evIndex) ",
+      "wikitext_line": 287
+    },
+    {
+      "id": "wt-global-api-CalendarContextInviteModeratorStatus-288",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextInviteModeratorStatus",
+      "annotation": "* NEW - CalendarContextInviteModeratorStatus ?? ",
+      "wikitext_line": 288
+    },
+    {
+      "id": "wt-global-api-CalendarContextInviteRemove-289",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextInviteRemove",
+      "annotation": "* NEW - CalendarContextInviteRemove(monthOffset, day, evIndex) ",
+      "wikitext_line": 289
+    },
+    {
+      "id": "wt-global-api-CalendarContextInviteStatus-290",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextInviteStatus",
+      "annotation": "* NEW - inviteStatus = CalendarContextInviteStatus(monthOffset, day, evIndex) ",
+      "wikitext_line": 290
+    },
+    {
+      "id": "wt-global-api-CalendarDefaultGuildFilter-291",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarDefaultGuildFilter",
+      "annotation": "* NEW - minLevel, maxLevel = CalendarDefaultGuildFilter() ",
+      "wikitext_line": 291
+    },
+    {
+      "id": "wt-global-api-CalendarEventAvailable-292",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventAvailable",
+      "annotation": "* NEW - CalendarEventAvailable() - Again this accepts the invite ",
+      "wikitext_line": 292
+    },
+    {
+      "id": "wt-global-api-CalendarEventCanEdit-293",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventCanEdit",
+      "annotation": "* NEW - canEdit = CalendarEventCanEdit() ",
+      "wikitext_line": 293
+    },
+    {
+      "id": "wt-global-api-CalendarEventClearAutoApprove-294",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventClearAutoApprove",
+      "annotation": "* NEW - CalendarEventClearAutoApprove() ",
+      "wikitext_line": 294
+    },
+    {
+      "id": "wt-global-api-CalendarEventClearLocked-295",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventClearLocked",
+      "annotation": "* NEW - CalendarEventClearLocked() ",
+      "wikitext_line": 295
+    },
+    {
+      "id": "wt-global-api-CalendarEventClearModerator-296",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventClearModerator",
+      "annotation": "* NEW - CalendarEventClearModerator(inviteIndex) ",
+      "wikitext_line": 296
+    },
+    {
+      "id": "wt-global-api-CalendarEventDecline-297",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventDecline",
+      "annotation": "* NEW - CalendarEventDecline() ",
+      "wikitext_line": 297
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetInvite-298",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetInvite",
+      "annotation": "* NEW - level, className, classFilename, inviteStatus, modStatus, inviteIsMine = CalendarEventGetInvite(inviteIndex) ",
+      "wikitext_line": 298
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetInviteSortCriterion-299",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetInviteSortCriterion",
+      "annotation": "* NEW - criterion, reverse = CalendarEventGetInviteSortCriterion() ",
+      "wikitext_line": 299
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetNumInvites-300",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetNumInvites",
+      "annotation": "* NEW - count = CalendarEventGetNumInvites() ",
+      "wikitext_line": 300
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetRepeatOptions-301",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetRepeatOptions",
+      "annotation": "* NEW - opt1, opt2, ... = CalendarEventGetRepeatOptions() ",
+      "wikitext_line": 301
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetSelectedInvite-302",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetSelectedInvite",
+      "annotation": "* NEW - inviteIndex = CalendarEventGetSelectedInvite() ",
+      "wikitext_line": 302
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetStatusOptions-303",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetStatusOptions",
+      "annotation": "* NEW - CalendarEventGetStatusOptions ?? ",
+      "wikitext_line": 303
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetTextures-304",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetTextures",
+      "annotation": "* NEW - title1, tex1, expLvl1, title2, tex2, expLvl2, ... = CalendarEventGetTextures(eventType) ",
+      "wikitext_line": 304
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetTypes-305",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetTypes",
+      "annotation": "* NEW - name1, name2, ... = CalendarEventGetTypes()",
+      "wikitext_line": 305
+    },
+    {
+      "id": "wt-global-api-CalendarEventHasPendingInvite-306",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventHasPendingInvite",
+      "annotation": "* NEW - hasPending = CalendarEventHasPendingInvite() ",
+      "wikitext_line": 306
+    },
+    {
+      "id": "wt-global-api-CalendarEventHaveSettingsChanged-307",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventHaveSettingsChanged",
+      "annotation": "* NEW - haveChanged = CalendarEventHaveSettingsChanged() ",
+      "wikitext_line": 307
+    },
+    {
+      "id": "wt-global-api-CalendarEventInvite-308",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventInvite",
+      "annotation": "* NEW - CalendarEventInvite(\"name\") ",
+      "wikitext_line": 308
+    },
+    {
+      "id": "wt-global-api-CalendarEventIsGuildWide-309",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventIsGuildWide",
+      "annotation": "* NEW - guildWide = CalendarEventIsGuildWide() ",
+      "wikitext_line": 309
+    },
+    {
+      "id": "wt-global-api-CalendarEventIsModerator-310",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventIsModerator",
+      "annotation": "* NEW - CalendarEventIsModerator ?? ",
+      "wikitext_line": 310
+    },
+    {
+      "id": "wt-global-api-CalendarEventRemoveInvite-311",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventRemoveInvite",
+      "annotation": "* NEW - CalendarEventRemoveInvite(inviteIndex) ",
+      "wikitext_line": 311
+    },
+    {
+      "id": "wt-global-api-CalendarEventSelectInvite-312",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSelectInvite",
+      "annotation": "* NEW - CalendarEventSelectInvite(inviteIndex) ",
+      "wikitext_line": 312
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetAutoApprove-313",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetAutoApprove",
+      "annotation": "* NEW - CalendarEventSetAutoApprove() ",
+      "wikitext_line": 313
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetDate-314",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetDate",
+      "annotation": "* NEW - CalendarEventSetDate(month, day, year) ",
+      "wikitext_line": 314
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetDescription-315",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetDescription",
+      "annotation": "* NEW - CalendarEventSetDescription(\"description\") ",
+      "wikitext_line": 315
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetLocked-316",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetLocked",
+      "annotation": "* NEW - CalendarEventSetLocked() ",
+      "wikitext_line": 316
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetLockoutDate-317",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetLockoutDate",
+      "annotation": "* NEW - CalendarEventSetLockoutDate ?? ",
+      "wikitext_line": 317
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetLockoutTime-318",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetLockoutTime",
+      "annotation": "* NEW - CalendarEventSetLockoutTime ?? ",
+      "wikitext_line": 318
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetModerator-319",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetModerator",
+      "annotation": "* NEW - CalendarEventSetModerator(inviteIndex) ",
+      "wikitext_line": 319
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetRepeatOption-320",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetRepeatOption",
+      "annotation": "* NEW - CalendarEventSetRepeatOption(id) ",
+      "wikitext_line": 320
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetSize-321",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetSize",
+      "annotation": "* NEW - CalendarEventSetSize ?? ",
+      "wikitext_line": 321
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetStatus-322",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetStatus",
+      "annotation": "* NEW - CalendarEventSetStatus(inviteIndex, inviteStatus) ",
+      "wikitext_line": 322
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetTextureID-323",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetTextureID",
+      "annotation": "* NEW - CalendarEventSetTextureID(texIndex) ",
+      "wikitext_line": 323
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetTime-324",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetTime",
+      "annotation": "* NEW - CalendarEventSetTime(hour, minute) ",
+      "wikitext_line": 324
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetTitle-325",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetTitle",
+      "annotation": "* NEW - CalendarEventSetTitle(\"title\") ",
+      "wikitext_line": 325
+    },
+    {
+      "id": "wt-global-api-CalendarEventSetType-326",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSetType",
+      "annotation": "* NEW - CalendarEventSetType(eventType) ",
+      "wikitext_line": 326
+    },
+    {
+      "id": "wt-global-api-CalendarEventSortInvites-327",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventSortInvites",
+      "annotation": "* NEW - CalendarEventSortInvites(criterion) ",
+      "wikitext_line": 327
+    },
+    {
+      "id": "wt-global-api-CalendarGetAbsMonth-328",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetAbsMonth",
+      "annotation": " NEW - month, year = CalendarGetAbsMonth() ?? ",
+      "wikitext_line": 328
+    },
+    {
+      "id": "wt-global-api-CalendarGetDate-329",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetDate",
+      "annotation": "* NEW - weekday, month, day, year = CalendarGetDate() - IMPORTANT - Only call this after PLAYER_ENTERING_WORLD ",
+      "wikitext_line": 329
+    },
+    {
+      "id": "wt-global-api-CalendarGetDayEvent-330",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetDayEvent",
+      "annotation": "* NEW - CalendarGetDayEvent(monthOffset, day, eventIndex) ",
+      "wikitext_line": 330
+    },
+    {
+      "id": "wt-global-api-CalendarGetEventIndex-331",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetEventIndex",
+      "annotation": "* NEW - monthOffset, day, index = CalendarGetEventIndex() ",
+      "wikitext_line": 331
+    },
+    {
+      "id": "wt-global-api-CalendarGetEventInfo-332",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetEventInfo",
+      "annotation": "* NEW - autoApprove, pendingInvite, inviteStatus = CalendarGetEventInfo() ",
+      "wikitext_line": 332
+    },
+    {
+      "id": "wt-global-api-CalendarGetFirstPendingInvite-333",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetFirstPendingInvite",
+      "annotation": "* NEW - eventIndex = CalendarGetFirstPendingInvite(monthOffset, day) ",
+      "wikitext_line": 333
+    },
+    {
+      "id": "wt-global-api-CalendarGetHolidayInfo-334",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetHolidayInfo",
+      "annotation": "* NEW - name, description, texture = CalendarGetHolidayInfo(monthOffsey, day, eventIndex) ",
+      "wikitext_line": 334
+    },
+    {
+      "id": "wt-global-api-CalendarGetMaxCreateDate-335",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetMaxCreateDate",
+      "annotation": "* NEW - maxWeekday, maxMonth, maxDay, maxYear = CalendarGetMaxCreateDate() ",
+      "wikitext_line": 335
+    },
+    {
+      "id": "wt-global-api-CalendarGetMaxDate-336",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetMaxDate",
+      "annotation": "* NEW - maxWeekday, maxMonth, maxDay, maxYear = CalendarGetMaxDate() ?? ",
+      "wikitext_line": 336
+    },
+    {
+      "id": "wt-global-api-CalendarGetMinDate-337",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetMinDate",
+      "annotation": "* NEW - minWeekday, minMonth, minDay, minYear = CalendarGetMinDate() ",
+      "wikitext_line": 337
+    },
+    {
+      "id": "wt-global-api-CalendarGetMinHistoryDate-338",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetMinHistoryDate",
+      "annotation": "* NEW - minWeekday, minMonth, minDay, minYear = CalendarGetMinHistoryDate() ?? ",
+      "wikitext_line": 338
+    },
+    {
+      "id": "wt-global-api-CalendarGetMonth-339",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetMonth",
+      "annotation": "* NEW - month, year = CalendarGetMonth(monthOffset) ",
+      "wikitext_line": 339
+    },
+    {
+      "id": "wt-global-api-CalendarGetMonthNames-340",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetMonthNames",
+      "annotation": "* NEW - CalendarGetMonthNames ?? ",
+      "wikitext_line": 340
+    },
+    {
+      "id": "wt-global-api-CalendarGetNumDayEvents-341",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetNumDayEvents",
+      "annotation": "* NEW - count = CalendarGetNumDayEvents(monthOffset, day) ",
+      "wikitext_line": 341
+    },
+    {
+      "id": "wt-global-api-CalendarGetNumPendingInvites-342",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetNumPendingInvites",
+      "annotation": "* NEW - count = CalendarGetNumPendingInvites() ",
+      "wikitext_line": 342
+    },
+    {
+      "id": "wt-global-api-CalendarGetRaidInfo-343",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetRaidInfo",
+      "annotation": "* NEW - name, calendarType, raidID, hour, minute, difficulty = CalendarGetRaidInfo(monthOffset, day, eventIndex) ",
+      "wikitext_line": 343
+    },
+    {
+      "id": "wt-global-api-CalendarGetWeekdayNames-344",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarGetWeekdayNames",
+      "annotation": "* NEW - CalendarGetWeekdayNames ?? ",
+      "wikitext_line": 344
+    },
+    {
+      "id": "wt-global-api-CalendarIsActionPending-345",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarIsActionPending",
+      "annotation": "* NEW - isPending = CalendarIsActionPending() ",
+      "wikitext_line": 345
+    },
+    {
+      "id": "wt-global-api-CalendarNewArenaTeamEvent-346",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarNewArenaTeamEvent",
+      "annotation": "* NEW - CalendarNewArenaTeamEvent(teamIndex) - Index is from GetArenaTeam(teamIndex) ",
+      "wikitext_line": 346
+    },
+    {
+      "id": "wt-global-api-CalendarNewEvent-347",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarNewEvent",
+      "annotation": "* NEW - CalendarNewEvent() ",
+      "wikitext_line": 347
+    },
+    {
+      "id": "wt-global-api-CalendarNewGuildEvent-348",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarNewGuildEvent",
+      "annotation": "* NEW - CalendarNewGuildEvent(minLevel, maxLevel, rank) ",
+      "wikitext_line": 348
+    },
+    {
+      "id": "wt-global-api-CalendarNewGuildWideEvent-349",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarNewGuildWideEvent",
+      "annotation": "* NEW - CalendarNewGuildWideEvent() ",
+      "wikitext_line": 349
+    },
+    {
+      "id": "wt-global-api-CalendarOpenEvent-350",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarOpenEvent",
+      "annotation": "* NEW - CalendarOpenEvent(monthOffset, day, eventIndex) ",
+      "wikitext_line": 350
+    },
+    {
+      "id": "wt-global-api-CalendarRemoveEvent-351",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarRemoveEvent",
+      "annotation": "* NEW - CalendarRemoveEvent() ",
+      "wikitext_line": 351
+    },
+    {
+      "id": "wt-global-api-CalendarSetAbsMonth-352",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarSetAbsMonth",
+      "annotation": "* NEW - CalendarSetAbsMonth(month, year) ",
+      "wikitext_line": 352
+    },
+    {
+      "id": "wt-global-api-CalendarSetMonth-353",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarSetMonth",
+      "annotation": "* NEW - CalendarSetMonth(monthOffset) ",
+      "wikitext_line": 353
+    },
+    {
+      "id": "wt-global-api-CalendarUpdateEvent-354",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarUpdateEvent",
+      "annotation": "* NEW - CalendarUpdateEvent() ",
+      "wikitext_line": 354
+    },
+    {
+      "id": "wt-global-api-ExpandCurrencyList-361",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ExpandCurrencyList",
+      "annotation": "* NEW - ExpandCurrencyList(index, state) ",
+      "wikitext_line": 361
+    },
+    {
+      "id": "wt-global-api-GetBackpackCurrencyInfo-362",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBackpackCurrencyInfo",
+      "annotation": "* NEW - name, count, extraType, icon = GetBackpackCurrencyInfo(id) ",
+      "wikitext_line": 362
+    },
+    {
+      "id": "wt-global-api-GetCoinTextureString-363",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCoinTextureString",
+      "annotation": "* NEW - text = GetCoinTextureString(amount, fontHeight) ",
+      "wikitext_line": 363
+    },
+    {
+      "id": "wt-global-api-GetCurrencyListSize-364",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyListSize",
+      "annotation": "* NEW - count = GetCurrencyListSize() ",
+      "wikitext_line": 364
+    },
+    {
+      "id": "wt-global-api-GetCurrencyListInfo-365",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyListInfo",
+      "annotation": "* NEW - count, extraType, icon = GetCurrencyListInfo(index) ",
+      "wikitext_line": 365
+    },
+    {
+      "id": "wt-global-api-GetNumWatchedTokens-366",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumWatchedTokens",
+      "annotation": "* NEW - count = GetNumWatchedTokens() ",
+      "wikitext_line": 366
+    },
+    {
+      "id": "wt-global-api-SetCurrencyBackpack-367",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetCurrencyBackpack",
+      "annotation": "* NEW - SetCurrencyBackpack(id, state) ",
+      "wikitext_line": 367
+    },
+    {
+      "id": "wt-global-api-SetCurrencyUnused-368",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetCurrencyUnused",
+      "annotation": "* NEW - SetCurrencyUnused(id, state) ",
+      "wikitext_line": 368
+    },
+    {
+      "id": "wt-global-api-GetGlyphSocketInfo-371",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGlyphSocketInfo",
+      "annotation": "* NEW - enabled, type, spell, icon = GetGlyphSocketInfo(id) ",
+      "wikitext_line": 371
+    },
+    {
+      "id": "wt-global-api-GetNumGlyphSockets-372",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumGlyphSockets",
+      "annotation": "* NEW - count = GetNumGlyphSockets() ",
+      "wikitext_line": 372
+    },
+    {
+      "id": "wt-global-api-GlyphMatchesSocket-373",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GlyphMatchesSocket",
+      "annotation": "* NEW - matches = GlyphMatchesSocket(id) ",
+      "wikitext_line": 373
+    },
+    {
+      "id": "wt-global-api-PlaceGlyphInSocket-374",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PlaceGlyphInSocket",
+      "annotation": "* NEW - PlaceGlyphInSocket(id) ",
+      "wikitext_line": 374
+    },
+    {
+      "id": "wt-global-api-RemoveGlyphFromSocket-375",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RemoveGlyphFromSocket",
+      "annotation": "* NEW - RemoveGlyphFromSocket(id) ",
+      "wikitext_line": 375
+    },
+    {
+      "id": "wt-global-api-SpellCanTargetGlyph-376",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SpellCanTargetGlyph",
+      "annotation": "* NEW - canTarget = SpellCanTargetGlyph() ",
+      "wikitext_line": 376
+    },
+    {
+      "id": "wt-global-api-GetPowerRegen-379",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPowerRegen",
+      "annotation": "* NEW - base?, combat? = GetPowerRegen() ",
+      "wikitext_line": 379
+    },
+    {
+      "id": "wt-global-api-GetRuneCooldown-380",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRuneCooldown",
+      "annotation": "* NEW - start, duration, isReady = GetRuneCooldown(index) ",
+      "wikitext_line": 380
+    },
+    {
+      "id": "wt-global-api-GetRuneCount-381",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRuneCount",
+      "annotation": "* NEW - count = GetRuneCount() ",
+      "wikitext_line": 381
+    },
+    {
+      "id": "wt-global-api-GetRuneType-382",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRuneType",
+      "annotation": "* NEW - type = GetRuneType(index) ",
+      "wikitext_line": 382
+    },
+    {
+      "id": "wt-global-api-UnitPower-383",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitPower",
+      "annotation": "* NEW - power = UnitPower(\"unit\", [,type])) -- type is one of SPELL_POWER_MANA etc.. ",
+      "wikitext_line": 383
+    },
+    {
+      "id": "wt-global-api-UnitPowerMax-384",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitPowerMax",
+      "annotation": "* NEW - maxPower = UnitPowerMax(\"unit\" [,type]) ",
+      "wikitext_line": 384
+    },
+    {
+      "id": "wt-global-api-ClickLandmark-387",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClickLandmark",
+      "annotation": "* NEW - ClickLandmark(id) ",
+      "wikitext_line": 387
+    },
+    {
+      "id": "wt-global-api-GetCurrentMapDungeonLevel-388",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrentMapDungeonLevel",
+      "annotation": "* NEW - level = GetCurrentMapDungeonLevel() ",
+      "wikitext_line": 388
+    },
+    {
+      "id": "wt-global-api-GetMapDebugObjectInfo-389",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMapDebugObjectInfo",
+      "annotation": "* NEW - name, size, x, y = GetMapDebugObjectInfo(id) ",
+      "wikitext_line": 389
+    },
+    {
+      "id": "wt-global-api-GetNumDungeonMapLevels-390",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumDungeonMapLevels",
+      "annotation": "* NEW - count = GetNumDungeonMapLevels() ",
+      "wikitext_line": 390
+    },
+    {
+      "id": "wt-global-api-GetNumMapDebugObjects-391",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumMapDebugObjects",
+      "annotation": "* NEW - count = GetNumMapDebugObjects() ",
+      "wikitext_line": 391
+    },
+    {
+      "id": "wt-global-api-SetDungeonMapLevel-392",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetDungeonMapLevel",
+      "annotation": "* NEW - SetDungeonMapLevel(level) ",
+      "wikitext_line": 392
+    },
+    {
+      "id": "wt-global-api-TeleportToDebugObject-393",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TeleportToDebugObject",
+      "annotation": "* NEW - TeleportToDebugObject(id) ",
+      "wikitext_line": 393
+    },
+    {
+      "id": "wt-global-api-ZoomOut-394",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ZoomOut",
+      "annotation": "* NEW - ZoomOut() ",
+      "wikitext_line": 394
+    },
+    {
+      "id": "wt-global-api-GetWorldLocMapPosition-396",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetWorldLocMapPosition",
+      "annotation": "* REMOVED - GetWorldLocMapPosition ",
+      "wikitext_line": 396
+    },
+    {
+      "id": "wt-global-api-GameMovieFinished-399",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GameMovieFinished",
+      "annotation": "* NEW - GameMovieFinished() ",
+      "wikitext_line": 399
+    },
+    {
+      "id": "wt-global-api-GetMovieResolution-400",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMovieResolution",
+      "annotation": "* NEW - ?? = GetMovieResolution() ",
+      "wikitext_line": 400
+    },
+    {
+      "id": "wt-global-api-GetMovieSubtitles-401",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMovieSubtitles",
+      "annotation": "* NEW - subtitles = GetMovieSubtitles() ",
+      "wikitext_line": 401
+    },
+    {
+      "id": "wt-global-api-SetMovieSubtitles-402",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetMovieSubtitles",
+      "annotation": "* NEW - SetMovieSubtitles(subtitles) ",
+      "wikitext_line": 402
+    },
+    {
+      "id": "wt-global-api-CloseCraft-405",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CloseCraft",
+      "annotation": "* REMOVED - CloseCraft ",
+      "wikitext_line": 405
+    },
+    {
+      "id": "wt-global-api-CollapseCraftSkillLine-406",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CollapseCraftSkillLine",
+      "annotation": "* REMOVED - CollapseCraftSkillLine ",
+      "wikitext_line": 406
+    },
+    {
+      "id": "wt-global-api-CraftIsEnchanting-407",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CraftIsEnchanting",
+      "annotation": "* REMOVED - CraftIsEnchanting ",
+      "wikitext_line": 407
+    },
+    {
+      "id": "wt-global-api-CraftIsPetTraining-408",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CraftIsPetTraining",
+      "annotation": "* REMOVED - CraftIsPetTraining ",
+      "wikitext_line": 408
+    },
+    {
+      "id": "wt-global-api-CraftOnlyShowMakeable-409",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CraftOnlyShowMakeable",
+      "annotation": "* REMOVED - CraftOnlyShowMakeable ",
+      "wikitext_line": 409
+    },
+    {
+      "id": "wt-global-api-DoCraft-410",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "DoCraft",
+      "annotation": "* REMOVED - DoCraft ",
+      "wikitext_line": 410
+    },
+    {
+      "id": "wt-global-api-ExpandCraftSkillLine-411",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ExpandCraftSkillLine",
+      "annotation": "* REMOVED - ExpandCraftSkillLine ",
+      "wikitext_line": 411
+    },
+    {
+      "id": "wt-global-api-GetNumCrafts-412",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumCrafts",
+      "annotation": "* REMOVED - GetNumCrafts ",
+      "wikitext_line": 412
+    },
+    {
+      "id": "wt-global-api-GetCraftButtonToken-413",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftButtonToken",
+      "annotation": "* REMOVED - GetCraftButtonToken ",
+      "wikitext_line": 413
+    },
+    {
+      "id": "wt-global-api-GetCraftCooldown-414",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftCooldown",
+      "annotation": "* REMOVED - GetCraftCooldown ",
+      "wikitext_line": 414
+    },
+    {
+      "id": "wt-global-api-GetCraftDescription-415",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftDescription",
+      "annotation": "* REMOVED - GetCraftDescription ",
+      "wikitext_line": 415
+    },
+    {
+      "id": "wt-global-api-GetCraftDisplaySkillLine-416",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftDisplaySkillLine",
+      "annotation": "* REMOVED - GetCraftDisplaySkillLine ",
+      "wikitext_line": 416
+    },
+    {
+      "id": "wt-global-api-GetCraftFilter-417",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftFilter",
+      "annotation": "* REMOVED - GetCraftFilter ",
+      "wikitext_line": 417
+    },
+    {
+      "id": "wt-global-api-GetCraftIcon-418",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftIcon",
+      "annotation": "* REMOVED - GetCraftIcon ",
+      "wikitext_line": 418
+    },
+    {
+      "id": "wt-global-api-GetCraftInfo-419",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftInfo",
+      "annotation": "* REMOVED - GetCraftInfo ",
+      "wikitext_line": 419
+    },
+    {
+      "id": "wt-global-api-GetCraftItemLink-420",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftItemLink",
+      "annotation": "* REMOVED - GetCraftItemLink ",
+      "wikitext_line": 420
+    },
+    {
+      "id": "wt-global-api-GetCraftItemNameFilter-421",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftItemNameFilter",
+      "annotation": "* REMOVED - GetCraftItemNameFilter ",
+      "wikitext_line": 421
+    },
+    {
+      "id": "wt-global-api-GetCraftName-422",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftName",
+      "annotation": "* REMOVED - GetCraftName ",
+      "wikitext_line": 422
+    },
+    {
+      "id": "wt-global-api-GetCraftNumMade-423",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftNumMade",
+      "annotation": "* REMOVED - GetCraftNumMade ",
+      "wikitext_line": 423
+    },
+    {
+      "id": "wt-global-api-GetCraftNumReagents-424",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftNumReagents",
+      "annotation": "* REMOVED - GetCraftNumReagents ",
+      "wikitext_line": 424
+    },
+    {
+      "id": "wt-global-api-GetCraftReagentInfo-425",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftReagentInfo",
+      "annotation": "* REMOVED - GetCraftReagentInfo ",
+      "wikitext_line": 425
+    },
+    {
+      "id": "wt-global-api-GetCraftReagentItemLink-426",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftReagentItemLink",
+      "annotation": "* REMOVED - GetCraftReagentItemLink ",
+      "wikitext_line": 426
+    },
+    {
+      "id": "wt-global-api-GetCraftRecipeLink-427",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftRecipeLink",
+      "annotation": "* REMOVED - GetCraftRecipeLink ",
+      "wikitext_line": 427
+    },
+    {
+      "id": "wt-global-api-GetCraftSelectionIndex-428",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftSelectionIndex",
+      "annotation": "* REMOVED - GetCraftSelectionIndex ",
+      "wikitext_line": 428
+    },
+    {
+      "id": "wt-global-api-GetCraftSkillLine-429",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftSkillLine",
+      "annotation": "* REMOVED - GetCraftSkillLine ",
+      "wikitext_line": 429
+    },
+    {
+      "id": "wt-global-api-GetCraftSlots-430",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftSlots",
+      "annotation": "* REMOVED - GetCraftSlots ",
+      "wikitext_line": 430
+    },
+    {
+      "id": "wt-global-api-GetCraftSpellFocus-431",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCraftSpellFocus",
+      "annotation": "* REMOVED - GetCraftSpellFocus ",
+      "wikitext_line": 431
+    },
+    {
+      "id": "wt-global-api-SelectCraft-432",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SelectCraft",
+      "annotation": "* REMOVED - SelectCraft ",
+      "wikitext_line": 432
+    },
+    {
+      "id": "wt-global-api-SetCraftFilter-433",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetCraftFilter",
+      "annotation": "* REMOVED - SetCraftFilter ",
+      "wikitext_line": 433
+    },
+    {
+      "id": "wt-global-api-SetCraftItemNameFilter-434",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetCraftItemNameFilter",
+      "annotation": "* REMOVED - SetCraftItemNameFilter ",
+      "wikitext_line": 434
+    },
+    {
+      "id": "wt-global-api-GetCVarAbsoluteMax-437",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarAbsoluteMax",
+      "annotation": "* NEW - max = GetCVarAbsoluteMax(\"cvar\") ",
+      "wikitext_line": 437
+    },
+    {
+      "id": "wt-global-api-GetCVarAbsoluteMin-438",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarAbsoluteMin",
+      "annotation": "* NEW - min = GetCVarAbsoluteMin(\"min\") ",
+      "wikitext_line": 438
+    },
+    {
+      "id": "wt-global-api-GetCVarBool-439",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarBool",
+      "annotation": "* NEW - value = GetCVarBool(\"cvar\") - Returns the value of the cvar as 1 or nil instead of requiring you to compare the cvar value with \"0\" or \"1\" ",
+      "wikitext_line": 439
+    },
+    {
+      "id": "wt-global-api-GetCVarInfo-440",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarInfo",
+      "annotation": "* NEW - name, defaultValue, serverStoredAccountWide, serverStoredPerCharacter = GetCVarInfo(\"cvar\") ",
+      "wikitext_line": 440
+    },
+    {
+      "id": "wt-global-api-GetCVarMax-441",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarMax",
+      "annotation": "* NEW - max = GetCVarMax(\"cvar\") ",
+      "wikitext_line": 441
+    },
+    {
+      "id": "wt-global-api-GetCVarMin-442",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCVarMin",
+      "annotation": "* NEW - min = GetCVarMin(\"cvar\") ",
+      "wikitext_line": 442
+    },
+    {
+      "id": "wt-global-api-GetAutoLootDefault-444",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAutoLootDefault",
+      "annotation": "* REMOVED - GetAutoLootDefault ",
+      "wikitext_line": 444
+    },
+    {
+      "id": "wt-global-api-GetWorldDetail-445",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetWorldDetail",
+      "annotation": "* REMOVED - GetWorldDetail ",
+      "wikitext_line": 445
+    },
+    {
+      "id": "wt-global-api-HideFriendNameplates-446",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "HideFriendNameplates",
+      "annotation": "* REMOVED - HideFriendNameplates ",
+      "wikitext_line": 446
+    },
+    {
+      "id": "wt-global-api-HideNameplates-447",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "HideNameplates",
+      "annotation": "* REMOVED - HideNameplates ",
+      "wikitext_line": 447
+    },
+    {
+      "id": "wt-global-api-SetAutoLootDefault-448",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetAutoLootDefault",
+      "annotation": "* REMOVED - SetAutoLootDefault ",
+      "wikitext_line": 448
+    },
+    {
+      "id": "wt-global-api-ShowFriendNameplates-449",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowFriendNameplates",
+      "annotation": "* REMOVED - ShowFriendNameplates ",
+      "wikitext_line": 449
+    },
+    {
+      "id": "wt-global-api-ShowNameplates-450",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowNameplates",
+      "annotation": "* REMOVED - ShowNameplates ",
+      "wikitext_line": 450
+    },
+    {
+      "id": "wt-global-api-SetWorldDetail-451",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetWorldDetail",
+      "annotation": "* REMOVED - SetWorldDetail ",
+      "wikitext_line": 451
+    },
+    {
+      "id": "wt-global-api-GetFactionInfo-454",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetFactionInfo",
+      "annotation": "* UPDATED - name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, hasRep, isWatched, isChild = GetFactionInfo(factionIndex) - The new hasRep return breaks existing code that uses the isWatched return value, isChild is also new. !!! ",
+      "wikitext_line": 454
+    },
+    {
+      "id": "wt-widgets-Texture:SetRotation-457",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:SetRotation",
+      "annotation": "* NEW - Texture:SetRotation(angle [,cx, cy]) - This is simply a shorthand for the appropriate 8 argument SetTexCoord rotation (in C++ so it's fast) ",
+      "wikitext_line": 457
+    },
+    {
+      "id": "wt-widgets-GameTooltip:GetMinimumWidth-460",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:GetMinimumWidth",
+      "annotation": "* NEW - width = GameTooltip:GetMinimumWidth() ",
+      "wikitext_line": 460
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetBackpackToken-461",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetBackpackToken",
+      "annotation": "* NEW - GameTooltip:SetBackpackToken(id) ",
+      "wikitext_line": 461
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetCurrencyToken-462",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetCurrencyToken",
+      "annotation": "* NEW - GameTooltip:SetCurrencyToken(index) ",
+      "wikitext_line": 462
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetGlyph-463",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetGlyph",
+      "annotation": "* NEW - GameTooltip:SetGlyph(id) ",
+      "wikitext_line": 463
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitAura-464",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetUnitAura",
+      "annotation": "* NEW - GameTooltip:SetUnitAura(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]); ",
+      "wikitext_line": 464
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitBuff-465",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "GameTooltip:SetUnitBuff",
+      "annotation": "* UPDATED - GameTooltip:SetUnitBuff(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]); ",
+      "wikitext_line": 465
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetUnitDebuff-466",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "GameTooltip:SetUnitDebuff",
+      "annotation": "* UPDATED - GameTooltip:SetUnitDebuff(\"unit\", [index] or [\"name\", \"rank\"][, \"filter\"]); ",
+      "wikitext_line": 466
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetCraftItem-467",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "GameTooltip:SetCraftItem",
+      "annotation": "* REMOVED - GameTooltip:SetCraftItem(...) ",
+      "wikitext_line": 467
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetCraftSpell-468",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "GameTooltip:SetCraftSpell",
+      "annotation": "* REMOVED - GameTooltip:SetCraftSpell(...) ",
+      "wikitext_line": 468
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetPlayerBuff-469",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "GameTooltip:SetPlayerBuff",
+      "annotation": "* REMOVED - GameTooltip:SetPlayerBuff(...) ",
+      "wikitext_line": 469
+    },
+    {
+      "id": "wt-widgets-OnTooltipSetAchievement-471",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "OnTooltipSetAchievement",
+      "annotation": "* NEW HANDLER - OnTooltipSetAchievement ",
+      "wikitext_line": 471,
+      "kind": "widget-script"
+    },
+    {
+      "id": "wt-widgets-Slider:Disable-474",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:Disable",
+      "annotation": "* NEW - Slider:Disable() ",
+      "wikitext_line": 474
+    },
+    {
+      "id": "wt-widgets-Slider:Enable-475",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:Enable",
+      "annotation": "* NEW - Slider:Enable() ",
+      "wikitext_line": 475
+    },
+    {
+      "id": "wt-widgets-Slider:IsEnabled-476",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:IsEnabled",
+      "annotation": "* NEW - enabled = Slider:IsEnabled() ",
+      "wikitext_line": 476
+    },
+    {
+      "id": "wt-widgets-Button:GetNormalFontObject-479",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:GetNormalFontObject",
+      "annotation": "* NEW - font = Button:GetNormalFontObject() ",
+      "wikitext_line": 479
+    },
+    {
+      "id": "wt-widgets-Button:SetNormalFontObject-480",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:SetNormalFontObject",
+      "annotation": "* NEW - Button:SetNormalFontObject(font) ",
+      "wikitext_line": 480
+    },
+    {
+      "id": "wt-widgets-Button:GetDisabledTextColor-481",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Button:GetDisabledTextColor",
+      "annotation": "* REMOVED - Button:GetDisabledTextColor() ",
+      "wikitext_line": 481
+    },
+    {
+      "id": "wt-widgets-Button:GetFont-482",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Button:GetFont",
+      "annotation": "* REMOVED - Button:GetFont() ",
+      "wikitext_line": 482
+    },
+    {
+      "id": "wt-widgets-Button:GetHighlightTextColor-483",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Button:GetHighlightTextColor",
+      "annotation": "* REMOVED - Button:GetHighlightTextColor() ",
+      "wikitext_line": 483
+    },
+    {
+      "id": "wt-widgets-Button:GetTextColor-484",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Button:GetTextColor",
+      "annotation": "* REMOVED - Button:GetTextColor() ",
+      "wikitext_line": 484
+    },
+    {
+      "id": "wt-widgets-Button:GetTextFontObject-485",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Button:GetTextFontObject",
+      "annotation": "* REMOVED - Button:GetTextFontObject() (replaced by GetNormalFontObject)",
+      "wikitext_line": 485
+    },
+    {
+      "id": "wt-widgets-Button:SetTextColor-486",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Button:SetTextColor",
+      "annotation": "* REMOVED - Button:SetTextColor(...) ",
+      "wikitext_line": 486
+    },
+    {
+      "id": "wt-widgets-Button:SetTextFontObject-487",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Button:SetTextFontObject",
+      "annotation": "* REMOVED - Button:SetTextFontObject(...) (replaced by SetNormalFontObject)",
+      "wikitext_line": 487
+    },
+    {
+      "id": "wt-widgets-Model:SetGlow-490",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Model:SetGlow",
+      "annotation": "* NEW - Model:SetGlow(...) ",
+      "wikitext_line": 490
+    },
+    {
+      "id": "wt-widgets-PlayerModel:SetCreature-493",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCreature",
+      "annotation": "* NEW - PlayerModel:SetCreature(creatureID)",
+      "wikitext_line": 493
+    }
+  ],
+  "client_line": "retail"
+}

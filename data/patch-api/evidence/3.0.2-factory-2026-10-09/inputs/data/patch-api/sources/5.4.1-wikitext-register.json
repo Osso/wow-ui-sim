@@ -1,0 +1,145 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.4.1",
+  "source": {
+    "path": "data/patch-api/sources/5.4.1-api-changes.wikitext",
+    "revid": 2150406,
+    "sha256": "f3173fceaa061c9c2f0f3fb0eca097a6d6a108365247ae15846955535795b8e6"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 9,
+      "parsed_count": 9
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ProductChoice.GetChoices-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProductChoice.GetChoices",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-C_ProductChoice.GetProducts-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProductChoice.GetProducts",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-C_ProductChoice.MakeSelection-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProductChoice.MakeSelection",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_RecruitAFriend.CheckEmailEnabled",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_RecruitAFriend.GetRecruitInfo-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_RecruitAFriend.GetRecruitInfo",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_RecruitAFriend.IsSendingEnabled",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_RecruitAFriend.SendRecruit-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_RecruitAFriend.SendRecruit",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StorePublic.IsDisabledByParentalControls",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-SelectedRealmName-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SelectedRealmName",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-events-PRODUCT_ASSIGN_TO_TARGET_FAILED-35",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PRODUCT_ASSIGN_TO_TARGET_FAILED",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-events-PRODUCT_CHOICE_UPDATE-36",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PRODUCT_CHOICE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-37",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RECRUIT_A_FRIEND_CAN_EMAIL",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-38",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RECRUIT_A_FRIEND_INVITATION_FAILED",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-39",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-40",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RECRUIT_A_FRIEND_SYSTEM_STATUS",
+      "annotation": "",
+      "wikitext_line": 40
+    }
+  ]
+}

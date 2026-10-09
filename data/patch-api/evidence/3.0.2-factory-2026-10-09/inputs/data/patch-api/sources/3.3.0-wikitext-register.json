@@ -1,0 +1,101 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "3.3.0",
+  "source": {
+    "path": "data/patch-api/sources/3.3.0-api-changes.wikitext",
+    "revid": 6055853,
+    "sha256": "8aba4ed7056b03aca55eb5136011a54cd6794668d3374909d2da6e1696bb9267"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-QueryQuestsCompleted-8",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QueryQuestsCompleted",
+      "annotation": "* NEW - QueryQuestsCompleted() requests that the server send the client a list of completed quest ids. Once the list is received the QUEST_QUERY_COMPLETE event is fired. (There is a limit on how frequently this can be called)",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-events-QUEST_QUERY_COMPLETE-8",
+      "section": "events",
+      "direction": "added",
+      "symbol": "QUEST_QUERY_COMPLETE",
+      "annotation": "* NEW - QueryQuestsCompleted() requests that the server send the client a list of completed quest ids. Once the list is received the QUEST_QUERY_COMPLETE event is fired. (There is a limit on how frequently this can be called)",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-GetQuestsCompleted-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestsCompleted",
+      "annotation": "* NEW - tbl = GetQuestsCompleted([tbl]) populates a table (creating one if necessary) with the ids of completed quests as keys with true values.",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-widgets-Frame:GetFrameType-15",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:GetFrameType",
+      "annotation": "* The deprecated GetFrameType method has been completely removed (GetObjectType offers the same result)",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-widgets-Frame:GetObjectType-15",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Frame:GetObjectType",
+      "annotation": "* The deprecated GetFrameType method has been completely removed (GetObjectType offers the same result)",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-widgets-Region:IsMouseOver-18",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Region:IsMouseOver",
+      "annotation": "* NEW - isOver = region:IsMouseOver() -- Tests whether the mouse is over the region, replaces the MouseIsOver FrameXML lua function.",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-framexml-MouseIsOver-18",
+      "section": "framexml",
+      "direction": "changed",
+      "symbol": "MouseIsOver",
+      "annotation": "* NEW - isOver = region:IsMouseOver() -- Tests whether the mouse is over the region, replaces the MouseIsOver FrameXML lua function.",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-widgets-Button:SetMotionScriptsWhileDisabled-21",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:SetMotionScriptsWhileDisabled",
+      "annotation": "* NEW - Button:SetMotionScriptsWhileDisabled(enable) --Allows OnEnter and OnLeave to fire while the button is disabled.",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-widgets-Button:GetMotionScriptsWhileDisabled-22",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:GetMotionScriptsWhileDisabled",
+      "annotation": "* NEW - isEnabled = Button:GetMotionScriptsWhileDisabled()",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-widgets-Texture:GetFileWidth-27",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:GetFileWidth",
+      "annotation": "* NEW - width = Texture:GetFileWidth() --Gets the width/height of the actual file in use by the texture. (0 if we can't access the texture for some reason) (Note: These currently aren't returning the right values for some Blizzard UI images)",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-widgets-Texture:GetFileHeight-28",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:GetFileHeight",
+      "annotation": "* NEW - height = Texture:GetFileHeight()",
+      "wikitext_line": 28
+    }
+  ],
+  "client_line": "retail"
+}

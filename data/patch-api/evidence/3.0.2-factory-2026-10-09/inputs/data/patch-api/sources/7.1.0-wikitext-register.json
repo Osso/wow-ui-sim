@@ -1,0 +1,92 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "7.1.0",
+  "source": {
+    "path": "data/patch-api/sources/7.1.0-api-changes.wikitext",
+    "revid": 3742660,
+    "sha256": "710a4f960ae532a858a1ff7e39f6d956353f69565ced0b66e4fb2ec22c10ef87"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-GetPhysicalScreenSize-4",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPhysicalScreenSize",
+      "annotation": "* New API: {{api|GetPhysicalScreenSize}}, {{api|GetDetailedItemLevelInfo}}",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-global-api-GetDetailedItemLevelInfo-4",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDetailedItemLevelInfo",
+      "annotation": "* New API: {{api|GetPhysicalScreenSize}}, {{api|GetDetailedItemLevelInfo}}",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-widgets-Frame:SetClipsChildren-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetClipsChildren",
+      "annotation": "",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-widgets-Frame:DoesClipChildren-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:DoesClipChildren",
+      "annotation": "",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalShowAlways-8",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalShowAlways",
+      "annotation": "",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalShowInCombat-9",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalShowInCombat",
+      "annotation": "",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalShowWithTarget-10",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalShowWithTarget",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalHideDelaySeconds-12",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalHideDelaySeconds",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalHideDelayAlpha-13",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalHideDelayAlpha",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-GetItemInfo-19",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetItemInfo",
+      "annotation": "* [[API_GetItemInfo|GetItemInfo]] has four new returns: 14: bindType, 15: expacID, 16: itemSetID, 17: isCraftingReagent",
+      "wikitext_line": 19
+    }
+  ]
+}

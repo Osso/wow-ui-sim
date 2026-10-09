@@ -1,0 +1,292 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "6.2.4",
+  "source": {
+    "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+    "revid": 2072181,
+    "sha256": "2460bc07a61df48e31c1b8f33d264c4270c901c753583e6d1cea920531a2b6fc"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-BNGetFriendGameAccountInfo-4",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetFriendGameAccountInfo",
+      "annotation": "",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-global-api-BNGetGameAccountInfo-5",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetGameAccountInfo",
+      "annotation": "",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-global-api-BNGetNumFriendGameAccounts-6",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumFriendGameAccounts",
+      "annotation": "",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-global-api-BNGetToonInfo-20",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetToonInfo",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-BNGetGameAccountInfo-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetGameAccountInfo",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-BNGetFriendToonInfo-21",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetFriendToonInfo",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-BNGetFriendGameAccountInfo-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetFriendGameAccountInfo",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-BNGetNumFriendToons-22",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetNumFriendToons",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-BNGetNumFriendGameAccounts-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumFriendGameAccounts",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-cvars-realmName-26",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "realmName",
+      "annotation": "* The “realmName” [[CVar]] no longer exists. You can get the name of the current realm using {{api|GetRealmName}}().",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-BNCreateConversation-27",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNCreateConversation",
+      "annotation": "  BNCreateConversation",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-BNGetBlockedToonInfo-28",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetBlockedToonInfo",
+      "annotation": "  BNGetBlockedToonInfo",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-BNGetConversationInfo-29",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetConversationInfo",
+      "annotation": "  BNGetConversationInfo",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-BNGetConversationMemberInfo-30",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetConversationMemberInfo",
+      "annotation": "  BNGetConversationMemberInfo",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-BNGetCustomMessageTable-31",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetCustomMessageTable",
+      "annotation": "  BNGetCustomMessageTable",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-BNGetFriendToonInfo-32",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetFriendToonInfo",
+      "annotation": "  BNGetFriendToonInfo",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-BNGetMatureLanguageFilter-33",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetMatureLanguageFilter",
+      "annotation": "  BNGetMatureLanguageFilter",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-BNGetMaxNumConversations-34",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetMaxNumConversations",
+      "annotation": "  BNGetMaxNumConversations",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-BNGetMaxPlayersInConversation-35",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetMaxPlayersInConversation",
+      "annotation": "  BNGetMaxPlayersInConversation",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-BNGetNumBlockedToons-36",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetNumBlockedToons",
+      "annotation": "  BNGetNumBlockedToons",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-BNGetNumConversationMembers-37",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetNumConversationMembers",
+      "annotation": "  BNGetNumConversationMembers",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-BNGetNumFriendToons-38",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetNumFriendToons",
+      "annotation": "  BNGetNumFriendToons",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-BNGetSelectedToonBlock-39",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetSelectedToonBlock",
+      "annotation": "  BNGetSelectedToonBlock",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-BNGetToonInfo-40",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNGetToonInfo",
+      "annotation": "  BNGetToonInfo",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-BNInviteToConversation-41",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNInviteToConversation",
+      "annotation": "  BNInviteToConversation",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-BNIsFriendConversationValid-42",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNIsFriendConversationValid",
+      "annotation": "  BNIsFriendConversationValid",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-BNIsToonBlocked-43",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNIsToonBlocked",
+      "annotation": "  BNIsToonBlocked",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-BNLeaveConversation-44",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNLeaveConversation",
+      "annotation": "  BNLeaveConversation",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-BNListConversation-45",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNListConversation",
+      "annotation": "  BNListConversation",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-BNReportFriendInvite-46",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNReportFriendInvite",
+      "annotation": "  BNReportFriendInvite",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-BNSendConversationMessage-47",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNSendConversationMessage",
+      "annotation": "  BNSendConversationMessage",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-BNSetFocus-48",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNSetFocus",
+      "annotation": "  BNSetFocus",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-BNSetMatureLanguageFilter-49",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNSetMatureLanguageFilter",
+      "annotation": "  BNSetMatureLanguageFilter",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-BNSetSelectedToonBlock-50",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNSetSelectedToonBlock",
+      "annotation": "  BNSetSelectedToonBlock",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-BNSetToonBlocked-51",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNSetToonBlocked",
+      "annotation": "  BNSetToonBlocked",
+      "wikitext_line": 51
+    }
+  ]
+}

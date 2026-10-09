@@ -1,0 +1,709 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "9.2.0",
+  "source": {
+    "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+    "revid": 4788278,
+    "sha256": "2592e6464c46add082bdf18b7310c3ad6aa640c53b4a8a58552b15658d3467ae"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 51,
+      "parsed_count": 51
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 13,
+      "parsed_count": 13
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 8,
+      "parsed_count": 8
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetAuctionInfoByID-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetAuctionInfoByID",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.AssignPCTDistribution-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CharacterServices.AssignPCTDistribution",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.GetCharacterServiceDisplayDataByVASType-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CharacterServices.GetCharacterServiceDisplayDataByVASType",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.GetCharacterServiceDisplayInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CharacterServices.GetCharacterServiceDisplayInfo",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.GetVASDistributions-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CharacterServices.GetVASDistributions",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.CanSpellBeClickBound-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.CanSpellBeClickBound",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.ExecuteBinding-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.ExecuteBinding",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.GetBindingType-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.GetBindingType",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.GetEffectiveInteractionButton-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.GetEffectiveInteractionButton",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.GetProfileInfo-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.GetProfileInfo",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.GetStringFromModifiers-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.GetStringFromModifiers",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.GetTutorialShown-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.GetTutorialShown",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.MakeModifiers-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.MakeModifiers",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.ResetCurrentProfile-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.ResetCurrentProfile",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.SetProfileByInfo-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.SetProfileByInfo",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_ClickBindings.SetTutorialShown-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClickBindings.SetTutorialShown",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_GamePad.ClearLedColor-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.ClearLedColor",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_GamePad.GetLedColor-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.GetLedColor",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_GamePad.SetLedColor-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.SetLedColor",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetCurrentCypherEquipmentLevel-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetCurrentCypherEquipmentLevel",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetCyphersToNextEquipmentLevel-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetCyphersToNextEquipmentLevel",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetMaxCypherEquipmentLevel-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetMaxCypherEquipmentLevel",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.GetCompletedOptionDescriptionString-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GossipInfo.GetCompletedOptionDescriptionString",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemConversionOutputIcon-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemConversionOutputIcon",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_Item.GetItemUniquenessByID-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetItemUniquenessByID",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemConvertibleAndValidForPlayer-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemConvertibleAndValidForPlayer",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemSpecificToPlayerClass-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemSpecificToPlayerClass",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.GetChargeInfo-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.GetChargeInfo",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.GetItemConversionCurrencyCost-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.GetItemConversionCurrencyCost",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.SetItemConversionOutputTooltip-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.SetItemConversionOutputTooltip",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_LootJournal.GetItemSetItems-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LootJournal.GetItemSetItems",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_LootJournal.GetItemSets-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LootJournal.GetItemSets",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.GetRemainingTime-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerChoice.GetRemainingTime",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_PvP.CanDisplayDamage-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.CanDisplayDamage",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_PvP.CanDisplayHealing-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.CanDisplayHealing",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_PvP.CanDisplayKillingBlows-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.CanDisplayKillingBlows",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetBattlefieldFlagPosition-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetBattlefieldFlagPosition",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetCustomVictoryStatID-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetCustomVictoryStatID",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetPVPSeasonRewardAchievementID-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetPVPSeasonRewardAchievementID",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetSpecialEventBrawlInfo-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetSpecialEventBrawlInfo",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_PvP.IsSoloShuffle-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.IsSoloShuffle",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_TTSSettings.ShouldOverrideMessage-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TTSSettings.ShouldOverrideMessage",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_UI.DoesAnyDisplayHaveNotch-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UI.DoesAnyDisplayHaveNotch",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_UI.GetTopLeftNotchSafeRegion-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UI.GetTopLeftNotchSafeRegion",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_UI.GetTopRightNotchSafeRegion-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UI.GetTopRightNotchSafeRegion",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_UI.ShouldUIParentAvoidNotch-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UI.ShouldUIParentAvoidNotch",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetUnitPowerBarWidgetVisualizationInfo-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetUnitPowerBarWidgetVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-StartSoloShuffleWarGameByName-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "StartSoloShuffleWarGameByName",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-StartSpectatorSoloShuffleWarGame-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "StartSpectatorSoloShuffleWarGame",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.GetCharacterServiceDisplayOrder-80",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_CharacterServices.GetCharacterServiceDisplayOrder",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetSpecialEventDetails-81",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PvP.GetSpecialEventDetails",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetSpecialEventInfo-82",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PvP.GetSpecialEventInfo",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-GetBattlefieldFlagPosition-83",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBattlefieldFlagPosition",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-widgets-FontString:GetTextScale-94",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:GetTextScale",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-widgets-FontString:SetTextScale-95",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:SetTextScale",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-widgets-Frame:SetAttributeNoHandler-96",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetAttributeNoHandler",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetSpecialPvpBrawl-97",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetSpecialPvpBrawl",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_SHOW_COMMODITY_WON_NOTIFICATION-110",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_SHOW_COMMODITY_WON_NOTIFICATION",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_SHOW_ERROR-111",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_SHOW_ERROR",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION-112",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_SHOW_NOTIFICATION-113",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_SHOW_NOTIFICATION",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-events-CLICKBINDINGS_SET_HIGHLIGHTS_SHOWN-114",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLICKBINDINGS_SET_HIGHLIGHTS_SHOWN",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-events-FIRST_FRAME_RENDERED-115",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FIRST_FRAME_RENDERED",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-events-ITEM_CONVERSION_DATA_READY-116",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_CONVERSION_DATA_READY",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-events-ITEM_INTERACTION_CHARGE_INFO_UPDATED-117",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_INTERACTION_CHARGE_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-events-NOTCHED_DISPLAY_MODE_CHANGED-118",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NOTCHED_DISPLAY_MODE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-events-PVP_ROLE_POPUP_HIDE-119",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PVP_ROLE_POPUP_HIDE",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-events-PVP_ROLE_POPUP_JOINED_MATCH-120",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PVP_ROLE_POPUP_JOINED_MATCH",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-events-PVP_ROLE_POPUP_SHOW-121",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PVP_ROLE_POPUP_SHOW",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-events-STOP_MOVIE-122",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STOP_MOVIE",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-cvars-BeckonTriggerEventlog-135",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "BeckonTriggerEventlog",
+      "annotation": "",
+      "wikitext_line": 135,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-CMAA2ExtraSharpness-136",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "CMAA2ExtraSharpness",
+      "annotation": "",
+      "wikitext_line": 136,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-CMAA2Quality-137",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "CMAA2Quality",
+      "annotation": "",
+      "wikitext_line": 137,
+      "page_default": "2"
+    },
+    {
+      "id": "wt-cvars-enableMouseoverCast-138",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "enableMouseoverCast",
+      "annotation": "",
+      "wikitext_line": 138,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadFactionColor-139",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadFactionColor",
+      "annotation": "",
+      "wikitext_line": 139,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-NotchedDisplayMode-140",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NotchedDisplayMode",
+      "annotation": "",
+      "wikitext_line": 140,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-telemetryTargetPackage-141",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "telemetryTargetPackage",
+      "annotation": "",
+      "wikitext_line": 141,
+      "page_default": "Blizzard.Telemetry.Wow_Mainline"
+    },
+    {
+      "id": "wt-cvars-spectate-144",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "spectate",
+      "annotation": "",
+      "wikitext_line": 144,
+      "kind": "command"
+    }
+  ]
+}

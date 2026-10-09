@@ -796,6 +796,10 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 
 Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen page560990/revision5407654; source RED retained, historical replay pending then. No runtime/native credit.
 
+## [2026-10-09] evidence | Patch 3.0.2 separate current-retail factory discovery
+
+[Measurement](investigations/patch-3-0-2-api-audit.md#separate-current-retail-factory-measurement--2026-10-09): empty-gap discovery at `982ccc3d9` retains all 373 observations, 185 matches/188 gaps. Exact reviewed identities and classifier limits separate from original 36+1+2 historical seals. No runtime/model/native credit; reviewed GREEN and fabricated unknown control pending.
+
 ## [2026-10-09] evidence | Patch 3.0.3 bounded source development proof
 
 [Audit/proof ledger](investigations/patch-3-0-3-api-audit.md#historical-replay): source GREEN3/3 at `ce0a0e863`, copied original replay/accounting GREEN2/2 at `e50955ee3`; 16 frozen seals/93 snapshots, 17 serialized tamper/restoration controls, 17 omission controls and two literal/credit controls. Eight IDs remain two metadata/six UNPROVEN; zero meaningful closures/runtime edits. Full101-page registry through1.0.0 preserved. Main owns ordered queued retail inputs, integration and native acceptance; no broad/final gates.
