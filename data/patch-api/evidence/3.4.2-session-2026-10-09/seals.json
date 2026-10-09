@@ -1,4 +1,6 @@
 {
+  "data/patch-api/evidence/3.4.2-session-2026-10-09/.gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+  "data/patch-api/evidence/3.4.2-session-2026-10-09/green.log": "943bfd84cf31ecbbd74baf7c7e37ed10f8e8ec14856f6c30dea13da136475926",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/historical-client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/historical-extract_patch_non_inventory.py": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/historical-gen_patch_wikitext_register.py": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
@@ -6,7 +8,7 @@
   "data/patch-api/evidence/3.4.2-session-2026-10-09/profile-observation.json": "1d4fd30fe32d537c87dca1a5b55428df143226cd5c34c83f2c5831a785eb5817",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/red.log": "edfbfd2e847a8bedec23dfa507b0f08a74564f7913c438fb5aa74d7dedabd44a",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/source-pin.json": "04e3824aeaef39a122b45d7e3a280796e4b96958aa2644278b5cb2f5b0b23ad6",
-  "data/patch-api/evidence/3.4.2-session-2026-10-09/source-proof.json": "1cfaf5df50cd4cca8b7bafd22e07a1b48341bd72cba7822dede587abf3a50ebb",
+  "data/patch-api/evidence/3.4.2-session-2026-10-09/source-proof.json": "8ad6f8d899f3426c030325348d0445c444913fdb5c30e7bc6c15166934a4330d",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/source-response.json": "2b81231fe3cea60671d8c61715cbef6c152f06ee2a3fb127eacb578aa9e6fd1a",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/successor-pin.json": "06848dfe98d4bfe90b694bff38a0c99ec79211172e5f9f29f1841572fff0f087",
   "data/patch-api/evidence/3.4.2-session-2026-10-09/successor-response.json": "594cacde59ac51e99109e28fea49ea153a1969994032064f83b8e3dfad5b3b05",

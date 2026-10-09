@@ -4,10 +4,10 @@ Account for frozen Warcraft Wiki page `355030` / revision `3422177`, TOC `30402`
 
 ## What it must do
 
-- [ ] Validate response identity and both manifest hashes before owned source copying; replay the exact frozen source and recorded plaintext flags.
-- [ ] Preserve all literal inventory occurrences, eight numerical headers, CVar default/scope/category/description fields, and every nonblank source line; derive counts from serialized inputs.
-- [ ] Reject missing/altered inventory or prose, invented signatures or publication/behavior credit, wrong profiles and foreign successors.
-- [ ] Keep supported Wrath profile / configured interface separate from historical TOC, documentation-only cache observation, runtime and native proof.
+- [x] Validate response identity and both manifest hashes before owned source copying; replay the exact frozen source and recorded plaintext flags.
+- [x] Preserve all literal inventory occurrences, eight numerical headers, CVar default/scope/category/description fields, and every nonblank source line; derive counts from serialized inputs.
+- [x] Reject missing/altered inventory or prose, invented signatures or publication/behavior credit, wrong profiles and foreign successors.
+- [x] Keep supported Wrath profile / configured interface separate from historical TOC, documentation-only cache observation, runtime and native proof.
 - [ ] Replay sealed historical own inputs independently of current tools, caches, global registers or original Git objects; reject serialized source and proof-log tampering.
 
 ## How it works

@@ -14,6 +14,19 @@
       "result": "expected assertion failure: missing derived source accounting",
       "log": "red.log",
       "invalidated_by_later_changes": true
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p342-source",
+      "revision": "4429022eaa72940769c8f474942839e72c71cf62",
+      "exit_code": 0,
+      "result": "10/10 owned serialized source fixtures; exhaustive per-row deletion/credit controls and literal tampering",
+      "log": "green.log",
+      "invalidated_by_later_changes": false
     }
   ],
   "excluded": [
@@ -24,5 +37,13 @@
     "readability",
     "final gates",
     "runtime/native measurements"
-  ]
+  ],
+  "tested_input_sha256": {
+    "data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py": "e0d407aaab531d5bc5ffd5d0077b803aba0c7ca6a1d4153c51a07f2ea39d3807",
+    "data/patch-api/evidence/3.4.2-session-2026-10-09/test_source_accounting.py": "f92910328819ae5ab8493fe2fe57ab04d8cf0ec4882ddb6d801fb5a663e7861a",
+    "data/patch-api/sources/3.4.2-api-changes.wikitext": "284871b95a3150e0dd0383ae4070ad1c067c1eee874e83d5bb44ebbf12118f0e",
+    "data/patch-api/sources/3.4.2-page-coverage.json": "41d65a8488c65cc122bcb63c3b94ab1ccab6fbdfc863286c03e5ac6c14c7b254",
+    "data/patch-api/sources/3.4.2-source-inventory.json": "ab08608d6ab0384c2f8e9cd5ae9631fc38df356b9fbb10e8b98a7fa61a50c92d",
+    "data/patch-api/sources/3.4.2-api-changes.txt": "cf9747e921e1b70bb9d4ed44dd8246cfa265fe700fd0f4ca33a6598cbcb1a7b3"
+  }
 }

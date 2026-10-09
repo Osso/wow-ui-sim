@@ -12,7 +12,7 @@
 
 ## [2026-10-09] ingest | Patch 3.4.2 Wrath Classic source inventory
 
-[Audit](investigations/patch-3-4-2-api-audit.md): frozen identity/hashes validated before copy; 155 explicit inventory/208 nonblank rows, two substantive summaries and all CVar fields retained. Shared tooling lacks Wrath publication classification, so no retail stand-in or runtime claim. Actual 3.4.3 successor retained reference-only; integration queued after it. Targeted derived-accounting RED fails as expected; GREEN pending. No runtime/vendor/shared-tool changes.
+[Audit](investigations/patch-3-4-2-api-audit.md): frozen identity/hashes validated before copy; 155 explicit inventory/208 nonblank rows, two substantive summaries and all CVar fields retained. Shared tooling lacks Wrath publication classification, so no retail stand-in or runtime claim. Actual 3.4.3 successor retained reference-only; integration queued after it. Targeted derived-accounting RED fails as expected; owned serialized fixtures GREEN 10/10 at 4429022ea. Replay/disk-seal controls pending. No runtime/vendor/shared-tool changes.
 
 ## [2026-10-09] maintenance | Patch 4.3.4 modeled client clock
 

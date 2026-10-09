@@ -1,0 +1,15 @@
+test_direction_defaults_and_header_tampering_rejected (__main__.SourceAccounting.test_direction_defaults_and_header_tampering_rejected) ... ok
+test_each_missing_inventory_occurrence_rejected (__main__.SourceAccounting.test_each_missing_inventory_occurrence_rejected) ... ok
+test_each_missing_literal_row_rejected (__main__.SourceAccounting.test_each_missing_literal_row_rejected) ... ok
+test_every_unproven_row_rejects_fabricated_credit (__main__.SourceAccounting.test_every_unproven_row_rejects_fabricated_credit) ... ok
+test_exact_inventory_and_prose_counts (__main__.SourceAccounting.test_exact_inventory_and_prose_counts) ... ok
+test_extract_and_pin_tampering_rejected (__main__.SourceAccounting.test_extract_and_pin_tampering_rejected) ... ok
+test_literal_identity_and_reason_required (__main__.SourceAccounting.test_literal_identity_and_reason_required) ... ok
+test_wrong_history_and_foreign_successors_rejected (__main__.SourceAccounting.test_wrong_history_and_foreign_successors_rejected) ... ok
+test_wrong_profile_and_native_credit_rejected (__main__.SourceAccounting.test_wrong_profile_and_native_credit_rejected) ... ok
+test_wrong_revision_and_content_rejected (__main__.SourceAccounting.test_wrong_revision_and_content_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 14.883s
+
+OK
