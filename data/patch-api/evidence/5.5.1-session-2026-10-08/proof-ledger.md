@@ -17,3 +17,5 @@ Gate-output recovery: session continuation orphaned the already-running pinned-m
 Pinned-master gate completed PASS: clean/later counts derived from its report and exact git ls-tree receipt sets (44/45 validators), zero failures. Original-process stdout recovery completed; no command was repeated.
 
 Completed runtime proof: retail publication sweeps 57/57 and Mists 5.5.1–5.5.4 page/line tests 5/5 pass at d56ab0593. Retail client-line compilation, Mists --tests check and negative control, then fresh-master sweep remain active; final comparison and branch gate still pending.
+
+Mists cargo check --tests passed (zero non-vendor warnings; seven vendor-manifest warning lines untouched); injected inventory row rejected at 1 → 0 with expected exit 101. Retail client-line controls pass 3/3. Fresh pinned-master sweep remains active; its log is retained under master/.
