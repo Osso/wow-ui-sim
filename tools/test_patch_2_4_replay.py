@@ -1,4 +1,5 @@
 """Fresh copied historical proof; no runtime/native acceptance."""
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -53,6 +54,14 @@ class ReplayTests(unittest.TestCase):
                     restored = replay(copy)
                     self.assertEqual(restored.returncode, 0, restored.stderr)
                     self.assertEqual(restored.stdout, clean.stdout)
+                    original_hash = hashlib.sha256(original).hexdigest()
+                    restored_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+                    self.assertEqual(restored_hash, original_hash)
+                    print(json.dumps({'tamper_path': name, 'reject_exit': rejected.returncode,
+                                      'rejection': rejected.stderr.strip(),
+                                      'restore_exit': restored.returncode,
+                                      'original_sha256': original_hash,
+                                      'restored_sha256': restored_hash}, sort_keys=True))
 
     def test_omitted_literal_line_cannot_become_closure(self):
         with tempfile.TemporaryDirectory() as temporary:
