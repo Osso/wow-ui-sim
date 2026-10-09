@@ -1,0 +1,40 @@
+{
+  "wt-global-api-IsPlayerResolutionAvailable-135": {
+    "old": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsPlayerResolutionAvailable"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "integrated": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-IsPlayerResolutionAvailable-67",
+        "symbol": "IsPlayerResolutionAvailable"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": true
+    }
+  }
+}

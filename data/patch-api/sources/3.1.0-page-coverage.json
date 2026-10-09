@@ -674,9 +674,11 @@
     },
     {
       "source_id": "wt-global-api-IsPlayerResolutionAvailable-135",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "UNPROVEN publication mismatch: {\"expected\": {\"direction\": \"added\", \"page_default\": null, \"publication\": \"published\", \"section\": \"global-api\", \"superseded_by\": null, \"symbol\": \"IsPlayerResolutionAvailable\"}, \"observed\": {\"default\": null, \"default_mismatch\": false, \"detail\": \"raw=nil; lookup=nil\", \"kind\": \"global\", \"value\": null}, \"ok\": false}"
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-only"
+      ],
+      "note": "Publication/absence only; historical call semantics remain UNPROVEN."
     },
     {
       "source_id": "wt-global-api-RespondInstanceLock-136",

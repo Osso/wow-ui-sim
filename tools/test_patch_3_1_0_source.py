@@ -91,6 +91,17 @@ class SourceAccountingReplayTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             for suffix in ('page-coverage.json', 'signatures.json'):
                 self.assertEqual((sources / ('3.1.0-' + suffix)).read_bytes(),
+                                 (evidence / 'current' / suffix).read_bytes())
+            integrated = frozen / 'integrated'
+            integrated.mkdir()
+            shutil.copyfile(evidence / 'integrated' / 'publication-results.json',
+                            integrated / 'publication-results.json')
+            result = subprocess.run(argv + ['--current-radians', '--observations',
+                'data/patch-api/evidence/3.1.0-session-2026-10-09/integrated/publication-results.json'],
+                cwd=ROOT, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            for suffix in ('page-coverage.json', 'signatures.json'):
+                self.assertEqual((sources / ('3.1.0-' + suffix)).read_bytes(),
                                  (ROOT / 'data/patch-api/sources' / ('3.1.0-' + suffix)).read_bytes())
             coverage = json.loads((sources / '3.1.0-page-coverage.json').read_bytes())
             modeled = [row for row in coverage['source_rows'] if 'modeled-radians-state-read' in row['capabilities']]
