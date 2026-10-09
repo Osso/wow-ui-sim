@@ -1,0 +1,14 @@
+[
+  {
+    "branch": "p540-page",
+    "revision": "9698f09862b6cd91b4f87e840295a3fce304940a",
+    "function": "parse_mists_summary",
+    "byte_identical": true
+  },
+  {
+    "branch": "p520-page",
+    "revision": "c38a57fa5ff1570cdaf5493d66ddf9076f81d8e5",
+    "function": "parse_mists_widget_handlers",
+    "byte_identical": true
+  }
+]

@@ -1,0 +1,151 @@
+diff --git a/tools/extract_patch_non_inventory.py b/tools/extract_patch_non_inventory.py
+index df668caa4..85f5cc120 100644
+--- a/tools/extract_patch_non_inventory.py
++++ b/tools/extract_patch_non_inventory.py
+@@ -100,16 +100,6 @@ def render_patch_diff_reference(raw):
+                   r'[Transcluded source: Patch \1/API changes/diff; not expanded]', raw)
+ 
+ 
+-def canonicalize_patch_navigation(raw):
+-    """Render the positional patch, even when named navigation parameters precede it."""
+-    def replace(match):
+-        patches = [part.strip() for part in match[1].split('|') if '=' not in part]
+-        if len(patches) != 1 or not re.fullmatch(r'\d+(?:\.\d+)+', patches[0]):
+-            raise ValueError('expected one positional patch in apichanges navigation')
+-        return f'Patch {patches[0]} API changes'
+-    return re.sub(r'\{\{apichanges\|([^{}]+)\}\}', replace, raw)
+-
+-
+ def strip_mists_automated_inventories(raw):
+     """Keep 2013 prose and enum values; omit API tables already in the register."""
+     raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|FrameXML|Widget API|Events) [\s\S]*?^\|\}\n?',
+@@ -118,14 +108,21 @@ def strip_mists_automated_inventories(raw):
+                      if not line.startswith(('{|', '|+', '|-', '!', '| valign', '</div>', '|}'))) + '\n'
+ 
+ 
++def render_mists_source_markup(raw):
++    """Retain Elink fields and omit only the non-transcluded wrapper."""
++    raw = raw.replace('<noinclude>{{Transclude|}}</noinclude>', '')
++    return re.sub(r'\{\{Elink\|site=([^{}|]+)\|link=([^{}|]+)\|desc=([^{}|]+)\}\}',
++                  r'[External link: \1; \2; \3]', raw)
++
++
+ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
+                  retain_reference_notes=False, legacy_api_tables=False,
+                  legacy_api_bullets=False, legacy_cvar_tables=False,
+                  bfa_prepatch=False, legion_prepatch=False,
+-                 retain_patch_diff_reference=False, canonical_patch_navigation=False,
+-                 mists_automated_diff=False):
+-    if canonical_patch_navigation:
+-        raw = canonicalize_patch_navigation(raw)
++                 retain_patch_diff_reference=False, mists_automated_diff=False,
++                 mists_source_markup=False):
++    if mists_source_markup:
++        raw = render_mists_source_markup(raw)
+     if mists_automated_diff:
+         raw = strip_mists_automated_inventories(raw)
+     if retain_patch_diff_reference:
+@@ -353,10 +350,10 @@ def main():
+                         help='Strip pure nested Legion inventories, retaining summaries and renames; opt-in')
+     parser.add_argument('--retain-patch-diff-reference', action='store_true',
+                         help='Retain transcluded patch diffs as unexpanded source references; opt-in')
+-    parser.add_argument('--canonical-patch-navigation', action='store_true',
+-                        help='Render positional apichanges patch after named parameters; opt-in')
+     parser.add_argument('--mists-automated-diff', action='store_true',
+                         help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
++    parser.add_argument('--mists-source-markup', action='store_true',
++                        help='Retain Mists external-link fields and omit noinclude wrappers; opt-in')
+     args = parser.parse_args()
+     if args.self_test:
+         check_examples()
+@@ -375,8 +372,8 @@ def main():
+                         bfa_prepatch=args.bfa_prepatch,
+                         legion_prepatch=args.legion_prepatch,
+                         retain_patch_diff_reference=args.retain_patch_diff_reference,
+-                        canonical_patch_navigation=args.canonical_patch_navigation,
+-                        mists_automated_diff=args.mists_automated_diff)
++                        mists_automated_diff=args.mists_automated_diff,
++                        mists_source_markup=args.mists_source_markup)
+     rows = seed_rows(text, args.patch)
+     if args.text_only:
+         if args.check:
+diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
+index c90c36c28..2442dda44 100644
+--- a/tools/gen_patch_wikitext_register.py
++++ b/tools/gen_patch_wikitext_register.py
+@@ -29,11 +29,6 @@ FONT = re.compile(r"</?font[^>]*>")
+ COUNT = re.compile(r"<small>\((\d+)\)</small>")
+ 
+ 
+-def with_client_line(register, client_line):
+-    """Keep legacy bytes by default; explicitly label separate client histories."""
+-    return register if client_line is None else dict(register, client_line=client_line)
+-
+-
+ def parse_symbol(text):
+     """Return (symbol, params) for the inventory reference on one line."""
+     match = TEMPLATE.search(text)
+@@ -667,6 +662,26 @@ def parse_mists_automated_diff(text):
+     return entries, counts
+ 
+ 
++def parse_mists_summary(text):
++    """Keep explicit 5.4.0 prose references without inferring historical removals."""
++    entries = []
++    section = None
++    for number, line in enumerate(text.splitlines(), 1):
++        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
++        if heading:
++            section = heading[1]
++        elif section in ('Breaking changes', 'Modified API', 'Bugs', 'New features'):
++            for match in TEMPLATE.finditer(line):
++                category = 'widgets' if '|t=w|' in match[0] else (
++                    'events' if '|t=e|' in match[0] else 'global-api')
++                direction = 'added' if section == 'New features' else 'changed'
++                symbol = next(part for part in match[2].split('|') if '=' not in part)
++                entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
++                entry['annotation'] = line
++                entries.append(entry)
++    return entries
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     for name in ("patch", "path", "revid", "out"):
+@@ -721,10 +736,11 @@ def main():
+     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
+     parser.add_argument('--combat-restriction-bullets', action='store_true',
+                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
+-    parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
+-                        help='Label the client history for isolated supersession; opt-in')
+     parser.add_argument('--mists-automated-diff', action='store_true',
+                         help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
++    parser.add_argument('--mists-summary', action='store_true',
++                        help='Retain explicit 5.4.0 summary API occurrences; opt-in')
++    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
+     args = parser.parse_args()
+     patch, path, revid, out = args.patch, args.path, args.revid, args.out
+     raw = Path(path).read_bytes()
+@@ -787,6 +803,14 @@ def main():
+         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
+     if args.mists_automated_diff:
+         entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
++    if args.mists_summary:
++        entries.extend(parse_mists_summary(raw.decode('utf-8')))
++    if args.mists_diff:
++        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
++        for entry in diff_entries:
++            entry['id'] = 'diff-' + entry['id']
++        entries.extend(diff_entries)
++        counts.extend(diff_counts)
+     if args.inventory_only:
+         for entry in entries:
+             for key in ("kind", "page_default", "test_inline"):
+@@ -799,7 +823,6 @@ def main():
+         "header_counts": counts,
+         "entries": entries,
+     }
+-    register = with_client_line(register, args.client_line)
+     with open(out, "w") as handle:
+         json.dump(register, handle, indent=2, ensure_ascii=False)
+         handle.write("\n")

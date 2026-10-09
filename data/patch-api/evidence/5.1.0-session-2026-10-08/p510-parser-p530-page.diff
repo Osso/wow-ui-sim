@@ -1,0 +1,108 @@
+diff --git a/tools/extract_patch_non_inventory.py b/tools/extract_patch_non_inventory.py
+index df668caa4..f49f1af63 100644
+--- a/tools/extract_patch_non_inventory.py
++++ b/tools/extract_patch_non_inventory.py
+@@ -110,24 +110,13 @@ def canonicalize_patch_navigation(raw):
+     return re.sub(r'\{\{apichanges\|([^{}]+)\}\}', replace, raw)
+ 
+ 
+-def strip_mists_automated_inventories(raw):
+-    """Keep 2013 prose and enum values; omit API tables already in the register."""
+-    raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|FrameXML|Widget API|Events) [\s\S]*?^\|\}\n?',
+-                 '', raw, flags=re.M)
+-    return '\n'.join(line for line in raw.splitlines()
+-                     if not line.startswith(('{|', '|+', '|-', '!', '| valign', '</div>', '|}'))) + '\n'
+-
+-
+ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
+                  retain_reference_notes=False, legacy_api_tables=False,
+                  legacy_api_bullets=False, legacy_cvar_tables=False,
+                  bfa_prepatch=False, legion_prepatch=False,
+-                 retain_patch_diff_reference=False, canonical_patch_navigation=False,
+-                 mists_automated_diff=False):
++                 retain_patch_diff_reference=False, canonical_patch_navigation=False):
+     if canonical_patch_navigation:
+         raw = canonicalize_patch_navigation(raw)
+-    if mists_automated_diff:
+-        raw = strip_mists_automated_inventories(raw)
+     if retain_patch_diff_reference:
+         raw = render_patch_diff_reference(raw)
+     if legion_prepatch:
+@@ -355,8 +344,6 @@ def main():
+                         help='Retain transcluded patch diffs as unexpanded source references; opt-in')
+     parser.add_argument('--canonical-patch-navigation', action='store_true',
+                         help='Render positional apichanges patch after named parameters; opt-in')
+-    parser.add_argument('--mists-automated-diff', action='store_true',
+-                        help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
+     args = parser.parse_args()
+     if args.self_test:
+         check_examples()
+@@ -375,8 +362,7 @@ def main():
+                         bfa_prepatch=args.bfa_prepatch,
+                         legion_prepatch=args.legion_prepatch,
+                         retain_patch_diff_reference=args.retain_patch_diff_reference,
+-                        canonical_patch_navigation=args.canonical_patch_navigation,
+-                        mists_automated_diff=args.mists_automated_diff)
++                        canonical_patch_navigation=args.canonical_patch_navigation)
+     rows = seed_rows(text, args.patch)
+     if args.text_only:
+         if args.check:
+diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
+index c90c36c28..405efadfb 100644
+--- a/tools/gen_patch_wikitext_register.py
++++ b/tools/gen_patch_wikitext_register.py
+@@ -667,6 +667,23 @@ def parse_mists_automated_diff(text):
+     return entries, counts
+ 
+ 
++def parse_mists_widget_handlers(text):
++    """Keep Browser handler owner/name pairs in the dedicated 2013 table."""
++    entries, counts = [], []
++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
++        lines = table[1].splitlines()
++        if not any(line.startswith('|+ Widget Handlers ') for line in lines):
++            continue
++        first_line = text[:table.start(1)].count('\n') + 1
++        rows, headers = parse_section(
++            'widgets', list(enumerate(lines, first_line)), legacy_column_headers=True)
++        for row in rows:
++            row['kind'] = 'widget-script'
++        entries.extend(rows)
++        counts.extend(headers)
++    return entries, counts
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     for name in ("patch", "path", "revid", "out"):
+@@ -725,6 +742,9 @@ def main():
+                         help='Label the client history for isolated supersession; opt-in')
+     parser.add_argument('--mists-automated-diff', action='store_true',
+                         help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
++    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
++    parser.add_argument('--mists-widget-handlers', action='store_true',
++                        help='Retain captioned Mists widget handler ownership; opt-in')
+     args = parser.parse_args()
+     patch, path, revid, out = args.patch, args.path, args.revid, args.out
+     raw = Path(path).read_bytes()
+@@ -787,6 +807,20 @@ def main():
+         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
+     if args.mists_automated_diff:
+         entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
++    if args.mists_diff:
++        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
++        for entry in diff_entries:
++            entry['id'] = 'diff-' + entry['id']
++        entries.extend(diff_entries)
++        counts.extend(diff_counts)
++    if args.mists_widget_handlers:
++        handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
++        handler_entries, handler_counts = parse_mists_widget_handlers(handler_raw)
++        if args.mists_diff:
++            for entry in handler_entries:
++                entry['id'] = 'diff-' + entry['id']
++        entries.extend(handler_entries)
++        counts.extend(handler_counts)
+     if args.inventory_only:
+         for entry in entries:
+             for key in ("kind", "page_default", "test_inline"):

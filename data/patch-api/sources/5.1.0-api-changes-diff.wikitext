@@ -1,0 +1,118 @@
+<noinclude>{{Transclude}}</noinclude>
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.0.4.16016 &rarr; 5.1.0.16309)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 24 new functions
+! style="width: 50%; padding-right: 1em"| 3 removed functions
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_LossOfControl.GetEventInfo}}
+: {{api|C_LossOfControl.GetNumEvents}}
+: {{api|C_PetJournal.FindPetIDByName}}
+: {{api|C_PetJournal.GetNumCollectedInfo}}
+: {{api|C_PetJournal.GetOwnedBattlePetString}}
+: {{api|C_PetJournal.GetPetSortParameter}}
+: {{api|C_PetJournal.GetPetTeamAverageLevel}}
+: {{api|C_PetJournal.GetSummonedPetGUID}}
+: {{api|C_PetJournal.SetPetSortParameter}}
+: {{api|C_PetJournal.SummonPetByGUID}}
+: {{api|C_PetJournal.SummonRandomPet}}
+: {{api|FlyoutHasSpell}}
+: {{api|GetActionLossOfControlCooldown}}
+: {{api|GetFriendshipReputationRanks}}
+: {{api|GetHomePartyInfo}}
+: {{api|GetPvpPowerDamage}}
+: {{api|GetPvpPowerHealing}}
+: {{api|InActiveBattlefield}}
+: {{api|IsLFGComplete}}
+: {{api|IsTradeSkillRepeating}}
+: {{api|PickupPetSpell}}
+: {{api|SetTradeSkillRepeatCount}}
+: {{api|UnitBattlePetSpeciesID}}
+: {{api|UnitIsBattlePet}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: <code>C_PetJournal.GetSummonedPetID</code>
+: <code>C_PetJournal.SummonPetByID</code>
+: <code>GetFriendshipReputationByID</code>
+</div>
+|}
+
+=== FrameXML ===
+{| class="wikitable" style="min-width: 600px"
+|+ FrameXML (5.0.4.16016 &rarr; 5.1.0.16309)
+|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 6 new functions
+! style="width: 50%; padding-right: 1em"| 1 removed functions
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-fxml"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|ConfirmOrLeaveBattlefield}}
+: {{api|ConfirmOrLeaveLFGParty}}
+: {{api|GetRelativeDifficultyColor}}
+: {{api|IsLFGModeActive}}
+: {{api|ShowFriendshipReputationTooltip}}
+: {{api|ShowStatInCategory}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: <code>CheckForMapInBlacklist</code>
+</div>
+|}
+
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.0.4.16016 &rarr; 5.1.0.16309)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 6 new events
+! style="width: 50%; padding-right: 1em"| 2 removed events
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CHAT_MSG_INSTANCE_CHAT_LEADER}}
+: {{api|t=e|CHAT_MSG_INSTANCE_CHAT}}
+: {{api|t=e|GROUP_JOINED}}
+: {{api|t=e|LOSS_OF_CONTROL_ADDED}}
+: {{api|t=e|LOSS_OF_CONTROL_UPDATE}}
+: {{api|t=e|PET_BATTLE_LOOT_RECEIVED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: <code>CHAT_MSG_BATTLEGROUND</code>
+: <code>CHAT_MSG_BATTLEGROUND_LEADER</code>
+</div>
+|}
+
+=== Widget API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API (5.0.4.16016 &rarr; 5.1.0.16309)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 7 new methods
+! style="width: 50%; padding-right: 1em"| 0 removed methods
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Cooldown:SetLossOfControlCooldown}}
+: {{api|t=w|GameTooltip:SetUpgradeItem}}
+: {{api|t=w|Path:CreateControlPoint}}
+: {{api|t=w|Path:GetControlPoints}}
+: {{api|t=w|Path:GetCurve}}
+: {{api|t=w|Path:GetMaxOrder}}
+: {{api|t=w|Path:SetCurve}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+
+</div>
+|}
+
+=== Widget Handlers ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget Handlers (5.0.4.16016 &rarr; 5.1.0.16309)
+|- class="mw-customtoggle-widget-handlers" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 0 new handlers
+! style="width: 50%; padding-right: 1em"| 2 removed handlers
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widget-handlers"
+| valign="top" | <div style="margin-left:-1.5em">
+
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: <code>Animation OnEvent</code>
+: <code>AnimationGroup OnEvent</code>
+</div>
+|}
