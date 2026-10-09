@@ -23,3 +23,4 @@ Commands below ran against committed inputs; receipt revisions identify exact sc
 | `python3 -B /home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_mists_register.py` | PASS | `test_patch_mists_register.proof.json` |
 | `python3 -B /home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_mists_transclusion.py` | PASS | `test_patch_mists_transclusion.proof.json` |
 | `python3 -B /home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_warlords_register.py` | PASS | `test_patch_warlords_register.proof.json` |
+| `cargo test --test prefork_full_ui -- patch_5_3_0_publication_sweep` | 1 passed | `own-sweep.proof.json` |

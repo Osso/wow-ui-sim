@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_3_0_publication_sweep"
+  ],
+  "revision": "9e255f67263297a162ea0cb6225896729dbc8def",
+  "scope": "own-sweep",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {
+    "P530_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p530-page/data/patch-api/evidence/5.3.0-session-2026-10-08/integrated/patch_5_3_0_publication_sweep-results.json"
+  },
+  "exit": 0,
+  "log": "own-sweep.txt",
+  "log_sha256": "11ad2bb5984cdfd892624f3c78e8bfa959c0f200eb69029e0bde5f8cca206596",
+  "seconds": 136.9706494659913,
+  "invalidated": false
+}
