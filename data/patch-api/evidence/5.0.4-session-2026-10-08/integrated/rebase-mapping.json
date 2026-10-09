@@ -1,0 +1,346 @@
+{
+  "original_tip": "64443cc33e7087135d8485ce0e5c555cc5dd18d4",
+  "rebased_tip": "6f9c997b7d45a3f3f119a678b319e2066c090082",
+  "master": "1c9984d2e8a5e672c5109d2234197303e6190317",
+  "original_commits": [
+    "64443cc33e7087135d8485ce0e5c555cc5dd18d4",
+    "2ffcc12e089d7b3da2dc4d681be6a834d16647de",
+    "a12f12042ab8c39f6779ac4251efeeff57f691f1",
+    "755b023c349079e5ea29cb9a53e43764555fb98f",
+    "0df6da251940d6a06d70fc1497a4ab2514abd17f",
+    "295dcfc2084f928d236153068be184bf4f0b3598",
+    "749eca12d9dca19652223257ac13bbb1c9bb3208",
+    "edf957802b92d060d53bbcc2dbb3cc1a803e716e",
+    "53ec81e5d81dbabef8553d32a5c8dd2d3b37d744",
+    "c61b64719a058a775df750874d347b7e24221af0",
+    "3d31dd5e1ca53410bd0ca7d66b899d97f9dd1925",
+    "c406223858ee7d7e6873d5aa7de4a185b61c761c",
+    "2f8a2c0937e98ff9b09dcee4742e92966a13986e",
+    "8d4463dcab2da0617b7e4f6fa7ecde42c689582f"
+  ],
+  "commits": [
+    {
+      "original": "64443cc33e7087135d8485ce0e5c555cc5dd18d4",
+      "rebased": "4662f4ca51155fa31faaacead9869ab74b50593a",
+      "subject": "Record completed 5.0.4 bounded audit and portability gate",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+          "rebased": "cd2c0e47c03c4c0e0f1261bdd693938f63d48ca1"
+        }
+      }
+    },
+    {
+      "original": "2ffcc12e089d7b3da2dc4d681be6a834d16647de",
+      "rebased": "c3dd2493d8d555a5c92a1f72949458903be833b1",
+      "subject": "Prove 5.0.4 validator rejects source and owned log tampering",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+          "rebased": "cd2c0e47c03c4c0e0f1261bdd693938f63d48ca1"
+        }
+      }
+    },
+    {
+      "original": "a12f12042ab8c39f6779ac4251efeeff57f691f1",
+      "rebased": "7cd50b50f4699132da1da1ef6ed1c20fbae5f055",
+      "subject": "Seal completed 5.0.4 runtime Classic and source proof",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+          "rebased": "cd2c0e47c03c4c0e0f1261bdd693938f63d48ca1"
+        }
+      }
+    },
+    {
+      "original": "755b023c349079e5ea29cb9a53e43764555fb98f",
+      "rebased": "12358e56587faa45f9f80523202e047aa710ebc2",
+      "subject": "Preserve exact command logs source pins and acceptance receipts",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+          "rebased": "cd2c0e47c03c4c0e0f1261bdd693938f63d48ca1"
+        }
+      }
+    },
+    {
+      "original": "0df6da251940d6a06d70fc1497a4ab2514abd17f",
+      "rebased": "015e171f995a4a40275d0e8da010bea81a20ebb3",
+      "subject": "Require every bounded acceptance command in 5.0.4 validator",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+          "rebased": "cd2c0e47c03c4c0e0f1261bdd693938f63d48ca1"
+        }
+      }
+    },
+    {
+      "original": "295dcfc2084f928d236153068be184bf4f0b3598",
+      "rebased": "f0b6f34f6b76c44a8d304ef40451b82198265c4f",
+      "subject": "Add compact tree-pinned 5.0.4 historical proof validator",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+          "rebased": "cd2c0e47c03c4c0e0f1261bdd693938f63d48ca1"
+        }
+      }
+    },
+    {
+      "original": "749eca12d9dca19652223257ac13bbb1c9bb3208",
+      "rebased": "4ca01ae6f3ade8c5234c869a2a25983ae5def640",
+      "subject": "Account every 5.0.4 occurrence prose and signature with bounded evidence",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+          "rebased": "cd2c0e47c03c4c0e0f1261bdd693938f63d48ca1"
+        }
+      }
+    },
+    {
+      "original": "edf957802b92d060d53bbcc2dbb3cc1a803e716e",
+      "rebased": "2ebeb8f0aa8456e8fbe23b88465c52d765b7a609",
+      "subject": "Retain exact 159 bounded discovery mismatches for page review",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "5382c8acf5f6c9e2d892c970cd983cf6a88e068c",
+          "rebased": "dd11a535d42e5e9789f885bfdfe48c64cb4d4ee9"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "8ba8021e6549772a6bf871dd71677e332a3d7b6a",
+          "rebased": "aa45fa7eb838794f44b5a825072a5c8c0abe475c"
+        }
+      }
+    },
+    {
+      "original": "53ec81e5d81dbabef8553d32a5c8dd2d3b37d744",
+      "rebased": "036d697cf0c75efb94b21c63fc992e046211cf97",
+      "subject": "Back pet battle type reads with existing per-side pet state",
+      "trees": {
+        "src": {
+          "original": "3f0b5efe5d4642b67f336879348f4fbef286da77",
+          "rebased": "338c07704ad0a2405547d560f976f1070dc6f2ea"
+        },
+        "tests": {
+          "original": "f4e1291c5bf0d190aaf9504d83bd1f99ebd7b730",
+          "rebased": "f132cdf52be829d6cc07c7d6872f411ed7faec1a"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "8ba8021e6549772a6bf871dd71677e332a3d7b6a",
+          "rebased": "aa45fa7eb838794f44b5a825072a5c8c0abe475c"
+        }
+      }
+    },
+    {
+      "original": "c61b64719a058a775df750874d347b7e24221af0",
+      "rebased": "d32cde9d295b83c6fc39976873e141f875ae19fc",
+      "subject": "Add concrete pet type read mutation and missing-state cases",
+      "trees": {
+        "src": {
+          "original": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "original": "f4e1291c5bf0d190aaf9504d83bd1f99ebd7b730",
+          "rebased": "f132cdf52be829d6cc07c7d6872f411ed7faec1a"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "8ba8021e6549772a6bf871dd71677e332a3d7b6a",
+          "rebased": "aa45fa7eb838794f44b5a825072a5c8c0abe475c"
+        }
+      }
+    },
+    {
+      "original": "3d31dd5e1ca53410bd0ca7d66b899d97f9dd1925",
+      "rebased": "757fb1cfb1077c7eec2cb204f599a55487568582",
+      "subject": "Add 5.0.4 retail discovery sweep with pinned 5.1 successor",
+      "trees": {
+        "src": {
+          "original": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "original": "bb3c1c3cc6ab69f91a5360ae572928e90b17a790",
+          "rebased": "3b6bb07e0076357f2202eaa0349e89587b95fdd6"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "8ba8021e6549772a6bf871dd71677e332a3d7b6a",
+          "rebased": "aa45fa7eb838794f44b5a825072a5c8c0abe475c"
+        }
+      }
+    },
+    {
+      "original": "c406223858ee7d7e6873d5aa7de4a185b61c761c",
+      "rebased": "4a7cd03633983239b3eb6c777f801aa8a8959f81",
+      "subject": "Capture complete 5.0.4 page and diff parsing provenance",
+      "trees": {
+        "src": {
+          "original": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "original": "4a72f423ab099d559f337af60ee56c53489b7c16",
+          "rebased": "ee3ddf2ea8947151049da1b77ed95eb2d8ed1ebf"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "8ba8021e6549772a6bf871dd71677e332a3d7b6a",
+          "rebased": "aa45fa7eb838794f44b5a825072a5c8c0abe475c"
+        }
+      }
+    },
+    {
+      "original": "2f8a2c0937e98ff9b09dcee4742e92966a13986e",
+      "rebased": "9ba6fcac219fa6170e577508d44d49fc2766662e",
+      "subject": "Parse opt-in Mists prepatch rename and diff code identities",
+      "trees": {
+        "src": {
+          "original": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "original": "4a72f423ab099d559f337af60ee56c53489b7c16",
+          "rebased": "ee3ddf2ea8947151049da1b77ed95eb2d8ed1ebf"
+        },
+        "tools": {
+          "original": "437e606d1bfa6891d87412b00242c7f86fec7e18",
+          "rebased": "7e9292318d043b9625f7171d53e837719bafa5d8"
+        },
+        "data/patch-api/sources": {
+          "original": "f1a503986237ceec39d5785fb57a601ecf2e5548",
+          "rebased": "a68d00bf7dc12d6e47f4e17020d8ab617bd67127"
+        }
+      }
+    },
+    {
+      "original": "8d4463dcab2da0617b7e4f6fa7ecde42c689582f",
+      "rebased": "7899bd4492b92b706cf8aa3a2a8c454223b8252e",
+      "subject": "Pin retail 5.0.4 page and separate transcluded inventory",
+      "trees": {
+        "src": {
+          "original": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "original": "4a72f423ab099d559f337af60ee56c53489b7c16",
+          "rebased": "ee3ddf2ea8947151049da1b77ed95eb2d8ed1ebf"
+        },
+        "tools": {
+          "original": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030",
+          "rebased": "d9207917bcd0f6de544e87829eed6d57ffdf1bfa"
+        },
+        "data/patch-api/sources": {
+          "original": "f1a503986237ceec39d5785fb57a601ecf2e5548",
+          "rebased": "a68d00bf7dc12d6e47f4e17020d8ab617bd67127"
+        }
+      }
+    }
+  ],
+  "historical_input_pins": "../pins.json"
+}
