@@ -1,0 +1,27 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py"
+  ],
+  "revision": "a12f12042",
+  "cases": [
+    {
+      "path": "data/patch-api/sources/5.0.4-api-changes.wikitext",
+      "exit": 1,
+      "expected_diagnostic": "source drift: data/patch-api/sources/5.0.4-api-changes.wikitext",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py\", line 188, in <module>\n    validate()\n    ~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py\", line 172, in validate\n    validate_seals(final)\n    ~~~~~~~~~~~~~~^^^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py\", line 35, in validate_seals\n    assert digest((ROOT / path).read_bytes()) == expected, 'source drift: ' + path\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: source drift: data/patch-api/sources/5.0.4-api-changes.wikitext\n",
+      "original_sha256": "b8ac5f350bba3ac9669428b005ac9d5a2340ff85caed6c2792ab07e1be1264b9"
+    },
+    {
+      "path": "data/patch-api/evidence/5.0.4-session-2026-10-08/own-prefork.log",
+      "exit": 1,
+      "expected_diagnostic": "own evidence drift: own-prefork.log",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py\", line 188, in <module>\n    validate()\n    ~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py\", line 172, in validate\n    validate_seals(final)\n    ~~~~~~~~~~~~~~^^^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py\", line 33, in validate_seals\n    assert digest((HERE / name).read_bytes()) == expected, 'own evidence drift: ' + name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: own evidence drift: own-prefork.log\n",
+      "original_sha256": "85f346de9551dab705ce16284c9a236f8d77b27b2605d223e5402612c60f6ef1"
+    }
+  ],
+  "all_bytes_restored": true
+}

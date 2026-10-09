@@ -1,0 +1,5 @@
+{
+  "exit": 0,
+  "stdout": "{\"status\": \"PASS\", \"inventory\": 626, \"accounted_ids\": 704, \"publication_mismatches\": 159, \"retirements\": 0}\n",
+  "stderr": ""
+}
