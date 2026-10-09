@@ -1,0 +1,13 @@
+{
+  "base_revision": "4163299fac218bcd84057897cc4ffdc81a80e42a",
+  "templates": [
+    "data/patch-api/evidence/1.10.0-session-2026-10-09",
+    "data/patch-api/evidence/1.10.1-session-2026-10-09"
+  ],
+  "limit": "Methodology only. Own inputs, executed tests, defaults, receipts and seals; no sibling writes or transplanted proof.",
+  "queued_unapplied": {
+    "1.7.0": "active /home/osso/.worktrees/wow-ui-sim-p170-page",
+    "1.8.0": "pending behind 1.9.0",
+    "1.9.0": "separate queued predecessor; not expanded or applied"
+  }
+}
