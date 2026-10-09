@@ -17,7 +17,7 @@ fn patch_5_0_4_publication_sweep(env: &WowLuaEnv) {
         register_env: "P504_SWEEP_REGISTER",
         out_env: "P504_SWEEP_OUT",
         later_registers: &[
-            include_str!("../data/patch-api/evidence/5.0.4-session-2026-10-08/later-5.1.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/5.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.3.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.4.0-wikitext-register.json"),
