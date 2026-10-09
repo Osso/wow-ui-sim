@@ -8,7 +8,7 @@ Account for frozen page `685353`, revision `6778086`, timestamp `2026-07-22T05:4
 - [x] Keep unexpanded Blue posts transclusion UNPROVEN, with absent identity/signature/output/event/state/security/native-equivalence contracts explicit; no positive empty-inventory credit.
 - [x] Record actual configured feature/interface/cache/manifests separately from native source TOC; neither profile names, missing mappings nor manifest contents diagnose unsupported runtime behavior.
 - [x] Reject cross-client successors, omitted rows/contracts, fabricated API/signature/summary/header credit and measurements.
-- [ ] Replay sealed historical tools/source/configuration without Git, target or current mutable repo/cache files; reject serialized ledger/log tampering and restore exact bytes/hashes.
+- [x] Replay sealed historical tools/source/configuration without Git, target or current mutable repo/cache files; reject serialized ledger/log tampering and restore exact bytes/hashes.
 
 ## How it works
 
@@ -22,7 +22,7 @@ Account for frozen page `685353`, revision `6778086`, timestamp `2026-07-22T05:4
 
 ## Tests asserting this spec
 
-`python3 data/patch-api/evidence/2.5.6-session-2026-10-09/test_source_accounting.py` tests serialized SOURCE accounting. `validate.py` derives source/configuration totals from historical sealed inputs. `replay_controls.py` mutates/restores actual serialized artifacts and runs a fresh relocated validator from an own archive. Tests remain source-only; no simulator is invoked. Targeted RED retained; SOURCE GREEN 9/9 and historical validator exit 0 at `c77aab464`. Exact revision, commands and 27 input seals in `source-proof.json`. Serialized archive controls pending; no native/model measurement.
+`python3 data/patch-api/evidence/2.5.6-session-2026-10-09/test_source_accounting.py` tests serialized SOURCE accounting. `validate.py` derives source/configuration totals from historical sealed inputs. `replay_controls.py` captures actual serialized tamper/restoration and a fresh relocated validator from an own archive. This one-time capture refuses to overwrite an already sealed archive; replay retained `replay-archive.tar.gz` with its own validator/seal map instead. Tests remain source-only; no simulator is invoked. Targeted RED retained; SOURCE GREEN 9/9 and historical validator exit 0 at `c77aab464`. Exact revision, commands and 27 input seals in `source-proof.json`. At `4db382e41`, ledger/log disk tampering rejects both exact seals and restores bytes/hashes; fresh copied archive replay exit 0 with 30 historical inputs. Archive and exact member hashes retained in `portable-controls.log` / `portable-proof.json`. Outer seals subsequently include these receipts/archive, without altering tested bytes. No native/model measurement.
 
 ## Known gaps (current cycle)
 
