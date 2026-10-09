@@ -1,0 +1,12 @@
+Patch 4.0.1 API changes
+
+== Breaking changes ==
+* Global variables this, event, arg1, ..., are no longer available.
+* UNIT_MANA, UNIT_ENERGY, UNIT_RAGE, UNIT_RUNIC_POWER, UNIT_FOCUS and UNIT_HAPPINESS events, as well as their UNIT_MAX* counterparts, no longer fire. UNIT_POWER and UNIT_MAXPOWER may be used instead.
+* GetItemCooldown now only accepts numeric item IDs as its argument.
+* Cancelling player buffs and temporary weapon enchants is now protected.
+
+== Global API == <!-- Automatically generated, last updated: 4.0.1.13066 -->
+
+
+== Events == <!-- Automatically generated; last updated: 4.0.1.13066 -->

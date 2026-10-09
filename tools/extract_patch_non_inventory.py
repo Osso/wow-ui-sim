@@ -136,7 +136,11 @@ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=F
                  bfa_prepatch=False, legion_prepatch=False,
                  retain_patch_diff_reference=False, canonical_patch_navigation=False,
                  mists_automated_diff=False, lowercase_reflist=False,
-                 mists_source_markup=False):
+                 mists_source_markup=False, cataclysm_labeled_inventory=False):
+    if cataclysm_labeled_inventory:
+        raw = '\n'.join(line for line in raw.splitlines()
+                        if not re.fullmatch(r': (NEW|REMOVED) \{\{api\|[^{}]+\}\}', line)) + '\n'
+        raw = canonicalize_patch_navigation(raw)
     if mists_source_markup:
         raw = render_mists_source_markup(raw)
     if lowercase_reflist:
@@ -376,6 +380,8 @@ def main():
                         help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
     parser.add_argument('--lowercase-reflist', action='store_true',
                         help='Retain lowercase reflist as an unexpanded reference marker; opt-in')
+    parser.add_argument('--cataclysm-labeled-inventory', action='store_true',
+                        help='Strip explicit NEW/REMOVED rows, retain breaking prose/build context; opt-in')
     parser.add_argument('--mists-source-markup', action='store_true',
                         help='Retain Mists external-link fields and omit noinclude wrappers; opt-in')
     args = parser.parse_args()
@@ -399,7 +405,8 @@ def main():
                         canonical_patch_navigation=args.canonical_patch_navigation,
                         mists_automated_diff=args.mists_automated_diff,
                         lowercase_reflist=args.lowercase_reflist,
-                        mists_source_markup=args.mists_source_markup)
+                        mists_source_markup=args.mists_source_markup,
+                        cataclysm_labeled_inventory=args.cataclysm_labeled_inventory)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

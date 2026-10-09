@@ -639,6 +639,30 @@ def parse_indented_api_lists(text):
     return entries
 
 
+def parse_cataclysm_labeled_inventory(text):
+    """Retain explicit NEW/REMOVED rows and typed Breaking changes references."""
+    entries = []
+    section = None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==\s*(?:<!--.*?-->)?', line)
+        if heading:
+            section = heading[1].strip()
+            continue
+        labeled = re.fullmatch(r': (NEW|REMOVED) (\{\{api\|[^{}]+\}\})', line)
+        if labeled and section in ('Global API', 'Events'):
+            category = 'events' if section == 'Events' else 'global-api'
+            entries.append(make_entry(category, 'added' if labeled[1] == 'NEW' else 'removed',
+                                      number, labeled[2]))
+        elif section == 'Breaking changes' and line.startswith('*'):
+            for match in TEMPLATE.finditer(line):
+                symbol, params = parse_symbol(match[0])
+                category = 'events' if params.get('t') == 'e' else 'global-api'
+                entry = make_entry(category, 'changed', number, match[0])
+                entry['annotation'] = line
+                entries.append(entry)
+    return entries
+
+
 def parse_colon_api_bullets(text):
     """Retain standalone colon-prefixed API additions, not addon descriptions."""
     entries = []
@@ -859,6 +883,8 @@ def main():
                         help='Parse Legion nested inventories, canonical widget owners and explicit removals; opt-in')
     parser.add_argument('--indented-api-lists', action='store_true',
                         help='Retain standalone legacy API lists, rename pairs and CVar removals; opt-in')
+    parser.add_argument('--cataclysm-labeled-inventory', action='store_true',
+                        help='Retain NEW/REMOVED colon inventories and typed breaking references; opt-in')
     parser.add_argument('--colon-api-bullets', action='store_true',
                         help='Retain standalone colon-prefixed New API bullets; opt-in')
     parser.add_argument('--warlords-prepatch', action='store_true',
@@ -935,6 +961,8 @@ def main():
         entries, counts = parse_warlords_prepatch(raw.decode('utf-8')), []
     if args.indented_api_lists:
         entries.extend(parse_indented_api_lists(raw.decode('utf-8')))
+    if args.cataclysm_labeled_inventory:
+        entries, counts = parse_cataclysm_labeled_inventory(raw.decode('utf-8')), []
     if args.colon_api_bullets:
         entries.extend(parse_colon_api_bullets(raw.decode('utf-8')))
     if args.warlords_diff:

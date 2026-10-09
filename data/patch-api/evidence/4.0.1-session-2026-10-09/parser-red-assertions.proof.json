@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_cataclysm_register.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "revision": "29b56e5c18ecdb214bf0b27d46e5bebf492130b7",
+  "scope": "uncommitted RED tests now report missing extractor option as assertion; parser/extractor unchanged",
+  "exit": 1,
+  "log": "parser-red-assertions.log",
+  "log_sha256": "1917aefdff13c1a64e891beb511bee82b489fb501f88a3012f93c06a7bed2e70"
+}

@@ -673,3 +673,7 @@ Source/accounting fixtures 6/6 at `a0db0fa0d`; compact per-command scope/revisio
 
 [Audit](investigations/patch-4-1-0-api-audit.md#integration-boundary): actual 4.2.0/4.3.0/4.3.4 successors; sole overlap is 4.3.0 IsIPv6Available removal, 51 matches / 30 gaps, no IPv6 model/native credit. Historical 81 inventory, 50/31 observations, 86 extract rows (78 metadata/eight prose), four signatures and 171 IDs (50 bounded/43 pending/78 metadata) remain frozen; negative 31 → 32 unchanged. Explicit sidecar hashes at 216568b5e preserve all 23 original seals, archive and logs. Retail GetPetHappiness absent; non-retail/Mists state retained. Main reports 69 sweeps pass; Mists missing-file rebase failure awaits retry, runtime build, portability and independent verifier. Native/full-suite/CI unproven. Earlier queued descriptions record historical capture boundaries, not current successor state.
 
+
+## 2026-10-09 — Retail Patch 4.0.1 source parsing
+
+Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventories, typed breaking references, retained prose/build context and ordered pending successors. Targeted development proof pending.
