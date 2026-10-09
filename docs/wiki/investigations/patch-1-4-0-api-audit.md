@@ -33,13 +33,14 @@ Own base SOURCE RED retained; initial four failures/three absent-field errors fo
 
 ## Post-seal category correction
 
-Original sealed ledger carries last New category “Miscellaneous” into Changed TogglePVP metadata. Frozen source has no category term in Changed. Current corrected ledger resets category at every section heading; exactly one group changes to null, no signatures/contracts/counts/history/defaults/measurements change. Own correction RED3 retained before implementation; current GREEN pending at correction commit epoch. Original seals/archive/code/ledger and their SOURCE7 proof remain historical, not rewritten or misrepresented as corrected proof. Main consumes corrected current ledger alongside immutable original replay.
+Original sealed ledger carries last New category “Miscellaneous” into Changed TogglePVP metadata. Frozen source has no category term in Changed. Current corrected ledger resets category at every section heading; exactly one group changes to null, no signatures/contracts/counts/history/defaults/measurements change. Own correction RED3 retained before implementation; fresh copied current SOURCE GREEN3/3 at8bfc74ee9 with55 category/omission controls and default/original preservation. Separate three-file/four-member replay extension sealed; no original archive rewrite. Original seals/archive/code/ledger and their SOURCE7 proof remain historical, not rewritten or misrepresented as corrected proof. Main consumes corrected current ledger alongside immutable original replay.
 
 ## Sources
 
 - [Current literal ledger](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/current-ledger.json)
 - [Original sealed ledger](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/ledger.json) — historical pre-category-correction artifact
-- [Proof ledger](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/proof-ledger.json)
+- [Proof ledger](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/proof-ledger.json) / [later actual receipts](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/later-proof-ledger.json)
+- [HANDOFF](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/HANDOFF.md) / [REPLAY](../../../data/patch-api/evidence/1.4.0-session-2026-10-09/REPLAY.md)
 - [Spec](../../specs/patch-1-4-0-source-accounting.md)
 - [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — explicit child restrictions override operations
 

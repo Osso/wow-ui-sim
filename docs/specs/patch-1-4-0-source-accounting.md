@@ -7,10 +7,10 @@ Audit only frozen page316397/revision3052898 from the [own evidence](../../data/
 - [x] Validate exact body/response/manifest-linked registry101 identity before deriving every literal row, API/event occurrence, signature, prose, header, link, navigation and template.
 - [x] Reject each boundary omission, derived-count mutation, invented default/count/coverage and linked-target expansion; retain precise UNPROVEN argument/return/state/event/security/native limits.
 - [x] Preserve own-base default generator/extractor bytes and malformed-symbol/null-input errors independently of literal accounting.
-- [ ] Replay copied SOURCE and three portable controls without Git, target, current tools, runtime or network; reject serialized ledger/log tampering and restore exact bytes/hashes/original map without resealing.
-- [ ] Preserve original seals/archive; keep later actual revision/cwd/argv/times/full-stream/hash-scope receipts separate.
+- [x] Replay copied SOURCE and three portable controls without Git, target, current tools, runtime or network; reject serialized ledger/log tampering and restore exact bytes/hashes/original map without resealing.
+- [x] Preserve original seals/archive; keep later actual revision/cwd/argv/times/full-stream/hash-scope receipts separate.
 
-- [ ] Reset category at each section heading; retain historical sealed misclassification separately, without changing any contract or coverage credit.
+- [x] Reset category at each section heading; retain historical sealed misclassification separately, without changing any contract or coverage credit.
 
 ## How it works
 
