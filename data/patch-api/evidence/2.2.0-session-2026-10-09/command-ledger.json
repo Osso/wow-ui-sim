@@ -12,6 +12,18 @@
       "result": "RED 5/5 expected assertions",
       "log": "source-red.log",
       "invalidated_by": "validator implementation; retained development RED, not current pass"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "revision": "3045ccee9494e5ce4c09dd9f0c23e0f0bbb4043c",
+      "scope": "own SOURCE fixture and frozen ledger; 279 individual omission controls; no runtime/native",
+      "result": "GREEN 5/5; exit0",
+      "log": "source-green.log",
+      "invalidated_by": null
     }
   ]
 }
