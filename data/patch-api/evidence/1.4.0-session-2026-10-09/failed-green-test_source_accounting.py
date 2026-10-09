@@ -178,11 +178,7 @@ class SourceAccounting(unittest.TestCase):
         first = ledger["inventory"][0]
         self.assertEqual(first["literal_signature"], "AcceptBattlefieldPort(accept)")
         self.assertEqual(
-            next(
-                c
-                for c in ledger["contracts"]
-                if c.get("symbol") == "AcceptBattlefieldPort"
-            )["source_claim"],
+            ledger["contracts"][0]["source_claim"],
             "Called with true to accept porting into a battlefield, or false to reject/leave queue.",
         )
         self.assertTrue(all(c["status"] == "UNPROVEN" for c in ledger["contracts"]))

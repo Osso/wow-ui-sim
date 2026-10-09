@@ -1,0 +1,75 @@
+test_every_boundary_omission_and_count_mutation_rejected (__main__.SourceAccounting.test_every_boundary_omission_and_count_mutation_rejected) ... FAIL
+test_exact_identity_and_literal_rows (__main__.SourceAccounting.test_exact_identity_and_literal_rows) ... FAIL
+test_historical_default_bytes_and_errors (__main__.SourceAccounting.test_historical_default_bytes_and_errors) ... FAIL
+test_identity_source_response_and_manifest_registry_mutations (__main__.SourceAccounting.test_identity_source_response_and_manifest_registry_mutations) ... FAIL
+test_invention_expansion_and_credit_rejected (__main__.SourceAccounting.test_invention_expansion_and_credit_rejected) ... FAIL
+test_precise_contract_limits_no_alias_or_default (__main__.SourceAccounting.test_precise_contract_limits_no_alias_or_default) ... FAIL
+test_separate_unapplied_histories (__main__.SourceAccounting.test_separate_unapplied_histories) ... FAIL
+
+======================================================================
+FAIL: test_every_boundary_omission_and_count_mutation_rejected (__main__.SourceAccounting.test_every_boundary_omission_and_count_mutation_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 85, in test_every_boundary_omission_and_count_mutation_rejected
+    self.assertGreater(controls, 170)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than 170
+
+======================================================================
+FAIL: test_exact_identity_and_literal_rows (__main__.SourceAccounting.test_exact_identity_and_literal_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 45, in test_exact_identity_and_literal_rows
+    self.assertIn("pageid", pin, "frozen identity absent")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'pageid' not found in {} : frozen identity absent
+
+======================================================================
+FAIL: test_historical_default_bytes_and_errors (__main__.SourceAccounting.test_historical_default_bytes_and_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 169, in test_historical_default_bytes_and_errors
+    self.assertTrue((EVIDENCE / "default-register.json").is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_identity_source_response_and_manifest_registry_mutations (__main__.SourceAccounting.test_identity_source_response_and_manifest_registry_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 113, in test_identity_source_response_and_manifest_registry_mutations
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_invention_expansion_and_credit_rejected (__main__.SourceAccounting.test_invention_expansion_and_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 93, in test_invention_expansion_and_credit_rejected
+    with self.assertRaisesRegex(AssertionError, "serialized literal ledger"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_precise_contract_limits_no_alias_or_default (__main__.SourceAccounting.test_precise_contract_limits_no_alias_or_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 145, in test_precise_contract_limits_no_alias_or_default
+    self.assertTrue(ledger["inventory"], "literal declarations absent")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : literal declarations absent
+
+======================================================================
+FAIL: test_separate_unapplied_histories (__main__.SourceAccounting.test_separate_unapplied_histories)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 163, in test_separate_unapplied_histories
+    self.assertTrue(history["queued_successor_references"], "queue identity absent")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : queue identity absent
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=7)

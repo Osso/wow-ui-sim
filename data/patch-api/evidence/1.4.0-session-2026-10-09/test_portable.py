@@ -93,9 +93,9 @@ class PortableReplay(unittest.TestCase):
         )
 
     def test_serialized_log_fabrication_rejected_restored(self):
-        original = (self.copied / "green.log").read_bytes()
+        original = (self.copied / "source-green.log").read_bytes()
         self.reject_restore(
-            "green.log", original + b"fabricated native 1.4.0 parity PASS\n"
+            "source-green.log", original + b"fabricated native 1.4.0 parity PASS\n"
         )
 
 
