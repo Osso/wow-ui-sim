@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "revision": "3aea1d5d18e0ab291a060f4d71badfb5a51faac0",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 48
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 49
+    }
+  },
+  "prior_validator_count": 47,
+  "prior_set_exact": true,
+  "log_sha256": "b80051586bca13dc889188d28cff6f1fa76db9e30ba603da981006696a2acc3c"
+}

@@ -1,0 +1,27 @@
+{
+  "initial": {
+    "index.md": {
+      "lines": 2751,
+      "bytes": 572944
+    },
+    "log.md": {
+      "lines": 513,
+      "bytes": 63870
+    }
+  },
+  "preceding_revision": "3aea1d5d18e0ab291a060f4d71badfb5a51faac0",
+  "current": {
+    "index.md": {
+      "lines": 2755,
+      "bytes": 574074,
+      "preceding_lines": 2755,
+      "preceding_bytes": 573845
+    },
+    "log.md": {
+      "lines": 518,
+      "bytes": 65001,
+      "preceding_lines": 518,
+      "preceding_bytes": 64772
+    }
+  }
+}

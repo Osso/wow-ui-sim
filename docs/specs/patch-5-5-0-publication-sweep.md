@@ -8,7 +8,7 @@ Audit the pinned Mists Classic launch page, not historical retail MoP. Source: `
 - [x] Assert current Mists profile, interface 50504, Mists cache, and successful real SharedXML publication before classifying the empty inventory.
 - [x] Restrict later registers to Classic 5.5.1–5.5.4; reject an injected inventory row.
 - [x] Preserve retail publication observations and client-line controls; pass Mists page tests and warning-free non-vendor check.
-- [ ] Validate committed session proof with pinned shared inputs in clean and synthetic-later-audit checkouts.
+- [x] Validate committed session proof with pinned shared inputs in clean and synthetic-later-audit checkouts.
 
 ## How it works
 

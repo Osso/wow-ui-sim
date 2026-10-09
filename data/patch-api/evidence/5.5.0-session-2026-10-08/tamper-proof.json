@@ -1,0 +1,24 @@
+{
+  "controls": [
+    {
+      "input": "p550-source-response.json",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p550-page/data/patch-api/evidence/5.5.0-session-2026-10-08/validate.py\", line 229, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p550-page/data/patch-api/evidence/5.5.0-session-2026-10-08/validate.py\", line 211, in main\n    assert digest(path.read_bytes()) == expected, name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: p550-source-response.json\n",
+      "original_sha256": "002a59b3356751acf8c7a658dc02ec27b19bd70dd2b68e2fdb2672d291e9ceb4"
+    },
+    {
+      "input": "mists-pages.txt",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p550-page/data/patch-api/evidence/5.5.0-session-2026-10-08/validate.py\", line 229, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p550-page/data/patch-api/evidence/5.5.0-session-2026-10-08/validate.py\", line 211, in main\n    assert digest(path.read_bytes()) == expected, name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: mists-pages.txt\n",
+      "original_sha256": "843b95eb7eb01e1ad3d5ce0fe5f0b2559bb1c77971190059fc78a6a933cd6251"
+    }
+  ],
+  "restored_byte_identical": true,
+  "restored_validation": {
+    "exit": 0,
+    "stdout": "{\"accounting\": {\"gaps\": 0, \"inventory\": 0, \"metadata\": 5, \"problematic_prose\": 1}, \"reproduction\": {\"extracts\": 59, \"inherited_extract_failures\": [\"12.0.5\", \"12.0.7\", \"12.1.0\"], \"registers\": 62}, \"retail\": {\"differences\": 0, \"observations\": 9817, \"pages\": 57}, \"status\": \"PASS\"}\n",
+    "stderr": ""
+  }
+}
