@@ -1,0 +1,57 @@
+{
+  "integrated_registers": [
+    "5.4.1",
+    "5.4.2",
+    "5.4.7"
+  ],
+  "before_gaps": 22,
+  "after_gaps": 21,
+  "observation_changes": {
+    "diff-wt-global-api-securerandom-43": {
+      "before": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "securerandom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "after": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": "wt-global-api-securerandom-28",
+          "symbol": "securerandom"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    }
+  },
+  "replacements": [
+    {
+      "source_id": "diff-wt-global-api-securerandom-43",
+      "later_patch": "5.4.2",
+      "later_id": "wt-global-api-securerandom-28"
+    }
+  ],
+  "reason": "The exact 5.4.2 removal supersedes historical 5.4.0 addition; raw=nil and lookup=nil satisfy current absence. No historical RNG or runtime implementation claim."
+}
