@@ -69,9 +69,11 @@
     },
     {
       "source_id": "diff-wt-global-api-GetArenaTeamIndexBySize-20",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "Historical arena-team roster/size indexing is absent. Current rated PvP queries do not establish the 2013 persistent arena-team contract."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current retail absence superseded by 5.4.0 removal diff-wt-global-api-GetArenaTeamIndexBySize-58. Historical producer/transaction behavior remains unproved; no runtime alias or retirement added."
     },
     {
       "source_id": "diff-wt-global-api-GetBlacklistMapName-21",
@@ -193,9 +195,11 @@
     },
     {
       "source_id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-37",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "Void-storage transmog preparation global is absent. The void-storage source-to-transmog pending transaction and selection ownership are unmodeled; current outfit models are not that service."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current retail absence superseded by 5.3.0 removal diff-wt-global-api-PrepVoidStorageForTransmogrify-28. Historical producer/transaction behavior remains unproved; no runtime alias or retirement added."
     },
     {
       "source_id": "diff-wt-global-api-RequestRandomBattlegroundInstanceInfo-38",

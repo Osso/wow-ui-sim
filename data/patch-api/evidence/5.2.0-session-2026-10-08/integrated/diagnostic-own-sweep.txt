@@ -1,0 +1,165 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p520-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 48.08s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p520-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.12ms
+[  0.002s] [Startup] rilua VM created in 101.10µs
+[  0.002s] [Startup] builtin frames initialized in 75.15µs
+[  0.002s] [Startup] template registry cleared in 6.35µs
+[  0.002s] [Startup] intrinsic templates registered in 7.64µs
+[  0.002s] [Startup] initial app_data lua handle installed in 541.00ns
+[  0.179s] [Startup] init_lua_state complete in 176.44ms
+[  0.179s] [Startup] final app_data lua handle installed in 301.00ns
+[  0.179s] [Startup] initial screen globals installed in 124.61µs
+[  0.179s] [Startup] WowLuaEnv::new complete
+[  3.001s] [Startup] apply_post_load_workarounds: begin
+[  3.001s] [Workarounds] starting patch_edit_mode_manager
+[  3.001s] [Workarounds] finished patch_edit_mode_manager in 316.05µs
+[  3.001s] [Workarounds] starting init_edit_mode_layout
+[  3.001s] [EditMode] starting setup_layout_info
+[  3.005s] [EditMode] finished setup_layout_info in 3.81ms
+[  3.005s] [EditMode] starting apply_system_anchors
+[  3.158s] [EditMode] finished apply_system_anchors in 152.41ms
+[  3.158s] [EditMode] starting finalize_action_bar_positions
+[  3.160s] [EditMode] finished finalize_action_bar_positions in 1.96ms
+[  3.160s] [EditMode] starting invoke_anchor_changed_hooks
+[  3.160s] [EditMode] finished invoke_anchor_changed_hooks in 424.29µs
+[  3.160s] [EditMode] starting fix_action_bar_nan_size
+[  3.160s] [EditMode] finished fix_action_bar_nan_size in 51.47µs
+[  3.160s] [EditMode] starting fix_action_bar_scale
+[  3.160s] [EditMode] finished fix_action_bar_scale in 4.61µs
+[  3.160s] [Workarounds] finished init_edit_mode_layout in 158.74ms
+[  3.160s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  3.160s] [Workarounds] finished patch_ui_parent_panel_toggles in 236.11µs
+[  3.160s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  3.161s] [Workarounds] finished patch_uiparent_onupdate_worklists in 97.62µs
+[  3.161s] [Workarounds] starting init_chat_type_colors
+[  3.161s] [Workarounds] finished init_chat_type_colors in 132.85µs
+[  3.161s] [Workarounds] starting patch_chat_voice_button_surface
+[  3.161s] [Workarounds] finished patch_chat_voice_button_surface in 124.76µs
+[  3.161s] [Workarounds] starting patch_item_socketing_tooltips
+[  3.161s] [Workarounds] finished patch_item_socketing_tooltips in 60.09µs
+[  3.161s] [Workarounds] starting patch_character_select_selected_name
+[  3.161s] [Workarounds] finished patch_character_select_selected_name in 30.27µs
+[  3.161s] [Workarounds] starting patch_character_create_defaults
+[  3.161s] [Workarounds] finished patch_character_create_defaults in 217.19µs
+[  3.161s] [Workarounds] starting patch_character_frame_title_refresh
+[  3.167s] [Workarounds] finished patch_character_frame_title_refresh in 5.90ms
+[  3.167s] [Workarounds] starting patch_vignette_pin_template
+[  3.167s] [Workarounds] finished patch_vignette_pin_template in 112.49µs
+[  3.167s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  3.168s] [Workarounds] finished patch_fog_of_war_pin_mixin in 292.08µs
+[  3.168s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  3.174s] [Workarounds] finished patch_map_exploration_pin_mixin in 5.98ms
+[  3.174s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  3.174s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 142.23µs
+[  3.174s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  3.174s] [Workarounds] finished ensure_adventure_map_frame_surface in 708.92µs
+[  3.174s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  3.175s] [Workarounds] finished patch_action_bar_button_event_fanout in 164.56µs
+[  3.175s] [Workarounds] starting patch_paging_controls_page_text
+[  3.175s] [Workarounds] finished patch_paging_controls_page_text in 61.07µs
+[  3.175s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  3.175s] [Workarounds] finished patch_talent_edge_frame_level_sync in 36.29µs
+[  3.175s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  3.175s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 69.96µs
+[  3.175s] [Workarounds] starting patch_game_time_defaults
+[  3.175s] [Workarounds] finished patch_game_time_defaults in 9.51µs
+[  3.175s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  3.175s] [Workarounds] finished patch_tooltip_nineslice_surface in 65.38µs
+[  3.175s] [Workarounds] starting patch_container_frame_token_tracker
+[  3.175s] [Workarounds] finished patch_container_frame_token_tracker in 45.28µs
+[  3.175s] [Workarounds] starting patch_achievement_display_set_achievements
+[  3.175s] [Workarounds] finished patch_achievement_display_set_achievements in 12.48µs
+[  3.175s] [Workarounds] starting patch_housing_dashboard_preload
+[  3.175s] [Workarounds] finished patch_housing_dashboard_preload in 227.58µs
+[  3.175s] [Workarounds] starting patch_lfg_lock_list
+[  3.175s] [Workarounds] finished patch_lfg_lock_list in 53.19µs
+[  3.175s] [Workarounds] starting patch_auction_house_browse_results_event
+[  3.175s] [Workarounds] finished patch_auction_house_browse_results_event in 72.32µs
+[  3.175s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  3.175s] [Workarounds] finished patch_auction_house_search_context_aliases in 33.28µs
+[  3.175s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  3.175s] [Workarounds] finished patch_auth_challenge_frame_parent in 101.05µs
+[  3.175s] [Workarounds] starting patch_settings_surface_defaults
+[  3.176s] [Workarounds] finished patch_settings_surface_defaults in 522.67µs
+[  3.176s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  3.176s] [Workarounds] finished patch_settings_canvas_layout_visibility in 125.07µs
+[  3.176s] [Startup] apply_post_load_workarounds: workarounds complete
+[  3.258s] [Startup] apply_post_load_workarounds: globals restored
+[  3.258s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  3.258s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  3.424s] [Startup] begin login sequence
+[  3.424s] [Startup] Firing ADDON_LOADED
+[  3.425s] [Startup] Firing VARIABLES_LOADED
+[  3.545s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  3.595s] [Startup] Firing UI_SCALE_CHANGED
+[  3.596s] [Startup] Firing PLAYER_LOGIN
+[  3.597s] [Startup] end login sequence in 172.10ms
+[  3.597s] [Startup] begin world enter sequence
+[  3.597s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  3.597s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  3.597s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  3.897s] [EditMode] starting setup_layout_info
+[  3.904s] [EditMode] finished setup_layout_info in 6.66ms
+[  3.904s] [EditMode] starting apply_system_anchors
+[  4.064s] [EditMode] finished apply_system_anchors in 160.59ms
+[  4.064s] [EditMode] starting finalize_action_bar_positions
+[  4.067s] [EditMode] finished finalize_action_bar_positions in 3.18ms
+[  4.067s] [EditMode] starting invoke_anchor_changed_hooks
+[  4.074s] [EditMode] finished invoke_anchor_changed_hooks in 6.66ms
+[  4.074s] [EditMode] starting fix_action_bar_nan_size
+[  4.074s] [EditMode] finished fix_action_bar_nan_size in 88.83µs
+[  4.074s] [EditMode] starting fix_action_bar_scale
+[  4.074s] [EditMode] finished fix_action_bar_scale in 5.56µs
+[  4.074s] [EditMode] starting reapply_player_frame_anchor
+[  4.076s] [EditMode] finished reapply_player_frame_anchor in 1.66ms
+[  4.085s] [Startup] end world enter sequence in 488.73ms
+[  4.085s] [Startup] begin post-login events
+[  4.086s] [Startup] Firing UNIT_AURA
+[  4.087s] [Startup] Firing PET_UI_UPDATE
+[  4.090s] [Startup] Firing BAG_UPDATE_DELAYED
+[  4.091s] [Startup] Firing QUEST_LOG_UPDATE
+[  4.092s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  4.266s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  4.266s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  4.268s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  4.300s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  4.300s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  4.300s] [Startup] Firing UPDATE_BINDINGS
+[  4.304s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  4.308s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  4.309s] [Startup] end post-login events in 224.15ms
+[  4.309s] [Startup] begin close startup special windows
+[  4.310s] [Startup] end close startup special windows in 422.15µs
+[  4.310s] [Startup] begin FIRST_FRAME_RENDERED
+[  4.310s] [Startup] Firing FIRST_FRAME_RENDERED
+[  4.310s] [Startup] end FIRST_FRAME_RENDERED in 239.34µs
+[  4.310s] [Startup] begin unblock hidden splash alerts
+[  4.310s] [Startup] end unblock hidden splash alerts in 19.96µs
+[  4.310s] [Startup] begin post-event workarounds
+[  4.310s] [Startup] end post-event workarounds in 1.37µs
+running 1 tests
+test patch_5_2_0_publication_sweep::patch_5_2_0_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: []; resolved/stale gaps: ["diff-wt-global-api-GetArenaTeamIndexBySize-20", "diff-wt-global-api-PrepVoidStorageForTransmogrify-37"]
+  left: {"diff-wt-framexml-ControlGetActiveCvarValue-88", "diff-wt-global-api-C_MapBar.BarIsShown-10", "diff-wt-global-api-C_MapBar.GetCurrentValue-11", "diff-wt-global-api-C_MapBar.GetMaxValue-12", "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13", "diff-wt-global-api-C_MapBar.GetPhaseIndex-14", "diff-wt-global-api-C_MapBar.GetTag-15", "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16", "diff-wt-global-api-DeclineChannelInvite-18", "diff-wt-global-api-GetBlacklistMapName-21", "diff-wt-global-api-GetQuestChoiceInfo-25", "diff-wt-global-api-GetQuestChoiceOptionInfo-26", "diff-wt-global-api-GetRandomBGInfo-32", "diff-wt-global-api-IsAllowedToUserTeleport-35", "diff-wt-global-api-IsTradeSkillReady-36", "diff-wt-global-api-SetRaidDifficultyID-41", "diff-wt-global-api-UpdateWorldMapArrow-44", "diff-wt-global-api-UseVoidItemForTransmogrify-45", "diff-wt-widgets-Model:AdvanceTime-172", "diff-wt-widgets-Model:ClearFog-173", "diff-wt-widgets-Model:ClearModel-174", "diff-wt-widgets-Model:GetCameraDistance-175", "diff-wt-widgets-Model:GetCameraFacing-176", "diff-wt-widgets-Model:GetCameraPosition-177", "diff-wt-widgets-Model:GetCameraTarget-178", "diff-wt-widgets-Model:GetFacing-179", "diff-wt-widgets-Model:GetFogColor-180", "diff-wt-widgets-Model:GetFogFar-181", "diff-wt-widgets-Model:GetFogNear-182", "diff-wt-widgets-Model:GetLight-183", "diff-wt-widgets-Model:GetModel-184", "diff-wt-widgets-Model:GetModelScale-185", "diff-wt-widgets-Model:GetPosition-186", "diff-wt-widgets-Model:GetWorldScale-187", "diff-wt-widgets-Model:HasCustomCamera-188", "diff-wt-widgets-Model:ReplaceIconTexture-189", "diff-wt-widgets-Model:SetCamera-190", "diff-wt-widgets-Model:SetCameraDistance-191", "diff-wt-widgets-Model:SetCameraFacing-192", "diff-wt-widgets-Model:SetCameraPosition-193", "diff-wt-widgets-Model:SetCameraTarget-194", "diff-wt-widgets-Model:SetCustomCamera-195", "diff-wt-widgets-Model:SetFacing-196", "diff-wt-widgets-Model:SetFogColor-197", "diff-wt-widgets-Model:SetFogFar-198", "diff-wt-widgets-Model:SetFogNear-199", "diff-wt-widgets-Model:SetGlow-200", "diff-wt-widgets-Model:SetLight-201", "diff-wt-widgets-Model:SetModel-202", "diff-wt-widgets-Model:SetModelScale-203", "diff-wt-widgets-Model:SetPosition-204", "diff-wt-widgets-Model:SetSequence-205", "diff-wt-widgets-Model:SetSequenceTime-206", "diff-wt-widgets-PlayerModel OnAnimFinished-217", "diff-wt-widgets-PlayerModel OnUpdateModel-218"}
+ right: {"diff-wt-framexml-ControlGetActiveCvarValue-88", "diff-wt-global-api-C_MapBar.BarIsShown-10", "diff-wt-global-api-C_MapBar.GetCurrentValue-11", "diff-wt-global-api-C_MapBar.GetMaxValue-12", "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13", "diff-wt-global-api-C_MapBar.GetPhaseIndex-14", "diff-wt-global-api-C_MapBar.GetTag-15", "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16", "diff-wt-global-api-DeclineChannelInvite-18", "diff-wt-global-api-GetArenaTeamIndexBySize-20", "diff-wt-global-api-GetBlacklistMapName-21", "diff-wt-global-api-GetQuestChoiceInfo-25", "diff-wt-global-api-GetQuestChoiceOptionInfo-26", "diff-wt-global-api-GetRandomBGInfo-32", "diff-wt-global-api-IsAllowedToUserTeleport-35", "diff-wt-global-api-IsTradeSkillReady-36", "diff-wt-global-api-PrepVoidStorageForTransmogrify-37", "diff-wt-global-api-SetRaidDifficultyID-41", "diff-wt-global-api-UpdateWorldMapArrow-44", "diff-wt-global-api-UseVoidItemForTransmogrify-45", "diff-wt-widgets-Model:AdvanceTime-172", "diff-wt-widgets-Model:ClearFog-173", "diff-wt-widgets-Model:ClearModel-174", "diff-wt-widgets-Model:GetCameraDistance-175", "diff-wt-widgets-Model:GetCameraFacing-176", "diff-wt-widgets-Model:GetCameraPosition-177", "diff-wt-widgets-Model:GetCameraTarget-178", "diff-wt-widgets-Model:GetFacing-179", "diff-wt-widgets-Model:GetFogColor-180", "diff-wt-widgets-Model:GetFogFar-181", "diff-wt-widgets-Model:GetFogNear-182", "diff-wt-widgets-Model:GetLight-183", "diff-wt-widgets-Mo)
+---- patch_5_2_0_publication_sweep::patch_5_2_0_publication_sweep stderr ----
+
+thread 'main' (964373) panicked at /home/osso/.worktrees/wow-ui-sim-p520-page/tests/common/publication_sweep.rs:544:5:
+assertion `left == right` failed: new gaps: []; resolved/stale gaps: ["diff-wt-global-api-GetArenaTeamIndexBySize-20", "diff-wt-global-api-PrepVoidStorageForTransmogrify-37"]
+  left: {"diff-wt-framexml-ControlGetActiveCvarValue-88", "diff-wt-global-api-C_MapBar.BarIsShown-10", "diff-wt-global-api-C_MapBar.GetCurrentValue-11", "diff-wt-global-api-C_MapBar.GetMaxValue-12", "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13", "diff-wt-global-api-C_MapBar.GetPhaseIndex-14", "diff-wt-global-api-C_MapBar.GetTag-15", "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16", "diff-wt-global-api-DeclineChannelInvite-18", "diff-wt-global-api-GetBlacklistMapName-21", "diff-wt-global-api-GetQuestChoiceInfo-25", "diff-wt-global-api-GetQuestChoiceOptionInfo-26", "diff-wt-global-api-GetRandomBGInfo-32", "diff-wt-global-api-IsAllowedToUserTeleport-35", "diff-wt-global-api-IsTradeSkillReady-36", "diff-wt-global-api-SetRaidDifficultyID-41", "diff-wt-global-api-UpdateWorldMapArrow-44", "diff-wt-global-api-UseVoidItemForTransmogrify-45", "diff-wt-widgets-Model:AdvanceTime-172", "diff-wt-widgets-Model:ClearFog-173", "diff-wt-widgets-Model:ClearModel-174", "diff-wt-widgets-Model:GetCameraDistance-175", "diff-wt-widgets-Model:GetCameraFacing-176", "diff-wt-widgets-Model:GetCameraPosition-177", "diff-wt-widgets-Model:GetCameraTarget-178", "diff-wt-widgets-Model:GetFacing-179", "diff-wt-widgets-Model:GetFogColor-180", "diff-wt-widgets-Model:GetFogFar-181", "diff-wt-widgets-Model:GetFogNear-182", "diff-wt-widgets-Model:GetLight-183", "diff-wt-widgets-Model:GetModel-184", "diff-wt-widgets-Model:GetModelScale-185", "diff-wt-widgets-Model:GetPosition-186", "diff-wt-widgets-Model:GetWorldScale-187", "diff-wt-widgets-Model:HasCustomCamera-188", "diff-wt-widgets-Model:ReplaceIconTexture-189", "diff-wt-widgets-Model:SetCamera-190", "diff-wt-widgets-Model:SetCameraDistance-191", "diff-wt-widgets-Model:SetCameraFacing-192", "diff-wt-widgets-Model:SetCameraPosition-193", "diff-wt-widgets-Model:SetCameraTarget-194", "diff-wt-widgets-Model:SetCustomCamera-195", "diff-wt-widgets-Model:SetFacing-196", "diff-wt-widgets-Model:SetFogColor-197", "diff-wt-widgets-Model:SetFogFar-198", "diff-wt-widgets-Model:SetFogNear-199", "diff-wt-widgets-Model:SetGlow-200", "diff-wt-widgets-Model:SetLight-201", "diff-wt-widgets-Model:SetModel-202", "diff-wt-widgets-Model:SetModelScale-203", "diff-wt-widgets-Model:SetPosition-204", "diff-wt-widgets-Model:SetSequence-205", "diff-wt-widgets-Model:SetSequenceTime-206", "diff-wt-widgets-PlayerModel OnAnimFinished-217", "diff-wt-widgets-PlayerModel OnUpdateModel-218"}
+ right: {"diff-wt-framexml-ControlGetActiveCvarValue-88", "diff-wt-global-api-C_MapBar.BarIsShown-10", "diff-wt-global-api-C_MapBar.GetCurrentValue-11", "diff-wt-global-api-C_MapBar.GetMaxValue-12", "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13", "diff-wt-global-api-C_MapBar.GetPhaseIndex-14", "diff-wt-global-api-C_MapBar.GetTag-15", "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16", "diff-wt-global-api-DeclineChannelInvite-18", "diff-wt-global-api-GetArenaTeamIndexBySize-20", "diff-wt-global-api-GetBlacklistMapName-21", "diff-wt-global-api-GetQuestChoiceInfo-25", "diff-wt-global-api-GetQuestChoiceOptionInfo-26", "diff-wt-global-api-GetRandomBGInfo-32", "diff-wt-global-api-IsAllowedToUserTeleport-35", "diff-wt-global-api-IsTradeSkillReady-36", "diff-wt-global-api-PrepVoidStorageForTransmogrify-37", "diff-wt-global-api-SetRaidDifficultyID-41", "diff-wt-global-api-UpdateWorldMapArrow-44", "diff-wt-global-api-UseVoidItemForTransmogrify-45", "diff-wt-widgets-Model:AdvanceTime-172", "diff-wt-widgets-Model:ClearFog-173", "diff-wt-widgets-Model:ClearModel-174", "diff-wt-widgets-Model:GetCameraDistance-175", "diff-wt-widgets-Model:GetCameraFacing-176", "diff-wt-widgets-Model:GetCameraPosition-177", "diff-wt-widgets-Model:GetCameraTarget-178", "diff-wt-widgets-Model:GetFacing-179", "diff-wt-widgets-Model:GetFogColor-180", "diff-wt-widgets-Model:GetFogFar-181", "diff-wt-widgets-Model:GetFogNear-182", "diff-wt-widgets-Model:GetLight-183", "diff-wt-widgets-Model:GetModel-184", "diff-wt-widgets-Model:GetModelScale-185", "diff-wt-widgets-Model:GetPosition-186", "diff-wt-widgets-Model:GetWorldScale-187", "diff-wt-widgets-Model:HasCustomCamera-188", "diff-wt-widgets-Model:ReplaceIconTexture-189", "diff-wt-widgets-Model:SetCamera-190", "diff-wt-widgets-Model:SetCameraDistance-191", "diff-wt-widgets-Model:SetCameraFacing-192", "diff-wt-widgets-Model:SetCameraPosition-193", "diff-wt-widgets-Model:SetCameraTarget-194", "diff-wt-widgets-Model:SetCustomCamera-195", "diff-wt-widgets-Model:SetFacing-196", "diff-wt-widgets-Model:SetFogColor-197", "diff-wt-widgets-Model:SetFogFar-198", "diff-wt-widgets-Model:SetFogNear-199", "diff-wt-widgets-Model:SetGlow-200", "diff-wt-widgets-Model:SetLight-201", "diff-wt-widgets-Model:SetModel-202", "diff-wt-widgets-Model:SetModelScale-203", "diff-wt-widgets-Model:SetPosition-204", "diff-wt-widgets-Model:SetSequence-205", "diff-wt-widgets-Model:SetSequenceTime-206", "diff-wt-widgets-PlayerModel OnAnimFinished-217", "diff-wt-widgets-PlayerModel OnUpdateModel-218"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.cache/wow-ui-sim-targets/p520-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 patch_5_2_0_publication_sweep` (exit status: 1)

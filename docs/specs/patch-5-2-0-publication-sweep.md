@@ -6,7 +6,7 @@ Audit the pinned [API page](../../data/patch-api/sources/5.2.0-api-changes.wikit
 
 - [x] Preserve bare removed widget handler owners, directions and source lines; match the transclusion's numerical inventory headers.
 - [x] Probe every inventory occurrence against the retail prefork SharedXML surface, separating exact known gaps from publication/absence credit.
-- [x] Apply only later retail registers, oldest first; keep queued 5.3.0/5.4.0/5.4.1/5.4.2 placeholders ahead of 5.4.7.
+- [x] Apply only later retail registers, oldest first; use merged 5.3.0/5.4.0/5.4.1/5.4.2 registers ahead of 5.4.7.
 - [x] Account separately for every retained prose statement and transclusion build caption.
 - [x] Keep behavioral credit bounded: raid difficulty reads distinct state values, cooldown duration follows timing updates/clear, and school mapping remains linked to its cached deprecated alias.
 - [x] Preserve historical proof in fresh checkouts and after unrelated later audits; reject own evidence tampering.
@@ -18,7 +18,7 @@ Audit the pinned [API page](../../data/patch-api/sources/5.2.0-api-changes.wikit
 
 ## Implementation inventory
 
-- `tools/gen_patch_wikitext_register.py`: opt-in 2013 table/transclusion parsers copied from p530-page; separate bare-handler normalization.
+- `tools/gen_patch_wikitext_register.py`: master-owned opt-in 2013 table/transclusion parsers; 5.2.0-specific bare-handler normalization.
 - `tests/patch_5_2_0_publication_sweep.rs`: retail-only inventory discovery and known-gap fixture.
 - `data/patch-api/sources/5.2.0-*`: pinned source, provenance, inventory and coverage.
 - `data/patch-api/evidence/5.2.0-session-2026-10-08/`: retained execution and retirement proof.
@@ -32,7 +32,7 @@ Audit the pinned [API page](../../data/patch-api/sources/5.2.0-api-changes.wikit
 
 ## Known gaps (current cycle)
 
-- [ ] 57 publication gaps and 16 historical prose contracts remain documented, not replaced with shims. Queued retail register integration may supersede some later.
+- [ ] 55 publication gaps and 16 historical prose contracts remain documented, not replaced with shims. Exact 5.3.0/5.4.0 removals supersede two former publication gaps.
 
 ## Out of scope
 

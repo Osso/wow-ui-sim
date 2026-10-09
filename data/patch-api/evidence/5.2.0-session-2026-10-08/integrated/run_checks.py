@@ -28,6 +28,7 @@ def main():
     os.environ['PATCH_PROOF_REVISION'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     outputs(os.environ['PATCH_PROOF_REVISION'], HERE)
     jobs = [
+        ('own-sweep', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_5_2_0_publication_sweep']),
         ('all-sweeps', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'publication_sweep']),
         ('prefork-patch_5_2_0', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_5_2_0']),
         ('integration-patch_5_2_0', ['cargo', 'test', '--test', 'integration', '--', 'patch_5_2_0']),
