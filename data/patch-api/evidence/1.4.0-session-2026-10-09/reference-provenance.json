@@ -1,0 +1,31 @@
+{
+  "methodology_only": true,
+  "own_base": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+  "references": [
+    {
+      "path": "data/patch-api/evidence/1.6.0-session-2026-10-09/audit.py",
+      "sha256": "6e1f51217bfc2d9650c1a00bea45578324392b00de13063df76fdd5531d55c09"
+    },
+    {
+      "path": "data/patch-api/evidence/1.6.0-session-2026-10-09/HANDOFF.md",
+      "sha256": "276f12af0920ba9bb031995e4283737cfcd0a1a19346dd7e3e11e3e0165aaeb4"
+    },
+    {
+      "path": "data/patch-api/evidence/1.6.0-session-2026-10-09/test_portable.py",
+      "sha256": "d0ac2185bbfe4adb7bb385854e7bbdaf400216442ff04bedf8e4e124fa3ad21a"
+    },
+    {
+      "path": "data/patch-api/evidence/1.7.0-session-2026-10-09/audit.py",
+      "sha256": "931edfe691b3731c0b507f7f02957889641308c54ec19051f8b9e34fdd187599"
+    },
+    {
+      "path": "data/patch-api/evidence/1.7.0-session-2026-10-09/HANDOFF.md",
+      "sha256": "8d76c9e7d5bdd5f998ecb5bce79dc9ce785c65186f2d1c932f7099ed21cb34bb"
+    },
+    {
+      "path": "data/patch-api/evidence/1.7.0-session-2026-10-09/test_portable.py",
+      "sha256": "0d3d04632017756711a6a6d00d3d1fcad943397503aadb1813e338a196efa060"
+    }
+  ],
+  "inherited_execution_proof": false
+}

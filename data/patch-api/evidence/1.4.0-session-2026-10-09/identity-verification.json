@@ -1,0 +1,53 @@
+{
+  "time": "2026-10-09T19:29:49.160323+00:00",
+  "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p140-page",
+  "method": "Pyrun in-process immutable identity assertions before derivation",
+  "hashes": {
+    "source.wikitext": "94fc69b008e0531c8630274dcf0ea03864fa2a3d5a8faab00fb93b40b45e9f52",
+    "source-response.json": "f9125fedab7a00d8a65b1a1b3ca69fe855d178982d31dc7ca47640be51d7f5fa",
+    "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+    "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+  },
+  "pageid": 316397,
+  "revid": 3052898,
+  "registry_count": 101,
+  "credential_key_scan": {
+    "patterns": "token|secret|password|credential|api.?key|auth",
+    "key_names": [
+      "BUILD_HOST_SCRIPTS",
+      "CARGO_BUILD_JOBS",
+      "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+      "COLORTERM",
+      "DBUS_SESSION_BUS_ADDRESS",
+      "HOME",
+      "INVOCATION_ID",
+      "LC_CTYPE",
+      "LOGNAME",
+      "MAIL",
+      "MOTD_SHOWN",
+      "NoDefaultCurrentDirectoryInExePath",
+      "PATH",
+      "PI_CODING_AGENT",
+      "PI_CODING_AGENT_DIR",
+      "PWD",
+      "SHELL",
+      "SHLVL",
+      "SSH_CLIENT",
+      "SSH_CONNECTION",
+      "TERM",
+      "TERM_PROGRAM",
+      "TERM_PROGRAM_VERSION",
+      "TMUX",
+      "TMUX_PANE",
+      "USER",
+      "XDG_RUNTIME_DIR",
+      "XDG_SESSION_CLASS",
+      "XDG_SESSION_ID",
+      "XDG_SESSION_TYPE",
+      "_"
+    ],
+    "matched_key_names": [],
+    "values_inspected": false
+  }
+}

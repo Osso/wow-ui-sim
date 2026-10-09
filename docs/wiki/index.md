@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-1-5-0-api-audit.md): frozen372076/3587158; exact45-byte redirect, one row/link/UNPROVEN contract, zero local model/runtime/native subset. Own SOURCE RED6/portable RED3 retained; SOURCE GREEN6/6 at231bc7d2e; copied SOURCE6/portable3 atd209973b3. Original31 seals/32-member53,739-byte archive unchanged; seven separate later receipts, both serialized rejection/exact-restoration controls. Original queued1.6.0/1.7.0 separate/unapplied despite newer1.6.0 integrated at base. Main owns target research/integration/acceptance.
 
+## [2026-10-09] investigation | Patch 1.4.0 frozen literal SOURCE accounting
+
+[Audit](investigations/patch-1-4-0-api-audit.md): frozen316397/3052898,2670bytes;34 literal rows/27 inventory/25 signatures/25 prose/6 headers/3 links/2 navigation/28 templates/32UNPROVEN contracts. Not a redirect; optional-unit/default/native limits explicit. Own SOURCE RED7/portableRED3 and default-byte/error captures retained; SOURCE GREEN7/7 at5c4bde798 with197 omission/count controls. Static single-argument AcceptBattlefieldPort candidate reported; no runtime/model/native credit. Original44-seal archive/copy SOURCE7/portable3 atedbe7d9a1 retained; separate category-reset correction RED3/GREEN3 at8bfc74ee9 with55 controls and sealed replay extension. Queued1.5.0 separately unapplied, main owns integration/independent acceptance.
+
 ## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
 
 [Audit](investigations/patch-1-9-0-api-audit.md): frozen278324/2690597,45bytes; one literal redirect/link/UNPROVEN contract; zero local API/signature/default/prose/header/template/model/runtime/native. Own RED5+identityRED1/portableRED3 retained; SOURCE GREEN6/6 at4e3807887; copied SOURCE6/portable3/default-byte/error replay at011964fcb, both serialized tamper rejections/exact restorations. Original30 seals/31-member51,931byte archive unchanged; later receipts separate. Newer1.10.0 separately queued unapplied; main owns target research/integration/meaningful closure.

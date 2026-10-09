@@ -1,0 +1,2163 @@
+{
+  "source_rows": [
+    {
+      "id": "raw-1.4.0-001",
+      "line": 1,
+      "literal": "{{apichanges|patch=1.4.0|prev=1.3.0|next=1.5.0|misc=Adapted from an [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy] (by [[WoWInterface]]) of a forum post originally written [[Iriel]]}}",
+      "status": "metadata-only"
+    },
+    {
+      "id": "raw-1.4.0-003",
+      "line": 3,
+      "literal": "== New ==",
+      "status": "metadata-only"
+    },
+    {
+      "id": "raw-1.4.0-004",
+      "line": 4,
+      "literal": "; Battlefields",
+      "status": "metadata-only"
+    },
+    {
+      "id": "raw-1.4.0-005",
+      "line": 5,
+      "literal": "*{{api|AcceptBattlefieldPort(accept)}} - Called with true to accept porting into a battlefield, or false to reject/leave queue.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-006",
+      "line": 6,
+      "literal": "*{{api|GetBattlefieldEstimatedWaitTime()}} - Get estimated wait for entry into the battlefield.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-007",
+      "line": 7,
+      "literal": "*{{api|GetBattlefieldInfo(index)}} - Get detailed information about a battlefield.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-008",
+      "line": 8,
+      "literal": "*{{api|GetBattlefieldInstanceExpiration()}} - Get shutdown timer for the battlefield instance",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-009",
+      "line": 9,
+      "literal": "*{{api|GetBattlefieldInstanceInfo(index)}} - Get information about a battlefield instance.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-010",
+      "line": 10,
+      "literal": "*{{api|GetBattlefieldPortExpiration()}} - Get the number of milliseconds before the battlefield port expires.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-011",
+      "line": 11,
+      "literal": "*{{api|GetBattlefieldStatus()}} - Get status information for the battlefield",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-012",
+      "line": 12,
+      "literal": "*{{api|ShowBattlefieldList()}} - Request list of available battlefield instances.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-015",
+      "line": 15,
+      "literal": "; PvP Stats",
+      "status": "metadata-only"
+    },
+    {
+      "id": "raw-1.4.0-016",
+      "line": 16,
+      "literal": "*{{api|GetPVPLastWeekStats()}} - Get the statistics about your PvP contribution for last week.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-017",
+      "line": 17,
+      "literal": "*{{api|GetPVPLifetimeStats()}} - Get the statistics about your lifetimes PvP contribution",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-018",
+      "line": 18,
+      "literal": "*{{api|GetPVPRankInfo(rank [, unit])}} - Get information about a specific rank (Second arg not used by UI)",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-019",
+      "line": 19,
+      "literal": "*{{api|GetPVPSessionStats()}} - Get the statistics about your PvP contribution for this session.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-020",
+      "line": 20,
+      "literal": "*{{api|GetPVPYesterdayStats()}} - Get the statistics about your PvP contribution for yesterday.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-021",
+      "line": 21,
+      "literal": "*{{api|UnitPVPRank(\"unit\")}} - Return PVP rank information for a unit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-022",
+      "line": 22,
+      "literal": "*RegisterEvent(\"{{api|t=e|PLAYER_PVP_KILLS_CHANGED}}\");",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-023",
+      "line": 23,
+      "literal": "*RegisterEvent(\"{{api|t=e|PLAYER_PVP_RANK_CHANGED}}\");",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-026",
+      "line": 26,
+      "literal": "; Character inspection and honor data",
+      "status": "metadata-only"
+    },
+    {
+      "id": "raw-1.4.0-027",
+      "line": 27,
+      "literal": "*{{api|ClearInspectPlayer()}} Clears the player currently being inspected (Called on hide of inspect frame)",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-028",
+      "line": 28,
+      "literal": "*{{api|GetInspectHonorData()}} - Get the honor information about the inspected unit (Phew!)",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-029",
+      "line": 29,
+      "literal": "*{{api|HasInspectHonorData()}} - Determine if the inspected unit's honor data has been loaded.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-030",
+      "line": 30,
+      "literal": "*{{api|RequestInspectHonorData()}} - Request honor data for inspected unit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-031",
+      "line": 31,
+      "literal": "*{{api|GetWeaponEnchantInfo()}} - Get lots of information about weapon enchantments and charges.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-032",
+      "line": 32,
+      "literal": "*RegisterEvent(\"{{api|t=e|INSPECT_HONOR_UPDATE}}\");",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-035",
+      "line": 35,
+      "literal": "; Miscellaneous",
+      "status": "metadata-only"
+    },
+    {
+      "id": "raw-1.4.0-036",
+      "line": 36,
+      "literal": "*{{api|GetCurrentMultisampleFormat()}} - Get current multi-sampling (antialiasing) format.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-037",
+      "line": 37,
+      "literal": "*{{api|GetMultisampleFormats()}} - Get the available multi-sample formats.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-038",
+      "line": 38,
+      "literal": "*{{api|SetEuropeanNumbers(...)}} - New API function - unknown purpose",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-039",
+      "line": 39,
+      "literal": "*{{api|SetMultisampleFormat(index)}} - Select multi-sample (antialias) format to use.",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "raw-1.4.0-041",
+      "line": 41,
+      "literal": "== Changed ==",
+      "status": "metadata-only"
+    },
+    {
+      "id": "raw-1.4.0-042",
+      "line": 42,
+      "literal": "*{{api|TogglePVP()}} - Replaced <code>EnablePVP()</code> to toggle PVP status",
+      "status": "UNPROVEN"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "inventory-1.4.0-005",
+      "line": 5,
+      "literal": "{{api|AcceptBattlefieldPort(accept)}}",
+      "symbol": "AcceptBattlefieldPort",
+      "literal_signature": "AcceptBattlefieldPort(accept)",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-006",
+      "line": 6,
+      "literal": "{{api|GetBattlefieldEstimatedWaitTime()}}",
+      "symbol": "GetBattlefieldEstimatedWaitTime",
+      "literal_signature": "GetBattlefieldEstimatedWaitTime()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-007",
+      "line": 7,
+      "literal": "{{api|GetBattlefieldInfo(index)}}",
+      "symbol": "GetBattlefieldInfo",
+      "literal_signature": "GetBattlefieldInfo(index)",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-008",
+      "line": 8,
+      "literal": "{{api|GetBattlefieldInstanceExpiration()}}",
+      "symbol": "GetBattlefieldInstanceExpiration",
+      "literal_signature": "GetBattlefieldInstanceExpiration()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-009",
+      "line": 9,
+      "literal": "{{api|GetBattlefieldInstanceInfo(index)}}",
+      "symbol": "GetBattlefieldInstanceInfo",
+      "literal_signature": "GetBattlefieldInstanceInfo(index)",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-010",
+      "line": 10,
+      "literal": "{{api|GetBattlefieldPortExpiration()}}",
+      "symbol": "GetBattlefieldPortExpiration",
+      "literal_signature": "GetBattlefieldPortExpiration()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-011",
+      "line": 11,
+      "literal": "{{api|GetBattlefieldStatus()}}",
+      "symbol": "GetBattlefieldStatus",
+      "literal_signature": "GetBattlefieldStatus()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-012",
+      "line": 12,
+      "literal": "{{api|ShowBattlefieldList()}}",
+      "symbol": "ShowBattlefieldList",
+      "literal_signature": "ShowBattlefieldList()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Battlefields",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-016",
+      "line": 16,
+      "literal": "{{api|GetPVPLastWeekStats()}}",
+      "symbol": "GetPVPLastWeekStats",
+      "literal_signature": "GetPVPLastWeekStats()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-017",
+      "line": 17,
+      "literal": "{{api|GetPVPLifetimeStats()}}",
+      "symbol": "GetPVPLifetimeStats",
+      "literal_signature": "GetPVPLifetimeStats()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-018",
+      "line": 18,
+      "literal": "{{api|GetPVPRankInfo(rank [, unit])}}",
+      "symbol": "GetPVPRankInfo",
+      "literal_signature": "GetPVPRankInfo(rank [, unit])",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-019",
+      "line": 19,
+      "literal": "{{api|GetPVPSessionStats()}}",
+      "symbol": "GetPVPSessionStats",
+      "literal_signature": "GetPVPSessionStats()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-020",
+      "line": 20,
+      "literal": "{{api|GetPVPYesterdayStats()}}",
+      "symbol": "GetPVPYesterdayStats",
+      "literal_signature": "GetPVPYesterdayStats()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-021",
+      "line": 21,
+      "literal": "{{api|UnitPVPRank(\"unit\")}}",
+      "symbol": "UnitPVPRank",
+      "literal_signature": "UnitPVPRank(\"unit\")",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-022",
+      "line": 22,
+      "literal": "{{api|t=e|PLAYER_PVP_KILLS_CHANGED}}",
+      "symbol": "PLAYER_PVP_KILLS_CHANGED",
+      "literal_signature": "PLAYER_PVP_KILLS_CHANGED",
+      "kind": "event",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-023",
+      "line": 23,
+      "literal": "{{api|t=e|PLAYER_PVP_RANK_CHANGED}}",
+      "symbol": "PLAYER_PVP_RANK_CHANGED",
+      "literal_signature": "PLAYER_PVP_RANK_CHANGED",
+      "kind": "event",
+      "direction": "New",
+      "group": "PvP Stats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-027",
+      "line": 27,
+      "literal": "{{api|ClearInspectPlayer()}}",
+      "symbol": "ClearInspectPlayer",
+      "literal_signature": "ClearInspectPlayer()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Character inspection and honor data",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-028",
+      "line": 28,
+      "literal": "{{api|GetInspectHonorData()}}",
+      "symbol": "GetInspectHonorData",
+      "literal_signature": "GetInspectHonorData()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Character inspection and honor data",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-029",
+      "line": 29,
+      "literal": "{{api|HasInspectHonorData()}}",
+      "symbol": "HasInspectHonorData",
+      "literal_signature": "HasInspectHonorData()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Character inspection and honor data",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-030",
+      "line": 30,
+      "literal": "{{api|RequestInspectHonorData()}}",
+      "symbol": "RequestInspectHonorData",
+      "literal_signature": "RequestInspectHonorData()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Character inspection and honor data",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-031",
+      "line": 31,
+      "literal": "{{api|GetWeaponEnchantInfo()}}",
+      "symbol": "GetWeaponEnchantInfo",
+      "literal_signature": "GetWeaponEnchantInfo()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Character inspection and honor data",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-032",
+      "line": 32,
+      "literal": "{{api|t=e|INSPECT_HONOR_UPDATE}}",
+      "symbol": "INSPECT_HONOR_UPDATE",
+      "literal_signature": "INSPECT_HONOR_UPDATE",
+      "kind": "event",
+      "direction": "New",
+      "group": "Character inspection and honor data",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-036",
+      "line": 36,
+      "literal": "{{api|GetCurrentMultisampleFormat()}}",
+      "symbol": "GetCurrentMultisampleFormat",
+      "literal_signature": "GetCurrentMultisampleFormat()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Miscellaneous",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-037",
+      "line": 37,
+      "literal": "{{api|GetMultisampleFormats()}}",
+      "symbol": "GetMultisampleFormats",
+      "literal_signature": "GetMultisampleFormats()",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Miscellaneous",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-038",
+      "line": 38,
+      "literal": "{{api|SetEuropeanNumbers(...)}}",
+      "symbol": "SetEuropeanNumbers",
+      "literal_signature": "SetEuropeanNumbers(...)",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Miscellaneous",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-039",
+      "line": 39,
+      "literal": "{{api|SetMultisampleFormat(index)}}",
+      "symbol": "SetMultisampleFormat",
+      "literal_signature": "SetMultisampleFormat(index)",
+      "kind": "global-api",
+      "direction": "New",
+      "group": "Miscellaneous",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "inventory-1.4.0-042",
+      "line": 42,
+      "literal": "{{api|TogglePVP()}}",
+      "symbol": "TogglePVP",
+      "literal_signature": "TogglePVP()",
+      "kind": "global-api",
+      "direction": "Changed",
+      "group": "Miscellaneous",
+      "status": "UNPROVEN"
+    }
+  ],
+  "signatures": [
+    {
+      "id": "signature-1.4.0-005",
+      "line": 5,
+      "literal": "AcceptBattlefieldPort(accept)",
+      "symbol": "AcceptBattlefieldPort",
+      "arguments_literal": "accept",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-006",
+      "line": 6,
+      "literal": "GetBattlefieldEstimatedWaitTime()",
+      "symbol": "GetBattlefieldEstimatedWaitTime",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-007",
+      "line": 7,
+      "literal": "GetBattlefieldInfo(index)",
+      "symbol": "GetBattlefieldInfo",
+      "arguments_literal": "index",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-008",
+      "line": 8,
+      "literal": "GetBattlefieldInstanceExpiration()",
+      "symbol": "GetBattlefieldInstanceExpiration",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-009",
+      "line": 9,
+      "literal": "GetBattlefieldInstanceInfo(index)",
+      "symbol": "GetBattlefieldInstanceInfo",
+      "arguments_literal": "index",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-010",
+      "line": 10,
+      "literal": "GetBattlefieldPortExpiration()",
+      "symbol": "GetBattlefieldPortExpiration",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-011",
+      "line": 11,
+      "literal": "GetBattlefieldStatus()",
+      "symbol": "GetBattlefieldStatus",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-012",
+      "line": 12,
+      "literal": "ShowBattlefieldList()",
+      "symbol": "ShowBattlefieldList",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-016",
+      "line": 16,
+      "literal": "GetPVPLastWeekStats()",
+      "symbol": "GetPVPLastWeekStats",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-017",
+      "line": 17,
+      "literal": "GetPVPLifetimeStats()",
+      "symbol": "GetPVPLifetimeStats",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-018",
+      "line": 18,
+      "literal": "GetPVPRankInfo(rank [, unit])",
+      "symbol": "GetPVPRankInfo",
+      "arguments_literal": "rank [, unit]",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-019",
+      "line": 19,
+      "literal": "GetPVPSessionStats()",
+      "symbol": "GetPVPSessionStats",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-020",
+      "line": 20,
+      "literal": "GetPVPYesterdayStats()",
+      "symbol": "GetPVPYesterdayStats",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-021",
+      "line": 21,
+      "literal": "UnitPVPRank(\"unit\")",
+      "symbol": "UnitPVPRank",
+      "arguments_literal": "\"unit\"",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-027",
+      "line": 27,
+      "literal": "ClearInspectPlayer()",
+      "symbol": "ClearInspectPlayer",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-028",
+      "line": 28,
+      "literal": "GetInspectHonorData()",
+      "symbol": "GetInspectHonorData",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-029",
+      "line": 29,
+      "literal": "HasInspectHonorData()",
+      "symbol": "HasInspectHonorData",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-030",
+      "line": 30,
+      "literal": "RequestInspectHonorData()",
+      "symbol": "RequestInspectHonorData",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-031",
+      "line": 31,
+      "literal": "GetWeaponEnchantInfo()",
+      "symbol": "GetWeaponEnchantInfo",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-036",
+      "line": 36,
+      "literal": "GetCurrentMultisampleFormat()",
+      "symbol": "GetCurrentMultisampleFormat",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-037",
+      "line": 37,
+      "literal": "GetMultisampleFormats()",
+      "symbol": "GetMultisampleFormats",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-038",
+      "line": 38,
+      "literal": "SetEuropeanNumbers(...)",
+      "symbol": "SetEuropeanNumbers",
+      "arguments_literal": "...",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-039",
+      "line": 39,
+      "literal": "SetMultisampleFormat(index)",
+      "symbol": "SetMultisampleFormat",
+      "arguments_literal": "index",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-042",
+      "line": 42,
+      "literal": "TogglePVP()",
+      "symbol": "TogglePVP",
+      "arguments_literal": "",
+      "role": "declaration",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "signature-1.4.0-042",
+      "line": 42,
+      "literal": "EnablePVP()",
+      "symbol": "EnablePVP",
+      "arguments_literal": "",
+      "role": "replaced-prose-reference",
+      "optional_argument_default": null,
+      "returns": null,
+      "status": "UNPROVEN"
+    }
+  ],
+  "defaults": [],
+  "prose": [
+    {
+      "id": "prose-1.4.0-001",
+      "line": 1,
+      "literal": "Adapted from an [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy] (by [[WoWInterface]]) of a forum post originally written [[Iriel]]",
+      "symbol": null,
+      "status": "provenance-only"
+    },
+    {
+      "id": "prose-1.4.0-005",
+      "line": 5,
+      "literal": "Called with true to accept porting into a battlefield, or false to reject/leave queue.",
+      "symbol": "AcceptBattlefieldPort",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-006",
+      "line": 6,
+      "literal": "Get estimated wait for entry into the battlefield.",
+      "symbol": "GetBattlefieldEstimatedWaitTime",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-007",
+      "line": 7,
+      "literal": "Get detailed information about a battlefield.",
+      "symbol": "GetBattlefieldInfo",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-008",
+      "line": 8,
+      "literal": "Get shutdown timer for the battlefield instance",
+      "symbol": "GetBattlefieldInstanceExpiration",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-009",
+      "line": 9,
+      "literal": "Get information about a battlefield instance.",
+      "symbol": "GetBattlefieldInstanceInfo",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-010",
+      "line": 10,
+      "literal": "Get the number of milliseconds before the battlefield port expires.",
+      "symbol": "GetBattlefieldPortExpiration",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-011",
+      "line": 11,
+      "literal": "Get status information for the battlefield",
+      "symbol": "GetBattlefieldStatus",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-012",
+      "line": 12,
+      "literal": "Request list of available battlefield instances.",
+      "symbol": "ShowBattlefieldList",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-016",
+      "line": 16,
+      "literal": "Get the statistics about your PvP contribution for last week.",
+      "symbol": "GetPVPLastWeekStats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-017",
+      "line": 17,
+      "literal": "Get the statistics about your lifetimes PvP contribution",
+      "symbol": "GetPVPLifetimeStats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-018",
+      "line": 18,
+      "literal": "Get information about a specific rank (Second arg not used by UI)",
+      "symbol": "GetPVPRankInfo",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-019",
+      "line": 19,
+      "literal": "Get the statistics about your PvP contribution for this session.",
+      "symbol": "GetPVPSessionStats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-020",
+      "line": 20,
+      "literal": "Get the statistics about your PvP contribution for yesterday.",
+      "symbol": "GetPVPYesterdayStats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-021",
+      "line": 21,
+      "literal": "Return PVP rank information for a unit.",
+      "symbol": "UnitPVPRank",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-027",
+      "line": 27,
+      "literal": "Clears the player currently being inspected (Called on hide of inspect frame)",
+      "symbol": "ClearInspectPlayer",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-028",
+      "line": 28,
+      "literal": "Get the honor information about the inspected unit (Phew!)",
+      "symbol": "GetInspectHonorData",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-029",
+      "line": 29,
+      "literal": "Determine if the inspected unit's honor data has been loaded.",
+      "symbol": "HasInspectHonorData",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-030",
+      "line": 30,
+      "literal": "Request honor data for inspected unit.",
+      "symbol": "RequestInspectHonorData",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-031",
+      "line": 31,
+      "literal": "Get lots of information about weapon enchantments and charges.",
+      "symbol": "GetWeaponEnchantInfo",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-036",
+      "line": 36,
+      "literal": "Get current multi-sampling (antialiasing) format.",
+      "symbol": "GetCurrentMultisampleFormat",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-037",
+      "line": 37,
+      "literal": "Get the available multi-sample formats.",
+      "symbol": "GetMultisampleFormats",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-038",
+      "line": 38,
+      "literal": "New API function - unknown purpose",
+      "symbol": "SetEuropeanNumbers",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-039",
+      "line": 39,
+      "literal": "Select multi-sample (antialias) format to use.",
+      "symbol": "SetMultisampleFormat",
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "prose-1.4.0-042",
+      "line": 42,
+      "literal": "Replaced <code>EnablePVP()</code> to toggle PVP status",
+      "symbol": "TogglePVP",
+      "status": "UNPROVEN"
+    }
+  ],
+  "headers": [
+    {
+      "id": "header-1.4.0-003",
+      "line": 3,
+      "literal": "== New ==",
+      "level": 2,
+      "label": "New",
+      "claimed_count": null,
+      "status": "metadata-only"
+    },
+    {
+      "id": "header-1.4.0-004",
+      "line": 4,
+      "literal": "; Battlefields",
+      "level": "definition-term",
+      "label": "Battlefields",
+      "claimed_count": null,
+      "status": "metadata-only"
+    },
+    {
+      "id": "header-1.4.0-015",
+      "line": 15,
+      "literal": "; PvP Stats",
+      "level": "definition-term",
+      "label": "PvP Stats",
+      "claimed_count": null,
+      "status": "metadata-only"
+    },
+    {
+      "id": "header-1.4.0-026",
+      "line": 26,
+      "literal": "; Character inspection and honor data",
+      "level": "definition-term",
+      "label": "Character inspection and honor data",
+      "claimed_count": null,
+      "status": "metadata-only"
+    },
+    {
+      "id": "header-1.4.0-035",
+      "line": 35,
+      "literal": "; Miscellaneous",
+      "level": "definition-term",
+      "label": "Miscellaneous",
+      "claimed_count": null,
+      "status": "metadata-only"
+    },
+    {
+      "id": "header-1.4.0-041",
+      "line": 41,
+      "literal": "== Changed ==",
+      "level": 2,
+      "label": "Changed",
+      "claimed_count": null,
+      "status": "metadata-only"
+    }
+  ],
+  "count_claims": [],
+  "templates": [
+    {
+      "id": "template-1-1.4.0-001",
+      "line": 1,
+      "literal": "{{apichanges|patch=1.4.0|prev=1.3.0|next=1.5.0|misc=Adapted from an [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy] (by [[WoWInterface]]) of a forum post originally written [[Iriel]]}}",
+      "name": "apichanges",
+      "parameters_literal": [
+        "patch=1.4.0",
+        "prev=1.3.0",
+        "next=1.5.0",
+        "misc=Adapted from an [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy] (by [[WoWInterface]]) of a forum post originally written [[Iriel]]"
+      ],
+      "expanded": false,
+      "status": "metadata-only"
+    },
+    {
+      "id": "template-1-1.4.0-005",
+      "line": 5,
+      "literal": "{{api|AcceptBattlefieldPort(accept)}}",
+      "name": "api",
+      "parameters_literal": [
+        "AcceptBattlefieldPort(accept)"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-006",
+      "line": 6,
+      "literal": "{{api|GetBattlefieldEstimatedWaitTime()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetBattlefieldEstimatedWaitTime()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-007",
+      "line": 7,
+      "literal": "{{api|GetBattlefieldInfo(index)}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetBattlefieldInfo(index)"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-008",
+      "line": 8,
+      "literal": "{{api|GetBattlefieldInstanceExpiration()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetBattlefieldInstanceExpiration()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-009",
+      "line": 9,
+      "literal": "{{api|GetBattlefieldInstanceInfo(index)}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetBattlefieldInstanceInfo(index)"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-010",
+      "line": 10,
+      "literal": "{{api|GetBattlefieldPortExpiration()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetBattlefieldPortExpiration()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-011",
+      "line": 11,
+      "literal": "{{api|GetBattlefieldStatus()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetBattlefieldStatus()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-012",
+      "line": 12,
+      "literal": "{{api|ShowBattlefieldList()}}",
+      "name": "api",
+      "parameters_literal": [
+        "ShowBattlefieldList()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-016",
+      "line": 16,
+      "literal": "{{api|GetPVPLastWeekStats()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetPVPLastWeekStats()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-017",
+      "line": 17,
+      "literal": "{{api|GetPVPLifetimeStats()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetPVPLifetimeStats()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-018",
+      "line": 18,
+      "literal": "{{api|GetPVPRankInfo(rank [, unit])}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetPVPRankInfo(rank [, unit])"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-019",
+      "line": 19,
+      "literal": "{{api|GetPVPSessionStats()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetPVPSessionStats()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-020",
+      "line": 20,
+      "literal": "{{api|GetPVPYesterdayStats()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetPVPYesterdayStats()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-021",
+      "line": 21,
+      "literal": "{{api|UnitPVPRank(\"unit\")}}",
+      "name": "api",
+      "parameters_literal": [
+        "UnitPVPRank(\"unit\")"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-022",
+      "line": 22,
+      "literal": "{{api|t=e|PLAYER_PVP_KILLS_CHANGED}}",
+      "name": "api",
+      "parameters_literal": [
+        "t=e",
+        "PLAYER_PVP_KILLS_CHANGED"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-023",
+      "line": 23,
+      "literal": "{{api|t=e|PLAYER_PVP_RANK_CHANGED}}",
+      "name": "api",
+      "parameters_literal": [
+        "t=e",
+        "PLAYER_PVP_RANK_CHANGED"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-027",
+      "line": 27,
+      "literal": "{{api|ClearInspectPlayer()}}",
+      "name": "api",
+      "parameters_literal": [
+        "ClearInspectPlayer()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-028",
+      "line": 28,
+      "literal": "{{api|GetInspectHonorData()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetInspectHonorData()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-029",
+      "line": 29,
+      "literal": "{{api|HasInspectHonorData()}}",
+      "name": "api",
+      "parameters_literal": [
+        "HasInspectHonorData()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-030",
+      "line": 30,
+      "literal": "{{api|RequestInspectHonorData()}}",
+      "name": "api",
+      "parameters_literal": [
+        "RequestInspectHonorData()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-031",
+      "line": 31,
+      "literal": "{{api|GetWeaponEnchantInfo()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetWeaponEnchantInfo()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-032",
+      "line": 32,
+      "literal": "{{api|t=e|INSPECT_HONOR_UPDATE}}",
+      "name": "api",
+      "parameters_literal": [
+        "t=e",
+        "INSPECT_HONOR_UPDATE"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-036",
+      "line": 36,
+      "literal": "{{api|GetCurrentMultisampleFormat()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetCurrentMultisampleFormat()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-037",
+      "line": 37,
+      "literal": "{{api|GetMultisampleFormats()}}",
+      "name": "api",
+      "parameters_literal": [
+        "GetMultisampleFormats()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-038",
+      "line": 38,
+      "literal": "{{api|SetEuropeanNumbers(...)}}",
+      "name": "api",
+      "parameters_literal": [
+        "SetEuropeanNumbers(...)"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-039",
+      "line": 39,
+      "literal": "{{api|SetMultisampleFormat(index)}}",
+      "name": "api",
+      "parameters_literal": [
+        "SetMultisampleFormat(index)"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "template-1-1.4.0-042",
+      "line": 42,
+      "literal": "{{api|TogglePVP()}}",
+      "name": "api",
+      "parameters_literal": [
+        "TogglePVP()"
+      ],
+      "expanded": false,
+      "status": "UNPROVEN"
+    }
+  ],
+  "references": [
+    {
+      "id": "link-1-1.4.0-001",
+      "line": 1,
+      "literal": "[https://www.wowinterface.com/forums/showthread.php?t=645 archived copy]",
+      "target": "https://www.wowinterface.com/forums/showthread.php?t=645",
+      "label": "archived copy",
+      "kind": "external",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "link-2-1.4.0-001",
+      "line": 1,
+      "literal": "[[WoWInterface]]",
+      "target": "WoWInterface",
+      "label": null,
+      "kind": "internal",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "link-3-1.4.0-001",
+      "line": 1,
+      "literal": "[[Iriel]]",
+      "target": "Iriel",
+      "label": null,
+      "kind": "internal",
+      "expanded": false,
+      "status": "UNPROVEN"
+    }
+  ],
+  "navigation": [
+    {
+      "id": "navigation-prev-1.4.0-001",
+      "line": 1,
+      "literal": "prev=1.3.0",
+      "target_version": "1.3.0",
+      "expanded": false,
+      "status": "metadata-only"
+    },
+    {
+      "id": "navigation-next-1.4.0-001",
+      "line": 1,
+      "literal": "next=1.5.0",
+      "target_version": "1.5.0",
+      "expanded": false,
+      "status": "metadata-only"
+    }
+  ],
+  "contracts": [
+    {
+      "id": "contract-link-1-1.4.0-001",
+      "line": 1,
+      "literal": "[https://www.wowinterface.com/forums/showthread.php?t=645 archived copy]",
+      "symbol": null,
+      "source_claim": "[https://www.wowinterface.com/forums/showthread.php?t=645 archived copy]",
+      "missing_contract": "Linked content/revision is not frozen in this slice. Attribution or archive provenance does not import callable contracts. Main owns primary-target research; redirect targets, if encountered there, remain unexpanded here.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-link-2-1.4.0-001",
+      "line": 1,
+      "literal": "[[WoWInterface]]",
+      "symbol": null,
+      "source_claim": "[[WoWInterface]]",
+      "missing_contract": "Linked content/revision is not frozen in this slice. Attribution or archive provenance does not import callable contracts. Main owns primary-target research; redirect targets, if encountered there, remain unexpanded here.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-link-3-1.4.0-001",
+      "line": 1,
+      "literal": "[[Iriel]]",
+      "symbol": null,
+      "source_claim": "[[Iriel]]",
+      "missing_contract": "Linked content/revision is not frozen in this slice. Attribution or archive provenance does not import callable contracts. Main owns primary-target research; redirect targets, if encountered there, remain unexpanded here.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-005",
+      "line": 5,
+      "literal": "Called with true to accept porting into a battlefield, or false to reject/leave queue.",
+      "symbol": "AcceptBattlefieldPort",
+      "source_claim": "Called with true to accept porting into a battlefield, or false to reject/leave queue.",
+      "missing_contract": "One accept boolean is literal: true accepts porting; false rejects/leaves queue. Queue identity, invitation prerequisites, completion timing, port side effects, return values and event payload/order absent. Current two-argument registration cannot establish this one-argument historical contract.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-006",
+      "line": 6,
+      "literal": "Get estimated wait for entry into the battlefield.",
+      "symbol": "GetBattlefieldEstimatedWaitTime",
+      "source_claim": "Get estimated wait for entry into the battlefield.",
+      "missing_contract": "Estimated entry wait described; units, return count/types, queue identity, no-queue result, update timing and error conditions absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-007",
+      "line": 7,
+      "literal": "Get detailed information about a battlefield.",
+      "symbol": "GetBattlefieldInfo",
+      "source_claim": "Get detailed information about a battlefield.",
+      "missing_contract": "Index named; index domain and detailed information return fields/types/order, absence and errors absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-008",
+      "line": 8,
+      "literal": "Get shutdown timer for the battlefield instance",
+      "symbol": "GetBattlefieldInstanceExpiration",
+      "source_claim": "Get shutdown timer for the battlefield instance",
+      "missing_contract": "Shutdown timer described; units, return count/types, no-instance result and timer evolution absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-009",
+      "line": 9,
+      "literal": "Get information about a battlefield instance.",
+      "symbol": "GetBattlefieldInstanceInfo",
+      "source_claim": "Get information about a battlefield instance.",
+      "missing_contract": "Index named; instance index domain, information fields/types/order, absent instance and errors absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-010",
+      "line": 10,
+      "literal": "Get the number of milliseconds before the battlefield port expires.",
+      "symbol": "GetBattlefieldPortExpiration",
+      "source_claim": "Get the number of milliseconds before the battlefield port expires.",
+      "missing_contract": "Milliseconds before port expiry explicitly stated; return shape, invitation/expired/no-port cases, clock evolution and error behavior absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-011",
+      "line": 11,
+      "literal": "Get status information for the battlefield",
+      "symbol": "GetBattlefieldStatus",
+      "source_claim": "Get status information for the battlefield",
+      "missing_contract": "Status information described; status values, fields/types/order and queue/port lifecycle absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-012",
+      "line": 12,
+      "literal": "Request list of available battlefield instances.",
+      "symbol": "ShowBattlefieldList",
+      "source_claim": "Request list of available battlefield instances.",
+      "missing_contract": "Request for available instances described; request prerequisites, asynchronous response, event/payload ordering and returned values absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-016",
+      "line": 16,
+      "literal": "Get the statistics about your PvP contribution for last week.",
+      "symbol": "GetPVPLastWeekStats",
+      "source_claim": "Get the statistics about your PvP contribution for last week.",
+      "missing_contract": "Last-week contribution statistics described; return fields/types/order, week boundary/timezone, reset behavior and unavailable results absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-017",
+      "line": 17,
+      "literal": "Get the statistics about your lifetimes PvP contribution",
+      "symbol": "GetPVPLifetimeStats",
+      "source_claim": "Get the statistics about your lifetimes PvP contribution",
+      "missing_contract": "Lifetime contribution statistics described; return fields/types/order, accumulation and unavailable results absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-018",
+      "line": 18,
+      "literal": "Get information about a specific rank (Second arg not used by UI)",
+      "symbol": "GetPVPRankInfo",
+      "source_claim": "Get information about a specific rank (Second arg not used by UI)",
+      "missing_contract": "Literal rank and optional unit; second argument not used by UI is an observation, not a default. Rank domain, unit resolution, omission default and information fields/types/order absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-019",
+      "line": 19,
+      "literal": "Get the statistics about your PvP contribution for this session.",
+      "symbol": "GetPVPSessionStats",
+      "source_claim": "Get the statistics about your PvP contribution for this session.",
+      "missing_contract": "Session contribution statistics described; session boundary, return fields/types/order, reset/update and absent data absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-020",
+      "line": 20,
+      "literal": "Get the statistics about your PvP contribution for yesterday.",
+      "symbol": "GetPVPYesterdayStats",
+      "source_claim": "Get the statistics about your PvP contribution for yesterday.",
+      "missing_contract": "Yesterday contribution statistics described; day boundary/timezone, return fields/types/order and absent data absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-021",
+      "line": 21,
+      "literal": "Return PVP rank information for a unit.",
+      "symbol": "UnitPVPRank",
+      "source_claim": "Return PVP rank information for a unit.",
+      "missing_contract": "Literal quoted unit token and rank information; unit domain, identity resolution, return fields/types/order and absent-unit behavior absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-022",
+      "line": 22,
+      "literal": "*RegisterEvent(\"{{api|t=e|PLAYER_PVP_KILLS_CHANGED}}\");",
+      "symbol": "PLAYER_PVP_KILLS_CHANGED",
+      "source_claim": "*RegisterEvent(\"{{api|t=e|PLAYER_PVP_KILLS_CHANGED}}\");",
+      "missing_contract": "Event name and RegisterEvent example only. Trigger conditions, argument count/types/payload, unit context, ordering and historical delivery behavior absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-023",
+      "line": 23,
+      "literal": "*RegisterEvent(\"{{api|t=e|PLAYER_PVP_RANK_CHANGED}}\");",
+      "symbol": "PLAYER_PVP_RANK_CHANGED",
+      "source_claim": "*RegisterEvent(\"{{api|t=e|PLAYER_PVP_RANK_CHANGED}}\");",
+      "missing_contract": "Event name and RegisterEvent example only. Trigger conditions, argument count/types/payload, unit context, ordering and historical delivery behavior absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-027",
+      "line": 27,
+      "literal": "Clears the player currently being inspected (Called on hide of inspect frame)",
+      "symbol": "ClearInspectPlayer",
+      "source_claim": "Clears the player currently being inspected (Called on hide of inspect frame)",
+      "missing_contract": "Clear currently inspected player, called when inspect frame hides; state ownership, outstanding-request cancellation, completion/event ordering and return values absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-028",
+      "line": 28,
+      "literal": "Get the honor information about the inspected unit (Phew!)",
+      "symbol": "GetInspectHonorData",
+      "source_claim": "Get the honor information about the inspected unit (Phew!)",
+      "missing_contract": "Inspected-unit honor information described; fields/types/order, inspected identity, request completion and unavailable result absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-029",
+      "line": 29,
+      "literal": "Determine if the inspected unit's honor data has been loaded.",
+      "symbol": "HasInspectHonorData",
+      "source_claim": "Determine if the inspected unit's honor data has been loaded.",
+      "missing_contract": "Whether inspected-unit honor data has loaded described; return type/count, stale/cancelled requests, identity changes and availability lifecycle absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-030",
+      "line": 30,
+      "literal": "Request honor data for inspected unit.",
+      "symbol": "RequestInspectHonorData",
+      "source_claim": "Request honor data for inspected unit.",
+      "missing_contract": "Honor-data request for inspected unit described; prerequisites, server completion, INSPECT_HONOR_UPDATE relationship/payload/order, errors and return values absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-031",
+      "line": 31,
+      "literal": "Get lots of information about weapon enchantments and charges.",
+      "symbol": "GetWeaponEnchantInfo",
+      "source_claim": "Get lots of information about weapon enchantments and charges.",
+      "missing_contract": "Enchantments and charges mentioned; weapon slot identities, tuple shape/types/order, durations/units, absent enchantment and update lifecycle absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-032",
+      "line": 32,
+      "literal": "*RegisterEvent(\"{{api|t=e|INSPECT_HONOR_UPDATE}}\");",
+      "symbol": "INSPECT_HONOR_UPDATE",
+      "source_claim": "*RegisterEvent(\"{{api|t=e|INSPECT_HONOR_UPDATE}}\");",
+      "missing_contract": "Event name and RegisterEvent example only. Trigger conditions, argument count/types/payload, unit context, ordering and historical delivery behavior absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-036",
+      "line": 36,
+      "literal": "Get current multi-sampling (antialiasing) format.",
+      "symbol": "GetCurrentMultisampleFormat",
+      "source_claim": "Get current multi-sampling (antialiasing) format.",
+      "missing_contract": "Current antialias format described; format identity, return shape/types/order and initial/default selection absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-037",
+      "line": 37,
+      "literal": "Get the available multi-sample formats.",
+      "symbol": "GetMultisampleFormats",
+      "source_claim": "Get the available multi-sample formats.",
+      "missing_contract": "Available antialias formats described; format catalogue, return shape/types/order and device dependence absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-038",
+      "line": 38,
+      "literal": "New API function - unknown purpose",
+      "symbol": "SetEuropeanNumbers",
+      "source_claim": "New API function - unknown purpose",
+      "missing_contract": "Ellipsis is literal; source explicitly says unknown purpose. Argument schema, defaults, numeric formatting rules, scope, side effects and return values absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-039",
+      "line": 39,
+      "literal": "Select multi-sample (antialias) format to use.",
+      "symbol": "SetMultisampleFormat",
+      "source_claim": "Select multi-sample (antialias) format to use.",
+      "missing_contract": "Format index named; valid indices, device catalogue, invalid input, persistence, rendering effects and return values absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-1.4.0-042",
+      "line": 42,
+      "literal": "Replaced <code>EnablePVP()</code> to toggle PVP status",
+      "symbol": "TogglePVP",
+      "source_claim": "Replaced <code>EnablePVP()</code> to toggle PVP status",
+      "missing_contract": "Replacement of EnablePVP and toggling PvP status stated; initial state, eligibility, transitions/timers, synchronization/events and return values absent. No alias or callable removal rule inferred.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-replaced-1.4.0-042",
+      "line": 42,
+      "literal": "Replaced <code>EnablePVP()</code> to toggle PVP status",
+      "symbol": "EnablePVP",
+      "source_claim": "Replaced <code>EnablePVP()</code> to toggle PVP status",
+      "missing_contract": "Replacement claim is literal, not a frozen runtime removal test or alias requirement. Prior callable behavior, retirement timing, compatibility and native equivalence absent.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "contract-navigation-1.4.0-001",
+      "line": 1,
+      "literal": "{{apichanges|patch=1.4.0|prev=1.3.0|next=1.5.0|misc=Adapted from an [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy] (by [[WoWInterface]]) of a forum post originally written [[Iriel]]}}",
+      "symbol": null,
+      "source_claim": "{{apichanges|patch=1.4.0|prev=1.3.0|next=1.5.0|misc=Adapted from an [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy] (by [[WoWInterface]]) of a forum post originally written [[Iriel]]}}",
+      "missing_contract": "Navigation and adaptation attribution only; 1.3.0/1.5.0 content and source forum post are not expanded. Template output/transclusion revision and historical provenance cannot supply behavioral defaults.",
+      "defaults": null,
+      "security": null,
+      "native_equivalence": null,
+      "status": "UNPROVEN"
+    }
+  ],
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.4.0",
+  "source": {
+    "title": "Patch 1.4.0/API changes",
+    "version": "1.4.0",
+    "pageid": 316397,
+    "revid": 3052898,
+    "timestamp": "2021-04-23T23:31:01Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3052898&format=json",
+    "retrieved": "2026-10-09T08:51:36.403283+00:00",
+    "response_sha256": "f9125fedab7a00d8a65b1a1b3ca69fe855d178982d31dc7ca47640be51d7f5fa",
+    "wikitext_sha256": "94fc69b008e0531c8630274dcf0ea03864fa2a3d5a8faab00fb93b40b45e9f52",
+    "wikitext_bytes": 2670,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.4.0-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.4.0-wikitext.txt"
+  },
+  "base_revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+  "client_line": "original-historical-retail-task-scope",
+  "literal_client_attribution": null,
+  "totals": {
+    "source_rows": 34,
+    "inventory": 27,
+    "signatures": 25,
+    "defaults": 0,
+    "prose": 25,
+    "headers": 6,
+    "count_claims": 0,
+    "templates": 28,
+    "references": 3,
+    "navigation": 2,
+    "contracts": 32,
+    "physical_lines": 42,
+    "nonblank_rows": 34,
+    "metadata_rows": 7,
+    "unproven_source_rows": 27
+  },
+  "measurements": {
+    "model": 0,
+    "runtime": 0,
+    "native": 0
+  },
+  "model_review": {
+    "candidate": "AcceptBattlefieldPort(accept) true/false transition",
+    "observation": "Current src/lua_api/globals/battlefield_verbs.rs reads accept at stack argument 2, while source names a single accept argument. Static mismatch, not executed reproduction.",
+    "disposition": "Reported before alias/default invention. Runtime/Cargo/client changes and execution excluded by explicit bounded assignment. Main owns model/native proof; no SOURCE success closes parent behavior goal."
+  },
+  "history": {
+    "applied_successors": [],
+    "queued_successor_references": [
+      {
+        "title": "Patch 1.5.0/API changes",
+        "version": "1.5.0",
+        "pageid": 372076,
+        "revid": 3587158,
+        "timestamp": "2020-04-13T00:49:38Z"
+      }
+    ],
+    "queued_150": "/home/osso/.worktrees/wow-ui-sim-p150-page active, separate and unapplied",
+    "separate_retail_successor_references": [
+      {
+        "title": "Patch 8.2.5/API changes",
+        "version": "8.2.5",
+        "pageid": 83383,
+        "revid": 6471405,
+        "timestamp": "2025-09-13T10:05:08Z"
+      },
+      {
+        "title": "Patch 8.2.0/API changes",
+        "version": "8.2.0",
+        "pageid": 533235,
+        "revid": 5142162,
+        "timestamp": "2021-04-23T01:19:12Z"
+      },
+      {
+        "title": "Patch 8.1.5/API changes",
+        "version": "8.1.5",
+        "pageid": 394493,
+        "revid": 3789732,
+        "timestamp": "2019-04-25T05:47:36Z"
+      },
+      {
+        "title": "Patch 8.1.0/API changes",
+        "version": "8.1.0",
+        "pageid": 464337,
+        "revid": 4462737,
+        "timestamp": "2021-12-04T17:01:42Z"
+      },
+      {
+        "title": "Patch 8.0.1/API changes",
+        "version": "8.0.1",
+        "pageid": 149302,
+        "revid": 1463362,
+        "timestamp": "2023-07-20T21:26:53Z"
+      },
+      {
+        "title": "Patch 7.3.2/API changes",
+        "version": "7.3.2",
+        "pageid": 230850,
+        "revid": 6200179,
+        "timestamp": "2024-12-21T14:17:59Z"
+      },
+      {
+        "title": "Patch 7.3.0/API changes",
+        "version": "7.3.0",
+        "pageid": 553643,
+        "revid": 5335723,
+        "timestamp": "2017-10-26T17:46:34Z"
+      },
+      {
+        "title": "Patch 7.2.5/API changes",
+        "version": "7.2.5",
+        "pageid": 448509,
+        "revid": 4311256,
+        "timestamp": "2021-04-19T22:54:47Z"
+      },
+      {
+        "title": "Patch 7.2.0/API changes",
+        "version": "7.2.0",
+        "pageid": 412195,
+        "revid": 6767100,
+        "timestamp": "2026-07-09T22:13:57Z"
+      },
+      {
+        "title": "Patch 7.1.0/API changes",
+        "version": "7.1.0",
+        "pageid": 389232,
+        "revid": 3742660,
+        "timestamp": "2022-01-31T18:50:28Z"
+      },
+      {
+        "title": "Patch 7.0.3/API changes",
+        "version": "7.0.3",
+        "pageid": 549091,
+        "revid": 5295335,
+        "timestamp": "2017-09-18T11:16:26Z"
+      },
+      {
+        "title": "Patch 7.0.1/API changes",
+        "version": "7.0.1",
+        "pageid": 336026,
+        "revid": 3241525,
+        "timestamp": "2016-02-28T20:50:06Z"
+      },
+      {
+        "title": "Patch 6.2.4/API changes",
+        "version": "6.2.4",
+        "pageid": 212964,
+        "revid": 2072181,
+        "timestamp": "2023-09-27T22:21:22Z"
+      },
+      {
+        "title": "Patch 6.2.2/API changes",
+        "version": "6.2.2",
+        "pageid": 122147,
+        "revid": 6209268,
+        "timestamp": "2025-01-03T15:17:31Z"
+      },
+      {
+        "title": "Patch 6.2.0/API changes",
+        "version": "6.2.0",
+        "pageid": 149103,
+        "revid": 1460518,
+        "timestamp": "2023-09-27T22:20:46Z"
+      },
+      {
+        "title": "Patch 6.1.0/API changes",
+        "version": "6.1.0",
+        "pageid": 123523,
+        "revid": 1216027,
+        "timestamp": "2015-05-01T23:34:38Z"
+      },
+      {
+        "title": "Patch 6.0.2/API changes",
+        "version": "6.0.2",
+        "pageid": 556401,
+        "revid": 5363123,
+        "timestamp": "2015-01-12T21:05:30Z"
+      },
+      {
+        "title": "Patch 6.0.1/API changes",
+        "version": "6.0.1",
+        "pageid": 3058,
+        "revid": 31159,
+        "timestamp": "2014-08-22T01:10:34Z"
+      },
+      {
+        "title": "Patch 5.4.8/API changes",
+        "version": "5.4.8",
+        "pageid": 177816,
+        "revid": 1736772,
+        "timestamp": "2014-05-16T21:02:06Z"
+      },
+      {
+        "title": "Patch 5.4.7/API changes",
+        "version": "5.4.7",
+        "pageid": 549368,
+        "revid": 5298169,
+        "timestamp": "2014-05-31T17:45:19Z"
+      },
+      {
+        "title": "Patch 5.4.2/API changes",
+        "version": "5.4.2",
+        "pageid": 262849,
+        "revid": 2543251,
+        "timestamp": "2014-02-20T12:32:21Z"
+      },
+      {
+        "title": "Patch 5.4.1/API changes",
+        "version": "5.4.1",
+        "pageid": 221650,
+        "revid": 2150406,
+        "timestamp": "2018-11-26T23:10:07Z"
+      },
+      {
+        "title": "Patch 5.4.0/API changes",
+        "version": "5.4.0",
+        "pageid": 414879,
+        "revid": 6200158,
+        "timestamp": "2024-12-21T14:07:57Z"
+      },
+      {
+        "title": "Patch 5.3.0/API changes",
+        "version": "5.3.0",
+        "pageid": 423274,
+        "revid": 4065122,
+        "timestamp": "2021-07-13T19:26:28Z"
+      },
+      {
+        "title": "Patch 5.2.0/API changes",
+        "version": "5.2.0",
+        "pageid": 422312,
+        "revid": 4057299,
+        "timestamp": "2018-11-26T23:09:55Z"
+      },
+      {
+        "title": "Patch 5.1.0/API changes",
+        "version": "5.1.0",
+        "pageid": 282785,
+        "revid": 2736212,
+        "timestamp": "2013-01-06T16:37:16Z"
+      },
+      {
+        "title": "Patch 5.0.4/API changes",
+        "version": "5.0.4",
+        "pageid": 385020,
+        "revid": 3706382,
+        "timestamp": "2021-02-12T21:08:15Z"
+      },
+      {
+        "title": "Patch 5.0.1/API changes",
+        "version": "5.0.1",
+        "pageid": 554410,
+        "revid": 5344081,
+        "timestamp": "2012-08-06T00:56:48Z"
+      },
+      {
+        "title": "Patch 4.3.4/API changes",
+        "version": "4.3.4",
+        "pageid": 389302,
+        "revid": 3743181,
+        "timestamp": "2021-08-22T03:09:40Z"
+      },
+      {
+        "title": "Patch 4.3.0/API changes",
+        "version": "4.3.0",
+        "pageid": 167555,
+        "revid": 1639407,
+        "timestamp": "2021-08-22T03:08:50Z"
+      },
+      {
+        "title": "Patch 4.2.0/API changes",
+        "version": "4.2.0",
+        "pageid": 315583,
+        "revid": 3045158,
+        "timestamp": "2021-08-22T03:01:41Z"
+      },
+      {
+        "title": "Patch 4.1.0/API changes",
+        "version": "4.1.0",
+        "pageid": 426651,
+        "revid": 4094671,
+        "timestamp": "2011-07-24T19:40:04Z"
+      },
+      {
+        "title": "Patch 4.0.1/API changes",
+        "version": "4.0.1",
+        "pageid": 129645,
+        "revid": 1271877,
+        "timestamp": "2012-09-06T23:25:23Z"
+      },
+      {
+        "title": "Patch 3.3.5/API changes",
+        "version": "3.3.5",
+        "pageid": 25049,
+        "revid": 247986,
+        "timestamp": "2010-07-10T15:47:20Z"
+      },
+      {
+        "title": "Patch 3.3.3/API changes",
+        "version": "3.3.3",
+        "pageid": 261776,
+        "revid": 2531935,
+        "timestamp": "2010-05-13T22:15:52Z"
+      },
+      {
+        "title": "Patch 3.3.0/API changes",
+        "version": "3.3.0",
+        "pageid": 522376,
+        "revid": 6055853,
+        "timestamp": "2024-06-04T04:47:16Z"
+      },
+      {
+        "title": "Patch 3.2.0/API changes",
+        "version": "3.2.0",
+        "pageid": 499137,
+        "revid": 4812266,
+        "timestamp": "2020-09-04T21:33:02Z"
+      },
+      {
+        "title": "Patch 3.1.0/API changes",
+        "version": "3.1.0",
+        "pageid": 233195,
+        "revid": 2259594,
+        "timestamp": "2013-05-22T17:34:42Z"
+      },
+      {
+        "title": "Patch 3.0.8/API changes",
+        "version": "3.0.8",
+        "pageid": 95599,
+        "revid": 947144,
+        "timestamp": "2021-12-04T02:32:44Z"
+      },
+      {
+        "title": "Patch 3.0.3/API changes",
+        "version": "3.0.3",
+        "pageid": 560990,
+        "revid": 5407654,
+        "timestamp": "2010-03-28T14:26:47Z"
+      },
+      {
+        "title": "Patch 3.0.2/API changes",
+        "version": "3.0.2",
+        "pageid": 482353,
+        "revid": 4638841,
+        "timestamp": "2020-02-23T21:55:29Z"
+      },
+      {
+        "title": "Patch 2.4.2/API changes",
+        "version": "2.4.2",
+        "pageid": 81145,
+        "revid": 803933,
+        "timestamp": "2021-12-28T02:03:05Z"
+      },
+      {
+        "title": "Patch 2.4.0/API changes",
+        "version": "2.4.0",
+        "pageid": 73272,
+        "revid": 6471380,
+        "timestamp": "2025-09-13T09:55:32Z"
+      },
+      {
+        "title": "Patch 2.3.0/API changes",
+        "version": "2.3.0",
+        "pageid": 44655,
+        "revid": 6055877,
+        "timestamp": "2024-06-04T05:03:50Z"
+      },
+      {
+        "title": "Patch 2.2.0/API changes",
+        "version": "2.2.0",
+        "pageid": 184149,
+        "revid": 6428980,
+        "timestamp": "2025-08-03T13:04:54Z"
+      },
+      {
+        "title": "Patch 2.1.0/API changes",
+        "version": "2.1.0",
+        "pageid": 279373,
+        "revid": 6767102,
+        "timestamp": "2026-07-09T22:15:03Z"
+      },
+      {
+        "title": "Patch 2.0.1/API changes",
+        "version": "2.0.1",
+        "pageid": 324401,
+        "revid": 3129557,
+        "timestamp": "2019-06-15T12:04:30Z"
+      }
+    ],
+    "foreign_history_limit": "Classic Era 1.13.x+, TBC 2.5.x, Wrath 3.4.x, Cataclysm 4.4.x, Mists 5.5.x and Forever remain separate, never historical Retail supersession.",
+    "templates": "Own-base canonical 1.6.0/1.7.0 evidence/wiki methodology only, not inherited execution proof or expanded target contracts."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "scope": "Separate current category correction; original archive unchanged",
+  "sha256": "0457936feb38bd5aa45adf1e3bfc956289e6df7624b447a7a005756a3fe98c7b",
+  "bytes": 9981,
+  "members": 4,
+  "original_archive_identity": {
+    "archive": "replay-archive.tar.gz",
+    "sha256": "0c870e9f20d34dcbc8637c855e8dd21870dc729f31a82ddd266c611f6cbca79d",
+    "bytes": 84207,
+    "members": 45,
+    "original_seals_count": 44,
+    "original_map_sha256": "71f8d83560898a8e2e73fcf360746e083c18c17d7e280421ae064297ea8536d4",
+    "scope": "Original proof ledger and files immutable. Later replay receipts are separate; no backfill."
+  },
+  "changes": "TogglePVP Changed group Miscellaneous -> null only; all contracts/counts/history/defaults/measurements identical"
+}

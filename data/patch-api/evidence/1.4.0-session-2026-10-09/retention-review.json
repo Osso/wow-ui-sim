@@ -1,0 +1,15 @@
+{
+  "time": "2026-10-09T19:36:18.185887+00:00",
+  "scope": "own original evidence before sealing",
+  "files_scanned": 43,
+  "credential_key_names_scanned_before_values": true,
+  "environment_values_requested": false,
+  "patterns": [
+    "-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----",
+    "(?i)authorization\\s*[:=]\\s*[\\\"\\x27]?bearer\\s+[A-Za-z0-9._-]{16,}",
+    "\\b(?:ghp_|github_pat_|sk-proj-)[A-Za-z0-9_\\-]{16,}",
+    "(?i)(?:password|api_key|access_token|client_secret)\\s*[=:]\\s*[\\\"\\x27][^\\\"\\x27\\s]{8,}"
+  ],
+  "matches": [],
+  "limit": "high-specificity artifact scan, not exhaustive secret detection; scanner literal not self-scanned; streams unchanged"
+}

@@ -1,0 +1,9 @@
+{
+  "archive": "replay-archive.tar.gz",
+  "sha256": "0c870e9f20d34dcbc8637c855e8dd21870dc729f31a82ddd266c611f6cbca79d",
+  "bytes": 84207,
+  "members": 45,
+  "original_seals_count": 44,
+  "original_map_sha256": "71f8d83560898a8e2e73fcf360746e083c18c17d7e280421ae064297ea8536d4",
+  "scope": "Original proof ledger and files immutable. Later replay receipts are separate; no backfill."
+}

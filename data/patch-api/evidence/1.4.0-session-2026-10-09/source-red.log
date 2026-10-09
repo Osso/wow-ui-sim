@@ -1,0 +1,75 @@
+test_every_boundary_omission_and_count_mutation_rejected (__main__.SourceAccounting.test_every_boundary_omission_and_count_mutation_rejected) ... FAIL
+test_exact_identity_and_literal_rows (__main__.SourceAccounting.test_exact_identity_and_literal_rows) ... ERROR
+test_historical_default_bytes_and_errors (__main__.SourceAccounting.test_historical_default_bytes_and_errors) ... FAIL
+test_identity_source_response_and_manifest_registry_mutations (__main__.SourceAccounting.test_identity_source_response_and_manifest_registry_mutations) ... FAIL
+test_invention_expansion_and_credit_rejected (__main__.SourceAccounting.test_invention_expansion_and_credit_rejected) ... FAIL
+test_precise_contract_limits_no_alias_or_default (__main__.SourceAccounting.test_precise_contract_limits_no_alias_or_default) ... ERROR
+test_separate_unapplied_histories (__main__.SourceAccounting.test_separate_unapplied_histories) ... ERROR
+
+======================================================================
+ERROR: test_exact_identity_and_literal_rows (__main__.SourceAccounting.test_exact_identity_and_literal_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 45, in test_exact_identity_and_literal_rows
+    self.assertEqual((pin["pageid"], pin["revid"]), (316397, 3052898))
+                      ~~~^^^^^^^^^^
+KeyError: 'pageid'
+
+======================================================================
+ERROR: test_precise_contract_limits_no_alias_or_default (__main__.SourceAccounting.test_precise_contract_limits_no_alias_or_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 144, in test_precise_contract_limits_no_alias_or_default
+    first = ledger["inventory"][0]
+            ~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_separate_unapplied_histories (__main__.SourceAccounting.test_separate_unapplied_histories)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 161, in test_separate_unapplied_histories
+    self.assertEqual(history["queued_successor_references"][0]["version"], "1.5.0")
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_every_boundary_omission_and_count_mutation_rejected (__main__.SourceAccounting.test_every_boundary_omission_and_count_mutation_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 84, in test_every_boundary_omission_and_count_mutation_rejected
+    self.assertGreater(controls, 170)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than 170
+
+======================================================================
+FAIL: test_historical_default_bytes_and_errors (__main__.SourceAccounting.test_historical_default_bytes_and_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 166, in test_historical_default_bytes_and_errors
+    self.assertTrue((EVIDENCE / "default-register.json").is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_identity_source_response_and_manifest_registry_mutations (__main__.SourceAccounting.test_identity_source_response_and_manifest_registry_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 112, in test_identity_source_response_and_manifest_registry_mutations
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_invention_expansion_and_credit_rejected (__main__.SourceAccounting.test_invention_expansion_and_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 92, in test_invention_expansion_and_credit_rejected
+    with self.assertRaisesRegex(AssertionError, "serialized literal ledger"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=4, errors=3)

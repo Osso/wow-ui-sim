@@ -1,0 +1,12 @@
+{
+  "scope": "static candidate only, not executed reproduction",
+  "source_path": "src/lua_api/globals/battlefield_verbs.rs",
+  "source_revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+  "source_sha256": "705abdb32774e78c68125df53b136b33fbd679a8a81efabbe47cbbbba818b44e",
+  "historical_literal": "AcceptBattlefieldPort(accept)",
+  "explicit_source_claim": "true accepts battlefield port; false rejects/leaves queue",
+  "current_code_observation": "accept_battlefield_port reads stack_truthy(state, 2), and index at stack slot 1",
+  "model_credit": 0,
+  "native_credit": 0,
+  "required_main_work": "Reproduce historical single-argument transition without invented aliases/defaults, then decide supported-profile semantics; no runtime/client/build gate executed here"
+}

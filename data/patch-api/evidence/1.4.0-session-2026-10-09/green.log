@@ -1,0 +1,31 @@
+{"omission_and_count_controls": 197}
+test_every_boundary_omission_and_count_mutation_rejected (__main__.SourceAccounting.test_every_boundary_omission_and_count_mutation_rejected) ... ok
+test_exact_identity_and_literal_rows (__main__.SourceAccounting.test_exact_identity_and_literal_rows) ... ok
+test_historical_default_bytes_and_errors (__main__.SourceAccounting.test_historical_default_bytes_and_errors) ... ok
+test_identity_source_response_and_manifest_registry_mutations (__main__.SourceAccounting.test_identity_source_response_and_manifest_registry_mutations) ... ok
+test_invention_expansion_and_credit_rejected (__main__.SourceAccounting.test_invention_expansion_and_credit_rejected) ... ok
+test_precise_contract_limits_no_alias_or_default (__main__.SourceAccounting.test_precise_contract_limits_no_alias_or_default) ... FAIL
+test_separate_unapplied_histories (__main__.SourceAccounting.test_separate_unapplied_histories) ... ok
+
+======================================================================
+FAIL: test_precise_contract_limits_no_alias_or_default (__main__.SourceAccounting.test_precise_contract_limits_no_alias_or_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p140-page/data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py", line 180, in test_precise_contract_limits_no_alias_or_default
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        ledger["contracts"][0]["source_claim"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "Called with true to accept porting into a battlefield, or false to reject/leave queue.",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: '[https://www.wowinterface.com/forums/show[27 chars]opy]' != 'Called with true to accept porting into a[41 chars]eue.'
+- [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy]
++ Called with true to accept porting into a battlefield, or false to reject/leave queue.
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.190s
+
+FAILED (failures=1)
