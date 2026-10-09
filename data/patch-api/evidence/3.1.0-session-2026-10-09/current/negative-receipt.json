@@ -1,0 +1,15 @@
+{
+  "revision": "3f024eddf6ece99ab42fd283d3652e23a427c037",
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_3_1_0_publication_sweep",
+    "--nocapture"
+  ],
+  "exit_code": 1,
+  "scope": "current fabricated-global negative; read-only original sealed control register; original negative receipt untouched"
+}

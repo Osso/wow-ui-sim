@@ -1,0 +1,15 @@
+{
+  "revision": "3f024eddf6ece99ab42fd283d3652e23a427c037",
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_3_1_0_publication_sweep",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "scope": "current exact 59-gap publication fixture; real radians getter source unchanged from 0529f3685"
+}

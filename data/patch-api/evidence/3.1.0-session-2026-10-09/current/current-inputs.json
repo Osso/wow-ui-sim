@@ -1,0 +1,251 @@
+{
+  "schema": "p310-current-bounded-proof/v1",
+  "original_manifest_sha256": "a33186896972499e4f01b635994f0530f7e573566adde9849716c92d2c6371cd",
+  "sealed_files": {
+    "accounting-receipt.json": {
+      "sha256": "cd0412ab5bd8500746ba3a253e42236966d6a4f6ad4b1ef63db72e67fdfe1f06",
+      "bytes": 315
+    },
+    "accounting.log": {
+      "sha256": "b10b441537d5238a49db71902623e67ed9190a240142302c54f10ed249e9c49a",
+      "bytes": 172
+    },
+    "known-gaps.json": {
+      "sha256": "05fb538b9d13df218742a7504e2d02c472e2e92806e74c607caab7d2f6366066",
+      "bytes": 2679
+    },
+    "model-green-receipt.json": {
+      "sha256": "9ce60e4c0c82cfcd979a3d008f22896adf758e75c836e329dc40959fe48ed6ed",
+      "bytes": 359
+    },
+    "model-green.log": {
+      "sha256": "94dd001087205c4b718e6ca2e38f89012016d98f4d18a7f6b747677de8328fb0",
+      "bytes": 10304
+    },
+    "model-red-receipt.json": {
+      "sha256": "05786846954c4bee30c637b513a575e42c888aa69711cd1bec89ee8239d1858c",
+      "bytes": 355
+    },
+    "model-red.log": {
+      "sha256": "85b9d42d4ccc7536906b43b112c5378efcc219a52279e9f841dd065e44ac1414",
+      "bytes": 2660
+    },
+    "negative-receipt.json": {
+      "sha256": "3c355f28491c72c36ce0373a0587169382cfac8f916ca98d52a4b51d37359101",
+      "bytes": 379
+    },
+    "negative-results.json": {
+      "sha256": "5d53749ce9191bbb0ad107afcb2a192541a12ec2a522d6a9cd9b53f8aa79821d",
+      "bytes": 50538
+    },
+    "negative.log": {
+      "sha256": "cd80d91e73716bf64a6f99f2b855f6d76b43a4189b4dcffd610e95dc68004061",
+      "bytes": 20124
+    },
+    "page-coverage.json": {
+      "sha256": "363a5b7cdfac6df526e9ccdcb62b30492f22b7386dc715dbfb798582f3265ed5",
+      "bytes": 202655
+    },
+    "publication-green-receipt.json": {
+      "sha256": "3e999540fb74b4e63536435cf6cbeefbae651a58400313622f7a44ad20337e5c",
+      "bytes": 357
+    },
+    "publication-green-results.json": {
+      "sha256": "cba99e747692e522ec96e6929900bb935454c19cbf2efdf0fcc371dd48acc706",
+      "bytes": 50575
+    },
+    "publication-green.log": {
+      "sha256": "971e99012805fd9d2a4a84500695e0ebd9b29aef7bee792bd930d61dbe18e6d4",
+      "bytes": 10368
+    },
+    "publication-red-receipt.json": {
+      "sha256": "581550c18a40a1f7ec2ab3985a37aaa42bb4e67aa8a34ef74889df1c56a9528c",
+      "bytes": 343
+    },
+    "publication-red-results.json": {
+      "sha256": "cba99e747692e522ec96e6929900bb935454c19cbf2efdf0fcc371dd48acc706",
+      "bytes": 50575
+    },
+    "publication-red.log": {
+      "sha256": "2c020d4629443b268f3609e815a5a4386356be10c025f4ef3b0643a24344b930",
+      "bytes": 20222
+    },
+    "signatures.json": {
+      "sha256": "ac3fbe1c389fe63123e890a9d984eb24609478ce94535b5fdd79dcfa239b8f88",
+      "bytes": 20609
+    },
+    "source-and-accounting-green-receipt.json": {
+      "sha256": "a810338edeab28a9a1836495f00b50eda3c2f47dd99f7a842a6838a6541c7ccc",
+      "bytes": 274
+    },
+    "source-and-accounting-green.log": {
+      "sha256": "ef08e6c84f0e738d04a4398dc26ff91be159913fd8de8eddda454d53f4d3f435",
+      "bytes": 101
+    },
+    "source-snapshots.json.gz": {
+      "sha256": "7b06ef129ef24f510dbf1ab2df9d41917bfff917eec3cb694ad530c5fd2eef27",
+      "bytes": 89250
+    }
+  },
+  "commands": [
+    {
+      "revision": "3f024eddf6ece99ab42fd283d3652e23a427c037",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "tools/build_patch_3_1_0_accounting.py",
+        "--current-radians"
+      ],
+      "exit_code": 0,
+      "scope": "current source coverage with separate modeled-radians proof; original sealed ledger/gaps not modified",
+      "artifact": "accounting.log",
+      "artifact_sha256": "b10b441537d5238a49db71902623e67ed9190a240142302c54f10ed249e9c49a"
+    },
+    {
+      "revision": "0529f36852d7f0df9819361c1d9f6449e13fe9fd",
+      "argv": [
+        "/usr/bin/cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_1_0_player_facing_reads_radians_state",
+        "--nocapture"
+      ],
+      "exit_code": 0,
+      "scope": "current narrow retail radians state and publication; original archive untouched",
+      "artifact": "model-green.log",
+      "artifact_sha256": "94dd001087205c4b718e6ca2e38f89012016d98f4d18a7f6b747677de8328fb0"
+    },
+    {
+      "revision": "7a39c501e075e63d6ed7575c5c77556652e4a71e",
+      "argv": [
+        "/usr/bin/cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_1_0_player_facing_reads_radians_state",
+        "--nocapture"
+      ],
+      "exit_code": 101,
+      "scope": "concrete retail player-orientation state fixture; getter currently absent",
+      "artifact": "model-red.log",
+      "artifact_sha256": "85b9d42d4ccc7536906b43b112c5378efcc219a52279e9f841dd065e44ac1414"
+    },
+    {
+      "revision": "3f024eddf6ece99ab42fd283d3652e23a427c037",
+      "argv": [
+        "/usr/bin/cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_1_0_publication_sweep",
+        "--nocapture"
+      ],
+      "exit_code": 1,
+      "scope": "current fabricated-global negative; read-only original sealed control register; original negative receipt untouched",
+      "artifact": "negative.log",
+      "artifact_sha256": "cd80d91e73716bf64a6f99f2b855f6d76b43a4189b4dcffd610e95dc68004061"
+    },
+    {
+      "revision": "3f024eddf6ece99ab42fd283d3652e23a427c037",
+      "argv": [
+        "/usr/bin/cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_1_0_publication_sweep",
+        "--nocapture"
+      ],
+      "exit_code": 0,
+      "scope": "current exact 59-gap publication fixture; real radians getter source unchanged from 0529f3685",
+      "artifact": "publication-green.log",
+      "artifact_sha256": "971e99012805fd9d2a4a84500695e0ebd9b29aef7bee792bd930d61dbe18e6d4"
+    },
+    {
+      "revision": "0529f36852d7f0df9819361c1d9f6449e13fe9fd",
+      "argv": [
+        "/usr/bin/cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_1_0_publication_sweep",
+        "--nocapture"
+      ],
+      "exit_code": 1,
+      "scope": "current narrow retail radians state and publication; original archive untouched",
+      "artifact": "publication-red.log",
+      "artifact_sha256": "2c020d4629443b268f3609e815a5a4386356be10c025f4ef3b0643a24344b930"
+    },
+    {
+      "revision": "2c9d3844f99dcff6ba318c78738c649836f2936f",
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "tools/test_patch_3_1_0_source.py"
+      ],
+      "exit_code": 0,
+      "scope": "own parser and disposable original/current ledger byte reproduction; no runtime/final gate",
+      "artifact": "source-and-accounting-green.log",
+      "artifact_sha256": "ef08e6c84f0e738d04a4398dc26ff91be159913fd8de8eddda454d53f4d3f435"
+    }
+  ],
+  "snapshot_sha256": {
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/src/lua_api/state_types/character_world.rs": "8a46e6d2da3bd27a296900d8d787f14cfc9781548dc4ba2a4fe1b6a96141a4e8",
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/src/lua_api/globals/register.rs": "8e4340356b9e1964af21d9a428bbd7a1ae0a0e2b4a0a09da482dce714c55a8c2",
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/src/lua_api/globals/real/mod.rs": "92329607894649e6c9f570c75f477b5337d86c0a7de3d5f89296076f02ff8913",
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/src/lua_api/globals/real/player_facing.rs": "29a335f1c26a3d242c9c09215c117bb217cf499e67325e996ec6c3ec89ef66d7",
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/tests/patch_3_1_0_publication_sweep.rs": "f5c45cb31fefd61ac72fea30609a221174c5d1554aa4dd4720b7b07ca39a0221",
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/tests/data/patch_3_1_0_sweep_known_gaps.json": "0abb75c444529b37423d3bdc34bc96a6d94417cd55fc647e99534f2cb537c16b",
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/tools/build_patch_3_1_0_accounting.py": "e8fc928f9672f361f33b7ff1fd9e65f8fd19cc0e6ac3b48073d39ecd43e6a7db",
+    "0529f36852d7f0df9819361c1d9f6449e13fe9fd/tools/test_patch_3_1_0_source.py": "733584243de95c5499cb301c850fd42e36dc6de4909d5d9310742fcfe8747f5e",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/src/lua_api/state_types/character_world.rs": "8a46e6d2da3bd27a296900d8d787f14cfc9781548dc4ba2a4fe1b6a96141a4e8",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/src/lua_api/globals/register.rs": "8e4340356b9e1964af21d9a428bbd7a1ae0a0e2b4a0a09da482dce714c55a8c2",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/src/lua_api/globals/real/mod.rs": "92329607894649e6c9f570c75f477b5337d86c0a7de3d5f89296076f02ff8913",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/src/lua_api/globals/real/player_facing.rs": "29a335f1c26a3d242c9c09215c117bb217cf499e67325e996ec6c3ec89ef66d7",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/tests/patch_3_1_0_publication_sweep.rs": "f5c45cb31fefd61ac72fea30609a221174c5d1554aa4dd4720b7b07ca39a0221",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/tests/data/patch_3_1_0_sweep_known_gaps.json": "05fb538b9d13df218742a7504e2d02c472e2e92806e74c607caab7d2f6366066",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/tools/build_patch_3_1_0_accounting.py": "2c900856c1bd7d91c144e978c9e2c61e0157a9474dc9d6cfc7b9276a89c8db0f",
+    "2c9d3844f99dcff6ba318c78738c649836f2936f/tools/test_patch_3_1_0_source.py": "782411f04ff46a9f1774696d764847f47bcf07fd4493da8f85da4ec4137c82ac",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/src/lua_api/state_types/character_world.rs": "8a46e6d2da3bd27a296900d8d787f14cfc9781548dc4ba2a4fe1b6a96141a4e8",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/src/lua_api/globals/register.rs": "8e4340356b9e1964af21d9a428bbd7a1ae0a0e2b4a0a09da482dce714c55a8c2",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/src/lua_api/globals/real/mod.rs": "92329607894649e6c9f570c75f477b5337d86c0a7de3d5f89296076f02ff8913",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/src/lua_api/globals/real/player_facing.rs": "29a335f1c26a3d242c9c09215c117bb217cf499e67325e996ec6c3ec89ef66d7",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/tests/patch_3_1_0_publication_sweep.rs": "f5c45cb31fefd61ac72fea30609a221174c5d1554aa4dd4720b7b07ca39a0221",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/tests/data/patch_3_1_0_sweep_known_gaps.json": "05fb538b9d13df218742a7504e2d02c472e2e92806e74c607caab7d2f6366066",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/tools/build_patch_3_1_0_accounting.py": "2c900856c1bd7d91c144e978c9e2c61e0157a9474dc9d6cfc7b9276a89c8db0f",
+    "3f024eddf6ece99ab42fd283d3652e23a427c037/tools/test_patch_3_1_0_source.py": "733584243de95c5499cb301c850fd42e36dc6de4909d5d9310742fcfe8747f5e",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/src/lua_api/state_types/character_world.rs": "31201342123783e51ff082e5a2a61690acf43a22a365022f59e9f494787d4129",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/src/lua_api/globals/register.rs": "e37bafa16cf0c12d1ac7d902fba63e80eea174d99d6468ff7daf4498d3d13ac0",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/src/lua_api/globals/real/mod.rs": "81248fd66386282d13273ad25e8b9c17c722014e755a94a8c599e3a0c6362d4c",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/src/lua_api/globals/real/player_facing.rs": "4e02598ca0db714106567dc64d480d51e3f70f78b509a108f1a52138db46d6e7",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/tests/patch_3_1_0_publication_sweep.rs": "f5c45cb31fefd61ac72fea30609a221174c5d1554aa4dd4720b7b07ca39a0221",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/tests/data/patch_3_1_0_sweep_known_gaps.json": "0abb75c444529b37423d3bdc34bc96a6d94417cd55fc647e99534f2cb537c16b",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/tools/build_patch_3_1_0_accounting.py": "e8fc928f9672f361f33b7ff1fd9e65f8fd19cc0e6ac3b48073d39ecd43e6a7db",
+    "7a39c501e075e63d6ed7575c5c77556652e4a71e/tools/test_patch_3_1_0_source.py": "733584243de95c5499cb301c850fd42e36dc6de4909d5d9310742fcfe8747f5e",
+    "proof-scopes.json": "cab2e3c9666e622e6d2651f6cbbf3c36cc7775171f6a7600deec4a3002f651bb"
+  },
+  "publication_rows": 110,
+  "publication_matches": 51,
+  "publication_gaps": 59,
+  "negative_gaps": 60,
+  "changed_original_observation_ids": [
+    "wt-global-api-GetPlayerFacing-239",
+    "wt-global-api-GetPlayerFacing-241"
+  ],
+  "modeled_closures": 1,
+  "model_fragment_ids": [
+    "signature-239-1",
+    "signature-241-1"
+  ],
+  "limits": "Current configured-radians state read and publication only. Original fresh-process validator remains source-only and never consumes this current directory. This current snapshot is source/receipt retention, not a full native/runtime replay or final acceptance gate."
+}

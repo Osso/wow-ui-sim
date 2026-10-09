@@ -1,0 +1,15 @@
+{
+  "revision": "0529f36852d7f0df9819361c1d9f6449e13fe9fd",
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_3_1_0_player_facing_reads_radians_state",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "scope": "current narrow retail radians state and publication; original archive untouched"
+}

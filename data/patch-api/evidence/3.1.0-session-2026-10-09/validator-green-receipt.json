@@ -1,0 +1,10 @@
+{
+  "revision": "81e86954551d2ee5ec4843a95558e285ab25a799",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "tools/test_patch_3_1_0_validator.py"
+  ],
+  "exit_code": 0,
+  "scope": "own frozen replay development fixtures; no runtime/current acceptance gate"
+}

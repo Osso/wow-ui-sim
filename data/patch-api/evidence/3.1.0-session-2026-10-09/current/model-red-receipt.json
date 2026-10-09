@@ -1,0 +1,15 @@
+{
+  "revision": "7a39c501e075e63d6ed7575c5c77556652e4a71e",
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_3_1_0_player_facing_reads_radians_state",
+    "--nocapture"
+  ],
+  "exit_code": 101,
+  "scope": "concrete retail player-orientation state fixture; getter currently absent"
+}

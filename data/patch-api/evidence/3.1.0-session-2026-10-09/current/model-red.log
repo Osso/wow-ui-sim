@@ -1,0 +1,34 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p310-source)
+error[E0609]: no field `facing` on type `PlayerState`
+  --> /home/osso/.worktrees/wow-ui-sim-p310-source/tests/patch_3_1_0_publication_sweep.rs:97:48
+   |
+97 |     let original = env.state().borrow().player.facing;
+   |                                                ^^^^^^ unknown field
+   |
+   = note: available fields are: `name`, `regional_unique_names_enabled`, `can_port_graveyard`, `health`, `health_max` ... and 45 others
+
+error[E0609]: no field `facing` on type `PlayerState`
+  --> /home/osso/.worktrees/wow-ui-sim-p310-source/tests/patch_3_1_0_publication_sweep.rs:99:41
+   |
+99 |         env.state().borrow_mut().player.facing = Some(radians);
+   |                                         ^^^^^^ unknown field
+   |
+   = note: available fields are: `name`, `regional_unique_names_enabled`, `can_port_graveyard`, `health`, `health_max` ... and 45 others
+
+error[E0609]: no field `facing` on type `PlayerState`
+   --> /home/osso/.worktrees/wow-ui-sim-p310-source/tests/patch_3_1_0_publication_sweep.rs:105:37
+    |
+105 |     env.state().borrow_mut().player.facing = original;
+    |                                     ^^^^^^ unknown field
+    |
+    = note: available fields are: `name`, `regional_unique_names_enabled`, `can_port_graveyard`, `health`, `health_max` ... and 45 others
+
+For more information about this error, try `rustc --explain E0609`.
+error: could not compile `wow-ui-sim` (test "prefork_full_ui") due to 3 previous errors

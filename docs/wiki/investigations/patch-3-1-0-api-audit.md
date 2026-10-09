@@ -1,44 +1,63 @@
 # Historical retail Patch 3.1.0 API source audit
 
-Frozen page 233195/revision 2259594/timestamp 2013-05-22T17:34:42Z describes 2009 retail builds 9614/9626. The later wiki revision timestamp is not the game-release date. Supplied October 9, 2026; literal manifest response/body hashes checked before copying. Wrath Classic 3.4.x is a different client history.
+Frozen page 233195/revision 2259594/timestamp 2013-05-22T17:34:42Z describes 2009 retail builds 9614/9626. Wiki revision timestamp is not the game-release date. Supplied October 9, 2026; literal response/body hashes checked against the committed manifest before copying. Wrath Classic 3.4.x is a separate history.
 
-## Source format and capability boundary
+## Source format
 
-`--legacy-function-labels` is opt-in. It retains plain NEW/UPDATED/REMOVED rows and explicit addenda with original line numbers/annotations. Default parser behavior is unchanged; default full-page extraction remains unmodified. No invented owner for the prose-only secure `SetUpAnimation` method, no `GetTargetFacing` publication from a question, and no argument expansion from linked API pages. The page explicitly says its PTR list is incomplete and hover implementation buggy.
+`--legacy-function-labels` is opt-in. It retains plain NEW/UPDATED/REMOVED rows and explicit addenda with original lines/annotations. Default generator behavior and full-page extraction are unchanged. No invented owner for prose-only secure `SetUpAnimation`, no `GetTargetFacing` publication from a question, no invented arguments for bare names or expansion from linked API pages. The source explicitly calls its PTR list incomplete and hover implementation buggy.
 
-| Scope | Accounted | Still UNPROVEN | Proof |
-|---|---|---|---|
-| Publication occurrences | 110: 87 additions, 12 changes, 11 removals | Current callable/absent mismatches; historical semantics regardless of match | Own discovery in progress |
-| Nonblank original lines/full extract | 189 / 189, including source context and PTR caveats | Talent-group/preview state, aura legacy caster/controller token and owned-first order; secure restoration/hover lifecycle; macro spec selection; item-location table mutation | Literal source accounting |
-| Signature fragments | 33, including heading/question/empty-call/code fragments | Historical coercion, arity, default selection, outputs and security; identity-only inventory has no invented signature | Literal parenthetical source retention |
-| Cheap modeled closures | Original archive: zero. Real retail player-orientation activation pending proof | Native PTR correction, unavailable-state behavior, movement production, other-unit facing and security | Test RED: retail backing field was feature-gated; concrete 0/π÷2/π state fixture added |
-| Queued successors | Retail 3.2.0, 3.3.0, 3.3.3, 3.3.5, 4.0.1 | Ordered main integration and final runtime/CI gates | Read-only overlaps, no placeholder credit |
+110 publication occurrences = 100 labeled function rows + ten addenda, including both player-facing statement/example: 87 additions, 12 changes, 11 removals. Separate accounting targets: 189 nonblank raw lines, 189 full-extract rows and 33 literal parenthetical fragments. Empty-call/heading/question/code fragments retain their literal role; full return prefixes remain in exact source text. No declared numeric inventory headers occur.
 
-100 labeled rows plus ten addenda include both `GetPlayerFacing` statement and code occurrence. Raw-line, full-extract, signature and publication IDs remain separate so current symbol presence cannot erase prose limits. Talent/glyph groups are historically 1-based, but modern specializations do not establish preview allocation/learning behavior. Hover prose retains expiration/reset, explicit-hide and movement cancellation, child-rectangle and noncombat requirements rather than implementing a guessed driver.
+## Capability matrix
 
-## Targeted development evidence
+| Scope | Accounted/current proof | Still UNPROVEN |
+|---|---|---|
+| Publication | 110 rows: 51 matches, 59 gaps; own GREEN 1/1, negative 59 → 60 | Historical call semantics regardless of presence; original sealed observation remains 49/61, negative 62 |
+| Raw/full-extract | 189 / 189; 51 raw prose/context rows pending, extraction mirrors carry no duplicate credit | Talent-group/preview state, aura legacy tuple/controller token/owned-first order, secure restoration/hover lifecycle, macro spec selection and item-location table mutation |
+| Literal fragments | 33: two configured-radians fragments bounded; 31 without model credit | Full native/historical coercion, outputs, unavailable-state defaults, PTR correction and security; two bounded fragments also retain these limits |
+| Cheap real model | One player-orientation scalar read; 0, π÷2, π state transitions and exactly one result pass 1/1 | Movement/input producer, other-unit facing, nil/native defaults, native 2009 PTR correction and security |
+| Historical archive | 36 sealed files, 128 archived files, five exact revision pins/seven command receipts; fresh-process fixtures 2/2 | Full runtime/native reconstruction, current/future acceptance and coordinator gates |
 
-Parser RED at `1fcfa05b4` fails on the missing opt-in flag. First GREEN attempt at `768d579f4` exposes a fixture omission: the source contains both player-facing statement and example. Corrected fixture at `1a19167bc` passes 2/2; parser unchanged. The source itself is not changed to fit the fixture.
+[Current ledger](../../../data/patch-api/sources/3.1.0-page-coverage.json): 521 IDs = 110 inventory + 189 full-extract + 189 raw + 33 fragments. Statuses: 53 bounded (51 publication, two narrow model fragments), 141 pending (59 publication, 51 raw, 31 fragments), 327 metadata. [Original sealed ledger](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/historical-page-coverage.json) remains 49 bounded/145 pending/327 metadata; original 61 gaps and 33 unmodeled fragments never rewritten.
 
-Initial headless prefork invocation at `c7f6e49ae` exits 101 on pre-existing GUI-gated registry references; it provides no publication observations. Failure log/exit retained, warnings unsuppressed. The bounded default-feature case is running independently; no all-publication, check/lint/profile/full suite or final acceptance claimed.
+## Precise limits
+
+Talent/glyph groups are historically 1-based, with inspect/pet selection, active-group defaults, preview allocation/prerequisites and learning lifecycle; modern specializations do not establish this model. Aura prose requires legacy caster-token/controller fallback, arena tokens and player-owned-first ordering, not just modern aura IDs or presence. Hover prose retains expiration/reset, explicit-hide/movement cancellation, child rectangles and noncombat restriction; unnamed restored methods/Show-Hide driver and ownerless secure-method removal cannot be guessed from an unexpanded guide. Item-location numeric encoding and optional supplied-table mutation remain unproven. Slash-command and macro examples are not executed by publication probes.
+
+[Original gap review](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/gap-review.json) records all 61 observations, including five absence mismatches. Only both player-facing occurrences resolve through the real state read. No removals, wrapper deletion or missing-name shims. [Read-only consumer scans](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/consumer-scans.json) retain literal whole-word matches across all UTF-8 src/tests/cache files, binary filenames and 7,860 file hashes. Scans precede model activation and do not claim current-head or native completeness.
 
 ## Bounded radians model
 
-Existing `player.facing: Option<f64>` and real getter now reused for retail; common player state retains unknown initial orientation as simulator policy. Only getter publication changes on retail; WowForever admin setter and Classic API exposure remain unchanged. No movement controller, UI input, normalization, fallback, other-unit facing or native-default behavior invented. Concrete state-transition test checks 0, π÷2 and π without degree conversion and exactly one return; proof pending. The archived original source audit remains independent and earns no retroactive model credit.
+Existing `player.facing: Option<f64>` and real getter reused for retail. Player state keeps unknown initial orientation as simulator policy; the getter returns the configured radians unchanged. Only retail getter publication changes; WowForever admin setter is unchanged and this real getter is not registered for Classic profiles. No input producer, normalization, fallback or native default invented. Actual Classic compilation remains unverified, not inferred from gating.
 
-## Historical replay boundary
+Test RED at `7a39c501e` exits 101 because the retail player field was feature-gated. GREEN at `0529f3685` passes 1/1 with concrete 0, π÷2 and π state values plus one return. [Current receipts](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/current/) retain this proof separately. Publication discovery then identifies exactly two resolved rows; updated 59-gap GREEN at `3f024eddf` passes 1/1, negative exits 1 with exactly 60 gaps. No native/model credit inferred from either sweep.
 
-Own historical source/register/extract/ledger/gaps and command receipts are sealed separately from current/future closures. Fresh-process replay proves source accounting and retained targeted results, not full runtime/native reconstruction. Main owns integration/final gates. Only real retail getter/backing-state activation; no cache/vendor writes, shims, retirements, delegation, push, merge or deployment.
+## Source and historical development receipts
+
+Parser RED at `1fcfa05b4` fails on missing opt-in flag. First GREEN at `768d579f4` reveals fixture omission of the second player-facing occurrence; corrected fixture `1a19167bc` passes 2/2 without changing source/parser to fit the fixture. Extended parser/accounting fixtures at `2c9d3844f` pass 3/3, reproducing original/current ledgers byte-identically in disposable roots. 151 prior register/extract outputs remain byte-identical to starting master `c17f1b4bb`; this is byte identity, not a broad execution gate.
+
+Initial headless prefork invocation at `c7f6e49ae` exits 101 on pre-existing GUI-gated registry references; no publication observations earned. Retained default-feature discovery exits 1 with 61 gaps; source-only GREEN at `9d949d52d` passes 1/1 and negative exits 1 with 62 gaps. That commit's message incorrectly says 58; files/receipts show 61 and are authoritative. Six inherited iced manifest deprecation warnings remain unsuppressed. No warning-clean, check/lint/readability/profile/startup/all-publication/full-suite/CI or final gate claimed.
+
+## Portable frozen replay
+
+[Historical validator](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/validate.py) reads only its relocated own directory and deterministic 1,065,834-byte gzip bundle. It reproduces exact response/register/extract, derives every nonblank/fragment/inventory/known-gap disposition, checks actual retail successors and validates selected commit/tree/blob objects without Git. No target, installed project code, current ledger/gaps or mutable later-register dependency. Registry through 1.0.0 is retained; no page cutoff invented. All retained inputs below 5 MB each.
+
+Manifest seal: `a33186896972499e4f01b635994f0530f7e573566adde9849716c92d2c6371cd`. [Fresh-process receipt](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/validator-green-receipt.json) at `81e869545`: 2/2 pass outside checkout with no Git/target, stable after synthetic current/future closures, exact source/log/historical-ledger/gap/bundle/manifest tamper rejection and byte restoration. Original seals/receipts remain untouched after real model activation. [Current snapshots/receipts](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/current/current-inputs.json) are separate: 21 seals, seven receipts/four revisions and 89,250-byte selected-source bundle, manifest `f8345b9ed1070995b3fe4d0ef8faa7747d23be74908e569ee62ad7ae8b60f6c4`. This bundle retains exact current sources/results but is not a standalone current/native runtime replay. Frozen original replay proves source accounting and retained targeted outcomes, not native or current-head acceptance.
+
+## Queued successors and handoff
+
+Only actual retail 4.1.0+ registers applied in this slice. Main adds queued retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 in order; placeholders earn no credit. [Overlap receipt](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/queued-successor-overlaps.json): no 3.3.3/3.3.5 identity overlap; 3.2.0 mentions `GetInstanceLockTimeRemaining` only; 3.3.0 no matching mentions; 4.0.1 removes `IsPlayerResolutionAvailable`, potentially resolving one current absence gap at integration. No guessed 3.2.0 direction or Classic supersession.
+
+Bounded independent slice only. Main owns affected-callers/all-publication/cross-profile/native startup/full-suite/CI/integration/final gates. No vendor/cache writes, shims, retirements, rebase, delegation, push, merge or deployment.
 
 ## Sources
 
 - [Spec](../../specs/patch-3-1-0-publication-sweep.md).
 - [Frozen source](../../../data/patch-api/sources/3.1.0-api-changes.wikitext).
-- [Literal response and manifest receipt](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/source-pin.json).
-- [Read-only consumer scans](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/consumer-scans.json).
-- [Queued successor overlaps](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/queued-successor-overlaps.json).
+- [Literal manifest receipt](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/source-pin.json).
+- [Original command ledger](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/command-ledger.json).
 
 ## See Also
 
-- [[patch-4-0-1-api-audit]] — separately integrated source format and historical evidence boundary.
-- [[patch-4-1-0-api-audit]] — oldest actual successor applied in this slice.
+- [[patch-4-0-1-api-audit]] — separate source format and historical replay boundary.
+- [[patch-4-1-0-api-audit]] — oldest actual successor applied here.

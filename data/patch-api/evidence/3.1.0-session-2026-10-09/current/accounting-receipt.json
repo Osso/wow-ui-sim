@@ -1,0 +1,11 @@
+{
+  "revision": "3f024eddf6ece99ab42fd283d3652e23a427c037",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "tools/build_patch_3_1_0_accounting.py",
+    "--current-radians"
+  ],
+  "exit_code": 0,
+  "scope": "current source coverage with separate modeled-radians proof; original sealed ledger/gaps not modified"
+}

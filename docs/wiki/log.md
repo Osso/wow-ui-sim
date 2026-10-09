@@ -24,7 +24,7 @@ Owned specs/audits/index updated from queued to integrated: 3.4.3 `80a3fb104`, 3
 
 ## [2026-10-09] investigation | Retail Patch 3.1.0 bounded source audit
 
-[Audit](investigations/patch-3-1-0-api-audit.md) pins supplied response/revision 2259594, retains 110 inventory occurrences and complete nonblank/signature source boundaries. Parser fixtures 2/2; first headless prefork compilation failed on existing GUI registry references, no publication credit. No runtime/vendor/cache changes; own sealed replay and default-feature discovery in progress, coordinator final gates separate.
+[Audit](investigations/patch-3-1-0-api-audit.md) retains 110 inventory/189 raw/189 extract/33 fragment rows, 521 IDs. Original publication 49/61 and negative 62 sealed with 36 inputs/128 snapshots/five exact revision pins; fresh replay/tamper fixtures 2/2. Reused real player-facing state getter on retail: concrete 0/π÷2/π and one-return proof 1/1; current publication 51/59, negative 60, current statuses 53/141/327. Parser and original/current byte accounting 3/3; 151 prior outputs unchanged. Headless compilation/iced warnings retained, no broad/profile/final gates. Native/default/controller/security limits and queued retail successor integration remain main-owned; no vendor/cache edits or operations.
 
 ## [2026-10-09] maintenance | Patch 4.2.0 proof boundaries
 

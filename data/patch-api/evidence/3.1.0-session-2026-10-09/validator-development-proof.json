@@ -1,0 +1,10 @@
+{
+  "revision": "81e869545",
+  "receipt": "validator-green-receipt.json",
+  "exit_code": 0,
+  "tests": 2,
+  "validator_sha256": "068eda97b23369de9d0953ac6baf79d6690d180ba302d3fec03a2ecfd0cb3332",
+  "log_sha256": "62150a099edef251d3834abfe219d3c8626630e26915e74f4d1d23df80b0796f",
+  "manifest_sha256": "a33186896972499e4f01b635994f0530f7e573566adde9849716c92d2c6371cd",
+  "scope": "Retained original relocated no-Git/no-target/future-current/tamper development fixtures; same original sealed inputs after actual radians/current source changes."
+}

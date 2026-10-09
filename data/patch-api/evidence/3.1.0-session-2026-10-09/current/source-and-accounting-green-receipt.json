@@ -1,0 +1,10 @@
+{
+  "revision": "2c9d3844f99dcff6ba318c78738c649836f2936f",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "tools/test_patch_3_1_0_source.py"
+  ],
+  "exit_code": 0,
+  "scope": "own parser and disposable original/current ledger byte reproduction; no runtime/final gate"
+}
