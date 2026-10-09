@@ -2765,3 +2765,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-08] investigation | Patch 6.0.2 API audit
 
 [Audit](investigations/patch-6-0-2-api-audit.md): 657 API occurrences, 100 prose rows and 79 enum members; two scenario-backed queries and three consumer-free retirements. 382 bounded/275 API gaps; 51 sweeps, 3 cached/2 bare cases and 11 scenario regressions pass; 50 registers/47 extracts reproduce with three inherited failures. Both addons-enabled startups []; Mists warning-clean outside vendor; portability gate clean 29/29, later 30/30.
+
+## [2026-10-08] investigation | Retail Patch 5.2.0 API audit
+
+[Audit](investigations/patch-5-2-0-api-audit.md): pinned retail TOC 50200 source and transclusion; 163 inventory occurrences, whole-word retirement scans, separate prose accounting and queued 5.3.0–5.4.2 placeholders.

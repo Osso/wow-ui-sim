@@ -534,3 +534,7 @@ Retail page and transcluded diff pinned; all 159 IDs accounted. [Audit](investig
 ## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
 
 [Audit](investigations/patch-5-3-0-api-audit.md) integrated against a82b8eb1c: real 5.4.x successors leave all 44 observations and 15 gaps unchanged; every other retail/Classic sweep equals master. Compact patch-ID/directory-tree rebase mapping and committed-input receipts preserve historical records. All requested source, targeted, fixture, format and warning-clean non-vendor Mists checks pass; historical contracts remain pending. Integrated portability gate PASS: 54/54 clean, 55/55 later; all 52 prior validators preserved. Largest written evidence file 482,854 bytes; index/log did not shrink. No runtime changes or compaction-branch imports.
+
+## 2026-10-08 — Retail Patch 5.2.0 API audit
+
+Pinned page/transclusion and confirmed 2013 retail TOC 50200. Added opt-in parser reuse, owner-preserving handler normalization, discovery sweep and whole-word retirement evidence. [Audit](investigations/patch-5-2-0-api-audit.md).
