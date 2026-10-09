@@ -1,0 +1,16 @@
+{
+  "rows": 373,
+  "discovery_matches": 185,
+  "discovery_gaps": 188,
+  "reviewed_observations_equal_discovery": true,
+  "negative_rows": 373,
+  "negative_gaps": 189,
+  "only_changed_observation": "wt-global-api-AutoLootMailItem-103",
+  "negative_raw_detail": "raw=nil; lookup=nil",
+  "failed_control": {
+    "revision": "1fdb73aa66b95e738af0bde956b47113ed334128",
+    "passed": 6,
+    "failed": 1,
+    "reason": "Wrong Wrath-derived console expectation; current-retail C API emits 12 baseline plus 2 later Command records. Registered CVar remains distinct. No runtime bug."
+  }
+}

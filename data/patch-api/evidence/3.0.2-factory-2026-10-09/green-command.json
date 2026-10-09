@@ -1,0 +1,32 @@
+{
+  "revision": "1fdb73aa66b95e738af0bde956b47113ed334128",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p302-factory",
+  "argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-retail",
+    "--test",
+    "patch_3_0_2_factory",
+    "--",
+    "--nocapture"
+  ],
+  "env_overrides": {
+    "CARGO_TARGET_DIR": "/tmp/wow-ui-sim-p302-factory-target",
+    "CARGO_NET_OFFLINE": "true",
+    "WOW_SIM_P302_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p302-factory/data/patch-api/evidence/3.0.2-factory-2026-10-09/green-observations.json"
+  },
+  "inherited_relevant_env": {
+    "CARGO_BUILD_JOBS": "12"
+  },
+  "stage": "green",
+  "exit_code": 101,
+  "sha256": {
+    "green.stdout": "b3ac051451e34273ee482862a89a276b9ef9da9dae22bc9be6b390cf0428b975",
+    "green.stderr": "08a90831b80947272e38fa1121facfa3e903aab478cad6bdcd10c61bfcab76d2",
+    "green-observations.json": "fba1e29951db3d1bbfec84c75ce730e8944e2960df779960e731a7717a75e3c1"
+  }
+}

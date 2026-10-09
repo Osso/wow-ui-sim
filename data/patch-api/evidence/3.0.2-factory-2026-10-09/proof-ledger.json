@@ -1,0 +1,112 @@
+[
+  {
+    "command_receipt": "discovery-command.json",
+    "revision": "982ccc3d99158084db17660463e0ecac21c967b5",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p302-factory",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "client-retail",
+      "--test",
+      "patch_3_0_2_factory",
+      "patch_3_0_2_exact_factory_publication_gaps",
+      "--",
+      "--exact",
+      "--nocapture"
+    ],
+    "env_overrides": {
+      "CARGO_TARGET_DIR": "/tmp/wow-ui-sim-p302-factory-target",
+      "CARGO_NET_OFFLINE": "true",
+      "WOW_SIM_P302_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p302-factory/data/patch-api/evidence/3.0.2-factory-2026-10-09/discovery-observations.json"
+    },
+    "inherited_relevant_env": {
+      "CARGO_BUILD_JOBS": "12"
+    },
+    "stage": "empty-gap discovery; current retail only",
+    "exit_code": 101,
+    "sha256": {
+      "discovery.stdout": "61ca68e12fe5350ef4b0fa16cee7252ad172750535d8ca1e094405f4d119b35a",
+      "discovery.stderr": "76e3fbbfbc361ef8a5e19f6e29d8092706c0abb58034a54341732d46c1b8ef77",
+      "discovery-observations.json": "fba1e29951db3d1bbfec84c75ce730e8944e2960df779960e731a7717a75e3c1"
+    },
+    "proof_scope": "373 exact current-retail publication observations and reviewed gap identities",
+    "later_change_invalidates": "console-control assertion only; factory observations and negative control unchanged by console-test correction"
+  },
+  {
+    "command_receipt": "green-command.json",
+    "revision": "1fdb73aa66b95e738af0bde956b47113ed334128",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p302-factory",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "client-retail",
+      "--test",
+      "patch_3_0_2_factory",
+      "--",
+      "--nocapture"
+    ],
+    "env_overrides": {
+      "CARGO_TARGET_DIR": "/tmp/wow-ui-sim-p302-factory-target",
+      "CARGO_NET_OFFLINE": "true",
+      "WOW_SIM_P302_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p302-factory/data/patch-api/evidence/3.0.2-factory-2026-10-09/green-observations.json"
+    },
+    "inherited_relevant_env": {
+      "CARGO_BUILD_JOBS": "12"
+    },
+    "stage": "green",
+    "exit_code": 101,
+    "sha256": {
+      "green.stdout": "b3ac051451e34273ee482862a89a276b9ef9da9dae22bc9be6b390cf0428b975",
+      "green.stderr": "08a90831b80947272e38fa1121facfa3e903aab478cad6bdcd10c61bfcab76d2",
+      "green-observations.json": "fba1e29951db3d1bbfec84c75ce730e8944e2960df779960e731a7717a75e3c1"
+    },
+    "proof_scope": "373 observations plus seven supplemental own tests; console control RED",
+    "later_change_invalidates": "console-control assertion only; factory observations and negative control unchanged by console-test correction"
+  },
+  {
+    "command_receipt": "negative-command.json",
+    "revision": "1fdb73aa66b95e738af0bde956b47113ed334128",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p302-factory",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "client-retail",
+      "--test",
+      "patch_3_0_2_factory",
+      "patch_3_0_2_exact_factory_publication_gaps",
+      "--",
+      "--exact",
+      "--nocapture"
+    ],
+    "env_overrides": {
+      "CARGO_TARGET_DIR": "/tmp/wow-ui-sim-p302-factory-target",
+      "CARGO_NET_OFFLINE": "true",
+      "WOW_SIM_P302_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p302-factory/data/patch-api/evidence/3.0.2-factory-2026-10-09/negative-observations.json",
+      "WOW_SIM_P302_FACTORY_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p302-factory/data/patch-api/evidence/3.0.2-factory-2026-10-09/negative-register.json"
+    },
+    "inherited_relevant_env": {
+      "CARGO_BUILD_JOBS": "12"
+    },
+    "stage": "negative",
+    "exit_code": 101,
+    "sha256": {
+      "negative.stdout": "f9b50d9959a15a454e82af121ae27100335de8d9fb489f9ebb043e19bdf61a73",
+      "negative.stderr": "0cc06dab353e591c53ba32d129533cbb061ff2f78acb40417f9530baaded442f",
+      "negative-observations.json": "e6650c81928f29235a514a62449980461d76ee995acfc0519be79e4e7b5f4e9d"
+    },
+    "proof_scope": "373 exact current-retail publication observations and reviewed gap identities",
+    "later_change_invalidates": "console-control assertion only; factory observations and negative control unchanged by console-test correction"
+  }
+]
