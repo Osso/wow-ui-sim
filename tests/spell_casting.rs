@@ -154,9 +154,63 @@ fn env_with_blizzard_ui_from(ui: std::path::PathBuf) -> WowLuaEnv {
     for (_name, toc_path) in &addons {
         let _ = wow_ui_sim::loader::load_addon(&env.loader_env(), toc_path);
     }
+    probe_mists_cast_parent(&env, "after-addon-load/before-post-load-workarounds");
     env.apply_post_load_workarounds();
+    probe_mists_cast_parent(&env, "after-post-load-workarounds/before-startup-events");
     fire_startup_events(&env);
+    probe_mists_cast_parent(&env, "after-startup-events");
     env
+}
+
+/// Read state without replaying anchors, registering frames, or replacing Lua handlers.
+fn probe_mists_cast_parent(env: &WowLuaEnv, phase: &str) {
+    if !cfg!(feature = "client-mists") {
+        return;
+    }
+    let diagnostic: Result<String, _> = env.eval(
+        r#"
+        local cast = PlayerCastingBarFrame
+        local bottom = UIParentBottomManagedFrameContainer
+        local observations = {}
+        local function observe(label, read)
+            local ok, value = pcall(read)
+            observations[#observations + 1] = label .. "="
+                .. (ok and tostring(value) or ("READ_ERROR:" .. tostring(value)))
+        end
+        observe("cast", function() return cast end)
+        observe("systemInfo", function() return cast.systemInfo end)
+        observe("systemInfo.isInDefaultPosition", function() return cast.systemInfo.isInDefaultPosition end)
+        observe("IsInitialized", function() return cast:IsInitialized() end)
+        observe("IsInDefaultPosition", function() return cast:IsInDefaultPosition() end)
+        observe("isManagedFrame", function() return cast.isManagedFrame end)
+        observe("isBottomManagedFrame", function() return cast.isBottomManagedFrame end)
+        observe("ignoreFramePositionManager", function() return cast.ignoreFramePositionManager end)
+        observe("layoutOnBottom", function() return cast.layoutOnBottom end)
+        observe("IsShown", function() return cast:IsShown() end)
+        observe("attachedToPlayerFrame", function() return cast.attachedToPlayerFrame end)
+        observe("parent", function() return cast:GetParent() end)
+        observe("parent.name", function() return cast:GetParent():GetName() end)
+        observe("layoutParent", function() return cast.layoutParent end)
+        observe("layoutParent.name", function() return cast.layoutParent:GetName() end)
+        observe("bottom", function() return bottom end)
+        observe("bottom.name", function() return bottom:GetName() end)
+        observe("layoutParent==bottom", function() return cast.layoutParent == bottom end)
+        observe("parent==bottom", function() return cast:GetParent() == bottom end)
+        observe("bottom.BottomManagedLayoutContainer", function() return bottom.BottomManagedLayoutContainer end)
+        observe("parent==bottom.BottomManagedLayoutContainer", function()
+            return cast:GetParent() == bottom.BottomManagedLayoutContainer
+        end)
+        observe("bottom.showingFrames", function() return bottom.showingFrames end)
+        observe("bottom.showingFrames[cast]", function() return bottom.showingFrames[cast] end)
+        observe("bottom.showingFrames[cast]==cast", function() return bottom.showingFrames[cast] == cast end)
+        observe("layoutParent.showingFrames[cast]", function() return cast.layoutParent.showingFrames[cast] end)
+        return table.concat(observations, "; ")
+        "#,
+    );
+    match diagnostic {
+        Ok(observations) => eprintln!("MISTS_CAST_PARENT [{phase}] {observations}"),
+        Err(error) => eprintln!("MISTS_CAST_PARENT [{phase}] PROBE_ERROR: {error}"),
+    }
 }
 
 fn fire_startup_events(env: &WowLuaEnv) {
@@ -165,7 +219,9 @@ fn fire_startup_events(env: &WowLuaEnv) {
         let _ = env.fire_event(ev);
     }
     common::fire_player_entering_world(env, true, false);
+    probe_mists_cast_parent(env, "before-EDIT_MODE_LAYOUTS_UPDATED");
     let _ = env.fire_edit_mode_layouts_updated();
+    probe_mists_cast_parent(env, "after-EDIT_MODE_LAYOUTS_UPDATED");
     for ev in [
         "UPDATE_BINDINGS",
         "DISPLAY_SIZE_CHANGED",
@@ -390,6 +446,7 @@ fn cast_bar_visible_during_cast() {
 prefork_fixture_case! {
 fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
 
+        probe_mists_cast_parent(env, "cast-case-before-original-assertions");
         let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
             .eval(
                 r#"
