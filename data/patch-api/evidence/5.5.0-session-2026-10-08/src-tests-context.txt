@@ -1,0 +1,995 @@
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/xml/parse.rs:74:///   - Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonLandingPage.xml:673
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/xml/parse.rs:729:        .join("Blizzard_FrameXML/Mainline/LowHealthFrame.xml");
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/c_api/c_party_info/loot_method.rs:24:/// Enum.LootMethodStyles.Mainline: TOKENS is the Mainline method set, the only
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/c_api/patch_12_0_5_enums.rs:153:    ("LootMethodStyles", &[("Mainline", 0)]),
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/c_api/c_artifact_ui/action_bar.rs:3://! `Blizzard_ActionBar/Mainline/ArtifactBar.lua`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/c_api/c_artifact_ui/mod.rs:2://! `Blizzard_ActionBar/Mainline/ArtifactBar.lua` (the equipped-artifact
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/c_api/item_spell/c_equipment_set.rs:2://! `Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua`'s
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/c_api/c_azerite_item.rs:2://! `Blizzard_ActionBar/Mainline/AzeriteBar.lua`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/c_api/c_barber_shop.rs:4://! Covers `Blizzard_BarbershopUI/Mainline/Blizzard_BarberShopUI.lua`
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/blizzard_ui_sync/tests.rs:386:        manifest.contains(&"Blizzard_AccessibilityTemplates/Mainline/AccessibilityTemplates.lua")
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/blizzard_ui_sync/tests.rs:495:        "Mists cache marker must not be trusted when Blizzard_NamePlates.toc would load Mainline class bar files"
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/blizzard_ui_sync/tests.rs:500:        "Mainline\\Blizzard_ClassNameplateBar.lua [AllowLoadGameType mainline]\n",
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/blizzard_ui_sync/tests.rs:505:        "Mists cache should be complete when Blizzard_NamePlates.toc preserves Mainline game-type gates"
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/ptr/compat_bootstrap.rs:37:// (Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua) can still assign them.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/blizzard_ui_sync_mists_test_fixture.rs:58:            "Mainline\\Blizzard_ClassNameplateBar.lua [AllowLoadGameType mainline]\n"
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/mod.rs:220:/// and Forever vendors ship a `Mainline/` subdir; mists ship `Classic/`. Wrath
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/mod.rs:226:        | crate::client_profile::ClientProfile::WowForever => "Mainline",
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:220:## Interface: 110107, 50500, 11507
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:225:    assert_eq!(toc.interface_versions(), vec![110107, 50500, 11507]);
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:243:/// Mists profile vendors write `## Interface: 50500` for MoP-Classic
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:245:/// `test_multiple_interface_versions` covers 50500 only as a list element).
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:250:## Interface: 50500
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:255:    assert_eq!(toc.interface_versions(), vec![50500]);
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:501:    assert_eq!(toc.files[1], PathBuf::from("Mainline/ColorConstants.lua"));
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:502:    assert_eq!(toc.files[2], PathBuf::from("Mainline/ColorManager.lua"));
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:523:Mainline\Override.lua [AllowLoadGameType mainline]
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:537:            "Mainline/Override.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/toc/tests.rs:541:        ClientProfile::WowForever => &["Core.lua", "Mainline/Override.lua"],
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/state_types/character_world.rs:353:/// and `Mainline/HonorBar.lua`. Default values mirror "level 70 paladin in a
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/game_data/allied_races.rs:7:/// in `runtime_surface_bootstrap.lua`. Model IDs are the live Mainline values
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/globals/missing_surface/garrison.rs:12://! defined in `vendor/wow-ui-source/Interface/AddOns/Blizzard_FrameXMLUtil/Mainline/GarrisonBaseUtils.lua`
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/globals/real/xp_honor_rest.rs:2://! `Mainline/HonorBar.lua`, and `Mainline/ExhaustionTickMixin:UpdateTickPosition`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/globals/housing.rs:2://! surface read by `Blizzard_ActionBar/Mainline/HouseFavorBar.lua`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/globals/enum_data/missing_enums.lua:11086:    Mainline = 1,
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/state/support_types.rs:195:/// (`vendor/wow-ui-source/Interface/AddOns/Blizzard_ActionBar/Mainline/HouseFavorBar.lua`).
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/state/support_types.rs:493:/// and the `Blizzard_ActionBar/Mainline/ArtifactBar.lua` mixin stays hidden.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/lua_api/env_init/shared_bootstrap.lua:300:-- Blizzard_SharedXML/Mainline/SoundKitConstants.lua:51.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/screen_selection.rs:237:        "Mists should prefer the shipped Mists WorldMap TOC over the retail Mainline TOC"
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/toc_discovery.rs:32:        ClientProfile::Retail | ClientProfile::Ptr => "Mainline",
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/toc_discovery.rs:115:        ClientProfile::Retail | ClientProfile::Ptr => ["Mainline", "Standard"],
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/toc_discovery.rs:119:        ClientProfile::WowForever => ["Camelot", "Mainline"],
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/toc_discovery.rs:122:        "Mainline", "Standard", "Wrath", "Mists", "Vanilla", "Camelot", "Classic", "Cata", "TBC",
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/toc_discovery.rs:184:        ("Blizzard_GameMenu", "Mainline"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/mod.rs:187:    let xml_path = addon_root.join("Mainline/SharedUIPanelTemplates.xml");
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/tests/wow_api_globals/startup_globals.rs:541:    // Mirrors Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua assignments.
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/lua_file.rs:365:            r"C:\repo\vendor\wow-ui-source\Interface\AddOns\Blizzard_UIParent\Mainline\UIParent.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/lua_file.rs:369:            "@Interface/AddOns/Blizzard_UIParent/Mainline/UIParent.lua"
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/loader/lua_file.rs:376:            Path::new(r"C:\repo\Interface\BlizzardUI\Blizzard_UIParent\Mainline\UIParent.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/client_profile.rs:83:pub const ACTIVE_INTERFACE_VERSION: u32 = 50504;
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/client_profile.rs:147:            ClientProfile::Mists => 50504,
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/mists/compat_bootstrap.lua:32:  return "5.5.4", "68042", "Jun 2 2026", 50504, "", " "
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/blizzard_ui_sync.rs:311:            | "Blizzard_PrivateAurasUI/Mainline/PrivateAurasTooltip.lua"
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/blizzard_ui_sync.rs:312:            | "Blizzard_PrivateAurasUI/Mainline/PrivateAurasTooltip.xml"
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_sim/addon_loading/tests.rs:467:    write_addon_with_toc(temp.path(), "ElvUI", "## Interface: 50504\nmain.lua\n");
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_cli/audit_api/patch_source_index.rs:834:            "Mainline.lua\nMainline/Shared.xml\n",
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_cli/audit_api/patch_source_index.rs:839:        std::fs::create_dir_all(addon.join("Mainline")).expect("mainline directory should create");
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_cli/audit_api/patch_source_index.rs:841:            addon.join("Mainline/Shared.xml"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_cli/audit_api/patch_source_index.rs:845:        std::fs::write(addon.join("Mainline.lua"), "function MainlineOnly() end\n")
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_cli/audit_api/patch_source_index.rs:848:            addon.join("Mainline/Nested.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_cli/audit_api/patch_source_index.rs:855:            addon.join("Mainline/NeverLoaded.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/src/bin/wow_cli/audit_api/patch_source_index.rs:872:        assert_eq!(index.missing, vec!["ExampleAddon/Mainline/Missing.xml"]);
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/forever_auto_roll.rs:35:// Mainline captures the club autocomplete function without calling it; the base
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/forever_auto_roll.rs:37:// Diagnostic lines are loader attribution, not physical Mainline source lines.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_5_5_0_publication_sweep.rs:13:        assert_eq!(ACTIVE_INTERFACE_VERSION, 50504);
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_base_loads.rs:65:        "Blizzard_FrameXMLBase declares no `## AllowLoadGameType:` line on the Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_base_loads.rs:218:         IconDataProviderMixin (Mainline/IconDataProvider.lua:43 — shared icon picker \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_base_loads.rs:526:         are loaded — confirms the Mainline-vs-Shared subdir resolution works"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_inventory_slots.rs:17:    load_source(&env, "Blizzard_ItemButton/Mainline/ItemButtonTemplate.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_shared_loads.rs:35:    "Mainline\\UnitPopupSharedButtonMixins.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_shared_loads.rs:188:         screens (where Mainline/UnitPopupSharedButtonMixins.lua's \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_shared_loads.rs:224:             in Mainline\\UnitPopupSharedButtonMixins.lua"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_shared_loads.rs:274:             Mainline\\UnitPopupSharedButtonMixins overlays three \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_shared_loads.rs:496:             Mainline\\UnitPopupSharedButtonMixins.lua loads AFTER \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_shared_loads.rs:505:             load these mixins exist (the Mainline overlay always \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_quick_join_loads.rs:106:         and falls through to the bare form because no Mainline-suffixed \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_map_canvas_secure_util_loads.rs:126:         (Mainline, Classic Era, Cataclysm, MoP Classic, etc) carries the secure-call \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_profile.rs:256:            PathBuf::from("Mainline/StackSplitFrame.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_profile.rs:321:    std::fs::write(addon.join("Example-Mainline.toc"), "Core.lua\n").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_profile.rs:324:        Some(addon.join("Example-Mainline.toc"))
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_profile.rs:326:    std::fs::remove_file(addon.join("Example-Mainline.toc")).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/soundkit_ig_inventory_rotate_character.rs:11://! `vendor/wow-ui-source/Interface/AddOns/Blizzard_SharedXML/Mainline/SoundKitConstants.lua:51`).
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_edit_mode_loads.rs:167:         across Shared/Mainline/Standard subdirs and is essential infrastructure for the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_edit_mode_loads.rs:400:            && subdirs.contains(&&"Mainline".to_string())
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_edit_mode_loads.rs:406:         (game-agnostic engine), Mainline ([Family] for retail), Classic, Standard \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:27:    "Mainline/Blizzard_ItemUpgradeUI.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:28:    "Mainline/Blizzard_ItemUpgradeUI.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:259:        "TOC body must list the bootstrap before the Mainline lua and XML files. The Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:272:         Mainline and Mists source directories"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:355:         Mainline/Blizzard_ItemUpgradeUI.lua:17 creates the empty table at file scope before \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:549:            "{helper} must publish at `_G` as a function — Mainline/Blizzard_ItemUpgradeUI.lua:3 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:586:         Mainline/Blizzard_ItemUpgradeUI.xml:144 with `name=\"ItemUpgradeFrame\"` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_upgrade_ui_loads.rs:620:         Mainline/Blizzard_ItemUpgradeUI.lua:1 registers the panel as a left-docked panel via \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/targeting_verbs.rs:425:                    addons.join("Blizzard_UnitFrame/Mainline/TargetFrame.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_quest_navigation_loads.rs:58:         the bare form because no Mainline-suffixed variant exists. This is the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:305:            if s.starts_with("Mainline/") {
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:315:        "Exactly 4 body entries must resolve under `Mainline/` after the TOC \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:317:         Mainline/NewDefinitions.lua, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:318:         Mainline/Blizzard_SettingsPanelTemplates.xml, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:319:         Mainline/GraphicsOverrides.lua, Mainline/AudioOverrides.lua. The \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:320:         settings_shared TOC uses literal `Mainline\\` rather than `[Family]\\` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:325:        "Mainline/NewDefinitions.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:326:        "Mainline/Blizzard_SettingsPanelTemplates.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:327:        "Mainline/GraphicsOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:328:        "Mainline/AudioOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:332:            "Mainline body entry {expected} must be present after normalization"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:583:         seeds `NewSettings = {{}};` empty, then Mainline/NewDefinitions.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_shared_loads.rs:607:         Mainline/NewDefinitions.lua runs — the version key is the patch number \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_housing_dashboard_loads.rs:70:         from Blizzard_HousingEventHandler.lua:106 + Blizzard_UIPanels_Game/Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:24:    "Mainline/RaidFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:25:    "Mainline/RaidFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:26:    "Mainline/RaidFrameSocialView.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:27:    "Mainline/RaidFrameSocialView.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:28:    "Mainline/RaidInfoFrameSocialView.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:29:    "Mainline/RaidInfoFrameSocialView.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:110:         Wrath/RaidFrame.xml that the Mainline TOC does NOT reference. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:112:         .toc]` at src/loader/mod.rs:65-95 and picks the Mainline-suffixed \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:121:             single Mainline TOC only. The Wrath/ subdirectory ships a \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_frame_loads.rs:153:         Wrath/RaidFrame.xml is NOT loaded by this Mainline TOC — that file \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/housing_category_search.rs:402:        .join("Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_match_celebration_party_pose_ui_loads.rs:71:         `MatchCelebrationPartyPose_LoadUI()` (Blizzard_UIParent/Mainline/UIParent.lua:391-393), \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_queue_status_frame_loads.rs:24:    "Mainline/QueueStatusFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_queue_status_frame_loads.rs:25:    "Mainline/QueueStatusFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_queue_status_frame_loads.rs:133:         at src/loader/mod.rs:65-95 and picks the Mainline-suffixed form first"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_queue_status_frame_loads.rs:141:             single Mainline TOC only; the queue-status button only ships on retail \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_queue_status_frame_loads.rs:259:         Mainline/QueueStatusFrame.lua FIRST (declares all 3 mixins + 24 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_queue_status_frame_loads.rs:261:         per-queue-type entry setup pipeline), Mainline/QueueStatusFrame.xml \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_queue_status_frame_loads.rs:264:         file layout is the canonical pattern even though only Mainline ships — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_texture_metatable.rs:9:        .join("Blizzard_UnitFrame/Mainline/UnitFrameUtil.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_stubs_loads.rs:119:         localization, no Mainline/Classic subdirectory. The single XML body declares 2 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_stubs_loads.rs:152:         Blizzard_ActionBar/Mainline/ActionButtonTemplate.xml on the Game screen. The glue-screen \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/addon_require.rs:53:            ("Mainline/NineSliceLayouts.lua", "NineSliceLayouts = { border = 7 }; FamilyOrder = 'layouts'"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/addon_require.rs:55:            ("Mainline/InputUtil.lua", "InputUtil = { ready = true }; FamilyOrder = FamilyOrder .. ',input'"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/addon_require.rs:56:            ("Mainline/SharedUIPanelTemplates.lua", "SidePanelTabButtonMixin = { ready = true }; FamilyOrder = FamilyOrder .. ',templates'"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/addon_require.rs:81:            ("Mainline/Base.lua", "AnnotationValue = require('MainlineDependency.Value'); AnnotationOrder = 'base'"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/publication_deprecated_alias.rs:28:                "Mainline/Deprecated_12_1_0.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/party_loot_method.rs:464:        assert(Enum.LootMethodStyles.Mainline == 0)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/party_loot_method.rs:465:        assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/party_loot_method.rs:468:        assert(C_PartyInfo.GetLootMethodStyle() == Enum.LootMethodStyles.Mainline)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/party_loot_method.rs:471:    .expect("the Retail loot ruleset reports the Mainline style");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_fonts_shared_loads.rs:105:        "TOC uses the `[Family]` placeholder (resolved to `Mainline` by src/toc.rs:145) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_fonts_shared_loads.rs:106:         to keep one TOC file driving both Mainline and Classic font sets — the parser \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_fonts_shared_loads.rs:239:        "Shared/GameFontStyles.xml + Mainline/GameFontStyles.xml declare the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_colors_loads.rs:101:        "MATERIAL_TEXT_COLOR_TABLE should contain all 7 Shared keys plus the Mainline-added \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:137:         Blizzard_GlueXMLBase (the Mainline-only base) so the menu frame instead pulls \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:140:         layout that Mainline splits into Blizzard_GlueXMLBase)"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:154:        "Classic TOC carries `## AllowLoadGameType: classic` so the Mainline-targeted \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:173:            "Mainline\\GlueMenuFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:174:            "Mainline\\GlueMenuFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:178:         Mainline\\GlueMenuFrame.xml's KeyValue references `GlueMenuFrameUtil.GlueMenuContextKey`, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:179:         then the Mainline-flavored mixin Lua, then the XML that binds the mixin"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:256:         namespace consumed by both the Mainline and Classic mixin Lua"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:295:        "Mainline/GlueMenuFrame.lua line 1 publishes `GlueMenuFrameMixin = {{}}` — bound by \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:334:        "Mainline/GlueMenuFrame.xml line 10 declares `<Frame name=\"GlueMenuFrame\">` so the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:344:        "Mainline/GlueMenuFrame.xml line 10 sets `parent=\"GlueParent\"` — the menu must dock \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:355:        "Mainline/GlueMenuFrame.xml line 10 sets `hidden=\"true\"` — the menu must start \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:370:        "Virtual template `GlueMenuFrameButtonTemplate` (Mainline/GlueMenuFrame.xml line 4 — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:396:            "Mainline".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_menu_frame_loads.rs:398:        "Blizzard_GlueMenuFrame ships exactly: 2 flavor TOCs (Mainline + Classic) + 2 flavor \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_collections_loads.rs:84:         only). The Game-screen warband-scene picker is in Blizzard_Collections/Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_collections_loads.rs:158:         in-game warband-scene UI lives in Blizzard_Collections/Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_collections_loads.rs:238:         WarbandSceneEntryMixin (Blizzard_SharedXML/Mainline/SharedCollectionTemplates.lua) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_collections_loads.rs:372:         additional Mainline/ subdirectory, no localized strings file, no test fixtures. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:27:    "Mainline/ItemButtonTemplate.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:155:         the suffixed variant before falling back to a bare `.toc`. The Shared/Mainline split \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:156:         lets non-mainline flavors keep their own TOC + lua/xml even though only the Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:225:        "TOC must declare `## AllowLoadGameType: mainline` exactly — the Shared/Mainline file \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:254:         the table; Mainline\\ItemButtonTemplate.xml loads LAST and uses `<Script file=...>` to \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:255:         pull in Mainline\\ItemButtonTemplate.lua before its 7 virtual templates instantiate \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:270:         `Mainline/` subdir). The Shared/Mainline split exists so non-mainline flavors could \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:271:         ship divergent xml/lua against the same intrinsic, but only Mainline ships today"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:400:             Mainline/ItemButtonTemplate.lua:404-422 defines five method overrides on \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:404:             Mainline/ItemButtonTemplate.xml:3 via `<Script file=\"Mainline\\ItemButtonTemplate.lua\"/>` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:405:             — missing this method proves the Mainline xml's Script directive never fired"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:420:         Mainline/ItemButtonTemplate.lua:424 creates the table at file scope, then binds \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:447:         Mainline/ItemButtonTemplate.lua:448 creates the table, then binds 6 methods. Consumed \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:483:             Mainline/ItemButtonTemplate.lua exposes 22 free helpers (count / texture / quality / \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:487:             Mainline\\ItemButtonTemplate.lua never executed"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_item_button_loads.rs:502:            "{template} must NOT publish at `_G` — Mainline/ItemButtonTemplate.xml declares 7 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_edit_mode_enums.rs:67:    load_source(&env, "Blizzard_EditMode/Mainline/EditModePresetLayouts.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_edit_mode_enums.rs:91:    load_source(&env, "Blizzard_EditMode/Mainline/EditModePresetLayouts.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_selector_ui_loads.rs:201:            .join("Blizzard_SharedXML/Mainline/Selector/Blizzard_ScrollBoxSelector.xml")
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_selector_ui_loads.rs:203:        "The Mainline selector XML companion must exist outside Shared/Selector"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_foundation_lane.rs:12://!     SharedXMLBase   (AllowLoad: Both, Mainline+Mists agnostic, depends on Blizzard_ScriptErrors)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_foundation_lane.rs:13://!         └── SharedXML       (AllowLoad: Both, Mainline-only via AllowLoadGameType, depends on
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_foundation_lane.rs:233:        body.iter().any(|f| f == "Mainline/Localization.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_foundation_lane.rs:235:         in raw form. The loader at src/toc.rs:144-146 substitutes `[Family]` → `Mainline` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_foundation_lane.rs:407:                "Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_communities_loads.rs:249:         Mainline/GuildInfo.lua) should be populated"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/on_update_modes.rs:1://! Numeric script-object update modes shared by Mainline and Forever.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:24:    "Mainline/Blizzard_InspectUI_Bootstrap.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:25:    "Mainline/Blizzard_InspectUI.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:26:    "Mainline/InspectPaperDollFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:27:    "Mainline/InspectPaperDollFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:28:    "Mainline/InspectPVPFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:29:    "Mainline/InspectPVPFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:30:    "Mainline/InspectGuildFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:31:    "Mainline/InspectGuildFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:32:    "Mainline/Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:182:        "current retail TOC must list its bootstrap and Mainline files in declared order"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_inspect_ui_loads.rs:194:         and the Cata, Mainline, Mists, TBC, and Vanilla source directories"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_quest_timer_loads.rs:36:         bare form because no Mainline-suffixed variant exists"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_menu_loads.rs:69:        .expect("Blizzard_GameMenu Mainline TOC parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_menu_loads.rs:111:        .expect("Blizzard_GameMenu Mainline TOC should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_menu_loads.rs:141:        .expect("Blizzard_GameMenu Mainline TOC parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/test_showuipanel_lod_player_spells.rs:285:            before_source.contains("Blizzard_FrameXMLUtil/Mainline/PlayerSpellsUtil.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/test_showuipanel_lod_player_spells.rs:289:            after_source.contains("Blizzard_FrameXMLUtil/Mainline/PlayerSpellsUtil.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_map_data_providers_loads.rs:132:         no bare `.toc`. The data-provider family is Mainline-only because it \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:139:            "Mainline/Constants.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:140:            "Mainline/Localization.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:141:            "Mainline/GlueTemplates.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:142:            "Mainline/GlueTemplates.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:143:            "Mainline/GlueButtons.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:204:            "Mainline".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:208:        "Blizzard_GlueXMLBase directory ships exactly 5 entries: 2 flavor TOCs (Mainline + \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:209:         Mists) plus 3 subdirectories (Mainline/ for retail-specific source files, Mists/ for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:306:             function — Mainline/GlueTemplates.lua publishes 10 GlueTemplates_* tab-helper \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:438:        "SafeGetExpansionData should publish as a `_G` function — Mainline/Constants.lua line 1 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:471:        "GLUE_AMBIENCE_TRACKS should publish as a `_G` table — Mainline/Constants.lua line 10 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:511:        "GLUE_BACKDROP_COLOR should publish as a CreateColor result — Mainline/Constants.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:524:        "GLUE_BACKDROP_BORDER_COLOR should publish as a CreateColor result — Mainline/Constants.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:550:             Mainline/GlueButtons.xml), 1 check button template (GlueCheckButtonTemplate from \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_base_loads.rs:551:             Mainline/GlueTemplates.xml), and 2 context-menu templates \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:95:        "Mainline flavor TOC — addon ships ONLY \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:197:        "Mainline\\Blizzard_TimeManager.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:198:        "Mainline\\Blizzard_TimeManager.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:199:        "Mainline\\Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:228:        "Mainline/Blizzard_TimeManager.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:229:        "Mainline/Blizzard_TimeManager.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:230:        "Mainline/Localization.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_time_manager_loads.rs:235:        "Body must resolve to the bootstrap followed by the three declared Mainline entries. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:246:        "Mainline/GameplaySettingsGroup.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:247:        "Mainline/InterfaceOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:248:        "Mainline/ControlsOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:249:        "Mainline/CombatOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:250:        "Mainline/SocialOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:251:        "Mainline/ColorblindOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:252:        "Mainline/KeybindingsOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:253:        "Mainline/AccessibilityOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:254:        "Mainline/NameplatesOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:262:        "First 8 body entries must be the 8 Mainline\\*.lua override files in \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:283:        "Mainline/Colorblind.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:348:    let mainline_dir = dir.join("Mainline");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:351:        "Mainline\\ subdirectory must exist — holds the 8 mainline-only override \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:369:            "Mainline\\{filename} must exist — listed in TOC body and required \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:429:             ActionBarsOverrides.RunSettingsCallback). The Mainline\\ override \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:431:             non-Mainline classic flavors would publish stub or different \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_frame_loads.rs:474:         Mainline\\GameplaySettingsGroup.lua line 2 declares \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_social_toast_loads.rs:360:         Those helpers are defined in Blizzard_FrameXML/Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_tooltip_loads.rs:61:         (src/loader/mod.rs:65) prefers the Mainline-suffixed variant when present"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_tooltip_loads.rs:68:        .expect("Blizzard_GameTooltip Mainline TOC parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_tooltip_loads.rs:112:        .expect("Blizzard_GameTooltip Mainline TOC should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_tooltip_loads.rs:134:        .expect("Blizzard_GameTooltip Mainline TOC parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_tooltip_loads.rs:364:         GameTooltip dir, NOT in Mainline\\) is the canonical OnValueChanged handler for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_5_5_4_publication_sweep.rs:40:        assert_eq!(ACTIVE_INTERFACE_VERSION, 50504);
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_compact_raid_frames_loads.rs:198:        "Blizzard_CompactRaidFrames Mainline/Manager.lua should define all 14 manager mixins \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_saved_variables_loads.rs:112:         Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectTemplates.lua's tool-tray \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_saved_variables_loads.rs:113:         expand toggle and read by Blizzard_GlueXML/Mainline/CharacterSelect.lua to restore the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_saved_variables_loads.rs:154:         no Lua, no XML, no localization, no Mainline/Classic subdirectory — this addon exists \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/housing_catalog_base_lookups.rs:276:        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/c_cursor.rs:11:/// `vendor/wow-ui-source/.../Blizzard_ObjectAPI/Mainline/ItemLocation.lua`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_mode_select_loads.rs:70:        .expect("Blizzard_GameModeSelect Mainline TOC parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_mode_select_loads.rs:111:        .expect("Blizzard_GameModeSelect Mainline TOC should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_mode_select_loads.rs:128:        .expect("Blizzard_GameModeSelect Mainline TOC parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_game_mode_select_loads.rs:433:        "Mainline/GameModeSelectConstants.lua publishes the layout scalars: \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_global_strings.rs:11:            .join("Blizzard_SettingsDefinitions_Frame/Mainline/GameplaySettingsGroup.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/pandaria_installed_addons.rs:147:            .any(|version| *version == 50503 || *version == 50504),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/pandaria_installed_addons.rs:148:        "{} should declare Pandaria Classic interface 50503/50504; got {interfaces:?}",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_paged_content_loads.rs:99:         drives Mainline talent loadouts, Classic spellbook tabs, and the Wrath-Classic \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_12_1_0_deprecated_wrappers.rs:99:        defined_in: "Mainline/Deprecated_12_1_0.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_12_1_0_deprecated_wrappers.rs:120:        defined_in: "Mainline/Deprecated_12_1_0.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_combat_log_base_loads.rs:149:        .expect("Mainline-constants query should succeed");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_weekly_rewards_util_loads.rs:99:         Blizzard_UIParent/Mainline/UIParent.lua's WeeklyRewards_ShowUI declaration); none \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_weekly_rewards_util_loads.rs:377:         that ChallengeModeWeeklyChestMixin (in Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:282) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/c_garrison_talents.rs:9://! `vendor/wow-ui-source/Interface/AddOns/Blizzard_FrameXMLUtil/Mainline/GarrisonBaseUtils.lua`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_guild_bank_ui_loads.rs:118:            "Mainline/Blizzard_GuildBankUI.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_guild_bank_ui_loads.rs:121:        "Blizzard_GuildBankUI Mainline TOC lists its bootstrap, Mainline XML, and Localization \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_guild_bank_ui_loads.rs:143:            "Mainline".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_guild_bank_ui_loads.rs:148:         Mainline/Mists/TBC source directories"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_5_5_1_publication_sweep.rs:13:        assert_eq!(ACTIVE_INTERFACE_VERSION, 50504);
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_deprecated_unit_script_loads.rs:273:         The top-level TOC's `[Family]` template resolves to `Mainline` on retail \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:88:        "Mainline TOC declares six hard dependencies in this order: Blizzard_FrameXML, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:101:        .expect("Mainline TOC should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:104:        "Mainline TOC declares `## LoadFirst: 1` — within its dependency tier the loader \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:109:        "Mainline TOC declares `## OptionalDeps: Blizzard_RestrictedAddOnEnvironment` — when \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:115:        "Mainline TOC declares `## AllowLoad: Game` — confines the cleanup pass to the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:120:        "Mainline TOC declares `## DefaultState: enabled` — security cleanup runs by default, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:159:             Mainline TOC has `mainline` game type and `AllowLoad: Game`",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:184:        "Blizzard_EnvironmentCleanup (Mainline TOC, `AllowLoad: Game`, mainline game type) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_environment_cleanup_loads.rs:432:        "Top-level EnvironmentCleanup.lua must exist — referenced by the Mainline TOC's file \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_map_canvas_loads.rs:121:         scaffolding is a universal contract that every shipping flavor (Mainline, Classic \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_quick_keybind_loads.rs:70:         the bare form because no Mainline-suffixed variant exists"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_quick_keybind_loads.rs:96:         Blizzard_SettingsDefinitions_Frame/Mainline/KeybindingsOverrides.lua"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_quick_keybind_loads.rs:155:         Mainline/KeybindingsOverrides.lua:65) which AdvancedOptions.lua then \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:40:    "Mainline\\UnitPopupUtils.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:41:    "Mainline\\UnitPopup.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:44:const FAMILY_PLACEHOLDER_BODY_FILE: &str = "Mainline\\UnitPopup.lua";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:45:const FAMILY_PLACEHOLDER_RESOLVED_RELATIVE: &str = "Mainline/UnitPopup.lua";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:144:         (Mainline + Mists, NOT a generic `_Classic.toc` like \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:145:         Blizzard_UnitFrame): the Mainline variant declares one hard \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:147:         across the addon root + Mainline/Standard subdirs, while the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:215:        "Mainline TOC has no `## AllowLoadGameType` directive — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:233:         on Classic-flavor Mists builds; the Mainline build silently \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:244:         hard dep — the Mainline build folds the voice toggle into \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:272:             family-specific Mainline\\ files. Mainline\\UnitPopupUtils \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:274:             helpers; Mainline\\UnitPopup defines the RAID_TOGGLE_MAP \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:285:             build's game directory (`Standard` for the Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:303:        "Mainline TOC must not carry an AllowLoadGameType directive — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:316:         `{resolved:?}` on disk. Mainline\\UnitPopup.lua holds \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:317:         RAID_TOGGLE_MAP plus SetRaidDifficulties() — the Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_popup_loads.rs:516:         per-flavor Mainline overlay (UnitPopup.lua + UnitPopupUtils.lua), \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:25:    "Mainline/ContinuableContainer.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:26:    "Mainline/ItemLocation.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:27:    "Mainline/AsyncCallbackSystem.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:28:    "Mainline/ObjectCache.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:29:    "Mainline/Item.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:30:    "Mainline/Spell.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:31:    "Mainline/PlayerLocation.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:32:    "Mainline/CampaignChapter.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:33:    "Mainline/Campaign.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:34:    "Mainline/Quest.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:35:    "Mainline/UiMapPoint.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:36:    "Mainline/CovenantCalling.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:108:         and the bare `.toc` second, so the Mainline-suffixed TOC resolves successfully. The \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:109:         Mainline-only naming reflects that the API is retail-exclusive — every file in the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:110:         body lives under `Mainline\\` and references retail-only C_* namespaces \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:212:         restriction lock — every file under Mainline\\ uses retail-only C_* namespaces"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:245:         `Mainline\\` subdirectory. The order encodes the dependency graph among the files: \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:258:            entry.starts_with("Mainline/"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:259:            "TOC body entry `{entry}` must live under the Mainline/ subdirectory (the TOC \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:260:             parser at src/toc.rs normalizes the raw `Mainline\\...` Windows-style backslash \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:262:             against the normalized form). Every file is mainline-only — the Mainline/ \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:535:            "_G.{global} must be nil — `Mainline\\SpellBookItemLocation.lua` exists in the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:548:        .join("Mainline")
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_object_api_loads.rs:552:        "Mainline\\SpellBookItemLocation.lua must exist on disk at {} — the file ships with \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_glue_loads.rs:143:        blizzard_ui_dir().join("Blizzard_DeclensionFrameGlue/Mainline/DeclensionFrame.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_glue_loads.rs:145:        blizzard_ui_dir().join("Blizzard_DeclensionFrameGlue/Mainline/DeclensionFrame.xml");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_glue_loads.rs:148:        .expect("Mainline/DeclensionFrame.lua (Glue) should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_glue_loads.rs:150:        .expect("Mainline/DeclensionFrame.xml (Glue) should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_glue_loads.rs:154:        "Glue Mainline/DeclensionFrame.lua is a single-line placeholder comment by design — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_glue_loads.rs:159:        "Glue Mainline/DeclensionFrame.xml is a body-less <Ui> document by design — the real \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_plunderstorm_prematch_ui_loads.rs:121:         `standard`. The simulator runs as Mainline by default so this addon is filtered \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_plunderstorm_prematch_ui_loads.rs:258:             {screen:?} — the simulator runs as Mainline by default and \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_plunderstorm_prematch_ui_loads.rs:262:             on Mainline, ALL screens skip it"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_plunderstorm_prematch_ui_loads.rs:294:         succeed even on Mainline. This is intentional: testing the load contract for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:264:        "Mainline\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:543:                 UIParent at frameStrata DIALOG; `AlertFrame` in Mainline/AlertFrames.xml; \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:545:                 `MovieFrame` in MovieFrame.xml; `ColorPickerFrame` in Mainline/ColorPickerFrame.xml; \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:546:                 `StackSplitFrame` in Mainline/StackSplitFrame.xml; `ReadyCheckFrame` in \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:547:                 Mainline/ReadyCheck.xml; `StaticPopup1` from Blizzard_StaticPopup (a dep of \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:578:                "Blizzard_ManagedFrameSystem/Mainline/ManagedFrameSystem.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:582:                "Blizzard_FrameXML/Mainline/AlertFrames.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_core_frame_lane.rs:592:                 for FrameXML/Mainline/AlertFrameSystems.xml's per-system alert variants. If this \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:27:    "Mainline/MenuConstants.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:29:    "Mainline/MenuVariants.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:37:    "Mainline/MenuTemplates.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:38:    "Mainline/MenuTemplates.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:167:         (Mainline / Cata / Vanilla files all share one TOC), so no flavor-suffixed TOC variants \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:262:         `[Family]\\` → `Mainline/` (src/toc.rs:145, retail flavor) and `[AllowLoadGameType ...]` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:267:         [AllowLoadGameType mainline]` resolves to `Mainline/MenuVariants.lua` and survives the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:292:            "Mainline".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:303:         Mainline / Vanilla, each holding flavor-specific MenuConstants / MenuVariants / \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:444:             instantiated through retail-only XML templates (Mainline/MenuTemplates.xml). \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:445:             MenuStyle1Mixin (Mainline/MenuTemplates.lua:51) is retail-only — it overrides \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:447:             MenuStyle1Mixin in retail (Mainline/MenuVariants.lua:1-7) where the cross-flavor \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:560:             Mainline/MenuConstants.lua publishes 6 retail-only filter-dropdown atlas-key \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:589:         MenuVariants.lua`; Mainline/MenuVariants.lua:1-7 then overwrites both with closures \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:591:         Mainline/MenuVariants.lua, which it does since the TOC body lists `MenuVariants.lua` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_menu_loads.rs:618:             motionScriptsWhileDisabled=true)); Mainline/MenuTemplates.xml declares 3 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/test_showuipanel_reputation.rs:84:        "Mainline/UIParentPanelManagerOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:114:    let lua_path = blizzard_ui_dir().join("Blizzard_DeclensionFrame/Mainline/DeclensionFrame.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:115:    let xml_path = blizzard_ui_dir().join("Blizzard_DeclensionFrame/Mainline/DeclensionFrame.xml");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:118:        std::fs::read_to_string(&lua_path).expect("Mainline/DeclensionFrame.lua should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:120:        std::fs::read_to_string(&xml_path).expect("Mainline/DeclensionFrame.xml should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:124:        "Mainline/DeclensionFrame.lua is a single-line placeholder comment by design — the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:130:        "Mainline/DeclensionFrame.xml is a body-less <Ui> document by design — the real \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:148:        .expect("Mainline stub global query should succeed");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_declension_frame_loads.rs:152:         Mainline/DeclensionFrame.lua is just `-- Overridden by the locale-specific versions`. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_player_spells_loads.rs:207:// Retail, PTR, and Forever share the Mainline PlayerSpells keybinding lifecycle.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_player_spells_loads.rs:261:         Mainline-only construct because its Tab system replaces the Mists/Cata/Wrath \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_player_spells_loads.rs:788:         Blizzard_FrameXMLUtil/Mainline/PlayerSpellsUtil.lua (which loads as part of \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_5_5_3_publication_sweep.rs:13:        assert_eq!(ACTIVE_INTERFACE_VERSION, 50504);
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_performance_bar_loads.rs:164:         on Mainline. The override exists because Classic re-enables the legacy \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_performance_bar_loads.rs:165:         `showNewbieTips` CVar tooltip behavior that Mainline removed"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_performance_bar_loads.rs:199:         The result on Mainline is exactly 1 file: PerformanceBar.lua. Pinning the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_performance_bar_loads.rs:201:         filter is removed and the Classic-only file would crash on Mainline because it \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_performance_bar_loads.rs:293:             Mainline — the Classic override file replaces this with the legacy \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_professions_customer_orders_loads.rs:131:        .expect("Blizzard_AuctionHouseUI (Mainline) loads cleanly");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:346:        .expect("Mainline subdir util probe should succeed");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:351:         `Mainline\\<file>.lua` by src/toc.rs:145) load the Mainline subdir variants: \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:352:         MapUtil (Mainline/MapUtil.lua — GetDisplayableMapForPlayer, map-id resolution), \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:353:         MinimapUtil (Mainline/MinimapUtil.lua — minimap-icon coordinate helpers), \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:354:         QuestUtil (Mainline/QuestUtils.lua — quest tag/threshold helpers), \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:355:         ReputationUtil (Mainline/ReputationUtil.lua — paragon/major-faction helpers)"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:365:        .expect("Additional Mainline subdir util probe should succeed");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:369:        "Mainline subdir also publishes TraitUtil (Mainline/TraitUtil.lua — talent-tree \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:371:         SpellBookCategories enums for the spellbook tab UI), RAFUtil (Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_frame_xml_util_loads.rs:373:         global from Mainline/ExpansionUtil.lua (the file does not declare an \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:25:// `[Family]` is resolved to `Mainline` by `src/toc.rs:145` before path resolution,
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:26:// so the canonical 5-file body on a Mainline run substitutes `Mainline` for the
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:31:    "Mainline/Blizzard_PetBattleUI.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:116:         a `[Family]` placeholder in the file list (resolved to Mainline or \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:125:         is the canonical entry point for both Mainline and Classic Mists",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:211:         modern Mainline retail; `mists` covers the Mists of Pandaria classic \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:214:         false (i.e. allow-Mainline) as long as ANY token matches `mainline` or \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:215:         `standard`, so this TOC loads on Mainline. Other Classic flavors (Vanilla \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:228:         `[Family]` placeholder is resolved to `Mainline` by src/toc.rs:145 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:229:         before path resolution, allowing one TOC to drive both Mainline (which \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:290:         (3) Mainline/Blizzard_PetBattleUI.lua — resolved from the `[Family]` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:293:         EditModeManagerFrame:BlockEnteringEditMode (Mainline-only — Classic's \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:318:         `is_game_type_restricted` for Mainline runs"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:407:            "_G.{mixin} must publish as a table — the Mainline family file \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:413:             (-10/27 vs the Mainline -3/4), the only behavior split between \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pet_battle_ui_loads.rs:469:             both Mainline and Classic share the layout), and StartSplash \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_timerunning_character_create_loads.rs:202:        "Body must resolve to 3 entries at addon root (no Mainline/ \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_timerunning_character_create_loads.rs:261:         Blizzard_GlueXML/Mainline/CharacterSelect.lua via runtime \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:7://!   `Mainline/AccessibilityTemplates.lua`, mixed into the
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:122:            "Mainline/AccessibilityTemplates.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_globals.rs:8://! | `UIThemeContainerMixin` | `Mainline/AccessibilityTemplates.lua` (`= {}` at line 1)         |
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_set.rs:11://! `Mainline/Blizzard_AchievementUI.lua:225-235`):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_set.rs:170:             `Mainline/Blizzard_AchievementUI.lua:225` and `Cata/Blizzard_AchievementUI.lua` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_set.rs:205:             `Mainline/Blizzard_AchievementUI.lua:2834`. This is the actual proxy that \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_set.rs:216:             declared at `Mainline/Blizzard_AchievementUI.xml:2080` as \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:6://! `Mainline/Blizzard_AchievementUI.xml:1505`:
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:51:const XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:1505";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:57:    ("Header", "Mainline/Blizzard_AchievementUI.xml:1505", "parentKey"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:58:    ("HeaderDetails", "Mainline/Blizzard_AchievementUI.xml:1675", "parentKey"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:59:    ("Categories", "Mainline/Blizzard_AchievementUI.xml:1578", "parentKey"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:60:    ("Achievements", "Mainline/Blizzard_AchievementUI.xml:1518", "name-prefix"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:61:    ("Stats", "Mainline/Blizzard_AchievementUI.xml:1572", "name-prefix"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:62:    ("Summary", "Mainline/Blizzard_AchievementUI.xml:1625", "name-prefix"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:63:    ("Comparison", "Mainline/Blizzard_AchievementUI.xml:2080", "name-prefix"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:204:const COMPARISON_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:2080";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:225:        "Mainline/Blizzard_AchievementUI.xml:2087",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:230:        "Mainline/Blizzard_AchievementUI.xml:2103",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:235:        "Mainline/Blizzard_AchievementUI.xml:2149",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:240:        "Mainline/Blizzard_AchievementUI.xml:2212",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_frames.rs:250:/// `Mainline/Blizzard_AchievementUI.xml:2080` declares the comparison
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_select.rs:74://!    No call site in the entire addon (Mainline or Cata) writes
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_select.rs:210:             `Mainline/Blizzard_AchievementUI.lua:496` as `AchievementCategoryTemplateMixin = {{}}` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_select.rs:222:             `Mainline/Blizzard_AchievementUI.lua:506`). Got `{on_click_type}`. A `nil` reading \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_select.rs:231:             function (declared at `Mainline/Blizzard_AchievementUI.lua:698`). Got \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_select.rs:242:             (declared at `Mainline/Blizzard_AchievementUI.lua:634`, the actual selection-state \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_select.rs:254:             (declared at `Mainline/Blizzard_AchievementUI.lua:960`, the achievement-list \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:10://! (`Mainline/Blizzard_AchievementUI.lua:496-569`):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:42://! at `Mainline/Blizzard_AchievementUI.xml:622` via the
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:62:const CATEGORY_TEMPLATE_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:496";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:63:const CATEGORY_TEMPLATE_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:622";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:76:const CATEGORY_BUTTON_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:571";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:77:const CATEGORY_BUTTON_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:625";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:87:const ACHIEVEMENT_TEMPLATE_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:1039";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:88:const ACHIEVEMENT_TEMPLATE_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:733";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:105:        "Mainline/Blizzard_AchievementUI.xml:340 (AchievementFrameAchievementsObjectivesTemplate)",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:110:        "Mainline/Blizzard_AchievementUI.xml:457 (MetaCriteriaTemplate)",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:115:        "Mainline/Blizzard_AchievementUI.xml:1222 (AchievementComparisonTemplate)",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:120:        "Mainline/Blizzard_AchievementUI.xml:1351 (AchievementStatTemplate)",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:125:        "Mainline/Blizzard_AchievementUI.xml:1405 (AchievementComparisonStatTemplate)",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:130:        "Mainline/Blizzard_AchievementUI.xml:62 (AchievementFullSearchResultsButtonTemplate)",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:135:const ACHIVEMENT_BUTTON_CHECK_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:1629";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:136:const ACHIVEMENT_BUTTON_CHECK_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:220";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:244:/// `Mainline/Blizzard_AchievementUI.lua:571`, then attaches both PLAN-named
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:252:/// at `Mainline/Blizzard_AchievementUI.xml:625`, nested inside the
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:320:/// `Mainline/Blizzard_AchievementUI.lua:1039`, then attaches a much larger
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:329:/// `Mainline/Blizzard_AchievementUI.xml:733` via `mixin="AchievementTemplateMixin"`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:411:/// `Mainline/Blizzard_AchievementUI.lua:1674` (note the plural form
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:473:                 `Mainline/Blizzard_AchievementUI.lua:{line_number}`, and the mixin is \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:492:/// lua:2908) at `Mainline/Blizzard_AchievementUI.lua:1629`, then attaches
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:507:/// at `Mainline/Blizzard_AchievementUI.xml:220` via
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_criteria_update_event.rs:197:             `Mainline/Blizzard_AchievementUI.lua:925`, bound via xml:1795 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_criteria_update_event.rs:208:             function (declared at `Mainline/Blizzard_AchievementUI.lua:907`). Got \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_criteria_update_event.rs:217:             (declared at `Mainline/Blizzard_AchievementUI.lua:886`, returns \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_progress.rs:197:             at `Mainline/Blizzard_AchievementUI.lua:3318`). Got `{on_update_type}`. A `nil` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:2://! the Mainline source. The chat-link branch lives on the Mainline
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:7://! Mainline call chain as present.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:12://! -- Mainline/Blizzard_AchievementUI.lua:1060-1077 (the actual call site)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:44://! 1. **`AchievementButton_OnClick` does not exist in Mainline.** It only
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:45://!    appears in `Cata/Blizzard_AchievementUI.lua:893`. Mainline routes
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:52://!    Mainline and Cata call `ChatFrameUtil.InsertLink(achievementLink)`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:65://!    `Mainline/ChatFrameUtilOverrides.lua:1`, which is not in this
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:68://!    call a nil value (field 'InsertLink')". The Mainline mixin path
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:74://! - **Absence half** (3): `_G.AchievementButton_OnClick` is nil (Mainline
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:77://!   closure); `ChatFrameUtil.InsertLink` is nil (the Mainline ChatFrameBase
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:81://!   function (the actual Mainline call site); `GetAchievementLink(6)`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:137:             `Cata/Blizzard_AchievementUI.lua:893`, not in Mainline. Got \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:139:             Cata-style global into Mainline (the absence half should then be replaced by a \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:151:             `{chat_edit_insert_link_type}`. The actual Mainline call at lua:1067 is \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:160:             `Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua:14` publishes the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:161:             Mainline insertion API. Got `{chat_frame_util_insert_link_type}`. The deprecated \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:173:             call at lua:1065 (Mainline mixin) and `GetAchievementLink(self.id)` at lua:896 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_click_link.rs:180:             `Mainline/Blizzard_AchievementUI.lua:1060`, this is the actual Mainline call site \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:156:             `Mainline/Blizzard_AchievementUI.lua:3377`). Got `{text_changed_type}`. A `nil` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_clear.rs:167:             `Mainline/Blizzard_AchievementUI.lua:225`. The test uses it as the *setup* entry \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_clear.rs:199:             `Mainline/Blizzard_AchievementUI.lua:2804` and bound via the XML `<OnHide \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_clear.rs:212:             declared at `Mainline/Blizzard_AchievementUI.xml:2080` as \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_objective_rep.rs:7://! Source map (the actual Mainline contract at
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_objective_rep.rs:8://! `Mainline/Blizzard_AchievementUI.lua:1861-1899`):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_objective_rep.rs:164:             `Mainline/Blizzard_AchievementUI.lua:1861` and `Cata/Blizzard_AchievementUI.lua:1312`. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_objective_rep.rs:187:             `Mainline/Blizzard_AchievementUI.lua:1674` and bound to the virtual frame \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_objective_rep.rs:197:             `Mainline/Blizzard_AchievementUI.lua:1689`, this is the ONLY call site for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_objective_rep.rs:210:             `Mainline/Blizzard_AchievementUI.xml:343` as \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_guild_member_tooltip.rs:43://! exists in `Mainline/Blizzard_AchievementUI.lua`. The guild-members
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_guild_member_tooltip.rs:163:             (declared at `Mainline/Blizzard_AchievementUI.lua:3167`). Got \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_guild_member_tooltip.rs:173:             `Mainline/Blizzard_AchievementUI.lua`. The actual guild-members tooltip path is \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_friend_completed.rs:3://! `Mainline/Blizzard_AchievementUI.lua:2688-2762` does NOT toggle a
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_friend_completed.rs:223:             `Mainline/Blizzard_AchievementUI.lua:2682`). Got `{mixin_type}`. A `nil` reading \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_friend_completed.rs:362:             `Mainline/Blizzard_AchievementUI.lua`. The actual friend-side completion cue \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_saturate.rs:6://! `Mainline/Blizzard_AchievementUI.lua:1359-1418`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:7://! grep across both `Mainline/Blizzard_AchievementUI.lua` and
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:20://! There is NO header-level progress bar in the Mainline AchievementFrame
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:99:             exist in either Mainline or Cata source. Got `{plan_named_function_type}`. A \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:131:             header-level points/completion display in the Mainline UI — there is no \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_default.rs:294:             (declared at `Mainline/Blizzard_AchievementUI.lua:707`). Got \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_default.rs:305:             (declared at `Mainline/Blizzard_AchievementUI.lua:718`, the data-provider builder \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_default.rs:316:             `Mainline/Blizzard_AchievementUI.lua:634`). Got `{select_elt_type}`. A `nil` reading \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_toggle.rs:5://! Source (`Mainline/Blizzard_AchievementUI.lua:195-223`):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_toggle.rs:112:             (Mainline/Blizzard_AchievementUI.lua:202-213 — the `not toggleStatFrame` arm \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_toggle.rs:123:             toggle from the hidden default state (Mainline/Blizzard_AchievementUI.lua:211 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_toggle.rs:133:             (Mainline/Blizzard_AchievementUI.lua:196 — `AchievementFrameComparison:Hide()` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_toggle.rs:144:             show-toggle (Mainline/Blizzard_AchievementUI.lua:203-204 — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_toggle.rs:155:             (Mainline/Blizzard_AchievementUI.lua:206-209 — the same `not toggleStatFrame` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_toggle.rs:167:             (Mainline/Blizzard_AchievementUI.lua:208-209 — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:8://! Source (`Mainline/Blizzard_AchievementUI.lua:2297-2301`):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:125:             Mainline/Blizzard_AchievementUI.lua:2297). Got `{update_function_type}`. A `nil` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:155:             in XML at Mainline/Blizzard_AchievementUI.xml:1958 as `$parentStatusBar` inside \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:166:             (declared in XML at Mainline/Blizzard_AchievementUI.xml:1970 as `$parentText` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_expand_collapse.rs:5://! `Mainline/Blizzard_AchievementUI.lua:1308-1357`. (1) Neither method
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_expand_collapse.rs:274:             `Mainline/Blizzard_AchievementUI.lua:1308`). Got `{collapse_type}`. A `nil` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_expand_collapse.rs:283:             `Mainline/Blizzard_AchievementUI.lua:1332`). Got `{expand_type}`. A `nil` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:2://! exist in either Mainline or Cata source. PLAN's "calls
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:9://! Source map (the real Mainline contract):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:36://!    `Mainline/Blizzard_AchievementUI.lua` or
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:118:             `Mainline/Blizzard_AchievementUI.lua` and `Cata/Blizzard_AchievementUI.lua` finds \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:135:             The depends-on tag is stale; if this assertion fails the Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:143:             `Mainline/Blizzard_AchievementUI.lua:1141`, this is the actual call site for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:152:             `Mainline/Blizzard_AchievementUI.lua:1580`, this is the actual tracking-toggle \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_button_double_click.rs:165:             `Mainline/Blizzard_AchievementUI.lua:1621`, this is the actual user-facing dispatch \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:120:                 via `function <name>(...)` syntax in `Mainline/Blizzard_AchievementUI.lua` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:137:/// `function <name>(...)` syntax in `Mainline/Blizzard_AchievementUI.lua`:
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:184:                 `Mainline/Blizzard_AchievementUI.lua` (lines 584/603/707/718). A non-function \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:206:/// `function <name>(...)` syntax in `Mainline/Blizzard_AchievementUI.lua`:
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:259:                 `Mainline/Blizzard_AchievementUI.lua` (lines 890/895/907/960). A non-function \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:285:/// `Mainline/Blizzard_AchievementUI.lua`. The other two were never
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:348:                 actually exists in `Mainline/Blizzard_AchievementUI.lua` (line 820). A \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:367:                 exist in `Mainline/Blizzard_AchievementUI.lua` — see the module doc comment for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:426:///   across both Mainline/Blizzard_AchievementUI.lua AND .xml for
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:451:                 that actually exists at the file scope in `Mainline/Blizzard_AchievementUI.lua` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:472:                 in `Mainline/Blizzard_AchievementUI.lua` — see the module doc comment for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_portrait.rs:203:             at `Mainline/Blizzard_AchievementUI.lua:2792` and bound via xml:2305 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_portrait.rs:215:             at `Mainline/Blizzard_AchievementUI.lua:2814` and bound via xml:2304 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_portrait.rs:229:             at `Mainline/Blizzard_AchievementUI.lua:2834`. The fifth call site at \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_comparison_portrait.rs:243:             return `\"Texture\"` — declared at `Mainline/Blizzard_AchievementUI.xml:2103` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:3://! `Mainline/Blizzard_AchievementUI.lua:2152-2214` writes the
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:247:             `Mainline/Blizzard_AchievementUI.lua:2125`). Got `{mixin_type}`. A `nil` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:6://! **Spec/source mismatch on the Mainline branch.** The PLAN claim mirrors
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:20://! On Mainline (`Mainline/Blizzard_AchievementUI.lua:843-884`), `_OnLoad`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:61:const FRAME_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:1755";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:62:const ONLOAD_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:843";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:63:const ONEVENT_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:925";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:66:/// OnLoad time. Mainline's `_OnLoad` (line 843) registers exactly one:
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:72:/// Events the PLAN names but which the Mainline source does NOT register
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:150:                 but the Mainline source diverges from that claim: `_OnLoad` at \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:207:const CATEGORIES_FRAME_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:1729";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:208:const CATEGORIES_ONLOAD_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:584";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:215:/// `_OnLoad` at `Mainline/Blizzard_AchievementUI.lua:584-593` registers
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:218:/// `Mainline/Blizzard_AchievementUI.xml:1729-1738` declares the frame
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:314:const COMPARISON_FRAME_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:2080";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:315:const COMPARISON_SCRIPTS_XML_SITE: &str = "Mainline/Blizzard_AchievementUI.xml:2302";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:316:const COMPARISON_ONLOAD_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:2764";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:317:const COMPARISON_ONEVENT_LUA_SITE: &str = "Mainline/Blizzard_AchievementUI.lua:2814";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:341:/// `Mainline/Blizzard_AchievementUI.lua:2764-2782` declares
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/surface_events.rs:346:/// `Mainline/Blizzard_AchievementUI.xml:2302-2307` wires four scripts:
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:214:             `Mainline/Blizzard_AchievementUI.lua:925` and bound via xml:1795 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:225:             function (declared at `Mainline/Blizzard_AchievementUI.lua:895`). Got \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:245:             `Mainline/Blizzard_AchievementUI.xml:1713` as \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_track_toggle.rs:7://! `Mainline/Blizzard_AchievementUI.lua:1580-1620`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_achievementui/behavior_guild_view_toggle.rs:132:             `Mainline/Blizzard_AchievementUI.lua:195`). Got `{toggle_type}`. A `nil` reading \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accountstore/surface_events.rs:33://!    `Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua` (line 2439), and
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accountstore/surface_events.rs:133:         Blizzard_CharacterSelectNavBar (line 207), Blizzard_PVPUI/Mainline (line 2439), and \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accountstore/surface_events.rs:277:             Blizzard_PVPUI/Mainline line 2439, Blizzard_PlunderstormBasics line 42), none of \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:81://!    `Blizzard_StaticPopup_Glue/Mainline/GlueDialogDefs.lua:163-177`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:37://!    - `Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:2439` lists it in
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:174:             `Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:2439`, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionstatus/load.rs:27:const EXPECTED_BODY: [&str; 2] = ["Mainline/ActionStatus.lua", "Mainline/ActionStatus.xml"];
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionstatus/load.rs:83:        "`{ROOT}` must retain its current Mainline Lua/XML body order"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:8://! MainActionBar XML at `Mainline/MainActionBar.xml:29` declares the
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:127:const XML_SITE: &str = "Mainline/MainActionBar.xml:29";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:151:             `Mainline/AssistedCombatManager.lua:223` (`MainActionBar:GetEndCapsFrameLevel`)."
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:217:                 `Mainline/MainActionBar.xml:3` inherits `ActionBarButtonTemplate` which \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:693:/// `Mainline/StatusTrackingBar.xml:35-62` as a `parent="UIParent"`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:703:/// `StatusTrackingManagerMixin` at `Mainline/StatusTrackingBarManager.lua`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:717:             `{manager_type}`. The XML at `Mainline/StatusTrackingBar.xml:35` declares \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:722:             from `Mainline/StatusTrackingBarManager.lua` would surface a nil-method error."
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:739:                 `Mainline/StatusTrackingBar.xml:41/49`), got `{container_type}`. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:744:                 method bodies in `Mainline/StatusTrackingBarManager.lua` (which read \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:38:        frame_xml_site: "Mainline/StanceBar.xml:12",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:56:        frame_xml_site: "Mainline/PetActionBar.xml:33",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:78:        frame_xml_site: "Mainline/PossessActionBar.xml:13",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:364:/// is on `BaseActionButtonMixin` (lua:1546 stub + `Mainline/ActionButtonOverrides.lua:2`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:373:/// ActionButtonTemplate` (`Mainline/ActionButtonTemplate.xml:189` ->
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:389:/// Stub at lua:1546, overridden at `Mainline/ActionButtonOverrides.lua:2`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:390:/// — the real Mainline body shows/hides `SlotArt`/`SlotBackground` and
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:465:             `Mainline/ActionButtonOverrides.lua:2`. False reading: stub or override failed \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:639:/// `Mainline/MainActionBarOverrides.lua:2` — both are valid `function`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:687:    ("HonorBarMixin", "Mainline/HonorBar.lua:5"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:688:    ("AzeriteBarMixin", "Mainline/AzeriteBar.lua:12"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:689:    ("ArtifactBarMixin", "Mainline/ArtifactBar.lua:5"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:690:    ("ArtifactTickMixin", "Mainline/ArtifactBar.lua:110"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:691:    ("HouseFavorBarMixin", "Mainline/HouseFavorBar.lua:11"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:715:/// methods. Declared at `Mainline/AssistedCombatManager.lua:3`. Source
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:737:             (declared at `Mainline/AssistedCombatManager.lua:3`), got `{manager_type}`."
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:747:                 `Mainline/AssistedCombatManager.lua`."
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_stance_select.rs:44://!    `Mainline/StanceBar.xml:23` buttons named `StanceButton1`..`StanceButton10`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_stance_select.rs:82://!      `<Frame name="StanceBar">` element from `Mainline/StanceBar.xml:12`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_stance_select.rs:196:             Mainline/StanceBar.xml:12, parented to UIParent. The buttons \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:15://!    declared at `Mainline/StatusTrackingBar.xml:35`. Its child
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:23://!    `Mainline/StatusTrackingManagerOverrides.lua:42-66`. The Mainline
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:30://!    `Mainline/ExpBar.xml:3-46`, which inherits `StatusTrackingBarTemplate`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:31://!    (`Mainline/StatusTrackingBarTemplate.xml:3`) and mixes in
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:41://!    `Mainline/ExpBar.xml:40` fires synchronously during `CreateFrame`),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:98://!    declared at `Mainline/ExpBar.xml:20-37`. Its OnEvent
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:175://!    or `InitializeBars` (Mainline/StatusTrackingManagerOverrides.lua:42-66)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:254:/// `Mainline/StatusTrackingManagerOverrides.lua:63`. Inlined into Lua
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:13://! `HouseFavorBarMixin:Update` (`Mainline/HouseFavorBar.lua:13-24`):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:48://! (`Mainline/StatusTrackingManagerOverrides.lua:35-37`'s `CanShowBar` arm).
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:67://! `Mainline/StatusTrackingManagerOverrides.lua:65` adds the HouseFavor bar
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:13://! ## Source contract (`Mainline/ArtifactBar.lua`)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:62://! Mainline/AsyncCallbackSystem.lua:47-56`), which calls
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:85://! `Mainline/StatusTrackingManagerOverrides.lua:62` adds the bar via
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_paragon_tooltip.rs:4://! `Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua`; the ActionBar
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_possess_bar_show.rs:50://!    declared at `Mainline/PossessActionBar.xml:13`. `numButtons = 2`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_possess_bar_show.rs:191:             Mainline/PossessActionBar.xml:13. The buttons are created by \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_possess_bar_show.rs:205:             Mainline/PossessActionBar.xml:13, and \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:544:///   `Blizzard_ActionBar/Mainline/ArtifactBar.lua:96` — declared BY
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:545:///   `Blizzard_ActionBar` itself, but ONLY in the Mainline TOC flavor.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:556:///   `Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:686` — declared
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:567:///   `Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:697` — also
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:597:/// `Mainline/ArtifactBar.lua` chunk into a TOC flavor branch the
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:599:/// path while the test still loads Mainline).
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:613:                 `Blizzard_ActionBar` itself at `Mainline/ArtifactBar.lua:96` (Mainline-only — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:616:                 addon `Blizzard_UIPanels_Game` at `Mainline/ReputationFrame.lua:686` and `:697` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:622:                 failed (Blizzard_ActionBar's `Mainline/ArtifactBar.lua` for the Artifact helper, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:623:                 Blizzard_UIPanels_Game's `Mainline/ReputationFrame.lua` for the two \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:632:                 picks up `Mainline/ArtifactBar.lua` (e.g. Blizzard moved the Artifact UI to a \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:9://!    `Mainline/PetActionBar.xml:33`, parented to UIParent and starting
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:22://!    `Mainline/ActionButtonTemplate.xml:23`. So `PetActionButtonN.icon` is a
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:193:             Mainline/PetActionBar.xml:33. The buttons are created by \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:198:             Mainline/ActionButtonTemplate.xml:23 (inherited through \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:334:const MAIN_ACTION_BAR_XML_SITE: &str = "Mainline/MainActionBar.xml:29";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:335:const MAIN_ACTION_BAR_SCRIPTS_XML_SITE: &str = "Mainline/MainActionBar.xml:170";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:354:/// (lua:6, lua:7), and the XML at `Mainline/MainActionBar.xml:172`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:369:///    from `name="MainActionBar"` at `Mainline/MainActionBar.xml:29`.
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:460:const STANCE_BAR_XML_SITE: &str = "Mainline/StanceBar.xml:12";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:461:const STANCE_BAR_SCRIPTS_XML_SITE: &str = "Mainline/StanceBar.xml:32";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:469:/// spec/source mismatch. XML at `Mainline/StanceBar.xml:33` wires
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:529:const PET_ACTION_BAR_XML_SITE: &str = "Mainline/PetActionBar.xml:33";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/surface_events.rs:530:const PET_ACTION_BAR_SCRIPTS_XML_SITE: &str = "Mainline/PetActionBar.xml:55";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_reputation_bar_update.rs:71://! (`Mainline/ReputationBarOverrides.lua:41-47`) which picks
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_honor_bar_update.rs:10://! `HonorBarMixin:Update` (`Mainline/HonorBar.lua:7-12`) is straight-line:
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_honor_bar_update.rs:40://! `Blizzard_ActionBar/Mainline/StatusTrackingManagerOverrides.lua:61`
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:11://! ## Source contract (`Mainline/AzeriteBar.lua`)
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:70://! `Mainline/StatusTrackingManagerOverrides.lua:64` adds the bar via
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:51://! `CanShowBar` (`Mainline/StatusTrackingManagerOverrides.lua:22-40`):
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:84://! when `UnitExists("player")` is true; Mainline registers
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:118://! `Mainline/StatusTrackingBar.xml:41,49` defines exactly two frames that
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:26:    "Mainline/MainMenuBarBagButtons.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:28:    "Mainline/MainMenuBarBagButtons.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:149:         `find_toc_file` resolves the Mainline variant first per src/loader/mod.rs:67-69 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:150:         (Mainline preferred, then bare, then any non-Classic). The bag-bar UI differs \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:153:         ships its own TOC + Mainline / Classic / Mists / Wrath subdirectories"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:159:    let toc = TocFile::from_file(&bag_buttons_toc()).expect("Mainline TOC parses");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:171:        "Mainline TOC declares zero `## Dependencies:` — relies only on globals from the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:178:         path, but Mainline doesn't need it"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:197:        "Mainline TOC declares `## AllowLoad: Game` — must auto-discover on the Game screen \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:215:    let toc = TocFile::from_file(&bag_buttons_toc()).expect("Mainline TOC parses");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:222:        "Mainline TOC body lists exactly 4 files in load order: \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:225:         Mainline/MainMenuBarBagButtons.lua second (4 mixins: BagSlotItemFlyInMixin, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:229:         Mainline/MainMenuBarBagButtons.xml last (BaseBagSlotButtonTemplate virtual + BagsBar Frame \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:243:         (Mainline / Mists / Shared). Classic TOC pulls the Classic + Mists subdirs alongside \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:244:         Shared; Mainline TOC only consumes Mainline + Shared"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:258:         `## AllowLoadGameType: mainline`) routes the Mainline TOC into the eager `addons` set \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:383:         Mainline/MainMenuBarBagButtons.lua:11. The base mixin for every bag slot button; \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_main_menu_bar_bag_buttons_loads.rs:609:             Mainline/MainMenuBarBagButtons.xml. Missing implies the XML parser dropped the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_micro_menu_loads.rs:26:    "Mainline/MainMenuBarMicroButtons.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_micro_menu_loads.rs:27:    "Mainline/MainMenuBarMicroButtons.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_micro_menu_loads.rs:29:    "Mainline/MicroMenuContainerOverrides.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_micro_menu_loads.rs:30:    "Mainline/MicroMenuContainer.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_micro_menu_loads.rs:208:        "Blizzard_MicroMenu TOC body must list exactly 6 files across two subdirectories:          Shared/ (MicroMenuUtil.lua, MicroMenuContainer.lua) contains the game-type-agnostic          mixin foundations shared with Classic variants; Mainline/ (MainMenuBarMicroButtons.lua,          MainMenuBarMicroButtons.xml, MicroMenuContainerOverrides.lua, MicroMenuContainer.xml)          contains retail-specific button definitions, overrides, and the frame declarations          for MicroMenu / MicroMenuContainer"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:83:         dep, Blizzard_DeclensionFrameGlue's `Mainline\\DeclensionFrame.lua` overlay)"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:142:        first, "Mainline/Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:143:        "Blizzard_GlueXML_Mainline lists `Mainline\\Localization.lua` as the first file so \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:159:        "Mainline/Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:161:        "Mainline/AccountLogin.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:162:        "Mainline/RealmList.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:163:        "Mainline/CharacterSelect.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:164:        "Mainline/CharacterServices.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:167:        "Mainline/CinematicsMenu.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:168:        "Mainline/CreditsFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:232:    for subdir in ["Mainline", "Mists", "Shared", "WoWLabs"] {
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_xml_loads.rs:325:             this is one of the top-level mixins owned by Blizzard_GlueXML's Mainline source \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:228:        "Mainline/GlueDialogDefs.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:230:        "Mainline/GlueDialog.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:233:        "Mainline/GlueAnnouncementDialog.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:234:        "Mainline/GlueAnnouncementDialog.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:240:        "8 retained body entries — `[Family]` substituted to `Mainline/`. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:427:        "GlueAnnouncementDialogMixin = table — Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:454:        "GlueDialogBackgroundTop = string — Mainline/GlueDialog.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:463:        "Mainline atlas name pinned"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:494:            "StaticPopupDialogs['{key}'] seeded by Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:511:        "REALM_IS_FULL.OnCancel must be present after Mainline overrides \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:513:         placeholder (`--OnCancel OVERRIDEN`), Mainline/GlueDialogDefs.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:559:        "GlueAnnouncementDialog = frame — Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_glue_loads.rs:561:         GlueAnnouncementDialogMixin OnShow handler. Mainline-gated via \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:143:            "Mainline\\GlueParent.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:144:            "Mainline\\GlueParent.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:149:         check that Mainline\\GlueParent.lua's GlueParentMixin:OnEvent path immediately invokes \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:215:        "Mainline/GlueParent.xml line 4 declares `<Frame name=\"GlueParent\">` so the frame \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:229:        "Mainline/GlueParent.xml line 6 declares the `<Frame parentKey=\"ScreenFrame\" \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:245:        "Mainline/GlueParent.xml line 27 declares the `<Frame parentKey=\"BlockingFrame\" \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:270:         The OnLoad path also performs `UIParent = self` (Mainline/GlueParent.lua line 74) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:283:        "GlueParentMixin:OnLoad invokes `Kiosk.IsEnabled()` directly (Mainline/GlueParent.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:299:        "Mainline/GlueParent.lua line 70 publishes `GlueParentMixin = {{}}` — bound by the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:351:        "GLUE_SCREENS (Mainline/GlueParent.lua line 1) lists exactly 6 primary glue screens. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:374:        "GLUE_SECONDARY_SCREENS (Mainline/GlueParent.lua line 10) lists exactly 5 secondary \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:401:        "Mainline/GlueParent.lua line 20 sets `ACCOUNT_SUSPENDED_ERROR_CODE = 53` — consumed \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:412:        "Mainline/GlueParent.lua line 21 sets `GENERIC_DISCONNECTED_ERROR_CODE = 319` — used \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:495:            "Mainline".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_glue_parent_loads.rs:498:        "Blizzard_GlueParent ships exactly: 1 Mainline TOC + Mainline/ subdir + Shared/ \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_deprecated_loads.rs:236:            "Mainline",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_deprecated_loads.rs:252:            "Mainline/Deprecated_12_0_1.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_deprecated_loads.rs:253:            "Mainline/Deprecated_12_0_5.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_deprecated_loads.rs:254:            "Mainline/Deprecated_12_0_7.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_deprecated_loads.rs:255:            "Mainline/Deprecated_12_1_0.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:60:         src/toc.rs:144-146 substitutes [Family]→Mainline and [Game]→\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:87:         DressUpModelFrameMixin / Mainline ListTemplates on top of the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:160:        "Mainline/Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:167:        "Mainline/LootSpecialization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:173:        "TOC body MUST reduce to exactly 10 entries on Mainline. The \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:177:         stripped on Mainline); (2) keeps lines tagged \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:179:         substitutes `[Family]` → `Mainline` and `[Game]` → `Standard` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:203:    assert_eq!(toc.files.len(), 10, "10 entries after Mainline filter");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:206:        "Retail 12.1.0.69497 retains 10 Lua entries after the Mainline filter, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:207:         including Mainline/LootSpecialization.lua. Got {lua_count}"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:209:    assert_eq!(xml_count, 0, "No XML entries survive the Mainline filter");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:246:        .position(|p| p == "Mainline/LootSpecialization.lua")
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:250:        "DressUpModelFrameMixin.lua must load before Mainline/LootSpecialization.lua in the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:358:                 used pervasively in Mainline addon dialogs (TalentTree spec \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_game_loads.rs:472:                 Mainline/ListTemplates.xml) must materialize via \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_mirror_timer_loads.rs:24:const MIRROR_TIMER_TOC_FILES: &[&str] = &["Mainline/MirrorTimer.lua", "Mainline/MirrorTimer.xml"];
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_mirror_timer_loads.rs:93:        "Blizzard_MirrorTimer ships Mainline and Classic TOC variants; retail resolution \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_mirror_timer_loads.rs:186:        "Retail Mainline TOC must list Mainline/MirrorTimer.lua then \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_mirror_timer_loads.rs:187:         Mainline/MirrorTimer.xml"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_personal_resource_display_loads.rs:176:         `mainline` or `standard` so this TOC loads on Mainline and is filtered \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_personal_resource_display_loads.rs:257:         Mainline runs"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_12_0_5_enum_additions.rs:269:        "{ Mainline=0, Vanilla=1 }",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_encounter_journal_loads.rs:126:        "Blizzard_EncounterJournal ships both Mainline and Mists TOC variants — the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_talent_ui_loads.rs:82:         exist in both Mainline and (subsets of) Classic flavors"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/test_keybindings_targeting.rs:192:                    "Mainline/TargetFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:41:    "Mainline/Blizzard_ClassNameplateBar.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:42:    "Mainline/Blizzard_ClassNameplateBar.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:43:    "Mainline/Blizzard_ClassNameplateAlternatePowerBarBase.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:44:    "Mainline/Blizzard_ClassNameplateAlternatePowerBarBase.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:45:    "Mainline/Blizzard_ClassNameplateBar_Paladin.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:46:    "Mainline/Blizzard_ClassNameplateBar_Paladin.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:47:    "Mainline/Blizzard_ClassNameplateBar_DeathKnight.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:48:    "Mainline/Blizzard_ClassNameplateBar_DeathKnight.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:49:    "Mainline/Blizzard_ClassNameplateBar_Dracthyr.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:50:    "Mainline/Blizzard_ClassNameplateBar_Dracthyr.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:51:    "Mainline/Blizzard_ClassNameplateBar_Rogue.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:52:    "Mainline/Blizzard_ClassNameplateBar_Rogue.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:53:    "Mainline/Blizzard_ClassNameplateBar_Druid.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:54:    "Mainline/Blizzard_ClassNameplateBar_Druid.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:55:    "Mainline/Blizzard_ClassNameplateBar_Mage.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:56:    "Mainline/Blizzard_ClassNameplateBar_Mage.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:57:    "Mainline/Blizzard_ClassNameplateBar_Monk.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:58:    "Mainline/Blizzard_ClassNameplateBar_Monk.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:59:    "Mainline/Blizzard_ClassNameplateBar_Warlock.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:60:    "Mainline/Blizzard_ClassNameplateBar_Warlock.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_nameplates_loads.rs:203:        "Retail 12.1.0.69497 lists 34 retail files, including CastingBar.xml and Mainline/ \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:110:         substitution to swap Mainline vs Classic override files at \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:222:            "Mainline/Blizzard_TransmogOverrides.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:240:         documents the flavor matrix. Mainline currently substitutes \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:241:         the [Family] token to `Mainline\\` (toc.rs:145), so Classic's \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:246:        .join("Mainline")
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:249:        std::fs::read_to_string(&mainline_override).expect("Mainline override file reads utf-8");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:254:            "Mainline/Blizzard_TransmogOverrides.lua must define \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_transmog_loads.rs:255:             `{fn_name}()` — current Mainline override source exports the direct dress-up-linking predicate"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/test_showuipanel.rs:181:                -- From Blizzard_UIParentPanelManager/Mainline/UIPanelWindows.lua
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_login_warning_dialogs_loads.rs:76:         the bare-TOC fallback after the Mainline lookup misses"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_ui_loads.rs:25:    "Mainline/Blizzard_RaidUI.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_ui_loads.rs:275:         Mainline/RaidFrame.lua then Mainline/RaidFrame.xml"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_ui_loads.rs:591:    let xml_path = raid_ui_dir().join("Mainline/Blizzard_RaidUI.xml");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_raid_ui_loads.rs:600:         lists Mainline/RaidFrame.lua AND Mainline/RaidFrame.xml \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:27:    "Mainline/MoneyFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:28:    "Mainline/MoneyFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:31:    "Mainline/MoneyInputFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:32:    "Mainline/MoneyInputFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:33:    "Mainline/Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:178:         would lose the visible Mainline-only signal carried by the directory layout",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:228:    let raw = std::fs::read_to_string(money_frame_mainline_toc()).expect("Mainline TOC reads");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:294:         and MoneyInputFrame, the Shared (lua, xml) pair loads BEFORE the Mainline (lua, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:295:         xml) pair so the Mainline files can override or extend Shared mixins / functions \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:296:         (LargeMoneyInputBoxMixin is redefined in Mainline/MoneyInputFrame.lua line 252 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:298:         Mainline/Localization.lua loads last to set up locale-specific MONEY_TEXT_VADJUST \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:389:             reusable per-coin display + multi-coin frame), SmallMoneyFrameMixin (Mainline, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:392:             LargeMoneyInputBoxMixin is redefined in Mainline so the post-load value comes \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:393:             from the Mainline file), MoneyFrameEditBoxMixin / MoneyInputFrameMixin \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:394:             (Mainline, the 3-field copper / silver / gold input frame)"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:502:        "GetDenominationsFromCopper must publish at `_G` as a function. Mainline's \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_money_frame_loads.rs:538:        "The Mainline/Localization.lua `l10nTable` is declared `local` (line 1) — it MUST \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_game_loads.rs:285:        "Mainline/GameDialogDefs.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_game_loads.rs:287:        "Mainline/GameDialog.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_game_loads.rs:289:        "Mainline/StaticPopupSpecial.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_game_loads.rs:297:         [Family] → Mainline/ per toc.rs:145. Got: {body:?}"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_static_popup_game_loads.rs:804:        "PetBattleQueueReadyFrame = frame — Mainline/StaticPopupSpecial.xml \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_torghast_level_picker_loads.rs:336:        "Blizzard_UIParentPanelManager/Mainline/UIPanelWindows.lua:63 \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_torghast_level_picker_loads.rs:350:        blizzard_ui_dir().join("Blizzard_UIPanels_Game/Mainline/CustomGossipFrameBase.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/mists_compat_bootstrap.rs:110:            50504,
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:28:    "Mainline/Blizzard_PVPUI_Bootstrap.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:29:    "Mainline/Blizzard_PVPUI.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:30:    "Mainline/Blizzard_PVPUI.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:138:        "Blizzard_PVPUI ships Mainline + Mists variants and NO bare TOC. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:140:         suffix first, so the resolver returns the Mainline variant — confirmed \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:161:        "Mainline TOC must declare `## LoadOnDemand: 1` — the PVP UI is loaded \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:171:        "Mainline variant: `## AllowLoadGameType: mainline` — \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:230:        "Retail 12.1.0.69497 Mainline TOC declares HelpPlate, GroupFinder, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:274:    let raw = std::fs::read_to_string(pvp_ui_mainline_toc()).expect("Mainline TOC reads utf-8");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:302:    let toc = TocFile::from_file(&pvp_ui_mainline_toc()).expect("Mainline TOC parses");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:310:        "Retail 12.1.0.69497 Mainline TOC lists its bootstrap before the Lua, XML, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:409:             22 public Mixin globals across the Mainline Blizzard_PVPUI.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_pvp_ui_loads.rs:463:             a representative subset of the ~30+ virtual templates Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_parent_panel_manager_loads.rs:136:         the Mainline variant — no bare TOC, no Classic/Mists companion. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_parent_panel_manager_loads.rs:212:        "Mainline\\UIPanelWindows.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_parent_panel_manager_loads.rs:215:        "Mainline\\UIParentPanelManagerOverrides.lua [AllowLoadEnvironment Global]",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_parent_panel_manager_loads.rs:224:             Mainline overrides, and position updater. The four \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_parent_panel_manager_loads.rs:357:             Mainline/UIParentPanelManagerOverrides.lua:3 and is the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_warfronts_party_pose_ui_loads.rs:63:         `WarfrontsPartyPose_LoadUI()` in Blizzard_UIParent/Mainline/UIParent.lua via \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_warfronts_party_pose_ui_loads.rs:299:         Blizzard_UIParent/Mainline/UIParent.lua:387 as the only call site that issues \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_map_lane.rs:266:         picks `_Mainline.toc` on its first probe, so this addon lights up only on Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:80:         (resolves to `Mainline/` per src/toc.rs:145) and per-line \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:190:        "Mainline/QuestTextPreview.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:191:        "Mainline/QuestTextPreview.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:192:        "Mainline/TextSizePreview.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:193:        "Mainline/TextSizePreview.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:194:        "Mainline/Text.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:200:             `[Family]` with `Mainline` AND backslash with forward slash, so \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:202:             `Mainline/QuestTextPreview.lua`. Got: {listed:?}"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:302:    let mainline_dir = dir.join("Mainline");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:314:            "Blizzard_SettingsDefinitions_Shared/Mainline/{filename} must exist \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_settings_definitions_shared_loads.rs:419:            "_G.{fn_name} must publish as a function — Mainline/Text.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_5_5_2_publication_sweep.rs:13:        assert_eq!(ACTIVE_INTERFACE_VERSION, 50504);
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_parent_loads.rs:352:         Mainline/UIParent.lua at 2842 lines with ~131 free functions \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:156:    let toc = TocFile::from_file(&shared_xml_toc()).expect("Mainline TOC parses");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:248:    let toc = TocFile::from_file(&shared_xml_toc()).expect("Mainline TOC parses");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:264:        "Retail 12.1.0.69497 TOC body has 218 active Mainline file entries. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:269:        "Retail 12.1.0.69497 TOC body has 145 active Mainline Lua entries. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:274:        "Retail 12.1.0.69497 TOC body has 73 active Mainline XML entries. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:302:             cross-flavor widget primitives that both Mainline and Mists \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:314:    let mainline_dir = shared_xml_dir().join("Mainline");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:326:        "Mainline-only — Major Faction renown UI is Dragonflight+ retail"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:330:        "Mainline-only — extended model frame primitives for the retail \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:448:            "_G.RAID_CLASS_COLORS must be a table — Mainline/ClassColors.lua \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_shared_xml_loads.rs:612:             NineSliceLayout table (defined in Mainline/NineSliceLayouts.lua) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_housing_controls_loads.rs:50:         pull it: `Blizzard_UIParent/Mainline/UIParent.lua:1622` calls \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/patch_12_0_7_removed_native_surface.rs:10:    "Blizzard_Deprecated/Mainline/Deprecated_12_0_7.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:47:    "Mainline\\BuilderSpenderFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:48:    "Mainline\\PowerBarColorUtil.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:51:    "Mainline\\UnitFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:54:    "Mainline\\PlayerFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:56:    "Mainline\\TargetFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:57:    "Mainline\\RuneFrame.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:58:    "Mainline\\ClassPowerBar.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:61:    "Mainline\\CompactArenaFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:64:    "Mainline\\Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:68:const FAMILY_PLACEHOLDER_RESOLVED_RELATIVE: &str = "Mainline/CompactUnitFrameOptions.lua";
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:260:         (Mainline + Classic) — the Mainline variant has 7 hard deps \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:261:         and ~53 body files arranged across Shared / Mainline subdirs, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:342:         only matter on Classic-flavor builds; the Mainline build \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:371:             Mainline\\UnitFrame.lua (mainline-only behaviour overlay) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:372:             so the Mainline override can patch fields the shared file \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:382:         build's family directory (`Mainline` for the Mainline build, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_unit_frame_loads.rs:404:         `[Family]` → `Mainline` literally; the Mainline build's body \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:115:         `<addon>_Mainline.toc`. The addon ships ONLY the Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:136:        "Mainline TOC must declare exactly {} hard dep. Got {}: {:?}",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:204:        "Mainline\\AutoCastTemplates.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:205:        "Mainline\\AutoCastTemplates.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:208:        "Mainline\\UIPanelTemplates.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:209:        "Mainline\\UIPanelTemplates.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:219:             xml in Mainline/). The lua-before-xml ordering within each \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:292:             + AutoCastOverlayMixin (Mainline/AutoCastTemplates.lua) are \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panel_templates_loads.rs:294:             Mainline/UIPanelTemplates.lua and back the major shared \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/startup_warnings/late.rs:366:                    || warning.contains("Mainline/Localization.lua:48")
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/xml_animation_group_onload.rs:65:        cache.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.xml"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/xml_animation_group_onload.rs:111:        cache.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.xml"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/xml_animation_group_onload.rs:140:        cache.join("Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/p1207_merchant_currencies.rs:103:        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_7.lua");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_photo_sharing_loads.rs:82:         The Mainline-only restriction is enforced via `## AllowLoadGameType: standard` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_photo_sharing_loads.rs:113:         returns false (NOT restricted from Mainline). The `standard` token at \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_photo_sharing_loads.rs:114:         src/toc.rs:294-302 is the canonical Mainline alias — same as `mainline` — and \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_photo_sharing_loads.rs:175:         single-token Mainline-only gametype lock. UNUSUAL compared to the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_photo_sharing_loads.rs:203:         and matches a few small Mainline-only social/utility addons"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_photo_sharing_loads.rs:238:         LoadOnDemand) AND `## AllowLoadGameType: standard` allows Mainline AND \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_trainer_ui_loads.rs:150:            "Mainline\\Blizzard_TrainerUI.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_trainer_ui_loads.rs:153:        "Retail 12.1 TrainerUI TOC must retain its current directives, bootstrap, and Mainline XML body"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_trainer_ui_loads.rs:171:            "Mainline/Blizzard_TrainerUI.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_trainer_ui_loads.rs:174:        "Retail 12.1 body must retain the bootstrap, Mainline XML, and localization trailer in order. Got: {body:?}"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_progression_lane.rs:154:         Blizzard_TalentUI is invisible to the standard load path on a Mainline target. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_progression_lane.rs:156:         Mainline preference. Got: {resolved:?}"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_progression_lane.rs:163:         resolver skips it on Mainline runs"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ping_ui_loads.rs:112:         The Mainline-only restriction is enforced via `## AllowLoadGameType: mainline` \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ping_ui_loads.rs:114:         is a Mainline-only social feature; Mists Classic and earlier flavors have no \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ping_ui_loads.rs:176:         `mainline` or `standard` token. PingUI is a Mainline-only addon; the radial \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ping_ui_loads.rs:224:         recognized by `is_game_type_restricted` as Mainline-allowed (src/toc.rs:299), \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_weekly_rewards_loads.rs:70:         `WeeklyRewards_LoadUI()` in Blizzard_UIParent/Mainline/UIParent.lua:519 via \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_weekly_rewards_loads.rs:283:             Blizzard_UIParent/Mainline/UIParent.lua (lines 519-534) BEFORE the addon itself \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_level_up_display_loads.rs:34:        "Blizzard_LevelUpDisplay must resolve to None on the simulator's Mainline target. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_level_up_display_loads.rs:108:         addon is build-time gated to the Mists-of-Pandaria classic flavor. On a Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_level_up_display_loads.rs:183:         gate ensures the simulator never attempts to load the missing file: on a Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_level_up_display_loads.rs:267:             gate is checked before the LoadOnDemand split). On a Mainline simulator \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:65:         variant on retail, so the simulator picks the Mainline TOC when it asks for the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:72:    let toc = TocFile::from_file(&group_finder_mainline_toc()).expect("Mainline TOC should parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:75:        "Blizzard_GroupFinder Mainline omits `## LoadOnDemand` — the PVEFrame / GroupFinder \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:102:        "Blizzard_GroupFinder Mainline declares six `## Dependencies:` in published order: \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:120:        std::fs::read_to_string(group_finder_mainline_toc()).expect("Mainline TOC should read");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:123:        "Blizzard_GroupFinder Mainline declares `## AllowLoad: game` — Game-screen-only. \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:129:        "Blizzard_GroupFinder Mainline declares `## AllowLoadGameType: mainline` — retail \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:134:        "Blizzard_GroupFinder Mainline declares `## DefaultState: enabled` — the LFG / PVE \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:141:    let toc = TocFile::from_file(&group_finder_mainline_toc()).expect("Mainline TOC should parse");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:150:            "Mainline/QueueUpdater.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:151:            "Mainline/PVEFrame.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:152:            "Mainline/PVEFrame.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:154:            "Mainline/LFGFrame.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:155:            "Mainline/LFDFrame.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:156:            "Mainline/LFDFrame.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:161:            "Mainline/LFGList.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:162:            "Mainline/LFGList.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:163:            "Mainline/PvpPopup.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:164:            "Mainline/PvpPopup.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:165:            "Mainline/PVPHelper.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:166:            "Mainline/PVPHelper.xml".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:168:            "Mainline/ScenarioFinder.lua".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:171:        "Blizzard_GroupFinder Mainline TOC enumerates 20 source files in this exact order: \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:176:         LFGReadyCheck, RaidFinder, ScenarioFinder_Shared) are reused across Mainline + \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:177:         Mists; Mainline/ files override or extend with retail-only behavior"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:196:            "Mainline".to_string(),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:200:        "Blizzard_GroupFinder directory ships exactly 6 entries: 3 flavor TOCs (Mainline / \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:201:         TBC / Vanilla) + 3 source subdirectories (Mainline / Mists / Shared). The Classic \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:224:         Mainline, only the game-type filter differs"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:236:         the Mainline-only Blizzard_EditMode dependency remains absent on TBC"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:270:         Mainline variant is picked up. Discovered {} occurrences",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:348:             Mainline/PVEFrame.lua publishes 10 GroupFinderFrame_* lifecycle and helper \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:372:             Mainline/PVEFrame.lua publishes 5 PVEFrame_* helpers consumed by the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:388:        "PVEFrameMixin should publish as a `_G` table — Mainline/PVEFrame.lua declares the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:401:            "PVEFrameMixin.{method} should be a function — owned by Mainline/PVEFrame.lua"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:418:         Mainline/PVEFrame.xml declares `<Frame name=\"PVEFrame\" mixin=\"PVEFrameMixin\" \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_group_finder_loads.rs:433:        "LFGAuthenticatorMessagingMixin should publish as a `_G` table — Mainline/\
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_perks_program_loads.rs:118:         Trader's Tender / Trading Post is a Mainline-only feature (added in patch 10.0.7) \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_reforging_ui_loads.rs:60:        "Blizzard_ReforgingUI ships ONLY a `_Classic` suffixed TOC — no Mainline or bare \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_reforging_ui_loads.rs:61:         variant. find_toc_file (src/loader/mod.rs:65) tries Mainline first, then bare, then \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/wowforever_input_style.rs:77:    for file in ["Mainline/InputUtil.lua", "InputUtil.lua"] {
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:190:    let mainline_count = toc_text.matches("Mainline\\").count();
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:193:        "Retail 12.1.0.69497 enumerates 32 `Mainline\\\\*` entries: the bootstrap Lua, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:197:        toc_text.contains("Mainline\\Blizzard_GarrisonUI_Bootstrap.lua [Bootstrap]"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:201:        toc_text.contains("Mainline\\Localization.lua"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:202:        "TOC must list Mainline\\Localization.lua — the per-locale l10nTable holds \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:206:        toc_text.contains("Mainline\\Blizzard_GarrisonLandingPage.lua")
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:207:            && toc_text.contains("Mainline\\Blizzard_GarrisonLandingPage.xml"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:212:        toc_text.contains("Mainline\\Blizzard_CovenantMissionUI.lua")
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_garrison_ui_loads.rs:213:            && toc_text.contains("Mainline\\Blizzard_CovenantMissionUI.xml"),
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:29:    "Mainline/Minimap.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:30:    "Mainline/Minimap.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:31:    "Mainline/GameTime.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:32:    "Mainline/GameTime.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:33:    "Mainline/AddonCompartment.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:34:    "Mainline/AddonCompartment.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:141:         resolver MUST prefer the Mainline copy on retail (the `_Mainline` lookup is the \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:148:         addon, not a single bare TOC. The Mainline-preference behavior of `find_toc_file` is \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:200:    let raw = std::fs::read_to_string(minimap_mainline_toc()).expect("Mainline TOC reads");
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:212:         different game-type marker so the retail-only Mainline copy is the one that \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:258:         under the `Mainline/` subdirectory: Minimap, GameTime, AddonCompartment. The \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_minimap_loads.rs:260:         the relative file paths. The `Mainline` prefix is the load-order isolator that \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_combat_text_loads.rs:147:         AND the Mainline overrides (REFLECT, SPELL_DAMAGE_CRIT, PERIODIC_ENERGIZE, \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_combat_text_loads.rs:176:        "CombatTextPowerEnumFromEnergizeStringLookup, CombatTextFrameEvents (with the Mainline \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:135:        "Mainline TOC must declare exactly {} hard deps. Got {}: {:?}",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:206:         hard dep on Classic but not on Mainline)"
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:225:        "Mainline\\Localization.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:226:        "Mainline\\CharacterFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:227:        "Mainline\\WorldMapFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:228:        "Mainline\\QuestFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:229:        "Mainline\\MerchantFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:230:        "Mainline\\BankFrame.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:241:             PlayerInteractionFrameManager and Mainline\\ for \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_ui_panels_game_loads.rs:315:             addon publishes ~50+ mixins across Mainline/ + Shared/ \
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_private_auras_ui_loads.rs:25:    "Mainline/PrivateAurasTooltip.lua",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_private_auras_ui_loads.rs:26:    "Mainline/PrivateAurasTooltip.xml",
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_private_auras_ui_loads.rs:441:        std::fs::read_to_string(private_auras_dir().join("Mainline/PrivateAurasTooltip.xml"))
+/home/osso/.worktrees/wow-ui-sim-p550-page/tests/blizzard_private_auras_ui_loads.rs:442:            .expect("Mainline/PrivateAurasTooltip.xml reads utf-8");

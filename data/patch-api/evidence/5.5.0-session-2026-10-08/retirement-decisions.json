@@ -1,0 +1,17 @@
+{
+  "removed_entries": [],
+  "new_retirements": [],
+  "later_registers": [
+    "5.5.1",
+    "5.5.2",
+    "5.5.3",
+    "5.5.4"
+  ],
+  "later_readditions": {
+    "5.5.1": [],
+    "5.5.2": [],
+    "5.5.3": [],
+    "5.5.4": []
+  },
+  "reason": "No source-listed removal or identity; context scans confer no consumer-free retirement claim."
+}

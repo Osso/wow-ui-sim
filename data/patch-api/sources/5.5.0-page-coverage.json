@@ -1,0 +1,50 @@
+{
+  "patch": "5.5.0",
+  "client_line": "mists-classic",
+  "profile": "client-mists",
+  "source_sha256": "7530406cb6e8a6315652bb431c1c1a365b47900c6ad8e9d9f56df4f24f8f83e1",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.5.0-api-changes.txt",
+    "sha256": "ab12ad3af0590a74f9127ece4fcef9fa2fe445f6ab16b0bac55e3cbf6cb3ca79",
+    "wikitext_revid": 6303391
+  },
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "problematic-gap",
+      "note": "Broad client synchronization claim through Mainline 11.1.7 names no API identities, signatures, outputs or security transitions. Linked retail page/diffs are unexpanded external boundaries; no native equivalence or publication coverage claimed."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    }
+  ],
+  "proof_policy": "No identity inventory. Five metadata rows and one explicitly problematic synchronization claim; no behavioral credit. Linked retail page and external diffs unexpanded."
+}

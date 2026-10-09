@@ -1,0 +1,44 @@
+[
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-RInw",
+      "--exclude-dir=*Documentation*",
+      "-e",
+      "50500",
+      "-e",
+      "50504",
+      "-e",
+      "Mainline",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+    ],
+    "exit": 0,
+    "log": "mists-consumer-context.txt",
+    "log_sha256": "d5b374e13e088b17c3877c84dcabae24e5fd2e295f0cc22a45f0039f50be4873",
+    "line_count": 548,
+    "untruncated": true,
+    "scope": "Context only: no removal candidates or positive consumer-free claim."
+  },
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-RInw",
+      "-e",
+      "50500",
+      "-e",
+      "50504",
+      "-e",
+      "Mainline",
+      "/home/osso/.worktrees/wow-ui-sim-p550-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p550-page/tests"
+    ],
+    "exit": 0,
+    "log": "src-tests-context.txt",
+    "log_sha256": "10ae8c263bcef21a8e15da97ba883877fc242820cee7293486b9cd77d95aa7d6",
+    "line_count": 995,
+    "untruncated": true,
+    "scope": "Context only: no removal candidates or positive consumer-free claim."
+  }
+]
