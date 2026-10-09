@@ -1,0 +1,32 @@
+[
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1110-page/data/patch-api/evidence/1.11.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+    "revision": "3d224c81a14b96ca1589c16f919504a27d938532",
+    "scope": "committed own SOURCE5, default byte/history controls; not final acceptance",
+    "started": "2026-10-09T17:32:19.548078+00:00",
+    "finished": "2026-10-09T17:32:19.609827+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... ok\ntest_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... ok\ntest_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... ok\ntest_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... ok\ntest_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.020s\n\nOK\n"
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1110-page/data/patch-api/evidence/1.11.0-session-2026-10-09/test_portable.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+    "revision": "3d224c81a14b96ca1589c16f919504a27d938532",
+    "scope": "uncommitted portable3 test, absent immutable seals; expected RED",
+    "started": "2026-10-09T17:32:19.632304+00:00",
+    "finished": "2026-10-09T17:32:19.674216+00:00",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay) ... FAIL\ntest_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored) ... FAIL\ntest_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored) ... FAIL\n\n======================================================================\nFAIL: test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1110-page/data/patch-api/evidence/1.11.0-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n======================================================================\nFAIL: test_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1110-page/data/patch-api/evidence/1.11.0-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n======================================================================\nFAIL: test_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1110-page/data/patch-api/evidence/1.11.0-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=3)\n"
+  }
+]
