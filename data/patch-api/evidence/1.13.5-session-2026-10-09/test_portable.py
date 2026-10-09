@@ -53,6 +53,12 @@ class PortableSource(unittest.TestCase):
         generated = self.execute(self.copied / 'historical-tools/gen_patch_wikitext_register.py', '1.13.5', self.copied / 'source.wikitext', '3835002', output)
         self.assertEqual(generated.returncode, 0, generated.stderr)
         self.assertEqual(output.read_bytes(), (self.copied / 'default-register.json').read_bytes())
+        failed_extract = self.execute(self.copied / 'audit.py', 'default-extract')
+        self.assertNotEqual(failed_extract.returncode, 0)
+        expected_error = json.loads((self.copied / 'default-extract-error.json').read_bytes())
+        self.assertIn('ValueError: ' + expected_error['error'], failed_extract.stderr)
+        self.assertEqual(failed_extract.stdout, '')
+        self.assertFalse((self.copied / 'default-extract.txt').exists())
         self.check_originals()
 
     def reject_and_restore(self, name, changed):

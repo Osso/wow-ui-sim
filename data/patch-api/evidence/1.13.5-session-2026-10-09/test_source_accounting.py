@@ -20,8 +20,13 @@ class SourceAccounting(unittest.TestCase):
         expected = [(n, s) for n, s in enumerate((E / 'source.wikitext').read_text().splitlines(), 1) if s.strip()]
         self.assertEqual([(r['line'], r['literal']) for r in ledger.get('source_rows', [])], expected)
         self.assertEqual(len(expected), 31)
-        extracted = [(n, s) for n, s in enumerate((E / 'default-extract.txt').read_text().splitlines(), 1) if s.strip()]
-        self.assertEqual([(r['line'], r['literal']) for r in ledger.get('extracted_rows', [])], extracted)
+        self.assertEqual(ledger.get('extracted_rows'), [])
+        failure = ledger.get('default_extract', {})
+        self.assertEqual(failure.get('result'), 'existing-failure')
+        self.assertIsNone(failure.get('text'))
+        self.assertEqual(failure.get('error_type'), 'ValueError')
+        self.assertIn('unhandled template: * Reinstated [[Threat]] API', failure.get('error', ''))
+        self.assertFalse((E / 'default-extract.txt').exists())
 
     def test_inventory_and_unknown_signatures(self):
         ledger = audit.build()

@@ -982,3 +982,7 @@ Added [literal audit](investigations/patch-1-13-7-api-audit.md) and [spec](../sp
 ## 2026-10-09 — Patch 1.13.7 own SOURCE/portable receipts
 
 SOURCE GREEN8/8 at0b39afb17,77 omission controls; portable GREEN3/3 at7fe5edac1 after retained RED3. Fresh copied SOURCE8/default generator+extractor byte equality, serialized ledger/log seal rejections and exact restorations. Original55 seals unchanged,56-member archive/five separate receipt seals. Zero model/runtime/native credit; main owns integration/final gates.
+
+## [2026-10-09] investigation | Patch 1.13.5 frozen SOURCE accounting
+
+[Audit](investigations/patch-1-13-5-api-audit.md): frozen398847/3835002;31nonblank rows,3globals/2events,5unknown signatures,2prose rows,5headings/2matching counts,7links/7templates/2named refs;14UNPROVEN contracts. Threat defaults and generic bag capacity do not model reinstatement/log range/authenticator entitlement. Concurrent1.13.6 queued separately; main orders1.13.6 before1.13.5. Own SOURCE RED8 retained; no runtime/model/native credit. Default register exact; default extractor existing ref-web failure retained. Targeted/copy proof pending; main owns integration/final gates.

@@ -3051,3 +3051,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.13.7 SOURCE accounting
 
 [Audit](investigations/patch-1-13-7-api-audit.md): frozen46829/458410,25 raw/5 extracted rows,five inventory occurrences,one unspecified signature,four unspecified-default CVars. SOURCE GREEN8/8 at0b39afb17 (77 omission controls); portable GREEN3/3 at7fe5edac1, copied SOURCE8/default-byte replay and both serialized seal rejections/exact restorations. Original55 seals unchanged;56-member archive/five separate receipt seals. No model/runtime/native credit or foreign supersession. Main owns integration/native/final gates.
+
+## [2026-10-09] investigation | Patch 1.13.5 frozen SOURCE accounting
+
+[Audit](investigations/patch-1-13-5-api-audit.md): frozen398847/3835002;31nonblank rows,3globals/2events,5unknown signatures,2prose rows,5headings/2matching counts,7links/7templates/2named refs;14UNPROVEN contracts. Threat defaults and generic bag capacity do not model reinstatement/log range/authenticator entitlement. Concurrent1.13.6 queued separately; main orders1.13.6 before1.13.5. Own SOURCE RED8 retained; no runtime/model/native credit. Default register exact; default extractor existing ref-web failure retained. Targeted/copy proof pending; main owns integration/final gates.
