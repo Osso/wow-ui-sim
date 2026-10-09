@@ -1,0 +1,400 @@
+{
+  "scope": "All text files under own src/tests (including embedded Lua strings), and every cached retail .lua; exact whole-word global names. No retirement edits.",
+  "symbols": [
+    "BNGetFriendIndex",
+    "CollapseWarGameHeader",
+    "CreateNewRaidProfile",
+    "DeleteRaidProfile",
+    "EJ_GetLootInfoByIndex",
+    "EJ_GetMapEncounter",
+    "EJ_GetSectionInfo",
+    "EJ_SetDifficultyByMask",
+    "ExpandWarGameHeader",
+    "GetCurrentRefresh",
+    "GetMaxNumCUFProfiles",
+    "GetNumRaidProfiles",
+    "GetNumWarGameTypes",
+    "GetOSLocale",
+    "GetPVPRewards",
+    "GetRaidProfileFlattenedOptions",
+    "GetRaidProfileName",
+    "GetRaidProfileOption",
+    "GetRaidProfileSavedPosition",
+    "GetSelectedWarGameType",
+    "GetWarGameTypeInfo",
+    "HasTravelPass",
+    "KeyRingButtonIDToInvSlotID",
+    "LoadURLIndex",
+    "RaidProfileExists",
+    "RaidProfileHasUnsavedChanges",
+    "RestoreRaidProfileFromCopy",
+    "SaveRaidProfileCopy",
+    "SetRaidProfileOption",
+    "SetRaidProfileSavedPosition",
+    "SetRefresh",
+    "SetSelectedWarGameType",
+    "UpdateWarGamesList",
+    "strreplace"
+  ],
+  "scans": {
+    "src": {
+      "root": "/home/osso/.worktrees/wow-ui-sim-p420-source/src",
+      "exists": true,
+      "text_files_scanned": 1652,
+      "matches": [
+        {
+          "path": "src/era/compat_bootstrap.lua",
+          "line": 87,
+          "symbols": [
+            "GetRaidProfileOption"
+          ],
+          "text": "if rawget(_G, \"GetRaidProfileOption\") == nil then"
+        },
+        {
+          "path": "src/era/compat_bootstrap.lua",
+          "line": 88,
+          "symbols": [
+            "GetRaidProfileOption"
+          ],
+          "text": "  function GetRaidProfileOption(_profile, _option) return nil end"
+        },
+        {
+          "path": "src/lua_api/globals/missing_surface/encounter_journal.rs",
+          "line": 89,
+          "symbols": [
+            "EJ_GetLootInfoByIndex"
+          ],
+          "text": "        \"EJ_GetLootInfoByIndex\","
+        },
+        {
+          "path": "src/mists/compat_bootstrap.lua",
+          "line": 274,
+          "symbols": [
+            "GetRaidProfileOption"
+          ],
+          "text": "if rawget(_G, \"GetRaidProfileOption\") == nil then"
+        },
+        {
+          "path": "src/mists/compat_bootstrap.lua",
+          "line": 275,
+          "symbols": [
+            "GetRaidProfileOption"
+          ],
+          "text": "  function GetRaidProfileOption() return nil end"
+        },
+        {
+          "path": "src/mists/compat_bootstrap.lua",
+          "line": 655,
+          "symbols": [
+            "GetNumRaidProfiles"
+          ],
+          "text": "if rawget(_G, \"GetNumRaidProfiles\") == nil then"
+        },
+        {
+          "path": "src/mists/compat_bootstrap.lua",
+          "line": 656,
+          "symbols": [
+            "GetNumRaidProfiles"
+          ],
+          "text": "  function GetNumRaidProfiles() return 0 end"
+        }
+      ]
+    },
+    "tests": {
+      "root": "/home/osso/.worktrees/wow-ui-sim-p420-source/tests",
+      "exists": true,
+      "text_files_scanned": 2149,
+      "matches": [
+        {
+          "path": "tests/c_encounter_journal_probes.rs",
+          "line": 217,
+          "symbols": [
+            "EJ_GetLootInfoByIndex"
+          ],
+          "text": "                local item = EJ_GetLootInfoByIndex(i)"
+        },
+        {
+          "path": "tests/c_encounter_journal_probes.rs",
+          "line": 334,
+          "symbols": [
+            "EJ_GetLootInfoByIndex"
+          ],
+          "text": "                    local item = EJ_GetLootInfoByIndex(i)"
+        },
+        {
+          "path": "tests/data/patch_5_4_0_sweep_known_gaps.json",
+          "line": 20,
+          "symbols": [
+            "GetPVPRewards"
+          ],
+          "text": "  \"wt-global-api-GetPVPRewards-17\","
+        },
+        {
+          "path": "tests/data/patch_9_0_1_sweep_known_gaps.json",
+          "line": 222,
+          "symbols": [
+            "EJ_GetLootInfoByIndex"
+          ],
+          "text": "  \"wt-global-api-EJ_GetLootInfoByIndex-601\","
+        }
+      ]
+    },
+    "cached-retail-lua": {
+      "root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "exists": true,
+      "text_files_scanned": 2551,
+      "matches": [
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/LocaleDocumentation.lua",
+          "line": 58,
+          "symbols": [
+            "GetOSLocale"
+          ],
+          "text": "\t\t\tName = \"GetOSLocale\","
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/URLDocumentation.lua",
+          "line": 21,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\t\tName = \"LoadURLIndex\","
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+          "line": 2545,
+          "symbols": [
+            "BNGetFriendIndex"
+          ],
+          "text": "\tlocal index = BNGetFriendIndex(bnetIDAccount);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/Shared/GameMenuFrame.lua",
+          "line": 14,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\tLoadURLIndex(67);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua",
+          "line": 840,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\t\tLoadURLIndex(2);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+          "line": 282,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\tLoadURLIndex(22);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Events.lua",
+          "line": 61,
+          "symbols": [
+            "EJ_GetMapEncounter"
+          ],
+          "text": "        ejEncounterName = select(4, EJ_GetMapEncounter(uiMapID, i))"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Events.lua",
+          "line": 64,
+          "symbols": [
+            "EJ_GetMapEncounter"
+          ],
+          "text": "            displayInfoID = select(4, EJ_GetCreatureInfo(1, select(6, EJ_GetMapEncounter(uiMapID, i))))"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 954,
+          "symbols": [
+            "UpdateWarGamesList"
+          ],
+          "text": "\t\tUpdateWarGamesList();"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 962,
+          "symbols": [
+            "GetNumWarGameTypes"
+          ],
+          "text": "\tlocal numWarGames = GetNumWarGameTypes();"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 968,
+          "symbols": [
+            "GetWarGameTypeInfo"
+          ],
+          "text": "\t\t\tlocal name = GetWarGameTypeInfo(i);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 996,
+          "symbols": [
+            "GetNumWarGameTypes"
+          ],
+          "text": "\tlocal numWarGames = GetNumWarGameTypes();"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 997,
+          "symbols": [
+            "GetSelectedWarGameType"
+          ],
+          "text": "\tlocal selectedIndex = GetSelectedWarGameType();"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1003,
+          "symbols": [
+            "GetWarGameTypeInfo"
+          ],
+          "text": "\t\t\tlocal name, pvpType, collapsed, id, minPlayers, maxPlayers, isRandom, iconTexture = GetWarGameTypeInfo(index);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1066,
+          "symbols": [
+            "GetWarGameTypeInfo"
+          ],
+          "text": "\tlocal name, pvpType, collapsed = GetWarGameTypeInfo(index);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1068,
+          "symbols": [
+            "ExpandWarGameHeader"
+          ],
+          "text": "\t\tExpandWarGameHeader(index);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1070,
+          "symbols": [
+            "CollapseWarGameHeader"
+          ],
+          "text": "\t\tCollapseWarGameHeader(index);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1083,
+          "symbols": [
+            "GetSelectedWarGameType"
+          ],
+          "text": "\tif ( self:GetParent().index ~= GetSelectedWarGameType() ) then"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1091,
+          "symbols": [
+            "SetSelectedWarGameType"
+          ],
+          "text": "\tSetSelectedWarGameType(index);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1097,
+          "symbols": [
+            "GetSelectedWarGameType"
+          ],
+          "text": "\tlocal selectedIndex = GetSelectedWarGameType();"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1114,
+          "symbols": [
+            "GetSelectedWarGameType",
+            "GetWarGameTypeInfo"
+          ],
+          "text": "\tlocal name, pvpType, collapsed, id, minPlayers, maxPlayers = GetWarGameTypeInfo(GetSelectedWarGameType());"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mists/Blizzard_PVPUI.lua",
+          "line": 1139,
+          "symbols": [
+            "GetSelectedWarGameType",
+            "GetWarGameTypeInfo"
+          ],
+          "text": "\tlocal name = GetWarGameTypeInfo(GetSelectedWarGameType());"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/InterfaceUtil.lua",
+          "line": 55,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\tLoadURLIndex(22);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/LinkUtil.lua",
+          "line": 141,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\tLoadURLIndex(tonumber(index));"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+          "line": 2957,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\tOnAccept = function(dialog, data) LoadURLIndex(data.index, data.mapID); end,"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+          "line": 3207,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\tLoadURLIndex(41);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+          "line": 3220,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\tLoadURLIndex(41);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Glue/GlueDialogDefs.lua",
+          "line": 61,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\tLoadURLIndex(urlIndex);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua",
+          "line": 1527,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\t\t\tLoadURLIndex(2);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua",
+          "line": 1773,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\tLoadURLIndex(ActiveURLIndex);"
+        },
+        {
+          "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+          "line": 285,
+          "symbols": [
+            "LoadURLIndex"
+          ],
+          "text": "\tLoadURLIndex(tonumber(index));"
+        }
+      ]
+    }
+  }
+}

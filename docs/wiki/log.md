@@ -640,3 +640,7 @@ Pinned revision 3045158: 63 additions/two removals, one navigation metadata row,
 ## 2026-10-09 — Patch 4.2.0 friend index model
 
 Retail-only `BNGetFriendIndex` reads the existing ordered friend list; two missing-global RED cases retained. No native parity; unknown-ID nil inferred. [Audit](investigations/patch-4-2-0-api-audit.md).
+
+## 2026-10-09 — Patch 4.2.0 bounded publication accounting
+
+Own sweep 1/1; ledger 34 bounded/31 gaps/one metadata. Local friend-index 2/2; same-size negative rejects 31 → 32 gaps. Full caller/cache scan retained; no retirements or native parity. Pending 4.3.0/4.3.4 remain coordinator-owned. [Audit](investigations/patch-4-2-0-api-audit.md).

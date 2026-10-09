@@ -68,6 +68,34 @@ class Patch420Accounting(unittest.TestCase):
         self.assertEqual([row["source_id"] for row in rows], ["source-context-001"])
         self.assertTrue(all(row["status"] == "metadata-only" for row in rows))
 
+    def test_later_retail_history_drives_expected_publication(self):
+        pins = load(EVIDENCE / "later-register-pins.json")
+        self.assertEqual(pins["pending"], ["4.3.0", "4.3.4"])
+        latest = {}
+        for pin in pins["pins"]:
+            path = ROOT / pin["path"]
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), pin["sha256"])
+            register = load(path)
+            self.assertEqual(register.get("client_line", "retail"), "retail")
+            for row in register["entries"]:
+                if row["direction"] in ("added", "removed"):
+                    latest[row["symbol"]] = row
+        results = load(EVIDENCE / "development-results.json")
+        for row in load(SOURCES / "4.2.0-wikitext-register.json")["entries"]:
+            newer = latest.get(row["symbol"], row)
+            expected = results[row["id"]]["expected"]
+            self.assertEqual(expected["publication"], "absent" if newer["direction"] == "removed" else "published")
+            superseded = newer["id"] if newer["direction"] != row["direction"] else None
+            self.assertEqual(expected["superseded_by"], superseded)
+
+    def test_negative_control_adds_exactly_one_publication_gap(self):
+        baseline = load(EVIDENCE / "development-results.json")
+        negative = load(EVIDENCE / "negative-results.json")
+        self.assertEqual(len(negative), len(baseline))
+        baseline_gaps = {key for key, result in baseline.items() if not result["ok"]}
+        negative_gaps = {key for key, result in negative.items() if not result["ok"]}
+        self.assertEqual(negative_gaps, baseline_gaps | {"negative-p420-missing-global"})
+
     def test_accounting_matches_development_observations(self):
         register = load(SOURCES / "4.2.0-wikitext-register.json")
         coverage = load(SOURCES / "4.2.0-page-coverage.json")

@@ -1,0 +1,39 @@
+{
+  "inventory_rows": 65,
+  "directions": {
+    "added": 63,
+    "removed": 2
+  },
+  "status_totals": {
+    "bounded-coverage": 34,
+    "audit-pending": 31,
+    "metadata-only": 1
+  },
+  "observation_totals": {
+    "published": 22,
+    "deprecated-fallback": 4,
+    "gap": 31,
+    "absent": 8
+  },
+  "gap_groups": {
+    "war-games": 7,
+    "raid-profiles": 14,
+    "legacy-retirement-mismatch": 1,
+    "encounter-journal": 3,
+    "display-refresh": 2,
+    "os-locale": 1,
+    "pvp-rewards": 1,
+    "travel-pass": 1,
+    "url-launch": 1
+  },
+  "available_later_registers": 64,
+  "pending_later_registers": [
+    "4.3.0",
+    "4.3.4"
+  ],
+  "prose_rows": 0,
+  "signature_rows": 0,
+  "runtime_model_gaps_closed": 1,
+  "retirements_changed": 0,
+  "native_parity": false
+}

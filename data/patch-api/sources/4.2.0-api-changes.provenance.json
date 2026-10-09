@@ -16,5 +16,5 @@
   ],
   "extractor_flags": [],
   "classification": "historical-retail-inventory",
-  "scope": "Pinned 65 global occurrences; publication observations pending; no behavior/native parity claim."
+  "scope": "Pinned historical retail inventory. Complete per-ID bounded publication/source accounting; 31 retained gaps, 4.3.0/4.3.4 successor integration pending. No native signature or behavior parity claim."
 }

@@ -1,0 +1,546 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "4.2.0",
+  "source": {
+    "path": "data/patch-api/sources/4.2.0-api-changes.wikitext",
+    "revid": 3045158,
+    "sha256": "699e1b8b9794a244f8421929cd4603ee04f4686a03cc1cd8b5478b31d7316bcd"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 63,
+      "parsed_count": 63
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    }
+  ],
+  "entries": [
+    {
+      "id": "negative-p420-missing-global",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P420InventedMissingGlobal",
+      "annotation": "Negative control replacement; not a source statement.",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-BNInviteFriend-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNInviteFriend",
+      "annotation": "",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-CollapseWarGameHeader-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CollapseWarGameHeader",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-ConfirmOnUse-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ConfirmOnUse",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-CreateNewRaidProfile-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CreateNewRaidProfile",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-DeleteRaidProfile-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeleteRaidProfile",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-EJ_ClearSearch-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_ClearSearch",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-EJ_GetAvailableClasses-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetAvailableClasses",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-EJ_GetCreatureInfo-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetCreatureInfo",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-EJ_GetCurrentInstance-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetCurrentInstance",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-EJ_GetEncounterInfoByIndex-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetEncounterInfoByIndex",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-EJ_GetEncounterInfo-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetEncounterInfo",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-EJ_GetInstanceByIndex-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetInstanceByIndex",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-EJ_GetInstanceInfo-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetInstanceInfo",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-EJ_GetLootInfoByIndex-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetLootInfoByIndex",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-EJ_GetLootInfo-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetLootInfo",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-EJ_GetMapEncounter-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetMapEncounter",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-EJ_GetNumLoot-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetNumLoot",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-EJ_GetNumSearchResults-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetNumSearchResults",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-EJ_GetSearchResult-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetSearchResult",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-EJ_GetSectionInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetSectionInfo",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-EJ_GetSectionPath-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetSectionPath",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-EJ_GetTierInfo-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetTierInfo",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-EJ_HandleLinkPath-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_HandleLinkPath",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-EJ_InstanceIsRaid-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_InstanceIsRaid",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-EJ_SelectEncounter-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_SelectEncounter",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-EJ_SelectInstance-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_SelectInstance",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-EJ_SelectTier-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_SelectTier",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-EJ_SetClassLootFilter-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_SetClassLootFilter",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-EJ_SetDifficultyByMask-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_SetDifficultyByMask",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-EJ_SetDifficulty-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_SetDifficulty",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-EJ_SetSearch-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_SetSearch",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-ExpandWarGameHeader-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ExpandWarGameHeader",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-GetCurrencyLink-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyLink",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-GetCurrencyListLink-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyListLink",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-GetCurrentRefresh-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrentRefresh",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-GetMaxNumCUFProfiles-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMaxNumCUFProfiles",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-GetMerchantCurrencies-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMerchantCurrencies",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-GetNumRaidProfiles-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumRaidProfiles",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-GetNumWarGameTypes-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumWarGameTypes",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-GetOSLocale-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetOSLocale",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-GetPVPRewards-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPVPRewards",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-GetRaidProfileFlattenedOptions-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRaidProfileFlattenedOptions",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-GetRaidProfileName-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRaidProfileName",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-GetRaidProfileOption-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRaidProfileOption",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-GetRaidProfileSavedPosition-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRaidProfileSavedPosition",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-GetRestrictedAccountData-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRestrictedAccountData",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-GetSelectedWarGameType-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSelectedWarGameType",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-GetWarGameTypeInfo-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetWarGameTypeInfo",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-HasTravelPass-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasTravelPass",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-LoadURLIndex-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "LoadURLIndex",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-PetAssistMode-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PetAssistMode",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-RaidProfileExists-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RaidProfileExists",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-RaidProfileHasUnsavedChanges-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RaidProfileHasUnsavedChanges",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-RequestPVPRewards-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestPVPRewards",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-RestoreRaidProfileFromCopy-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RestoreRaidProfileFromCopy",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-SaveRaidProfileCopy-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SaveRaidProfileCopy",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-SetRaidProfileOption-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetRaidProfileOption",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-SetRaidProfileSavedPosition-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetRaidProfileSavedPosition",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-SetRefresh-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetRefresh",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-SetSelectedWarGameType-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetSelectedWarGameType",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-UnitHasIncomingResurrection-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitHasIncomingResurrection",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-UpdateWarGamesList-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UpdateWarGamesList",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-KeyRingButtonIDToInvSlotID-75",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "KeyRingButtonIDToInvSlotID",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-strreplace-76",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "strreplace",
+      "annotation": "",
+      "wikitext_line": 76
+    }
+  ],
+  "client_line": "retail"
+}

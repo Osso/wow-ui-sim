@@ -10,399 +10,498 @@
   "source_rows": [
     {
       "source_id": "wt-global-api-BNGetFriendIndex-10",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof. Separate local model tests prove ordered friend lookup/reorder/removal only; unknown-ID nil inferred."
     },
     {
       "source_id": "wt-global-api-BNInviteFriend-11",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof. Cached unmodified deprecation wrapper/alias attribution accepted by the existing harness; not native API presence."
     },
     {
       "source_id": "wt-global-api-CollapseWarGameHeader-12",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-ConfirmOnUse-13",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof. Cached unmodified deprecation wrapper/alias attribution accepted by the existing harness; not native API presence."
     },
     {
       "source_id": "wt-global-api-CreateNewRaidProfile-14",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-DeleteRaidProfile-15",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-EJ_ClearSearch-16",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetAvailableClasses-17",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetCreatureInfo-18",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetCurrentInstance-19",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetEncounterInfoByIndex-20",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetEncounterInfo-21",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetInstanceByIndex-22",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetInstanceInfo-23",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetLootInfoByIndex-24",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Later retail removal expects absence, but the existing simulator Rust global remains callable. No cached Lua whole-word consumers found; no retirement change in this older-page slice. Related namespace behavior is not proof of legacy/native retirement parity. Observed: raw=function; lookup=function. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "legacy-retirement-mismatch"
     },
     {
       "source_id": "wt-global-api-EJ_GetLootInfo-25",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetMapEncounter-26",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy map encounter-index query; journal data does not establish this historical argument/return contract. Cached PTRFeedback calls exist; no alias/shim introduced. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "encounter-journal"
     },
     {
       "source_id": "wt-global-api-EJ_GetNumLoot-27",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetNumSearchResults-28",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetSearchResult-29",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetSectionInfo-30",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy section-info global despite a related C_EncounterJournal query. Source gives no tuple/signature; namespace publication cannot justify a guessed legacy adapter. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "encounter-journal"
     },
     {
       "source_id": "wt-global-api-EJ_GetSectionPath-31",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_GetTierInfo-32",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_HandleLinkPath-33",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_InstanceIsRaid-34",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_SelectEncounter-35",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_SelectInstance-36",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_SelectTier-37",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_SetClassLootFilter-38",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_SetDifficultyByMask-39",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing historical difficulty-mask mutation and documented mask contract; existing difficulty ID state is insufficient proof of bit-mask semantics. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "encounter-journal"
     },
     {
       "source_id": "wt-global-api-EJ_SetDifficulty-40",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-EJ_SetSearch-41",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-ExpandWarGameHeader-42",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-GetCurrencyLink-43",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-GetCurrencyListLink-44",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-GetCurrentRefresh-45",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing display refresh-rate query/model; do not substitute frame/update rate or a constant. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "display-refresh"
     },
     {
       "source_id": "wt-global-api-GetMaxNumCUFProfiles-46",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetMerchantCurrencies-47",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof. Cached unmodified deprecation wrapper/alias attribution accepted by the existing harness; not native API presence."
     },
     {
       "source_id": "wt-global-api-GetNumRaidProfiles-48",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetNumWarGameTypes-49",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-GetOSLocale-50",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing distinct OS locale input; current game locale is not proof of OS locale semantics. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "os-locale"
     },
     {
       "source_id": "wt-global-api-GetPVPRewards-51",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy reward result contract/state. Modern PVP/honor state and published RequestPVPRewards do not prove the old reward tuple. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "pvp-rewards"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileFlattenedOptions-52",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileName-53",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileOption-54",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileSavedPosition-55",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetRestrictedAccountData-56",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-GetSelectedWarGameType-57",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-GetWarGameTypeInfo-58",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-HasTravelPass-59",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy Battle.net travel-pass eligibility policy; no constant predicate or inferred service entitlement. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "travel-pass"
     },
     {
       "source_id": "wt-global-api-LoadURLIndex-60",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing URL-index catalog and launch behavior. Current cached Game/Shared/Glue callers retained; no external URL side effects or no-op shim introduced. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "url-launch"
     },
     {
       "source_id": "wt-global-api-PetAssistMode-61",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof. Cached unmodified deprecation wrapper/alias attribution accepted by the existing harness; not native API presence."
     },
     {
       "source_id": "wt-global-api-RaidProfileExists-62",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-RaidProfileHasUnsavedChanges-63",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-RequestPVPRewards-64",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-RestoreRaidProfileFromCopy-65",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SaveRaidProfileCopy-66",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SetRaidProfileOption-67",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SetRaidProfileSavedPosition-68",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SetRefresh-69",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing display refresh-rate mutation/model and accepted-rate policy; no no-op setter added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "display-refresh"
     },
     {
       "source_id": "wt-global-api-SetSelectedWarGameType-70",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-UnitHasIncomingResurrection-71",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-UpdateWarGamesList-72",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-KeyRingButtonIDToInvSlotID-75",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "wt-global-api-strreplace-76",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail publication/absence only after the pinned available retail successor chain. No historical/native signature/output/security/gameplay credit; published placeholders are not behavior proof."
     },
     {
       "source_id": "source-context-001",
       "capabilities": [],
       "status": "metadata-only",
-      "note": "Navigation: historical 4.1.0 → 4.2.0 → 4.3.0; not a behavior statement. Entire source contains only navigation and the global inventory; no prose or signatures."
+      "note": "Navigation: historical 4.1.0 \u2192 4.2.0 \u2192 4.3.0; not a behavior statement. Entire source contains only navigation and the global inventory; no prose or signatures."
     }
   ]
 }
