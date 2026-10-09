@@ -2781,3 +2781,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-08] investigation | Retail Patch 5.1.0 API audit
 
 [Audit](investigations/patch-5-1-0-api-audit.md): pinned API 2736212/diff 4546247; parent TOC 50100/build 16309 confirms 2012 retail. 63 API/21 extract IDs, two consumer-free pet ID retirements, 17 API gaps and fifteen prose limits. 59/59 sweeps, own 3/3 prefork and 1/1 bare, 92 Python fixtures and warning-clean non-vendor Mists pass; controlled startup equals master (505 inherited errors). Portable gate PASS: clean 47/47, later 48/48; own-log tampering rejected/restored; queued retail placeholders and Classic separation explicit.
+
+## [2026-10-08] investigation | Cataclysm Classic 4.4.1 source accounting
+
+[Audit](investigations/patch-4-4-1-api-audit.md): page 608915/revision 6234252, TOC 40401. Nineteen exact source rows: seventeen metadata/markup, two API occurrences UNPROVEN without a Cata profile. Direction 4.4.0 → 4.4.1, four literal x counts and incomplete date preserved. Source/serialized-ledger tests include negative controls; no runtime, shared tooling, register, retail retirement or supersession changes. Final acceptance recorded separately.

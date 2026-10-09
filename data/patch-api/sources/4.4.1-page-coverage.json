@@ -1,0 +1,195 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "4.4.1",
+  "client_line": "cataclysm-classic",
+  "profile": null,
+  "scope": "source-only",
+  "source_commit": "5960d3b73c48895dc216c4ecf1afccc8b51aa074",
+  "source": {
+    "pageid": 608915,
+    "title": "Patch 4.4.1/API changes",
+    "revid": 6234252,
+    "timestamp": "2025-02-08T13:53:50Z",
+    "retrieved": "2026-10-08",
+    "toc": 40401,
+    "wikitext_path": "data/patch-api/sources/4.4.1-api-changes.wikitext",
+    "wikitext_sha256": "076080f53193f5c8808f255e5630b9e83db8e9e284c53eff7a7ed7b84623284a",
+    "wikitext_bytes": 883,
+    "response_path": "data/patch-api/evidence/4.4.1-session-2026-10-08/source-response.json",
+    "response_sha256": "6f022bc0d02bb1c67f4f531ae52d18309682ae9bb96f58f42f4f4641b1205579",
+    "response_bytes": 1206
+  },
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/4.4.1-api-changes.txt",
+    "sha256": "c27d366a643a97442af4cf11344153de401492753bca984e49f7b7f83a3b7400",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "extractor_flags": [
+      "--text-only",
+      "--canonical-patch-navigation"
+    ]
+  },
+  "shared_inputs": {
+    "revision": "5960d3b73c48895dc216c4ecf1afccc8b51aa074",
+    "extractor_git_blob": "6fcc1724827c7588b91d23e3c815324d86a33b97"
+  },
+  "inventory": {
+    "enumerated_api_occurrences": 2,
+    "added_occurrences": 1,
+    "removed_occurrences": 1,
+    "register_created": false,
+    "caption": "4.4.0 (x) \u2192 4.4.1 (x) xxx xx 2024",
+    "old_patch": "4.4.0",
+    "new_patch": "4.4.1",
+    "old_count": "x",
+    "new_count": "x",
+    "added_header_count": "x",
+    "removed_header_count": "x",
+    "date_literal": "xxx xx 2024"
+  },
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "wikitext_line": 1,
+      "source_text": "{{apichanges|4.4.1|prev=4.4.0|next=4.4.2}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-003",
+      "wikitext_line": 3,
+      "source_text": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-004",
+      "wikitext_line": 4,
+      "source_text": "* TOC: <code>40401</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-005",
+      "wikitext_line": 5,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/4.4.0..4.4.1 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/4.4.0..4.4.1 BlizzardInterfaceResources]",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-007",
+      "wikitext_line": 7,
+      "source_text": "==Consolidated diffs==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-008",
+      "wikitext_line": 8,
+      "source_text": "===Global API===",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-009",
+      "wikitext_line": 9,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-010",
+      "wikitext_line": 10,
+      "source_text": "|+ 4.4.0 (x) &rarr; 4.4.1 (x) xxx xx 2024",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-011",
+      "wikitext_line": 11,
+      "source_text": "|- class=\"mw-customtoggle-global-c\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-012",
+      "wikitext_line": 12,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(x)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-013",
+      "wikitext_line": 13,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(x)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-014",
+      "wikitext_line": 14,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-015",
+      "wikitext_line": 15,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "global-api-added-016",
+      "wikitext_line": 16,
+      "source_text": ": {{api|t=a|C_SpecializationInfo.GetNumSpecializationsForClassID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "identity": "C_SpecializationInfo.GetNumSpecializationsForClassID",
+      "direction": "added",
+      "old_patch": "4.4.0",
+      "new_patch": "4.4.1",
+      "reason": "Missing supported Cataclysm Classic runtime profile; no publication, removal, signature, output, security, behavior or native-client proof. No retail retirement or Mists stand-in."
+    },
+    {
+      "source_id": "source-context-017",
+      "wikitext_line": 17,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-018",
+      "wikitext_line": 18,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "global-api-removed-019",
+      "wikitext_line": 19,
+      "source_text": ": {{api|t=a|GetNumSpecializationsForClassID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "identity": "GetNumSpecializationsForClassID",
+      "direction": "removed",
+      "old_patch": "4.4.0",
+      "new_patch": "4.4.1",
+      "reason": "Missing supported Cataclysm Classic runtime profile; no publication, removal, signature, output, security, behavior or native-client proof. No retail retirement or Mists stand-in."
+    },
+    {
+      "source_id": "source-context-020",
+      "wikitext_line": 20,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "source-context-021",
+      "wikitext_line": 21,
+      "source_text": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    }
+  ],
+  "proof_policy": "Exact source accounting only; both API occurrence runtime claims UNPROVEN because no Cataclysm Classic profile exists. Literal placeholder counts are not numbers. No register, later_registers, retail supersession, runtime gap count, positive runtime/native credit or external diff expansion."
+}

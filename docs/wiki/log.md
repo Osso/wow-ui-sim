@@ -572,3 +572,7 @@ Rebased onto 7c3bbbfd3, retaining both parser behaviors and wiki histories. Real
 ## 2026-10-08 — Cataclysm Classic 4.4.2 source accounting
 
 [Audit](investigations/patch-4-4-2-api-audit.md): page 619773/revision 6303388, literal TOC 40402. Exact ledger: five metadata rows and one substantive modern-auction-house/`C_AuctionHouse` contract UNPROVEN because Cata runtime profile is unsupported. Returned content equals pinned source bytes; external diffs remain unexpanded. No publication register, retail/Mists stand-in, runtime/profile/classifier changes, native proof, delegation, push or merge. Source-proof acceptance at `b5ee99e5b`: five tests and exact plaintext reproduction pass; [receipt](../../data/patch-api/evidence/4.4.2-session-2026-10-08/source-proof.json) records unchanged tested scope. Source accounting complete; runtime contract remains open independently.
+
+## [2026-10-08] investigation | Cataclysm Classic 4.4.1 source accounting
+
+[Audit](investigations/patch-4-4-1-api-audit.md): page 608915/revision 6234252, TOC 40401. Nineteen exact source rows: seventeen metadata/markup, two API occurrences UNPROVEN without a Cata profile. Direction 4.4.0 → 4.4.1, four literal x counts and incomplete date preserved. Source/serialized-ledger tests include negative controls; no runtime, shared tooling, register, retail retirement or supersession changes. Final acceptance recorded separately.
