@@ -7,6 +7,9 @@
 ## [2026-10-09] investigation | Patch 1.15.9 literal SOURCE audit
 
 [Audit](investigations/patch-1-15-9-api-audit.md): frozen 685352/6780591, TOC11509 and literal Classic Era/Season of Discovery/Hardcore. 37 rows, 14 UNPROVEN contracts, six headers, four API occurrences, three TBC-context CVar/chat examples and one partial UnitAura return removal. Configured Era/Anniversary11507 is not native1.15.9 proof. Own SOURCE RED/GREEN8/8 at 07c93b3b5; historical validator/copy8/8/default-byte replay at 308aeda25. Both serialized ledger/log tampers reject/restored; 18 original + five separate receipt seals, compact 20-member archive. No runtime edits or 2.5.6 receipt backfill; main owns successors/native/integration.
+## [2026-10-09] investigation | Patch 1.15.8 literal SOURCE audit
+
+[Audit](investigations/patch-1-15-8-api-audit.md): frozen 686952/6778071, literal TOC11508; four nonblank rows, one header, two UNPROVEN diff contracts and unexpanded navigation. No local API/event/CVar/widget/command/signature/prose declarations. Literal page lacks client name; configured Era/Anniversary11507 and queued sibling1.15.9 Classic context separated from native/integration credit. Own SOURCE RED retained; GREEN8/8 at `384699f11`, original23 seals (660,202 bytes); at `b02477039` both serialized tamper rejections/restorations and fresh no-Git/target historical replay pass (24 members, five separate receipt seals). Main owns successor/native/integration; zero runtime/model/native credit. No runtime/shared-tool changes or final gates.
 
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 

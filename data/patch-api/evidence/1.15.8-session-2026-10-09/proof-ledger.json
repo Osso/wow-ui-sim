@@ -1,0 +1,51 @@
+{
+  "scope": "1.15.8 SOURCE only",
+  "runs": [
+    {
+      "phase": "RED",
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/1.15.8-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "worktree",
+      "revision": "fcdf1d151371e894aa19d800eeaaf17aa0a3674a + own frozen fixtures and RED scaffold",
+      "exit_code": 1,
+      "result": "8 expected assertion failures: accounting missing",
+      "log": "red.log",
+      "invalidated_by": "implementation will replace scaffold; retained negative control only"
+    },
+    {
+      "phase": "GREEN",
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/1.15.8-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "worktree",
+      "revision": "384699f1160b41b3017c68adf96e39b197e5001f",
+      "exit_code": 0,
+      "result": "SOURCE 8/8; only own fixtures",
+      "log": "green.log",
+      "invalidated_by": null
+    },
+    {
+      "phase": "historical-default-generator",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1158-source/data/patch-api/evidence/1.15.8-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.8",
+        "/home/osso/.worktrees/wow-ui-sim-p1158-source/data/patch-api/evidence/1.15.8-session-2026-10-09/source.wikitext",
+        "6778071",
+        "/home/osso/.worktrees/wow-ui-sim-p1158-source/data/patch-api/evidence/1.15.8-session-2026-10-09/default-register.json"
+      ],
+      "revision": "384699f1160b41b3017c68adf96e39b197e5001f",
+      "flags": [],
+      "exit_code": 0,
+      "result": "empty stock inventory, not API/native credit",
+      "output": "default-register.json",
+      "invalidated_by": null
+    }
+  ]
+}
