@@ -1,0 +1,22 @@
+{
+  "schema": "bounded-historical-validator-acceptance/v1",
+  "scope": "Artifact/test scope only; no fresh runtime or coordinator acceptance proof",
+  "files": {
+    "validate.py": {
+      "sha256": "287a86a817a149b8a3bbffcea820085eae2c8e96f4c86944e5b90137d36ef755",
+      "bytes": 14872
+    },
+    "test_validate.py": {
+      "sha256": "5d4601b18f5a946ea5d0715a243995c4643941b03ffd68662be3ee61021ab35c",
+      "bytes": 5814
+    },
+    "session-seals.json": {
+      "sha256": "b00a065b7f1feaa9e9448f8e75fb93976b3b2e8b5934e3a7a6c5ad0ac890c0b7",
+      "bytes": 3487
+    },
+    "validation-note.md": {
+      "sha256": "8ba6cc98296335c6c4f57818d090f18e4e5485a0ee62fca15ae957afdf2c3ce7",
+      "bytes": 1612
+    }
+  }
+}
