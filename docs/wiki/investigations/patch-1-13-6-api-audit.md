@@ -6,7 +6,7 @@ Independent bounded literal audit of page461367/revision4435603, timestamp2021-0
 
 | Boundary | Exact coverage | Proof level |
 |---|---|---|
-| Source | Every nonblank physical line, unchanged | SOURCE fixtures pending GREEN |
+| Source | Every nonblank physical line, unchanged | SOURCE GREEN7/7 |
 | Inventory | `nameplateCommentatorMaxDistance`, `specular`, `textureErrorColors`; all added CVars | Publication names only; behavior UNPROVEN |
 | Headers | Summary, CVars; literal `3 new cvars` matches three occurrences | Independent accounting; default generator header_counts empty retained |
 | Prose | `Patch 1.13.6 [[Naxxramas (Classic)\|Naxxramas]] content patch.` | Attribution only; no modeled effect contract |
@@ -22,7 +22,7 @@ Read-only `src/`/`tests/` exact-symbol scan found no modeled callsites for these
 
 ## Proof and replay
 
-Own SOURCE RED7/7 retained at `fe64d92ca`; GREEN and portable controls pending. Shared parser/extractor defaults are unchanged: copied generator reproduces three inventory entries; copied default extractor retains seven nonblank text lines. Original seals/archive are immutable after capture; current receipts stay separate. No broad/check/lint/type/coverage/final gates.
+Own SOURCE RED7/7 retained at `fe64d92ca`; GREEN7/7 at `d69734ceb` covers55 omission controls and fabricated defaults/credit/history rejection. Portable RED3 retained; GREEN3/3 at `271ed3a03` runs fresh copied SOURCE7, default register/extract byte replay and both serialized seal rejections/exact restorations. Original88 seals and89-member/138222-byte archive remain immutable; later receipts separate. Shared parser/extractor defaults are unchanged: copied generator reproduces three inventory entries; copied default extractor retains seven nonblank text lines. Original seals/archive are immutable after capture; current receipts stay separate. No broad/check/lint/type/coverage/final gates.
 
 ## Successor boundaries
 

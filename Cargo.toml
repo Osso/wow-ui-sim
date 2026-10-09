@@ -182,6 +182,11 @@ harness = false
 required-features = ["client-retail"]
 
 [[test]]
+name = "patch_1_13_6_factory"
+path = "patch-tests/patch_1_13_6_factory.rs"
+required-features = ["client-era"]
+
+[[test]]
 name = "patch_1_14_2_cvars"
 path = "patch-tests/patch_1_14_2_cvars.rs"
 required-features = ["client-era"]
