@@ -1,0 +1,34 @@
+{
+  "scope": "SOURCE development only; no runtime/native acceptance",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "revision": "b1a35a77352a3140ed548d507570637610af3cd5",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok\ntest_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok\ntest_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok\ntest_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok\ntest_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok\ntest_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok\ntest_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok\ntest_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.174s\n\nOK\n",
+      "log": "green.log",
+      "scope": "targeted SOURCE development"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py",
+        "default-extract"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "revision": "b1a35a77352a3140ed548d507570637610af3cd5",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py\", line 167, in <module>\n    print(load_tool('extract_patch_non_inventory.py').extract_text(raw), end='')\n          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/historical-tools/extract_patch_non_inventory.py\", line 279, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: * Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>\n",
+      "log": "default-extract-failure.log",
+      "scope": "historical default extractor failure reproduction; unchanged tool flags[]"
+    }
+  ]
+}

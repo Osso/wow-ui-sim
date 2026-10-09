@@ -1,0 +1,14 @@
+{
+  "title": "Patch 1.13.5/API changes",
+  "version": "1.13.5",
+  "pageid": 398847,
+  "revid": 3835002,
+  "timestamp": "2021-05-06T13:20:38Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3835002&format=json",
+  "retrieved": "2026-10-09T08:51:36.400324+00:00",
+  "response_sha256": "eaa85552784310bd4cf62fab378f6863123fe1843c7826537495499f18d9f831",
+  "wikitext_sha256": "f8a5356cff1fc8c2188b68aa77ab60969c102ea64767a4f4721fd07532f85ac2",
+  "wikitext_bytes": 1690,
+  "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.5-response.json",
+  "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.5-wikitext.txt"
+}

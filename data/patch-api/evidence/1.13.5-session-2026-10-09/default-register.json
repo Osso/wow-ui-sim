@@ -1,0 +1,52 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.13.5",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 3835002,
+    "sha256": "f8a5356cff1fc8c2188b68aa77ab60969c102ea64767a4f4721fd07532f85ac2"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-UnitDetailedThreatSituation-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitDetailedThreatSituation",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-UnitThreatPercentageOfLead-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatPercentageOfLead",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-UnitThreatSituation-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatSituation",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_LIST_UPDATE-31",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_SITUATION_UPDATE-32",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_SITUATION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 32
+    }
+  ]
+}

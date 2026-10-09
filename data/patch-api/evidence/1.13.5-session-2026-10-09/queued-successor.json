@@ -1,0 +1,9 @@
+{
+  "patch": "1.13.6",
+  "state": "concurrently-active-not-integrated",
+  "register": null,
+  "applied": false,
+  "native_proof": false,
+  "ordering": "main integrates 1.13.6 before 1.13.5",
+  "possible_supersessions": "Unknown until actual 1.13.6 register is integrated; no borrowed credit."
+}

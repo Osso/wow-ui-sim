@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+  "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+  "exit_code": 0,
+  "stdout": "{\n  \"seals\": 70,\n  \"totals\": {\n    \"physical_lines\": 36,\n    \"source_rows\": 31,\n    \"extracted_rows\": 0,\n    \"inventory\": 5,\n    \"signatures\": 5,\n    \"headers\": 5,\n    \"inventory_headers\": 2,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 7,\n    \"templates\": 7,\n    \"references\": 2,\n    \"contracts\": 14,\n    \"configured_profiles\": 2,\n    \"successors\": 16,\n    \"model_review\": 4,\n    \"source_statuses\": {\n      \"metadata-only\": 22,\n      \"UNPROVEN\": 9\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 3,\n      \"events\": 2\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 14\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 103\n  }\n}\n",
+  "stderr": "",
+  "scope": "historical sealed SOURCE/default reproduction"
+}

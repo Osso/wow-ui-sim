@@ -1,0 +1,330 @@
+[package]
+name = "wow-ui-sim"
+version = "0.1.0"
+edition = "2024"
+description = "World of Warcraft UI simulator for addon development"
+license = "GPL-3.0-only"
+default-run = "wow-sim"
+build = "build.rs"
+autotests = false
+
+[workspace]
+members = [".", "xtask"]
+
+[dependencies]
+icu_casemap = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+icu_locale_core = { version = "=2.1.1", default-features = false, features = ["alloc"] }
+icu_locale = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+icu_collator = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+icu_normalizer = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+icu_plurals = { version = "=2.1.1", default-features = false, features = ["compiled_data"] }
+icu_properties = { version = "=2.1.2", default-features = false, features = ["compiled_data"] }
+unicode-blocks = "=0.1.10"
+fixed_decimal = { version = "=0.7.0", features = ["ryu"] }
+icu_segmenter = { version = "=2.1.1", default-features = false, features = ["compiled_data", "auto"] }
+# mlua removed — rilua is the sole Lua VM
+rilua = { git = "https://github.com/Osso/rilua.git", rev = "842e4d3ff8592af45a5a93058eddf93419d29012" }
+quick-xml = { version = "0.37", features = ["serialize"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+dirs = "5.0"
+thiserror = "2.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+image = "0.25"
+image-blp = "1"
+tokio = { version = "1", features = ["sync", "rt", "time"] }
+libc = "0.2"
+glob = "0.3"
+clap = { version = "4", features = ["derive"] }
+regex = "1"
+walkdir = "2"
+phf = { version = "0.11", features = ["macros"] }
+phf_codegen = "0.11"
+rodio = { version = "0.21", optional = true }
+winapi = { version = "0.3", features = ["winuser"], optional = true }
+
+# Iced GUI (optional, gated behind "gui" feature)
+iced = { version = "0.14.0", optional = true, features = ["advanced", "canvas", "image", "tokio", "wgpu"] }
+iced-dynamic = { path = "iced-dynamic", optional = true }
+iced_wgpu = { version = "0.14", optional = true, path = "iced-wgpu-patched" }
+iced_runtime = { version = "0.14", optional = true }
+iced-layout-inspector = { git = "https://github.com/Osso/iced-layout-inspector.git", tag = "v0.2.0", optional = true }
+
+# Text rendering
+cosmic-text = "0.15"
+
+# GPU rendering (optional, gated behind "gui" feature)
+wgpu = { version = "27.0", optional = true }
+bytemuck = { version = "1.21", features = ["derive"], optional = true }
+pollster = { version = "0.4", optional = true }
+webp = { version = "0.3.1", optional = true }
+rustc-hash = "2.1.2"
+asset-resolver = { git = "https://github.com/world-of-osso/asset-resolver", rev = "462097bba2aa72d1afed8e0ca5b7c7315096427d", optional = true }
+cascette-client-storage = { git = "https://github.com/Osso/cascette-rs", rev = "758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48", features = ["local-install"], optional = true }
+cascette-crypto = { git = "https://github.com/Osso/cascette-rs", rev = "758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48", optional = true }
+cascette-formats = { git = "https://github.com/Osso/cascette-rs", rev = "758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48", optional = true }
+casc-extract = { git = "https://github.com/Osso/casc-extract", rev = "bbfb184066531b6eb674b50b63a6052eb871ab2f", optional = true }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls"] }
+httpdate = "1"
+tar = "0.4.45"
+flate2 = "1.1.9"
+sha2 = "0.10"
+
+[[bin]]
+name = "wow-sim"
+path = "src/bin/wow_sim/main.rs"
+
+[[bin]]
+name = "wow-cli"
+path = "src/bin/wow_cli/main.rs"
+
+[[bin]]
+name = "bench_spellbook"
+path = "src/bin/bench_spellbook.rs"
+required-features = ["gui"]
+
+[[bin]]
+name = "bench_steady_state"
+path = "src/bin/bench_steady_state.rs"
+required-features = ["gui"]
+
+[[example]]
+name = "casc_smoke"
+path = "examples/casc_smoke.rs"
+required-features = ["casc"]
+
+[dev-dependencies]
+insta = "1.42"
+pollster = "0.4"
+tempfile = "3"
+
+[features]
+# fast-build is opt-in because the iced dylib hits MSVC's LNK1189 object limit
+# on Windows. Local Linux dev/debug builds can use `--features fast-build` for
+# faster incremental rebuilds. Release builds should use:
+#   cargo build --release --no-default-features --features sound,gui,client-retail
+# to produce a fully static binary not tied to a specific rustc version.
+default = ["sound", "gui", "casc", "client-retail"]
+sound = ["rodio", "casc"]
+gui = ["casc", "dep:iced", "dep:iced_wgpu", "dep:iced_runtime", "dep:wgpu", "dep:iced-layout-inspector", "dep:pollster", "dep:bytemuck", "dep:webp", "dep:winapi"]
+casc = ["dep:asset-resolver", "dep:cascette-client-storage", "dep:cascette-crypto", "dep:cascette-formats", "dep:casc-extract"]
+fast-build = ["gui", "dep:iced-dynamic"]
+rehash-stats = ["rilua/rehash-stats"]
+intern-stats = ["rilua/intern-stats"]
+# Retail API epoch features are cumulative patch gates. Client-channel
+# features select one runtime profile and point at the current API epoch for
+# that channel.
+retail-12-0-0 = ["aura-instance-enumeration"]
+retail-12-0-5 = ["retail-12-0-0", "native-duration-formatting", "base-spell-relationships"]
+retail-12-0-7 = ["retail-12-0-5"]
+retail-12-1-0 = ["retail-12-0-7", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-aspects", "numeric-rule-formatters", "aura-containers"]
+retail-12-1-5 = ["retail-12-1-0", "timed-signal-maps", "forbidden-animation-aspects"]
+# Private ICU duration rendering; this capability does not publish C_Intl.
+native-duration-formatting = ["dep:cc", "dep:pkg-config", "dep:vcpkg"]
+# Existing specialization relationship model shared by Retail 12.0.5+ and Forever.
+base-spell-relationships = []
+# Shared keyed timer capability used by PTR and Forever.
+timed-signal-maps = []
+# Shared XML aliases and intrinsic mappings for aura frames/buttons.
+aura-xml-widgets = []
+# Shared modeled AuraContainer option processors, enums and base aura secrecy queries.
+aura-containers = ["aura-instance-enumeration"]
+# Public aura ID queries shared by Retail 12.0+ and native aura containers.
+aura-instance-enumeration = []
+# Shared numeric frame update scheduling for Mainline and Forever.
+on-update-modes = []
+# Shared modeled player cast/channel lifecycle, identity tuples and duration queries.
+player-cast-durations = []
+# Shared forbidden-aspect state/query surface; animation bits arrived after Retail 12.1.
+forbidden-aspects = []
+forbidden-animation-aspects = ["forbidden-aspects"]
+# Shared modeled numeric formatting rules for Retail 12.1+ and Forever.
+numeric-rule-formatters = []
+
+# Client profile features — exactly one profile marker must be enabled. The
+# public client-retail bundle preserves the current retail epoch; profile-retail
+# allows historical retail epoch tests against the same retail source cache.
+profile-retail = []
+client-retail = ["profile-retail", "retail-12-1-0"]
+client-ptr = ["retail-12-1-5"]
+client-wrath = []
+client-mists = []
+client-era = []
+client-anniversary = []
+client-wowforever = ["timed-signal-maps", "aura-xml-widgets", "on-update-modes", "player-cast-durations", "forbidden-animation-aspects", "numeric-rule-formatters", "aura-containers", "native-duration-formatting", "base-spell-relationships"]
+
+[profile.release]
+lto = false
+debug = "line-tables-only"
+
+[profile.dev]
+incremental = true
+lto = false
+debug = "line-tables-only"
+# Hit-grid rebuilds, layout resolution, and texture decode are pure data
+# traversal; opt-level 0 makes them ~5-10x slower and visibly degrades GUI
+# input latency in dev builds.
+opt-level = 1
+
+[[test]]
+name = "frame_positions"
+harness = false
+
+[[test]]
+name = "integration"
+path = "tests/integration.rs"
+
+[[test]]
+name = "prefork_full_ui"
+path = "tests/prefork_full_ui.rs"
+harness = false
+required-features = ["client-retail"]
+
+[[test]]
+name = "patch_1_14_2_cvars"
+path = "patch-tests/patch_1_14_2_cvars.rs"
+required-features = ["client-era"]
+
+[[test]]
+name = "patch_1_15_1_alias"
+path = "patch-tests/patch_1_15_1_alias.rs"
+required-features = ["client-era"]
+
+[[test]]
+name = "patch_1_60_1_source_model"
+path = "patch-tests/patch_1_60_1_source_model.rs"
+required-features = ["client-wowforever"]
+
+[[test]]
+name = "forever_runtime_contracts"
+path = "patch-tests/forever_runtime_contracts.rs"
+required-features = ["client-wowforever"]
+
+[[test]]
+name = "patch_12_1_audit"
+path = "patch-tests/patch_12_1.rs"
+required-features = ["client-ptr"]
+
+[[test]]
+name = "frame_edit_mode_methods"
+path = "tests/frame_edit_mode_methods.rs"
+
+[[test]]
+name = "c_autocomplete"
+path = "tests/c_autocomplete.rs"
+
+[[test]]
+name = "enum_diff_coverage"
+path = "tests/enum_diff_coverage.rs"
+
+[[test]]
+name = "scoped_modifier_addon_smoke"
+path = "tests/scoped_modifier_addon_smoke.rs"
+
+[[test]]
+name = "pandaria_installed_addons"
+path = "tests/pandaria_installed_addons.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "mists_compat_bootstrap"
+path = "tests/mists_compat_bootstrap.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "mists_forbidden_frames"
+path = "tests/mists_forbidden_frames.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "era_compat_bootstrap"
+path = "tests/era_compat_bootstrap.rs"
+required-features = ["client-era"]
+
+[[test]]
+name = "anniversary_compat_bootstrap"
+path = "tests/anniversary_compat_bootstrap.rs"
+required-features = ["client-anniversary"]
+
+[[test]]
+name = "mists_world_map_opacity"
+path = "tests/mists_world_map_opacity.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "mists_nameplate_scale"
+path = "tests/mists_nameplate_scale.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "mists_currency_list"
+path = "tests/mists_currency_list.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "mists_dialog_helpers"
+path = "tests/mists_dialog_helpers.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "mists_class_colors"
+path = "tests/mists_class_colors.rs"
+required-features = ["client-mists"]
+
+[[test]]
+name = "classic_guild_roster_selection"
+path = "tests/classic_guild_roster_selection.rs"
+
+[[test]]
+name = "patch_3_0_3_factory"
+path = "tests/patch_3_0_3_factory.rs"
+required-features = ["client-retail"]
+
+[[test]]
+name = "patch_3_0_2_factory"
+path = "tests/patch_3_0_2_factory.rs"
+required-features = ["client-retail"]
+
+[[test]]
+name = "patch_3_4_1_factory"
+path = "tests/patch_3_4_1_factory.rs"
+required-features = ["client-wrath"]
+
+[[test]]
+name = "patch_1_14_3_factory"
+path = "patch-tests/patch_1_14_3_factory.rs"
+required-features = ["client-era"]
+
+[[test]]
+name = "patch_3_4_2_factory"
+path = "tests/patch_3_4_2_factory.rs"
+required-features = ["client-wrath"]
+
+# The `server` feature of iced-layout-inspector pulls in peercred-ipc, which is
+# Linux-only (uses SO_PEERCRED — macOS is unix but lacks this socket option).
+[target.'cfg(target_os = "linux")'.dependencies]
+iced-layout-inspector = { git = "https://github.com/Osso/iced-layout-inspector.git", tag = "v0.2.0", features = ["server"], optional = true }
+
+[build-dependencies]
+# Compile/probe the shared private ICU4C shim; older profiles do not activate it.
+cc = { version = "=1.2.52", optional = true }
+pkg-config = { version = "=0.3.32", optional = true }
+vcpkg = { version = "=0.2.15", optional = true }
+winresource = "0.1"
+# Parse explicit prefork test marker items in build.rs instead of maintaining a bespoke Rust lexer.
+syn = { version = "2", features = ["full", "parsing"] }
+quote = "1"
+
+[patch.crates-io]
+iced_wgpu = { path = "iced-wgpu-patched" }
+
+[[test]]
+name = "patch_1_14_1_text_scale"
+path = "patch-tests/patch_1_14_1_text_scale.rs"
+required-features = ["client-era"]
+
+[[test]]
+name = "patch_2_4_2_factory"
+path = "tests/patch_2_4_2_factory.rs"
+required-features = ["client-retail"]

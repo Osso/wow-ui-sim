@@ -1,0 +1,36 @@
+{{apichanges|1.13.5|prev=1.13.4|next=1.13.6}}
+
+== Diffs ==
+1.13.4 (34600) to 1.13.5 (34713)
+* FrameXML: https://github.com/Gethe/wow-ui-source/commit/5cf55088150934fdba9ad399574941a3460ca382
+* API resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/12b063e9a05d9d3ec72931c9279194c79b44c84e
+
+== Changes ==
+* [[Getting_the_current_interface_number|TOC version]]: <code>11305</code>
+* Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name="patch notes">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>
+* 4 additional backpack slots were added for [[Blizzard_Authenticator#Rewards|Blizzard Authenticator]] secured accounts <ref name="patch notes" />
+
+== Global API ==
+{| class="wikitable" style="min-width: 400px"
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 100%; padding-right: 1em;"| 3 new functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|UnitDetailedThreatSituation}}
+: {{api|UnitThreatPercentageOfLead}}
+: {{api|UnitThreatSituation}}
+</div>
+|}
+
+== Events ==
+{| class="wikitable" style="min-width: 400px"
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 100%; padding-right: 1em;"| 2 new events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|UNIT_THREAT_LIST_UPDATE}}
+: {{api|t=e|UNIT_THREAT_SITUATION_UPDATE}}
+</div>
+|}
+
+== References ==

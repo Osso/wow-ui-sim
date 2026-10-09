@@ -1,0 +1,72 @@
+{
+  "scope": "later own copied SOURCE receipts only; no native/model/runtime acceptance",
+  "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+  "source_unchanged": true,
+  "original_sealmap_sha256": "872ffcab1e3a5464378607c4e50ca810c2940319e38d6fff927a9c32e859a71b",
+  "counts_from_retained_files": {
+    "source_tests": 8,
+    "portable_tests": 3,
+    "portable_failures": 0,
+    "portable_errors": 0,
+    "copied_process_runs": 8,
+    "disk_restorations": 2,
+    "original_seals": 70,
+    "original_bytes": 975379,
+    "archive_members": 71,
+    "archive_bytes": 157330,
+    "omission_controls": 103
+  },
+  "portable_command": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_portable.py",
+      "--archive",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/originals.tar.gz",
+      "--scratch",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green",
+      "--receipts",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/portable-proof.json"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+    "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+    "exit_code": 0,
+    "log": "portable-green.log",
+    "scope": "copied historical SOURCE; no runtime/model/native/final acceptance"
+  },
+  "historical_validator": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+    "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+    "exit_code": 0,
+    "stdout": "{\n  \"seals\": 70,\n  \"totals\": {\n    \"physical_lines\": 36,\n    \"source_rows\": 31,\n    \"extracted_rows\": 0,\n    \"inventory\": 5,\n    \"signatures\": 5,\n    \"headers\": 5,\n    \"inventory_headers\": 2,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 7,\n    \"templates\": 7,\n    \"references\": 2,\n    \"contracts\": 14,\n    \"configured_profiles\": 2,\n    \"successors\": 16,\n    \"model_review\": 4,\n    \"source_statuses\": {\n      \"metadata-only\": 22,\n      \"UNPROVEN\": 9\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 3,\n      \"events\": 2\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 14\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 103\n  }\n}\n",
+    "stderr": "",
+    "scope": "historical sealed SOURCE/default reproduction"
+  },
+  "receipt_sources": [
+    "portable-proof.json",
+    "portable-command.json",
+    "portable-green.log",
+    "historical-validator-proof.json"
+  ],
+  "exact_restorations": [
+    {
+      "restored": "ledger.json",
+      "sha256": "71b81eccec657487047ffbe5cad2cfec079f7c19c657da47f9fc94862f373667",
+      "all_original_seals": 70
+    },
+    {
+      "restored": "green.log",
+      "sha256": "20deeed57b66052019361638897a30b9e1c787215575b5ce922f83f7881e7ab2",
+      "all_original_seals": 70
+    }
+  ],
+  "source_default_generator": "byte-exact in fresh copied process",
+  "source_default_extractor": "same retained ValueError; stdout empty, no fallback rendering",
+  "warnings": "No Python unittest warnings emitted. Expected existing extractor error retained. Cargo/native/model not run; no Rust warning-free claim.",
+  "later_changes_invalidate": false
+}
