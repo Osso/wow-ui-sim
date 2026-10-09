@@ -256,6 +256,11 @@ required-features = ["client-mists"]
 name = "classic_guild_roster_selection"
 path = "tests/classic_guild_roster_selection.rs"
 
+[[test]]
+name = "patch_3_4_2_factory"
+path = "tests/patch_3_4_2_factory.rs"
+required-features = ["client-wrath"]
+
 # The `server` feature of iced-layout-inspector pulls in peercred-ipc, which is
 # Linux-only (uses SO_PEERCRED — macOS is unix but lacks this socket option).
 [target.'cfg(target_os = "linux")'.dependencies]

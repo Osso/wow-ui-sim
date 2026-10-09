@@ -1,0 +1,112 @@
+{
+  "base_revision": "990dae19c30b7b71c0ae3e1a4dfcd0a444546d84",
+  "branch": "p342-source",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p342-source",
+  "commands": [
+    {
+      "phase": "classifier RED / bounded factory probe",
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-wrath",
+        "--test",
+        "patch_3_4_2_factory",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit_code": 101,
+      "log": "classifier-red.log",
+      "scope": "base shared classifier, initial standalone target, empty gap fixture; 18 literal widget rows probe successfully; Wrath deserialization rejects unknown client line",
+      "subsequent_changes": "WrathClassic classifier added; factory measurement separated from cached aliases"
+    },
+    {
+      "phase": "discovery RED",
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-wrath",
+        "--test",
+        "patch_3_4_2_factory",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "WOW_SIM_P342_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-factory-2026-10-09/discovery-observations.json"
+      },
+      "exit_code": 101,
+      "log": "discovery-red.log",
+      "scope": "155 current factory rows with empty known-gap fixture; exact 83 publication mismatches persisted before assertion; controls incomplete because assignment mistakenly used eval instead of exec",
+      "subsequent_changes": "Pin exact 83 IDs; use exec for control assignment; add CVar-default/event discrimination controls"
+    },
+    {
+      "phase": "GREEN",
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-wrath",
+        "--test",
+        "patch_3_4_2_factory",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env": {
+        "WOW_SIM_P342_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-factory-2026-10-09/green-observations.json"
+      },
+      "result": "PASS: 6/6 targeted cases; 155/155 observations equal discovery",
+      "log": "green.log",
+      "exit_code": 0,
+      "scope": "final formatted standalone test/common classifier/Cargo target plus exact source inventory and 83-ID fixture",
+      "source_and_input_sha256": {
+        "Cargo.toml": "ab2ab0841487d02b44ebc2a05eed884944ae9d10982c0becfb2892bc17dd27fb",
+        "tests/patch_3_4_2_factory.rs": "6d8054a68b3e275b4c9c79fc0cfdf82a858f46f1049055be3019ca68c8872147",
+        "tests/common/publication_sweep.rs": "26babc6f764fb17d008b040c7141bbc790b9c3b998f04bad07f0ff06b7ac1701",
+        "data/patch-api/3.4.2-factory-known-gaps.json": "e9767261c959d444c220fa961e85420b1d06e713013e53b871a262d7203f36ad",
+        "data/patch-api/sources/3.4.2-source-inventory.json": "ab08608d6ab0384c2f8e9cd5ae9631fc38df356b9fbb10e8b98a7fa61a50c92d"
+      },
+      "later_changes_invalidate_proof": false
+    }
+  ],
+  "excluded_gates": [
+    "broad tests",
+    "cargo check",
+    "profile checks",
+    "readability",
+    "startup/full UI",
+    "full suite",
+    "deployment"
+  ],
+  "warnings": "Six inherited iced-wgpu-patched manifest deprecated lint-name warnings; no vendor edit or warning suppression.",
+  "formatter": {
+    "argv": [
+      "rustfmt",
+      "--edition",
+      "2024",
+      "tests/common/publication_sweep.rs",
+      "tests/patch_3_4_2_factory.rs"
+    ],
+    "exit_code": 0,
+    "timing": "before final GREEN"
+  },
+  "source_preservation": {
+    "argv": [
+      "git",
+      "diff",
+      "--exit-code",
+      "990dae19c",
+      "--",
+      "data/patch-api/sources/3.4.2*",
+      "data/patch-api/evidence/3.4.2-session-2026-10-09"
+    ],
+    "exit_code": 0,
+    "scope": "all historical owned source files and evidence, including 23 seals"
+  }
+}

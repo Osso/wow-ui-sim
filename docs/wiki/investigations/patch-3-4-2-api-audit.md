@@ -4,7 +4,7 @@ Bounded frozen-source audit against `f0baf34d43ea6d6eb1ef0aef2a85efae9f7d55f5`, 
 
 ## Literal coverage matrix
 
-The [source inventory](../../../data/patch-api/sources/3.4.2-source-inventory.json) preserves original spelling/owner, direction and source line for every occurrence. The [ledger](../../../data/patch-api/sources/3.4.2-page-coverage.json) accounts for all **208 nonblank lines**: **155 inventory**, **2 substantive prose**, **51 metadata/table-context**. All 157 substantive rows remain **UNPROVEN for runtime**, not diagnosed missing APIs. No runtime compatibility gap count is manufactured from source accounting.
+The [source inventory](../../../data/patch-api/sources/3.4.2-source-inventory.json) preserves original spelling/owner, direction and source line for every occurrence. The [ledger](../../../data/patch-api/sources/3.4.2-page-coverage.json) accounts for all **208 nonblank lines**: **155 inventory**, **2 substantive prose**, **51 metadata/table-context**. At source-audit time all 157 substantive rows were **UNPROVEN for runtime**, not diagnosed missing APIs. Historical accounting remains unchanged; the separate current bare-factory measurement below does not manufacture native compatibility gaps.
 
 | Section | Added | Removed | Proof |
 |---|---:|---:|---|
@@ -25,7 +25,7 @@ CVar metadata does establish literal source defaults and descriptions. It does *
 
 [ClientProfile](../../../src/client_profile.rs) already supports `client-wrath`, `Wrath`, cache `wrath`, configured interface **38001**. That differs from source **30402**; profile existence is not historical version/native parity. [Observation](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/profile-observation.json) records **42 local files**, exclusively API documentation directories, including a zero-byte `.missing` marker. No SharedXML/full publisher cache or native client probe. Static profile/manifest snapshots are retained; no cache sync/modification, build, runtime load or replay attempted.
 
-Shared [publication classifier](../../../tests/common/publication_sweep.rs) accepts Retail/MistsClassic/ClassicEra, not WrathClassic; [generator CLI](../../../tools/gen_patch_wikitext_register.py) has the same client-line limitation. Existing pure section parsing correctly captures this inventory, so owned historical copies replay it into a separate `patch-source-inventory/v1`. No default-retail register or falsely passing retail sweep is created. Coordinator owns adding Wrath publication classification and a publisher-loaded measurement if required.
+Shared [publication classifier](../../../tests/common/publication_sweep.rs) accepts Retail/MistsClassic/ClassicEra, not WrathClassic; [generator CLI](../../../tools/gen_patch_wikitext_register.py) has the same client-line limitation. Existing pure section parsing correctly captures this inventory, so owned historical copies replay it into a separate `patch-source-inventory/v1`. No default-retail register or falsely passing retail sweep is created. This describes historical source-audit state. The bounded current change adds shared test-only Wrath classification and a cache-independent factory sweep, not a generator flag or publisher-loaded measurement; coordinator owns the latter if required.
 
 ## Actual successor and integration order
 
@@ -40,6 +40,27 @@ Identity, exact returned content and both manifest hashes were validated before 
 [Tests](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/test_source_accounting.py) reject serialized missing/changed rows, directions, defaults, headers, invented proof, wrong clients/successors and native/runtime credit. Targeted RED first failed missing derived accounting against a temporary empty validator. GREEN **10/10** passes at `4429022ea`, covering exhaustive per-row deletion/credit controls and literal tampering. Historical replay and recorded-flag extraction pass at `f9905c3a3`. Both disk-seal controls fail with exit 1 at the exact changed ledger/GREEN-log seal; original bytes/hashes restored. Current evidence plus owned sources is under 0.6 MB, with 23 sealed inputs. Later receipt/docs/seal-entry additions preserve all tested semantic input bytes; no redundant fixture rerun. Python formatted manually (ruff/black unavailable); no Rust changes or Cargo formatter invoked. Exact scope/revision/command/log is retained in [proof ledger](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/source-proof.json).
 
 No shared tools/runtime/vendor changes, push, merge, delegation, cwd switch or provider/model/retry changes. Main owns broader gates and integration. Source-accounting tests are not simulator/native compatibility tests.
+
+## Current bare simulator factory measurement
+
+Measurement base `990dae19c30b7b71c0ae3e1a4dfcd0a444546d84`, branch `p342-source`, 2026-10-09. Standalone [target](../../../tests/patch_3_4_2_factory.rs) uses `WowLuaEnv::new` and the unchanged 155-row source inventory directly. Build features `sound,gui,casc,client-wrath` compile successfully; no headless workaround, full Game initialization, cached publisher loading or native probe needed. Profile is **Wrath, interface 38001, 3.3.5-era simulator architecture**, not historical source **30402**.
+
+| Literal section | Added match / mismatch | Removed match / mismatch | Proof level |
+|---|---:|---:|---|
+| Global API (94) | 20 / 43 | 14 / 17 | Raw publication plus ordinary lookup; no calls/contracts |
+| Widgets (18) | 11 / 5 | 2 / 0 | Factory object method lookup; no native class/state parity |
+| Events (8) | 4 / 0 | 0 / 4 | Registration accepts any nonempty name; weak discrimination |
+| CVars (35) | 12 / 14 | 9 / 0 | Current value/default queried; metadata/effects not modeled |
+
+**155 observations: 72 publication-direction matches, 83 strict mismatches.** The [current fixture](../../../data/patch-api/3.4.2-factory-known-gaps.json) pins the exact 83 IDs. These are not “83 native missing APIs”: among 43 added-global mismatches, 27 have raw nil / lookup function, 11 both nil, five raw-absent parents / lookup function. Sixteen removed globals have raw nil / lookup function; `GetAddOnMetadata` remains raw/lookup function. Simulator lookup behavior is retained, not replaced with production fixes or stubs.
+
+All 18 widget owners construct and probe without errors; 13 method-direction matches and five added-method nil lookups. Literal `EditBox` owners remain unchanged. This proves simulator factory access only, not native widget identity, arguments, results or transitions. All eight event names register, including four source removals; the independent nonsense-name control also registers. Added-event matches cannot establish native event existence, emission, payload or removal enforcement.
+
+For 26 added CVars, 14 lack current value/default, 12 are published: 11 defaults match, **`TargetAutoLock`: source `1`, observed value/default `0`**. The classifier intentionally records default differences separately from publication; 15 recorded default differences include the 14 absent registrations. Nine removed CVars return nil for both. Source `default`, `desc`, `scope`, `cat` metadata remains preserved on every current-ledger source row; no persistence, scope or subsystem-effect credit. Thus 83 publication mismatches plus one additional published-default mismatch cover 84 distinct source rows, not an undifferentiated native gap count.
+
+`WrathClassic` matches only `ClientProfile::Wrath`; runtime cross-line control rejects retail inventory and ignores foreign retail/Mists removals while retaining observable control publication. Empty same-line successor contributes no override; actual 3.4.3 has zero explicit rows, so the measured inventory uses no successors. No retail/Cata supersession is inferred.
+
+[Current evidence](../../../data/patch-api/evidence/3.4.2-factory-2026-10-09/) retains first classifier RED, all 155 discovery observations, strict-gap discovery RED, GREEN observations, a current per-occurrence measurement ledger and exact proof commands. Historical source ledger and all 23 seals remain untouched. Two substantive summary claims remain UNPROVEN; linked contracts, full Blizzard UI and native Wrath Classic remain unmeasured. Main owns integration, broad/profile/readability/final gates; no production API/vendor edits, push, merge, deploy or delegation.
 
 ## Sources
 

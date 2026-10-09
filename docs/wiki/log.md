@@ -10,6 +10,10 @@
 
 [Audit](investigations/patch-4-2-0-api-audit.md#integrated-successors): actual 4.3.0/4.3.4 registers resolve only `EJ_SetDifficultyByMask` via later removal. Current 35 matches/30 gaps; historical 34/31 observations and 32-gap negative unchanged. Accounting fixtures 6/6; integrated runtime/portability acceptance pending. No new behavior or native parity credit.
 
+## [2026-10-09] measurement | Patch 3.4.2 bare Wrath factory
+
+[Audit](investigations/patch-3-4-2-api-audit.md#current-bare-simulator-factory-measurement): unchanged inventory measured directly in standalone `WowLuaEnv::new`, `sound,gui,casc,client-wrath`, simulator interface 38001 rather than source 30402. Exact 155 observations: 72 publication-direction matches/83 mismatches; 11 published CVar defaults match, TargetAutoLock differs, 14 added registrations absent. All 18 widgets construct; event acceptance deliberately nondiscriminating. Shared test classifier adds Wrath only; no generator/runtime/native/vendor changes. Separate current evidence and ledger preserve all historical source bytes/23 seals. Targeted classifier and exact-gap RED retained; parent owns broad/profile/final gates.
+
 ## [2026-10-09] ingest | Patch 3.4.2 Wrath Classic source inventory
 
 [Audit](investigations/patch-3-4-2-api-audit.md): frozen identity/hashes validated before copy; 155 explicit inventory/208 nonblank rows, two substantive summaries and all CVar fields retained. Shared tooling lacks Wrath publication classification, so no retail stand-in or runtime claim. Actual 3.4.3 successor retained reference-only; integration queued after it. Targeted derived-accounting RED fails as expected; owned serialized fixtures GREEN 10/10 at 4429022ea. Historical replay/extraction pass at f9905c3a3; own serialized ledger/GREEN-log tamper controls reject exact seals and restore bytes. Compact 23-input historical evidence; all runtime/native measurements remain unperformed. No runtime/vendor/shared-tool changes.

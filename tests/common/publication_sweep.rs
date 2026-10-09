@@ -27,6 +27,7 @@ enum ClientLine {
     Retail,
     MistsClassic,
     ClassicEra,
+    WrathClassic,
 }
 
 impl ClientLine {
@@ -36,6 +37,7 @@ impl ClientLine {
             (self, profile),
             (Self::Retail, ClientProfile::Retail | ClientProfile::Ptr)
                 | (Self::MistsClassic, ClientProfile::Mists)
+                | (Self::WrathClassic, ClientProfile::Wrath)
                 | (
                     Self::ClassicEra,
                     ClientProfile::Era | ClientProfile::Anniversary
@@ -510,6 +512,20 @@ fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, 
 /// Probe every register row in one cached Game environment and require the non-ok
 /// ID set to equal the reviewed known-gap set exactly.
 pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
+    run_sweep(env, spec, || read_deprecated_aliases(env));
+}
+
+/// Bare Wrath factory measurement: no cached publisher/deprecation files are consulted.
+#[cfg(feature = "client-wrath")]
+pub(crate) fn run_factory_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
+    run_sweep(env, spec, BTreeMap::new);
+}
+
+fn run_sweep(
+    env: &WowLuaEnv,
+    spec: &SweepSpec,
+    read_aliases: impl FnOnce() -> BTreeMap<String, (String, String)>,
+) {
     let register = read_register(spec);
     assert!(
         register
@@ -520,7 +536,7 @@ pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     let later = later_publication(spec, register.client_line);
     let known: BTreeSet<String> =
         serde_json::from_str(spec.known_gaps).expect("parse known-gap IDs");
-    let aliases = read_deprecated_aliases(env);
+    let aliases = read_aliases();
     let results = register
         .entries
         .iter()
