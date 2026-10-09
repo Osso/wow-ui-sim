@@ -823,3 +823,7 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 Added [bounded audit](investigations/patch-2-5-4-api-audit.md), spec and own literal ledger: 461 rows/412 occurrences/414 UNPROVEN contracts, separate actual configured interfaces, 8/8 source-only GREEN. Historical seals/copy controls recorded by own proof artifacts; native/integration owned by main.
 
 Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied members pass without Git/target/current tools/runtime; serialized ledger/proof/GREEN-log tampering rejected and restored exactly. Original seals remain unchanged; supplemental portable receipts separately sealed. SOURCE-only; native/main integration gates remain open.
+
+## 2026-10-09 — Patch 1.15.9 SOURCE audit
+
+- Added [independent audit](investigations/patch-1-15-9-api-audit.md) and [spec](../specs/patch-1-15-9-source-accounting.md); own literal SOURCE RED/GREEN8/8, no runtime/native/model credit or TBC receipt mutation. Historical controls next.
