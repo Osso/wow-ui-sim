@@ -500,3 +500,5 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
 
 
 [2026-10-08] 5.4.2 integration: preserved 123 historical artifacts, nine rebased/two external identities and original sealed validator invariants; all 59 registers/56 extracts reproduce with three unchanged inherited failures. Runtime unchanged versus pinned master 896086537. Fresh receipt driver running.
+
+[2026-10-08] 5.4.2 integrated audit complete: 39 gaps unchanged; 58 other page snapshots equal master 896086537. Retail sweeps 58/57, own prefork 3/3, separate Classic 3/3 each (two page sweeps plus line control), Python 89/89, format/Mists and negative 39 → 40 pass. Portable gate PASS at dcb39b5d4d3e60502056b1907db44aee4016de38: clean 45/45, synthetic later audit 46/46; zero failures. Historical/integrated own-log tampering is rejected at the exact seal and all bytes restored.

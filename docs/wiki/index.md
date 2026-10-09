@@ -16,7 +16,7 @@
 
 ## [2026-10-08] investigation | Patch 5.4.2 retail API audit
 
-[Audit](investigations/patch-5-4-2-api-audit.md): pageid 262849 revision 2543251; parent TOC 50400/build 17688 confirms December 2013 retail, not Classic. All 68 inventory/17 extract IDs retained; 39 publication gaps precisely pending, current enum aliases and explicit roster backing bounded; historical values pending. No new models, retirements or shims; merged 5.4.7/5.4.8 registers precede 6.0.1/6.0.2. Sweeps 56/56, own 3/3, guild 22/22, sliders 15/15, 86 Python fixtures, format/Mists pass; 55 registers/52 extracts reproduce with three unchanged inherited failures. Negative 39 → 40; portability gate PASS 37/37 clean and 38/38 later-audit; own-log tampering rejected.
+[Audit](investigations/patch-5-4-2-api-audit.md): integrated against 896086537; 39 gaps unchanged, no replacements/runtime changes. Nine rebased/two external identities and 123 historical artifacts preserved. All 59 registers/56 extracts reproduce with three unchanged inherited failures. Branch/master retail sweeps 58/57 pass; own prefork 3/3, integration selector zero cases, Classic commands 3/3 each (two page sweeps plus line control), Python 89/89, format/Mists warning gate and 43 prior validators pass. All 9,749 other retail observations and both Classic inventories equal master. Negative 39 → 40; Portable gate PASS at dcb39b5d4d3e60502056b1907db44aee4016de38: clean 45/45, synthetic later audit 46/46; zero failures. Historical/integrated own-log tampering is rejected at the exact seal and all bytes restored.
 
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 
