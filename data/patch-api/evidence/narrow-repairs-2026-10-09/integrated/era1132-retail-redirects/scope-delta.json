@@ -1,0 +1,10 @@
+{
+  "docs/wiki/index.md": {
+    "before": "d3b9e65e74d2762c134256efe1b813e2f67e4ba382a578d63388aea172de4626",
+    "after": "dfa2d6531e8b40c887fceee65d384af93180d39f3bbaf7312829ea1b53664aea"
+  },
+  "src/loader/tests/wow_api_globals/transmog_situation.rs": {
+    "before": "68608da6f55bc93864c082a77b65089948f41da116361b2f52ac4e108f72bbd8",
+    "after": "cc345a31a551df82174093cc54d91099dbfc1d12d9250faad909736b5c2f28a4"
+  }
+}

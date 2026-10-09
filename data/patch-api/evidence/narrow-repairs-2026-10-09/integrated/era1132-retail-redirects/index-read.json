@@ -1,0 +1,22 @@
+{
+  "bytes": 636933,
+  "sha256": "d3b9e65e74d2762c134256efe1b813e2f67e4ba382a578d63388aea172de4626",
+  "owned_entries": [
+    {
+      "line": 3,
+      "text": "[Audit](investigations/patch-1-13-2-api-audit.md): frozen115161/6471351,171914bytes;2758inventory/2838raw rows/2764signature limits/23prose/5011UNPROVEN contracts. SOURCE8/8 ata3cc2a2269, bare Era generic CVar storage1/1 at15d12138f(6transitions, no effect/default/native credit), portable3/3 atc5436865b(copied SOURCE8/default bytes/error and both serialized restorations,89original seals), separate successors3/3 at752cd507e(20actual same-Era ledgers,581identity overlaps/580source occurrences,0semantic closures), receipt-validator3/3 atf73ba78a5.13existing manifest/library/binary warning diagnostics retained. Main integrates1.13.2 before separate originalRetail1.12.0; histories remain distinct."
+    },
+    {
+      "line": 7,
+      "text": "[Audit](investigations/patch-1-12-0-api-audit.md): frozen326189/3145618,45 exact bytes; one metadata redirect/one UNPROVEN linked contract, zero local API/signature/default/prose/header/template declarations. SOURCE RED5/GREEN5 preserves registry101 and historical default bytes. Portable GREEN3 and fresh copied SOURCE5 at3364a24c8 retain23original seals/24archive members, both serialized tamper rejections and exact restoration. No grounded model/native subset; original Retail2.0.1+ references separate from Classic/Forever, queued1.13.2 order only. Main owns integration/native/final gates."
+    },
+    {
+      "line": 3081,
+      "text": "[Audit](investigations/patch-1-11-0-api-audit.md): frozen109825/1074793, 45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero local inventory/model/runtime/native credit. Own RED5/SOURCE GREEN5 at3d224c81a; portable RED3/copied SOURCE5/portable GREEN3 at27e8ba9c1, serialized ledger/log rejection and exact restoration. Original24 seals unchanged; six separate receipts,25-member48326byte archive. Queued1.12.0 retained separately, pending behind1.13.2 and unapplied. Main owns integration/native/final gates."
+    },
+    {
+      "line": 3085,
+      "text": "[Audit](investigations/patch-1-10-2-api-audit.md): frozen465540/4475520, exact45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero API/signature/default/model/runtime/native subset. Own SOURCE RED5/GREEN5 atd69bbfdcc; copied SOURCE5 and portable3 at4e34482d2, exact default-byte/error replay and both serialized tamper rejections/restorations. Original26 seals/27-member50,127-byte archive unchanged; six later receipt seals separate. Queued1.11.0 behind1.13.2/1.12.0 unapplied; separate histories. Main owns integration/native/final gates."
+    }
+  ]
+}

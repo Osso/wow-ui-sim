@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--test",
+    "patch_1_13_2_cvar_state",
+    "--no-run"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "start": "2026-10-09T19:03:59.848757+00:00",
+  "end": "2026-10-09T19:04:00.009831+00:00",
+  "exit": 101,
+  "scope": "Default-profile rejection before compilation; both explicit Era gates restored."
+}

@@ -1,0 +1,156 @@
+[
+  {
+    "page": "1.13.2",
+    "tests": 3,
+    "rejected": [
+      {
+        "test": "__main__.PortableSource.test_copied_source_and_historical_default_bytes",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1132-retail-redirect-independent/portable-scratch/tmpqdif78a_/audit.py",
+          "default-extract"
+        ],
+        "cwd": "/tmp/era1132-retail-redirect-independent/portable-scratch/tmpqdif78a_",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1132-retail-redirect-independent/portable-scratch/tmpqdif78a_/audit.py\", line 197, in <module>\n    print(load_tool('extract_patch_non_inventory.py').extract_text(raw), end='')\n          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/tmp/era1132-retail-redirect-independent/portable-scratch/tmpqdif78a_/historical-tools/extract_patch_non_inventory.py\", line 279, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: * The [[COMBAT_LOG_EVENT|Combat Log]] is restricted to events within 50 yards of the player. (Build 32600, Nov 20 2019) <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/in-game-combat-log-range-decreased/370390|author=Kaivax|date=2019-11-22|title=In-Game Combat Log Range Decreased}}</ref>\n"
+      },
+      {
+        "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1132-retail-redirect-independent/portable-scratch/tmpgvjxbn7j/audit.py"
+        ],
+        "cwd": "/tmp/era1132-retail-redirect-independent/portable-scratch/tmpgvjxbn7j",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1132-retail-redirect-independent/portable-scratch/tmpgvjxbn7j/audit.py\", line 203, in <module>\n    seals = check_seals()\n  File \"/tmp/era1132-retail-redirect-independent/portable-scratch/tmpgvjxbn7j/audit.py\", line 192, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+      },
+      {
+        "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "/tmp/era1132-retail-redirect-independent/portable-scratch/tmpe_qh6try/audit.py"
+        ],
+        "cwd": "/tmp/era1132-retail-redirect-independent/portable-scratch/tmpe_qh6try",
+        "path": "empty; Git/current commands unavailable",
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1132-retail-redirect-independent/portable-scratch/tmpe_qh6try/audit.py\", line 203, in <module>\n    seals = check_seals()\n  File \"/tmp/era1132-retail-redirect-independent/portable-scratch/tmpe_qh6try/audit.py\", line 192, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+      }
+    ],
+    "restored": [
+      {
+        "restored": "ledger.json",
+        "sha256": "1ab5b64f504357f1b0f168cde70d4a0ccbabc4a46b23d2fee1c5244cbacd9562",
+        "all_original_seals": 89
+      },
+      {
+        "restored": "green.log",
+        "sha256": "68b9f0018f11daf08db6c61026229961e947eb536a063c69498f7d797c6e1e66",
+        "all_original_seals": 89
+      }
+    ]
+  },
+  {
+    "page": "1.12.0",
+    "tests": 3,
+    "rejected": [
+      {
+        "control": "serialized-tamper-rejected",
+        "file": "ledger.json",
+        "original_sha256": "75fedbf00ba0189f6906b58b9d289b9a7c24710cd9246853ddd84db754f62dbd",
+        "tampered_sha256": "9a0b112f767df65174c447b75989a1e1d4ca54737b7fa3cbc99ac11a532469fb"
+      },
+      {
+        "control": "serialized-tamper-rejected",
+        "file": "green.log",
+        "original_sha256": "b9c9046f6b734b29e936556c8230e27736773d2a08e058d31eaa0afd84e4197a",
+        "tampered_sha256": "f9c58207c1922154a51ee8fbc1fc49396ce3536e3d6f486830c06fd93ccaea13"
+      }
+    ],
+    "restored": [
+      {
+        "control": "exact-restoration",
+        "file": "ledger.json",
+        "restored_sha256": "75fedbf00ba0189f6906b58b9d289b9a7c24710cd9246853ddd84db754f62dbd",
+        "original_seals_sha256": "2fb061e0938283a66f5db1d44804a532082fd27a99d1d4fbc5fd4dbfc79fb4df"
+      },
+      {
+        "control": "exact-restoration",
+        "file": "green.log",
+        "restored_sha256": "b9c9046f6b734b29e936556c8230e27736773d2a08e058d31eaa0afd84e4197a",
+        "original_seals_sha256": "2fb061e0938283a66f5db1d44804a532082fd27a99d1d4fbc5fd4dbfc79fb4df"
+      }
+    ]
+  },
+  {
+    "page": "1.11.0",
+    "tests": 3,
+    "rejected": [
+      {
+        "control": "serialized-tamper-rejected",
+        "file": "ledger.json",
+        "original_sha256": "6ce3e150a86456a3606c695b7ef1849dd8c07d94b3ebb3f9f85793d479609388",
+        "tampered_sha256": "4d106ea924269698d8153e78bae323181402a106f01abbcb4f6773499b610c12"
+      },
+      {
+        "control": "serialized-tamper-rejected",
+        "file": "green.log",
+        "original_sha256": "dc5b4e2b8940ecaab4ce9ced4a8e74a614cdb3b60864f6884a1980fc1903250c",
+        "tampered_sha256": "da1c97d5043637bdef11bf0390694282d5e706de683f4f70e9177ee5bc4ec022"
+      }
+    ],
+    "restored": [
+      {
+        "control": "exact-restoration",
+        "file": "ledger.json",
+        "restored_sha256": "6ce3e150a86456a3606c695b7ef1849dd8c07d94b3ebb3f9f85793d479609388",
+        "original_seals_sha256": "2c83739aed9735bc52791dee68df7f2b83aadad6300e6b94449866286e70ef22"
+      },
+      {
+        "control": "exact-restoration",
+        "file": "green.log",
+        "restored_sha256": "dc5b4e2b8940ecaab4ce9ced4a8e74a614cdb3b60864f6884a1980fc1903250c",
+        "original_seals_sha256": "2c83739aed9735bc52791dee68df7f2b83aadad6300e6b94449866286e70ef22"
+      }
+    ]
+  },
+  {
+    "page": "1.10.2",
+    "tests": 3,
+    "rejected": [
+      {
+        "control": "serialized-tamper-rejected",
+        "file": "ledger.json",
+        "original_sha256": "d087e383c9d6a574e67a948a3476628c90013bdf268a812cf52fa8266c7c6e65",
+        "tampered_sha256": "8f51a4c9744b1bf613c11e52675dcffbd8899b8bde1dc37a5303966ff3fea896"
+      },
+      {
+        "control": "serialized-tamper-rejected",
+        "file": "green.log",
+        "original_sha256": "5bdd5cca7dfa8601569dc7274a952ba34038f83b07a4461f717f399d59b85dd1",
+        "tampered_sha256": "82e3328e807e55aa1a0d2d79000e090d7c1ccb74e2bd1f9550fce8eb68aa82ae"
+      }
+    ],
+    "restored": [
+      {
+        "control": "exact-restoration",
+        "file": "ledger.json",
+        "restored_sha256": "d087e383c9d6a574e67a948a3476628c90013bdf268a812cf52fa8266c7c6e65",
+        "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+      },
+      {
+        "control": "exact-restoration",
+        "file": "green.log",
+        "restored_sha256": "5bdd5cca7dfa8601569dc7274a952ba34038f83b07a4461f717f399d59b85dd1",
+        "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+      }
+    ]
+  }
+]

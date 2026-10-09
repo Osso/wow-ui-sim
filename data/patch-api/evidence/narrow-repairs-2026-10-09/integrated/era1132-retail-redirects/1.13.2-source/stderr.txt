@@ -1,0 +1,13 @@
+test_all_raw_rows_and_default_bytes (__main__.SourceAccounting.test_all_raw_rows_and_default_bytes) ... ok
+test_current_profiles_and_separate_successors (__main__.SourceAccounting.test_current_profiles_and_separate_successors) ... ok
+test_every_omission_and_fabricated_credit_rejected (__main__.SourceAccounting.test_every_omission_and_fabricated_credit_rejected) ... ok
+test_full_inventory_and_original_link_disagreements (__main__.SourceAccounting.test_full_inventory_and_original_link_disagreements) ... ok
+test_headers_counts_and_captions (__main__.SourceAccounting.test_headers_counts_and_captions) ... ok
+test_identity (__main__.SourceAccounting.test_identity) ... ok
+test_prose_defaults_and_signature_limits (__main__.SourceAccounting.test_prose_defaults_and_signature_limits) ... ok
+test_source_tamper_rejected (__main__.SourceAccounting.test_source_tamper_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.331s
+
+OK

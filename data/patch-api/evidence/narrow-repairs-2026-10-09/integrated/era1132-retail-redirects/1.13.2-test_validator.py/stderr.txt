@@ -1,0 +1,8 @@
+test_current_model_reads_are_not_factory_defaults (__main__.ReceiptValidation.test_current_model_reads_are_not_factory_defaults) ... ok
+test_derives_original_and_actual_successor_counts (__main__.ReceiptValidation.test_derives_original_and_actual_successor_counts) ... ok
+test_derives_portable_replay_and_exact_restore_receipts (__main__.ReceiptValidation.test_derives_portable_replay_and_exact_restore_receipts) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.123s
+
+OK

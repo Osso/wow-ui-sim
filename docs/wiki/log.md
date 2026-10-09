@@ -2,6 +2,10 @@
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) links selected static preservation receipts and lost check-result evidence. No Mists type/runtime gate closed; no old process remained before one terminal capture retry. Process-list streams excluded from publication.
 
+## [2026-10-09] ingest | Era1.13.2 and historical Retail redirect proof
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#era1132--three-historical-retail-redirects--bounded-pass) links exact current/copy SOURCE, portable, successor/receipt and six-transition storage proof with mutable-checkout epochs and retained warnings. 191 root/command artifacts retained; original maps unchanged. Adjacent target-gate defect and later configuration repair remain separate. Later pages and parent acceptance not credited.
+
 ## [2026-10-09] fix | Keep headless collection test independent of GUI
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#headless-hittable-order-fixture--dependency-repair-proof-pending) records optional-dependency errors and GUI-only block gating. Common headless order assertion retained; no rendering/runtime or assertion-value changes. Historical and enabled-GUI proof pending.

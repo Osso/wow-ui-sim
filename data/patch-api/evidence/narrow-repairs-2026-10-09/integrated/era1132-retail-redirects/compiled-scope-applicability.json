@@ -1,0 +1,18 @@
+{
+  "runtime_epoch": "15d12138f56ac2db90499303a80d9b702ccf4e5b",
+  "epoch_diff_stdout_bytes": 0,
+  "concurrent_test_change": "src/loader/tests/wow_api_globals/transmog_situation.rs",
+  "test_gate_evidence": [
+    {
+      "path": "src/loader/mod.rs",
+      "line": 861,
+      "context": [
+        "",
+        "#[cfg(test)]",
+        "mod tests;"
+      ]
+    }
+  ],
+  "reason": "standalone integration Cargo test builds library without cfg(test); test file additionally requires retail-12-0-0, absent from client-era; no production/test-target/lock changes",
+  "rerun_required": false
+}

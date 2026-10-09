@@ -1,0 +1,8 @@
+test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay) ... ok
+test_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored) ... ok
+test_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.046s
+
+OK

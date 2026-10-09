@@ -1,0 +1,89 @@
+{
+  "original_seals": 89,
+  "separate_receipt_seals": 43,
+  "source_totals": {
+    "physical_lines": 2853,
+    "source_rows": 2838,
+    "extracted_rows": 0,
+    "inventory": 2758,
+    "default_inventory": 2758,
+    "default_omissions": 0,
+    "signatures": 2764,
+    "defaults": 2,
+    "headers": 11,
+    "inventory_headers": 9,
+    "captions": 4,
+    "prose": 23,
+    "links": 2230,
+    "templates": 568,
+    "references": 1,
+    "contracts": 5011,
+    "examples": 1,
+    "configured_profiles": 2,
+    "successors": 20,
+    "model_review": 13,
+    "source_statuses": {
+      "metadata-only": 57,
+      "UNPROVEN": 2781
+    },
+    "inventory_by_section": {
+      "global-api": 2129,
+      "widgets": 72,
+      "events": 457,
+      "cvars": 100
+    },
+    "inventory_by_direction": {
+      "added": 163,
+      "removed": 2595
+    },
+    "contract_statuses": {
+      "UNPROVEN": 5011
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "registry_pages": 101,
+    "omission_controls": 19013
+  },
+  "actual_successor_totals": {
+    "actual_registers": 20,
+    "source_inventory": 2758,
+    "overlap_occurrences": 581,
+    "source_occurrences_with_overlap": 580,
+    "overlaps_by_patch": {
+      "1.13.3": 14,
+      "1.13.4": 15,
+      "1.13.5": 5,
+      "1.13.6": 0,
+      "1.13.7": 0,
+      "1.14.0": 263,
+      "1.14.1": 1,
+      "1.14.2": 0,
+      "1.14.3": 283,
+      "1.14.4": 0,
+      "1.15.0": 0,
+      "1.15.1": 0,
+      "1.15.2": 0,
+      "1.15.3": 0,
+      "1.15.4": 0,
+      "1.15.5": 0,
+      "1.15.6": 0,
+      "1.15.7": 0,
+      "1.15.8": 0,
+      "1.15.9": 0
+    },
+    "meaningful_historical_closures": 0,
+    "native_closures": 0
+  },
+  "current_model_transitions": 6,
+  "portable_tests": 3,
+  "exact_restored_files": [
+    "green.log",
+    "ledger.json"
+  ],
+  "historical_credit": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "scope": "bounded frozen page SOURCE and separate receipts, not main integration/native/final acceptance"
+}

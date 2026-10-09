@@ -1,0 +1,55 @@
+{
+  "retained_at": "2026-10-09T19:15:27.729258+00:00",
+  "actual_revision": "306cf7c43",
+  "scope": "Direct trivial-configuration proof: Cargo metadata exit0 declares client-era for NPC and CVar targets; two default-profile no-run requests exit101 before compilation because required feature absent. Six inherited manifest warnings remain. Metadata command exact start/end was not captured; negative-selection receipts have explicit timestamps. Revision attributed from same-evaluation commit/command ordering, not backfilled command receipts. No builds or model execution credited.",
+  "files": [
+    {
+      "source": "/tmp/era-target-gate-restoration/metadata.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/metadata.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era-target-gate-restoration/metadata.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/metadata.stdout",
+      "sha256": "843941f893262e8ecc38659fff8654820a8988ee480a51d7f5f5893ac5087cca",
+      "bytes": 32910
+    },
+    {
+      "source": "/tmp/era-target-gate-restoration/patch_1_13_2_cvar_state.receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/patch_1_13_2_cvar_state.receipt.json",
+      "sha256": "83c9e81dbd17e5270158031c0ac451d4a4b551ef794a5cdc65298af349b56fec",
+      "bytes": 386
+    },
+    {
+      "source": "/tmp/era-target-gate-restoration/patch_1_13_2_cvar_state.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/patch_1_13_2_cvar_state.stderr",
+      "sha256": "b74b6d802f037885abc4581561ddedf569b093ef3feb8896538f21b16589cd33",
+      "bytes": 1302
+    },
+    {
+      "source": "/tmp/era-target-gate-restoration/patch_1_13_2_cvar_state.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/patch_1_13_2_cvar_state.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era-target-gate-restoration/patch_1_13_3_npc_health.receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/patch_1_13_3_npc_health.receipt.json",
+      "sha256": "685b96cfc78957d56ee8eacd925375bfeb9e15c71a1f862e2f0217c1385ac22d",
+      "bytes": 386
+    },
+    {
+      "source": "/tmp/era-target-gate-restoration/patch_1_13_3_npc_health.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/patch_1_13_3_npc_health.stderr",
+      "sha256": "a5ac2a93c3cc8d67ceeab7312952ab5ac7f48af8a33f0dc5ea963daa20e93617",
+      "bytes": 1302
+    },
+    {
+      "source": "/tmp/era-target-gate-restoration/patch_1_13_3_npc_health.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era-target-gates/patch_1_13_3_npc_health.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

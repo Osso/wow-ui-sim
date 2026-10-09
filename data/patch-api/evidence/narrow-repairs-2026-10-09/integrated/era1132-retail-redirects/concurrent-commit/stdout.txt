@@ -1,0 +1,5 @@
+f2eebd359 Scope historical TransmogSituation assertions to 12.0.0
+ .../integrated-source-and-factory-proof-2026-10-09.md               | 6 ++++++
+ docs/wiki/log.md                                                    | 4 ++++
+ src/loader/tests/wow_api_globals/transmog_situation.rs              | 3 ++-
+ 3 files changed, 12 insertions(+), 1 deletion(-)

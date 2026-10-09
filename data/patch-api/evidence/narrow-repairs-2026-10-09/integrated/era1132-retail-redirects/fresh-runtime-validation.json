@@ -1,0 +1,76 @@
+{
+  "equal_to_explicit_cases": true,
+  "equal_to_historical_observations": true,
+  "registered_raw_globals": [
+    "function",
+    "function",
+    "function"
+  ],
+  "transitions": [
+    {
+      "input": "0",
+      "name": "alwaysShowTargetNameplate",
+      "observed": [
+        true,
+        "0",
+        false
+      ],
+      "rust_store": "0"
+    },
+    {
+      "input": "1",
+      "name": "alwaysShowTargetNameplate",
+      "observed": [
+        true,
+        "1",
+        true
+      ],
+      "rust_store": "1"
+    },
+    {
+      "input": "0",
+      "name": "alwaysShowTargetNameplate",
+      "observed": [
+        true,
+        "0",
+        false
+      ],
+      "rust_store": "0"
+    },
+    {
+      "input": "1",
+      "name": "instantQuestText",
+      "observed": [
+        true,
+        "1",
+        true
+      ],
+      "rust_store": "1"
+    },
+    {
+      "input": "0",
+      "name": "instantQuestText",
+      "observed": [
+        true,
+        "0",
+        false
+      ],
+      "rust_store": "0"
+    },
+    {
+      "input": "1",
+      "name": "instantQuestText",
+      "observed": [
+        true,
+        "1",
+        true
+      ],
+      "rust_store": "1"
+    }
+  ],
+  "source_hashes": {
+    "current-model-cases.json": "811ba61e7f05f1d110d1d8df0963cb8afd12bf609d1168d1b447a1fd07d1c6b6",
+    "current-model-observations.json": "6ab1075287579e2d74b98a3a8ec8c724a6d73e54161e107c135b10726b21fff4"
+  },
+  "fresh_sha256": "6ab1075287579e2d74b98a3a8ec8c724a6d73e54161e107c135b10726b21fff4"
+}

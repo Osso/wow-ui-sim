@@ -1,0 +1,64 @@
+worktree /home/osso/Projects/wow/wow-ui-sim
+HEAD f8da74e315acd21a0af85512598b27c25da6fd23
+branch refs/heads/master
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1100-page
+HEAD f8da74e315acd21a0af85512598b27c25da6fd23
+branch refs/heads/p1100-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1101-page
+HEAD cb9c8e5d865ee7c69e9b1f74e34c8618d9575552
+branch refs/heads/p1101-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1135-page
+HEAD 748bd72af9603ae942a421883d7f26745e70cba8
+branch refs/heads/p1135-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1136-page
+HEAD 0529935a57db1aabc10054200649647a43bc8f39
+branch refs/heads/p1136-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1137-page
+HEAD d85eb075f253cb81aa1e936409d590b6cdc0fa71
+branch refs/heads/p1137-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1140-page
+HEAD fba1c90cc2df73fadf943905b3aab9ebe619fa5a
+branch refs/heads/p1140-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1141-page
+HEAD 29ed6fc8ae04297b45f8c5ed73afc83ac46ab60a
+branch refs/heads/p1141-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1144-page
+HEAD 655384946f18aa443ac7a63004defd691cd6df23
+branch refs/heads/p1144-page
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1158-source
+HEAD b0d00d989b1f00d5e354d122ce97247baa13663f
+branch refs/heads/p1158-source
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1159-source
+HEAD 2de92ff56c8ed9371fb834d1ec294134b0f87c91
+branch refs/heads/p1159-source
+
+worktree /home/osso/.worktrees/wow-ui-sim-p1601-source
+HEAD 2218c0f4114b50bb33ab507917983892b30dbf4a
+branch refs/heads/p1601-source
+
+worktree /home/osso/.worktrees/wow-ui-sim-p201-source
+HEAD ca8c55afabf6057af3e943f2e7c5c17a4f6c53e5
+branch refs/heads/p201-source
+
+worktree /home/osso/.worktrees/wow-ui-sim-p210-source
+HEAD 3bf728dc2b901082964faf6f486eb003c5f2d1e1
+branch refs/heads/p210-source
+
+worktree /home/osso/.worktrees/wow-ui-sim-p220-source
+HEAD 76800b111cd8d731406b872d3378b880556c8448
+branch refs/heads/p220-source
+
+worktree /home/osso/.worktrees/wow-ui-sim-p230-source
+HEAD 9f3142fb80cb27e15314369ef4ad97dd5d83a1b3
+branch refs/heads/p230-source
+

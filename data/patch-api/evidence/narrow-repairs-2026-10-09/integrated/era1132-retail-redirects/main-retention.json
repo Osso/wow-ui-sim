@@ -1,0 +1,1158 @@
+{
+  "retained_at": "2026-10-09T19:13:57.802272+00:00",
+  "scope": "Root proof artifacts and complete command receipt/stream directories, byte-identical. Build target/TMPDIR/copied inputs/scratch excluded; immutable source archives remain separately committed. Current mutable checkout epochs and later Transmog test-only change disclosed in original report. Cargo NPC feature-gate caveat remains historical and was subsequently restored separately; no retroactive seal/receipt rewrite. Key-onlyenvironment, credential patterns inspected. No commands rerun.",
+  "excluded_directories": [
+    "cargo-target",
+    "cargo-tmp",
+    "copies",
+    "portable-scratch"
+  ],
+  "files": [
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-source/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-source/receipt-start.json",
+      "sha256": "bf2023bc759075bc629593b6fa74ddfe3a8052e6abca9b5701d5c11373ef403e",
+      "bytes": 242583
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-source/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-source/receipt.json",
+      "sha256": "071a8494448ca78eeb778f43a851c9862815f40cae8de81de5fdb7970b097984",
+      "bytes": 484451
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-source/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-source/stderr.txt",
+      "sha256": "dea5af0efc78bf20420e3625c299560d3518f8481085a19805659d13915a8a17",
+      "bytes": 749
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-source/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-source/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-validator/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-validator/receipt-start.json",
+      "sha256": "83b0da516ccb56b69bdbc4c3d9b7278337681fbe324b53f6e183d667d77cba25",
+      "bytes": 242569
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-validator/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-validator/receipt.json",
+      "sha256": "d468a0e5ba01c4a259f728831c50627cf10efab51450587f8ab65b336be151ef",
+      "bytes": 484438
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-validator/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-validator/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-copied-validator/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-copied-validator/stdout.txt",
+      "sha256": "6692fa43392701d83f9397da972618d540f7e51f00b2237bf246361fb1fc0866",
+      "bytes": 348
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-original-validator/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-original-validator/receipt-start.json",
+      "sha256": "7dd367756c5f44f4a311256f7de401b2e0c73b747d407db39fe07c32f554fd42",
+      "bytes": 242454
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-original-validator/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-original-validator/receipt.json",
+      "sha256": "dcaa0c7f69ec098bb2b621faba5c1de6585fbd0c60bb657c3f17c6c6daf156ee",
+      "bytes": 484321
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-original-validator/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-original-validator/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-original-validator/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-original-validator/stdout.txt",
+      "sha256": "6692fa43392701d83f9397da972618d540f7e51f00b2237bf246361fb1fc0866",
+      "bytes": 348
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-portable/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-portable/receipt-start.json",
+      "sha256": "51995899e2c715ac9f398c0980a89046630a92cc705100909af8200d0ef2ed5b",
+      "bytes": 242647
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-portable/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-portable/receipt.json",
+      "sha256": "d3b0b2a12c8dc1c9365a36e97119935062d87ebaa05f78c9cad8fe216ead703a",
+      "bytes": 484515
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-portable/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-portable/stderr.txt",
+      "sha256": "bdc7a8e9ad04bd07d90104d4df20d277c35847111c94e45ac9af9241fc9b731e",
+      "bytes": 457
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-portable/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-portable/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-portable-receipts.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-portable-receipts.json",
+      "sha256": "c0f67006ad59719f5394db1cfadace16b7a962915e890c2a2b78f38914c7ae83",
+      "bytes": 1766
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-receipt-seals.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-receipt-seals.json",
+      "sha256": "e062e1505392be56478ec772d9dfe841627f1e8c1c3ac4a005aed672f17d1839",
+      "bytes": 673
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-source/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-source/receipt-start.json",
+      "sha256": "41628b1eb08c3c8d7f65802b8dd6666fa7953ab4764fee0d455c3545abd6c458",
+      "bytes": 242459
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-source/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-source/receipt.json",
+      "sha256": "2a05ecd7f786b54d7988fb53d26dbe01351eef3a7c97be7c21a1a9aa5afd24c4",
+      "bytes": 484327
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-source/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-source/stderr.txt",
+      "sha256": "0ea6b8e4fb7d18c5db0ee369fa8d75cc7e442da5972913915d2f808bc24c5988",
+      "bytes": 749
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.10.2-source/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.10.2-source/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-source/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-source/receipt-start.json",
+      "sha256": "c251fefae967002d2e379e7ab57503c155934ddf20a645228c3bf6d0689e3fc0",
+      "bytes": 242583
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-source/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-source/receipt.json",
+      "sha256": "6a1e7949c6e53099c8914c05e3695816c62353d9944c35676a89af367d6647ed",
+      "bytes": 484452
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-source/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-source/stderr.txt",
+      "sha256": "44e63c925a5c1b92877da439b83ce3e5a012470cb2ae4d90e713c7780618f760",
+      "bytes": 749
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-source/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-source/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-validator/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-validator/receipt-start.json",
+      "sha256": "2f8c39652e641f97bf9538bf0c1c87a54eb12c9de445feae530706e2c96ca56b",
+      "bytes": 242569
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-validator/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-validator/receipt.json",
+      "sha256": "69a0521c3b111f8ccd32d2c2f0bcca01776a3e47de7e756e1d06fbebd44410d1",
+      "bytes": 484437
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-validator/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-validator/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-copied-validator/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-copied-validator/stdout.txt",
+      "sha256": "5cd2062b1d9264489b004a5c8ac2de1f4a3beeda19a0d33c02987bde39afa8dc",
+      "bytes": 348
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-original-validator/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-original-validator/receipt-start.json",
+      "sha256": "8a325ef8b108c5bf4366e828a891d2e215ed1c6d720f444f97f1fc967149bde0",
+      "bytes": 242454
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-original-validator/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-original-validator/receipt.json",
+      "sha256": "d28e0912a75b32ee14eec10a9088b5dcff2ff1dae40118160c1475fcc027bcc4",
+      "bytes": 484321
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-original-validator/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-original-validator/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-original-validator/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-original-validator/stdout.txt",
+      "sha256": "5cd2062b1d9264489b004a5c8ac2de1f4a3beeda19a0d33c02987bde39afa8dc",
+      "bytes": 348
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-portable/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-portable/receipt-start.json",
+      "sha256": "2b73bfddf9a216f1ef719e37b4d8247068d683a0aa93cb937af1afe74eeecf29",
+      "bytes": 242647
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-portable/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-portable/receipt.json",
+      "sha256": "c7ae5d968adc6ae1fdd7cd1a7b916a7dd9c9248d7c90a8fd18dc5da0ea4900c9",
+      "bytes": 484515
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-portable/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-portable/stderr.txt",
+      "sha256": "ba96143db5592cac0505850b9d69bce745cea2af8afdd49eaa4f9857ecfe0467",
+      "bytes": 457
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-portable/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-portable/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-portable-receipts.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-portable-receipts.json",
+      "sha256": "c98a7d1ae16468cfb6029f2f9f49e36474c38050e1a4c97a85f8fc64aa67e0bd",
+      "bytes": 1766
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-receipt-seals.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-receipt-seals.json",
+      "sha256": "94a15b2836f5868d353a3c35371930d5f5a65c5feebb6e7796a0baf0dd19b65c",
+      "bytes": 673
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-source/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-source/receipt-start.json",
+      "sha256": "77c2725af5d3586ed8c4d745f43138064c17a62338b405a430f2754cc18ca98c",
+      "bytes": 242459
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-source/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-source/receipt.json",
+      "sha256": "67a336613624589295e14b9f739a14bb67cc2f97e5a88f7cdbd4441504fa9910",
+      "bytes": 484327
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-source/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-source/stderr.txt",
+      "sha256": "e6665d74ee5d866e8264dc6200dff344579394aa5a0e07dc2f771a4ff7ab3717",
+      "bytes": 749
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.11.0-source/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.11.0-source/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-source/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-source/receipt-start.json",
+      "sha256": "229279787c3840bb9dd8b07d97a4a1d05abeafb77f51cbc9b3ed70e5b22c3dcd",
+      "bytes": 242583
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-source/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-source/receipt.json",
+      "sha256": "131250ee85d4a0ed8175df2877da310718bdbe936caebc7f06e908465d8191bc",
+      "bytes": 484451
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-source/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-source/stderr.txt",
+      "sha256": "dea5af0efc78bf20420e3625c299560d3518f8481085a19805659d13915a8a17",
+      "bytes": 749
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-source/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-source/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-validator/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-validator/receipt-start.json",
+      "sha256": "74ecbc28870191698a66e93519c490b6e3c7c7c927505af8b125c6a4f3089ea3",
+      "bytes": 242569
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-validator/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-validator/receipt.json",
+      "sha256": "d212eec89403b45ff37e907b28b9f1c51484f76d81626c68645987f820aed18d",
+      "bytes": 484436
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-validator/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-validator/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-copied-validator/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-copied-validator/stdout.txt",
+      "sha256": "83253f588079adc162f25c3307654b707dca3bfb17cb240f7a1b2fc933715a16",
+      "bytes": 348
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-original-validator/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-original-validator/receipt-start.json",
+      "sha256": "1940ef0a91d021d8bd6dea53dea95361055bd4d712507e0585f364cf19b7272f",
+      "bytes": 242454
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-original-validator/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-original-validator/receipt.json",
+      "sha256": "5a129017d5b9c6f808b9ca4790d8d7d8932622ec78ce79a7e2f651f0b0b2cba6",
+      "bytes": 484321
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-original-validator/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-original-validator/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-original-validator/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-original-validator/stdout.txt",
+      "sha256": "83253f588079adc162f25c3307654b707dca3bfb17cb240f7a1b2fc933715a16",
+      "bytes": 348
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-portable/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-portable/receipt-start.json",
+      "sha256": "92c10fbdb6a4dc6c4434c4a4e16f6de386d75cdb59002d1d9f5481deadba5a74",
+      "bytes": 242647
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-portable/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-portable/receipt.json",
+      "sha256": "383bb0c99d5784ad12fdf9019ad243dc2a9e764c085d4d11bd96f2708e7d6f36",
+      "bytes": 484515
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-portable/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-portable/stderr.txt",
+      "sha256": "09b34ce7818a90e3aba5cd6752f7aee9d4780999db2228729a87cc5ac2b651bf",
+      "bytes": 457
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-portable/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-portable/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-portable-receipts.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-portable-receipts.json",
+      "sha256": "22add33a93cdcbe6e096648e8e91a2858d658a477fced7bf9c42fbea508c01db",
+      "bytes": 1766
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-receipt-seals.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-receipt-seals.json",
+      "sha256": "f76ef9c8f1b38a2eb7e087ec8df073ba784ec7f506045d83de62508c97f6587b",
+      "bytes": 758
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-source/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-source/receipt-start.json",
+      "sha256": "74e849e03ff07b9b0a07572fed962336e88d84662f2aaff987bde71a2eeb4c77",
+      "bytes": 242459
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-source/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-source/receipt.json",
+      "sha256": "32ea188ffa7cd3ffb0ca98d3058ee54432de5bdee3713b17030ebbbb9235b672",
+      "bytes": 484326
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-source/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-source/stderr.txt",
+      "sha256": "da63451427daca5f6e2db6ef0a98d3dd4b4e1026a99b671ce30ac1a628fca7ee",
+      "bytes": 749
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.12.0-source/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.12.0-source/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-original-validator/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-original-validator/receipt-start.json",
+      "sha256": "0b4655ec22abee0ee78acaa6226e87221bf8ff1324ee8dd308bd4e10ee412038",
+      "bytes": 242454
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-original-validator/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-original-validator/receipt.json",
+      "sha256": "944b8daa143dc0ca99eb95f85322d7f462f86e21c40bf395360c7a9fa2ac90f3",
+      "bytes": 484320
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-original-validator/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-original-validator/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-original-validator/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-original-validator/stdout.txt",
+      "sha256": "96acd304b5bdfc39d4fbe34dca680e28c0621ebc0ed7ea7dbbd11abcff58a453",
+      "bytes": 961
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-portable/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-portable/receipt-start.json",
+      "sha256": "529990969397072d1cc6215c2cbd0b30f1e6224b2f1ccdd597690eaa3b9362d0",
+      "bytes": 242811
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-portable/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-portable/receipt.json",
+      "sha256": "dd535070c635df18d4b2868b8e1abe37a52251a4d44879fdc3f138aed06c876e",
+      "bytes": 484678
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-portable/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-portable/stderr.txt",
+      "sha256": "e475e365834f542b6811493336896625692a55664f3eccde18c6f2db30420ca3",
+      "bytes": 509
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-portable/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-portable/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-portable-receipts.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-portable-receipts.json",
+      "sha256": "b271912b4a143ef2ee9cfe1b4b0af81ab8dc676dd85443a168c63796fb6aba25",
+      "bytes": 10539
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-source/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-source/receipt-start.json",
+      "sha256": "f268dee2d3ce916efc9b375b3aa70ccc74ff9789b3704f6406979ba01f505c70",
+      "bytes": 242459
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-source/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-source/receipt.json",
+      "sha256": "68258153e8eab13df98be4707bdd48033fa2d529320cb978a6307ab99d582efa",
+      "bytes": 484326
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-source/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-source/stderr.txt",
+      "sha256": "4b3898c3fa84f9764c56a444b811b919f1a7346d78f75db39e4c7cda80f2d3dd",
+      "bytes": 980
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-source/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-source/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_successors.py/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_successors.py/receipt-start.json",
+      "sha256": "cfc19f9b0c6805617540ac5eb97795947c05eb1e934699d245619ce16e2572c2",
+      "bytes": 242464
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_successors.py/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_successors.py/receipt.json",
+      "sha256": "731f247a9c83bd02dda4b01df7d9547764dc58ac80284dee387d0ad52d99b78c",
+      "bytes": 484331
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_successors.py/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_successors.py/stderr.txt",
+      "sha256": "5ef20f3da8e0a38cbf9b041fe3b47ede167a71654f6f507fc62ff7f4ddef5143",
+      "bytes": 514
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_successors.py/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_successors.py/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_validator.py/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_validator.py/receipt-start.json",
+      "sha256": "361095a7cce569828168d04962f3eafcea547c1bed7b17271a09e0a5368bc5ad",
+      "bytes": 242462
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_validator.py/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_validator.py/receipt.json",
+      "sha256": "c7cc6a34480ca7c271525cbfecb561c3d3f9ea32eedb1b7b66aaadb780e4edf5",
+      "bytes": 484329
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_validator.py/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_validator.py/stderr.txt",
+      "sha256": "a35df99cdb97ddf12f54b846bdf1c14c0cfc611b1c5e8d55fb3cfe1af744176b",
+      "bytes": 518
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-test_validator.py/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-test_validator.py/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-validator.py/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-validator.py/receipt-start.json",
+      "sha256": "101b86cc5f5dceff504a68095538827bed187cd659751cdefcea8160336e84c8",
+      "bytes": 242452
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-validator.py/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-validator.py/receipt.json",
+      "sha256": "a1897f3677bcad3ff4c3102489eb8f77affb2f28c78abf40a5508cf6827ce741",
+      "bytes": 484319
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-validator.py/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-validator.py/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/1.13.2-validator.py/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/1.13.2-validator.py/stdout.txt",
+      "sha256": "790543b65c9d76729170908db0503a85b2a1387eb343e1c04555607b433e40e3",
+      "bytes": 1978
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/archive-proofs.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/archive-proofs.json",
+      "sha256": "b9ff8a0ede672f7dd571febf32791e9a8c7a7db1e58c720d4c6ffd2a497bb5ee",
+      "bytes": 32682
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/artifact-hashes.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/artifact-hashes.json",
+      "sha256": "49a7f356e98325c6aea70247aa8d6eb4698e0f213f9565f0e26fd21c3bbab40e",
+      "bytes": 38871
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/commands.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/commands.json",
+      "sha256": "3ebee295f07d3adca52fdefd386ef1972c5f948cd849856212e23a2c9fbea7af",
+      "bytes": 20180747
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/compiled-scope-applicability.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/compiled-scope-applicability.json",
+      "sha256": "a6d61ebf5de68158344e2fcc91543a27b3b26435bec5214f1071406dff058c34",
+      "bytes": 584
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-commit/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-commit/receipt-start.json",
+      "sha256": "117018b906b6b294c46a2b003be1582263999e267acd8b6be2da700e35d6bf56",
+      "bytes": 242405
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-commit/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-commit/receipt.json",
+      "sha256": "21ec4bd138f6b54c8f40329609765bd0f14aa7585b2d4ed79d92596e74dd616d",
+      "bytes": 484274
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-commit/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-commit/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-commit/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-commit/stdout.txt",
+      "sha256": "8656cd7b3d6e3f8dbfe97231d86f733cd2d611e4b3525ddab3c0c9cda266f87c",
+      "bytes": 351
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-history/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-history/receipt-start.json",
+      "sha256": "82d7b9beb7c382a95fc9b62f4bad0d443d84bfe42eecbf8f40762b6834653caf",
+      "bytes": 242434
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-history/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-history/receipt.json",
+      "sha256": "5b5207510181190912a2b78b17354ff959689315007713b4e8340b116440e3b0",
+      "bytes": 484303
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-history/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-history/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-history/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-history/stdout.txt",
+      "sha256": "7de81aad78028cfacdbc09c053ce3357f9f979571300ab743d1e8939111fe684",
+      "bytes": 6256
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-runtime-delta/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-runtime-delta/receipt-start.json",
+      "sha256": "2d3c0471f8519f65fa43f9e181acec259eec89a9107f806c4aa503d22ee5ccc9",
+      "bytes": 242520
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-runtime-delta/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-runtime-delta/receipt.json",
+      "sha256": "4df15d392f4cce2621696a202f20faf215369b7a470a61600a99a2f575ecc0dc",
+      "bytes": 484389
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-runtime-delta/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-runtime-delta/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/concurrent-runtime-delta/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/concurrent-runtime-delta/stdout.txt",
+      "sha256": "6b74c31ca08424da17c7f3cff02d831a8755fdfbfd7d17fc71caeebb1dcd1ee6",
+      "bytes": 588
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/current-model-observations.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/current-model-observations.json",
+      "sha256": "6ab1075287579e2d74b98a3a8ec8c724a6d73e54161e107c135b10726b21fff4",
+      "bytes": 1421
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/deleted-worktrees.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/deleted-worktrees.json",
+      "sha256": "51f64ff1e0838eb0198720496d7e47f53a17d7b494103861aec833a0f20b58f6",
+      "bytes": 94
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/environment-keys.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/environment-keys.json",
+      "sha256": "a91176ba2d195338458161af91b81cdb80a6ca0a218e02ceea1463506c05abfe",
+      "bytes": 476
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/era-runtime/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/era-runtime/receipt-start.json",
+      "sha256": "23edefb23dde606bafd1b9406ef1d91beba48c358b992a63f1a17bf3360eb4c9",
+      "bytes": 242836
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/era-runtime/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/era-runtime/receipt.json",
+      "sha256": "9ae01b0af5a7cc74fdd08b519b783d08a1b57126662863616fd199620640d835",
+      "bytes": 484792
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/era-runtime/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/era-runtime/stderr.txt",
+      "sha256": "3d08f02f23c6a38694534d6133233c1b3a97044b31d95b8d93e9c41c808edbc3",
+      "bytes": 14413
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/era-runtime/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/era-runtime/stdout.txt",
+      "sha256": "59f06b25b1d7f533cc898a08f373b4335e7f06dfb6f51346923f134d5cd22bdf",
+      "bytes": 183
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-concurrent-metadata/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-concurrent-metadata/receipt-start.json",
+      "sha256": "5b9fe78ef43a738e47cf867907c2ad0ed5c87fe0400749f4de2f455d0ddf75e8",
+      "bytes": 242429
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-concurrent-metadata/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-concurrent-metadata/receipt.json",
+      "sha256": "d000701bfa14474b8cd184fd328a06f333542afb1d39a6e77372c337da3ba6fc",
+      "bytes": 484297
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-concurrent-metadata/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-concurrent-metadata/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-concurrent-metadata/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-concurrent-metadata/stdout.txt",
+      "sha256": "77954ef3d79b088c9c6082b100b95e5b15c3d859db431e4d88a288d54d304491",
+      "bytes": 2854
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-seal-validation.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-seal-validation.json",
+      "sha256": "2c66fc917a48eb5fa2d435099ecdafcfa6c381c0501f75888c8fd40ed3ee10da",
+      "bytes": 243227
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-status/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-status/receipt-start.json",
+      "sha256": "28f3cee2407969f7e10438e0246a5e4cf1da18b0f08570095bef023a598e2212",
+      "bytes": 242346
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-status/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-status/receipt.json",
+      "sha256": "551d8539e88e476a7e773ff64b03c1598fce016e8a0ba780b70dfc04a5734b13",
+      "bytes": 484214
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-status/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-status/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/final-status/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/final-status/stdout.txt",
+      "sha256": "afbbaa89fd2dd18e916d24c76db7f59cecba0e0cefc23e3b9745ec5bed252acb",
+      "bytes": 18
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/fresh-runtime-validation.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/fresh-runtime-validation.json",
+      "sha256": "458d1fdfdaeb808b63e96990ee283addf7a49fdf69dbef6f7507c0b6cba068f6",
+      "bytes": 1494
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identifiers.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identifiers.json",
+      "sha256": "7d5df6e9feecafcefc9cfcfc0b9d899d292b9c5ab4936684afa9ccd215bd5987",
+      "bytes": 592
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-0ec696f6e/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-0ec696f6e/receipt-start.json",
+      "sha256": "6966463882239abc51fc8af589bb8abf17e5ff7cfb5cd17d09ad08bf8665bc40",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-0ec696f6e/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-0ec696f6e/receipt.json",
+      "sha256": "f18e0787b30a8fd930c1d9839dc39e5a0629bc652b37575f739f017da452e11a",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-0ec696f6e/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-0ec696f6e/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-0ec696f6e/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-0ec696f6e/stdout.txt",
+      "sha256": "03e0f51934eab340ef5efd8922aec97b58c87046f7f3c94590a8a423e5f03424",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-15d12138f/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-15d12138f/receipt-start.json",
+      "sha256": "59ff49b20ca979d338db4a5191128ab315ab294fe077705d2d0d0e06ebe97d90",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-15d12138f/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-15d12138f/receipt.json",
+      "sha256": "de9a9aaf01788ffd6e8afaa9bf7996fad94e955ace884662fd890d100baae9d3",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-15d12138f/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-15d12138f/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-15d12138f/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-15d12138f/stdout.txt",
+      "sha256": "f6d3f878cbc3221646d41981bff7a2303cb11de861f1f871fe9cc3d366bea30f",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-31686de71/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-31686de71/receipt-start.json",
+      "sha256": "b5c208907aa5b39a5bc90d9f9bd1bb1f7ecbe1ae43d37d4f1ffdd79ee2103d90",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-31686de71/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-31686de71/receipt.json",
+      "sha256": "46e297fe771e97f92c1f5cb49475a0b57c9780d49e483e4bac185d33dd7314e9",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-31686de71/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-31686de71/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-31686de71/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-31686de71/stdout.txt",
+      "sha256": "f2a867bd2d959f5cb524aed8a03e649e35385bb9f874d31ad07b99d3106f7b19",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-592bf2e74/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-592bf2e74/receipt-start.json",
+      "sha256": "9bb9043fc13b8891ea6c4e3feab7e5edac4cf5aabd46e3a00804841e1395b9ba",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-592bf2e74/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-592bf2e74/receipt.json",
+      "sha256": "f53518e015db88ff09f8649124bed281c2295e4675fc3375d225dced0f8427f2",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-592bf2e74/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-592bf2e74/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-592bf2e74/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-592bf2e74/stdout.txt",
+      "sha256": "0fb0859bd467c2f59f121b8201346562b1dc7fa708f45f31d4e3f99ff6fc74d3",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9252c6cc9/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9252c6cc9/receipt-start.json",
+      "sha256": "b9f8a666827351df7785e784cda9c911461856c3f32e4ade42e8a1e5b42feba5",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9252c6cc9/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9252c6cc9/receipt.json",
+      "sha256": "53d9dd7869a8b44b8783c017bf8f27e56965a8cb963e7987257eb3d6e8959b2a",
+      "bytes": 484235
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9252c6cc9/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9252c6cc9/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9252c6cc9/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9252c6cc9/stdout.txt",
+      "sha256": "b20bf40467e6412000a49a1762886b837724920accf90323dc3706b5def44fed",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb20ec31/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb20ec31/receipt-start.json",
+      "sha256": "b6cee6b8077c9ef65284e3779c15b99b9c2cf15130561928a4fffdac7d47ad91",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb20ec31/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb20ec31/receipt.json",
+      "sha256": "0d8671976d60142dd145d98a7f1df4abd813c013a4262ccc0e951445f5e07531",
+      "bytes": 484235
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb20ec31/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb20ec31/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb20ec31/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb20ec31/stdout.txt",
+      "sha256": "ae9c65b731b620b071defdbe3f2fe580bb821c56412ff3dfcea69d7483d122a5",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb8968f8/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb8968f8/receipt-start.json",
+      "sha256": "6829a5a01c97d55edb043b5153218391ee28ba8a5078bfb0dcc6040a4183df36",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb8968f8/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb8968f8/receipt.json",
+      "sha256": "a571bab0a6515c1d5038d112d76dd9834258a8e3655097a3c9567c39e08d4232",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb8968f8/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb8968f8/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-9fb8968f8/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-9fb8968f8/stdout.txt",
+      "sha256": "95a91a2ec7bad3f8ec72f50846c9f3b4b496955c49c49f949119651e4c60ceff",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d026c9e6a/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d026c9e6a/receipt-start.json",
+      "sha256": "2cba5786a0c7d1214843a7f7eb3470f255337279ac96a91798f8ef9ea7edce1c",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d026c9e6a/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d026c9e6a/receipt.json",
+      "sha256": "b58f9ed18d20c9b8f9d34536b003ae718738136ba2d097bc7474978977c31bbf",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d026c9e6a/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d026c9e6a/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d026c9e6a/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d026c9e6a/stdout.txt",
+      "sha256": "1b14523c6b7819386f0eb26dab160a467f0d2edeba77ba376f9689ad79ed2bec",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d8b98ecf5/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d8b98ecf5/receipt-start.json",
+      "sha256": "053f40e739228a3b6c62d7cf7163e14ccd3f7b8cb329a7080083e9b18f9473f6",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d8b98ecf5/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d8b98ecf5/receipt.json",
+      "sha256": "7221bb76a4f59fdb9bd84e5667d481219d2a6eece9cfbbc82fc25cd65941226e",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d8b98ecf5/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d8b98ecf5/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-d8b98ecf5/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-d8b98ecf5/stdout.txt",
+      "sha256": "05cd72584b331ae43de1faa303f254ec395d92c2082dd860d7fdb490b9e9fd3a",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-f8da74e31/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-f8da74e31/receipt-start.json",
+      "sha256": "853e0e24462a8a95dcec0d25ca0408f14e90b88ae3d09cdb14a8b5ae7fd517a3",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-f8da74e31/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-f8da74e31/receipt.json",
+      "sha256": "248f28e132e7913ed411ddf729f2607c1559f160689d47f118771b1876fecd81",
+      "bytes": 484236
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-f8da74e31/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-f8da74e31/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/identity-f8da74e31/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/identity-f8da74e31/stdout.txt",
+      "sha256": "eab1ebbf509829cd7fb8a9f2aabb35da31317bfff5f68b324e53f8ebe732a0db",
+      "bytes": 41
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/index-read.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/index-read.json",
+      "sha256": "a3615b6477f63bdacc4f63bd398a9e27899fc7716a2ab6ed738c5123defd039e",
+      "bytes": 2729
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/integration-history/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/integration-history/receipt-start.json",
+      "sha256": "44fe72b33bc7724714c37af1466300696d10dca08159edca7f2b7404cc44b2f4",
+      "bytes": 242370
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/integration-history/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/integration-history/receipt.json",
+      "sha256": "14308a1b89d8319dc4143cdf3ee8be7a6df3cc9c9eca46d0934ac854815afac7",
+      "bytes": 484240
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/integration-history/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/integration-history/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/integration-history/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/integration-history/stdout.txt",
+      "sha256": "46fddf1459bd2ae3a8db5b462642e0aa67ad159693a63460a20c7f93d09e2b48",
+      "bytes": 1255
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/owned-runtime-diff/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/owned-runtime-diff/receipt-start.json",
+      "sha256": "0ab45c5d37cfc1679c4811f1944630ef0b7a019a25958ad0496ff5cc3d41beef",
+      "bytes": 242550
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/owned-runtime-diff/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/owned-runtime-diff/receipt.json",
+      "sha256": "53e57dcd5e34cb73c33eecace9099f7a9e26e522a643b548b07da62ad31438d6",
+      "bytes": 484420
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/owned-runtime-diff/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/owned-runtime-diff/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/owned-runtime-diff/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/owned-runtime-diff/stdout.txt",
+      "sha256": "1ee6f6f517f9f8f0aff35a55f1f239338cc8ca73d8fcbafe290cb4dafe3003ab",
+      "bytes": 3106
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/portable-restoration-validation.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/portable-restoration-validation.json",
+      "sha256": "38f882c3d14d69e086d52c6e51f848d250d2d6d7ed88c6d3cd2b8304812f7d4a",
+      "bytes": 7398
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/proof_helpers.py",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/proof_helpers.py",
+      "sha256": "53ef19f448eb8f8de0c5d46b3eaf7290686ffeeacdea485704af59619c89c2f1",
+      "bytes": 2683
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/report.md",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/report.md",
+      "sha256": "d2560110e9f3ae3bfa22df00b3c6e5d235002c21464944475d373896e5cb69ab",
+      "bytes": 10888
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/result-counts.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/result-counts.json",
+      "sha256": "3f865bc7cb13490b158561246b5adaf7c07563866e28491f4ede164ff7a19ba3",
+      "bytes": 9677
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/runtime-binary-hashes.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/runtime-binary-hashes.json",
+      "sha256": "895675cbf8866393fecac73b4b16bcdda5408ab1b1aff0803e5288017b84bdf5",
+      "bytes": 237
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/runtime-epoch-diff/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/runtime-epoch-diff/receipt-start.json",
+      "sha256": "cc88021a23fb13765b9bc0b6803eda405277f06eac25a6aaecd195a4b27c4e91",
+      "bytes": 242514
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/runtime-epoch-diff/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/runtime-epoch-diff/receipt.json",
+      "sha256": "adb4bac12aa3ec397eeb52d1a25cbb663b417d002583f20d74f9edd33c295e9f",
+      "bytes": 484383
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/runtime-epoch-diff/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/runtime-epoch-diff/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/runtime-epoch-diff/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/runtime-epoch-diff/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/rust-readability.md",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/rust-readability.md",
+      "sha256": "aa37fbc373f32cc4cca54b745a24f32ac786f398350c963bbf3204c5ac15df37",
+      "bytes": 1486
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/scope-delta.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/scope-delta.json",
+      "sha256": "fa8eb07da2021edd045e55ee24f8af2fd7615b5f4636bde1b252d61a4a778477",
+      "bytes": 424
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/scope-final.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/scope-final.json",
+      "sha256": "f82543f5114648d0cd520be78f0137e3f5c1aeeecc4cd4437acc6e8e7d058aa2",
+      "bytes": 241608
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/scope-initial.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/scope-initial.json",
+      "sha256": "0df63daf21a20208b8ef4f00b6b74624e064a2eb4b146a03979e648e7a146c07",
+      "bytes": 241608
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/worktree-state/receipt-start.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/worktree-state/receipt-start.json",
+      "sha256": "137757930af451d9a1ef3cbbef80f3cc56a89fe904c967b0b782e171e2a43537",
+      "bytes": 242366
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/worktree-state/receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/worktree-state/receipt.json",
+      "sha256": "a944d0cca2eb40d99db7965ddda31663ebc7c3d21c4e60ec1c06e8207c5bf05c",
+      "bytes": 484235
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/worktree-state/stderr.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/worktree-state/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/era1132-retail-redirect-independent/worktree-state/stdout.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/worktree-state/stdout.txt",
+      "sha256": "d6fce39aa8b8ff0023679625c19b6bad48a568e3580dfd69f1d1ebea69c66036",
+      "bytes": 2071
+    }
+  ]
+}

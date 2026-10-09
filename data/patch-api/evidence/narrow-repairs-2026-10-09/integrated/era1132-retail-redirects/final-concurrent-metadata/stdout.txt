@@ -1,0 +1,45 @@
+a9d2433b6b113aca7ab3e2505c5548a59b4f0445 f2eebd359a18c127ac228a4750157414086b13d2 85dd495308f59498176c68568382c191784eede5 Integrate historical Retail 1.10.0 frozen redirect audit
+
+ .../evidence/1.10.0-session-2026-10-09/.gitignore  |    1 +
+ .../evidence/1.10.0-session-2026-10-09/HANDOFF.md  |   32 +
+ .../evidence/1.10.0-session-2026-10-09/REPLAY.md   |   17 +
+ .../evidence/1.10.0-session-2026-10-09/audit.py    |  257 ++++
+ .../evidence/1.10.0-session-2026-10-09/capture.log |    0
+ .../copied-source-green.log                        |   10 +
+ .../1.10.0-session-2026-10-09/default-errors.json  |   14 +
+ .../1.10.0-session-2026-10-09/default-extract.txt  |    1 +
+ .../default-generator.log                          |    0
+ .../default-register.json                          |   11 +
+ .../1.10.0-session-2026-10-09/frozen-manifest.json |  919 +++++++++++++
+ .../1.10.0-session-2026-10-09/frozen-registry.json |  714 ++++++++++
+ .../evidence/1.10.0-session-2026-10-09/green.log   |   10 +
+ .../historical-replay.log                          |   18 +
+ .../extract_patch_non_inventory.py                 |  499 +++++++
+ .../gen_patch_wikitext_register.py                 | 1454 ++++++++++++++++++++
+ .../later-proof-ledger.json                        |  246 ++++
+ .../evidence/1.10.0-session-2026-10-09/ledger.json |  433 ++++++
+ .../original-docs/patch-1-10-0-api-audit.md        |   37 +
+ .../patch-1-10-0-source-accounting.md              |   35 +
+ .../portable-context.json                          |   17 +
+ .../1.10.0-session-2026-10-09/portable-green.log   |    8 +
+ .../1.10.0-session-2026-10-09/portable-proof.json  |   52 +
+ .../1.10.0-session-2026-10-09/portable-red.log     |   47 +
+ .../1.10.0-session-2026-10-09/proof-ledger.json    |  131 ++
+ .../1.10.0-session-2026-10-09/receipt-seals.json   |    9 +
+ .../1.10.0-session-2026-10-09/red-scaffold.py      |    9 +
+ .../red-test_source_accounting.py                  |  120 ++
+ .../evidence/1.10.0-session-2026-10-09/red.log     |   77 ++
+ .../reference-provenance.json                      |   19 +
+ .../replay-archive.tar.gz                          |  Bin 0 -> 49534 bytes
+ .../retention-review.json                          |   40 +
+ .../evidence/1.10.0-session-2026-10-09/seals.json  |   27 +
+ .../1.10.0-session-2026-10-09/source-pin.json      |   14 +
+ .../1.10.0-session-2026-10-09/source-response.json |    1 +
+ .../1.10.0-session-2026-10-09/source.wikitext      |    1 +
+ .../1.10.0-session-2026-10-09/test_portable.py     |  123 ++
+ .../test_source_accounting.py                      |  127 ++
+ docs/specs/patch-1-10-0-source-accounting.md       |   35 +
+ docs/wiki/index.md                                 |    4 +
+ docs/wiki/investigations/patch-1-10-0-api-audit.md |   41 +
+ docs/wiki/log.md                                   |    4 +
+ 42 files changed, 5614 insertions(+)

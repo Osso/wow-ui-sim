@@ -1,0 +1,85 @@
+f2eebd359a18c127ac228a4750157414086b13d2 3d1a4140734c9fbc82cd3ec6dfaf0536767a9edd Scope historical TransmogSituation assertions to 12.0.0
+
+M	docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
+M	docs/wiki/log.md
+M	src/loader/tests/wow_api_globals/transmog_situation.rs
+3d1a4140734c9fbc82cd3ec6dfaf0536767a9edd 43d9ce02e91bcfeb9f70993a325df50fe1ec1f08 c6fec74a139db330b2222ac6f915c41f98d80fff Integrate historical Retail 1.10.1 frozen redirect audit
+c6fec74a139db330b2222ac6f915c41f98d80fff cb9c8e5d865ee7c69e9b1f74e34c8618d9575552 Retain Patch 1.10.1 portable replay receipts and handoff
+
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/HANDOFF.md
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/completion-summary.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/copied-source-green.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/historical-replay.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/later-proof-ledger.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/portable-context.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/portable-green.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/portable-proof.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/receipt-seals.json
+M	docs/specs/patch-1-10-1-source-accounting.md
+M	docs/wiki/index.md
+M	docs/wiki/investigations/patch-1-10-1-api-audit.md
+M	docs/wiki/log.md
+43d9ce02e91bcfeb9f70993a325df50fe1ec1f08 f8da74e315acd21a0af85512598b27c25da6fd23 Preserve failed Mists command capture without gate credit
+
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/cast_bar_respects_edit_mode_lock_setting_after_startup_fix.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/env_with_blizzard_ui_from.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/env_with_full_blizzard_ui.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/final-scope.json
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/fire_startup_events.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/initial-scope.json
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/ledger.json
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/load_runtime_game_ui.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/main-retention.json
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/mainline_spellbook_keybind_opens_and_closes_without_runtime_errors.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/preservation-audit.json
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/report.md
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/setup_env.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/test_chat_editbox_click_type_and_submit.diff
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/mists-capture-failure/test_chat_editbox_text_color_after_activation.diff
+M	docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
+M	docs/wiki/log.md
+cb9c8e5d865ee7c69e9b1f74e34c8618d9575552 3c927000fd6203425492188f5417be223bf136da Seal Patch 1.10.1 SOURCE development proof and replay archive
+
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/REPLAY.md
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/default-capture.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/default-generator.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/green.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/ledger-capture.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/original-docs/audit.md
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/original-docs/spec.md
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/portable-red.log
+M	data/patch-api/evidence/1.10.1-session-2026-10-09/proof-ledger.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/red.log
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/replay-archive.tar.gz
+M	data/patch-api/evidence/1.10.1-session-2026-10-09/retention-review.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/seals.json
+M	docs/specs/patch-1-10-1-source-accounting.md
+M	docs/wiki/index.md
+M	docs/wiki/investigations/patch-1-10-1-api-audit.md
+M	docs/wiki/log.md
+3c927000fd6203425492188f5417be223bf136da e14488aaaed19d49038d366630768cec3d4b23f6 Account frozen Patch 1.10.1 redirect source
+
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/.gitignore
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/audit.py
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/capture_defaults.py
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/default-errors.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/default-extract.txt
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/default-register.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/frozen-manifest.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/frozen-registry.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/historical-tools/extract_patch_non_inventory.py
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/ledger.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/proof-ledger.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/red-scaffold.py
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/reference-provenance.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/retention-review.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/source-pin.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/source-response.json
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/source.wikitext
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/test_portable.py
+A	data/patch-api/evidence/1.10.1-session-2026-10-09/test_source_accounting.py
+A	docs/specs/patch-1-10-1-source-accounting.md
+M	docs/wiki/index.md
+A	docs/wiki/investigations/patch-1-10-1-api-audit.md
+M	docs/wiki/log.md

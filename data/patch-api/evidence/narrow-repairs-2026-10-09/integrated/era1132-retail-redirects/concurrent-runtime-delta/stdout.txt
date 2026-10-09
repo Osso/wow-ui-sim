@@ -1,0 +1,13 @@
+diff --git a/src/loader/tests/wow_api_globals/transmog_situation.rs b/src/loader/tests/wow_api_globals/transmog_situation.rs
+index f872027c6..da7745076 100644
+--- a/src/loader/tests/wow_api_globals/transmog_situation.rs
++++ b/src/loader/tests/wow_api_globals/transmog_situation.rs
+@@ -1,6 +1,7 @@
+ //! Startup publication and values for the 12.0.0 TransmogSituation enum.
+ 
+-#![cfg(feature = "retail-12-0-0")]
++// Later cumulative epochs publish additional members and different metadata.
++#![cfg(all(feature = "retail-12-0-0", not(feature = "retail-12-0-5")))]
+ 
+ use super::super::*;
+ 
