@@ -1,0 +1,66 @@
+{
+  "schema": "bounded-development-proof/v1",
+  "base_revision": "dd8ca0f19e9f0172851116a7bfae43792a1b78b4",
+  "proofs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "scope": "initial test fixture; validator absent",
+      "result": "RED 5/5 expected assertions",
+      "log": "source-red.log",
+      "invalidated_by": "validator implementation; retained development RED, not current pass"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "revision": "3045ccee9494e5ce4c09dd9f0c23e0f0bbb4043c",
+      "scope": "own SOURCE fixture and frozen ledger; 279 individual omission controls; no runtime/native",
+      "result": "GREEN 5/5; exit0",
+      "log": "source-green.log",
+      "invalidated_by": null
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/replay_controls.py"
+      ],
+      "revision": "aed5d9bae",
+      "scope": "portable fixture before seals creation",
+      "result": "RED 1/1 expected assertion: historical seals are missing",
+      "log": "portable-red.log",
+      "invalidated_by": "seals creation; development RED only"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py"
+      ],
+      "revision": "4f7a2c79797b95402e703e7e10ad87d677a3d926",
+      "scope": "historical response/body/registry/extract/complete literal ledger replay",
+      "result": "exit0; 19sealed inputs",
+      "log": "validator-green.log",
+      "invalidated_by": null
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/replay_controls.py"
+      ],
+      "revision": "4f7a2c79797b95402e703e7e10ad87d677a3d926",
+      "scope": "relocated no-Git/no-target; foreign/queued mutable state ignored; serialized ledger/log rejection and SHA256/output restoration",
+      "result": "GREEN1/1 exit0",
+      "log": "portable-green.log",
+      "invalidated_by": null
+    }
+  ],
+  "current_proof_applicability": "SOURCE validator/tests and all19sealed inputs unchanged since recorded proof; later receipt/docs-only additions do not invalidate it. Main owns runtime/native/integration/final gates."
+}

@@ -1,6 +1,9 @@
 ## [2026-10-09] documentation | Bounded retail 3.1.0/3.0.8/3.0.3/3.0.2 proof status
 
 Updated only named audit/spec status paragraphs and index; immutable historical receipts/counts retained. Current proof SSOT: [3.1.0](investigations/patch-3-1-0-api-audit.md#main-successor-integration--2026-10-09), [3.0.8](investigations/patch-3-0-8-api-audit.md#main-successor-integration--2026-10-09), [3.0.3](investigations/patch-3-0-3-api-audit.md#main-successor-integration--2026-10-09), [3.0.2](investigations/patch-3-0-2-api-audit.md#main-successor-integration--2026-10-09), linking retained independent reports. Full suite `614402d56` remains FAIL with unchanged failure sets/zero new delta, not acceptance; passing exact sweeps do not cover latest HEAD. Recorded-option/default replay revisions stay explicit. 3.0.3 factory still UNMERGED; 3.0.2 factory pending; synchronization/all-behavior/native gates remain open. Docs-only at starting `cac924710`; no tests, checks, network or operations.
+## [2026-10-09] investigation | Historical retail Patch 2.2.0 SOURCE audit
+
+[Audit](investigations/patch-2-2-0-api-audit.md): frozen source/registry identity and literal accounting added; owned SOURCE RED5/5, shared generator/extractor unchanged. Initial implementation committed before targeted SOURCE GREEN5/5 at3045ccee9; historical replay/portable GREEN1/1 at4f7a2c797 with19seals, copied no-Git/no-target and two serialized ledger/log seal rejections/restorations. Archive317490bytes/max109178bytes; all native/model contracts UNPROVEN. Main owns integration/final gates.
 
 ## [2026-10-09] measurement | Separate Wrath 3.4.1 bare factory
 

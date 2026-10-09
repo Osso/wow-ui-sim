@@ -1,0 +1,55 @@
+test_all_serialized_accounting_required (__main__.SourceAccounting.test_all_serialized_accounting_required) ... FAIL
+test_counts_and_literal_headers (__main__.SourceAccounting.test_counts_and_literal_headers) ... FAIL
+test_event_family_cvar_and_replaced_functions_limits (__main__.SourceAccounting.test_event_family_cvar_and_replaced_functions_limits) ... FAIL
+test_literal_optional_and_split_signatures_not_reconstructed (__main__.SourceAccounting.test_literal_optional_and_split_signatures_not_reconstructed) ... FAIL
+test_no_invented_native_or_foreign_supersession (__main__.SourceAccounting.test_no_invented_native_or_foreign_supersession) ... FAIL
+
+======================================================================
+FAIL: test_all_serialized_accounting_required (__main__.SourceAccounting.test_all_serialized_accounting_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p220-source/data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(path.exists(), "2.2.0 historical validator is missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : 2.2.0 historical validator is missing
+
+======================================================================
+FAIL: test_counts_and_literal_headers (__main__.SourceAccounting.test_counts_and_literal_headers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p220-source/data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(path.exists(), "2.2.0 historical validator is missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : 2.2.0 historical validator is missing
+
+======================================================================
+FAIL: test_event_family_cvar_and_replaced_functions_limits (__main__.SourceAccounting.test_event_family_cvar_and_replaced_functions_limits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p220-source/data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(path.exists(), "2.2.0 historical validator is missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : 2.2.0 historical validator is missing
+
+======================================================================
+FAIL: test_literal_optional_and_split_signatures_not_reconstructed (__main__.SourceAccounting.test_literal_optional_and_split_signatures_not_reconstructed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p220-source/data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(path.exists(), "2.2.0 historical validator is missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : 2.2.0 historical validator is missing
+
+======================================================================
+FAIL: test_no_invented_native_or_foreign_supersession (__main__.SourceAccounting.test_no_invented_native_or_foreign_supersession)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p220-source/data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(path.exists(), "2.2.0 historical validator is missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : 2.2.0 historical validator is missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (failures=5)

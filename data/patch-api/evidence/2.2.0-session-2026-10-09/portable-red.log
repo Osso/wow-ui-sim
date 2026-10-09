@@ -1,0 +1,15 @@
+test_copied_no_git_no_target_and_serialized_tamper_restore (__main__.PortableSource.test_copied_no_git_no_target_and_serialized_tamper_restore) ... FAIL
+
+======================================================================
+FAIL: test_copied_no_git_no_target_and_serialized_tamper_restore (__main__.PortableSource.test_copied_no_git_no_target_and_serialized_tamper_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p220-source/data/patch-api/evidence/2.2.0-session-2026-10-09/replay_controls.py", line 21, in test_copied_no_git_no_target_and_serialized_tamper_restore
+    self.assertTrue((EVIDENCE / "seals.json").exists(), "historical seals are missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical seals are missing
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
