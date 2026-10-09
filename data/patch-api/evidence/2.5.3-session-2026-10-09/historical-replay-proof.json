@@ -1,0 +1,40 @@
+{
+  "schema": "historical-source-replay/v1",
+  "revision": "08e9278b4",
+  "proof_ledger": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.5.3-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p253-source",
+      "scope": "Original 37 sealed source/tool/configuration/test/RED-GREEN-log inputs; full-row/register/contract reproduction, not runtime.",
+      "exit": 0,
+      "result": {
+        "configured_profiles": 7,
+        "contracts": 50,
+        "cvar_defaults": 15,
+        "explicit_signatures": 0,
+        "headers": 8,
+        "inventory_occurrences": 49,
+        "linked_contracts": 4,
+        "model_observations": 0,
+        "native_observations": 0,
+        "runtime_observations": 0,
+        "sealed_inputs": 37,
+        "source_rows": 103,
+        "statuses": {
+          "UNPROVEN": 50,
+          "metadata-only": 53
+        },
+        "summary_contracts": 1,
+        "transclusions": 0,
+        "unspecified_callable_signatures": 25
+      },
+      "log": "validator.log",
+      "invalidated_by": null
+    }
+  ],
+  "later_changes": "Only added historical receipts/seals/doc updates. Original 37 input hashes remain unchanged."
+}

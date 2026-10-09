@@ -35,5 +35,7 @@
   "data/patch-api/sources/2.5.3-api-changes.txt": "4df3fd26e2a6f8667fdc0894e6f760338fc99bf68e7eebf89e83a3b9623c6e72",
   "data/patch-api/sources/2.5.3-api-changes.wikitext": "f922ba1f9ee5e22f6a6c5a70bf8b5fe614b76a2a993ff5ee68149250198a2ca1",
   "data/patch-api/sources/2.5.3-page-coverage.json": "a54fca760866d956e255d1b2697600f2c86f82c7953129fb01605875bb71e6cb",
-  "data/patch-api/sources/2.5.3-wikitext-register.json": "1101f6a2f94751d8bc34765399274890b44667c0f88eba459fbd3d2e35495c1e"
+  "data/patch-api/sources/2.5.3-wikitext-register.json": "1101f6a2f94751d8bc34765399274890b44667c0f88eba459fbd3d2e35495c1e",
+  "data/patch-api/evidence/2.5.3-session-2026-10-09/validator.log": "e085b37a55d233098585e8fb7ea7cc60091b253a5cd1ba168d1996fa1dd7e96b",
+  "data/patch-api/evidence/2.5.3-session-2026-10-09/historical-replay-proof.json": "1c52964542b315e18c228a9956e4b57832277de2ac4efe96d97dcef1ef7970ce"
 }
