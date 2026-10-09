@@ -43,7 +43,30 @@ fn forever_cooldown_categories_initialize_vendor_provider() {
 }
 
 #[test]
-#[cfg(not(feature = "client-wowforever"))]
+#[cfg(all(not(feature = "client-wowforever"), feature = "retail-12-1-0"))]
+fn forever_cooldown_categories_preserve_retail_12_1_0_epoch() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        assert(Enum.CooldownViewerCategory.Essential == 0)
+        assert(Enum.CooldownViewerCategory.Utility == 1)
+        assert(Enum.CooldownViewerCategory.TrackedBuff == 2)
+        assert(Enum.CooldownViewerCategory.TrackedBar == 3)
+        assert(Enum.CooldownViewerCategory.GroupBuff == 4)
+        assert(Enum.CooldownViewerCategory.SpecAgnosticEssential == 5)
+        assert(Enum.CooldownViewerCategory.SpecAgnosticTracked == 6)
+        assert(Enum.CooldownViewerCategory.EquipSlotEssential == 7)
+        assert(Enum.CooldownViewerCategory.EquipSlotTracked == 8)
+        assert(Enum.CooldownViewerCategoryMeta.MinValue == 0)
+        assert(Enum.CooldownViewerCategoryMeta.MaxValue == 8)
+        assert(Enum.CooldownViewerCategoryMeta.NumValues == 9)
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
+#[cfg(all(not(feature = "client-wowforever"), not(feature = "retail-12-1-0")))]
 fn forever_cooldown_categories_preserve_other_profiles() {
     let env = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     env.exec(
@@ -51,6 +74,7 @@ fn forever_cooldown_categories_preserve_other_profiles() {
         assert(Enum.CooldownViewerCategory.Essential == 0)
         assert(Enum.CooldownViewerCategory.TrackedBar == 3)
         assert(Enum.CooldownViewerCategory.EquipSlotEssential == nil)
+        assert(Enum.CooldownViewerCategoryMeta.MinValue == 0)
         assert(Enum.CooldownViewerCategoryMeta.MaxValue == 3)
         assert(Enum.CooldownViewerCategoryMeta.NumValues == 4)
         "#,
