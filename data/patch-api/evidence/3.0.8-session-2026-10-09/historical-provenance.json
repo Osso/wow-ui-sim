@@ -1,0 +1,17 @@
+{
+  "pageid": 95599,
+  "title": "Patch 3.0.8/API changes",
+  "revid": 947144,
+  "timestamp": "2021-12-04T02:32:44Z",
+  "sha256": "4f5b48b4b17c3ddcc3838c61eb015d0d2d18772e323d08733e06ea79d6833417",
+  "fetched": "2026-10-09",
+  "fetch_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=947144&format=json",
+  "generator_flags": [
+    "--legacy-labeled-summaries",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [],
+  "client_line": "retail",
+  "source_kind": "substantive-page"
+}

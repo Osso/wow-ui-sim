@@ -11,6 +11,118 @@
       "revision": "ec600ac7da0a9d44c2dcc43e489c83af0763d74c",
       "scope": "new source test, missing opt-in parser",
       "artifact": "source-red.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_8_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 1,
+      "revision": "186f2ab38e144537c1ce852792dad5a2e37eb9f9",
+      "scope": "literal inventory/default compatibility",
+      "artifact": "source-alias-red.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_8_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 0,
+      "revision": "dae538930d2aec42305973daa39fa8c7f699339b",
+      "scope": "56 literal rows and default compatibility",
+      "artifact": "source-green.log"
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_0_8"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 101,
+      "revision": "b6e30ec1f6104bc1545e6fbe140463901b750d41",
+      "scope": "own discovery and literal empty-handler HookScript; headless native retail",
+      "artifact": "native-discovery.log",
+      "env": {
+        "P308_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p308-source/data/patch-api/evidence/3.0.8-session-2026-10-09/own-sweep-red-results.json"
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_0_8"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 1,
+      "revision": "b6e30ec1f6104bc1545e6fbe140463901b750d41",
+      "scope": "own two cases, default retail features",
+      "artifact": "native-default-red.log",
+      "env": {
+        "P308_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p308-source/data/patch-api/evidence/3.0.8-session-2026-10-09/own-sweep-red-results.json"
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_0_8"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 0,
+      "revision": "0123da79d7f2e957e30bd754ae84d265c83fbc08",
+      "scope": "known-gap fixture and empty-script hook",
+      "artifact": "native-green.log",
+      "env": {
+        "P308_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p308-source/data/patch-api/evidence/3.0.8-session-2026-10-09/own-sweep-green-results.json"
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_0_8_publication_sweep::patch_3_0_8_publication_sweep"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 1,
+      "revision": "0123da79d7f2e957e30bd754ae84d265c83fbc08",
+      "scope": "scratch register negative control; P308_SWEEP_REGISTER=negative-register.json",
+      "artifact": "native-negative.log",
+      "env": {
+        "P308_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p308-source/data/patch-api/evidence/3.0.8-session-2026-10-09/negative-register.json",
+        "P308_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p308-source/data/patch-api/evidence/3.0.8-session-2026-10-09/negative-results.json"
+      }
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_8_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 1,
+      "revision": "0123da79d7f2e957e30bd754ae84d265c83fbc08",
+      "scope": "new relocated fixture, missing own validator",
+      "artifact": "validator-red.log"
     }
   ]
 }

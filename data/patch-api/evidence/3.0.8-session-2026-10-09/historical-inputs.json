@@ -1,0 +1,108 @@
+{
+  "schema": "patch-api-historical-inputs/v1",
+  "patch": "3.0.8",
+  "scope": "immutable source/accounting/development receipts; no runtime replay or native WoW/final acceptance",
+  "base_revision": "ec600ac7da0a9d44c2dcc43e489c83af0763d74c",
+  "sealed_files": {
+    "cache-manifest.json": {
+      "sha256": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "bytes": 51323
+    },
+    "command-ledger.json": {
+      "sha256": "36fc8a29c7adce77d51a43e7f98141bcc65064355b5253aedefdcbf29f30eb7b",
+      "bytes": 4035
+    },
+    "historical-bundle.json.gz": {
+      "sha256": "e51e614af66547c45fe42183eb7450400e755fc12bc6b3010048218145b2077a",
+      "bytes": 301514
+    },
+    "historical-extract.txt": {
+      "sha256": "9342da2cad271e6a4516f26d5c4044332db3a241ea941786909e04be906c49c9",
+      "bytes": 3174
+    },
+    "historical-known-gaps.json": {
+      "sha256": "31ce5d9dbb024399ee19b372c6c990d335c444f0442c3726b5517b0f3171d70a",
+      "bytes": 1425
+    },
+    "historical-page-coverage.json": {
+      "sha256": "a59dda948fc8b1b5042a5a45d407255fad3e519b61e893e599443daa5d92a3c0",
+      "bytes": 95586
+    },
+    "historical-provenance.json": {
+      "sha256": "4674b97b82275ae7eb16e85879b1904a8c95a34b362710f958758ea288081077",
+      "bytes": 561
+    },
+    "historical-register.json": {
+      "sha256": "b6e630ea3023a11c7dcd856a8037f417efcc5b1a18f49575a37b8dd4b82c8b4b",
+      "bytes": 24485
+    },
+    "historical-source.wikitext": {
+      "sha256": "4f5b48b4b17c3ddcc3838c61eb015d0d2d18772e323d08733e06ea79d6833417",
+      "bytes": 4021
+    },
+    "historical-successors.json": {
+      "sha256": "5941d97aea7cd9cba1117ac419cf9c8702a6aa011e9bfbd5f64a9ed595828ba3",
+      "bytes": 4337
+    },
+    "native-default-red.log": {
+      "sha256": "3e7a9ecb7374d7dab06829dce2e6658d386a43c71b24295af79b3df80a296bda",
+      "bytes": 29891
+    },
+    "native-discovery.log": {
+      "sha256": "42c97fd94b68a0c0414964e6a2badd3206b35a43b6b40cd0b51d1fc90d9eddf4",
+      "bytes": 27199
+    },
+    "native-green.log": {
+      "sha256": "ec40633b99ed2e65b92518caddb2ab40f1a1798fc97765a98e4af715e92a359c",
+      "bytes": 10354
+    },
+    "native-negative.log": {
+      "sha256": "40bc6101a8b12be2adcf4780ab3ff06dfb66f7119a0dd92649a30de350582230",
+      "bytes": 16472
+    },
+    "negative-register.json": {
+      "sha256": "6f16537126d6f3d3e4a89a231e6f195b145016a551fa581d44d7a6c63a8823f5",
+      "bytes": 24497
+    },
+    "negative-results.json": {
+      "sha256": "7069e0fb406e9fb93ed79814943d3b1ae814dc6f9ecc91af817885ca403443f5",
+      "bytes": 26468
+    },
+    "own-sweep-green-results.json": {
+      "sha256": "f37e672a56f162a1a41051f1365d850760cf2c4a1f58ec1dcc7fa3b5531fd7e7",
+      "bytes": 26465
+    },
+    "own-sweep-red-results.json": {
+      "sha256": "f37e672a56f162a1a41051f1365d850760cf2c4a1f58ec1dcc7fa3b5531fd7e7",
+      "bytes": 26465
+    },
+    "queued-overlaps.json": {
+      "sha256": "15cb51bb82d5955daa9529edf0ce86493512ff1a238f20ef472e581a16bee576",
+      "bytes": 563
+    },
+    "source-alias-red.log": {
+      "sha256": "2ac67f4b94898940e60059d350b97905916a9e51e57f70f336a60009dce026a9",
+      "bytes": 1104
+    },
+    "source-green.log": {
+      "sha256": "df38e98fa8f7b2524710a568bf024ee062161c76828f58ddcb11757001982267",
+      "bytes": 98
+    },
+    "source-pin.json": {
+      "sha256": "382c1f2b365c07a39ecd39662d9bdfa8e3894a5df17dc8df261726150cd7d505",
+      "bytes": 723
+    },
+    "source-red.log": {
+      "sha256": "833697bc1797bdaab14725074575b2b2511441117a43dfaf6a7901208a1dc5ae",
+      "bytes": 3160
+    },
+    "source-response.json": {
+      "sha256": "942182a99e1fdc05ad376845f2608c02a84e359670ea3291e28f28fb65a5d0b4",
+      "bytes": 4371
+    },
+    "validator-red.log": {
+      "sha256": "1fb2051c56ddcf86f32de44b0f48ea9247611cff4b33f9aea622f4b6d2dfbb99",
+      "bytes": 798
+    }
+  }
+}

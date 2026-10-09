@@ -1,0 +1,23 @@
+F
+======================================================================
+FAIL: test_opt_in_literal_rows_and_default_compatibility (__main__.SourceTests.test_opt_in_literal_rows_and_default_compatibility)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p308-source/tools/test_patch_3_0_8_source.py", line 30, in test_opt_in_literal_rows_and_default_compatibility
+    self.assertEqual([r['symbol'] for r in rows[:2]],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ['ScriptObject:HookScript', 'ScriptObject:SetScript'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['HookScript', 'SetScript'] != ['ScriptObject:HookScript', 'ScriptObject:SetScript']
+
+First differing element 0:
+'HookScript'
+'ScriptObject:HookScript'
+
+- ['HookScript', 'SetScript']
++ ['ScriptObject:HookScript', 'ScriptObject:SetScript']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.061s
+
+FAILED (failures=1)

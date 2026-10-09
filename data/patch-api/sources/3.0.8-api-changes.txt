@@ -1,0 +1,75 @@
+Patch 3.0.8 API changes
+
+== General changes ==
+* ScriptObject:HookScript() will now function like ScriptObject:SetScript() if there is no script currently on the object.
+* Both Dropdown menus and the Vehicle Action Bar have been made less susceptible to taint.
+* Lua closures can now be directly assigned to widget script handlers from XML using the following new format: . The old format will continue to be supported indefinitely.
+* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName("token") instead. These functions include: AddFriend, RemoveFriend, SetFriendNotes, AddMute, DelMute, AddIgnore, DelIgnore, InviteUnit, UninviteUnit, GuildInvite, GuildUninvite, GuildPromote, GuildDemote, GuildSetLeaderByName, CalenderEventInvite.
+* The secure handlers system was restricted with respect to OnUpdate/Timer handling and the ability to react to frame visibility. There is a new SetupAnimation method that addresses some of the restrictions. This change unfortunately removed some otherwise useful functionality around auto-hiding frames (and animation) but hopefully a future patch will address this.
+
+== Widget API ==
+=== Frame Methods ===
+
+* NEW - depth = Frame:GetDepth()
+* NEW - depth = Frame:GetEffectiveDepth()
+* NEW - Frame:IgnoreDepth(ignoreFlag)
+* NEW - ignoreFlag = Frame:IsIgnoringDepth()
+* NEW - Frame:SetDepth(depth)
+
+=== ScrollingMessageFrame ===
+* NEW - enableFlag = Frame:GetHyperlinksEnabled()
+* NEW - Frame:SetHyperlinksEnabled(enableFlag)
+
+=== SimpleHTML ===
+* NEW - enableFlag = Frame:GetHyperlinksEnabled()
+* NEW -Frame:SetHyperlinksEnabled(enableFlag)
+
+== API ==
+
+=== Calendar ===
+
+* NEW - CalendarContextDeselectEvent()
+* NEW - monthOfs, eventDay, eventIndex = CalendarContextGetEventIndex()
+* NEW - CalendarContextSelectEvent(monthOfs, eventDay, eventIndex)
+* NEW - OpenCalendar()
+
+=== Stereo Video ===
+* NEW - available = IsStereoVideoAvailable()
+* NEW - RestoreVideoStereoDefaults()
+* See also the gxStereoEnabled, gxStereoConvergence, gxStereoSeparation CVars
+
+=== Chat Management ===
+* NEW - SetChatWindowUninteractable(id, isUninteractable)
+
+=== Glyphs ===
+* NEW - link = GetGlyphLink(glyphId)
+
+=== Debugging ===
+* NEW - ConsoleAddMessage(message)
+
+=== Unknown ===
+* NEW - GetArenaTeamGdfInfo
+* NEW - ResurrectGetOfferer
+* NEW - TargetTotem
+
+=== Secure Handlers ===
+* REMOVED - SecureHandlerShowHideTemplate
+* NEW - SecureHandlerMouseUpDownTemplate
+* NEW - SecureHandlerMouseWheelTemplate
+
+* REMOVED - FrameHandle:IsShown()
+* REMOVED - FrameHandle:IsVisible()
+* REMOVED - FrameHandle:GetWidth()
+* REMOVED - FrameHandle:GetHeight()
+* REMOVED - FrameHandle:GetRect()
+* REMOVED - FrameHandle:GetScale()
+* REMOVED - FrameHandle:GetEffectiveScale()
+
+* Removed ability to wrap OnShow / OnHide
+
+* REMOVED - Control:SetTimer(elapsed, message, body)
+* REMOVED - Control:GetTIme()
+* REMOVED - Control:SetAnimating(flag, body)
+* REMOVED - Control:IsAnimating()
+
+* NEW - SetUpAnimation(frame, updateFunc, posBody, totalTime, postFunc, reverse) - Sets the current 'animation' function for the frame (Available update functions are Show, Hide, SetPoint, SetScale, SetHeight, SetWidth, SetAlpha)

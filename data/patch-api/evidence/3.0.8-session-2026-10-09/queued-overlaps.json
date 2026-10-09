@@ -1,0 +1,17 @@
+{
+  "3.1.0": {
+    "literal_name_mentions_only": [
+      "GetGlyphLink",
+      "SetUpAnimation"
+    ],
+    "limit": "Queued page register/direction not integrated; name mention is not supersession or behavior proof."
+  },
+  "3.2.0": {
+    "literal_name_mentions_only": [],
+    "limit": "Queued page register/direction not integrated; name mention is not supersession or behavior proof."
+  },
+  "3.3.0": {
+    "literal_name_mentions_only": [],
+    "limit": "Queued page register/direction not integrated; name mention is not supersession or behavior proof."
+  }
+}

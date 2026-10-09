@@ -1,0 +1,514 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "3.0.8",
+  "source": {
+    "path": "data/patch-api/sources/3.0.8-api-changes.wikitext",
+    "revid": 947144,
+    "sha256": "4f5b48b4b17c3ddcc3838c61eb015d0d2d18772e323d08733e06ea79d6833417"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-widgets-ScriptObject:HookScript-4",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScriptObject:HookScript",
+      "annotation": "* {{api|t=w|ScriptObject:HookScript|HookScript}}() will now function like {{api|t=w|ScriptObject:SetScript|SetScript}}() if there is no script currently on the object. ",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-widgets-ScriptObject:SetScript-4",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScriptObject:SetScript",
+      "annotation": "* {{api|t=w|ScriptObject:HookScript|HookScript}}() will now function like {{api|t=w|ScriptObject:SetScript|SetScript}}() if there is no script currently on the object. ",
+      "wikitext_line": 4
+    },
+    {
+      "id": "p308-negative-control",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P308DefinitelyMissingGlobal",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-RemoveFriend-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "RemoveFriend",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-SetFriendNotes-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SetFriendNotes",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-AddMute-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "AddMute",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-DelMute-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "DelMute",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-AddIgnore-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "AddIgnore",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-DelIgnore-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "DelIgnore",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-InviteUnit-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "InviteUnit",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-UninviteUnit-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UninviteUnit",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-GuildInvite-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GuildInvite",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-GuildUninvite-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GuildUninvite",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-GuildPromote-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GuildPromote",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-GuildDemote-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GuildDemote",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-GuildSetLeaderByName-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GuildSetLeaderByName",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-CalenderEventInvite-7",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "CalenderEventInvite",
+      "annotation": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-widgets-Frame:GetDepth-13",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:GetDepth",
+      "annotation": "* NEW - depth = {{api|t=w|Frame:GetDepth()}}",
+      "wikitext_line": 13,
+      "signature": "Frame:GetDepth()",
+      "returns": "depth"
+    },
+    {
+      "id": "wt-widgets-Frame:GetEffectiveDepth-14",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:GetEffectiveDepth",
+      "annotation": "* NEW - depth = {{api|t=w|Frame:GetEffectiveDepth()}}",
+      "wikitext_line": 14,
+      "signature": "Frame:GetEffectiveDepth()",
+      "returns": "depth"
+    },
+    {
+      "id": "wt-widgets-Frame:IgnoreDepth-15",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:IgnoreDepth",
+      "annotation": "* NEW - {{api|t=w|Frame:IgnoreDepth(ignoreFlag)}}",
+      "wikitext_line": 15,
+      "signature": "Frame:IgnoreDepth(ignoreFlag)"
+    },
+    {
+      "id": "wt-widgets-Frame:IsIgnoringDepth-16",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:IsIgnoringDepth",
+      "annotation": "* NEW - ignoreFlag = {{api|t=w|Frame:IsIgnoringDepth()}}",
+      "wikitext_line": 16,
+      "signature": "Frame:IsIgnoringDepth()",
+      "returns": "ignoreFlag"
+    },
+    {
+      "id": "wt-widgets-Frame:SetDepth-17",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetDepth",
+      "annotation": "* NEW - {{api|t=w|Frame:SetDepth(depth)}}",
+      "wikitext_line": 17,
+      "signature": "Frame:SetDepth(depth)"
+    },
+    {
+      "id": "wt-widgets-ScrollingMessageFrame:GetHyperlinksEnabled-20",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScrollingMessageFrame:GetHyperlinksEnabled",
+      "annotation": "* NEW - enableFlag = {{api|t=w|Frame:GetHyperlinksEnabled()|ScrollingMessageFrame:GetHyperlinksEnabled}}",
+      "wikitext_line": 20,
+      "signature": "Frame:GetHyperlinksEnabled()",
+      "returns": "enableFlag"
+    },
+    {
+      "id": "wt-widgets-ScrollingMessageFrame:SetHyperlinksEnabled-21",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScrollingMessageFrame:SetHyperlinksEnabled",
+      "annotation": "* NEW - {{api|t=w|Frame:SetHyperlinksEnabled(enableFlag)|ScrollingMessageFrame:SetHyperlinksEnabled}}",
+      "wikitext_line": 21,
+      "signature": "Frame:SetHyperlinksEnabled(enableFlag)"
+    },
+    {
+      "id": "wt-widgets-SimpleHTML:GetHyperlinksEnabled-24",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "SimpleHTML:GetHyperlinksEnabled",
+      "annotation": "* NEW - enableFlag = {{api|t=w|Frame:GetHyperlinksEnabled()|SimpleHTML:GetHyperlinksEnabled}}",
+      "wikitext_line": 24,
+      "signature": "Frame:GetHyperlinksEnabled()",
+      "returns": "enableFlag"
+    },
+    {
+      "id": "wt-widgets-SimpleHTML:SetHyperlinksEnabled-25",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "SimpleHTML:SetHyperlinksEnabled",
+      "annotation": "* NEW -{{api|t=w|Frame:SetHyperlinksEnabled(enableFlag)|SimpleHTML:SetHyperlinksEnabled}}",
+      "wikitext_line": 25,
+      "signature": "Frame:SetHyperlinksEnabled(enableFlag)"
+    },
+    {
+      "id": "wt-global-api-CalendarContextDeselectEvent-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextDeselectEvent",
+      "annotation": "* NEW - {{api|CalendarContextDeselectEvent()}}",
+      "wikitext_line": 31,
+      "signature": "CalendarContextDeselectEvent()"
+    },
+    {
+      "id": "wt-global-api-CalendarContextGetEventIndex-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextGetEventIndex",
+      "annotation": "* NEW - monthOfs, eventDay, eventIndex = {{api|CalendarContextGetEventIndex()}}",
+      "wikitext_line": 32,
+      "signature": "CalendarContextGetEventIndex()",
+      "returns": "monthOfs, eventDay, eventIndex"
+    },
+    {
+      "id": "wt-global-api-CalendarContextSelectEvent-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextSelectEvent",
+      "annotation": "* NEW - {{api|CalendarContextSelectEvent(monthOfs, eventDay, eventIndex)}}",
+      "wikitext_line": 33,
+      "signature": "CalendarContextSelectEvent(monthOfs, eventDay, eventIndex)"
+    },
+    {
+      "id": "wt-global-api-OpenCalendar-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "OpenCalendar",
+      "annotation": "* NEW - {{api|OpenCalendar()}}",
+      "wikitext_line": 34,
+      "signature": "OpenCalendar()"
+    },
+    {
+      "id": "wt-global-api-IsStereoVideoAvailable-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsStereoVideoAvailable",
+      "annotation": "* NEW - available = {{api|IsStereoVideoAvailable()}}",
+      "wikitext_line": 37,
+      "signature": "IsStereoVideoAvailable()",
+      "returns": "available"
+    },
+    {
+      "id": "wt-global-api-RestoreVideoStereoDefaults-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RestoreVideoStereoDefaults",
+      "annotation": "* NEW - {{api|RestoreVideoStereoDefaults()}}",
+      "wikitext_line": 38,
+      "signature": "RestoreVideoStereoDefaults()"
+    },
+    {
+      "id": "wt-cvars-gxStereoEnabled-39",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "gxStereoEnabled",
+      "annotation": "* See also the {{api|t=c|gxStereoEnabled}}, {{api|t=c|gxStereoConvergence}}, {{api|t=c|gxStereoSeparation}} CVars ",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-cvars-gxStereoConvergence-39",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "gxStereoConvergence",
+      "annotation": "* See also the {{api|t=c|gxStereoEnabled}}, {{api|t=c|gxStereoConvergence}}, {{api|t=c|gxStereoSeparation}} CVars ",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-cvars-gxStereoSeparation-39",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "gxStereoSeparation",
+      "annotation": "* See also the {{api|t=c|gxStereoEnabled}}, {{api|t=c|gxStereoConvergence}}, {{api|t=c|gxStereoSeparation}} CVars ",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-SetChatWindowUninteractable-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetChatWindowUninteractable",
+      "annotation": "* NEW - {{api|SetChatWindowUninteractable(id, isUninteractable)}}",
+      "wikitext_line": 42,
+      "signature": "SetChatWindowUninteractable(id, isUninteractable)"
+    },
+    {
+      "id": "wt-global-api-GetGlyphLink-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGlyphLink",
+      "annotation": "* NEW - link = {{api|GetGlyphLink(glyphId)}}",
+      "wikitext_line": 45,
+      "signature": "GetGlyphLink(glyphId)",
+      "returns": "link"
+    },
+    {
+      "id": "wt-global-api-ConsoleAddMessage-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ConsoleAddMessage",
+      "annotation": "* NEW - {{api|ConsoleAddMessage(message)}}",
+      "wikitext_line": 48,
+      "signature": "ConsoleAddMessage(message)"
+    },
+    {
+      "id": "wt-global-api-GetArenaTeamGdfInfo-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetArenaTeamGdfInfo",
+      "annotation": "* NEW - GetArenaTeamGdfInfo ",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-ResurrectGetOfferer-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ResurrectGetOfferer",
+      "annotation": "* NEW - ResurrectGetOfferer ",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-TargetTotem-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TargetTotem",
+      "annotation": "* NEW - TargetTotem ",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-scriptobjects-SecureHandlerShowHideTemplate-56",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "SecureHandlerShowHideTemplate",
+      "annotation": "* REMOVED - [[SecureHandlerShowHideTemplate]]",
+      "wikitext_line": 56,
+      "kind": "template"
+    },
+    {
+      "id": "wt-scriptobjects-SecureHandlerMouseUpDownTemplate-57",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "SecureHandlerMouseUpDownTemplate",
+      "annotation": "* NEW - [[SecureHandlerMouseUpDownTemplate]]",
+      "wikitext_line": 57,
+      "kind": "template"
+    },
+    {
+      "id": "wt-scriptobjects-SecureHandlerMouseWheelTemplate-58",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "SecureHandlerMouseWheelTemplate",
+      "annotation": "* NEW - [[SecureHandlerMouseWheelTemplate]]",
+      "wikitext_line": 58,
+      "kind": "template"
+    },
+    {
+      "id": "wt-scriptobjects-FrameHandle:IsShown-60",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "FrameHandle:IsShown",
+      "annotation": "* REMOVED - FrameHandle:IsShown() ",
+      "wikitext_line": 60,
+      "signature": "FrameHandle:IsShown()",
+      "kind": "secure-handle"
+    },
+    {
+      "id": "wt-scriptobjects-FrameHandle:IsVisible-61",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "FrameHandle:IsVisible",
+      "annotation": "* REMOVED - FrameHandle:IsVisible() ",
+      "wikitext_line": 61,
+      "signature": "FrameHandle:IsVisible()",
+      "kind": "secure-handle"
+    },
+    {
+      "id": "wt-scriptobjects-FrameHandle:GetWidth-62",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "FrameHandle:GetWidth",
+      "annotation": "* REMOVED - FrameHandle:GetWidth() ",
+      "wikitext_line": 62,
+      "signature": "FrameHandle:GetWidth()",
+      "kind": "secure-handle"
+    },
+    {
+      "id": "wt-scriptobjects-FrameHandle:GetHeight-63",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "FrameHandle:GetHeight",
+      "annotation": "* REMOVED - FrameHandle:GetHeight() ",
+      "wikitext_line": 63,
+      "signature": "FrameHandle:GetHeight()",
+      "kind": "secure-handle"
+    },
+    {
+      "id": "wt-scriptobjects-FrameHandle:GetRect-64",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "FrameHandle:GetRect",
+      "annotation": "* REMOVED - FrameHandle:GetRect() ",
+      "wikitext_line": 64,
+      "signature": "FrameHandle:GetRect()",
+      "kind": "secure-handle"
+    },
+    {
+      "id": "wt-scriptobjects-FrameHandle:GetScale-65",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "FrameHandle:GetScale",
+      "annotation": "* REMOVED - FrameHandle:GetScale() ",
+      "wikitext_line": 65,
+      "signature": "FrameHandle:GetScale()",
+      "kind": "secure-handle"
+    },
+    {
+      "id": "wt-scriptobjects-FrameHandle:GetEffectiveScale-66",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "FrameHandle:GetEffectiveScale",
+      "annotation": "* REMOVED - FrameHandle:GetEffectiveScale() ",
+      "wikitext_line": 66,
+      "signature": "FrameHandle:GetEffectiveScale()",
+      "kind": "secure-handle"
+    },
+    {
+      "id": "wt-scriptobjects-Control:SetTimer-70",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "Control:SetTimer",
+      "annotation": "* REMOVED - Control:SetTimer(elapsed, message, body) ",
+      "wikitext_line": 70,
+      "signature": "Control:SetTimer(elapsed, message, body)",
+      "kind": "secure-control"
+    },
+    {
+      "id": "wt-scriptobjects-Control:GetTIme-71",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "Control:GetTIme",
+      "annotation": "* REMOVED - Control:GetTIme() ",
+      "wikitext_line": 71,
+      "signature": "Control:GetTIme()",
+      "kind": "secure-control"
+    },
+    {
+      "id": "wt-scriptobjects-Control:SetAnimating-72",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "Control:SetAnimating",
+      "annotation": "* REMOVED - Control:SetAnimating(flag, body) ",
+      "wikitext_line": 72,
+      "signature": "Control:SetAnimating(flag, body)",
+      "kind": "secure-control"
+    },
+    {
+      "id": "wt-scriptobjects-Control:IsAnimating-73",
+      "section": "scriptobjects",
+      "direction": "removed",
+      "symbol": "Control:IsAnimating",
+      "annotation": "* REMOVED - Control:IsAnimating() ",
+      "wikitext_line": 73,
+      "signature": "Control:IsAnimating()",
+      "kind": "secure-control"
+    },
+    {
+      "id": "wt-scriptobjects-SetUpAnimation-75",
+      "section": "scriptobjects",
+      "direction": "added",
+      "symbol": "SetUpAnimation",
+      "annotation": "* NEW - SetUpAnimation(frame, updateFunc, posBody, totalTime, postFunc, reverse) - Sets the current 'animation' function for the frame (Available update functions are Show, Hide, SetPoint, SetScale, SetHeight, SetWidth, SetAlpha)",
+      "wikitext_line": 75,
+      "signature": "SetUpAnimation(frame, updateFunc, posBody, totalTime, postFunc, reverse)",
+      "kind": "secure-control"
+    }
+  ],
+  "client_line": "retail"
+}

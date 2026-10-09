@@ -1,0 +1,1694 @@
+{
+  "patch": "3.0.8",
+  "source_sha256": "4f5b48b4b17c3ddcc3838c61eb015d0d2d18772e323d08733e06ea79d6833417",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/3.0.8-api-changes.txt",
+    "sha256": "9342da2cad271e6a4516f26d5c4044332db3a241ea941786909e04be906c49c9"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-widgets-ScriptObject:HookScript-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN universal ScriptObject publication: classifier has no ScriptObject factory. Separate Frame empty-OnShow HookScript test establishes that subset only, not every script object or native parity. Observed factory: unknown frame type 'ScriptObject'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-ScriptObject:HookScript-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN universal ScriptObject publication: classifier has no ScriptObject factory. Separate Frame empty-OnShow HookScript test establishes that subset only, not every script object or native parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-widgets-ScriptObject:SetScript-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN universal ScriptObject publication: classifier has no ScriptObject factory. Separate Frame empty-OnShow HookScript test establishes that subset only, not every script object or native parity. Observed factory: unknown frame type 'ScriptObject'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-ScriptObject:SetScript-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN universal ScriptObject publication: classifier has no ScriptObject factory. Separate Frame empty-OnShow HookScript test establishes that subset only, not every script object or native parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-AddFriend-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication"
+      ],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=function; lookup=function. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-AddFriend-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-RemoveFriend-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-RemoveFriend-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-SetFriendNotes-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-SetFriendNotes-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-AddMute-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-AddMute-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-DelMute-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-DelMute-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-AddIgnore-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-AddIgnore-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-DelIgnore-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-DelIgnore-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-InviteUnit-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-InviteUnit-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-UninviteUnit-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedPartyInfo/Deprecated_PartyInfo.lua. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-UninviteUnit-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-GuildInvite-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua; alias=C_GuildInfo.Invite. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-GuildInvite-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-GuildUninvite-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua; alias=C_GuildInfo.Uninvite. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-GuildUninvite-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-GuildPromote-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua; alias=C_GuildInfo.Promote. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-GuildPromote-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-GuildDemote-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua; alias=C_GuildInfo.Demote. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-GuildDemote-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-GuildSetLeaderByName-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-GuildSetLeaderByName-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-CalenderEventInvite-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-CalenderEventInvite-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: literal change excludes unit tokens and recommends UnitName; no fresh name-vs-token input/error transition proof. Source spelling preserved; current namespace/wrapper publication is not 2009 acceptance parity. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetDepth-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Observed Frame; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-Frame:GetDepth-13",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:GetDepth()",
+      "literal_returns": "depth",
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetEffectiveDepth-14",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Observed Frame; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-Frame:GetEffectiveDepth-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:GetEffectiveDepth()",
+      "literal_returns": "depth",
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-Frame:IgnoreDepth-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Observed Frame; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-Frame:IgnoreDepth-15",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:IgnoreDepth(ignoreFlag)",
+      "literal_returns": null,
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-Frame:IsIgnoringDepth-16",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Observed Frame; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-Frame:IsIgnoringDepth-16",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:IsIgnoringDepth()",
+      "literal_returns": "ignoreFlag",
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetDepth-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Observed Frame; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-Frame:SetDepth-17",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:SetDepth(depth)",
+      "literal_returns": null,
+      "note": "UNPROVEN: literal depth scalar/ignoreFlag signature supplies no depth coordinate, inheritance or effective-depth rules; simulator intentional 3D gap cannot establish native depth behavior. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-ScrollingMessageFrame:GetHyperlinksEnabled-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication"
+      ],
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Observed ScrollingMessageFrame; lookup=function. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-ScrollingMessageFrame:GetHyperlinksEnabled-20",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:GetHyperlinksEnabled()",
+      "literal_returns": "enableFlag",
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-ScrollingMessageFrame:SetHyperlinksEnabled-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication"
+      ],
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Observed ScrollingMessageFrame; lookup=function. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-ScrollingMessageFrame:SetHyperlinksEnabled-21",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:SetHyperlinksEnabled(enableFlag)",
+      "literal_returns": null,
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-SimpleHTML:GetHyperlinksEnabled-24",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication"
+      ],
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Observed SimpleHTML; lookup=function. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-SimpleHTML:GetHyperlinksEnabled-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:GetHyperlinksEnabled()",
+      "literal_returns": "enableFlag",
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-widgets-SimpleHTML:SetHyperlinksEnabled-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication"
+      ],
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Observed SimpleHTML; lookup=function. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-widgets-SimpleHTML:SetHyperlinksEnabled-25",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Frame:SetHyperlinksEnabled(enableFlag)",
+      "literal_returns": null,
+      "note": "UNPROVEN: boolean property signature preserved with displayed owner and literal Frame reference; no fresh hyperlink hit/input/callback behavior proof. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-CalendarContextDeselectEvent-31",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-CalendarContextDeselectEvent-31",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "CalendarContextDeselectEvent()",
+      "literal_returns": null,
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-CalendarContextGetEventIndex-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-CalendarContextGetEventIndex-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "CalendarContextGetEventIndex()",
+      "literal_returns": "monthOfs, eventDay, eventIndex",
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-CalendarContextSelectEvent-33",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-CalendarContextSelectEvent-33",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "CalendarContextSelectEvent(monthOfs, eventDay, eventIndex)",
+      "literal_returns": null,
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-OpenCalendar-34",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-OpenCalendar-34",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "OpenCalendar()",
+      "literal_returns": null,
+      "note": "UNPROVEN: calendar selection/deselection index state and OpenCalendar lifecycle are missing from this historical global surface; month offset, event index domains and deselected sentinel unpinned. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-IsStereoVideoAvailable-37",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-IsStereoVideoAvailable-37",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "IsStereoVideoAvailable()",
+      "literal_returns": "available",
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-RestoreVideoStereoDefaults-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-RestoreVideoStereoDefaults-38",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "RestoreVideoStereoDefaults()",
+      "literal_returns": null,
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-cvars-gxStereoEnabled-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. Observed value/default queried. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-cvars-gxStereoEnabled-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-cvars-gxStereoConvergence-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. Observed value/default queried. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-cvars-gxStereoConvergence-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-cvars-gxStereoSeparation-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. Observed value/default queried. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-cvars-gxStereoSeparation-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: stereo device capability/default configuration state is not modeled; source gives no hardware condition or restored default values. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-SetChatWindowUninteractable-42",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication"
+      ],
+      "note": "UNPROVEN: source gives id/isUninteractable signature but no accepted window-ID domain or interaction suppression transitions; callable alone proves neither. Observed raw=function; lookup=function. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-SetChatWindowUninteractable-42",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "SetChatWindowUninteractable(id, isUninteractable)",
+      "literal_returns": null,
+      "note": "UNPROVEN: source gives id/isUninteractable signature but no accepted window-ID domain or interaction suppression transitions; callable alone proves neither. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-GetGlyphLink-45",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: glyph catalog/link fixture and unknown-ID result are missing; glyphId signature alone specifies no link format. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-GetGlyphLink-45",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "GetGlyphLink(glyphId)",
+      "literal_returns": "link",
+      "note": "UNPROVEN: glyph catalog/link fixture and unknown-ID result are missing; glyphId signature alone specifies no link format. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-ConsoleAddMessage-48",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: message signature alone does not establish console sink/ordering or formatting; no fresh sink behavior receipt. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-ConsoleAddMessage-48",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "ConsoleAddMessage(message)",
+      "literal_returns": null,
+      "note": "UNPROVEN: message signature alone does not establish console sink/ordering or formatting; no fresh sink behavior receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-global-api-GetArenaTeamGdfInfo-51",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "UNPROVEN: source names this API only, without input, return, state or event contract; do not invent a contract from its name. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-GetArenaTeamGdfInfo-51",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: source names this API only, without input, return, state or event contract; do not invent a contract from its name. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-ResurrectGetOfferer-52",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication"
+      ],
+      "note": "UNPROVEN: source names this API only, without input, return, state or event contract; do not invent a contract from its name. Observed raw=function; lookup=function. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-ResurrectGetOfferer-52",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: source names this API only, without input, return, state or event contract; do not invent a contract from its name. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-global-api-TargetTotem-53",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: source names this API only, without input, return, state or event contract; do not invent a contract from its name. Observed raw=nil; lookup=nil. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-global-api-TargetTotem-53",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: source names this API only, without input, return, state or event contract; do not invent a contract from its name. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecureHandlerShowHideTemplate-56",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory=false; type=string. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-SecureHandlerShowHideTemplate-56",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecureHandlerMouseUpDownTemplate-57",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory=false; type=string. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-SecureHandlerMouseUpDownTemplate-57",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-scriptobjects-SecureHandlerMouseWheelTemplate-58",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory=false; type=string. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-SecureHandlerMouseWheelTemplate-58",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": null,
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. No signature specified; names-only record, not a fabricated signature."
+    },
+    {
+      "source_id": "wt-scriptobjects-FrameHandle:IsShown-60",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'FrameHandle'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-FrameHandle:IsShown-60",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "FrameHandle:IsShown()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-FrameHandle:IsVisible-61",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'FrameHandle'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-FrameHandle:IsVisible-61",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "FrameHandle:IsVisible()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-FrameHandle:GetWidth-62",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'FrameHandle'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-FrameHandle:GetWidth-62",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "FrameHandle:GetWidth()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-FrameHandle:GetHeight-63",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'FrameHandle'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-FrameHandle:GetHeight-63",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "FrameHandle:GetHeight()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-FrameHandle:GetRect-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'FrameHandle'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-FrameHandle:GetRect-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "FrameHandle:GetRect()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-FrameHandle:GetScale-65",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'FrameHandle'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-FrameHandle:GetScale-65",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "FrameHandle:GetScale()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-FrameHandle:GetEffectiveScale-66",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'FrameHandle'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-FrameHandle:GetEffectiveScale-66",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "FrameHandle:GetEffectiveScale()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-Control:SetTimer-70",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'Control'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-Control:SetTimer-70",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Control:SetTimer(elapsed, message, body)",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-Control:GetTIme-71",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'Control'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-Control:GetTIme-71",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Control:GetTIme()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-Control:SetAnimating-72",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'Control'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-Control:SetAnimating-72",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Control:SetAnimating(flag, body)",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-Control:IsAnimating-73",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory: unknown frame type 'Control'. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-Control:IsAnimating-73",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "Control:IsAnimating()",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "wt-scriptobjects-SetUpAnimation-75",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Observed factory=false; type=string. Publication/absence only; native/semantic parity unproven."
+    },
+    {
+      "source_id": "signature-wt-scriptobjects-SetUpAnimation-75",
+      "status": "audit-pending",
+      "capabilities": [],
+      "literal_signature": "SetUpAnimation(frame, updateFunc, posBody, totalTime, postFunc, reverse)",
+      "literal_returns": null,
+      "note": "UNPROVEN: secure restricted handle/control/template domain is not the ordinary CreateFrame owner tested by the shared classifier; no native restricted-environment removal, wrapping or animation lifecycle receipt. Literal signature fragment retained without type/sentinel inference."
+    },
+    {
+      "source_id": "raw-source-001",
+      "wikitext_line": 1,
+      "literal": "{{apichanges|3.0.8|prev=3.0.3|next=3.1.0|misc=Adapted from on Iriel's posts [http://forums.worldofwarcraft.com/thread.html?topicId=8202271194&sid=1#4] [http://forums.worldofwarcraft.com/thread.html?topicId=14637474367&sid=1] on the official forums.}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-003",
+      "wikitext_line": 3,
+      "literal": "== General changes ==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-004",
+      "wikitext_line": 4,
+      "literal": "* {{api|t=w|ScriptObject:HookScript|HookScript}}() will now function like {{api|t=w|ScriptObject:SetScript|SetScript}}() if there is no script currently on the object. ",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "frame-empty-script-hook"
+      ],
+      "note": "Frame subset only: own native empty-OnShow hook test passes twice with same receiver. Universal ScriptObject and native WoW comparison UNPROVEN."
+    },
+    {
+      "source_id": "raw-source-005",
+      "wikitext_line": 5,
+      "literal": "* Both Dropdown menus and the Vehicle Action Bar have been made less susceptible to taint. ",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: less susceptible to taint is qualitative; no specific path, input, before/after security rule or comparison fixture."
+    },
+    {
+      "source_id": "raw-source-006",
+      "wikitext_line": 6,
+      "literal": "* Lua closures can now be directly assigned to [[widget script handlers]] from XML using the following new format: <OnClick function=\"FunctionName\"/>. The old format will continue to be supported indefinitely. ",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: direct XML function attribute and indefinite old-format compatibility are literal contracts; fresh parser/binding identity and both-format receipts not run."
+    },
+    {
+      "source_id": "raw-source-007",
+      "wikitext_line": 7,
+      "literal": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: fifteen listed APIs exclude unit tokens; fresh name/token rejection, error/return and state transition receipts absent."
+    },
+    {
+      "source_id": "raw-source-008",
+      "wikitext_line": 8,
+      "literal": "* The [[SecureHandlers|secure handlers]] system was restricted with respect to OnUpdate/Timer handling and the ability to react to frame visibility. There is a new SetupAnimation method that addresses some of the restrictions. This change unfortunately removed some otherwise useful functionality around auto-hiding frames (and animation) but hopefully a future patch will address this.",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: secure OnUpdate/timer/visibility restrictions and auto-hide loss need restricted environment and event lifecycle proof; qualitative summary is not an exact restriction table."
+    },
+    {
+      "source_id": "raw-source-010",
+      "wikitext_line": 10,
+      "literal": "== Widget API ==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-011",
+      "wikitext_line": 11,
+      "literal": "=== Frame Methods ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-013",
+      "wikitext_line": 13,
+      "literal": "* NEW - depth = {{api|t=w|Frame:GetDepth()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-014",
+      "wikitext_line": 14,
+      "literal": "* NEW - depth = {{api|t=w|Frame:GetEffectiveDepth()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-015",
+      "wikitext_line": 15,
+      "literal": "* NEW - {{api|t=w|Frame:IgnoreDepth(ignoreFlag)}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-016",
+      "wikitext_line": 16,
+      "literal": "* NEW - ignoreFlag = {{api|t=w|Frame:IsIgnoringDepth()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-017",
+      "wikitext_line": 17,
+      "literal": "* NEW - {{api|t=w|Frame:SetDepth(depth)}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-019",
+      "wikitext_line": 19,
+      "literal": "=== ScrollingMessageFrame ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-020",
+      "wikitext_line": 20,
+      "literal": "* NEW - enableFlag = {{api|t=w|Frame:GetHyperlinksEnabled()|ScrollingMessageFrame:GetHyperlinksEnabled}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-021",
+      "wikitext_line": 21,
+      "literal": "* NEW - {{api|t=w|Frame:SetHyperlinksEnabled(enableFlag)|ScrollingMessageFrame:SetHyperlinksEnabled}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-023",
+      "wikitext_line": 23,
+      "literal": "=== SimpleHTML ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-024",
+      "wikitext_line": 24,
+      "literal": "* NEW - enableFlag = {{api|t=w|Frame:GetHyperlinksEnabled()|SimpleHTML:GetHyperlinksEnabled}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-025",
+      "wikitext_line": 25,
+      "literal": "* NEW -{{api|t=w|Frame:SetHyperlinksEnabled(enableFlag)|SimpleHTML:SetHyperlinksEnabled}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-027",
+      "wikitext_line": 27,
+      "literal": "== API ==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-029",
+      "wikitext_line": 29,
+      "literal": "=== Calendar  ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-031",
+      "wikitext_line": 31,
+      "literal": "* NEW - {{api|CalendarContextDeselectEvent()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-032",
+      "wikitext_line": 32,
+      "literal": "* NEW - monthOfs, eventDay, eventIndex = {{api|CalendarContextGetEventIndex()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-033",
+      "wikitext_line": 33,
+      "literal": "* NEW - {{api|CalendarContextSelectEvent(monthOfs, eventDay, eventIndex)}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-034",
+      "wikitext_line": 34,
+      "literal": "* NEW - {{api|OpenCalendar()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-036",
+      "wikitext_line": 36,
+      "literal": "=== Stereo Video ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-037",
+      "wikitext_line": 37,
+      "literal": "* NEW - available = {{api|IsStereoVideoAvailable()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-038",
+      "wikitext_line": 38,
+      "literal": "* NEW - {{api|RestoreVideoStereoDefaults()}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-039",
+      "wikitext_line": 39,
+      "literal": "* See also the {{api|t=c|gxStereoEnabled}}, {{api|t=c|gxStereoConvergence}}, {{api|t=c|gxStereoSeparation}} CVars ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-041",
+      "wikitext_line": 41,
+      "literal": "=== Chat Management  ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-042",
+      "wikitext_line": 42,
+      "literal": "* NEW - {{api|SetChatWindowUninteractable(id, isUninteractable)}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-044",
+      "wikitext_line": 44,
+      "literal": "=== Glyphs ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-045",
+      "wikitext_line": 45,
+      "literal": "* NEW - link = {{api|GetGlyphLink(glyphId)}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-047",
+      "wikitext_line": 47,
+      "literal": "=== Debugging ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-048",
+      "wikitext_line": 48,
+      "literal": "* NEW - {{api|ConsoleAddMessage(message)}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-050",
+      "wikitext_line": 50,
+      "literal": "=== Unknown ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-051",
+      "wikitext_line": 51,
+      "literal": "* NEW - GetArenaTeamGdfInfo ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-052",
+      "wikitext_line": 52,
+      "literal": "* NEW - ResurrectGetOfferer ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-053",
+      "wikitext_line": 53,
+      "literal": "* NEW - TargetTotem ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-055",
+      "wikitext_line": 55,
+      "literal": "=== Secure Handlers ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-056",
+      "wikitext_line": 56,
+      "literal": "* REMOVED - [[SecureHandlerShowHideTemplate]]",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-057",
+      "wikitext_line": 57,
+      "literal": "* NEW - [[SecureHandlerMouseUpDownTemplate]]",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-058",
+      "wikitext_line": 58,
+      "literal": "* NEW - [[SecureHandlerMouseWheelTemplate]]",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-060",
+      "wikitext_line": 60,
+      "literal": "* REMOVED - FrameHandle:IsShown() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-061",
+      "wikitext_line": 61,
+      "literal": "* REMOVED - FrameHandle:IsVisible() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-062",
+      "wikitext_line": 62,
+      "literal": "* REMOVED - FrameHandle:GetWidth() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-063",
+      "wikitext_line": 63,
+      "literal": "* REMOVED - FrameHandle:GetHeight() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-064",
+      "wikitext_line": 64,
+      "literal": "* REMOVED - FrameHandle:GetRect() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-065",
+      "wikitext_line": 65,
+      "literal": "* REMOVED - FrameHandle:GetScale() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-066",
+      "wikitext_line": 66,
+      "literal": "* REMOVED - FrameHandle:GetEffectiveScale() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-068",
+      "wikitext_line": 68,
+      "literal": "* Removed ability to wrap OnShow / OnHide ",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: OnShow/OnHide wrap rejection needs secure snippet registration/execution boundary proof; no fresh secure wrapping receipt."
+    },
+    {
+      "source_id": "raw-source-070",
+      "wikitext_line": 70,
+      "literal": "* REMOVED - Control:SetTimer(elapsed, message, body) ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-071",
+      "wikitext_line": 71,
+      "literal": "* REMOVED - Control:GetTIme() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-072",
+      "wikitext_line": 72,
+      "literal": "* REMOVED - Control:SetAnimating(flag, body) ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-073",
+      "wikitext_line": 73,
+      "literal": "* REMOVED - Control:IsAnimating() ",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal header/navigation/inventory cross-reference; separately accounted identities/signatures get no duplicate behavior credit."
+    },
+    {
+      "source_id": "raw-source-075",
+      "wikitext_line": 75,
+      "literal": "* NEW - SetUpAnimation(frame, updateFunc, posBody, totalTime, postFunc, reverse) - Sets the current 'animation' function for the frame (Available update functions are Show, Hide, SetPoint, SetScale, SetHeight, SetWidth, SetAlpha)",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UNPROVEN: SetUpAnimation explicit parameters/update-function list retained; secure animation frame/timer/body/reverse/post lifecycle absent. SetupAnimation in general prose and SetUpAnimation inventory remain literal distinct spellings."
+    },
+    {
+      "source_id": "extract-source-001",
+      "literal": "Patch 3.0.8 API changes",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-003",
+      "literal": "== General changes ==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-004",
+      "literal": "* ScriptObject:HookScript() will now function like ScriptObject:SetScript() if there is no script currently on the object.",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-005",
+      "literal": "* Both Dropdown menus and the Vehicle Action Bar have been made less susceptible to taint.",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-006",
+      "literal": "* Lua closures can now be directly assigned to widget script handlers from XML using the following new format: . The old format will continue to be supported indefinitely.",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-007",
+      "literal": "* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName(\"token\") instead. These functions include: AddFriend, RemoveFriend, SetFriendNotes, AddMute, DelMute, AddIgnore, DelIgnore, InviteUnit, UninviteUnit, GuildInvite, GuildUninvite, GuildPromote, GuildDemote, GuildSetLeaderByName, CalenderEventInvite.",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-008",
+      "literal": "* The secure handlers system was restricted with respect to OnUpdate/Timer handling and the ability to react to frame visibility. There is a new SetupAnimation method that addresses some of the restrictions. This change unfortunately removed some otherwise useful functionality around auto-hiding frames (and animation) but hopefully a future patch will address this.",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-010",
+      "literal": "== Widget API ==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-011",
+      "literal": "=== Frame Methods ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-013",
+      "literal": "* NEW - depth = Frame:GetDepth()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-014",
+      "literal": "* NEW - depth = Frame:GetEffectiveDepth()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-015",
+      "literal": "* NEW - Frame:IgnoreDepth(ignoreFlag)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-016",
+      "literal": "* NEW - ignoreFlag = Frame:IsIgnoringDepth()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-017",
+      "literal": "* NEW - Frame:SetDepth(depth)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-019",
+      "literal": "=== ScrollingMessageFrame ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-020",
+      "literal": "* NEW - enableFlag = Frame:GetHyperlinksEnabled()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-021",
+      "literal": "* NEW - Frame:SetHyperlinksEnabled(enableFlag)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-023",
+      "literal": "=== SimpleHTML ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-024",
+      "literal": "* NEW - enableFlag = Frame:GetHyperlinksEnabled()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-025",
+      "literal": "* NEW -Frame:SetHyperlinksEnabled(enableFlag)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-027",
+      "literal": "== API ==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-029",
+      "literal": "=== Calendar ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-031",
+      "literal": "* NEW - CalendarContextDeselectEvent()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-032",
+      "literal": "* NEW - monthOfs, eventDay, eventIndex = CalendarContextGetEventIndex()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-033",
+      "literal": "* NEW - CalendarContextSelectEvent(monthOfs, eventDay, eventIndex)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-034",
+      "literal": "* NEW - OpenCalendar()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-036",
+      "literal": "=== Stereo Video ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-037",
+      "literal": "* NEW - available = IsStereoVideoAvailable()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-038",
+      "literal": "* NEW - RestoreVideoStereoDefaults()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-039",
+      "literal": "* See also the gxStereoEnabled, gxStereoConvergence, gxStereoSeparation CVars",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-041",
+      "literal": "=== Chat Management ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-042",
+      "literal": "* NEW - SetChatWindowUninteractable(id, isUninteractable)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-044",
+      "literal": "=== Glyphs ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-045",
+      "literal": "* NEW - link = GetGlyphLink(glyphId)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-047",
+      "literal": "=== Debugging ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-048",
+      "literal": "* NEW - ConsoleAddMessage(message)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-050",
+      "literal": "=== Unknown ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-051",
+      "literal": "* NEW - GetArenaTeamGdfInfo",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-052",
+      "literal": "* NEW - ResurrectGetOfferer",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-053",
+      "literal": "* NEW - TargetTotem",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-055",
+      "literal": "=== Secure Handlers ===",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-056",
+      "literal": "* REMOVED - SecureHandlerShowHideTemplate",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-057",
+      "literal": "* NEW - SecureHandlerMouseUpDownTemplate",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-058",
+      "literal": "* NEW - SecureHandlerMouseWheelTemplate",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-060",
+      "literal": "* REMOVED - FrameHandle:IsShown()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-061",
+      "literal": "* REMOVED - FrameHandle:IsVisible()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-062",
+      "literal": "* REMOVED - FrameHandle:GetWidth()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-063",
+      "literal": "* REMOVED - FrameHandle:GetHeight()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-064",
+      "literal": "* REMOVED - FrameHandle:GetRect()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-065",
+      "literal": "* REMOVED - FrameHandle:GetScale()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-066",
+      "literal": "* REMOVED - FrameHandle:GetEffectiveScale()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-068",
+      "literal": "* Removed ability to wrap OnShow / OnHide",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-070",
+      "literal": "* REMOVED - Control:SetTimer(elapsed, message, body)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-071",
+      "literal": "* REMOVED - Control:GetTIme()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-072",
+      "literal": "* REMOVED - Control:SetAnimating(flag, body)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-073",
+      "literal": "* REMOVED - Control:IsAnimating()",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    },
+    {
+      "source_id": "extract-source-075",
+      "literal": "* NEW - SetUpAnimation(frame, updateFunc, posBody, totalTime, postFunc, reverse) - Sets the current 'animation' function for the frame (Available update functions are Show, Hide, SetPoint, SetScale, SetHeight, SetWidth, SetAlpha)",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Rendered cross-reference only; raw lines retain source markup/XML/external-link fields lost by default rendering. No duplicate contract credit."
+    }
+  ],
+  "proof_policy": "Frozen source/accounting and own bounded development observations only; no native WoW, universal ScriptObject, secure-control or final acceptance credit."
+}
