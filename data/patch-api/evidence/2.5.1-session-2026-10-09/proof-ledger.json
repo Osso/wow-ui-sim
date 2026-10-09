@@ -1,0 +1,56 @@
+{
+  "scope": "bounded 2.5.1 SOURCE-only proof; none measures publication/model/native/full UI",
+  "proofs": [
+    {
+      "revision": "08a957127bd15821dfb3c661ea44ae79324f0585",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p251-source",
+      "exit": 1,
+      "scope": "missing owned literal SOURCE ledger; nine assertion failures expected; no runtime measurement"
+    },
+    {
+      "revision": "985fd2c9502463288324a3fc5d6c4c53e0ddde3f",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p251-source",
+      "exit": 0,
+      "log": "green.log",
+      "scope": "nine owned literal/source mutation fixtures; configured snapshot comparison only",
+      "later_changes_invalidate": "any change to sealed source, ledger, validator, historical tools, tests or configuration snapshots"
+    },
+    {
+      "revision": "eb48b0fc67f32c5b4fcd19ce8cdcea2893ffadfc",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p251-source",
+      "exit": 0,
+      "log": "validator.log",
+      "scope": "original source/tool/config/ledger/log seals and historical source reproduction; no native/runtime observation",
+      "artifact": "validator-proof.json"
+    },
+    {
+      "revision": "c1391db3fd9bca64d76eefd9c91a13194a45eec4",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/replay_controls.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p251-source",
+      "exit": 0,
+      "artifact": "portable-proof.json",
+      "log": "portable-controls.log",
+      "scope": "fresh copied isolated SOURCE replay; 29 original seals and both serialized tamper rejection/restoration controls"
+    }
+  ],
+  "applicability": "Original 985fd2c95 source fixture proof remains applicable: no later source/ledger/test/tool/configuration changes; later commits add docs, seals and receipts only. Original seals must remain unchanged. Native and main integration owned separately."
+}
