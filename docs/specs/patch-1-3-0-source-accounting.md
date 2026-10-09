@@ -7,8 +7,8 @@ Bounded original historical Retail page350208/revision3376287/timestamp2021-04-2
 - [x] Verify exact frozen body/response/manifest-linked registry101 before derivation; preserve every physical row, API declaration, signature spelling, prose, header, link and template parameter.
 - [x] Reject every populated-boundary omission, derived-count mutation, invented alias/default/return/expansion/native credit and source/identity mutation.
 - [x] Keep all missing contracts precisely UNPROVEN; retain old/new TabardModel rename identities and no inferred current aliases/defaults/retirements.
-- [ ] Replay unchanged own-base generator/extractor default bytes and errors from a fresh copied immutable archive without Git/target/current tools/network.
-- [ ] Reject both serialized ledger/log mutations, restore exact bytes/hashes/original seal map without resealing; separate later actual execution receipts from originals.
+- [x] Replay unchanged own-base generator/extractor default bytes and errors from a fresh copied immutable archive without Git/target/current tools/network.
+- [x] Reject both serialized ledger/log mutations, restore exact bytes/hashes/original seal map without resealing; separate later actual execution receipts from originals.
 
 ## How it works
 
