@@ -1,0 +1,40 @@
+{
+  "environment_keys": [
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+    "COLORTERM",
+    "DBUS_SESSION_BUS_ADDRESS",
+    "HOME",
+    "LC_CTYPE",
+    "LOGNAME",
+    "MAIL",
+    "MOTD_SHOWN",
+    "NoDefaultCurrentDirectoryInExePath",
+    "PATH",
+    "PI_CODING_AGENT",
+    "PWD",
+    "SHELL",
+    "SHLVL",
+    "SSH_CLIENT",
+    "SSH_CONNECTION",
+    "TERM",
+    "TERM_PROGRAM",
+    "TERM_PROGRAM_VERSION",
+    "TMUX",
+    "TMUX_PANE",
+    "USER",
+    "XDG_RUNTIME_DIR",
+    "XDG_SESSION_CLASS",
+    "XDG_SESSION_ID",
+    "XDG_SESSION_TYPE",
+    "_"
+  ],
+  "credential_pattern_environment_keys": [],
+  "environment_values_retained": false,
+  "credential_value_pattern_classes": [
+    "PEM private key",
+    "provider token prefix",
+    "Authorization bearer value"
+  ],
+  "artifact_findings": [],
+  "limit": "Not exhaustive secret detection. Setup/exploration are not command proof. Explicit replay argv assignments only; original full command streams unaltered."
+}

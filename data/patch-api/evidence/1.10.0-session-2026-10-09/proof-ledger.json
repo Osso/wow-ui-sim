@@ -77,5 +77,55 @@
       "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
       "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
     }
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/1.10.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "ea3ae8a4485e14ff106b8330fe2993b75bda0780",
+    "scope": "committed SOURCE GREEN accounting/count/invention/source-mutation/default-byte/error controls",
+    "started": "2026-10-09T17:49:41.819835+00:00",
+    "finished": "2026-10-09T17:49:41.975663+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... ok\ntest_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... ok\ntest_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... ok\ntest_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... ok\ntest_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.028s\n\nOK\n",
+    "scoped_sha256": {
+      "audit.py": "926c8e64138b4914bc62796efe5b085716563c7b13cdcdaac9fecb8e41f6b277",
+      "test_source_accounting.py": "4c5ef6236113416d50235931baecdae2e254dda5f0e7761358251c3eeec0da6d",
+      "source.wikitext": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+      "test_portable.py": "ba31abe4e455e4e83e89555c25dde7dbe44e39d78e5393e29c63424116c0a61a",
+      "red-scaffold.py": "381a8436c98c940464d7473ea8d60aca7986f3d6a71a7b743098ed165185ddc2",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    }
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/1.10.0-session-2026-10-09/test_portable.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "ea3ae8a4485e14ff106b8330fe2993b75bda0780",
+    "scope": "portable RED missing immutable seal map",
+    "started": "2026-10-09T17:49:41.820400+00:00",
+    "finished": "2026-10-09T17:49:41.925816+00:00",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay) ... FAIL\ntest_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored) ... FAIL\ntest_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored) ... FAIL\n\n======================================================================\nFAIL: test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/1.10.0-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n======================================================================\nFAIL: test_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/1.10.0-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n======================================================================\nFAIL: test_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/1.10.0-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n----------------------------------------------------------------------\nRan 3 tests in 0.010s\n\nFAILED (failures=3)\n",
+    "scoped_sha256": {
+      "audit.py": "926c8e64138b4914bc62796efe5b085716563c7b13cdcdaac9fecb8e41f6b277",
+      "test_source_accounting.py": "4c5ef6236113416d50235931baecdae2e254dda5f0e7761358251c3eeec0da6d",
+      "source.wikitext": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+      "test_portable.py": "ba31abe4e455e4e83e89555c25dde7dbe44e39d78e5393e29c63424116c0a61a",
+      "red-scaffold.py": "381a8436c98c940464d7473ea8d60aca7986f3d6a71a7b743098ed165185ddc2",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    }
   }
 ]
