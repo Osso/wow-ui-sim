@@ -58,6 +58,10 @@ Archive **230038 bytes**, SHA-256 `c02af17f6b490e7c2f65cde9970b108e266d34543bab6
 
 No Rust/runtime/profile/shared tool/vendor/cache/Wowless edit, native probe, delegation/model CLI, operation, push/merge/deploy. Main owns integration and native/final-gate acceptance. Unavailable matching configured interface remains a measurement boundary, not an API failure claim.
 
+## Main integration — 2026-10-09
+
+Actual same-line 2.5.6 source is now integrated at `93bcc6afe`. It supplies no explicit API identities, so no member supersession or native/model closure follows. Source TOCs 20505/20506 remain distinct from configured Anniversary 11507. Original history and seals stay unchanged; independent SOURCE replay gate pending. Four linked/native/state contracts remain UNPROVEN; no foreign-line or empty-inventory parity credit.
+
 ## Sources
 
 - [Raw](../../../data/patch-api/sources/2.5.5-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/2.5.5-api-changes.txt), [ledger](../../../data/patch-api/sources/2.5.5-page-coverage.json).
