@@ -1,0 +1,4 @@
+REJECT/RESTORE data/patch-api/sources/2.5.4-page-coverage.json exit=1 sha256=39ac71f5e38ccaf00fc37ba0da85823107eed1b6814e540dfc51bef1c5d763f6
+REJECT/RESTORE data/patch-api/evidence/2.5.4-session-2026-10-09/source-proof.json exit=1 sha256=f53358f8db7f8c55b9bf8bc1d680975df40c73fcfc119f91f14c84739676d84f
+REJECT/RESTORE data/patch-api/evidence/2.5.4-session-2026-10-09/green.log exit=1 sha256=c1b64f8fa7eebca89609b8e2eaf22e6d2f0ba3f7ce13944efbef942d9c5094e0
+COPIED REPLAY exit=0 sealed=27 Git/target/current tools/current runtime absent
