@@ -20,6 +20,10 @@ Canonical `1044215d0`, copied as `2218c0f41` in the source worktree, gates Retai
 
 [Full retained receipts](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/main-retention.json) keep this GREEN epoch separate from E0433/E0609 RED. Seven library, one binary and six vendor warnings remain unsuppressed; newly observed Forever warnings do not establish regressions. Chat/removal API execution, real pre-login lifecycle, native tuple/security/identity and loaded UI remain UNPROVEN. Aggregate-only API tests cannot supply headless proof: disabled iced blocks their harness, and the sender helper also requires Retail BNet. No broad acceptance.
 
+## Standalone execution target
+
+`patch-tests/forever_runtime_contracts.rs` is registered as the Forever-only `forever_runtime_contracts` target. It constructs direct `WowLuaEnv` environments without GUI/BNet dependencies and checks ordered addon/logged/whisper records, independent-environment isolation, invalid-prefix no-append behavior, and the three explicitly removed public/raw/legacy combat-log getter lookups. These assert existing simulator contracts, not native/security/transport behavior. No runtime implementation or Retail restriction registration changed. Target execution and independent verification receipts are pending; the earlier proof epochs above remain unchanged.
+
 ## See also
 
 - [Narrow repairs](narrow-validator-discovery-and-forever-cfg-repairs.md).
