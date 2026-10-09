@@ -22,14 +22,16 @@ Page310843/revision2998524/timestamp2020-04-05T21:05:34Z, captured2026-10-09T08:
 
 Original-Retail2.0.1+ references remain separate/unapplied. Classic Era/TBC/Wrath/Cataclysm/Mists and Forever are distinct histories. Queued1.7.0 active at `/home/osso/.worktrees/wow-ui-sim-p170-page`,1.8.0 pending behind1.9.0: frozen identities only, no contracts imported/applied. Own-base canonical1.10.0/1.10.1 templates supply methodology, not transplanted proof.
 
-Own SOURCE RED5 and portable RED3 at base retained: missing ledger/identity/default-replay scaffold and absent original seals respectively. Implementation `61fa2a1fa` precedes own SOURCE GREEN5/5 at that exact revision: three populated-boundary omissions,12 count mutations, six empty-category inventions, three invented proof credits and one fabricated target expansion (25 ledger controls); three raw/response mutations, history separation and default-byte/error replay. Original seal/archive and portable receipts pending. Own-base historical tool defaults retained independently; shared tools untouched. Retained pre-format RED test/scaffold match executed hash scope.
+Own SOURCE RED5 and portable RED3 at base retained: missing ledger/identity/default-replay scaffold and absent original seals respectively. Implementation `61fa2a1fa` precedes own SOURCE GREEN5/5 at that exact revision: three populated-boundary omissions,12 count mutations, six empty-category inventions, three invented proof credits and one fabricated target expansion (25 ledger controls); three raw/response mutations, history separation and default-byte/error replay. Original seal/archive `a0e7ba901` retains30 original seals,31-member53,161-byte archive. At that exact revision, fresh extracted isolated replay yields validator exit0/copied SOURCE5/5/portable3/3, historical default byte/error equality, serialized ledger/log seal rejection and exact byte/hash/map restoration. Original files/map/archive remain unchanged; seven later receipt artifacts separately sealed, never backfilled. Archived `original-docs/` describes its original pre-portable epoch. Own-base historical tool defaults retained independently; shared tools untouched. Retained pre-format RED test/scaffold match executed hash scope.
 
 No broad/final gate, client/build launch, native proof or parent acceptance. Main owns ordered integration and independent acceptance. No canonical/sibling/vendor/Blizzard/Wowless edits or operations.
 
 ## Sources
 
 - [Literal ledger](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/ledger.json) — derived only from own frozen inputs
-- [Own proof ledger](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/proof-ledger.json) — exact execution contexts and full streams
+- [Own proof ledger](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/proof-ledger.json) — original exact execution contexts and full streams
+- [Later actual ledger](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/later-proof-ledger.json) — actual copied execution epoch, scoped hashes and unaltered full streams
+- [HANDOFF](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/HANDOFF.md) / [REPLAY](../../../data/patch-api/evidence/1.6.0-session-2026-10-09/REPLAY.md) — bounded delivery and reproducible copied commands
 - [Spec](../../specs/patch-1-6-0-source-accounting.md) — bounded contract
 - [Governing handoff](../../../data/patch-api/evidence/handoff-laptop-to-agent-server/HANDOFF.md) — main workflow; explicit child restrictions override operations
 

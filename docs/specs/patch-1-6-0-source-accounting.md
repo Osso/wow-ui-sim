@@ -8,8 +8,8 @@ Bounded accounting of frozen page310843/revision2998524/timestamp2020-04-05T21:0
 - [x] Account every literal row/link/prose/header/template/signature/default; reject omission, count mutation, invention and unsupported proof credit.
 - [x] Retain redirect target unexpanded and missing contracts UNPROVEN; zero local declarations imply zero grounded model/native subset, not historical absence of changes.
 - [x] Separate original Retail, Era and Forever histories; retain 1.7.0 active and 1.8.0 pending behind 1.9.0 as unapplied references.
-- [ ] Preserve own SOURCE RED/GREEN and own-base default bytes/error replay; copied portable three-test controls must reject serialized ledger/log tampering and restore exact bytes/map without resealing.
-- [ ] Keep original seals/archive immutable; retain separate later actual revision/cwd/argv/timestamps/full-stream/scoped-hash receipts, environment keys only after credential-pattern inspection.
+- [x] Preserve own SOURCE RED/GREEN and own-base default bytes/error replay; copied portable three-test controls must reject serialized ledger/log tampering and restore exact bytes/map without resealing.
+- [ ] Independently accept outer receipt metadata and retention; original seals/archive immutability and separate later actual revision/cwd/argv/timestamps/full-stream/scoped-hash receipts are recorded, environment keys only after credential-pattern inspection. Child does not run this main-owned gate.
 
 ## How it works
 

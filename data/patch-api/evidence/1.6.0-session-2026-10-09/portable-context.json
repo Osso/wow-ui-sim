@@ -1,0 +1,140 @@
+{
+  "revision": "a0e7ba9016e7c2034ada53e1c3d029599c192e28",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p160-page",
+  "copy_root": "/home/osso/.worktrees/wow-ui-sim-p160-page/data/patch-api/evidence/1.6.0-session-2026-10-09/portable-160-a6ms4x1i",
+  "archive_sha256": "f25bd16c4f07ff7abc04e73bd2547353ce7614c33cf9e2945fc9bbe9f1089bde",
+  "archive_bytes": 53161,
+  "archive_members": 31,
+  "original_seals": 30,
+  "original_seals_sha256": "b193b6752c7fb6e2686f27aef28b7bd2321f7a8c18846c23198e27bf8aa7702f",
+  "members": [
+    {
+      "name": "audit.py",
+      "bytes": 9322
+    },
+    {
+      "name": "capture_defaults.py",
+      "bytes": 1530
+    },
+    {
+      "name": "default-capture.log",
+      "bytes": 402
+    },
+    {
+      "name": "default-errors.json",
+      "bytes": 322
+    },
+    {
+      "name": "default-extract.txt",
+      "bytes": 42
+    },
+    {
+      "name": "default-generator.log",
+      "bytes": 15
+    },
+    {
+      "name": "default-register.json",
+      "bytes": 262
+    },
+    {
+      "name": "frozen-manifest.json",
+      "bytes": 51323
+    },
+    {
+      "name": "frozen-registry.json",
+      "bytes": 17701
+    },
+    {
+      "name": "green.log",
+      "bytes": 764
+    },
+    {
+      "name": "historical-tools/extract_patch_non_inventory.py",
+      "bytes": 25063
+    },
+    {
+      "name": "historical-tools/gen_patch_wikitext_register.py",
+      "bytes": 72712
+    },
+    {
+      "name": "ledger-capture.log",
+      "bytes": 15
+    },
+    {
+      "name": "ledger.json",
+      "bytes": 12849
+    },
+    {
+      "name": "original-docs/HANDOFF.md",
+      "bytes": 1812
+    },
+    {
+      "name": "original-docs/REPLAY.md",
+      "bytes": 1384
+    },
+    {
+      "name": "original-docs/audit.md",
+      "bytes": 3631
+    },
+    {
+      "name": "original-docs/spec.md",
+      "bytes": 2563
+    },
+    {
+      "name": "portable-red.log",
+      "bytes": 2663
+    },
+    {
+      "name": "proof-ledger.json",
+      "bytes": 22017
+    },
+    {
+      "name": "red-scaffold.py",
+      "bytes": 764
+    },
+    {
+      "name": "red-test_source_accounting.py",
+      "bytes": 4952
+    },
+    {
+      "name": "red.log",
+      "bytes": 4919
+    },
+    {
+      "name": "reference-provenance.json",
+      "bytes": 532
+    },
+    {
+      "name": "retention-review.json",
+      "bytes": 1308
+    },
+    {
+      "name": "seals.json",
+      "bytes": 2832
+    },
+    {
+      "name": "source-pin.json",
+      "bytes": 724
+    },
+    {
+      "name": "source-response.json",
+      "bytes": 315
+    },
+    {
+      "name": "source.wikitext",
+      "bytes": 45
+    },
+    {
+      "name": "test_portable.py",
+      "bytes": 4559
+    },
+    {
+      "name": "test_source_accounting.py",
+      "bytes": 4952
+    }
+  ],
+  "method": "Fresh stdlib tarfile extraction, file-only bounded paths; isolated Python -I -B with PATH=/nonexistent. CLI cwd remains owned worktree by explicit instruction; copied modules load only own archived historical tools.",
+  "copy_has_git_target_addons_current_tools": false,
+  "original_map_archive_files_unchanged": true,
+  "temporary_copy_removed_after_execution": true
+}
