@@ -1,6 +1,6 @@
 ## [2026-10-09] ingest | Patch 4.3.4 pinned source
 
-[Audit](investigations/patch-4-3-4-api-audit.md): complete default-parser inventory (10 additions, one removal), one metadata context, zero prose/signatures; full caller scans retained. Registered own retail discovery case with actual 5.0.1/5.0.4 successors; no runtime changes. Targeted discovery pending, coordinator owns final gates.
+[Audit](investigations/patch-4-3-4-api-audit.md): complete default-parser inventory (10 additions, one removal), one metadata context, zero prose/signatures; full caller scans retained. Registered own retail discovery case with actual 5.0.1/5.0.4 successors; no runtime changes. Targeted discovery RED at 5c3bccdf7: seven gaps, three superseded removals, one absence. Reviewed fixture/precise model limits recorded before GREEN; coordinator owns final gates.
 
 ## [2026-10-08] maintenance | Compact patch-audit evidence
 

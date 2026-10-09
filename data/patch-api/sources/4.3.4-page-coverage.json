@@ -6,73 +6,73 @@
     "path": "data/patch-api/sources/4.3.4-api-changes.txt",
     "sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184"
   },
-  "proof_policy": "Publication/absence only, never signature/output/security/behavior parity. No external linked-page contracts or Classic credit. Discovery pending.",
+  "proof_policy": "All inventory IDs accounted. Own cached-retail publication/absence only; no signatures, outputs, security, native or modeled-service parity. No external linked-page expansion or Classic credit.",
   "source_rows": [
     {
       "source_id": "wt-global-api-GetNumSoRRemaining-10",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "superseded-publication",
+      "note": "Later retail removal wt-global-api-GetNumSoRRemaining-155; current raw/lookup nil. Historical addition behavior unproven; no new retirement."
     },
     {
       "source_id": "wt-global-api-GetSecondsUntilParentalControlsKick-11",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "publication-gap",
+      "note": "Missing account parental-control schedule, deadline and session enforcement model. Generated documentation name is not behavioral proof; page gives no return/sentinel contract."
     },
     {
       "source_id": "wt-global-api-GetSessionTime-12",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "publication-gap",
+      "note": "Missing login-session start/lifetime clock contract; existing simulated elapsed time is not established as login-session time. Current BNet consumer retained; page gives no unit/reset contract."
     },
     {
       "source_id": "wt-global-api-GMItemRestorationButtonEnabled-13",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "publication-gap",
+      "note": "Missing item-restoration support-service capability state; page provides no policy/output contract. No modeled restoration service or source-backed cheap implementation."
     },
     {
       "source_id": "wt-global-api-GMQuickTicketSystemEnabled-14",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "publication-gap",
+      "note": "Missing quick-ticket service availability/policy state; page provides no output contract. No modeled ticket service; not replaced with a plausible boolean."
     },
     {
       "source_id": "wt-global-api-GMQuickTicketSystemThrottled-15",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "publication-gap",
+      "note": "Missing quick-ticket request/throttle lifecycle; page provides no policy/timing contract. No modeled ticket service; not replaced with a constant."
     },
     {
       "source_id": "wt-global-api-GMSubmitBug-16",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "superseded-publication",
+      "note": "Later retail removal wt-global-api-GMSubmitBug-607; current raw/lookup nil. Historical addition behavior unproven; no new retirement."
     },
     {
       "source_id": "wt-global-api-GMSubmitSuggestion-17",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "superseded-publication",
+      "note": "Later retail removal wt-global-api-GMSubmitSuggestion-608; current raw/lookup nil. Historical addition behavior unproven; no new retirement."
     },
     {
       "source_id": "wt-global-api-ReportPlayer-18",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "publication-gap",
+      "note": "Missing report submission state, target/category rules and server effects. Similar retired C_* members are not this unqualified API. Page gives no signature; no no-op submission shim."
     },
     {
       "source_id": "wt-global-api-SetPendingReportTarget-19",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "publication-gap",
+      "note": "Missing report-target selection/identity lifecycle; similarly named retired C_ReportSystem member is not this global. Page gives no signature; no fake target state."
     },
     {
       "source_id": "wt-global-api-ComplainChat-22",
       "capabilities": [],
-      "status": "audit-pending",
-      "note": "Publication discovery pending; source supplies only identity/direction, not a signature or behavioral contract."
+      "status": "absence-only",
+      "note": "ComplainChat raw/lookup nil in cached retail Game; no signature/behavior parity, no runtime retirement edits or Classic claim."
     },
     {
       "source_id": "source-context-001",
