@@ -195,7 +195,7 @@ def verify_receipts(context):
     return len(receipts), len(prior)
 
 
-CONTEXT_SHA256 = '6b4939a3855251bdf8db5f83221a427d51767466f317efa5d1ee5a4a29aa4acc'
+CONTEXT_SHA256 = '83d016c8794413583412a1ad75f11496a2f329b3302695acf464a67c15e05b17'
 
 
 def main():
