@@ -17,8 +17,8 @@ fn patch_4_2_0_publication_sweep(env: &WowLuaEnv) {
         register_env: "P420_SWEEP_REGISTER",
         out_env: "P420_SWEEP_OUT",
         later_registers: &[
-            // PENDING: 4.3.0-wikitext-register.json (coordinator replaces at integration).
-            // PENDING: 4.3.4-wikitext-register.json (coordinator replaces at integration).
+            include_str!("../data/patch-api/sources/4.3.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/4.3.4-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.0.4-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.1.0-wikitext-register.json"),
