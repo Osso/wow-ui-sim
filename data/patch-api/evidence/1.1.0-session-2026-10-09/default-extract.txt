@@ -1,0 +1,4 @@
+Patch 1.1.0 API changes
+
+Source: https://warcraft.wiki.gg/index.php?title=Global_functions&oldid=4997032
+
