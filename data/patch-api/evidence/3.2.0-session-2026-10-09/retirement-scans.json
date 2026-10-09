@@ -1,0 +1,26 @@
+{
+  "cached-retail": {
+    "root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+    "exists": true,
+    "files": 4044,
+    "text_files": 4040,
+    "matches": [],
+    "search": "whole-word bare and qualified identical: all symbols are unnamespaced; no truncation"
+  },
+  "src": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p320-source/src",
+    "exists": true,
+    "files": 1653,
+    "text_files": 1653,
+    "matches": [],
+    "search": "whole-word bare and qualified identical: all symbols are unnamespaced; no truncation"
+  },
+  "tests": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p320-source/tests",
+    "exists": true,
+    "files": 2160,
+    "text_files": 2159,
+    "matches": [],
+    "search": "whole-word bare and qualified identical: all symbols are unnamespaced; no truncation"
+  }
+}

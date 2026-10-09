@@ -1,0 +1,1288 @@
+{
+  "patch": "3.2.0",
+  "client_line": "retail",
+  "source_sha256": "69aa203697a58b43c936098568b7c44d051e9be045156c5b266ce2789552b21b",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/3.2.0-api-changes.txt",
+    "sha256": "580a691695ac1c2f535231b8972b0746ada43b6b642bc0ccbb2be971b10523b8",
+    "wikitext_revid": 4812266,
+    "extractor_flags": [
+      "--numbered-reflist"
+    ]
+  },
+  "proof_policy": "Original targeted development publication/absence only. Full prose, signatures and slash command claims remain unsupported. No newly closed backing models, retirements, Classic mutations, historical/native/full-suite/final acceptance credit. Future closures must not overwrite archived originals.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-GetSavedInstanceInfo-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current handler returns fourteen nils, not a saved-instance record. No lockout backing collection or native return-position/type proof for instanceIDMostSig/isRaid; source calls both bools, preserved without correction. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetSavedInstanceInfo",
+      "wikitext_line": 7
+    },
+    {
+      "source_id": "wt-global-api-GetInstanceLockTimeRemaining-8",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no instance-extension deadline/previous-instance model. Source adds isPreviousInstance but does not pin its return position or timing. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetInstanceLockTimeRemaining",
+      "wikitext_line": 8
+    },
+    {
+      "source_id": "wt-global-api-GetDifficutlyColor-12",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Literal source misspelling retained; never silently replaced with GetDifficultyColor. Removed identity is already absent, no simulator retirement performed; source does not establish old color formula. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetDifficutlyColor",
+      "wikitext_line": 12
+    },
+    {
+      "source_id": "wt-global-api-GetQuestDifficultyColor-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Published Blizzard UI helper; exact equivalence to the source misspelled predecessor and historical level/color thresholds are not established by this page. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetQuestDifficultyColor",
+      "wikitext_line": 13
+    },
+    {
+      "source_id": "wt-global-api-QuestDifficultyColor-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Removed singular array is already absent. Source explicitly cannot locate its owner; no inferred namespace or Classic deletion. Publication/absence probe only; no behavioral credit.",
+      "symbol": "QuestDifficultyColor",
+      "wikitext_line": 17
+    },
+    {
+      "source_id": "wt-global-api-QuestDifficultyColors-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Published table comes from existing defaults/vendor UI, not a newly modeled color contract. Source gives neither owner nor keys/color values. Publication/absence probe only; no behavioral credit.",
+      "symbol": "QuestDifficultyColors",
+      "wikitext_line": 18
+    },
+    {
+      "source_id": "wt-global-api-UnitIsPlusMob-21",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent, but source says updated OR removed and not 100% sure. Missing NPC elite/rank query semantics; uncertainty cannot authorize absence credit. Publication/absence probe only; no behavioral credit.",
+      "symbol": "UnitIsPlusMob",
+      "wikitext_line": 21
+    },
+    {
+      "source_id": "wt-global-api-QuestMapUpdateQuest-25",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Absent legacy quest-map API; source explicitly questions index meaning. No pinned log-index/quest-ID mapping and POI selection/update contract. Publication/absence probe only; no behavioral credit.",
+      "symbol": "QuestMapUpdateQuest",
+      "wikitext_line": 25
+    },
+    {
+      "source_id": "wt-global-api-QuestMapGetQuestName-26",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Absent legacy quest-map API; no defined index identity/return tuple or historical quest-map selection model. Modern quest-log data alone cannot establish an alias. Publication/absence probe only; no behavioral credit.",
+      "symbol": "QuestMapGetQuestName",
+      "wikitext_line": 26
+    },
+    {
+      "source_id": "wt-global-api-QuestMapGetPOIInfoForQuest-27",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Absent legacy API; source names two indices but defines neither POI tuple nor indexing/quest ownership. No historical POI model contract. Publication/absence probe only; no behavioral credit.",
+      "symbol": "QuestMapGetPOIInfoForQuest",
+      "wikitext_line": 27
+    },
+    {
+      "source_id": "wt-global-api-GetAbandonedQuestName-30",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Literal undocumented name absent. Existing GetAbandonQuestName is a different spelling; source gives no equivalence or abandonment-time selection semantics, so no guessed alias. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetAbandonedQuestName",
+      "wikitext_line": 30
+    },
+    {
+      "source_id": "wt-global-api-GetAbandonQuestItems-31",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later retail removal expects absence, but real quest surface still registers this function. Leave legacy backing state/Classic behavior unchanged pending a separately scoped full removal audit; no publication or historical item-contract credit. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetAbandonQuestItems",
+      "wikitext_line": 31
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogSpellLink-32",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retail removal and current absence match. Historical selected-quest reward-spell hyperlink contract is not provided. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetQuestLogSpellLink",
+      "wikitext_line": 32
+    },
+    {
+      "source_id": "wt-events-UNIT_SPELLCAST_INTERRUPTIBLE-37",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Event registers, but enemy interruptibility transition producer, payload and native timing are not established; registration is not delivery. Publication/absence probe only; no behavioral credit.",
+      "symbol": "UNIT_SPELLCAST_INTERRUPTIBLE",
+      "wikitext_line": 37
+    },
+    {
+      "source_id": "wt-events-UNIT_SPELLCAST_NOT_INTERRUPTIBLE-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Event registers, but inverse enemy interruptibility transition producer/payload/order is not established; registration is not delivery. Publication/absence probe only; no behavioral credit.",
+      "symbol": "UNIT_SPELLCAST_NOT_INTERRUPTIBLE",
+      "wikitext_line": 38
+    },
+    {
+      "source_id": "wt-global-api-UnitCastingInfo-41",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current player cast query exists; source claims enemy interruptibility. No modeled non-player cast/interruptibility transition or native interrupt-result slot/type/meaning proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "UnitCastingInfo",
+      "wikitext_line": 41
+    },
+    {
+      "source_id": "wt-global-api-UnitChannelInfo-42",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current player channel query exists; no enemy channel/interruptibility state or native appended-result slot/type/meaning proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "UnitChannelInfo",
+      "wikitext_line": 42
+    },
+    {
+      "source_id": "wt-global-api-CalendarGetDayEvent-46",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; current namespace/default calendar surface cannot establish this changed legacy call. Page gives no arguments, return shape or day-event backing contract. Publication/absence probe only; no behavioral credit.",
+      "symbol": "CalendarGetDayEvent",
+      "wikitext_line": 46
+    },
+    {
+      "source_id": "wt-global-api-CalendarGetDayEventSequenceInfo-47",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no recurring-event sequence backing model, selected date/index or return contract defined by source. Publication/absence probe only; no behavioral credit.",
+      "symbol": "CalendarGetDayEventSequenceInfo",
+      "wikitext_line": 47
+    },
+    {
+      "source_id": "wt-global-api-GetInboxNumItems-51",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Existing inbox state returns loaded count twice; page adds totalItems but gives no independent server-total/paging contract. This audit does not add an invented unloaded-mail model or native count parity. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetInboxNumItems",
+      "wikitext_line": 51
+    },
+    {
+      "source_id": "wt-global-api-GMResponseNeedMoreHelp-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no GM ticket/response workflow. Text argument alone does not establish submission side effects/events/error contract. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GMResponseNeedMoreHelp",
+      "wikitext_line": 54
+    },
+    {
+      "source_id": "wt-events-END_REFUND-57",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retirement/current rejection match. Source questions expiration vs pre-action warning; no refund timer/action producer or native payload proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "END_REFUND",
+      "wikitext_line": 57
+    },
+    {
+      "source_id": "wt-events-END_BOUND_TRADEABLE-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Event registers; source explicitly questions exact event name. No item bound-trade timer/transition producer or payload proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "END_BOUND_TRADEABLE",
+      "wikitext_line": 58
+    },
+    {
+      "source_id": "wt-global-api-EndBoundTradeable-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later removal allows loaded unchanged Blizzard C_Item deprecation alias. Source argument someVar is explicitly inferred; no native input/item trade-window mutation contract credit. Publication/absence probe only; no behavioral credit.",
+      "symbol": "EndBoundTradeable",
+      "wikitext_line": 59
+    },
+    {
+      "source_id": "wt-global-api-GetSocketItemBoundTradeable-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later removal allows unchanged Blizzard C_ItemSocketInfo deprecation alias. No native socket-context/trade eligibility/refund model proof from the empty signature. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetSocketItemBoundTradeable",
+      "wikitext_line": 60
+    },
+    {
+      "source_id": "wt-global-api-GetPlayerInfoByGUID-63",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Existing real global resolves the seeded local character only. Source says another player; no remote GUID identity directory or native tuple/type/missing-identity contract proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GetPlayerInfoByGUID",
+      "wikitext_line": 63
+    },
+    {
+      "source_id": "wt-global-api-FillLocalizedClassList-64",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retail removal/current absence match. Source does not define boolean meaning, localization scope or table mutation behavior; Classic bootstrap behavior preserved. Publication/absence probe only; no behavioral credit.",
+      "symbol": "FillLocalizedClassList",
+      "wikitext_line": 64
+    },
+    {
+      "source_id": "wt-global-api-IsXPUserDisabled-65",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Existing real global reads player.xp_disabled; no new model needed. Page provides only signature; native XP-toggle policy/event order remains unmeasured. Publication/absence probe only; no behavioral credit.",
+      "symbol": "IsXPUserDisabled",
+      "wikitext_line": 65
+    },
+    {
+      "source_id": "wt-global-api-CanQueueForWintergrasp-66",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no Wintergrasp admission/eligibility state or source-defined queue conditions. Generic PvP queue defaults cannot justify a fabricated answer. Publication/absence probe only; no behavioral credit.",
+      "symbol": "CanQueueForWintergrasp",
+      "wikitext_line": 66
+    },
+    {
+      "source_id": "wt-global-api-IsFlyableArea-67",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Existing real global reads world.flyable_area. No modeled Dalaran/Karsus Landing subarea transition or historical numeric 1/native boolean return parity proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "IsFlyableArea",
+      "wikitext_line": 67
+    },
+    {
+      "source_id": "wt-events-COMBAT_LOG_EVENT-71",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current retail intentionally rejects combat-log script registration. Historical changed payload unspecified; no bypass of current restriction or fabricated historical producer. Publication/absence probe only; no behavioral credit.",
+      "symbol": "COMBAT_LOG_EVENT",
+      "wikitext_line": 71
+    },
+    {
+      "source_id": "wt-events-UPDATE_CHAT_COLOR_NAME_BY_CLASS-73",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Event registers; no tested historical class-color setting producer/payload or native delivery proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "UPDATE_CHAT_COLOR_NAME_BY_CLASS",
+      "wikitext_line": 73
+    },
+    {
+      "source_id": "wt-events-EQUIPMENT_SWAP_FINISHED-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Existing equipment-set producer is outside this page-only proof; registration alone does not establish historical result payload/swap order. Publication/absence probe only; no behavioral credit.",
+      "symbol": "EQUIPMENT_SWAP_FINISHED",
+      "wikitext_line": 75
+    },
+    {
+      "source_id": "wt-events-UNIT_DISSIPATES-77",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Event rejected; no source-defined unit dissipation lifecycle, payload or backing producer. No speculative registration-only shim. Publication/absence probe only; no behavioral credit.",
+      "symbol": "UNIT_DISSIPATES",
+      "wikitext_line": 77
+    },
+    {
+      "source_id": "wt-events-GMRESPONSE_RECEIVED-79",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later removal/current rejection match; GM response/ticket producer and historical payload remain unsupported. Publication/absence probe only; no behavioral credit.",
+      "symbol": "GMRESPONSE_RECEIVED",
+      "wikitext_line": 79
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE-81",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retirement/current rejection match; no battlefield-manager request response state or historical payload proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE",
+      "wikitext_line": 81
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_QUEUE_INVITE-82",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retirement/current rejection match; no battlefield-manager queue invitation state/payload proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "BATTLEFIELD_MGR_QUEUE_INVITE",
+      "wikitext_line": 82
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_ENTRY_INVITE-83",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retirement/current rejection match; no battlefield entry invitation state/payload proof. Publication/absence probe only; no behavioral credit.",
+      "symbol": "BATTLEFIELD_MGR_ENTRY_INVITE",
+      "wikitext_line": 83
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_EJECT_PENDING-84",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retirement/current rejection match; no pending ejection countdown/producer/payload contract. Publication/absence probe only; no behavioral credit.",
+      "symbol": "BATTLEFIELD_MGR_EJECT_PENDING",
+      "wikitext_line": 84
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_EJECTED-85",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retirement/current rejection match; no completed battlefield ejection producer/payload contract. Publication/absence probe only; no behavioral credit.",
+      "symbol": "BATTLEFIELD_MGR_EJECTED",
+      "wikitext_line": 85
+    },
+    {
+      "source_id": "wt-events-NPC_PVPQUEUE_ANYWHERE-86",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Later retirement/current rejection match; no NPC queue-context interaction/producer/payload contract. Publication/absence probe only; no behavioral credit.",
+      "symbol": "NPC_PVPQUEUE_ANYWHERE",
+      "wikitext_line": 86
+    },
+    {
+      "source_id": "wt-events-ENABLE_XP_GAIN-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current event registers and GUI XP toggle can emit it; this audit does not measure historical producer payload/order. Publication/absence probe only; no behavioral credit.",
+      "symbol": "ENABLE_XP_GAIN",
+      "wikitext_line": 89
+    },
+    {
+      "source_id": "wt-events-DISABLE_XP_GAIN-90",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current event registers and GUI XP toggle can emit it; this audit does not measure historical producer payload/order. Publication/absence probe only; no behavioral credit.",
+      "symbol": "DISABLE_XP_GAIN",
+      "wikitext_line": 90
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit.",
+      "literal": "Patch 3.2.0 API changes",
+      "wikitext_line": 1
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Development Tools ==",
+      "wikitext_line": 3
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Four Blizzard slash developer tools are listed, not console commands. No invocation/output/event-trace/frame-stack/reload proof; linked forum citations not expanded.",
+      "literal": "* The default UI now contains versions of some popular (I may be biassed) tools for UI developers - /dump, /eventtrace, /framestack, and /reloadIriel on Wow 3.2 API Changes topic",
+      "wikitext_line": 4
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Saved Instances ==",
+      "wikitext_line": 6
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current handler returns fourteen nils, not a saved-instance record. No lockout backing collection or native return-position/type proof for instanceIDMostSig/isRaid; source calls both bools, preserved without correction. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated GetSavedInstanceInfo(index) -- added two bools to return: instanceIDMostSig, isRaid",
+      "wikitext_line": 7
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global absent; no instance-extension deadline/previous-instance model. Source adds isPreviousInstance but does not pin its return position or timing. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated GetInstanceLockTimeRemaining() -- Added Bool isPreviousInstance to return (part of the extend instance stuff)",
+      "wikitext_line": 8
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Quest Difficulty ==",
+      "wikitext_line": 10
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Functions ===",
+      "wikitext_line": 11
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal source misspelling retained; never silently replaced with GetDifficultyColor. Removed identity is already absent, no simulator retirement performed; source does not establish old color formula. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* removed GetDifficutlyColor(level) -- Replaced by GetQuestDifficultyColor(level)Speeddymon  on Wow 3.2 API Changes topic",
+      "wikitext_line": 12
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Published Blizzard UI helper; exact equivalence to the source misspelled predecessor and historical level/color thresholds are not established by this page. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new GetQuestDifficultyColor(level) -- exact replacement for GetDifficutlyColor(level)",
+      "wikitext_line": 13
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Arrays ===",
+      "wikitext_line": 15
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source explicitly leaves global/FrameUI/QuestUI ownership unresolved. Do not infer namespace or contents.",
+      "literal": "Not sure of where these arrays live (global? FrameUI? QuestUI?), but this very subtle change broke several addons, so it's being included here",
+      "wikitext_line": 16
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Removed singular array is already absent. Source explicitly cannot locate its owner; no inferred namespace or Classic deletion. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* removed \"QuestDifficultyColor\" array -- Replaced by \"QuestDifficultyColors\" array",
+      "wikitext_line": 17
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Published table comes from existing defaults/vendor UI, not a newly modeled color contract. Source gives neither owner nor keys/color values. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new \"QuestDifficultyColors\"array -- exact replacement for \"QuestDifficultyColor\" array",
+      "wikitext_line": 18
+    },
+    {
+      "source_id": "source-context-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Unit Functions ==",
+      "wikitext_line": 20
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global absent, but source says updated OR removed and not 100% sure. Missing NPC elite/rank query semantics; uncertainty cannot authorize absence credit. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated or removed UnitIsPlusMob(unitID) -- (not 100% sure, but believed to have been removed)",
+      "wikitext_line": 21
+    },
+    {
+      "source_id": "source-context-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Quest Maps ==",
+      "wikitext_line": 23
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Quest-associated map POI support asserted, but index semantics and POI data/selection model unspecified.",
+      "literal": "There's support for points of interest on the map associated with quests, the API functions are:",
+      "wikitext_line": 24
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Absent legacy quest-map API; source explicitly questions index meaning. No pinned log-index/quest-ID mapping and POI selection/update contract. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new QuestMapUpdateQuest(index) -- Is 'index' the normal quest log index?",
+      "wikitext_line": 25
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Absent legacy quest-map API; no defined index identity/return tuple or historical quest-map selection model. Modern quest-log data alone cannot establish an alias. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new QuestMapGetQuestName(index)",
+      "wikitext_line": 26
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Absent legacy API; source names two indices but defines neither POI tuple nor indexing/quest ownership. No historical POI model contract. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new QuestMapGetPOIInfoForQuest(questIndex, poiIndex)",
+      "wikitext_line": 27
+    },
+    {
+      "source_id": "source-context-029",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Quest API ===",
+      "wikitext_line": 29
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal undocumented name absent. Existing GetAbandonQuestName is a different spelling; source gives no equivalence or abandonment-time selection semantics, so no guessed alias. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* undocumented GetAbandonedQuestName()",
+      "wikitext_line": 30
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retail removal expects absence, but real quest surface still registers this function. Leave legacy backing state/Classic behavior unchanged pending a separately scoped full removal audit; no publication or historical item-contract credit. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* undocumented GetAbandonQuestItems()",
+      "wikitext_line": 31
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retail removal and current absence match. Historical selected-quest reward-spell hyperlink contract is not provided. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* undocumented GetQuestLogSpellLink()",
+      "wikitext_line": 32
+    },
+    {
+      "source_id": "source-context-034",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Spell Casting ==",
+      "wikitext_line": 34
+    },
+    {
+      "source_id": "source-context-035",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Casting Events ===",
+      "wikitext_line": 35
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enemy cast/channel interruptibility claim lacks non-player cast state/transition producer and native query/event payload proof.",
+      "literal": "Spell casting events and queries indicate whether enemy spells/channeling can be interrupted:",
+      "wikitext_line": 36
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Event registers, but enemy interruptibility transition producer, payload and native timing are not established; registration is not delivery. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new UNIT_SPELLCAST_INTERRUPTIBLE",
+      "wikitext_line": 37
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Event registers, but inverse enemy interruptibility transition producer/payload/order is not established; registration is not delivery. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new UNIT_SPELLCAST_NOT_INTERRUPTIBLE",
+      "wikitext_line": 38
+    },
+    {
+      "source_id": "source-context-040",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Casting Functions ===",
+      "wikitext_line": 40
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current player cast query exists; source claims enemy interruptibility. No modeled non-player cast/interruptibility transition or native interrupt-result slot/type/meaning proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated UnitCastingInfo(unit) -- added interrupt result",
+      "wikitext_line": 41
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current player channel query exists; no enemy channel/interruptibility state or native appended-result slot/type/meaning proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated UnitChannelInfo(unit) -- added interrupt result",
+      "wikitext_line": 42
+    },
+    {
+      "source_id": "source-context-044",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Calendar Functions ==",
+      "wikitext_line": 44
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global absent; current namespace/default calendar surface cannot establish this changed legacy call. Page gives no arguments, return shape or day-event backing contract. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated CalendarGetDayEvent()",
+      "wikitext_line": 46
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global absent; no recurring-event sequence backing model, selected date/index or return contract defined by source. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new CalendarGetDayEventSequenceInfo()",
+      "wikitext_line": 47
+    },
+    {
+      "source_id": "source-context-049",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Mail functions ==",
+      "wikitext_line": 49
+    },
+    {
+      "source_id": "prose-undated-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing inbox state returns loaded count twice; page adds totalItems but gives no independent server-total/paging contract. This audit does not add an invented unloaded-mail model or native count parity. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated GetInboxNumItems() -- added totalItems",
+      "wikitext_line": 51
+    },
+    {
+      "source_id": "source-context-052",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Gamemaster Functions ==",
+      "wikitext_line": 52
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global absent; no GM ticket/response workflow. Text argument alone does not establish submission side effects/events/error contract. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new  GMResponseNeedMoreHelp(text)",
+      "wikitext_line": 54
+    },
+    {
+      "source_id": "source-context-056",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Loot Trading/Refunding ==",
+      "wikitext_line": 56
+    },
+    {
+      "source_id": "prose-undated-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retirement/current rejection match. Source questions expiration vs pre-action warning; no refund timer/action producer or native payload proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new END_REFUND -- triggered when a returnable item's refund period ends (or maybe would end if action performed?)",
+      "wikitext_line": 57
+    },
+    {
+      "source_id": "prose-undated-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Event registers; source explicitly questions exact event name. No item bound-trade timer/transition producer or payload proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new END_BOUND_TRADEABLE -- Not 100% sure of this is the right event name",
+      "wikitext_line": 58
+    },
+    {
+      "source_id": "prose-undated-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later removal allows loaded unchanged Blizzard C_Item deprecation alias. Source argument someVar is explicitly inferred; no native input/item trade-window mutation contract credit. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new EndBoundTradeable(someVar) -- inferred from staticPopupDialogs.lua",
+      "wikitext_line": 59
+    },
+    {
+      "source_id": "prose-undated-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later removal allows unchanged Blizzard C_ItemSocketInfo deprecation alias. No native socket-context/trade eligibility/refund model proof from the empty signature. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new GetSocketItemBoundTradeable()Nafe on Wow 3.2 API Changes topic",
+      "wikitext_line": 60
+    },
+    {
+      "source_id": "source-context-062",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Other Information ==",
+      "wikitext_line": 62
+    },
+    {
+      "source_id": "prose-undated-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing real global resolves the seeded local character only. Source says another player; no remote GUID identity directory or native tuple/type/missing-identity contract proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new GetPlayerInfoByGUID(string) - Returns basic information about another player from their GUID",
+      "wikitext_line": 63
+    },
+    {
+      "source_id": "prose-undated-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retail removal/current absence match. Source does not define boolean meaning, localization scope or table mutation behavior; Classic bootstrap behavior preserved. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new FillLocalizedClassList(table, boolean)",
+      "wikitext_line": 64
+    },
+    {
+      "source_id": "prose-undated-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing real global reads player.xp_disabled; no new model needed. Page provides only signature; native XP-toggle policy/event order remains unmeasured. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new IsXPUserDisabled()",
+      "wikitext_line": 65
+    },
+    {
+      "source_id": "prose-undated-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global absent; no Wintergrasp admission/eligibility state or source-defined queue conditions. Generic PvP queue defaults cannot justify a fabricated answer. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new CanQueueForWintergrasp()",
+      "wikitext_line": 66
+    },
+    {
+      "source_id": "prose-undated-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing real global reads world.flyable_area. No modeled Dalaran/Karsus Landing subarea transition or historical numeric 1/native boolean return parity proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated IsFlyableArea() -- updated to work properly in dalaran (returning 1 in Karsus landing)Gello on Wow 3.2 API Changes topic",
+      "wikitext_line": 67
+    },
+    {
+      "source_id": "source-context-069",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Other Useful Events ==",
+      "wikitext_line": 69
+    },
+    {
+      "source_id": "source-context-070",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Combatlog Events ===",
+      "wikitext_line": 70
+    },
+    {
+      "source_id": "prose-undated-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current retail intentionally rejects combat-log script registration. Historical changed payload unspecified; no bypass of current restriction or fabricated historical producer. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* updated COMBAT_LOG_EVENT",
+      "wikitext_line": 71
+    },
+    {
+      "source_id": "source-context-072",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== ChatLog Events ===",
+      "wikitext_line": 72
+    },
+    {
+      "source_id": "prose-undated-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Event registers; no tested historical class-color setting producer/payload or native delivery proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new UPDATE_CHAT_COLOR_NAME_BY_CLASS",
+      "wikitext_line": 73
+    },
+    {
+      "source_id": "source-context-074",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Inventory Events ===",
+      "wikitext_line": 74
+    },
+    {
+      "source_id": "prose-undated-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing equipment-set producer is outside this page-only proof; registration alone does not establish historical result payload/swap order. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new EQUIPMENT_SWAP_FINISHED",
+      "wikitext_line": 75
+    },
+    {
+      "source_id": "source-context-076",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Unit Events ===",
+      "wikitext_line": 76
+    },
+    {
+      "source_id": "prose-undated-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Event rejected; no source-defined unit dissipation lifecycle, payload or backing producer. No speculative registration-only shim. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new UNIT_DISSIPATES",
+      "wikitext_line": 77
+    },
+    {
+      "source_id": "source-context-078",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== GameMaster Events ===",
+      "wikitext_line": 78
+    },
+    {
+      "source_id": "prose-undated-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later removal/current rejection match; GM response/ticket producer and historical payload remain unsupported. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new GMRESPONSE_RECEIVED",
+      "wikitext_line": 79
+    },
+    {
+      "source_id": "source-context-080",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Battlefield Events ===",
+      "wikitext_line": 80
+    },
+    {
+      "source_id": "prose-undated-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retirement/current rejection match; no battlefield-manager request response state or historical payload proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE",
+      "wikitext_line": 81
+    },
+    {
+      "source_id": "prose-undated-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retirement/current rejection match; no battlefield-manager queue invitation state/payload proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new BATTLEFIELD_MGR_QUEUE_INVITE",
+      "wikitext_line": 82
+    },
+    {
+      "source_id": "prose-undated-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retirement/current rejection match; no battlefield entry invitation state/payload proof. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new BATTLEFIELD_MGR_ENTRY_INVITE",
+      "wikitext_line": 83
+    },
+    {
+      "source_id": "prose-undated-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retirement/current rejection match; no pending ejection countdown/producer/payload contract. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new BATTLEFIELD_MGR_EJECT_PENDING",
+      "wikitext_line": 84
+    },
+    {
+      "source_id": "prose-undated-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retirement/current rejection match; no completed battlefield ejection producer/payload contract. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new BATTLEFIELD_MGR_EJECTED",
+      "wikitext_line": 85
+    },
+    {
+      "source_id": "prose-undated-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retirement/current rejection match; no NPC queue-context interaction/producer/payload contract. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new NPC_PVPQUEUE_ANYWHERE",
+      "wikitext_line": 86
+    },
+    {
+      "source_id": "source-context-088",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "=== Reputation Events ===",
+      "wikitext_line": 88
+    },
+    {
+      "source_id": "prose-undated-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current event registers and GUI XP toggle can emit it; this audit does not measure historical producer payload/order. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new ENABLE_XP_GAIN",
+      "wikitext_line": 89
+    },
+    {
+      "source_id": "prose-undated-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current event registers and GUI XP toggle can emit it; this audit does not measure historical producer payload/order. Full statement retained; no behavioral credit from repeated inventory.",
+      "literal": "* new DISABLE_XP_GAIN",
+      "wikitext_line": 90
+    },
+    {
+      "source_id": "source-context-092",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== References ==",
+      "wikitext_line": 92
+    },
+    {
+      "source_id": "prose-undated-093",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Unexpanded reference marker with column count; no runtime credit.",
+      "literal": "[References list; columns=2; not expanded]",
+      "wikitext_line": 93
+    },
+    {
+      "source_id": "signature-GetSavedInstanceInfo-7",
+      "symbol": "GetSavedInstanceInfo",
+      "literal": "GetSavedInstanceInfo(index)",
+      "wikitext_line": 7,
+      "inventory_id": "wt-global-api-GetSavedInstanceInfo-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current handler returns fourteen nils, not a saved-instance record. No lockout backing collection or native return-position/type proof for instanceIDMostSig/isRaid; source calls both bools, preserved without correction. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetInstanceLockTimeRemaining-8",
+      "symbol": "GetInstanceLockTimeRemaining",
+      "literal": "GetInstanceLockTimeRemaining()",
+      "wikitext_line": 8,
+      "inventory_id": "wt-global-api-GetInstanceLockTimeRemaining-8",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no instance-extension deadline/previous-instance model. Source adds isPreviousInstance but does not pin its return position or timing. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetDifficutlyColor-12",
+      "symbol": "GetDifficutlyColor",
+      "literal": "GetDifficutlyColor(level)",
+      "wikitext_line": 12,
+      "inventory_id": "wt-global-api-GetDifficutlyColor-12",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Literal source misspelling retained; never silently replaced with GetDifficultyColor. Removed identity is already absent, no simulator retirement performed; source does not establish old color formula. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetQuestDifficultyColor-13",
+      "symbol": "GetQuestDifficultyColor",
+      "literal": "GetQuestDifficultyColor(level)",
+      "wikitext_line": 13,
+      "inventory_id": "wt-global-api-GetQuestDifficultyColor-13",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Published Blizzard UI helper; exact equivalence to the source misspelled predecessor and historical level/color thresholds are not established by this page. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-UnitIsPlusMob-21",
+      "symbol": "UnitIsPlusMob",
+      "literal": "UnitIsPlusMob(unitID)",
+      "wikitext_line": 21,
+      "inventory_id": "wt-global-api-UnitIsPlusMob-21",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent, but source says updated OR removed and not 100% sure. Missing NPC elite/rank query semantics; uncertainty cannot authorize absence credit. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-QuestMapUpdateQuest-25",
+      "symbol": "QuestMapUpdateQuest",
+      "literal": "QuestMapUpdateQuest(index)",
+      "wikitext_line": 25,
+      "inventory_id": "wt-global-api-QuestMapUpdateQuest-25",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Absent legacy quest-map API; source explicitly questions index meaning. No pinned log-index/quest-ID mapping and POI selection/update contract. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-QuestMapGetQuestName-26",
+      "symbol": "QuestMapGetQuestName",
+      "literal": "QuestMapGetQuestName(index)",
+      "wikitext_line": 26,
+      "inventory_id": "wt-global-api-QuestMapGetQuestName-26",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Absent legacy quest-map API; no defined index identity/return tuple or historical quest-map selection model. Modern quest-log data alone cannot establish an alias. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-QuestMapGetPOIInfoForQuest-27",
+      "symbol": "QuestMapGetPOIInfoForQuest",
+      "literal": "QuestMapGetPOIInfoForQuest(questIndex, poiIndex)",
+      "wikitext_line": 27,
+      "inventory_id": "wt-global-api-QuestMapGetPOIInfoForQuest-27",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Absent legacy API; source names two indices but defines neither POI tuple nor indexing/quest ownership. No historical POI model contract. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetAbandonedQuestName-30",
+      "symbol": "GetAbandonedQuestName",
+      "literal": "GetAbandonedQuestName()",
+      "wikitext_line": 30,
+      "inventory_id": "wt-global-api-GetAbandonedQuestName-30",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Literal undocumented name absent. Existing GetAbandonQuestName is a different spelling; source gives no equivalence or abandonment-time selection semantics, so no guessed alias. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetAbandonQuestItems-31",
+      "symbol": "GetAbandonQuestItems",
+      "literal": "GetAbandonQuestItems()",
+      "wikitext_line": 31,
+      "inventory_id": "wt-global-api-GetAbandonQuestItems-31",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later retail removal expects absence, but real quest surface still registers this function. Leave legacy backing state/Classic behavior unchanged pending a separately scoped full removal audit; no publication or historical item-contract credit. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetQuestLogSpellLink-32",
+      "symbol": "GetQuestLogSpellLink",
+      "literal": "GetQuestLogSpellLink()",
+      "wikitext_line": 32,
+      "inventory_id": "wt-global-api-GetQuestLogSpellLink-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later retail removal and current absence match. Historical selected-quest reward-spell hyperlink contract is not provided. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-UnitCastingInfo-41",
+      "symbol": "UnitCastingInfo",
+      "literal": "UnitCastingInfo(unit)",
+      "wikitext_line": 41,
+      "inventory_id": "wt-global-api-UnitCastingInfo-41",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current player cast query exists; source claims enemy interruptibility. No modeled non-player cast/interruptibility transition or native interrupt-result slot/type/meaning proof. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-UnitChannelInfo-42",
+      "symbol": "UnitChannelInfo",
+      "literal": "UnitChannelInfo(unit)",
+      "wikitext_line": 42,
+      "inventory_id": "wt-global-api-UnitChannelInfo-42",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current player channel query exists; no enemy channel/interruptibility state or native appended-result slot/type/meaning proof. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-CalendarGetDayEvent-46",
+      "symbol": "CalendarGetDayEvent",
+      "literal": "CalendarGetDayEvent()",
+      "wikitext_line": 46,
+      "inventory_id": "wt-global-api-CalendarGetDayEvent-46",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; current namespace/default calendar surface cannot establish this changed legacy call. Page gives no arguments, return shape or day-event backing contract. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-CalendarGetDayEventSequenceInfo-47",
+      "symbol": "CalendarGetDayEventSequenceInfo",
+      "literal": "CalendarGetDayEventSequenceInfo()",
+      "wikitext_line": 47,
+      "inventory_id": "wt-global-api-CalendarGetDayEventSequenceInfo-47",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no recurring-event sequence backing model, selected date/index or return contract defined by source. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetInboxNumItems-51",
+      "symbol": "GetInboxNumItems",
+      "literal": "GetInboxNumItems()",
+      "wikitext_line": 51,
+      "inventory_id": "wt-global-api-GetInboxNumItems-51",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing inbox state returns loaded count twice; page adds totalItems but gives no independent server-total/paging contract. This audit does not add an invented unloaded-mail model or native count parity. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GMResponseNeedMoreHelp-54",
+      "symbol": "GMResponseNeedMoreHelp",
+      "literal": "GMResponseNeedMoreHelp(text)",
+      "wikitext_line": 54,
+      "inventory_id": "wt-global-api-GMResponseNeedMoreHelp-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no GM ticket/response workflow. Text argument alone does not establish submission side effects/events/error contract. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-EndBoundTradeable-59",
+      "symbol": "EndBoundTradeable",
+      "literal": "EndBoundTradeable(someVar)",
+      "wikitext_line": 59,
+      "inventory_id": "wt-global-api-EndBoundTradeable-59",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later removal allows loaded unchanged Blizzard C_Item deprecation alias. Source argument someVar is explicitly inferred; no native input/item trade-window mutation contract credit. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetSocketItemBoundTradeable-60",
+      "symbol": "GetSocketItemBoundTradeable",
+      "literal": "GetSocketItemBoundTradeable()",
+      "wikitext_line": 60,
+      "inventory_id": "wt-global-api-GetSocketItemBoundTradeable-60",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later removal allows unchanged Blizzard C_ItemSocketInfo deprecation alias. No native socket-context/trade eligibility/refund model proof from the empty signature. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-GetPlayerInfoByGUID-63",
+      "symbol": "GetPlayerInfoByGUID",
+      "literal": "GetPlayerInfoByGUID(string)",
+      "wikitext_line": 63,
+      "inventory_id": "wt-global-api-GetPlayerInfoByGUID-63",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing real global resolves the seeded local character only. Source says another player; no remote GUID identity directory or native tuple/type/missing-identity contract proof. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-FillLocalizedClassList-64",
+      "symbol": "FillLocalizedClassList",
+      "literal": "FillLocalizedClassList(table, boolean)",
+      "wikitext_line": 64,
+      "inventory_id": "wt-global-api-FillLocalizedClassList-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later retail removal/current absence match. Source does not define boolean meaning, localization scope or table mutation behavior; Classic bootstrap behavior preserved. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-IsXPUserDisabled-65",
+      "symbol": "IsXPUserDisabled",
+      "literal": "IsXPUserDisabled()",
+      "wikitext_line": 65,
+      "inventory_id": "wt-global-api-IsXPUserDisabled-65",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing real global reads player.xp_disabled; no new model needed. Page provides only signature; native XP-toggle policy/event order remains unmeasured. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-CanQueueForWintergrasp-66",
+      "symbol": "CanQueueForWintergrasp",
+      "literal": "CanQueueForWintergrasp()",
+      "wikitext_line": 66,
+      "inventory_id": "wt-global-api-CanQueueForWintergrasp-66",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent; no Wintergrasp admission/eligibility state or source-defined queue conditions. Generic PvP queue defaults cannot justify a fabricated answer. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "signature-IsFlyableArea-67",
+      "symbol": "IsFlyableArea",
+      "literal": "IsFlyableArea()",
+      "wikitext_line": 67,
+      "inventory_id": "wt-global-api-IsFlyableArea-67",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing real global reads world.flyable_area. No modeled Dalaran/Karsus Landing subarea transition or historical numeric 1/native boolean return parity proof. Literal parenthesized signature is incomplete native contract evidence, not parity."
+    },
+    {
+      "source_id": "command-/dump-4",
+      "symbol": "/dump",
+      "literal": "/dump",
+      "wikitext_line": 4,
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "/dump is a Blizzard slash UI tool, not GetConsoleCommands inventory. Historical command handler/output/lifecycle untested; no console-command alias inferred."
+    },
+    {
+      "source_id": "command-/eventtrace-4",
+      "symbol": "/eventtrace",
+      "literal": "/eventtrace",
+      "wikitext_line": 4,
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "/eventtrace is a Blizzard slash UI tool, not GetConsoleCommands inventory. Historical command handler/output/lifecycle untested; no console-command alias inferred."
+    },
+    {
+      "source_id": "command-/framestack-4",
+      "symbol": "/framestack",
+      "literal": "/framestack",
+      "wikitext_line": 4,
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "/framestack is a Blizzard slash UI tool, not GetConsoleCommands inventory. Historical command handler/output/lifecycle untested; no console-command alias inferred."
+    },
+    {
+      "source_id": "command-/reload-4",
+      "symbol": "/reload",
+      "literal": "/reload",
+      "wikitext_line": 4,
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "/reload is a Blizzard slash UI tool, not GetConsoleCommands inventory. Historical command handler/output/lifecycle untested; no console-command alias inferred."
+    }
+  ]
+}

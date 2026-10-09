@@ -1,0 +1,1514 @@
+{
+  "DISABLE_XP_GAIN": [
+    {
+      "path": "src/iced_app/update.rs",
+      "line": 260,
+      "text": "\"DISABLE_XP_GAIN\""
+    },
+    {
+      "path": "src/event/valid_events_a.rs",
+      "line": 566,
+      "text": "\"DISABLE_XP_GAIN\","
+    }
+  ],
+  "ENABLE_XP_GAIN": [
+    {
+      "path": "src/iced_app/update.rs",
+      "line": 262,
+      "text": "\"ENABLE_XP_GAIN\""
+    },
+    {
+      "path": "src/event/valid_events_a.rs",
+      "line": 587,
+      "text": "\"ENABLE_XP_GAIN\","
+    }
+  ],
+  "FillLocalizedClassList": [
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 42,
+      "text": "if FillLocalizedClassList == nil then"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 43,
+      "text": "function FillLocalizedClassList(classTable)"
+    },
+    {
+      "path": "src/mists/compat_bootstrap.lua",
+      "line": 159,
+      "text": "if rawget(_G, \"FillLocalizedClassList\") == nil then"
+    },
+    {
+      "path": "src/mists/compat_bootstrap.lua",
+      "line": 160,
+      "text": "function FillLocalizedClassList(t) return t end"
+    },
+    {
+      "path": "src/era/compat_bootstrap.lua",
+      "line": 15,
+      "text": "if rawget(_G, \"FillLocalizedClassList\") == nil then"
+    },
+    {
+      "path": "src/era/compat_bootstrap.lua",
+      "line": 16,
+      "text": "function FillLocalizedClassList(t) return t end"
+    }
+  ],
+  "QuestDifficultyColors": [
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 245,
+      "text": "-- QuestDifficultyColors is a global table (not a function)."
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 246,
+      "text": "if QuestDifficultyColors == nil then"
+    },
+    {
+      "path": "src/wrath/compat_bootstrap.lua",
+      "line": 247,
+      "text": "QuestDifficultyColors = {"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 84,
+      "text": "QuestDifficultyColors = QuestDifficultyColors or {}"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 84,
+      "text": "QuestDifficultyColors = QuestDifficultyColors or {}"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 85,
+      "text": "QuestDifficultyColors.trivial = QuestDifficultyColors.trivial or { r = 0.50, g = 0.50, b = 0.50 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 85,
+      "text": "QuestDifficultyColors.trivial = QuestDifficultyColors.trivial or { r = 0.50, g = 0.50, b = 0.50 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 86,
+      "text": "QuestDifficultyColors.standard = QuestDifficultyColors.standard or { r = 0.25, g = 0.75, b = 0.25 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 86,
+      "text": "QuestDifficultyColors.standard = QuestDifficultyColors.standard or { r = 0.25, g = 0.75, b = 0.25 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 87,
+      "text": "QuestDifficultyColors.difficult = QuestDifficultyColors.difficult or { r = 1.00, g = 1.00, b = 0.00 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 87,
+      "text": "QuestDifficultyColors.difficult = QuestDifficultyColors.difficult or { r = 1.00, g = 1.00, b = 0.00 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 88,
+      "text": "QuestDifficultyColors.verydifficult = QuestDifficultyColors.verydifficult or { r = 1.00, g = 0.50, b = 0.25 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 88,
+      "text": "QuestDifficultyColors.verydifficult = QuestDifficultyColors.verydifficult or { r = 1.00, g = 0.50, b = 0.25 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 89,
+      "text": "QuestDifficultyColors.impossible = QuestDifficultyColors.impossible or { r = 1.00, g = 0.10, b = 0.10 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 89,
+      "text": "QuestDifficultyColors.impossible = QuestDifficultyColors.impossible or { r = 1.00, g = 0.10, b = 0.10 }"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/color_defaults.rs",
+      "line": 236,
+      "text": "if QuestDifficultyColors.impossible.g ~= 0.10 then return \"quest\" end"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 53,
+      "text": "QuestDifficultyColors, ...), AnimatedStatusBarMixin, GradualAnimatedStatusBarMixin, \\"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 388,
+      "text": "\"return type(QuestDifficultyColors) == 'table', \\"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 389,
+      "text": "type(QuestDifficultyColors['impossible']) == 'table', \\"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 390,
+      "text": "type(QuestDifficultyColors['standard']) == 'table', \\"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 393,
+      "text": ".expect(\"QuestDifficultyColors probe should succeed\");"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 397,
+      "text": "\"Constants.lua:210-228 publishes QuestDifficultyColors and \\"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 405,
+      "text": "\"local c = QuestDifficultyColors['impossible']; \\"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_base_loads.rs",
+      "line": 414,
+      "text": "\"QuestDifficultyColors.impossible == {{r=1.00, g=0.10, b=0.10}} (Constants.lua:211) \u2014 \\"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 243,
+      "text": "if color ~= QuestDifficultyColors.impossible then return \"relative-plus-five\" end"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 245,
+      "text": "if color ~= QuestDifficultyColors.verydifficult then return \"relative-plus-three\" end"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 247,
+      "text": "if color ~= QuestDifficultyColors.difficult then return \"relative-minus-four\" end"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 251,
+      "text": "if color ~= QuestDifficultyColors.impossible then return \"scaling-plus-five\" end"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 253,
+      "text": "if color ~= QuestDifficultyColors.verydifficult then return \"scaling-plus-three\" end"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 255,
+      "text": "if color ~= QuestDifficultyColors.difficult then return \"scaling-zero\" end"
+    },
+    {
+      "path": "tests/runtime_bootstrap_boundaries.rs",
+      "line": 444,
+      "text": "!bootstrap.contains(\"QuestDifficultyColors\"),"
+    }
+  ],
+  "GetQuestDifficultyColor": [
+    {
+      "path": "src/ptr/compat_bootstrap.rs",
+      "line": 97,
+      "text": "GetQuestDifficultyColor = sentinel(\"quest\")"
+    },
+    {
+      "path": "src/ptr/compat_bootstrap.rs",
+      "line": 112,
+      "text": "{ \"GetQuestDifficultyColor\", { 72, true, 99 }, \"quest:72,true,99\", \"quest-highlight\" },"
+    },
+    {
+      "path": "src/ptr/compat_bootstrap.lua",
+      "line": 77,
+      "text": "\"GetQuestDifficultyColor\","
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 237,
+      "text": "if not matchesVendor(\"GetQuestDifficultyColor\", UnitEffectiveLevel(\"player\"), false) then return \"quest\" end"
+    },
+    {
+      "path": "tests/blizzard_frame_xml_util_loads.rs",
+      "line": 274,
+      "text": "and DifficultyUtil.GetQuestDifficultyColor == nil"
+    }
+  ],
+  "UNIT_SPELLCAST_INTERRUPTIBLE": [
+    {
+      "path": "src/event/valid_events_c.rs",
+      "line": 413,
+      "text": "\"UNIT_SPELLCAST_INTERRUPTIBLE\","
+    }
+  ],
+  "UNIT_SPELLCAST_NOT_INTERRUPTIBLE": [
+    {
+      "path": "src/event/valid_events_c.rs",
+      "line": 414,
+      "text": "\"UNIT_SPELLCAST_NOT_INTERRUPTIBLE\","
+    }
+  ],
+  "UPDATE_CHAT_COLOR_NAME_BY_CLASS": [
+    {
+      "path": "src/event/valid_events_c.rs",
+      "line": 438,
+      "text": "\"UPDATE_CHAT_COLOR_NAME_BY_CLASS\","
+    }
+  ],
+  "COMBAT_LOG_EVENT": [
+    {
+      "path": "src/event/mod.rs",
+      "line": 26,
+      "text": "pub const COMBAT_LOG_EVENT: &str = \"COMBAT_LOG_EVENT\";"
+    },
+    {
+      "path": "src/event/mod.rs",
+      "line": 26,
+      "text": "pub const COMBAT_LOG_EVENT: &str = \"COMBAT_LOG_EVENT\";"
+    },
+    {
+      "path": "src/event/valid_events_a.rs",
+      "line": 445,
+      "text": "\"COMBAT_LOG_EVENT\","
+    },
+    {
+      "path": "src/event/valid_events.rs",
+      "line": 70,
+      "text": "if matches!(name, \"COMBAT_LOG_EVENT\" | \"COMBAT_LOG_EVENT_UNFILTERED\") {"
+    },
+    {
+      "path": "src/event/valid_events.rs",
+      "line": 208,
+      "text": "\"COMBAT_LOG_EVENT\","
+    },
+    {
+      "path": "src/event/valid_events.rs",
+      "line": 226,
+      "text": "\"COMBAT_LOG_EVENT\","
+    },
+    {
+      "path": "src/event/valid_events.rs",
+      "line": 289,
+      "text": "const NON_REGISTERABLE_EVENTS: &[&str] = &[\"COMBAT_LOG_EVENT\", \"COMBAT_LOG_EVENT_UNFILTERED\"];"
+    },
+    {
+      "path": "tests/autoroll_compat.rs",
+      "line": 173,
+      "text": "C_EventUtils.IsCallbackEvent(\"COMBAT_LOG_EVENT\")"
+    },
+    {
+      "path": "tests/autoroll_compat.rs",
+      "line": 189,
+      "text": "\"COMBAT_LOG_EVENT should be recognized as a callback event\""
+    },
+    {
+      "path": "tests/patch_12_0_0_prose.rs",
+      "line": 15,
+      "text": "for _,event in ipairs({'COMBAT_LOG_EVENT','COMBAT_LOG_EVENT_UNFILTERED'}) do"
+    },
+    {
+      "path": "tests/patch_12_0_0_prose.rs",
+      "line": 29,
+      "text": "\"COMBAT_LOG_EVENT\","
+    },
+    {
+      "path": "tests/patch_12_0_0_prose.rs",
+      "line": 44,
+      "text": "assert(C_EventUtils.IsCallbackEvent('COMBAT_LOG_EVENT'))"
+    },
+    {
+      "path": "tests/patch_12_0_0_prose.rs",
+      "line": 48,
+      "text": "local ok = pcall(f.RegisterEventCallback,f,'COMBAT_LOG_EVENT',callback)"
+    },
+    {
+      "path": "tests/patch_12_0_0_prose.rs",
+      "line": 49,
+      "text": "assert(ok and f:IsEventRegistered('COMBAT_LOG_EVENT'))"
+    },
+    {
+      "path": "tests/data/patch_5_0_4_sweep_known_gaps.json",
+      "line": 137,
+      "text": "\"wt-events-COMBAT_LOG_EVENT-30\","
+    },
+    {
+      "path": "tests/data/patch_5_0_4_sweep_known_gaps.json",
+      "line": 138,
+      "text": "\"wt-events-COMBAT_LOG_EVENT-78\","
+    },
+    {
+      "path": "tests/data/patch_6_0_2_sweep_known_gaps.json",
+      "line": 271,
+      "text": "\"wt-events-COMBAT_LOG_EVENT-53\","
+    },
+    {
+      "path": "tests/data/patch_4_1_0_sweep_known_gaps.json",
+      "line": 2,
+      "text": "\"wt-events-COMBAT_LOG_EVENT-4\","
+    },
+    {
+      "path": "tests/data/patch_4_1_0_sweep_known_gaps.json",
+      "line": 3,
+      "text": "\"wt-events-COMBAT_LOG_EVENT-86\","
+    }
+  ],
+  "END_BOUND_TRADEABLE": [
+    {
+      "path": "src/event/valid_events_a.rs",
+      "line": 605,
+      "text": "\"END_BOUND_TRADEABLE\","
+    }
+  ],
+  "EQUIPMENT_SWAP_FINISHED": [
+    {
+      "path": "src/event/valid_events_a.rs",
+      "line": 609,
+      "text": "\"EQUIPMENT_SWAP_FINISHED\","
+    },
+    {
+      "path": "src/c_api/item_spell/c_equipment_set.rs",
+      "line": 30,
+      "text": "const EQUIPMENT_SWAP_FINISHED: &str = \"EQUIPMENT_SWAP_FINISHED\";"
+    },
+    {
+      "path": "src/c_api/item_spell/c_equipment_set.rs",
+      "line": 30,
+      "text": "const EQUIPMENT_SWAP_FINISHED: &str = \"EQUIPMENT_SWAP_FINISHED\";"
+    },
+    {
+      "path": "src/c_api/item_spell/c_equipment_set.rs",
+      "line": 287,
+      "text": "EQUIPMENT_SWAP_FINISHED,"
+    },
+    {
+      "path": "tests/equipment_set_command.rs",
+      "line": 92,
+      "text": "frame:RegisterEvent('EQUIPMENT_SWAP_FINISHED')"
+    },
+    {
+      "path": "tests/equipment_set_command.rs",
+      "line": 102,
+      "text": "assert(swapEvents[2][1] == 'EQUIPMENT_SWAP_FINISHED')"
+    }
+  ],
+  "UnitCastingInfo": [
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 1131,
+      "text": "type(UnitCastingInfo),"
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+      "line": 1132,
+      "text": "UnitCastingInfo(\"player\") == nil,"
+    },
+    {
+      "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+      "line": 1,
+      "text": "//! Spell-related globals: UnitHealth, UnitPower, UnitCastingInfo, CastSpellBy*."
+    },
+    {
+      "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+      "line": 575,
+      "text": "LuaApiMut::register_function(lua, \"UnitCastingInfo\", unit_casting_info)?;"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 16,
+      "text": "row.queryBarID = select(10, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 49,
+      "text": "assert(UnitCastingInfo(\"player\") ~= nil)"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 63,
+      "text": "assert(stop.queryBarID == nil and UnitCastingInfo(\"player\") == nil)"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 72,
+      "text": "env.exec(\"assert(#cancellationEvents == 3); assert(UnitCastingInfo('player') == nil)\")"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 99,
+      "text": "assert(select(9, UnitCastingInfo(\"player\")) == 82326)"
+    },
+    {
+      "path": "src/iced_app/casting/interrupted_tests.rs",
+      "line": 100,
+      "text": "assert(select(10, UnitCastingInfo(\"player\")) == replacement[4])"
+    },
+    {
+      "path": "src/iced_app/casting/tests.rs",
+      "line": 14,
+      "text": "row.queryID = select(10, UnitCastingInfo('player'))"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 17,
+      "text": "row.bar = select(10, UnitCastingInfo('player'))"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 18,
+      "text": "row.delay = select(11, UnitCastingInfo('player'))"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 43,
+      "text": "original = {UnitCastingInfo('player')}"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 46,
+      "text": "local updated = {UnitCastingInfo('player')}"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 61,
+      "text": "assert(select(11, UnitCastingInfo('player')) == 750 and #inputEvents == 3)"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 73,
+      "text": "env.exec(\"assert(UnitCastingInfo('player') == nil); assert(A_Admin.DelayCasting(1) == false)\")"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 92,
+      "text": "assert(UnitCastingInfo('player') ~= nil and #inputEvents == 1)"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 105,
+      "text": "assert(select(9, UnitCastingInfo('player')) == 82326)"
+    },
+    {
+      "path": "src/iced_app/casting/input_tests.rs",
+      "line": 106,
+      "text": "assert(select(10, UnitCastingInfo('player')) ~= inputEvents[1][4])"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 18,
+      "text": "row.cast = select(10, UnitCastingInfo('player'))"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 40,
+      "text": "assert(UnitCastingInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 125,
+      "text": "assert(UnitCastingInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 164,
+      "text": "assert(UnitCastingInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 170,
+      "text": "assert(UnitChannelInfo('player') == nil and UnitCastingInfo('player') ~= nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 176,
+      "text": "assert(UnitChannelInfo('player') == nil and UnitCastingInfo('player') ~= nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 179,
+      "text": "assert(UnitChannelInfo('player') == nil and select(9, UnitCastingInfo('player')) == 82326)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 182,
+      "text": "assert(UnitChannelInfo('player') == nil and UnitCastingInfo('player') ~= nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 185,
+      "text": "assert(UnitCastingInfo('player') == nil)"
+    },
+    {
+      "path": "tests/key_dispatch.rs",
+      "line": 120,
+      "text": "local castingAfterFirst = UnitCastingInfo(\"player\") ~= nil"
+    },
+    {
+      "path": "tests/channel_reentrancy.rs",
+      "line": 24,
+      "text": "assert(UnitCastingInfo('player') == nil and normalStarts == 0)"
+    },
+    {
+      "path": "tests/channel_reentrancy.rs",
+      "line": 41,
+      "text": "assert(select(9, UnitCastingInfo('player')) == 19750)"
+    },
+    {
+      "path": "tests/channel_reentrancy.rs",
+      "line": 63,
+      "text": "assert(UnitCastingInfo('player') == nil and not incomingStarted)"
+    },
+    {
+      "path": "tests/unit_auras_private.rs",
+      "line": 71,
+      "text": "assert(events[1][4] == select(7, UnitCastingInfo('player')))"
+    },
+    {
+      "path": "tests/unit_auras_private.rs",
+      "line": 72,
+      "text": "assert(events[1][5] == select(10, UnitCastingInfo('player')))"
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 8,
+      "text": "//! press yields an active `UnitCastingInfo` entry."
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 36,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 52,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 68,
+      "text": "return _G.ActionButton1:GetButtonState(), (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 102,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 141,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 178,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/c_action_bar_input_probes.rs",
+      "line": 209,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/unit_cast_durations.rs",
+      "line": 112,
+      "text": "local _, _, _, startMs, endMs = UnitCastingInfo('player')"
+    },
+    {
+      "path": "tests/unit_cast_durations.rs",
+      "line": 181,
+      "text": "activeID = select(10, UnitCastingInfo(unit))"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 4,
+      "text": "//! cast time), shows UnitCastingInfo, and on completion clears the cast and"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 26,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 33,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 35,
+      "text": "assert!(casting_after, \"UnitCastingInfo should return data during cast\");"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 39,
+      "text": ".eval(\"return select(1, UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 99,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 101,
+      "text": "assert!(!casting_after, \"UnitCastingInfo should be nil after cast completes\");"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 131,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 244,
+      "text": ".eval(\"local _, _, _, s, e = UnitCastingInfo('player'); return s, e\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 247,
+      "text": "// GetTime() returns seconds; UnitCastingInfo returns milliseconds."
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 482,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 495,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 524,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 556,
+      "text": "return UnitCastingInfo(\"player\") ~= nil,"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 695,
+      "text": "assert(select(11, UnitCastingInfo(\"player\")) == 750)"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 699,
+      "text": "assert(UnitCastingInfo(\"player\") == nil)"
+    },
+    {
+      "path": "tests/spell_casting.rs",
+      "line": 704,
+      "text": "assert(not bar.casting and UnitCastingInfo(\"player\") == nil)"
+    },
+    {
+      "path": "tests/admin_combat_api.rs",
+      "line": 115,
+      "text": "local n = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/admin_combat_api.rs",
+      "line": 130,
+      "text": "local n, t, i, s, e, ts, ci, ni, sid = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/admin_combat_api.rs",
+      "line": 145,
+      "text": "local n, t, i = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/admin_combat_api.rs",
+      "line": 160,
+      "text": "local _, _, _, start_ms, end_ms = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/admin_combat_api.rs",
+      "line": 183,
+      "text": "return UnitCastingInfo(\"player\") == nil"
+    },
+    {
+      "path": "tests/admin_combat_api.rs",
+      "line": 197,
+      "text": "return UnitCastingInfo(\"player\") == nil"
+    },
+    {
+      "path": "tests/action_button_input_dispatch.rs",
+      "line": 115,
+      "text": "local before = select(9, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/action_button_input_dispatch.rs",
+      "line": 117,
+      "text": "local afterUp = select(9, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/action_button_input_dispatch.rs",
+      "line": 119,
+      "text": "local afterDown = select(9, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/action_button_input_dispatch.rs",
+      "line": 137,
+      "text": "return select(9, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 52,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 69,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 74,
+      "text": ".eval(\"return select(1, UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 98,
+      "text": "// Instant spell should not show UnitCastingInfo"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 100,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 121,
+      "text": "\"return select(10, UnitCastingInfo('player'))\""
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 123,
+      "text": "\"return select(7, UnitCastingInfo('player'))\""
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 148,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 153,
+      "text": ".eval(\"return select(1, UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 168,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 297,
+      "text": "let casting: bool = env.eval(\"return UnitCastingInfo('player') ~= nil\").unwrap();"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 313,
+      "text": "let casting: bool = env.eval(\"return UnitCastingInfo('player') ~= nil\").unwrap();"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 317,
+      "text": ".eval(\"return select(1, UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 332,
+      "text": "let casting: bool = env.eval(\"return UnitCastingInfo('player') ~= nil\").unwrap();"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 601,
+      "text": "let casting: bool = env.eval(\"return UnitCastingInfo('player') ~= nil\").unwrap();"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 610,
+      "text": "let casting: bool = env.eval(\"return UnitCastingInfo('player') ~= nil\").unwrap();"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 614,
+      "text": ".eval(\"return select(1, UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/click_targeting.rs",
+      "line": 628,
+      "text": "let casting: bool = env.eval(\"return UnitCastingInfo('player') ~= nil\").unwrap();"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 19,
+      "text": "let query = if channel { \"UnitChannelInfo\" } else { \"UnitCastingInfo\" };"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 43,
+      "text": "env.exec(\"assert(UnitCastingInfo('player') == nil); assert(UnitChannelInfo('player') == nil)\")"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 49,
+      "text": "env.exec(\"assert(UnitChannelInfo('player') == nil); A_Admin.StopCasting(); assert(UnitCastingInfo('player') == nil)\")"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 54,
+      "text": "env.exec(\"assert(UnitCastingInfo('target') == nil)\").unwrap();"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 63,
+      "text": "env.exec(\"assert(UnitCastingInfo('player') == nil); assert(A_Admin.UpdateChannel(5.75))\").unwrap();"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 80,
+      "text": "env.exec(\"assert(UnitCastingInfo('player') == nil)\").unwrap();"
+    },
+    {
+      "path": "tests/secure_aura_header_helpers.rs",
+      "line": 322,
+      "text": "\"assert(UnitCastingInfo('player') == nil); \\"
+    },
+    {
+      "path": "tests/secure_aura_header_helpers.rs",
+      "line": 501,
+      "text": "assert(UnitCastingInfo('player') == nil)"
+    },
+    {
+      "path": "tests/test_crafting.rs",
+      "line": 203,
+      "text": "let before: bool = env.eval(\"return UnitCastingInfo('player') ~= nil\").unwrap();"
+    },
+    {
+      "path": "tests/test_crafting.rs",
+      "line": 217,
+      "text": "local name, _, _, startTime, endTime, _, _, _, spellID = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/test_crafting.rs",
+      "line": 247,
+      "text": "local _, _, _, startTime, endTime = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/unit_api.rs",
+      "line": 900,
+      "text": "let is_nil: bool = env.eval(\"return UnitCastingInfo('player') == nil\").unwrap();"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 18,
+      "text": "local name, _, _, _, _, _, _, _, spellId = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 31,
+      "text": ".eval(\"CastSpellByID(); return (UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 48,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 62,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 78,
+      "text": "local _, _, _, _, _, _, _, _, spellId = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 95,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 110,
+      "text": "local a = (UnitCastingInfo(\"player\")) or \"\""
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 113,
+      "text": "local b = (UnitCastingInfo(\"player\")) or \"\""
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 134,
+      "text": ".eval(\"ClickSpecialAbility(1); return (UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 143,
+      "text": ".eval(\"ClickSpecialAbility(2); return (UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 152,
+      "text": ".eval(\"ClickSpecialAbility(99); return (UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 164,
+      "text": ".eval(\"SpellTargetUnit('target'); return (UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 177,
+      "text": "return (UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 212,
+      "text": "local activeAfterStop = UnitCastingInfo(\"player\")"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 222,
+      "text": "\"SpellStopCasting should clear UnitCastingInfo\""
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 241,
+      "text": "local castId1 = select({identity_slot}, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/combat_verbs.rs",
+      "line": 243,
+      "text": "local castId2 = select({identity_slot}, UnitCastingInfo(\"player\"))"
+    },
+    {
+      "path": "tests/secrets_publication_queries.rs",
+      "line": 188,
+      "text": "env.exec(\"assert(UnitCastingInfo('player') == 'Flash of Light')\")"
+    },
+    {
+      "path": "tests/secrets_publication_queries.rs",
+      "line": 216,
+      "text": "function() return UnitCastingInfo('player') end },"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 56,
+      "text": "//! - `UnitCastingInfo(\"player\")` reads `state.casting` and returns the cast"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 73,
+      "text": "//!      `Blizzard_ActionBar`, `UnitCastingInfo(\"player\")` is nil and"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 83,
+      "text": "//!      branch of `execute_spell_by_id` ran. `UnitCastingInfo(\"player\")`"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 134,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 135,
+      "text": ".expect(\"UnitCastingInfo cold-start probe must run cleanly\");"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 139,
+      "text": "`UnitCastingInfo('player')` must be nil. The harness drives \\"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 143,
+      "text": "during settle, or `UnitCastingInfo` is reading the wrong field.\""
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 178,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 179,
+      "text": ".expect(\"UnitCastingInfo post-Down probe must run cleanly\");"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 182,
+      "text": "\"After `ActionButtonDown(1)`, `UnitCastingInfo('player')` must \\"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 202,
+      "text": ".eval(\"return select(1, UnitCastingInfo('player'))\")"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 203,
+      "text": ".expect(\"UnitCastingInfo spell-name probe must run cleanly\");"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 232,
+      "text": ".eval(\"return UnitCastingInfo('player') ~= nil\")"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_keybind_dispatch.rs",
+      "line": 233,
+      "text": ".expect(\"UnitCastingInfo post-Up probe must run cleanly\");"
+    }
+  ],
+  "GetPlayerInfoByGUID": [
+    {
+      "path": "src/loader/tests/wow_api_globals/global_functions.rs",
+      "line": 215,
+      "text": "return GetPlayerInfoByGUID(UnitGUID(\"player\"))"
+    },
+    {
+      "path": "src/lua_api/globals/real/player_identity.rs",
+      "line": 103,
+      "text": "LuaApiMut::register_function(lua, \"GetPlayerInfoByGUID\", get_player_info_by_guid)?;"
+    }
+  ],
+  "IsXPUserDisabled": [
+    {
+      "path": "src/lua_api/state_types/character_world.rs",
+      "line": 357,
+      "text": "/// because many existing readers (UnitXP / UnitXPMax / IsXPUserDisabled /"
+    },
+    {
+      "path": "src/lua_api/globals/real/xp_honor_rest.rs",
+      "line": 22,
+      "text": "//! `IsResting`, `IsXPUserDisabled`, `UnitHonorLevel`, and `UnitXP` /"
+    },
+    {
+      "path": "src/lua_api/globals/real/player_probes.rs",
+      "line": 7,
+      "text": "//! - `IsXPUserDisabled()`    -> `SimState.xp_disabled`"
+    },
+    {
+      "path": "src/lua_api/globals/real/player_probes.rs",
+      "line": 37,
+      "text": "LuaApiMut::register_function(lua, \"IsXPUserDisabled\", is_xp_user_disabled)?;"
+    },
+    {
+      "path": "tests/player_probes.rs",
+      "line": 35,
+      "text": "// \u2500\u2500 IsXPUserDisabled \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+    },
+    {
+      "path": "tests/player_probes.rs",
+      "line": 40,
+      "text": "let b: bool = env.eval(\"return IsXPUserDisabled()\").unwrap();"
+    },
+    {
+      "path": "tests/player_probes.rs",
+      "line": 43,
+      "text": "let b: bool = env.eval(\"return IsXPUserDisabled()\").unwrap();"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs",
+      "line": 103,
+      "text": "//!      IsPlayerAtEffectiveMaxLevel() or IsXPUserDisabled()` \u2192"
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs",
+      "line": 65,
+      "text": "//! - Experience: `not IsPlayerAtEffectiveMaxLevel() and not IsXPUserDisabled()"
+    }
+  ],
+  "IsFlyableArea": [
+    {
+      "path": "src/lua_api/state_types/character_world.rs",
+      "line": 490,
+      "text": "/// Whether the current area allows flying. Drives `IsFlyableArea`."
+    },
+    {
+      "path": "src/lua_api/globals/real/combat_probes.rs",
+      "line": 8,
+      "text": "//! - `IsFlyableArea()`       \u2014 `world.flyable_area`"
+    },
+    {
+      "path": "src/lua_api/globals/real/combat_probes.rs",
+      "line": 64,
+      "text": "LuaApiMut::register_function(lua, \"IsFlyableArea\", is_flyable_area)?;"
+    },
+    {
+      "path": "tests/combat_probes.rs",
+      "line": 20,
+      "text": "IsFlyableArea(),"
+    },
+    {
+      "path": "tests/combat_probes.rs",
+      "line": 82,
+      "text": "let b: bool = env.eval(\"return IsFlyableArea()\").unwrap();"
+    }
+  ],
+  "GetInboxNumItems": [
+    {
+      "path": "src/lua_api/globals/mail_probes.rs",
+      "line": 284,
+      "text": "LuaApiMut::register_function(lua, \"GetInboxNumItems\", get_inbox_num_items)?;"
+    },
+    {
+      "path": "tests/test_mail.rs",
+      "line": 91,
+      "text": "local num, total = GetInboxNumItems()"
+    },
+    {
+      "path": "tests/test_mail.rs",
+      "line": 108,
+      "text": "local num, total = GetInboxNumItems()"
+    },
+    {
+      "path": "tests/test_mail.rs",
+      "line": 124,
+      "text": "local num, total = GetInboxNumItems()"
+    },
+    {
+      "path": "tests/test_mail.rs",
+      "line": 139,
+      "text": "local num, total = GetInboxNumItems()"
+    },
+    {
+      "path": "tests/test_mail.rs",
+      "line": 518,
+      "text": "local num = GetInboxNumItems()"
+    },
+    {
+      "path": "tests/test_mail.rs",
+      "line": 537,
+      "text": "local num = GetInboxNumItems()"
+    }
+  ],
+  "GetSavedInstanceInfo": [
+    {
+      "path": "src/lua_api/globals/instance_info.rs",
+      "line": 22,
+      "text": "//! - `GetSavedInstanceInfo(index)` / `GetSavedWorldBossInfo(index)` \u2192 no"
+    },
+    {
+      "path": "src/lua_api/globals/instance_info.rs",
+      "line": 226,
+      "text": "LuaApiMut::register_function(lua, \"GetSavedInstanceInfo\", get_saved_instance_info)?;"
+    },
+    {
+      "path": "tests/blizzard_raid_frame_loads.rs",
+      "line": 174,
+      "text": "saved instances only exist in-world via GetSavedInstanceInfo\""
+    },
+    {
+      "path": "tests/blizzard_raid_frame_loads.rs",
+      "line": 187,
+      "text": "every saved instance pulls from live GetSavedInstanceInfo / \\"
+    },
+    {
+      "path": "tests/blizzard_raid_frame_loads.rs",
+      "line": 392,
+      "text": "GetSavedInstanceInfo / GetSavedWorldBossInfo with locked / \\"
+    },
+    {
+      "path": "tests/instance_info.rs",
+      "line": 138,
+      "text": "local instanceName = GetSavedInstanceInfo(1)"
+    }
+  ],
+  "GetSocketItemBoundTradeable": [
+    {
+      "path": "src/lua_api/globals/missing_surface/item_socket_info.rs",
+      "line": 31,
+      "text": "\"GetSocketItemBoundTradeable\","
+    },
+    {
+      "path": "tests/item_socket_info.rs",
+      "line": 309,
+      "text": "C_ItemSocketInfo.GetSocketItemBoundTradeable()"
+    },
+    {
+      "path": "tests/blizzard_deprecated_item_socket_info_loads.rs",
+      "line": 144,
+      "text": "and type(GetSocketItemBoundTradeable) == 'function' \\"
+    },
+    {
+      "path": "tests/blizzard_deprecated_item_socket_info_loads.rs",
+      "line": 156,
+      "text": "GetSocketItemBoundTradeable, HasBoundGemProposed) \u2014 so each alias resolves to a \\"
+    },
+    {
+      "path": "tests/blizzard_deprecated_item_socket_info_loads.rs",
+      "line": 179,
+      "text": "and GetSocketItemBoundTradeable == C_ItemSocketInfo.GetSocketItemBoundTradeable \\"
+    },
+    {
+      "path": "tests/blizzard_deprecated_item_socket_info_loads.rs",
+      "line": 179,
+      "text": "and GetSocketItemBoundTradeable == C_ItemSocketInfo.GetSocketItemBoundTradeable \\"
+    }
+  ],
+  "GetAbandonQuestItems": [
+    {
+      "path": "src/lua_api/globals/quest_surface/register.rs",
+      "line": 86,
+      "text": "(\"GetAbandonQuestItems\", get_abandon_quest_items),"
+    },
+    {
+      "path": "tests/data/patch_9_0_1_sweep_known_gaps.json",
+      "line": 155,
+      "text": "\"wt-global-api-C_QuestLog.GetAbandonQuestItems-405\","
+    },
+    {
+      "path": "tests/data/patch_9_0_1_sweep_known_gaps.json",
+      "line": 223,
+      "text": "\"wt-global-api-GetAbandonQuestItems-609\","
+    }
+  ],
+  "UnitChannelInfo": [
+    {
+      "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+      "line": 576,
+      "text": "LuaApiMut::register_function(lua, \"UnitChannelInfo\", unit_channel_info)?;"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 17,
+      "text": "row.channel = select(11, UnitChannelInfo('player'))"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 38,
+      "text": "local before = {UnitChannelInfo('player')}"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 42,
+      "text": "local after = {UnitChannelInfo('player')}"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 54,
+      "text": "env.exec(\"assert(UnitChannelInfo('player') ~= nil and #channelEvents == 2)\").unwrap();"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 57,
+      "text": "assert(UnitChannelInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 75,
+      "text": "originalChannel = {UnitChannelInfo('player')}"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 89,
+      "text": "assert(select(11, UnitChannelInfo('player')) == originalChannel[11])"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 97,
+      "text": "env.exec(\"assert(UnitChannelInfo('player') ~= nil and #channelEvents == 2)\").unwrap();"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 103,
+      "text": "assert(stop.channel == nil and UnitChannelInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 114,
+      "text": "local id = select(11, UnitChannelInfo('player'))"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 122,
+      "text": "assert(select(11, UnitChannelInfo('player')) == id and #channelEvents == 1)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 130,
+      "text": "local empowerID = select(11, UnitChannelInfo('player'))"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 132,
+      "text": "assert(select(10, UnitChannelInfo('player')) == 3)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 133,
+      "text": "assert(select(11, UnitChannelInfo('player')) == empowerID)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 138,
+      "text": "assert(select(10, UnitChannelInfo('player')) == 3)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 148,
+      "text": "assert(stop[5] == UnitGUID('player') and UnitChannelInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 170,
+      "text": "assert(UnitChannelInfo('player') == nil and UnitCastingInfo('player') ~= nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 176,
+      "text": "assert(UnitChannelInfo('player') == nil and UnitCastingInfo('player') ~= nil)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 179,
+      "text": "assert(UnitChannelInfo('player') == nil and select(9, UnitCastingInfo('player')) == 82326)"
+    },
+    {
+      "path": "tests/channel_lifecycle.rs",
+      "line": 182,
+      "text": "assert(UnitChannelInfo('player') == nil and UnitCastingInfo('player') ~= nil)"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 3,
+      "text": "//! `UnitChannelInfo` in `globals/utility_system_spell/spell_api.rs`."
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 231,
+      "text": "let nil_first: bool = env.eval(\"return UnitChannelInfo('player') == nil\").unwrap();"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 254,
+      "text": ".eval(\"return select(1, UnitChannelInfo('player'))\")"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 259,
+      "text": ".eval(\"return select(8, UnitChannelInfo('player'))\")"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 264,
+      "text": ".eval(\"return select(7, UnitChannelInfo('player'))\")"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 269,
+      "text": ".eval(\"return select(4, UnitChannelInfo('player'))\")"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 274,
+      "text": ".eval(\"return select(10, UnitChannelInfo('player'))\")"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 301,
+      "text": ".eval(\"return select(10, UnitChannelInfo('player'))\")"
+    },
+    {
+      "path": "tests/c_vehicle_possession_globals.rs",
+      "line": 323,
+      "text": "let target_nil: bool = env.eval(\"return UnitChannelInfo('target') == nil\").unwrap();"
+    },
+    {
+      "path": "tests/channel_reentrancy.rs",
+      "line": 23,
+      "text": "assert(select(8, UnitChannelInfo('player')) == 357208, 'callback empower was canceled by stale ordinary START')"
+    },
+    {
+      "path": "tests/channel_reentrancy.rs",
+      "line": 40,
+      "text": "assert(UnitChannelInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_reentrancy.rs",
+      "line": 62,
+      "text": "assert(select(8, UnitChannelInfo('player')) == 357208)"
+    },
+    {
+      "path": "tests/unit_cast_durations.rs",
+      "line": 184,
+      "text": "activeID = select(11, UnitChannelInfo(unit))"
+    },
+    {
+      "path": "tests/channel_blizzard.rs",
+      "line": 25,
+      "text": "assert(UnitChannelInfo('player') == nil)"
+    },
+    {
+      "path": "tests/channel_blizzard.rs",
+      "line": 74,
+      "text": "env.exec(\"assert(UnitChannelInfo('player') == nil); assert(not PlayerCastingBarFrame.reverseChanneling)\").unwrap();"
+    },
+    {
+      "path": "tests/channel_blizzard.rs",
+      "line": 97,
+      "text": "local id = select(11, UnitChannelInfo('player'))"
+    },
+    {
+      "path": "tests/channel_blizzard.rs",
+      "line": 99,
+      "text": "assert(select(11, UnitChannelInfo('player')) == id)"
+    },
+    {
+      "path": "tests/channel_blizzard.rs",
+      "line": 102,
+      "text": "local _, _, _, startMs, endMs = UnitChannelInfo('player')"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 19,
+      "text": "let query = if channel { \"UnitChannelInfo\" } else { \"UnitCastingInfo\" };"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 43,
+      "text": "env.exec(\"assert(UnitCastingInfo('player') == nil); assert(UnitChannelInfo('player') == nil)\")"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 49,
+      "text": "env.exec(\"assert(UnitChannelInfo('player') == nil); A_Admin.StopCasting(); assert(UnitCastingInfo('player') == nil)\")"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 74,
+      "text": "env.exec(\"assert(UnitChannelInfo('player') == nil); assert(UnitChannelInfo('target') == nil)\").unwrap();"
+    },
+    {
+      "path": "tests/cast_bar_id.rs",
+      "line": 74,
+      "text": "env.exec(\"assert(UnitChannelInfo('player') == nil); assert(UnitChannelInfo('target') == nil)\").unwrap();"
+    },
+    {
+      "path": "tests/unit_api.rs",
+      "line": 907,
+      "text": "let is_nil: bool = env.eval(\"return UnitChannelInfo('player') == nil\").unwrap();"
+    }
+  ],
+  "EndBoundTradeable": [
+    {
+      "path": "tests/blizzard_deprecated_item_script_loads.rs",
+      "line": 162,
+      "text": "and type(EndBoundTradeable) == 'function' \\"
+    }
+  ]
+}
