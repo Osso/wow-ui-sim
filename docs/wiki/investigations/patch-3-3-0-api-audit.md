@@ -14,7 +14,7 @@ Frozen historical Retail source, verified 2026-10-09: page 522376/revision 60558
 `GetObjectType` is a named successor reference, not a new 3.3.0 API. `MouseIsOver` is a replacement reference, not an inferred 3.3.0 removal. Quest completion response event is an explicit separate occurrence. No transcluded or linked page expansion: Special:Diff/4997637/4997649 and Iriel's forum post remain source boundaries.
 
 ## Retail ordering
-Queued ordered placeholders: 3.3.3, 3.3.5, 4.0.1. Existing 68 actual Retail 4.1+ registers follow; main inserts the real queued registers at integration. Wrath Classic 3.4.x never supersedes this historical Retail page. Parent registry continues through 1.0.0.
+Current sweep uses actual ordered 3.3.3, 3.3.5, 4.0.1 inputs before the 68 Retail 4.1+ registers. Main added these after rebase onto `7a7a29519`; none has section/symbol overlap with the 11 own occurrences. Original placeholder capture, archives and seals remain unchanged. Extractor conflict resolution preserves both independent `cataclysm_labeled_inventory` and `wrath_summary_markup` opt-ins; default/current-byte replay is an integration proof obligation. Wrath Classic 3.4.x never supersedes this historical Retail page. Parent registry continues through 1.0.0.
 
 Four actual later removals govern current publication: QueryQuestsCompleted and QUEST_QUERY_COMPLETE by 5.0.4, GetQuestsCompleted by 9.0.1, MouseIsOver by 12.1.0. Do not restore these APIs to satisfy historical prose. GetFrameType already absent; no retirement or source removal performed, so Classic API preservation is untouched. No cached/vendor/Wowless edits.
 

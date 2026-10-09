@@ -29,7 +29,8 @@ Audit frozen page 522376/revision 6055853, not Wrath Classic 3.4.x. [Audit](../w
 ## Known gaps (current cycle)
 - [ ] Two Texture file-dimension publication methods lack actual-file metadata/semantics; no zero stub or layout-size alias.
 - [ ] Fifteen current prose rows and seven signature contracts lack bounded behavioral/native proof; occurrence-specific reasons remain in ledger.
-- [ ] Main integration supplies real queued 3.3.3/3.3.5/4.0.1 successors and owns acceptance.
+- [x] Main supplies actual ordered 3.3.3/3.3.5/4.0.1 successors; none overlaps the 11 own section/symbol pairs.
+- [ ] Main current integration acceptance remains separate from historical development proof.
 
 ## Out of scope
 Native historical-client parity, linked diff/forum expansion, speculative models, shims/fallbacks, vendor/cache/Wowless edits, Classic supersession and final integration acceptance.
