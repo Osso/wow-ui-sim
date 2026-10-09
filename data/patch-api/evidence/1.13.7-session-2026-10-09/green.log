@@ -1,0 +1,13 @@
+test_configured_profiles_and_same_history_boundaries (__main__.SourceAccounting.test_configured_profiles_and_same_history_boundaries) ... ok
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok
+test_exact_source_identity (__main__.SourceAccounting.test_exact_source_identity) ... ok
+test_headers_navigation_and_unexpanded_links (__main__.SourceAccounting.test_headers_navigation_and_unexpanded_links) ... ok
+test_inventory_signatures_and_no_defaults (__main__.SourceAccounting.test_inventory_signatures_and_no_defaults) ... ok
+test_literal_limits_and_zero_credit (__main__.SourceAccounting.test_literal_limits_and_zero_credit) ... ok
+test_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract) ... ok
+test_response_and_body_tamper (__main__.SourceAccounting.test_response_and_body_tamper) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.874s
+
+OK

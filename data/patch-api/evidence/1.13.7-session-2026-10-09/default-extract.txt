@@ -1,0 +1,7 @@
+Patch 1.13.7 API changes
+
+== Summary ==
+* TOC: 11307
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== Global API ==

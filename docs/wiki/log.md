@@ -974,3 +974,11 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] retention | Bounded Era narrow-helper integration
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#era-narrow-helper-integration-bounded-pass) links retained independent report, receipts/hash scopes/comparison and streams; 32 original files / 1,155,904 bytes preserved byte-identically, original seals untouched. First Era transcript/no-timestamps caveat retained; no native/model/event-producer credit. Existing page only: index unchanged. No tests or runtime changes.
+
+## 2026-10-09 — Patch 1.13.7 frozen SOURCE accounting
+
+Added [literal audit](investigations/patch-1-13-7-api-audit.md) and [spec](../specs/patch-1-13-7-source-accounting.md). Raw25/extract5/inventory5,all behavior UNPROVEN; queued1.14.0/1 and integrated1.14.2–1.15.9 unapplied. SOURCE RED8 retained; targeted GREEN/portable pending.
+
+## 2026-10-09 — Patch 1.13.7 own SOURCE/portable receipts
+
+SOURCE GREEN8/8 at0b39afb17,77 omission controls; portable GREEN3/3 at7fe5edac1 after retained RED3. Fresh copied SOURCE8/default generator+extractor byte equality, serialized ledger/log seal rejections and exact restorations. Original55 seals unchanged,56-member archive/five separate receipt seals. Zero model/runtime/native credit; main owns integration/final gates.

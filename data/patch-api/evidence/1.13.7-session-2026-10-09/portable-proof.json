@@ -1,0 +1,113 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp0rw29w_z/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"seals\": 55,\n  \"totals\": {\n    \"physical_lines\": 28,\n    \"nonblank_rows\": 25,\n    \"extracted_rows\": 5,\n    \"metadata_rows\": 19,\n    \"unproven_rows\": 6,\n    \"inventory\": 5,\n    \"callables\": 1,\n    \"cvars\": 4,\n    \"headers\": 3,\n    \"inventory_headers\": 2,\n    \"numeric_headers\": 0,\n    \"contracts\": 7,\n    \"signature_declarations\": 0,\n    \"unspecified_signatures\": 1,\n    \"links\": 2,\n    \"templates\": 6,\n    \"examples\": 0,\n    \"prose\": 0,\n    \"defaults\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp0rw29w_z/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_configured_profiles_and_same_history_boundaries (__main__.SourceAccounting.test_configured_profiles_and_same_history_boundaries) ... ok\ntest_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok\ntest_exact_source_identity (__main__.SourceAccounting.test_exact_source_identity) ... ok\ntest_headers_navigation_and_unexpanded_links (__main__.SourceAccounting.test_headers_navigation_and_unexpanded_links) ... ok\ntest_inventory_signatures_and_no_defaults (__main__.SourceAccounting.test_inventory_signatures_and_no_defaults) ... ok\ntest_literal_limits_and_zero_credit (__main__.SourceAccounting.test_literal_limits_and_zero_credit) ... ok\ntest_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract) ... ok\ntest_response_and_body_tamper (__main__.SourceAccounting.test_response_and_body_tamper) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.880s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp0rw29w_z/historical-tools/gen_patch_wikitext_register.py",
+        "1.13.7",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp0rw29w_z/source.wikitext",
+        "458410",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp0rw29w_z/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp7z2p5yeo/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp7z2p5yeo/audit.py\", line 152, in <module>\n    seals=check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp7z2p5yeo/audit.py\", line 141, in check_seals\n    assert digest((E/name).read_bytes())==expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp7z2p5yeo/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"seals\": 55,\n  \"totals\": {\n    \"physical_lines\": 28,\n    \"nonblank_rows\": 25,\n    \"extracted_rows\": 5,\n    \"metadata_rows\": 19,\n    \"unproven_rows\": 6,\n    \"inventory\": 5,\n    \"callables\": 1,\n    \"cvars\": 4,\n    \"headers\": 3,\n    \"inventory_headers\": 2,\n    \"numeric_headers\": 0,\n    \"contracts\": 7,\n    \"signature_declarations\": 0,\n    \"unspecified_signatures\": 1,\n    \"links\": 2,\n    \"templates\": 6,\n    \"examples\": 0,\n    \"prose\": 0,\n    \"defaults\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "cb3415ca8bea5f9068389adb906c4df662b01e336903027451b8fb5d9e15128e",
+      "all_original_seals": 55
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp4gg0h2vk/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp4gg0h2vk/audit.py\", line 152, in <module>\n    seals=check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp4gg0h2vk/audit.py\", line 141, in check_seals\n    assert digest((E/name).read_bytes())==expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable/tmp4gg0h2vk/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"seals\": 55,\n  \"totals\": {\n    \"physical_lines\": 28,\n    \"nonblank_rows\": 25,\n    \"extracted_rows\": 5,\n    \"metadata_rows\": 19,\n    \"unproven_rows\": 6,\n    \"inventory\": 5,\n    \"callables\": 1,\n    \"cvars\": 4,\n    \"headers\": 3,\n    \"inventory_headers\": 2,\n    \"numeric_headers\": 0,\n    \"contracts\": 7,\n    \"signature_declarations\": 0,\n    \"unspecified_signatures\": 1,\n    \"links\": 2,\n    \"templates\": 6,\n    \"examples\": 0,\n    \"prose\": 0,\n    \"defaults\": 0\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "c48a007654a76a7c84eaf9094080e35b8a634a6268b8a7311e293e68e536328a",
+      "all_original_seals": 55
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

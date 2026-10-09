@@ -1,0 +1,52 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.13.7",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 458410,
+    "sha256": "b9f8be9d2db166e6b85ec868fc077bc5591071d55c05bb5f11267eb5ba11e996"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-GetDefaultScale-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDefaultScale",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-cvars-heardChoiceSFX-23",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "heardChoiceSFX",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-cvars-lastCharacterGuid-24",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastCharacterGuid",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-cvars-seenTBCInfoPane-25",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenTBCInfoPane",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-cvars-showUnactivatedCharacters-26",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "showUnactivatedCharacters",
+      "annotation": "",
+      "wikitext_line": 26
+    }
+  ]
+}

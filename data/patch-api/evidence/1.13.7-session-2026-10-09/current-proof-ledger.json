@@ -1,0 +1,21 @@
+{
+  "scope": "separate portable receipts, no runtime/model/native claims",
+  "revision": "7fe5edac1",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/originals.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/portable-proof.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+  "result": "GREEN3/3: copied SOURCE8/8/default generator+extractor bytes, serialized ledger/log rejection and exact restoration",
+  "log": "portable-green.log",
+  "original_seals": 55,
+  "original_seals_unchanged": true,
+  "later_changes_invalidate": false
+}
