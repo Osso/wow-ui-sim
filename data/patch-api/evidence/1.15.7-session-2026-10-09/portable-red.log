@@ -1,0 +1,37 @@
+test_fresh_git_free_source_and_default_generator_replay (__main__.PortableSource.test_fresh_git_free_source_and_default_generator_replay) ... FAIL
+test_serialized_ledger_omission_rejected_then_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_then_restored) ... FAIL
+test_serialized_log_fabrication_rejected_then_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_then_restored) ... FAIL
+
+======================================================================
+FAIL: test_fresh_git_free_source_and_default_generator_replay (__main__.PortableSource.test_fresh_git_free_source_and_default_generator_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/test_portable.py", line 30, in setUp
+    self.assertTrue(archive.is_file(), 'copied immutable SOURCE archive absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : copied immutable SOURCE archive absent
+
+======================================================================
+FAIL: test_serialized_ledger_omission_rejected_then_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_then_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/test_portable.py", line 30, in setUp
+    self.assertTrue(archive.is_file(), 'copied immutable SOURCE archive absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : copied immutable SOURCE archive absent
+
+======================================================================
+FAIL: test_serialized_log_fabrication_rejected_then_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_then_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/test_portable.py", line 30, in setUp
+    self.assertTrue(archive.is_file(), 'copied immutable SOURCE archive absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : copied immutable SOURCE archive absent
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+FAILED (failures=3)
+
+exit_code=1

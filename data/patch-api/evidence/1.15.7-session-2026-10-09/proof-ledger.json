@@ -1,0 +1,52 @@
+{
+  "scope": "own SOURCE-only development; no runtime/native/final acceptance",
+  "base_revision": "2d83b9b8088e110e6e170473ed59650d1821612e",
+  "source_red": {
+    "revision": "123136120",
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page",
+    "result": "exit1 / eight expected assertion failures against retained empty scaffold",
+    "log": "red.log",
+    "red_scaffold": "red-scaffold.py",
+    "invalidated": false
+  },
+  "source_green": {
+    "revision": "767c22561",
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page",
+    "result": "exit0 / SOURCE8/8",
+    "log": "green.log",
+    "proof_scope": [
+      "audit.py",
+      "test_source_accounting.py",
+      "source inputs",
+      "ledger.json"
+    ],
+    "invalidated": false
+  },
+  "default_generator": {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+      "1.15.7",
+      "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/source.wikitext",
+      "6778069",
+      "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/default-register.json"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page",
+    "generator_flags": [],
+    "result": "exit0; empty inventory only, not parity",
+    "output": "default-register.json",
+    "log": "default-generator.log"
+  },
+  "portable_scope": "new copied-process/seal-control scope; RED3/3 against absent archive retained separately; no repeated broad command"
+}
