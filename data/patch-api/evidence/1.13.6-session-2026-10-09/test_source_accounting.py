@@ -48,7 +48,7 @@ class SourceAccounting(unittest.TestCase):
         original=audit.build()
         self.assertIn('contracts',original)
         controls=0
-        for field in ['source_rows','inventory','headers','inventory_headers','links','templates','contracts','configured_profiles','successors']:
+        for field in ['source_rows','inventory','headers','inventory_headers','links','templates','prose','contracts','configured_profiles','successors']:
             for index in range(len(original[field])):
                 changed=copy.deepcopy(original);changed[field].pop(index)
                 with self.assertRaises(AssertionError): audit.validate_ledger(changed)
