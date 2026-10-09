@@ -1,0 +1,21 @@
+{
+  "schema": "p242-separate-portable-receipts/v1",
+  "revision": "fbf655ef9",
+  "historical_manifest_sha256": "dae8a4298ab6d31fc72cd2a6c9e6613e1043dab0316707e0f0378e00ff50309b",
+  "historical_validator_sha256": "44d7fd119d6d5c4836613e5ccd1d9491a3e979b5f5728be4b6c1fa0cc120c244",
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_2_4_2_replay.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+  "exit": 0,
+  "scope": "Fresh copied original evidence only; missing Git/target/current mutable source; ledger/log/archive reject and restore, preserved parser defaults and recorded options. Not a native rebuild or final gate.",
+  "files": {
+    "portable-proof/replay-green.log": "3c6e079ed3deea83fa6d8c206addd6b40941c96beb2bcab9902bdcf041457471",
+    "portable-proof/initial-replay-green.log": "3f4e8c8d18daf1005f14b9964648e62a9c816ded3c3c04db0fbba2859c1eb081",
+    "portable-proof/summary.json": "9bcfc4b49da6b25078056a06f5971a1c60295aa815b24d7c053b8850f891e3ba",
+    "portable-proof/replay-fixture.py": "cc80d1667e7206fbfa0f0a2f58316bc10ef005b2841abe461254511425ce58c4",
+    "overlap-review.json": "1506ce35b110ce7a74291f96211d1c8ab3ec8ec6d199bb77c5e721477350a5d5"
+  }
+}
