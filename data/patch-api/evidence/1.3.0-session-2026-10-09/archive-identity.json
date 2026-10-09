@@ -1,0 +1,10 @@
+{
+  "created_at": "2026-10-09T19:39:22.724651+00:00",
+  "revision": "d9e82235ba7949562a3bd6b36ef466f70cb531ab",
+  "original_seals": 46,
+  "archive_members": 47,
+  "archive_bytes": 62573,
+  "archive_sha256": "41e92ad0d3d1eeecf60ce65790cd1ccc93e27d5c3242e1e13089762197db95f6",
+  "seals_sha256": "c3e8100a8741778755a0ed7ebdfcbd952c37624429a9b6d36a2f44b6f0cbac70",
+  "scope": "Immutable originals; current HANDOFF/REPLAY excluded, original-docs snapshots included. Later receipts separate."
+}
