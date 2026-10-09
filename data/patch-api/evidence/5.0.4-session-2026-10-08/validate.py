@@ -130,6 +130,21 @@ def validate_scans(register):
                           'Cooldown:GetDrawEdge', 'Cooldown:SetDrawEdge'}
 
 
+def validate_test_totals(final):
+    expected = {'discovery-red': (0, 1), 'pet-type-red': (0, 1), 'pet-type-green': (1, 0),
+                'own-prefork': (2, 0), 'retail-sweeps': (63, 0), 'retail-integration': (36, 0),
+                'own-integration': (1, 0), 'affected-prefork': (7, 0), 'retail-line-controls': (3, 0),
+                'mists-controls': (6, 0), 'mists-pet-type': (1, 0), 'lib-namespace': (24, 0),
+                'negative': (0, 1)}
+    commands = {row['name']: row for row in final['commands']}
+    for name, counts in expected.items():
+        log = (HERE / commands[name]['log']).read_text()
+        matches = re.findall(r'test result: (?:ok|FAILED)\. (\d+) passed; (\d+) failed', log)
+        assert matches and tuple(map(int, matches[-1])) == counts, name
+    for name in ['mists-check', 'retail-check']:
+        assert 'Finished `dev` profile' in (HERE / commands[name]['log']).read_text(), name
+
+
 def validate_receipts(final):
     required = {'discovery-red', 'pet-type-red', 'pet-type-green', 'own-prefork',
                 'retail-sweeps', 'retail-integration', 'own-integration', 'affected-prefork',
@@ -164,6 +179,7 @@ def validate():
     validate_reproduction(final)
     validate_scans(register)
     validate_receipts(final)
+    validate_test_totals(final)
     print(json.dumps({'status': 'PASS', 'inventory': 626, 'accounted_ids': 704,
                       'publication_mismatches': 159, 'retirements': 0}))
 
