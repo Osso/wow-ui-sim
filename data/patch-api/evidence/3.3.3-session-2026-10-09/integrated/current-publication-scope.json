@@ -1,0 +1,20 @@
+{
+  "revision": "f1adc06a517c427dfedae4fd06d5a5a84ea8b62f",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p342-source",
+  "scope": "Current retail prefork publication sweep, not historical/native parity",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "suite_passed": 72,
+  "output_env": {
+    "P333_SWEEP_OUT": "/tmp/p333-current-v2-results.json"
+  },
+  "historical_seals_unchanged": true
+}
