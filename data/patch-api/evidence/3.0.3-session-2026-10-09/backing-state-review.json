@@ -1,0 +1,26 @@
+{
+  "files": {
+    "src/cvars.rs": {
+      "sha256": "4a9c33eb99b1aafd4fbc22e8cb3929d2e98608c3bfa2c3c99ec1ea6df8abc89c",
+      "literal_name_hits": [],
+      "scope": "Static source only; absence of these spellings is not runtime/native absence or proof no synchronization system exists elsewhere."
+    },
+    "src/cvars.yaml": {
+      "sha256": "598bed1386eaa5f5a4a97aaff1ed5dee974663a016791e12a6d480cda42c4636",
+      "literal_name_hits": [
+        {
+          "line": 1424,
+          "text": "synchronizeBindings: '1'"
+        }
+      ],
+      "scope": "Static source only; absence of these spellings is not runtime/native absence or proof no synchronization system exists elsewhere."
+    },
+    "src/lua_api/globals/set_cvar_verb.rs": {
+      "sha256": "e3f5df9076269e557e11ea63ecce0ab03174937df5c0e10b8b13b13f169f08a0",
+      "literal_name_hits": [],
+      "scope": "Static source only; absence of these spellings is not runtime/native absence or proof no synchronization system exists elsewhere."
+    }
+  },
+  "decision": "No runtime model edits. Existing local generic key/value persistence does not establish page-promised synchronization; precise contracts remain UNPROVEN.",
+  "meaningful_closures": []
+}

@@ -1,0 +1,17 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_3_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+      "revision": "e2cf94de1972cdda57e6328364f136abc494d964",
+      "scope": "Own CVar parser fixtures (2 expected missing-flag failures), integrated 3.3.3/3.3.5/4.0.1 reproduction (1 passed); source-only, no runtime proof.",
+      "exit": 1,
+      "artifact": "source-red.log",
+      "invalidated_by": null
+    }
+  ]
+}

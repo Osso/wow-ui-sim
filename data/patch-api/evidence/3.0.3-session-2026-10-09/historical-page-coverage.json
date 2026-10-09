@@ -1,0 +1,89 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "3.0.3",
+  "client_line": "retail",
+  "source_sha256": "434740b793ade76d3c459f142cf07577accd6da23c9f97be5fc4ff2d69d59911",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/3.0.3-api-changes.txt",
+    "sha256": "2f8a14f3f5c1593bf7a3d66acb63a6ec0011075752dd75b3a2b8a79f173fe06c"
+  },
+  "signature_rows": [],
+  "signature_boundary": "No callable argument/return fragment appears. CVar 0/1 range is prose, not a signature or default.",
+  "source_rows": [
+    {
+      "source_id": "wt-cvars-syncronizeConfig-4",
+      "capabilities": [],
+      "status": "publication-unproven",
+      "symbol": "syncronizeConfig",
+      "wikitext_line": 4,
+      "literal": "; syncronizeConfig : Flag - 0/1 to disable/enable synchronization of UI settings.",
+      "note": "UNPROVEN: source names a new CVar, but no historical/native or current runtime publication measurement is archived. No correction of source spelling, default or later supersession inferred."
+    },
+    {
+      "source_id": "wt-cvars-synchronizeBindings-5",
+      "capabilities": [],
+      "status": "publication-unproven",
+      "symbol": "synchronizeBindings",
+      "wikitext_line": 5,
+      "literal": "; synchronizeBindings : Flag - 0/1 to disable/enable synchronization of key bindings.",
+      "note": "UNPROVEN: source names a new CVar, but no historical/native or current runtime publication measurement is archived. No correction of source spelling, default or later supersession inferred."
+    },
+    {
+      "source_id": "wt-cvars-synchronizeMacros-6",
+      "capabilities": [],
+      "status": "publication-unproven",
+      "symbol": "synchronizeMacros",
+      "wikitext_line": 6,
+      "literal": "; synchronizeMacros : Flag - 0/1 to disable/enable synchronization of macros.",
+      "note": "UNPROVEN: source names a new CVar, but no historical/native or current runtime publication measurement is archived. No correction of source spelling, default or later supersession inferred."
+    },
+    {
+      "source_id": "raw-3.0.3-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "wikitext_line": 1,
+      "literal": "{{apichanges|3.0.3|next=3.0.8|prev=3.0.2|misc=Based on [http://forums.worldofwarcraft.com/thread.html?topicId=8202271194&sid=1#4 Iriel's post] on the official forums.}}",
+      "rendered": "Patch 3.0.3 API changes",
+      "note": "Navigation/source attribution; linked Iriel forum post is not expanded."
+    },
+    {
+      "source_id": "raw-3.0.3-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "wikitext_line": 3,
+      "literal": "== New CVars ==",
+      "rendered": "== New CVars ==",
+      "note": "Named New CVars header; no numerical count is stated."
+    },
+    {
+      "source_id": "raw-3.0.3-004",
+      "capabilities": [],
+      "status": "semantic-unproven",
+      "wikitext_line": 4,
+      "literal": "; syncronizeConfig : Flag - 0/1 to disable/enable synchronization of UI settings.",
+      "rendered": "; syncronizeConfig : Flag - 0/1 to disable/enable synchronization of UI settings.",
+      "note": "UNPROVEN: Flag - 0/1 to disable/enable synchronization of UI settings. Local CVar key/value storage is not synchronization. Default, endpoint, trigger, scope, conflict policy, persistence, events and native behavior are unspecified; do not invent them.",
+      "inventory_id": "wt-cvars-syncronizeConfig-4"
+    },
+    {
+      "source_id": "raw-3.0.3-005",
+      "capabilities": [],
+      "status": "semantic-unproven",
+      "wikitext_line": 5,
+      "literal": "; synchronizeBindings : Flag - 0/1 to disable/enable synchronization of key bindings.",
+      "rendered": "; synchronizeBindings : Flag - 0/1 to disable/enable synchronization of key bindings.",
+      "note": "UNPROVEN: Flag - 0/1 to disable/enable synchronization of key bindings. Local CVar key/value storage is not synchronization. Default, endpoint, trigger, scope, conflict policy, persistence, events and native behavior are unspecified; do not invent them.",
+      "inventory_id": "wt-cvars-synchronizeBindings-5"
+    },
+    {
+      "source_id": "raw-3.0.3-006",
+      "capabilities": [],
+      "status": "semantic-unproven",
+      "wikitext_line": 6,
+      "literal": "; synchronizeMacros : Flag - 0/1 to disable/enable synchronization of macros.",
+      "rendered": "; synchronizeMacros : Flag - 0/1 to disable/enable synchronization of macros.",
+      "note": "UNPROVEN: Flag - 0/1 to disable/enable synchronization of macros. Local CVar key/value storage is not synchronization. Default, endpoint, trigger, scope, conflict policy, persistence, events and native behavior are unspecified; do not invent them.",
+      "inventory_id": "wt-cvars-synchronizeMacros-6"
+    }
+  ]
+}

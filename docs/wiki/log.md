@@ -789,3 +789,6 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## [2026-10-09] integration | Retail Patch 3.1.0 documentation handoff
 
 [Audit](investigations/patch-3-1-0-api-audit.md#main-successor-integration--2026-10-09) records integrated `614402d56`, pushed (main handoff). Actual retail 3.2.0/3.3.0/3.3.3/3.3.5/4.0.1 successors applied; `IsPlayerResolutionAvailable` removed from current gaps. Original 49/61, implementer-current 51/59 and two bounded radians fragments remain immutable historical receipts; inferred 52/58 is not observed. Getter reuses nullable facing radians only, no input/default/native parity. Fresh runtime verification/profile/startup/full-suite/CI pending, no acceptance. Documentation-only update; no tests or operational actions.
+## [2026-10-09] investigation | Historical retail Patch 3.0.3 source accounting
+
+[Audit](investigations/patch-3-0-3-api-audit.md): frozen page560990/revision5407654, exact three CVar definitions; source spelling preserved. Eight IDs: two metadata and six UNPROVEN publication/semantic records; zero signatures/models/runtime edits. Targeted source RED retained; GREEN/historical replay pending. Queued retail3.0.8/3.1.0/3.2.0/3.3.0 inputs remain placeholders; no Classic supersession or native/final acceptance.

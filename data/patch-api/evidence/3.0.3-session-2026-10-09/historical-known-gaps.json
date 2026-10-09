@@ -1,0 +1,38 @@
+[
+  {
+    "source_id": "wt-cvars-syncronizeConfig-4",
+    "symbol": "syncronizeConfig",
+    "contract": "publication",
+    "reason": "UNPROVEN: literal name is inventoried; source-only audit does not measure runtime publication."
+  },
+  {
+    "source_id": "wt-cvars-synchronizeBindings-5",
+    "symbol": "synchronizeBindings",
+    "contract": "publication",
+    "reason": "UNPROVEN: literal name is inventoried; source-only audit does not measure runtime publication."
+  },
+  {
+    "source_id": "wt-cvars-synchronizeMacros-6",
+    "symbol": "synchronizeMacros",
+    "contract": "publication",
+    "reason": "UNPROVEN: literal name is inventoried; source-only audit does not measure runtime publication."
+  },
+  {
+    "source_id": "raw-3.0.3-004",
+    "symbol": "syncronizeConfig",
+    "contract": "flag-synchronization",
+    "reason": "UNPROVEN: Flag - 0/1 to disable/enable synchronization of UI settings. Local CVar key/value storage is not synchronization. Default, endpoint, trigger, scope, conflict policy, persistence, events and native behavior are unspecified; do not invent them."
+  },
+  {
+    "source_id": "raw-3.0.3-005",
+    "symbol": "synchronizeBindings",
+    "contract": "flag-synchronization",
+    "reason": "UNPROVEN: Flag - 0/1 to disable/enable synchronization of key bindings. Local CVar key/value storage is not synchronization. Default, endpoint, trigger, scope, conflict policy, persistence, events and native behavior are unspecified; do not invent them."
+  },
+  {
+    "source_id": "raw-3.0.3-006",
+    "symbol": "synchronizeMacros",
+    "contract": "flag-synchronization",
+    "reason": "UNPROVEN: Flag - 0/1 to disable/enable synchronization of macros. Local CVar key/value storage is not synchronization. Default, endpoint, trigger, scope, conflict policy, persistence, events and native behavior are unspecified; do not invent them."
+  }
+]

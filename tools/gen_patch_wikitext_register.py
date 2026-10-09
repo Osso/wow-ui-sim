@@ -798,6 +798,24 @@ def parse_colon_api_bullets(text):
     return entries
 
 
+def parse_legacy_cvar_definitions(text):
+    """Retain literal New CVars definition lists; a flag range is not a default."""
+    entries, in_cvars = [], False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_cvars = heading[1] == 'New CVars'
+        elif in_cvars and line.startswith(';'):
+            definition = re.fullmatch(r';\s*([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(\S.*)', line)
+            if definition is None:
+                raise ValueError(f'malformed CVar definition at line {number}: {line!r}')
+            entry = make_entry('cvars', 'added', number, ': ' + definition[1])
+            entry['annotation'] = line
+            entry['description'] = definition[2]
+            entries.append(entry)
+    return entries
+
+
 def parse_legacy_section_lists(text):
     """Retain 2010 sectioned API/event lists and literal signature fragments."""
     sections = {
@@ -1110,6 +1128,8 @@ def main():
     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
     parser.add_argument('--legacy-labeled-summaries', action='store_true',
                         help='Retain 2009 NEW/REMOVED summaries, secure handles and general prose; opt-in')
+    parser.add_argument('--legacy-cvar-definitions', action='store_true',
+                        help='Retain historical New CVars definition lists literally; opt-in')
     parser.add_argument('--legacy-section-lists', action='store_true',
                         help='Retain 2010 sectioned API/event lists and literal signatures; opt-in')
     parser.add_argument('--combat-restriction-bullets', action='store_true',
@@ -1203,6 +1223,8 @@ def main():
         counts.extend(diff_counts)
     if args.legacy_labeled_summaries:
         entries, counts = parse_legacy_labeled_summaries(raw.decode('utf-8')), []
+    if args.legacy_cvar_definitions:
+        entries.extend(parse_legacy_cvar_definitions(raw.decode('utf-8')))
     if args.legacy_section_lists:
         entries.extend(parse_legacy_section_lists(raw.decode('utf-8')))
     if args.combat_restriction_bullets:
