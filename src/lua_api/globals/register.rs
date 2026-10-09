@@ -52,6 +52,8 @@ fn register_bootstrap_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     prewarm_hot_literal_registry(lua);
     LuaApiMut::register_function(lua, "GetTime", get_time)?;
     LuaApiMut::register_function(lua, "GetTimePreciseSec", get_time)?;
+    #[cfg(feature = "client-retail")]
+    LuaApiMut::register_function(lua, "GetSessionTime", get_time)?;
     LuaApiMut::register_function(lua, "GetServerTime", get_server_time)?;
     LuaApiMut::register_function(lua, "GetRaidDifficultyID", get_raid_difficulty_id)?;
     LuaApiMut::register_function(

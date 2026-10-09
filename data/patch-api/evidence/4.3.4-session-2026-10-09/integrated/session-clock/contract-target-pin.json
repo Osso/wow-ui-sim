@@ -1,0 +1,9 @@
+{
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&titles=API%3AGetSessionTime&format=json",
+  "pageid": 254254,
+  "title": "API:GetSessionTime",
+  "revid": 6809914,
+  "timestamp": "2026-08-10T21:09:34Z",
+  "response_sha256": "f13dcea902d413f8ac6b7d7cd6edf3cc3f090b455089e72400c05a1ebbbbfab0",
+  "wikitext_sha256": "d8b8a8af02d9825958a579efe356aabaca04290a182f039ce0920d856d299aab"
+}

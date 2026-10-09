@@ -1,0 +1,78 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is depr
+ecated in favor of `lints.clippy.large_enum_variant` and will not work in a futu
+re edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in
+ favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-v
+ariants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_varia
+nts` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-metho
+d-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_ca
+lls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref`
+ is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will no
+t work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is depreca
+ted in favor of `lints.clippy.type_complexity` and will not work in a future edi
+tion
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p434-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 17s
+     Running tests/integration.rs (target/debug/deps/integration-1db16289b0998b2
+a)
+
+running 2 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.66ms
+[  0.002s] [Startup] SimState::default complete in 1.66ms
+[  0.002s] [Startup] rilua VM created in 100.73µs
+[  0.002s] [Startup] rilua VM created in 99.07µs
+[  0.002s] [Startup] builtin frames initialized in 73.61µs
+[  0.002s] [Startup] template registry cleared in 4.20µs
+[  0.002s] [Startup] builtin frames initialized in 85.05µs
+[  0.002s] [Startup] intrinsic templates registered in 5.70µs
+[  0.002s] [Startup] initial app_data lua handle installed in 350.00ns
+[  0.002s] [Startup] template registry cleared in 1.88µs
+[  0.002s] [Startup] intrinsic templates registered in 3.19µs
+[  0.002s] [Startup] initial app_data lua handle installed in 140.00ns
+[  0.108s] [Startup] init_lua_state complete in 105.82ms
+[  0.108s] [Startup] final app_data lua handle installed in 451.00ns
+[  0.108s] [Startup] initial screen globals installed in 72.15µs
+[  0.108s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_4_3_4_session_clock::session_time_reports_client_elapsed_seconds_a
+nd_new_clients_start_fresh' (1017796) panicked at /home/osso/.worktrees/wow-ui-s
+im-p434-source/tests/patch_4_3_4_session_clock.rs:9:10:
+GetSessionTime should expose the client-open clock: Lua(Runtime(RuntimeError { m
+essage: "(string):2: attempt to call a nil value", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.108s] [Startup] init_lua_state complete in 106.30ms
+[  0.108s] [Startup] final app_data lua handle installed in 240.00ns
+[  0.108s] [Startup] initial screen globals installed in 68.12µs
+[  0.108s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_4_3_4_session_clock::session_time_keeps_client_origin_across_login
+_and_character_screen_transitions' (1017795) panicked at /home/osso/.worktrees/w
+ow-ui-sim-p434-source/tests/patch_4_3_4_session_clock.rs:9:10:
+GetSessionTime should expose the client-open clock: Lua(Runtime(RuntimeError { m
+essage: "(string):2: attempt to call a nil value", level: 0, traceback: [] }))
+test patch_4_3_4_session_clock::session_time_reports_client_elapsed_seconds_and_
+new_clients_start_fresh ... FAILED
+test patch_4_3_4_session_clock::session_time_keeps_client_origin_across_login_an
+d_character_screen_transitions ... FAILED
+
+failures:
+
+failures:
+    patch_4_3_4_session_clock::session_time_keeps_client_origin_across_login_and
+_character_screen_transitions
+    patch_4_3_4_session_clock::session_time_reports_client_elapsed_seconds_and_n
+ew_clients_start_fresh
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10687 filtered o
+ut; finished in 0.11s
+
+error: test failed, to rerun pass `--test integration`
+
+Pane is dead (status 101, Fri Oct  9 04:35:07 2026)

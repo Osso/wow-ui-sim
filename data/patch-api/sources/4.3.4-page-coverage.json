@@ -6,7 +6,7 @@
     "path": "data/patch-api/sources/4.3.4-api-changes.txt",
     "sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184"
   },
-  "proof_policy": "All inventory IDs accounted. Own cached-retail publication/absence only; no signatures, outputs, security, native or modeled-service parity. No external linked-page expansion or Classic credit.",
+  "proof_policy": "All inventory IDs accounted. Historical discovery remains publication/absence only. Coordinator models retail client-open elapsed seconds for GetSessionTime from a separately pinned primary contract; other service/native/security parity remains unproven. No linked inventory expansion or Classic credit.",
   "source_rows": [
     {
       "source_id": "wt-global-api-GetNumSoRRemaining-10",
@@ -22,9 +22,9 @@
     },
     {
       "source_id": "wt-global-api-GetSessionTime-12",
-      "capabilities": [],
-      "status": "publication-gap",
-      "note": "Missing login-session start/lifetime clock contract; existing simulated elapsed time is not established as login-session time. Current BNet consumer retained; page gives no unit/reset contract."
+      "capabilities": ["publication-absence", "modeled-client-open-seconds"],
+      "status": "bounded-coverage",
+      "note": "Retail binding reads the existing SimState.start_time client-creation Instant in seconds, independent of login and character-screen state. Primary API:GetSessionTime page 254254/revision 6809914 supplies the client-open origin and units separately from this identity-only change page. Native granularity and locale-specific SESSION_TIME_ALERT delivery remain unproven; coordinator execution receipts are separate from historical discovery."
     },
     {
       "source_id": "wt-global-api-GMItemRestorationButtonEnabled-13",

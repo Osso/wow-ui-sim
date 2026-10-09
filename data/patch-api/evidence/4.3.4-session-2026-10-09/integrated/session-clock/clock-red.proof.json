@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_4_3_4_session_clock",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p434-source",
+  "repository_revision_at_launch": null,
+  "runtime_scope_revision": "d937c30d6",
+  "revision_note": "Launch HEAD was not recorded; subsequent pre-implementation commits changed only validator/evidence. Runtime src tree matches this scope; new test file was uncommitted.",
+  "exit": 101,
+  "passed": 0,
+  "failed": 2,
+  "expected_boundary": "GetSessionTime is nil",
+  "test_sha256": "d20854086e4748dda76b8652f88bc4e02bd1ee6ea92ed91b409d371def15436e",
+  "log": "clock-red.log",
+  "log_sha256": "548c62a671a6127c695a6d655d009ef0f02a51667de3b2b76972b5ff1653eef0"
+}
