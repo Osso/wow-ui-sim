@@ -2,7 +2,7 @@
   "schema": "patch-api-page-coverage/v1",
   "patch": "3.1.0",
   "client_line": "retail",
-  "proof_policy": "Own observed publication only. Raw lines and literal fragments include questions/headings/examples without promoting them to contracts. Native/model/security parity UNPROVEN.",
+  "proof_policy": "Own publication and configured-radians state only. Historical/native/security parity and other model contracts remain UNPROVEN.",
   "source_rows": [
     {
       "source_id": "wt-global-api-GetNumTalentGroups-18",
@@ -752,15 +752,19 @@
     },
     {
       "source_id": "wt-global-api-GetPlayerFacing-239",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "UNPROVEN publication mismatch: {\"expected\": {\"direction\": \"changed\", \"page_default\": null, \"publication\": \"published\", \"section\": \"global-api\", \"superseded_by\": null, \"symbol\": \"GetPlayerFacing\"}, \"observed\": {\"default\": null, \"default_mismatch\": false, \"detail\": \"raw=nil; lookup=nil\", \"kind\": \"global\", \"value\": null}, \"ok\": false}"
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-only"
+      ],
+      "note": "Publication/absence only; historical call semantics remain UNPROVEN."
     },
     {
       "source_id": "wt-global-api-GetPlayerFacing-241",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "UNPROVEN publication mismatch: {\"expected\": {\"direction\": \"changed\", \"page_default\": null, \"publication\": \"published\", \"section\": \"global-api\", \"superseded_by\": null, \"symbol\": \"GetPlayerFacing\"}, \"observed\": {\"default\": null, \"default_mismatch\": false, \"detail\": \"raw=nil; lookup=nil\", \"kind\": \"global\", \"value\": null}, \"ok\": false}"
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-only"
+      ],
+      "note": "Publication/absence only; historical call semantics remain UNPROVEN."
     },
     {
       "source_id": "source-context-001",
@@ -3774,7 +3778,7 @@
       "subsection": "GetPlayerFacing() UPDATE",
       "status": "metadata-only",
       "capabilities": [],
-      "note": "Literal source line; inventory/signature IDs carry separate proof limits. UNPROVEN: historical/native PTR correction and radians return; constant publication cannot prove player-orientation state."
+      "note": "Current configured-radians state read has separate signature proof; native PTR correction and unavailable/default/security behavior remain UNPROVEN."
     },
     {
       "source_id": "raw-line-241",
@@ -3784,7 +3788,7 @@
       "subsection": "GetPlayerFacing() UPDATE",
       "status": "metadata-only",
       "capabilities": [],
-      "note": "Literal source line; inventory/signature IDs carry separate proof limits. UNPROVEN: historical/native PTR correction and radians return; constant publication cannot prove player-orientation state."
+      "note": "Current configured-radians state read has separate signature proof; native PTR correction and unavailable/default/security behavior remain UNPROVEN."
     },
     {
       "source_id": "signature-018-1",
@@ -3974,15 +3978,19 @@
     },
     {
       "source_id": "signature-239-1",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "UNPROVEN: historical/native PTR correction and radians return; constant publication cannot prove player-orientation state."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "modeled-radians-state-read"
+      ],
+      "note": "Configured current player orientation reads unchanged at 0, pi/2 and pi, with one result; targeted Lua/Rust state proof. Native 2009 PTR correction, unavailable/default behavior, movement production and security remain UNPROVEN."
     },
     {
       "source_id": "signature-241-1",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "UNPROVEN: historical/native PTR correction and radians return; constant publication cannot prove player-orientation state."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "modeled-radians-state-read"
+      ],
+      "note": "Configured current player orientation reads unchanged at 0, pi/2 and pi, with one result; targeted Lua/Rust state proof. Native 2009 PTR correction, unavailable/default behavior, movement production and security remain UNPROVEN."
     }
   ]
 }
