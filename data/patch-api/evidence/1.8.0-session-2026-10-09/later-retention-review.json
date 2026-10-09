@@ -1,0 +1,9 @@
+{
+  "scope": "own retained original and later text artifacts; original archive separately reviewed before freeze",
+  "matching_environment_key_names": [],
+  "values_retained": false,
+  "patterns_from": "retention-review.json",
+  "artifact_matches": [],
+  "revision": "a3e47eb41",
+  "limit": "patterns not exhaustive; no independent metadata acceptance"
+}

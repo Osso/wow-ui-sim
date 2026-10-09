@@ -1,0 +1,14 @@
+{
+  "scope": "own retained original evidence only; patterns not exhaustive",
+  "patterns": {
+    "aws_access_key": "\\bAKIA[0-9A-Z]{16}\\b",
+    "github_token": "\\bgh[pousr]_[A-Za-z0-9]{20,}\\b",
+    "private_key": "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+    "assigned_credential": "(?i)(?:api[_-]?key|password|bearer|access[_-]?token)\\s*[:=]\\s*[\\\"\\x27]?[A-Za-z0-9_+/=-]{16,}"
+  },
+  "matching_environment_key_names": [],
+  "values_retained": false,
+  "artifact_matches": [],
+  "review_revision": "44ebe2cb2",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p180-page"
+}

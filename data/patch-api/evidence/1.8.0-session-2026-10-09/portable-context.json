@@ -1,0 +1,23 @@
+{
+  "identity": {
+    "archive_sha256": "0764cb47f1436bffd42d826b437134cfdeeb8819744c63b556aa600d9cbbc6e1",
+    "archive_bytes": 52231,
+    "original_seals_sha256": "421372f1a47738ccecd90e2d48b5ca99e5e7710848b208b6667ed48db4c75dc4",
+    "original_seals": 40,
+    "archive_members": 41,
+    "original_epoch": "44ebe2cb2",
+    "scope": "sealed original SOURCE evidence; later actual receipts excluded"
+  },
+  "actual_copy": "/home/osso/.worktrees/wow-ui-sim-p180-page/data/patch-api/evidence/1.8.0-session-2026-10-09/copied-replay-zknw8t6z",
+  "forbidden_inputs_absent": [
+    ".git",
+    "target",
+    "Interface",
+    "tools"
+  ],
+  "execution_environment": {
+    "PATH": "/nonexistent",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "scope": "copied immutable SOURCE/default-byte/error replay; no native/model/main acceptance"
+}

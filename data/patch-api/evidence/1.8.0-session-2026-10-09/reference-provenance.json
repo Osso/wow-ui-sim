@@ -1,0 +1,15 @@
+{
+  "own_base": "a9d2433b6b113aca7ab3e2505c5548a59b4f0445",
+  "template_source_commit": "85dd49530",
+  "template_merged_at": "a9d2433b6",
+  "template": "data/patch-api/evidence/1.10.0-session-2026-10-09",
+  "scope": "methodology only; no imported historical target contracts",
+  "credential_pattern_inspection": [
+    "TOKEN",
+    "SECRET",
+    "PASSWORD",
+    "CREDENTIAL",
+    "API_KEY"
+  ],
+  "matching_environment_key_names": []
+}
