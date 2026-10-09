@@ -2989,3 +2989,6 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] proof | Patch 1.15.6 frozen SOURCE replay
 
 [Audit](investigations/patch-1-15-6-api-audit.md): SOURCE8/8 at `910fefc68`; portable3/3 at `d01aae433`, fresh copied SOURCE8/8 and default register byte replay. Serialized ledger/log seal controls reject and restore exactly. Original34 seals/map unchanged; 35-member/101,120-byte archive and six separately sealed later artifacts/map. Four rows/two UNPROVEN links, no runtime/model/native/final credit. Pending same-Era1.15.7 inflight/1.15.8/1.15.9 remain unapplied; main integration/gates separate.
+## [2026-10-09] investigation | Era Patch 1.15.3 literal SOURCE accounting
+
+[Audit](investigations/patch-1-15-3-api-audit.md): frozen593663/6114194,11503; six rows/five UNPROVEN summary/link contracts. Dragonflight10.2.7 and Cataclysm4.4.0 subset references unexpanded; distinct Gethe4.4.0/Ketho1.15.2 bases retained. SOURCE-only, own RED10/GREEN10 at4b957a6cf; portable RED3/GREEN3 and copied10/default bytes at7621e4627. Serialized ledger/log reject/restored,50 original seals unchanged;51-member archive/six later receipt seals. Zero runtime/model/native credit. Main owns six ordered Era successors and final gates.
