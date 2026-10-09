@@ -30,5 +30,8 @@
   "data/patch-api/sources/2.5.5-page-coverage.json": "58acbc86baf51c5b720b2e2d5acdbd7a9cb721f6f10366817c8971c2f8e7b0d4",
   "data/patch-api/evidence/2.5.5-session-2026-10-09/green.log": "8fa6acff36c2cc582b674d37102d1ab021144cfda4a5e7988d0d7951736fb6fa",
   "data/patch-api/evidence/2.5.5-session-2026-10-09/validator.log": "729f5687e7d545735c13a4cf80e2d21f0a10c470f014df75718e8d0941f8df22",
-  "data/patch-api/evidence/2.5.5-session-2026-10-09/source-proof.json": "ee34bfffc058da471a8b343bf387ad3a838edaf195823259e32d647b069879da"
+  "data/patch-api/evidence/2.5.5-session-2026-10-09/source-proof.json": "ee34bfffc058da471a8b343bf387ad3a838edaf195823259e32d647b069879da",
+  "data/patch-api/evidence/2.5.5-session-2026-10-09/portable-controls.log": "e00933906113a58b09a66b922eb692f50d0ef7e62310df95ffc76df409a9beec",
+  "data/patch-api/evidence/2.5.5-session-2026-10-09/portable-proof.json": "d9e90e89766b7f2ed082c5dd71a26afc076e9ab087475c0914906a9a0037b5dc",
+  "data/patch-api/evidence/2.5.5-session-2026-10-09/replay-archive.tar.gz": "c02af17f6b490e7c2f65cde9970b108e266d34543bab6f07eeff0955965f4cb8"
 }

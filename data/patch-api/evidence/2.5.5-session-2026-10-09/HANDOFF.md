@@ -1,0 +1,9 @@
+# Patch 2.5.5 SOURCE handoff
+
+Owned branch `p255-source`, worktree `/home/osso/.worktrees/wow-ui-sim-p255-source`, base `acf7fbfe9b07dc342b8078cb1c54b702151a23d6`. [Audit](../../../../docs/wiki/investigations/patch-2-5-5-api-audit.md), [spec](../../../../docs/specs/patch-2-5-5-source-accounting.md).
+
+Source identity: frozen page 686953/revision 6838475/time 2026-08-20T15:48:09Z; literal Burning Crusade Classic Anniversary pre-patch, TOC 20505. Five rows/four metadata/one UNPROVEN summary; four linked/native/state contract records; zero explicit APIs/signatures/headers/removals/transclusions. No meaningful literal model, publication/native/runtime parity or unsupported-API diagnosis. Configured Anniversary 11507 is distinct.
+
+Implementation `6566d762f`; own SOURCE GREEN 10/10 and 29-seal validator at that revision. Proof receipt commit `4de916d8e`; at that revision serialized ledger/log tamper rejected at exact seals, restored original bytes/hashes, fresh copied replay passed 32 historical seals with no Git/target/current tools/current runtime. Outer 35 seals cover archive/receipts; original tested bytes unchanged. Archive SHA-256 c02af17f6b490e7c2f65cde9970b108e266d34543bab6f07eeff0955965f4cb8, 230038 bytes. Extract retained archive into a fresh root and run relocated `validate.py`; capture script refuses overwrite after sealing. No fresh test rerun/final acceptance claimed.
+
+Main owns integration of pending frozen same-line 2.5.6 reference and any matching native/profile/final gate. Its frozen pin/input pair is retained here; no sibling audit proof or register transferred. Never substitute Retail 3.x/Cata 4.x/Wrath Classic 3.4/Era 1.x supersession or force Anniversary 11507 measurements into TBC 205xx. No push/merge/deploy/delegation/model CLI, broad/check/lint/profile/startup/full-suite/final gate, native probe, runtime/shared classifier/vendor/cache/Wowless edits performed.

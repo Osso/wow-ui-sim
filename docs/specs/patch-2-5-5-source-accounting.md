@@ -9,7 +9,7 @@ Bounded frozen SOURCE/contract audit, separate Classic/TBC history within the fu
 - [x] Keep four linked/state/native contracts UNPROVEN with unspecified members, arguments, returns, event triggers/payloads, transitions, security and native equivalence.
 - [x] Derive seven configured profiles from copied code/features/manifests; Anniversary 11507 must not become TBC 20505 by name. Missing matching interface is not an unsupported-client diagnosis.
 - [x] Keep 2.5.6 same-line frozen reference pending main integration, with no supersession credit. Reject retail 3.x/Cata 4.x/Wrath Classic 3.4/Era 1.x successors and positive empty-inventory parity.
-- [ ] Replay sealed original source/tools/configuration/ledger/proof in a fresh copied process without Git, target, current tools or current runtime; reject serialized ledger/log tampering and restore original bytes/hashes.
+- [x] Replay sealed original source/tools/configuration/ledger/proof in a fresh copied process without Git, target, current tools or current runtime; reject serialized ledger/log tampering and restore original bytes/hashes.
 
 ## How it works
 
