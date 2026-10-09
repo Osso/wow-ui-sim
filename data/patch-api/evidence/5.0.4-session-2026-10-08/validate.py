@@ -131,6 +131,11 @@ def validate_scans(register):
 
 
 def validate_receipts(final):
+    required = {'discovery-red', 'pet-type-red', 'pet-type-green', 'own-prefork',
+                'retail-sweeps', 'retail-integration', 'own-integration', 'affected-prefork',
+                'retail-line-controls', 'mists-check', 'mists-controls', 'mists-pet-type',
+                'lib-namespace', 'retail-check', 'format', 'negative', 'python-fixtures', 'lua-errors'}
+    assert required == {row['name'] for row in final['commands']}
     for row in final['commands']:
         assert row['exit'] == row['expected_exit'] and row['invalidated'] is False, row['name']
         assert digest((HERE / row['log']).read_bytes()) == row['log_sha256']
