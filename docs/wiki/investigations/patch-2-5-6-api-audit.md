@@ -57,6 +57,10 @@ Targeted development RED retained: required derived accounting fails against tem
 
 Outer map now records **33** sealed inputs; archive retains its original **30**-input map. Own capture script refuses to overwrite a sealed archive: extract the retained archive into a fresh directory and run its relocated `validate.py` for repeat historical replay. No original Git objects, target, live cache or current mutable tool/source/configuration files needed. Main retains integration/native/final-gate ownership. This bounded source slice cannot close runtime compatibility or broader registry accounting.
 
+## Main integration — 2026-10-09
+
+Integrated source slice at `93bcc6afe`; no shared parser or runtime changes. Original archived source, configured observations and 33 outer seals remain historical inputs, not current native measurements. Independent SOURCE replay gate pending. Unexpanded Era transclusion remains UNPROVEN; zero API/model/native credit. No surrogate Anniversary 11507 probe for source TOC 20506.
+
 ## Sources
 
 - [Raw](../../../data/patch-api/sources/2.5.6-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/2.5.6-api-changes.txt), [ledger](../../../data/patch-api/sources/2.5.6-page-coverage.json).
