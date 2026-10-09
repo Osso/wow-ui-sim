@@ -58,13 +58,14 @@ def summary():
 
 
 def main():
-    if not (HERE / 'checks.proof.json').is_file():
+    if not (HERE / 'mists-routing-correction.proof.json').is_file():
         descriptor = os.pidfd_open(int(sys.argv[1]))
         try:
             select.select([descriptor], [], [])
         finally:
             os.close(descriptor)
     assert read('checks.proof.json')['exit'] == 0
+    assert read('mists-routing-correction.proof.json')['exit'] == 0
     assert read('prior-validators.proof.json')['exit'] == 0
     positive = read('patch_5_4_1_publication_sweep-results.json')
     historical = json.loads((HERE.parent / 'patch_5_4_1_publication_sweep-results.json').read_text())
