@@ -122,6 +122,14 @@ macro_rules! prefork_full_ui_case {
     };
 }
 
+/// Emit a prefork case for an explicit fixture group, not the generated Game registry.
+#[macro_export]
+macro_rules! prefork_fixture_case {
+    ($($case:tt)*) => {
+        $crate::prefork_full_ui_case! { $($case)* }
+    };
+}
+
 /// Convenience macro: wraps a test body with a 120s timeout.
 ///
 /// ```ignore

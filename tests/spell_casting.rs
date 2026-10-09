@@ -387,10 +387,8 @@ fn cast_bar_visible_during_cast() {
     cast_bar_visible_during_cast::run(&env);
 }
 
-#[test]
-fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+prefork_fixture_case! {
+fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
 
         let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
             .eval(
@@ -469,6 +467,15 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
             "locked cast-bar edit-mode anchor path should attach to PlayerFrame"
         );
         assert_eq!(parent_after_cast_anchor, "PlayerFrame");
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
+    test_timeout! {
+        let env = env_with_full_blizzard_ui();
+        cast_bar_respects_edit_mode_lock_setting_after_startup_fix::run(&env);
     }
 }
 

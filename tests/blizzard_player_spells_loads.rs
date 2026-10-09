@@ -130,7 +130,7 @@ const PVP_AND_WARMODE_MIXINS: &[&str] = &[
     "WarmodeIncentiveMixin",
 ];
 
-fn load_runtime_game_ui() -> WowLuaEnv {
+pub(crate) fn load_runtime_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
     env.set_screen_mode(ScreenKind::Game);
@@ -173,7 +173,6 @@ fn load_runtime_game_ui() -> WowLuaEnv {
 fn load_player_spells_after_fork(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &player_spells_toc())
         .expect("explicit load_addon for Blizzard_PlayerSpells succeeds");
-
 }
 
 fn load_full_game_ui_with_player_spells() -> WowLuaEnv {
@@ -206,10 +205,9 @@ fn load_full_game_ui_with_player_spells() -> WowLuaEnv {
 
 // Retail, PTR, and Forever share the Mainline PlayerSpells keybinding lifecycle.
 // Mists uses its Cata panel implementation; older profiles use legacy SpellBookFrame.
-#[test]
 #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
-fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
-    let env = load_runtime_game_ui();
+prefork_fixture_case! {
+fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors(env: &WowLuaEnv) {
     env.state().borrow_mut().lua_errors.clear();
 
     env.send_key_press("S", None)
@@ -247,6 +245,17 @@ fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
         "opening and closing the active profile spellbook emitted Lua errors:\n{}",
         errors.join("\n")
     );
+}
+}
+
+#[cfg(all(
+    not(feature = "client-retail"),
+    any(feature = "retail-12-1-0", feature = "client-wowforever")
+))]
+#[test]
+fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
+    let env = load_runtime_game_ui();
+    mainline_spellbook_keybind_opens_and_closes_without_runtime_errors::run(&env);
 }
 
 #[test]

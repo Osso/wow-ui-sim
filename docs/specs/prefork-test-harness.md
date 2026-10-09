@@ -58,6 +58,13 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] Classify exclusions as dependency/load-order/absence, pre-start, lifecycle, partial-fixture, alternate-screen, render-sensitive, thread-sensitive, profile-specific, post-drop, or version-specific; none is equivalent to normal complete retail startup.
 - [x] Preserve exclusion rationale: the finalized parent is incompatible with pre-start and lifecycle cases, while partial/custom, alternate-screen, render-sensitive, and thread-sensitive cases are not normal-retail startup; migrated cases retain the same 120-second child timeout and process-tree cleanup.
 
+### Exact startup fixtures (verification pending)
+
+- [ ] Migrate the two chat editbox cases, cast-bar edit-mode case, and Mainline spellbook keybinding case using their original fixture constructors and unchanged assertions, not completed Game preload or post-fork state normalization.
+- [ ] Preserve manual chat startup without `UPDATE_CHAT_WINDOWS`, initial SAY/white behavior, original cast-bar startup and anchor transitions, and profile-specific spellbook loading and key dispatch.
+- [ ] List each stable case name exactly once in the existing `prefork_full_ui` target; exclude migrated Retail cases from ordinary integration and retain original non-Retail feature gates and fixture behavior.
+- [ ] Apply existing filtering, timeout, process cleanup, parent-isolation and bytecode-cache contracts to every fixture group; propagate any group failure to the target exit status.
+
 ### Bytecode-cache child contract
 
 - [x] Keep the Lua bytecode cache writable by default in production; use process-local parent-bypass mode only for the dedicated prefork preload.
