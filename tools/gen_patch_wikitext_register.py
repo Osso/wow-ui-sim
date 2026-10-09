@@ -739,6 +739,52 @@ def parse_cataclysm_labeled_inventory(text):
     return entries
 
 
+def parse_legacy_function_labels(text):
+    """Retain plain NEW/UPDATED/REMOVED function rows and explicit 3.1 addenda.
+
+    Questions, examples, and ownerless secure-method prose remain in the full
+    extract; they do not establish a globally published API identity.
+    """
+    entries = []
+    section = ''
+    subsection = ''
+    directions = {'NEW': 'added', 'UPDATED': 'changed', 'REMOVED': 'removed'}
+    supplemental = {
+        'UnitAura': ('changed', {'UnitAura', 'UnitBuff', 'UnitDebuff'}),
+        'Animation and Mouse Hover': ('added', {'RegisterAutoHide', 'UnregisterAutoHide', 'AddToAutoHide'}),
+        'GetInventoryItemsForSlot()': ('added', {'GetInventoryItemsForSlot'}),
+        'GameTooltip:SetGlyph()': ('changed', {'GameTooltip:SetGlyph'}),
+        'GetPlayerFacing() UPDATE': ('changed', {'GetPlayerFacing'}),
+    }
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'(={2,4})\s*([^=]+?)\s*\1', line)
+        if heading:
+            if len(heading[1]) == 2:
+                section, subsection = heading[2].strip(), ''
+            else:
+                subsection = heading[2].strip()
+            continue
+        labeled = re.match(r'^\* (NEW|UPDATED|REMOVED) - (.*)$', line)
+        direction = None
+        symbol = None
+        if labeled and section.endswith('Functions'):
+            direction = directions[labeled[1]]
+            body = labeled[2].split('--', 1)[0].strip()
+            call = re.search(r'([A-Za-z_]\w*(?::[A-Za-z_]\w*)?)\s*\(', body)
+            symbol = call[1] if call else body
+        elif section == 'Other Info' and subsection in supplemental:
+            direction, allowed = supplemental[subsection]
+            call = re.match(r'^\s*(?:[^=\n]+ = )?([A-Za-z_]\w*(?::[A-Za-z_]\w*)?)\(', line)
+            if call and call[1] in allowed:
+                symbol = call[1]
+        if symbol:
+            category = 'widgets' if ':' in symbol else 'global-api'
+            entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+            entry['annotation'] = line
+            entries.append(entry)
+    return entries
+
+
 def parse_colon_api_bullets(text):
     """Retain standalone colon-prefixed API additions, not addon descriptions."""
     entries = []
@@ -995,6 +1041,8 @@ def main():
                         help='Retain standalone legacy API lists, rename pairs and CVar removals; opt-in')
     parser.add_argument('--cataclysm-labeled-inventory', action='store_true',
                         help='Retain NEW/REMOVED colon inventories and typed breaking references; opt-in')
+    parser.add_argument('--legacy-function-labels', action='store_true',
+                        help='Opt-in plain NEW/UPDATED/REMOVED function inventories and 3.1 addenda')
     parser.add_argument('--colon-api-bullets', action='store_true',
                         help='Retain standalone colon-prefixed New API bullets; opt-in')
     parser.add_argument('--warlords-prepatch', action='store_true',
@@ -1083,6 +1131,8 @@ def main():
         entries.extend(parse_indented_api_lists(raw.decode('utf-8')))
     if args.cataclysm_labeled_inventory:
         entries, counts = parse_cataclysm_labeled_inventory(raw.decode('utf-8')), []
+    if args.legacy_function_labels:
+        entries, counts = parse_legacy_function_labels(raw.decode('utf-8')), []
     if args.colon_api_bullets:
         entries.extend(parse_colon_api_bullets(raw.decode('utf-8')))
     if args.warlords_diff:
