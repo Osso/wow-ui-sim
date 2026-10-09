@@ -1,0 +1,87 @@
+{
+  "scope": "Owned source/model-contract accounting only; no runtime/native/factory measurement.",
+  "base_revision": "34c303c108d55e6c9d4919878abbb9a0efc08c00",
+  "proof_revision": "2497ec7a8",
+  "ledger": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "test_source_accounting.SourceAccounting.test_literal_counts_and_command_in_cvar_header"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09",
+      "revision": "69c390450 plus test fixture and temporary empty validator",
+      "scope": "Own missing source accounting output",
+      "exit": 1,
+      "log": "red.log",
+      "expected_failure": "None != 331",
+      "invalidated": false
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p340-source",
+      "revision": "2497ec7a8",
+      "scope": "All owned accounting fixtures; 987 row-omission controls, identity/metadata/partial-contract/profile controls",
+      "exit": 0,
+      "passed": 8,
+      "log": "green.log",
+      "invalidated": false
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p340-source",
+      "revision": "2497ec7a8 plus green-log seal entry only",
+      "scope": "Owned source replay and historical seals",
+      "exit": 0,
+      "log": "validator.log",
+      "invalidated": false
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-c",
+        "import importlib.util,pathlib,sys; p=pathlib.Path(sys.argv[1]); s=importlib.util.spec_from_file_location('historical_extract',p); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.ROOT=pathlib.Path.cwd(); sys.argv=sys.argv[1:]; m.main()",
+        "/home/osso/.worktrees/wow-ui-sim-p340-source/data/patch-api/evidence/3.4.0-session-2026-10-09/historical-extract_patch_non_inventory.py",
+        "--patch",
+        "3.4.0",
+        "--text-only",
+        "--canonical-patch-navigation",
+        "--check"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p340-source",
+      "revision": "2497ec7a8",
+      "scope": "Owned limited extraction recorded flags",
+      "exit": 0,
+      "log": "extractor.log",
+      "invalidated": false
+    }
+  ],
+  "content_scope": {
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/historical-extract_patch_non_inventory.py": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/historical-gen_patch_wikitext_register.py": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/model-context.json": "9414b5a82986d213ccaa03978098123d6dd58437b2a5588968771f992305d478",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/profile-observation.json": "b9c992d3a5863760a1959046ff73783fcd216949913a0e912f8db44e2e14f598",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/red.log": "ff1057630bb1affc2f3ae430e0a3b2a35a64279b6f601565c032f742217fdddb",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/replay_controls.py": "a0d0f16c8a4984f682675038f96d76ff6677e1ad1f26e8cf0ac3b8ed544e1608",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/source-pin.json": "f054478703ff015ca05eecc8afc4d3a3e2672265e375c581246fc209c05846b0",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/source-response.json": "750bc9d2a3e9d3605718488f73890051308671bd612c385b5372914ce79f359e",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/test_source_accounting.py": "23b89a83decfbd97dd7399cfff0e0fd8547bc43b5be0ea47f7ff9a4bc298c673",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/validate.py": "035cd87e5c7b829463af5ba680768531c55f133ce7f8873e4881d7dde593ee6b",
+    "data/patch-api/sources/3.4.0-api-changes.txt": "601607afe53d4cccfbc3677fe92d7ebd514e66bfeb9f241b2b6dc72a0157de58",
+    "data/patch-api/sources/3.4.0-api-changes.wikitext": "080a68a5f4f24e10962f4a63f3db6cb025038729c83ddb9c081735943b6a6ac2",
+    "data/patch-api/sources/3.4.0-page-coverage.json": "4cafec8e8e0f382b2539af01477c1755ef13866656b29bef1c4341fc06becb09",
+    "data/patch-api/evidence/3.4.0-session-2026-10-09/green.log": "81d9495a394e7a5971cb61e44b0b3b653b61392ea52119bd4eeefa50c9204f8e"
+  },
+  "format": "Python manually formatted; no Rust changes/formatter or readability gate."
+}

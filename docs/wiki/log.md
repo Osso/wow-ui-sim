@@ -721,3 +721,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## [2026-10-09] source audit | Wrath Classic Patch 3.4.0
 
 [[patch-3-4-0-api-audit]] records 331 inventory/four summary contracts and 386 raw rows at frozen revision 165668. Partial UnitAura and suffix contracts separate from configured Wrath38001/native30400 proof; no runtime edits. Owned source fixture proof pending.
+
+## [2026-10-09] source fixture | Wrath Classic Patch 3.4.0
+
+[[patch-3-4-0-api-audit]] source accounting GREEN 8/8 at `2497ec7a8`, including 987 omission controls and partial-signature/profile tampering. Source replay/extraction pass; zero runtime/native observations. Portable controls pending.

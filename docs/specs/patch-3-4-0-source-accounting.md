@@ -4,10 +4,10 @@ Account only the frozen Wrath Classic [page](../../data/patch-api/sources/3.4.0-
 
 ## What it must do
 
-- [ ] Verify exact manifest/response/content identity and hashes before ingestion; replay independently without Git.
-- [ ] Account every nonblank raw row, inventory occurrence, direction and table count, including the command and bare CVar removal.
-- [ ] Preserve literal CVar metadata, four summary contracts and the partial UnitAura return contract without inventing a full signature.
-- [ ] Reject fabricated capability/runtime/native credit, omitted rows, changed identities, metadata, partial contracts and foreign supersession.
+- [x] Verify exact manifest/response/content identity and hashes before ingestion; replay independently without Git.
+- [x] Account every nonblank raw row, inventory occurrence, direction and table count, including the command and bare CVar removal.
+- [x] Preserve literal CVar metadata, four summary contracts and the partial UnitAura return contract without inventing a full signature.
+- [x] Reject fabricated capability/runtime/native credit, omitted rows, changed identities, metadata, partial contracts and foreign supersession.
 - [ ] Separate immutable compact historical evidence from dynamic validator; reject serialized-source/log tampering, restore bytes, replay from relocated Git-free archive under 5MB.
 
 ## How it works
@@ -21,11 +21,11 @@ Account only the frozen Wrath Classic [page](../../data/patch-api/sources/3.4.0-
 
 ## Tests asserting this spec
 
-- Owned `test_source_accounting.py`, `validate.py`, `replay_controls.py` under the evidence directory (pending).
+- Owned `test_source_accounting.py`: 8/8 GREEN and 987 individual omission controls at `2497ec7a8`; `validate.py` replays source-only summaries. `replay_controls.py` portability pending.
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted source fixtures and portable negative controls pending.
+- [ ] Portable negative controls pending; targeted source fixtures pass.
 
 ## Out of scope
 
