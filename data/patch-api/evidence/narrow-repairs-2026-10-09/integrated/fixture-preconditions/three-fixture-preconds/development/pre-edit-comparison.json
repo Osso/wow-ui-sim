@@ -1,0 +1,23 @@
+{
+  "red_revision": "96e88494a6844833b79a574d37a2115dc03b44eb",
+  "files": [
+    {
+      "path": "tests/edit_mode_api/enums.rs",
+      "revision96_sha256": "db3db6c5e6bf0a67927db7edcba30e6b7f412133f1a25c61a0b6e36734802034",
+      "pre_edit_sha256": "db3db6c5e6bf0a67927db7edcba30e6b7f412133f1a25c61a0b6e36734802034",
+      "byte_equal": true
+    },
+    {
+      "path": "tests/patch_12_0_7_b23_b28.rs",
+      "revision96_sha256": "67f1df98a5bbb198706fdd2c6eaba8e92d3245ef3c60ab4d234e4c4937c5e007",
+      "pre_edit_sha256": "67f1df98a5bbb198706fdd2c6eaba8e92d3245ef3c60ab4d234e4c4937c5e007",
+      "byte_equal": true
+    },
+    {
+      "path": "tests/toplevel_render_groups.rs",
+      "revision96_sha256": "daff142a6270fb91c730b07968bb2dcdd8af4a6a73723099a1aae2791617bb5c",
+      "pre_edit_sha256": "daff142a6270fb91c730b07968bb2dcdd8af4a6a73723099a1aae2791617bb5c",
+      "byte_equal": true
+    }
+  ]
+}

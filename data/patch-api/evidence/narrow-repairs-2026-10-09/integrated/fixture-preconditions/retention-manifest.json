@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "date": "2026-10-09",
+  "scope": "Bounded development receipts for test-only 611e10d2d and 21b513f3e; not execution or native acceptance",
+  "files": [
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/two-fixture-inputs/development/fixture-only.diff",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/two-fixture-inputs/development/fixture-only.diff",
+      "bytes": 6723,
+      "sha256": "1f5e66a68085682288005947e385820e282409a0effea2a2e874e902e3035148",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/two-fixture-inputs/development/implementation-receipt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/two-fixture-inputs/development/implementation-receipt.json",
+      "bytes": 2366,
+      "sha256": "50a317deedeb4eff1e09f8ce08d929d11f37c2a91bff12a9231145a8cdcef52d",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/two-fixture-inputs/development/pre-edit-proof.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/two-fixture-inputs/development/pre-edit-proof.json",
+      "bytes": 1309,
+      "sha256": "31a3e5af5c4dcac47d0cac544d9ed32992118d05c37a2c4cf2490bb8eb924f83",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/commit-result.txt",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/commit-result.txt",
+      "bytes": 125,
+      "sha256": "b7bb4f43651aa8ce7afa828d9dd68877596d93d3c198535a12bdefab73000ed7",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/committed-fixture-diff.patch",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/committed-fixture-diff.patch",
+      "bytes": 5431,
+      "sha256": "1526d1e6cbdfa1f07bbf51a26d82a22aa04de05a82ac248a4c4bd37f036915c0",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/development-proof.md",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/development-proof.md",
+      "bytes": 3499,
+      "sha256": "466a0336157480f4bebd8ddb1021458e44a26420d6b807e2d84db633967f0a2c",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/post-edit-hashes.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/post-edit-hashes.json",
+      "bytes": 506,
+      "sha256": "37aea84fe8f5a0b762f43a6af057aff6d1d7309a6268aff29b0013f7aa2dc92e",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/pre-edit-comparison.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/pre-edit-comparison.json",
+      "bytes": 902,
+      "sha256": "e3027a418ea664c35c80f6b163b87c696a79cf3a7c10a6fca433f6aebbf0c2c1",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/tests_edit_mode_api_enums.rs.revision96.rs",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/tests_edit_mode_api_enums.rs.revision96.rs",
+      "bytes": 14627,
+      "sha256": "db3db6c5e6bf0a67927db7edcba30e6b7f412133f1a25c61a0b6e36734802034",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/tests_patch_12_0_7_b23_b28.rs.revision96.rs",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/tests_patch_12_0_7_b23_b28.rs.revision96.rs",
+      "bytes": 17961,
+      "sha256": "67f1df98a5bbb198706fdd2c6eaba8e92d3245ef3c60ab4d234e4c4937c5e007",
+      "byte_identical": true
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/three-fixture-preconds/development/tests_toplevel_render_groups.rs.revision96.rs",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/three-fixture-preconds/development/tests_toplevel_render_groups.rs.revision96.rs",
+      "bytes": 8309,
+      "sha256": "daff142a6270fb91c730b07968bb2dcdd8af4a6a73723099a1aae2791617bb5c",
+      "byte_identical": true
+    }
+  ],
+  "file_count": 11,
+  "total_bytes": 61758,
+  "privacy": {
+    "scan": "All selected UTF-8 bytes",
+    "patterns": {
+      "private_key": "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+      "bearer": "(?i)Bearer\\s+[A-Za-z0-9._~+/=-]{16,}",
+      "credential_assignment": "(?i)(?:password|api[_-]?key|access[_-]?token|client[_-]?secret)\\s*[=:]\\s*\\S{16,}"
+    },
+    "candidate_counts": {
+      "private_key": 0,
+      "bearer": 0,
+      "credential_assignment": 0
+    },
+    "limits": "Not exhaustive privacy certification or publication approval; local paths, source snapshots and internal revision IDs remain. No raw whole logs, binaries, native capture or broad artifact inventories copied."
+  },
+  "excluded": "All other verification artifacts and raw logs/binaries; original local receipts unchanged",
+  "governance": "Main handoff /home/osso/.local/state/wow-ui-sim/handoff/enum-and-render-main-errata.md; selected frozen copy already retained by ff4585f30",
+  "parent": "OPEN"
+}

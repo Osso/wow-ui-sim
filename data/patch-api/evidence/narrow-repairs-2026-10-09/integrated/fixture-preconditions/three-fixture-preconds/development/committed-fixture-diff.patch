@@ -1,0 +1,119 @@
+commit 21b513f3ef9eed7a5cea07fb11acf5708ce0327a
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 18:07:22 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 18:07:22 2026 -0500
+
+    Correct enum and visible render fixture preconditions
+
+diff --git a/tests/edit_mode_api/enums.rs b/tests/edit_mode_api/enums.rs
+index 8bfb82844..0f5df59fb 100644
+--- a/tests/edit_mode_api/enums.rs
++++ b/tests/edit_mode_api/enums.rs
+@@ -26,12 +26,20 @@ fn compact_raid_group_type_enum_matches_edit_mode_unit_frame_indices() {
+ fn unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size() {
+     let env = WowLuaEnv::new().expect("create Lua environment");
+ 
+-    let (big_defensive_icon_size, min_value, max_value, num_values): (i32, i32, i32, i32) = env
++    // Current Retail publication includes BuffIconSize after BigDefensiveIconSize.
++    let (big_defensive_icon_size, buff_icon_size, min_value, max_value, num_values): (
++        i32,
++        i32,
++        i32,
++        i32,
++        i32,
++    ) = env
+         .eval(
+             r#"
+             local setting = Enum.EditModeUnitFrameSetting
+             local meta = Enum.EditModeUnitFrameSettingMeta
+             return setting.BigDefensiveIconSize,
++                setting.BuffIconSize,
+                 meta.MinValue,
+                 meta.MaxValue,
+                 meta.NumValues
+@@ -40,9 +48,10 @@ fn unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size() {
+         .expect("read unit frame edit mode setting enum");
+ 
+     assert_eq!(big_defensive_icon_size, 21);
++    assert_eq!(buff_icon_size, 22);
+     assert_eq!(min_value, 0);
+-    assert_eq!(max_value, 21);
+-    assert_eq!(num_values, 22);
++    assert_eq!(max_value, 22);
++    assert_eq!(num_values, 23);
+ }
+ 
+ #[test]
+diff --git a/tests/patch_12_0_7_b23_b28.rs b/tests/patch_12_0_7_b23_b28.rs
+index 6067a678b..d5a64c37e 100644
+--- a/tests/patch_12_0_7_b23_b28.rs
++++ b/tests/patch_12_0_7_b23_b28.rs
+@@ -341,11 +341,8 @@ fn b28_empty_catalog_defaults_and_live_shipped_id_membership() {
+ #[test]
+ fn b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries() {
+     let env = environment();
+-    // Uses only the audit cache if an integrator executes this fixture on this host.
+-    let root = tempfile::Builder::new()
+-        .prefix("b28-")
+-        .tempdir_in("/home/osso-test/.cache/wow-ui-sim-audit")
+-        .unwrap();
++    // Own the physical-file fixture without an externally provisioned cache directory.
++    let root = tempfile::tempdir().expect("create B28 physical-file fixture directory");
+     let present = root.path().join("present.ogg");
+     std::fs::write(&present, b"audio fixture").unwrap();
+     let path = present
+diff --git a/tests/toplevel_render_groups.rs b/tests/toplevel_render_groups.rs
+index ebdc28770..f9cb1b174 100644
+--- a/tests/toplevel_render_groups.rs
++++ b/tests/toplevel_render_groups.rs
+@@ -1,6 +1,7 @@
+-//! Native 12.1.0.69587 controlled layering capture (2026-09-08).
++//! Model fixture for the documented native 12.1.0.69587 layering matrix (2026-09-08).
+ //! Case 1's HIGH child stays inside its LOW top-level group. Independent
+ //! HIGH, DIALOG, plain TOOLTIP and GameTooltip controls remain above MEDIUM.
++//! Explicit visibility is a model fixture precondition, not a new native capture.
+ 
+ use wow_ui_sim::lua_api::WowLuaEnv;
+ use wow_ui_sim::widget::FrameStrata;
+@@ -36,6 +37,8 @@ fn create_controls() -> WowLuaEnv {
+             blueTexture:SetColorTexture(0, 0, 1, 1)
+             if i == 5 then
+                 red:SetOwner(blue, 'ANCHOR_NONE')
++                -- SetOwner hides the model tooltip; this layering control must be visible.
++                red:Show()
+                 assert(red:GetParent() == UIParent)
+             end
+             NativeLayerCases[i] = { red = red, blue = blue }
+@@ -55,13 +58,27 @@ fn assert_control_order(env: &WowLuaEnv) {
+         let red = state
+             .widgets
+             .get_id_by_name(&format!("NativeLayerRedTexture{case}"))
+-            .unwrap();
++            .unwrap_or_else(|| panic!("native control case {case}: red texture not registered"));
+         let blue = state
+             .widgets
+             .get_id_by_name(&format!("NativeLayerBlueTexture{case}"))
+-            .unwrap();
+-        let red_index = order.iter().position(|&id| id == red).unwrap();
+-        let blue_index = order.iter().position(|&id| id == blue).unwrap();
++            .unwrap_or_else(|| panic!("native control case {case}: blue texture not registered"));
++        assert!(
++            state.widgets.is_ancestor_visible(red),
++            "native control case {case}: red texture {red} must be visible before order lookup"
++        );
++        assert!(
++            state.widgets.is_ancestor_visible(blue),
++            "native control case {case}: blue texture {blue} must be visible before order lookup"
++        );
++        let red_index = order.iter().position(|&id| id == red).unwrap_or_else(|| {
++            panic!("native control case {case}: visible red texture {red} absent from render order")
++        });
++        let blue_index = order.iter().position(|&id| id == blue).unwrap_or_else(|| {
++            panic!(
++                "native control case {case}: visible blue texture {blue} absent from render order"
++            )
++        });
+         assert_eq!(
+             red_index < blue_index,
+             case == 1,

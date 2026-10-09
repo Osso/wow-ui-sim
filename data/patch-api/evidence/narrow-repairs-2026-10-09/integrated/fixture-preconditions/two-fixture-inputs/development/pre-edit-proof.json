@@ -1,0 +1,25 @@
+{
+  "pre_edit_HEAD": "7130cea91dea9a051207fb84435c1beb9cbb5a08",
+  "comparison": [
+    {
+      "path": "tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs",
+      "red_revision": "96e88494a6844833b79a574d37a2115dc03b44eb",
+      "bytes": 19890,
+      "sha256": "b712d75bec62a0f7dc22a783c31900552cacd511c77eeea1c53a881bb16dfc20",
+      "red_equals_current_equals_HEAD": true
+    },
+    {
+      "path": "tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+      "red_revision": "96e88494a6844833b79a574d37a2115dc03b44eb",
+      "bytes": 15011,
+      "sha256": "610151d35a5042c71a022d5631b5e8f6336fb8f938ffcfbb8e8425456b1575d4",
+      "red_equals_current_equals_HEAD": true
+    }
+  ],
+  "red_evidence": "/home/osso/.local/state/wow-ui-sim/verification/fullsuite-96-comparison/report.md",
+  "red_observations": {
+    "currency": "actual 1,234 |T9999777:12:12:0:0|t; expected 1234 |T9999777:12:12:0:0|t",
+    "achievement": "actual set_called=0 hide_called=2 update_called=0 show_called=0; expected hide_called=1"
+  },
+  "proof_boundary": "Git objects at saved RED revision are byte-equivalent to current files and HEAD before edits. Saved run provenance limitations remain as documented in report.md. No new build/test/check; main owns exact targeted GREEN integration proof."
+}

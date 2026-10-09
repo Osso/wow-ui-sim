@@ -1,0 +1,40 @@
+{
+  "commit": "611e10d2d76b368d01f0c61b006fe2d787746f37",
+  "paths": [
+    "tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs",
+    "tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs"
+  ],
+  "diff": "/home/osso/.local/state/wow-ui-sim/verification/two-fixture-inputs/development/fixture-only.diff",
+  "diffstat": "2 files changed, 29 insertions(+), 15 deletions(-)",
+  "exact_tests_pending_main_GREEN": [
+    "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero",
+    "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length"
+  ],
+  "proof_ledger": [
+    {
+      "action": "byte comparison to RED revision 96e88494a6844833b79a574d37a2115dc03b44eb and pre-edit HEAD",
+      "scope": "pre-edit files only",
+      "result": "identical; pre-edit-proof.json contains sizes and SHA256",
+      "invalidated": "post-edit files intentionally differ; retained RED is input evidence, not GREEN"
+    },
+    {
+      "action": "rustfmt --edition 2024 <two absolute Rust paths>",
+      "scope": "611e10d2d76b368d01f0c61b006fe2d787746f37",
+      "result": "exit 0; only changed Rust formatted",
+      "invalidated": false
+    },
+    {
+      "action": "manual rust-readability audit of changed lines",
+      "scope": "611e10d2d76b368d01f0c61b006fe2d787746f37",
+      "result": "no new violations: named original script restored exactly at teardown, explicit locale probe/assertion, exact localized amount, no new nesting/branches/suppressions/opaque effects",
+      "invalidated": false
+    },
+    {
+      "action": "git diff-tree and git show",
+      "scope": "611e10d2d76b368d01f0c61b006fe2d787746f37",
+      "result": "exactly two authorized fixture files; search counts, assertions, forwarding and stubs preserved; icon size/offset markup unchanged; production/runtime/vendor and original prefork fixture untouched by this commit",
+      "invalidated": false
+    }
+  ],
+  "verification_boundary": "No Cargo build, test or check invoked. Main owns new integration compile and exact targeted GREEN. No native acceptance claim. No push/merge/deploy/services/delegation/change_working_directory. Pre-existing untracked .code-index.db left untouched."
+}
