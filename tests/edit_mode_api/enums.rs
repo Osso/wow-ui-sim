@@ -26,12 +26,20 @@ fn compact_raid_group_type_enum_matches_edit_mode_unit_frame_indices() {
 fn unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size() {
     let env = WowLuaEnv::new().expect("create Lua environment");
 
-    let (big_defensive_icon_size, min_value, max_value, num_values): (i32, i32, i32, i32) = env
+    // Current Retail publication includes BuffIconSize after BigDefensiveIconSize.
+    let (big_defensive_icon_size, buff_icon_size, min_value, max_value, num_values): (
+        i32,
+        i32,
+        i32,
+        i32,
+        i32,
+    ) = env
         .eval(
             r#"
             local setting = Enum.EditModeUnitFrameSetting
             local meta = Enum.EditModeUnitFrameSettingMeta
             return setting.BigDefensiveIconSize,
+                setting.BuffIconSize,
                 meta.MinValue,
                 meta.MaxValue,
                 meta.NumValues
@@ -40,9 +48,10 @@ fn unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size() {
         .expect("read unit frame edit mode setting enum");
 
     assert_eq!(big_defensive_icon_size, 21);
+    assert_eq!(buff_icon_size, 22);
     assert_eq!(min_value, 0);
-    assert_eq!(max_value, 21);
-    assert_eq!(num_values, 22);
+    assert_eq!(max_value, 22);
+    assert_eq!(num_values, 23);
 }
 
 #[test]

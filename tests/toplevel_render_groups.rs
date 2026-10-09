@@ -1,6 +1,7 @@
-//! Native 12.1.0.69587 controlled layering capture (2026-09-08).
+//! Model fixture for the documented native 12.1.0.69587 layering matrix (2026-09-08).
 //! Case 1's HIGH child stays inside its LOW top-level group. Independent
 //! HIGH, DIALOG, plain TOOLTIP and GameTooltip controls remain above MEDIUM.
+//! Explicit visibility is a model fixture precondition, not a new native capture.
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::widget::FrameStrata;
@@ -36,6 +37,8 @@ fn create_controls() -> WowLuaEnv {
             blueTexture:SetColorTexture(0, 0, 1, 1)
             if i == 5 then
                 red:SetOwner(blue, 'ANCHOR_NONE')
+                -- SetOwner hides the model tooltip; this layering control must be visible.
+                red:Show()
                 assert(red:GetParent() == UIParent)
             end
             NativeLayerCases[i] = { red = red, blue = blue }
@@ -55,13 +58,27 @@ fn assert_control_order(env: &WowLuaEnv) {
         let red = state
             .widgets
             .get_id_by_name(&format!("NativeLayerRedTexture{case}"))
-            .unwrap();
+            .unwrap_or_else(|| panic!("native control case {case}: red texture not registered"));
         let blue = state
             .widgets
             .get_id_by_name(&format!("NativeLayerBlueTexture{case}"))
-            .unwrap();
-        let red_index = order.iter().position(|&id| id == red).unwrap();
-        let blue_index = order.iter().position(|&id| id == blue).unwrap();
+            .unwrap_or_else(|| panic!("native control case {case}: blue texture not registered"));
+        assert!(
+            state.widgets.is_ancestor_visible(red),
+            "native control case {case}: red texture {red} must be visible before order lookup"
+        );
+        assert!(
+            state.widgets.is_ancestor_visible(blue),
+            "native control case {case}: blue texture {blue} must be visible before order lookup"
+        );
+        let red_index = order.iter().position(|&id| id == red).unwrap_or_else(|| {
+            panic!("native control case {case}: visible red texture {red} absent from render order")
+        });
+        let blue_index = order.iter().position(|&id| id == blue).unwrap_or_else(|| {
+            panic!(
+                "native control case {case}: visible blue texture {blue} absent from render order"
+            )
+        });
         assert_eq!(
             red_index < blue_index,
             case == 1,

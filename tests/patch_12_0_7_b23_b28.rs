@@ -341,11 +341,8 @@ fn b28_empty_catalog_defaults_and_live_shipped_id_membership() {
 #[test]
 fn b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries() {
     let env = environment();
-    // Uses only the audit cache if an integrator executes this fixture on this host.
-    let root = tempfile::Builder::new()
-        .prefix("b28-")
-        .tempdir_in("/home/osso-test/.cache/wow-ui-sim-audit")
-        .unwrap();
+    // Own the physical-file fixture without an externally provisioned cache directory.
+    let root = tempfile::tempdir().expect("create B28 physical-file fixture directory");
     let present = root.path().join("present.ogg");
     std::fs::write(&present, b"audio fixture").unwrap();
     let path = present
