@@ -1,6 +1,7 @@
 """Literal labeled 2009 retail inventory; default CLI stays byte-compatible."""
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -58,6 +59,43 @@ class LegacyFunctionLabelsTests(unittest.TestCase):
             rows = self.generate(source, output, ['--legacy-function-labels'])['entries']
             self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line']) for r in rows],
                              [('Known', 'added', 2), ('UnitAura', 'changed', 8)])
+
+
+class SourceAccountingReplayTests(unittest.TestCase):
+    def test_original_and_current_ledgers_reproduce_in_disposable_root(self):
+        evidence = ROOT / 'data/patch-api/evidence/3.1.0-session-2026-10-09'
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tools = root / 'tools'
+            sources = root / 'data/patch-api/sources'
+            frozen = root / 'data/patch-api/evidence/3.1.0-session-2026-10-09'
+            for path in (tools, sources, frozen / 'current'):
+                path.mkdir(parents=True, exist_ok=True)
+            for name in ('build_patch_3_1_0_accounting.py', 'extract_patch_non_inventory.py'):
+                shutil.copyfile(ROOT / 'tools' / name, tools / name)
+            for name, target in [('historical-source.wikitext', 'api-changes.wikitext'),
+                                 ('historical-register.json', 'wikitext-register.json'),
+                                 ('historical-extract.txt', 'api-changes.txt')]:
+                shutil.copyfile(evidence / name, sources / ('3.1.0-' + target))
+            shutil.copyfile(evidence / 'own-sweep-green-results.json', frozen / 'own-sweep-green-results.json')
+            for name in ('publication-green-results.json', 'model-green-receipt.json'):
+                shutil.copyfile(evidence / 'current' / name, frozen / 'current' / name)
+            argv = [sys.executable, '-B', str(tools / 'build_patch_3_1_0_accounting.py')]
+            result = subprocess.run(argv, cwd=ROOT, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual((sources / '3.1.0-page-coverage.json').read_bytes(),
+                             (evidence / 'historical-page-coverage.json').read_bytes())
+            self.assertEqual((sources / '3.1.0-signatures.json').read_bytes(),
+                             (evidence / 'historical-signatures.json').read_bytes())
+            result = subprocess.run(argv + ['--current-radians'], cwd=ROOT, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            for suffix in ('page-coverage.json', 'signatures.json'):
+                self.assertEqual((sources / ('3.1.0-' + suffix)).read_bytes(),
+                                 (ROOT / 'data/patch-api/sources' / ('3.1.0-' + suffix)).read_bytes())
+            coverage = json.loads((sources / '3.1.0-page-coverage.json').read_bytes())
+            modeled = [row for row in coverage['source_rows'] if 'modeled-radians-state-read' in row['capabilities']]
+            self.assertEqual([row['source_id'] for row in modeled], ['signature-239-1', 'signature-241-1'])
+            self.assertTrue(all('UNPROVEN' in row['note'] for row in modeled))
 
 
 if __name__ == '__main__':
