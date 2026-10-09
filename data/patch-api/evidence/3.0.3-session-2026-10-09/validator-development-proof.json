@@ -1,0 +1,63 @@
+{
+  "schema": "patch-api-development-proof/v1",
+  "patch": "3.0.3",
+  "revision": "e50955ee323cbdf913e01f0c37bab663534a1804",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+  "argv": [
+    "python3",
+    "-B",
+    "tools/test_patch_3_0_3_validator.py"
+  ],
+  "exit": 0,
+  "tests": 2,
+  "scope": "Targeted development only: full source accounting controls and original fresh copied-process replay. No runtime/native/integration/final gate.",
+  "later_doc_changes_invalidate": false,
+  "details": {
+    "ledger_rows": 8,
+    "inventory_rows": 3,
+    "nonblank_rows": 5,
+    "explicit_callable_signatures": 0,
+    "publication_unproven": 3,
+    "semantic_unproven": 3,
+    "metadata_only": 2,
+    "meaningful_model_closures": 0,
+    "sealed_inputs": 16,
+    "serialized_tamper_controls": 17,
+    "serialized_exact_restorations": 17,
+    "deleted_gap_sidecar_restored": true,
+    "omission_controls": {
+      "ledger": 8,
+      "gap": 6,
+      "inventory": 3
+    },
+    "non_seal_overclaim_and_spelling_controls": 2,
+    "registry_pages": 101,
+    "registry_cutoff": "1.0.0",
+    "snapshot_files": 93,
+    "archive_bytes": 340952,
+    "actual_later_retail_registers": 71,
+    "fresh_process_environment": {
+      "argv": [
+        "absolute-python",
+        "-I",
+        "-B",
+        "copied/validate.py"
+      ],
+      "cwd": "fresh temporary root",
+      "PATH": "/p303-no-git",
+      "PYTHONPATH": "",
+      "Git": false,
+      "target": false,
+      "src": false,
+      "mutable_original_ledger": false
+    },
+    "synthetic_current_closures_and_later_registers_leave_stdout_identical": true
+  },
+  "sha256": {
+    "validator-green.log": "a17e09e1e4ce55537223b7d3f8ecb07e2b95690a6347638a9ee1871ca85009b5",
+    "validate.py": "1444e64ebbfa9eb85eee3dc2ab9082a4f5d12ba8b3f9426c737d4dc0a97b4c04",
+    "historical-inputs.json": "e2ff038493ccdbe9ba04ec35c301c82aaee6a127a1ec905fa237fb6ce22cc525",
+    "historical-bundle.json.gz": "897b297a957278d57f152654cd45fb11edcb801d95f93f95403db792959e07a4"
+  },
+  "test_sha256": "7a9902beaf44f68e9149e41382ee633de9d678f6aaae39ed65ea8d1294ce284c"
+}

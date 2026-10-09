@@ -1,0 +1,61 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_3_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+      "revision": "e2cf94de1972cdda57e6328364f136abc494d964",
+      "scope": "Own CVar parser fixtures (2 expected missing-flag failures), integrated 3.3.3/3.3.5/4.0.1 reproduction (1 passed); source-only, no runtime proof.",
+      "exit": 1,
+      "artifact": "source-red.log",
+      "invalidated_by": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_3_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+      "revision": "ce0a0e863dbdd148c99d1c21d23bd4c996bcc0f9",
+      "scope": "Own exact-name/definition output, section/malformed boundaries and integrated 3.3.3/3.3.5/4.0.1 register/extract byte reproduction; 3/3 source tests only.",
+      "exit": 0,
+      "artifact": "source-green.log",
+      "invalidated_by": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_3_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+      "revision": "f7582f153a8d84d23f0732925ff277b7611e2c5f",
+      "scope": "Two historical replay/accounting fixtures fail exactly because own validator is absent.",
+      "exit": 1,
+      "artifact": "validator-red.log",
+      "invalidated_by": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_3_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+      "revision": "e50955ee323cbdf913e01f0c37bab663534a1804",
+      "scope": "Targeted development only: full source accounting controls and original fresh copied-process replay. No runtime/native/integration/final gate.",
+      "exit": 0,
+      "artifact": "validator-green.log",
+      "invalidated_by": null
+    }
+  ],
+  "original_command_ledger_seal": {
+    "sha256": "9a87fc1e112d6b1820ed1605b0b0ac701aeb5ab24b695237c5d6b681d15da867",
+    "bytes": 1431
+  },
+  "proof_boundary": "Sealed original receipts unchanged; this append-only follow-up records post-implementation development GREEN, not native or final acceptance."
+}
