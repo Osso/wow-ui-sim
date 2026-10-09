@@ -677,3 +677,7 @@ Source/accounting fixtures 6/6 at `a0db0fa0d`; compact per-command scope/revisio
 ## 2026-10-09 — Retail Patch 4.0.1 source parsing
 
 Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventories, typed breaking references, retained prose/build context and ordered pending successors. Targeted development proof pending.
+
+## 2026-10-09 — Retail Patch 4.0.1 bounded retirements
+
+[[patch-4-0-1-api-audit]]: 419 observations/119 initial mismatches, complete 197-symbol scans, two unused no-op skill headers excluded on modern retail only. 117 publication gaps/four prose limits/one signature gap remain explicit. Parser fixtures 75/75; factory RED retained.

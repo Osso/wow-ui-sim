@@ -1,0 +1,3182 @@
+{
+  "patch": "4.0.1",
+  "client_line": "retail",
+  "source_revid": 1271877,
+  "source_sha256": "cfdef52eb38da73f43f015b1b44486a0e0aa0ac31cd567cd281e83d7f34b5123",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/4.0.1-api-changes.txt",
+    "sha256": "7e998153d8bb163fbb70bd597a6f48ac3dfaf0ec29cbc3eef50adb3e0ee85447"
+  },
+  "proof_policy": "Publication/absence and two bounded modern-retail no-op retirements only. Historical prose/signature/native enforcement remain distinct pending limits. No structures/enums in pinned source. Pending successor placeholders convey no credit.",
+  "source_rows": [
+    {
+      "source_id": "wt-events-UNIT_POWER-5",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXPOWER-5",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetItemCooldown-6",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-AbandonQuest-10",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-AcceptSkillUps-11",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-AddSkillUp-12",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-BuyPetition-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-BuySkillTier-14",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-BuyStableSlot-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CancelSkillUps-16",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ChangePlayerDifficulty-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ClickPetitionButton-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ClickStablePet-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CloseBattlefield-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ClosePetitionVendor-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CollapseSkillHeader-22",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Two unused no-op globals explicitly removed by pinned page; retail-only registration exclusion implemented after failing factory test. Targeted GREEN proof pending."
+    },
+    {
+      "source_id": "wt-global-api-CollapseTrainerSkillLine-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ExpandSkillHeader-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Two unused no-op globals explicitly removed by pinned page; retail-only registration exclusion implemented after failing factory test. Targeted GREEN proof pending."
+    },
+    {
+      "source_id": "wt-global-api-ExpandTrainerSkillLine-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-FindSpellBookSlotByID-26",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAdjustedSkillPoints-27",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetArenaCurrency-28",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAvailableRoles-29",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetBaseMip-30",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetBattlefieldInfo-31",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetBattlefieldInstanceInfo-32",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarAbsoluteMax-33",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarAbsoluteMin-34",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarMax-35",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarMin-36",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDamageBonusStat-37",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetFarclip-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildBankWithdrawLimit-39",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetHonorCurrency-40",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetKnownSlotFromHighestRankSlot-41",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNextStableSlotCost-42",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumBattlefields-43",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumPetitionItems-44",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumSkillLines-45",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetNumSkillLines: raw=function; lookup=function. Existing simulator state/compatibility surface retained; complete src/tests scan in retirement-scans.json; affected existing tests: tests/talent_spec_probes.rs:221. Not an unused two-header no-op; migration/retirement beyond this bounded change remains unimplemented."
+    },
+    {
+      "source_id": "wt-global-api-GetNumStablePets-46",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumStableSlots-47",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetPetitionItemInfo-48",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardArenaPoints-49",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardHonor-50",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetQuestLogRewardHonor: raw=function; lookup=function. Retained current cached retail consumer(s): Blizzard_GameTooltip/Mainline/GameTooltip.lua:197; Blizzard_UIPanels_Game/Mainline/QuestInfo.lua:632; Blizzard_FrameXMLUtil/Mainline/QuestUtils.lua:806. Do not remove consumers or Blizzard deprecation wrappers to satisfy historical absence."
+    },
+    {
+      "source_id": "wt-global-api-GetSelectedBattlefield-51",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSelectedSkill-52",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetSelectedSkill: raw=function; lookup=function. Existing simulator state/compatibility surface retained; complete src/tests scan in retirement-scans.json; affected existing tests: tests/talent_spec_probes.rs:235; tests/mists_compat_bootstrap.rs:314; tests/mists_compat_bootstrap.rs:318. Not an unused two-header no-op; migration/retirement beyond this bounded change remains unimplemented."
+    },
+    {
+      "source_id": "wt-global-api-GetSelectedStablePet-53",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSkillLineInfo-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetSkillLineInfo: raw=function; lookup=function. Existing simulator state/compatibility surface retained; complete src/tests scan in retirement-scans.json; affected existing tests: tests/talent_spec_probes.rs:228; tests/mists_compat_bootstrap.rs:314; tests/mists_compat_bootstrap.rs:547. Not an unused two-header no-op; migration/retirement beyond this bounded change remains unimplemented."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellName-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTerrainMip-56",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTexLodBias-57",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTrackingTexture-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTrainerServiceStepIncrease-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTrainerServiceStepReq-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTrainerSkillLineFilter-61",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTrainerSkillLines-62",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitHealthRegenRateFromSpirit-63",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetWaterDetail-64",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-HasFilledPetition-65",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsBattlefieldArena-66",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "IsBattlefieldArena: raw=function; lookup=function. Existing simulator state/compatibility surface retained; complete src/tests scan in retirement-scans.json; affected existing tests: tests/combat_probes.rs:21; tests/combat_probes.rs:90. Not an unused two-header no-op; migration/retirement beyond this bounded change remains unimplemented."
+    },
+    {
+      "source_id": "wt-global-api-IsPlayerResolutionAvailable-67",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsSelectedSpell-68",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsTrainerServiceSkillStep-69",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-QuestPOIUpdateTexture-70",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RemoveSkillUp-71",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RestoreVideoEffectsDefaults-72",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RestoreVideoResolutionDefaults-73",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RestoreVideoStereoDefaults-74",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetBaseMip-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetFarclip-76",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetGuildBankTabWithdraw-77",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetGuildBankWithdrawLimit-78",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetSelectedBattlefield-79",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetSelectedSkill-80",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetTerrainMip-81",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetTexLodBias-82",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetTrainerSkillLineFilter-83",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetWaterDetail-84",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-StablePet-85",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-TurnInArenaPetition-86",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-TurnInPetition-87",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitCharacterPoints-88",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnstablePet-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UpdateSpells-90",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-getglobal-91",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-setglobal-92",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-AddAutoQuestPopUp-93",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "AddAutoQuestPopUp: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ArchaeologyGetIconInfo-94",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ArchaeologyGetIconInfo: raw=nil; lookup=nil. Missing archaeology site/artifact selection, completion or projection contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ArchaeologyMapUpdateAll-95",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ArchaeologyMapUpdateAll: raw=nil; lookup=nil. Missing archaeology site/artifact selection, completion or projection contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ArcheologyGetVisibleBlobID-96",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ArcheologyGetVisibleBlobID: raw=nil; lookup=nil. Missing archaeology site/artifact selection, completion or projection contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-BNGetMaxNumConversations-97",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-BNTokenCombineGivenAndSurname-98",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CalendarGetGuildEventInfo-99",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CalendarGetGuildEventInfo: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CalendarGetGuildEventSelectionInfo-100",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CalendarGetGuildEventSelectionInfo: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CalendarGetNumGuildEvents-101",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CalendarGetNumGuildEvents: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CanBeRaidTarget-102",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CanItemBeSocketedToArtifact-103",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CanItemBeSocketedToArtifact: raw=nil; lookup=nil. Missing archaeology site/artifact selection, completion or projection contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CanSolveArtifact-104",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CanTransform-105",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CanTransform: raw=nil; lookup=nil. Missing class transformation or dual-wield eligibility contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CanViewGuildRecipes-106",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CastGlyph-107",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CastGlyphByID-108",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CastGlyphByID: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CastGlyphByName-109",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CastGlyphByName: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ClearRaidMarker-110",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ClearRaidMarker: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CloseReforge-111",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CloseResearch-112",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CollapseGuildTradeSkillHeader-113",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CollapseGuildTradeSkillHeader: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-CommentatorStartWargame-114",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CommentatorStartWargame: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ConvertToParty-115",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CreateArenaTeam-116",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ExpandGuildTradeSkillHeader-117",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ExpandGuildTradeSkillHeader: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-FindSpellBookSlotBySpellID-118",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAchievementGuildRep-119",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetActiveArtifactByRace-120",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetActiveArtifactByRace: raw=nil; lookup=nil. Missing archaeology site/artifact selection, completion or projection contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetArchaeologyInfo-121",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetArchaeologyRaceInfo-122",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetArtifactInfoByRace-123",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetArtifactProgress-124",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAutoDeclineGuildInvites-125",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAutoQuestPopUp-126",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAvailableBandwidth-127",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAvailableLocales-128",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetAvailableLocales: raw=nil; lookup=nil. Missing native installation/display/debug/cinematic or map refresh state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetAverageItemLevel-129",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetBackgroundLoadingStatus-130",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetBonusBarOverrideBarType-131",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarBitfield-132",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetCVarBitfield: raw=function; lookup=function. Retained current cached retail consumer(s): Blizzard_TokenUI/Blizzard_TokenUI.lua:412; Blizzard_SharedXMLGame/DressUpModelFrameMixin.lua:23; Blizzard_BuffFrame/BuffFrame.lua:1090. Do not remove consumers or Blizzard deprecation wrappers to satisfy historical absence."
+    },
+    {
+      "source_id": "wt-global-api-GetCallPetSpellInfo-133",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCemeteryPreference-134",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetCemeteryPreference: raw=nil; lookup=nil. Missing cemetery availability/preference or travel validation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetContainerItemEquipmentSetInfo-135",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetContainerItemPurchaseCurrency-136",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCriteriaSpell-137",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrencyInfo-138",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentLevelFeatures-139",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetCurrentLevelFeatures: raw=nil; lookup=nil. Missing legacy argument/return and state-transition contract contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentLevelSpells-140",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentRaidDifficulty-141",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDebugAnimationStats-142",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetDebugAnimationStats: raw=nil; lookup=nil. Missing native installation/display/debug/cinematic or map refresh state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetDefaultRaidDifficulty-143",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDefaultVideoOptions-144",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDemotionRank-145",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetDemotionRank: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetDestinationReforgeStats-146",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDistanceSqToQuest-147",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDownloadedPercentage-148",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetEclipseDirection-149",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetEclipseDirection: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetFileStreamingStatus-150",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetFlyoutID-151",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetFlyoutID: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetFlyoutInfo-152",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetFlyoutSlotInfo-153",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGlyphClearInfo-154",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGlyphClearInfo: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGlyphInfo-155",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildAchievementMemberInfo-156",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildAchievementMembers-157",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildAchievementNumMembers-158",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildBankWithdrawGoldLimit-159",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildBankWithdrawGoldLimit: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildCategoryList-160",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildExpirationTime-161",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildFactionGroup-162",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildFactionInfo-163",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildFactionInfo: raw=function; lookup=function. Existing simulator state/compatibility surface retained; complete src/tests scan in retirement-scans.json; affected existing tests: tests/faction_probes.rs:119; tests/faction_probes.rs:128; tests/faction_probes.rs:144. Not an unused two-header no-op; migration/retirement beyond this bounded change remains unimplemented."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildLevel-164",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildLevelEnabled-165",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildLevelEnabled: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildLogoInfo-166",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildMemberRecipes-167",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildMemberRecipes: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildNewsFilters-168",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildNewsFilters: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildNewsInfo-169",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildNewsMemberName-170",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildNewsMemberName: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildNewsSort-171",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildNewsSort: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildPerkInfo-172",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildPerkInfo: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRecipeInfoPostQuery-173",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildRecipeInfoPostQuery: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRecipeMember-174",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildRecipeMember: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRewardInfo-175",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildRewardInfo: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRosterContribution-176",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRosterLargestAchievementPoints-177",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildRosterLargestAchievementPoints: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRosterLargestContribution-178",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildTradeSkillInfo-179",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetGuildTradeSkillInfo: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetHitModifier-180",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetInspectGuildInfo-181",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetMajorTalentTreeBonuses-182",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetMastery-183",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetMinorTalentTreeBonuses-184",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetMonitorAspectRatio-185",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetMonitorAspectRatio: raw=nil; lookup=nil. Missing native installation/display/debug/cinematic or map refresh state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetMonitorCount-186",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetMonitorCount: raw=nil; lookup=nil. Missing native installation/display/debug/cinematic or map refresh state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetMonitorName-187",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetMonitorName: raw=nil; lookup=nil. Missing native installation/display/debug/cinematic or map refresh state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetNextPetTalentLevel-188",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNextTalentLevel-189",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumArchaeologyRaces-190",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumArtifactsByRace-191",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumAutoQuestPopUps-192",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumFlyouts-193",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetNumFlyouts: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetNumGlyphs-194",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetNumGlyphs: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildNews-195",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildPerks-196",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildRewards-197",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetNumGuildRewards: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildTradeSkill-198",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetNumGuildTradeSkill: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetNumMembersInRank-199",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumQuestCurrencies-200",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetNumQuestCurrencies: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetNumQuestLogRewardCurrencies-201",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumReforgeOptions-202",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumRewardCurrencies-203",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumTalentPoints-204",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumWorldPVPAreas-205",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetPersonalRatedArenaInfo-206",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetPersonalRatedBGInfo-207",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetPlayerTradeCurrency-208",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetPlayerTradeCurrency: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetPreviewPrimaryTalentTree-209",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetPrimaryTalentTree-210",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetProfessionInfo-211",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetProfessions-212",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetPromotionRank-213",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetPromotionRank: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestCurrencyInfo-214",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestID-215",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogCriteriaSpell-216",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogIndexByID-217",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetQuestLogIndexByID: raw=function; lookup=function. Retained current cached retail consumer(s): Blizzard_FrameXML/Mainline/TutorialFrame.lua:25. Do not remove consumers or Blizzard deprecation wrappers to satisfy historical absence."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogIsAutoComplete-218",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogPortraitGiver-219",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogPortraitTurnIn-220",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetQuestLogPortraitTurnIn: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardCurrencyInfo-221",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardSkillPoints-222",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestPortraitGiver-223",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetQuestPortraitGiver: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestPortraitTurnIn-224",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetQuestPortraitTurnIn: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetRatedBattleGroundInfo-225",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetRatedBattleGroundInfo: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetReforgeItemInfo-226",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetReforgeItemStats-227",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetReforgeOptionInfo-228",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetRewardNumSkillUps-229",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetRewardNumSkillUps: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetRewardSkillLineID-230",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetRewardSkillLineID: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetRewardSkillPoints-231",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSavedInstanceChatLink-232",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetSavedInstanceChatLink: raw=nil; lookup=nil. Missing legacy argument/return and state-transition contract contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetSavedInstanceEncounterInfo-233",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetSavedInstanceEncounterInfo: raw=nil; lookup=nil. Missing legacy argument/return and state-transition contract contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetSelectedArtifactInfo-234",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSelectedGlyphSpellIndex-235",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetSelectedGlyphSpellIndex: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetShapeshiftFormID-236",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSourceReforgeStats-237",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellAvailableLevel-238",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellBookItemInfo-239",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetSpellBookItemInfo: raw=function; lookup=function. Retained current cached retail consumer(s): Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:270; Blizzard_ProfessionsBook/Blizzard_ProfessionsBook.lua:313; Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:92. Do not remove consumers or Blizzard deprecation wrappers to satisfy historical absence."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellBookItemName-240",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellBookItemTexture-241",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetSpellBookItemTexture: raw=function; lookup=function. Retained current cached retail consumer(s): Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:412; Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:96; Blizzard_FrameXMLBase/Mainline/IconDataProviderOverrides.lua:11. Do not remove consumers or Blizzard deprecation wrappers to satisfy historical absence."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellDescription-242",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellHitModifier-243",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSuperTrackedQuestID-244",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTalentTreeEarlySpells-245",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTalentTreeMasterySpells-246",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTalentTreeRoles-247",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTargetTradeCurrency-248",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetTargetTradeCurrency: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetToolTipInfo-249",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetTradeSkillSubClassFilteredSlots-250",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetTradeSkillSubClassFilteredSlots: raw=nil; lookup=nil. Missing legacy argument/return and state-transition contract contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetTradeSkillTexture-251",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetVideoOptions-252",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetWarGameQueueStatus-253",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GetWarGameQueueStatus: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GetWorldPVPAreaInfo-254",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GuildControlGetAllowedShifts-255",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GuildControlShiftRankDown-256",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GuildControlShiftRankUp-257",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GuildNewsSetSticky-258",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "GuildNewsSetSticky: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-GuildNewsSort-259",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GuildUIEnabled-260",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-InGuildParty-261",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "InGuildParty: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-InitiateRolePoll-262",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "InitiateRolePoll: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-IsAchievementEligible-263",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "IsAchievementEligible: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-IsArtifactCompletionHistoryAvailable-264",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsCemeterySelectionAvailable-265",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "IsCemeterySelectionAvailable: raw=nil; lookup=nil. Missing cemetery availability/preference or travel validation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-IsDualWielding-266",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "IsDualWielding: raw=nil; lookup=nil. Missing class transformation or dual-wield eligibility contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-IsGMClient-267",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsGlyphFlagSet-268",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "IsGlyphFlagSet: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-IsInActiveWorldPVP-269",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsInAuthenticatedRank-270",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "IsInAuthenticatedRank: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-IsRatedBattleground-271",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsSelectedSpellBookItem-272",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsSpellOverlayed-273",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsTradeSkillGuild-274",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "IsTradeSkillGuild: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ItemAddedToArtifact-275",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-JoinArena-276",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "JoinArena: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-JoinRatedBattlefield-277",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "JoinRatedBattlefield: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-LootSlotIsCurrency-278",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-MouseOverrideCinematicDisable-279",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "MouseOverrideCinematicDisable: raw=nil; lookup=nil. Missing native installation/display/debug/cinematic or map refresh state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-OldAbandonQuest-280",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "OldAbandonQuest: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-PickupCurrency-281",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-PickupSpellBookItem-282",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-PlaceRaidMarker-283",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "PlaceRaidMarker: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-PlaySoundKitID-284",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "PlaySoundKitID: raw=nil; lookup=nil. Missing legacy argument/return and state-transition contract contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-PlayerHasHearthstone-285",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "PlayerHasHearthstone: raw=function; lookup=function. Retained current cached retail consumer(s): Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua:431. Do not remove consumers or Blizzard deprecation wrappers to satisfy historical absence."
+    },
+    {
+      "source_id": "wt-global-api-PortGraveyard-286",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "PortGraveyard: raw=nil; lookup=nil. Missing cemetery availability/preference or travel validation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-QueryGuildMembersForRecipe-287",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-QueryGuildNews-288",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-QueryGuildRecipes-289",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-QueryGuildXP-290",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-QuestGetAutoLaunched-291",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "QuestGetAutoLaunched: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-QuestIsFromAreaTrigger-292",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "QuestIsFromAreaTrigger: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-QuestLogShouldShowPortrait-293",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "QuestLogShouldShowPortrait: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ReforgeItem-294",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RefreshWorldMap-295",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "RefreshWorldMap: raw=nil; lookup=nil. Missing native installation/display/debug/cinematic or map refresh state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-RemoveAutoQuestPopUp-296",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "RemoveAutoQuestPopUp: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-RemoveItemFromArtifact-297",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RequestArtifactCompletionHistory-298",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildPartyState-299",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildRewards-300",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RequestPVPOptionsEnabled-301",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RequestRatedArenaInfo-302",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-RequestRatedBattlegroundInfo-303",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ResistancePercent-304",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ResistancePercent: raw=nil; lookup=nil. Missing resistance formula and level-dependent mitigation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SearchGuildRecipes-305",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetAutoDeclineGuildInvites-306",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetAutoDeclineGuildInvites: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetCVarBitfield-307",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetCVarBitfield: raw=function; lookup=function. Retained current cached retail consumer(s): Blizzard_SharedXMLGame/DressUpModelFrameMixin.lua:67; Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua:627; Blizzard_QuickJoin/QuickJoin.lua:74. Do not remove consumers or Blizzard deprecation wrappers to satisfy historical absence."
+    },
+    {
+      "source_id": "wt-global-api-SetCemeteryPreference-308",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetCemeteryPreference: raw=nil; lookup=nil. Missing cemetery availability/preference or travel validation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetDefaultVideoOptions-309",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetFocusedAchievement-310",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetGlyphFilter-311",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetGlyphFilter: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetGlyphNameFilter-312",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetGlyphNameFilter: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetGuildBankTabItemWithdraw-313",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetGuildBankTabItemWithdraw: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetGuildBankWithdrawGoldLimit-314",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetGuildBankWithdrawGoldLimit: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetGuildNewsFilter-315",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetGuildNewsFilter: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetGuildTradeSkillCategoryFilter-316",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetGuildTradeSkillCategoryFilter: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetGuildTradeSkillItemNameFilter-317",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetGuildTradeSkillItemNameFilter: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetPetSlot-318",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetPreviewPrimaryTalentTree-319",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetPrimaryTalentTree-320",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetRaidTargetProtected-321",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetReforgeFromCursorItem-322",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetSelectedArtifact-323",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetSpellbookPetAction-324",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SetSpellbookPetAction: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SetSuperTrackedQuestID-325",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetTradeCurrency-326",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ShowQuestComplete-327",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ShowQuestComplete: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ShowQuestOffer-328",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ShowQuestOffer: raw=nil; lookup=nil. Missing quest/currency/portrait/auto-launch state and transition contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-SocketItemToArtifact-329",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SolveArtifact-330",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SortGuildTradeSkill-331",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "SortGuildTradeSkill: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-StartUnratedArena-332",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-StartWarGame-333",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "StartWarGame: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ToggleAnimKitDisplay-334",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ToggleGlyphFilter-335",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ToggleGlyphFilter: raw=nil; lookup=nil. Missing historical glyph/talent/spellbook selection or lifecycle contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-Transform-336",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Transform: raw=nil; lookup=nil. Missing class transformation or dual-wield eligibility contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-UnitAlternatePowerInfo-337",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitAlternatePowerTextureInfo-338",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitAttackerListCount-339",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UnitAttackerListCount: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-UnitAttackerListInfo-340",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UnitAttackerListInfo: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-UnitGetAvailableRoles-341",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitGetGuildLevel-342",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitGetGuildXP-343",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitGetIncomingHeals-344",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitHasVehiclePlayerFrameUI-345",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitInPhase-346",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitIsQuestBoss-347",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitSetRole-348",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "UnitSetRole: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-ViewGuildRecipes-349",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ViewGuildRecipes: raw=nil; lookup=nil. Missing historical guild rank/recipe/news/reward or eligibility state contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-global-api-WarGameRespond-350",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "WarGameRespond: raw=nil; lookup=nil. Missing PvP queue, roster role, attacker list or raid-marker mutation contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+    },
+    {
+      "source_id": "wt-events-END_REFUND-354",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-HONOR_CURRENCY_UPDATE-355",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-INSPECT_TALENT_READY-356",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-KNOWN_CURRENCY_TYPES_UPDATE-357",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_ENERGY-358",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_FOCUS-359",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_HAPPINESS-360",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXENERGY-361",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXFOCUS-362",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXHAPPINESS-363",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXMANA-364",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXRAGE-365",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXRUNIC_POWER-366",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_RAGE-367",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_RUNIC_POWER-368",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ARCHAEOLOGY_CLOSED-369",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ARCHAEOLOGY_TOGGLE-370",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ARTIFACT_COMPLETE-371",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ARTIFACT_COMPLETE: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"ARTIFACT_COMPLETE\"; registered=false. Historical event is not in current event catalog; no producer/payload/lifecycle contract supplied by inventory-only source. No fabricated event registration or emission."
+    },
+    {
+      "source_id": "wt-events-ARTIFACT_DIG_SITE_UPDATED-372",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ARTIFACT_DIG_SITE_UPDATED: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"ARTIFACT_DIG_SITE_UPDATED\"; registered=false. Historical event is not in current event catalog; no producer/payload/lifecycle contract supplied by inventory-only source. No fabricated event registration or emission."
+    },
+    {
+      "source_id": "wt-events-ARTIFACT_HISTORY_READY-373",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "ARTIFACT_HISTORY_READY: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"ARTIFACT_HISTORY_READY\"; registered=false. Historical event is not in current event catalog; no producer/payload/lifecycle contract supplied by inventory-only source. No fabricated event registration or emission."
+    },
+    {
+      "source_id": "wt-events-ARTIFACT_UPDATE-374",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_QUEUE_TIMEOUT-375",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-CALENDAR_UPDATE_GUILD_EVENTS-376",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_COMBAT_GUILD_XP_GAIN-377",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CHAT_MSG_COMBAT_GUILD_XP_GAIN: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_COMBAT_GUILD_XP_GAIN\"; registered=false. Historical event is not in current event catalog; no producer/payload/lifecycle contract supplied by inventory-only source. No fabricated event registration or emission."
+    },
+    {
+      "source_id": "wt-events-CHAT_SERVER_DISCONNECTED-378",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-CHAT_SERVER_RECONNECTED-379",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-DISABLE_DECLINE_GUILD_INVITE-380",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ECLIPSE_DIRECTION_CHANGE-381",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ENABLE_DECLINE_GUILD_INVITE-382",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ENTERED_DIFFERENT_INSTANCE_FROM_PARTY-383",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-FORGE_MASTER_CLOSED-384",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-FORGE_MASTER_ITEM_CHANGED-385",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-FORGE_MASTER_OPENED-386",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-FORGE_MASTER_SET_ITEM-387",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_NEWS_UPDATE-388",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_PARTY_STATE_UPDATED-389",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_PERK_UPDATE-390",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_RANKS_UPDATE-391",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_RECIPE_KNOWN_BY_MEMBERS-392",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_REWARDS_LIST-393",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_TRADESKILL_UPDATE-394",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-GUILD_XP_UPDATE-395",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-INSPECT_READY-396",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_LOCK_WARNING-397",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-MASTERY_UPDATE-398",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-PLAYER_AVG_ITEM_LEVEL_READY-399",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-PLAYER_TRADE_CURRENCY-400",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-PREVIEW_TALENT_PRIMARY_TREE_CHANGED-401",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-PVP_RATED_STATS_UPDATE-402",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-PVP_TYPES_ENABLED-403",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-QUEST_AUTOCOMPLETE-404",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-RECEIVED_ACHIEVEMENT_MEMBER_LIST-405",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-REQUEST_CEMETERY_LIST_RESPONSE-406",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ROLE_CHANGED_INFORM-407",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-ROLE_POLL_BEGIN-408",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-SPELL_ACTIVATION_OVERLAY_GLOW_HIDE-409",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-SPELL_ACTIVATION_OVERLAY_GLOW_SHOW-410",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-SPELL_ACTIVATION_OVERLAY_HIDE-411",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-SPELL_ACTIVATION_OVERLAY_SHOW-412",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-SPELL_FLYOUT_UPDATE-413",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-STREAMING_ICON-414",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-TRADE_CURRENCY_CHANGED-415",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-TRADE_SKILL_NAME_UPDATE-416",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UI_SCALE_CHANGED-417",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_CONNECTION-418",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_GUILD_LEVEL-419",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_HEAL_PREDICTION-420",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_MAXPOWER-421",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_PHASE-422",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_POWER-423",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_POWER_BAR_HIDE-424",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_POWER_BAR_SHOW-425",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_TARGETABLE_CHANGED-426",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-WARGAME_REQUESTED-427",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "wt-events-WEIGHTED_SPELL_UPDATED-428",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current retail publication/absence observed at 6c041621f after pinned retail successors only; no historical signature/output/security/gameplay or pre-existing stub behavior credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation, editorial heading or generated build 4.0.1.13066 context; no runtime capability credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation, editorial heading or generated build 4.0.1.13066 context; no runtime capability credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Implicit this/event/argN removal: dispatch environment, legacy XML script and callback compatibility require native historical fixtures. Publication sweep does not test automatic global injection."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy per-power events no longer fire; replacement UNIT_POWER/UNIT_MAXPOWER identities are probed separately, not producer emission, payload/order or non-emission. Native historical event trace required."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Numeric-item-only historical GetItemCooldown input. Current deprecated global aliases C_Item.GetItemCooldown; c_item_get_item_cooldown ignores itemInfo and returns constant cooldown values. No item cooldown backing model; historical assertion is not a safe modern C_Item contract. Do not impose unsupported rejection semantics on current retail."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Protected player-buff/temporary weapon-enchant cancellation: requires secure/insecure execution, combat-state and native error/side-effect matrix. No security enforcement credit from publication; native contract gap."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation, editorial heading or generated build 4.0.1.13066 context; no runtime capability credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation, editorial heading or generated build 4.0.1.13066 context; no runtime capability credit."
+    },
+    {
+      "source_id": "signature-GetItemCooldown-6",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 6,
+      "note": "Numeric-item-only historical GetItemCooldown input. Current deprecated global aliases C_Item.GetItemCooldown; c_item_get_item_cooldown ignores itemInfo and returns constant cooldown values. No item cooldown backing model; historical assertion is not a safe modern C_Item contract. Do not impose unsupported rejection semantics on current retail."
+    }
+  ]
+}

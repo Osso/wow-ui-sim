@@ -1,0 +1,252 @@
+{
+  "pending_not_available": [
+    "4.1.0",
+    "4.2.0",
+    "4.3.0",
+    "4.3.4"
+  ],
+  "retail_source_intersections": [
+    {
+      "patch": "5.0.4",
+      "symbols": [
+        "BNTokenCombineGivenAndSurname",
+        "GetBonusBarOverrideBarType",
+        "GetDefaultRaidDifficulty",
+        "GetMajorTalentTreeBonuses",
+        "GetMinorTalentTreeBonuses",
+        "GetNextPetTalentLevel",
+        "GetNextTalentLevel",
+        "GetNumTalentPoints",
+        "GetPreviewPrimaryTalentTree",
+        "GetPrimaryTalentTree",
+        "GetTalentTreeEarlySpells",
+        "GetTalentTreeMasterySpells",
+        "GetTalentTreeRoles",
+        "LootSlotIsCurrency",
+        "SetPreviewPrimaryTalentTree",
+        "SetPrimaryTalentTree"
+      ]
+    },
+    {
+      "patch": "5.2.0",
+      "symbols": [
+        "GetCurrentRaidDifficulty"
+      ]
+    },
+    {
+      "patch": "5.4.0",
+      "symbols": [
+        "GetPersonalRatedArenaInfo",
+        "GetPersonalRatedBGInfo",
+        "GuildUIEnabled",
+        "RequestRatedArenaInfo",
+        "RequestRatedBattlegroundInfo",
+        "StartWarGame"
+      ]
+    },
+    {
+      "patch": "5.4.2",
+      "symbols": [
+        "StartUnratedArena"
+      ]
+    },
+    {
+      "patch": "6.0.2",
+      "symbols": [
+        "CloseReforge",
+        "CreateArenaTeam",
+        "FORGE_MASTER_CLOSED",
+        "FORGE_MASTER_ITEM_CHANGED",
+        "FORGE_MASTER_OPENED",
+        "FORGE_MASTER_SET_ITEM",
+        "GetDestinationReforgeStats",
+        "GetGlyphInfo",
+        "GetGuildLevel",
+        "GetGuildRosterContribution",
+        "GetGuildRosterLargestContribution",
+        "GetNumReforgeOptions",
+        "GetReforgeItemInfo",
+        "GetReforgeItemStats",
+        "GetReforgeOptionInfo",
+        "GetSourceReforgeStats",
+        "PLAYER_AVG_ITEM_LEVEL_READY",
+        "QueryGuildXP",
+        "ReforgeItem",
+        "SetReforgeFromCursorItem",
+        "UnitGetGuildLevel",
+        "UnitGetGuildXP"
+      ]
+    },
+    {
+      "patch": "6.2.4",
+      "symbols": [
+        "BNGetMaxNumConversations"
+      ]
+    },
+    {
+      "patch": "7.0.3",
+      "symbols": [
+        "CastGlyph",
+        "GetGlyphInfo"
+      ]
+    },
+    {
+      "patch": "8.0.1",
+      "symbols": [
+        "GUILD_PERK_UPDATE",
+        "GUILD_XP_UPDATE",
+        "PREVIEW_TALENT_PRIMARY_TREE_CHANGED",
+        "SearchGuildRecipes",
+        "UNIT_POWER",
+        "WEIGHTED_SPELL_UPDATED"
+      ]
+    },
+    {
+      "patch": "8.1.5",
+      "symbols": [
+        "GetCVarBitfield",
+        "SetCVarBitfield"
+      ]
+    },
+    {
+      "patch": "8.2.0",
+      "symbols": [
+        "GetGuildNewsInfo",
+        "IsRatedBattleground"
+      ]
+    },
+    {
+      "patch": "8.2.5",
+      "symbols": [
+        "ConvertToParty"
+      ]
+    },
+    {
+      "patch": "8.3.0",
+      "symbols": [
+        "UnitAlternatePowerInfo",
+        "UnitAlternatePowerTextureInfo"
+      ]
+    },
+    {
+      "patch": "9.0.1",
+      "symbols": [
+        "AbandonQuest",
+        "GetCurrencyInfo",
+        "GetDistanceSqToQuest",
+        "GetQuestLogIndexByID",
+        "GetQuestLogIsAutoComplete",
+        "GetSuperTrackedQuestID",
+        "PickupCurrency",
+        "SetSuperTrackedQuestID",
+        "UnitInPhase"
+      ]
+    },
+    {
+      "patch": "9.0.5",
+      "symbols": [
+        "QueryGuildMembersForRecipe"
+      ]
+    },
+    {
+      "patch": "9.1.0",
+      "symbols": [
+        "GetCurrentLevelSpells",
+        "GetQuestLogPortraitGiver"
+      ]
+    },
+    {
+      "patch": "10.0.0",
+      "symbols": [
+        "GetDefaultVideoOptions",
+        "GetToolTipInfo",
+        "GetVideoOptions",
+        "PVP_TYPES_ENABLED",
+        "SetDefaultVideoOptions"
+      ]
+    },
+    {
+      "patch": "10.0.2",
+      "symbols": [
+        "GetContainerItemEquipmentSetInfo",
+        "GetContainerItemPurchaseCurrency",
+        "PlayerHasHearthstone"
+      ]
+    },
+    {
+      "patch": "10.1.5",
+      "symbols": [
+        "RequestArtifactCompletionHistory"
+      ]
+    },
+    {
+      "patch": "10.2.6",
+      "symbols": [
+        "GetItemCooldown",
+        "ToggleAnimKitDisplay"
+      ]
+    },
+    {
+      "patch": "10.2.7",
+      "symbols": [
+        "ECLIPSE_DIRECTION_CHANGE",
+        "GetNumWorldPVPAreas",
+        "GetWorldPVPAreaInfo",
+        "SetPetSlot"
+      ]
+    },
+    {
+      "patch": "11.0.0",
+      "symbols": [
+        "GetGuildExpirationTime",
+        "GetGuildFactionInfo",
+        "GetInspectGuildInfo",
+        "GetNumQuestLogRewardCurrencies",
+        "GetNumRewardCurrencies",
+        "GetQuestCurrencyInfo",
+        "GetQuestLogRewardCurrencyInfo",
+        "GetSpellAvailableLevel",
+        "GetSpellBookItemInfo",
+        "GetSpellBookItemName",
+        "GetSpellBookItemTexture",
+        "GetSpellDescription",
+        "PVP_TYPES_ENABLED",
+        "PickupSpellBookItem"
+      ]
+    },
+    {
+      "patch": "11.0.5",
+      "symbols": [
+        "SPELL_ACTIVATION_OVERLAY_SHOW"
+      ]
+    },
+    {
+      "patch": "11.2.0",
+      "symbols": [
+        "IsSpellOverlayed",
+        "UNIT_GUILD_LEVEL"
+      ]
+    },
+    {
+      "patch": "12.0.0",
+      "symbols": [
+        "SetRaidTargetProtected"
+      ]
+    },
+    {
+      "patch": "12.0.5",
+      "symbols": [
+        "GetHitModifier",
+        "GetMastery",
+        "GetSpellHitModifier"
+      ]
+    },
+    {
+      "patch": "12.1.0",
+      "symbols": [
+        "getglobal",
+        "setglobal"
+      ]
+    }
+  ]
+}

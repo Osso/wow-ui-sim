@@ -305,6 +305,10 @@ fn stub_action_bar_toggles(state: &mut LuaState) -> rilua::LuaResult<u32> {
 
 pub(super) fn register_global_stubs(state: &mut LuaState) {
     for &name in GLOBAL_NIL_STUBS {
+        #[cfg(feature = "retail-12-0-0")]
+        if crate::c_api::RETIRED_4_0_1_GLOBALS.contains(&name) {
+            continue;
+        }
         if is_nil_global(state, name) {
             set_global_fn(state, name, stub_nil);
         }

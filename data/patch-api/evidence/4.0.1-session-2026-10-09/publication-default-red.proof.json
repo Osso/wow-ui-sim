@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_0_1_publication_sweep",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "environment": {
+    "P401_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/publication-default-red-results.json"
+  },
+  "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+  "scope": "own retail publication sweep; default features",
+  "exit": 1,
+  "log": "publication-default-red.log",
+  "log_sha256": "6d44e2f06481dcfdf0d693452312be0eab0c076a448f28b712539952ed1b8644"
+}

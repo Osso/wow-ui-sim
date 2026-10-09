@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_cataclysm_register.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+  "scope": "targeted parser/extractor fixtures only",
+  "exit": 0,
+  "log": "parser-green.log",
+  "log_sha256": "3a172c55de7c4fc985c2eec12502fa584b176585174d269e7bf8844dda63959f"
+}

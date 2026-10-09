@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+  "scope": "targeted parser/extractor fixtures only",
+  "exit": 0,
+  "log": "extractor-regression.log",
+  "log_sha256": "128a3ed6bdd7cf4069869b4f6408ae2c52ad05a3a019225bd0c044ee9016ab76"
+}

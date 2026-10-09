@@ -312,6 +312,8 @@ mod gamepad_action_bar_constants;
 mod helpers;
 #[cfg(feature = "retail-12-0-0")]
 mod patch_retired_members;
+#[cfg(feature = "retail-12-0-0")]
+pub(crate) use patch_retired_members::RETIRED_4_0_1_GLOBALS;
 mod registration;
 
 pub(crate) use helpers::{

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_gen_patch_wikitext_register.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+  "scope": "targeted parser/extractor fixtures only",
+  "exit": 0,
+  "log": "generator-regression.log",
+  "log_sha256": "a28b033deea33864ff5fbd3d32baa763c33ea576da76ad062b2e5994b0885ecd"
+}
