@@ -26,7 +26,13 @@ Own configuration snapshot Era/Anniversary11507/manifests is not source11400/nat
 
 ## Development proof
 
-Own SOURCE RED10 missing-accounting assertion failures; portable RED3 absent-archive assertion failures retained. Page-local adapter/fixtures implemented with existing historical tools unchanged. Default generator flags[] fails at literal `: Scripts`; existing `--skip-plain-scripts-label` yields723 entries/eight matching count headers. Default extractor flags[] retains summary/navigation/attribution; own literal ledger preserves skipped inventories and unexpanded link identities. Derivation receipts/logs retained; targeted SOURCE GREEN and copied replay pending at implementation commit. Main owns integration/native/final gates; no broad/check/lint/type/coverage gate.
+Own SOURCE RED10 missing-accounting assertion failures; portable RED3 absent-archive assertion failures retained. Page-local adapter/fixtures implemented with existing historical tools unchanged. Default generator flags[] fails at literal `: Scripts`; existing `--skip-plain-scripts-label` yields723 entries/eight matching count headers. Default extractor flags[] retains summary/navigation/attribution; own literal ledger preserves skipped inventories and unexpanded link identities. Derivation receipts/logs retained. Own SOURCE GREEN10/10 at `66a5448b0`:2983 omission controls,8 fabricated-credit/history/normalization controls and two source-identity/content controls. Implementation committed before tests. Main owns integration/native/final gates; no broad/check/lint/type/coverage gate.
+
+## Copied historical SOURCE proof
+
+Original92 seals/1857298bytes created once; map SHA256 `95ba4fff0eeff9b31cec31c9fb5a912a132ab0bbcde00d3f59ecbc402f9bb797`.93-member archive215960bytes, SHA256 `3b16de6f0589170fd3cd469ade6cbc957f0ea21a1deeb4126e26148b746c68a6`, committed before portable GREEN. [Replay instructions](../../../data/patch-api/evidence/1.14.0-session-2026-10-09/REPLAY.md).
+
+Portable GREEN3/3 at `4e3739d4f`: fresh disposable copied historical validator exits0, copied SOURCE10/10 passes; default-generator failure reproduced, opt-in register and default extractor byte-identical. No Git/target/current tools/vendor/package cache or build snapshots; fresh absolute Python processes use empty PATH, copied-file-relative inputs and explicit own worktree cwd. [Detailed current receipts](../../../data/patch-api/evidence/1.14.0-session-2026-10-09/portable-controls.json) preserve each command/cwd/exit/output. Serialized inventory omission rejects at `seal: ledger.json`; invented GREEN log rejects at `seal: green.log`. Exact bytes restored, historical validator accepts afterward. All92 original seals/map unchanged; five archive/current receipt seals separate. No runtime/model/native/security/loaded-UI/integration or final acceptance credit; [portable proof](../../../data/patch-api/evidence/1.14.0-session-2026-10-09/portable-proof.json).
 
 ## Sources
 

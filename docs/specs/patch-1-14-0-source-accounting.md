@@ -4,12 +4,12 @@ Account frozen Warcraft Wiki page71995/revision710568 without turning historical
 
 ## What it must do
 
-- [ ] Verify exact legacy-2026-10-09 manifest, registry, response identity, timestamp, raw bytes and hashes before derivation.
-- [ ] Preserve every nonblank literal row, inventory occurrence/direction, header/count, PTR build caption, script label, template and link boundary.
-- [ ] Preserve malformed/underqualified widget identities literally; do not invent aliases, arguments, returns, payloads, CVar defaults or modeled coverage.
-- [ ] Keep the foreign2.5.2 synchronization claim and navigation `like` separate from pending/actual same-Era successors, none applied here.
-- [ ] Reject each omitted accounting record, fabricated coverage, source-content/identity tamper and serialized ledger/log changes.
-- [ ] Replay copied historical SOURCE and opt-in register/default extractor bytes without Git, build target, current tools or network; preserve default-generator failure and exact restoration of original sealed bytes.
+- [x] Verify exact legacy-2026-10-09 manifest, registry, response identity, timestamp, raw bytes and hashes before derivation.
+- [x] Preserve every nonblank literal row, inventory occurrence/direction, header/count, PTR build caption, script label, template and link boundary.
+- [x] Preserve malformed/underqualified widget identities literally; do not invent aliases, arguments, returns, payloads, CVar defaults or modeled coverage.
+- [x] Keep the foreign2.5.2 synchronization claim and navigation `like` separate from pending/actual same-Era successors, none applied here.
+- [x] Reject each omitted accounting record, fabricated coverage, source-content/identity tamper and serialized ledger/log changes.
+- [x] Replay copied historical SOURCE and opt-in register/default extractor bytes without Git, build target, current tools or network; preserve default-generator failure and exact restoration of original sealed bytes.
 
 ## How it works
 

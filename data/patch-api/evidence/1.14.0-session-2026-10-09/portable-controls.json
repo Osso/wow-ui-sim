@@ -1,0 +1,145 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 92,\n  \"totals\": {\n    \"physical_lines\": 781,\n    \"nonblank_rows\": 776,\n    \"inventory\": 723,\n    \"api_templates\": 719,\n    \"widget_scripts\": 4,\n    \"category_labels\": 1,\n    \"headers\": 5,\n    \"count_headers\": 8,\n    \"count_conflicts\": 0,\n    \"prose\": 1,\n    \"links\": 10,\n    \"templates\": 720,\n    \"signature_limits\": 560,\n    \"default_limits\": 163\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... ok\ntest_all_reference_and_template_boundaries (__main__.SourceAccounting.test_all_reference_and_template_boundaries) ... ok\ntest_baseline_is_not_successor_or_imported_behavior (__main__.SourceAccounting.test_baseline_is_not_successor_or_imported_behavior) ... ok\ntest_complete_totals (__main__.SourceAccounting.test_complete_totals) ... ok\ntest_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... ok\ntest_fabricated_credit_and_normalization_rejected (__main__.SourceAccounting.test_fabricated_credit_and_normalization_rejected) ... ok\ntest_headers_caption_and_navigation (__main__.SourceAccounting.test_headers_caption_and_navigation) ... ok\ntest_inventory_columns_and_literal_identities (__main__.SourceAccounting.test_inventory_columns_and_literal_identities) ... ok\ntest_no_invented_signatures_defaults_or_credit (__main__.SourceAccounting.test_no_invented_signatures_defaults_or_credit) ... ok\ntest_source_identity_and_content_rejection (__main__.SourceAccounting.test_source_identity_and_content_rejection) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.181s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/historical-tools/gen_patch_wikitext_register.py",
+        "1.14.0",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/source.wikitext",
+        "710568",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/historical-tools/gen_patch_wikitext_register.py\", line 1454, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/historical-tools/gen_patch_wikitext_register.py\", line 1326, in main\n    section_entries, section_counts = parse_section(\n                                      ~~~~~~~~~~~~~^\n        entry_section, buckets.get(section, []),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n        legacy_column_headers=args.legacy_column_headers,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        legacy_inventory_labels=args.legacy_inventory_labels)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/historical-tools/gen_patch_wikitext_register.py\", line 136, in parse_section\n    entry = make_entry(section, mode, line_no, text)\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/historical-tools/gen_patch_wikitext_register.py\", line 74, in make_entry\n    symbol, params = parse_symbol(text)\n                     ~~~~~~~~~~~~^^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/historical-tools/gen_patch_wikitext_register.py\", line 67, in parse_symbol\n    raise ValueError(f\"no symbol reference in: {text!r}\")\nValueError: no symbol reference in: ': Scripts'\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/historical-tools/gen_patch_wikitext_register.py",
+        "1.14.0",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/source.wikitext",
+        "710568",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/reproduced-register.json",
+        "--skip-plain-scripts-label"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmpmqz47rfr/audit.py",
+        "extract"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "Patch 1.14.0 API changes\n\n== Summary ==\n* TOC: 11400\n* Diffs: wow-ui-source, BlizzardInterfaceResources\n* Community patch notes: 1.14.0 Consolidated UI Changes\nThe 1.14.0 client has been synchronized to be on the same baseline as patch 2.5.2\n<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/DiffWikitext/DiffWikitext.lua -->\n\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmp4ry4b6qp/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmp4ry4b6qp/audit.py\", line 162, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmp4ry4b6qp/audit.py\", line 158, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmp4ry4b6qp/audit.py\", line 142, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmp4ry4b6qp/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 92,\n  \"totals\": {\n    \"physical_lines\": 781,\n    \"nonblank_rows\": 776,\n    \"inventory\": 723,\n    \"api_templates\": 719,\n    \"widget_scripts\": 4,\n    \"category_labels\": 1,\n    \"headers\": 5,\n    \"count_headers\": 8,\n    \"count_conflicts\": 0,\n    \"prose\": 1,\n    \"links\": 10,\n    \"templates\": 720,\n    \"signature_limits\": 560,\n    \"default_limits\": 163\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "f9c610da7c89c884b9b201740386078e7a66ba56028e37ecea6957beddb56241",
+      "all_original_seals": 92
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmplhac_0kr/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmplhac_0kr/audit.py\", line 162, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmplhac_0kr/audit.py\", line 158, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmplhac_0kr/audit.py\", line 142, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch/tmplhac_0kr/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 92,\n  \"totals\": {\n    \"physical_lines\": 781,\n    \"nonblank_rows\": 776,\n    \"inventory\": 723,\n    \"api_templates\": 719,\n    \"widget_scripts\": 4,\n    \"category_labels\": 1,\n    \"headers\": 5,\n    \"count_headers\": 8,\n    \"count_conflicts\": 0,\n    \"prose\": 1,\n    \"links\": 10,\n    \"templates\": 720,\n    \"signature_limits\": 560,\n    \"default_limits\": 163\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "fc3886c23fc7447d26a63167cbdb8bef2fd9c48425e226ed3292bb3142a3030d",
+      "all_original_seals": 92
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

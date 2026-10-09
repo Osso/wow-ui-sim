@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE accounting
 
-[Audit](investigations/patch-1-14-0-api-audit.md): exact frozen identity verified before derivation; own SOURCE RED10/portable RED3 retained.723 inventory occurrences and every row/header/prose/template/link boundary accounted without invented defaults/aliases/models. Implementation committed before GREEN; main owns integration/native/final gates.
+[Audit](investigations/patch-1-14-0-api-audit.md): exact frozen identity verified before derivation; own SOURCE RED10/portable RED3 retained.723 inventory occurrences and every row/header/prose/template/link boundary accounted without invented defaults/aliases/models. SOURCE GREEN10/10 at66a5448b0:2983 omissions; portable GREEN3/3 at4e3739d4f: copied SOURCE10/validator, opt-in register/default extractor bytes and both serialized ledger/log rejection/restoration.92 original seals/map unchanged; five separate current receipt seals/93-member archive. Implementation committed before GREEN; zero runtime/model/native credit; main owns integration/native/final gates.
 
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE accounting
 

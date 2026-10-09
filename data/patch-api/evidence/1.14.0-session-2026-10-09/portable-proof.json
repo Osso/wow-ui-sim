@@ -1,0 +1,30 @@
+{
+  "stage": "portable SOURCE GREEN",
+  "revision": "4e3739d4f",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/replay-archive.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-controls.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+  "exit_code": 0,
+  "tests": 3,
+  "copied_source_tests": 10,
+  "original_seals": 92,
+  "original_map_sha256": "95ba4fff0eeff9b31cec31c9fb5a912a132ab0bbcde00d3f59ecbc402f9bb797",
+  "original_map_unchanged": true,
+  "archive_sha256": "3b16de6f0589170fd3cd469ade6cbc957f0ea21a1deeb4126e26148b746c68a6",
+  "result": "copied fresh historical validator/SOURCE/opt-in register/default extractor replay and both serialized ledger/log seal rejections/exact restorations",
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "main_gates": "unperformed"
+}

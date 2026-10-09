@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE audit
 
-[Audit](investigations/patch-1-14-0-api-audit.md): frozen71995/710568;776 literal rows/723 inventory,560 unspecified signature records,163 unknown CVar defaults,8 matching count headers,720 unexpanded templates/10 links. Foreign2.5.2 baseline claim separate from unapplied same-Era1.14.1..1.15.9. Own SOURCE/portable RED retained; GREEN pending. Zero runtime/model/native credit; shared tools unchanged; main owns integration/gates.
+[Audit](investigations/patch-1-14-0-api-audit.md): frozen71995/710568;776 literal rows/723 inventory,560 unspecified signature records,163 unknown CVar defaults,8 matching count headers,720 unexpanded templates/10 links. Foreign2.5.2 baseline claim separate from unapplied same-Era1.14.1..1.15.9. Own SOURCE RED10/GREEN10 at66a5448b0:2983 omissions; portable RED3/GREEN3 at4e3739d4f: copied SOURCE10, byte replay, serialized ledger/log rejection/restoration.92 original +5 separate receipt seals;93-member215960byte archive. Zero runtime/model/native credit; shared tools unchanged; main owns integration/gates.
 
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE audit
 
