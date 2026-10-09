@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "a6d38f864763f36b0a608bb4dcfa9012b59c821a",
+    "HEAD",
+    "--",
+    "src",
+    "tests",
+    "patch-tests",
+    "Cargo.toml",
+    "Cargo.lock"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env_overrides": {},
+  "revision": "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+  "start": "2026-10-09T16:11:12.027887+00:00",
+  "end": "2026-10-09T16:11:12.032361+00:00",
+  "exit_code": 0
+}

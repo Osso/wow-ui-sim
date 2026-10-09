@@ -1,0 +1,626 @@
+{
+  "1.14.1": {
+    "seals.json": {
+      "count": 160,
+      "expected": 160,
+      "mismatches": [],
+      "map_sha256": "9918f7611435b9f3a5711e8b4259b333e25627e3f1fb65c16b1b024f9d0e5a78"
+    },
+    "receipt-seals.json": {
+      "count": 10,
+      "expected": 10,
+      "mismatches": [],
+      "map_sha256": "1ce5e52c97aa0dc311f97e017380547702e024e20159df451528c09912d3039f"
+    },
+    "counts": {
+      "source_rows": 114,
+      "inventory": 59
+    },
+    "frozen_successors": [
+      {
+        "patch": "1.14.2",
+        "state": "queued-pending-main-integration",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "source": {
+          "title": "Patch 1.14.2/API changes",
+          "version": "1.14.2",
+          "pageid": 236101,
+          "revid": 2290155,
+          "timestamp": "2022-06-05T00:14:08Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2290155&format=json",
+          "retrieved": "2026-10-09T08:51:36.399009+00:00",
+          "response_sha256": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+          "wikitext_sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+          "wikitext_bytes": 2460,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.14.3",
+        "state": "queued-pending-main-integration",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "source": {
+          "title": "Patch 1.14.3/API changes",
+          "version": "1.14.3",
+          "pageid": 480026,
+          "revid": 4615755,
+          "timestamp": "2023-07-10T10:27:33Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4615755&format=json",
+          "retrieved": "2026-10-09T08:51:36.398924+00:00",
+          "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+          "wikitext_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+          "wikitext_bytes": 23291,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.14.4",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226",
+        "source": {
+          "title": "Patch 1.14.4/API changes",
+          "version": "1.14.4",
+          "pageid": 267043,
+          "revid": 2581777,
+          "timestamp": "2023-07-19T19:32:56Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+          "retrieved": "2026-10-09T08:51:36.398825+00:00",
+          "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+          "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+          "wikitext_bytes": 775,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.0",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "ac2d227ce84c5e1ec013808236037b28a2ce1070529159620f31c7668ff3c6eb",
+        "source": {
+          "title": "Patch 1.15.0/API changes",
+          "version": "1.15.0",
+          "pageid": 564510,
+          "revid": 5950848,
+          "timestamp": "2024-01-30T19:36:35Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+          "retrieved": "2026-10-09T08:51:36.398773+00:00",
+          "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+          "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+          "wikitext_bytes": 915,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.1",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "ad60adbab94fbb7e35d7d44c506d8e6d6f66b0398df3bda02cebe2f7a26c73e1",
+        "source": {
+          "title": "Patch 1.15.1/API changes",
+          "version": "1.15.1",
+          "pageid": 577687,
+          "revid": 5998991,
+          "timestamp": "2024-04-03T08:43:49Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+          "retrieved": "2026-10-09T08:51:36.398724+00:00",
+          "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+          "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+          "wikitext_bytes": 835,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.2",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417",
+        "source": {
+          "title": "Patch 1.15.2/API changes",
+          "version": "1.15.2",
+          "pageid": 583919,
+          "revid": 6061806,
+          "timestamp": "2024-06-12T18:59:26Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+          "retrieved": "2026-10-09T08:51:36.398676+00:00",
+          "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+          "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+          "wikitext_bytes": 391,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.3",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0",
+        "source": {
+          "title": "Patch 1.15.3/API changes",
+          "version": "1.15.3",
+          "pageid": 593663,
+          "revid": 6114194,
+          "timestamp": "2024-08-30T01:06:01Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+          "retrieved": "2026-10-09T08:51:36.398616+00:00",
+          "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+          "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+          "wikitext_bytes": 452,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.4",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "f3aa9280a2c56d358756109b52cdc0a817dd0a94eedf904d8126a6b76df71b6d",
+        "source": {
+          "title": "Patch 1.15.4/API changes",
+          "version": "1.15.4",
+          "pageid": 600355,
+          "revid": 6172581,
+          "timestamp": "2024-11-13T21:59:45Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+          "retrieved": "2026-10-09T08:51:36.398568+00:00",
+          "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+          "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+          "wikitext_bytes": 439,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.5",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "41e335e655966d9352b6a28a97b453be64ad533010f5a4906fd7817c5966ff62",
+        "source": {
+          "title": "Patch 1.15.5/API changes",
+          "version": "1.15.5",
+          "pageid": 610284,
+          "revid": 6235411,
+          "timestamp": "2025-02-09T17:32:34Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+          "retrieved": "2026-10-09T08:51:36.398521+00:00",
+          "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+          "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.6",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "70cdfac19ed015b0433bb313451b8dd8254c4a7ab1c9e7574badf245546f5577",
+        "source": {
+          "title": "Patch 1.15.6/API changes",
+          "version": "1.15.6",
+          "pageid": 619994,
+          "revid": 6281951,
+          "timestamp": "2025-04-04T10:14:39Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+          "retrieved": "2026-10-09T08:51:36.398475+00:00",
+          "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+          "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.7",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+        "source": {
+          "title": "Patch 1.15.7/API changes",
+          "version": "1.15.7",
+          "pageid": 626071,
+          "revid": 6778069,
+          "timestamp": "2026-07-22T05:34:20Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+          "retrieved": "2026-10-09T08:51:36.398418+00:00",
+          "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+          "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.8",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+        "source": {
+          "title": "Patch 1.15.8/API changes",
+          "version": "1.15.8",
+          "pageid": 686952,
+          "revid": 6778071,
+          "timestamp": "2026-07-22T05:34:51Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+          "retrieved": "2026-10-09T08:51:36.398359+00:00",
+          "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+          "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+          "wikitext_bytes": 279,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.9",
+        "state": "actual-canonical-input-not-applied",
+        "applied": false,
+        "native_proof": false,
+        "history": "same-Era-only",
+        "canonical_ledger_sha256": "fe98aaabb773e2bf486747dd0aa2c01bcd25164f12a2319e5503f569c91f1138",
+        "source": {
+          "title": "Patch 1.15.9/API changes",
+          "version": "1.15.9",
+          "pageid": 685352,
+          "revid": 6780591,
+          "timestamp": "2026-07-24T15:29:35Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+          "retrieved": "2026-10-09T08:51:36.398273+00:00",
+          "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+          "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+          "wikitext_bytes": 4085,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+        }
+      }
+    ],
+    "archive_members": 161,
+    "script_copied_unchanged": true,
+    "source_cwd_exists": true
+  },
+  "1.14.0": {
+    "seals.json": {
+      "count": 92,
+      "expected": 92,
+      "mismatches": [],
+      "map_sha256": "95ba4fff0eeff9b31cec31c9fb5a912a132ab0bbcde00d3f59ecbc402f9bb797"
+    },
+    "receipt-seals.json": {
+      "count": 5,
+      "expected": 5,
+      "mismatches": [],
+      "map_sha256": "ab69012cc4db84b4ebb11cbc2349873cf1fa9978e0e29d70ead5bc4df796d375"
+    },
+    "counts": {
+      "source_rows": 776,
+      "inventory": 723
+    },
+    "frozen_successors": [
+      {
+        "patch": "1.14.1",
+        "state": "in-flight-pending-main-integration",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.14.1/API changes",
+          "version": "1.14.1",
+          "pageid": 102588,
+          "revid": 1010974,
+          "timestamp": "2022-03-02T05:21:47Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1010974&format=json",
+          "retrieved": "2026-10-09T08:51:36.399083+00:00",
+          "response_sha256": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+          "wikitext_sha256": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+          "wikitext_bytes": 6207,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.14.2",
+        "state": "queued-pending-main-integration",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.14.2/API changes",
+          "version": "1.14.2",
+          "pageid": 236101,
+          "revid": 2290155,
+          "timestamp": "2022-06-05T00:14:08Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2290155&format=json",
+          "retrieved": "2026-10-09T08:51:36.399009+00:00",
+          "response_sha256": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+          "wikitext_sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+          "wikitext_bytes": 2460,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.14.3",
+        "state": "queued-pending-main-integration",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.14.3/API changes",
+          "version": "1.14.3",
+          "pageid": 480026,
+          "revid": 4615755,
+          "timestamp": "2023-07-10T10:27:33Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4615755&format=json",
+          "retrieved": "2026-10-09T08:51:36.398924+00:00",
+          "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+          "wikitext_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+          "wikitext_bytes": 23291,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.14.4",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.14.4/API changes",
+          "version": "1.14.4",
+          "pageid": 267043,
+          "revid": 2581777,
+          "timestamp": "2023-07-19T19:32:56Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+          "retrieved": "2026-10-09T08:51:36.398825+00:00",
+          "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+          "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+          "wikitext_bytes": 775,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.0",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.0/API changes",
+          "version": "1.15.0",
+          "pageid": 564510,
+          "revid": 5950848,
+          "timestamp": "2024-01-30T19:36:35Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+          "retrieved": "2026-10-09T08:51:36.398773+00:00",
+          "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+          "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+          "wikitext_bytes": 915,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.1",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.1/API changes",
+          "version": "1.15.1",
+          "pageid": 577687,
+          "revid": 5998991,
+          "timestamp": "2024-04-03T08:43:49Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+          "retrieved": "2026-10-09T08:51:36.398724+00:00",
+          "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+          "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+          "wikitext_bytes": 835,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.2",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.2/API changes",
+          "version": "1.15.2",
+          "pageid": 583919,
+          "revid": 6061806,
+          "timestamp": "2024-06-12T18:59:26Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+          "retrieved": "2026-10-09T08:51:36.398676+00:00",
+          "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+          "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+          "wikitext_bytes": 391,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.3",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.3/API changes",
+          "version": "1.15.3",
+          "pageid": 593663,
+          "revid": 6114194,
+          "timestamp": "2024-08-30T01:06:01Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+          "retrieved": "2026-10-09T08:51:36.398616+00:00",
+          "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+          "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+          "wikitext_bytes": 452,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.4",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.4/API changes",
+          "version": "1.15.4",
+          "pageid": 600355,
+          "revid": 6172581,
+          "timestamp": "2024-11-13T21:59:45Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+          "retrieved": "2026-10-09T08:51:36.398568+00:00",
+          "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+          "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+          "wikitext_bytes": 439,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.5",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.5/API changes",
+          "version": "1.15.5",
+          "pageid": 610284,
+          "revid": 6235411,
+          "timestamp": "2025-02-09T17:32:34Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+          "retrieved": "2026-10-09T08:51:36.398521+00:00",
+          "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+          "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.6",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.6/API changes",
+          "version": "1.15.6",
+          "pageid": 619994,
+          "revid": 6281951,
+          "timestamp": "2025-04-04T10:14:39Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+          "retrieved": "2026-10-09T08:51:36.398475+00:00",
+          "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+          "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.7",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.7/API changes",
+          "version": "1.15.7",
+          "pageid": 626071,
+          "revid": 6778069,
+          "timestamp": "2026-07-22T05:34:20Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+          "retrieved": "2026-10-09T08:51:36.398418+00:00",
+          "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+          "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.8",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.8/API changes",
+          "version": "1.15.8",
+          "pageid": 686952,
+          "revid": 6778071,
+          "timestamp": "2026-07-22T05:34:51Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+          "retrieved": "2026-10-09T08:51:36.398359+00:00",
+          "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+          "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+          "wikitext_bytes": 279,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+        }
+      },
+      {
+        "patch": "1.15.9",
+        "state": "actual-input-not-applied",
+        "history": "same-Era-context-only",
+        "applied": false,
+        "native_proof": false,
+        "source": {
+          "title": "Patch 1.15.9/API changes",
+          "version": "1.15.9",
+          "pageid": 685352,
+          "revid": 6780591,
+          "timestamp": "2026-07-24T15:29:35Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+          "retrieved": "2026-10-09T08:51:36.398273+00:00",
+          "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+          "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+          "wikitext_bytes": 4085,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+        }
+      }
+    ],
+    "archive_members": 93,
+    "script_copied_unchanged": true,
+    "source_cwd_exists": true
+  }
+}

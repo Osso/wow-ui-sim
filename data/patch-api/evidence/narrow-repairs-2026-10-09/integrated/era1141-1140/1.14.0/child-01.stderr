@@ -1,0 +1,15 @@
+test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... ok
+test_all_reference_and_template_boundaries (__main__.SourceAccounting.test_all_reference_and_template_boundaries) ... ok
+test_baseline_is_not_successor_or_imported_behavior (__main__.SourceAccounting.test_baseline_is_not_successor_or_imported_behavior) ... ok
+test_complete_totals (__main__.SourceAccounting.test_complete_totals) ... ok
+test_every_omission_rejected (__main__.SourceAccounting.test_every_omission_rejected) ... ok
+test_fabricated_credit_and_normalization_rejected (__main__.SourceAccounting.test_fabricated_credit_and_normalization_rejected) ... ok
+test_headers_caption_and_navigation (__main__.SourceAccounting.test_headers_caption_and_navigation) ... ok
+test_inventory_columns_and_literal_identities (__main__.SourceAccounting.test_inventory_columns_and_literal_identities) ... ok
+test_no_invented_signatures_defaults_or_credit (__main__.SourceAccounting.test_no_invented_signatures_defaults_or_credit) ... ok
+test_source_identity_and_content_rejection (__main__.SourceAccounting.test_source_identity_and_content_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.127s
+
+OK

@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "git",
+    "show",
+    "--no-patch",
+    "--format=fuller",
+    "3b3769d3b",
+    "ce40cfb89",
+    "29ed6fc8a",
+    "fba1c90cc"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env_overrides": {},
+  "revision": "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+  "start": "2026-10-09T16:12:52.382620+00:00",
+  "end": "2026-10-09T16:12:52.387184+00:00",
+  "exit_code": 0
+}

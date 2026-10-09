@@ -1,0 +1,16 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index b5708eae8..2394584b5 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -196,6 +196,11 @@ name = "patch_1_60_1_source_model"
+ path = "patch-tests/patch_1_60_1_source_model.rs"
+ required-features = ["client-wowforever"]
+ 
++[[test]]
++name = "forever_runtime_contracts"
++path = "patch-tests/forever_runtime_contracts.rs"
++required-features = ["client-wowforever"]
++
+ [[test]]
+ name = "patch_12_1_audit"
+ path = "patch-tests/patch_12_1.rs"

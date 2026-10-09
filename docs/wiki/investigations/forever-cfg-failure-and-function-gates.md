@@ -22,7 +22,26 @@ Canonical `1044215d0`, copied as `2218c0f41` in the source worktree, gates Retai
 
 ## Standalone execution target
 
-`patch-tests/forever_runtime_contracts.rs` is registered as the Forever-only `forever_runtime_contracts` target. It constructs direct `WowLuaEnv` environments without GUI/BNet dependencies and checks ordered addon/logged/whisper records, independent-environment isolation, invalid-prefix no-append behavior, and the three explicitly removed public/raw/legacy combat-log getter lookups. These assert existing simulator contracts, not native/security/transport behavior. No runtime implementation or Retail restriction registration changed. Target execution and independent verification receipts are pending; the earlier proof epochs above remain unchanged.
+`patch-tests/forever_runtime_contracts.rs` is registered as the Forever-only `forever_runtime_contracts` target. It constructs direct `WowLuaEnv` environments without GUI/BNet dependencies and checks ordered addon/logged/whisper records, independent-environment isolation, invalid-prefix no-append behavior, and the three explicitly removed public/raw/legacy combat-log getter lookups. These assert existing simulator contracts, not native/security/transport behavior. No runtime implementation or Retail restriction registration changed. At this development epoch, target execution and independent verification receipts were pending; the earlier proof epochs above remain unchanged. Fresh standalone proof follows separately.
+
+## Independent standalone proof epoch
+
+[Retained independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/report.md): standalone **3/3**, actual execution at `045e396b0c6f717c2d962b97cdf46b736a3328ce`, compiled scope equivalent to requested `f611a6752a14b4d660902417c59e14073de9ac31`. [Equivalence and hash scope](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/equivalence.json) and [runtime receipt](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/runtime-test.receipt.json) retain exact revision, argv, CWD, environment, timestamps and unchanged pre/post inputs. Later SOURCE merges are not latest prefork-runtime acceptance.
+
+| Gate | Fresh bounded proof | Remaining boundary |
+|---|---|---|
+| Ordered records / environment isolation | Three success results 0; exact ordered `(addon, ACE, one, PARTY, empty)`, `(addon_logged, BUG, plain text, PARTY, empty)`, `(addon, ACE, three, WHISPER, Bob-Realm)`; second direct environment log empty | One-way isolation observation, not bidirectional mutation or delivery |
+| Invalid prefixes | Both senders return 1; accepted control record retained; one shared final whole-log snapshot equals pre-call snapshot | No intermediate per-call snapshot; unchanged shared helper statically appends only on SUCCESS, supporting no append for either rejection |
+| Specific removed getter | Raw `C_CombatLog.GetCurrentEventInfo`, public member lookup, raw legacy global `CombatLogGetCurrentEventInfo` each nil | No generic namespace absence or Retail restriction runtime inference |
+| Formatting / readability | `cargo fmt --check` exit 0; manual full changed-Rust readability audit passes | Automated metric tool unavailable; no metric values claimed |
+
+**14 warning diagnostics retained:** six vendor manifest deprecations, seven library warnings, one binary warning; no suppression or warning-free claim. [Full runtime stderr](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/runtime-test.stderr) preserves sites. Prior Retail library check is reused type evidence only, not fresh runtime restriction proof. No native parity, security/taint, transport, inbound delivery/no-echo, real login, loaded Blizzard UI, BNet or broad acceptance credit. No prefork migration-pass claim.
+
+[Separate byte-hash retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/main-retention.json) covers 14 original files / 933,071 bytes, all byte-identical, including original retention seal, report, receipts, comparisons and full streams. Original seals and historical RED/unproven epochs are not rewritten.
+
+## Sources
+
+- Independent failure, follow-up and standalone reports and byte-hash manifests linked above — distinct bounded epochs.
 
 ## See also
 

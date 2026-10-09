@@ -1,0 +1,23 @@
+{
+  "time": "2026-10-09T16:11:12.022532+00:00",
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+  "initial_status": "?? .code-index.db\n",
+  "commands": [
+    [
+      "git",
+      "status",
+      "--short"
+    ],
+    [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ]
+  ],
+  "exit_codes": [
+    0,
+    0
+  ],
+  "note": "Initial tool output retained here manually; initial capture variables unavailable in subsequent evaluation."
+}

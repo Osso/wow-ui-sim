@@ -80,6 +80,18 @@ Twelve new integration cases and two new prefork cases PASS. Exactly 75 executed
 
 Main's four partial-startup cases remain in ordinary integration. The new Cargo/shared-helper refactor was in flight and not proven by this retained suite; the later bounded Era-helper proof above is separate, not full-suite acceptance; ignored, untracked PLAN is not acceptance evidence. No fresh tests or broad gates run here. **Broader goal remains open**, including native/full-UI and final integration gaps.
 
+## Era1.14.1/1.14.0: independent bounded epoch
+
+[Exact report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/report.md) requested `ce40cfb899bcc342457fc1cd03c2b23b26969406`; checkout later advanced to `045e396b0`. Copied SOURCE **8/8** (1.14.1) and **10/10** (1.14.0), portable **3/3 each**, and standalone 1.14.1 getter **1/1** pass. First FontString changes 1.5→2.25; second remains 0.75. Original/separate receipt seals **160+10 / 92+5** match; original seal-map hashes and all protected evidence bytes remain unchanged. The 1.14.0 default generator's expected `: Scripts` rejection remains a negative control, not a failure or new default inference.
+
+[Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/main-retention.json) binds 95 byte-identical files, including original receipts, streams, archives, preservation and runtime scope. [Concurrent scope note](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-scope-note.json) records Cargo drift; [literal successor comparison](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/successor-literal-comparison.json) is identity/input inspection only, not semantic supersession. Frozen queued/in-flight statements retain their original epoch. No native/signature/default/alias, security, loaded-UI or broad acceptance credit.
+
+## Forever standalone contracts: independent bounded epoch
+
+[Exact report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/report.md) records **3/3** at actual `045e396b0c6f717c2d962b97cdf46b736a3328ce`, with [compiled-scope equivalence](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/equivalence.json) to requested `f611a6752a14b4d660902417c59e14073de9ac31`. Later SOURCE merges do not promote that epoch to latest prefork-runtime acceptance. [Function-gate SSOT](forever-cfg-failure-and-function-gates.md#independent-standalone-proof-epoch) details ordered records, environment isolation, two invalid-prefix results with one shared final snapshot, and exact getter absence. Formatting and manual changed-Rust readability pass; **14 warnings retained**, not warning-free proof.
+
+[Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/main-retention.json) binds 14 byte-identical report/receipt/scope/comparison/stream files; original seals unchanged. No native/security/transport/inbound-delivery or fresh Retail restriction credit. Prefork migration remains outside this retention task; no migration-pass claim.
+
 ## Sources
 
 - Retained independent reports, comparisons, hash evidence and retention manifests linked above — bounded execution epochs, not latest-HEAD blanket proof.

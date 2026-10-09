@@ -1,0 +1,37 @@
+commit 3b3769d3bc2d1b9026b96ef48edf8c463a8480c2
+Merge: 5b12dac25 29ed6fc8a
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 11:09:19 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 11:09:19 2026 -0500
+
+    Integrate Era 1.14.1 audit and text-scale probe
+    
+    # Conflicts:
+    #       docs/wiki/index.md
+    #       docs/wiki/log.md
+
+commit ce40cfb899bcc342457fc1cd03c2b23b26969406
+Merge: 3b3769d3b fba1c90cc
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 11:09:19 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 11:09:19 2026 -0500
+
+    Integrate frozen Era 1.14.0 source audit
+
+commit 29ed6fc8ae04297b45f8c5ed73afc83ac46ab60a
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 11:00:48 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 11:00:48 2026 -0500
+
+    Record copied Era audit controls and current getter-state proof
+
+commit fba1c90cc2df73fadf943905b3aab9ebe619fa5a
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 10:58:00 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 10:58:00 2026 -0500
+
+    Record Era 1.14.0 copied replay and immutable seal controls

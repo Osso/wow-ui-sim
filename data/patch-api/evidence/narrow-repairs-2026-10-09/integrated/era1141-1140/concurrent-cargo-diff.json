@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+    "--",
+    "Cargo.toml"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env_overrides": {},
+  "start": "2026-10-09T16:14:52.199841+00:00",
+  "end": "2026-10-09T16:14:52.202302+00:00",
+  "exit_code": 0,
+  "requested_scope_revision": "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+  "observed_current_revision": "045e396b0c6f717c2d962b97cdf46b736a3328ce"
+}

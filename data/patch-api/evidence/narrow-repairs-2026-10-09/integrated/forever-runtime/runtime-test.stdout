@@ -1,0 +1,8 @@
+
+running 3 tests
+test forever_invalid_chat_prefix_preserves_existing_records ... ok
+test forever_removed_public_combat_log_getters_are_absent ... ok
+test forever_chat_senders_append_ordered_environment_local_records ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+

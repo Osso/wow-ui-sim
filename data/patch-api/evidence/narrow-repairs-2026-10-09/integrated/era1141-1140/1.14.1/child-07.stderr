@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py", line 164, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py", line 160, in main
+    count = check_seals()
+  File "/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py", line 152, in check_seals
+    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: green.log

@@ -1,0 +1,34 @@
+{
+  "requested_revision": "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+  "final_revision": "045e396b0c6f717c2d962b97cdf46b736a3328ce",
+  "runtime_test_receipt": {
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--manifest-path",
+      "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "client-era",
+      "--test",
+      "patch_1_14_1_text_scale",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "revision": "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+    "start": "2026-10-09T16:12:31.189848+00:00",
+    "end": "2026-10-09T16:12:31.809814+00:00",
+    "exit_code": 0
+  },
+  "requested_Cargo_equals_before_hash": true,
+  "after_scope_delta": [
+    "Cargo.toml adds unrelated client-wowforever-gated test",
+    "new patch-tests/forever_runtime_contracts.rs"
+  ],
+  "src_and_existing_test_bytes_unchanged": true,
+  "rerun": "not required; delta does not intersect headless client-era text-scale test behavior; no latest-HEAD overall acceptance claimed"
+}

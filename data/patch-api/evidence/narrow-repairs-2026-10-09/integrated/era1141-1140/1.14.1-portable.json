@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/tmp/era1141-1140-independent/1.14.1/test_portable.py",
+    "--archive",
+    "/tmp/era1141-1140-independent/1.14.1/replay-archive.tar.gz",
+    "--scratch",
+    "/tmp/era1141-1140-independent/1.14.1/scratch",
+    "--receipts",
+    "/tmp/era1141-1140-independent/1.14.1/portable-receipts.json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env_overrides": {},
+  "revision": "ce40cfb899bcc342457fc1cd03c2b23b26969406",
+  "start": "2026-10-09T16:12:10.621628+00:00",
+  "end": "2026-10-09T16:12:11.839653+00:00",
+  "exit_code": 0
+}

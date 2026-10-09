@@ -1,0 +1,17 @@
+{
+  "path": "/tmp/forever-cfg-independent/retail-check-result.json",
+  "sha256": "3d61e14e747f99bf7f48b0ea3c886cc242cb92cb11536a4bda8f72729daecc5b",
+  "argv": [
+    "/usr/bin/cargo",
+    "check",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-retail",
+    "--lib"
+  ],
+  "revision": "811a0491b8a1ba21e2ebb27f364f03a563c5300c",
+  "exit_code": 0,
+  "reason": "Runtime library sources unchanged since 1044215d0; only ten Retail-true cfg attributes since 811a0491b. Manifest changes add Era/Forever gated standalone test targets only, with library/features/dependencies unchanged. No fresh Retail behavior claim."
+}

@@ -1,0 +1,17 @@
+{
+  "historical_seals": 160,
+  "totals": {
+    "physical_lines": 120,
+    "nonblank_rows": 114,
+    "inventory": 59,
+    "headings": 6,
+    "inventory_headers": 8,
+    "prose": 3,
+    "cvars": 8,
+    "template_claims": 2,
+    "links": 14,
+    "transclusions": 57,
+    "unspecified_signatures": 59,
+    "substantive_rows": 64
+  }
+}

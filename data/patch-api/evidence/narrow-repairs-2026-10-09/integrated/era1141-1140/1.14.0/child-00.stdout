@@ -1,0 +1,19 @@
+{
+  "historical_seals": 92,
+  "totals": {
+    "physical_lines": 781,
+    "nonblank_rows": 776,
+    "inventory": 723,
+    "api_templates": 719,
+    "widget_scripts": 4,
+    "category_labels": 1,
+    "headers": 5,
+    "count_headers": 8,
+    "count_conflicts": 0,
+    "prose": 1,
+    "links": 10,
+    "templates": 720,
+    "signature_limits": 560,
+    "default_limits": 163
+  }
+}

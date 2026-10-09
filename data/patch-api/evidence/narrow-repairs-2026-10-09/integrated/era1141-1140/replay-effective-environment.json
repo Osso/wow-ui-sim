@@ -1,0 +1,11 @@
+{
+  "inherited_relevant_env": {
+    "HOME": "/home/osso",
+    "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+  },
+  "child_overrides": {
+    "PATH": "",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "path_only_adjustment": "none; both literal source-worktree CWD paths existed; scripts executed byte-identical copies"
+}

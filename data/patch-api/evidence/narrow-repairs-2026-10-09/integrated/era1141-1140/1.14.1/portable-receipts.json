@@ -1,0 +1,126 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpnkm166sq/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 160,\n  \"totals\": {\n    \"physical_lines\": 120,\n    \"nonblank_rows\": 114,\n    \"inventory\": 59,\n    \"headings\": 6,\n    \"inventory_headers\": 8,\n    \"prose\": 3,\n    \"cvars\": 8,\n    \"template_claims\": 2,\n    \"links\": 14,\n    \"transclusions\": 57,\n    \"unspecified_signatures\": 59,\n    \"substantive_rows\": 64\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpnkm166sq/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "omission controls: 353\n",
+      "stderr": "test_boundaries (__main__.SourceAccounting.test_boundaries) ... ok\ntest_every_omission (__main__.SourceAccounting.test_every_omission) ... ok\ntest_exact_inventory_counts_and_typo (__main__.SourceAccounting.test_exact_inventory_counts_and_typo) ... ok\ntest_fabrications (__main__.SourceAccounting.test_fabrications) ... ok\ntest_headers_caption_navigation (__main__.SourceAccounting.test_headers_caption_navigation) ... ok\ntest_identity (__main__.SourceAccounting.test_identity) ... ok\ntest_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... ok\ntest_prose_defaults_and_templates (__main__.SourceAccounting.test_prose_defaults_and_templates) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.929s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpnkm166sq/historical-tools/gen_patch_wikitext_register.py",
+        "1.14.1",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpnkm166sq/source.wikitext",
+        "1010974",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpnkm166sq/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpnkm166sq/replay_defaults.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "default extract byte-identical\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmp66dvkowe/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1141-1140-independent/1.14.1/scratch/tmp66dvkowe/audit.py\", line 164, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1141-1140-independent/1.14.1/scratch/tmp66dvkowe/audit.py\", line 160, in main\n    count = check_seals()\n  File \"/tmp/era1141-1140-independent/1.14.1/scratch/tmp66dvkowe/audit.py\", line 152, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmp66dvkowe/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 160,\n  \"totals\": {\n    \"physical_lines\": 120,\n    \"nonblank_rows\": 114,\n    \"inventory\": 59,\n    \"headings\": 6,\n    \"inventory_headers\": 8,\n    \"prose\": 3,\n    \"cvars\": 8,\n    \"template_claims\": 2,\n    \"links\": 14,\n    \"transclusions\": 57,\n    \"unspecified_signatures\": 59,\n    \"substantive_rows\": 64\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "cf7079ee4c6c0dd0877aac59f9c84aee36e66605c6cc62ea4f2f2175cb31eba4",
+      "all_original_seals": 160
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py\", line 164, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py\", line 160, in main\n    count = check_seals()\n  File \"/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py\", line 152, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/tmp/era1141-1140-independent/1.14.1/scratch/tmpgoeyrqf7/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 160,\n  \"totals\": {\n    \"physical_lines\": 120,\n    \"nonblank_rows\": 114,\n    \"inventory\": 59,\n    \"headings\": 6,\n    \"inventory_headers\": 8,\n    \"prose\": 3,\n    \"cvars\": 8,\n    \"template_claims\": 2,\n    \"links\": 14,\n    \"transclusions\": 57,\n    \"unspecified_signatures\": 59,\n    \"substantive_rows\": 64\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "91c381fe17b0ce84246d53df28af4d62fc818b6a2a033d43e40627eb2d1e6943",
+      "all_original_seals": 160
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

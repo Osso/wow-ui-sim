@@ -1,0 +1,810 @@
+[
+  {
+    "patch": "1.14.1",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.1-session-2026-10-09/ledger.json",
+    "ledger_sha256": "cf7079ee4c6c0dd0877aac59f9c84aee36e66605c6cc62ea4f2f2175cb31eba4",
+    "source_pin": {
+      "title": "Patch 1.14.1/API changes",
+      "version": "1.14.1",
+      "pageid": 102588,
+      "revid": 1010974,
+      "timestamp": "2022-03-02T05:21:47Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1010974&format=json",
+      "retrieved": "2026-10-09T08:51:36.399083+00:00",
+      "response_sha256": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+      "wikitext_sha256": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+      "wikitext_bytes": 6207,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-wikitext.txt"
+    },
+    "rows": 114,
+    "inventory": 59,
+    "api_occurrences": 0,
+    "contracts": 0,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.14.1",
+          "state": "in-flight-pending-main-integration",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      }
+    ],
+    "raw": "{{apichanges|1.14.1|prev=1.14.0|next=1.14.2}}\n\n==Summary==\n* Added [[:Category:API namespaces/C_Seasons|C_Seasons]] to support Classic Era [[Season of Mastery]].\n* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate, see this [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes section] for solutions.\n* The event trace tool now supports logging events while the frame is hidden. This option is disabled by default.\n\n==Resources==\n* TOC: <code>11401</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/commit/b00df2a627cc7b57cdb45aec60ced39e59f4877f wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/3988081e4f766fb43f634449602f06ced2205e46 BlizzardInterfaceResources]\n* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes 1.14.1 Consolidated UI Changes]\n<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->\n\n==Global API==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ 1.14.0 (39958) &rarr; 1.14.1 (41030) Nov 10 2021\n|- class=\"mw-customtoggle-global-c\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(14)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(3)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=a|C_BehavioralMessaging.SendNotificationReceipt}}\n: {{api|t=a|C_Club.FocusCommunityStreams}}\n: {{api|t=a|C_Club.UnfocusAllStreams}}\n: {{api|t=a|C_Commentator.SetBlocklistedAuras}}\n: {{api|t=a|C_Commentator.SetBlocklistedCooldowns}}\n: {{Wow-inline}} {{api|t=a|C_LFGList.IsLookingForGroupEnabled}}\n: {{Wow-inline}} {{api|t=a|C_Seasons.GetActiveSeason}}\n: {{Wow-inline}} {{api|t=a|C_Seasons.HasActiveSeason}}\n: {{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}\n: {{api|t=a|C_SocialRestrictions.IsChatDisabled}}\n: {{api|t=a|C_SocialRestrictions.SetChatDisabled}}\n: {{Wow-inline}} {{api|t=a|GetFirstBagBankSlotIndex}}\n: {{api|t=a|securecallfunction}}\n: {{api|t=a|secureexecuterange}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=a|AcknowledgeAADCAlert}}\n: {{api|t=a|C_Commentator.SetBlacklistedAuras}}\n: {{api|t=a|C_Commentator.SetBlacklistedCooldowns}}\n</div>\n|}\n\n==Widgets==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|- class=\"mw-customtoggle-widgets\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(2)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widgets\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=w|FontString:GetTextScale}}\n: {{api|t=w|FontStringSetTextScale}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n</div>\n|}\n\n==Events==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|- class=\"mw-customtoggle-events\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(31)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(1)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=e|AVATAR_LIST_UPDATED}}\n: {{api|t=e|CLUB_ADDED}}\n: {{api|t=e|CLUB_ERROR}}\n: {{api|t=e|CLUB_INVITATION_ADDED_FOR_SELF}}\n: {{api|t=e|CLUB_INVITATION_REMOVED_FOR_SELF}}\n: {{api|t=e|CLUB_INVITATIONS_RECEIVED_FOR_CLUB}}\n: {{api|t=e|CLUB_MEMBER_ADDED}}\n: {{api|t=e|CLUB_MEMBER_PRESENCE_UPDATED}}\n: {{api|t=e|CLUB_MEMBER_REMOVED}}\n: {{api|t=e|CLUB_MEMBER_ROLE_UPDATED}}\n: {{api|t=e|CLUB_MEMBER_UPDATED}}\n: {{api|t=e|CLUB_MESSAGE_ADDED}}\n: {{api|t=e|CLUB_MESSAGE_HISTORY_RECEIVED}}\n: {{api|t=e|CLUB_MESSAGE_UPDATED}}\n: {{api|t=e|CLUB_REMOVED_MESSAGE}}\n: {{api|t=e|CLUB_REMOVED}}\n: {{api|t=e|CLUB_SELF_MEMBER_ROLE_UPDATED}}\n: {{api|t=e|CLUB_STREAM_ADDED}}\n: {{api|t=e|CLUB_STREAM_REMOVED}}\n: {{api|t=e|CLUB_STREAM_SUBSCRIBED}}\n: {{api|t=e|CLUB_STREAM_UNSUBSCRIBED}}\n: {{api|t=e|CLUB_STREAM_UPDATED}}\n: {{api|t=e|CLUB_STREAMS_LOADED}}\n: {{api|t=e|CLUB_TICKET_CREATED}}\n: {{api|t=e|CLUB_TICKET_RECEIVED}}\n: {{api|t=e|CLUB_TICKETS_RECEIVED}}\n: {{api|t=e|CLUB_UPDATED}}\n: {{api|t=e|INITIAL_CLUBS_LOADED}}\n: {{api|t=e|NOTIFY_CHAT_SUPPRESSED}}\n: {{api|t=e|STREAM_VIEW_MARKER_UPDATED}}\n: {{api|t=e|UNIT_HEAL_PREDICTION}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=e|SHOW_AADC_ALERT}}\n</div>\n|}\n\n==CVars==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|- class=\"mw-customtoggle-cvars\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(7)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(1)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-cvars\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: <span class=\"tttemplatelink\">[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0.333333</span></code><br><small>Lowest render scale DynamicRenderScale can use</small></span>\n: <span class=\"tttemplatelink\">[[CVar DynamicRenderScale|DynamicRenderScale]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.</small></span>\n: <span class=\"tttemplatelink\">[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Disable use of texture heaps and force the fallback path</small></span>\n: <span class=\"tttemplatelink\">[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Seen the alert indicating chat has been disabled by default. (UK AADC)</small></span>\n: [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]\n: [[CVar GxFrameStats|GxFrameStats]]\n: {{Wow-inline}} [[CVar seenSoMNotification|seenSoMNotification]]\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: [[CVar seenAADCAlert|seenAADCAlert]]\n</div>\n|}",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11401
+  },
+  {
+    "patch": "1.14.2",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.2-session-2026-10-09/ledger.json",
+    "ledger_sha256": "0052716897759cf473c700ebe000dcf2e0ebe2e4018b14082117325aed01ec54",
+    "source_pin": {
+      "title": "Patch 1.14.2/API changes",
+      "version": "1.14.2",
+      "pageid": 236101,
+      "revid": 2290155,
+      "timestamp": "2022-06-05T00:14:08Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2290155&format=json",
+      "retrieved": "2026-10-09T08:51:36.399009+00:00",
+      "response_sha256": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+      "wikitext_sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+      "wikitext_bytes": 2460,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt"
+    },
+    "rows": 36,
+    "inventory": 7,
+    "api_occurrences": 0,
+    "contracts": 14,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.14.2",
+          "state": "queued-pending-main-integration",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.14.2",
+          "state": "queued-pending-main-integration",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only"
+        }
+      }
+    ],
+    "raw": "{{apichanges|1.14.2|prev=1.14.1|next=1.14.3}}\n\n==Resources==\n* TOC: <code>11402</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/commit/00cee12f0aac36397dd2deeaf5b6187289a9e490 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/938a761ef8269c8965bf7058c61be411eb64a12e BlizzardInterfaceResources]\n* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/classic_era/Interface/AddOns/Blizzard_Deprecated/Deprecated_1_14_2.lua Deprecated_1_14_2.lua]\n* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.2-Consolidated-UI-Changes 1.14.2 Consolidated UI Changes]\n\n==Global API==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ 1.14.1 (41030) &rarr; 1.14.2 (42214) Feb 3 2022\n|- class=\"mw-customtoggle-global-c\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(4)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=a|C_GamePad.ClearLedColor}}\n: {{api|t=a|C_GamePad.GetLedColor}}\n: {{api|t=a|C_GamePad.SetLedColor}}\n: {{api|t=a|TradeSkillOnlyShowMakeable}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n</div>\n|}\n\n==CVars==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|- class=\"mw-customtoggle-cvars\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(3)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-cvars\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: <span class=\"tttemplatelink\">[[CVar GamePadFactionColor|GamePadFactionColor]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code><br><small>Enable setting GamePad's led color to match current faction</small></span>\n: <span class=\"tttemplatelink\">[[CVar GamePadVibrationStrength|GamePadVibrationStrength]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code><br><small>GamePad vibration effect strength</small></span>\n: <span class=\"tttemplatelink\">[[CVar telemetryTargetPackage|telemetryTargetPackage]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">Blizzard.Telemetry.Wow_Mainline</span></code><br><small>The Package we want to send telemetry to e.g. Wow_Mainline or Wow_Classic</small></span>\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n</div>\n|}",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11402
+  },
+  {
+    "patch": "1.14.3",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.3-session-2026-10-09/original/ledger.json",
+    "ledger_sha256": "4f69fecb88c7b4201898cea4c15a84f91708c2232dfcf48df3cd021af257cee6",
+    "source_pin": {
+      "title": "Patch 1.14.3/API changes",
+      "version": "1.14.3",
+      "pageid": 480026,
+      "revid": 4615755,
+      "timestamp": "2023-07-10T10:27:33Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4615755&format=json",
+      "retrieved": "2026-10-09T08:51:36.398924+00:00",
+      "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+      "wikitext_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+      "wikitext_bytes": 23291,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt"
+    },
+    "rows": 463,
+    "inventory": 412,
+    "api_occurrences": 0,
+    "contracts": 0,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.14.3",
+          "state": "queued-pending-main-integration",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.14.3",
+          "state": "queued-pending-main-integration",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only"
+        }
+      }
+    ],
+    "raw": "{{apichanges|1.14.3|prev=1.14.2|next=1.14.4}}\n\n==Summary==\nPatch 1.14.3 appears to be in sync with [[Patch_2.5.4/API_changes|patch 2.5.4]].\n\n==Resources==\n* TOC: <code>11403</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/commit/9f08b9fac59b359deffdf15346c39a7fa0c3c00d wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/ee7a394bfb6db25519aeec86fc8a60c8aa5a6dde BlizzardInterfaceResources]\n\n==Global API==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ 1.14.2 (42214) &rarr; 1.14.3 (43639) May 10 2022\n|- class=\"mw-customtoggle-global-c\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(187)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=a|C_AzeriteEmpoweredItem.CanSelectPower}}\n: {{api|t=a|C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec}}\n: {{api|t=a|C_AzeriteEmpoweredItem.ConfirmAzeriteEmpoweredItemRespec}}\n: {{api|t=a|C_AzeriteEmpoweredItem.GetAllTierInfoByItemID}}\n: {{api|t=a|C_AzeriteEmpoweredItem.GetAllTierInfo}}\n: {{api|t=a|C_AzeriteEmpoweredItem.GetAzeriteEmpoweredItemRespecCost}}\n: {{api|t=a|C_AzeriteEmpoweredItem.GetPowerInfo}}\n: {{api|t=a|C_AzeriteEmpoweredItem.GetPowerText}}\n: {{api|t=a|C_AzeriteEmpoweredItem.GetSpecsForPower}}\n: {{api|t=a|C_AzeriteEmpoweredItem.HasAnyUnselectedPowers}}\n: {{api|t=a|C_AzeriteEmpoweredItem.HasBeenViewed}}\n: {{api|t=a|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID}}\n: {{api|t=a|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem}}\n: {{api|t=a|C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable}}\n: {{api|t=a|C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped}}\n: {{api|t=a|C_AzeriteEmpoweredItem.IsPowerAvailableForSpec}}\n: {{api|t=a|C_AzeriteEmpoweredItem.IsPowerSelected}}\n: {{api|t=a|C_AzeriteEmpoweredItem.SelectPower}}\n: {{api|t=a|C_AzeriteEmpoweredItem.SetHasBeenViewed}}\n: {{api|t=a|C_AzeriteEssence.ActivateEssence}}\n: {{api|t=a|C_AzeriteEssence.CanActivateEssence}}\n: {{api|t=a|C_AzeriteEssence.CanDeactivateEssence}}\n: {{api|t=a|C_AzeriteEssence.CanOpenUI}}\n: {{api|t=a|C_AzeriteEssence.ClearPendingActivationEssence}}\n: {{api|t=a|C_AzeriteEssence.CloseForge}}\n: {{api|t=a|C_AzeriteEssence.GetEssenceHyperlink}}\n: {{api|t=a|C_AzeriteEssence.GetEssenceInfo}}\n: {{api|t=a|C_AzeriteEssence.GetEssences}}\n: {{api|t=a|C_AzeriteEssence.GetMilestoneEssence}}\n: {{api|t=a|C_AzeriteEssence.GetMilestoneInfo}}\n: {{api|t=a|C_AzeriteEssence.GetMilestoneSpell}}\n: {{api|t=a|C_AzeriteEssence.GetMilestones}}\n: {{api|t=a|C_AzeriteEssence.GetNumUnlockedEssences}}\n: {{api|t=a|C_AzeriteEssence.GetNumUsableEssences}}\n: {{api|t=a|C_AzeriteEssence.GetPendingActivationEssence}}\n: {{api|t=a|C_AzeriteEssence.HasNeverActivatedAnyEssences}}\n: {{api|t=a|C_AzeriteEssence.HasPendingActivationEssence}}\n: {{api|t=a|C_AzeriteEssence.IsAtForge}}\n: {{api|t=a|C_AzeriteEssence.SetPendingActivationEssence}}\n: {{api|t=a|C_AzeriteEssence.UnlockMilestone}}\n: {{api|t=a|C_AzeriteItem.FindActiveAzeriteItem}}\n: {{api|t=a|C_AzeriteItem.GetAzeriteItemXPInfo}}\n: {{api|t=a|C_AzeriteItem.GetPowerLevel}}\n: {{api|t=a|C_AzeriteItem.GetUnlimitedPowerLevel}}\n: {{api|t=a|C_AzeriteItem.HasActiveAzeriteItem}}\n: {{api|t=a|C_AzeriteItem.IsAzeriteItemAtMaxLevel}}\n: {{api|t=a|C_AzeriteItem.IsAzeriteItemByID}}\n: {{api|t=a|C_AzeriteItem.IsAzeriteItemEnabled}}\n: {{api|t=a|C_AzeriteItem.IsAzeriteItem}}\n: {{api|t=a|C_Calendar.AddEvent}}\n: {{api|t=a|C_Calendar.AreNamesReady}}\n: {{api|t=a|C_Calendar.CanAddEvent}}\n: {{api|t=a|C_Calendar.CanSendInvite}}\n: {{api|t=a|C_Calendar.CloseEvent}}\n: {{api|t=a|C_Calendar.ContextMenuEventCanComplain}}\n: {{api|t=a|C_Calendar.ContextMenuEventCanEdit}}\n: {{api|t=a|C_Calendar.ContextMenuEventCanRemove}}\n: {{api|t=a|C_Calendar.ContextMenuEventClipboard}}\n: {{api|t=a|C_Calendar.ContextMenuEventComplain}}\n: {{api|t=a|C_Calendar.ContextMenuEventCopy}}\n: {{api|t=a|C_Calendar.ContextMenuEventGetCalendarType}}\n: {{api|t=a|C_Calendar.ContextMenuEventPaste}}\n: {{api|t=a|C_Calendar.ContextMenuEventRemove}}\n: {{api|t=a|C_Calendar.ContextMenuEventSignUp}}\n: {{api|t=a|C_Calendar.ContextMenuGetEventIndex}}\n: {{api|t=a|C_Calendar.ContextMenuInviteAvailable}}\n: {{api|t=a|C_Calendar.ContextMenuInviteDecline}}\n: {{api|t=a|C_Calendar.ContextMenuInviteRemove}}\n: {{api|t=a|C_Calendar.ContextMenuInviteTentative}}\n: {{api|t=a|C_Calendar.ContextMenuSelectEvent}}\n: {{api|t=a|C_Calendar.CreateCommunitySignUpEvent}}\n: {{api|t=a|C_Calendar.CreateGuildAnnouncementEvent}}\n: {{api|t=a|C_Calendar.CreateGuildSignUpEvent}}\n: {{api|t=a|C_Calendar.CreatePlayerEvent}}\n: {{api|t=a|C_Calendar.EventAvailable}}\n: {{api|t=a|C_Calendar.EventCanEdit}}\n: {{api|t=a|C_Calendar.EventClearAutoApprove}}\n: {{api|t=a|C_Calendar.EventClearLocked}}\n: {{api|t=a|C_Calendar.EventClearModerator}}\n: {{api|t=a|C_Calendar.EventDecline}}\n: {{api|t=a|C_Calendar.EventGetCalendarType}}\n: {{api|t=a|C_Calendar.EventGetClubId}}\n: {{api|t=a|C_Calendar.EventGetInviteResponseTime}}\n: {{api|t=a|C_Calendar.EventGetInviteSortCriterion}}\n: {{api|t=a|C_Calendar.EventGetInvite}}\n: {{api|t=a|C_Calendar.EventGetSelectedInvite}}\n: {{api|t=a|C_Calendar.EventGetStatusOptions}}\n: {{api|t=a|C_Calendar.EventGetTextures}}\n: {{api|t=a|C_Calendar.EventGetTypesDisplayOrdered}}\n: {{api|t=a|C_Calendar.EventGetTypes}}\n: {{api|t=a|C_Calendar.EventHasPendingInvite}}\n: {{api|t=a|C_Calendar.EventHaveSettingsChanged}}\n: {{api|t=a|C_Calendar.EventInvite}}\n: {{api|t=a|C_Calendar.EventRemoveInviteByGuid}}\n: {{api|t=a|C_Calendar.EventRemoveInvite}}\n: {{api|t=a|C_Calendar.EventSelectInvite}}\n: {{api|t=a|C_Calendar.EventSetAutoApprove}}\n: {{api|t=a|C_Calendar.EventSetClubId}}\n: {{api|t=a|C_Calendar.EventSetDate}}\n: {{api|t=a|C_Calendar.EventSetDescription}}\n: {{api|t=a|C_Calendar.EventSetInviteStatus}}\n: {{api|t=a|C_Calendar.EventSetLocked}}\n: {{api|t=a|C_Calendar.EventSetModerator}}\n: {{api|t=a|C_Calendar.EventSetTextureID}}\n: {{api|t=a|C_Calendar.EventSetTime}}\n: {{api|t=a|C_Calendar.EventSetTitle}}\n: {{api|t=a|C_Calendar.EventSetType}}\n: {{api|t=a|C_Calendar.EventSignUp}}\n: {{api|t=a|C_Calendar.EventSortInvites}}\n: {{api|t=a|C_Calendar.EventTentative}}\n: {{api|t=a|C_Calendar.GetClubCalendarEvents}}\n: {{api|t=a|C_Calendar.GetDayEvent}}\n: {{api|t=a|C_Calendar.GetDefaultGuildFilter}}\n: {{api|t=a|C_Calendar.GetEventIndexInfo}}\n: {{api|t=a|C_Calendar.GetEventIndex}}\n: {{api|t=a|C_Calendar.GetEventInfo}}\n: {{api|t=a|C_Calendar.GetFirstPendingInvite}}\n: {{api|t=a|C_Calendar.GetGuildEventInfo}}\n: {{api|t=a|C_Calendar.GetGuildEventSelectionInfo}}\n: {{api|t=a|C_Calendar.GetHolidayInfo}}\n: {{api|t=a|C_Calendar.GetMaxCreateDate}}\n: {{api|t=a|C_Calendar.GetMinDate}}\n: {{api|t=a|C_Calendar.GetMonthInfo}}\n: {{api|t=a|C_Calendar.GetNextClubId}}\n: {{api|t=a|C_Calendar.GetNumDayEvents}}\n: {{api|t=a|C_Calendar.GetNumGuildEvents}}\n: {{api|t=a|C_Calendar.GetNumInvites}}\n: {{api|t=a|C_Calendar.GetNumPendingInvites}}\n: {{api|t=a|C_Calendar.GetRaidInfo}}\n: {{api|t=a|C_Calendar.IsActionPending}}\n: {{api|t=a|C_Calendar.IsEventOpen}}\n: {{api|t=a|C_Calendar.MassInviteCommunity}}\n: {{api|t=a|C_Calendar.MassInviteGuild}}\n: {{api|t=a|C_Calendar.OpenCalendar}}\n: {{api|t=a|C_Calendar.OpenEvent}}\n: {{api|t=a|C_Calendar.RemoveEvent}}\n: {{api|t=a|C_Calendar.SetAbsMonth}}\n: {{api|t=a|C_Calendar.SetMonth}}\n: {{api|t=a|C_Calendar.SetNextClubId}}\n: {{api|t=a|C_Calendar.UpdateEvent}}\n: {{api|t=a|C_ChatInfo.GetChannelInfoFromIdentifier}}\n: {{api|t=a|C_ChatInfo.GetChannelShortcutForChannelID}}\n: {{api|t=a|C_ChatInfo.GetChannelShortcut}}\n: {{api|t=a|C_ChatInfo.GetChatTypeName}}\n: {{api|t=a|C_GamePad.AddSDLMapping}}\n: {{api|t=a|C_ReportSystem.CanReportPlayerForLanguage}}\n: {{api|t=a|C_ReportSystem.CanReportPlayer}}\n: {{api|t=a|C_ReportSystem.InitiateReportPlayer}}\n: {{api|t=a|C_ReportSystem.OpenReportPlayerDialog}}\n: {{api|t=a|C_ReportSystem.ReportServerLag}}\n: {{api|t=a|C_ReportSystem.ReportStuckInCombat}}\n: {{api|t=a|C_ReportSystem.SendReportPlayer}}\n: {{api|t=a|C_ReportSystem.SetPendingReportPetTarget}}\n: {{api|t=a|C_ReportSystem.SetPendingReportTargetByGuid}}\n: {{api|t=a|C_ReportSystem.SetPendingReportTarget}}\n: {{api|t=a|C_System.GetFrameStack}}\n: {{api|t=a|C_TTSSettings.GetChannelEnabled}}\n: {{api|t=a|C_TTSSettings.GetCharacterSettingsSaved}}\n: {{api|t=a|C_TTSSettings.GetChatTypeEnabled}}\n: {{api|t=a|C_TTSSettings.GetSetting}}\n: {{api|t=a|C_TTSSettings.GetSpeechRate}}\n: {{api|t=a|C_TTSSettings.GetSpeechVolume}}\n: {{api|t=a|C_TTSSettings.GetVoiceOptionID}}\n: {{api|t=a|C_TTSSettings.GetVoiceOptionName}}\n: {{api|t=a|C_TTSSettings.MarkCharacterSettingsSaved}}\n: {{api|t=a|C_TTSSettings.SetChannelEnabled}}\n: {{api|t=a|C_TTSSettings.SetChannelKeyEnabled}}\n: {{api|t=a|C_TTSSettings.SetChatTypeEnabled}}\n: {{api|t=a|C_TTSSettings.SetDefaultSettings}}\n: {{api|t=a|C_TTSSettings.SetSetting}}\n: {{api|t=a|C_TTSSettings.SetSpeechRate}}\n: {{api|t=a|C_TTSSettings.SetSpeechVolume}}\n: {{api|t=a|C_TTSSettings.SetVoiceOptionName}}\n: {{api|t=a|C_TTSSettings.SetVoiceOption}}\n: {{api|t=a|C_TTSSettings.ShouldOverrideMessage}}\n: {{api|t=a|C_UI.DoesAnyDisplayHaveNotch}}\n: {{api|t=a|C_UI.GetTopLeftNotchSafeRegion}}\n: {{api|t=a|C_UI.GetTopRightNotchSafeRegion}}\n: {{api|t=a|C_UI.ShouldUIParentAvoidNotch}}\n: {{api|t=a|C_VoiceChat.IsSpeakForMeActive}}\n: {{api|t=a|C_VoiceChat.IsSpeakForMeAllowed}}\n: {{api|t=a|C_VoiceChat.IsTranscriptionAllowed}}\n: {{api|t=a|GetTradeSkillItemLevelFilter}}\n: {{api|t=a|GetTradeSkillItemNameFilter}}\n: {{api|t=a|SetTradeSkillItemLevelFilter}}\n: {{api|t=a|SetTradeSkillItemNameFilter}}\n: {{api|t=a|UnitGroupRolesAssigned}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n</div>\n|}\n\n==Widgets==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|- class=\"mw-customtoggle-widgets\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(1)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widgets\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=w|Frame:SetAttributeNoHandler}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n</div>\n|}\n\n==Events==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|- class=\"mw-customtoggle-events\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(200)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=e|ACHIEVEMENT_EARNED}}\n: {{api|t=e|ACHIEVEMENT_PLAYER_NAME}}\n: {{api|t=e|ACHIEVEMENT_SEARCH_UPDATED}}\n: {{api|t=e|ACTIVATE_GLYPH}}\n: {{api|t=e|ADVENTURE_MAP_CLOSE}}\n: {{api|t=e|ADVENTURE_MAP_OPEN}}\n: {{api|t=e|ADVENTURE_MAP_QUEST_UPDATE}}\n: {{api|t=e|ADVENTURE_MAP_UPDATE_INSETS}}\n: {{api|t=e|ADVENTURE_MAP_UPDATE_POIS}}\n: {{api|t=e|AJ_DUNGEON_ACTION}}\n: {{api|t=e|AJ_OPEN}}\n: {{api|t=e|AJ_PVE_LFG_ACTION}}\n: {{api|t=e|AJ_PVP_ACTION}}\n: {{api|t=e|AJ_PVP_LFG_ACTION}}\n: {{api|t=e|AJ_PVP_RBG_ACTION}}\n: {{api|t=e|AJ_PVP_SKIRMISH_ACTION}}\n: {{api|t=e|AJ_QUEST_LOG_OPEN}}\n: {{api|t=e|AJ_RAID_ACTION}}\n: {{api|t=e|AJ_REFRESH_DISPLAY}}\n: {{api|t=e|AJ_REWARD_DATA_RECEIVED}}\n: {{api|t=e|ALERT_REGIONAL_CHAT_DISABLED}}\n: {{api|t=e|AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED}}\n: {{api|t=e|AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED}}\n: {{api|t=e|AZERITE_ESSENCE_ACTIVATED}}\n: {{api|t=e|AZERITE_ESSENCE_ACTIVATION_FAILED}}\n: {{api|t=e|AZERITE_ESSENCE_CHANGED}}\n: {{api|t=e|AZERITE_ESSENCE_FORGE_CLOSE}}\n: {{api|t=e|AZERITE_ESSENCE_FORGE_OPEN}}\n: {{api|t=e|AZERITE_ESSENCE_MILESTONE_UNLOCKED}}\n: {{api|t=e|AZERITE_ESSENCE_UPDATE}}\n: {{api|t=e|AZERITE_ITEM_ENABLED_STATE_CHANGED}}\n: {{api|t=e|AZERITE_ITEM_EXPERIENCE_CHANGED}}\n: {{api|t=e|AZERITE_ITEM_POWER_LEVEL_CHANGED}}\n: {{api|t=e|BEHAVIORAL_NOTIFICATION}}\n: {{api|t=e|BLACK_MARKET_BID_RESULT}}\n: {{api|t=e|BLACK_MARKET_CLOSE}}\n: {{api|t=e|BLACK_MARKET_ITEM_UPDATE}}\n: {{api|t=e|BLACK_MARKET_OPEN}}\n: {{api|t=e|BLACK_MARKET_OUTBID}}\n: {{api|t=e|BLACK_MARKET_UNAVAILABLE}}\n: {{api|t=e|BLACK_MARKET_WON}}\n: {{api|t=e|CALENDAR_ACTION_PENDING}}\n: {{api|t=e|CALENDAR_CLOSE_EVENT}}\n: {{api|t=e|CALENDAR_EVENT_ALARM}}\n: {{api|t=e|CALENDAR_NEW_EVENT}}\n: {{api|t=e|CALENDAR_OPEN_EVENT}}\n: {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_COUNT}}\n: {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME}}\n: {{api|t=e|CALENDAR_UPDATE_ERROR}}\n: {{api|t=e|CALENDAR_UPDATE_EVENT_LIST}}\n: {{api|t=e|CALENDAR_UPDATE_EVENT}}\n: {{api|t=e|CALENDAR_UPDATE_GUILD_EVENTS}}\n: {{api|t=e|CALENDAR_UPDATE_INVITE_LIST}}\n: {{api|t=e|CALENDAR_UPDATE_PENDING_INVITES}}\n: {{api|t=e|CANCEL_GLYPH_CAST}}\n: {{api|t=e|CHAT_DISABLED_CHANGE_FAILED}}\n: {{api|t=e|CHAT_DISABLED_CHANGED}}\n: {{api|t=e|CLASS_TRIAL_TIMER_START}}\n: {{api|t=e|CLASS_TRIAL_UPGRADE_COMPLETE}}\n: {{api|t=e|CRITERIA_COMPLETE}}\n: {{api|t=e|CRITERIA_EARNED}}\n: {{api|t=e|CRITERIA_UPDATE}}\n: {{api|t=e|ENTITLEMENT_DELIVERED}}\n: {{api|t=e|EQUIPMENT_SETS_CHANGED}}\n: {{api|t=e|EQUIPMENT_SWAP_FINISHED}}\n: {{api|t=e|EQUIPMENT_SWAP_PENDING}}\n: {{api|t=e|FIRST_FRAME_RENDERED}}\n: {{api|t=e|GAME_PAD_ACTIVE_CHANGED}}\n: {{api|t=e|GAME_PAD_CONFIGS_CHANGED}}\n: {{api|t=e|GAME_PAD_CONNECTED}}\n: {{api|t=e|GAME_PAD_DISCONNECTED}}\n: {{api|t=e|GLOBAL_MOUSE_DOWN}}\n: {{api|t=e|GLOBAL_MOUSE_UP}}\n: {{api|t=e|GUILDBANK_ITEM_LOCK_CHANGED}}\n: {{api|t=e|GUILDBANK_TEXT_CHANGED}}\n: {{api|t=e|GUILDBANK_UPDATE_MONEY}}\n: {{api|t=e|GUILDBANK_UPDATE_TABS}}\n: {{api|t=e|GUILDBANK_UPDATE_TEXT}}\n: {{api|t=e|GUILDBANK_UPDATE_WITHDRAWMONEY}}\n: {{api|t=e|GUILDBANKBAGSLOTS_CHANGED}}\n: {{api|t=e|GUILDBANKFRAME_CLOSED}}\n: {{api|t=e|GUILDBANKFRAME_OPENED}}\n: {{api|t=e|GUILDBANKLOG_UPDATE}}\n: {{api|t=e|HEIRLOOM_UPGRADE_TARGETING_CHANGED}}\n: {{api|t=e|HEIRLOOMS_UPDATED}}\n: {{api|t=e|INSPECT_ACHIEVEMENT_READY}}\n: {{api|t=e|ISLAND_COMPLETED}}\n: {{api|t=e|ITEM_UPGRADE_FAILED}}\n: {{api|t=e|ITEM_UPGRADE_MASTER_CLOSED}}\n: {{api|t=e|ITEM_UPGRADE_MASTER_OPENED}}\n: {{api|t=e|ITEM_UPGRADE_MASTER_SET_ITEM}}\n: {{api|t=e|LFG_BOOT_PROPOSAL_UPDATE}}\n: {{api|t=e|LFG_COMPLETION_REWARD}}\n: {{api|t=e|LFG_INVALID_ERROR_MESSAGE}}\n: {{api|t=e|LFG_LOCK_INFO_RECEIVED}}\n: {{api|t=e|LFG_OFFER_CONTINUE}}\n: {{api|t=e|LFG_OPEN_FROM_GOSSIP}}\n: {{api|t=e|LFG_PROPOSAL_DONE}}\n: {{api|t=e|LFG_PROPOSAL_FAILED}}\n: {{api|t=e|LFG_PROPOSAL_SHOW}}\n: {{api|t=e|LFG_PROPOSAL_SUCCEEDED}}\n: {{api|t=e|LFG_PROPOSAL_UPDATE}}\n: {{api|t=e|LFG_QUEUE_STATUS_UPDATE}}\n: {{api|t=e|LFG_READY_CHECK_DECLINED}}\n: {{api|t=e|LFG_READY_CHECK_HIDE}}\n: {{api|t=e|LFG_READY_CHECK_PLAYER_IS_READY}}\n: {{api|t=e|LFG_READY_CHECK_SHOW}}\n: {{api|t=e|LFG_READY_CHECK_UPDATE}}\n: {{api|t=e|LFG_ROLE_CHECK_DECLINED}}\n: {{api|t=e|LFG_ROLE_CHECK_HIDE}}\n: {{api|t=e|LFG_ROLE_CHECK_ROLE_CHOSEN}}\n: {{api|t=e|LFG_ROLE_CHECK_SHOW}}\n: {{api|t=e|LFG_ROLE_CHECK_UPDATE}}\n: {{api|t=e|LFG_ROLE_UPDATE}}\n: {{api|t=e|LFG_UPDATE_RANDOM_INFO}}\n: {{api|t=e|LFG_UPDATE}}\n: {{api|t=e|NEW_TOY_ADDED}}\n: {{api|t=e|NOTCHED_DISPLAY_MODE_CHANGED}}\n: {{api|t=e|OPEN_REPORT_PLAYER}}\n: {{api|t=e|PENDING_AZERITE_ESSENCE_CHANGED}}\n: {{api|t=e|PET_BATTLE_ABILITY_CHANGED}}\n: {{api|t=e|PET_BATTLE_ACTION_SELECTED}}\n: {{api|t=e|PET_BATTLE_AURA_APPLIED}}\n: {{api|t=e|PET_BATTLE_AURA_CANCELED}}\n: {{api|t=e|PET_BATTLE_AURA_CHANGED}}\n: {{api|t=e|PET_BATTLE_CAPTURED}}\n: {{api|t=e|PET_BATTLE_CLOSE}}\n: {{api|t=e|PET_BATTLE_FINAL_ROUND}}\n: {{api|t=e|PET_BATTLE_HEALTH_CHANGED}}\n: {{api|t=e|PET_BATTLE_LEVEL_CHANGED}}\n: {{api|t=e|PET_BATTLE_MAX_HEALTH_CHANGED}}\n: {{api|t=e|PET_BATTLE_OPENING_DONE}}\n: {{api|t=e|PET_BATTLE_OPENING_START}}\n: {{api|t=e|PET_BATTLE_OVERRIDE_ABILITY}}\n: {{api|t=e|PET_BATTLE_OVER}}\n: {{api|t=e|PET_BATTLE_PET_CHANGED}}\n: {{api|t=e|PET_BATTLE_PET_ROUND_PLAYBACK_COMPLETE}}\n: {{api|t=e|PET_BATTLE_PET_ROUND_RESULTS}}\n: {{api|t=e|PET_BATTLE_PET_TYPE_CHANGED}}\n: {{api|t=e|PET_BATTLE_PVP_DUEL_REQUEST_CANCEL}}\n: {{api|t=e|PET_BATTLE_PVP_DUEL_REQUESTED}}\n: {{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_ACCEPTED}}\n: {{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_DECLINED}}\n: {{api|t=e|PET_BATTLE_QUEUE_PROPOSE_MATCH}}\n: {{api|t=e|PET_BATTLE_QUEUE_STATUS}}\n: {{api|t=e|PET_BATTLE_XP_CHANGED}}\n: {{api|t=e|PLAYER_GAINS_VEHICLE_DATA}}\n: {{api|t=e|PLAYER_LOSES_VEHICLE_DATA}}\n: {{api|t=e|QUEST_SESSION_CREATED}}\n: {{api|t=e|QUEST_SESSION_DESTROYED}}\n: {{api|t=e|QUEST_SESSION_ENABLED_STATE_CHANGED}}\n: {{api|t=e|QUEST_SESSION_JOINED}}\n: {{api|t=e|QUEST_SESSION_LEFT}}\n: {{api|t=e|QUEST_SESSION_MEMBER_CONFIRM}}\n: {{api|t=e|QUEST_SESSION_MEMBER_START_RESPONSE}}\n: {{api|t=e|QUEST_SESSION_NOTIFICATION}}\n: {{api|t=e|RAF_ENTITLEMENT_DELIVERED}}\n: {{api|t=e|RECEIVED_ACHIEVEMENT_LIST}}\n: {{api|t=e|RECEIVED_ACHIEVEMENT_MEMBER_LIST}}\n: {{api|t=e|REPORT_PLAYER_RESULT}}\n: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED}}\n: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_OPENED}}\n: {{api|t=e|SHOW_LFG_EXPAND_SEARCH_PROMPT}}\n: {{api|t=e|SOCKET_INFO_ACCEPT}}\n: {{api|t=e|SOCKET_INFO_CLOSE}}\n: {{api|t=e|SOCKET_INFO_FAILURE}}\n: {{api|t=e|SOCKET_INFO_REFUNDABLE_CONFIRM}}\n: {{api|t=e|SOCKET_INFO_SUCCESS}}\n: {{api|t=e|SOCKET_INFO_UPDATE}}\n: {{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_HIDE}}\n: {{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_SHOW}}\n: {{api|t=e|SPELL_ACTIVATION_OVERLAY_HIDE}}\n: {{api|t=e|SPELL_ACTIVATION_OVERLAY_SHOW}}\n: {{api|t=e|STOP_MOVIE}}\n: {{api|t=e|TOYS_UPDATED}}\n: {{api|t=e|TRACKED_ACHIEVEMENT_LIST_CHANGED}}\n: {{api|t=e|TRACKED_ACHIEVEMENT_UPDATE}}\n: {{api|t=e|TRANSMOG_OUTFITS_CHANGED}}\n: {{api|t=e|UNIT_ENTERED_VEHICLE}}\n: {{api|t=e|UNIT_ENTERING_VEHICLE}}\n: {{api|t=e|UNIT_EXITED_VEHICLE}}\n: {{api|t=e|UNIT_EXITING_VEHICLE}}\n: {{api|t=e|UPDATE_LFG_LIST}}\n: {{api|t=e|USE_GLYPH}}\n: {{api|t=e|VEHICLE_ANGLE_SHOW}}\n: {{api|t=e|VEHICLE_PASSENGERS_CHANGED}}\n: {{api|t=e|VEHICLE_POWER_SHOW}}\n: {{api|t=e|VEHICLE_UPDATE}}\n: {{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED}}\n: {{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED}}\n: {{api|t=e|VOID_DEPOSIT_WARNING}}\n: {{api|t=e|VOID_STORAGE_CLOSE}}\n: {{api|t=e|VOID_STORAGE_CONTENTS_UPDATE}}\n: {{api|t=e|VOID_STORAGE_DEPOSIT_UPDATE}}\n: {{api|t=e|VOID_STORAGE_OPEN}}\n: {{api|t=e|VOID_STORAGE_UPDATE}}\n: {{api|t=e|VOID_TRANSFER_DONE}}\n: {{api|t=e|VOID_TRANSFER_SUCCESS}}\n: {{api|t=e|WARFRONT_COMPLETED}}\n: {{api|t=e|WEAR_EQUIPMENT_SET}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n</div>\n|}\n\n==CVars==\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|- class=\"mw-customtoggle-cvars\"\n! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(15)</small>\n! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(9)</small>\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-cvars\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: <span class=\"tttemplatelink\">[[CVar BeckonTriggerEventlog|BeckonTriggerEventlog]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code></span>\n: <span class=\"tttemplatelink\">[[CVar calendarShowHolidays|calendarShowHolidays]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code>, Scope: <span class=\"apitype\">Character</span><br><small>Whether holidays should appear in the calendar</small></span>\n: <span class=\"tttemplatelink\">[[CVar CameraKeepCharacterCentered|CameraKeepCharacterCentered]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Motion sickness control to keep character's head at center of screen to act as motion reference point. Can override other cvar settings.</small></span>\n: <span class=\"tttemplatelink\">[[CVar CameraReduceUnexpectedMovement|CameraReduceUnexpectedMovement]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Motion sickness control to reduce camera movement without player input. Can override other cvar settings.</small></span>\n: <span class=\"tttemplatelink\">[[CVar cameraZSmooth|cameraZSmooth]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Smooths camera vertical movement. 1 = only while moving, 2 = also while standing still</small></span>\n: <span class=\"tttemplatelink\">[[CVar CMAA2ExtraSharpness|CMAA2ExtraSharpness]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Set to 1 to preserve even more text and shape clarity at the expense of less AA</small></span>\n: <span class=\"tttemplatelink\">[[CVar CMAA2Quality|CMAA2Quality]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">2</span></code><br><small>CMAA2 Quality Level. 0 - LOW, 1 - MEDIUM, 2 - HIGH, 3 - ULTRA</small></span>\n: <span class=\"tttemplatelink\">[[CVar GamePadEmulateTapWindowMs|GamePadEmulateTapWindowMs]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">350</span></code><br><small>GamePad buttons emulating Ctrl/Alt/Shift will be 'tapped' if released withing this time in MS</small></span>\n: <span class=\"tttemplatelink\">[[CVar GameplayContext|GameplayContext]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code></span>\n: <span class=\"tttemplatelink\">[[CVar NotchedDisplayMode|NotchedDisplayMode]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code><br><small>Do nothing = 0. Shift UI down = 1. Shift everything down = 2.</small></span>\n: <span class=\"tttemplatelink\">[[CVar overrideScreenFlash|overrideScreenFlash]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Overrides fade color options so that it always fades to black</small></span>\n: <span class=\"tttemplatelink\">[[CVar ShakeStrengthCamera|ShakeStrengthCamera]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Motion sickness control for how much effects can shake the camera</small></span>\n: <span class=\"tttemplatelink\">[[CVar ShakeStrengthUI|ShakeStrengthUI]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Motion sickness control for how much effects can shake in 2D UI</small></span>\n: <span class=\"tttemplatelink\">[[CVar speechToText|speechToText]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Allows enabling transcription on a voice channel in order to see written text based on the words spoken by other players</small></span>\n: <span class=\"tttemplatelink\">[[CVar textToSpeech|textToSpeech]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Reads chat text out loud using the voice text to speech system based on the selected options</small></span>\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: [[CVar AIProcessDebugger|AIProcessDebugger]]\n: [[CVar cameraZDamp|cameraZDamp]]\n: [[CVar particulatesEnabled|particulatesEnabled]]\n: [[CVar RAIDParticulatesEnabled|RAIDParticulatesEnabled]]\n: [[CVar RAIDVolumeFogLevel|RAIDVolumeFogLevel]]\n: [[CVar RAIDVolumeFog|RAIDVolumeFog]]\n: [[CVar volumeFogInterior|volumeFogInterior]]\n: [[CVar volumeFogLevel|volumeFogLevel]]\n: [[CVar volumeFog|volumeFog]]\n</div>\n|}",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11403
+  },
+  {
+    "patch": "1.14.4",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/ledger.json",
+    "ledger_sha256": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226",
+    "source_pin": {
+      "title": "Patch 1.14.4/API changes",
+      "version": "1.14.4",
+      "pageid": 267043,
+      "revid": 2581777,
+      "timestamp": "2023-07-19T19:32:56Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+      "retrieved": "2026-10-09T08:51:36.398825+00:00",
+      "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+      "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+      "wikitext_bytes": 775,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+    },
+    "rows": 8,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 11,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.14.4",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.14.4",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}\n\n==Summary==\n* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].\n** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.\n** Refer to the linked articles for guidance on any impactful changes.\n\n==Resources==\n* TOC: <code>11404</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11404
+  },
+  {
+    "patch": "1.15.0",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.0-session-2026-10-09/ledger.json",
+    "ledger_sha256": "ac2d227ce84c5e1ec013808236037b28a2ce1070529159620f31c7668ff3c6eb",
+    "source_pin": {
+      "title": "Patch 1.15.0/API changes",
+      "version": "1.15.0",
+      "pageid": 564510,
+      "revid": 5950848,
+      "timestamp": "2024-01-30T19:36:35Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+      "retrieved": "2026-10-09T08:51:36.398773+00:00",
+      "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+      "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+      "wikitext_bytes": 915,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+    },
+    "rows": 10,
+    "inventory": 0,
+    "api_occurrences": 1,
+    "contracts": 11,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.0",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.0",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "ac2d227ce84c5e1ec013808236037b28a2ce1070529159620f31c7668ff3c6eb"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.0|prev=1.14.4|next=1.15.1}}\n\n==Summary==\n* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.3/API changes|Patch 3.4.3]].\n** A subset of Dragonflight API changes from [[Patch 10.1.7/API changes|Patch 10.1.7]] through to [[Patch 10.2.0/API changes|Patch 10.2.0]] are also included.\n** Refer to the linked articles for guidance on any impactful changes.\n* Added a new C_Engraving namespace for managing runes in seasonal content.\n\n==Resources==\n* TOC: <code>11500</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.4..1.15.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.4..1.15.0 BlizzardInterfaceResources]\n* Deprecated API: [https://github.com/Gethe/wow-ui-source/tree/classic_era_ptr/Interface/AddOns/Blizzard_Deprecated/Deprecated_1_15_0.lua Blizzard_Deprecated]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11500
+  },
+  {
+    "patch": "1.15.1",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.1-session-2026-10-09/ledger.json",
+    "ledger_sha256": "ad60adbab94fbb7e35d7d44c506d8e6d6f66b0398df3bda02cebe2f7a26c73e1",
+    "source_pin": {
+      "title": "Patch 1.15.1/API changes",
+      "version": "1.15.1",
+      "pageid": 577687,
+      "revid": 5998991,
+      "timestamp": "2024-04-03T08:43:49Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+      "retrieved": "2026-10-09T08:51:36.398724+00:00",
+      "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+      "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+      "wikitext_bytes": 835,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+    },
+    "rows": 9,
+    "inventory": 0,
+    "api_occurrences": 2,
+    "contracts": 7,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.1",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.1",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "ad60adbab94fbb7e35d7d44c506d8e6d6f66b0398df3bda02cebe2f7a26c73e1"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.1|prev=1.15.0|next=1.15.2}}\n\n==Summary==\n* A subset of Dragonflight API changes from [[Patch 10.2.5/API changes|Patch 10.2.5]] are included.\n* Added a new Season ID constant for Season of Discovery realms (<code>Enum.SeasonID.SeasonOfDiscovery</code>).\n** A deprecation alias is included that allows usages of <code>Enum.SeasonID.Placeholder</code> to continue working as-is for detecting Season of Discovery realms.\n\n==Resources==\n* TOC: <code>11501</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.0..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.0..1.15.1 BlizzardInterfaceResources]\n* Deprecated API: [https://github.com/Gethe/wow-ui-source/tree/classic_era_ptr/Interface/AddOns/Blizzard_Deprecated/Deprecated_1_15_1.lua Blizzard_Deprecated]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11501
+  },
+  {
+    "patch": "1.15.2",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.2-session-2026-10-09/ledger.json",
+    "ledger_sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417",
+    "source_pin": {
+      "title": "Patch 1.15.2/API changes",
+      "version": "1.15.2",
+      "pageid": 583919,
+      "revid": 6061806,
+      "timestamp": "2024-06-12T18:59:26Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+      "retrieved": "2026-10-09T08:51:36.398676+00:00",
+      "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+      "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+      "wikitext_bytes": 391,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+    },
+    "rows": 6,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 4,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.2",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.2",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.2|prev=1.15.1|next=1.15.3}}\n\n==Summary==\n* A subset of Dragonflight API changes from [[Patch 10.2.6/API changes|Patch 10.2.6]] are included.\n\n==Resources==\n* TOC: <code>11502</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.1..1.15.2 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.1..1.15.2 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11502
+  },
+  {
+    "patch": "1.15.3",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.3-session-2026-10-09/ledger.json",
+    "ledger_sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0",
+    "source_pin": {
+      "title": "Patch 1.15.3/API changes",
+      "version": "1.15.3",
+      "pageid": 593663,
+      "revid": 6114194,
+      "timestamp": "2024-08-30T01:06:01Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+      "retrieved": "2026-10-09T08:51:36.398616+00:00",
+      "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+      "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+      "wikitext_bytes": 452,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+    },
+    "rows": 6,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 5,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.3",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.3",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.3|prev=1.15.2|next=1.15.4}}\n\n==Summary==\n* A subset of Dragonflight API changes from [[Patch 10.2.7/API changes|Patch 10.2.7]] are included, as well as Cataclysm [[Patch 4.4.0/API changes|Patch 4.4.0]].\n\n==Resources==\n* TOC: <code>11503</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/4.4.0..1.15.3 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.2..1.15.3 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11503
+  },
+  {
+    "patch": "1.15.4",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.4-session-2026-10-09/ledger.json",
+    "ledger_sha256": "f3aa9280a2c56d358756109b52cdc0a817dd0a94eedf904d8126a6b76df71b6d",
+    "source_pin": {
+      "title": "Patch 1.15.4/API changes",
+      "version": "1.15.4",
+      "pageid": 600355,
+      "revid": 6172581,
+      "timestamp": "2024-11-13T21:59:45Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+      "retrieved": "2026-10-09T08:51:36.398568+00:00",
+      "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+      "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+      "wikitext_bytes": 439,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+    },
+    "rows": 6,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 5,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.4",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.4",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "f3aa9280a2c56d358756109b52cdc0a817dd0a94eedf904d8126a6b76df71b6d"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.4|prev=1.15.3|next=1.15.5}}\n\n==Summary==\n* A subset of The War Within API changes from [[Patch 11.0.0/API changes|Patch 11.0.0]] and [[Patch 11.0.2/API changes|Patch 11.0.2]] are included.\n\n==Resources==\n* TOC: <code>11504</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.3..1.15.4 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.3..1.15.4 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11504
+  },
+  {
+    "patch": "1.15.5",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.5-session-2026-10-09/ledger.json",
+    "ledger_sha256": "41e335e655966d9352b6a28a97b453be64ad533010f5a4906fd7817c5966ff62",
+    "source_pin": {
+      "title": "Patch 1.15.5/API changes",
+      "version": "1.15.5",
+      "pageid": 610284,
+      "revid": 6235411,
+      "timestamp": "2025-02-09T17:32:34Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+      "retrieved": "2026-10-09T08:51:36.398521+00:00",
+      "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+      "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+      "wikitext_bytes": 278,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+    },
+    "rows": 4,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 2,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.5",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.5",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "41e335e655966d9352b6a28a97b453be64ad533010f5a4906fd7817c5966ff62"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.5|prev=1.15.4|next=1.15.6}}\n\n==Resources==\n* TOC: <code>11505</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.4..1.15.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.4..1.15.5 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11505
+  },
+  {
+    "patch": "1.15.6",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.6-session-2026-10-09/ledger.json",
+    "ledger_sha256": "70cdfac19ed015b0433bb313451b8dd8254c4a7ab1c9e7574badf245546f5577",
+    "source_pin": {
+      "title": "Patch 1.15.6/API changes",
+      "version": "1.15.6",
+      "pageid": 619994,
+      "revid": 6281951,
+      "timestamp": "2025-04-04T10:14:39Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+      "retrieved": "2026-10-09T08:51:36.398475+00:00",
+      "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+      "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+      "wikitext_bytes": 278,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+    },
+    "rows": 4,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 2,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.6",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.6",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "70cdfac19ed015b0433bb313451b8dd8254c4a7ab1c9e7574badf245546f5577"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.6|prev=1.15.5|next=1.15.7}}\n\n==Resources==\n* TOC: <code>11506</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.5..1.15.6 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.5..1.15.6 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11506
+  },
+  {
+    "patch": "1.15.7",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.7-session-2026-10-09/ledger.json",
+    "ledger_sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+    "source_pin": {
+      "title": "Patch 1.15.7/API changes",
+      "version": "1.15.7",
+      "pageid": 626071,
+      "revid": 6778069,
+      "timestamp": "2026-07-22T05:34:20Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+      "retrieved": "2026-10-09T08:51:36.398418+00:00",
+      "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+      "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+      "wikitext_bytes": 278,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+    },
+    "rows": 4,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 2,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.7",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.7",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.7|prev=1.15.6|next=1.15.8}}\n\n==Resources==\n* TOC: <code>11507</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.6..1.15.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.6..1.15.7 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11507
+  },
+  {
+    "patch": "1.15.8",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.8-session-2026-10-09/ledger.json",
+    "ledger_sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+    "source_pin": {
+      "title": "Patch 1.15.8/API changes",
+      "version": "1.15.8",
+      "pageid": 686952,
+      "revid": 6778071,
+      "timestamp": "2026-07-22T05:34:51Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+      "retrieved": "2026-10-09T08:51:36.398359+00:00",
+      "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+      "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+      "wikitext_bytes": 279,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+    },
+    "rows": 4,
+    "inventory": 0,
+    "api_occurrences": 0,
+    "contracts": 2,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.8",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.8",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|1.15.8|prev=1.15.7|next=1.15.9}}\n\n==Resources==\n* TOC: <code>11508</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.7..1.15.8 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.7...1.15.8 BlizzardInterfaceResources]",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11508
+  },
+  {
+    "patch": "1.15.9",
+    "ledger": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.9-session-2026-10-09/ledger.json",
+    "ledger_sha256": "fe98aaabb773e2bf486747dd0aa2c01bcd25164f12a2319e5503f569c91f1138",
+    "source_pin": {
+      "title": "Patch 1.15.9/API changes",
+      "version": "1.15.9",
+      "pageid": 685352,
+      "revid": 6780591,
+      "timestamp": "2026-07-24T15:29:35Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+      "retrieved": "2026-10-09T08:51:36.398273+00:00",
+      "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+      "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+      "wikitext_bytes": 4085,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+    },
+    "rows": 37,
+    "inventory": 0,
+    "api_occurrences": 4,
+    "contracts": 14,
+    "measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    },
+    "frozen_comparison": [
+      {
+        "ancestor": "1.14.0",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.9",
+          "state": "actual-input-not-applied",
+          "history": "same-Era-context-only",
+          "applied": false,
+          "native_proof": false
+        }
+      },
+      {
+        "ancestor": "1.14.1",
+        "pin_equal": true,
+        "raw_equal": true,
+        "frozen_status": {
+          "patch": "1.15.9",
+          "state": "actual-canonical-input-not-applied",
+          "applied": false,
+          "native_proof": false,
+          "history": "same-Era-only",
+          "canonical_ledger_sha256": "fe98aaabb773e2bf486747dd0aa2c01bcd25164f12a2319e5503f569c91f1138"
+        },
+        "frozen_canonical_ledger_equals_current": true
+      }
+    ],
+    "raw": "{{apichanges|prev=1.15.8|1.15.9}}\n\n==Resources==\n* TOC: <code>11509</code>\n* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.8..1.15.9 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.8...1.15.9 BlizzardInterfaceResources]\n\n==Notes==\n* Removed <code>shouldConsolidate</code> from {{api|UnitAura}}.\n\n==Blue posts==\n<onlyinclude>{{Bluepost\n|poster=Kaivax\n|date=Jul 10, 2026 5:10 am\n|link=https://us.forums.blizzard.com/en/wow/t/user-interface-updates-in-classic/2325408\n|title=User Interface Updates in Classic\n|body=Hello,\n\nThis week, we updated Burning Crusade Classic Anniversary from patch 2.5.5 to patch 2.5.6. Although this patch was almost entirely to support critical service systems, it also included changes to nameplates and raid frames. We\u2019d like to tell you about these changes, highlight options you have to edit some of the user interface (UI), and look forward to patch 1.15.9 coming to WoW Classic soon.\n\n{{apisummary.heading|UI Using Shared Code}}\nAll versions of WoW Classic share code with modern World of Warcraft. The games gain significant benefits from this, including the support of modern hardware, additional options for graphics and accessibility, widescreen support, and the ability to integrate with Battle.net services in the first place.\n\nThis shared code also allows the introduction of UI elements to fill gaps in the original World of Warcraft UI. For instance, the original Burning Crusade only supported the \u201cdrag out\u201d raid group UI from the Raid Frame. With the release of WoW Classic in 2019, the game included an additional option to use raid frames from modern World of Warcraft. This means that WoW Classic launched in 2019 with Battle for Azeroth\u2019s raid frames, and then with patch 2.5.5, Burning Crusade Classic Anniversary utilized frames from The War Within. With patch 2.5.6, the game\u2019s raid frame option has aligned with updates to modern World of Warcraft, now matching the offering from Midnight.\n\n{{apisummary.heading|Modifications Using Chat Commands}}\nSince we released patch 2.5.6, we\u2019ve been listening to community feedback, and we recognize that players are looking for ways to modify their nameplates and raid frames that were updated. In addition to the settings that exist in the Options menu, players can use the following chat commands for further customization:\n\n* Nameplate Class Color (Enemy Units):\n<syntaxhighlight lang=\"lua\">\n/script C_CVar.SetCVar(\"nameplateShowClassColor\", 1);\n</syntaxhighlight>\n\n* Nameplate Class Color (Friendly Units):\n<syntaxhighlight lang=\"lua\">\n/script C_CVar.SetCVar(\"nameplateShowFriendlyClassColor\", 1);\n</syntaxhighlight>\n\n* Disabling Raid Frame Dispel Highlights:\n<syntaxhighlight lang=\"lua\">\n/script C_CVar.SetCVar(\"raidFramesDispelIndicatorOverlay\", 0);\n</syntaxhighlight>\n\nWe\u2019re currently working on surfacing these settings in the Options menu itself, so that players will have access to them there, in addition to the option to use chat commands. We expect to implement this next week.\n\n{{apisummary.heading|Upcoming WoW Classic Patch 1.15.9 \u2013 Week of July 19}}\nSimilar to this week\u2019s Burning Crusade Classic Anniversary patch, the WoW Classic games (Classic Era, Season of Discovery, Hardcore) will receive a similar patch with the start of weekly regional maintenance the week of July 19. As with the Burning Crusade Classic Anniversary patch, this patch will bring in Edit Mode and changes to players\u2019 nameplates and raid frames to the WoW Classic games.\n\nSome third-party addons may experience errors until they are updated by their authors. As all versions of World of Warcraft share most of their UI code, the addon API in 1.15.9 very closely matches the addon API from 2.5.6. For addon authors, we encourage you to use 2.5.6 as an environment for updating addons to be compatible with 1.15.9.\n\nWe will continue to refine our updates in the future, so that we\u2019re providing additional options for players to modify settings wherever possible.\n\nThank you, as always, for your passion and feedback.}}</onlyinclude>",
+    "credit": "canonical same-Era input exists at requested HEAD; no native or automatic supersession credit",
+    "source_toc": 11509
+  }
+]

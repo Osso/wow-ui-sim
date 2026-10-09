@@ -1,0 +1,12 @@
+commit 045e396b0c6f717c2d962b97cdf46b736a3328ce
+Merge: f611a6752 d85eb075f
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 11:14:37 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 11:14:37 2026 -0500
+
+    Integrate frozen Era 1.13.7 source audit
+    
+    # Conflicts:
+    #       docs/wiki/index.md
+    #       docs/wiki/log.md

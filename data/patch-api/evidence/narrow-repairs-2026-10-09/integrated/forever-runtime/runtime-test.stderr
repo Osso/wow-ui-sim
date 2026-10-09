@@ -1,0 +1,118 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/Projects/wow/wow-ui-sim)
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `is_never_secret_aura` is never used
+   --> src/c_api/c_secrets.rs:110:15
+    |
+110 | pub(crate) fn is_never_secret_aura(spell_id: i32) -> LuaResult<bool> {
+    |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used
+   --> src/widget/frame.rs:601:19
+    |
+600 | impl Frame {
+    | ---------- methods in this implementation
+601 |     pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+610 |     pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 7 warnings
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 17s
+     Running patch-tests/forever_runtime_contracts.rs (target/debug/deps/forever_runtime_contracts-44000c10e8eb2f89)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.75ms
+[  0.002s] [Startup] SimState::default complete in 1.76ms
+[  0.002s] [Startup] rilua VM created in 94.33µs
+[  0.002s] [Startup] rilua VM created in 90.56µs
+[  0.002s] [Startup] SimState::default complete in 1.86ms
+[  0.002s] [Startup] builtin frames initialized in 67.68µs
+[  0.002s] [Startup] builtin frames initialized in 69.39µs
+[  0.002s] [Startup] template registry cleared in 4.41µs
+[  0.002s] [Startup] template registry cleared in 3.25µs
+[  0.002s] [Startup] intrinsic templates registered in 4.74µs
+[  0.002s] [Startup] intrinsic templates registered in 3.78µs
+[  0.002s] [Startup] initial app_data lua handle installed in 441.00ns
+[  0.002s] [Startup] initial app_data lua handle installed in 231.00ns
+[  0.002s] [Startup] rilua VM created in 142.27µs
+[  0.002s] [Startup] builtin frames initialized in 104.91µs
+[  0.002s] [Startup] template registry cleared in 3.61µs
+[  0.002s] [Startup] intrinsic templates registered in 7.11µs
+[  0.002s] [Startup] initial app_data lua handle installed in 211.00ns
+[  0.105s] [Startup] init_lua_state complete in 102.34ms
+[  0.105s] [Startup] final app_data lua handle installed in 171.00ns
+[  0.105s] [Startup] initial screen globals installed in 84.52µs
+[  0.105s] [Startup] WowLuaEnv::new complete
+[  0.105s] [Startup] init_lua_state complete in 102.66ms
+[  0.105s] [Startup] final app_data lua handle installed in 161.00ns
+[  0.105s] [Startup] WowLuaEnv::new begin
+[  0.105s] [Startup] init_lua_state complete in 102.70ms
+[  0.105s] [Startup] final app_data lua handle installed in 171.00ns
+[  0.105s] [Startup] initial screen globals installed in 50.41µs
+[  0.105s] [Startup] WowLuaEnv::new complete
+[  0.105s] [Startup] initial screen globals installed in 62.35µs
+[  0.105s] [Startup] WowLuaEnv::new complete
+[  0.107s] [Startup] SimState::default complete in 1.92ms
+[  0.107s] [Startup] rilua VM created in 116.63µs
+[  0.107s] [Startup] builtin frames initialized in 41.62µs
+[  0.107s] [Startup] template registry cleared in 5.58µs
+[  0.107s] [Startup] intrinsic templates registered in 4.05µs
+[  0.107s] [Startup] initial app_data lua handle installed in 120.00ns
+[  0.172s] [Startup] init_lua_state complete in 65.52ms
+[  0.172s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.172s] [Startup] initial screen globals installed in 53.59µs
+[  0.172s] [Startup] WowLuaEnv::new complete

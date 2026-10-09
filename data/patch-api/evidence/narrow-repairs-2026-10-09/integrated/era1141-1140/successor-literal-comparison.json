@@ -1,0 +1,2087 @@
+[
+  {
+    "patch": "1.14.2",
+    "literal_api_markers": [
+      {
+        "symbol": "C_GamePad.ClearLedColor",
+        "literal": "{{api|t=a|C_GamePad.ClearLedColor}}",
+        "line": 17
+      },
+      {
+        "symbol": "C_GamePad.GetLedColor",
+        "literal": "{{api|t=a|C_GamePad.GetLedColor}}",
+        "line": 18
+      },
+      {
+        "symbol": "C_GamePad.SetLedColor",
+        "literal": "{{api|t=a|C_GamePad.SetLedColor}}",
+        "line": 19
+      },
+      {
+        "symbol": "TradeSkillOnlyShowMakeable",
+        "literal": "{{api|t=a|TradeSkillOnlyShowMakeable}}",
+        "line": 20
+      }
+    ],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.14.3",
+    "literal_api_markers": [
+      {
+        "symbol": "C_AzeriteEmpoweredItem.CanSelectPower",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.CanSelectPower}}",
+        "line": 18
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec}}",
+        "line": 19
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.ConfirmAzeriteEmpoweredItemRespec",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.ConfirmAzeriteEmpoweredItemRespec}}",
+        "line": 20
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.GetAllTierInfoByItemID",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.GetAllTierInfoByItemID}}",
+        "line": 21
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.GetAllTierInfo",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.GetAllTierInfo}}",
+        "line": 22
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.GetAzeriteEmpoweredItemRespecCost",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.GetAzeriteEmpoweredItemRespecCost}}",
+        "line": 23
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.GetPowerInfo",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.GetPowerInfo}}",
+        "line": 24
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.GetPowerText",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.GetPowerText}}",
+        "line": 25
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.GetSpecsForPower",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.GetSpecsForPower}}",
+        "line": 26
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.HasAnyUnselectedPowers",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.HasAnyUnselectedPowers}}",
+        "line": 27
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.HasBeenViewed",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.HasBeenViewed}}",
+        "line": 28
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID}}",
+        "line": 29
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem}}",
+        "line": 30
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable}}",
+        "line": 31
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped}}",
+        "line": 32
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.IsPowerAvailableForSpec",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.IsPowerAvailableForSpec}}",
+        "line": 33
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.IsPowerSelected",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.IsPowerSelected}}",
+        "line": 34
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.SelectPower",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.SelectPower}}",
+        "line": 35
+      },
+      {
+        "symbol": "C_AzeriteEmpoweredItem.SetHasBeenViewed",
+        "literal": "{{api|t=a|C_AzeriteEmpoweredItem.SetHasBeenViewed}}",
+        "line": 36
+      },
+      {
+        "symbol": "C_AzeriteEssence.ActivateEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.ActivateEssence}}",
+        "line": 37
+      },
+      {
+        "symbol": "C_AzeriteEssence.CanActivateEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.CanActivateEssence}}",
+        "line": 38
+      },
+      {
+        "symbol": "C_AzeriteEssence.CanDeactivateEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.CanDeactivateEssence}}",
+        "line": 39
+      },
+      {
+        "symbol": "C_AzeriteEssence.CanOpenUI",
+        "literal": "{{api|t=a|C_AzeriteEssence.CanOpenUI}}",
+        "line": 40
+      },
+      {
+        "symbol": "C_AzeriteEssence.ClearPendingActivationEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.ClearPendingActivationEssence}}",
+        "line": 41
+      },
+      {
+        "symbol": "C_AzeriteEssence.CloseForge",
+        "literal": "{{api|t=a|C_AzeriteEssence.CloseForge}}",
+        "line": 42
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetEssenceHyperlink",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetEssenceHyperlink}}",
+        "line": 43
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetEssenceInfo",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetEssenceInfo}}",
+        "line": 44
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetEssences",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetEssences}}",
+        "line": 45
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetMilestoneEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetMilestoneEssence}}",
+        "line": 46
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetMilestoneInfo",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetMilestoneInfo}}",
+        "line": 47
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetMilestoneSpell",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetMilestoneSpell}}",
+        "line": 48
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetMilestones",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetMilestones}}",
+        "line": 49
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetNumUnlockedEssences",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetNumUnlockedEssences}}",
+        "line": 50
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetNumUsableEssences",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetNumUsableEssences}}",
+        "line": 51
+      },
+      {
+        "symbol": "C_AzeriteEssence.GetPendingActivationEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.GetPendingActivationEssence}}",
+        "line": 52
+      },
+      {
+        "symbol": "C_AzeriteEssence.HasNeverActivatedAnyEssences",
+        "literal": "{{api|t=a|C_AzeriteEssence.HasNeverActivatedAnyEssences}}",
+        "line": 53
+      },
+      {
+        "symbol": "C_AzeriteEssence.HasPendingActivationEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.HasPendingActivationEssence}}",
+        "line": 54
+      },
+      {
+        "symbol": "C_AzeriteEssence.IsAtForge",
+        "literal": "{{api|t=a|C_AzeriteEssence.IsAtForge}}",
+        "line": 55
+      },
+      {
+        "symbol": "C_AzeriteEssence.SetPendingActivationEssence",
+        "literal": "{{api|t=a|C_AzeriteEssence.SetPendingActivationEssence}}",
+        "line": 56
+      },
+      {
+        "symbol": "C_AzeriteEssence.UnlockMilestone",
+        "literal": "{{api|t=a|C_AzeriteEssence.UnlockMilestone}}",
+        "line": 57
+      },
+      {
+        "symbol": "C_AzeriteItem.FindActiveAzeriteItem",
+        "literal": "{{api|t=a|C_AzeriteItem.FindActiveAzeriteItem}}",
+        "line": 58
+      },
+      {
+        "symbol": "C_AzeriteItem.GetAzeriteItemXPInfo",
+        "literal": "{{api|t=a|C_AzeriteItem.GetAzeriteItemXPInfo}}",
+        "line": 59
+      },
+      {
+        "symbol": "C_AzeriteItem.GetPowerLevel",
+        "literal": "{{api|t=a|C_AzeriteItem.GetPowerLevel}}",
+        "line": 60
+      },
+      {
+        "symbol": "C_AzeriteItem.GetUnlimitedPowerLevel",
+        "literal": "{{api|t=a|C_AzeriteItem.GetUnlimitedPowerLevel}}",
+        "line": 61
+      },
+      {
+        "symbol": "C_AzeriteItem.HasActiveAzeriteItem",
+        "literal": "{{api|t=a|C_AzeriteItem.HasActiveAzeriteItem}}",
+        "line": 62
+      },
+      {
+        "symbol": "C_AzeriteItem.IsAzeriteItemAtMaxLevel",
+        "literal": "{{api|t=a|C_AzeriteItem.IsAzeriteItemAtMaxLevel}}",
+        "line": 63
+      },
+      {
+        "symbol": "C_AzeriteItem.IsAzeriteItemByID",
+        "literal": "{{api|t=a|C_AzeriteItem.IsAzeriteItemByID}}",
+        "line": 64
+      },
+      {
+        "symbol": "C_AzeriteItem.IsAzeriteItemEnabled",
+        "literal": "{{api|t=a|C_AzeriteItem.IsAzeriteItemEnabled}}",
+        "line": 65
+      },
+      {
+        "symbol": "C_AzeriteItem.IsAzeriteItem",
+        "literal": "{{api|t=a|C_AzeriteItem.IsAzeriteItem}}",
+        "line": 66
+      },
+      {
+        "symbol": "C_Calendar.AddEvent",
+        "literal": "{{api|t=a|C_Calendar.AddEvent}}",
+        "line": 67
+      },
+      {
+        "symbol": "C_Calendar.AreNamesReady",
+        "literal": "{{api|t=a|C_Calendar.AreNamesReady}}",
+        "line": 68
+      },
+      {
+        "symbol": "C_Calendar.CanAddEvent",
+        "literal": "{{api|t=a|C_Calendar.CanAddEvent}}",
+        "line": 69
+      },
+      {
+        "symbol": "C_Calendar.CanSendInvite",
+        "literal": "{{api|t=a|C_Calendar.CanSendInvite}}",
+        "line": 70
+      },
+      {
+        "symbol": "C_Calendar.CloseEvent",
+        "literal": "{{api|t=a|C_Calendar.CloseEvent}}",
+        "line": 71
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventCanComplain",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventCanComplain}}",
+        "line": 72
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventCanEdit",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventCanEdit}}",
+        "line": 73
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventCanRemove",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventCanRemove}}",
+        "line": 74
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventClipboard",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventClipboard}}",
+        "line": 75
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventComplain",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventComplain}}",
+        "line": 76
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventCopy",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventCopy}}",
+        "line": 77
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventGetCalendarType",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventGetCalendarType}}",
+        "line": 78
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventPaste",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventPaste}}",
+        "line": 79
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventRemove",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventRemove}}",
+        "line": 80
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuEventSignUp",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuEventSignUp}}",
+        "line": 81
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuGetEventIndex",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuGetEventIndex}}",
+        "line": 82
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuInviteAvailable",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuInviteAvailable}}",
+        "line": 83
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuInviteDecline",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuInviteDecline}}",
+        "line": 84
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuInviteRemove",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuInviteRemove}}",
+        "line": 85
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuInviteTentative",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuInviteTentative}}",
+        "line": 86
+      },
+      {
+        "symbol": "C_Calendar.ContextMenuSelectEvent",
+        "literal": "{{api|t=a|C_Calendar.ContextMenuSelectEvent}}",
+        "line": 87
+      },
+      {
+        "symbol": "C_Calendar.CreateCommunitySignUpEvent",
+        "literal": "{{api|t=a|C_Calendar.CreateCommunitySignUpEvent}}",
+        "line": 88
+      },
+      {
+        "symbol": "C_Calendar.CreateGuildAnnouncementEvent",
+        "literal": "{{api|t=a|C_Calendar.CreateGuildAnnouncementEvent}}",
+        "line": 89
+      },
+      {
+        "symbol": "C_Calendar.CreateGuildSignUpEvent",
+        "literal": "{{api|t=a|C_Calendar.CreateGuildSignUpEvent}}",
+        "line": 90
+      },
+      {
+        "symbol": "C_Calendar.CreatePlayerEvent",
+        "literal": "{{api|t=a|C_Calendar.CreatePlayerEvent}}",
+        "line": 91
+      },
+      {
+        "symbol": "C_Calendar.EventAvailable",
+        "literal": "{{api|t=a|C_Calendar.EventAvailable}}",
+        "line": 92
+      },
+      {
+        "symbol": "C_Calendar.EventCanEdit",
+        "literal": "{{api|t=a|C_Calendar.EventCanEdit}}",
+        "line": 93
+      },
+      {
+        "symbol": "C_Calendar.EventClearAutoApprove",
+        "literal": "{{api|t=a|C_Calendar.EventClearAutoApprove}}",
+        "line": 94
+      },
+      {
+        "symbol": "C_Calendar.EventClearLocked",
+        "literal": "{{api|t=a|C_Calendar.EventClearLocked}}",
+        "line": 95
+      },
+      {
+        "symbol": "C_Calendar.EventClearModerator",
+        "literal": "{{api|t=a|C_Calendar.EventClearModerator}}",
+        "line": 96
+      },
+      {
+        "symbol": "C_Calendar.EventDecline",
+        "literal": "{{api|t=a|C_Calendar.EventDecline}}",
+        "line": 97
+      },
+      {
+        "symbol": "C_Calendar.EventGetCalendarType",
+        "literal": "{{api|t=a|C_Calendar.EventGetCalendarType}}",
+        "line": 98
+      },
+      {
+        "symbol": "C_Calendar.EventGetClubId",
+        "literal": "{{api|t=a|C_Calendar.EventGetClubId}}",
+        "line": 99
+      },
+      {
+        "symbol": "C_Calendar.EventGetInviteResponseTime",
+        "literal": "{{api|t=a|C_Calendar.EventGetInviteResponseTime}}",
+        "line": 100
+      },
+      {
+        "symbol": "C_Calendar.EventGetInviteSortCriterion",
+        "literal": "{{api|t=a|C_Calendar.EventGetInviteSortCriterion}}",
+        "line": 101
+      },
+      {
+        "symbol": "C_Calendar.EventGetInvite",
+        "literal": "{{api|t=a|C_Calendar.EventGetInvite}}",
+        "line": 102
+      },
+      {
+        "symbol": "C_Calendar.EventGetSelectedInvite",
+        "literal": "{{api|t=a|C_Calendar.EventGetSelectedInvite}}",
+        "line": 103
+      },
+      {
+        "symbol": "C_Calendar.EventGetStatusOptions",
+        "literal": "{{api|t=a|C_Calendar.EventGetStatusOptions}}",
+        "line": 104
+      },
+      {
+        "symbol": "C_Calendar.EventGetTextures",
+        "literal": "{{api|t=a|C_Calendar.EventGetTextures}}",
+        "line": 105
+      },
+      {
+        "symbol": "C_Calendar.EventGetTypesDisplayOrdered",
+        "literal": "{{api|t=a|C_Calendar.EventGetTypesDisplayOrdered}}",
+        "line": 106
+      },
+      {
+        "symbol": "C_Calendar.EventGetTypes",
+        "literal": "{{api|t=a|C_Calendar.EventGetTypes}}",
+        "line": 107
+      },
+      {
+        "symbol": "C_Calendar.EventHasPendingInvite",
+        "literal": "{{api|t=a|C_Calendar.EventHasPendingInvite}}",
+        "line": 108
+      },
+      {
+        "symbol": "C_Calendar.EventHaveSettingsChanged",
+        "literal": "{{api|t=a|C_Calendar.EventHaveSettingsChanged}}",
+        "line": 109
+      },
+      {
+        "symbol": "C_Calendar.EventInvite",
+        "literal": "{{api|t=a|C_Calendar.EventInvite}}",
+        "line": 110
+      },
+      {
+        "symbol": "C_Calendar.EventRemoveInviteByGuid",
+        "literal": "{{api|t=a|C_Calendar.EventRemoveInviteByGuid}}",
+        "line": 111
+      },
+      {
+        "symbol": "C_Calendar.EventRemoveInvite",
+        "literal": "{{api|t=a|C_Calendar.EventRemoveInvite}}",
+        "line": 112
+      },
+      {
+        "symbol": "C_Calendar.EventSelectInvite",
+        "literal": "{{api|t=a|C_Calendar.EventSelectInvite}}",
+        "line": 113
+      },
+      {
+        "symbol": "C_Calendar.EventSetAutoApprove",
+        "literal": "{{api|t=a|C_Calendar.EventSetAutoApprove}}",
+        "line": 114
+      },
+      {
+        "symbol": "C_Calendar.EventSetClubId",
+        "literal": "{{api|t=a|C_Calendar.EventSetClubId}}",
+        "line": 115
+      },
+      {
+        "symbol": "C_Calendar.EventSetDate",
+        "literal": "{{api|t=a|C_Calendar.EventSetDate}}",
+        "line": 116
+      },
+      {
+        "symbol": "C_Calendar.EventSetDescription",
+        "literal": "{{api|t=a|C_Calendar.EventSetDescription}}",
+        "line": 117
+      },
+      {
+        "symbol": "C_Calendar.EventSetInviteStatus",
+        "literal": "{{api|t=a|C_Calendar.EventSetInviteStatus}}",
+        "line": 118
+      },
+      {
+        "symbol": "C_Calendar.EventSetLocked",
+        "literal": "{{api|t=a|C_Calendar.EventSetLocked}}",
+        "line": 119
+      },
+      {
+        "symbol": "C_Calendar.EventSetModerator",
+        "literal": "{{api|t=a|C_Calendar.EventSetModerator}}",
+        "line": 120
+      },
+      {
+        "symbol": "C_Calendar.EventSetTextureID",
+        "literal": "{{api|t=a|C_Calendar.EventSetTextureID}}",
+        "line": 121
+      },
+      {
+        "symbol": "C_Calendar.EventSetTime",
+        "literal": "{{api|t=a|C_Calendar.EventSetTime}}",
+        "line": 122
+      },
+      {
+        "symbol": "C_Calendar.EventSetTitle",
+        "literal": "{{api|t=a|C_Calendar.EventSetTitle}}",
+        "line": 123
+      },
+      {
+        "symbol": "C_Calendar.EventSetType",
+        "literal": "{{api|t=a|C_Calendar.EventSetType}}",
+        "line": 124
+      },
+      {
+        "symbol": "C_Calendar.EventSignUp",
+        "literal": "{{api|t=a|C_Calendar.EventSignUp}}",
+        "line": 125
+      },
+      {
+        "symbol": "C_Calendar.EventSortInvites",
+        "literal": "{{api|t=a|C_Calendar.EventSortInvites}}",
+        "line": 126
+      },
+      {
+        "symbol": "C_Calendar.EventTentative",
+        "literal": "{{api|t=a|C_Calendar.EventTentative}}",
+        "line": 127
+      },
+      {
+        "symbol": "C_Calendar.GetClubCalendarEvents",
+        "literal": "{{api|t=a|C_Calendar.GetClubCalendarEvents}}",
+        "line": 128
+      },
+      {
+        "symbol": "C_Calendar.GetDayEvent",
+        "literal": "{{api|t=a|C_Calendar.GetDayEvent}}",
+        "line": 129
+      },
+      {
+        "symbol": "C_Calendar.GetDefaultGuildFilter",
+        "literal": "{{api|t=a|C_Calendar.GetDefaultGuildFilter}}",
+        "line": 130
+      },
+      {
+        "symbol": "C_Calendar.GetEventIndexInfo",
+        "literal": "{{api|t=a|C_Calendar.GetEventIndexInfo}}",
+        "line": 131
+      },
+      {
+        "symbol": "C_Calendar.GetEventIndex",
+        "literal": "{{api|t=a|C_Calendar.GetEventIndex}}",
+        "line": 132
+      },
+      {
+        "symbol": "C_Calendar.GetEventInfo",
+        "literal": "{{api|t=a|C_Calendar.GetEventInfo}}",
+        "line": 133
+      },
+      {
+        "symbol": "C_Calendar.GetFirstPendingInvite",
+        "literal": "{{api|t=a|C_Calendar.GetFirstPendingInvite}}",
+        "line": 134
+      },
+      {
+        "symbol": "C_Calendar.GetGuildEventInfo",
+        "literal": "{{api|t=a|C_Calendar.GetGuildEventInfo}}",
+        "line": 135
+      },
+      {
+        "symbol": "C_Calendar.GetGuildEventSelectionInfo",
+        "literal": "{{api|t=a|C_Calendar.GetGuildEventSelectionInfo}}",
+        "line": 136
+      },
+      {
+        "symbol": "C_Calendar.GetHolidayInfo",
+        "literal": "{{api|t=a|C_Calendar.GetHolidayInfo}}",
+        "line": 137
+      },
+      {
+        "symbol": "C_Calendar.GetMaxCreateDate",
+        "literal": "{{api|t=a|C_Calendar.GetMaxCreateDate}}",
+        "line": 138
+      },
+      {
+        "symbol": "C_Calendar.GetMinDate",
+        "literal": "{{api|t=a|C_Calendar.GetMinDate}}",
+        "line": 139
+      },
+      {
+        "symbol": "C_Calendar.GetMonthInfo",
+        "literal": "{{api|t=a|C_Calendar.GetMonthInfo}}",
+        "line": 140
+      },
+      {
+        "symbol": "C_Calendar.GetNextClubId",
+        "literal": "{{api|t=a|C_Calendar.GetNextClubId}}",
+        "line": 141
+      },
+      {
+        "symbol": "C_Calendar.GetNumDayEvents",
+        "literal": "{{api|t=a|C_Calendar.GetNumDayEvents}}",
+        "line": 142
+      },
+      {
+        "symbol": "C_Calendar.GetNumGuildEvents",
+        "literal": "{{api|t=a|C_Calendar.GetNumGuildEvents}}",
+        "line": 143
+      },
+      {
+        "symbol": "C_Calendar.GetNumInvites",
+        "literal": "{{api|t=a|C_Calendar.GetNumInvites}}",
+        "line": 144
+      },
+      {
+        "symbol": "C_Calendar.GetNumPendingInvites",
+        "literal": "{{api|t=a|C_Calendar.GetNumPendingInvites}}",
+        "line": 145
+      },
+      {
+        "symbol": "C_Calendar.GetRaidInfo",
+        "literal": "{{api|t=a|C_Calendar.GetRaidInfo}}",
+        "line": 146
+      },
+      {
+        "symbol": "C_Calendar.IsActionPending",
+        "literal": "{{api|t=a|C_Calendar.IsActionPending}}",
+        "line": 147
+      },
+      {
+        "symbol": "C_Calendar.IsEventOpen",
+        "literal": "{{api|t=a|C_Calendar.IsEventOpen}}",
+        "line": 148
+      },
+      {
+        "symbol": "C_Calendar.MassInviteCommunity",
+        "literal": "{{api|t=a|C_Calendar.MassInviteCommunity}}",
+        "line": 149
+      },
+      {
+        "symbol": "C_Calendar.MassInviteGuild",
+        "literal": "{{api|t=a|C_Calendar.MassInviteGuild}}",
+        "line": 150
+      },
+      {
+        "symbol": "C_Calendar.OpenCalendar",
+        "literal": "{{api|t=a|C_Calendar.OpenCalendar}}",
+        "line": 151
+      },
+      {
+        "symbol": "C_Calendar.OpenEvent",
+        "literal": "{{api|t=a|C_Calendar.OpenEvent}}",
+        "line": 152
+      },
+      {
+        "symbol": "C_Calendar.RemoveEvent",
+        "literal": "{{api|t=a|C_Calendar.RemoveEvent}}",
+        "line": 153
+      },
+      {
+        "symbol": "C_Calendar.SetAbsMonth",
+        "literal": "{{api|t=a|C_Calendar.SetAbsMonth}}",
+        "line": 154
+      },
+      {
+        "symbol": "C_Calendar.SetMonth",
+        "literal": "{{api|t=a|C_Calendar.SetMonth}}",
+        "line": 155
+      },
+      {
+        "symbol": "C_Calendar.SetNextClubId",
+        "literal": "{{api|t=a|C_Calendar.SetNextClubId}}",
+        "line": 156
+      },
+      {
+        "symbol": "C_Calendar.UpdateEvent",
+        "literal": "{{api|t=a|C_Calendar.UpdateEvent}}",
+        "line": 157
+      },
+      {
+        "symbol": "C_ChatInfo.GetChannelInfoFromIdentifier",
+        "literal": "{{api|t=a|C_ChatInfo.GetChannelInfoFromIdentifier}}",
+        "line": 158
+      },
+      {
+        "symbol": "C_ChatInfo.GetChannelShortcutForChannelID",
+        "literal": "{{api|t=a|C_ChatInfo.GetChannelShortcutForChannelID}}",
+        "line": 159
+      },
+      {
+        "symbol": "C_ChatInfo.GetChannelShortcut",
+        "literal": "{{api|t=a|C_ChatInfo.GetChannelShortcut}}",
+        "line": 160
+      },
+      {
+        "symbol": "C_ChatInfo.GetChatTypeName",
+        "literal": "{{api|t=a|C_ChatInfo.GetChatTypeName}}",
+        "line": 161
+      },
+      {
+        "symbol": "C_GamePad.AddSDLMapping",
+        "literal": "{{api|t=a|C_GamePad.AddSDLMapping}}",
+        "line": 162
+      },
+      {
+        "symbol": "C_ReportSystem.CanReportPlayerForLanguage",
+        "literal": "{{api|t=a|C_ReportSystem.CanReportPlayerForLanguage}}",
+        "line": 163
+      },
+      {
+        "symbol": "C_ReportSystem.CanReportPlayer",
+        "literal": "{{api|t=a|C_ReportSystem.CanReportPlayer}}",
+        "line": 164
+      },
+      {
+        "symbol": "C_ReportSystem.InitiateReportPlayer",
+        "literal": "{{api|t=a|C_ReportSystem.InitiateReportPlayer}}",
+        "line": 165
+      },
+      {
+        "symbol": "C_ReportSystem.OpenReportPlayerDialog",
+        "literal": "{{api|t=a|C_ReportSystem.OpenReportPlayerDialog}}",
+        "line": 166
+      },
+      {
+        "symbol": "C_ReportSystem.ReportServerLag",
+        "literal": "{{api|t=a|C_ReportSystem.ReportServerLag}}",
+        "line": 167
+      },
+      {
+        "symbol": "C_ReportSystem.ReportStuckInCombat",
+        "literal": "{{api|t=a|C_ReportSystem.ReportStuckInCombat}}",
+        "line": 168
+      },
+      {
+        "symbol": "C_ReportSystem.SendReportPlayer",
+        "literal": "{{api|t=a|C_ReportSystem.SendReportPlayer}}",
+        "line": 169
+      },
+      {
+        "symbol": "C_ReportSystem.SetPendingReportPetTarget",
+        "literal": "{{api|t=a|C_ReportSystem.SetPendingReportPetTarget}}",
+        "line": 170
+      },
+      {
+        "symbol": "C_ReportSystem.SetPendingReportTargetByGuid",
+        "literal": "{{api|t=a|C_ReportSystem.SetPendingReportTargetByGuid}}",
+        "line": 171
+      },
+      {
+        "symbol": "C_ReportSystem.SetPendingReportTarget",
+        "literal": "{{api|t=a|C_ReportSystem.SetPendingReportTarget}}",
+        "line": 172
+      },
+      {
+        "symbol": "C_System.GetFrameStack",
+        "literal": "{{api|t=a|C_System.GetFrameStack}}",
+        "line": 173
+      },
+      {
+        "symbol": "C_TTSSettings.GetChannelEnabled",
+        "literal": "{{api|t=a|C_TTSSettings.GetChannelEnabled}}",
+        "line": 174
+      },
+      {
+        "symbol": "C_TTSSettings.GetCharacterSettingsSaved",
+        "literal": "{{api|t=a|C_TTSSettings.GetCharacterSettingsSaved}}",
+        "line": 175
+      },
+      {
+        "symbol": "C_TTSSettings.GetChatTypeEnabled",
+        "literal": "{{api|t=a|C_TTSSettings.GetChatTypeEnabled}}",
+        "line": 176
+      },
+      {
+        "symbol": "C_TTSSettings.GetSetting",
+        "literal": "{{api|t=a|C_TTSSettings.GetSetting}}",
+        "line": 177
+      },
+      {
+        "symbol": "C_TTSSettings.GetSpeechRate",
+        "literal": "{{api|t=a|C_TTSSettings.GetSpeechRate}}",
+        "line": 178
+      },
+      {
+        "symbol": "C_TTSSettings.GetSpeechVolume",
+        "literal": "{{api|t=a|C_TTSSettings.GetSpeechVolume}}",
+        "line": 179
+      },
+      {
+        "symbol": "C_TTSSettings.GetVoiceOptionID",
+        "literal": "{{api|t=a|C_TTSSettings.GetVoiceOptionID}}",
+        "line": 180
+      },
+      {
+        "symbol": "C_TTSSettings.GetVoiceOptionName",
+        "literal": "{{api|t=a|C_TTSSettings.GetVoiceOptionName}}",
+        "line": 181
+      },
+      {
+        "symbol": "C_TTSSettings.MarkCharacterSettingsSaved",
+        "literal": "{{api|t=a|C_TTSSettings.MarkCharacterSettingsSaved}}",
+        "line": 182
+      },
+      {
+        "symbol": "C_TTSSettings.SetChannelEnabled",
+        "literal": "{{api|t=a|C_TTSSettings.SetChannelEnabled}}",
+        "line": 183
+      },
+      {
+        "symbol": "C_TTSSettings.SetChannelKeyEnabled",
+        "literal": "{{api|t=a|C_TTSSettings.SetChannelKeyEnabled}}",
+        "line": 184
+      },
+      {
+        "symbol": "C_TTSSettings.SetChatTypeEnabled",
+        "literal": "{{api|t=a|C_TTSSettings.SetChatTypeEnabled}}",
+        "line": 185
+      },
+      {
+        "symbol": "C_TTSSettings.SetDefaultSettings",
+        "literal": "{{api|t=a|C_TTSSettings.SetDefaultSettings}}",
+        "line": 186
+      },
+      {
+        "symbol": "C_TTSSettings.SetSetting",
+        "literal": "{{api|t=a|C_TTSSettings.SetSetting}}",
+        "line": 187
+      },
+      {
+        "symbol": "C_TTSSettings.SetSpeechRate",
+        "literal": "{{api|t=a|C_TTSSettings.SetSpeechRate}}",
+        "line": 188
+      },
+      {
+        "symbol": "C_TTSSettings.SetSpeechVolume",
+        "literal": "{{api|t=a|C_TTSSettings.SetSpeechVolume}}",
+        "line": 189
+      },
+      {
+        "symbol": "C_TTSSettings.SetVoiceOptionName",
+        "literal": "{{api|t=a|C_TTSSettings.SetVoiceOptionName}}",
+        "line": 190
+      },
+      {
+        "symbol": "C_TTSSettings.SetVoiceOption",
+        "literal": "{{api|t=a|C_TTSSettings.SetVoiceOption}}",
+        "line": 191
+      },
+      {
+        "symbol": "C_TTSSettings.ShouldOverrideMessage",
+        "literal": "{{api|t=a|C_TTSSettings.ShouldOverrideMessage}}",
+        "line": 192
+      },
+      {
+        "symbol": "C_UI.DoesAnyDisplayHaveNotch",
+        "literal": "{{api|t=a|C_UI.DoesAnyDisplayHaveNotch}}",
+        "line": 193
+      },
+      {
+        "symbol": "C_UI.GetTopLeftNotchSafeRegion",
+        "literal": "{{api|t=a|C_UI.GetTopLeftNotchSafeRegion}}",
+        "line": 194
+      },
+      {
+        "symbol": "C_UI.GetTopRightNotchSafeRegion",
+        "literal": "{{api|t=a|C_UI.GetTopRightNotchSafeRegion}}",
+        "line": 195
+      },
+      {
+        "symbol": "C_UI.ShouldUIParentAvoidNotch",
+        "literal": "{{api|t=a|C_UI.ShouldUIParentAvoidNotch}}",
+        "line": 196
+      },
+      {
+        "symbol": "C_VoiceChat.IsSpeakForMeActive",
+        "literal": "{{api|t=a|C_VoiceChat.IsSpeakForMeActive}}",
+        "line": 197
+      },
+      {
+        "symbol": "C_VoiceChat.IsSpeakForMeAllowed",
+        "literal": "{{api|t=a|C_VoiceChat.IsSpeakForMeAllowed}}",
+        "line": 198
+      },
+      {
+        "symbol": "C_VoiceChat.IsTranscriptionAllowed",
+        "literal": "{{api|t=a|C_VoiceChat.IsTranscriptionAllowed}}",
+        "line": 199
+      },
+      {
+        "symbol": "GetTradeSkillItemLevelFilter",
+        "literal": "{{api|t=a|GetTradeSkillItemLevelFilter}}",
+        "line": 200
+      },
+      {
+        "symbol": "GetTradeSkillItemNameFilter",
+        "literal": "{{api|t=a|GetTradeSkillItemNameFilter}}",
+        "line": 201
+      },
+      {
+        "symbol": "SetTradeSkillItemLevelFilter",
+        "literal": "{{api|t=a|SetTradeSkillItemLevelFilter}}",
+        "line": 202
+      },
+      {
+        "symbol": "SetTradeSkillItemNameFilter",
+        "literal": "{{api|t=a|SetTradeSkillItemNameFilter}}",
+        "line": 203
+      },
+      {
+        "symbol": "UnitGroupRolesAssigned",
+        "literal": "{{api|t=a|UnitGroupRolesAssigned}}",
+        "line": 204
+      },
+      {
+        "symbol": "Frame:SetAttributeNoHandler",
+        "literal": "{{api|t=w|Frame:SetAttributeNoHandler}}",
+        "line": 217
+      },
+      {
+        "symbol": "ACHIEVEMENT_EARNED",
+        "literal": "{{api|t=e|ACHIEVEMENT_EARNED}}",
+        "line": 230
+      },
+      {
+        "symbol": "ACHIEVEMENT_PLAYER_NAME",
+        "literal": "{{api|t=e|ACHIEVEMENT_PLAYER_NAME}}",
+        "line": 231
+      },
+      {
+        "symbol": "ACHIEVEMENT_SEARCH_UPDATED",
+        "literal": "{{api|t=e|ACHIEVEMENT_SEARCH_UPDATED}}",
+        "line": 232
+      },
+      {
+        "symbol": "ACTIVATE_GLYPH",
+        "literal": "{{api|t=e|ACTIVATE_GLYPH}}",
+        "line": 233
+      },
+      {
+        "symbol": "ADVENTURE_MAP_CLOSE",
+        "literal": "{{api|t=e|ADVENTURE_MAP_CLOSE}}",
+        "line": 234
+      },
+      {
+        "symbol": "ADVENTURE_MAP_OPEN",
+        "literal": "{{api|t=e|ADVENTURE_MAP_OPEN}}",
+        "line": 235
+      },
+      {
+        "symbol": "ADVENTURE_MAP_QUEST_UPDATE",
+        "literal": "{{api|t=e|ADVENTURE_MAP_QUEST_UPDATE}}",
+        "line": 236
+      },
+      {
+        "symbol": "ADVENTURE_MAP_UPDATE_INSETS",
+        "literal": "{{api|t=e|ADVENTURE_MAP_UPDATE_INSETS}}",
+        "line": 237
+      },
+      {
+        "symbol": "ADVENTURE_MAP_UPDATE_POIS",
+        "literal": "{{api|t=e|ADVENTURE_MAP_UPDATE_POIS}}",
+        "line": 238
+      },
+      {
+        "symbol": "AJ_DUNGEON_ACTION",
+        "literal": "{{api|t=e|AJ_DUNGEON_ACTION}}",
+        "line": 239
+      },
+      {
+        "symbol": "AJ_OPEN",
+        "literal": "{{api|t=e|AJ_OPEN}}",
+        "line": 240
+      },
+      {
+        "symbol": "AJ_PVE_LFG_ACTION",
+        "literal": "{{api|t=e|AJ_PVE_LFG_ACTION}}",
+        "line": 241
+      },
+      {
+        "symbol": "AJ_PVP_ACTION",
+        "literal": "{{api|t=e|AJ_PVP_ACTION}}",
+        "line": 242
+      },
+      {
+        "symbol": "AJ_PVP_LFG_ACTION",
+        "literal": "{{api|t=e|AJ_PVP_LFG_ACTION}}",
+        "line": 243
+      },
+      {
+        "symbol": "AJ_PVP_RBG_ACTION",
+        "literal": "{{api|t=e|AJ_PVP_RBG_ACTION}}",
+        "line": 244
+      },
+      {
+        "symbol": "AJ_PVP_SKIRMISH_ACTION",
+        "literal": "{{api|t=e|AJ_PVP_SKIRMISH_ACTION}}",
+        "line": 245
+      },
+      {
+        "symbol": "AJ_QUEST_LOG_OPEN",
+        "literal": "{{api|t=e|AJ_QUEST_LOG_OPEN}}",
+        "line": 246
+      },
+      {
+        "symbol": "AJ_RAID_ACTION",
+        "literal": "{{api|t=e|AJ_RAID_ACTION}}",
+        "line": 247
+      },
+      {
+        "symbol": "AJ_REFRESH_DISPLAY",
+        "literal": "{{api|t=e|AJ_REFRESH_DISPLAY}}",
+        "line": 248
+      },
+      {
+        "symbol": "AJ_REWARD_DATA_RECEIVED",
+        "literal": "{{api|t=e|AJ_REWARD_DATA_RECEIVED}}",
+        "line": 249
+      },
+      {
+        "symbol": "ALERT_REGIONAL_CHAT_DISABLED",
+        "literal": "{{api|t=e|ALERT_REGIONAL_CHAT_DISABLED}}",
+        "line": 250
+      },
+      {
+        "symbol": "AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED",
+        "literal": "{{api|t=e|AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED}}",
+        "line": 251
+      },
+      {
+        "symbol": "AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED",
+        "literal": "{{api|t=e|AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED}}",
+        "line": 252
+      },
+      {
+        "symbol": "AZERITE_ESSENCE_ACTIVATED",
+        "literal": "{{api|t=e|AZERITE_ESSENCE_ACTIVATED}}",
+        "line": 253
+      },
+      {
+        "symbol": "AZERITE_ESSENCE_ACTIVATION_FAILED",
+        "literal": "{{api|t=e|AZERITE_ESSENCE_ACTIVATION_FAILED}}",
+        "line": 254
+      },
+      {
+        "symbol": "AZERITE_ESSENCE_CHANGED",
+        "literal": "{{api|t=e|AZERITE_ESSENCE_CHANGED}}",
+        "line": 255
+      },
+      {
+        "symbol": "AZERITE_ESSENCE_FORGE_CLOSE",
+        "literal": "{{api|t=e|AZERITE_ESSENCE_FORGE_CLOSE}}",
+        "line": 256
+      },
+      {
+        "symbol": "AZERITE_ESSENCE_FORGE_OPEN",
+        "literal": "{{api|t=e|AZERITE_ESSENCE_FORGE_OPEN}}",
+        "line": 257
+      },
+      {
+        "symbol": "AZERITE_ESSENCE_MILESTONE_UNLOCKED",
+        "literal": "{{api|t=e|AZERITE_ESSENCE_MILESTONE_UNLOCKED}}",
+        "line": 258
+      },
+      {
+        "symbol": "AZERITE_ESSENCE_UPDATE",
+        "literal": "{{api|t=e|AZERITE_ESSENCE_UPDATE}}",
+        "line": 259
+      },
+      {
+        "symbol": "AZERITE_ITEM_ENABLED_STATE_CHANGED",
+        "literal": "{{api|t=e|AZERITE_ITEM_ENABLED_STATE_CHANGED}}",
+        "line": 260
+      },
+      {
+        "symbol": "AZERITE_ITEM_EXPERIENCE_CHANGED",
+        "literal": "{{api|t=e|AZERITE_ITEM_EXPERIENCE_CHANGED}}",
+        "line": 261
+      },
+      {
+        "symbol": "AZERITE_ITEM_POWER_LEVEL_CHANGED",
+        "literal": "{{api|t=e|AZERITE_ITEM_POWER_LEVEL_CHANGED}}",
+        "line": 262
+      },
+      {
+        "symbol": "BEHAVIORAL_NOTIFICATION",
+        "literal": "{{api|t=e|BEHAVIORAL_NOTIFICATION}}",
+        "line": 263
+      },
+      {
+        "symbol": "BLACK_MARKET_BID_RESULT",
+        "literal": "{{api|t=e|BLACK_MARKET_BID_RESULT}}",
+        "line": 264
+      },
+      {
+        "symbol": "BLACK_MARKET_CLOSE",
+        "literal": "{{api|t=e|BLACK_MARKET_CLOSE}}",
+        "line": 265
+      },
+      {
+        "symbol": "BLACK_MARKET_ITEM_UPDATE",
+        "literal": "{{api|t=e|BLACK_MARKET_ITEM_UPDATE}}",
+        "line": 266
+      },
+      {
+        "symbol": "BLACK_MARKET_OPEN",
+        "literal": "{{api|t=e|BLACK_MARKET_OPEN}}",
+        "line": 267
+      },
+      {
+        "symbol": "BLACK_MARKET_OUTBID",
+        "literal": "{{api|t=e|BLACK_MARKET_OUTBID}}",
+        "line": 268
+      },
+      {
+        "symbol": "BLACK_MARKET_UNAVAILABLE",
+        "literal": "{{api|t=e|BLACK_MARKET_UNAVAILABLE}}",
+        "line": 269
+      },
+      {
+        "symbol": "BLACK_MARKET_WON",
+        "literal": "{{api|t=e|BLACK_MARKET_WON}}",
+        "line": 270
+      },
+      {
+        "symbol": "CALENDAR_ACTION_PENDING",
+        "literal": "{{api|t=e|CALENDAR_ACTION_PENDING}}",
+        "line": 271
+      },
+      {
+        "symbol": "CALENDAR_CLOSE_EVENT",
+        "literal": "{{api|t=e|CALENDAR_CLOSE_EVENT}}",
+        "line": 272
+      },
+      {
+        "symbol": "CALENDAR_EVENT_ALARM",
+        "literal": "{{api|t=e|CALENDAR_EVENT_ALARM}}",
+        "line": 273
+      },
+      {
+        "symbol": "CALENDAR_NEW_EVENT",
+        "literal": "{{api|t=e|CALENDAR_NEW_EVENT}}",
+        "line": 274
+      },
+      {
+        "symbol": "CALENDAR_OPEN_EVENT",
+        "literal": "{{api|t=e|CALENDAR_OPEN_EVENT}}",
+        "line": 275
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_ERROR_WITH_COUNT",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_ERROR_WITH_COUNT}}",
+        "line": 276
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME}}",
+        "line": 277
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_ERROR",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_ERROR}}",
+        "line": 278
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_EVENT_LIST",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_EVENT_LIST}}",
+        "line": 279
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_EVENT",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_EVENT}}",
+        "line": 280
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_GUILD_EVENTS",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_GUILD_EVENTS}}",
+        "line": 281
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_INVITE_LIST",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_INVITE_LIST}}",
+        "line": 282
+      },
+      {
+        "symbol": "CALENDAR_UPDATE_PENDING_INVITES",
+        "literal": "{{api|t=e|CALENDAR_UPDATE_PENDING_INVITES}}",
+        "line": 283
+      },
+      {
+        "symbol": "CANCEL_GLYPH_CAST",
+        "literal": "{{api|t=e|CANCEL_GLYPH_CAST}}",
+        "line": 284
+      },
+      {
+        "symbol": "CHAT_DISABLED_CHANGE_FAILED",
+        "literal": "{{api|t=e|CHAT_DISABLED_CHANGE_FAILED}}",
+        "line": 285
+      },
+      {
+        "symbol": "CHAT_DISABLED_CHANGED",
+        "literal": "{{api|t=e|CHAT_DISABLED_CHANGED}}",
+        "line": 286
+      },
+      {
+        "symbol": "CLASS_TRIAL_TIMER_START",
+        "literal": "{{api|t=e|CLASS_TRIAL_TIMER_START}}",
+        "line": 287
+      },
+      {
+        "symbol": "CLASS_TRIAL_UPGRADE_COMPLETE",
+        "literal": "{{api|t=e|CLASS_TRIAL_UPGRADE_COMPLETE}}",
+        "line": 288
+      },
+      {
+        "symbol": "CRITERIA_COMPLETE",
+        "literal": "{{api|t=e|CRITERIA_COMPLETE}}",
+        "line": 289
+      },
+      {
+        "symbol": "CRITERIA_EARNED",
+        "literal": "{{api|t=e|CRITERIA_EARNED}}",
+        "line": 290
+      },
+      {
+        "symbol": "CRITERIA_UPDATE",
+        "literal": "{{api|t=e|CRITERIA_UPDATE}}",
+        "line": 291
+      },
+      {
+        "symbol": "ENTITLEMENT_DELIVERED",
+        "literal": "{{api|t=e|ENTITLEMENT_DELIVERED}}",
+        "line": 292
+      },
+      {
+        "symbol": "EQUIPMENT_SETS_CHANGED",
+        "literal": "{{api|t=e|EQUIPMENT_SETS_CHANGED}}",
+        "line": 293
+      },
+      {
+        "symbol": "EQUIPMENT_SWAP_FINISHED",
+        "literal": "{{api|t=e|EQUIPMENT_SWAP_FINISHED}}",
+        "line": 294
+      },
+      {
+        "symbol": "EQUIPMENT_SWAP_PENDING",
+        "literal": "{{api|t=e|EQUIPMENT_SWAP_PENDING}}",
+        "line": 295
+      },
+      {
+        "symbol": "FIRST_FRAME_RENDERED",
+        "literal": "{{api|t=e|FIRST_FRAME_RENDERED}}",
+        "line": 296
+      },
+      {
+        "symbol": "GAME_PAD_ACTIVE_CHANGED",
+        "literal": "{{api|t=e|GAME_PAD_ACTIVE_CHANGED}}",
+        "line": 297
+      },
+      {
+        "symbol": "GAME_PAD_CONFIGS_CHANGED",
+        "literal": "{{api|t=e|GAME_PAD_CONFIGS_CHANGED}}",
+        "line": 298
+      },
+      {
+        "symbol": "GAME_PAD_CONNECTED",
+        "literal": "{{api|t=e|GAME_PAD_CONNECTED}}",
+        "line": 299
+      },
+      {
+        "symbol": "GAME_PAD_DISCONNECTED",
+        "literal": "{{api|t=e|GAME_PAD_DISCONNECTED}}",
+        "line": 300
+      },
+      {
+        "symbol": "GLOBAL_MOUSE_DOWN",
+        "literal": "{{api|t=e|GLOBAL_MOUSE_DOWN}}",
+        "line": 301
+      },
+      {
+        "symbol": "GLOBAL_MOUSE_UP",
+        "literal": "{{api|t=e|GLOBAL_MOUSE_UP}}",
+        "line": 302
+      },
+      {
+        "symbol": "GUILDBANK_ITEM_LOCK_CHANGED",
+        "literal": "{{api|t=e|GUILDBANK_ITEM_LOCK_CHANGED}}",
+        "line": 303
+      },
+      {
+        "symbol": "GUILDBANK_TEXT_CHANGED",
+        "literal": "{{api|t=e|GUILDBANK_TEXT_CHANGED}}",
+        "line": 304
+      },
+      {
+        "symbol": "GUILDBANK_UPDATE_MONEY",
+        "literal": "{{api|t=e|GUILDBANK_UPDATE_MONEY}}",
+        "line": 305
+      },
+      {
+        "symbol": "GUILDBANK_UPDATE_TABS",
+        "literal": "{{api|t=e|GUILDBANK_UPDATE_TABS}}",
+        "line": 306
+      },
+      {
+        "symbol": "GUILDBANK_UPDATE_TEXT",
+        "literal": "{{api|t=e|GUILDBANK_UPDATE_TEXT}}",
+        "line": 307
+      },
+      {
+        "symbol": "GUILDBANK_UPDATE_WITHDRAWMONEY",
+        "literal": "{{api|t=e|GUILDBANK_UPDATE_WITHDRAWMONEY}}",
+        "line": 308
+      },
+      {
+        "symbol": "GUILDBANKBAGSLOTS_CHANGED",
+        "literal": "{{api|t=e|GUILDBANKBAGSLOTS_CHANGED}}",
+        "line": 309
+      },
+      {
+        "symbol": "GUILDBANKFRAME_CLOSED",
+        "literal": "{{api|t=e|GUILDBANKFRAME_CLOSED}}",
+        "line": 310
+      },
+      {
+        "symbol": "GUILDBANKFRAME_OPENED",
+        "literal": "{{api|t=e|GUILDBANKFRAME_OPENED}}",
+        "line": 311
+      },
+      {
+        "symbol": "GUILDBANKLOG_UPDATE",
+        "literal": "{{api|t=e|GUILDBANKLOG_UPDATE}}",
+        "line": 312
+      },
+      {
+        "symbol": "HEIRLOOM_UPGRADE_TARGETING_CHANGED",
+        "literal": "{{api|t=e|HEIRLOOM_UPGRADE_TARGETING_CHANGED}}",
+        "line": 313
+      },
+      {
+        "symbol": "HEIRLOOMS_UPDATED",
+        "literal": "{{api|t=e|HEIRLOOMS_UPDATED}}",
+        "line": 314
+      },
+      {
+        "symbol": "INSPECT_ACHIEVEMENT_READY",
+        "literal": "{{api|t=e|INSPECT_ACHIEVEMENT_READY}}",
+        "line": 315
+      },
+      {
+        "symbol": "ISLAND_COMPLETED",
+        "literal": "{{api|t=e|ISLAND_COMPLETED}}",
+        "line": 316
+      },
+      {
+        "symbol": "ITEM_UPGRADE_FAILED",
+        "literal": "{{api|t=e|ITEM_UPGRADE_FAILED}}",
+        "line": 317
+      },
+      {
+        "symbol": "ITEM_UPGRADE_MASTER_CLOSED",
+        "literal": "{{api|t=e|ITEM_UPGRADE_MASTER_CLOSED}}",
+        "line": 318
+      },
+      {
+        "symbol": "ITEM_UPGRADE_MASTER_OPENED",
+        "literal": "{{api|t=e|ITEM_UPGRADE_MASTER_OPENED}}",
+        "line": 319
+      },
+      {
+        "symbol": "ITEM_UPGRADE_MASTER_SET_ITEM",
+        "literal": "{{api|t=e|ITEM_UPGRADE_MASTER_SET_ITEM}}",
+        "line": 320
+      },
+      {
+        "symbol": "LFG_BOOT_PROPOSAL_UPDATE",
+        "literal": "{{api|t=e|LFG_BOOT_PROPOSAL_UPDATE}}",
+        "line": 321
+      },
+      {
+        "symbol": "LFG_COMPLETION_REWARD",
+        "literal": "{{api|t=e|LFG_COMPLETION_REWARD}}",
+        "line": 322
+      },
+      {
+        "symbol": "LFG_INVALID_ERROR_MESSAGE",
+        "literal": "{{api|t=e|LFG_INVALID_ERROR_MESSAGE}}",
+        "line": 323
+      },
+      {
+        "symbol": "LFG_LOCK_INFO_RECEIVED",
+        "literal": "{{api|t=e|LFG_LOCK_INFO_RECEIVED}}",
+        "line": 324
+      },
+      {
+        "symbol": "LFG_OFFER_CONTINUE",
+        "literal": "{{api|t=e|LFG_OFFER_CONTINUE}}",
+        "line": 325
+      },
+      {
+        "symbol": "LFG_OPEN_FROM_GOSSIP",
+        "literal": "{{api|t=e|LFG_OPEN_FROM_GOSSIP}}",
+        "line": 326
+      },
+      {
+        "symbol": "LFG_PROPOSAL_DONE",
+        "literal": "{{api|t=e|LFG_PROPOSAL_DONE}}",
+        "line": 327
+      },
+      {
+        "symbol": "LFG_PROPOSAL_FAILED",
+        "literal": "{{api|t=e|LFG_PROPOSAL_FAILED}}",
+        "line": 328
+      },
+      {
+        "symbol": "LFG_PROPOSAL_SHOW",
+        "literal": "{{api|t=e|LFG_PROPOSAL_SHOW}}",
+        "line": 329
+      },
+      {
+        "symbol": "LFG_PROPOSAL_SUCCEEDED",
+        "literal": "{{api|t=e|LFG_PROPOSAL_SUCCEEDED}}",
+        "line": 330
+      },
+      {
+        "symbol": "LFG_PROPOSAL_UPDATE",
+        "literal": "{{api|t=e|LFG_PROPOSAL_UPDATE}}",
+        "line": 331
+      },
+      {
+        "symbol": "LFG_QUEUE_STATUS_UPDATE",
+        "literal": "{{api|t=e|LFG_QUEUE_STATUS_UPDATE}}",
+        "line": 332
+      },
+      {
+        "symbol": "LFG_READY_CHECK_DECLINED",
+        "literal": "{{api|t=e|LFG_READY_CHECK_DECLINED}}",
+        "line": 333
+      },
+      {
+        "symbol": "LFG_READY_CHECK_HIDE",
+        "literal": "{{api|t=e|LFG_READY_CHECK_HIDE}}",
+        "line": 334
+      },
+      {
+        "symbol": "LFG_READY_CHECK_PLAYER_IS_READY",
+        "literal": "{{api|t=e|LFG_READY_CHECK_PLAYER_IS_READY}}",
+        "line": 335
+      },
+      {
+        "symbol": "LFG_READY_CHECK_SHOW",
+        "literal": "{{api|t=e|LFG_READY_CHECK_SHOW}}",
+        "line": 336
+      },
+      {
+        "symbol": "LFG_READY_CHECK_UPDATE",
+        "literal": "{{api|t=e|LFG_READY_CHECK_UPDATE}}",
+        "line": 337
+      },
+      {
+        "symbol": "LFG_ROLE_CHECK_DECLINED",
+        "literal": "{{api|t=e|LFG_ROLE_CHECK_DECLINED}}",
+        "line": 338
+      },
+      {
+        "symbol": "LFG_ROLE_CHECK_HIDE",
+        "literal": "{{api|t=e|LFG_ROLE_CHECK_HIDE}}",
+        "line": 339
+      },
+      {
+        "symbol": "LFG_ROLE_CHECK_ROLE_CHOSEN",
+        "literal": "{{api|t=e|LFG_ROLE_CHECK_ROLE_CHOSEN}}",
+        "line": 340
+      },
+      {
+        "symbol": "LFG_ROLE_CHECK_SHOW",
+        "literal": "{{api|t=e|LFG_ROLE_CHECK_SHOW}}",
+        "line": 341
+      },
+      {
+        "symbol": "LFG_ROLE_CHECK_UPDATE",
+        "literal": "{{api|t=e|LFG_ROLE_CHECK_UPDATE}}",
+        "line": 342
+      },
+      {
+        "symbol": "LFG_ROLE_UPDATE",
+        "literal": "{{api|t=e|LFG_ROLE_UPDATE}}",
+        "line": 343
+      },
+      {
+        "symbol": "LFG_UPDATE_RANDOM_INFO",
+        "literal": "{{api|t=e|LFG_UPDATE_RANDOM_INFO}}",
+        "line": 344
+      },
+      {
+        "symbol": "LFG_UPDATE",
+        "literal": "{{api|t=e|LFG_UPDATE}}",
+        "line": 345
+      },
+      {
+        "symbol": "NEW_TOY_ADDED",
+        "literal": "{{api|t=e|NEW_TOY_ADDED}}",
+        "line": 346
+      },
+      {
+        "symbol": "NOTCHED_DISPLAY_MODE_CHANGED",
+        "literal": "{{api|t=e|NOTCHED_DISPLAY_MODE_CHANGED}}",
+        "line": 347
+      },
+      {
+        "symbol": "OPEN_REPORT_PLAYER",
+        "literal": "{{api|t=e|OPEN_REPORT_PLAYER}}",
+        "line": 348
+      },
+      {
+        "symbol": "PENDING_AZERITE_ESSENCE_CHANGED",
+        "literal": "{{api|t=e|PENDING_AZERITE_ESSENCE_CHANGED}}",
+        "line": 349
+      },
+      {
+        "symbol": "PET_BATTLE_ABILITY_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_ABILITY_CHANGED}}",
+        "line": 350
+      },
+      {
+        "symbol": "PET_BATTLE_ACTION_SELECTED",
+        "literal": "{{api|t=e|PET_BATTLE_ACTION_SELECTED}}",
+        "line": 351
+      },
+      {
+        "symbol": "PET_BATTLE_AURA_APPLIED",
+        "literal": "{{api|t=e|PET_BATTLE_AURA_APPLIED}}",
+        "line": 352
+      },
+      {
+        "symbol": "PET_BATTLE_AURA_CANCELED",
+        "literal": "{{api|t=e|PET_BATTLE_AURA_CANCELED}}",
+        "line": 353
+      },
+      {
+        "symbol": "PET_BATTLE_AURA_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_AURA_CHANGED}}",
+        "line": 354
+      },
+      {
+        "symbol": "PET_BATTLE_CAPTURED",
+        "literal": "{{api|t=e|PET_BATTLE_CAPTURED}}",
+        "line": 355
+      },
+      {
+        "symbol": "PET_BATTLE_CLOSE",
+        "literal": "{{api|t=e|PET_BATTLE_CLOSE}}",
+        "line": 356
+      },
+      {
+        "symbol": "PET_BATTLE_FINAL_ROUND",
+        "literal": "{{api|t=e|PET_BATTLE_FINAL_ROUND}}",
+        "line": 357
+      },
+      {
+        "symbol": "PET_BATTLE_HEALTH_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_HEALTH_CHANGED}}",
+        "line": 358
+      },
+      {
+        "symbol": "PET_BATTLE_LEVEL_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_LEVEL_CHANGED}}",
+        "line": 359
+      },
+      {
+        "symbol": "PET_BATTLE_MAX_HEALTH_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_MAX_HEALTH_CHANGED}}",
+        "line": 360
+      },
+      {
+        "symbol": "PET_BATTLE_OPENING_DONE",
+        "literal": "{{api|t=e|PET_BATTLE_OPENING_DONE}}",
+        "line": 361
+      },
+      {
+        "symbol": "PET_BATTLE_OPENING_START",
+        "literal": "{{api|t=e|PET_BATTLE_OPENING_START}}",
+        "line": 362
+      },
+      {
+        "symbol": "PET_BATTLE_OVERRIDE_ABILITY",
+        "literal": "{{api|t=e|PET_BATTLE_OVERRIDE_ABILITY}}",
+        "line": 363
+      },
+      {
+        "symbol": "PET_BATTLE_OVER",
+        "literal": "{{api|t=e|PET_BATTLE_OVER}}",
+        "line": 364
+      },
+      {
+        "symbol": "PET_BATTLE_PET_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_PET_CHANGED}}",
+        "line": 365
+      },
+      {
+        "symbol": "PET_BATTLE_PET_ROUND_PLAYBACK_COMPLETE",
+        "literal": "{{api|t=e|PET_BATTLE_PET_ROUND_PLAYBACK_COMPLETE}}",
+        "line": 366
+      },
+      {
+        "symbol": "PET_BATTLE_PET_ROUND_RESULTS",
+        "literal": "{{api|t=e|PET_BATTLE_PET_ROUND_RESULTS}}",
+        "line": 367
+      },
+      {
+        "symbol": "PET_BATTLE_PET_TYPE_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_PET_TYPE_CHANGED}}",
+        "line": 368
+      },
+      {
+        "symbol": "PET_BATTLE_PVP_DUEL_REQUEST_CANCEL",
+        "literal": "{{api|t=e|PET_BATTLE_PVP_DUEL_REQUEST_CANCEL}}",
+        "line": 369
+      },
+      {
+        "symbol": "PET_BATTLE_PVP_DUEL_REQUESTED",
+        "literal": "{{api|t=e|PET_BATTLE_PVP_DUEL_REQUESTED}}",
+        "line": 370
+      },
+      {
+        "symbol": "PET_BATTLE_QUEUE_PROPOSAL_ACCEPTED",
+        "literal": "{{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_ACCEPTED}}",
+        "line": 371
+      },
+      {
+        "symbol": "PET_BATTLE_QUEUE_PROPOSAL_DECLINED",
+        "literal": "{{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_DECLINED}}",
+        "line": 372
+      },
+      {
+        "symbol": "PET_BATTLE_QUEUE_PROPOSE_MATCH",
+        "literal": "{{api|t=e|PET_BATTLE_QUEUE_PROPOSE_MATCH}}",
+        "line": 373
+      },
+      {
+        "symbol": "PET_BATTLE_QUEUE_STATUS",
+        "literal": "{{api|t=e|PET_BATTLE_QUEUE_STATUS}}",
+        "line": 374
+      },
+      {
+        "symbol": "PET_BATTLE_XP_CHANGED",
+        "literal": "{{api|t=e|PET_BATTLE_XP_CHANGED}}",
+        "line": 375
+      },
+      {
+        "symbol": "PLAYER_GAINS_VEHICLE_DATA",
+        "literal": "{{api|t=e|PLAYER_GAINS_VEHICLE_DATA}}",
+        "line": 376
+      },
+      {
+        "symbol": "PLAYER_LOSES_VEHICLE_DATA",
+        "literal": "{{api|t=e|PLAYER_LOSES_VEHICLE_DATA}}",
+        "line": 377
+      },
+      {
+        "symbol": "QUEST_SESSION_CREATED",
+        "literal": "{{api|t=e|QUEST_SESSION_CREATED}}",
+        "line": 378
+      },
+      {
+        "symbol": "QUEST_SESSION_DESTROYED",
+        "literal": "{{api|t=e|QUEST_SESSION_DESTROYED}}",
+        "line": 379
+      },
+      {
+        "symbol": "QUEST_SESSION_ENABLED_STATE_CHANGED",
+        "literal": "{{api|t=e|QUEST_SESSION_ENABLED_STATE_CHANGED}}",
+        "line": 380
+      },
+      {
+        "symbol": "QUEST_SESSION_JOINED",
+        "literal": "{{api|t=e|QUEST_SESSION_JOINED}}",
+        "line": 381
+      },
+      {
+        "symbol": "QUEST_SESSION_LEFT",
+        "literal": "{{api|t=e|QUEST_SESSION_LEFT}}",
+        "line": 382
+      },
+      {
+        "symbol": "QUEST_SESSION_MEMBER_CONFIRM",
+        "literal": "{{api|t=e|QUEST_SESSION_MEMBER_CONFIRM}}",
+        "line": 383
+      },
+      {
+        "symbol": "QUEST_SESSION_MEMBER_START_RESPONSE",
+        "literal": "{{api|t=e|QUEST_SESSION_MEMBER_START_RESPONSE}}",
+        "line": 384
+      },
+      {
+        "symbol": "QUEST_SESSION_NOTIFICATION",
+        "literal": "{{api|t=e|QUEST_SESSION_NOTIFICATION}}",
+        "line": 385
+      },
+      {
+        "symbol": "RAF_ENTITLEMENT_DELIVERED",
+        "literal": "{{api|t=e|RAF_ENTITLEMENT_DELIVERED}}",
+        "line": 386
+      },
+      {
+        "symbol": "RECEIVED_ACHIEVEMENT_LIST",
+        "literal": "{{api|t=e|RECEIVED_ACHIEVEMENT_LIST}}",
+        "line": 387
+      },
+      {
+        "symbol": "RECEIVED_ACHIEVEMENT_MEMBER_LIST",
+        "literal": "{{api|t=e|RECEIVED_ACHIEVEMENT_MEMBER_LIST}}",
+        "line": 388
+      },
+      {
+        "symbol": "REPORT_PLAYER_RESULT",
+        "literal": "{{api|t=e|REPORT_PLAYER_RESULT}}",
+        "line": 389
+      },
+      {
+        "symbol": "RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED",
+        "literal": "{{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED}}",
+        "line": 390
+      },
+      {
+        "symbol": "RESPEC_AZERITE_EMPOWERED_ITEM_OPENED",
+        "literal": "{{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_OPENED}}",
+        "line": 391
+      },
+      {
+        "symbol": "SHOW_LFG_EXPAND_SEARCH_PROMPT",
+        "literal": "{{api|t=e|SHOW_LFG_EXPAND_SEARCH_PROMPT}}",
+        "line": 392
+      },
+      {
+        "symbol": "SOCKET_INFO_ACCEPT",
+        "literal": "{{api|t=e|SOCKET_INFO_ACCEPT}}",
+        "line": 393
+      },
+      {
+        "symbol": "SOCKET_INFO_CLOSE",
+        "literal": "{{api|t=e|SOCKET_INFO_CLOSE}}",
+        "line": 394
+      },
+      {
+        "symbol": "SOCKET_INFO_FAILURE",
+        "literal": "{{api|t=e|SOCKET_INFO_FAILURE}}",
+        "line": 395
+      },
+      {
+        "symbol": "SOCKET_INFO_REFUNDABLE_CONFIRM",
+        "literal": "{{api|t=e|SOCKET_INFO_REFUNDABLE_CONFIRM}}",
+        "line": 396
+      },
+      {
+        "symbol": "SOCKET_INFO_SUCCESS",
+        "literal": "{{api|t=e|SOCKET_INFO_SUCCESS}}",
+        "line": 397
+      },
+      {
+        "symbol": "SOCKET_INFO_UPDATE",
+        "literal": "{{api|t=e|SOCKET_INFO_UPDATE}}",
+        "line": 398
+      },
+      {
+        "symbol": "SPELL_ACTIVATION_OVERLAY_GLOW_HIDE",
+        "literal": "{{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_HIDE}}",
+        "line": 399
+      },
+      {
+        "symbol": "SPELL_ACTIVATION_OVERLAY_GLOW_SHOW",
+        "literal": "{{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_SHOW}}",
+        "line": 400
+      },
+      {
+        "symbol": "SPELL_ACTIVATION_OVERLAY_HIDE",
+        "literal": "{{api|t=e|SPELL_ACTIVATION_OVERLAY_HIDE}}",
+        "line": 401
+      },
+      {
+        "symbol": "SPELL_ACTIVATION_OVERLAY_SHOW",
+        "literal": "{{api|t=e|SPELL_ACTIVATION_OVERLAY_SHOW}}",
+        "line": 402
+      },
+      {
+        "symbol": "STOP_MOVIE",
+        "literal": "{{api|t=e|STOP_MOVIE}}",
+        "line": 403
+      },
+      {
+        "symbol": "TOYS_UPDATED",
+        "literal": "{{api|t=e|TOYS_UPDATED}}",
+        "line": 404
+      },
+      {
+        "symbol": "TRACKED_ACHIEVEMENT_LIST_CHANGED",
+        "literal": "{{api|t=e|TRACKED_ACHIEVEMENT_LIST_CHANGED}}",
+        "line": 405
+      },
+      {
+        "symbol": "TRACKED_ACHIEVEMENT_UPDATE",
+        "literal": "{{api|t=e|TRACKED_ACHIEVEMENT_UPDATE}}",
+        "line": 406
+      },
+      {
+        "symbol": "TRANSMOG_OUTFITS_CHANGED",
+        "literal": "{{api|t=e|TRANSMOG_OUTFITS_CHANGED}}",
+        "line": 407
+      },
+      {
+        "symbol": "UNIT_ENTERED_VEHICLE",
+        "literal": "{{api|t=e|UNIT_ENTERED_VEHICLE}}",
+        "line": 408
+      },
+      {
+        "symbol": "UNIT_ENTERING_VEHICLE",
+        "literal": "{{api|t=e|UNIT_ENTERING_VEHICLE}}",
+        "line": 409
+      },
+      {
+        "symbol": "UNIT_EXITED_VEHICLE",
+        "literal": "{{api|t=e|UNIT_EXITED_VEHICLE}}",
+        "line": 410
+      },
+      {
+        "symbol": "UNIT_EXITING_VEHICLE",
+        "literal": "{{api|t=e|UNIT_EXITING_VEHICLE}}",
+        "line": 411
+      },
+      {
+        "symbol": "UPDATE_LFG_LIST",
+        "literal": "{{api|t=e|UPDATE_LFG_LIST}}",
+        "line": 412
+      },
+      {
+        "symbol": "USE_GLYPH",
+        "literal": "{{api|t=e|USE_GLYPH}}",
+        "line": 413
+      },
+      {
+        "symbol": "VEHICLE_ANGLE_SHOW",
+        "literal": "{{api|t=e|VEHICLE_ANGLE_SHOW}}",
+        "line": 414
+      },
+      {
+        "symbol": "VEHICLE_PASSENGERS_CHANGED",
+        "literal": "{{api|t=e|VEHICLE_PASSENGERS_CHANGED}}",
+        "line": 415
+      },
+      {
+        "symbol": "VEHICLE_POWER_SHOW",
+        "literal": "{{api|t=e|VEHICLE_POWER_SHOW}}",
+        "line": 416
+      },
+      {
+        "symbol": "VEHICLE_UPDATE",
+        "literal": "{{api|t=e|VEHICLE_UPDATE}}",
+        "line": 417
+      },
+      {
+        "symbol": "VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED",
+        "literal": "{{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED}}",
+        "line": 418
+      },
+      {
+        "symbol": "VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED",
+        "literal": "{{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED}}",
+        "line": 419
+      },
+      {
+        "symbol": "VOID_DEPOSIT_WARNING",
+        "literal": "{{api|t=e|VOID_DEPOSIT_WARNING}}",
+        "line": 420
+      },
+      {
+        "symbol": "VOID_STORAGE_CLOSE",
+        "literal": "{{api|t=e|VOID_STORAGE_CLOSE}}",
+        "line": 421
+      },
+      {
+        "symbol": "VOID_STORAGE_CONTENTS_UPDATE",
+        "literal": "{{api|t=e|VOID_STORAGE_CONTENTS_UPDATE}}",
+        "line": 422
+      },
+      {
+        "symbol": "VOID_STORAGE_DEPOSIT_UPDATE",
+        "literal": "{{api|t=e|VOID_STORAGE_DEPOSIT_UPDATE}}",
+        "line": 423
+      },
+      {
+        "symbol": "VOID_STORAGE_OPEN",
+        "literal": "{{api|t=e|VOID_STORAGE_OPEN}}",
+        "line": 424
+      },
+      {
+        "symbol": "VOID_STORAGE_UPDATE",
+        "literal": "{{api|t=e|VOID_STORAGE_UPDATE}}",
+        "line": 425
+      },
+      {
+        "symbol": "VOID_TRANSFER_DONE",
+        "literal": "{{api|t=e|VOID_TRANSFER_DONE}}",
+        "line": 426
+      },
+      {
+        "symbol": "VOID_TRANSFER_SUCCESS",
+        "literal": "{{api|t=e|VOID_TRANSFER_SUCCESS}}",
+        "line": 427
+      },
+      {
+        "symbol": "WARFRONT_COMPLETED",
+        "literal": "{{api|t=e|WARFRONT_COMPLETED}}",
+        "line": 428
+      },
+      {
+        "symbol": "WEAR_EQUIPMENT_SET",
+        "literal": "{{api|t=e|WEAR_EQUIPMENT_SET}}",
+        "line": 429
+      }
+    ],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.14.4",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.0",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.1",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.2",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.3",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.4",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.5",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.6",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.7",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.8",
+    "literal_api_markers": [],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  },
+  {
+    "patch": "1.15.9",
+    "literal_api_markers": [
+      {
+        "symbol": "UnitAura",
+        "literal": "{{api|UnitAura}}",
+        "line": 8
+      }
+    ],
+    "exact_identity_overlap": {
+      "1.14.0": [],
+      "1.14.1": []
+    },
+    "limit": "Lexical overlap only; not behavior, default, signature, removal or supersession proof. CVars/prose/link bodies not normalized or imported."
+  }
+]

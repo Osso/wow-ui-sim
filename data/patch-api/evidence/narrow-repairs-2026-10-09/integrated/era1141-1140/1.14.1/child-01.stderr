@@ -1,0 +1,13 @@
+test_boundaries (__main__.SourceAccounting.test_boundaries) ... ok
+test_every_omission (__main__.SourceAccounting.test_every_omission) ... ok
+test_exact_inventory_counts_and_typo (__main__.SourceAccounting.test_exact_inventory_counts_and_typo) ... ok
+test_fabrications (__main__.SourceAccounting.test_fabrications) ... ok
+test_headers_caption_navigation (__main__.SourceAccounting.test_headers_caption_navigation) ... ok
+test_identity (__main__.SourceAccounting.test_identity) ... ok
+test_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... ok
+test_prose_defaults_and_templates (__main__.SourceAccounting.test_prose_defaults_and_templates) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.929s
+
+OK
