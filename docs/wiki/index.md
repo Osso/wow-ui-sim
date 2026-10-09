@@ -3083,3 +3083,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.10.2 frozen redirect SOURCE audit
 
 [Audit](investigations/patch-1-10-2-api-audit.md): frozen465540/4475520, exact45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero API/signature/default/model/runtime/native subset. Own SOURCE RED5/GREEN5 atd69bbfdcc; copied SOURCE5 and portable3 at4e34482d2, exact default-byte/error replay and both serialized tamper rejections/restorations. Original26 seals/27-member50,127-byte archive unchanged; six later receipt seals separate. Queued1.11.0 behind1.13.2/1.12.0 unapplied; separate histories. Main owns integration/native/final gates.
+
+## [2026-10-09] investigation | Patch 1.10.0 frozen redirect SOURCE audit
+
+[Audit](investigations/patch-1-10-0-api-audit.md): frozen385987/3714298,45 bytes; one metadata row/unexpanded historical link/UNPROVEN contract, zero local API/signature/default/prose/header/template declarations. Own SOURCE RED5 retained; original Retail/Era/Forever separate, frozen1.10.1 queue unapplied. No model/runtime/native subset; main owns integration/independent proof/final gates.
