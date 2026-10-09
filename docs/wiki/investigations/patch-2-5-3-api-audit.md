@@ -40,6 +40,10 @@ Only same TBC Classic history 2.5.4/2.5.5/2.5.6 is referenced, all `pending-main
 
 `validate.py` reads only own frozen configuration/source/tool/registry/manifest inputs and serialized artifacts. `replay_controls.py` mutates serialized ledger/native-equivalence and GREEN log independently; expects exact seal rejection and restores original bytes/hash in finally. Archive contains original sealed inputs and its original seal map; fresh-process replay uses missing PATH and fresh HOME with no `.git`, `target`, `tools`, current `src` or configuration source tree. Archive membership/hashes are checked before replay; later append-only receipts do not rewrite original archive bytes.
 
+## Main integration — 2026-10-09
+
+[Actual same-line comparison](../../../data/patch-api/evidence/2.5.3-session-2026-10-09/integrated/successor-comparison.json) finds zero section/symbol overlap between all 49 own occurrences and integrated 2.5.4's 412 occurrences. Integrated 2.5.5/2.5.6 supply no explicit API identities. No member/model/native closure; original 39 seals and separate receipt/archive seals unchanged. Independent SOURCE replay pending. Source TOC 20503 remains distinct from configured Anniversary 11507; no foreign-line surrogate probe.
+
 ## Sources
 
 - [Ledger](../../../data/patch-api/sources/2.5.3-page-coverage.json) — every literal row and precise UNPROVEN contracts.

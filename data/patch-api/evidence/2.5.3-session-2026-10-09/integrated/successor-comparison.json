@@ -1,0 +1,11 @@
+{
+  "scope": "actual same-TBC inventory comparisons only; no modeled/native credit",
+  "later_patch": "2.5.4",
+  "later_path": "data/patch-api/sources/2.5.4-page-coverage.json",
+  "later_sha256": "39ac71f5e38ccaf00fc37ba0da85823107eed1b6814e540dfc51bef1c5d763f6",
+  "overlap": [],
+  "other_same_line_sources": {
+    "2.5.5": "zero explicit API identities",
+    "2.5.6": "zero explicit API identities"
+  }
+}
