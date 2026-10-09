@@ -32,4 +32,4 @@ Account only for pinned CLASSIC4.4.0 page `580953`, revision `6163701`, literal 
 
 ## Out of scope
 
-Runtime, parser or profile redesign; new client-line classifier/register; Cargo/build/runtime probes; retail/Mists substitutes; external links/diffs expansion; unlisted API or enum members; cross-line supersession. Pending 4.4.1 integrates newer-first under coordinator ownership; no rebase, push or merge here.
+Runtime, parser or profile redesign; new client-line classifier/register; Cargo/build/runtime probes; retail/Mists substitutes; external links/diffs expansion; unlisted API or enum members; cross-line supersession. Coordinator integration follows 4.4.1; source accounting does not establish cross-line runtime supersession.

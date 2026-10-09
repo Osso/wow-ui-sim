@@ -35,7 +35,7 @@ Returned response: **1646 bytes**, SHA-256 `3563e32d0abf16e7fa0e71d1d4b5cc4a8b62
 
 At the source commit, [TocFile::interface_versions](../../../src/toc/mod.rs) splits comma-delimited Interface values into parsed integers. [active_profile_toc_suffixes](../../../src/loader/mod.rs) lists `_Classic` for Wrath/Mists/Era/Anniversary and `_Vanilla` preference for Era/Anniversary, with no `_Cata` profile arm. These are read-only implementation observations, not tests or native proof for any ledger contract. No runtime/parser/profile/classifier redesign performed.
 
-External references retained only where literally present: TOC format, linked 10.2.7 messaging, Classic Era and both GitHub comparisons. None fetched or expanded. No unlisted enum/API members introduced. Navigation does not establish supersession; pending 4.4.1 integrates newer-first under coordinator ownership. No rebase/push/merge here.
+External references retained only where literally present: TOC format, linked 10.2.7 messaging, Classic Era and both GitHub comparisons. None fetched or expanded. No unlisted enum/API members introduced. Navigation does not establish runtime supersession. The coordinator rebased this source-only audit after 4.4.1 merged; all seven native contracts remain unproven.
 
 ## Committed acceptance
 
