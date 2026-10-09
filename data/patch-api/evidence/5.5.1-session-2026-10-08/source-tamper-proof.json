@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import runpy,json,subprocess; v=runpy.run_path('data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py'); revision=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(); print(json.dumps(v['verify_accounting'](revision))); print(json.dumps(v['verify_reproduction'](revision,'0469e5592fa74e051d9b01d85368b351f24e7d09')))"
+  ],
+  "revision": "b3317dd4a29a043f2150aaae26b7e2a9a1c6e22e",
+  "positive_exit": 0,
+  "tampered_exit": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import runpy,json,subprocess; v=runpy.run_path('data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py'); revision=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(); print(json.dumps(v['verify_accounting'](revision))); print(json.dumps(v['verify_reproduction'](revision,'0469e5592fa74e051d9b01d85368b351f24e7d09')))\n                                                                                                                                                                                                                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^\n  File \"data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py\", line 59, in verify_accounting\n    assert digest(response) == provenance['sha256']\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "restored_sha256": "419c7a7a6f8b0f8feaf1584cb727f4e964c50b7fc2227fa7ab97d2b8e4b2a4f3",
+  "original_sha256": "419c7a7a6f8b0f8feaf1584cb727f4e964c50b7fc2227fa7ab97d2b8e4b2a4f3"
+}

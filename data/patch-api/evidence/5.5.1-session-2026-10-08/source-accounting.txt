@@ -1,0 +1,2 @@
+{"inventory": 0, "metadata": 4, "gaps": 0}
+{"registers": 60, "extracts": 57, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"]}
