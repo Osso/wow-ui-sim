@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.15.4 literal subset SOURCE audit
+
+[Audit](investigations/patch-1-15-4-api-audit.md): frozen600355/6172581, TOC11504; six literal rows/five UNPROVEN contracts/two headers, unspecified War Within11.0.0/11.0.2 subset and two diffs. Explicit retail attribution does not import contracts or replace Era successors. Own SOURCE RED9/portable RED3 retained; GREEN/seals/replay pending. Zero runtime/model/native credit; main owns integration/final gates.
+
 ## [2026-10-09] integration | Source/factory receipts and narrow repairs
 
 [Integrated source/factory proof](investigations/integrated-source-and-factory-proof-2026-10-09.md) preserves mixed-checkout epochs, exact observation equality and native/model gaps. [Narrow repairs](investigations/narrow-validator-discovery-and-forever-cfg-repairs.md) separates historical validator 87/87 + 88/88 proof from later integrations. [Forever failure/function gates](investigations/forever-cfg-failure-and-function-gates.md) retains E0609 RED and separate 1/1 configured pre-login name GREEN, not chat/removal/native acceptance. [Private browser readiness](../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/browser-vnc-independent-report.md) confirms loopback listeners and readable public page only; remote access and 403 cause unproven.

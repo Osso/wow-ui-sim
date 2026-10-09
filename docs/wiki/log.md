@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.15.4 literal subset SOURCE accounting
+
+[Audit](investigations/patch-1-15-4-api-audit.md): pinned600355/6172581,439 bytes. Six literal rows/five UNPROVEN contracts/two headers, explicit unspecified retail subset attribution separate from Era successor chain. Own SOURCE RED9/portable RED3 retained; implementation committed before GREEN. No runtime/model/native credit or shared-tool changes; main gates pending.
+
 ## [2026-10-09] integration | Separate source/factory and repaired Forever proof epochs
 
 [Integrated source/factory receipts](investigations/integrated-source-and-factory-proof-2026-10-09.md) retained without rewriting historical seals. [Narrow discovery repair](investigations/narrow-validator-discovery-and-forever-cfg-repairs.md) historical 87/87 + 88/88; [Forever follow-up](investigations/forever-cfg-failure-and-function-gates.md) exact 1/1 configured pre-login state read after E0433/E0609, chat/removal/native proof absent and warnings retained. 2.4.x integration source proof at `dd710c6fc`: 18/18 fixtures, 170/170 default outcomes baseline-equal; recorded saved outputs 83/87 registers and 78/87 extracts with explicit inherited/no-provenance limits. Full suite at `dd710c6fc` submitted asynchronously; prior `614402d56` remains FAIL. No parent/native acceptance.
