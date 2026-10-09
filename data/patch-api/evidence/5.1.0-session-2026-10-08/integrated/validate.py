@@ -36,10 +36,11 @@ def names(revision, directory):
 
 def check_history(context):
     for name, expected in read('historical-preservation.json').items():
-        assert digest((HISTORY / name).read_bytes()) == expected, ('historical artifact drift', name)
+        path = HERE / 'historical-validator.py.txt' if name == 'validate.py' else HISTORY / name
+        assert digest(path.read_bytes()) == expected, ('historical artifact drift', name)
     mapping = read('rebase-mapping.json')
     assert mapping['master_revision'] == context['master_revision']
-    for row in mapping['commits']:
+    for row in mapping['commits'] + mapping['external_pins']:
         revision = row['rebased_revision']
         assert git('rev-parse', revision + '^{tree}').decode().strip() == row['rebased_tree']
         patch = git('show', '--format=', '--binary', revision)

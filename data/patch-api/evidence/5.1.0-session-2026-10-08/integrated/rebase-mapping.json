@@ -336,5 +336,186 @@
         }
       }
     }
-  ]
+  ],
+  "external_pins": [
+    {
+      "recorded_revision": "c38a57fa5ff1570cdaf5493d66ddf9076f81d8e5",
+      "rebased_revision": "d09fdaea485ef1247ac0c2a64c4f8e936cb50516",
+      "subject": "Record portable gate and finalize retail 5.2.0 audit",
+      "recorded_patch_id": "0ed39ec135467f8a4999539affd62c54d5dec93c",
+      "rebased_patch_id": "0ed39ec135467f8a4999539affd62c54d5dec93c",
+      "rebased_tree": "0e57b555f851022c24212d813b9f22bd69762787",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "51ea2d1dd83cd640e23c7d56630a212a6396693b",
+          "rebased_tree": "637b21df1815cc3ba93ddedc49481fbdee932b74"
+        },
+        "tools": {
+          "recorded_tree": "a60b56146c6bf27aa34a213d07cdaac1f77bd8cf",
+          "rebased_tree": "ba1d8974ceff975ee23257f350d0f5f8cc7f8030"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "c9f95324e8639d8669ab7e34eb58104fa733179f",
+          "rebased_tree": "c4b0c427adf19b580a95a9f61d8111466ee0a635"
+        },
+        "docs/wiki": {
+          "recorded_tree": "61890b019a2c546a5ba78d8ab5807f9cc52e4456",
+          "rebased_tree": "c3714fcf81460c0576ddcb34e759ba1815b93074"
+        }
+      }
+    },
+    {
+      "recorded_revision": "c237c344eb1e2fb008be02cdd8c44e72f51c40c4",
+      "rebased_revision": "8721fdb653d74279bfd48f44d4bb60069cf26519",
+      "subject": "Record passing 5.3.0 portability and tamper gates",
+      "recorded_patch_id": "b6472bfc2b956a94f1093425f6ad30eafbcd5200",
+      "rebased_patch_id": "b6472bfc2b956a94f1093425f6ad30eafbcd5200",
+      "rebased_tree": "73d4d26d08e1577b17248cc05466ab16d1d47055",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "648654171fd36bb909451968567877e1f1b02c89",
+          "rebased_tree": "f5d9a623cf46bf8555ca93e4c3b6d7bbd8725959"
+        },
+        "tools": {
+          "recorded_tree": "12ee0978b6e8280f097d2eef167f345de2797c9e",
+          "rebased_tree": "285b9d56ae59bd8fde89d9392d880db3f928cad0"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "679dd54c154503cbabe031f03d1fc134cbd533c7",
+          "rebased_tree": "8dc0911db6b69a3c0111ac6eee4a3e3e589f2f04"
+        },
+        "docs/wiki": {
+          "recorded_tree": "6437ff9dab040ea2619fbe20891535107adcda46",
+          "rebased_tree": "bcf28f05e998abd108014f0ba74ef3f66042c17f"
+        }
+      }
+    },
+    {
+      "recorded_revision": "9698f09862b6cd91b4f87e840295a3fce304940a",
+      "rebased_revision": "13f9283f4a450ddccdf34a875b738f355da96c42",
+      "subject": "Record passing clean and later-audit 5.4.0 portability gate",
+      "recorded_patch_id": "f4d83441f0724a7cf5b19bd5af78e47e54e8a1fa",
+      "rebased_patch_id": "f4d83441f0724a7cf5b19bd5af78e47e54e8a1fa",
+      "rebased_tree": "8cc3230a8926e5e15eb86ead81c70a7c1a470271",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "d132784732ef2bcc1e5b880a778875de1d0939d5",
+          "rebased_tree": "cc810cc1a52c9c158930b893b1a9d24cc635d930"
+        },
+        "tools": {
+          "recorded_tree": "5ffc0e012fb8908269fd085fadc9830a9c4c2699",
+          "rebased_tree": "2ffa5e4717db10b0eb8a1795172182ccb54c42ed"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "ba08eb2258253fb048d395de95173495bfa1f99d",
+          "rebased_tree": "b8dfb58b492dc88d4cdbf59f74c6ecaee04276cb"
+        },
+        "docs/wiki": {
+          "recorded_tree": "8d9e8deb27274c2ae9279430194e2629b5c229a3",
+          "rebased_tree": "0a6d19c98028255974e7c8b4cfe08e60759c20d0"
+        }
+      }
+    },
+    {
+      "recorded_revision": "1452ef875dca6ed8bc167c0734223b951cfd1437",
+      "rebased_revision": "cd488f5d2c0ec0a9575dafc9e83c2a79e1b24e93",
+      "subject": "Archive failed finalization outputs before resealing corrected receipts",
+      "recorded_patch_id": "5e0e483d46bbeb53128f7b42f49a67e4de2e32e1",
+      "rebased_patch_id": "5e0e483d46bbeb53128f7b42f49a67e4de2e32e1",
+      "rebased_tree": "8f771b7ce36095842ac41d5e2e7fc0675001a3e0",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "bcddb1f4667de6b3a65b9876363e8464915404c7",
+          "rebased_tree": "c85f85a671ea1c38e6bd2b0f82923ddb0883f4c9"
+        },
+        "tools": {
+          "recorded_tree": "c50af286ee8fe67981a51202334d99f62d3a870f",
+          "rebased_tree": "c50af286ee8fe67981a51202334d99f62d3a870f"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "b519f332bf73656e90cad1c7ce206de97e004cb6",
+          "rebased_tree": "3eb9f79a7c2e3e1032d38f65d3205ad37521763e"
+        },
+        "docs/wiki": {
+          "recorded_tree": "469159920986aa10e04d25bb721456e58f6715d3",
+          "rebased_tree": "080cca347cc349b2851f8f83f38f5f5caf9505ae"
+        }
+      }
+    }
+  ],
+  "historical_overrides": [
+    {
+      "recorded_revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+      "path": "docs/wiki/index.md",
+      "sha256": "22db256fc97715d59b7997fd5873129b84ffb0fbd24b3b0693e15aa0e32011c9",
+      "recorded_blob": "741b5727a2cd939c9729af9b448540dc75b55020",
+      "historical_file": "historical-blobs/22db256fc97715d59b7997fd5873129b84ffb0fbd24b3b0693e15aa0e32011c9.txt"
+    },
+    {
+      "recorded_revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+      "path": "docs/wiki/log.md",
+      "sha256": "74b080e65689bc1c85aaeebdfb580f24f16a989466de6df078bdb2834af77022",
+      "recorded_blob": "51d71a0b9e81c459668c7d7880b17c590e2f89b3",
+      "historical_file": "historical-blobs/74b080e65689bc1c85aaeebdfb580f24f16a989466de6df078bdb2834af77022.txt"
+    },
+    {
+      "recorded_revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+      "path": "tools/extract_patch_non_inventory.py",
+      "sha256": "97e626144755d34e8aaee620a668f8b73551684140a998008461a019ba881036",
+      "recorded_blob": "df668caa40327e1dc31b1b727288a4ba4eaae910",
+      "historical_file": "historical-blobs/97e626144755d34e8aaee620a668f8b73551684140a998008461a019ba881036.txt"
+    },
+    {
+      "recorded_revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+      "path": "tools/gen_patch_wikitext_register.py",
+      "sha256": "fbaf3c4f91f5a916b0ef8461698704f4a710c949a7362dee6035f2c517079af6",
+      "recorded_blob": "0149a6810b52a023aad1cec6ca53b7eda386b07c",
+      "historical_file": "historical-blobs/fbaf3c4f91f5a916b0ef8461698704f4a710c949a7362dee6035f2c517079af6.txt"
+    },
+    {
+      "recorded_revision": "eb39e1eb56c886966c402a2f167fd0c1f865717d",
+      "path": "docs/wiki/index.md",
+      "sha256": "fb504913e8589c0dca2d49c9f43a0f64e9ae3d0c0c06b424eae75b82ad90f8de",
+      "recorded_blob": "b806898d9cbbc19c1ef915e70f5c37d13ca64aa6",
+      "historical_file": "historical-blobs/fb504913e8589c0dca2d49c9f43a0f64e9ae3d0c0c06b424eae75b82ad90f8de.txt"
+    },
+    {
+      "recorded_revision": "eb39e1eb56c886966c402a2f167fd0c1f865717d",
+      "path": "docs/wiki/log.md",
+      "sha256": "694d2b8f9408580fa9ad9cdd5ceca70d8e1b6518edec58ed1e6e71aebfc1f0b7",
+      "recorded_blob": "f0abfaf8d6a102eb8858f9f2094f2ed791e01cd3",
+      "historical_file": "historical-blobs/694d2b8f9408580fa9ad9cdd5ceca70d8e1b6518edec58ed1e6e71aebfc1f0b7.txt"
+    },
+    {
+      "recorded_revision": "eb39e1eb56c886966c402a2f167fd0c1f865717d",
+      "path": "tools/extract_patch_non_inventory.py",
+      "sha256": "97e626144755d34e8aaee620a668f8b73551684140a998008461a019ba881036",
+      "recorded_blob": "df668caa40327e1dc31b1b727288a4ba4eaae910",
+      "historical_file": "historical-blobs/97e626144755d34e8aaee620a668f8b73551684140a998008461a019ba881036.txt"
+    },
+    {
+      "recorded_revision": "eb39e1eb56c886966c402a2f167fd0c1f865717d",
+      "path": "tools/gen_patch_wikitext_register.py",
+      "sha256": "fbaf3c4f91f5a916b0ef8461698704f4a710c949a7362dee6035f2c517079af6",
+      "recorded_blob": "0149a6810b52a023aad1cec6ca53b7eda386b07c",
+      "historical_file": "historical-blobs/fbaf3c4f91f5a916b0ef8461698704f4a710c949a7362dee6035f2c517079af6.txt"
+    }
+  ],
+  "historical_source_inventory": "Own source set comes from original sealed shared-input paths; external sets use original p510-register-tree-* receipts. Reconstructed tree hashes must equal recorded directory pins; no new per-file inventory."
 }
