@@ -15,7 +15,7 @@
     "P520_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/integrated/patch_5_2_0_publication_sweep-results.json"
   },
   "exit": 1,
-  "log": "own-sweep.txt",
+  "log": "diagnostic-own-sweep.txt",
   "log_sha256": "c60c90d3f7c9eb99eec5ca0f6f8301332f1fa2de637cf914cd45e1a4810e6324",
   "seconds": 54.95164189899515,
   "invalidated": false
