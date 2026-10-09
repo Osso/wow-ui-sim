@@ -1,3 +1,7 @@
+## [2026-10-09] maintenance | Wrath 3.4.3 bounded independent replay
+
+[Audit](investigations/patch-3-4-3-api-audit.md#independent-bounded-replay--2026-10-09): verifier 216 reports fresh historical replay PASS, 16 seals/seven rows/five metadata/two UNPROVEN summary contracts; zero explicit API/runtime observations. Original 48ab8e1c3 sealed inputs and profile-observation bytes unchanged; retained 7/7 GREEN/tamper evidence remains applicable to source accounting only. Cache-marker nuance clarified; actual Wrath 38001 architecture differs from native Classic 30403. No linked reconstruction, retail/Cata supersession or native/current-runtime/positive empty-API parity. Docs-only; main shared portable gate, actual-master integration and CI pending, no full handoff completion claim.
+
 ## [2026-10-09] maintenance | Patch 4.2.0 proof boundaries
 
 [Audit status](investigations/patch-4-2-0-api-audit.md#integrated-proof-status--2026-10-09) links coordinator-owned integrated receipts and historical archive replay without rewriting original evidence. Model placement clarified in [Lua API](../lua-api.md); successor cross-links added. Portability/verifier remain pending; no final/CI/full-suite acceptance claim. Docs-only update.
@@ -16,7 +20,7 @@
 
 ## [2026-10-09] ingest | Wrath Classic Patch 3.4.3 source audit
 
-[Audit](investigations/patch-3-4-3-api-audit.md): frozen identity/hash validated before copying; seven rows, five metadata/two UNPROVEN prose limits. Supported Wrath profile and 42 documentation-only cached files observed separately from source TOC 30403/configured 38001; no runtime/native claim. Existing extractor flags reused, own historical tools sealed, no linked-page or shared-classifier expansion. Targeted RED recorded; GREEN 7/7 plus extraction/source replay pass at 84274cf67. Sealed proof-log tampering rejected and bytes restored; receipt/docs-only additions preserve tested source/tool/validator scope. Broad gates remain main-owned.
+[Audit](investigations/patch-3-4-3-api-audit.md): frozen identity/hash validated before copying; seven rows, five metadata/two UNPROVEN prose limits. Supported Wrath profile and 42 historical cache entries (including one empty `.missing` marker, not 42 usable documentation payloads) observed separately from source TOC 30403/configured 38001; no runtime/native or unsupported-client claim. Existing extractor flags reused, own historical tools sealed, no linked-page or shared-classifier expansion. Targeted RED recorded; GREEN 7/7 plus extraction/source replay pass at 84274cf67. Sealed proof-log tampering rejected and bytes restored; receipt/docs-only additions preserve tested source/tool/validator scope. Broad gates remain main-owned.
 
 ## [2026-10-08] maintenance | Compact patch-audit evidence
 

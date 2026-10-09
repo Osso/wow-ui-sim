@@ -4,7 +4,7 @@
 
 ## [2026-10-09] investigation | Wrath Classic Patch 3.4.3 source audit
 
-[Audit](investigations/patch-3-4-3-api-audit.md): frozen page 152751/revision 5983024, TOC 30403. Seven source rows: five metadata, two UNPROVEN summary contracts; no explicit APIs, linked-page reconstruction or positive parity credit. Supported Wrath profile/configured 38001 distinguished from documentation-only local cache. Own profile-aware source ledger and historical validator; seven targeted tests, extraction and source replay pass at 84274cf67; altered proof-log seal rejected/restored. No shared runtime/classifier edits or cross-client successors.
+[Audit](investigations/patch-3-4-3-api-audit.md): frozen page 152751/revision 5983024, TOC 30403. Seven source rows: five metadata, two UNPROVEN summary contracts; no explicit APIs, linked-page reconstruction or positive parity credit. Actual Wrath 38001 architecture differs from native Classic 30403. Historical cache records 42 entries including one empty `.missing` marker, not 42 usable documentation payloads or unsupported-client proof. Independent verifier 216 reports bounded fresh historical replay: 16 seals, seven rows/five metadata/two UNPROVEN contracts, zero explicit API/runtime observations. Original 48ab8e1c3 sealed inputs unchanged; retained 7/7 GREEN/tamper proof remains source-accounting-only. No current-runtime/native/positive empty-API parity or cross-client supersession; main shared portable gate, actual-master integration and CI pending.
 
 ## [2026-10-08] integration | Retail Patch 5.1.0 API refresh
 

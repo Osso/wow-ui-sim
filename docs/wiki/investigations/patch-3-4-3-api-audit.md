@@ -20,9 +20,9 @@ The [ledger](../../../data/patch-api/sources/3.4.3-page-coverage.json) preserves
 
 ## Profile and cache evidence
 
-Unlike [4.4.x Cataclysm source audits](patch-4-4-2-api-audit.md), Wrath is an existing supported profile. [ClientProfile](../../../src/client_profile.rs) selects `client-wrath`, `Wrath`, `wrath/AddOns` and configured interface **38001**. Source TOC **30403** and configured **38001** are recorded separately, not treated as identical builds or compatibility proof.
+Unlike [4.4.x Cataclysm source audits](patch-4-4-2-api-audit.md), Wrath is an existing supported profile. [ClientProfile](../../../src/client_profile.rs) selects `client-wrath`, `Wrath`, `wrath/AddOns` and configured interface **38001**. Source TOC **30403** and configured **38001** are recorded separately: the actual Wrath 38001 architecture differs from native Classic 30403. Neither profile selection nor source accounting proves compatibility between them.
 
-The [historical observation](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/profile-observation.json) records this host's cache file paths/hashes: 42 files under only `Blizzard_APIDocumentation` and `Blizzard_APIDocumentationGenerated`; no SharedXML or collection publisher files. The committed Wrath manifest exists and is hash-referenced separately. No sync, vendor edit, runtime load, compilation, startup or native probe was attempted. This is an incomplete local publisher-cache boundary, **not absent Wrath support** and not a diagnosed runtime failure. The supported profile plus documentation-only cache cannot support the [5.5.4 SharedXML publication harness](patch-5-5-4-api-audit.md); no retail/Mists stand-in is used.
+The [historical observation](../../../data/patch-api/evidence/3.4.3-session-2026-10-09/profile-observation.json) records this host's cache file paths/hashes: 42 recorded entries under only `Blizzard_APIDocumentation` and `Blizzard_APIDocumentationGenerated`, including one empty `.missing` marker—not 42 usable documentation payloads; no SharedXML or collection publisher files. The original sealed observation bytes remain unchanged; this wording clarifies their interpretation. The committed Wrath manifest exists and is hash-referenced separately. No sync, vendor edit, runtime load, compilation, startup or native probe was attempted. This is an incomplete local publisher-cache boundary, **not absent Wrath support** and not a diagnosed runtime failure. The supported profile plus documentation-only cache cannot support the [5.5.4 SharedXML publication harness](patch-5-5-4-api-audit.md); no retail/Mists stand-in is used.
 
 ## Separate client history and tooling
 
@@ -45,6 +45,12 @@ Frozen response/wikitext identity and both manifest hashes were validated **befo
 At `84274cf675b7e9cf7f8048d758ad07297beb5023`: source-accounting GREEN **7/7** (22 mutation subcases), recorded-flag extraction exit 0, and own historical replay exit 0. Development RED first failed the missing derived accounting assertion against a temporary empty validator; exact log retained. Altering the sealed GREEN log later fails the exact seal with exit 1; original bytes restored and hash checked. Receipt/docs/seal-entry additions leave the tested source, historical tools, validator, test fixture and profile observation bytes unchanged. Replay derives seven rows/five metadata/two UNPROVEN, no runtime observations; its sealed-input count grows with retained receipts and is not fixed acceptance data.
 
 No Rust changes or Cargo formatting; Python manually formatted because ruff/black are unavailable. No formatter installation, lint or broad gate attempted. All commands used the owned absolute worktree cwd. Main still owns integration and final verification, not this bounded source audit.
+
+## Independent bounded replay — 2026-10-09
+
+Independent verifier 216 reports fresh historical replay PASS: **16 seals**, **seven rows/five metadata/two UNPROVEN summary contracts**, **zero explicit API occurrences and zero runtime observations**. Original `48ab8e1c3` sealed inputs are unchanged; retained **7/7 GREEN** and proof-log tamper evidence remain applicable to their original source-accounting scope. This is bounded independent source replay, not native/current-runtime proof or positive empty-API parity.
+
+Main-owned shared portable gate, integration onto actual master and CI remain pending. This docs-only clarification adds no evidence or gate run and does not claim full handoff completion.
 
 ## Sources
 
