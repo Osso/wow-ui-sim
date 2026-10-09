@@ -2996,3 +2996,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.14.4 frozen SOURCE audit
 
 [Audit](investigations/patch-1-14-4-api-audit.md): frozen267043/2581777 identity verified before derivation. Own SOURCE RED11/portable RED3 retained; all-Wrath3.4.0/1/2 inclusion and unspecified Dragonflight10.0.0..10.1.5 subset kept separate/unexpanded. Zero runtime/model/native credit; main owns integration/gates.
+
+## [2026-10-09] investigation | Patch 1.14.4 SOURCE GREEN
+
+[Audit](investigations/patch-1-14-4-api-audit.md): SOURCE11/11 at183437dc5; eight rows/four metadata/four UNPROVEN, eleven contracts (three prose/six wiki/two diff), two headers/one unexpanded template, zero inventory/signatures. Original seals/archive captured; portable replay pending. No runtime or foreign supersession.

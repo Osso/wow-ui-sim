@@ -6,10 +6,10 @@ Frozen page267043/revision2581777/timestamp `2023-07-19T19:32:56Z` verified agai
 
 | Scope | Accounting | Proof boundary |
 |---|---|---|
-| Raw page | 775 bytes, ten physical lines/eight nonblank rows | Identity verified; adapter implemented, targeted GREEN pending |
+| Raw page | 775 bytes, ten physical lines/eight nonblank rows | Identity and SOURCE GREEN11/11 |
 | Wrath inclusion | All API changes from3.4.0,3.4.1,3.4.2 | Exact inclusion claim, links unexpanded; no imported contracts |
 | Dragonflight subset |10.0.0 through10.1.5 | Unspecified subset, endpoints unexpanded; no fabricated membership |
-| Other prose/links | Linked article guidance, Wrath article, two diff links | SOURCE fixtures RED; no behavior credit |
+| Other prose/links | Linked article guidance, Wrath article, two diff links | SOURCE GREEN11/11; no behavior credit |
 | Headers/template/TOC | Summary, Resources, navigation1.14.3→1.15.0,11404 | Metadata; no inferred native identity |
 | Local inventory/signatures | Zero API/event/CVar/widget/command/signature declarations | Not proof of linked API absence |
 
@@ -30,4 +30,4 @@ Own SOURCE RED11/11 expected assertion failures against empty-accounting scaffol
 
 ## Literal adapter
 
-Own adapter accounts eight rows (four metadata/four UNPROVEN), eleven contracts (three prose/six wiki links/two diffs), two headers and one unexpanded navigation template. Gethe head `classic_era_ptr` differs from Ketho1.14.4 and remains literal. Omission/fabricated-member/foreign-history/credit controls implemented; no runtime edit. Original historical tools copied unchanged; default replay pending.
+Own adapter accounts eight rows (four metadata/four UNPROVEN), eleven contracts (three prose/six wiki links/two diffs), two headers and one unexpanded navigation template. Gethe head `classic_era_ptr` differs from Ketho1.14.4 and remains literal. Omission/fabricated-member/foreign-history/credit controls implemented; no runtime edit. Original historical tools copied unchanged; historical default generator flags[] emits empty register, not linked-content proof. SOURCE GREEN11/11 at `183437dc5`, with35 occurrence omissions, seven foreign-history, eleven fabricated contract credit, two inclusion mutation, one diff-head collapse and three measurement controls. Original seals/archive captured once; portable GREEN pending.

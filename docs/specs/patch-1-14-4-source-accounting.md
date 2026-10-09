@@ -4,10 +4,10 @@ Account frozen Warcraft Wiki page267043/revision2581777/timestamp `2023-07-19T19
 
 ## What it must do
 
-- [ ] Validate manifest/registry/response/returned raw identity before derivation.
-- [ ] Preserve all literal rows, headers, navigation, TOC, summary/prose and link occurrences; explicitly account for local inventory/signature absence.
-- [ ] Preserve the all-API Wrath3.4.0/1/2 inclusion claim separately from the unspecified Dragonflight10.0.0 through10.1.5 subset; expand neither and invent no state contracts.
-- [ ] Separate configured Era/Anniversary11507 from source11404/native equivalence and same-Era1.15.0 in-flight,1.15.1/2 queued,1.15.3..9 integrated-canonical inputs not applied here.
+- [x] Validate manifest/registry/response/returned raw identity before derivation.
+- [x] Preserve all literal rows, headers, navigation, TOC, summary/prose and link occurrences; explicitly account for local inventory/signature absence.
+- [x] Preserve the all-API Wrath3.4.0/1/2 inclusion claim separately from the unspecified Dragonflight10.0.0 through10.1.5 subset; expand neither and invent no state contracts.
+- [x] Separate configured Era/Anniversary11507 from source11404/native equivalence and same-Era1.15.0 in-flight,1.15.1/2 queued,1.15.3..9 integrated-canonical inputs not applied here.
 - [ ] Retain own SOURCE/portable RED/GREEN, reject serialized ledger/log tampering, restore exact bytes, preserve original seals and separate later receipts.
 
 ## How it works
@@ -16,7 +16,7 @@ Own evidence adapter and copied frozen/configured/historical inputs under `data/
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py` and `test_portable.py`; targeted only. SOURCE RED11 failures and portable RED3 failures retained; adapter implemented, targeted GREEN pending.
+Own `test_source_accounting.py` and `test_portable.py`; targeted only. SOURCE RED11 failures and portable RED3 failures retained; SOURCE GREEN11/11 at `183437dc5`; default generator flags[] produces empty inventory, not linked API absence. Original seals/archive captured once; copied replay pending.
 
 ## Known gaps
 
