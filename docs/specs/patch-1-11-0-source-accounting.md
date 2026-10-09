@@ -8,7 +8,7 @@ Bounded audit of the immutable [frozen redirect](../../data/patch-api/source-cac
 - [x] Preserve the complete raw redirect and unexpanded linked target; derive counts and reject omitted boundaries, invented inventory and changed counts.
 - [x] Keep original historical Retail distinct from Classic/Forever; retain separate original-Retail successor references without applying contracts or supersession.
 - [x] Replay unchanged historical generator CLI defaults and extractor `extract_text` defaults byte-for-byte.
-- [ ] Copy historical evidence without Git/target/current tools; reject serialized ledger/log tampering and restore original bytes without resealing.
+- [x] Copy historical evidence without Git/target/current tools; reject serialized ledger/log tampering and restore original bytes without resealing.
 
 ## How it works
 

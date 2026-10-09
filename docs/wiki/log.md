@@ -1025,4 +1025,4 @@ Ingested [audit](investigations/patch-1-13-4-api-audit.md): literal SOURCE bound
 
 ## [2026-10-09] investigation | Historical Retail Patch 1.11.0 redirect SOURCE audit
 
-[Audit](investigations/patch-1-11-0-api-audit.md): frozen109825/1074793, 45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero local inventory/model/runtime/native credit. Own RED5/SOURCE GREEN5 at3d224c81a; portable RED3 retained, copied GREEN pending. Queued1.12.0 retained separately, pending behind1.13.2 and unapplied. Main owns integration/native/final gates.
+[Audit](investigations/patch-1-11-0-api-audit.md): frozen109825/1074793, 45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero local inventory/model/runtime/native credit. Own RED5/SOURCE GREEN5 at3d224c81a; portable RED3/copied SOURCE5/portable GREEN3 at27e8ba9c1, serialized ledger/log rejection and exact restoration. Original24 seals unchanged; six separate receipts,25-member48326byte archive. Queued1.12.0 retained separately, pending behind1.13.2 and unapplied. Main owns integration/native/final gates.
