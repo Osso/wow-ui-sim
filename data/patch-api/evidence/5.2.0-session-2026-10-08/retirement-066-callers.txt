@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:785:    ("SetFogColor", scene_set_fog_color),
+tests/widget_methods_model.rs:509:        scene:SetFogColor(0.7, 0.8, 0.9)

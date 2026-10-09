@@ -1,0 +1,23 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_Wardrobe_Sets.lua:798:				local modelX = self:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_Wardrobe_Sets.lua:818:		local modelX, modelY, modelZ = self:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_Wardrobe_Sets.lua:833:	local posX, posY, posZ = self:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FramerateFrame/Mainline/FramerateFrame.lua:7:	local position = MicroMenuContainer:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop_Model.lua:328:		local actorPos = CreateVector3D(actor:GetPosition());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua:78:		local positionVector = CreateVector3D(actor:GetPosition());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MicroMenu/Shared/MicroMenuContainer.lua:69:function MicroMenuContainerMixin:GetPosition()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MicroMenu/Shared/MicroMenuContainer.lua:245:	self:UpdateQueueStatusAnchors(MicroMenuContainer:GetPosition());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MicroMenu/Shared/MicroMenuContainer.lua:251:	local position = MicroMenuContainer:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspector.lua:138:			local x, y = selfWindow:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneMixin.lua:515:	local positionVector = CreateVector3D(actor:GetPosition());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/ModelFrameMixin.lua:219:	local cameraX, cameraY, cameraZ = self:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/ModelSceneCameras/CameraBaseMixin.lua:46:function CameraBaseMixin:GetPosition()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:1834:				local posX, posY = pin:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PartyPoseUI/Blizzard_PartyPoseUI.lua:220:	local positionVector = CreateVector3D(actor:GetPosition());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramModel.lua:98:		local x, y, z = actor:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramModel.lua:697:			local currentX, currentY, currentZ= self.playerActor:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramModel.lua:743:				local currentX, currentY, currentZ= self.playerActor:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MapCanvas/MapCanvas_DataProviderBase.lua:133:	local x, y = targetPin:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MapCanvas/MapCanvas_DataProviderBase.lua:151:	local x, y = targetPin:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MapCanvas/MapCanvas_DataProviderBase.lua:422:function MapCanvasPinMixin:GetPosition()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MapCanvas/Blizzard_MapCanvas.lua:501:	local normalizedX, normalizedY = targetPin:GetPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MapCanvas/Blizzard_MapCanvas.lua:518:				local otherNormalizedX, otherNormalizedY = sourcePin:GetPosition();

@@ -1,0 +1,8 @@
+src/lua_api/frame/methods/widgets/model.rs:637:    ("GetPosition", get_position),
+tests/blizzard_map_canvas_loads.rs:555:            "GetPosition",
+tests/blizzard_map_canvas_loads.rs:563:         (SetPosition/GetPosition/GetGlobalPosition), camera-routing (PanTo/PanAndZoomTo \
+tests/blizzard_framerate_frame_loads.rs:254:         benchmark API: OnLoad (lua:3 — calls MicroMenuContainer:GetPosition() and \
+tests/blizzard_micro_menu_loads.rs:86:const CONTAINER_MIXIN_METHODS: &[&str] = &["OnLoad", "OnEvent", "Layout", "GetPosition"];
+tests/blizzard_micro_menu_loads.rs:511:        "MicroMenuContainerMixin must publish 4 methods as functions: OnLoad (registers          PLAYER_LEVEL_UP + TRIAL_STATUS_UPDATE), OnEvent (calls UpdateMicroButtons),          Layout (custom GridLayout that accounts for hidden buttons and the QueueStatusButton          tacked on the side), GetPosition (maps screen quadrant to MicroMenuPositionEnum).          Failed: {:?}",
+tests/widget_methods_model.rs:26:        local x, y, z = frame:GetPosition()
+tests/widget_methods_model.rs:223:        .eval("return TestPlayerModelTransformCamera:GetPosition()")

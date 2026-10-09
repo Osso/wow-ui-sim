@@ -1,0 +1,6 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:95:	self:SetCamera(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua:69:	self.PlunderstormBackground:SetCamera(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua:184:	model:SetCamera(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:603:	self:SetCamera(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:624:	model:SetCamera(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:630:	model:SetCamera(0);

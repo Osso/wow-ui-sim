@@ -1,0 +1,3 @@
+src/lua_api/frame/methods/widgets/model.rs:635:    ("GetModelScale", get_model_scale),
+tests/widget_methods_model.rs:25:        local scale = frame:GetModelScale()
+tests/widget_methods_model.rs:220:        .eval("return TestPlayerModelTransformCamera:GetModelScale()")

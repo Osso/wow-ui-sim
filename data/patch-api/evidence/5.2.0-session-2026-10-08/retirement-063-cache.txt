@@ -1,0 +1,4 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RemixArtifactUI/Blizzard_RemixArtifactUI.lua:446:		self:SetCameraTarget(targetX, targetY, targetZ);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mists/CharacterCreate.lua:621:				model:SetCameraTarget(config.tx * scale, config.ty * scale, config.tz * scale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/ModelFrames.lua:88:		self:SetCameraTarget(targetX, targetY, targetZ);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/WorldQuestDataProvider.lua:511:			self:SetCameraTarget(0, 0, 0);

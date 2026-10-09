@@ -1,0 +1,9 @@
+src/lua_api/frame/methods/widgets/model.rs:691:    ("ClearFog", SKIP_3D_RENDERING),
+tests/widget_methods_model.rs:152:            return type(model.ClearFog) == "function",
+tests/widget_methods_model.rs:153:                   pcall(model.ClearFog, model),
+tests/widget_methods_model.rs:154:                   type(scene.ClearFog) == "function",
+tests/widget_methods_model.rs:155:                   pcall(scene.ClearFog, scene)
+tests/widget_methods_model.rs:160:    assert!(model_method, "Model should expose ClearFog");
+tests/widget_methods_model.rs:161:    assert!(model_call, "Model:ClearFog should absorb the visual reset");
+tests/widget_methods_model.rs:162:    assert!(scene_method, "ModelScene should expose ClearFog");
+tests/widget_methods_model.rs:165:        "ModelScene:ClearFog should absorb the visual reset"

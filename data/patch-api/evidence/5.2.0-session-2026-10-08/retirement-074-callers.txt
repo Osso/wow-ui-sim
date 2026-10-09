@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:672:    ("SetSequence", set_sequence),
+tests/widget_methods_model.rs:312:        TestPlayerModelAppearanceState:SetSequence(7)

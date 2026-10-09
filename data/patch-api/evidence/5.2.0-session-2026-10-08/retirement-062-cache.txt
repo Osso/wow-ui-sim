@@ -1,0 +1,11 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua:669:	followerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua:675:	followerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua:681:	followerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RemixArtifactUI/Blizzard_RemixArtifactUI.lua:445:		self:SetCameraPosition(cameraX, cameraY, cameraZ);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mists/CharacterCreate.lua:624:				model:SetCameraPosition(cx, cy, config.cz * scale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/ModelFrames.lua:87:		self:SetCameraPosition(cameraX, cameraY, cameraZ);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/ModelSceneCameras/CameraBaseMixin.lua:43:	self:GetOwningScene():SetCameraPosition(x, y, z);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecruitAFriend/RecruitAFriendFrame.lua:643:	self:SetCameraPosition(0, 0, -25);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_Commentator.lua:331:		C_Commentator.SetCameraPosition(pos.x, pos.y, pos.z, SNAP_TO_POSITION);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Mainline/Blizzard_Commentator.lua:310:		C_Commentator.SetCameraPosition(pos.x, pos.y, pos.z, SNAP_TO_POSITION);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/WorldQuestDataProvider.lua:512:			self:SetCameraPosition(0, 0, 25);

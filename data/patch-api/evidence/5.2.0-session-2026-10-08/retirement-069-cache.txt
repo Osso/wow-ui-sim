@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:632:	model:SetGlow(0.3);

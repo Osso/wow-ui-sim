@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GroupFinder/Mainline/LFGList.lua:3802:	C_LFGList.DeclineInvite(self.resultID);

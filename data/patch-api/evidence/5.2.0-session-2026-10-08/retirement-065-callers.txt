@@ -1,0 +1,5 @@
+src/lua_api/frame/methods/widgets/model.rs:638:    ("SetFacing", set_facing),
+tests/player_facing.rs:14:        model:SetFacing(2)
+tests/player_facing.rs:18:        model:SetFacing(3)
+tests/widget_methods_model.rs:52:        OrdinaryModelMethodFrame:SetFacing(0)
+tests/widget_methods_model.rs:210:        pm:SetFacing(1.125)

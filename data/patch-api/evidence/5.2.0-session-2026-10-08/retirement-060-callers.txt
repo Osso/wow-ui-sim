@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:676:    ("SetCameraDistance", set_camera_distance),
+tests/widget_methods_model.rs:211:        pm:SetCameraDistance(23.5)

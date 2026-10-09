@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mists/CharacterCreate.lua:623:				local cx, cy, cz = model:GetCameraPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/ModelSceneCameras/CameraBaseMixin.lua:47:	return self:GetOwningScene():GetCameraPosition();

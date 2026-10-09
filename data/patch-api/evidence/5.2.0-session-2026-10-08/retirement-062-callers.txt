@@ -1,0 +1,3 @@
+src/lua_api/frame/methods/widgets/model.rs:754:    ("SetCameraPosition", scene_set_camera_position),
+tests/widget_methods_model.rs:496:        scene:SetCameraPosition(1.5, -2.25, 3.75)
+tests/widget_methods_model.rs:675:        scene:SetCameraPosition(1.0, 2.0, 3.0)

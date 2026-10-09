@@ -1,0 +1,1601 @@
+[
+  {
+    "source_id": "diff-wt-global-api-ClearChannelWatch-48",
+    "symbol": "ClearChannelWatch",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "ClearChannelWatch"
+    ],
+    "cache": {
+      "path": "retirement-000-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-000-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorAddPlayer-49",
+    "symbol": "CommentatorAddPlayer",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorAddPlayer"
+    ],
+    "cache": {
+      "path": "retirement-001-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-001-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetPartyInfo-50",
+    "symbol": "CommentatorGetPartyInfo",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorGetPartyInfo"
+    ],
+    "cache": {
+      "path": "retirement-002-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-002-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetSkirmishMode-51",
+    "symbol": "CommentatorGetSkirmishMode",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorGetSkirmishMode"
+    ],
+    "cache": {
+      "path": "retirement-003-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-003-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetSkirmishQueueCount-52",
+    "symbol": "CommentatorGetSkirmishQueueCount",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorGetSkirmishQueueCount"
+    ],
+    "cache": {
+      "path": "retirement-004-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-004-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-53",
+    "symbol": "CommentatorGetSkirmishQueuePlayerInfo",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorGetSkirmishQueuePlayerInfo"
+    ],
+    "cache": {
+      "path": "retirement-005-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-005-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorRemovePlayer-54",
+    "symbol": "CommentatorRemovePlayer",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorRemovePlayer"
+    ],
+    "cache": {
+      "path": "retirement-006-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-006-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorRequestSkirmishMode-55",
+    "symbol": "CommentatorRequestSkirmishMode",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorRequestSkirmishMode"
+    ],
+    "cache": {
+      "path": "retirement-007-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-007-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorRequestSkirmishQueueData-56",
+    "symbol": "CommentatorRequestSkirmishQueueData",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorRequestSkirmishQueueData"
+    ],
+    "cache": {
+      "path": "retirement-008-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-008-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorSetPlayerIndex-57",
+    "symbol": "CommentatorSetPlayerIndex",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorSetPlayerIndex"
+    ],
+    "cache": {
+      "path": "retirement-009-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-009-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorSetSkirmishMatchmakingMode-58",
+    "symbol": "CommentatorSetSkirmishMatchmakingMode",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorSetSkirmishMatchmakingMode"
+    ],
+    "cache": {
+      "path": "retirement-010-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-010-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorStartInstance-59",
+    "symbol": "CommentatorStartInstance",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorStartInstance"
+    ],
+    "cache": {
+      "path": "retirement-011-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-011-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorStartSkirmishMatch-60",
+    "symbol": "CommentatorStartSkirmishMatch",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CommentatorStartSkirmishMatch"
+    ],
+    "cache": {
+      "path": "retirement-012-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-012-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CreateMiniWorldMapArrowFrame-61",
+    "symbol": "CreateMiniWorldMapArrowFrame",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CreateMiniWorldMapArrowFrame"
+    ],
+    "cache": {
+      "path": "retirement-013-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-013-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CreateWorldMapArrowFrame-62",
+    "symbol": "CreateWorldMapArrowFrame",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "CreateWorldMapArrowFrame"
+    ],
+    "cache": {
+      "path": "retirement-014-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-014-callers.txt",
+      "exit": 0,
+      "sha256": "801302c71792164a8335705522519a6f3b8b094022079b20fee152415eebb17d",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-DeclineInvite-63",
+    "symbol": "DeclineInvite",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "DeclineInvite"
+    ],
+    "cache": {
+      "path": "retirement-015-cache.txt",
+      "exit": 0,
+      "sha256": "f878e500980fa021a9dc3c76c4787914d7b8a98445d0f85b740dca3f9faa42cf",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-015-callers.txt",
+      "exit": 0,
+      "sha256": "3aeb82031730113400999fb6008611f4132c711a8d0cc6d97e234261222f08c3",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetCurrentRaidDifficulty-64",
+    "symbol": "GetCurrentRaidDifficulty",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "GetCurrentRaidDifficulty"
+    ],
+    "cache": {
+      "path": "retirement-016-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-016-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetInstanceDifficulty-65",
+    "symbol": "GetInstanceDifficulty",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "GetInstanceDifficulty"
+    ],
+    "cache": {
+      "path": "retirement-017-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-017-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMinigameState-66",
+    "symbol": "GetMinigameState",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "GetMinigameState"
+    ],
+    "cache": {
+      "path": "retirement-018-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-018-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMinigameType-67",
+    "symbol": "GetMinigameType",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "GetMinigameType"
+    ],
+    "cache": {
+      "path": "retirement-019-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-019-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetRaidDifficulty-68",
+    "symbol": "GetRaidDifficulty",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "GetRaidDifficulty"
+    ],
+    "cache": {
+      "path": "retirement-020-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-020-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-MakeMinigameMove-69",
+    "symbol": "MakeMinigameMove",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "MakeMinigameMove"
+    ],
+    "cache": {
+      "path": "retirement-021-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-021-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-PlayDance-70",
+    "symbol": "PlayDance",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "PlayDance"
+    ],
+    "cache": {
+      "path": "retirement-022-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-022-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-PositionMiniWorldMapArrowFrame-71",
+    "symbol": "PositionMiniWorldMapArrowFrame",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "PositionMiniWorldMapArrowFrame"
+    ],
+    "cache": {
+      "path": "retirement-023-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-023-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-PositionWorldMapArrowFrame-72",
+    "symbol": "PositionWorldMapArrowFrame",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "PositionWorldMapArrowFrame"
+    ],
+    "cache": {
+      "path": "retirement-024-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-024-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetChannelWatch-73",
+    "symbol": "SetChannelWatch",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "SetChannelWatch"
+    ],
+    "cache": {
+      "path": "retirement-025-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-025-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetRaidDifficulty-74",
+    "symbol": "SetRaidDifficulty",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "SetRaidDifficulty"
+    ],
+    "cache": {
+      "path": "retirement-026-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-026-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-ShowMiniWorldMapArrowFrame-75",
+    "symbol": "ShowMiniWorldMapArrowFrame",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "ShowMiniWorldMapArrowFrame"
+    ],
+    "cache": {
+      "path": "retirement-027-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-027-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-ShowWorldMapArrowFrame-76",
+    "symbol": "ShowWorldMapArrowFrame",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "ShowWorldMapArrowFrame"
+    ],
+    "cache": {
+      "path": "retirement-028-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-028-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-UpdateWorldMapArrowFrames-77",
+    "symbol": "UpdateWorldMapArrowFrames",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "UpdateWorldMapArrowFrames"
+    ],
+    "cache": {
+      "path": "retirement-029-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-029-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-BattlegroundShineFadeIn-93",
+    "symbol": "BattlegroundShineFadeIn",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "BattlegroundShineFadeIn"
+    ],
+    "cache": {
+      "path": "retirement-030-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-030-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-BattlegroundShineFadeOut-94",
+    "symbol": "BattlegroundShineFadeOut",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "BattlegroundShineFadeOut"
+    ],
+    "cache": {
+      "path": "retirement-031-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-031-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-IsAlreadyInQueue-95",
+    "symbol": "IsAlreadyInQueue",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "IsAlreadyInQueue"
+    ],
+    "cache": {
+      "path": "retirement-032-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-032-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-IsPvPFrameSelected-96",
+    "symbol": "IsPvPFrameSelected",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "IsPvPFrameSelected"
+    ],
+    "cache": {
+      "path": "retirement-033-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-033-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-TogglePVPFrame-97",
+    "symbol": "TogglePVPFrame",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "TogglePVPFrame"
+    ],
+    "cache": {
+      "path": "retirement-034-cache.txt",
+      "exit": 0,
+      "sha256": "df5257929fe31d226e9bb1b0a36da4f2c6e98edbc856930aa802fbe97793e977",
+      "matching_lines": 3
+    },
+    "callers": {
+      "path": "retirement-034-callers.txt",
+      "exit": 0,
+      "sha256": "fa49d180fe63ad6c099ffe1aedde013af11a7396f1ecd24630c4ef0a52230c48",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-117",
+    "symbol": "COMMENTATOR_SKIRMISH_MODE_REQUEST",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "COMMENTATOR_SKIRMISH_MODE_REQUEST"
+    ],
+    "cache": {
+      "path": "retirement-035-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-035-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-118",
+    "symbol": "COMMENTATOR_SKIRMISH_QUEUE_REQUEST",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "COMMENTATOR_SKIRMISH_QUEUE_REQUEST"
+    ],
+    "cache": {
+      "path": "retirement-036-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-036-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-events-MINIGAME_UPDATE-119",
+    "symbol": "MINIGAME_UPDATE",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "MINIGAME_UPDATE"
+    ],
+    "cache": {
+      "path": "retirement-037-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-037-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-events-START_MINIGAME-120",
+    "symbol": "START_MINIGAME",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "START_MINIGAME"
+    ],
+    "cache": {
+      "path": "retirement-038-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-038-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Minimap:SetPlayerTextureHeight-170",
+    "symbol": "Minimap:SetPlayerTextureHeight",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Minimap:SetPlayerTextureHeight",
+      "SetPlayerTextureHeight"
+    ],
+    "cache": {
+      "path": "retirement-039-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-039-callers.txt",
+      "exit": 0,
+      "sha256": "1d996431c706a6d8972a8e40564ac804e4b2a3d9836d0e66f134d480e58da0b7",
+      "matching_lines": 3
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Minimap:SetPlayerTextureWidth-171",
+    "symbol": "Minimap:SetPlayerTextureWidth",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Minimap:SetPlayerTextureWidth",
+      "SetPlayerTextureWidth"
+    ],
+    "cache": {
+      "path": "retirement-040-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-040-callers.txt",
+      "exit": 0,
+      "sha256": "d0ebabf4018c797035eaabc14d8bee040ccbe60a021e8e287b24701b97c16098",
+      "matching_lines": 4
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:AdvanceTime-172",
+    "symbol": "Model:AdvanceTime",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:AdvanceTime",
+      "AdvanceTime"
+    ],
+    "cache": {
+      "path": "retirement-041-cache.txt",
+      "exit": 0,
+      "sha256": "92f6342e480512f1602c9417faac592b7fc9d52d8c6a57808123d7204877fbc5",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-041-callers.txt",
+      "exit": 0,
+      "sha256": "58fe8f82871d6f526bc0c32348ca8d86a4388ad1f0d832924e2b4ee975a833b7",
+      "matching_lines": 23
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ClearFog-173",
+    "symbol": "Model:ClearFog",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:ClearFog",
+      "ClearFog"
+    ],
+    "cache": {
+      "path": "retirement-042-cache.txt",
+      "exit": 0,
+      "sha256": "451d747444d56391eb4f369d3bf66114beaa0f239b4af3a11cccc72ecfa96197",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-042-callers.txt",
+      "exit": 0,
+      "sha256": "0735591daecd50627299433a28f36d0ec5e7bb7cea29cb693e969c3c47e8aaa8",
+      "matching_lines": 9
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ClearModel-174",
+    "symbol": "Model:ClearModel",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:ClearModel",
+      "ClearModel"
+    ],
+    "cache": {
+      "path": "retirement-043-cache.txt",
+      "exit": 0,
+      "sha256": "df3c160483a264aacb31c20f7fd1372893df7a56f31239a39226fcc9fef5b6f9",
+      "matching_lines": 21
+    },
+    "callers": {
+      "path": "retirement-043-callers.txt",
+      "exit": 0,
+      "sha256": "651713256d6079bdfd8ef4372d62d27f8a148b2e22ae884dfb8307aec177f26f",
+      "matching_lines": 5
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraDistance-175",
+    "symbol": "Model:GetCameraDistance",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetCameraDistance",
+      "GetCameraDistance"
+    ],
+    "cache": {
+      "path": "retirement-044-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-044-callers.txt",
+      "exit": 0,
+      "sha256": "15c8e1e56b1188f7dcaa083e56b9fb2b9f110eac3008d1819ac0e33d8c3d623c",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraFacing-176",
+    "symbol": "Model:GetCameraFacing",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetCameraFacing",
+      "GetCameraFacing"
+    ],
+    "cache": {
+      "path": "retirement-045-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-045-callers.txt",
+      "exit": 0,
+      "sha256": "db06bf293698dcf17ae262fe82450241763d0a3629c1b22a769b3da6f8a4ec5e",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraPosition-177",
+    "symbol": "Model:GetCameraPosition",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetCameraPosition",
+      "GetCameraPosition"
+    ],
+    "cache": {
+      "path": "retirement-046-cache.txt",
+      "exit": 0,
+      "sha256": "4f597afa720d5e2dc21a510e83b15daa95bcaa9d51055100517a3112b1f851aa",
+      "matching_lines": 2
+    },
+    "callers": {
+      "path": "retirement-046-callers.txt",
+      "exit": 0,
+      "sha256": "e3aa2adfd1e01d2bab5ff3b0379f8e775d250db846026c69a429580e66dfe00b",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraTarget-178",
+    "symbol": "Model:GetCameraTarget",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetCameraTarget",
+      "GetCameraTarget"
+    ],
+    "cache": {
+      "path": "retirement-047-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-047-callers.txt",
+      "exit": 0,
+      "sha256": "952902e7e7bdc0bef815b94bb4a9f31f91ccb4287873dffc1bc34882fb684528",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFacing-179",
+    "symbol": "Model:GetFacing",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetFacing",
+      "GetFacing"
+    ],
+    "cache": {
+      "path": "retirement-048-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-048-callers.txt",
+      "exit": 0,
+      "sha256": "794ccf421c57d4e06ff8fe8e3fdd347964aa72cf3ccec4f50cef4624fd2c2fdb",
+      "matching_lines": 4
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogColor-180",
+    "symbol": "Model:GetFogColor",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetFogColor",
+      "GetFogColor"
+    ],
+    "cache": {
+      "path": "retirement-049-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-049-callers.txt",
+      "exit": 0,
+      "sha256": "824abb59cbd4e557eac5a94a335714c6c663ed07e26ace16183fc109128fcad2",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogFar-181",
+    "symbol": "Model:GetFogFar",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetFogFar",
+      "GetFogFar"
+    ],
+    "cache": {
+      "path": "retirement-050-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-050-callers.txt",
+      "exit": 0,
+      "sha256": "e209ba0830480517ed18260248491df59465a2b77e659d302b16c5789c9b0274",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogNear-182",
+    "symbol": "Model:GetFogNear",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetFogNear",
+      "GetFogNear"
+    ],
+    "cache": {
+      "path": "retirement-051-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-051-callers.txt",
+      "exit": 0,
+      "sha256": "18df1921cd1a07bbb448c2c3ef9d79d58fef199535df7220cda606927eb8c845",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetLight-183",
+    "symbol": "Model:GetLight",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetLight",
+      "GetLight"
+    ],
+    "cache": {
+      "path": "retirement-052-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-052-callers.txt",
+      "exit": 0,
+      "sha256": "fe2a781a23988b762076bc8399ebb29c01a0588b9480f34b6a42ef1892f0b9c9",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetModel-184",
+    "symbol": "Model:GetModel",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetModel",
+      "GetModel"
+    ],
+    "cache": {
+      "path": "retirement-053-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-053-callers.txt",
+      "exit": 0,
+      "sha256": "a9e5822242ddd30ab7dd7fca60b764a5cebbb8c156e66e75c029e4366bc9af11",
+      "matching_lines": 5
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetModelScale-185",
+    "symbol": "Model:GetModelScale",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetModelScale",
+      "GetModelScale"
+    ],
+    "cache": {
+      "path": "retirement-054-cache.txt",
+      "exit": 0,
+      "sha256": "2d30caec74da6e734c191dc2259fa0687c23a7ae0d8a0a2d4130fe5079b443cc",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-054-callers.txt",
+      "exit": 0,
+      "sha256": "4c35534d54258c7387848ef2dd80afb8e4b28139ee3f98edd0c27e1ffbfe7b09",
+      "matching_lines": 3
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetPosition-186",
+    "symbol": "Model:GetPosition",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetPosition",
+      "GetPosition"
+    ],
+    "cache": {
+      "path": "retirement-055-cache.txt",
+      "exit": 0,
+      "sha256": "2378c6ed73e02419e849c3f5f193c510010e0edf6e365e01304c41e9f2282959",
+      "matching_lines": 23
+    },
+    "callers": {
+      "path": "retirement-055-callers.txt",
+      "exit": 0,
+      "sha256": "1adefd25f8f29d1984bb4949f8234c9e2df8f758b2a04323d5d262d5209da0f6",
+      "matching_lines": 8
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetWorldScale-187",
+    "symbol": "Model:GetWorldScale",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:GetWorldScale",
+      "GetWorldScale"
+    ],
+    "cache": {
+      "path": "retirement-056-cache.txt",
+      "exit": 0,
+      "sha256": "b40879924dbb7db9293bbe80eb4ad9b419760538eff17f05e5f250e2b90f4b72",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-056-callers.txt",
+      "exit": 0,
+      "sha256": "0c58c61d8b7a17ff80e58cb253586d720047c4dbaefefcfa570450b4675301e3",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:HasCustomCamera-188",
+    "symbol": "Model:HasCustomCamera",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:HasCustomCamera",
+      "HasCustomCamera"
+    ],
+    "cache": {
+      "path": "retirement-057-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-057-callers.txt",
+      "exit": 0,
+      "sha256": "9607696f4ee7ede034daee43610047451143c4891cbcfd355dc37147e77e9be6",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ReplaceIconTexture-189",
+    "symbol": "Model:ReplaceIconTexture",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:ReplaceIconTexture",
+      "ReplaceIconTexture"
+    ],
+    "cache": {
+      "path": "retirement-058-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-058-callers.txt",
+      "exit": 0,
+      "sha256": "f75cf5b5a7f794f28e804e093a0f04494870fbd12832dbe8d8279db5531f5fe2",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCamera-190",
+    "symbol": "Model:SetCamera",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetCamera",
+      "SetCamera"
+    ],
+    "cache": {
+      "path": "retirement-059-cache.txt",
+      "exit": 0,
+      "sha256": "d8cce0b4ebe43c8fdaf5cec3f9798dfd57454a2dc6335dbdb0924e3412638bbb",
+      "matching_lines": 6
+    },
+    "callers": {
+      "path": "retirement-059-callers.txt",
+      "exit": 0,
+      "sha256": "f5781e10f6e3622aa9b3e0668e41090dee275fb30496fb686a57fb34f8717c30",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraDistance-191",
+    "symbol": "Model:SetCameraDistance",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetCameraDistance",
+      "SetCameraDistance"
+    ],
+    "cache": {
+      "path": "retirement-060-cache.txt",
+      "exit": 0,
+      "sha256": "88f82ce63d14b723329eccc32ebd8c0155dfb5223fe7f7bc78703ab32b93d4c3",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-060-callers.txt",
+      "exit": 0,
+      "sha256": "773899356846903c73954ec57fb48d363cc35c14af394366c7d047827e789886",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraFacing-192",
+    "symbol": "Model:SetCameraFacing",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetCameraFacing",
+      "SetCameraFacing"
+    ],
+    "cache": {
+      "path": "retirement-061-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-061-callers.txt",
+      "exit": 0,
+      "sha256": "d3f339d16cfede808ae69cfa25a0edc59ca6ef8d6e6ffcab2fcde8e880821b52",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraPosition-193",
+    "symbol": "Model:SetCameraPosition",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetCameraPosition",
+      "SetCameraPosition"
+    ],
+    "cache": {
+      "path": "retirement-062-cache.txt",
+      "exit": 0,
+      "sha256": "ebaf6ceebd87760024e28cb90b1476e3a765f81f0906dfb492c3877ab50b4c66",
+      "matching_lines": 11
+    },
+    "callers": {
+      "path": "retirement-062-callers.txt",
+      "exit": 0,
+      "sha256": "95fb41f3e5ffafe3353e1b0d021589241961a5e3afbae2121a33f053064a765f",
+      "matching_lines": 3
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraTarget-194",
+    "symbol": "Model:SetCameraTarget",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetCameraTarget",
+      "SetCameraTarget"
+    ],
+    "cache": {
+      "path": "retirement-063-cache.txt",
+      "exit": 0,
+      "sha256": "41f5d14a95ea6351379d7b5ba482651db3ce007a664179a581db9f7b94939f45",
+      "matching_lines": 4
+    },
+    "callers": {
+      "path": "retirement-063-callers.txt",
+      "exit": 0,
+      "sha256": "b0e94b037b96b24b0c9f71e1d0e0c8e28e8be25e913b009e03b759f799f6b5aa",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCustomCamera-195",
+    "symbol": "Model:SetCustomCamera",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetCustomCamera",
+      "SetCustomCamera"
+    ],
+    "cache": {
+      "path": "retirement-064-cache.txt",
+      "exit": 0,
+      "sha256": "10909f7280deb30cc5bc9e8afc7b2b7300e68165d7ed89b5dba273451f9b4ad2",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-064-callers.txt",
+      "exit": 0,
+      "sha256": "921a98c7dab077771568ac890e43cc665093db167a27a5ce0f97531fc288b0bf",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFacing-196",
+    "symbol": "Model:SetFacing",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetFacing",
+      "SetFacing"
+    ],
+    "cache": {
+      "path": "retirement-065-cache.txt",
+      "exit": 0,
+      "sha256": "9b1fc5b0581ce999d78003c7ed68ad5b853c486c2df71f6f4f50fa98fa177f37",
+      "matching_lines": 6
+    },
+    "callers": {
+      "path": "retirement-065-callers.txt",
+      "exit": 0,
+      "sha256": "3d6f721fe36edf26bf2561471a5d299382bb2b955a688b970067d685f16b8b0e",
+      "matching_lines": 5
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogColor-197",
+    "symbol": "Model:SetFogColor",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetFogColor",
+      "SetFogColor"
+    ],
+    "cache": {
+      "path": "retirement-066-cache.txt",
+      "exit": 0,
+      "sha256": "441717b137218308d29b61b8860ed997cc3aa00c716e6266d1549b599fbe729a",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-066-callers.txt",
+      "exit": 0,
+      "sha256": "06ffa9eb4b8e3dc0b2e1f7eb5e24d871d521875acbabb5feacd5e58f223b5944",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogFar-198",
+    "symbol": "Model:SetFogFar",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetFogFar",
+      "SetFogFar"
+    ],
+    "cache": {
+      "path": "retirement-067-cache.txt",
+      "exit": 0,
+      "sha256": "63c70289bb268e0960dc2c22980b7bed384ca6d6b31e433b9eb9259df49a7cb7",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-067-callers.txt",
+      "exit": 0,
+      "sha256": "55ed60c40a72b2ab3f0042f02567ee077bd385d2b68835798e28384a3b2ddced",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogNear-199",
+    "symbol": "Model:SetFogNear",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetFogNear",
+      "SetFogNear"
+    ],
+    "cache": {
+      "path": "retirement-068-cache.txt",
+      "exit": 0,
+      "sha256": "39e1aaaa9f0a16ce21ddddf5537180b5beb59c53f9d849c08e5703089a90bf4c",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-068-callers.txt",
+      "exit": 0,
+      "sha256": "437c3c0080a0fc200b4b4c6f17d3a610fe811607714bd021d550456833d82d03",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetGlow-200",
+    "symbol": "Model:SetGlow",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetGlow",
+      "SetGlow"
+    ],
+    "cache": {
+      "path": "retirement-069-cache.txt",
+      "exit": 0,
+      "sha256": "ffb081ed206d5954e82c230e13cb6b17b3d29e7e5db5ce3d852915a73b46b139",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-069-callers.txt",
+      "exit": 0,
+      "sha256": "30ee89ead115a9cb40f06fa985606c60c48bf21e0f21a43d14250a61df1418be",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetLight-201",
+    "symbol": "Model:SetLight",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetLight",
+      "SetLight"
+    ],
+    "cache": {
+      "path": "retirement-070-cache.txt",
+      "exit": 0,
+      "sha256": "da0e65c60afc172ac85370f894e91af4a7f7b6b7409b2484d7e8e5adfd460d93",
+      "matching_lines": 6
+    },
+    "callers": {
+      "path": "retirement-070-callers.txt",
+      "exit": 0,
+      "sha256": "9511d4635be7ffa22c346ea9cbd7705fa110ad38d5a7f424186d757a44e3fe99",
+      "matching_lines": 1
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetModel-202",
+    "symbol": "Model:SetModel",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetModel",
+      "SetModel"
+    ],
+    "cache": {
+      "path": "retirement-071-cache.txt",
+      "exit": 0,
+      "sha256": "99c1c9a81e4c5d3a3da8ae4375a658be93d22a7984d9a52fcfb6d8f591aaca33",
+      "matching_lines": 3
+    },
+    "callers": {
+      "path": "retirement-071-callers.txt",
+      "exit": 0,
+      "sha256": "26d57a35b7f19b7055fe6c04bf31c27c59325184e1248e90f24fa5db8c35b5ca",
+      "matching_lines": 3
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetModelScale-203",
+    "symbol": "Model:SetModelScale",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetModelScale",
+      "SetModelScale"
+    ],
+    "cache": {
+      "path": "retirement-072-cache.txt",
+      "exit": 0,
+      "sha256": "64e663ddf177651faeaee4c28217df9509357a7351e4dcbad11e9f1715925976",
+      "matching_lines": 2
+    },
+    "callers": {
+      "path": "retirement-072-callers.txt",
+      "exit": 0,
+      "sha256": "7ee634eaf7404dfd44858eaeea037429339687f36682cf358bd5773395fdc935",
+      "matching_lines": 5
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetPosition-204",
+    "symbol": "Model:SetPosition",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetPosition",
+      "SetPosition"
+    ],
+    "cache": {
+      "path": "retirement-073-cache.txt",
+      "exit": 0,
+      "sha256": "81a0e364ca459cb239b9fcf10507b5cfef159237d0bd0115b8732c72bdb0e69d",
+      "matching_lines": 72
+    },
+    "callers": {
+      "path": "retirement-073-callers.txt",
+      "exit": 0,
+      "sha256": "62207aca957b3029d9a5226ac20ab296e997dce68a82af737644a5d950e42a74",
+      "matching_lines": 8
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetSequence-205",
+    "symbol": "Model:SetSequence",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetSequence",
+      "SetSequence"
+    ],
+    "cache": {
+      "path": "retirement-074-cache.txt",
+      "exit": 0,
+      "sha256": "7aa611aae1010d0b2e89f74cbb62c26a5f6635607ebe4762fb737be76c7db629",
+      "matching_lines": 6
+    },
+    "callers": {
+      "path": "retirement-074-callers.txt",
+      "exit": 0,
+      "sha256": "388ed9135cdbd2255b217728999f6f28a9612591d4971a2e405650a2e5a13a0b",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetSequenceTime-206",
+    "symbol": "Model:SetSequenceTime",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model:SetSequenceTime",
+      "SetSequenceTime"
+    ],
+    "cache": {
+      "path": "retirement-075-cache.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    },
+    "callers": {
+      "path": "retirement-075-callers.txt",
+      "exit": 0,
+      "sha256": "874dd9e101768540a18d30ccb8f4304536eb40fe42124ca7188df49713c40247",
+      "matching_lines": 2
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model OnAnimFinished-221",
+    "symbol": "Model OnAnimFinished",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model OnAnimFinished",
+      "OnAnimFinished"
+    ],
+    "cache": {
+      "path": "retirement-076-cache.txt",
+      "exit": 0,
+      "sha256": "eaa0ebaaae0f0ae2705562e5cc810ab473fcc271d7d5858630a97a417ea15207",
+      "matching_lines": 57
+    },
+    "callers": {
+      "path": "retirement-076-callers.txt",
+      "exit": 0,
+      "sha256": "bec152ab5ca6517084845053ac63ff6a33ed5d9b65b90200b441df59330769b1",
+      "matching_lines": 8
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model OnUpdateModel-222",
+    "symbol": "Model OnUpdateModel",
+    "tool": "/usr/bin/grep -R -n -w -F (whole-word; untruncated)",
+    "patterns": [
+      "Model OnUpdateModel",
+      "OnUpdateModel"
+    ],
+    "cache": {
+      "path": "retirement-077-cache.txt",
+      "exit": 0,
+      "sha256": "4456b5431067e362156f4812a49399caf41ec22b3434c5ae64ffdb292d8d4907",
+      "matching_lines": 1
+    },
+    "callers": {
+      "path": "retirement-077-callers.txt",
+      "exit": 1,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matching_lines": 0
+    }
+  }
+]

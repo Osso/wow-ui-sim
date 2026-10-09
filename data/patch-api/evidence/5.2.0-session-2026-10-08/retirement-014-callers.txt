@@ -1,0 +1,2 @@
+src/wrath/compat_bootstrap.lua:31:if CreateWorldMapArrowFrame == nil then
+src/wrath/compat_bootstrap.lua:32:  function CreateWorldMapArrowFrame()

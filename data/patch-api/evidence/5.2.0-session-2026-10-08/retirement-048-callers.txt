@@ -1,0 +1,4 @@
+src/lua_api/frame/methods/widgets/model.rs:639:    ("GetFacing", get_facing),
+tests/player_facing.rs:22:        assert(model:GetFacing() == 3)
+tests/widget_methods_model.rs:27:        local facing = frame:GetFacing()
+tests/widget_methods_model.rs:226:        .eval("return TestPlayerModelTransformCamera:GetFacing()")

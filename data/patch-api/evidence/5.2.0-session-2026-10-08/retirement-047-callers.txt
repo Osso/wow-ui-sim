@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:679:    ("GetCameraTarget", get_camera_target),
+tests/widget_methods_model.rs:235:        .eval("return TestPlayerModelTransformCamera:GetCameraTarget()")

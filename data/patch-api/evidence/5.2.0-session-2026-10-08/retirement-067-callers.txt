@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:783:    ("SetFogFar", scene_set_fog_far),
+tests/widget_methods_model.rs:508:        scene:SetFogFar(8.5)

@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:675:    ("GetCameraDistance", get_camera_distance),
+tests/widget_methods_model.rs:229:        .eval("return TestPlayerModelTransformCamera:GetCameraDistance()")

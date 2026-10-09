@@ -1,0 +1,4 @@
+src/wrath/frame_methods.rs:30:    table_set_rust_fn_static(state, mt, "SetPlayerTextureWidth", set_player_texture_width)?;
+src/wrath/frame_methods.rs:60:/// `Minimap:SetPlayerTextureWidth(40)` during init.
+src/wrath/compat_bootstrap.lua:285:if SetPlayerTextureWidth == nil then
+src/wrath/compat_bootstrap.lua:286:  function SetPlayerTextureWidth()

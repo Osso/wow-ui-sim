@@ -1,0 +1,3 @@
+src/wrath/frame_methods.rs:27:        "SetPlayerTextureHeight",
+src/wrath/frame_methods.rs:59:/// Companion to `SetPlayerTextureHeight` — wrath Minimap calls
+src/wrath/mod.rs:10://!   `SetBackdropBorderColor`, `IgnoreDepth`, `SetPlayerTextureHeight`) that

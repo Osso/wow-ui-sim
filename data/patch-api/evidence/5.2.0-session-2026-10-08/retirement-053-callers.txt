@@ -1,0 +1,5 @@
+src/lua_api/frame/methods/widgets/model.rs:633:    ("GetModel", get_model),
+tests/widget_methods_model.rs:24:        local model = frame:GetModel()
+tests/widget_methods_model.rs:182:        .eval("return TestPlayerModelSetModel:GetModel()")
+tests/widget_methods_model.rs:356:                   TestPlayerModelAppearanceState:GetModel(),
+tests/data/patch_7_0_3_sweep_known_gaps.json:53:  "wt-widgets-Model:GetModel-123"

@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:781:    ("SetFogNear", scene_set_fog_near),
+tests/widget_methods_model.rs:507:        scene:SetFogNear(7.5)

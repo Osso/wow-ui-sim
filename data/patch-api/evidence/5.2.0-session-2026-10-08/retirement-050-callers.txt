@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:784:    ("GetFogFar", scene_get_fog_far),
+tests/widget_methods_model.rs:556:    let fog_far: f64 = env.eval("return TestModelSceneState:GetFogFar()").unwrap();

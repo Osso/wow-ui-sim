@@ -1,0 +1,3 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1235:		TogglePVPFrame();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.xml:326:						TogglePVPFrame();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.xml:337:							TogglePVPFrame();

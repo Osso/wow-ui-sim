@@ -1,0 +1,23 @@
+src/c_api/duration_clock.rs:48:        ("AdvanceTime", advance_time),
+src/lua_api/frame/methods/widgets/model.rs:700:    ("AdvanceTime", SKIP_3D_RENDERING),
+src/loader/tests/wow_api_globals/startup_globals.rs:93:            clock:AdvanceTime(2)
+src/loader/tests/wow_api_globals/startup_globals.rs:94:            if clock:GetTime() ~= 13 then return "DurationManualClock.AdvanceTime" end
+tests/duration_core.rs:396:        clock:AdvanceTime(10)
+tests/duration_core.rs:595:        clock:AdvanceTime(3)
+tests/duration_core.rs:600:        clock:AdvanceTime(1)
+tests/duration_core.rs:623:        clock:AdvanceTime(3)
+tests/duration_core.rs:628:        clock:AdvanceTime(1)
+tests/patch_12_0_7_duration_clocks.rs:23:        assert(select('#', a:AdvanceTime(2.5)) == 0 and a:GetTime() == 12.75)
+tests/patch_12_0_7_duration_clocks.rs:26:        b:AdvanceTime(0.25)
+tests/patch_12_0_7_duration_clocks.rs:43:        clock:AdvanceTime(0.5)
+tests/patch_12_0_7_duration_clocks.rs:60:        for _, name in ipairs({'SetTime', 'AdvanceTime', 'RewindTime'}) do
+tests/patch_12_0_7_duration_clocks.rs:69:        clock:AdvanceTime(-0.25)
+tests/patch_12_0_7_duration_clocks.rs:74:        assert(not pcall(clock.AdvanceTime, clock, 1e308))
+tests/patch_12_0_7_duration_clocks.rs:91:        clock:AdvanceTime(advance)
+tests/patch_12_0_7_duration_clocks.rs:96:            for _, item in ipairs({{'SetTime',timestamp}, {'AdvanceTime',advance}, {'RewindTime',rewind}}) do
+tests/patch_12_0_7_duration_clocks.rs:103:            clock:AdvanceTime(0.25)
+tests/patch_12_0_7_duration_clocks.rs:134:        a:AdvanceTime(0.25)
+tests/patch_12_0_7_duration_clocks.rs:136:        a:AdvanceTime(0.5)
+tests/patch_12_0_7_duration_clocks.rs:241:    first.exec("clock:AdvanceTime(2.25)").unwrap();
+tests/patch_12_0_7_duration_clocks.rs:261:            for _, name in ipairs({'SetTime', 'AdvanceTime', 'RewindTime'}) do
+tests/classic_secret_policy.rs:158:        clock:AdvanceTime(2)

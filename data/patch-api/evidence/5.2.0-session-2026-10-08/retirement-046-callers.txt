@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:755:    ("GetCameraPosition", scene_get_camera_position),
+tests/widget_methods_model.rs:517:        .eval("return TestModelSceneState:GetCameraPosition()")

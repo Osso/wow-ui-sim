@@ -1,0 +1,6 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TransmogShared/Blizzard_TransmogShared.lua:666:	self:SetLight(enabled, lightValues);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_Wardrobe_Sets.lua:754:	self:SetLight(enabled, lightValues);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RemixArtifactUI/Blizzard_RemixArtifactUI.lua:468:	self:SetLight(enabled, lightValues);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mists/CharacterCreate.lua:628:				model:SetLight(true, light);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:150:	self:SetLight(enabled, lightValues);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Transmog/Blizzard_TransmogTemplates.lua:1340:	self:SetLight(enabled, lightValues);

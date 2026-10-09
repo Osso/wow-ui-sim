@@ -1,0 +1,1 @@
+src/lua_api/frame/methods/widgets/model.rs:717:    ("SetCustomCamera", SKIP_3D_RENDERING),

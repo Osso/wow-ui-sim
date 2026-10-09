@@ -1,0 +1,8 @@
+src/event/mod.rs:145:    OnAnimFinished,
+src/event/mod.rs:243:    ("OnAnimFinished", ScriptHandler::OnAnimFinished),
+tests/blizzard_covenant_toasts_loads.rs:184:                and type(CovenantChoiceToastMixin.OnAnimFinished) == 'function'",
+tests/blizzard_covenant_toasts_loads.rs:195:         layers then playing ShowAnim; StopBanner stopping the anim and hiding; OnAnimFinished \
+tests/blizzard_covenant_toasts_loads.rs:219:                and type(CovenantRenownToastMixin.OnAnimFinished) == 'function'",
+tests/blizzard_covenant_toasts_loads.rs:238:         RENOWN_REWARD_MILESTONE_TOOLTIP_TITLE; StopBanner; OnAnimFinished)"
+tests/blizzard_major_factions_loads/support.rs:75:    "OnAnimFinished",
+tests/blizzard_major_factions_loads/support.rs:89:    "OnAnimFinished",

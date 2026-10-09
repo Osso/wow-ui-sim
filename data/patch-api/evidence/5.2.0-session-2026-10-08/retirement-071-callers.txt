@@ -1,0 +1,3 @@
+src/lua_api/frame/methods/widgets/model.rs:632:    ("SetModel", set_model),
+tests/widget_methods_model.rs:176:        pm:SetModel("Creature/Dragon/Dragon.m2")
+tests/widget_methods_model.rs:281:        pm:SetModel("Creature/Dragon/Dragon.m2")

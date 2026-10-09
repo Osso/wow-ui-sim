@@ -1,0 +1,5 @@
+src/lua_api/frame/methods/widgets/model.rs:651:    ("ClearModel", clear_model),
+tests/blizzard_housing_model_preview_loads.rs:290:         tracked state + Hide the variant buttons + ClearModel on the actor), HasValidData (truthy \
+tests/widget_methods_model.rs:57:        OrdinaryModelMethodFrame:ClearModel()
+tests/widget_methods_model.rs:349:    env.exec("TestPlayerModelAppearanceState:ClearModel()")
+tests/widget_methods_model.rs:365:        "ClearModel should clear the active animation state"

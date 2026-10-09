@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/UI.xsd:422:				<xs:element name="OnUpdateModel" type="ScriptType"/>

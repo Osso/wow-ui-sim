@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:786:    ("GetFogColor", scene_get_fog_color),
+tests/widget_methods_model.rs:558:        .eval("return TestModelSceneState:GetFogColor()")

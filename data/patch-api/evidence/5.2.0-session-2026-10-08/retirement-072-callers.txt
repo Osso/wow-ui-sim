@@ -1,0 +1,5 @@
+src/lua_api/frame/methods/widgets/model.rs:634:    ("SetModelScale", set_model_scale),
+tests/widget_methods_model.rs:50:        OrdinaryModelMethodFrame:SetModelScale(1)
+tests/widget_methods_model.rs:68:    env.exec("OrdinaryModelMethodFrame:SetModelScale(2)")
+tests/widget_methods_model.rs:102:        model:SetModelScale(2)
+tests/widget_methods_model.rs:208:        pm:SetModelScale(1.75)

@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:678:    ("SetCameraFacing", set_camera_facing),
+tests/widget_methods_model.rs:212:        pm:SetCameraFacing(0.875)

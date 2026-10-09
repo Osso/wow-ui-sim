@@ -1,0 +1,6 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua:1261:		model:SetFacing(-.2);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonRecruiterUI.xml:150:							self:SetFacing(.2);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RemixArtifactUI/Blizzard_RemixArtifactUI.lua:437:		self:SetFacing(yaw);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/ModelFrames.lua:79:		self:SetFacing(yaw);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.xml:1173:						self:SetFacing(-.4);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:1374:				modelFrame:SetFacing(data.facing + pos[i].facing);

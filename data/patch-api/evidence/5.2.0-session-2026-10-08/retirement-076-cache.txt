@@ -1,0 +1,57 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantToasts/Blizzard_CovenantChoiceToast.xml:65:						self:GetParent():OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantToasts/Blizzard_CovenantRenownToast.xml:125:						self:GetParent():OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantToasts/Blizzard_CovenantRenownToast.lua:210:function CovenantRenownToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantToasts/Blizzard_CovenantChoiceToast.lua:63:function CovenantChoiceToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateFillUpFrames.xml:87:							<OnFinished method="OnAnimFinished"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateFillUpFrames.xml:93:							<OnFinished method="OnAnimFinished"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateFillUpFrames.xml:134:					<OnFinished method="OnAnimFinished"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateFillUpFrames.lua:316:function DecorFlipbookAnimMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateFillUpFrames.lua:323:function FilledFlipbookAnimMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateFillUpFrames.lua:329:function BurstFlipbookAnimMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/AnimatedStatusBar.lua:9:	self.OnFinishedCallback = function(...) self:OnAnimFinished(...); end;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/AnimatedStatusBar.lua:220:		self:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/AnimatedStatusBar.lua:292:function AnimatedStatusBarMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/IconIntroAnimation.xml:16:					<OnFinished method="OnAnimFinished"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/AzeriteItemToasts.lua:187:function AzeriteItemLevelUpToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/PVPHonorSystem.xml:91:							self:OnAnimFinished(...);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/PVPHonorSystem.xml:321:							self:OnAnimFinished(...);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/TalkingHeadUI.lua:296:		self:SetScript("OnAnimFinished", nil);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/TalkingHeadUI.lua:301:		self:SetScript("OnAnimFinished", self.IdleAnim);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/TalkingHeadUI.lua:305:		self:SetScript("OnAnimFinished", self.IdleAnim);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/TalkingHeadUI.lua:336:		self:SetScript("OnAnimFinished", nil);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/ArtifactToasts.lua:73:function ArtifactLevelUpToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/IconIntroAnimation.lua:80:			iconIntro.trail1.flyin:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/IconIntroAnimation.lua:82:			iconIntro.trail2.flyin:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/IconIntroAnimation.lua:84:			iconIntro.trail3.flyin:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/IconIntroAnimation.lua:86:			iconIntro.icon.flyin:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/IconIntroAnimation.lua:120:function IconIntroFlyinAnimMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/ArtifactToasts.xml:253:						self:GetParent():OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/AzeriteItemToasts.xml:348:						self:GetParent():OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:530:function EventToastScenarioBaseToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:573:function EventToastScenarioToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:574:	EventToastScenarioBaseToastMixin.OnAnimFinished(self);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:605:function EventToastScenarioExpandToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:606:	EventToastScenarioBaseToastMixin.OnAnimFinished(self);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:685:function EventToastWithIconBaseMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:807:function EventToastManagerNormalMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:1065:function EventToastAnimationsMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua:1230:	self:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/UI.xsd:426:				<xs:element name="OnAnimFinished" type="ScriptType"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/UI.xsd:1221:				<xs:element name="OnAnimFinished" type="ScriptType"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ScenarioObjectiveTracker.lua:882:	self.CountdownAnimFrame.Anim:SetScript("OnFinished", GenerateClosure(self.OnAnimFinished, self));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ScenarioObjectiveTracker.lua:946:function ScenarioObjectiveTrackerProvingGroundsMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ScenarioObjectiveTracker.lua:963:	self.Anim:SetScript("OnFinished", GenerateClosure(self.OnAnimFinished, self));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ScenarioObjectiveTracker.lua:1009:function ScenarioRewardsFrameMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_AutoQuestPopUpTracker.lua:60:	self.Contents.IconShine.Flash:SetScript("OnFinished", GenerateClosure(self.OnAnimFinished, self));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_AutoQuestPopUpTracker.lua:168:function AutoQuestPopupBlockMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTrackerAnimTemplates.lua:107:function ObjectiveTrackerAnimBlockMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTrackerAnimTemplates.lua:140:		self.AddAnim:SetScript("OnFinished", GenerateClosure(self.OnAnimFinished, self));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTrackerAnimTemplates.lua:155:		self.TurnInAnim:SetScript("OnFinished", GenerateClosure(self.OnAnimFinished, self));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTrackerAnimTemplates.lua:165:		self.RemoveAnim:SetScript("OnFinished", GenerateClosure(self.OnAnimFinished, self));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Mainline/HonorBar.lua:33:		self.StatusBar:OnAnimFinished(...);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecruitAFriend/RecruitAFriendFrame.xml:405:					<OnAnimFinished method="OnAnimFinished"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecruitAFriend/RecruitAFriendFrame.lua:650:function RecruitActivityButtonModelMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionRenownToast.lua:11:		self:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionRenownToast.lua:168:function MajorFactionsRenownToastMixin:OnAnimFinished()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionUnlockToast.lua:7:		self:OnAnimFinished();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionUnlockToast.lua:68:function MajorFactionUnlockToastMixin:OnAnimFinished()

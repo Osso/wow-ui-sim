@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:677:    ("GetCameraFacing", get_camera_facing),
+tests/widget_methods_model.rs:232:        .eval("return TestPlayerModelTransformCamera:GetCameraFacing()")

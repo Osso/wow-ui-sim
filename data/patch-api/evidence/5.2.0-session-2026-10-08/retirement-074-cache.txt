@@ -1,0 +1,6 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:94:	self:SetSequence(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua:68:	self.PlunderstormBackground:SetSequence(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua:185:	model:SetSequence(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:602:	self:SetSequence(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:625:	model:SetSequence(0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:629:	--model:SetSequence(0);

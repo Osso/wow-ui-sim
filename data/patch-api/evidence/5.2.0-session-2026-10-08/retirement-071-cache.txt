@@ -1,0 +1,3 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua:183:	model:SetModel(BACKGROUND_MODEL_ID, true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:617:			model:SetModel(background, true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecruitAFriend/RecruitAFriendFrame.lua:634:	self:SetModel(1601381);			--7FX_ARGUS_LIGHTFORGED_SIEGEWEAPON_IMPACT_HOLY.m2

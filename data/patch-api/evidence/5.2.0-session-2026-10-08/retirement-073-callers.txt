@@ -1,0 +1,8 @@
+src/lua_api/frame/methods/widgets/model.rs:636:    ("SetPosition", set_position),
+tests/blizzard_map_canvas_loads.rs:554:            "SetPosition",
+tests/blizzard_map_canvas_loads.rs:563:         (SetPosition/GetPosition/GetGlobalPosition), camera-routing (PanTo/PanAndZoomTo \
+tests/blizzard_ui/blizzard_animadiversionui/behavior_data_provider_connects_active_pins_to_origin.rs:80:        SetPosition = function(self, x, y)
+tests/blizzard_ui/blizzard_adventuremap/behavior_zone_summary_provider_groups_quests_by_zone_and_inset.rs:51:        pin.SetPosition = function(self, normalizedX, normalizedY)
+tests/blizzard_ui/blizzard_adventuremap/behavior_quest_choice_refresh_acquires_pin_per_valid_choice.rs:53:                        pin.SetPosition = function(self, normalizedX, normalizedY)
+tests/widget_methods_model.rs:51:        OrdinaryModelMethodFrame:SetPosition(0, 0, 0)
+tests/widget_methods_model.rs:209:        pm:SetPosition(10.5, -2.25, 8.0)

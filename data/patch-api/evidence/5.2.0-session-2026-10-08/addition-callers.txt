@@ -1,0 +1,65 @@
+src/c_api/c_spell.rs:11://! - `GetSchoolString(mask)` → localized school name for a bitmask.
+src/c_api/c_spell.rs:92:    ("GetSchoolString", get_school_string),
+src/lua_api/state_types/character_world.rs:532:    /// Seeded holiday battleground info returned by `C_PvP.GetHolidayBGInfo()`.
+src/lua_api/state_types/character_world.rs:534:    /// Seeded random battleground info returned by `C_PvP.GetRandomBGInfo()`.
+src/lua_api/state_types/character_world.rs:658:/// Seeded `C_PvP.GetHolidayBGInfo()` row.
+src/lua_api/workarounds/temporary/unit_stagger_defaults.rs:4://! `UnitStagger` global and PaperDoll stagger percentage explicit here until
+src/lua_api/workarounds/temporary/unit_stagger_defaults.rs:8:if UnitStagger == nil then
+src/lua_api/workarounds/temporary/unit_stagger_defaults.rs:9:  function UnitStagger(_unit)
+src/lua_api/workarounds/temporary/unit_stagger_defaults.rs:37:            .eval(r#"return UnitStagger("player")"#)
+src/lua_api/workarounds/temporary/unit_stagger_defaults.rs:38:            .expect("UnitStagger probe should run");
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:133:if GetRaidDifficultyID == nil then
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:134:    function GetRaidDifficultyID()
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:143:if GetDifficultyInfo == nil then
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:144:    function GetDifficultyInfo(difficultyID)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:199:                    GetDifficultyInfo(DifficultyUtil.ID.DungeonHeroic)
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:152:    ("IsTradeSkillReady", c_trade_skill_ui_is_trade_skill_ready),
+src/lua_api/globals/missing_surface/quest_choice.rs:48:    ("GetQuestChoiceInfo", get_quest_choice_info),
+src/lua_api/globals/missing_surface/quest_choice.rs:49:    ("GetQuestChoiceOptionInfo", get_quest_choice_option_info),
+src/lua_api/globals/missing_surface/quest_choice.rs:51:        "GetQuestChoiceRewardCurrency",
+src/lua_api/globals/missing_surface/quest_choice.rs:55:        "GetQuestChoiceRewardFaction",
+src/lua_api/globals/missing_surface/quest_choice.rs:58:    ("GetQuestChoiceRewardInfo", get_quest_choice_reward_info),
+src/lua_api/globals/missing_surface/quest_choice.rs:59:    ("GetQuestChoiceRewardItem", get_quest_choice_reward_item),
+src/lua_api/globals/missing_surface/quest_choice.rs:60:    ("SendQuestChoiceResponse", send_quest_choice_response),
+src/lua_api/globals/missing_surface/small_namespaces.rs:88:        "GetHolidayBGInfo",
+src/lua_api/globals/missing_surface/small_namespaces.rs:92:        "GetRandomBGInfo",
+src/lua_api/globals/create_frame/template_chain/parser_function_arg_shapes.rs:367:        let handler = parse_inline_function_arg_shapes("UseValue(GetCurrentValue())");
+src/lua_api/globals/create_frame/template_chain/parser_function_arg_shapes.rs:378:        assert_eq!(arg_function_name, "GetCurrentValue");
+src/lua_api/globals/pvp_probes.rs:14://! - `GetHolidayBGInfo()`       — seeded random BG info table.
+src/lua_api/globals/pvp_probes.rs:15://! - `GetRandomBGInfo()`        — random BG table; default row when unseeded.
+src/lua_api/globals/pvp_probes.rs:529:    LuaApiMut::register_function(lua, "GetHolidayBGInfo", get_holiday_bg_info)?;
+src/lua_api/globals/register.rs:56:    LuaApiMut::register_function(lua, "GetRaidDifficultyID", get_raid_difficulty_id)?;
+src/lua_api/globals/stubs/global_stubs.rs:53:    "RequestRandomBattlegroundInstanceInfo",
+src/lua_api/globals/utility_system_spell/spell_api.rs:568:    LuaApiMut::register_function(lua, "UnitGetTotalAbsorbs", unit_get_total_absorbs)?;
+src/lua_api/globals/font_strings_collection/pet_journal.rs:465:    tb.set_function("GetPetCooldownByGUID", |state| {
+src/loader/tests/wow_api_globals/startup_globals.rs:1288:            local randomBGInfo = C_PvP.GetRandomBGInfo()
+src/loader/tests/wow_api_globals/startup_globals.rs:1454:                type(GetRaidDifficultyID),
+src/loader/tests/wow_api_globals/startup_globals.rs:1455:                GetRaidDifficultyID(),
+tests/blizzard_deprecated_spell_script_loads.rs:51:         GetSpellQueueWindow / GetSchoolString / SpellIsPriorityAura / SpellIsSelfBuff / \
+tests/blizzard_deprecated_spell_script_loads.rs:52:         SpellGetVisibilityInfo) plus the in-place C_Spell.GetSpellLossOfControlCooldown \
+tests/blizzard_deprecated_spell_script_loads.rs:139:                and type(GetSchoolString) == 'function'",
+tests/blizzard_deprecated_spell_script_loads.rs:149:         function); GetSchoolString (registered at c_spell.rs, returns localized school \
+tests/blizzard_deprecated_spell_script_loads.rs:170:                and GetSchoolString == C_Spell.GetSchoolString
+tests/blizzard_deprecated_spell_script_loads.rs:276:        .eval("return type(C_Spell.GetSpellLossOfControlCooldown)")
+tests/blizzard_deprecated_spell_script_loads.rs:277:        .expect("type(C_Spell.GetSpellLossOfControlCooldown) query should succeed");
+tests/blizzard_deprecated_spell_script_loads.rs:281:         `function C_Spell.GetSpellLossOfControlCooldown(spellIdentifier) ... end` — \
+tests/blizzard_deprecated_spell_script_loads.rs:290:        .eval("return _G.GetSpellLossOfControlCooldown == nil")
+tests/blizzard_deprecated_spell_script_loads.rs:294:        "The C_Spell.GetSpellLossOfControlCooldown method must NOT leak as a `_G` global. \
+tests/blizzard_deprecated_spell_script_loads.rs:307:                local startTime, duration = C_Spell.GetSpellLossOfControlCooldown(0) \
+tests/blizzard_deprecated_spell_script_loads.rs:314:        "Calling C_Spell.GetSpellLossOfControlCooldown(0) must return all nils because the \
+tests/blizzard_deprecated_spell_script_loads.rs:335:         C_Spell.GetSpellLossOfControlCooldown mutation are applied"
+tests/blizzard_deprecated_spell_script_loads.rs:361:         C_Spell.GetSpellLossOfControlCooldown method)"
+tests/professions_api.rs:266:        .eval("return C_TradeSkillUI.IsTradeSkillReady()")
+tests/quest_verbs.rs:94:            local choiceID, _question, optionCount = C_QuestChoice.GetQuestChoiceInfo()
+tests/quest_verbs.rs:95:            local optionID, optionText = C_QuestChoice.GetQuestChoiceOptionInfo(0)
+tests/quest_verbs.rs:96:            C_QuestChoice.SendQuestChoiceResponse(optionID)
+tests/recent_runtime_bootstrap_boundaries.rs:229:            "function GetDifficultyInfo",
+tests/recent_runtime_bootstrap_boundaries.rs:450:        ("function UnitStagger", "temporary unit stagger workaround"),
+tests/spell_api.rs:396:    let school: String = env.eval("return C_Spell.GetSchoolString(1)").unwrap();
+tests/pvp_info.rs:40:    local holiday = C_PvP.GetHolidayBGInfo()
+tests/mists_compat_bootstrap.rs:118:            return GetRaidDifficultyID() == 14,
+tests/unit_api.rs:830:    let val: i32 = env.eval("return UnitGetTotalAbsorbs('player')").unwrap();
+tests/data/patch_8_1_0_sweep_known_gaps.json:49:  "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-90",
+tests/data/patch_8_1_0_sweep_known_gaps.json:50:  "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91",
+tests/data/patch_9_0_1_sweep_known_gaps.json:148:  "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-591",
+tests/data/patch_9_0_1_sweep_known_gaps.json:149:  "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-592",

@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/model.rs:673:    ("SetSequenceTime", set_sequence_time),
+tests/widget_methods_model.rs:339:    env.exec("TestPlayerModelAppearanceState:SetSequenceTime(7, 250)")

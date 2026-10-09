@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mists/CharacterCreate.lua:620:				local scale = model:GetWorldScale();

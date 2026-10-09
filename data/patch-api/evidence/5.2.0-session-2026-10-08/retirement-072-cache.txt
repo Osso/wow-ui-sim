@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua:549:			modelViewer:SetModelScale(0.75)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua:552:			modelViewer:SetModelScale(0.6)
