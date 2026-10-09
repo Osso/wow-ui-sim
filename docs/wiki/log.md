@@ -778,3 +778,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## [2026-10-09] development | Retail 3.2.0 portable original replay
 
 [Audit](investigations/patch-3-2-0-api-audit.md#original-receipt-replay): accounting fixtures 3/3 at 106630826, fresh-process clean replay without Git/target/tools or PATH executables. Current future-closure files ignored; serialized source/own-log/ledger/gap tampering rejected at exact seals, bytes restored and clean replay repeated. Original 145-ID/30-match/13-gap history and archive remain frozen. No new models, runtime mutation or independent/final acceptance claim; main owns ordered successor integration.
+
+## [2026-10-09] integration | Retail Patch 3.1.0 documentation handoff
+
+[Audit](investigations/patch-3-1-0-api-audit.md#main-successor-integration--2026-10-09) records integrated `614402d56`, pushed (main handoff). Actual retail 3.2.0/3.3.0/3.3.3/3.3.5/4.0.1 successors applied; `IsPlayerResolutionAvailable` removed from current gaps. Original 49/61, implementer-current 51/59 and two bounded radians fragments remain immutable historical receipts; inferred 52/58 is not observed. Getter reuses nullable facing radians only, no input/default/native parity. Fresh runtime verification/profile/startup/full-suite/CI pending, no acceptance. Documentation-only update; no tests or operational actions.

@@ -16,7 +16,7 @@
 
 ## [2026-10-09] investigation | Retail Patch 3.1.0 bounded source audit
 
-[Audit](investigations/patch-3-1-0-api-audit.md): frozen page 233195/revision 2259594; 110 inventory, 189 raw/full-extract rows, 33 fragments and 521 ledger IDs. Current publication 51/59, negative 60; one real configured-radians state read passes 1/1, two fragments bounded without native credit. Parser/disposable original-current accounting 3/3; frozen replay 2/2, 36 seals/128 snapshots/five revisions. Original 49/61 and negative 62 remain immutable. Precise talent/aura/hover/item/macro/native limits; main owns queued retail successors and final gates, no Classic credit or operations.
+[Audit](investigations/patch-3-1-0-api-audit.md): frozen page 233195/revision 2259594; 110 inventory, 189 raw/full-extract rows, 33 fragments and 521 ledger IDs. Implementer-current historical publication 51/59, negative 60; one real configured-radians state read passes 1/1, two fragments bounded without native credit. Parser/disposable original-current accounting 3/3; frozen replay 2/2, 36 seals/128 snapshots/five revisions. Original 49/61 and negative 62 remain immutable. Precise talent/aura/hover/item/macro/native limits. Integrated `614402d56`, pushed (main handoff): actual retail 3.2.0/3.3.0/3.3.3/3.3.5/4.0.1 applied and `IsPlayerResolutionAvailable` removed from current gaps. Fresh verification/profile/startup/full-suite/CI pending; inferred 52/58 is not observed. Nullable facing-radians getter only, no input/default/native parity or Classic credit.
 
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 

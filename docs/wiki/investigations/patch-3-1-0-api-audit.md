@@ -10,6 +10,8 @@ Frozen page 233195/revision 2259594/timestamp 2013-05-22T17:34:42Z describes 200
 
 ## Capability matrix
 
+The counts and targeted outcomes below are immutable implementer-current historical receipts, not fresh observations at integrated HEAD. Original 49/61, implementer-current 51/59 and the two bounded radians fragments retain their original proof limits.
+
 | Scope | Accounted/current proof | Still UNPROVEN |
 |---|---|---|
 | Publication | 110 rows: 51 matches, 59 gaps; own GREEN 1/1, negative 59 → 60 | Historical call semantics regardless of presence; original sealed observation remains 49/61, negative 62 |
@@ -18,7 +20,7 @@ Frozen page 233195/revision 2259594/timestamp 2013-05-22T17:34:42Z describes 200
 | Cheap real model | One player-orientation scalar read; 0, π÷2, π state transitions and exactly one result pass 1/1 | Movement/input producer, other-unit facing, nil/native defaults, native 2009 PTR correction and security |
 | Historical archive | 36 sealed files, 128 archived files, five exact revision pins/seven command receipts; fresh-process fixtures 2/2 | Full runtime/native reconstruction, current/future acceptance and coordinator gates |
 
-[Current ledger](../../../data/patch-api/sources/3.1.0-page-coverage.json): 521 IDs = 110 inventory + 189 full-extract + 189 raw + 33 fragments. Statuses: 53 bounded (51 publication, two narrow model fragments), 141 pending (59 publication, 51 raw, 31 fragments), 327 metadata. [Original sealed ledger](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/historical-page-coverage.json) remains 49 bounded/145 pending/327 metadata; original 61 gaps and 33 unmodeled fragments never rewritten.
+Implementer-current historical ledger receipt (mutable [working ledger](../../../data/patch-api/sources/3.1.0-page-coverage.json) is not the receipt): 521 IDs = 110 inventory + 189 full-extract + 189 raw + 33 fragments. Statuses: 53 bounded (51 publication, two narrow model fragments), 141 pending (59 publication, 51 raw, 31 fragments), 327 metadata. [Original sealed ledger](../../../data/patch-api/evidence/3.1.0-session-2026-10-09/historical-page-coverage.json) remains 49 bounded/145 pending/327 metadata; original 61 gaps and 33 unmodeled fragments never rewritten.
 
 ## Precise limits
 
@@ -52,7 +54,7 @@ Bounded independent slice only. Main owns affected-callers/all-publication/cross
 
 ## Main successor integration — 2026-10-09
 
-Actual retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 registers now replace the queued placeholder. The 4.0.1 removal of `IsPlayerResolutionAvailable` changes its expected publication to absent; the reviewed current gap list excludes that row. Current publication/model, affected-caller and profile gates remain pending. Original historical and implementer-current receipts stay unchanged; new integration observations belong in a separate `integrated/` directory. No native behavior credit from removal.
+Integrated at `614402d56`, pushed (main handoff). Actual retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 registers now replace the queued placeholder. The 4.0.1 removal of `IsPlayerResolutionAvailable` changes its expected publication to absent; the current gap list excludes that row. Fresh runtime verification, publication/model, affected-caller, profile, startup, full-suite and CI gates remain pending; no final acceptance. Original 49/61 and implementer-current 51/59 receipts stay unchanged; inferred 52/58 is not an observed result. New integration observations belong in a separate `integrated/` directory. The current getter reuses the nullable facing-radians read; no input producer, native default or native parity credit. The two radians fragments retain only historical configured-state proof. No native behavior credit from removal.
 
 ## Sources
 

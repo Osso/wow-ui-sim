@@ -32,12 +32,16 @@ Frozen page 233195, revision 2259594, timestamp 2013-05-22T17:34:42Z. [Implement
 - `tests/patch_3_1_0_publication_sweep.rs`: publication GREEN 1/1 and configured-radians GREEN 1/1; current negative rejects 59 → 60 gaps.
 - `tools/test_patch_3_1_0_validator.py`: 2/2 relocated no-Git/no-target historical replay/tamper/future-current isolation cases; original 61 → 62 negative retained.
 
+## Integration status — 2026-10-09
+
+Integrated at `614402d56`, pushed (main handoff). Actual retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 successors are applied; `IsPlayerResolutionAvailable` is removed from the current gap list. Fresh runtime verification remains pending. Original 49/61 and implementer-current 51/59 are immutable historical receipts, not integrated-head counts; inferred 52/58 is not an observed result. The getter reuses the nullable facing-radians read, with no input producer, native default or native parity credit.
+
 ## Known gaps (current cycle)
 
-- [ ] 59 current publication mismatches; 51 matches are presence/absence evidence only. Queued retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 integration remains main-owned; no placeholder or Wrath Classic supersession credit.
+- [ ] Fresh integrated publication/model verification; implementer-current 51 matches/59 mismatches remain historical presence/absence evidence only. No placeholder or Wrath Classic supersession credit.
 - [ ] 51 raw prose/context rows remain pending; 31 literal fragments have no modeled credit. Two player-facing fragments have only configured-current-state credit and still retain native/historical limits. All full native contracts remain UNPROVEN.
 - [ ] Historical talent/glyph group/preview state, controller-token aura ordering/legacy tuple, secure restoration/hover cancellation/noncombat lifecycle, item-location table encoding/mutation, slash-command/macro dispatch and native PTR corrections remain unsupported.
-- [ ] Cross-profile compilation, all-publication/affected callers, lint/check/startup/full-suite/CI and final integration gates remain main-owned; no acceptance claim.
+- [ ] Fresh verification, cross-profile compilation, all-publication/affected callers, lint/check/startup/full-suite/CI and final acceptance gates remain main-owned and pending; integration/push is not acceptance.
 
 ## Out of scope
 
