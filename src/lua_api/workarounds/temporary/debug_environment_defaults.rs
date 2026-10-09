@@ -222,14 +222,28 @@ mod tests {
             "installs_debug_environment_defaults_before_probe",
         );
 
-        let result: String = env
-            .eval(
-                r#"
+        let trace_enabled = std::env::var("WOW_SIM_TRACE_DEBUG_GETTERS").as_deref() == Ok("1");
+        let probe = format!(
+            "local traceDebugGettersEnabled = {trace_enabled}\n{}",
+            r#"
+                local function traceDebugGetters(phase)
+                    if not traceDebugGettersEnabled then return end
+                    print("[DebugGetterProbe]", phase, "GetCallstackHeight",
+                        type(_G.GetCallstackHeight), tostring(_G.GetCallstackHeight))
+                    print("[DebugGetterProbe]", phase, "GetErrorCallstackHeight",
+                        type(_G.GetErrorCallstackHeight), tostring(_G.GetErrorCallstackHeight))
+                end
+                traceDebugGetters("probe_start")
                 local marker = function() return "wrapped" end
                 if CreateSecureDelegate(marker)() ~= "wrapped" then return "secure_delegate" end
+                traceDebugGetters("after_secure_delegate")
                 if type(GetButtonMetatable()) ~= "table" then return "button_metatable" end
+                traceDebugGetters("after_button_metatable")
                 if type(GetEditBoxMetatable()) ~= "table" then return "editbox_metatable" end
+                traceDebugGetters("after_editbox_metatable")
                 if secretwrap(marker)() ~= "wrapped" then return "secretwrap" end
+                traceDebugGetters("after_secretwrap")
+                traceDebugGetters("before_callstack_height")
                 if GetCallstackHeight() ~= 0 then return "callstack_height" end
                 if GetErrorCallstackHeight() ~= 0 then return "error_callstack_height" end
                 if type(debugstack) ~= "function" then return "debugstack_type" end
@@ -240,7 +254,9 @@ mod tests {
                 AddSourceLocationExclude("example.lua")
                 return "ok"
                 "#,
-            )
+        );
+        let result: String = env
+            .eval(&probe)
             .expect("debug environment defaults probe should run");
 
         assert_eq!(result, "ok");
