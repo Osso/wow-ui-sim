@@ -400,7 +400,7 @@ fn run_controller_fixture_group(group: &std::ffi::OsStr, config: Config) -> Exit
 
 fn create_controller_fixture_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create controlled exact fixture environment");
-    env.eval::<()>("__prefork_group_parent = true")
+    env.exec("__prefork_group_parent = true")
         .expect("initialize controlled parent");
     env
 }
