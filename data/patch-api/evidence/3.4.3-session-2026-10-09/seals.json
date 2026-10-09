@@ -1,0 +1,13 @@
+{
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/historical-extract_patch_non_inventory.py": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/historical-gen_patch_wikitext_register.py": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/profile-observation.json": "1c07df170fdc1e3dd443baf761249e6d610de18151a34695c5d003cb8d5928ae",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/red.log": "6da28b34d48f2ccd29bed2e5480ec08019818b34dde34f6f6fba8ff1c1f77cbb",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/source-pin.json": "06848dfe98d4bfe90b694bff38a0c99ec79211172e5f9f29f1841572fff0f087",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/source-response.json": "594cacde59ac51e99109e28fea49ea153a1969994032064f83b8e3dfad5b3b05",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/test_source_accounting.py": "9c796eed4a36c30acde0526e8553dcbd0a2cf7b33742e8ed5fddd130d0b51e4f",
+  "data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py": "f0fe151506f54ed57995c33ffa521be183a982072c70c90aa6442bdd935abe3e",
+  "data/patch-api/sources/3.4.3-api-changes.txt": "288903874f44a46594f7521dd4b9d51b94cd7bd431bdd9e45bfd333d5eac488f",
+  "data/patch-api/sources/3.4.3-api-changes.wikitext": "1849b20140e6c83b62c4a1b5a14adba2143de8ce01d9a368b7a52d166d0f5e6e",
+  "data/patch-api/sources/3.4.3-page-coverage.json": "af45e812c7c7897ab1792c26f01db84c150f9ebeb244ed0af9e8becea92deeba"
+}

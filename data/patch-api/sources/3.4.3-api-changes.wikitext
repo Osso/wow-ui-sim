@@ -1,0 +1,9 @@
+{{apichanges|3.4.3|prev=3.4.2|next=4.4.0}}
+
+==Summary==
+* The client has pulled in many API changes from [[Patch 10.1.7/API changes|Patch 10.1.7]].
+* Collection-related APIs for mounts, pets, toys, and heirlooms have been added.
+
+==Resources==
+* TOC: <code>30403</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/3.4.2..classic_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/3.4.2..3.4.3 BlizzardInterfaceResources]

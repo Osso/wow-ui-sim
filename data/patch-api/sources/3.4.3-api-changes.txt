@@ -1,0 +1,9 @@
+Patch 3.4.3 API changes
+
+== Summary ==
+* The client has pulled in many API changes from Patch 10.1.7.
+* Collection-related APIs for mounts, pets, toys, and heirlooms have been added.
+
+== Resources ==
+* TOC: 30403
+* Diffs: wow-ui-source, BlizzardInterfaceResources

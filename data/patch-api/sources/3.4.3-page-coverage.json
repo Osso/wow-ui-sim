@@ -1,0 +1,102 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "3.4.3",
+  "client_line": "wrath-classic",
+  "profile": "wrath",
+  "scope": "source-and-profile-accounting",
+  "source": {
+    "title": "Patch 3.4.3/API changes",
+    "version": "3.4.3",
+    "pageid": 152751,
+    "revid": 5983024,
+    "timestamp": "2024-03-07T08:49:48Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5983024&format=json",
+    "retrieved": "2026-10-09T08:51:36.389075+00:00",
+    "response_sha256": "594cacde59ac51e99109e28fea49ea153a1969994032064f83b8e3dfad5b3b05",
+    "wikitext_sha256": "1849b20140e6c83b62c4a1b5a14adba2143de8ce01d9a368b7a52d166d0f5e6e",
+    "wikitext_bytes": 463,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.3-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.3-wikitext.txt"
+  },
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/3.4.3-api-changes.txt",
+    "sha256": "288903874f44a46594f7521dd4b9d51b94cd7bd431bdd9e45bfd333d5eac488f",
+    "extractor_flags": [
+      "--text-only",
+      "--canonical-patch-navigation"
+    ]
+  },
+  "inventory": {
+    "enumerated_api_occurrences": 0,
+    "header_counts": [],
+    "register_created": false,
+    "removals": 0
+  },
+  "later_registers": [],
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation prev=3.4.2/next=4.4.0 is not runtime supersession; Cata transition is separate history.",
+      "wikitext_line": 1,
+      "text_line": 1,
+      "source_text": "{{apichanges|3.4.3|prev=3.4.2|next=4.4.0}}"
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "wikitext_line": 3,
+      "text_line": 3,
+      "source_text": "==Summary=="
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "UNPROVEN",
+      "note": "Many is not all: the linked retail 10.1.7 page is not expanded or transplanted into Wrath Classic. No member identities, signatures, outputs, events or security contracts specified.",
+      "wikitext_line": 4,
+      "text_line": 4,
+      "source_text": "* The client has pulled in many API changes from [[Patch 10.1.7/API changes|Patch 10.1.7]]."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "UNPROVEN",
+      "note": "Mount/pet/toy/heirloom collection APIs are not enumerated. Namespace/member sets, arguments, outputs, transitions and native collection behavior are unspecified; publication would not prove behavior.",
+      "wikitext_line": 5,
+      "text_line": 5,
+      "source_text": "* Collection-related APIs for mounts, pets, toys, and heirlooms have been added."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "wikitext_line": 7,
+      "text_line": 7,
+      "source_text": "==Resources=="
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit.",
+      "wikitext_line": 8,
+      "text_line": 8,
+      "source_text": "* TOC: <code>30403</code>"
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Two external diffs unexpanded; moving classic_ptr URL is not a pinned linked API inventory.",
+      "wikitext_line": 9,
+      "text_line": 9,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/3.4.2..classic_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/3.4.2..3.4.3 BlizzardInterfaceResources]"
+    }
+  ],
+  "proof_policy": "Source and historical profile/cache accounting only; no positive publication, behavior, full UI or native parity credit. Both substantive summary statements remain UNPROVEN."
+}
