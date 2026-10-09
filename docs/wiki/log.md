@@ -802,3 +802,7 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 ## [2026-10-09] evidence | Patch 3.0.3 bounded source development proof
 
 [Audit/proof ledger](investigations/patch-3-0-3-api-audit.md#historical-replay): source GREEN3/3 at `ce0a0e863`, copied original replay/accounting GREEN2/2 at `e50955ee3`; 16 frozen seals/93 snapshots, 17 serialized tamper/restoration controls, 17 omission controls and two literal/credit controls. Eight IDs remain two metadata/six UNPROVEN; zero meaningful closures/runtime edits. Full101-page registry through1.0.0 preserved. Main owns ordered queued retail inputs, integration and native acceptance; no broad/final gates.
+
+## [2026-10-09] investigation | Historical retail Patch 2.0.1 SOURCE audit
+
+[Audit](investigations/patch-2-0-1-api-audit.md): frozen 324401/3129557; exact response/body and 101-page registry pin verified. Dedicated literal source auditor; own RED 3/3 missing-tool failures at 9276337ae. All publication/semantics UNPROVEN; no native/runtime or Classic credit. Bounded source/replay proof pending; main owns integration.

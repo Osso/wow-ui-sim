@@ -2911,3 +2911,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Historical retail Patch 3.0.3 source accounting
 
 [Audit](investigations/patch-3-0-3-api-audit.md): frozen page560990/revision5407654, three literal CVar definitions and eight IDs; two metadata/six UNPROVEN publication/semantic records, zero signatures/models/runtime edits. Own source GREEN3/3 and original Git-free copied replay GREEN2/2; 16 seals/93 archived snapshots, 17 serialized tamper/restoration controls. Full101-page handoff registry through1.0.0 retained. Queued retail3.0.8/3.1.0/3.2.0/3.3.0 remain ordered placeholders; no Classic supersession or native/final acceptance.
+
+## [2026-10-09] investigation | Historical retail Patch 2.0.1 SOURCE audit
+
+[Audit](investigations/patch-2-0-1-api-audit.md): frozen 324401/3129557; exact response/body and 101-page registry pin verified. Dedicated literal source auditor; own RED 3/3 missing-tool failures at 9276337ae. All publication/semantics UNPROVEN; no native/runtime or Classic credit. Bounded source/replay proof pending; main owns integration.
