@@ -1,0 +1,18 @@
+commit 374c2c6c79a7925074240a6d9bbc8a19b7e46cc7
+Author: Alessio Deiana <adeiana@gmail.com>
+Date:   Mon Sep 21 22:07:43 2026 -0500
+
+    Model inferred Forever Classic expansion identity
+
+diff --git a/src/lua_api/globals/enum_data/missing_constants.lua b/src/lua_api/globals/enum_data/missing_constants.lua
+index ab2a9e8d9..ca32b7021 100644
+--- a/src/lua_api/globals/enum_data/missing_constants.lua
++++ b/src/lua_api/globals/enum_data/missing_constants.lua
+@@ -70,7 +70,6 @@ if LE_EXPANSION_CATACLYSM == nil then LE_EXPANSION_CATACLYSM = 3 end
+ if LE_EXPANSION_CLASSIC == nil then LE_EXPANSION_CLASSIC = 0 end
+ if LE_EXPANSION_DRAGONFLIGHT == nil then LE_EXPANSION_DRAGONFLIGHT = 9 end
+ if LE_EXPANSION_LEGION == nil then LE_EXPANSION_LEGION = 6 end
+-if LE_EXPANSION_LEVEL_CURRENT == nil then LE_EXPANSION_LEVEL_CURRENT = 11 end
+ if LE_EXPANSION_LEVEL_PREVIOUS == nil then LE_EXPANSION_LEVEL_PREVIOUS = 10 end
+ if LE_EXPANSION_MIDNIGHT == nil then LE_EXPANSION_MIDNIGHT = 11 end
+ if LE_EXPANSION_MISTS_OF_PANDARIA == nil then LE_EXPANSION_MISTS_OF_PANDARIA = 4 end

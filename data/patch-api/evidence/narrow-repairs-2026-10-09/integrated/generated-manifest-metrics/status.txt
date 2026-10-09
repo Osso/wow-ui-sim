@@ -1,0 +1,1 @@
+CommandResult(stdout=' M tests/prefork_full_ui.rs\n?? .code-index.db\n', stderr='', exit_code=0, upstream_results=())

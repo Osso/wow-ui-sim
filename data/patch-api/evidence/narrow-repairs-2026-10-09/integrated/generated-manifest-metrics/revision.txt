@@ -1,0 +1,1 @@
+CommandResult(stdout='149795f1666d221022a4330da17da309e8697b8d\n', stderr='', exit_code=0, upstream_results=())

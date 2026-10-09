@@ -1,6 +1,6 @@
 ## [2026-10-09] fix | Generated constants manifest metrics
 
-[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#generated-file-metrics--stale-manifest-corrected-green-pending) records exact0/1 RED and prior intentional fallback removal374c2c6c7. Only constants manifest byte/line/hash metrics updated to actual output; enums/Lua/discovery/method snapshots unchanged. Independent GREEN pending; no regeneration/native proof.
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#generated-file-metrics--stale-manifest-corrected-bounded-green) records exact0/1 RED and prior intentional fallback removal374c2c6c7. Only constants manifest byte/line/hash metrics updated to actual output; enums/Lua/discovery/method snapshots unchanged. Independent exact disk-reading GREEN1/1 at149795f16, identified unchanged artifact/test; twelve RED/GREEN/diff receipts retained. No regeneration/native proof.
 
 ## [2026-10-09] investigation | Current browser and Pi provenance gaps
 

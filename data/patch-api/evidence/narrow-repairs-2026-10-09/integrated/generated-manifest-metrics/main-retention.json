@@ -1,0 +1,99 @@
+{
+  "retained_at": "2026-10-09T20:36:46.035776+00:00",
+  "files": [
+    {
+      "source": "/tmp/generated-manifest-metrics/red.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/red.json",
+      "bytes": 1567,
+      "source_sha256": "9377c852123e94265d22687d31f7db69323bbddffe98e6bc3426ac5df0f57d62",
+      "target_sha256": "9377c852123e94265d22687d31f7db69323bbddffe98e6bc3426ac5df0f57d62"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics/red.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/red.stderr",
+      "bytes": 470,
+      "source_sha256": "c274048494bd88bc27de00183343c11c37b4a9fa8b30c0b05054ee4d23c7f368",
+      "target_sha256": "c274048494bd88bc27de00183343c11c37b4a9fa8b30c0b05054ee4d23c7f368"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics/red.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/red.stdout",
+      "bytes": 350,
+      "source_sha256": "96a8e8f6b4c633f03d0378a774c4a19dcbb7db93a4792d2a52ad86cf88f743ee",
+      "target_sha256": "96a8e8f6b4c633f03d0378a774c4a19dcbb7db93a4792d2a52ad86cf88f743ee"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/changes.txt",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/changes.txt",
+      "bytes": 4963,
+      "source_sha256": "b123b84cf0ad9e5ee02bb7797be9a0771a52ea94135ad8b9c943f86edf7eff62",
+      "target_sha256": "b123b84cf0ad9e5ee02bb7797be9a0771a52ea94135ad8b9c943f86edf7eff62"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/diff.txt",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/diff.txt",
+      "bytes": 667,
+      "source_sha256": "305459f1cccdf9e0c79bb6d4240237ecb82a1e719b932a38dd560302099e211d",
+      "target_sha256": "305459f1cccdf9e0c79bb6d4240237ecb82a1e719b932a38dd560302099e211d"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/green.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/green.json",
+      "bytes": 1721,
+      "source_sha256": "f4a822fff9d6743cac17f49112065a470a9ac368f893b64ba27d3f2ca9bc0822",
+      "target_sha256": "f4a822fff9d6743cac17f49112065a470a9ac368f893b64ba27d3f2ca9bc0822"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/green.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/green.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/green.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/green.stdout",
+      "bytes": 222,
+      "source_sha256": "6f4bbf2d2133c2d3d28bdad75ca9be24b1272ac5c37d0c5385cd0d10d99666c9",
+      "target_sha256": "6f4bbf2d2133c2d3d28bdad75ca9be24b1272ac5c37d0c5385cd0d10d99666c9"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/prior-removal.txt",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/prior-removal.txt",
+      "bytes": 1063,
+      "source_sha256": "ec6949771f6e8d6780a57956249174f8bee662209a757bcc803c7b583e42b618",
+      "target_sha256": "ec6949771f6e8d6780a57956249174f8bee662209a757bcc803c7b583e42b618"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/removal.txt",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/removal.txt",
+      "bytes": 882,
+      "source_sha256": "f0a9cc0f833be03fc1a5ebb0a97b5284063bf9a8142d83923f2e7faa9a0ae9a1",
+      "target_sha256": "f0a9cc0f833be03fc1a5ebb0a97b5284063bf9a8142d83923f2e7faa9a0ae9a1"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/revision.txt",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/revision.txt",
+      "bytes": 111,
+      "source_sha256": "1563aef08f2f8541fdf62511d7d15f72692a88f6561456b0303680a2e6f300f1",
+      "target_sha256": "1563aef08f2f8541fdf62511d7d15f72692a88f6561456b0303680a2e6f300f1"
+    },
+    {
+      "source": "/tmp/generated-manifest-metrics-independent/status.txt",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/generated-manifest-metrics/status.txt",
+      "bytes": 117,
+      "source_sha256": "ef4e62d0f1a84fccc24c2c0a50232c9ea61d6c0415e6730bb301e9f009293500",
+      "target_sha256": "ef4e62d0f1a84fccc24c2c0a50232c9ea61d6c0415e6730bb301e9f009293500"
+    }
+  ],
+  "privacy": {
+    "patterns": [
+      "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+      "\\b(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})\\b",
+      "(?i)authorization\\s*[:=]\\s*Bearer\\s+\\S+"
+    ],
+    "matches": 0,
+    "limits": "Bounded text credential-pattern check only, not exhaustive; no raw environment or process data."
+  },
+  "scope": "Exact manifest test RED0/1 exit101 at a1c31b3cf and independent GREEN1/1 exit0 at149795f16, identified dcc artifact+unchanged disk-reading test. No rebuild/generator replay/native/profile or unrelated runtime equivalence."
+}
