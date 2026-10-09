@@ -13,6 +13,38 @@
       "exit_code": 1,
       "log": "red.log",
       "result": "10 expected missing-accounting assertion failures"
+    },
+    {
+      "stage": "SOURCE GREEN",
+      "revision": "66a5448b0",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "exit_code": 0,
+      "log": "green.log",
+      "result": "10/10; omission/content/credit controls, no runtime/model/native proof"
+    },
+    {
+      "stage": "PORTABLE RED",
+      "revision": "53bdb30cbd74ee496109f7be5e21ebf4c2ad5016 plus own fixtures",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/replay-archive.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-scratch",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1140-page/data/patch-api/evidence/1.14.0-session-2026-10-09/portable-red-controls.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1140-page",
+      "exit_code": 1,
+      "log": "portable-red.log",
+      "result": "3 expected missing-archive assertion failures"
     }
   ]
 }
