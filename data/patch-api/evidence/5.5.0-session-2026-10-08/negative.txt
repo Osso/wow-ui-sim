@@ -1,0 +1,53 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.74s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p550-page-mists/debug/deps/integration-f15e4c1da9a8b8f4)
+
+running 1 test
+
+running 1 test
+test patch_5_5_0_publication_sweep::patch_5_5_0_publication_sweep ... FAILED
+
+failures:
+
+failures:
+    patch_5_5_0_publication_sweep::patch_5_5_0_publication_sweep
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 0.99s
+
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.023s] [Startup] SimState::default complete in 21.92ms
+[  0.025s] [Startup] rilua VM created in 2.14ms
+[  0.026s] [Startup] builtin frames initialized in 1.19ms
+[  0.026s] [Startup] template registry cleared in 226.85µs
+[  0.033s] [Startup] intrinsic templates registered in 6.73ms
+[  0.033s] [Startup] initial app_data lua handle installed in 5.89µs
+[  0.529s] [Startup] init_lua_state complete in 496.29ms
+[  0.529s] [Startup] final app_data lua handle installed in 1.26µs
+[  0.530s] [Startup] initial screen globals installed in 371.12µs
+[  0.530s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_5_5_0_publication_sweep::patch_5_5_0_publication_sweep' (3833159) panicked at /home/osso/.worktrees/wow-ui-sim-p550-page/tests/common/publication_sweep.rs:356:9:
+assertion `left == right` failed: register row count changed
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'patch_5_5_0_publication_sweep::patch_5_5_0_publication_sweep' (3833152) panicked at /home/osso/.worktrees/wow-ui-sim-p550-page/tests/common/timeout_reexec.rs:181:9:
+timeout child for `patch_5_5_0_publication_sweep::patch_5_5_0_publication_sweep` failed (exit code 101)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test patch_5_5_0_publication_sweep::patch_5_5_0_publication_sweep ... FAILED
+
+failures:
+
+failures:
+    patch_5_5_0_publication_sweep::patch_5_5_0_publication_sweep
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 1.07s
+
+error: test failed, to rerun pass `--test integration`

@@ -28,7 +28,7 @@ For 1.13–1.15 Classic Era pages with real identities, choose the source-proven
 
 ## Verification
 
-Verification in progress. Scope is pinned master `7a292c9d0fc7458c648eceb6cf67a036b2e22ac8` versus this branch. Required receipts cover retail sweeps/client-line controls, Mists 5.5.0–5.5.4 cases/check, Python fixtures, complete extract/register reproduction, injected-row rejection, formatting, sealed own validator and clean/later-audit portability gate. No widely shared source path changed, so the conditional full integration/lib/addons-enabled startup regression requirement is not triggered.
+Pinned master `7a292c9d0fc7458c648eceb6cf67a036b2e22ac8` versus branch runtime/test revision `c9e249647`: retail sweeps/factory pass 58/58 each; all 9,817 observations across 57 retail pages are exactly identical. Mists 5.5.0–5.5.4 page/line cases pass 6/6, retail client-line controls 3/3. Mists `cargo check --tests` passes with zero non-vendor warnings (seven unchanged vendor-manifest warning lines). All 89 Python fixtures and formatting pass. All 62 registers reproduce byte-identically; 59/62 extracts reproduce and inherited 12.0.5/12.0.7/12.1.0 failures are exactly unchanged. Injected row fails at the expected count boundary, 1 → 0, exit 101. Own validator passes with 153 sealed session inputs. Clean/later-audit gate pending the evidence commit; retained receipts and pinned shared inputs already pass own validation. No widely shared source path changed, so the conditional full integration/lib/addons-enabled startup regression requirement is not triggered.
 
 ## Sources
 
