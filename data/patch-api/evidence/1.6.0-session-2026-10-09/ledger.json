@@ -1,0 +1,447 @@
+{
+  "inventory": [],
+  "signatures": [],
+  "defaults": [],
+  "prose": [],
+  "headers": [],
+  "templates": [],
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.6.0",
+  "source": {
+    "title": "Patch 1.6.0/API changes",
+    "version": "1.6.0",
+    "pageid": 310843,
+    "revid": 2998524,
+    "timestamp": "2020-04-05T21:05:34Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2998524&format=json",
+    "retrieved": "2026-10-09T08:51:36.403182+00:00",
+    "response_sha256": "6ceb530c971d28be469ee57c2a8843436a3fde78325351533f88778292f8deb7",
+    "wikitext_sha256": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+    "wikitext_bytes": 45,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.6.0-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.6.0-wikitext.txt"
+  },
+  "base_revision": "4163299fac218bcd84057897cc4ffdc81a80e42a",
+  "client_line": "original-historical-retail-task-scope",
+  "literal_client_attribution": null,
+  "source_rows": [
+    {
+      "id": "raw-1.6.0-001",
+      "line": 1,
+      "literal": "#REDIRECT [[API change summaries/Historical]]",
+      "status": "metadata-only",
+      "capabilities": []
+    }
+  ],
+  "references": [
+    {
+      "id": "link-1.6.0-001",
+      "line": 1,
+      "literal": "[[API change summaries/Historical]]",
+      "target": "API change summaries/Historical",
+      "status": "UNPROVEN",
+      "expanded": false
+    }
+  ],
+  "contracts": [
+    {
+      "id": "contract-1.6.0-redirect",
+      "reference_id": "link-1.6.0-001",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "defaults": null,
+      "events": null,
+      "state_transitions": null,
+      "security": null,
+      "native_equivalence": null,
+      "missing_contract": "Pinned redirect target revision/content and patch-specific historical API delta are absent. No local callable/signature/default/prose declaration supplies a model contract."
+    }
+  ],
+  "measurements": {
+    "model": 0,
+    "runtime": 0,
+    "native": 0
+  },
+  "model_review": {
+    "result": "no-grounded-behavioral-subset",
+    "reason": "Only a redirect is published. Choosing current APIs or Classic defaults would invent a historical contract; no runtime changes or tests justified.",
+    "current_default_retail_limit": "Current model tests cannot establish native 1.6.0 equivalence."
+  },
+  "history": {
+    "separate_retail_successor_references": [
+      {
+        "title": "Patch 8.2.5/API changes",
+        "version": "8.2.5",
+        "pageid": 83383,
+        "revid": 6471405,
+        "timestamp": "2025-09-13T10:05:08Z"
+      },
+      {
+        "title": "Patch 8.2.0/API changes",
+        "version": "8.2.0",
+        "pageid": 533235,
+        "revid": 5142162,
+        "timestamp": "2021-04-23T01:19:12Z"
+      },
+      {
+        "title": "Patch 8.1.5/API changes",
+        "version": "8.1.5",
+        "pageid": 394493,
+        "revid": 3789732,
+        "timestamp": "2019-04-25T05:47:36Z"
+      },
+      {
+        "title": "Patch 8.1.0/API changes",
+        "version": "8.1.0",
+        "pageid": 464337,
+        "revid": 4462737,
+        "timestamp": "2021-12-04T17:01:42Z"
+      },
+      {
+        "title": "Patch 8.0.1/API changes",
+        "version": "8.0.1",
+        "pageid": 149302,
+        "revid": 1463362,
+        "timestamp": "2023-07-20T21:26:53Z"
+      },
+      {
+        "title": "Patch 7.3.2/API changes",
+        "version": "7.3.2",
+        "pageid": 230850,
+        "revid": 6200179,
+        "timestamp": "2024-12-21T14:17:59Z"
+      },
+      {
+        "title": "Patch 7.3.0/API changes",
+        "version": "7.3.0",
+        "pageid": 553643,
+        "revid": 5335723,
+        "timestamp": "2017-10-26T17:46:34Z"
+      },
+      {
+        "title": "Patch 7.2.5/API changes",
+        "version": "7.2.5",
+        "pageid": 448509,
+        "revid": 4311256,
+        "timestamp": "2021-04-19T22:54:47Z"
+      },
+      {
+        "title": "Patch 7.2.0/API changes",
+        "version": "7.2.0",
+        "pageid": 412195,
+        "revid": 6767100,
+        "timestamp": "2026-07-09T22:13:57Z"
+      },
+      {
+        "title": "Patch 7.1.0/API changes",
+        "version": "7.1.0",
+        "pageid": 389232,
+        "revid": 3742660,
+        "timestamp": "2022-01-31T18:50:28Z"
+      },
+      {
+        "title": "Patch 7.0.3/API changes",
+        "version": "7.0.3",
+        "pageid": 549091,
+        "revid": 5295335,
+        "timestamp": "2017-09-18T11:16:26Z"
+      },
+      {
+        "title": "Patch 7.0.1/API changes",
+        "version": "7.0.1",
+        "pageid": 336026,
+        "revid": 3241525,
+        "timestamp": "2016-02-28T20:50:06Z"
+      },
+      {
+        "title": "Patch 6.2.4/API changes",
+        "version": "6.2.4",
+        "pageid": 212964,
+        "revid": 2072181,
+        "timestamp": "2023-09-27T22:21:22Z"
+      },
+      {
+        "title": "Patch 6.2.2/API changes",
+        "version": "6.2.2",
+        "pageid": 122147,
+        "revid": 6209268,
+        "timestamp": "2025-01-03T15:17:31Z"
+      },
+      {
+        "title": "Patch 6.2.0/API changes",
+        "version": "6.2.0",
+        "pageid": 149103,
+        "revid": 1460518,
+        "timestamp": "2023-09-27T22:20:46Z"
+      },
+      {
+        "title": "Patch 6.1.0/API changes",
+        "version": "6.1.0",
+        "pageid": 123523,
+        "revid": 1216027,
+        "timestamp": "2015-05-01T23:34:38Z"
+      },
+      {
+        "title": "Patch 6.0.2/API changes",
+        "version": "6.0.2",
+        "pageid": 556401,
+        "revid": 5363123,
+        "timestamp": "2015-01-12T21:05:30Z"
+      },
+      {
+        "title": "Patch 6.0.1/API changes",
+        "version": "6.0.1",
+        "pageid": 3058,
+        "revid": 31159,
+        "timestamp": "2014-08-22T01:10:34Z"
+      },
+      {
+        "title": "Patch 5.4.8/API changes",
+        "version": "5.4.8",
+        "pageid": 177816,
+        "revid": 1736772,
+        "timestamp": "2014-05-16T21:02:06Z"
+      },
+      {
+        "title": "Patch 5.4.7/API changes",
+        "version": "5.4.7",
+        "pageid": 549368,
+        "revid": 5298169,
+        "timestamp": "2014-05-31T17:45:19Z"
+      },
+      {
+        "title": "Patch 5.4.2/API changes",
+        "version": "5.4.2",
+        "pageid": 262849,
+        "revid": 2543251,
+        "timestamp": "2014-02-20T12:32:21Z"
+      },
+      {
+        "title": "Patch 5.4.1/API changes",
+        "version": "5.4.1",
+        "pageid": 221650,
+        "revid": 2150406,
+        "timestamp": "2018-11-26T23:10:07Z"
+      },
+      {
+        "title": "Patch 5.4.0/API changes",
+        "version": "5.4.0",
+        "pageid": 414879,
+        "revid": 6200158,
+        "timestamp": "2024-12-21T14:07:57Z"
+      },
+      {
+        "title": "Patch 5.3.0/API changes",
+        "version": "5.3.0",
+        "pageid": 423274,
+        "revid": 4065122,
+        "timestamp": "2021-07-13T19:26:28Z"
+      },
+      {
+        "title": "Patch 5.2.0/API changes",
+        "version": "5.2.0",
+        "pageid": 422312,
+        "revid": 4057299,
+        "timestamp": "2018-11-26T23:09:55Z"
+      },
+      {
+        "title": "Patch 5.1.0/API changes",
+        "version": "5.1.0",
+        "pageid": 282785,
+        "revid": 2736212,
+        "timestamp": "2013-01-06T16:37:16Z"
+      },
+      {
+        "title": "Patch 5.0.4/API changes",
+        "version": "5.0.4",
+        "pageid": 385020,
+        "revid": 3706382,
+        "timestamp": "2021-02-12T21:08:15Z"
+      },
+      {
+        "title": "Patch 5.0.1/API changes",
+        "version": "5.0.1",
+        "pageid": 554410,
+        "revid": 5344081,
+        "timestamp": "2012-08-06T00:56:48Z"
+      },
+      {
+        "title": "Patch 4.3.4/API changes",
+        "version": "4.3.4",
+        "pageid": 389302,
+        "revid": 3743181,
+        "timestamp": "2021-08-22T03:09:40Z"
+      },
+      {
+        "title": "Patch 4.3.0/API changes",
+        "version": "4.3.0",
+        "pageid": 167555,
+        "revid": 1639407,
+        "timestamp": "2021-08-22T03:08:50Z"
+      },
+      {
+        "title": "Patch 4.2.0/API changes",
+        "version": "4.2.0",
+        "pageid": 315583,
+        "revid": 3045158,
+        "timestamp": "2021-08-22T03:01:41Z"
+      },
+      {
+        "title": "Patch 4.1.0/API changes",
+        "version": "4.1.0",
+        "pageid": 426651,
+        "revid": 4094671,
+        "timestamp": "2011-07-24T19:40:04Z"
+      },
+      {
+        "title": "Patch 4.0.1/API changes",
+        "version": "4.0.1",
+        "pageid": 129645,
+        "revid": 1271877,
+        "timestamp": "2012-09-06T23:25:23Z"
+      },
+      {
+        "title": "Patch 3.3.5/API changes",
+        "version": "3.3.5",
+        "pageid": 25049,
+        "revid": 247986,
+        "timestamp": "2010-07-10T15:47:20Z"
+      },
+      {
+        "title": "Patch 3.3.3/API changes",
+        "version": "3.3.3",
+        "pageid": 261776,
+        "revid": 2531935,
+        "timestamp": "2010-05-13T22:15:52Z"
+      },
+      {
+        "title": "Patch 3.3.0/API changes",
+        "version": "3.3.0",
+        "pageid": 522376,
+        "revid": 6055853,
+        "timestamp": "2024-06-04T04:47:16Z"
+      },
+      {
+        "title": "Patch 3.2.0/API changes",
+        "version": "3.2.0",
+        "pageid": 499137,
+        "revid": 4812266,
+        "timestamp": "2020-09-04T21:33:02Z"
+      },
+      {
+        "title": "Patch 3.1.0/API changes",
+        "version": "3.1.0",
+        "pageid": 233195,
+        "revid": 2259594,
+        "timestamp": "2013-05-22T17:34:42Z"
+      },
+      {
+        "title": "Patch 3.0.8/API changes",
+        "version": "3.0.8",
+        "pageid": 95599,
+        "revid": 947144,
+        "timestamp": "2021-12-04T02:32:44Z"
+      },
+      {
+        "title": "Patch 3.0.3/API changes",
+        "version": "3.0.3",
+        "pageid": 560990,
+        "revid": 5407654,
+        "timestamp": "2010-03-28T14:26:47Z"
+      },
+      {
+        "title": "Patch 3.0.2/API changes",
+        "version": "3.0.2",
+        "pageid": 482353,
+        "revid": 4638841,
+        "timestamp": "2020-02-23T21:55:29Z"
+      },
+      {
+        "title": "Patch 2.4.2/API changes",
+        "version": "2.4.2",
+        "pageid": 81145,
+        "revid": 803933,
+        "timestamp": "2021-12-28T02:03:05Z"
+      },
+      {
+        "title": "Patch 2.4.0/API changes",
+        "version": "2.4.0",
+        "pageid": 73272,
+        "revid": 6471380,
+        "timestamp": "2025-09-13T09:55:32Z"
+      },
+      {
+        "title": "Patch 2.3.0/API changes",
+        "version": "2.3.0",
+        "pageid": 44655,
+        "revid": 6055877,
+        "timestamp": "2024-06-04T05:03:50Z"
+      },
+      {
+        "title": "Patch 2.2.0/API changes",
+        "version": "2.2.0",
+        "pageid": 184149,
+        "revid": 6428980,
+        "timestamp": "2025-08-03T13:04:54Z"
+      },
+      {
+        "title": "Patch 2.1.0/API changes",
+        "version": "2.1.0",
+        "pageid": 279373,
+        "revid": 6767102,
+        "timestamp": "2026-07-09T22:15:03Z"
+      },
+      {
+        "title": "Patch 2.0.1/API changes",
+        "version": "2.0.1",
+        "pageid": 324401,
+        "revid": 3129557,
+        "timestamp": "2019-06-15T12:04:30Z"
+      }
+    ],
+    "applied_successors": [],
+    "queued_170": "1.7.0 active sibling retained separately, unapplied; 1.8.0 pending behind 1.9.0",
+    "queued_successor_references": [
+      {
+        "title": "Patch 1.9.0/API changes",
+        "version": "1.9.0",
+        "pageid": 278324,
+        "revid": 2690597,
+        "timestamp": "2020-04-05T21:06:37Z"
+      },
+      {
+        "title": "Patch 1.8.0/API changes",
+        "version": "1.8.0",
+        "pageid": 360905,
+        "revid": 3476931,
+        "timestamp": "2020-04-05T21:06:17Z"
+      },
+      {
+        "title": "Patch 1.7.0/API changes",
+        "version": "1.7.0",
+        "pageid": 456653,
+        "revid": 4390984,
+        "timestamp": "2020-04-05T21:06:01Z"
+      }
+    ],
+    "reference_source_revision": "4163299fac218bcd84057897cc4ffdc81a80e42a",
+    "templates": "Own-base canonical 1.10.0/1.10.1 evidence supplies methodology only; no copied execution receipts or imported target contracts",
+    "foreign_history_limit": "Classic Era 1.13.x+, TBC Classic 2.5.x, Wrath Classic 3.4.x, Cataclysm Classic 4.4.x, Mists Classic 5.5.x and Forever are separate. Links/navigation never import behavior.",
+    "retail_limit": "Original Retail 2.0.1 and later historical Retail pages are separate successors; none can supply missing redirect content or create local inventory."
+  },
+  "totals": {
+    "physical_lines": 1,
+    "nonblank_rows": 1,
+    "metadata_rows": 1,
+    "unproven_source_rows": 0,
+    "references": 1,
+    "unproven_contracts": 1,
+    "inventory": 0,
+    "signatures": 0,
+    "defaults": 0,
+    "prose": 0,
+    "headers": 0,
+    "templates": 0
+  }
+}
