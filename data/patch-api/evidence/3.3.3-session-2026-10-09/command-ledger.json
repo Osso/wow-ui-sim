@@ -51,6 +51,66 @@
       "exit": 1,
       "artifact": "own-sweep-red.txt",
       "proof": "publication discovery; see log"
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_3_3",
+        "--nocapture"
+      ],
+      "env": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p333-source/target",
+        "P333_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p333-source/data/patch-api/evidence/3.3.3-session-2026-10-09/own-sweep-green-results.json"
+      },
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p333-source",
+      "revision": "ddfaa9d4584944f4b1a98d4f77a9af7e90e4599a",
+      "scope": "own 3.3.3 publication known gaps and existing pet scalar cached-UI boundary only",
+      "exit": 0,
+      "artifact": "own-sweep-green.txt",
+      "proof": "GREEN"
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_3_3_publication_sweep",
+        "--nocapture"
+      ],
+      "env": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p333-source/target",
+        "P333_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p333-source/data/patch-api/evidence/3.3.3-session-2026-10-09/negative-register.json",
+        "P333_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p333-source/data/patch-api/evidence/3.3.3-session-2026-10-09/negative-results.json"
+      },
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p333-source",
+      "revision": "ddfaa9d4584944f4b1a98d4f77a9af7e90e4599a",
+      "scope": "own fabricated global replaces successful pet scalar row; exact known-gap rejection",
+      "exit": 1,
+      "artifact": "negative.txt",
+      "proof": "negative control: exactly one fabricated new gap"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools/test_patch_3_3_3_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p333-source",
+      "revision": "ddfaa9d45",
+      "scope": "fresh-process own historical validator before implementation",
+      "exit": 1,
+      "artifact": "validator-red.txt",
+      "proof": "RED: missing own historical validator"
     }
   ]
 }

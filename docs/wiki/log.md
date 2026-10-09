@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-3-4-3-api-audit.md#independent-bounded-replay--2026-10-09): verifier 216 reports fresh historical replay PASS, 16 seals/seven rows/five metadata/two UNPROVEN summary contracts; zero explicit API/runtime observations. Original 48ab8e1c3 sealed inputs and profile-observation bytes unchanged; retained 7/7 GREEN/tamper evidence remains applicable to source accounting only. Cache-marker nuance clarified; actual Wrath 38001 architecture differs from native Classic 30403. No linked reconstruction, retail/Cata supersession or native/current-runtime/positive empty-API parity. Docs-only; main shared portable gate, actual-master integration and CI pending, no full handoff completion claim.
 
+## [2026-10-09] investigation | Historical retail Patch 3.3.3 accounting
+
+[Audit](investigations/patch-3-3-3-api-audit.md): own publication/pet scalar GREEN 2/2 at `ddfaa9d45`; 25 publication matches, 11 gaps, three prose limits, 36 signatures with one bounded existing scalar read. Complete 113-ID ledger; no new model or retirement. Negative 11 → 12 rejected. Frozen 22 source/log/accounting inputs and compact 68-retail-successor archive; portable validator fixture RED, replay pending implementation commit. No broad gate, integration or deployment.
+
 ## [2026-10-09] investigation | Historical retail Patch 3.3.3 source format
 
 [Audit](investigations/patch-3-3-3-api-audit.md): manifest identity/content/hashes validated before copying revision 2531935. Opt-in heading parser preserves 36 inventory occurrences and annotations; two RED source fixtures fail on the missing flag. No runtime/vendor/Classic change; bounded development proof pending.

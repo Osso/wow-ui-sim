@@ -12,7 +12,7 @@
 
 ## [2026-10-09] investigation | Historical retail Patch 3.3.3 API audit
 
-[Audit](investigations/patch-3-3-3-api-audit.md): frozen 2010 revision 2531935, 36 named occurrences; opt-in historical heading parser, no Classic successor credit. Targeted development and historical accounting in progress; no behavior/native parity claim.
+[Audit](investigations/patch-3-3-3-api-audit.md): frozen 2010 revision 2531935; 36 inventory, 41 full-extract and 36 signature IDs. Own retail publication/pet scalar GREEN 2/2, parser 2/2, negative 11 → 12; 113 ledger IDs (26 bounded / 49 pending / 38 metadata). Existing pet model only, no new model/retirement/Classic/native credit. Compact frozen historical receipts; portability fixture pending implementation commit.
 
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 

@@ -1,0 +1,13 @@
+[
+  "wt-global-api-GetAllowLowLevelRaid-6",
+  "wt-global-api-GetHolidayBGHonorCurrencyBonuses-9",
+  "wt-global-api-GetLFGBootProposal-39",
+  "wt-global-api-GetQuestWatchIndex-13",
+  "wt-global-api-GetRandomBGHonorCurrencyBonuses-14",
+  "wt-global-api-QuestIsDaily-15",
+  "wt-global-api-QuestIsWeekly-16",
+  "wt-global-api-SetAllowLowLevelRaid-17",
+  "wt-global-api-SortBGList-20",
+  "wt-global-api-SortQuestWatches-21",
+  "wt-global-api-SummonRandomCritter-22"
+]

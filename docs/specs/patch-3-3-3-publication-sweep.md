@@ -6,7 +6,8 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 
 - [x] Opt-in heading parsing retains all 36 named occurrences and original lines; without the flag previous output bytes remain unchanged.
 - [x] Full source, rendered extract, signatures, prose and editorial headers receive explicit dispositions.
-- [ ] Only actual later retail registers supersede, with 3.3.5 then 4.0.1 placeholders preceding actual 4.1.0 onward; never Wrath Classic 3.4.x or other Classic histories.
+- [x] Only actual later retail registers supersede, with 3.3.5 then 4.0.1 placeholders preceding actual 4.1.0 onward; never Wrath Classic 3.4.x or other Classic histories.
+- [x] Existing pet scalar has one return and tracks two explicit seeded values after full cached-retail UI loading; no new model/native credit.
 - [ ] Portable historical replay derives counts and validates sealed source/log receipts without Git, target or mutable current accounting inputs.
 
 ## How it works
@@ -21,14 +22,14 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 ## Tests asserting this spec
 
 - `tools/test_patch_3_3_3_source.py`: full pinned page and unrelated-section exclusion, GREEN 2/2.
-- `tests/patch_3_3_3_publication_sweep.rs`: own cached-retail publication discovery, RED with 11 exact gaps.
-- `tests/patch_3_3_3_behavior.rs`: existing pet scalar at full cached-UI load boundary, execution pending.
+- `tests/patch_3_3_3_publication_sweep.rs`: RED 11 exact gaps; reviewed GREEN 1/1; fabricated-global negative 11 → 12 rejected.
+- `tests/patch_3_3_3_behavior.rs`: existing pet scalar at full cached-UI load boundary, GREEN 1/1.
+- `tools/test_patch_3_3_3_validator.py`: detached fresh-process replay and serialized tamper/restoration, RED then implementation pending.
 
 ## Known gaps (current cycle)
 
 - [ ] Historical signatures and producers require established contracts and behavior evidence; no native 2010 receipt supplied.
-- [ ] Own publication discovery reports 11 exact mismatches; GREEN known-gap accounting pending.
-- [ ] Existing pet scalar read needs own full cached-UI development receipt; historical event/native contract still unproven.
+- [ ] Eleven current publication mismatches, three changed-prose contracts and 35 signature rows remain pending; existing scalar read does not establish historical native/event behavior.
 
 ## Out of scope
 
