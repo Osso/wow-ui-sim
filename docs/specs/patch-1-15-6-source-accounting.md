@@ -8,7 +8,7 @@ Account frozen page 619994 / revision 6281951 / timestamp `2025-04-04T10:14:39Z`
 - [x] Preserve all four nonblank rows, Resources header, literal TOC11506 and navigation; never infer a client name.
 - [x] Account both unexpanded linked-diff occurrences and navigation template; invent no local APIs, prose, signatures, defaults or aliases.
 - [x] Keep configured Era/Anniversary11507 separate from historical/native proof; preserve pending same-Era1.15.7 inflight/1.15.8/1.15.9 without applying successors or foreign histories.
-- [ ] Reject omissions, fabricated coverage, foreign supersession and identity tampering; retain original logs/seals independently of copied replay and serialized ledger/log tamper receipts.
+- [x] Reject omissions, fabricated coverage, foreign supersession and identity tampering; retain original logs/seals independently of copied replay and serialized ledger/log tamper receipts.
 
 ## How it works
 
@@ -21,7 +21,7 @@ Account frozen page 619994 / revision 6281951 / timestamp `2025-04-04T10:14:39Z`
 
 ## Tests asserting this spec
 
-`python3 -B data/patch-api/evidence/1.15.6-session-2026-10-09/test_source_accounting.py`: eight SOURCE fixtures; retained RED eight assertion failures. GREEN **8/8** at `910fefc68`; copied replay/serialized tamper tests in `test_portable.py` pending. Original input/log seals retain exact tested bytes.
+`python3 -B data/patch-api/evidence/1.15.6-session-2026-10-09/test_source_accounting.py`: eight SOURCE fixtures; retained RED eight assertion failures. GREEN **8/8** at `910fefc68`. `test_portable.py` **3/3** at `d01aae433`: fresh copied SOURCE8/8, default register byte replay, serialized ledger/log rejection and exact restoration. Original34 seals unchanged; 35-member/101,120-byte archive and separate later receipt seals. [Exact receipts](../../data/patch-api/evidence/1.15.6-session-2026-10-09/portable-proof.json). No final gates.
 
 ## Known gaps (current cycle)
 

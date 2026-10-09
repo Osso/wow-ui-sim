@@ -30,7 +30,11 @@ Own eight SOURCE fixtures and retained empty-accounting scaffold; RED eight expe
 
 ## Historical proof
 
-Original `seals.json` pins 34 inputs, 676948 bytes total; largest 219034 bytes. Source/ledger/fixtures/configuration/successors/historical tools/RED-GREEN logs/proof ledger sealed once. Portable archive and later control receipts will be separately sealed, never appended to or rewritten into original proof. Copied replay and serialized ledger/log controls pending.
+Original `seals.json` pins 34 inputs, 676948 bytes total; largest 219034 bytes. Source/ledger/fixtures/configuration/successors/historical tools/RED-GREEN logs/proof ledger sealed once. Portable archive and later control receipts will be separately sealed, never appended to or rewritten into original proof. [Portable receipts](../../../data/patch-api/evidence/1.15.6-session-2026-10-09/portable-proof.json) at `d01aae433`: own portable fixtures **3/3**, fresh copied SOURCE **8/8**, historical validator exit0 and frozen default generator byte replay. Serialized ledger contract omission and fabricated GREEN log each rejected at exact seal, then restored byte-for-byte; restoration validator exit0. Original34 inputs/map unchanged, map SHA256 `eb8b3be2d4944c3da03180e72b602d59e7b96647b9e71afbd881890c5350405a`.
+
+Fresh archive **35 members / 101,120 bytes**, SHA256 `b11ef94a1f23e120b1cde778c13637a1d380cf1519665e32c2f690d3413ca502`. Archive has no Git/target/current tools/runtime/cache inputs. Fresh processes use absolute copied paths with empty PATH (Git/current commands unavailable); harness-required cwd remains this worktree. Historical audit/generator resolve inputs from copied files, not cwd. Frozen extractor retained, not expanded/executed. No shared parser/all-flags regression or final gate.
+
+[Replay instructions](../../../data/patch-api/evidence/1.15.6-session-2026-10-09/REPLAY.md) and separate `receipt-seals.json` pin later receipts/archive/map; no original proof rewritten. Detailed commands/outputs/tamper restorations in `portable-controls.json` and `portable-controls.log`. Native/runtime/model credit remains zero.
 
 ## Sources
 
