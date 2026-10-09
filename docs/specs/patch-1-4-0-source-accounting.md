@@ -10,6 +10,8 @@ Audit only frozen page316397/revision3052898 from the [own evidence](../../data/
 - [ ] Replay copied SOURCE and three portable controls without Git, target, current tools, runtime or network; reject serialized ledger/log tampering and restore exact bytes/hashes/original map without resealing.
 - [ ] Preserve original seals/archive; keep later actual revision/cwd/argv/times/full-stream/hash-scope receipts separate.
 
+- [ ] Reset category at each section heading; retain historical sealed misclassification separately, without changing any contract or coverage credit.
+
 ## How it works
 
 - [Literal accounting and limits](../wiki/investigations/patch-1-4-0-api-audit.md)
@@ -19,6 +21,8 @@ Audit only frozen page316397/revision3052898 from the [own evidence](../../data/
 
 - `data/patch-api/evidence/1.4.0-session-2026-10-09/audit.py`: frozen-input derivation, equality validator, sealed copied replay.
 - Same directory `test_source_accounting.py`: seven own SOURCE development controls.
+- Same directory `current_accounting.py`: corrected current ledger; original sealed historical accounting remains immutable.
+- Same directory `test_current_accounting.py`: category/omission controls and original/default preservation.
 - Same directory `test_portable.py`: copied replay, serialized ledger/log rejection and exact restoration.
 - Same directory `historical-tools/`: unchanged own-base tools, not shared-tool edits.
 - Same directory `session_receipts.py`: Pyrun full-stream execution capture, not portable dependency.
@@ -27,6 +31,8 @@ Audit only frozen page316397/revision3052898 from the [own evidence](../../data/
 
 - `data/patch-api/evidence/1.4.0-session-2026-10-09/test_source_accounting.py`
 - `data/patch-api/evidence/1.4.0-session-2026-10-09/test_portable.py`
+
+- `data/patch-api/evidence/1.4.0-session-2026-10-09/test_current_accounting.py`
 
 ## Known gaps (current cycle)
 
