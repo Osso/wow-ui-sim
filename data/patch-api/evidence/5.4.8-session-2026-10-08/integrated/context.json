@@ -445,10 +445,10 @@
     "prior-validators.txt": "0b0d6e818385b51afc0014709898748f652172123a16e202029d0ac0072a14a6",
     "protected-cache.txt": "f154cb216f58e2bdca5d2996b3b8929babdb9fd4550e5e64c63e9533d5db7258",
     "protected-runtime.txt": "363042031471b025d97f93bc85310f53deadb7b826f79776a574121432c4ff31",
-    "rebase-mapping.json": "484b6f11b63371f69950fc286d344d8f009553f888da27e11273c386c0ecc304",
+    "rebase-mapping.json": "225f3ccddfce762dbb187e7af8f55663b95d066fc6a57849b1f71b05c5a7aec7",
     "receipts.json": "df1864894163d95ee42a416ce97f70f716993a5790e5448464b16c399c25c09b",
     "regression-comparison.json": "ce1a7ce90e40ad409b372d6231243f958c3d2809e7cb3aa0cd044f8456d26bfb",
-    "replay_history.py": "acda6f9f32f25bcc7d22299a1ea048c47f02ea36417eb7a1ce668ae6a5d45026",
+    "replay_history.py": "a300cea9a0a076c3aed12c61f9c50fc2b85fbebb2173cd08e6cead8767f82f26",
     "reproduce_sources.py": "a2663de31486e4b59342f267f1e527245b35788b815acfb7ba9b2c58b1b83958",
     "retail-build.proof.json": "36587159c6f68c71786d2c89341986bf00658bd508ceb97134fab9f8e68d0488",
     "retail-build.txt": "c49a0a1b01ab54741df628b857524b49518b0c153c50b8c9c51784b68573e4d0",
@@ -477,6 +477,6 @@
     "test_patch_audit_validation.txt": "67f97a728919e2ad5dfba049861acb001446983219545ae7b722c107eefafb2b",
     "test_patch_warlords_register.proof.json": "d8ceb5ea4a4bd03851058d23d38d60430c95bd9439219b8480f8f52313642e7b",
     "test_patch_warlords_register.txt": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0",
-    "validate.py": "2899cba061b2845051d6f798416f52992b3bcb7f6ee9dc80a6503b77a3398b6a"
+    "validate.py": "5f7155b33527a2253a32e7e2603cf28466706fda3b759fd16f6b74f3d7c93e80"
   }
 }

@@ -10,6 +10,11 @@ import sys
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
+
+sys.path.insert(0, str(ROOT / 'tools'))
+assert hashlib.sha256((ROOT / 'tools/patch_audit_pin_trees.py').read_bytes()).hexdigest() == 'd0405c9e3fb49ced8bfe73ce0f42a566e1f1a9d21ec74a12e26d24bcd2b62e6a', 'compact helper tamper'
+from patch_audit_pin_trees import ProofGit, expand_pinned_inputs
+PROOF_GIT = ProofGit(ROOT, HERE, json.loads((HERE / 'rebase-mapping.json').read_text()))
 HISTORY = HERE.parent
 
 
@@ -22,7 +27,7 @@ def digest(value):
 
 
 def git(*args, input=None):
-    return subprocess.check_output(['git', *args], cwd=ROOT, input=input)
+    return PROOF_GIT(*args, input=input)
 
 
 def blob(revision, path):
@@ -39,6 +44,7 @@ def pinned(revision, path):
 
 def verify_mapping():
     mapping = read('rebase-mapping.json')
+    mapping['pinned_inputs'] = expand_pinned_inputs(ROOT, HERE, mapping['pinned_inputs'])
     for row in mapping['commits'] + mapping['external_commits']:
         revision = row['rebased_revision']
         assert git('show', '-s', '--format=%s', revision).decode().strip() == row['subject']
@@ -227,7 +233,7 @@ def verify_receipts(context):
     return len(receipts), len(prior)
 
 
-CONTEXT_SHA256 = '1e5938f82e47abd493801d606a808c1f82e8ad8bbfacf1bb78f73dd112664b00'
+CONTEXT_SHA256 = 'c74c5c3e2998b83fa2e789d38f516fbd832e64413c4133bda4d0fdc904818e25'
 
 
 def main():

@@ -50,6 +50,14 @@ Rule: no live-file comparisons outside the audit's own session directory; prove 
 
 At `45a64bef3`, 27 of 28 validators passed both phases. Integrated 6.2.4 failed on ignored scratch `PLAN.md` and also compared shared runtime/tool/source files and prior validators with live bytes. The repair pins those checks to recorded revisions, removes the two uncommitted scratch entries, and preserves counts, gap sets, negative control, receipts/log hashes and rebase mapping. Its [note](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validator-portability-note.md) explains preservation of the original historical-manifest seal.
 
+## Compact rebase evidence
+
+The seven mappings with `pinned_inputs` use [tree proofs](../../../tools/patch_audit_pin_trees.py): full rebased directory tree IDs, projected recorded-input tree IDs, sparse exclusions and blob overrides. Standalone files and historical byte exceptions retain blob IDs and SHA-256 seals. Historical replay reconstructs the exact original input dictionaries, directory names and diff blob maps before running the existing checks. Conversion compared every expanded structure with its original and checked every original content seal.
+
+Five sessions also had stale *rebased* commit references after subsequent rebases. Historical labels now resolve through verified root-tree snapshots at master-ancestor commits. Missing wiki blobs and three changed patches are gzip-preserved and hash-checked; recorded trees are recomputed without opening historical tree objects. The reachable counterpart's patch ID is independently pinned. Both entrypoints hash-pin the helper; only changed artifact seals were refreshed. Original mappings remain at `a82b8eb1c` under their session paths, named in each affected `integrated/evidence-compaction-note.md`.
+
+The four remaining mappings have no `pinned_inputs`: 6.1.0 retains individual blob checks and source/sweep inventory allowances; 6.2.0 retains referenced source blobs and exact permitted inventory additions; 6.2.4 retains raw changed-blob and patch/tree checks; 7.0.3 retains its original-history and runtime equality checks. Their small proofs are unchanged.
+
 ## Sources
 
 - [Shared helper and tests](../../../tools/test_patch_audit_validation.py).

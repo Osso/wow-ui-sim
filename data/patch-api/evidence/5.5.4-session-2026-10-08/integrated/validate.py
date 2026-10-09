@@ -10,9 +10,14 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
 
+sys.path.insert(0, str(ROOT / 'tools'))
+assert hashlib.sha256((ROOT / 'tools/patch_audit_pin_trees.py').read_bytes()).hexdigest() == 'd0405c9e3fb49ced8bfe73ce0f42a566e1f1a9d21ec74a12e26d24bcd2b62e6a', 'compact helper tamper'
+from patch_audit_pin_trees import ProofGit, expand_pinned_inputs
+PROOF_GIT = ProofGit(ROOT, HERE, json.loads((HERE / 'rebase-mapping.json').read_text()))
+
 
 def git(*args, input=None):
-    return subprocess.check_output(['git', *args], cwd=ROOT, input=input)
+    return PROOF_GIT(*args, input=input)
 
 
 def digest(content):
@@ -33,6 +38,7 @@ def names(revision, directory):
 
 def verify_history():
     mapping = read('rebase-mapping.json')
+    mapping['pinned_inputs'] = expand_pinned_inputs(ROOT, HERE, mapping['pinned_inputs'])
     for row in mapping['commits'] + mapping['external_commits']:
         revision = row['rebased_revision']
         assert git('show', '-s', '--format=%s', revision).decode().strip() == row['subject']

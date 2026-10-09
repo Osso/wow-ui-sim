@@ -220,8 +220,8 @@
   "prior-launcher.proof.json": "a4b13d3878b9a8fad9fd164cf598caeb94cacb948f9d83a20f3aacb2bf2eab0b",
   "prior-launcher.txt": "c40d0927683282421909ee43b2bef1516e443384bad228694bb14daf3f70c9ac",
   "prior-validator-matrix.json": "99ec8d0844cd6ba14196d7cab23404b8a12617cd4bb4889d1b2ea7dcfd5bc066",
-  "rebase-mapping.json": "a717abc980353a62c7b6180436ed2b698d39f3f1da86219adbd6716fcb7921d7",
-  "replay_history.py": "d4dc4c86c8a6987f9324639644dedde5d950c2c606143240e06a70ae8e468f7a",
+  "rebase-mapping.json": "0cfa86ec21db4688fa89b769029d93ce0aae305079dbb31530699db8b34e83e9",
+  "replay_history.py": "4c89d1967c526b418ddd06989ab55351a295b5e29d3e9aa61657903091c5b19e",
   "reproduce_sources.py": "79b00298b8bea5761ec3cb5a61b63e0ae78140c0a822c28acd81efe31c271363",
   "retail-build.proof.json": "8d3a9c0bbb1aa4bdc6b0d039eac0e53004ba6fa7a20b7c0a82d7f0de9624ff27",
   "retail-build.txt": "e937a0923d7a86a8693d00992a24de082a7aec8305beffe1f4c396775a109e0b",
@@ -239,6 +239,6 @@
   "test_patch_audit_validation.txt": "9daebb0e55c3e924de034b9ffc5547583736536d673350db0a8074ba0bfde932",
   "test_patch_warlords_register.proof.json": "e5de42c03ce18a1f6c22949a5710d4c3086c51b54543940386fd40236f1755f9",
   "test_patch_warlords_register.txt": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0",
-  "validate.py": "bb674c8a138411305251dd45ebfff42e67a2e54924b32d8dbef8449f875f1287",
+  "validate.py": "aee2a190420da6591b22af3cdba48755d506ee5aa92337518a522159a5509edf",
   "../validate.py": "987243c6e44f03570bbe37047c7ee8602217bd38b206b9cdf7fe7e1e1ee6356f"
 }
