@@ -1,0 +1,12 @@
+{
+  "title": "Patch 4.3.4/API changes",
+  "version": "4.3.4",
+  "pageid": 389302,
+  "revid": 3743181,
+  "timestamp": "2021-08-22T03:09:40Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3743181&format=json",
+  "retrieved": "2026-10-09T08:41:58.986442+00:00",
+  "response_sha256": "e9f53579481fdce620bcf80567a1fd38debf0c1daa2e24b8d3689ba7c7ef3b81",
+  "wikitext_sha256": "37d7e34b52398cfe7ccb9e90114d1cd2bb414841b9e654e91af2d08b7c25c19f",
+  "wikitext_bytes": 866
+}
