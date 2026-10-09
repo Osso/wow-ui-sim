@@ -9,7 +9,7 @@ Audit the pinned [API page](../../data/patch-api/sources/5.2.0-api-changes.wikit
 - [x] Apply only later retail registers, oldest first; keep queued 5.3.0/5.4.0/5.4.1/5.4.2 placeholders ahead of 5.4.7.
 - [x] Account separately for every retained prose statement and transclusion build caption.
 - [x] Keep behavioral credit bounded: raid difficulty reads distinct state values, cooldown duration follows timing updates/clear, and school mapping remains linked to its cached deprecated alias.
-- [ ] Preserve historical proof in fresh checkouts and after unrelated later audits; reject own evidence tampering.
+- [x] Preserve historical proof in fresh checkouts and after unrelated later audits; reject own evidence tampering.
 
 ## How it works
 
@@ -32,7 +32,6 @@ Audit the pinned [API page](../../data/patch-api/sources/5.2.0-api-changes.wikit
 
 ## Known gaps (current cycle)
 
-- [ ] Pass historical validator portability and own-evidence tamper controls.
 - [ ] 57 publication gaps and 16 historical prose contracts remain documented, not replaced with shims. Queued retail register integration may supersede some later.
 
 ## Out of scope

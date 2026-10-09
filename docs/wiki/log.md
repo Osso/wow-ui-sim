@@ -540,3 +540,5 @@ Retail page and transcluded diff pinned; all 159 IDs accounted. [Audit](investig
 Pinned page/transclusion and confirmed 2013 retail TOC 50200. Added opt-in parser reuse, owner-preserving handler normalization, discovery sweep and whole-word retirement evidence. [Audit](investigations/patch-5-2-0-api-audit.md).
 
 5.2.0 targeted proof: publication 58/58, own prefork 2/2, scoped integration 15/15, alias 1/1, lib 3/3, Python 89/89; 59 registers/56 extracts with three inherited failures. Mists and format pass; runtime/vendor unchanged.
+
+5.2.0 final gate at 676fb8b24: clean 44/44 and synthetic later audit 45/45, zero failures. Own-log tamper rejected and exact bytes restored. All 191 source IDs accounted; 57 publication gaps/16 prose contracts remain explicitly pending; no runtime changes or retirements.

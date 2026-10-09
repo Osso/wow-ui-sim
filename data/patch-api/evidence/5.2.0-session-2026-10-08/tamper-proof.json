@@ -1,0 +1,7 @@
+{
+  "validator_exit": 1,
+  "expected_failure": "own evidence drift: all-sweeps.txt",
+  "log_sha256_before": "d590893efbc4b78bb0fe16a523600194091b6bf21712b48e1348693475818f6d",
+  "log_sha256_restored": "d590893efbc4b78bb0fe16a523600194091b6bf21712b48e1348693475818f6d",
+  "restoration_byte_identical": true
+}

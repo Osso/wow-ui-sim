@@ -19,3 +19,5 @@ No runtime source changes; no master-runtime rerun needed. No full integration s
 | targeted-driver.proof.json | 28b436c0ecf1fd08de3b935ec649c851125f24cd | 0 | False |
 | discovery.proof.json | 50ce62db5cef2ccf4ecbb4e125af262da7429d3c | 1 | False |
 | negative.proof.json | 2acaecc21f356c7f4a7d71bd63268ba1e224c571 | 1 | False |
+| portability-gate.proof.json | 676fb8b24a8820bc7f649d323c8432c4a762ff77 | 0 | False; no relevant source changes afterward |
+| tamper-proof.json | 676fb8b24a8820bc7f649d323c8432c4a762ff77 | 1 (expected) | Exact log bytes restored; original positive proof remains valid |
