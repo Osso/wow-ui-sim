@@ -80,6 +80,18 @@ class SourceTests(unittest.TestCase):
         self.assertEqual(wrappers[0]['column'], 3)
         self.assertEqual(wrappers[0]['signature'], 'function(self,event,...)')
 
+    def test_macro_option_suffix_placeholder_and_nested_reference_are_not_expanded(self):
+        audit = self.audit('<code>/castsequence reset=N/\'\'shift\'\'/alt/ctrl Spell</code>\n'
+                           '<code>/command &#91;option&#93; action</code>\n'
+                           '{{apichanges|misc=[http://example.invalid post]}}\n')
+        self.assertEqual([(r['symbol'], r['kind']) for r in audit['occurrences']],
+                         [('/castsequence', 'command'), ('/alt', 'macro-option-suffix'),
+                          ('/command', 'command-placeholder')])
+        self.assertEqual([r['literal'] for r in audit['references']],
+                         ['{{apichanges|misc=[http://example.invalid post]}}',
+                          '[http://example.invalid post]'])
+        self.assertTrue(all(r['status'] == 'UNPROVEN' for r in audit['references']))
+
     def test_malformed_signature_is_preserved_not_completed(self):
         audit = self.audit('* NEW ExampleCall("unterminated)\n')
         row = audit['occurrences'][0]
