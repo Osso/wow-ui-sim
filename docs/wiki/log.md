@@ -866,7 +866,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 
 ## 2026-10-09 — Retail Patch 4.0.1 historical validator implementation
 
-[[patch-4-0-1-api-audit]]: compact own source/tool/successor and cryptographic code-scope pins, historical-only validator and five concrete acceptance/tamper fixtures. Validator RED retained before implementation; no old-object or broad-gate dependency. GREEN pending.
+[[patch-4-0-1-api-audit]]: compact own source/tool/successor and cryptographic code-scope pins, historical-only validator and five concrete acceptance/tamper fixtures. Validator RED retained before implementation; no old-object or broad-gate dependency. SOURCE GREEN6/6 at231bc7d2e; portable GREEN pending seal/archive commit.
 
 ## 2026-10-09 — Retail Patch 4.0.1 validator targeted GREEN/handoff
 
@@ -991,7 +991,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 
 ## [2026-10-09] development proof | Era 1.15.2 SOURCE
 
-[Audit](investigations/patch-1-15-2-api-audit.md): own SOURCE GREEN9/9 at24f83c282;20 omissions rejected; historical default register empty, not API compatibility proof. Original54 seals/55-member archive retained; copied GREEN pending. Four contracts UNPROVEN; no runtime/model/native or integration credit.
+[Audit](investigations/patch-1-15-2-api-audit.md): own SOURCE GREEN9/9 at24f83c282;20 omissions rejected; historical default register empty, not API compatibility proof. Original54 seals/55-member archive retained; copied SOURCE GREEN6/6 at231bc7d2e; portable GREEN pending seal/archive commit. Four contracts UNPROVEN; no runtime/model/native or integration credit.
 
 ## [2026-10-09] copied SOURCE proof | Patch 1.15.2
 
@@ -1077,7 +1077,7 @@ Owned p1132-page/base9252c6cc9; exact frozen115161/6471351, literal2758 inventor
 
 ## 2026-10-09 — Patch1.13.2 original seals and separate precedence
 
-SOURCE8/8 ata3cc2a2269, existing bare Era storage1/1 at15d12138f, portable3/3 atc5436865b with89original seals. Actual20same-Era ledger comparison derived581identity overlaps/580source occurrences; no historical/native closures. Targeted successor RED3 retained; GREEN pending. [Audit](investigations/patch-1-13-2-api-audit.md).
+SOURCE8/8 ata3cc2a2269, existing bare Era storage1/1 at15d12138f, portable3/3 atc5436865b with89original seals. Actual20same-Era ledger comparison derived581identity overlaps/580source occurrences; no historical/native closures. Targeted successor RED3 retained; SOURCE GREEN6/6 at231bc7d2e; portable GREEN pending seal/archive commit. [Audit](investigations/patch-1-13-2-api-audit.md).
 
 ## 2026-10-09 — Patch1.13.2 bounded page handoff
 
@@ -1109,7 +1109,7 @@ Own exact body/response/manifest-linked registry101 verified before derivation. 
 
 ## 2026-10-09 | Patch 1.8.0 SOURCE GREEN and immutable archive
 
-SOURCE GREEN5/5 at44ebe2cb2; copied own-base defaults/errors retained. Original source/evidence seals and data-only replay archive frozen; portable GREEN pending.
+SOURCE GREEN5/5 at44ebe2cb2; copied own-base defaults/errors retained. Original source/evidence seals and data-only replay archive frozen; portable SOURCE GREEN6/6 at231bc7d2e; portable GREEN pending seal/archive commit.
 
 ## 2026-10-09 | Patch 1.8.0 portable SOURCE receipts
 
@@ -1121,4 +1121,4 @@ Fresh immutable copied validator/SOURCE5/portable3 ata3e47eb41; exact default by
 
 ## [2026-10-09] ingest | Patch 1.5.0 SOURCE accounting
 
-Own frozen identity verified before derivation; SOURCE RED6/portable RED3 retained. [Audit](investigations/patch-1-5-0-api-audit.md) bounds empty local inventory and unapplied frozen contexts; no runtime/native/parent credit. GREEN pending.
+Own frozen identity verified before derivation; SOURCE RED6/portable RED3 retained. [Audit](investigations/patch-1-5-0-api-audit.md) bounds empty local inventory and unapplied frozen contexts; no runtime/native/parent credit. SOURCE GREEN6/6 at231bc7d2e; portable GREEN pending seal/archive commit.
