@@ -1,29 +1,14 @@
 # Goal
 
-- [ ] Continue full historical handoff through registry endpoint 1.0.0, including outstanding prefork follow-up, integration, asynchronous full-suite comparison and CI.
-- [x] Patch 4.3.4 historical accounting retained with seven gaps; current retail client clock modeled, leaving six gaps. Native parity remains unproven.
+- [x] Bounded frozen historical-retail 2.2.0 SOURCE audit: exact identity, full literal accounting and sealed offline replay; no runtime/network/operations or final gates.
 
-## Coordinator integration
+## Active tasks
 
-- [x] Clock behavioral proof: 2/2; publication sweep: 66/66; Mists check, retail build and zero-error startup: exit 0; negative control: six to seven gaps, expected exit 1. Separate receipts committed.
-- [x] Independent bounded verification and formatting/readability audit; unchanged historical seals verified.
-- [ ] Finish clean/later validator portability gate, integrate/push 4.3.4, check CI and submit asynchronous full suite.
-- [ ] Integrate 4.3.0 then 4.2.0; replace queued successor registers and retain separate integrated proof.
-
-# Project Plan
-
-## Current Blocker
-
-None. Browser-fetched response, pin and exact wikitext committed at 85b757d2d; no collector wait.
-
-## Active TODO
-
-- [x] Read instructions/templates; rebase clean p434-source onto integrated 5.0.1 master 3d64fedad.
-- [x] Preserve verified response; existing default generator/extractor retain all 11 inventory rows and one metadata context; no new flags needed.
-- [x] Add own retail sweep with actual 5.0.1/5.0.4 successors; discovery RED accounts 7 gaps/3 supersessions/1 absence. Record exact backing-model limits; no source-backed cheap real model established.
-- [x] Commit source/discovery/accounting coherently; own prefork RED/GREEN and negative 7 → 8 complete. Exact logs/revisions retained; only formatter and own source replay run.
-- [x] Seal compact historical evidence under 5 MB, document capability/proof boundaries and report coherent commits. Coordinator owns final gates; no dedicated validator added.
+- [x] Read instructions/templates; pin response/body and manifest-linked registry101 through1.0.0; source fixtures RED.
+- [x] Implement separate literal inventory/signature/prose/header ledger; format and commit coherent SOURCE implementation before GREEN.
+- [x] Run owned SOURCE GREEN and historical validation; record exact revisions and commands.
+- [x] Seal compact evidence, copy no-Git/no-target history; reject/restore serialized ledger/log tamper and document proofs.
 
 ## Exclusions
 
-No delegation, push, merge, deploy, cwd switching, Bash, browser/provider changes, shims/fallbacks, vendor/Wowless edits, broad checks/all-publication/smoke/full suites or final acceptance.
+No runtime models/defaults/shims/fallbacks/aliases, shared tooling changes, linked expansion, Classic/queued supersession, network, canonical/vendor/cache/Wowless writes, push/merge/rebase/deploy/delegation or broad/final gates. Main owns native/integration/final acceptance.
