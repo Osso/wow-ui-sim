@@ -10,6 +10,9 @@ Account for the complete pinned historical retail page, revision 1271877, in `da
 - [x] Probe publication/absence in cached retail Game after retail-only successors; require exact known-gap equality.
 - [ ] Keep pending 4.1.0, 4.2.0, 4.3.0 and 4.3.4 placeholders in order before actual 5.0.1/later retail registers; main replaces on integration.
 
+- [ ] Validate sealed historical source, Git commit/tree/blob pins, own recorded commands, complete row/gap accounting and own byte reproduction without resolving old Git commits.
+- [ ] Reject source-response, own-log and historical-archive tampering; ignore unrelated later inventories without expanding proof scope.
+
 ## How it works
 
 - [Audit](../wiki/investigations/patch-4-0-1-api-audit.md).
@@ -24,12 +27,16 @@ Account for the complete pinned historical retail page, revision 1271877, in `da
 - `tools/extract_patch_non_inventory.py`: opt-in inventory omission without losing prose/build context.
 - `tests/patch_4_0_1_publication_sweep.rs`: own retail sweep.
 - `data/patch-api/sources/4.0.1-*`: pinned input and generated fixtures.
+- `data/patch-api/evidence/4.0.1-session-2026-10-09/validate.py`: historical-only own validator.
+- `data/patch-api/evidence/4.0.1-session-2026-10-09/pin-builder.py`: compact cryptographic snapshot capture.
 
 ## Tests asserting this spec
 
 - `tools/test_patch_cataclysm_register.py`: concrete labeled occurrences, direction, owner category, source line, opt-in boundary and retained extract.
 - `tests/patch_4_0_1_publication_sweep.rs`: current retail publication/absence only.
 - `tests/patch_4_0_1_retirements.rs`: factory/cached absence on modern retail; callable original registration on Classic.
+
+- `tools/test_patch_4_0_1_validator.py`: original/Git-unavailable evidence acceptance and disposable-copy tamper controls.
 
 ## Known gaps (current cycle)
 

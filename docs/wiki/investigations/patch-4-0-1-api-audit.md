@@ -24,6 +24,10 @@ Four historical breaking statements remain separate native limits: implicit scri
 
 Inherited iced manifest deprecations remain unsuppressed. No check/lint/type/readability/coverage, broad/all-publication suite, startup smoke, full-suite or final acceptance gate. Main owns integration and final verification.
 
+## Historical validator
+
+Dedicated own `validate.py` uses [compact historical pins](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/historical-pins.md): 84 source/tool/test/runtime/successor inputs, recorded code commit/tree/blob identities and sealed targeted logs. Archives total 2,083,184 bytes; each file below 5 MB. Existing object/tree helper contract is loaded from pinned bytes, avoiding dependence on old commit objects or mutable future registers. Counts derive from retained register/ledger/results; no current-head or runtime re-execution claim. Validator behavioral GREEN and disposable-copy source/log/archive tamper controls pending this implementation commit.
+
 ## Successor boundary
 
 Four explicit pending 4.1.0/4.2.0/4.3.0/4.3.4 placeholders precede actual 5.0.1 and later retail registers. Main replaces placeholders on integration. Classic 5.5.x is excluded. No native historical behavioral credit follows from modern retail publication or deprecation wrappers.

@@ -1,0 +1,300 @@
+{
+  "schema": "p401-historical-proof/v1",
+  "source_revision": "567654d75",
+  "source_revid": 1271877,
+  "pageid": 129645,
+  "validator_sha256": "ab28d73b49bef4a6e428fc060258dbe0f5d5cc53e1490db5b985249a8bb91cc6",
+  "archives": {
+    "historical-inputs.json.gz": "f5170a1b1f98ccd9818fc352c39b9adc5135a682b18e5471a3d0243d5297517d",
+    "historical-scopes.json.gz": "c08d81f78816c6496d55ab5a99a55f083488b24872427fad4448e7b1a1374b87"
+  },
+  "evidence_sha256": {
+    "command-ledger.md": "e6a2489f45527bb440b90caf861e54365c0fd78bb4aa79e099d175398c99705d",
+    "command-scopes.json": "6ff6730488016a00d018ca02b4a669db351fa5cfdf323422c8e5b3b17f280d4e",
+    "extractor-regression.log": "128a3ed6bdd7cf4069869b4f6408ae2c52ad05a3a019225bd0c044ee9016ab76",
+    "extractor-regression.proof.json": "6144121e0ce29081210341b8caf5b9a5b3b56fa50084390029bb3ee0dc07c3db",
+    "fabricated-register.json": "470ddded843a68c8aab21ede657d0a2d692edd8b25465b56eb43f1b8dfd451a9",
+    "generator-regression.log": "a28b033deea33864ff5fbd3d32baa763c33ea576da76ad062b2e5994b0885ecd",
+    "generator-regression.proof.json": "286851f219a429e5cd56c6e9279556c2651b26619cd4c44b44c6d7bcc7b30abb",
+    "historical-pins.md": "13679c3ca7fa45ae32c2b5e0214cd6fdf8b85ccf857d34223ee420822f887527",
+    "mists-factory-control.log": "7c00fcdeb7f1522c75ccdccf655663ebd8d14d75b59c63470a735acdd83bd767",
+    "mists-factory-control.proof.json": "29397ac12f2c666b735024a75f85d9b206cd1d917776a22cdd8d898f193dc259",
+    "mists-prefork-control.log": "bdfb377d63611ee0cd8db586033075a54d334e4e3377735acc0d336bde380bdb",
+    "mists-prefork-control.proof.json": "bab5edd0423d609b6a31b8fc7976895cf6196f2394226db6aded214337d56490",
+    "parser-green.log": "3a172c55de7c4fc985c2eec12502fa584b176585174d269e7bf8844dda63959f",
+    "parser-green.proof.json": "523390053f5bbfff549f1adbfe9289734df61da32338d4dcbcc80f6e23b384c6",
+    "parser-red-assertions-test.py.txt": "f848adfa97d234368606bbc07d75fc33497b669442a768f91f4e4e0fc05c854a",
+    "parser-red-assertions.log": "1917aefdff13c1a64e891beb511bee82b489fb501f88a3012f93c06a7bed2e70",
+    "parser-red-assertions.proof.json": "0c1c3eb54ff0aa537cfa3a12105b96b90cc02fd2f506d7cf30ecc6ee77eb2a45",
+    "parser-red-test.py.txt": "e545a258e0d745754490a6e805cb959fa7cc6f6060524fdee28a8e4a74de3468",
+    "parser-red.log": "84a091fcf808847dcee821ec995ce7e39138359532da0bf9a482799c27fc4c5e",
+    "parser-red.proof.json": "5674e92b512ff7efbdfb4284815ec4fd167d75ada5afffcce7daa39660c7b2af",
+    "publication-default-red-results.json": "ce937bedf8c63c169326336c51abd2f4777781d30e2153ccf88a1d4179013655",
+    "publication-default-red.log": "6d44e2f06481dcfdf0d693452312be0eab0c076a448f28b712539952ed1b8644",
+    "publication-default-red.proof.json": "17bfb4a23fc6eec3cc774c84497870b2a8e705e533fd4a3d8b1555262161fd2b",
+    "publication-green-results.json": "b02390ebcbc2b8928e3275440f13c26cb11ecd171f0f9f439bb631c04a11339d",
+    "publication-negative-results.json": "682398b89a2ae47e3715d3c2d38c6974c17eae09042b22f5eddc5938073b75d8",
+    "publication-negative.log": "950ed2b1709053d64a4df080ce2bba29b4abb7b81ea3ecd2b31d2d8eab5d9bbe",
+    "publication-negative.proof.json": "f704d0cdeb3d48d928d73c4f2f26e78ff9703d44ba3eb59810f6b61be68f038e",
+    "publication-red.log": "0404a76d3c5745291013b55b487e55f08d33fc25ebb6c88333a52cfd652004fe",
+    "publication-red.proof.json": "89b3eb4b508ee571e2345ede9bf98069526cd9ba29d87f89d4b02122be79dd6a",
+    "retail-factory-green.log": "ab22aa6670dd9486e3bcd3febb7425cf321843648878855d86fd96cb3b6bdfec",
+    "retail-factory-green.proof.json": "c18a18cddc08d533610425aeba675b47cbadc7b2780df348cdb2fb55e12cdbfb",
+    "retail-prefork-green.log": "2ba09c82026a5d8f58fc3346a4a588b449d324e4a249610ad16e10f01f48404b",
+    "retail-prefork-green.proof.json": "6b6582720b721fa0bc54a590f71f7a6efaa65a225e8ea81ce1989a249b32dff5",
+    "retirement-red-test.rs.txt": "bb4d064857e527ad5b27f267077a1b16e12038a726e2c586d94c5c8434827f3e",
+    "retirement-red.log": "ec94098524fa7b5b877c2aad4c36357e890f0455fb559e2be90aa35160634d41",
+    "retirement-red.proof.json": "830801e6431837e8982e09ae421ce7443e72b360faac4e04cfd938af09df8906",
+    "retirement-scans.json": "05244097ae6ba008529623ebee97608275c1c5f88752e4132f9f96613e884b45",
+    "source-overlaps.json": "8c1105dc2a9ddcb88b20e01d999ad8566a8bc6a48ae30b9dc72ddf0a0be46ebc",
+    "source-pin.json": "90795d2dc8e41105b0995214f3d712de17c77bc4a531d6f96ae4ff496ebd9b42",
+    "source-response.json": "b32e4728d43a0d1097f79e7a5d7bf55c450bc3db23bbba7de715423d664e1dc4"
+  },
+  "proofs": {
+    "extractor-regression": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_extract_patch_non_inventory.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+      "scope": "targeted parser/extractor fixtures only",
+      "exit": 0,
+      "log": "extractor-regression.log",
+      "log_sha256": "128a3ed6bdd7cf4069869b4f6408ae2c52ad05a3a019225bd0c044ee9016ab76"
+    },
+    "generator-regression": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_gen_patch_wikitext_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+      "scope": "targeted parser/extractor fixtures only",
+      "exit": 0,
+      "log": "generator-regression.log",
+      "log_sha256": "a28b033deea33864ff5fbd3d32baa763c33ea576da76ad062b2e5994b0885ecd"
+    },
+    "mists-factory-control": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--test",
+        "integration",
+        "patch_4_0_1_skill_headers_factory_surface",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "environment": {},
+      "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+      "scope": "targeted own publication or skill-header behavior only",
+      "exit": 0,
+      "log": "mists-factory-control.log",
+      "log_sha256": "7c00fcdeb7f1522c75ccdccf655663ebd8d14d75b59c63470a735acdd83bd767"
+    },
+    "mists-prefork-control": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_0_1_skill_headers_cached_surface",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "environment": {},
+      "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+      "scope": "own negative control or Classic cached skill-header preservation only",
+      "exit": 101,
+      "log": "mists-prefork-control.log",
+      "log_sha256": "bdfb377d63611ee0cd8db586033075a54d334e4e3377735acc0d336bde380bdb"
+    },
+    "parser-green": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_patch_cataclysm_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+      "scope": "targeted parser/extractor fixtures only",
+      "exit": 0,
+      "log": "parser-green.log",
+      "log_sha256": "3a172c55de7c4fc985c2eec12502fa584b176585174d269e7bf8844dda63959f"
+    },
+    "parser-red-assertions": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_patch_cataclysm_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "revision": "29b56e5c18ecdb214bf0b27d46e5bebf492130b7",
+      "scope": "uncommitted RED tests now report missing extractor option as assertion; parser/extractor unchanged",
+      "exit": 1,
+      "log": "parser-red-assertions.log",
+      "log_sha256": "1917aefdff13c1a64e891beb511bee82b489fb501f88a3012f93c06a7bed2e70"
+    },
+    "parser-red": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_patch_cataclysm_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "revision": "29b56e5c18ecdb214bf0b27d46e5bebf492130b7",
+      "scope": "test_patch_cataclysm_register.py uncommitted RED tests; parser/extractor unchanged",
+      "exit": 1,
+      "log": "parser-red.log",
+      "log_sha256": "84a091fcf808847dcee821ec995ce7e39138359532da0bf9a482799c27fc4c5e"
+    },
+    "publication-default-red": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_0_1_publication_sweep",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "environment": {
+        "P401_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/publication-default-red-results.json"
+      },
+      "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+      "scope": "own retail publication sweep; default features",
+      "exit": 1,
+      "log": "publication-default-red.log",
+      "log_sha256": "6d44e2f06481dcfdf0d693452312be0eab0c076a448f28b712539952ed1b8644"
+    },
+    "publication-negative": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_0_1_publication_sweep",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "environment": {
+        "P401_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/fabricated-register.json",
+        "P401_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/publication-negative-results.json"
+      },
+      "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+      "scope": "own negative control or Classic cached skill-header preservation only",
+      "exit": 1,
+      "log": "publication-negative.log",
+      "log_sha256": "950ed2b1709053d64a4df080ce2bba29b4abb7b81ea3ecd2b31d2d8eab5d9bbe"
+    },
+    "publication-red": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_0_1_publication_sweep",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "environment": {
+        "P401_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/publication-red-results.json"
+      },
+      "revision": "6c041621fd3ea0496befb12eb11d936a4e11f1cd",
+      "scope": "own retail publication sweep; headless feature profile; no runtime edits",
+      "exit": 101,
+      "log": "publication-red.log",
+      "log_sha256": "0404a76d3c5745291013b55b487e55f08d33fc25ebb6c88333a52cfd652004fe"
+    },
+    "retail-factory-green": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "integration",
+        "patch_4_0_1_skill_headers_factory_surface",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "environment": {},
+      "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+      "scope": "targeted own publication or skill-header behavior only",
+      "exit": 0,
+      "log": "retail-factory-green.log",
+      "log_sha256": "ab22aa6670dd9486e3bcd3febb7425cf321843648878855d86fd96cb3b6bdfec"
+    },
+    "retail-prefork-green": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_0_1",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "environment": {
+        "P401_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/publication-green-results.json"
+      },
+      "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+      "scope": "targeted own publication or skill-header behavior only",
+      "exit": 0,
+      "log": "retail-prefork-green.log",
+      "log_sha256": "2ba09c82026a5d8f58fc3346a4a588b449d324e4a249610ad16e10f01f48404b"
+    },
+    "retirement-red": {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "integration",
+        "patch_4_0_1_skill_headers_factory_surface",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+      "revision": "6c041621f",
+      "scope": "uncommitted patch_4_0_1_retirements.rs RED tests; runtime unchanged",
+      "exit": 101,
+      "log": "retirement-red.log",
+      "log_sha256": "ec94098524fa7b5b877c2aad4c36357e890f0455fb559e2be90aa35160634d41"
+    }
+  },
+  "retired_globals": [
+    "CollapseSkillHeader",
+    "ExpandSkillHeader"
+  ],
+  "pending_successors": [
+    "4.1.0",
+    "4.2.0",
+    "4.3.0",
+    "4.3.4"
+  ],
+  "policy": "Historical source/input integrity and recorded targeted proof only; no current-head, native, broad-gate or full runtime replay claim."
+}

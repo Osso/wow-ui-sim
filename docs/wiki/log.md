@@ -685,3 +685,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## 2026-10-09 — Retail Patch 4.0.1 targeted GREEN
 
 [[patch-4-0-1-api-audit]]: retail factory 1/1, cached cases 2/2, Mists factory 1/1; exact gaps 119 → 117, scratch negative 117 → 118. Mists cached target requires retail and is not executed. Four historical prose/one signature/native limits remain; no broad/final gate.
+
+## 2026-10-09 — Retail Patch 4.0.1 historical validator implementation
+
+[[patch-4-0-1-api-audit]]: compact own source/tool/successor and cryptographic code-scope pins, historical-only validator and five concrete acceptance/tamper fixtures. Validator RED retained before implementation; no old-object or broad-gate dependency. GREEN pending.

@@ -1,0 +1,52 @@
+FFFFF
+======================================================================
+FAIL: test_historical_archive_tamper_is_rejected (__main__.HistoricalValidatorTests.test_historical_archive_tamper_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p401-source/tools/test_patch_4_0_1_validator.py", line 63, in test_historical_archive_tamper_is_rejected
+    self.assertIn('archive seal: historical-inputs.json.gz', result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'archive seal: historical-inputs.json.gz' not found in "/usr/bin/python3: can't open file '/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/validate.py': [Errno 2] No such file or directory\n"
+
+======================================================================
+FAIL: test_own_green_log_tamper_is_rejected (__main__.HistoricalValidatorTests.test_own_green_log_tamper_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p401-source/tools/test_patch_4_0_1_validator.py", line 54, in test_own_green_log_tamper_is_rejected
+    self.assertIn('evidence seal: retail-prefork-green.log', result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'evidence seal: retail-prefork-green.log' not found in "/usr/bin/python3: can't open file '/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/validate.py': [Errno 2] No such file or directory\n"
+
+======================================================================
+FAIL: test_sealed_recorded_scope_validates_without_git_commands (__main__.HistoricalValidatorTests.test_sealed_recorded_scope_validates_without_git_commands)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p401-source/tools/test_patch_4_0_1_validator.py", line 31, in test_sealed_recorded_scope_validates_without_git_commands
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : /usr/bin/python3: can't open file '/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/validate.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_source_response_tamper_is_rejected (__main__.HistoricalValidatorTests.test_source_response_tamper_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p401-source/tools/test_patch_4_0_1_validator.py", line 45, in test_source_response_tamper_is_rejected
+    self.assertIn('evidence seal: source-response.json', result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'evidence seal: source-response.json' not found in "/usr/bin/python3: can't open file '/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/validate.py': [Errno 2] No such file or directory\n"
+
+======================================================================
+FAIL: test_unrelated_later_inventory_does_not_change_recorded_scope (__main__.HistoricalValidatorTests.test_unrelated_later_inventory_does_not_change_recorded_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p401-source/tools/test_patch_4_0_1_validator.py", line 70, in test_unrelated_later_inventory_does_not_change_recorded_scope
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : /usr/bin/python3: can't open file '/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/validate.py': [Errno 2] No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.066s
+
+FAILED (failures=5)
