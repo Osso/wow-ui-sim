@@ -3000,3 +3000,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.14.4 SOURCE GREEN
 
 [Audit](investigations/patch-1-14-4-api-audit.md): SOURCE11/11 at183437dc5; eight rows/four metadata/four UNPROVEN, eleven contracts (three prose/six wiki/two diff), two headers/one unexpanded template, zero inventory/signatures. Original seals/archive captured; portable replay pending. No runtime or foreign supersession.
+
+## [2026-10-09] investigation | Patch 1.14.4 copied SOURCE proof
+
+[Audit](investigations/patch-1-14-4-api-audit.md): portable3/3 atfb6e6ba53; copied SOURCE11/11/validator/default-byte replay and both serialized ledger/log seal rejections/exact restorations. Original67 seals unchanged;68-member archive, four separate current receipt seals. Wrath all-change inclusion and Dragonflight subset stay distinct/unexpanded; eleven contracts UNPROVEN. No runtime/model/native/foreign supersession; main owns ordered Era integration/gates.
