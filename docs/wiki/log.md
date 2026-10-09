@@ -1,3 +1,7 @@
+## [2026-10-09] fix | Generated constants manifest metrics
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#generated-file-metrics--stale-manifest-corrected-green-pending) records exact0/1 RED and prior intentional fallback removal374c2c6c7. Only constants manifest byte/line/hash metrics updated to actual output; enums/Lua/discovery/method snapshots unchanged. Independent GREEN pending; no regeneration/native proof.
+
 ## [2026-10-09] investigation | Current browser and Pi provenance gaps
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#browser-readiness-handoff) separates earlier readable-browser proof from later absentCDP/current loopbackVNC. Original launch/profile and current Pi source/live diagnostics provenance unresolved. Three read-only reports retained with bounded privacy limits. Interrupted capture cause remains unproven; no restart/deploy/model/provider change.
