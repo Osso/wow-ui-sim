@@ -1,0 +1,16 @@
+1: 
+2:                 local marker = function() return "wrapped" end
+3:                 if CreateSecureDelegate(marker)() ~= "wrapped" then return "secure_delegate" end
+4:                 if type(GetButtonMetatable()) ~= "table" then return "button_metatable" end
+5:                 if type(GetEditBoxMetatable()) ~= "table" then return "editbox_metatable" end
+6:                 if secretwrap(marker)() ~= "wrapped" then return "secretwrap" end
+7:                 if GetCallstackHeight() ~= 0 then return "callstack_height" end
+8:                 if GetErrorCallstackHeight() ~= 0 then return "error_callstack_height" end
+9:                 if type(debugstack) ~= "function" then return "debugstack_type" end
+10:                 if not string.find(debugstack(1), "in main chunk", 1, true) then return "debugstack_value" end
+11:                 if type(debuglocals) ~= "function" then return "debuglocals_type" end
+12:                 if type(debuglocals(1)) ~= "string" then return "debuglocals_value" end
+13:                 SetErrorCallstackHeight(4)
+14:                 AddSourceLocationExclude("example.lua")
+15:                 return "ok"
+16:                 

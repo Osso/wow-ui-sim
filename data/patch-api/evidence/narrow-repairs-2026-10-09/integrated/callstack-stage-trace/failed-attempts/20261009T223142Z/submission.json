@@ -1,0 +1,34 @@
+{
+  "source_revision": "77e552bae7210b3b6a1a9f604911a7dd9a1943b7",
+  "started": "2026-10-09T22:31:42.598853+00:00",
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--lib",
+    "--test",
+    "integration",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "unit": "fixture-callstack-retry-20261009t223142z",
+  "environment_overrides": {
+    "CARGO_BUILD_JOBS": "4"
+  },
+  "toolchain": "Cargo/rustc1.99.0",
+  "source_file_count": 3845,
+  "cache_file_count": 4044,
+  "worktree_status": "?? .code-index.db\n",
+  "boot_id": "931d4a8a-2178-4666-bf53-776e5eac97be",
+  "uptime_before": "135.70 4257.30",
+  "prior_epoch": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T222607Z",
+  "retry_reason": "Previousrequirednewsource compile terminatedSIGTERM duringorderlyhostreboot; no buildfinished/artifact/newtestproof. Capturedpriorlogsareavailable. Oneboundedretry forunexecuted3exactcases, notlogrecovery. Stillrequired: current611 fixtureGREEN +6a samechunkdiagnostic; no narrowerpriorproof coversnewsource.",
+  "exclusions": [
+    "untracked .code-index.db",
+    "externaldependencycontents andinheritedenvironment"
+  ],
+  "retry_number": 1
+}

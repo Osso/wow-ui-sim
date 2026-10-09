@@ -1,0 +1,40 @@
+{
+  "patterns": {
+    "secret_assignment": "(?i)\\b(?:password|passwd|token|api[_-]?key|secret)\\b\\s*[:=]\\s*\\S+",
+    "bearer": "(?i)\\bBearer\\s+[A-Za-z0-9._~+/=-]+",
+    "private_key": "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+    "credential_url": "\\b[a-z]+://[^\\s/:]+:[^\\s/@]+@",
+    "email": "\\b[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}\\b"
+  },
+  "counts": {
+    "compile.stdout": {
+      "secret_assignment": 0,
+      "bearer": 0,
+      "private_key": 0,
+      "credential_url": 0,
+      "email": 0
+    },
+    "compile.stderr": {
+      "secret_assignment": 0,
+      "bearer": 0,
+      "private_key": 0,
+      "credential_url": 0,
+      "email": 0
+    },
+    "run.stdout": {
+      "secret_assignment": 0,
+      "bearer": 0,
+      "private_key": 0,
+      "credential_url": 0,
+      "email": 0
+    },
+    "run.stderr": {
+      "secret_assignment": 0,
+      "bearer": 0,
+      "private_key": 0,
+      "credential_url": 0,
+      "email": 0
+    }
+  },
+  "qualification": "Heuristic candidate counts, not a guarantee of absence of sensitive data; compiler stdout contains local paths and build metadata."
+}

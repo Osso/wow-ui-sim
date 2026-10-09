@@ -1,0 +1,20 @@
+{
+  "observed": "2026-10-09T22:30:46.919052+00:00",
+  "argv": [
+    "journalctl",
+    "--user",
+    "-u",
+    "fixture-callstack-build-20261009t222607z",
+    "--no-pager",
+    "-n",
+    "12",
+    "-o",
+    "short-iso"
+  ],
+  "exit": 0,
+  "boot_id": "931d4a8a-2178-4666-bf53-776e5eac97be",
+  "uptime": "80.02 2480.39",
+  "status": "interrupted duringhostrestart; unit terminatedSIGTERM at17:26:57CDT; no build-finishedJSON; no newtests executed",
+  "reason": "restartinitiator/rootcause notestablished; notassumedOOM",
+  "retry": "notyet; investigate host interruptionbefore bounded retry"
+}

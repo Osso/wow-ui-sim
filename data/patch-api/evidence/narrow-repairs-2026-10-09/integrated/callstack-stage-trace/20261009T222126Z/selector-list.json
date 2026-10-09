@@ -1,0 +1,11 @@
+{
+  "exit": 0,
+  "argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+    "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+    "--list"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "stdout": "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults: test\n\n1 test, 0 benchmarks\n",
+  "stderr": ""
+}

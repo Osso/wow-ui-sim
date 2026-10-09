@@ -1,0 +1,43 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.001s] [Startup] SimState::default complete in 1.44ms
+[  0.002s] [Startup] rilua VM created in 83.15µs
+[  0.002s] [Startup] builtin frames initialized in 51.86µs
+[  0.002s] [Startup] template registry cleared in 5.30µs
+[  0.002s] [Startup] intrinsic templates registered in 5.38µs
+[  0.002s] [Startup] initial app_data lua handle installed in 410.00ns
+[DebugGetterTrace] phase=init_entry global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=init_entry global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_globals_register global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_globals_register global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=after_globals_register global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=after_globals_register global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_runtime_bootstrap global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_runtime_bootstrap global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=after_runtime_bootstrap global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=after_runtime_bootstrap global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_permanent_bootstrap global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_permanent_bootstrap global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=after_permanent_bootstrap global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=after_permanent_bootstrap global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_temporary_bootstrap global=GetCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=before_temporary_bootstrap global=GetErrorCallstackHeight type=nil value=Nil
+[DebugGetterTrace] phase=after_temporary_bootstrap global=GetCallstackHeight type=function value=Function(GcRef(6627, gen=0))
+[DebugGetterTrace] phase=after_temporary_bootstrap global=GetErrorCallstackHeight type=function value=Function(GcRef(6631, gen=0))
+[DebugGetterTrace] phase=before_profile_bootstrap global=GetCallstackHeight type=function value=Function(GcRef(6627, gen=0))
+[DebugGetterTrace] phase=before_profile_bootstrap global=GetErrorCallstackHeight type=function value=Function(GcRef(6631, gen=0))
+[DebugGetterTrace] phase=after_profile_bootstrap global=GetCallstackHeight type=function value=Function(GcRef(6627, gen=0))
+[DebugGetterTrace] phase=after_profile_bootstrap global=GetErrorCallstackHeight type=function value=Function(GcRef(6631, gen=0))
+[DebugGetterTrace] phase=before_final_gc global=GetCallstackHeight type=function value=Function(GcRef(6627, gen=0))
+[DebugGetterTrace] phase=before_final_gc global=GetErrorCallstackHeight type=function value=Function(GcRef(6631, gen=0))
+[DebugGetterTrace] phase=after_final_gc global=GetCallstackHeight type=function value=Function(GcRef(6627, gen=0))
+[DebugGetterTrace] phase=after_final_gc global=GetErrorCallstackHeight type=function value=Function(GcRef(6631, gen=0))
+[  0.088s] [Startup] init_lua_state complete in 86.57ms
+[  0.088s] [Startup] final app_data lua handle installed in 231.00ns
+[  0.088s] [Startup] initial screen globals installed in 54.54µs
+[  0.088s] [Startup] WowLuaEnv::new complete
+[DebugGetterTrace] phase=installs_debug_environment_defaults_before_probe global=GetCallstackHeight type=function value=Function(GcRef(6627, gen=0))
+[DebugGetterTrace] phase=installs_debug_environment_defaults_before_probe global=GetErrorCallstackHeight type=function value=Function(GcRef(6631, gen=0))
+
+thread 'lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults' (11374) panicked at src/lua_api/workarounds/temporary/debug_environment_defaults.rs:244:14:
+debug environment defaults probe should run: Lua(Runtime(RuntimeError { message: "(string):7: attempt to call a userdata value", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

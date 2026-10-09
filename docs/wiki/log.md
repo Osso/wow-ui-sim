@@ -1206,3 +1206,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] reference | Preserve observed TOC game-type tokens
 
 [[toc-game-type-tokens]] preserves twelve observed literals with exact local TOC lines, selected-source SHA-256 identities, and cache metadata. Separates filename suffixes, simulator aliases, native recognition, and annotation grammar; BCC and unknown-token semantics remain unproven. Documentation/source-capture only; no inventory rerun, tests, builds, network, vendor/cache mutation, or commit.
+
+## [2026-10-09] evidence | Callstack stage trace and separate failed attempts
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#callstack-stage-trace--compiled-diagnostic-exact-test-fail) retains 31 files /2,442,479 bytes with hash/byte identity and bounded privacy counts; [GC audit](investigations/gc-rooting-audit.md#debug-getter-diagnostic-follow-up-2026-10-09) reconciled. First trace compile exit0, exact lib test FAIL101; Nil until temporary bootstrap then Function through final GC/pre-probe, no first writer/GC cause. Source line7 GetCallstackHeight is not VM-offset proof. Same-chunk follow-up unexecuted: orderly reboot SIGTERM at17:26:57CDT, retry two links FAIL101/build-finished false; complete compiler-message records retained separately. No binary, broad artifact copy, builds/tests/checks or cleanup; six selected invalidation paths undeleted pending shared lock. Standalone warning count unverified; parent OPEN.

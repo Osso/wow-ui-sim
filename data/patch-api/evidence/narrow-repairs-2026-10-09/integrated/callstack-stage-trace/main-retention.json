@@ -1,0 +1,561 @@
+{
+  "scope": "bounded docs/evidence retention; no builds/tests/checks or binary copy",
+  "files": [
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile-service-status.json",
+      "retained": "20261009T222126Z/compile-service-status.json",
+      "bytes": 287,
+      "source_sha256": "602229fdcc7b02de20b8ce0cf184f8ec1a6d6719ae819fba054ace8c68af52b5",
+      "retained_sha256": "602229fdcc7b02de20b8ce0cf184f8ec1a6d6719ae819fba054ace8c68af52b5",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile.stderr",
+      "retained": "20261009T222126Z/compile.stderr",
+      "bytes": 1304,
+      "source_sha256": "6635a51b4c414a0a7bfd1fc7bc2e4a1bd50c1e63f4a9e00f89cd1a4c84f17282",
+      "retained_sha256": "6635a51b4c414a0a7bfd1fc7bc2e4a1bd50c1e63f4a9e00f89cd1a4c84f17282",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile.stdout",
+      "retained": "20261009T222126Z/compile.stdout",
+      "bytes": 565216,
+      "source_sha256": "6a046fbc8d59194265d0626625904949f6da24552e52322af75cef86e3d8fe8a",
+      "retained_sha256": "6a046fbc8d59194265d0626625904949f6da24552e52322af75cef86e3d8fe8a",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run-service-status.json",
+      "retained": "20261009T222126Z/run-service-status.json",
+      "bytes": 291,
+      "source_sha256": "a76d478cfaf92fb624d8fd5023784ccfa2505d282777cf5eb30b406b0f5dab91",
+      "retained_sha256": "a76d478cfaf92fb624d8fd5023784ccfa2505d282777cf5eb30b406b0f5dab91",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run-submission.json",
+      "retained": "20261009T222126Z/run-submission.json",
+      "bytes": 2106,
+      "source_sha256": "b8096f785ab85a28371d4d3b1775fd3b3a5e4829bac1b856c4afe4a1f556915c",
+      "retained_sha256": "b8096f785ab85a28371d4d3b1775fd3b3a5e4829bac1b856c4afe4a1f556915c",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run-submit-result.json",
+      "retained": "20261009T222126Z/run-submit-result.json",
+      "bytes": 979,
+      "source_sha256": "ed7dfce1ffb9cd8db5211ea2a6aec4b16a8ff9f2c29f5d589109197dd9a1a42e",
+      "retained_sha256": "ed7dfce1ffb9cd8db5211ea2a6aec4b16a8ff9f2c29f5d589109197dd9a1a42e",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run.stderr",
+      "retained": "20261009T222126Z/run.stderr",
+      "bytes": 4153,
+      "source_sha256": "bea9c8e82dd67d6bac2fc38c3e4d836f7384e090705bc87a65b9e4893cc4fbed",
+      "retained_sha256": "bea9c8e82dd67d6bac2fc38c3e4d836f7384e090705bc87a65b9e4893cc4fbed",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run.stdout",
+      "retained": "20261009T222126Z/run.stdout",
+      "bytes": 369,
+      "source_sha256": "a7fb5ab203d28ef22dd342650f156d5fc1b363bacba8249d53fe43b41488d0bd",
+      "retained_sha256": "a7fb5ab203d28ef22dd342650f156d5fc1b363bacba8249d53fe43b41488d0bd",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/selector-list.json",
+      "retained": "20261009T222126Z/selector-list.json",
+      "bytes": 458,
+      "source_sha256": "adaa7bdb075be7959508c81456bd21724eee888b2b3b77117049446c25f1dfb2",
+      "retained_sha256": "adaa7bdb075be7959508c81456bd21724eee888b2b3b77117049446c25f1dfb2",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/source-after-build.json",
+      "retained": "20261009T222126Z/source-after-build.json",
+      "bytes": 197151,
+      "source_sha256": "43b0aac34094f4ad64c539a1dfca60110f1f749af355b51c0222c650ee354378",
+      "retained_sha256": "43b0aac34094f4ad64c539a1dfca60110f1f749af355b51c0222c650ee354378",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/source-before.json",
+      "retained": "20261009T222126Z/source-before.json",
+      "bytes": 197151,
+      "source_sha256": "43b0aac34094f4ad64c539a1dfca60110f1f749af355b51c0222c650ee354378",
+      "retained_sha256": "43b0aac34094f4ad64c539a1dfca60110f1f749af355b51c0222c650ee354378",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/submission.json",
+      "retained": "20261009T222126Z/submission.json",
+      "bytes": 1112,
+      "source_sha256": "7566d25d45a23ecf5a0cd09dc185073e0751110842e3f0a4c32264a1c742134f",
+      "retained_sha256": "7566d25d45a23ecf5a0cd09dc185073e0751110842e3f0a4c32264a1c742134f",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/submit-result.json",
+      "retained": "20261009T222126Z/submit-result.json",
+      "bytes": 857,
+      "source_sha256": "bbe5dd6c408ef52d9660038b771c58ff91130582e9461e78664e9de7014aa01a",
+      "retained_sha256": "bbe5dd6c408ef52d9660038b771c58ff91130582e9461e78664e9de7014aa01a",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/evidence.json",
+      "retained": "audit/evidence.json",
+      "bytes": 1872,
+      "source_sha256": "7a45e0c36e421a305e82e0716d4cd12d5c6270f6338921c3f3fd0532ac2bba1a",
+      "retained_sha256": "7a45e0c36e421a305e82e0716d4cd12d5c6270f6338921c3f3fd0532ac2bba1a",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/hashmanifest.sha256",
+      "retained": "audit/hashmanifest.sha256",
+      "bytes": 3722,
+      "source_sha256": "1c7eba20224e7829542e03b4d6a4e2f1af951a8579aa61a32a76c7af4be7eae9",
+      "retained_sha256": "1c7eba20224e7829542e03b4d6a4e2f1af951a8579aa61a32a76c7af4be7eae9",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/privacy-candidates.json",
+      "retained": "audit/privacy-candidates.json",
+      "bytes": 1117,
+      "source_sha256": "6e4fa8cded70cd0c08eb7aaf80899378a6e60b412b762bcce402401c5ccc3212",
+      "retained_sha256": "6e4fa8cded70cd0c08eb7aaf80899378a6e60b412b762bcce402401c5ccc3212",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/probe-line-map.txt",
+      "retained": "audit/probe-line-map.txt",
+      "bytes": 1168,
+      "source_sha256": "44908a5a6197ebc23677124b4013c51e5c70a192aca8567a2c62080dca2d6967",
+      "retained_sha256": "44908a5a6197ebc23677124b4013c51e5c70a192aca8567a2c62080dca2d6967",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/report.md",
+      "retained": "audit/report.md",
+      "bytes": 9186,
+      "source_sha256": "94b488dfe9fa1a1c880f35194427ec9d692650a3cecdf491e98703c22a6069ba",
+      "retained_sha256": "94b488dfe9fa1a1c880f35194427ec9d692650a3cecdf491e98703c22a6069ba",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 1,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/rilua-read-path.txt",
+      "retained": "audit/rilua-read-path.txt",
+      "bytes": 592,
+      "source_sha256": "16ceda9812f2bf4f121a709103918604bfd8f0ed6b25211e13621ada47684ecf",
+      "retained_sha256": "16ceda9812f2bf4f121a709103918604bfd8f0ed6b25211e13621ada47684ecf",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/rustfmt.json",
+      "retained": "audit/rustfmt.json",
+      "bytes": 437,
+      "source_sha256": "75f560d130a382d922fcaecba86fed0270f06cf6471ca086058706ba401a24e3",
+      "retained_sha256": "75f560d130a382d922fcaecba86fed0270f06cf6471ca086058706ba401a24e3",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/source/src/lua_api/env_init/mod.rs",
+      "retained": "audit/source/src/lua_api/env_init/mod.rs",
+      "bytes": 15595,
+      "source_sha256": "6367e275b39c12e3001ecf382d6c3bacd7ecf831a7632ac91f4f51aba90bc1bc",
+      "retained_sha256": "6367e275b39c12e3001ecf382d6c3bacd7ecf831a7632ac91f4f51aba90bc1bc",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/source/src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "retained": "audit/source/src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "bytes": 7384,
+      "source_sha256": "69570e5c65029b2342962d47722269f339e3d5a0088a164b526e168806cf1e03",
+      "retained_sha256": "69570e5c65029b2342962d47722269f339e3d5a0088a164b526e168806cf1e03",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T222607Z/interruption.json",
+      "retained": "failed-attempts/20261009T222607Z/interruption.json",
+      "bytes": 590,
+      "source_sha256": "6f440ed1e7e4433413e2f3efabfa293cedfaa02cfa7024603556e909512c0a53",
+      "retained_sha256": "6f440ed1e7e4433413e2f3efabfa293cedfaa02cfa7024603556e909512c0a53",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T222607Z/interruption-journal.stdout",
+      "retained": "failed-attempts/20261009T222607Z/interruption-journal.stdout",
+      "bytes": 884,
+      "source_sha256": "38a7c28a5ba85f907cf76e69cb918a05544b76f25b4a31b2ec94f3b8e714b534",
+      "retained_sha256": "38a7c28a5ba85f907cf76e69cb918a05544b76f25b4a31b2ec94f3b8e714b534",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T222607Z/previous-boot-shutdown-selected.json",
+      "retained": "failed-attempts/20261009T222607Z/previous-boot-shutdown-selected.json",
+      "bytes": 1963,
+      "source_sha256": "7048cfebaada00d4d77e5d8c736c4c9e2ca170857de4c578bd5fa90956c6b363",
+      "retained_sha256": "7048cfebaada00d4d77e5d8c736c4c9e2ca170857de4c578bd5fa90956c6b363",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T222607Z/submission.json",
+      "retained": "failed-attempts/20261009T222607Z/submission.json",
+      "bytes": 1047,
+      "source_sha256": "7f8f038d0aef57aa8628e87c6a44da487616957030eb1edcafa6b98871341282",
+      "retained_sha256": "7f8f038d0aef57aa8628e87c6a44da487616957030eb1edcafa6b98871341282",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T223142Z/compile.stderr",
+      "retained": "failed-attempts/20261009T223142Z/compile.stderr",
+      "bytes": 1442,
+      "source_sha256": "8fc04d4bc86a835c0993a081c4a44ab05aeb3b338bf81f0f2d979ab1bd01cd7c",
+      "retained_sha256": "8fc04d4bc86a835c0993a081c4a44ab05aeb3b338bf81f0f2d979ab1bd01cd7c",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T223142Z/compile-service-status.json",
+      "retained": "failed-attempts/20261009T223142Z/compile-service-status.json",
+      "bytes": 309,
+      "source_sha256": "b3582fc860111b5f6b0d65277144f3d153b403b079116286a74e2e88a0cdeab0",
+      "retained_sha256": "b3582fc860111b5f6b0d65277144f3d153b403b079116286a74e2e88a0cdeab0",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T223142Z/submission.json",
+      "retained": "failed-attempts/20261009T223142Z/submission.json",
+      "bytes": 1299,
+      "source_sha256": "811e540d326cbd310ae52097cfa6e37a20ff82fd57bff3bd508890f716a5a3f7",
+      "retained_sha256": "811e540d326cbd310ae52097cfa6e37a20ff82fd57bff3bd508890f716a5a3f7",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/handoff/linker-state-attribution.md",
+      "retained": "failed-attempts/linker-state-attribution.md",
+      "bytes": 5154,
+      "source_sha256": "04c819042da8ac17fcd6d7b2749ae0f03dc6cbd2ed3ec70b5e9225729d27dd75",
+      "retained_sha256": "04c819042da8ac17fcd6d7b2749ae0f03dc6cbd2ed3ec70b5e9225729d27dd75",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/fixture-and-callstack-proof/20261009T223142Z/compile.stdout",
+      "retained": "failed-attempts/20261009T223142Z/compiler-message-records.json",
+      "derived": "all two full compiler-message records and build-finished record, not artifact inventory",
+      "bytes": 1417284,
+      "retained_sha256": "401ca3850a47337797ccf4ca4a2d25b55f0c3b4da1d3d88d36286c0b68bd0706",
+      "privacy_candidate_counts": {
+        "secret_assignment": 0,
+        "bearer": 0,
+        "private_key": 0,
+        "credential_url": 0,
+        "email": 0
+      }
+    }
+  ],
+  "original_audit_seals": [
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile-service-status.json",
+      "sha256": "602229fdcc7b02de20b8ce0cf184f8ec1a6d6719ae819fba054ace8c68af52b5",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile.stderr",
+      "sha256": "6635a51b4c414a0a7bfd1fc7bc2e4a1bd50c1e63f4a9e00f89cd1a4c84f17282",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile.stdout",
+      "sha256": "6a046fbc8d59194265d0626625904949f6da24552e52322af75cef86e3d8fe8a",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run-service-status.json",
+      "sha256": "a76d478cfaf92fb624d8fd5023784ccfa2505d282777cf5eb30b406b0f5dab91",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run-submission.json",
+      "sha256": "b8096f785ab85a28371d4d3b1775fd3b3a5e4829bac1b856c4afe4a1f556915c",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run-submit-result.json",
+      "sha256": "ed7dfce1ffb9cd8db5211ea2a6aec4b16a8ff9f2c29f5d589109197dd9a1a42e",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run.stderr",
+      "sha256": "bea9c8e82dd67d6bac2fc38c3e4d836f7384e090705bc87a65b9e4893cc4fbed",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run.stdout",
+      "sha256": "a7fb5ab203d28ef22dd342650f156d5fc1b363bacba8249d53fe43b41488d0bd",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/selector-list.json",
+      "sha256": "adaa7bdb075be7959508c81456bd21724eee888b2b3b77117049446c25f1dfb2",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/source-after-build.json",
+      "sha256": "43b0aac34094f4ad64c539a1dfca60110f1f749af355b51c0222c650ee354378",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/source-before.json",
+      "sha256": "43b0aac34094f4ad64c539a1dfca60110f1f749af355b51c0222c650ee354378",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/submission.json",
+      "sha256": "7566d25d45a23ecf5a0cd09dc185073e0751110842e3f0a4c32264a1c742134f",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/submit-result.json",
+      "sha256": "bbe5dd6c408ef52d9660038b771c58ff91130582e9461e78664e9de7014aa01a",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/evidence.json",
+      "sha256": "7a45e0c36e421a305e82e0716d4cd12d5c6270f6338921c3f3fd0532ac2bba1a",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/privacy-candidates.json",
+      "sha256": "6e4fa8cded70cd0c08eb7aaf80899378a6e60b412b762bcce402401c5ccc3212",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/probe-line-map.txt",
+      "sha256": "44908a5a6197ebc23677124b4013c51e5c70a192aca8567a2c62080dca2d6967",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/report.md",
+      "sha256": "94b488dfe9fa1a1c880f35194427ec9d692650a3cecdf491e98703c22a6069ba",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/rilua-read-path.txt",
+      "sha256": "16ceda9812f2bf4f121a709103918604bfd8f0ed6b25211e13621ada47684ecf",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/rustfmt.json",
+      "sha256": "75f560d130a382d922fcaecba86fed0270f06cf6471ca086058706ba401a24e3",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/source/src/lua_api/env_init/mod.rs",
+      "sha256": "6367e275b39c12e3001ecf382d6c3bacd7ecf831a7632ac91f4f51aba90bc1bc",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/source/src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+      "sha256": "69570e5c65029b2342962d47722269f339e3d5a0088a164b526e168806cf1e03",
+      "status": "matched retained source bytes"
+    },
+    {
+      "source": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+      "sha256": "407a4cbc456dedec51b750eb36d257447ee5a9cb46e47a5f5a69f72c5a898544",
+      "status": "original executable seal retained; binary not copied or rehashed"
+    }
+  ],
+  "privacy_patterns": {
+    "secret_assignment": "(?i)\\b(?:password|passwd|token|api[_-]?key|secret)\\b\\s*[:=]\\s*\\S+",
+    "bearer": "(?i)\\bBearer\\s+[A-Za-z0-9._~+/=-]+",
+    "private_key": "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+    "credential_url": "\\b[a-z]+://[^\\s/:]+:[^\\s/@]+@",
+    "email": "\\b[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}\\b"
+  },
+  "privacy_limit": "Full retained UTF-8 files scanned; heuristic candidates only, not exhaustive certification. Local paths, usernames, dependency metadata and internal references retained. Rust source identifiers/diagnostic strings may match assignment patterns without being credentials. Original audit manual stream review remains attributed to its report.",
+  "excluded": "Executable binary; failed-attempt source/cache inventories and whole compiler artifact stream. Original successful compilation epoch unchanged.",
+  "privacy_review": "Only nonzero match: audit/report.md Bearer credentials prose (one), not credential data. All other retained-file pattern counts zero."
+}

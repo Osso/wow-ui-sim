@@ -1,0 +1,70 @@
+{
+  "argv": [
+    "journalctl",
+    "-b",
+    "-1",
+    "--no-pager",
+    "-n",
+    "160",
+    "-o",
+    "json"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "selected": [
+    {
+      "__REALTIME_TIMESTAMP": "1791584945759802",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Requested transaction contradicts existing jobs: Transaction for systemd-hostnamed.service/start is destructive (systemd-reboot.service has 'start' job queued, but 'stop' is included in transaction)."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946770157",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Stopping Record System Boot/Shutdown in UTMP..."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946783541",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Stopped Record System Boot/Shutdown in UTMP."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946800179",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Reached target System Shutdown."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946800193",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Reached target Late Shutdown Services."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946800211",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "systemd-reboot.service: Deactivated successfully."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946800222",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Finished System Reboot."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946800235",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Reached target System Reboot."
+    },
+    {
+      "__REALTIME_TIMESTAMP": "1791584946800247",
+      "_COMM": "systemd",
+      "SYSLOG_IDENTIFIER": "systemd",
+      "MESSAGE": "Shutting down."
+    }
+  ]
+}

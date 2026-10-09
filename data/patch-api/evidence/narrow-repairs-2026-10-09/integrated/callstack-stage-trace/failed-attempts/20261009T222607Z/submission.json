@@ -1,0 +1,30 @@
+{
+  "source_revision": "6a4d43fc16008a9346eaad927b871354f184cc55",
+  "started": "2026-10-09T22:26:08.269826+00:00",
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--lib",
+    "--test",
+    "integration",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "unit": "fixture-callstack-build-20261009t222607z",
+  "environment_overrides": {
+    "CARGO_BUILD_JOBS": "4"
+  },
+  "toolchain": "Cargo/rustc1.99.0",
+  "source_file_count": 3845,
+  "cache_file_count": 4044,
+  "worktree_status": " M docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md\n M docs/wiki/log.md\n?? .code-index.db\n?? data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/lua-startup-warning-audit/\n",
+  "purpose": "new611fixtureinputs +6a4samechunkdiagnostic; exactly2integrationGREEN+1librarydiagnostic next",
+  "exclusions": [
+    "untracked .code-index.db",
+    "externaldependencycontents andinheritedenvironment"
+  ]
+}

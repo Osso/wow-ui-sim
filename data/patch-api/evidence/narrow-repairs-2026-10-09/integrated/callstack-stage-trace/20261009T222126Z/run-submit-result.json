@@ -1,0 +1,24 @@
+{
+  "exit": 0,
+  "stdout": "",
+  "stderr": "Running as unit: callstack-trace-run-20261009t222126z.service\n",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--no-block",
+    "--unit=callstack-trace-run-20261009t222126z",
+    "--property=Type=oneshot",
+    "--property=RemainAfterExit=yes",
+    "--property=WorkingDirectory=/home/osso/Projects/wow/wow-ui-sim",
+    "--property=StandardOutput=append:/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run.stdout",
+    "--property=StandardError=append:/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/run.stderr",
+    "--setenv=WOW_SIM_TRACE_DEBUG_GETTERS=1",
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+    "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ]
+}

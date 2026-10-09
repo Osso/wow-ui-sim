@@ -1,0 +1,29 @@
+{
+  "source_revision": "7130cea91dea9a051207fb84435c1beb9cbb5a08",
+  "diagnostic_commit": "be91144d2225ef1ac8b193eb758cef8e3bcdbadf",
+  "started": "2026-10-09T22:21:26.408080+00:00",
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--lib",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "unit": "callstack-trace-build-20261009t222126z",
+  "environment_overrides": {
+    "CARGO_BUILD_JOBS": "4"
+  },
+  "toolchain_documented_observation": "Cargo/rustc1.99.0",
+  "source_file_count": 1656,
+  "worktree_status": " M tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs\n M tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs\n?? .code-index.db\n",
+  "exclusions": [
+    "two dirty integrationfixture files excluded fromlibtarget and snapshot; incident not accepted",
+    "untracked .code-index.db",
+    "external pathdependencies and inheritedenvironment not dumped"
+  ],
+  "purpose": "new diagnostic source compile; exact isolatedlibrary gettertest next"
+}

@@ -1,0 +1,25 @@
+{
+  "exit": 0,
+  "stdout": "",
+  "stderr": "Running as unit: callstack-trace-build-20261009t222126z.service\n",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--no-block",
+    "--unit=callstack-trace-build-20261009t222126z",
+    "--property=Type=oneshot",
+    "--property=RemainAfterExit=yes",
+    "--property=WorkingDirectory=/home/osso/Projects/wow/wow-ui-sim",
+    "--property=StandardOutput=append:/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile.stdout",
+    "--property=StandardError=append:/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/20261009T222126Z/compile.stderr",
+    "--setenv=CARGO_BUILD_JOBS=4",
+    "/home/osso/.worktrees/build-lock.sh",
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--lib",
+    "--no-run",
+    "--message-format=json"
+  ]
+}

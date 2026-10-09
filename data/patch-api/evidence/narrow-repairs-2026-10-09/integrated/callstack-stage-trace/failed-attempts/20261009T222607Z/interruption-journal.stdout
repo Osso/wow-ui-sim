@@ -1,0 +1,5 @@
+2026-10-09T17:26:08-05:00 agent-server systemd[841]: Starting [systemd-run] /home/osso/.worktrees/build-lock.sh /usr/bin/cargo test --offline --locked --lib --test integration --no-run --message-format=json...
+2026-10-09T17:26:57-05:00 agent-server systemd[841]: fixture-callstack-build-20261009t222607z.service: Main process exited, code=killed, status=15/TERM
+2026-10-09T17:26:57-05:00 agent-server systemd[841]: fixture-callstack-build-20261009t222607z.service: Failed with result 'signal'.
+2026-10-09T17:26:57-05:00 agent-server systemd[841]: Stopped [systemd-run] /home/osso/.worktrees/build-lock.sh /usr/bin/cargo test --offline --locked --lib --test integration --no-run --message-format=json.
+2026-10-09T17:26:57-05:00 agent-server systemd[841]: fixture-callstack-build-20261009t222607z.service: Consumed 2min 42.605s CPU time over 49.061s wall clock time, 14.9G memory peak.

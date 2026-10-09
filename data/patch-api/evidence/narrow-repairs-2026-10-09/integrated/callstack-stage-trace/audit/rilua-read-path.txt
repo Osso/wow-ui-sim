@@ -1,0 +1,11 @@
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/api.rs
+68:     /// Reads a value from the global table for trusted embedding code.
+69:     /// Lua-facing global reads must use the checked VM access path.
+70:     fn get_global_val(&mut self, name: &str) -> Val {
+71:         let state = self.state_mut();
+72:         let key_ref = state.gc.intern_string(name.as_bytes());
+73:         let Some(global_table) = state.gc.tables.get(state.global) else {
+74:             return Val::Nil;
+75:         };
+76:         global_table.get_str(key_ref, &state.gc.string_arena)
+77:     }

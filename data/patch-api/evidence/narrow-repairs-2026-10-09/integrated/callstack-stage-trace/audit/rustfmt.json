@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "rustfmt",
+    "--check",
+    "--edition",
+    "2024",
+    "--config",
+    "skip_children=true",
+    "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/source/src/lua_api/env_init/mod.rs",
+    "/home/osso/.local/state/wow-ui-sim/verification/callstack-stage-trace/audit/source/src/lua_api/workarounds/temporary/debug_environment_defaults.rs"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": ""
+}
