@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "HEAD"
+  ],
+  "revision": "933a32cde107bd56bd030e5f7435eb3545dbf6cb",
+  "scope": "validator-gate",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "validator-gate.txt",
+  "log_sha256": "ecc841438e33c4a7abafc0e81ac324c8ac232d8b4044a9a70ede80eb7bd8ac6d",
+  "seconds": 207.76312654301,
+  "invalidated": false
+}
