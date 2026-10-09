@@ -1,0 +1,80 @@
+{
+  "scope": "bounded SOURCE development; main independent full acceptance pending",
+  "source": {
+    "title": "Patch 1.10.1/API changes",
+    "version": "1.10.1",
+    "pageid": 152527,
+    "revid": 1493942,
+    "timestamp": "2020-04-23T00:43:16Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1493942&format=json",
+    "retrieved": "2026-10-09T08:51:36.402947+00:00",
+    "response_sha256": "d83897738793a7fb25478ebd8e3439fd41289326b429f00d54255597e13f4c13",
+    "wikitext_sha256": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+    "wikitext_bytes": 45,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.10.1-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.10.1-wikitext.txt"
+  },
+  "totals": {
+    "physical_lines": 1,
+    "nonblank_rows": 1,
+    "metadata_rows": 1,
+    "unproven_source_rows": 0,
+    "references": 1,
+    "unproven_contracts": 1,
+    "inventory": 0,
+    "signatures": 0,
+    "defaults": 0,
+    "prose": 0,
+    "headers": 0,
+    "templates": 0
+  },
+  "meaningful_subset": {
+    "model": 0,
+    "runtime": 0,
+    "native": 0
+  },
+  "retail_successor_references": 47,
+  "queued_versions": [
+    "1.13.2",
+    "1.12.0",
+    "1.11.0",
+    "1.10.2"
+  ],
+  "applied_successors": [],
+  "red_source_tests": 5,
+  "red_portable_tests": 3,
+  "green_source_tests": 5,
+  "copied_source_tests": 5,
+  "green_portable_tests": 3,
+  "proof_epochs": {
+    "red": "e14488aaaed19d49038d366630768cec3d4b23f6",
+    "source_green": "3c927000f",
+    "portable_green": "cb9c8e5d865ee7c69e9b1f74e34c8618d9575552"
+  },
+  "original_seals": 29,
+  "later_receipt_seals": 6,
+  "archive": {
+    "revision": "cb9c8e5d865ee7c69e9b1f74e34c8618d9575552",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1101-page",
+    "copied_directory": "/home/osso/.worktrees/wow-ui-sim-p1101-page/data/patch-api/evidence/1.10.1-session-2026-10-09/fresh-replay-vdwv68jf",
+    "members": 30,
+    "archive_bytes": 51670,
+    "archive_sha256": "93739459bb668016b4b56d8dc683e5e56add1bc81ee232ff2ee1b1d326f94438",
+    "seals_sha256": "6cdbf8ac0ec4111f01574718c30f2e0103283c6101a26691e2a6c4390d0d04c9",
+    "copy_excludes": [
+      ".git",
+      "target",
+      "current tools",
+      "Interface",
+      "network"
+    ],
+    "source_tests": 5,
+    "portable_tests": 3,
+    "original_files_unchanged": true,
+    "sealed_files": 29
+  },
+  "sanitization": "environment values omitted; key names and explicit replay argv retained; credential pattern literal excluded from itself; no detected credential values; full streams unaltered; setup/exploration omitted as non-proof",
+  "limits": "unexpanded redirect; no runtime/model/native/compiler proof, no parent meaningful-behavior closure",
+  "handoff": "/home/osso/.worktrees/wow-ui-sim-p1101-page/data/patch-api/evidence/1.10.1-session-2026-10-09/HANDOFF.md",
+  "replay": "/home/osso/.worktrees/wow-ui-sim-p1101-page/data/patch-api/evidence/1.10.1-session-2026-10-09/REPLAY.md"
+}

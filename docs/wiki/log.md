@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.10.1 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-10-1-api-audit.md) records exact own source identity and redirect boundary; own SOURCE RED5/portable RED3 retained, SOURCE GREEN5/5 at3c927000f. Empty inventory is not parent meaningful-behavior/native closure; queued successors separate. No runtime/shared-tool edits.
+[Audit](investigations/patch-1-10-1-api-audit.md) records exact own source identity and redirect boundary; own SOURCE RED5/portable RED3 retained, SOURCE GREEN5/5 at3c927000f; copied SOURCE5/5/portable3/3 atcb9c8e5d8, both serialized tamper rejection/exact restoration and default byte/error replay.29 original seals/archive unchanged, six later receipts separately sealed. Empty inventory is not parent meaningful-behavior/native closure; queued successors separate. No runtime/shared-tool edits.
 
 ## [2026-10-09] ingest | Retail TOC fixture independent proof
 

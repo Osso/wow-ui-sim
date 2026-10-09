@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.10.1 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-10-1-api-audit.md): frozen152527/1493942;45 bytes, one literal row/link/UNPROVEN contract; zero local inventory/signatures/defaults/model/runtime/native. Own SOURCE RED5/portable RED3 retained; SOURCE GREEN5/5 at3c927000f, immutable portable replay pending. Queued1.10.2 separately unapplied behind1.13.2/1.12.0/1.11.0. Main owns integration/full acceptance.
+[Audit](investigations/patch-1-10-1-api-audit.md): frozen152527/1493942;45 bytes, one literal row/link/UNPROVEN contract; zero local inventory/signatures/defaults/model/runtime/native. Own SOURCE RED5/portable RED3 retained; SOURCE GREEN5/5 at3c927000f; fresh copied SOURCE5/5/portable3/3 atcb9c8e5d8, default-byte/error replay and both serialized tamper rejections/exact restorations.29 original/six later seals;30-member51,670-byte archive unchanged. Queued1.10.2 separately unapplied behind1.13.2/1.12.0/1.11.0. Main owns integration/full acceptance.
 
 ## [2026-10-09] investigation | Patch 1.13.4 frozen Era audit
 

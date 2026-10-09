@@ -8,8 +8,8 @@ Bounded accounting of frozen page152527/revision1493942/timestamp2020-04-23T00:4
 - [x] Reject each populated-boundary omission, count mutation and invented inventory/signature/default/prose/header/template/model/native claim.
 - [x] Preserve unexpanded redirect target and precise UNPROVEN contracts; zero local modeled/runtime/native subset.
 - [x] Keep queued1.10.2 behind1.13.2/1.12.0/1.11.0 separately unapplied; preserve original Retail, Classic Era and Forever histories.
-- [ ] Retain own SOURCE RED/GREEN and own-base default-byte/error replay; copy replay without Git/target/current tools/network.
-- [ ] Reject serialized ledger/log tampering and restore original bytes/map without resealing; retain immutable original seals/archive separately from later actual revision/cwd/argv/env-key/time/fullstream/hash receipts.
+- [x] Retain own SOURCE RED/GREEN and own-base default-byte/error replay; copy replay without Git/target/current tools/network.
+- [x] Reject serialized ledger/log tampering and restore original bytes/map without resealing; retain immutable original seals/archive separately from later actual revision/cwd/argv/env-key/time/fullstream/hash receipts.
 
 ## How it works
 

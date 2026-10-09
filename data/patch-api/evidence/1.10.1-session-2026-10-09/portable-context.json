@@ -1,0 +1,20 @@
+{
+  "revision": "cb9c8e5d865ee7c69e9b1f74e34c8618d9575552",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1101-page",
+  "copied_directory": "/home/osso/.worktrees/wow-ui-sim-p1101-page/data/patch-api/evidence/1.10.1-session-2026-10-09/fresh-replay-vdwv68jf",
+  "members": 30,
+  "archive_bytes": 51670,
+  "archive_sha256": "93739459bb668016b4b56d8dc683e5e56add1bc81ee232ff2ee1b1d326f94438",
+  "seals_sha256": "6cdbf8ac0ec4111f01574718c30f2e0103283c6101a26691e2a6c4390d0d04c9",
+  "copy_excludes": [
+    ".git",
+    "target",
+    "current tools",
+    "Interface",
+    "network"
+  ],
+  "source_tests": 5,
+  "portable_tests": 3,
+  "original_files_unchanged": true,
+  "sealed_files": 29
+}
