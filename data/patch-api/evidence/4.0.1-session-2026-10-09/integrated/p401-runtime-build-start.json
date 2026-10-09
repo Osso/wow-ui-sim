@@ -1,0 +1,11 @@
+{
+  "revision": "3e9003b64367d9a7c733401d7e6aba8c64ee4eb3",
+  "argv": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "env": {}
+}

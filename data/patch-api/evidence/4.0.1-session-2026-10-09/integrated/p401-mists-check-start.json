@@ -1,0 +1,13 @@
+{
+  "revision": "3e9003b64367d9a7c733401d7e6aba8c64ee4eb3",
+  "argv": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "env": {}
+}

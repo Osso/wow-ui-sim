@@ -47,7 +47,7 @@ Account for the complete pinned historical retail page, revision 1271877, in `da
 
 [Integrated discovery receipts](../../data/patch-api/evidence/4.0.1-session-2026-10-09/integrated/) are separate from [historical evidence](../../data/patch-api/evidence/4.0.1-session-2026-10-09/). [Portable validator v2](../../data/patch-api/evidence/4.0.1-session-2026-10-09/portable-validator-v2.md) removes only the repository-target temporary-workspace dependency; exact v1 validator/context and historical archive/evidence seals remain preserved.
 
-Main publication passes 70/70; Mists check/build exit 0, but built startup is not yet checked. Independent formatting scope covers 212 files; Python fixtures 75/75 and own v2 fresh-root/no-target/no-Git fixtures 5/5 pass. Register outputs reproduce 74/74 with all process exits captured; extracts reproduce 74/77, with three known inherited failures (12.0.5/12.0.7 mismatch, 12.1.0 error/no output). Shared portable gate, current negative control, runtime smoke, CI and full suite remain pending; no all-green acceptance claim.
+Main publication passes 70/70; Mists check/build exit 0; built startup emits `[]`, exit 0. Independent `cargo fmt --check` exits 0; Python fixtures 75/75 and own v2 fresh-root/no-target/no-Git fixtures 5/5 pass. Register outputs reproduce 74/74 with all process exits captured; extracts reproduce 74/77, with three known inherited failures (12.0.5/12.0.7 mismatch, 12.1.0 error/no output). Shared portable gate, current negative control, runtime smoke, CI and full suite remain pending; no all-green acceptance claim.
 
 ## Out of scope
 

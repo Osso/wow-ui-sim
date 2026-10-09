@@ -1,0 +1,17 @@
+{
+  "exit": 0,
+  "argv": [
+    "timeout",
+    "90",
+    "/home/osso/.worktrees/wow-ui-sim-p401-source/target/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "binary_build_revision": "297c9e654",
+  "current_revision": "6b6f50b2a1b26bd8d560182173b1b4434bb6f337",
+  "code_scope": "Runtime untouched across v2 validator workspace fix and acceptance metadata.",
+  "binary_sha256": "31ce180bc4e5117835f24f3a35b2a337708937c2ec46d1be1aacda3439266d85",
+  "stdout": "[]\n",
+  "stderr_sha256": "23fa5484002a9c7803f86a7713f1402caa43d18df2a94d287eae85dc24dae9d2"
+}

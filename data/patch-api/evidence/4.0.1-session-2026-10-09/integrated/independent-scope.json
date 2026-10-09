@@ -1,0 +1,116 @@
+[
+  {
+    "path": "src/c_api/mod.rs",
+    "sha256": "cc8212c4ef56c59923902c373d2c81107acb3d0e69d648bfaec03f551fb3f70a",
+    "archived_sha256": "cc8212c4ef56c59923902c373d2c81107acb3d0e69d648bfaec03f551fb3f70a",
+    "identical_to_archive": true,
+    "lines": 383
+  },
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "sha256": "8e7fdc4d44971730139476b45723b1bd9a3d7777129f0fa4deb18b734f3984d5",
+    "archived_sha256": "8e7fdc4d44971730139476b45723b1bd9a3d7777129f0fa4deb18b734f3984d5",
+    "identical_to_archive": true,
+    "lines": 636
+  },
+  {
+    "path": "src/lua_api/globals/stubs/global_stubs.rs",
+    "sha256": "e58910706b30395dc8a85107b1d29d16b7aa7e1e3132bb79dd967983abcd546f",
+    "archived_sha256": "e58910706b30395dc8a85107b1d29d16b7aa7e1e3132bb79dd967983abcd546f",
+    "identical_to_archive": true,
+    "lines": 348
+  },
+  {
+    "path": "tests/patch_4_0_1_retirements.rs",
+    "sha256": "bb4d064857e527ad5b27f267077a1b16e12038a726e2c586d94c5c8434827f3e",
+    "archived_sha256": "bb4d064857e527ad5b27f267077a1b16e12038a726e2c586d94c5c8434827f3e",
+    "identical_to_archive": true,
+    "lines": 32
+  },
+  {
+    "path": "tests/common/publication_sweep.rs",
+    "sha256": "9806ecce8fad716f3c3c0e3faaec53573b881c8630da8f6b2fe8caebc2247837",
+    "archived_sha256": "9806ecce8fad716f3c3c0e3faaec53573b881c8630da8f6b2fe8caebc2247837",
+    "identical_to_archive": true,
+    "lines": 548
+  },
+  {
+    "path": "src/client_profile.rs",
+    "sha256": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+    "archived_sha256": null,
+    "identical_to_archive": null,
+    "lines": 445
+  },
+  {
+    "path": "tools/gen_patch_wikitext_register.py",
+    "sha256": "f98f56fd0488fd1560e1dc5257d8cb76d0d960aca1df701a01bf868fe93ba2a1",
+    "archived_sha256": "e0af08104efbf5dc64a4a30123b47ba317096553bf95bc8ef38f61b45d8997ac",
+    "identical_to_archive": false,
+    "lines": 1026
+  },
+  {
+    "path": "tools/extract_patch_non_inventory.py",
+    "sha256": "0cbacb477244db36fea9a473ee980c5a53dc5d673760e9ed5eba171964642af2",
+    "archived_sha256": "0cbacb477244db36fea9a473ee980c5a53dc5d673760e9ed5eba171964642af2",
+    "identical_to_archive": true,
+    "lines": 455
+  },
+  {
+    "path": "tools/test_patch_4_0_1_validator.py",
+    "sha256": "048273834dd09e90e9c733afbe2d2ef936c1cd3da3e9f2de29cbc93a1312b020",
+    "archived_sha256": null,
+    "identical_to_archive": null,
+    "lines": 98
+  },
+  {
+    "path": "tests/patch_4_0_1_publication_sweep.rs",
+    "sha256": "439dc51fc2fe96f6cb26a5e4497f514957cfa66cc57eea3ca5a0912f1c003cd7",
+    "archived_sha256": "201d6ae46e99d37578ad909685d069ab883ae64a09ff04866423beeb7ff04b30",
+    "identical_to_archive": false,
+    "lines": 91
+  },
+  {
+    "path": "data/patch-api/evidence/4.0.1-session-2026-10-09/validate.py",
+    "sha256": "12bd752b78ff9d47f91cec474dceca6d48b991faab43d6287bc2ec94e2fa6606"
+  },
+  {
+    "path": "data/patch-api/evidence/4.0.1-session-2026-10-09/validate-v1.py.txt",
+    "sha256": "ab28d73b49bef4a6e428fc060258dbe0f5d5cc53e1490db5b985249a8bb91cc6"
+  },
+  {
+    "path": "data/patch-api/evidence/4.0.1-session-2026-10-09/historical-context-v1.json",
+    "sha256": "a7ae9cdfb4506ff99f15e4254ddc464fe11723b9563aa662f7d26b446c7c92c0"
+  },
+  {
+    "path": "data/patch-api/evidence/4.0.1-session-2026-10-09/historical-context.json",
+    "sha256": "3a75b282f67011ef90b0ac02e972bc9cc2d6feda2f9b8dcc3239d96abf65e628"
+  },
+  {
+    "path": "data/patch-api/evidence/4.0.1-session-2026-10-09/historical-inputs.json.gz",
+    "sha256": "f5170a1b1f98ccd9818fc352c39b9adc5135a682b18e5471a3d0243d5297517d"
+  },
+  {
+    "path": "data/patch-api/evidence/4.0.1-session-2026-10-09/historical-scopes.json.gz",
+    "sha256": "c08d81f78816c6496d55ab5a99a55f083488b24872427fad4448e7b1a1374b87"
+  },
+  {
+    "path": "tools/test_gen_patch_wikitext_register.py",
+    "sha256": "c8986ee8937bdd9cce3ccf33aed92bc175231ce7a9cf16d26cbad90b90b327d4",
+    "lines": 545
+  },
+  {
+    "path": "tools/test_extract_patch_non_inventory.py",
+    "sha256": "0d30c3a57868c0e80d2b7bce0656970d474593363b558219a7569757bf556276",
+    "lines": 413
+  },
+  {
+    "path": "tools/test_patch_cataclysm_register.py",
+    "sha256": "f848adfa97d234368606bbc07d75fc33497b669442a768f91f4e4e0fc05c854a",
+    "lines": 67
+  },
+  {
+    "path": "src/lua_api/globals/stubs/mod.rs",
+    "sha256": "ab403111add9398e2bfd1ece719daab43809cca523bce8308fd9a54dfefbceee",
+    "lines": 181
+  }
+]

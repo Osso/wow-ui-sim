@@ -1,0 +1,78 @@
+{
+  "wt-global-api-CanTransform-105": {
+    "old": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CanTransform"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "current": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-CanTransform-8",
+        "symbol": "CanTransform"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  "wt-global-api-Transform-336": {
+    "old": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "Transform"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "current": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-Transform-8",
+        "symbol": "Transform"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": true
+    }
+  }
+}

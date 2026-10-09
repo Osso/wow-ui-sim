@@ -1,0 +1,540 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "8.1.5",
+  "source": {
+    "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+    "revid": 3789732,
+    "sha256": "fc40dccee6ebfd304bce361e9251bcaab39e79e6fe2c6e3406c55fa4d6f5d8e4"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AccountInfo.GetIDFromBattleNetAccountGUID",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_CVar.GetCVar-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.GetCVar",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-C_CVar.GetCVarBitfield-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.GetCVarBitfield",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-C_CVar.GetCVarBool-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.GetCVarBool",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-C_CVar.GetCVarDefault-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.GetCVarDefault",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-C_CVar.RegisterCVar-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.RegisterCVar",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-C_CVar.ResetTestCVars-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.ResetTestCVars",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-C_CVar.SetCVar-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.SetCVar",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-C_CVar.SetCVarBitfield-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CVar.SetCVarBitfield",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.ReplaceIconAndGroupExpressions-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.ReplaceIconAndGroupExpressions",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_ClassColor.GetClassColor-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClassColor.GetClassColor",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_DateAndTime.GetServerTimeLocal-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DateAndTime.GetServerTimeLocal",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_EncounterJournal.IsEncounterComplete-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EncounterJournal.IsEncounterComplete",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_ItemSocketInfo.CompleteSocketing-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemSocketInfo.CompleteSocketing",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MerchantFrame.IsMerchantItemRefundable",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.UnitIsSameServer-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.UnitIsSameServer",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetActiveBrawlInfo-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetActiveBrawlInfo",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetAvailableBrawlInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetAvailableBrawlInfo",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_PvP.IsActiveBattlefield-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.IsActiveBattlefield",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.InitiateReportPlayer",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SendReportPlayer-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.SendReportPlayer",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_Social.GetLastScreenshotIndex-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Social.GetLastScreenshotIndex",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_Social.GetMaxTweetLength-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Social.GetMaxTweetLength",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_Social.GetScreenshotInfoByIndex-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Social.GetScreenshotInfoByIndex",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.IsInitialized-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.IsInitialized",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_TaskQuest.GetQuestTimeLeftSeconds-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TaskQuest.GetQuestTimeLeftSeconds",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_Texture.GetAtlasInfo-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Texture.GetAtlasInfo",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_ToyBoxInfo.ClearFanfare-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ToyBoxInfo.ClearFanfare",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_ToyBoxInfo.NeedsFanfare-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ToyBoxInfo.NeedsFanfare",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-BNGetDisplayName-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetDisplayName",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-DumpMovementCapture-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DumpMovementCapture",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-UnitPvpClassification-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitPvpClassification",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-UnitSelectionType-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitSelectionType",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-UnitTreatAsPlayerForDisplay-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitTreatAsPlayerForDisplay",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-UnitWidgetSet-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitWidgetSet",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_AreaPoiInfo.GetAreaPOITimeLeft-55",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_AreaPoiInfo.GetAreaPOITimeLeft",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_Calendar.GetDate-56",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Calendar.GetDate",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.CanReportPlayer-57",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ChatInfo.CanReportPlayer",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.ReportPlayer-58",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ChatInfo.ReportPlayer",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_Club.AddClubStreamToChatWindow-59",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Club.AddClubStreamToChatWindow",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_Club.SetCommunityID-60",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Club.SetCommunityID",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_DateAndTime.GetDateFromEpoch-61",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_DateAndTime.GetDateFromEpoch",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_DateAndTime.GetTodaysDate-62",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_DateAndTime.GetTodaysDate",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_DateAndTime.GetYesterdaysDate-63",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_DateAndTime.GetYesterdaysDate",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetBrawlInfo-64",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PvP.GetBrawlInfo",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.ReportPlayer-65",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.ReportPlayer",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_Social.GetLastScreenshot-66",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetLastScreenshot",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_Social.GetNumCharactersPerMedia-67",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetNumCharactersPerMedia",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_Social.GetScreenshotByIndex-68",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Social.GetScreenshotByIndex",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-GetAtlasInfo-69",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAtlasInfo",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-GetCVar-70",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCVar",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-GetCVarBitfield-71",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCVarBitfield",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-GetCVarBool-72",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCVarBool",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-GetCVarDefault-73",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCVarDefault",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-GetInspectGlyph-74",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetInspectGlyph",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-HasInspectHonorData-75",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "HasInspectHonorData",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-InActiveBattlefield-76",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "InActiveBattlefield",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-RegisterCVar-77",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RegisterCVar",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-RequestInspectHonorData-78",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RequestInspectHonorData",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-ResetTestCvars-79",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ResetTestCvars",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-SetCVar-80",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetCVar",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-SetCVarBitfield-81",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetCVarBitfield",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-gcinfo-82",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "gcinfo",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-events-NEW_TOY_ADDED-88",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEW_TOY_ADDED",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-SOCKET_INFO_BIND_CONFIRM-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SOCKET_INFO_BIND_CONFIRM",
+      "annotation": "",
+      "wikitext_line": 89
+    }
+  ]
+}

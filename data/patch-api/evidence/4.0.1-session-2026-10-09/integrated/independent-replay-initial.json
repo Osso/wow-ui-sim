@@ -1,0 +1,2916 @@
+[
+  {
+    "kind": "register",
+    "patch": "10.0.0",
+    "provenance": "data/patch-api/sources/10.0.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.0.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.0.0-api-changes.wikitext",
+      "6789768",
+      "/tmp/p401-independent/10.0.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "register",
+    "patch": "10.0.2",
+    "provenance": "data/patch-api/sources/10.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.0.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.0.2-api-changes.wikitext",
+      "2926754",
+      "/tmp/p401-independent/10.0.2-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.0.5",
+    "provenance": "data/patch-api/sources/10.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.0.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.0.5-api-changes.wikitext",
+      "742761",
+      "/tmp/p401-independent/10.0.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.0.7",
+    "provenance": "data/patch-api/sources/10.0.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.0.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.0.7-api-changes.wikitext",
+      "1063344",
+      "/tmp/p401-independent/10.0.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.1.0",
+    "provenance": "data/patch-api/sources/10.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.1.0-api-changes.wikitext",
+      "2236681",
+      "/tmp/p401-independent/10.1.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.1.5",
+    "provenance": "data/patch-api/sources/10.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.1.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.1.5-api-changes.wikitext",
+      "3807695",
+      "/tmp/p401-independent/10.1.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.1.7",
+    "provenance": "data/patch-api/sources/10.1.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.1.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.1.7-api-changes.wikitext",
+      "6473483",
+      "/tmp/p401-independent/10.1.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.0",
+    "provenance": "data/patch-api/sources/10.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.2.0-api-changes.wikitext",
+      "6473470",
+      "/tmp/p401-independent/10.2.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.5",
+    "provenance": "data/patch-api/sources/10.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.2.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.2.5-api-changes.wikitext",
+      "5993852",
+      "/tmp/p401-independent/10.2.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.6",
+    "provenance": "data/patch-api/sources/10.2.6-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.2.6",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.2.6-api-changes.wikitext",
+      "6268742",
+      "/tmp/p401-independent/10.2.6-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.7",
+    "provenance": "data/patch-api/sources/10.2.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "10.2.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/10.2.7-api-changes.wikitext",
+      "6268738",
+      "/tmp/p401-independent/10.2.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.0",
+    "provenance": "data/patch-api/sources/11.0.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.0.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.0.0-api-changes.wikitext",
+      "6726780",
+      "/tmp/p401-independent/11.0.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.2",
+    "provenance": "data/patch-api/sources/11.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.0.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.0.2-api-changes.wikitext",
+      "6862982",
+      "/tmp/p401-independent/11.0.2-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.5",
+    "provenance": "data/patch-api/sources/11.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.0.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.0.5-api-changes.wikitext",
+      "6726778",
+      "/tmp/p401-independent/11.0.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.7",
+    "provenance": "data/patch-api/sources/11.0.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.0.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.0.7-api-changes.wikitext",
+      "6726777",
+      "/tmp/p401-independent/11.0.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.1.0",
+    "provenance": "data/patch-api/sources/11.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.1.0-api-changes.wikitext",
+      "6726776",
+      "/tmp/p401-independent/11.1.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.1.5",
+    "provenance": "data/patch-api/sources/11.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.1.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.1.5-api-changes.wikitext",
+      "6726775",
+      "/tmp/p401-independent/11.1.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.1.7",
+    "provenance": "data/patch-api/sources/11.1.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.1.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.1.7-api-changes.wikitext",
+      "6726774",
+      "/tmp/p401-independent/11.1.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.2.0",
+    "provenance": "data/patch-api/sources/11.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.2.0-api-changes.wikitext",
+      "6726773",
+      "/tmp/p401-independent/11.2.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.2.5",
+    "provenance": "data/patch-api/sources/11.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.2.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.2.5-api-changes.wikitext",
+      "6726772",
+      "/tmp/p401-independent/11.2.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "11.2.7",
+    "provenance": "data/patch-api/sources/11.2.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "11.2.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/11.2.7-api-changes.wikitext",
+      "6726771",
+      "/tmp/p401-independent/11.2.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.0",
+    "provenance": "data/patch-api/sources/12.0.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "12.0.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/12.0.0-api-changes.wikitext",
+      "6747189",
+      "/tmp/p401-independent/12.0.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.1",
+    "provenance": "data/patch-api/sources/12.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "12.0.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/12.0.1-api-changes.wikitext",
+      "6747895",
+      "/tmp/p401-independent/12.0.1-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.5",
+    "provenance": "data/patch-api/sources/12.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "12.0.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/12.0.5-api-changes.wikitext",
+      "6747894",
+      "/tmp/p401-independent/12.0.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.7",
+    "provenance": "data/patch-api/sources/12.0.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "12.0.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/12.0.7-api-changes.wikitext",
+      "6794100",
+      "/tmp/p401-independent/12.0.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "12.1.0",
+    "provenance": "data/patch-api/sources/12.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "12.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/12.1.0-api-changes.wikitext",
+      "6886719",
+      "/tmp/p401-independent/12.1.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "register",
+    "patch": "4.0.1",
+    "provenance": "data/patch-api/sources/4.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "4.0.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/4.0.1-api-changes.wikitext",
+      "1271877",
+      "/tmp/p401-independent/4.0.1-replayed-register.json",
+      "--cataclysm-labeled-inventory",
+      "--client-line",
+      "retail"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "4.1.0",
+    "provenance": "data/patch-api/sources/4.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "4.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/4.1.0-api-changes.wikitext",
+      "4094671",
+      "/tmp/p401-independent/4.1.0-replayed-register.json",
+      "--cataclysm-change-bullets",
+      "--client-line",
+      "retail"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "4.2.0",
+    "provenance": "data/patch-api/sources/4.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "4.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/4.2.0-api-changes.wikitext",
+      "3045158",
+      "/tmp/p401-independent/4.2.0-replayed-register.json",
+      "--client-line",
+      "retail"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "4.3.0",
+    "provenance": "data/patch-api/sources/4.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "4.3.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/4.3.0-api-changes.wikitext",
+      "1639407",
+      "/tmp/p401-independent/4.3.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "4.3.4",
+    "provenance": "data/patch-api/sources/4.3.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "4.3.4",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/4.3.4-api-changes.wikitext",
+      "3743181",
+      "/tmp/p401-independent/4.3.4-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.0.1",
+    "provenance": "data/patch-api/sources/5.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.0.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.0.1-api-changes.wikitext",
+      "5344081",
+      "/tmp/p401-independent/5.0.1-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.0.4",
+    "provenance": "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.0.4",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.0.4-api-changes.wikitext",
+      "3706382",
+      "/tmp/p401-independent/5.0.4-replayed-register.json",
+      "--mists-prepatch",
+      "--mists-diff",
+      "data/patch-api/evidence/5.0.4-session-2026-10-08/diff.wikitext",
+      "--client-line",
+      "retail"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py\", line 1026, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py\", line 981, in main\n    diff_raw = Path(args.mists_diff).read_text()\n  File \"/usr/lib/python3.14/pathlib/__init__.py\", line 787, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.14/pathlib/__init__.py\", line 771, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'data/patch-api/evidence/5.0.4-session-2026-10-08/diff.wikitext'\n",
+    "output_exists": false,
+    "byte_match": false
+  },
+  {
+    "kind": "register",
+    "patch": "5.1.0",
+    "provenance": "data/patch-api/sources/5.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.1.0-api-changes.wikitext",
+      "2736212",
+      "/tmp/p401-independent/5.1.0-replayed-register.json",
+      "--mists-summary",
+      "--mists-diff",
+      "data/patch-api/sources/5.1.0-api-changes-diff.wikitext",
+      "--mists-widget-handlers",
+      "--mists-code-removals",
+      "--client-line",
+      "retail"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.2.0",
+    "provenance": "data/patch-api/sources/5.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.2.0-api-changes.wikitext",
+      "4057299",
+      "/tmp/p401-independent/5.2.0-replayed-register.json",
+      "--mists-diff",
+      "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
+      "--mists-bare-widget-handlers",
+      "--client-line",
+      "retail"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.3.0",
+    "provenance": "data/patch-api/sources/5.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.3.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.3.0-api-changes.wikitext",
+      "4065122",
+      "/tmp/p401-independent/5.3.0-replayed-register.json",
+      "--mists-diff",
+      "data/patch-api/sources/5.3.0-api-changes.diff.wikitext",
+      "--mists-widget-handlers",
+      "--client-line",
+      "retail"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.0",
+    "provenance": "data/patch-api/sources/5.4.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.4.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.4.0-api-changes.wikitext",
+      "6200158",
+      "/tmp/p401-independent/5.4.0-replayed-register.json",
+      "--mists-summary",
+      "--mists-diff",
+      "data/patch-api/sources/5.4.0-api-changes-diff.wikitext"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.1",
+    "provenance": "data/patch-api/sources/5.4.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.4.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.4.1-api-changes.wikitext",
+      "2150406",
+      "/tmp/p401-independent/5.4.1-replayed-register.json",
+      "--mists-automated-diff"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.2",
+    "provenance": "data/patch-api/sources/5.4.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.4.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.4.2-api-changes.wikitext",
+      "2543251",
+      "/tmp/p401-independent/5.4.2-replayed-register.json",
+      "--mists-automated-diff"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.7",
+    "provenance": "data/patch-api/sources/5.4.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.4.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.4.7-api-changes.wikitext",
+      "5298169",
+      "/tmp/p401-independent/5.4.7-replayed-register.json",
+      "--legacy-api-tables",
+      "--prose-api-links"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.8",
+    "provenance": "data/patch-api/sources/5.4.8-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.4.8",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.4.8-api-changes.wikitext",
+      "1736772",
+      "/tmp/p401-independent/5.4.8-replayed-register.json",
+      "--combat-restriction-bullets"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.0",
+    "provenance": "data/patch-api/sources/5.5.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.5.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.5.0-api-changes.wikitext",
+      "6303391",
+      "/tmp/p401-independent/5.5.0-replayed-register.json",
+      "--client-line",
+      "mists-classic"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.1",
+    "provenance": "data/patch-api/sources/5.5.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.5.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.5.1-api-changes.wikitext",
+      "6778077",
+      "/tmp/p401-independent/5.5.1-replayed-register.json",
+      "--client-line",
+      "mists-classic"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.2",
+    "provenance": "data/patch-api/sources/5.5.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.5.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.5.2-api-changes.wikitext",
+      "6778080",
+      "/tmp/p401-independent/5.5.2-replayed-register.json",
+      "--client-line",
+      "mists-classic"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.3",
+    "provenance": "data/patch-api/sources/5.5.3-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.5.3",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.5.3-api-changes.wikitext",
+      "6778082",
+      "/tmp/p401-independent/5.5.3-replayed-register.json",
+      "--client-line",
+      "mists-classic"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.4",
+    "provenance": "data/patch-api/sources/5.5.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "5.5.4",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/5.5.4-api-changes.wikitext",
+      "6778083",
+      "/tmp/p401-independent/5.5.4-replayed-register.json",
+      "--client-line",
+      "mists-classic"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "6.0.1",
+    "provenance": "data/patch-api/sources/6.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "6.0.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/6.0.1-api-changes.wikitext",
+      "31159",
+      "/tmp/p401-independent/6.0.1-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "6.0.2",
+    "provenance": "data/patch-api/sources/6.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "6.0.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/6.0.2-api-changes.wikitext",
+      "5363123",
+      "/tmp/p401-independent/6.0.2-replayed-register.json",
+      "--warlords-prepatch",
+      "--warlords-diff",
+      "data/patch-api/sources/6.0.2-api-changes.diff.wikitext"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "6.1.0",
+    "provenance": "data/patch-api/sources/6.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "6.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/6.1.0-api-changes.wikitext",
+      "1216027",
+      "/tmp/p401-independent/6.1.0-replayed-register.json",
+      "--colon-api-bullets",
+      "--prose-api-links"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "6.2.0",
+    "provenance": "data/patch-api/sources/6.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "6.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/6.2.0-api-changes.wikitext",
+      "1460518",
+      "/tmp/p401-independent/6.2.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "6.2.2",
+    "provenance": "data/patch-api/sources/6.2.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "6.2.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/6.2.2-api-changes.wikitext",
+      "6209268",
+      "/tmp/p401-independent/6.2.2-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "6.2.4",
+    "provenance": "data/patch-api/sources/6.2.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "6.2.4",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/6.2.4-api-changes.wikitext",
+      "2072181",
+      "/tmp/p401-independent/6.2.4-replayed-register.json",
+      "--indented-api-lists"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "7.0.1",
+    "provenance": "data/patch-api/sources/7.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "7.0.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/7.0.1-api-changes.wikitext",
+      "3241525",
+      "/tmp/p401-independent/7.0.1-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "7.0.3",
+    "provenance": "data/patch-api/sources/7.0.3-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "7.0.3",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/7.0.3-api-changes.wikitext",
+      "5295335",
+      "/tmp/p401-independent/7.0.3-replayed-register.json",
+      "--legion-prepatch"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "7.1.0",
+    "provenance": "data/patch-api/sources/7.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "7.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/7.1.0-api-changes.wikitext",
+      "3742660",
+      "/tmp/p401-independent/7.1.0-replayed-register.json",
+      "--top-level-api-bullets",
+      "--legacy-widget-cvar-bullets"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "7.2.0",
+    "provenance": "data/patch-api/sources/7.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "7.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/7.2.0-api-changes.wikitext",
+      "6767100",
+      "/tmp/p401-independent/7.2.0-replayed-register.json",
+      "--legacy-widget-summaries",
+      "--prose-namespace-migrations"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "7.2.5",
+    "provenance": "data/patch-api/sources/7.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "7.2.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/7.2.5-api-changes.wikitext",
+      "4311256",
+      "/tmp/p401-independent/7.2.5-replayed-register.json",
+      "--top-level-api-bullets"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "7.3.0",
+    "provenance": "data/patch-api/sources/7.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "7.3.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/7.3.0-api-changes.wikitext",
+      "5335723",
+      "/tmp/p401-independent/7.3.0-replayed-register.json",
+      "--legacy-summary-tables"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "7.3.2",
+    "provenance": "data/patch-api/sources/7.3.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "7.3.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/7.3.2-api-changes.wikitext",
+      "6200179",
+      "/tmp/p401-independent/7.3.2-replayed-register.json",
+      "--prose-api-links"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "8.0.1",
+    "provenance": "data/patch-api/sources/8.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "8.0.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/8.0.1-api-changes.wikitext",
+      "1463362",
+      "/tmp/p401-independent/8.0.1-replayed-register.json",
+      "--bfa-prepatch"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "8.1.0",
+    "provenance": "data/patch-api/sources/8.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "8.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/8.1.0-api-changes.wikitext",
+      "4462737",
+      "/tmp/p401-independent/8.1.0-replayed-register.json",
+      "--legacy-api-bullets",
+      "--legacy-api-renames"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "8.1.5",
+    "provenance": "data/patch-api/sources/8.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "8.1.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/8.1.5-api-changes.wikitext",
+      "3789732",
+      "/tmp/p401-independent/8.1.5-replayed-register.json",
+      "--legacy-api-bullets"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "8.2.0",
+    "provenance": "data/patch-api/sources/8.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "8.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/8.2.0-api-changes.wikitext",
+      "5142162",
+      "/tmp/p401-independent/8.2.0-replayed-register.json",
+      "--legacy-api-tables"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "8.2.5",
+    "provenance": "data/patch-api/sources/8.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "8.2.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/8.2.5-api-changes.wikitext",
+      "6471405",
+      "/tmp/p401-independent/8.2.5-replayed-register.json",
+      "--legacy-inventory-labels"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "8.3.0",
+    "provenance": "data/patch-api/sources/8.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "8.3.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/8.3.0-api-changes.wikitext",
+      "6471393",
+      "/tmp/p401-independent/8.3.0-replayed-register.json",
+      "--legacy-column-headers",
+      "--diff-api-additions"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "8.3.7",
+    "provenance": "data/patch-api/sources/8.3.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "8.3.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/8.3.7-api-changes.wikitext",
+      "1572710",
+      "/tmp/p401-independent/8.3.7-replayed-register.json",
+      "--simple-api-list"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.0.1",
+    "provenance": "data/patch-api/sources/9.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.0.1",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.0.1-api-changes.wikitext",
+      "6471353",
+      "/tmp/p401-independent/9.0.1-replayed-register.json",
+      "--skip-plain-scripts-label"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.0.2",
+    "provenance": "data/patch-api/sources/9.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.0.2",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.0.2-api-changes.wikitext",
+      "659986",
+      "/tmp/p401-independent/9.0.2-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.0.5",
+    "provenance": "data/patch-api/sources/9.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.0.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.0.5-api-changes.wikitext",
+      "4298844",
+      "/tmp/p401-independent/9.0.5-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.1.0",
+    "provenance": "data/patch-api/sources/9.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.1.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.1.0-api-changes.wikitext",
+      "167980",
+      "/tmp/p401-independent/9.1.0-replayed-register.json",
+      "--expand-shared-changes",
+      "--skip-plain-scripts-label"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.1.5",
+    "provenance": "data/patch-api/sources/9.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.1.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.1.5-api-changes.wikitext",
+      "5920444",
+      "/tmp/p401-independent/9.1.5-replayed-register.json",
+      "--expand-shared-changes",
+      "--capture-span-defaults"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.2.0",
+    "provenance": "data/patch-api/sources/9.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.2.0",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.2.0-api-changes.wikitext",
+      "4788278",
+      "/tmp/p401-independent/9.2.0-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.2.5",
+    "provenance": "data/patch-api/sources/9.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.2.5",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.2.5-api-changes.wikitext",
+      "2301036",
+      "/tmp/p401-independent/9.2.5-replayed-register.json",
+      "--expand-shared-changes",
+      "--separate-inline-structures",
+      "--capture-span-defaults"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "register",
+    "patch": "9.2.7",
+    "provenance": "data/patch-api/sources/9.2.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/gen_patch_wikitext_register.py",
+      "9.2.7",
+      "/tmp/p401-independent/replay-root/data/patch-api/sources/9.2.7-api-changes.wikitext",
+      "5227425",
+      "/tmp/p401-independent/9.2.7-replayed-register.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.0",
+    "provenance": "data/patch-api/sources/10.0.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.0.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.0\", \"rows\": 278, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 263}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.2",
+    "provenance": "data/patch-api/sources/10.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.0.2",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.2\", \"rows\": 163, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 152}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.5",
+    "provenance": "data/patch-api/sources/10.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.0.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.5\", \"rows\": 67, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 60}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.7",
+    "provenance": "data/patch-api/sources/10.0.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.0.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.7\", \"rows\": 2214, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 2203}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.1.0",
+    "provenance": "data/patch-api/sources/10.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.1.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.1.0\", \"rows\": 273, \"statuses\": {\"metadata-only\": 12, \"audit-pending\": 261}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "10.1.5",
+    "provenance": "data/patch-api/sources/10.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.1.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.1.5\", \"rows\": 98, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 89}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.1.7",
+    "provenance": "data/patch-api/sources/10.1.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.1.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.1.7\", \"rows\": 53, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 43}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.0",
+    "provenance": "data/patch-api/sources/10.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.2.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.0\", \"rows\": 134, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 119}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.5",
+    "provenance": "data/patch-api/sources/10.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.2.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.5\", \"rows\": 352, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 335}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.6",
+    "provenance": "data/patch-api/sources/10.2.6-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.2.6",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.6\", \"rows\": 138, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 121}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.7",
+    "provenance": "data/patch-api/sources/10.2.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "10.2.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.7\", \"rows\": 83, \"statuses\": {\"metadata-only\": 12, \"audit-pending\": 71}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.0",
+    "provenance": "data/patch-api/sources/11.0.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.0.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.0\", \"rows\": 347, \"statuses\": {\"metadata-only\": 19, \"audit-pending\": 328}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.2",
+    "provenance": "data/patch-api/sources/11.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.0.2",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.2\", \"rows\": 229, \"statuses\": {\"metadata-only\": 22, \"audit-pending\": 207}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.5",
+    "provenance": "data/patch-api/sources/11.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.0.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.5\", \"rows\": 34, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 24}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.7",
+    "provenance": "data/patch-api/sources/11.0.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.0.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.7\", \"rows\": 83, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 69}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.1.0",
+    "provenance": "data/patch-api/sources/11.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.1.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.0\", \"rows\": 100, \"statuses\": {\"metadata-only\": 13, \"audit-pending\": 87}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.1.5",
+    "provenance": "data/patch-api/sources/11.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.1.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.5\", \"rows\": 99, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 85}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.1.7",
+    "provenance": "data/patch-api/sources/11.1.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.1.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.7\", \"rows\": 27, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 16}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.2.0",
+    "provenance": "data/patch-api/sources/11.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.2.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.0\", \"rows\": 82, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 65}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.2.5",
+    "provenance": "data/patch-api/sources/11.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.2.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.5\", \"rows\": 73, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 58}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.2.7",
+    "provenance": "data/patch-api/sources/11.2.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.2.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.7\", \"rows\": 19, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 10}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.0",
+    "provenance": "data/patch-api/sources/12.0.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "12.0.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.0\", \"rows\": 143, \"statuses\": {\"metadata-only\": 31, \"audit-pending\": 112}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.1",
+    "provenance": "data/patch-api/sources/12.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "12.0.1",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.1\", \"rows\": 252, \"statuses\": {\"metadata-only\": 51, \"audit-pending\": 201}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.5",
+    "provenance": "data/patch-api/sources/12.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "12.0.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.5\", \"rows\": 271, \"statuses\": {\"metadata-only\": 61, \"audit-pending\": 210}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.7",
+    "provenance": "data/patch-api/sources/12.0.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "12.0.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.7\", \"rows\": 89, \"statuses\": {\"metadata-only\": 27, \"audit-pending\": 62}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "12.1.0",
+    "provenance": "data/patch-api/sources/12.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "12.1.0",
+      "--text-only"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py\", line 455, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py\", line 396, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,\n                        normalize_inventory_headings=args.normalize_inventory_headings,\n    ...<10 lines>...\n                        mists_source_markup=args.mists_source_markup,\n                        cataclysm_labeled_inventory=args.cataclysm_labeled_inventory)\n  File \"/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py\", line 247, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n",
+    "output_exists": false,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "4.0.1",
+    "provenance": "data/patch-api/sources/4.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.0.1",
+      "--text-only",
+      "--cataclysm-labeled-inventory"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.0.1\", \"rows\": 8, \"statuses\": {\"metadata-only\": 2, \"audit-pending\": 6}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.1.0",
+    "provenance": "data/patch-api/sources/4.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.1.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.1.0\", \"rows\": 86, \"statuses\": {\"metadata-only\": 4, \"audit-pending\": 82}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.2.0",
+    "provenance": "data/patch-api/sources/4.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.2.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.2.0\", \"rows\": 1, \"statuses\": {\"metadata-only\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.3.0",
+    "provenance": "data/patch-api/sources/4.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.3.0",
+      "--text-only",
+      "--legacy-api-tables"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.3.0\", \"rows\": 1, \"statuses\": {\"metadata-only\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.3.4",
+    "provenance": "data/patch-api/sources/4.3.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.3.4",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.3.4\", \"rows\": 1, \"statuses\": {\"metadata-only\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.4.0",
+    "provenance": "data/patch-api/sources/4.4.0-page-coverage.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.4.0",
+      "--text-only",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.4.0\", \"rows\": 12, \"statuses\": {\"metadata-only\": 6, \"audit-pending\": 6}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.4.1",
+    "provenance": "data/patch-api/sources/4.4.1-page-coverage.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.4.1",
+      "--text-only",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.4.1\", \"rows\": 5, \"statuses\": {\"metadata-only\": 5}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.4.2",
+    "provenance": "data/patch-api/sources/4.4.2-page-coverage.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "4.4.2",
+      "--text-only",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"4.4.2\", \"rows\": 6, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.0.1",
+    "provenance": "data/patch-api/sources/5.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.0.1",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.0.1\", \"rows\": 1, \"statuses\": {\"metadata-only\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.0.4",
+    "provenance": "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.0.4",
+      "--text-only",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.0.4\", \"rows\": 73, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 63}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.1.0",
+    "provenance": "data/patch-api/sources/5.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.1.0",
+      "--text-only",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.1.0\", \"rows\": 21, \"statuses\": {\"metadata-only\": 3, \"audit-pending\": 18}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.2.0",
+    "provenance": "data/patch-api/sources/5.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.2.0",
+      "--text-only",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.2.0\", \"rows\": 23, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 18}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.3.0",
+    "provenance": "data/patch-api/sources/5.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.3.0",
+      "--text-only",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.3.0\", \"rows\": 11, \"statuses\": {\"metadata-only\": 4, \"audit-pending\": 7}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.0",
+    "provenance": "data/patch-api/sources/5.4.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.4.0",
+      "--text-only",
+      "--retain-patch-diff-reference",
+      "--mists-source-markup"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.4.0\", \"rows\": 30, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 22}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.1",
+    "provenance": "data/patch-api/sources/5.4.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.4.1",
+      "--text-only",
+      "--mists-automated-diff",
+      "--lowercase-reflist"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.4.1\", \"rows\": 10, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 3}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.2",
+    "provenance": "data/patch-api/sources/5.4.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.4.2",
+      "--text-only",
+      "--mists-automated-diff"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.4.2\", \"rows\": 17, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 9}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.7",
+    "provenance": "data/patch-api/sources/5.4.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.4.7",
+      "--text-only",
+      "--legacy-api-tables"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.4.7\", \"rows\": 8, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 3}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.8",
+    "provenance": "data/patch-api/sources/5.4.8-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.4.8",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.4.8\", \"rows\": 32, \"statuses\": {\"metadata-only\": 2, \"audit-pending\": 30}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.0",
+    "provenance": "data/patch-api/sources/5.5.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.5.0",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.5.0\", \"rows\": 6, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.1",
+    "provenance": "data/patch-api/sources/5.5.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.5.1",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.5.1\", \"rows\": 4, \"statuses\": {\"metadata-only\": 4}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.2",
+    "provenance": "data/patch-api/sources/5.5.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.5.2",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.5.2\", \"rows\": 4, \"statuses\": {\"metadata-only\": 4}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.3",
+    "provenance": "data/patch-api/sources/5.5.3-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.5.3",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.5.3\", \"rows\": 4, \"statuses\": {\"metadata-only\": 4}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.4",
+    "provenance": "data/patch-api/sources/5.5.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "5.5.4",
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"5.5.4\", \"rows\": 4, \"statuses\": {\"metadata-only\": 4}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.0.1",
+    "provenance": "data/patch-api/sources/6.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "6.0.1",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"6.0.1\", \"rows\": 1, \"statuses\": {\"metadata-only\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.0.2",
+    "provenance": "data/patch-api/sources/6.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "6.0.2",
+      "--text-only",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"6.0.2\", \"rows\": 100, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 95}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.1.0",
+    "provenance": "data/patch-api/sources/6.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "6.1.0",
+      "--text-only",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"6.1.0\", \"rows\": 14, \"statuses\": {\"metadata-only\": 4, \"audit-pending\": 10}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.2.0",
+    "provenance": "data/patch-api/sources/6.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "6.2.0",
+      "--text-only",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"6.2.0\", \"rows\": 11, \"statuses\": {\"metadata-only\": 4, \"audit-pending\": 7}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.2.2",
+    "provenance": "data/patch-api/sources/6.2.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "6.2.2",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"6.2.2\", \"rows\": 1, \"statuses\": {\"metadata-only\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.2.4",
+    "provenance": "data/patch-api/sources/6.2.4-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "6.2.4",
+      "--text-only",
+      "--preserve-examples",
+      "--retain-patch-diff-reference"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"6.2.4\", \"rows\": 46, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 41}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.0.1",
+    "provenance": "data/patch-api/sources/7.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "7.0.1",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"7.0.1\", \"rows\": 1, \"statuses\": {\"metadata-only\": 1}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.0.3",
+    "provenance": "data/patch-api/sources/7.0.3-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "7.0.3",
+      "--text-only",
+      "--legion-prepatch"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"7.0.3\", \"rows\": 44, \"statuses\": {\"metadata-only\": 4, \"audit-pending\": 40}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.1.0",
+    "provenance": "data/patch-api/sources/7.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "7.1.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"7.1.0\", \"rows\": 21, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 16}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.2.0",
+    "provenance": "data/patch-api/sources/7.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "7.2.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"7.2.0\", \"rows\": 12, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 7}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.2.5",
+    "provenance": "data/patch-api/sources/7.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "7.2.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"7.2.5\", \"rows\": 12, \"statuses\": {\"metadata-only\": 3, \"audit-pending\": 9}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.3.0",
+    "provenance": "data/patch-api/sources/7.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "7.3.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"7.3.0\", \"rows\": 8, \"statuses\": {\"metadata-only\": 3, \"audit-pending\": 5}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.3.2",
+    "provenance": "data/patch-api/sources/7.3.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "7.3.2",
+      "--text-only",
+      "--retain-reference-notes"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"7.3.2\", \"rows\": 5, \"statuses\": {\"metadata-only\": 3, \"audit-pending\": 2}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.0.1",
+    "provenance": "data/patch-api/sources/8.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.0.1",
+      "--text-only",
+      "--bfa-prepatch"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"8.0.1\", \"rows\": 26, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 19}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.1.0",
+    "provenance": "data/patch-api/sources/8.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.1.0",
+      "--text-only",
+      "--legacy-api-bullets",
+      "--legacy-cvar-tables",
+      "--retain-reference-notes"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"8.1.0\", \"rows\": 28, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 17}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.1.5",
+    "provenance": "data/patch-api/sources/8.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.1.5",
+      "--text-only",
+      "--legacy-api-bullets"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"8.1.5\", \"rows\": 19, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 11}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.2.0",
+    "provenance": "data/patch-api/sources/8.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.2.0",
+      "--text-only",
+      "--legacy-api-tables"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"8.2.0\", \"rows\": 24, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 19}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.2.5",
+    "provenance": "data/patch-api/sources/8.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.2.5",
+      "--text-only",
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"8.2.5\", \"rows\": 14, \"statuses\": {\"metadata-only\": 6, \"audit-pending\": 8}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.3.0",
+    "provenance": "data/patch-api/sources/8.3.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.3.0",
+      "--text-only",
+      "--preserve-examples",
+      "--normalize-inventory-headings",
+      "--retain-reference-notes"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"8.3.0\", \"rows\": 16, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 7}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.3.7",
+    "provenance": "data/patch-api/sources/8.3.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.3.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"8.3.7\", \"rows\": 8, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 3}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.0.1",
+    "provenance": "data/patch-api/sources/9.0.1-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.0.1",
+      "--text-only",
+      "--normalize-inventory-headings",
+      "--preserve-examples"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.0.1\", \"rows\": 135, \"statuses\": {\"metadata-only\": 13, \"audit-pending\": 122}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.0.2",
+    "provenance": "data/patch-api/sources/9.0.2-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.0.2",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.0.2\", \"rows\": 11, \"statuses\": {\"metadata-only\": 6, \"audit-pending\": 5}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.0.5",
+    "provenance": "data/patch-api/sources/9.0.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.0.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.0.5\", \"rows\": 4, \"statuses\": {\"metadata-only\": 4}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.1.0",
+    "provenance": "data/patch-api/sources/9.1.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.1.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.1.0\", \"rows\": 12, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 5}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.1.5",
+    "provenance": "data/patch-api/sources/9.1.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.1.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.1.5\", \"rows\": 18, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 11}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.2.0",
+    "provenance": "data/patch-api/sources/9.2.0-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.2.0",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.0\", \"rows\": 14, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 7}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.2.5",
+    "provenance": "data/patch-api/sources/9.2.5-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.2.5",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.5\", \"rows\": 131, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 121}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": false
+  },
+  {
+    "kind": "extract",
+    "patch": "9.2.7",
+    "provenance": "data/patch-api/sources/9.2.7-api-changes.provenance.json",
+    "argv": [
+      "python3",
+      "-B",
+      "/tmp/p401-independent/replay-root/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "9.2.7",
+      "--text-only"
+    ],
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.7\", \"rows\": 23, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 15}}\n",
+    "stderr": "",
+    "output_exists": true,
+    "byte_match": true
+  }
+]

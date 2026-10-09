@@ -1,0 +1,802 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "10.0.5",
+  "source": {
+    "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+    "revid": 742761,
+    "sha256": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 49,
+      "parsed_count": 49
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 17,
+      "parsed_count": 17
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 9,
+      "parsed_count": 9
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_CraftingOrders.GetNumFavoriteCustomerOptions-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.GetNumFavoriteCustomerOptions",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_CraftingOrders.GetPersonalOrdersInfo-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CraftingOrders.GetPersonalOrdersInfo",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-C_Mail.SetOpeningAll-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Mail.SetOpeningAll",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.AddTrackedPerksActivity-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.AddTrackedPerksActivity",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.ClearPerksActivitiesPendingCompletion-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.ClearPerksActivitiesPendingCompletion",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.GetAllPerksActivityTags-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.GetAllPerksActivityTags",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.GetPerksActivitiesInfo-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.GetPerksActivitiesInfo",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.GetPerksActivitiesPendingCompletion-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.GetPerksActivitiesPendingCompletion",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.GetPerksActivityChatLink-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.GetPerksActivityChatLink",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.GetPerksActivityInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.GetPerksActivityInfo",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.GetTrackedPerksActivities-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.GetTrackedPerksActivities",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_PerksActivities.RemoveTrackedPerksActivity-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksActivities.RemoveTrackedPerksActivity",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.ClearFrozenPerksVendorItem-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.ClearFrozenPerksVendorItem",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.CloseInteraction-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.CloseInteraction",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetAvailableCategoryIDs-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetAvailableCategoryIDs",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetAvailableVendorItemIDs-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetAvailableVendorItemIDs",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetCategoryInfo-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetCategoryInfo",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetCurrencyAmount-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetCurrencyAmount",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetDraggedPerksVendorItem-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetDraggedPerksVendorItem",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetFrozenPerksVendorItemInfo-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetFrozenPerksVendorItemInfo",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetPendingChestRewards-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetPendingChestRewards",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetPerksProgramItemDisplayInfo-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetPerksProgramItemDisplayInfo",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetTimeRemaining-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetTimeRemaining",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetVendorItemInfoRefundTimeLeft",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.GetVendorItemInfo-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.GetVendorItemInfo",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.ItemSelectedTelemetry-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.ItemSelectedTelemetry",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.PickupPerksVendorItem-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.PickupPerksVendorItem",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.RequestPendingChestRewards-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.RequestPendingChestRewards",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.RequestPurchase-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.RequestPurchase",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.RequestRefund-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.RequestRefund",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.ResetHeldItemDragAndDrop-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.ResetHeldItemDragAndDrop",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_PerksProgram.SetFrozenPerksVendorItem-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PerksProgram.SetFrozenPerksVendorItem",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.CanUseItem-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.CanUseItem",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetDisplayID-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.GetDisplayID",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetGlidingInfo-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.GetGlidingInfo",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.GetPlayerCharacterData",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsTradingPostAvailable-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsTradingPostAvailable",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsTravelersLogAvailable-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsTravelersLogAvailable",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_PvP.ArePvpTalentsUnlocked-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.ArePvpTalentsUnlocked",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetPVPActiveRatedMatchDeserterPenalty",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetPvpTalentsUnlockedLevel-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetPvpTalentsUnlockedLevel",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.IsInRatedMatchWithDeserterPenalty",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRemainingRecasts-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRemainingRecasts",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeFirstCraft",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_Traits.GenerateInspectImportString-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.GenerateInspectImportString",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_Traits.ResetTreeByCurrency-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.ResetTreeByCurrency",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-IsUsingGamepad-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsUsingGamepad",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-IsUsingMouse-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsUsingMouse",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-BNSendSoR-71",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNSendSoR",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ContinueRecast-72",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.ContinueRecast",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-73",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.GetRecipeRepeatCount",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.HasRecipesTracked-74",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TradeSkillUI.HasRecipesTracked",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetCurrentCharacterData-77",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_BarberShop.GetCurrentCharacterData",
+      "annotation": "# ret 1: characterData, Type: BarberShopCharacterData -> PlayerInfoCharacterData",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_ClassTalents.LoadConfig-79",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ClassTalents.LoadConfig",
+      "annotation": "+ ret 2: changeError\n+ ret 3: newLearnedNodeIDs",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_EditMode.OnLayoutAdded-82",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_EditMode.OnLayoutAdded",
+      "annotation": "+ arg 2: activateNewLayout\n+ arg 3: isLayoutImported",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_ModelInfo.GetModelSceneInfoByID-85",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ModelInfo.GetModelSceneInfoByID",
+      "annotation": "+ ret 4: flags",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeOutputItemData-87",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TradeSkillUI.GetRecipeOutputItemData",
+      "annotation": "+ arg 5: recraftOrderID",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipesTracked-89",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TradeSkillUI.GetRecipesTracked",
+      "annotation": "+ arg 1: isRecraft",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeTracked-91",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TradeSkillUI.IsRecipeTracked",
+      "annotation": "+ arg 2: isRecraft",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeTracked-93",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TradeSkillUI.SetRecipeTracked",
+      "annotation": "+ arg 3: isRecraft",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-events-CHEST_REWARDS_UPDATED_FROM_SERVER-106",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHEST_REWARDS_UPDATED_FROM_SERVER",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_UNEXPECTED_ERROR-107",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_UNEXPECTED_ERROR",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_UPDATE_PERSONAL_ORDER_COUNTS-108",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_UPDATE_PERSONAL_ORDER_COUNTS",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-events-PERKS_ACTIVITIES_TRACKED_UPDATED-109",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_ACTIVITIES_TRACKED_UPDATED",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-events-PERKS_ACTIVITIES_UPDATED-110",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_ACTIVITIES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-events-PERKS_ACTIVITY_COMPLETED-111",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_ACTIVITY_COMPLETED",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_CLOSE-112",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_CLOSE",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_CURRENCY_AWARDED-113",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_CURRENCY_AWARDED",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_CURRENCY_REFRESH-114",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_CURRENCY_REFRESH",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_DATA_REFRESH-115",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_DATA_REFRESH",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_DATA_SPECIFIC_ITEM_REFRESH-116",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_DATA_SPECIFIC_ITEM_REFRESH",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_DISABLED-117",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_DISABLED",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_OPEN-118",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_OPEN",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_PURCHASE_SUCCESS-119",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_PURCHASE_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_REFUND_SUCCESS-120",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_REFUND_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-events-PERKS_PROGRAM_SET_FROZEN_ITEM-121",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PERKS_PROGRAM_SET_FROZEN_ITEM",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-events-PLAYER_CAN_GLIDE_CHANGED-122",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_CAN_GLIDE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-events-WEAR_EQUIPMENT_SET-125",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WEAR_EQUIPMENT_SET",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-events-AZERITE_ITEM_POWER_LEVEL_CHANGED-128",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "AZERITE_ITEM_POWER_LEVEL_CHANGED",
+      "annotation": "+ 5: azeriteItemID",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-events-EDIT_MODE_LAYOUTS_UPDATED-130",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "EDIT_MODE_LAYOUTS_UPDATED",
+      "annotation": "+ 2: reconcileLayouts\n- 2: fromServer",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-cvars-DisableAdvancedFlyingVelocityVFX-141",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DisableAdvancedFlyingVelocityVFX",
+      "annotation": "",
+      "wikitext_line": 141,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-motionSicknessFocalCircle-142",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "motionSicknessFocalCircle",
+      "annotation": "",
+      "wikitext_line": 142,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-motionSicknessLandscapeDarkening-143",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "motionSicknessLandscapeDarkening",
+      "annotation": "",
+      "wikitext_line": 143,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-perksActivitiesCurrentMonth-144",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "perksActivitiesCurrentMonth",
+      "annotation": "",
+      "wikitext_line": 144,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-perksActivitiesLastPoints-145",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "perksActivitiesLastPoints",
+      "annotation": "",
+      "wikitext_line": 145,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-perksActivitiesPendingCompletion-146",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "perksActivitiesPendingCompletion",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-cvars-professionsAllocateBestQualityReagentsCustomer-147",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "professionsAllocateBestQualityReagentsCustomer",
+      "annotation": "",
+      "wikitext_line": 147,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-trackedPerksActivities-148",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "trackedPerksActivities",
+      "annotation": "",
+      "wikitext_line": 148
+    },
+    {
+      "id": "wt-cvars-trackedProfessionRecraftRecipes-149",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "trackedProfessionRecraftRecipes",
+      "annotation": "",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-cvars-autoOpenLootHistory-152",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "autoOpenLootHistory",
+      "annotation": "",
+      "wikitext_line": 152,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-nameplateShowOnlyNames-153",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "nameplateShowOnlyNames",
+      "annotation": "",
+      "wikitext_line": 153,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-TargetPriorityValueBank-154",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "TargetPriorityValueBank",
+      "annotation": "",
+      "wikitext_line": 154,
+      "page_default": "1"
+    }
+  ]
+}

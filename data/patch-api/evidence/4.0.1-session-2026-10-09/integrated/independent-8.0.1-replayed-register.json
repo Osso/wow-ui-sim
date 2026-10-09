@@ -1,0 +1,2164 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "8.0.1",
+  "source": {
+    "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+    "revid": 1463362,
+    "sha256": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ChatInfo-7",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo",
+      "annotation": "",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.CanReportPlayer-8",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.CanReportPlayer",
+      "annotation": "",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.IsAddonMessagePrefixRegistered-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.IsAddonMessagePrefixRegistered",
+      "annotation": "",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.IsPartyChannelType-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.IsPartyChannelType",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetChannelRosterInfo-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetChannelRosterInfo",
+      "annotation": "",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetNumActiveChannels-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetNumActiveChannels",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetRegisteredAddonMessagePrefixes-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetRegisteredAddonMessagePrefixes",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.RegisterAddonMessagePrefix",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.ReportPlayer-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.ReportPlayer",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.SendAddonMessage-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.SendAddonMessage",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.SendAddonMessageLogged-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.SendAddonMessageLogged",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-C_Map-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-C_Map.GetAreaInfo-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetAreaInfo",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-C_Map.GetBestMapForUnit-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetBestMapForUnit",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_Map.GetBountySetIDForMap-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetBountySetIDForMap",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-C_Map.GetFallbackWorldMapID-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetFallbackWorldMapID",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapArtBackgroundAtlas-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapArtBackgroundAtlas",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapArtHelpTextPosition-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapArtHelpTextPosition",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapArtID-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapArtID",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapArtLayerTextures-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapArtLayerTextures",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapArtLayers-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapArtLayers",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapBannersForMap-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapBannersForMap",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapChildrenInfo-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapChildrenInfo",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapDisplayInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapDisplayInfo",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapGroupID-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapGroupID",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapGroupMembersInfo-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapGroupMembersInfo",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapHighlightInfoAtPosition-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapHighlightInfoAtPosition",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapInfo-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapInfo",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapInfoAtPosition-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapInfoAtPosition",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapLevels-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapLevels",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapLinksForMap-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapLinksForMap",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapPosFromWorldPos-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapPosFromWorldPos",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapRectOnMap-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapRectOnMap",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_Map.GetPlayerMapPosition-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetPlayerMapPosition",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_Map.GetWorldPosFromMapPos-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetWorldPosFromMapPos",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_Map.MapHasArt-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.MapHasArt",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_Map.RequestPreloadMap-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.RequestPreloadMap",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-GetMapContinents-55",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMapContinents",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-GetCurrentMapContinent-55",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCurrentMapContinent",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-GetCurrentMapAreaID-56",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCurrentMapAreaID",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-GetPlayerMapPosition-57",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPlayerMapPosition",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-EJ_GetCurrentInstance-58",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "EJ_GetCurrentInstance",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-events-GLYPH_ADDED-59",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_ADDED",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-events-GLYPH_REMOVED-59",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_REMOVED",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-events-GLYPH_UPDATED-59",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_UPDATED",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-FindSpellOverrideNameByName-60",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "FindSpellOverrideNameByName",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-FindBaseSpellNameByName-60",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "FindBaseSpellNameByName",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-SearchGuildRecipes-60",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SearchGuildRecipes",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-events-ACHIEVEMENT_PLAYER_NAME-65",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACHIEVEMENT_PLAYER_NAME",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-events-AREA_POIS_UPDATED-66",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AREA_POIS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-events-AVATAR_LIST_UPDATED-67",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AVATAR_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-events-AZERITE_EMPOWERED_ITEM_LOOTED-68",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AZERITE_EMPOWERED_ITEM_LOOTED",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-events-AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED-69",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-events-AZERITE_ITEM_EXPERIENCE_CHANGED-70",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AZERITE_ITEM_EXPERIENCE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-events-AZERITE_ITEM_POWER_LEVEL_CHANGED-71",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AZERITE_ITEM_POWER_LEVEL_CHANGED",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-events-CALENDAR_UPDATE_ERROR_WITH_COUNT-72",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CALENDAR_UPDATE_ERROR_WITH_COUNT",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-events-CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME-73",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-events-CAPTUREFRAMES_FAILED-74",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CAPTUREFRAMES_FAILED",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-events-CAPTUREFRAMES_SUCCEEDED-75",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CAPTUREFRAMES_SUCCEEDED",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-events-CEMETERY_PREFERENCE_UPDATED-76",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CEMETERY_PREFERENCE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-events-CHALLENGE_MODE_MEMBER_INFO_UPDATED-77",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHALLENGE_MODE_MEMBER_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-events-CHANNEL_LEFT-78",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHANNEL_LEFT",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-events-CHAT_MSG_ADDON_LOGGED-79",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_ADDON_LOGGED",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN-80",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-events-CHAT_MSG_COMMUNITIES_CHANNEL-81",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_COMMUNITIES_CHANNEL",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-events-CLASS_TRIAL_TIMER_START-82",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLASS_TRIAL_TIMER_START",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-events-CLASS_TRIAL_UPGRADE_COMPLETE-83",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLASS_TRIAL_UPGRADE_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-events-CLUB_ADDED-84",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_ADDED",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-events-CLUB_ERROR-85",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_ERROR",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-events-CLUB_INVITATIONS_RECEIVED_FOR_CLUB-86",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_INVITATIONS_RECEIVED_FOR_CLUB",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-CLUB_INVITATION_ADDED_FOR_SELF-87",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_INVITATION_ADDED_FOR_SELF",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-events-CLUB_INVITATION_REMOVED_FOR_SELF-88",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_INVITATION_REMOVED_FOR_SELF",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_ADDED-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_ADDED",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_PRESENCE_UPDATED-90",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_PRESENCE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_REMOVED-91",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_REMOVED",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_ROLE_UPDATED-92",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_ROLE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_UPDATED-93",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_UPDATED",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-events-CLUB_MESSAGE_ADDED-94",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MESSAGE_ADDED",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-events-CLUB_MESSAGE_HISTORY_RECEIVED-95",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MESSAGE_HISTORY_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-events-CLUB_MESSAGE_UPDATED-96",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MESSAGE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-events-CLUB_REMOVED-97",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_REMOVED",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-events-CLUB_REMOVED_MESSAGE-98",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_REMOVED_MESSAGE",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-events-CLUB_SELF_MEMBER_ROLE_UPDATED-99",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_SELF_MEMBER_ROLE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-events-CLUB_STREAMS_LOADED-100",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAMS_LOADED",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_ADDED-101",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_ADDED",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_REMOVED-102",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_REMOVED",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_SUBSCRIBED-103",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_SUBSCRIBED",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_UNSUBSCRIBED-104",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_UNSUBSCRIBED",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_UPDATED-105",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_UPDATED",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-events-CLUB_TICKETS_RECEIVED-106",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_TICKETS_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-events-CLUB_TICKET_CREATED-107",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_TICKET_CREATED",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-events-CLUB_TICKET_RECEIVED-108",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_TICKET_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-events-CLUB_UPDATED-109",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_UPDATED",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-events-COMMUNITIES_STREAM_CURSOR_CLEAR-110",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMUNITIES_STREAM_CURSOR_CLEAR",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-events-CONSOLE_LOG-111",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CONSOLE_LOG",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-events-CONTRIBUTION_CHANGED-112",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CONTRIBUTION_CHANGED",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-events-DYNAMIC_GOSSIP_POI_UPDATED-113",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DYNAMIC_GOSSIP_POI_UPDATED",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-events-FOG_OF_WAR_UPDATED-114",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FOG_OF_WAR_UPDATED",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-events-GDF_SIM_COMPLETE-115",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GDF_SIM_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-events-GENERIC_ERROR-116",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GENERIC_ERROR",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-events-GLUE_CONSOLE_LOG-117",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLUE_CONSOLE_LOG",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-events-GLUE_SCREENSHOT_FAILED-118",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLUE_SCREENSHOT_FAILED",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-events-GROUP_FORMED-119",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GROUP_FORMED",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-events-HIDE_SUBTITLE-120",
+      "section": "events",
+      "direction": "added",
+      "symbol": "HIDE_SUBTITLE",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-events-INITIAL_CLUBS_LOADED-121",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INITIAL_CLUBS_LOADED",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-events-INSTANCE_ENCOUNTER_ADD_TIMER-122",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_ENCOUNTER_ADD_TIMER",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-events-INSTANCE_ENCOUNTER_OBJECTIVE_COMPLETE-123",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_ENCOUNTER_OBJECTIVE_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-events-INSTANCE_ENCOUNTER_OBJECTIVE_START-124",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_ENCOUNTER_OBJECTIVE_START",
+      "annotation": "",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-events-INSTANCE_ENCOUNTER_OBJECTIVE_UPDATE-125",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_ENCOUNTER_OBJECTIVE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-events-ISLANDS_QUEUE_CLOSE-126",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ISLANDS_QUEUE_CLOSE",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-events-ISLANDS_QUEUE_OPEN-127",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ISLANDS_QUEUE_OPEN",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-events-ISLAND_AZERITE_GAIN-128",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ISLAND_AZERITE_GAIN",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-events-ISLAND_COMPLETED-129",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ISLAND_COMPLETED",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-events-ITEM_DATA_LOAD_RESULT-130",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_DATA_LOAD_RESULT",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-events-LOC_RESULT-131",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LOC_RESULT",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-events-MAP_EXPLORATION_UPDATED-132",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MAP_EXPLORATION_UPDATED",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-events-NOTIFY_PVP_AFK_RESULT-133",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NOTIFY_PVP_AFK_RESULT",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-events-OBJECT_ENTERED_AOI-134",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OBJECT_ENTERED_AOI",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-events-OBJECT_LEFT_AOI-135",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OBJECT_LEFT_AOI",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-events-PLAYER_LEVEL_CHANGED-136",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_LEVEL_CHANGED",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-events-PORTRAITS_UPDATED-137",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PORTRAITS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-events-PVP_VEHICLE_INFO_UPDATED-138",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PVP_VEHICLE_INFO_UPDATED",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-events-QUEST_CURRENCY_LOOT_RECEIVED-139",
+      "section": "events",
+      "direction": "added",
+      "symbol": "QUEST_CURRENCY_LOOT_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED-140",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_OPENED-141",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RESPEC_AZERITE_EMPOWERED_ITEM_OPENED",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-events-SCENARIO_BONUS_OBJECTIVE_COMPLETE-142",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCENARIO_BONUS_OBJECTIVE_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-events-SCENARIO_BONUS_VISIBILITY_UPDATE-143",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCENARIO_BONUS_VISIBILITY_UPDATE",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_CLOSE-144",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRAPPING_MACHINE_CLOSE",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED-145",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED",
+      "annotation": "",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_PENDING_ITEM_CHANGED-146",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRAPPING_MACHINE_PENDING_ITEM_CHANGED",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_SCRAPPING_FINISHED-147",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRAPPING_MACHINE_SCRAPPING_FINISHED",
+      "annotation": "",
+      "wikitext_line": 147
+    },
+    {
+      "id": "wt-events-SCRAPPING_MACHINE_SHOW-148",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRAPPING_MACHINE_SHOW",
+      "annotation": "",
+      "wikitext_line": 148
+    },
+    {
+      "id": "wt-events-SPELL_DATA_LOAD_RESULT-149",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SPELL_DATA_LOAD_RESULT",
+      "annotation": "",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-events-SPELL_TEXT_UPDATE-150",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SPELL_TEXT_UPDATE",
+      "annotation": "",
+      "wikitext_line": 150
+    },
+    {
+      "id": "wt-events-STREAM_VIEW_MARKER_UPDATED-151",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STREAM_VIEW_MARKER_UPDATED",
+      "annotation": "",
+      "wikitext_line": 151
+    },
+    {
+      "id": "wt-events-TOKEN_CAN_VETERAN_BUY_UPDATE-152",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TOKEN_CAN_VETERAN_BUY_UPDATE",
+      "annotation": "",
+      "wikitext_line": 152
+    },
+    {
+      "id": "wt-events-TRAINER_SERVICE_INFO_NAME_UPDATE-153",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRAINER_SERVICE_INFO_NAME_UPDATE",
+      "annotation": "",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-events-TUTORIAL_HIGHLIGHT_SPELL-154",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TUTORIAL_HIGHLIGHT_SPELL",
+      "annotation": "",
+      "wikitext_line": 154
+    },
+    {
+      "id": "wt-events-TUTORIAL_UNHIGHLIGHT_SPELL-155",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TUTORIAL_UNHIGHLIGHT_SPELL",
+      "annotation": "",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-events-UNIT_CHEAT_TOGGLE_EVENT-156",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_CHEAT_TOGGLE_EVENT",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "wt-events-UNIT_POWER_UPDATE-157",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_POWER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-events-UPDATE_ALL_UI_WIDGETS-158",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_ALL_UI_WIDGETS",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-events-UPDATE_UI_WIDGET-159",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_UI_WIDGET",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-events-VIGNETTES_UPDATED-160",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VIGNETTES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-events-VIGNETTE_MINIMAP_UPDATED-161",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VIGNETTE_MINIMAP_UPDATED",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_ACTIVE_INPUT_DEVICE_UPDATED-162",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_ACTIVE_INPUT_DEVICE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_ACTIVE_OUTPUT_DEVICE_UPDATED-163",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_ACTIVE_OUTPUT_DEVICE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_AUDIO_CAPTURE_ENERGY-164",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_AUDIO_CAPTURE_ENERGY",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_AUDIO_CAPTURE_STARTED-165",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_AUDIO_CAPTURE_STARTED",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_AUDIO_CAPTURE_STOPPED-166",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_AUDIO_CAPTURE_STOPPED",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_ACTIVATED-167",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_ACTIVATED",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_DEACTIVATED-168",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_DEACTIVATED",
+      "annotation": "",
+      "wikitext_line": 168
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_DISPLAY_NAME_CHANGED-169",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_DISPLAY_NAME_CHANGED",
+      "annotation": "",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_JOINED-170",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_JOINED",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_ACTIVE_STATE_CHANGED-171",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_ACTIVE_STATE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 171
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_ADDED-172",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_ADDED",
+      "annotation": "",
+      "wikitext_line": 172
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_ENERGY_CHANGED-173",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_ENERGY_CHANGED",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_GUID_UPDATED-174",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_GUID_UPDATED",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ALL_CHANGED-175",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ALL_CHANGED",
+      "annotation": "",
+      "wikitext_line": 175
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ME_CHANGED-176",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ME_CHANGED",
+      "annotation": "",
+      "wikitext_line": 176
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_REMOVED-177",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_REMOVED",
+      "annotation": "",
+      "wikitext_line": 177
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_SILENCED_CHANGED-178",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_SILENCED_CHANGED",
+      "annotation": "",
+      "wikitext_line": 178
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_SPEAKING_STATE_CHANGED-179",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_SPEAKING_STATE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 179
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_VOLUME_CHANGED-180",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_VOLUME_CHANGED",
+      "annotation": "",
+      "wikitext_line": 180
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MUTE_STATE_CHANGED-181",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MUTE_STATE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 181
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_PTT_CHANGED-182",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_PTT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 182
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_REMOVED-183",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_REMOVED",
+      "annotation": "",
+      "wikitext_line": 183
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_TRANSMIT_CHANGED-184",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_TRANSMIT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 184
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_VOLUME_CHANGED-185",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_VOLUME_CHANGED",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_COMMUNICATION_MODE_CHANGED-186",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_COMMUNICATION_MODE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CONNECTION_SUCCESS-187",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CONNECTION_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_DEAFENED_CHANGED-188",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_DEAFENED_CHANGED",
+      "annotation": "",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_ERROR-189",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_ERROR",
+      "annotation": "",
+      "wikitext_line": 189
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_INPUT_DEVICES_UPDATED-190",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_INPUT_DEVICES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 190
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_LOGIN-191",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_LOGIN",
+      "annotation": "",
+      "wikitext_line": 191
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_LOGOUT-192",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_LOGOUT",
+      "annotation": "",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_MUTED_CHANGED-193",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_MUTED_CHANGED",
+      "annotation": "",
+      "wikitext_line": 193
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_OUTPUT_DEVICES_UPDATED-194",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_OUTPUT_DEVICES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_PENDING_CHANNEL_JOIN_STATE-195",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_PENDING_CHANNEL_JOIN_STATE",
+      "annotation": "",
+      "wikitext_line": 195
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_PTT_BUTTON_PRESSED_STATE_CHANGED-196",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_PTT_BUTTON_PRESSED_STATE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 196
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_SILENCED_CHANGED-197",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_SILENCED_CHANGED",
+      "annotation": "",
+      "wikitext_line": 197
+    },
+    {
+      "id": "wt-events-VOID_TRANSFER_SUCCESS-198",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOID_TRANSFER_SUCCESS",
+      "annotation": "",
+      "wikitext_line": 198
+    },
+    {
+      "id": "wt-events-WARFRONT_COMPLETED-199",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WARFRONT_COMPLETED",
+      "annotation": "",
+      "wikitext_line": 199
+    },
+    {
+      "id": "wt-events-WAR_MODE_STATUS_UPDATE-200",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WAR_MODE_STATUS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 200
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_DROP_TIMER_CANCELED-204",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_DROP_TIMER_CANCELED",
+      "annotation": "",
+      "wikitext_line": 204
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_DROP_TIMER_STARTED-205",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_DROP_TIMER_STARTED",
+      "annotation": "",
+      "wikitext_line": 205
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_EJECTED-206",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_EJECTED",
+      "annotation": "",
+      "wikitext_line": 206
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_EJECT_PENDING-207",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_EJECT_PENDING",
+      "annotation": "",
+      "wikitext_line": 207
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_ENTERED-208",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_ENTERED",
+      "annotation": "",
+      "wikitext_line": 208
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_ENTRY_INVITE-209",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_ENTRY_INVITE",
+      "annotation": "",
+      "wikitext_line": 209
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_QUEUE_INVITE-210",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_QUEUE_INVITE",
+      "annotation": "",
+      "wikitext_line": 210
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE-211",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 211
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_QUEUE_STATUS_UPDATE-212",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_QUEUE_STATUS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 212
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_MGR_STATE_CHANGE-213",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BATTLEFIELD_MGR_STATE_CHANGE",
+      "annotation": "",
+      "wikitext_line": 213
+    },
+    {
+      "id": "wt-events-BN_FRIEND_INVITE_SEND_RESULT-214",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BN_FRIEND_INVITE_SEND_RESULT",
+      "annotation": "",
+      "wikitext_line": 214
+    },
+    {
+      "id": "wt-events-BN_NEW_PRESENCE-215",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BN_NEW_PRESENCE",
+      "annotation": "",
+      "wikitext_line": 215
+    },
+    {
+      "id": "wt-events-BN_REQUEST_FOF_FAILED-216",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BN_REQUEST_FOF_FAILED",
+      "annotation": "",
+      "wikitext_line": 216
+    },
+    {
+      "id": "wt-events-BN_SELF_OFFLINE-217",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BN_SELF_OFFLINE",
+      "annotation": "",
+      "wikitext_line": 217
+    },
+    {
+      "id": "wt-events-BN_SELF_ONLINE-218",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BN_SELF_ONLINE",
+      "annotation": "",
+      "wikitext_line": 218
+    },
+    {
+      "id": "wt-events-BN_SYSTEM_MESSAGE-219",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "BN_SYSTEM_MESSAGE",
+      "annotation": "",
+      "wikitext_line": 219
+    },
+    {
+      "id": "wt-events-CHALLENGE_MODE_NEW_RECORD-220",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CHALLENGE_MODE_NEW_RECORD",
+      "annotation": "",
+      "wikitext_line": 220
+    },
+    {
+      "id": "wt-events-CHANNEL_VOICE_UPDATE-221",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CHANNEL_VOICE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 221
+    },
+    {
+      "id": "wt-events-CLOSE_WORLD_MAP-222",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CLOSE_WORLD_MAP",
+      "annotation": "",
+      "wikitext_line": 222
+    },
+    {
+      "id": "wt-events-COMMENTATOR_PARTY_INFO_REQUEST-223",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COMMENTATOR_PARTY_INFO_REQUEST",
+      "annotation": "",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-events-EVENT_CLASS_TRIAL_UPGRADE_COMPLETE-224",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "EVENT_CLASS_TRIAL_UPGRADE_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 224
+    },
+    {
+      "id": "wt-events-EVENT_TUTORIAL_HIGHLIGHT_SPELL-225",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "EVENT_TUTORIAL_HIGHLIGHT_SPELL",
+      "annotation": "",
+      "wikitext_line": 225
+    },
+    {
+      "id": "wt-events-EVENT_TUTORIAL_UNHIGHLIGHT_SPELL-226",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "EVENT_TUTORIAL_UNHIGHLIGHT_SPELL",
+      "annotation": "",
+      "wikitext_line": 226
+    },
+    {
+      "id": "wt-events-GARRISON_BUILDINGS_SWAPPED-227",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GARRISON_BUILDINGS_SWAPPED",
+      "annotation": "",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-events-GLYPH_ADDED-228",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_ADDED",
+      "annotation": "",
+      "wikitext_line": 228
+    },
+    {
+      "id": "wt-events-GLYPH_DISABLED-229",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_DISABLED",
+      "annotation": "",
+      "wikitext_line": 229
+    },
+    {
+      "id": "wt-events-GLYPH_ENABLED-230",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_ENABLED",
+      "annotation": "",
+      "wikitext_line": 230
+    },
+    {
+      "id": "wt-events-GLYPH_REMOVED-231",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_REMOVED",
+      "annotation": "",
+      "wikitext_line": 231
+    },
+    {
+      "id": "wt-events-GLYPH_UPDATED-232",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLYPH_UPDATED",
+      "annotation": "",
+      "wikitext_line": 232
+    },
+    {
+      "id": "wt-events-GMRESPONSE_RECEIVED-233",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GMRESPONSE_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 233
+    },
+    {
+      "id": "wt-events-GMSURVEY_DISPLAY-234",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GMSURVEY_DISPLAY",
+      "annotation": "",
+      "wikitext_line": 234
+    },
+    {
+      "id": "wt-events-GUILD_PERK_UPDATE-235",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GUILD_PERK_UPDATE",
+      "annotation": "",
+      "wikitext_line": 235
+    },
+    {
+      "id": "wt-events-GUILD_REP_UPDATED-236",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GUILD_REP_UPDATED",
+      "annotation": "",
+      "wikitext_line": 236
+    },
+    {
+      "id": "wt-events-GUILD_XP_UPDATE-237",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GUILD_XP_UPDATE",
+      "annotation": "",
+      "wikitext_line": 237
+    },
+    {
+      "id": "wt-events-HONOR_PRESTIGE_UPDATE-238",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "HONOR_PRESTIGE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 238
+    },
+    {
+      "id": "wt-events-MAP_BAR_UPDATE-239",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "MAP_BAR_UPDATE",
+      "annotation": "",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-events-MOVIE_COMPRESSING_PROGRESS-240",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "MOVIE_COMPRESSING_PROGRESS",
+      "annotation": "",
+      "wikitext_line": 240
+    },
+    {
+      "id": "wt-events-MOVIE_RECORDING_PROGRESS-241",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "MOVIE_RECORDING_PROGRESS",
+      "annotation": "",
+      "wikitext_line": 241
+    },
+    {
+      "id": "wt-events-MOVIE_UNCOMPRESSED_MOVIE-242",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "MOVIE_UNCOMPRESSED_MOVIE",
+      "annotation": "",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-events-NEW_TITLE_EARNED-243",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "NEW_TITLE_EARNED",
+      "annotation": "",
+      "wikitext_line": 243
+    },
+    {
+      "id": "wt-events-NPC_PVPQUEUE_ANYWHERE-244",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "NPC_PVPQUEUE_ANYWHERE",
+      "annotation": "",
+      "wikitext_line": 244
+    },
+    {
+      "id": "wt-events-OLD_TITLE_LOST-245",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "OLD_TITLE_LOST",
+      "annotation": "",
+      "wikitext_line": 245
+    },
+    {
+      "id": "wt-events-PARTY_CONVERTED_TO_RAID-246",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PARTY_CONVERTED_TO_RAID",
+      "annotation": "",
+      "wikitext_line": 246
+    },
+    {
+      "id": "wt-events-PARTY_MEMBERS_CHANGED-247",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PARTY_MEMBERS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 247
+    },
+    {
+      "id": "wt-events-PETITION_VENDOR_CLOSED-248",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PETITION_VENDOR_CLOSED",
+      "annotation": "",
+      "wikitext_line": 248
+    },
+    {
+      "id": "wt-events-PETITION_VENDOR_SHOW-249",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PETITION_VENDOR_SHOW",
+      "annotation": "",
+      "wikitext_line": 249
+    },
+    {
+      "id": "wt-events-PETITION_VENDOR_UPDATE-250",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PETITION_VENDOR_UPDATE",
+      "annotation": "",
+      "wikitext_line": 250
+    },
+    {
+      "id": "wt-events-PET_BAR_HIDE-251",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PET_BAR_HIDE",
+      "annotation": "",
+      "wikitext_line": 251
+    },
+    {
+      "id": "wt-events-PET_BATTLE_TURN_STARTED-252",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PET_BATTLE_TURN_STARTED",
+      "annotation": "",
+      "wikitext_line": 252
+    },
+    {
+      "id": "wt-events-PET_RENAMEABLE-253",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PET_RENAMEABLE",
+      "annotation": "",
+      "wikitext_line": 253
+    },
+    {
+      "id": "wt-events-PLAYER_AURAS_CHANGED-254",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PLAYER_AURAS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 254
+    },
+    {
+      "id": "wt-events-PLAYER_CHARACTER_UPGRADE_TALENT_COUNT_CHANGED-255",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PLAYER_CHARACTER_UPGRADE_TALENT_COUNT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 255
+    },
+    {
+      "id": "wt-events-PRESTIGE_AND_HONOR_INVOLUNTARILY_CHANGED-256",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PRESTIGE_AND_HONOR_INVOLUNTARILY_CHANGED",
+      "annotation": "",
+      "wikitext_line": 256
+    },
+    {
+      "id": "wt-events-PREVIEW_TALENT_POINTS_CHANGED-257",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PREVIEW_TALENT_POINTS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 257
+    },
+    {
+      "id": "wt-events-PREVIEW_TALENT_PRIMARY_TREE_CHANGED-258",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PREVIEW_TALENT_PRIMARY_TREE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 258
+    },
+    {
+      "id": "wt-events-QUEST_WATCH_OBJECTIVES_CHANGED-259",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "QUEST_WATCH_OBJECTIVES_CHANGED",
+      "annotation": "",
+      "wikitext_line": 259
+    },
+    {
+      "id": "wt-events-RESTRICTED_ACCOUNT_WARNING-260",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "RESTRICTED_ACCOUNT_WARNING",
+      "annotation": "",
+      "wikitext_line": 260
+    },
+    {
+      "id": "wt-events-RUNE_TYPE_UPDATE-261",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "RUNE_TYPE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 261
+    },
+    {
+      "id": "wt-events-SCRIPT_ACHIEVEMENT_PLAYER_NAME-262",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SCRIPT_ACHIEVEMENT_PLAYER_NAME",
+      "annotation": "",
+      "wikitext_line": 262
+    },
+    {
+      "id": "wt-events-STORE_CLOSE_SIMPLE_CHECKOUT-263",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "STORE_CLOSE_SIMPLE_CHECKOUT",
+      "annotation": "",
+      "wikitext_line": 263
+    },
+    {
+      "id": "wt-events-SYNCHRONIZE_SETTINGS-264",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SYNCHRONIZE_SETTINGS",
+      "annotation": "",
+      "wikitext_line": 264
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_FILTER_UPDATE-265",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TRADE_SKILL_FILTER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 265
+    },
+    {
+      "id": "wt-events-TRANSMOG_COLLECTION_LOADED-266",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TRANSMOG_COLLECTION_LOADED",
+      "annotation": "",
+      "wikitext_line": 266
+    },
+    {
+      "id": "wt-events-UNIT_POWER-267",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UNIT_POWER",
+      "annotation": "",
+      "wikitext_line": 267
+    },
+    {
+      "id": "wt-events-UPDATE_LFG_LIST_INCREMENTAL-268",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UPDATE_LFG_LIST_INCREMENTAL",
+      "annotation": "",
+      "wikitext_line": 268
+    },
+    {
+      "id": "wt-events-UPDATE_LFG_TYPES-269",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UPDATE_LFG_TYPES",
+      "annotation": "",
+      "wikitext_line": 269
+    },
+    {
+      "id": "wt-events-UPDATE_TICKET-270",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UPDATE_TICKET",
+      "annotation": "",
+      "wikitext_line": 270
+    },
+    {
+      "id": "wt-events-UPDATE_WORLD_STATES-271",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UPDATE_WORLD_STATES",
+      "annotation": "",
+      "wikitext_line": 271
+    },
+    {
+      "id": "wt-events-VIGNETTE_ADDED-272",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VIGNETTE_ADDED",
+      "annotation": "",
+      "wikitext_line": 272
+    },
+    {
+      "id": "wt-events-VIGNETTE_REMOVED-273",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VIGNETTE_REMOVED",
+      "annotation": "",
+      "wikitext_line": 273
+    },
+    {
+      "id": "wt-events-VOICE_CHANNEL_STATUS_UPDATE-274",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_CHANNEL_STATUS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 274
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_ENABLED_UPDATE-275",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_CHAT_ENABLED_UPDATE",
+      "annotation": "",
+      "wikitext_line": 275
+    },
+    {
+      "id": "wt-events-VOICE_LEFT_SESSION-276",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_LEFT_SESSION",
+      "annotation": "",
+      "wikitext_line": 276
+    },
+    {
+      "id": "wt-events-VOICE_PLATE_START-277",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_PLATE_START",
+      "annotation": "",
+      "wikitext_line": 277
+    },
+    {
+      "id": "wt-events-VOICE_PLATE_STOP-278",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_PLATE_STOP",
+      "annotation": "",
+      "wikitext_line": 278
+    },
+    {
+      "id": "wt-events-VOICE_PUSH_TO_TALK_START-279",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_PUSH_TO_TALK_START",
+      "annotation": "",
+      "wikitext_line": 279
+    },
+    {
+      "id": "wt-events-VOICE_PUSH_TO_TALK_STOP-280",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_PUSH_TO_TALK_STOP",
+      "annotation": "",
+      "wikitext_line": 280
+    },
+    {
+      "id": "wt-events-VOICE_SELF_MUTE-281",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_SELF_MUTE",
+      "annotation": "",
+      "wikitext_line": 281
+    },
+    {
+      "id": "wt-events-VOICE_SESSIONS_UPDATE-282",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_SESSIONS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 282
+    },
+    {
+      "id": "wt-events-VOICE_START-283",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_START",
+      "annotation": "",
+      "wikitext_line": 283
+    },
+    {
+      "id": "wt-events-VOICE_STATUS_UPDATE-284",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_STATUS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 284
+    },
+    {
+      "id": "wt-events-VOICE_STOP-285",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "VOICE_STOP",
+      "annotation": "",
+      "wikitext_line": 285
+    },
+    {
+      "id": "wt-events-WEIGHTED_SPELL_UPDATED-286",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WEIGHTED_SPELL_UPDATED",
+      "annotation": "",
+      "wikitext_line": 286
+    },
+    {
+      "id": "wt-events-WORLD_MAP_UPDATE-287",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WORLD_MAP_UPDATE",
+      "annotation": "",
+      "wikitext_line": 287
+    },
+    {
+      "id": "wt-events-WORLD_STATE_UI_TIMER_UPDATE-288",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WORLD_STATE_UI_TIMER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 288
+    }
+  ]
+}

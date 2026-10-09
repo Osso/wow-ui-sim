@@ -1,0 +1,324 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "11.0.2",
+  "source": {
+    "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+    "revid": 6862982,
+    "sha256": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 17,
+      "parsed_count": 17
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 5,
+      "parsed_count": 5
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ClubFinder.IsValidSearchString-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClubFinder.IsValidSearchString",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_DelvesUI.RequestPartyEligibilityForDelveTiers-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DelvesUI.RequestPartyEligibilityForDelveTiers",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_EditMode.IsValidLayoutName-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EditMode.IsValidLayoutName",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_GameRules.GetGameRuleAsFloat-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.GetGameRuleAsFloat",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_GameRules.IsGameRuleActive-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GameRules.IsGameRuleActive",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_GuildBank.IsGuildBankEnabled-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GuildBank.IsGuildBankEnabled",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_GuildInfo.AreGuildEventsEnabled-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GuildInfo.AreGuildEventsEnabled",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_Item.CanBeRefunded-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.CanBeRefunded",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_Item.GetDelvePreviewItemLink-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetDelvePreviewItemLink",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemBindToAccountUntilEquip-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemBindToAccountUntilEquip",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_Map.GetMapArtZoneTextPosition-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.GetMapArtZoneTextPosition",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_Minimap.ClearMinimapInsetInfo-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.ClearMinimapInsetInfo",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_Minimap.SetMinimapInsetInfo-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Minimap.SetMinimapInsetInfo",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_Traits.CanEditConfig-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Traits.CanEditConfig",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.CanAccessSettings-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.CanAccessSettings",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_GameModeManager.GetFeatureSetting-53",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_GameModeManager.GetFeatureSetting",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_GameModeManager.IsFeatureEnabled-54",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_GameModeManager.IsFeatureEnabled",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.GetWeeklyRewardTextureKit-55",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_WeeklyRewards.GetWeeklyRewardTextureKit",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.DoesQuestAwardReputationWithFaction-58",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_QuestLog.DoesQuestAwardReputationWithFaction",
+      "annotation": "# arg 2: factionID -> targetFactionID",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_UPDATE_REWARDS-68",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_UPDATE_REWARDS",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-events-DELVES_ACCOUNT_DATA_ELEMENT_CHANGED-69",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DELVES_ACCOUNT_DATA_ELEMENT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-events-PARTY_ELIGIBILITY_FOR_DELVE_TIERS_CHANGED-70",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PARTY_ELIGIBILITY_FOR_DELVE_TIERS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-events-REMIX_END_OF_EVENT-71",
+      "section": "events",
+      "direction": "added",
+      "symbol": "REMIX_END_OF_EVENT",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-events-SHOW_DELVES_COMPANION_CONFIGURATION_UI-72",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SHOW_DELVES_COMPANION_CONFIGURATION_UI",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-events-CURRENCY_DISPLAY_UPDATE-77",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "CURRENCY_DISPLAY_UPDATE",
+      "annotation": "# 5: quantityLostSource -> destroyReason",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-events-START_TIMER-79",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "START_TIMER",
+      "annotation": "# 1: timerType, Type: luaIndex -> StartTimerType",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-events-STOP_TIMER_OF_TYPE-81",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "STOP_TIMER_OF_TYPE",
+      "annotation": "# 1: timerType, Type: luaIndex -> StartTimerType",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-cvars-minimapTrackedInfov2-91",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "minimapTrackedInfov2",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-cvars-mouseAcceleration-92",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "mouseAcceleration",
+      "annotation": "",
+      "wikitext_line": 92,
+      "page_default": "-1"
+    },
+    {
+      "id": "wt-cvars-useCompactPartyFrames-93",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "useCompactPartyFrames",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-cvars-UseOldVolumeFog-94",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "UseOldVolumeFog",
+      "annotation": "",
+      "wikitext_line": 94,
+      "page_default": "0.000000"
+    },
+    {
+      "id": "wt-cvars-mouseAccel-97",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "mouseAccel",
+      "annotation": "",
+      "wikitext_line": 97,
+      "page_default": "1"
+    }
+  ]
+}

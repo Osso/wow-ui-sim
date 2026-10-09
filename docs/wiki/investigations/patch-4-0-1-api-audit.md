@@ -36,7 +36,7 @@ Actual retail 4.1.0/4.2.0/4.3.0/4.3.4 registers replace the placeholders before 
 
 [Current discovery receipts](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/integrated/) are separate from historical receipts: sealed 302/117 accounting and negative 118 remain unchanged, as do 42 archive/evidence seals. Main publication passes 70/70; Mists check/build exit 0. Built startup is not yet checked.
 
-Independent formatting scope covers 212 files; Python fixtures 75/75 and own v2 validator fixtures 5/5 pass. All 74/74 register outputs reproduce with every process exit captured; 74/77 extracts reproduce. Three known inherited failures remain: 12.0.5/12.0.7 mismatch and 12.1.0 error/no output. Shared portable gate, current negative control, runtime smoke, CI and full suite remain pending; these receipts do not establish all-green acceptance.
+Independent `cargo fmt --check` exits 0; Python fixtures 75/75 and own v2 validator fixtures 5/5 pass. All 74/74 register outputs reproduce with every process exit captured; 74/77 extracts reproduce. Three known inherited failures remain: 12.0.5/12.0.7 mismatch and 12.1.0 error/no output. Shared portable gate, current negative control, runtime smoke, CI and full suite remain pending; these receipts do not establish all-green acceptance.
 
 [Portable validator v2 note](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/portable-validator-v2.md) records the minimal removal of the ROOT/target temporary-workspace dependency. Fresh-root/no-target/no-Git fixtures pass 5/5. Exact v1 validator/context bytes remain preserved; current self-seal metadata is new, not a retroactive rewrite of historical invocations or results.
 
