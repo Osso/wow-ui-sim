@@ -26,7 +26,11 @@ Copied base Cargo/client-profile/manifests record configured Era and Anniversary
 
 ## Development proof
 
-Own eight SOURCE fixtures and retained empty-accounting scaffold; RED eight expected assertion failures. Python AST formatting only; implementation/serialized ledger committed before GREEN. No shared tooling changes, checks/lints/types/readability/coverage, broad suites, startup or final gates. GREEN and portable/tamper receipts pending.
+Own eight SOURCE fixtures and retained empty-accounting scaffold; RED eight expected assertion failures. Python AST formatting only; implementation/serialized ledger committed before GREEN. No shared tooling changes, checks/lints/types/readability/coverage, broad suites, startup or final gates. GREEN **8/8** at `910fefc68a7bdb308ca05adfe197abaa112d6aac`; all literal omission/fabricated-credit/foreign-history/identity controls pass. Frozen default generator flags `[]` produce an empty register, not compatibility or empty linked-content proof. Own `proof-ledger.json` retains commands/revisions/results; no code change since GREEN.
+
+## Historical proof
+
+Original `seals.json` pins 34 inputs, 676948 bytes total; largest 219034 bytes. Source/ledger/fixtures/configuration/successors/historical tools/RED-GREEN logs/proof ledger sealed once. Portable archive and later control receipts will be separately sealed, never appended to or rewritten into original proof. Copied replay and serialized ledger/log controls pending.
 
 ## Sources
 
