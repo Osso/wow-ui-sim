@@ -1,0 +1,9 @@
+{
+  "observed_at": "2026-10-09T16:45:06.583054+00:00",
+  "endpoint": "127.0.0.1:5901",
+  "authentication_attempted": false,
+  "protocol_version": "RFB 003.008",
+  "offered_security_types": [
+    2
+  ]
+}

@@ -24,6 +24,8 @@ Original p302 36+1+2 seals, p303 16 seals, factory p302 112 seals and p303 16 se
 
 [Main-thread readiness report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/browser-vnc-independent-report.md) retains loopback-only CDP 9222/VNC 5901 and a readable current GetSessionTime page with no visible challenge at observation. No remote access/authentication test, frozen-revision validation or native API proof. Earlier direct HTTP403 and current browser readability are distinct observations.
 
+[Pre-auth VNC observation](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/private-vnc-security-observation.json), verified 2026-10-09T16:45:06Z: loopback endpoint responds with RFB 3.8 and advertises security type 2 only. No authentication attempted; remote login remains unverified. SSH local forwarding provides the private client access path; no public listener or noVNC deployment claim.
+
 ## 2.4.x shared-tool integration: source/historical PASS
 
 [Independent report](../../../data/patch-api/evidence/2.4.0-source-2026-10-09/integrated/p24x-integrated-independent-report.md) covers selected content at `dd710c6fc`: **18/18** targeted fixtures; **170/170** default outcomes equal archived baseline. One whole replay, with a scoped harness correction for the CLI-only `--text-only` flag, not a repeated whole gate. Own 2.4.0/2.4.2/3.0.2/2.1.0 opt-ins match; both parser function returns retained.
