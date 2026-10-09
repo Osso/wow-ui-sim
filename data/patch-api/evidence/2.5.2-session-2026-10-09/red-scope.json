@@ -1,0 +1,11 @@
+{
+  "revision": "3fbb148fa6b29378944f315f49d1bb571f4958c9",
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p252-source/data/patch-api/evidence/2.5.2-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p252-source",
+  "exit": 1,
+  "scope": "missing SOURCE derivation returns empty accounting; one required inventory assertion"
+}

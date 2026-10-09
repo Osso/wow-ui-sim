@@ -20,6 +20,9 @@ Created [bounded audit](investigations/patch-2-5-5-api-audit.md) and own spec/le
 ## [2026-10-09] investigation | Patch 2.5.3 TBC Classic SOURCE contracts
 
 [Audit](investigations/patch-2-5-3-api-audit.md): 103 rows/49 inventory/eight headers/one summary; 50 substantive contracts UNPROVEN, literal TOC20503 distinct from Anniversary11507. Targeted SOURCE GREEN 7/7 at `a2f9ca391`; serialized ledger/log tamper rejection and exact restoration, fresh isolated archive replay at `c3336abed` (39 original seals/40 members). Only pending 2.5.4/2.5.5/2.5.6 successors; no runtime/native/integration/final acceptance. Own spec/wiki/proof ledgers retained; main owns those gates.
+## [2026-10-09] investigation | Patch 2.5.2 SOURCE contract accounting
+
+[Audit](investigations/patch-2-5-2-api-audit.md): own isolated p252-source at f95eed96e; frozen source identity pinned before derivation. All 198 nonblank rows/145 occurrences/eight headers retained; 146 substantive rows UNPROVEN. Exact same-line pending references copied, no runtime/profile/shared-tool/native edit. Targeted RED retained at 3fbb148fa; GREEN/replay pending. Main owns integration/native gates.
 
 ## [2026-10-09] proof status | Retail 3.3.5/3.3.3 and Wrath 3.4.2 follow-up
 

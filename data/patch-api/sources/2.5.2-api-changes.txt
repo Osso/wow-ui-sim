@@ -1,0 +1,12 @@
+Patch 2.5.2 API changes
+
+== Summary ==
+The 1.14.0 client has been synchronized to be on the same baseline as patch 2.5.2
+
+== Resources ==
+* TOC: 20502
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Deprecated_2_5_2.lua
+* Community patch notes: 2.5.2 Consolidated UI Changes
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+
