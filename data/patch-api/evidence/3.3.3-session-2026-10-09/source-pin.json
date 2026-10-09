@@ -1,0 +1,14 @@
+{
+  "title": "Patch 3.3.3/API changes",
+  "version": "3.3.3",
+  "pageid": 261776,
+  "revid": 2531935,
+  "timestamp": "2010-05-13T22:15:52Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2531935&format=json",
+  "retrieved": "2026-10-09T08:51:36.393001+00:00",
+  "response_sha256": "9f2ba1c84d4f5b167219887f8808d69c64df031479819c092f7d32a8b91a2b0a",
+  "wikitext_sha256": "42a0c8c050382279d726a00d14e290bca3c3cb285cf66af14aa355d03c1071ca",
+  "wikitext_bytes": 1926,
+  "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.3.3-response.json",
+  "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.3.3-wikitext.txt"
+}

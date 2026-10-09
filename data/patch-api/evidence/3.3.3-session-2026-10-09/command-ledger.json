@@ -1,0 +1,19 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools/test_patch_3_3_3_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p333-source",
+      "revision": "9ff195d19564bd93fe34546ae97d4ce5660906d2",
+      "scope": "3.3.3 opt-in source format fixtures before implementation",
+      "exit": 1,
+      "artifact": "parser-red.log",
+      "proof": "RED: unrecognized --historical-api-headings"
+    }
+  ]
+}

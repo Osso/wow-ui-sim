@@ -240,6 +240,26 @@ def parse_simple_api_list(text):
     return entries
 
 
+def parse_historical_api_headings(text):
+    """Retain 2010 retail heading inventories, including signature-bearing bullets."""
+    headings = {'New API functions': ('global-api', 'added'),
+                'New events': ('events', 'added'),
+                'API function changes': ('global-api', 'changed'),
+                'Removed API': ('global-api', 'removed')}
+    entries, category, direction = [], None, None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            category, direction = headings.get(heading[1], (None, None))
+        elif category and line.startswith('* '):
+            for reference in TEMPLATE.finditer(line):
+                symbol, params = parse_symbol(reference[0])
+                section = 'widgets' if params.get('t') == 'w' else category
+                entry = make_entry(section, direction, number, reference[0])
+                entries.append(dict(entry, annotation=line))
+    return entries
+
+
 def parse_cataclysm_change_bullets(text):
     """Retain 4.1-style NEW/REMOVED groups and explicit changed event identities."""
     entries = []
@@ -888,6 +908,8 @@ def main():
                         help='Retain prose counts and singular CVar/Command labels; opt-in preserves prior registers')
     parser.add_argument('--legacy-api-tables', action='store_true',
                         help='Parse older unheaded/repeated caption inventories independently')
+    parser.add_argument('--historical-api-headings', action='store_true',
+                        help='Retain New API functions/New events/Removed API headings; opt-in')
     parser.add_argument('--cataclysm-change-bullets', action='store_true',
                         help='Retain NEW/REMOVED API groups and changed events in Cataclysm summaries; opt-in')
     parser.add_argument('--legacy-api-bullets', action='store_true',
@@ -963,6 +985,8 @@ def main():
         counts += section_counts
     if args.legacy_api_tables:
         entries, counts = parse_legacy_caption_tables(raw.decode('utf-8'))
+    if args.historical_api_headings:
+        entries.extend(parse_historical_api_headings(raw.decode('utf-8')))
     if args.cataclysm_change_bullets:
         entries.extend(parse_cataclysm_change_bullets(raw.decode('utf-8')))
     if args.legacy_api_bullets:
