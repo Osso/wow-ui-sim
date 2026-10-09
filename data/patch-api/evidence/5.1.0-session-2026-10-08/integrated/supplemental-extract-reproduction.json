@@ -1,0 +1,10 @@
+{
+  "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+  "path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+  "flags": [
+    "--mists-automated-diff",
+    "--mists-source-markup"
+  ],
+  "byte_identical": true,
+  "sha256": "d01c7b4c11d9c1d1c7b9f8fab6e9a1ebf435ae91f7f8f44a8a8eb7affa39ee2f"
+}

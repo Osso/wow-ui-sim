@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "install",
+    "ripgrep",
+    "--locked",
+    "--root",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep",
+    "--target-dir",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep-build"
+  ],
+  "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+  "scope": "scan-tool-build",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "scan-tool-build.txt",
+  "log_sha256": "0d2238d3388c31da034ce89a18f248118bc32830b7189181e4370165e22afbeb",
+  "seconds": 21.196855642003356,
+  "invalidated": false
+}

@@ -1,0 +1,33 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.16s
+     Running tests/integration.rs (target/debug/deps/integration-1db16289b0998b2a)
+
+running 19 tests
+test blizzard_deprecated_pet_info_loads::blizzard_deprecated_pet_info_has_no_xml_or_other_assets ... ok
+test blizzard_deprecated_pet_info_loads::blizzard_deprecated_pet_info_toc_is_minimal_with_no_flags_or_deps ... ok
+test blizzard_deprecated_pet_info_loads::blizzard_deprecated_pet_info_appears_in_game_discovery_only ... ok
+test c_pet_battles_probes::custom_seeded_pet_reflects_in_get_pet_info ... ok
+test c_collection_api::test_pet_journal_get_pet_info_by_index_nil ... ok
+test c_collection_api::test_pet_journal_get_pet_info_by_pet_id_nil ... ok
+test c_collection_api::test_pet_journal_get_pet_info_by_species_id_nil ... ok
+test c_pet_battles_probes::get_pet_info_by_pet_id_returns_nil ... ok
+test c_pet_battles_probes::get_pet_info_out_of_range_returns_nil ... ok
+test c_pet_battles_probes::get_pet_info_enemy_returns_rabbit ... ok
+test c_pet_battles_probes::get_pet_info_returns_seeded_player_pet_name ... ok
+test pet_info::pet_action_passive_lookup_is_state_backed ... ok
+test pet_info::pet_journal_ability_list_table_has_level_entries_and_info ... ok
+test pet_info::pet_action_spell_lookup_reads_state_mappings ... ok
+test pet_info::pet_tamers_for_map_are_state_backed_and_return_copies ... ok
+test test_collections::pet_journal_get_pet_info_by_pet_id_has_strings_for_card_fields ... ok
+test test_collections::pet_journal_get_pet_info_by_index ... ok
+test test_collections::pet_journal_get_pet_info_by_species_id ... ok
+test test_collections::pet_journal_get_pet_info_invalid ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 10667 filtered out; finished in 0.37s
+

@@ -1,0 +1,7 @@
+{
+  "historical_gaps": 17,
+  "integrated_gaps": 17,
+  "new_gaps": [],
+  "replacements": [],
+  "note": "Real merged 5.2.0/5.3.0/5.4.0/5.4.1 successors change no 5.1.0 expectation or observation. No resolved rows; keep every existing gap and ledger classification."
+}

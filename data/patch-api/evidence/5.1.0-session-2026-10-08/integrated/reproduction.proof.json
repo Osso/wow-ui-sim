@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/reproduce_sources.py"
+  ],
+  "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+  "scope": "reproduction",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "reproduction.txt",
+  "log_sha256": "85c68eb356a0ce1479b30fd8ca153e547485c6162c8e5770736976c2bbeee652",
+  "seconds": 4.424952141009271,
+  "invalidated": false
+}

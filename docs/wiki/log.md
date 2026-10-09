@@ -562,3 +562,5 @@ Pinned retail 2012 source/diff, added exhaustive ledger and prefork sweep. Two n
 ## 2026-10-08 — Retail 5.1.0 integration refresh
 
 Rebased onto 7c3bbbfd3, retaining both parser behaviors and wiki histories. Real 5.2.0–5.4.1 retail successors replace placeholders; eleven original/rebased identities and historical artifacts retained. Worktree-local acceptance in progress; no vendor/canonical/sibling edits or delegation. See [[patch-5-1-0-api-audit]].
+
+5.1.0 refreshed branch checks pass: 17 gaps unchanged, no supersessions; retail sweeps 63/63, Mists 6/6, Python 101/101, own and affected callers, format and non-vendor warning-clean Mists. 67 registers/64 extracts and supplemental diff reproduce; inherited failures unchanged, negative 17 → 18. Archived original validator replays with all fifteen original own/external pins denied. Same-worktree master comparison and final portability/tamper gates pending.

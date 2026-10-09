@@ -1,0 +1,2 @@
+{"api_gaps": 17, "extract": 21, "inventory": 63, "ledger": 84, "matching_extracts": 58, "registers": 61, "status": "PASS"}
+{"original_commits_denied": 15, "status": "PASS"}

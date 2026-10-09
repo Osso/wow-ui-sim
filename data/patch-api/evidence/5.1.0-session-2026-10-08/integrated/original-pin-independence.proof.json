@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/check_original_pin_independence.py"
+  ],
+  "revision": "1b2b601cedc20fd96894fd907533174ec7ebba7d",
+  "scope": "original-pin-independence",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "original-pin-independence.txt",
+  "log_sha256": "9afc80c552f6421b65aecc314e482f0f0ab4da63d005502dd9176402021e0f88",
+  "seconds": 15.034434282002621,
+  "invalidated": false
+}

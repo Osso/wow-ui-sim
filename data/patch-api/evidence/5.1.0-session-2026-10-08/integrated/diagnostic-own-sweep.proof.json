@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_1_0_publication_sweep"
+  ],
+  "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+  "scope": "diagnostic-own-sweep",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {
+    "P510_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/diagnostic-own-results.json"
+  },
+  "exit": 0,
+  "log": "diagnostic-own-sweep.txt",
+  "log_sha256": "653d1f46659a29fb4a850c2d7a9309881e026e5906187c2c64e81f3b57f9fe09",
+  "seconds": 215.3454631670029,
+  "invalidated": false
+}

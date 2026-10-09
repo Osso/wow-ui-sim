@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/validate.py"
+  ],
+  "revision": "341799ec6a113ad742d6e82da7cd4e70b67b6dc6",
+  "scope": "historical-replay",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "historical-replay.txt",
+  "log_sha256": "8b8383a1a6790b3cf3154c6850c549823fa82b069cddeb1757ba2046ad3875ac",
+  "seconds": 1.3632665119948797,
+  "invalidated": false
+}

@@ -1,0 +1,11 @@
+{
+  "inventory": 63,
+  "publication_gaps": 17,
+  "total_ids": 84,
+  "statuses": {
+    "bounded-coverage": 46,
+    "audit-pending": 32,
+    "metadata-only": 6
+  },
+  "note": "Publication/absence and existing interval fixtures only, not native 2012 gameplay parity. No gaps superseded on this refresh."
+}
