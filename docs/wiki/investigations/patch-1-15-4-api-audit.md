@@ -30,7 +30,7 @@ Five [exact frozen successor inputs](../../../data/patch-api/evidence/1.15.4-ses
 
 ## Development proof
 
-Own SOURCE RED nine expected assertion failures; own portable RED three failures for absent archive, retained. Adapter/fixtures AST formatted. GREEN follows coherent implementation commit; original seals and copied replay pending. Historical extractor retained unexecuted. No shared tool/runtime/vendor/cache/Wowless changes or broad/check/lint/type/readability/coverage/startup/final gates.
+Own SOURCE RED nine expected assertion failures; own portable RED three failures for absent archive, retained. Adapter/fixtures AST formatted. SOURCE GREEN **9/9** at `8bb569247`:19 omission controls, eight fabricated/foreign-history controls, five fabricated contract-coverage controls, two identity/content controls. Historical default generator flags[] emits empty inventory, not absence or linked-content compatibility proof. [Original proof ledger](../../../data/patch-api/evidence/1.15.4-session-2026-10-09/proof-ledger.json) records exact commands/cwd/revisions/results. Original **44 seals/701134 bytes**, seal-map SHA256 `3a3f862cae3d7ccedc524f92615ddb71128254b2dbd1705f7772a4b046de1e30`; original files/logs/map immutable. **45-member/107338-byte archive** and [replay instructions](../../../data/patch-api/evidence/1.15.4-session-2026-10-09/REPLAY.md) committed before portable GREEN; current copied receipts remain separate. Historical extractor retained unexecuted. No shared tool/runtime/vendor/cache/Wowless changes or broad/check/lint/type/readability/coverage/startup/final gates.
 
 ## Sources
 

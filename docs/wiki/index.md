@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.15.4 literal subset SOURCE audit
 
-[Audit](investigations/patch-1-15-4-api-audit.md): frozen600355/6172581, TOC11504; six literal rows/five UNPROVEN contracts/two headers, unspecified War Within11.0.0/11.0.2 subset and two diffs. Explicit retail attribution does not import contracts or replace Era successors. Own SOURCE RED9/portable RED3 retained; GREEN/seals/replay pending. Zero runtime/model/native credit; main owns integration/final gates.
+[Audit](investigations/patch-1-15-4-api-audit.md): frozen600355/6172581, TOC11504; six literal rows/five UNPROVEN contracts/two headers, unspecified War Within11.0.0/11.0.2 subset and two diffs. Explicit retail attribution does not import contracts or replace Era successors. Own SOURCE RED9/portable RED3 retained; SOURCE GREEN9/9 at8bb569247,44 original seals and45-member copied archive; portable GREEN pending. Zero runtime/model/native credit; main owns integration/final gates.
 
 ## [2026-10-09] integration | Source/factory receipts and narrow repairs
 
