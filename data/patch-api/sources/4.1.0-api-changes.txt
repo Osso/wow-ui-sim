@@ -1,0 +1,90 @@
+Patch 4.1.0 API changes
+
+== Breaking changes ==
+* COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, hideCaster.
+* Addons are now required to register the prefixes they want to receive SendAddonMessage messages for using  RegisterAddonMessagePrefix.
+
+== API changes ==
+* REMOVED CanTransform / Transform; worgen transformation is now treated entirely as a spell.
+* REMOVED GetPetHappiness along with actual pet happiness.
+* REMOVED RenameEquipmentSet
+* NEW calendar extensions
+** CalendarContextEventCanRemove
+** CalendarEventGetTypesDisplayOrdered
+**  GetEventTime
+**  GetCurrentEventID
+* NEW Looking For Guild / Guild Recruitment API
+** CancelGuildMembershipRequest
+**  DeclineGuildApplicant
+**  GetGuildApplicantInfo
+**  GetGuildApplicantSelection
+**  GetGuildMembershipRequestInfo
+**  GetGuildMembershipRequestSettings
+**  GetGuildRecruitmentComment
+**  GetGuildRecruitmentSettings
+**  GetLookingForGuildComment
+**  GetLookingForGuildSettings
+**  GetNumGuildApplicants
+**  GetNumGuildMembershipRequests
+**  GetNumRecruitingGuilds
+**  GetRecruitingGuildInfo
+**  GetRecruitingGuildSelection
+**  GetRecruitingGuildSettings
+**  GetRecruitingGuildTabardInfo
+**  RequestGuildApplicantsList
+**  RequestGuildMembership
+**  RequestGuildMembershipList
+**  RequestGuildRecruitmentSettings
+**  RequestRecruitingGuildsList
+**  SetGuildApplicantSelection
+**  SetGuildRecruitmentComment
+**  SetGuildRecruitmentSettings
+**  SetLookingForGuildComment
+**  SetLookingForGuildSettings
+**  SetRecruitingGuildSelection
+* NEW Looking for Group Call To Arms (role shortage) API
+**  GetLFGDungeonShortageRewardInfo
+**  GetLFGDungeonShortageRewardLink
+**  GetLFGRoleShortageRewards
+* NEW Guild Challenges API
+**  GetGuildChallengeInfo
+**  GetNumGuildChallenges
+**  RequestGuildChallengeInfo
+* NEW Opt-in Addon Communication API
+**  GetRegisteredAddonMessagePrefixes
+**  IsAddonMessagePrefixRegistered
+**  RegisterAddonMessagePrefix
+
+* NEW CanEditGuildBankTabInfo
+* NEW CancelEmote
+* NEW  ClearAllTracking
+* NEW  GetAddOnOptionalDependencies
+* NEW  GetDebugSpellEffects
+* NEW  GetDungeonForRandomSlot
+* NEW  GetGuildBankBonusDepositMoney
+* NEW  GetInspectRatedBGData
+* NEW  GetMaxAnimFramerate
+* NEW  GetNamePlateMotionType
+* NEW  GetNetIpTypes
+* NEW  GetNumDungeonForRandomSlot
+* NEW  GetNumNamePlateMotionTypes
+* NEW  GetNumberOfDetailTiles
+* NEW  GetTrainerTradeskillRankValues
+* NEW  IsIPv6Available
+* NEW  IsOnTournamentRealm
+* NEW  IsOnePersonParty
+* NEW  IsRatedMap
+* NEW  IsTrialAccount
+* NEW  ModifyEquipmentSet
+* NEW  SetBarSlotFromIntro
+* NEW  SetGuildMemberRank
+* NEW  SetMaxAnimFramerate
+* NEW  SetNamePlateMotionType
+* NEW  UnitThreatPercentageOfLead
+
+== Event changes ==
+* COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, shifting existing parameters to the right.
+* REMOVED END_REFUND, items no longer become unrefundable due to enchanting, etc.
+* REMOVED HONOR_CURRENCY_UPDATE, honor now treated as ordinary currency
+* REMOVED INSPECT_TALENT_READY, talent information available by default.
+* REMOVED KNOWN_CURRENCY_TYPES_UPDATE
