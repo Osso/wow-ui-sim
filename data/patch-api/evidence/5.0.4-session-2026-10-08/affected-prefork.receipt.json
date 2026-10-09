@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/home/osso/.cache/wow-ui-sim-targets/p504-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "pet_battle"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p504-page",
+  "revision": "edf957802",
+  "exit": 0,
+  "stdout": null,
+  "log": "affected-prefork.log",
+  "invalidated": false
+}

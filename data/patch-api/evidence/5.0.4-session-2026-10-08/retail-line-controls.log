@@ -1,0 +1,9 @@
+
+running 3 tests
+test publication_sweep_client_lines::publication_sweep_client_lines_ignore_classic_removals_for_retail ... ok
+test publication_sweep_client_lines::publication_sweep_client_lines_keep_same_line_ordering ... ok
+test publication_sweep_client_lines::publication_sweep_client_lines_reject_wrong_profile - should panic ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10683 filtered out; finished in 0.24s
+
+

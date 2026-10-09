@@ -1,0 +1,16 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p504-page/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p504-page",
+  "revision": "edf957802",
+  "exit": 0,
+  "stdout": "[]\n",
+  "log": "lua-errors.log",
+  "invalidated": false
+}

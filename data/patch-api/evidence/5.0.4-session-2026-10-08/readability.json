@@ -1,0 +1,11 @@
+{
+  "revision": "53ec81e5d",
+  "files": [
+    "src/c_api/c_pet_battles.rs",
+    "tests/patch_5_0_4_behavior.rs",
+    "tests/patch_5_0_4_publication_sweep.rs"
+  ],
+  "method": "Manual changed-line audit: naming, nesting, data flow, duplication and warning suppressions. No analyzer available assumed or used.",
+  "violations": [],
+  "scope": "One existing state getter registration plus concrete bare/cached fixtures; no gameplay producer inferred."
+}

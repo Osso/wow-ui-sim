@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/home/osso/.cache/wow-ui-sim-targets/p504-page/debug/deps/integration-1db16289b0998b2a",
+    "patch_5_0_4",
+    "--test-threads=2"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p504-page",
+  "revision": "edf957802",
+  "exit": 0,
+  "stdout": null,
+  "log": "own-integration.log",
+  "invalidated": false
+}

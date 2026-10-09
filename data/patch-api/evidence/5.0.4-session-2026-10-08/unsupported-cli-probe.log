@@ -1,0 +1,6 @@
+
+error: unexpected argument '--no-addons' found
+
+Usage: wow-cli <COMMAND>
+
+For more information, try '--help'.
