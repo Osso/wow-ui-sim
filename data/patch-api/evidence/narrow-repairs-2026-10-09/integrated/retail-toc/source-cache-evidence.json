@@ -1,0 +1,58 @@
+{
+  "src/toc/mod.rs": {
+    "sha256": "df98f3f00e3f5c3d496cc37d47193b29b619917c6fa8fbea35fb82c8f3da2d1e",
+    "locations": {
+      "fn insert_metadata": [
+        144
+      ],
+      "fn is_allowed_game_type": [
+        85
+      ],
+      "pub fn parse": [
+        290
+      ],
+      "pub fn from_file": [
+        321
+      ],
+      "pub fn dependencies": [
+        347
+      ]
+    }
+  },
+  "src/loader/mod.rs": {
+    "sha256": "9adc6ef887929101f8631552a558a5075517a49844d99b47423c18b211c3e934",
+    "locations": {
+      "fn active_profile_toc_suffixes": [
+        189
+      ],
+      "pub fn find_toc_file": [
+        258
+      ]
+    }
+  },
+  "src/paths.rs": {
+    "sha256": "e35e62ec8647f09d3675a6e038ac4fbb49dcf31b3aa156d08487645be5e4a949",
+    "locations": {
+      "fn default_blizzard_ui_addons_path": [
+        73
+      ]
+    }
+  },
+  "src/client_profile.rs": {
+    "sha256": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+    "locations": {
+      "fn blizzard_ui_addons_dir_under": [
+        307,
+        314
+      ]
+    }
+  },
+  "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Blizzard_FrameXML.toc": {
+    "sha256": "ba4cc2141e953a2ce90c7de51e513246bb8bcff351b0022966df3602d7c6c36c",
+    "text": "## Title: Blizzard_FrameXML\n## Dep: Blizzard_ObjectAPI\n## Dep: Blizzard_FrameXMLBase\n## Dep: Blizzard_UIErrorsFrame\n## Dep: Blizzard_UIParentPanelManager [AllowLoadGameType mainline]\n## Dep: Blizzard_SettingsDefinitions_Frame\n## Dep: Blizzard_ItemButton\n## Dep: Blizzard_UnitPopup [AllowLoadGameType classic]\n## Dep: Blizzard_FrameXMLUtil\n## Dep: Blizzard_RaidWarning\n## Dep: Blizzard_UIPanelTemplates\n## Dep: Blizzard_GameTooltip\n## Dep: Blizzard_MoneyFrame\n## Dep: Blizzard_Colors\n## Dep: Blizzard_TransmogShared [AllowLoadGameType wrath, cata, mists, mainline]\n## Dep: Blizzard_LFGUtil\n## Dep: Blizzard_ManagedFrameSystem\n## Dep: Blizzard_MirrorTimer [AllowLoadGameType classic]\n## LoadFirst: 1\nShared\\Localization.lua\nAchievementDisplayFrame.lua [AllowLoadGameType mainline]\nAchievementDisplayFrame.xml [AllowLoadGameType mainline]\nRewardTrackTemplates.lua [AllowLoadGameType mainline]\nRewardTrackTemplates.xml [AllowLoadGameType mainline]\nItemDisplay.lua [AllowLoadGameType mainline]\nItemDisplay.xml [AllowLoadGameType mainline]\nWrath\\SparkleFrame.lua [AllowLoadGameType wrath, cata, mists]\nWrath\\SparkleFrame.xml [AllowLoadGameType wrath, cata, mists]\nCustomBindingManager.lua\nCustomBindingHandler.lua\n[Family]\\TutorialFrame.lua\n[Family]\\TutorialFrame.xml\nSecureTemplatesBase.xml\nSecureTemplates.lua\nSecureTemplates.xml\nAzeriteAnimationTemplates.xml [AllowLoadGameType mainline]\nQuestNPCModelFrameMixin.lua [AllowLoadGameType mainline]\nTabardModelFrameMixin.lua [AllowLoadGameType mainline]\nWardrobeCustomSets.lua [AllowLoadGameType wrath, cata, mists, mainline]\nWardrobeCustomSets.xml [AllowLoadGameType wrath, cata, mists, mainline]\n[Family]\\NavigationBar.lua\n[Family]\\NavigationBar.xml\nDeprecatedTemplates.lua\nDeprecatedTemplates.xml\n[Family]\\CharacterFrameTemplates.xml [AllowLoadGameType vanilla, tbc, wrath]\nCata\\CharacterFrameTemplates.lua [AllowLoadGameType cata, mists]\nCata\\CharacterFrameTemplates.xml [AllowLoadGameType cata, mists]\n[Family]\\AlertFrames.lua\n[Family]\\AlertFrames.xml\n[Family]\\AlertFrameSystems.lua\n[Family]\\AlertFrameSystems.xml\n[Family]\\CoinPickupFrame.lua\n[Family]\\CoinPickupFrame.xml\n[Family]\\StackSplitFrame.lua\n[Family]\\StackSplitFrame.xml\n[Family]\\ZoneText.lua\n[Family]\\ZoneText.xml\nPVPUITemplates.lua [AllowLoadGameType mainline]\nPVPUITemplates.xml [AllowLoadGameType mainline]\nPVPHonorSystem.lua [AllowLoadGameType mainline]\nPVPHonorSystem.xml [AllowLoadGameType mainline]\nGuildUtil.lua\nInstanceDifficulty.lua [AllowLoadGameType mainline]\nInstanceDifficulty.xml [AllowLoadGameType mainline]\nEquipmentFlyout.lua [AllowLoadGameType cata, mists, mainline]\nEquipmentFlyout.xml [AllowLoadGameType cata, mists, mainline]\nShared\\LowHealthFrame.lua\n[Family]\\LowHealthFrame.xml\n[Family]\\CombatFeedback.lua\nMainline\\ReadyCheck.lua [AllowLoadGameType mainline]\nMainline\\ReadyCheck.xml [AllowLoadGameType mainline]\nMainline\\InstanceAbandon.lua [AllowLoadGameType mainline]\nMainline\\InstanceAbandon.xml [AllowLoadGameType mainline]\nCustomizationDebugFrame.xml [AllowLoadGameType mainline]\nShared\\CinematicFrame.lua\n[Family]\\CinematicFrameButton.xml\nShared\\CinematicFrame.xml\nMainline\\RatingMenuFrame.xml [AllowLoadGameType mainline]\nTBC\\WorldStateFrame.lua [AllowLoadGameType wrath, cata, mists]\n[Game]\\WorldStateFrame.lua [AllowLoadGameType vanilla, tbc, mists]\n[Game]\\WorldStateFrame.xml [AllowLoadGameType vanilla, tbc, mists]\nTBC\\WorldStateFrame.xml [AllowLoadGameType wrath]\nCata\\WorldStateFrame.xml [AllowLoadGameType cata]\n[Family]\\TalentFrameBase_Shared.lua [AllowLoadGameType classic]\nVanilla\\TalentFrameBase.lua [AllowLoadGameType vanilla, tbc, wrath]\n[Game]\\TalentFrameBase.lua [AllowLoadGameType cata, mists]\n[Family]\\Blizzard_TalentUITemplates.xml [AllowLoadGameType vanilla, tbc, wrath]\nCata\\Blizzard_TalentUITemplates.xml [AllowLoadGameType cata, mists]\nCata\\Blizzard_TalentUITemplates.xml [AllowLoadGameType cata, mists]\n[Family]\\TalentFrameBase.lua [AllowLoadGameType mainline]\n[Family]\\TalentFrameTemplates.xml [AllowLoadGameType mainline]\nMovieFrame.lua\nMovieFrame.xml\nBossBannerToast.lua [AllowLoadGameType mainline]\nTopBannerManager.lua [AllowLoadGameType mainline]\nBossBannerToast.xml [AllowLoadGameType mainline]\nEventToastManager.lua [AllowLoadGameType mainline]\nEventToastManager.xml [AllowLoadGameType mainline]\n[Family]\\EquipmentManager.lua [AllowLoadGameType wrath, cata, mists, mainline]\nShared\\EquipmentManager.lua [AllowLoadGameType wrath, cata, mists, mainline]\n[Family]\\RolePoll.lua\n[Family]\\RolePoll.xml\nSpellActivationOverlay.lua [AllowLoadGameType cata, mists, mainline]\nSpellActivationOverlay.xml [AllowLoadGameType cata, mists, mainline]\nGuildInviteFrame.lua [AllowLoadGameType cata, mists, mainline]\nGuildInviteFrame.xml [AllowLoadGameType cata, mists, mainline]\nGhostFrame.lua [AllowLoadGameType cata, mists, mainline]\nGhostFrame.xml [AllowLoadGameType cata, mists, mainline]\n[Family]\\StreamingFrame.lua\n[Family]\\StreamingFrame.xml\nIconIntroAnimation.lua\nIconIntroAnimation.xml\nTimer.lua\nTimer.xml\nDestinyFrame.lua [AllowLoadGameType mists, mainline]\nDestinyFrame.xml [AllowLoadGameType mists, mainline]\nSharedPetBattleTemplates.lua [AllowLoadGameType mists, mainline]\nSharedPetBattleTemplates.xml [AllowLoadGameType mists, mainline]\n[Family]\\LootHistory.lua\n[Family]\\LootHistory.xml\n[Family]\\ClassTrainerFrameTemplates.xml [AllowLoadGameType classic]\nFloatingPetBattleTooltip.lua [AllowLoadGameType mists, mainline]\nFloatingPetBattleTooltip.xml [AllowLoadGameType mists, mainline]\nBattlePetTooltip.lua [AllowLoadGameType mists, mainline]\nBattlePetTooltip.xml [AllowLoadGameType mists, mainline]\nLossOfControlFrame.lua [AllowLoadGameType mists, mainline]\n[Family]\\LossOfControlFrame.lua [AllowLoadGameType mists]\nLossOfControlFrame.xml [AllowLoadGameType mists, mainline]\nArtifactToasts.lua [AllowLoadGameType mainline]\nArtifactToasts.xml [AllowLoadGameType mainline]\nAzeriteItemToasts.lua [AllowLoadGameType mainline]\nAzeriteItemToasts.xml [AllowLoadGameType mainline]\nAzeriteIslandsToast.lua [AllowLoadGameType mainline]\nAzeriteIslandsToast.xml [AllowLoadGameType mainline]\nAzeriteEmpoweredItemDataSource.lua [AllowLoadGameType mainline]\nQuestSession.lua [AllowLoadGameType mainline]\nQuestSession.xml [AllowLoadGameType mainline]\nTalkingHeadUI.lua [AllowLoadGameType mainline]\nTalkingHeadUI.xml [AllowLoadGameType mainline]\nMotionSickness.lua [AllowLoadGameType mainline]\nMotionSickness.xml [AllowLoadGameType mainline]\nArchaeologyProgressBar.lua [AllowLoadGameType mainline]\nArchaeologyProgressBar.xml [AllowLoadGameType mainline]\n[Family]\\Localization.lua [AllowLoadGameType mainline]\n"
+  },
+  "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Blizzard_ReforgingUI_Classic.toc": {
+    "sha256": "2dd0f75e06f976bf73a243351855057c5a62355e560099e90ce474de6807753e",
+    "text": "## Interface: 0\n## Title: Blizzard Reforging UI\n## Secure: 1\n## LoadOnDemand: 1\n## AllowLoadGameType: classic\nClassic\\Blizzard_ReforgingUI_Bootstrap.lua [Bootstrap]\nClassic\\Blizzard_ReforgingUI.lua\nClassic\\Blizzard_ReforgingUI.xml\nClassic\\Localization.lua\n"
+  }
+}

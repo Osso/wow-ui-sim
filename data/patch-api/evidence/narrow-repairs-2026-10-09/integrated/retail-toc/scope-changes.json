@@ -1,0 +1,26 @@
+{
+  "before_head": "41f1abbeb83d508b323f51d1f371a3bc506b63b5",
+  "after_head": "41f1abbeb83d508b323f51d1f371a3bc506b63b5",
+  "changes": {
+    "tracked_sha256": [],
+    "retail_cache_sha256": []
+  },
+  "binary_unchanged": true,
+  "results": [
+    {
+      "filter": "blizzard_core_frame_lane::lane_dep_edges_pin_canonical_chain",
+      "passed_1_of_1": true,
+      "exit_code": 0
+    },
+    {
+      "filter": "blizzard_frame_xml_loads::blizzard_frame_xml_toc_is_load_first_with_current_dependencies",
+      "passed_1_of_1": true,
+      "exit_code": 0
+    },
+    {
+      "filter": "blizzard_reforging_ui_loads::retail_toc_selection_excludes_classic_only_reforging",
+      "passed_1_of_1": true,
+      "exit_code": 0
+    }
+  ]
+}

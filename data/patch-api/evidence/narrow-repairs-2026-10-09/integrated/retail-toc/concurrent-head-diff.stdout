@@ -1,0 +1,6 @@
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/fullsuite-comparison/group-coverage-retention.json
+A	data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/fullsuite-comparison/prefork-full-suite-group-coverage.md
+M	docs/specs/prefork-test-harness.md
+M	docs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md
+M	docs/wiki/log.md
+M	docs/wiki/systems/prefork-test-harness.md

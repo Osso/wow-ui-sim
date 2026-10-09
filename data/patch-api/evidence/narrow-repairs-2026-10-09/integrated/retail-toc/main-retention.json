@@ -1,0 +1,181 @@
+{
+  "retained_at": "2026-10-09T17:40:33.524771+00:00",
+  "proof_revision": "41f1abbeb83d508b323f51d1f371a3bc506b63b5",
+  "scope": "All top-level independent verifier artifacts byte-identical. Original failures and seals unchanged. Environment key-only evidence; credential-value patterns inspected before retention. No commands rerun.",
+  "files": [
+    {
+      "source": "/tmp/retail-toc-independent/after.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/after.json",
+      "sha256": "9b16b3aa01e9de34fe3f44c9d589d888c3f0b65a69dce9285f4bfb408328bdb5",
+      "bytes": 4069516
+    },
+    {
+      "source": "/tmp/retail-toc-independent/artifact-sha256.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/artifact-sha256.json",
+      "sha256": "3e253ebe8460019bcfaf1a2be5ae62ae2d705daf100889579a47a41391d36089",
+      "bytes": 2737
+    },
+    {
+      "source": "/tmp/retail-toc-independent/before.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/before.json",
+      "sha256": "9b3185a86aa11926b3b8e7b96c27288a1317add1831232adb15810774114a637",
+      "bytes": 4069516
+    },
+    {
+      "source": "/tmp/retail-toc-independent/binary-artifact.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/binary-artifact.json",
+      "sha256": "72e3c9e727fb24e1a8aee54d0a9fe1fb4a4310a1d9e69fea31d47edba58737dd",
+      "bytes": 1502
+    },
+    {
+      "source": "/tmp/retail-toc-independent/blizzard_core_frame_lane.committed.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/blizzard_core_frame_lane.committed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/blizzard_core_frame_lane.committed.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/blizzard_core_frame_lane.committed.stdout",
+      "sha256": "4ad5232e9078b870fb4e98c3d8a0f286db68a48a1365d2ce45cb3fa00c499287",
+      "bytes": 27652
+    },
+    {
+      "source": "/tmp/retail-toc-independent/blizzard_frame_xml_loads.committed.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/blizzard_frame_xml_loads.committed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/blizzard_frame_xml_loads.committed.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/blizzard_frame_xml_loads.committed.stdout",
+      "sha256": "0e43228f59d1751cf186926ce6da2971ebcef8f981e678eed1140821e48b5b37",
+      "bytes": 19117
+    },
+    {
+      "source": "/tmp/retail-toc-independent/blizzard_reforging_ui_loads.committed.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/blizzard_reforging_ui_loads.committed.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/blizzard_reforging_ui_loads.committed.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/blizzard_reforging_ui_loads.committed.stdout",
+      "sha256": "cddb451ed69bcc97a279c3a5195411ccf490312a329c23df27b68ae7846b320c",
+      "bytes": 15326
+    },
+    {
+      "source": "/tmp/retail-toc-independent/cargo-fmt.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/cargo-fmt.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/cargo-fmt.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/cargo-fmt.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/case-1.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/case-1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/case-1.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/case-1.stdout",
+      "sha256": "14f0639fb6eb605e3afc09eb32c6d507371c1efa9217cceb844c9b97f4993dd8",
+      "bytes": 189
+    },
+    {
+      "source": "/tmp/retail-toc-independent/case-2.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/case-2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/case-2.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/case-2.stdout",
+      "sha256": "c4f96d8af4ee443cff26bc42b24b7f535c8d71e70ad6ecc74f074091a0837818",
+      "bytes": 217
+    },
+    {
+      "source": "/tmp/retail-toc-independent/case-3.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/case-3.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/retail-toc-independent/case-3.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/case-3.stdout",
+      "sha256": "e6cbf22ba7c136414888420f8f4a005473395b43817b2140822be2506ffde7b4",
+      "bytes": 210
+    },
+    {
+      "source": "/tmp/retail-toc-independent/changed-test-commit-comparison.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/changed-test-commit-comparison.json",
+      "sha256": "4f5b4ecf6dab0c172829200c5bd1beba8516d58afaf3ef24f416a3b7536bcb36",
+      "bytes": 1125
+    },
+    {
+      "source": "/tmp/retail-toc-independent/command-ledger.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/command-ledger.json",
+      "sha256": "8845f92f362ea4b9ff46822323de89d725cae8814f4ca55157745fa46af4e361",
+      "bytes": 8292
+    },
+    {
+      "source": "/tmp/retail-toc-independent/compiler-diagnostics.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/compiler-diagnostics.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "source": "/tmp/retail-toc-independent/concurrent-head-diff.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/concurrent-head-diff.stdout",
+      "sha256": "4c2c698bd74a6f2f2e42a5bb59101012ee2f40f869470077ccadb212808b9683",
+      "bytes": 406
+    },
+    {
+      "source": "/tmp/retail-toc-independent/environment-keys.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/environment-keys.json",
+      "sha256": "88e9260d1ae90c85d1af470a4602e51e431fce3ac149cb1eadad9d764a41eb86",
+      "bytes": 477
+    },
+    {
+      "source": "/tmp/retail-toc-independent/full-stream-inspection.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/full-stream-inspection.json",
+      "sha256": "766f9387b55dc38a5a0d489d83d9abeaedbc9b4075f2f481db8ffa160f480440",
+      "bytes": 1472
+    },
+    {
+      "source": "/tmp/retail-toc-independent/integration-compile.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/integration-compile.stderr",
+      "sha256": "192f53aafcfdac00e8133031df4aeea9470c87564012173c0bdd5e1117317d2c",
+      "bytes": 1275
+    },
+    {
+      "source": "/tmp/retail-toc-independent/integration-compile.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/integration-compile.stdout",
+      "sha256": "bedffbff24dee89df8145d13b7b0e576410ec5f97dfa38999de1b2c0ae1ce08c",
+      "bytes": 572411
+    },
+    {
+      "source": "/tmp/retail-toc-independent/report.md",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/report.md",
+      "sha256": "e4a43ddce97bf24f8d5cf1f2892527319cf8dc8f0b183593d297b4dde3564e2c",
+      "bytes": 9082
+    },
+    {
+      "source": "/tmp/retail-toc-independent/scope-changes.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/scope-changes.json",
+      "sha256": "473112ac0030e1f1bcb4106cab61a18d54bb21bf23712755c494b3959feed301",
+      "bytes": 725
+    },
+    {
+      "source": "/tmp/retail-toc-independent/source-cache-evidence.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/retail-toc/source-cache-evidence.json",
+      "sha256": "3eeec0531929feff0d7a8ac7395d72f9c473c221695762ee236e240801131c44",
+      "bytes": 8501
+    }
+  ]
+}

@@ -1,10 +1,14 @@
+## [2026-10-09] ingest | Retail TOC fixture independent proof
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#retail-toc-fixtures--bounded-pass-at-41f1abbeb) records three exact passing cases, formatting/compile/readability and actual concurrent docs-only epoch. 29 artifacts retained byte-for-byte; no reruns or full-suite/native/profile expansion.
+
 ## [2026-10-09] investigation | Prefork suite group counts reconciled
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) now links saved-log evidence that all four migrated cases ran and passed. First summary counts only the base registry; no missing execution or failure-parser defect. Original comparison artifacts preserved; no tests rerun or reporting redesign.
 
 ## [2026-10-09] fix | Retail TOC fixture premises
 
-[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#retail-toc-fixtures--targeted-verification-pending) records dependency filtering at metadata insertion and unsupported Classic-only Retail discovery. Three test assertions corrected; no loader/cache/vendor edits. Original failure epochs preserved; fresh targeted proof pending.
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#retail-toc-fixtures--bounded-pass-at-41f1abbeb) records dependency filtering at metadata insertion and unsupported Classic-only Retail discovery. Three test assertions corrected; no loader/cache/vendor edits. Original failure epochs preserved; fresh targeted proof pending.
 
 ## [2026-10-09] investigation | Completed prefork migration suite failure comparison
 

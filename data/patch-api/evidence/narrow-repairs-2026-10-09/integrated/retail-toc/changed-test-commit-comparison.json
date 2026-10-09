@@ -1,0 +1,35 @@
+{
+  "tests/blizzard_core_frame_lane.rs": {
+    "commit_sha256": "4ad5232e9078b870fb4e98c3d8a0f286db68a48a1365d2ce45cb3fa00c499287",
+    "current_sha256": "4ad5232e9078b870fb4e98c3d8a0f286db68a48a1365d2ce45cb3fa00c499287",
+    "matches_commit": true,
+    "exit_code": 0,
+    "argv": [
+      "git",
+      "show",
+      "c5124f4c9:tests/blizzard_core_frame_lane.rs"
+    ]
+  },
+  "tests/blizzard_frame_xml_loads.rs": {
+    "commit_sha256": "0e43228f59d1751cf186926ce6da2971ebcef8f981e678eed1140821e48b5b37",
+    "current_sha256": "0e43228f59d1751cf186926ce6da2971ebcef8f981e678eed1140821e48b5b37",
+    "matches_commit": true,
+    "exit_code": 0,
+    "argv": [
+      "git",
+      "show",
+      "c5124f4c9:tests/blizzard_frame_xml_loads.rs"
+    ]
+  },
+  "tests/blizzard_reforging_ui_loads.rs": {
+    "commit_sha256": "cddb451ed69bcc97a279c3a5195411ccf490312a329c23df27b68ae7846b320c",
+    "current_sha256": "cddb451ed69bcc97a279c3a5195411ccf490312a329c23df27b68ae7846b320c",
+    "matches_commit": true,
+    "exit_code": 0,
+    "argv": [
+      "git",
+      "show",
+      "c5124f4c9:tests/blizzard_reforging_ui_loads.rs"
+    ]
+  }
+}
