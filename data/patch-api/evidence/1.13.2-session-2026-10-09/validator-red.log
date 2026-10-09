@@ -1,0 +1,37 @@
+test_current_model_reads_are_not_factory_defaults (__main__.ReceiptValidation.test_current_model_reads_are_not_factory_defaults) ... FAIL
+test_derives_original_and_actual_successor_counts (__main__.ReceiptValidation.test_derives_original_and_actual_successor_counts) ... FAIL
+test_derives_portable_replay_and_exact_restore_receipts (__main__.ReceiptValidation.test_derives_portable_replay_and_exact_restore_receipts) ... FAIL
+
+======================================================================
+FAIL: test_current_model_reads_are_not_factory_defaults (__main__.ReceiptValidation.test_current_model_reads_are_not_factory_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_validator.py", line 25, in test_current_model_reads_are_not_factory_defaults
+    self.assertEqual(validator.validate_model(observations), 6)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/validator.py", line 5, in validate_model
+    raise AssertionError('not implemented')
+AssertionError: not implemented
+
+======================================================================
+FAIL: test_derives_original_and_actual_successor_counts (__main__.ReceiptValidation.test_derives_original_and_actual_successor_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_validator.py", line 11, in test_derives_original_and_actual_successor_counts
+    self.assertEqual(result.get('original_seals'), len(audit.read_json('seals.json')))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 89
+
+======================================================================
+FAIL: test_derives_portable_replay_and_exact_restore_receipts (__main__.ReceiptValidation.test_derives_portable_replay_and_exact_restore_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_validator.py", line 19, in test_derives_portable_replay_and_exact_restore_receipts
+    self.assertEqual(result.get('portable_tests'), 3)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 3
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)

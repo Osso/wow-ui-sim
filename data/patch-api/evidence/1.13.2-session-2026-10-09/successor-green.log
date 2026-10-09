@@ -1,0 +1,8 @@
+test_every_omission_reordering_and_foreign_credit_rejected (__main__.SuccessorAccounting.test_every_omission_reordering_and_foreign_credit_rejected) ... ok
+test_exact_order_and_literal_overlaps (__main__.SuccessorAccounting.test_exact_order_and_literal_overlaps) ... ok
+test_frozen_queue_ledger_and_original_seals_unchanged (__main__.SuccessorAccounting.test_frozen_queue_ledger_and_original_seals_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.615s
+
+OK
