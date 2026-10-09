@@ -1,0 +1,5 @@
+{
+  "instruction": "Normal offline/locked Cargo bookkeeping allowed; own target, unchanged toolchain, no dependency/network updates. No cache edits means Blizzard/CASC/vendor source-cache changes; CoW not required. Stop copying caches.",
+  "from": "main",
+  "runtime_scope": "standalone client-era headless; no-default-features"
+}

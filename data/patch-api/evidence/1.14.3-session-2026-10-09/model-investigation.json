@@ -1,0 +1,11 @@
+{
+  "scope": "code inspection only; no model/native proof",
+  "exact_terms": [
+    "GamePadEmulateTapWindowMs",
+    "calendarShowHolidays",
+    "speechToText",
+    "CameraKeepCharacterCentered",
+    "NotchedDisplayMode"
+  ],
+  "hits": []
+}

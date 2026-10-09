@@ -282,11 +282,6 @@ path = "tests/patch_3_4_1_factory.rs"
 required-features = ["client-wrath"]
 
 [[test]]
-name = "patch_1_14_3_factory"
-path = "patch-tests/patch_1_14_3_factory.rs"
-required-features = ["client-era"]
-
-[[test]]
 name = "patch_3_4_2_factory"
 path = "tests/patch_3_4_2_factory.rs"
 required-features = ["client-wrath"]

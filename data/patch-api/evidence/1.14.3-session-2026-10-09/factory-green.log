@@ -1,0 +1,198 @@
+
+running 1 test
+test record_exact_inventory_factory_observations ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.20s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used
+   --> src/widget/frame.rs:601:19
+    |
+600 | impl Frame {
+    | ---------- methods in this implementation
+601 |     pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+610 |     pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 6 warnings
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1143-page)
+warning: struct `SweepSpec` is never constructed
+  --> patch-tests/../tests/common/publication_sweep.rs:11:19
+   |
+11 | pub(crate) struct SweepSpec {
+   |                   ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: enum `ClientLine` is never used
+  --> patch-tests/../tests/common/publication_sweep.rs:25:6
+   |
+25 | enum ClientLine {
+   |      ^^^^^^^^^^
+
+warning: method `matches_profile` is never used
+  --> patch-tests/../tests/common/publication_sweep.rs:34:8
+   |
+33 | impl ClientLine {
+   | --------------- method in this implementation
+34 |     fn matches_profile(self, profile: wow_ui_sim::client_profile::ClientProfile) -> bool {
+   |        ^^^^^^^^^^^^^^^
+
+warning: struct `Register` is never constructed
+  --> patch-tests/../tests/common/publication_sweep.rs:50:8
+   |
+50 | struct Register {
+   |        ^^^^^^^^
+
+warning: struct `Expectation` is never constructed
+  --> patch-tests/../tests/common/publication_sweep.rs:69:8
+   |
+69 | struct Expectation<'a> {
+   |        ^^^^^^^^^^^
+
+warning: function `classify_entry` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:328:4
+    |
+328 | fn classify_entry(
+    |    ^^^^^^^^^^^^^^
+
+warning: function `parse_register` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:363:4
+    |
+363 | fn parse_register(source: &str, row_count: Option<usize>) -> Register {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `read_register` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:393:4
+    |
+393 | fn read_register(spec: &SweepSpec) -> Register {
+    |    ^^^^^^^^^^^^^
+
+warning: function `later_publication` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:404:4
+    |
+404 | fn later_publication(spec: &SweepSpec, client_line: ClientLine) -> BTreeMap<String, Entry> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `expectation_for` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:420:4
+    |
+420 | fn expectation_for<'a>(entry: &Entry, later: &'a BTreeMap<String, Entry>) -> Expectation<'a> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `write_results_if_requested` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:434:4
+    |
+434 | fn write_results_if_requested(out_env: &str, results: &BTreeMap<String, Value>) {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_deprecated_aliases` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:445:15
+    |
+445 | pub(crate) fn read_deprecated_aliases(env: &WowLuaEnv) -> BTreeMap<String, (String, String)> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `addon_is_loaded` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:474:4
+    |
+474 | fn addon_is_loaded(env: &WowLuaEnv, name: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `read_sorted_dir` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:479:4
+    |
+479 | fn read_sorted_dir(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `deprecation_files` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:488:4
+    |
+488 | fn deprecation_files(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `parse_deprecated_alias` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:505:4
+    |
+505 | fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, String))> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_publication_sweep` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:530:15
+    |
+530 | pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_sweep` is never used
+   --> patch-tests/../tests/common/publication_sweep.rs:540:4
+    |
+540 | fn run_sweep(
+    |    ^^^^^^^^^
+
+warning: `wow-ui-sim` (test "patch_1_14_3_factory") generated 18 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.61s
+     Running patch-tests/patch_1_14_3_factory.rs (target/debug/deps/patch_1_14_3_factory-3a3f508211d46ac9)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.53ms
+[  0.002s] [Startup] rilua VM created in 87.06µs
+[  0.002s] [Startup] builtin frames initialized in 60.92µs
+[  0.002s] [Startup] template registry cleared in 5.05µs
+[  0.002s] [Startup] intrinsic templates registered in 6.98µs
+[  0.002s] [Startup] initial app_data lua handle installed in 1.05µs
+[  0.088s] [Startup] init_lua_state complete in 86.56ms
+[  0.088s] [Startup] final app_data lua handle installed in 190.00ns
+[  0.088s] [Startup] initial screen globals installed in 57.65µs
+[  0.088s] [Startup] WowLuaEnv::new complete

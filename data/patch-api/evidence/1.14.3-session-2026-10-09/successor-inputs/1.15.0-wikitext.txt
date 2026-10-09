@@ -1,0 +1,12 @@
+{{apichanges|1.15.0|prev=1.14.4|next=1.15.1}}
+
+==Summary==
+* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.3/API changes|Patch 3.4.3]].
+** A subset of Dragonflight API changes from [[Patch 10.1.7/API changes|Patch 10.1.7]] through to [[Patch 10.2.0/API changes|Patch 10.2.0]] are also included.
+** Refer to the linked articles for guidance on any impactful changes.
+* Added a new C_Engraving namespace for managing runes in seasonal content.
+
+==Resources==
+* TOC: <code>11500</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.4..1.15.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.4..1.15.0 BlizzardInterfaceResources]
+* Deprecated API: [https://github.com/Gethe/wow-ui-source/tree/classic_era_ptr/Interface/AddOns/Blizzard_Deprecated/Deprecated_1_15_0.lua Blizzard_Deprecated]

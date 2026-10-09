@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cp",
+    "--reflink=always",
+    "/home/osso/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/bevy_render-0.19.1.crate",
+    "/home/osso/.worktrees/wow-ui-sim-p1143-page/build/p1143-cargo-home/reflink-probe.crate"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1143-page",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "cp: failed to clone '/home/osso/.worktrees/wow-ui-sim-p1143-page/build/p1143-cargo-home/reflink-probe.crate' from '/home/osso/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/bevy_render-0.19.1.crate': Operation not supported\n",
+  "original_cache_mutated": false,
+  "fallback_used": false
+}
