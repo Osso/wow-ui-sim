@@ -1,0 +1,153 @@
+test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... FAIL
+test_complete_wrath_inclusion_claim_not_erased (__main__.SourceAccounting.test_complete_wrath_inclusion_claim_not_erased) ... FAIL
+test_configuration_and_successors_not_native_credit (__main__.SourceAccounting.test_configuration_and_successors_not_native_credit) ... FAIL
+test_diff_heads_not_collapsed (__main__.SourceAccounting.test_diff_heads_not_collapsed) ... FAIL
+test_dragonflight_subset_separate_and_unexpanded (__main__.SourceAccounting.test_dragonflight_subset_separate_and_unexpanded) ... FAIL
+test_guidance_prose_retained (__main__.SourceAccounting.test_guidance_prose_retained) ... FAIL
+test_header_navigation_toc_and_context (__main__.SourceAccounting.test_header_navigation_toc_and_context) ... FAIL
+test_inventory_signature_and_prose_totals (__main__.SourceAccounting.test_inventory_signature_and_prose_totals) ... FAIL
+test_omissions_fabricated_members_history_and_credit_rejected (__main__.SourceAccounting.test_omissions_fabricated_members_history_and_credit_rejected) ... FAIL
+test_source_identity_and_returned_bytes (__main__.SourceAccounting.test_source_identity_and_returned_bytes) ... FAIL
+test_wiki_and_external_links_accounted_individually (__main__.SourceAccounting.test_wiki_and_external_links_accounted_individually) ... FAIL
+
+======================================================================
+FAIL: test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 12, in test_all_literal_rows
+    self.assertEqual([(r['line'], r['literal']) for r in rows], [(n, s) for n, s in enumerate((EVIDENCE / 'source.wikitext').read_text().splitlines(), 1) if s.strip()])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|1.14.4|prev=1.14.3|next[792 chars]s]')]
+
+Second list contains 8 additional elements.
+First extra element 0:
+(1, '{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}')
+
+Diff is 943 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_complete_wrath_inclusion_claim_not_erased (__main__.SourceAccounting.test_complete_wrath_inclusion_claim_not_erased)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 20, in test_complete_wrath_inclusion_claim_not_erased
+    self.assertTrue(claims, 'inclusion claim absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : inclusion claim absent
+
+======================================================================
+FAIL: test_configuration_and_successors_not_native_credit (__main__.SourceAccounting.test_configuration_and_successors_not_native_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 64, in test_configuration_and_successors_not_native_credit
+    self.assertEqual([(p['feature'], p['configured_interface']) for p in ledger.get('configured_profiles', [])], [('client-era', 11507), ('client-anniversary', 11507)])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('client-era', 11507), ('client-anniversary', 11507)]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('client-era', 11507)
+
+- []
++ [('client-era', 11507), ('client-anniversary', 11507)]
+
+======================================================================
+FAIL: test_diff_heads_not_collapsed (__main__.SourceAccounting.test_diff_heads_not_collapsed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 49, in test_diff_heads_not_collapsed
+    self.assertEqual([(c['compare_base'], c['compare_head']) for c in links], [('1.14.3', 'classic_era_ptr'), ('1.14.3', '1.14.4')])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('1.14.3', 'classic_era_ptr'), ('1.14.3', '1.14.4')]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('1.14.3', 'classic_era_ptr')
+
+- []
++ [('1.14.3', 'classic_era_ptr'), ('1.14.3', '1.14.4')]
+
+======================================================================
+FAIL: test_dragonflight_subset_separate_and_unexpanded (__main__.SourceAccounting.test_dragonflight_subset_separate_and_unexpanded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 30, in test_dragonflight_subset_separate_and_unexpanded
+    self.assertGreaterEqual(len(claims), 2)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than or equal to 2
+
+======================================================================
+FAIL: test_guidance_prose_retained (__main__.SourceAccounting.test_guidance_prose_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 38, in test_guidance_prose_retained
+    self.assertEqual(len(claims), 3)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: 0 != 3
+
+======================================================================
+FAIL: test_header_navigation_toc_and_context (__main__.SourceAccounting.test_header_navigation_toc_and_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 53, in test_header_navigation_toc_and_context
+    self.assertEqual(ledger.get('source_toc'), 11404)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 11404
+
+======================================================================
+FAIL: test_inventory_signature_and_prose_totals (__main__.SourceAccounting.test_inventory_signature_and_prose_totals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 16, in test_inventory_signature_and_prose_totals
+    self.assertEqual(audit.build().get('totals'), dict(physical_lines=10, nonblank_rows=8, metadata_rows=4, unproven_rows=4, contracts=11, headers=2, numerical_inventory_headers=0, api_occurrences=0, event_occurrences=0, cvar_occurrences=0, widget_method_occurrences=0, command_occurrences=0, signature_declarations=0, prose_contracts=3, unexpanded_linked_contracts=8, unexpanded_transclusions=1))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'physical_lines': 10, 'nonblank_rows': 8[344 chars]': 1}
+
+======================================================================
+FAIL: test_omissions_fabricated_members_history_and_credit_rejected (__main__.SourceAccounting.test_omissions_fabricated_members_history_and_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 72, in test_omissions_fabricated_members_history_and_credit_rejected
+    self.assertIn('contracts', expected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+======================================================================
+FAIL: test_source_identity_and_returned_bytes (__main__.SourceAccounting.test_source_identity_and_returned_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 99, in test_source_identity_and_returned_bytes
+    self.assertIn('source', audit.build())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source' not found in {}
+
+======================================================================
+FAIL: test_wiki_and_external_links_accounted_individually (__main__.SourceAccounting.test_wiki_and_external_links_accounted_individually)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py", line 44, in test_wiki_and_external_links_accounted_individually
+    self.assertEqual([(c['line'], c['label'], c['target']) for c in links], [(4, 'Wrath Classic', 'World of Warcraft: Wrath of the Lich King Classic'), (4, 'Patch 3.4.0', 'Patch 3.4.0/API changes'), (4, 'Patch 3.4.1', 'Patch 3.4.1/API changes'), (4, 'Patch 3.4.2', 'Patch 3.4.2/API changes'), (5, 'Patch 10.0.0', 'Patch 10.0.0/API changes'), (5, 'Patch 10.1.5', 'Patch 10.1.5/API changes'), (10, 'wow-ui-source', 'https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr'), (10, 'BlizzardInterfaceResources', 'https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4')])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(4, 'Wrath Classic', 'World of Warcraft: [478 chars].4')]
+
+Second list contains 8 additional elements.
+First extra element 0:
+(4, 'Wrath Classic', 'World of Warcraft: Wrath of the Lich King Classic')
+
+- []
++ [(4, 'Wrath Classic', 'World of Warcraft: Wrath of the Lich King Classic'),
++  (4, 'Patch 3.4.0', 'Patch 3.4.0/API changes'),
++  (4, 'Patch 3.4.1', 'Patch 3.4.1/API changes'),
++  (4, 'Patch 3.4.2', 'Patch 3.4.2/API changes'),
++  (5, 'Patch 10.0.0', 'Patch 10.0.0/API changes'),
++  (5, 'Patch 10.1.5', 'Patch 10.1.5/API changes'),
++  (10,
++   'wow-ui-source',
++   'https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr'),
++  (10,
++   'BlizzardInterfaceResources',
++   'https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4')]
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.002s
+
+FAILED (failures=11)

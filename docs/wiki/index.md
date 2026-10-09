@@ -3012,3 +3012,14 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch1.15.1 frozen source and alias boundary
 
 [Audit](investigations/patch-1-15-1-api-audit.md): frozen577687/5998991;9 rows,2 enum occurrences,7 contracts/no signatures. SOURCE RED8/GREEN8 at3045ff2a9; portable RED3/GREEN3 at714277147, copied SOURCE8/default-byte replay, serialized ledger/log reject/restore;57 immutable originals/9 separate receipt seals. Standalone headless Era GREEN1/1 at714277147: unchanged pinned official Lua uses existing IsPublicBuild=true and raw named values2=2. Two bounded direct-existing-state declaration rows/five UNPROVEN; no native/full-loading/C_Seasons credit. Bare absence loading boundary, not defect. Seven existing simulator warnings +six vendor deprecations retained; main owns integration/native/final gates.
+## [2026-10-09] investigation | Patch 1.14.4 frozen SOURCE audit
+
+[Audit](investigations/patch-1-14-4-api-audit.md): frozen267043/2581777 identity verified before derivation. Own SOURCE RED11/portable RED3 retained; all-Wrath3.4.0/1/2 inclusion and unspecified Dragonflight10.0.0..10.1.5 subset kept separate/unexpanded. Zero runtime/model/native credit; main owns integration/gates.
+
+## [2026-10-09] investigation | Patch 1.14.4 SOURCE GREEN
+
+[Audit](investigations/patch-1-14-4-api-audit.md): SOURCE11/11 at183437dc5; eight rows/four metadata/four UNPROVEN, eleven contracts (three prose/six wiki/two diff), two headers/one unexpanded template, zero inventory/signatures. Original seals/archive captured; portable replay pending. No runtime or foreign supersession.
+
+## [2026-10-09] investigation | Patch 1.14.4 copied SOURCE proof
+
+[Audit](investigations/patch-1-14-4-api-audit.md): portable3/3 atfb6e6ba53; copied SOURCE11/11/validator/default-byte replay and both serialized ledger/log seal rejections/exact restorations. Original67 seals unchanged;68-member archive, four separate current receipt seals. Wrath all-change inclusion and Dragonflight subset stay distinct/unexpanded; eleven contracts UNPROVEN. No runtime/model/native/foreign supersession; main owns ordered Era integration/gates.

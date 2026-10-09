@@ -1,0 +1,16 @@
+test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... ok
+test_complete_wrath_inclusion_claim_not_erased (__main__.SourceAccounting.test_complete_wrath_inclusion_claim_not_erased) ... ok
+test_configuration_and_successors_not_native_credit (__main__.SourceAccounting.test_configuration_and_successors_not_native_credit) ... ok
+test_diff_heads_not_collapsed (__main__.SourceAccounting.test_diff_heads_not_collapsed) ... ok
+test_dragonflight_subset_separate_and_unexpanded (__main__.SourceAccounting.test_dragonflight_subset_separate_and_unexpanded) ... ok
+test_guidance_prose_retained (__main__.SourceAccounting.test_guidance_prose_retained) ... ok
+test_header_navigation_toc_and_context (__main__.SourceAccounting.test_header_navigation_toc_and_context) ... ok
+test_inventory_signature_and_prose_totals (__main__.SourceAccounting.test_inventory_signature_and_prose_totals) ... ok
+test_omissions_fabricated_members_history_and_credit_rejected (__main__.SourceAccounting.test_omissions_fabricated_members_history_and_credit_rejected) ... ok
+test_source_identity_and_returned_bytes (__main__.SourceAccounting.test_source_identity_and_returned_bytes) ... ok
+test_wiki_and_external_links_accounted_individually (__main__.SourceAccounting.test_wiki_and_external_links_accounted_individually) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.134s
+
+OK

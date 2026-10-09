@@ -1,0 +1,25 @@
+{
+  "scope": "own copied SOURCE only; no final gate",
+  "revision": "fb6e6ba536c7e440b0289ee9741b1ba987948c15",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/replay-archive.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1144-page/target/p1144-source-replay",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/portable-controls.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1144-page",
+  "exit_code": 0,
+  "tests": "portable3/3; copied SOURCE11/11; validator/default byte replay; serialized ledger/log rejection and restoration",
+  "original_seals": 67,
+  "seal_map_sha256": "072a807ef3ad318e5725268212e0a1d389a73d45fe0beb1560e5102473c5169c",
+  "all_originals_unchanged": true,
+  "archive_sha256": "3a94751922acbed0d852abb1df68a8edb334d09d51264a95f02075829fbf22f8",
+  "archive_bytes": 114575,
+  "archive_members": 68,
+  "invalidated_by": null
+}
