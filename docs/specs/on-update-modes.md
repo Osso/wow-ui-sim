@@ -28,7 +28,7 @@ The shared `on-update-modes` capability exposes the numeric frame update-mode co
 
 ## Tests asserting this spec
 
-`tests/on_update_modes.rs` in the existing grouped `integration` target.
+`tests/on_update_modes.rs` in the existing grouped `integration` target. The ManagedAura case preserves native phase registration, requests `UpdateAllAuras()` while hidden, observes the armed/dirty state through a hidden tick, then observes clean/Disabled state after the visible tick and again on the following tick. It does not substitute synthetic phases or handler counts.
 
 ## Evidence
 

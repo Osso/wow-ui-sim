@@ -1166,3 +1166,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] bounded proof | Typed formatter7/7, other failures preserved
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md):941140fd6lockedcompileexit0,formatter7/7 withdocumentedNumericFormattertyping andrealDurationObjects. SeparateManagedAura0/1 flags18; threeEditModeinitializerREDs0/3 beforepostconditions. Original scalarRED and6/7epoch preserved; Garrison actualdependencycheckout foundbutcatalogrowsunproved. Sixmanifestdeprecations/fullparentgates remain; no broad rerun.
+
+## [2026-10-09] fixture correction | Preserve actual ManagedAura phases
+
+[SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md): exactnativephaseRED flags18 retained. Fixture removes syntheticphase replacement/counters, usesUpdateAllAuras whilehidden, thenassertsarmed/dirty throughhidden tickandclean/Disabled acrossvisibleticks. Runtime/vendorunchanged; correctedexecutionpending.

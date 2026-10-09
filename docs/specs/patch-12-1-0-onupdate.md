@@ -5,7 +5,7 @@ Bounded simulator proof for [prose-2026-06-18-058; prose-2026-06-18-059](../../d
 ## What it must do
 
 - [x] L58/L59: all five numeric modes round-trip, invalid modes reject, default is RunWhenVisible; actual dispatch follows ancestor visibility, hidden RunAlways, one-shot reset/rearm and XML mode selection.
-- [ ] Existing managed-aura dirty-phase fixture fails: showing container requests full rebuild mask 19 after fixture replaces phases with only flag 1; unprocessed flags 18 remain. No managed aura proof credited or vendor/fixture patch made.
+- [ ] Actual managed-aura dirty processing must retain native registration, remain armed while hidden, then clear dirty state and stay Disabled after visible dispatch. Earlier synthetic-phase failure remains historical RED evidence; corrected execution pending.
 
 ## How it works
 
@@ -20,11 +20,11 @@ Bounded simulator proof for [prose-2026-06-18-058; prose-2026-06-18-059](../../d
 
 ## Tests asserting this spec
 
-- `tests/on_update_modes.rs — four passing tests; on_update_modes_process_actual_managed_aura_dirty_phases fails`
+- `tests/on_update_modes.rs` — prior proof had four passing tests and one ManagedAura failure. The 2026-10-09 fixture preserves native phases and uses `UpdateAllAuras()`; fresh runtime proof pending.
 
 ## Known gaps (current cycle)
 
-- [ ] Existing managed-aura dirty-phase fixture fails: showing container requests full rebuild mask 19 after fixture replaces phases with only flag 1; unprocessed flags 18 remain. No managed aura proof credited or vendor/fixture patch made.
+- [ ] Earlier fixture replaced six native phases with only flag 1, leaving flags 18 after showing requested the full rebuild. Exact 2026-10-09 RED reproduces that boundary. Fixture now observes actual hidden/visible dirty-state transitions without replacing phases; no vendor/runtime patch or ManagedAura PASS yet credited.
 
 ## Out of scope
 

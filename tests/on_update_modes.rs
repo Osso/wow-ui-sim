@@ -160,25 +160,32 @@ fn on_update_modes_process_actual_managed_aura_dirty_phases() {
         ModeAuraContainer = CreateFrame("ManagedAuraContainer", nil, UIParent, "CustomAuraContainerTemplate")
         local private = GetForbiddenObjectTable(ModeAuraContainer)
         assert(type(private.ProcessDirtyFlags) == "function")
-        AuraPhaseCalls = 0
         private:MarkClean(private.dirtyFlags:GetFlags())
-        private:SetDirtyPhases({{flag=1, handler=function()
-            assert(ModeAuraContainer:GetOnUpdateMode() == 0)
-            AuraPhaseCalls = AuraPhaseCalls + 1
-        end}})
         ModeAuraContainer:Hide()
-        private:MarkDirty(1)
+        ModeAuraContainer:UpdateAllAuras()
         assert(ModeAuraContainer:GetOnUpdateMode() == 2)
         assert(private:IsDirty())
     "#).unwrap();
     env.fire_on_update(0.016).unwrap();
-    env.exec("assert(AuraPhaseCalls == 0); ModeAuraContainer:Show()")
-        .unwrap();
-    env.fire_on_update(0.016).unwrap();
+    env.exec(
+        r#"
+        assert(ModeAuraContainer:GetOnUpdateMode() == 2)
+        assert(GetForbiddenObjectTable(ModeAuraContainer):IsDirty())
+        ModeAuraContainer:Show()
+    "#,
+    )
+    .unwrap();
     env.fire_on_update(0.016).unwrap();
     env.exec(
         r#"
-        assert(AuraPhaseCalls == 1)
+        assert(not GetForbiddenObjectTable(ModeAuraContainer):IsDirty())
+        assert(ModeAuraContainer:GetOnUpdateMode() == 0)
+    "#,
+    )
+    .unwrap();
+    env.fire_on_update(0.016).unwrap();
+    env.exec(
+        r#"
         assert(not GetForbiddenObjectTable(ModeAuraContainer):IsDirty())
         assert(ModeAuraContainer:GetOnUpdateMode() == 0)
     "#,
