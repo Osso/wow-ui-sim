@@ -54,6 +54,10 @@ Validation derives row/status/gap/header/signature/successor/receipt totals and 
 
 [Own portable development receipt](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/validator-development-proof.json) and physical log cover relocated fresh Python processes with no Git/Cargo PATH and no original repository/target/current state. Synthetic future current ledger and target drift leave results identical. All 25 sealed-file tamper controls plus manifest tampering reject at the exact filename; each restores byte-identically and clean replay is reconfirmed. Deleted historical gap sidecar also rejects and restores. This is source/development-evidence proof, not a coordinator final gate.
 
+## Main successor integration — 2026-10-09
+
+Actual retail 3.1.0, 3.2.0 and 3.3.0 now replace the queued placeholder. Exact symbol comparison finds 3.1.0 `GetGlyphLink` changed, 3.3.3 `UninviteUnit` changed and 4.0.1 `RestoreVideoStereoDefaults` removed; 3.2.0/3.3.0/3.3.5 have no overlap. The latter two actual successors were already applied in the historical slice. Ownerless `SetUpAnimation` prose remains unexpanded, with no registered successor identity. Fresh integrated observations and parser/replay gates pending; historical 25 seals remain untouched. No runtime changes or native credit.
+
 ## Sources
 
 - [Frozen literal page](../../../data/patch-api/sources/3.0.8-api-changes.wikitext).

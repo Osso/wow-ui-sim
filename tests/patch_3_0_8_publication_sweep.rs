@@ -17,7 +17,9 @@ fn patch_3_0_8_publication_sweep(env: &WowLuaEnv) {
         register_env: "P308_SWEEP_REGISTER",
         out_env: "P308_SWEEP_OUT",
         later_registers: &[
-            // Pending retail 3.3.0 / 3.2.0 / 3.1.0: main adds oldest-first at integration.
+            include_str!("../data/patch-api/sources/3.1.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/3.2.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/3.3.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/3.3.3-wikitext-register.json"),
             include_str!("../data/patch-api/sources/3.3.5-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.0.1-wikitext-register.json"),
