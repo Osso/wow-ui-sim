@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.15.8 literal SOURCE audit
 
-[Audit](investigations/patch-1-15-8-api-audit.md): frozen 686952/6778071, literal TOC11508; four nonblank rows, one header, two UNPROVEN diff contracts and unexpanded navigation. No local API/event/CVar/widget/command/signature/prose declarations. Literal page lacks client name; configured Era/Anniversary11507 and queued sibling1.15.9 Classic context separated from native/integration credit. Own SOURCE RED retained; GREEN/seals pending. No runtime/shared-tool changes or final gates.
+[Audit](investigations/patch-1-15-8-api-audit.md): frozen 686952/6778071, literal TOC11508; four nonblank rows, one header, two UNPROVEN diff contracts and unexpanded navigation. No local API/event/CVar/widget/command/signature/prose declarations. Literal page lacks client name; configured Era/Anniversary11507 and queued sibling1.15.9 Classic context separated from native/integration credit. Own SOURCE RED retained; GREEN8/8 at `384699f11`, original23 seals (660,202 bytes); portable controls pending. No runtime/shared-tool changes or final gates.
 
 ## [2026-10-09] documentation | Bounded retail 3.1.0/3.0.8/3.0.3/3.0.2 proof status
 

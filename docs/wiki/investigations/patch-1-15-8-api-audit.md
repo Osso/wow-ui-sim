@@ -26,11 +26,11 @@ Copied base Cargo/client-profile/manifests record **Era and Anniversary configur
 
 ## Development proof
 
-Own eight fixtures: RED eight expected assertion failures against empty accounting, retained with scaffold. Python AST formatting only. Implementation and source ledger present; GREEN not yet recorded. No check/lint/readability/coverage/broad/startup/final gates or runtime calls. Shared generator/extractor unchanged; own frozen copies retain original bytes and default flags `[]` for replay.
+Own eight fixtures: RED eight expected assertion failures against empty accounting, retained with scaffold. Python AST formatting only. Implementation/source ledger committed at `384699f11`; GREEN **8/8** there, including omission/fabricated-credit/foreign-history/source identity controls. No later code edits. No check/lint/readability/coverage/broad/startup/final gates or runtime calls. Shared generator/extractor unchanged; own frozen copies retain original bytes and default flags `[]` for replay.
 
 ## Historical proof
 
-Compact historical sealing and copied replay pending; original source proof and later receipt seals will remain separate. No native/final acceptance claim.
+Original `seals.json` pins **23 inputs**, 660,202 bytes total; largest file 219,034 bytes, all under 5 MB. RED/GREEN logs and proof ledger included. Frozen default generator flags `[]` yields retained empty register; no all-flags expansion. Copied replay and disk tamper controls pending; later receipt seals remain separate. No native/final acceptance claim.
 
 ## Sources
 
