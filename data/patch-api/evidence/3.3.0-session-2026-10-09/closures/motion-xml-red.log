@@ -1,0 +1,37 @@
+
+running 1 test
+test patch_3_3_0_motion_xml::patch_3_3_0_motion_xml_preserves_true_false_and_template_inheritance_before_onload ... FAILED
+
+failures:
+
+failures:
+    patch_3_3_0_motion_xml::patch_3_3_0_motion_xml_preserves_true_false_and_template_inheritance_before_onload
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10690 filtered out; finished in 0.46s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p330-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 14s
+     Running tests/integration.rs (target/debug/deps/integration-1db16289b0998b2a)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.004s] [Startup] SimState::default complete in 4.28ms
+[  0.005s] [Startup] rilua VM created in 195.23µs
+[  0.005s] [Startup] builtin frames initialized in 144.11µs
+[  0.005s] [Startup] template registry cleared in 8.22µs
+[  0.005s] [Startup] intrinsic templates registered in 14.13µs
+[  0.005s] [Startup] initial app_data lua handle installed in 531.00ns
+[  0.436s] [Startup] init_lua_state complete in 431.03ms
+[  0.436s] [Startup] final app_data lua handle installed in 461.00ns
+[  0.436s] [Startup] initial screen globals installed in 313.42µs
+[  0.436s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_3_3_0_motion_xml::patch_3_3_0_motion_xml_preserves_true_false_and_template_inheritance_before_onload' (2571524) panicked at /home/osso/.worktrees/wow-ui-sim-p330-source/tests/patch_3_3_0_motion_xml.rs:36:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "inherited true", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test integration`

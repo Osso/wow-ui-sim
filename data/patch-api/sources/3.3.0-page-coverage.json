@@ -202,9 +202,11 @@
     },
     {
       "source_id": "prose-undated-024",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Inline XML motionScriptsWhileDisabled is ignored: FrameXml lacks field and direct setup does not apply it. Existing widget flag/dispatch model supports a cheap literal attribute closure."
+      "capabilities": [
+        "xml-button-motion-flag"
+      ],
+      "status": "bounded-coverage",
+      "note": "Literal XML true/false and template/Lua creation inherited state tested before OnLoad; existing disabled enter/leave pointer test passes. See closures/coverage-update.json. No new model or native historical-client proof."
     },
     {
       "source_id": "prose-undated-025",

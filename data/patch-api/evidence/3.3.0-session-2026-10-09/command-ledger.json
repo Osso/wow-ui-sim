@@ -1,0 +1,93 @@
+{
+  "commands": [
+    {
+      "artifact": "parser-red.log",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_patch_3_3_0_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "9ff195d19 + new source fixture",
+      "exit": 1,
+      "scope": "missing opt-in summary parser/extractor RED",
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "parser-green.log",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_patch_3_3_0_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "d85488782",
+      "exit": 0,
+      "scope": "literal inventory, extraction, old own defaults",
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "own-sweep-red.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_3_0_publication_sweep",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "9e76d1e4c",
+      "exit": 1,
+      "scope": "own empty-known-gap probe; P330_SWEEP_OUT=own-sweep-red-results.json",
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "own-sweep-green.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_3_0_publication_sweep",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "224109b55",
+      "exit": 0,
+      "scope": "own probe; original two known gaps, P330_SWEEP_OUT=own-sweep-green-results.json",
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "negative.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_3_0_publication_sweep",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "224109b55",
+      "exit": 1,
+      "scope": "P330_SWEEP_REGISTER=negative-register.json; original row replaced with impossible method; gap delta one",
+      "later_changes_invalidate": false
+    }
+  ]
+}

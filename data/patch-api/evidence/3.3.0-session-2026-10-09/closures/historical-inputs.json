@@ -1,0 +1,40 @@
+{
+  "code_revision": "224109b55a0e29eec3adc63acbd1fc1118ce038e",
+  "scope": "one existing-model XML attribute closure; independent of original ledger",
+  "archive_sha256": "bb2856b0b60e78cbf52d0b54a65fb6fc28dc4f278ff8ac9b29f1c1d18b08b79d",
+  "archived_files": {
+    "src/xml/types.rs": "47032fbdd208c314fb8cbffa193c5a83e98f414dcafa27ad6fb7d6b250b46c08",
+    "src/lua_api/globals/template/direct.rs": "f551eb91f964c4b7fe06ba8054159d6421e409aa747523bd069a251c2fecaf26",
+    "src/loader/xml_frame/setup.rs": "3b8d5d6a3db97d0ddbfb135c602b60b6d340e3fe619e4f6edc2549ab6f63436d",
+    "src/lua_api/globals/create_frame/template_chain/runtime.rs": "0bd7c0dc5349ed955c69a4dd1a2488d71e7229b7e3c4d6f99ef581c6240e47e2",
+    "tests/patch_3_3_0_motion_xml.rs": "c86272a85329a28e76398ac8416b358a80aaad42ce4e35a1c2febc9369d2089c",
+    "src/iced_app/mouse_hover_tests.rs": "5e0d7331c62cbd961a6f21ccb14cfdb3bcdf2924dfbba28e1de84a5d3d22ff97",
+    "src/iced_app/mouse_drag.rs": "a2d02cf8e3b0d56615e139b458d4a9cd19e88ededcc5e89cfc846dc33739616e"
+  },
+  "sealed_files": {
+    "motion-xml-red.log": {
+      "sha256": "3c46e108f46fdd758403613235302d3ac39d39888e0543e14370fcbe7ddff66a",
+      "bytes": 2869
+    },
+    "motion-xml-green.log": {
+      "sha256": "85e2f8eb840f80a63d407a7608ae4d6c5e58483e3c19516c8d730d5ca17a3218",
+      "bytes": 2244
+    },
+    "motion-xml-test-compile-error.log": {
+      "sha256": "0db42b6f2cbb0f79f9e9597635d66a7f89aa43c9197d3c1c734dd626b57c1966",
+      "bytes": 2139
+    },
+    "existing-motion-dispatch-green.log": {
+      "sha256": "bb2746cf661081e97f34fa585623eefb620644083f2a8c8acf7979664514aa62",
+      "bytes": 2648
+    },
+    "command-ledger.json": {
+      "sha256": "f98f89473c1605e4b50ddedb29e226827868d5acff9ad6e41ff03130e3f57171",
+      "bytes": 1946
+    },
+    "coverage-update.json": {
+      "sha256": "49b87edbe9a28a48428445dd695e21f48bf24c6797fd966ef7c6fbe86b11e860",
+      "bytes": 581
+    }
+  }
+}

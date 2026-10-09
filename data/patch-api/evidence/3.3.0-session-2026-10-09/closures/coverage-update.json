@@ -1,0 +1,17 @@
+{
+  "closures": [
+    {
+      "source_id": "prose-undated-024",
+      "scope": "Literal XML bool connects existing button motion flag, before OnLoad and through templates; no new model/API or native historical parity.",
+      "proof": [
+        "motion-xml-red.log",
+        "motion-xml-green.log",
+        "existing-motion-dispatch-green.log"
+      ],
+      "capabilities": [
+        "xml-button-motion-flag"
+      ]
+    }
+  ],
+  "remaining": "Texture source-file dimensions; all other original prose/signature gaps remain. registerForClicks token/delimiter contract unpinned."
+}

@@ -16,12 +16,12 @@ class SourceTests(unittest.TestCase):
             output = Path(directory) / 'register.json'
             command = [sys.executable, '-B', str(ROOT / 'tools/gen_patch_wikitext_register.py'),
                        '3.3.0', str(RAW), '6055853', str(output)]
-            default = subprocess.run(command, capture_output=True, text=True)
+            default = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
             self.assertEqual(default.returncode, 0, default.stderr)
             original = output.read_bytes()
             self.assertEqual(json.loads(original)['entries'], [])
             result = subprocess.run(command + ['--wrath-retail-summary', '--client-line', 'retail'],
-                                    capture_output=True, text=True)
+                                    cwd=ROOT, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             rows = json.loads(output.read_text())['entries']
             self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line']) for r in rows], [
@@ -33,7 +33,7 @@ class SourceTests(unittest.TestCase):
                 ('Texture:GetFileWidth', 'added', 27), ('Texture:GetFileHeight', 'added', 28)])
             self.assertEqual(len({r['id'] for r in rows}), len(rows))
             self.assertTrue(all(r['annotation'] for r in rows))
-            subprocess.run(command, check=True, capture_output=True)
+            subprocess.run(command, cwd=ROOT, check=True, capture_output=True)
             self.assertEqual(output.read_bytes(), original)
 
     def test_summary_extraction_keeps_inline_xml_and_attribution(self):

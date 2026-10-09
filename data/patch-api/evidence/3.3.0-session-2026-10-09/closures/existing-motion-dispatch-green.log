@@ -1,0 +1,34 @@
+
+running 1 test
+test iced_app::mouse::mouse_test_modules::hover_tests::disabled_buttons_only_run_hover_motion_scripts_when_opted_in ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1978 filtered out; finished in 0.13s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p330-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 57s
+     Running unittests src/lib.rs (target/debug/deps/wow_ui_sim-bcad23723a7b3b0d)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.00ms
+[  0.002s] [Startup] rilua VM created in 109.77µs
+[  0.002s] [Startup] builtin frames initialized in 80.92µs
+[  0.002s] [Startup] template registry cleared in 4.09µs
+[  0.002s] [Startup] intrinsic templates registered in 9.85µs
+[  0.002s] [Startup] initial app_data lua handle installed in 501.00ns
+[  0.123s] [Startup] init_lua_state complete in 120.26ms
+[  0.123s] [Startup] final app_data lua handle installed in 371.00ns
+[  0.123s] [Startup] initial screen globals installed in 85.90µs
+[  0.123s] [Startup] WowLuaEnv::new complete
+[  0.123s] [Startup] WowFontSystem::new begin casc=true
+[  0.123s] [Startup] font FRIZQT__.TTF loaded in 61.39µs
+[  0.123s] [Startup] font ARIALN.TTF loaded in 25.37µs
+[  0.123s] [Startup] font FRIZQT___CYR.TTF loaded in 17.86µs
+[  0.123s] [Startup] cosmic font system built in 9.73µs
+[  0.123s] [Startup] swash cache created in 7.15µs
+[  0.123s] [Startup] WowFontSystem::new complete in 130.76µs

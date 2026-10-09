@@ -1,0 +1,541 @@
+[
+  {
+    "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+    "sha256": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.0.2-api-changes.wikitext",
+    "sha256": "2c166624469ef741392de16f972a89f8ca9b4b71fa3f087fb9919954be4ae716",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+    "sha256": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+    "sha256": "b4175ca8755de168ade2800555c5576f452111b8de2b48be81a639516d584689",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+    "sha256": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.1.5-api-changes.wikitext",
+    "sha256": "9a0f1759634bf56323e005271e909439905662d6411f01768641a59114c4ed08",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+    "sha256": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.2.0-api-changes.wikitext",
+    "sha256": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.2.5-api-changes.wikitext",
+    "sha256": "c2becc09182863ffce8ad75c3209159afdecea6223f4985d0bf3c6f6e89ef9db",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.2.6-api-changes.wikitext",
+    "sha256": "a02ddeeb6bb50ce02a5c84de9b9848c54c3ad25784a58853249231caee1769d4",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+    "sha256": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.0.0-api-changes.wikitext",
+    "sha256": "777f9c6031b93bc7070eeef547762da2869aa191b5ebf1e75a0282a7633ad347",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+    "sha256": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.0.5-api-changes.wikitext",
+    "sha256": "185e5cc92ca97494d00d7bdad8b770ceed22c075e4eacbbd30a4f1e7a3579f6c",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.0.7-api-changes.wikitext",
+    "sha256": "7452477854beac6fe0155caaf283801f15eb46acf20b69e90c8b8eb589ccb061",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+    "sha256": "1a802cad91a6b79b9ad5c8038627ba54c93ef963f0640494da7dfc3fd0eb6c99",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.1.5-api-changes.wikitext",
+    "sha256": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+    "sha256": "c934013da17b5072d32f4b0ce0427572d6b26835d7abc1da4ab16c8dcae05ee7",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+    "sha256": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.2.5-api-changes.wikitext",
+    "sha256": "c729365457a32afff2af1020cac832504358c11e9e59aaad2987cada06c4950b",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+    "sha256": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/12.0.0-api-changes.wikitext",
+    "sha256": "74e0dee19960d40c551759c94b06f8393d445781200182b9c5971a64e57b9a19",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/12.0.1-api-changes.wikitext",
+    "sha256": "cc4585de4c3d3600d8beacb5af7a278d9e9ee52d7c6e2aeb483b3baa259a465e",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/12.0.5-api-changes.wikitext",
+    "sha256": "2fd339ed0c93d26fc7b8e14743bc0430aa5169153e793bc68f85224e510dafd4",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+    "sha256": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/12.1.0-api-changes.wikitext",
+    "sha256": "de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/3.3.0-api-changes.wikitext",
+    "sha256": "8aba4ed7056b03aca55eb5136011a54cd6794668d3374909d2da6e1696bb9267",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/4.1.0-api-changes.wikitext",
+    "sha256": "8d21143deb4422f937bcec0ed3469e02c64115b48ceec5cb9239e2cd0752df1c",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/4.2.0-api-changes.wikitext",
+    "sha256": "699e1b8b9794a244f8421929cd4603ee04f4686a03cc1cd8b5478b31d7316bcd",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/4.3.0-api-changes.wikitext",
+    "sha256": "574755049e8851045711fc99cfb2b66db9b5f4818c01ce3ee0c1d3c8478be8a2",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/4.3.4-api-changes.wikitext",
+    "sha256": "37d7e34b52398cfe7ccb9e90114d1cd2bb414841b9e654e91af2d08b7c25c19f",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/4.4.0-api-changes.wikitext",
+    "sha256": "f8598e92092793a0621ea26d5620fd910c178dcb1fccd0b0aa313b83a6b56d5e",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/4.4.1-api-changes.wikitext",
+    "sha256": "076080f53193f5c8808f255e5630b9e83db8e9e284c53eff7a7ed7b84623284a",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/4.4.2-api-changes.wikitext",
+    "sha256": "484b49adb4301ad901914389cf37f9849c21d62eea20797d0ad2fefbaa2b8669",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.0.1-api-changes.wikitext",
+    "sha256": "a4fd086dfb7893dbd912a283c37c9242a4386af82e8e2e330a97c4f137f7484b",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.0.4-api-changes.wikitext",
+    "sha256": "b8ac5f350bba3ac9669428b005ac9d5a2340ff85caed6c2792ab07e1be1264b9",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/5.1.0-api-changes.wikitext",
+    "sha256": "6f6f3ce35868a731d2eede70c0ba839c02aba6ad870a608d65a8e68e56a1ca26",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/5.2.0-api-changes.wikitext",
+    "sha256": "3feae2c6e4d1d07dfdf77e714f904f5b76226a7bd7b7cdabd0e92e7bb8566568",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/5.3.0-api-changes.wikitext",
+    "sha256": "62da2d403ebc3027b12e47145329e459a903ef5f5779f2079bf1d6339a6013fe",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/5.4.0-api-changes.wikitext",
+    "sha256": "0ece64098024279814fdec4b6aa6ea40dbae1d58c97ffb3d8a9af56eae742fa8",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/5.4.1-api-changes.wikitext",
+    "sha256": "f3173fceaa061c9c2f0f3fb0eca097a6d6a108365247ae15846955535795b8e6",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.4.2-api-changes.wikitext",
+    "sha256": "0aa82c13e17c30d54797b45ffa769b65b01723e455174f6f2dfa39148671f773",
+    "default_equal": true,
+    "register_result": "ValueError",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.4.7-api-changes.wikitext",
+    "sha256": "9f0be17f51e16801f94e7306862184e3e4ad80c4025d9c751d39ff64bae99b89",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.4.8-api-changes.wikitext",
+    "sha256": "ab39eeb470444d78cd2e15236a46271fa70852c0a24a7c246e54a9b7255c3bf6",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.5.0-api-changes.wikitext",
+    "sha256": "287cde113f092de83ebeb7bac1ae4bd3658da1721ea9625302809ec0d8cf2fd6",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.5.1-api-changes.wikitext",
+    "sha256": "f791ec0e8af293c6837e2dc2b069c747868bacce07290757826f4ac24f828008",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.5.2-api-changes.wikitext",
+    "sha256": "715c614109b44ceef34559b2bdd01df19a33afafb25b9c432d700b34702da4f4",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.5.3-api-changes.wikitext",
+    "sha256": "ac47bdfc9be32a278b05e2eff939c8f1d2f55a168d420dab7b1e91701d89c138",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/5.5.4-api-changes.wikitext",
+    "sha256": "6a6170c87c139503993a1c18be03292edd5563a7a2bfe9428ab1f97a2b8e74cb",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/6.0.1-api-changes.wikitext",
+    "sha256": "4b165c4e4db1de0339eac46999fd4b4dcca1e48384c99e31bb35aae7ad4c2dc5",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/6.0.2-api-changes.wikitext",
+    "sha256": "8c3882d8457ff71a731d5534dd7e144c8faaafd342c997192d5dd8605eab8f60",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/6.1.0-api-changes.wikitext",
+    "sha256": "18c268e83e6e34c72e99eaf5318beaaec6b3b097d07fe85d88c2eced94583449",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/6.2.0-api-changes.wikitext",
+    "sha256": "d091f4ebd2592b24fb6f1da267cbd178d69bd9a1a17b07fa96f9c96fac79033a",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/6.2.2-api-changes.wikitext",
+    "sha256": "bc11548c8cbc0453f639c8053f7fc67845710d92a98a8a832dc815e4e406a741",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+    "sha256": "2460bc07a61df48e31c1b8f33d264c4270c901c753583e6d1cea920531a2b6fc",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/7.0.1-api-changes.wikitext",
+    "sha256": "1ccdea3045d48c436a307f6a3bc74412bac0ddb5b4a6347fbd00990943aaca3a",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/7.0.3-api-changes.wikitext",
+    "sha256": "d8951bad884b04b4686fdc7a0cc26b305b35c31ecc8872035d209937f13f3484",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/7.1.0-api-changes.wikitext",
+    "sha256": "710a4f960ae532a858a1ff7e39f6d956353f69565ced0b66e4fb2ec22c10ef87",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/7.2.0-api-changes.wikitext",
+    "sha256": "8441bd7ac745b2f839156b4e7e37a14f63f4f001649c5cecfb5110ea45db08cf",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/7.2.5-api-changes.wikitext",
+    "sha256": "93081583da31739e03d087b525787d5e7aafdaeac23ea9ec8480be624c03803e",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/7.3.0-api-changes.wikitext",
+    "sha256": "4fa82825b87c700d8fb0ab6d4d7c51061ed045675b644682a36f0eb495a1a082",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+    "sha256": "a510a7538a0925f0059bdb95a9ac696c9f4215444e3e65032784e78a3e6fb6d1",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+    "sha256": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/8.1.0-api-changes.wikitext",
+    "sha256": "9cc26872abfdc3de1b9708ea9eeb79287d114bd1aa2b652e0fef0e20ee592832",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+    "sha256": "fc40dccee6ebfd304bce361e9251bcaab39e79e6fe2c6e3406c55fa4d6f5d8e4",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/8.2.0-api-changes.wikitext",
+    "sha256": "35a296d3044d68b92286a0d3ec653283a7dc0beba2b4b64d3c9e9410f129e41f",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+    "sha256": "f8d21b89e4551b6b1478247f2ce5e6859a0a0ac8ea3b8a25b35b48da160059a8",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+    "sha256": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ValueError"
+  },
+  {
+    "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+    "sha256": "0fae3d8d22e456e84eb0082b729586429c9151d7ec32ecd851f8d3c8b1575784",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+    "sha256": "51c3ecf32ee65f178aaae7c711ff7af7bd9f243aea27712bf98261d78682d236",
+    "default_equal": true,
+    "register_result": "ValueError",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+    "sha256": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+    "sha256": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+    "sha256": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c",
+    "default_equal": true,
+    "register_result": "ValueError",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.1.5-api-changes.wikitext",
+    "sha256": "1af11608f2f057faf74f95cfefdfad43c282a4153357dc8900c64e870f438476",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+    "sha256": "2592e6464c46add082bdf18b7310c3ad6aa640c53b4a8a58552b15658d3467ae",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+    "sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  },
+  {
+    "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+    "sha256": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157",
+    "default_equal": true,
+    "register_result": "ok",
+    "extract_result": "ok"
+  }
+]

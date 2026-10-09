@@ -1,0 +1,200 @@
+{
+  "p330-negative-control": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:P330DefinitelyMissing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-events-QUEST_QUERY_COMPLETE-8": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "diff-wt-events-QUEST_QUERY_COMPLETE-547",
+      "symbol": "QUEST_QUERY_COMPLETE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"QUEST_QUERY_COMPLETE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-framexml-MouseIsOver-18": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "framexml",
+      "superseded_by": "wt-framexml-MouseIsOver-1019",
+      "symbol": "MouseIsOver"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetQuestsCompleted-9": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetQuestsCompleted-651",
+      "symbol": "GetQuestsCompleted"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-QueryQuestsCompleted-8": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "diff-wt-global-api-QueryQuestsCompleted-376",
+      "symbol": "QueryQuestsCompleted"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Button:GetMotionScriptsWhileDisabled-22": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Button:GetMotionScriptsWhileDisabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Button:SetMotionScriptsWhileDisabled-21": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Button:SetMotionScriptsWhileDisabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:GetFrameType-15": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:GetFrameType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Region:IsMouseOver-18": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Region:IsMouseOver"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Region; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:GetFileHeight-28": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:GetFileHeight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Texture:GetFileWidth-27": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:GetFileWidth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  }
+}

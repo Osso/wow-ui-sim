@@ -1,0 +1,71 @@
+{
+  "commands": [
+    {
+      "artifact": "motion-xml-test-compile-error.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_3_3_0_motion_xml",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "56bd9c923 + new fixture",
+      "exit": 101,
+      "scope": "test fixture referenced errors instead of warnings; no RED behavior credit",
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "motion-xml-red.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_3_3_0_motion_xml",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "56bd9c923 + corrected fixture",
+      "exit": 101,
+      "scope": "real addon XML inherited flag missing",
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "motion-xml-green.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_3_3_0_motion_xml",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "224109b55",
+      "exit": 0,
+      "scope": "XML true/false, CheckButton, inheritance, pre-OnLoad and Lua mutation",
+      "later_changes_invalidate": false
+    },
+    {
+      "artifact": "existing-motion-dispatch-green.log",
+      "argv": [
+        "cargo",
+        "test",
+        "--lib",
+        "disabled_buttons_only_run_hover_motion_scripts_when_opted_in",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "code_revision": "224109b55",
+      "exit": 0,
+      "scope": "existing real pointer movement: disabled enter/leave gated by same motion flag",
+      "later_changes_invalidate": false
+    }
+  ]
+}
