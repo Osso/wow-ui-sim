@@ -1,0 +1,105 @@
+{
+  "scope": "original SOURCE proof; model/portable GREEN receipts separate",
+  "base_revision": "3de87465828db7cc7f6f900d4b63e24f1b399825",
+  "proofs": [
+    {
+      "receipt": "default-command-0.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.13.3",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/source.wikitext",
+        "6472111",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/default-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+      "epoch": "base3de874658; frozen inputs; no runtime change",
+      "exit_code": 0,
+      "scope": "historical default/derivation; initial exit2 CLI usage error separate"
+    },
+    {
+      "receipt": "default-command-1.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/historical-tools/extract_patch_non_inventory.py",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/source.wikitext"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+      "epoch": "base3de874658; frozen inputs; no runtime change",
+      "exit_code": 2,
+      "scope": "historical default/derivation; initial exit2 CLI usage error separate"
+    },
+    {
+      "receipt": "default-extract-derivation-command.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/derive_default_extract.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+      "epoch": "base3de874658",
+      "exit_code": 0,
+      "scope": "historical default/derivation; initial exit2 CLI usage error separate"
+    },
+    {
+      "receipt": "red-proof.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+      "epoch": "2fcc53014c97821ad0a9a0980e1b764d91a9c54e",
+      "exit_code": 1,
+      "scope": "own nine SOURCE fixtures; missing literal accounting"
+    },
+    {
+      "receipt": "derivation-command.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/audit.py",
+        "capture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+      "epoch": "source implementation before own commit",
+      "exit_code": 0,
+      "scope": "historical default/derivation; initial exit2 CLI usage error separate"
+    },
+    {
+      "receipt": "source-green-proof.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+      "epoch": "63501af73f4ef6bd5719ddc773b81b1cfe5e4f9f",
+      "exit_code": 0,
+      "scope": "own nine SOURCE fixtures; includes occurrence controls; no runtime/native"
+    },
+    {
+      "receipt": "portable-red-command.json",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/originals.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/target/p1133-portable",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/portable-red-proof.json",
+        "--cwd",
+        "/home/osso/.worktrees/wow-ui-sim-p1133-page"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+      "epoch": "5cfb2265c10b5e384bd2ba26f5544a1cac5b5e8c",
+      "exit_code": 1,
+      "scope": "three copied-source controls RED; missing own archive; no runtime/native"
+    }
+  ],
+  "invalidation": "Runtime/target-only additions do not alter frozen source or historical tool proof; source/control changes require separate new receipts, never replacing original seals."
+}
