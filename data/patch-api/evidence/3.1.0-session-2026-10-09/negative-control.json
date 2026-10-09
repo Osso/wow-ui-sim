@@ -1,0 +1,5 @@
+{
+  "replaced_id": "wt-global-api-GetNumTalentGroups-18",
+  "fabricated_symbol": "P310FabricatedHistoricalGlobal",
+  "note": "Replace one passing occurrence, preserve declared row count and all original failing IDs; expected gap increment exactly one."
+}

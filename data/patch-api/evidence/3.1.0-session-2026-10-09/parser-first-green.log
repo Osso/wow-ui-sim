@@ -1,0 +1,42 @@
+F.
+======================================================================
+FAIL: test_labeled_and_supplemental_contracts_preserve_literal_lines (__main__.LegacyFunctionLabelsTests.test_labeled_and_supplemental_contracts_preserve_literal_lines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_source.py", line 37, in test_labeled_and_supplemental_contracts_preserve_literal_lines
+    self.assertEqual([(row['symbol'], row['direction']) for row in rows[-9:]],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [('UnitAura', 'changed'), ('UnitBuff', 'changed'), ('UnitDebuff', 'changed'),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      ('RegisterAutoHide', 'added'), ('UnregisterAutoHide', 'added'),
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      ('AddToAutoHide', 'added'), ('GetInventoryItemsForSlot', 'added'),
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      ('GameTooltip:SetGlyph', 'changed'), ('GetPlayerFacing', 'changed')])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [('UnitBuff', 'changed'), ('UnitDebuff', 'change[231 chars]ed')] != [('UnitAura', 'changed'), ('UnitBuff', 'changed'[224 chars]ed')]
+
+First differing element 0:
+('UnitBuff', 'changed')
+('UnitAura', 'changed')
+
+- [('UnitBuff', 'changed'),
+?        ^ ^^
+
++ [('UnitAura', 'changed'),
+?        ^ ^^
+
++  ('UnitBuff', 'changed'),
+   ('UnitDebuff', 'changed'),
+   ('RegisterAutoHide', 'added'),
+   ('UnregisterAutoHide', 'added'),
+   ('AddToAutoHide', 'added'),
+   ('GetInventoryItemsForSlot', 'added'),
+   ('GameTooltip:SetGlyph', 'changed'),
+-  ('GetPlayerFacing', 'changed'),
+   ('GetPlayerFacing', 'changed')]
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.492s
+
+FAILED (failures=1)

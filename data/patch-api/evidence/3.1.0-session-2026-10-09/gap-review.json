@@ -1,0 +1,1408 @@
+{
+  "rows": [
+    {
+      "source_id": "wt-global-api-GetGlyphLink-23",
+      "source_line": 23,
+      "symbol": "GetGlyphLink",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetGlyphLink"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetGlyphSocketInfo-24",
+      "source_line": 24,
+      "symbol": "GetGlyphSocketInfo",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetGlyphSocketInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetTalentLink-28",
+      "source_line": 28,
+      "symbol": "GetTalentLink",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetTalentLink"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-SetTrackedAchievement-46",
+      "source_line": 46,
+      "symbol": "SetTrackedAchievement",
+      "direction": "removed",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetTrackedAchievement"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current absence after explicit later retail supersession/removal, but binding or lookup remains present. No runtime removal authorized by this source-only slice."
+    },
+    {
+      "source_id": "wt-global-api-CalendarContextEventGetCalendarType-50",
+      "source_line": 50,
+      "symbol": "CalendarContextEventGetCalendarType",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarContextEventGetCalendarType"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarContextEventSignUp-51",
+      "source_line": 51,
+      "symbol": "CalendarContextEventSignUp",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarContextEventSignUp"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarContextInviteType-52",
+      "source_line": 52,
+      "symbol": "CalendarContextInviteType",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarContextInviteType"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarEventCanModerate-53",
+      "source_line": 53,
+      "symbol": "CalendarEventCanModerate",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarEventCanModerate"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarEventGetCalendarType-54",
+      "source_line": 54,
+      "symbol": "CalendarEventGetCalendarType",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarEventGetCalendarType"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarEventGetInviteResponseTime-55",
+      "source_line": 55,
+      "symbol": "CalendarEventGetInviteResponseTime",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarEventGetInviteResponseTime"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarEventSignUp-57",
+      "source_line": 57,
+      "symbol": "CalendarEventSignUp",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarEventSignUp"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarMassInviteGuild-60",
+      "source_line": 60,
+      "symbol": "CalendarMassInviteGuild",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarMassInviteGuild"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CalendarNewGuildAnnouncement-61",
+      "source_line": 61,
+      "symbol": "CalendarNewGuildAnnouncement",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CalendarNewGuildAnnouncement"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-BindingCommandUsesAngle-65",
+      "source_line": 65,
+      "symbol": "BindingCommandUsesAngle",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "BindingCommandUsesAngle"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-BindingCommandUsesPressure-66",
+      "source_line": 66,
+      "symbol": "BindingCommandUsesPressure",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "BindingCommandUsesPressure"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-BindingModeEnabled-67",
+      "source_line": 67,
+      "symbol": "BindingModeEnabled",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "BindingModeEnabled"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-EnableBindingMode-68",
+      "source_line": 68,
+      "symbol": "EnableBindingMode",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "EnableBindingMode"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-InvertBindingMode-69",
+      "source_line": 69,
+      "symbol": "InvertBindingMode",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "InvertBindingMode"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-IsMouseEnabledDefault-70",
+      "source_line": 70,
+      "symbol": "IsMouseEnabledDefault",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsMouseEnabledDefault"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-IsMouseEnabledTemporary-71",
+      "source_line": 71,
+      "symbol": "IsMouseEnabledTemporary",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsMouseEnabledTemporary"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-JoystickGetAxesFromStick-72",
+      "source_line": 72,
+      "symbol": "JoystickGetAxesFromStick",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "JoystickGetAxesFromStick"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-JoystickGetStickFromAxis-73",
+      "source_line": 73,
+      "symbol": "JoystickGetStickFromAxis",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "JoystickGetStickFromAxis"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-JoystickMouseDisable-74",
+      "source_line": 74,
+      "symbol": "JoystickMouseDisable",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "JoystickMouseDisable"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-JoystickName-75",
+      "source_line": 75,
+      "symbol": "JoystickName",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "JoystickName"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-JoystickSwingCamera-76",
+      "source_line": 76,
+      "symbol": "JoystickSwingCamera",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "JoystickSwingCamera"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-MouseEnableDefault-77",
+      "source_line": 77,
+      "symbol": "MouseEnableDefault",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "MouseEnableDefault"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-MouseEnableTemporary-78",
+      "source_line": 78,
+      "symbol": "MouseEnableTemporary",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "MouseEnableTemporary"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-MouseEnableUI-79",
+      "source_line": 79,
+      "symbol": "MouseEnableUI",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "MouseEnableUI"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-DeleteEquipmentSet-83",
+      "source_line": 83,
+      "symbol": "DeleteEquipmentSet",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "DeleteEquipmentSet"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-EquipmentManagerClearIgnoredSlotsForSave-84",
+      "source_line": 84,
+      "symbol": "EquipmentManagerClearIgnoredSlotsForSave",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "EquipmentManagerClearIgnoredSlotsForSave"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-EquipmentManagerIgnoreSlotForSave-85",
+      "source_line": 85,
+      "symbol": "EquipmentManagerIgnoreSlotForSave",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "EquipmentManagerIgnoreSlotForSave"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-EquipmentManagerIsSlotIgnoredForSave-86",
+      "source_line": 86,
+      "symbol": "EquipmentManagerIsSlotIgnoredForSave",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "EquipmentManagerIsSlotIgnoredForSave"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-EquipmentManagerUnignoreSlotForSave-87",
+      "source_line": 87,
+      "symbol": "EquipmentManagerUnignoreSlotForSave",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "EquipmentManagerUnignoreSlotForSave"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetEquipmentSetInfo-88",
+      "source_line": 88,
+      "symbol": "GetEquipmentSetInfo",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetEquipmentSetInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetEquipmentSetInfoByName-89",
+      "source_line": 89,
+      "symbol": "GetEquipmentSetInfoByName",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetEquipmentSetInfoByName"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetEquipmentSetItemLocations-90",
+      "source_line": 90,
+      "symbol": "GetEquipmentSetItemLocations",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetEquipmentSetItemLocations"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetNumEquipmentSets-91",
+      "source_line": 91,
+      "symbol": "GetNumEquipmentSets",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumEquipmentSets"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-PickupEquipmentSet-92",
+      "source_line": 92,
+      "symbol": "PickupEquipmentSet",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "PickupEquipmentSet"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-PickupEquipmentSetByName-93",
+      "source_line": 93,
+      "symbol": "PickupEquipmentSetByName",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "PickupEquipmentSetByName"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-SaveEquipmentSet-95",
+      "source_line": 95,
+      "symbol": "SaveEquipmentSet",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SaveEquipmentSet"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetWintergraspWaitTime-101",
+      "source_line": 101,
+      "symbol": "GetWintergraspWaitTime",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetWintergraspWaitTime"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-CanEjectPassengerFromSeat-105",
+      "source_line": 105,
+      "symbol": "CanEjectPassengerFromSeat",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CanEjectPassengerFromSeat"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-EjectPassengerFromSeat-106",
+      "source_line": 106,
+      "symbol": "EjectPassengerFromSeat",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "EjectPassengerFromSeat"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-TargetDirectionEnemy-108",
+      "source_line": 108,
+      "symbol": "TargetDirectionEnemy",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "TargetDirectionEnemy"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-TargetDirectionFinished-109",
+      "source_line": 109,
+      "symbol": "TargetDirectionFinished",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "TargetDirectionFinished"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-TargetDirectionFriend-110",
+      "source_line": 110,
+      "symbol": "TargetDirectionFriend",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "TargetDirectionFriend"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-TargetNearest-111",
+      "source_line": 111,
+      "symbol": "TargetNearest",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "TargetNearest"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-UnitIsTappedByAllThreatList-112",
+      "source_line": 112,
+      "symbol": "UnitIsTappedByAllThreatList",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "UnitIsTappedByAllThreatList"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogSpecialItemCooldown-115",
+      "source_line": 115,
+      "symbol": "GetQuestLogSpecialItemCooldown",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetQuestLogSpecialItemCooldown"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-IsQuestLogSpecialItemInRange-117",
+      "source_line": 117,
+      "symbol": "IsQuestLogSpecialItemInRange",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsQuestLogSpecialItemInRange"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-UseQuestLogSpecialItem-118",
+      "source_line": 118,
+      "symbol": "UseQuestLogSpecialItem",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "UseQuestLogSpecialItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-AddOrRemoveFriend-121",
+      "source_line": 121,
+      "symbol": "AddOrRemoveFriend",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "AddOrRemoveFriend"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetInstanceLockTimeRemaining-128",
+      "source_line": 128,
+      "symbol": "GetInstanceLockTimeRemaining",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetInstanceLockTimeRemaining"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetContainerItemID-132",
+      "source_line": 132,
+      "symbol": "GetContainerItemID",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-GetContainerItemID-353",
+        "symbol": "GetContainerItemID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current absence after explicit later retail supersession/removal, but binding or lookup remains present. No runtime removal authorized by this source-only slice."
+    },
+    {
+      "source_id": "wt-global-api-IsPlayerResolutionAvailable-135",
+      "source_line": 135,
+      "symbol": "IsPlayerResolutionAvailable",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsPlayerResolutionAvailable"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-RespondInstanceLock-136",
+      "source_line": 136,
+      "symbol": "RespondInstanceLock",
+      "direction": "added",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "RespondInstanceLock"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-UnitAura-167",
+      "source_line": 167,
+      "symbol": "UnitAura",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-UnitAura-121",
+        "symbol": "UnitAura"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current absence after explicit later retail supersession/removal, but binding or lookup remains present. No runtime removal authorized by this source-only slice."
+    },
+    {
+      "source_id": "wt-global-api-UnitBuff-168",
+      "source_line": 168,
+      "symbol": "UnitBuff",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-UnitBuff-122",
+        "symbol": "UnitBuff"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current absence after explicit later retail supersession/removal, but binding or lookup remains present. No runtime removal authorized by this source-only slice."
+    },
+    {
+      "source_id": "wt-global-api-UnitDebuff-169",
+      "source_line": 169,
+      "symbol": "UnitDebuff",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-UnitDebuff-123",
+        "symbol": "UnitDebuff"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current absence after explicit later retail supersession/removal, but binding or lookup remains present. No runtime removal authorized by this source-only slice."
+    },
+    {
+      "source_id": "wt-global-api-GetPlayerFacing-239",
+      "source_line": 239,
+      "symbol": "GetPlayerFacing",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetPlayerFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    },
+    {
+      "source_id": "wt-global-api-GetPlayerFacing-241",
+      "source_line": 241,
+      "symbol": "GetPlayerFacing",
+      "direction": "changed",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetPlayerFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "disposition": "UNPROVEN publication; separate signatures/prose retain native/model limits",
+      "reason": "Expected current publication, but recorded probe lacks the required callable/object support. Identity-only historical rows do not specify a complete backing model; no invented shim added."
+    }
+  ],
+  "policy": "Source-only exact observation review; no absence-derived native/model closure or runtime retirement."
+}

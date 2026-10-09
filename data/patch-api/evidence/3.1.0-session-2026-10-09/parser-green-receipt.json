@@ -1,0 +1,10 @@
+{
+  "revision": "1a19167bc7e30cc0c943173388e2b5772b683ece",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "tools/test_patch_3_1_0_source.py"
+  ],
+  "exit_code": 0,
+  "scope": "own opt-in source fixtures"
+}

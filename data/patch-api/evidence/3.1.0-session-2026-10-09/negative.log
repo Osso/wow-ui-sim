@@ -1,0 +1,163 @@
+running 1 tests
+test patch_3_1_0_publication_sweep::patch_3_1_0_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["p310-negative-control"]; resolved/stale gaps: []
+  left: {"p310-negative-control", "wt-global-api-AddOrRemoveFriend-121", "wt-global-api-BindingCommandUsesAngle-65", "wt-global-api-BindingCommandUsesPressure-66", "wt-global-api-BindingModeEnabled-67", "wt-global-api-CalendarContextEventGetCalendarType-50", "wt-global-api-CalendarContextEventSignUp-51", "wt-global-api-CalendarContextInviteType-52", "wt-global-api-CalendarEventCanModerate-53", "wt-global-api-CalendarEventGetCalendarType-54", "wt-global-api-CalendarEventGetInviteResponseTime-55", "wt-global-api-CalendarEventSignUp-57", "wt-global-api-CalendarMassInviteGuild-60", "wt-global-api-CalendarNewGuildAnnouncement-61", "wt-global-api-CanEjectPassengerFromSeat-105", "wt-global-api-DeleteEquipmentSet-83", "wt-global-api-EjectPassengerFromSeat-106", "wt-global-api-EnableBindingMode-68", "wt-global-api-EquipmentManagerClearIgnoredSlotsForSave-84", "wt-global-api-EquipmentManagerIgnoreSlotForSave-85", "wt-global-api-EquipmentManagerIsSlotIgnoredForSave-86", "wt-global-api-EquipmentManagerUnignoreSlotForSave-87", "wt-global-api-GetContainerItemID-132", "wt-global-api-GetEquipmentSetInfo-88", "wt-global-api-GetEquipmentSetInfoByName-89", "wt-global-api-GetEquipmentSetItemLocations-90", "wt-global-api-GetGlyphLink-23", "wt-global-api-GetGlyphSocketInfo-24", "wt-global-api-GetInstanceLockTimeRemaining-128", "wt-global-api-GetNumEquipmentSets-91", "wt-global-api-GetPlayerFacing-239", "wt-global-api-GetPlayerFacing-241", "wt-global-api-GetQuestLogSpecialItemCooldown-115", "wt-global-api-GetTalentLink-28", "wt-global-api-GetWintergraspWaitTime-101", "wt-global-api-InvertBindingMode-69", "wt-global-api-IsMouseEnabledDefault-70", "wt-global-api-IsMouseEnabledTemporary-71", "wt-global-api-IsPlayerResolutionAvailable-135", "wt-global-api-IsQuestLogSpecialItemInRange-117", "wt-global-api-JoystickGetAxesFromStick-72", "wt-global-api-JoystickGetStickFromAxis-73", "wt-global-api-JoystickMouseDisable-74", "wt-global-api-JoystickName-75", "wt-global-api-JoystickSwingCamera-76", "wt-global-api-MouseEnableDefault-77", "wt-global-api-MouseEnableTemporary-78", "wt-global-api-MouseEnableUI-79", "wt-global-api-PickupEquipmentSet-92", "wt-global-api-PickupEquipmentSetByName-93", "wt-global-api-RespondInstanceLock-136", "wt-global-api-SaveEquipmentSet-95", "wt-global-api-SetTrackedAchievement-46", "wt-global-api-TargetDirectionEnemy-108", "wt-global-api-TargetDirectionFinished-109", "wt-global-api-TargetDirectionFriend-110", "wt-global-api-TargetNearest-111", "wt-global-api-UnitAura-167", "wt-global-api-UnitBuff-168", "wt-global-api-UnitDebuff-169", "wt-global-api-UnitIsTappedByAllThreatList-112", "wt-global-api-UseQuestLogSpecialItem-118"}
+ right: {"wt-global-api-AddOrRemoveFriend-121", "wt-global-api-BindingCommandUsesAngle-65", "wt-global-api-BindingCommandUsesPressure-66", "wt-global-api-BindingModeEnabled-67", "wt-global-api-CalendarContextEventGetCalendarType-50", "wt-global-api-CalendarContextEventSignUp-51", "wt-global-api-CalendarContextInviteType-52", "wt-global-api-CalendarEventCanModerate-53", "wt-global-api-CalendarEventGetCalendarType-54", "wt-global-api-CalendarEventGetInviteResponseTime-55", "wt-global-api-CalendarEventSignUp-57", "wt-global-api-CalendarMassInviteGuild-60", "wt-global-api-CalendarNewGuildAnnouncement-61", "wt-global-api-CanEjectPassengerFromSeat-105", "wt-global-api-DeleteEquipmentSet-83", "wt-global-api-EjectPassengerFromSeat-106", "wt-global-api-EnableBindingMode-68", "wt-global-api-EquipmentManagerClearIgnoredSlotsForSave-84", "wt-global-api-EquipmentManagerIgnoreSlotForSave-85", "wt-global-api-EquipmentManagerIsSlotIgnoredForSave-86", "wt-global-api-EquipmentManagerUnignoreSlotForSave-87", "wt-global-api-GetContainerItemID-132", "wt-global-api-GetEquipmentSetInfo-88", "wt-global-api-GetEquipmentSetInfoByName-89", "wt-global-api-GetEquipmentSetItemLocations-90", "wt-global-api-GetGlyphLink-23", "wt-global-api-GetGlyphSocketInfo-24", "wt-global-api-GetInstanceLockTimeRemaining-128", "wt-global-api-GetNumEquipmentSet)
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.14s
+     Running tests/prefork_full_ui.rs (target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.88ms
+[  0.002s] [Startup] rilua VM created in 93.22µs
+[  0.002s] [Startup] builtin frames initialized in 63.40µs
+[  0.002s] [Startup] template registry cleared in 6.58µs
+[  0.002s] [Startup] intrinsic templates registered in 4.65µs
+[  0.002s] [Startup] initial app_data lua handle installed in 270.00ns
+[  0.093s] [Startup] init_lua_state complete in 91.23ms
+[  0.093s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.093s] [Startup] initial screen globals installed in 54.81µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+[  1.936s] [Startup] apply_post_load_workarounds: begin
+[  1.936s] [Workarounds] starting patch_edit_mode_manager
+[  1.936s] [Workarounds] finished patch_edit_mode_manager in 250.32µs
+[  1.936s] [Workarounds] starting init_edit_mode_layout
+[  1.936s] [EditMode] starting setup_layout_info
+[  1.939s] [EditMode] finished setup_layout_info in 2.64ms
+[  1.939s] [EditMode] starting apply_system_anchors
+[  2.044s] [EditMode] finished apply_system_anchors in 105.23ms
+[  2.044s] [EditMode] starting finalize_action_bar_positions
+[  2.046s] [EditMode] finished finalize_action_bar_positions in 1.35ms
+[  2.046s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.046s] [EditMode] finished invoke_anchor_changed_hooks in 337.40µs
+[  2.046s] [EditMode] starting fix_action_bar_nan_size
+[  2.046s] [EditMode] finished fix_action_bar_nan_size in 31.70µs
+[  2.046s] [EditMode] starting fix_action_bar_scale
+[  2.046s] [EditMode] finished fix_action_bar_scale in 3.62µs
+[  2.046s] [Workarounds] finished init_edit_mode_layout in 109.61ms
+[  2.046s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.046s] [Workarounds] finished patch_ui_parent_panel_toggles in 183.58µs
+[  2.046s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.046s] [Workarounds] finished patch_uiparent_onupdate_worklists in 77.55µs
+[  2.046s] [Workarounds] starting init_chat_type_colors
+[  2.046s] [Workarounds] finished init_chat_type_colors in 100.34µs
+[  2.046s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.046s] [Workarounds] finished patch_chat_voice_button_surface in 89.42µs
+[  2.046s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.046s] [Workarounds] finished patch_item_socketing_tooltips in 45.38µs
+[  2.046s] [Workarounds] starting patch_character_select_selected_name
+[  2.046s] [Workarounds] finished patch_character_select_selected_name in 23.71µs
+[  2.046s] [Workarounds] starting patch_character_create_defaults
+[  2.047s] [Workarounds] finished patch_character_create_defaults in 177.31µs
+[  2.047s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.051s] [Workarounds] finished patch_character_frame_title_refresh in 4.62ms
+[  2.051s] [Workarounds] starting patch_vignette_pin_template
+[  2.051s] [Workarounds] finished patch_vignette_pin_template in 70.73µs
+[  2.051s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.052s] [Workarounds] finished patch_fog_of_war_pin_mixin in 216.25µs
+[  2.052s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.056s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.34ms
+[  2.056s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.056s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 48.78µs
+[  2.056s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.056s] [Workarounds] finished ensure_adventure_map_frame_surface in 338.22µs
+[  2.056s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.056s] [Workarounds] finished patch_action_bar_button_event_fanout in 75.48µs
+[  2.056s] [Workarounds] starting patch_paging_controls_page_text
+[  2.056s] [Workarounds] finished patch_paging_controls_page_text in 29.32µs
+[  2.056s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.056s] [Workarounds] finished patch_talent_edge_frame_level_sync in 23.21µs
+[  2.056s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.056s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 48.05µs
+[  2.056s] [Workarounds] starting patch_game_time_defaults
+[  2.056s] [Workarounds] finished patch_game_time_defaults in 5.92µs
+[  2.056s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.056s] [Workarounds] finished patch_tooltip_nineslice_surface in 33.32µs
+[  2.056s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.057s] [Workarounds] finished patch_container_frame_token_tracker in 31.00µs
+[  2.057s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.057s] [Workarounds] finished patch_achievement_display_set_achievements in 6.66µs
+[  2.057s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.057s] [Workarounds] finished patch_housing_dashboard_preload in 127.61µs
+[  2.057s] [Workarounds] starting patch_lfg_lock_list
+[  2.057s] [Workarounds] finished patch_lfg_lock_list in 25.21µs
+[  2.057s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.057s] [Workarounds] finished patch_auction_house_browse_results_event in 50.94µs
+[  2.057s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.057s] [Workarounds] finished patch_auction_house_search_context_aliases in 22.62µs
+[  2.057s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.057s] [Workarounds] finished patch_auth_challenge_frame_parent in 51.14µs
+[  2.057s] [Workarounds] starting patch_settings_surface_defaults
+[  2.057s] [Workarounds] finished patch_settings_surface_defaults in 263.81µs
+[  2.057s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.057s] [Workarounds] finished patch_settings_canvas_layout_visibility in 85.63µs
+[  2.057s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.107s] [Startup] apply_post_load_workarounds: globals restored
+[  2.107s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.107s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.227s] [Startup] begin login sequence
+[  2.227s] [Startup] Firing ADDON_LOADED
+[  2.227s] [Startup] Firing VARIABLES_LOADED
+[  2.302s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.339s] [Startup] Firing UI_SCALE_CHANGED
+[  2.340s] [Startup] Firing PLAYER_LOGIN
+[  2.340s] [Startup] end login sequence in 113.67ms
+[  2.340s] [Startup] begin world enter sequence
+[  2.340s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.340s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.340s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.521s] [EditMode] starting setup_layout_info
+[  2.524s] [EditMode] finished setup_layout_info in 3.00ms
+[  2.524s] [EditMode] starting apply_system_anchors
+[  2.621s] [EditMode] finished apply_system_anchors in 97.43ms
+[  2.621s] [EditMode] starting finalize_action_bar_positions
+[  2.623s] [EditMode] finished finalize_action_bar_positions in 1.68ms
+[  2.623s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.627s] [EditMode] finished invoke_anchor_changed_hooks in 4.51ms
+[  2.627s] [EditMode] starting fix_action_bar_nan_size
+[  2.627s] [EditMode] finished fix_action_bar_nan_size in 49.68µs
+[  2.627s] [EditMode] starting fix_action_bar_scale
+[  2.627s] [EditMode] finished fix_action_bar_scale in 3.50µs
+[  2.627s] [EditMode] starting reapply_player_frame_anchor
+[  2.628s] [EditMode] finished reapply_player_frame_anchor in 1.16ms
+[  2.635s] [Startup] end world enter sequence in 295.06ms
+[  2.635s] [Startup] begin post-login events
+[  2.636s] [Startup] Firing UNIT_AURA
+[  2.636s] [Startup] Firing PET_UI_UPDATE
+[  2.637s] [Startup] Firing BAG_UPDATE_DELAYED
+[  2.639s] [Startup] Firing QUEST_LOG_UPDATE
+[  2.640s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  2.706s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  2.706s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  2.707s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  2.716s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  2.716s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  2.716s] [Startup] Firing UPDATE_BINDINGS
+[  2.719s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  2.721s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  2.721s] [Startup] end post-login events in 86.15ms
+[  2.721s] [Startup] begin close startup special windows
+[  2.722s] [Startup] end close startup special windows in 212.41µs
+[  2.722s] [Startup] begin FIRST_FRAME_RENDERED
+[  2.722s] [Startup] Firing FIRST_FRAME_RENDERED
+[  2.722s] [Startup] end FIRST_FRAME_RENDERED in 131.66µs
+[  2.722s] [Startup] begin unblock hidden splash alerts
+[  2.722s] [Startup] end unblock hidden splash alerts in 10.66µs
+[  2.722s] [Startup] begin post-event workarounds
+[  2.722s] [Startup] end post-event workarounds in 541.00ns
+
+thread 'main' (2752621) panicked at /home/osso/.worktrees/wow-ui-sim-p310-source/tests/common/publication_sweep.rs:544:5:
+assertion `left == right` failed: new gaps: ["p310-negative-control"]; resolved/stale gaps: []
+  left: {"p310-negative-control", "wt-global-api-AddOrRemoveFriend-121", "wt-global-api-BindingCommandUsesAngle-65", "wt-global-api-BindingCommandUsesPressure-66", "wt-global-api-BindingModeEnabled-67", "wt-global-api-CalendarContextEventGetCalendarType-50", "wt-global-api-CalendarContextEventSignUp-51", "wt-global-api-CalendarContextInviteType-52", "wt-global-api-CalendarEventCanModerate-53", "wt-global-api-CalendarEventGetCalendarType-54", "wt-global-api-CalendarEventGetInviteResponseTime-55", "wt-global-api-CalendarEventSignUp-57", "wt-global-api-CalendarMassInviteGuild-60", "wt-global-api-CalendarNewGuildAnnouncement-61", "wt-global-api-CanEjectPassengerFromSeat-105", "wt-global-api-DeleteEquipmentSet-83", "wt-global-api-EjectPassengerFromSeat-106", "wt-global-api-EnableBindingMode-68", "wt-global-api-EquipmentManagerClearIgnoredSlotsForSave-84", "wt-global-api-EquipmentManagerIgnoreSlotForSave-85", "wt-global-api-EquipmentManagerIsSlotIgnoredForSave-86", "wt-global-api-EquipmentManagerUnignoreSlotForSave-87", "wt-global-api-GetContainerItemID-132", "wt-global-api-GetEquipmentSetInfo-88", "wt-global-api-GetEquipmentSetInfoByName-89", "wt-global-api-GetEquipmentSetItemLocations-90", "wt-global-api-GetGlyphLink-23", "wt-global-api-GetGlyphSocketInfo-24", "wt-global-api-GetInstanceLockTimeRemaining-128", "wt-global-api-GetNumEquipmentSets-91", "wt-global-api-GetPlayerFacing-239", "wt-global-api-GetPlayerFacing-241", "wt-global-api-GetQuestLogSpecialItemCooldown-115", "wt-global-api-GetTalentLink-28", "wt-global-api-GetWintergraspWaitTime-101", "wt-global-api-InvertBindingMode-69", "wt-global-api-IsMouseEnabledDefault-70", "wt-global-api-IsMouseEnabledTemporary-71", "wt-global-api-IsPlayerResolutionAvailable-135", "wt-global-api-IsQuestLogSpecialItemInRange-117", "wt-global-api-JoystickGetAxesFromStick-72", "wt-global-api-JoystickGetStickFromAxis-73", "wt-global-api-JoystickMouseDisable-74", "wt-global-api-JoystickName-75", "wt-global-api-JoystickSwingCamera-76", "wt-global-api-MouseEnableDefault-77", "wt-global-api-MouseEnableTemporary-78", "wt-global-api-MouseEnableUI-79", "wt-global-api-PickupEquipmentSet-92", "wt-global-api-PickupEquipmentSetByName-93", "wt-global-api-RespondInstanceLock-136", "wt-global-api-SaveEquipmentSet-95", "wt-global-api-SetTrackedAchievement-46", "wt-global-api-TargetDirectionEnemy-108", "wt-global-api-TargetDirectionFinished-109", "wt-global-api-TargetDirectionFriend-110", "wt-global-api-TargetNearest-111", "wt-global-api-UnitAura-167", "wt-global-api-UnitBuff-168", "wt-global-api-UnitDebuff-169", "wt-global-api-UnitIsTappedByAllThreatList-112", "wt-global-api-UseQuestLogSpecialItem-118"}
+ right: {"wt-global-api-AddOrRemoveFriend-121", "wt-global-api-BindingCommandUsesAngle-65", "wt-global-api-BindingCommandUsesPressure-66", "wt-global-api-BindingModeEnabled-67", "wt-global-api-CalendarContextEventGetCalendarType-50", "wt-global-api-CalendarContextEventSignUp-51", "wt-global-api-CalendarContextInviteType-52", "wt-global-api-CalendarEventCanModerate-53", "wt-global-api-CalendarEventGetCalendarType-54", "wt-global-api-CalendarEventGetInviteResponseTime-55", "wt-global-api-CalendarEventSignUp-57", "wt-global-api-CalendarMassInviteGuild-60", "wt-global-api-CalendarNewGuildAnnouncement-61", "wt-global-api-CanEjectPassengerFromSeat-105", "wt-global-api-DeleteEquipmentSet-83", "wt-global-api-EjectPassengerFromSeat-106", "wt-global-api-EnableBindingMode-68", "wt-global-api-EquipmentManagerClearIgnoredSlotsForSave-84", "wt-global-api-EquipmentManagerIgnoreSlotForSave-85", "wt-global-api-EquipmentManagerIsSlotIgnoredForSave-86", "wt-global-api-EquipmentManagerUnignoreSlotForSave-87", "wt-global-api-GetContainerItemID-132", "wt-global-api-GetEquipmentSetInfo-88", "wt-global-api-GetEquipmentSetInfoByName-89", "wt-global-api-GetEquipmentSetItemLocations-90", "wt-global-api-GetGlyphLink-23", "wt-global-api-GetGlyphSocketInfo-24", "wt-global-api-GetInstanceLockTimeRemaining-128", "wt-global-api-GetNumEquipmentSets-91", "wt-global-api-GetPlayerFacing-239", "wt-global-api-GetPlayerFacing-241", "wt-global-api-GetQuestLogSpecialItemCooldown-115", "wt-global-api-GetTalentLink-28", "wt-global-api-GetWintergraspWaitTime-101", "wt-global-api-InvertBindingMode-69", "wt-global-api-IsMouseEnabledDefault-70", "wt-global-api-IsMouseEnabledTemporary-71", "wt-global-api-IsPlayerResolutionAvailable-135", "wt-global-api-IsQuestLogSpecialItemInRange-117", "wt-global-api-JoystickGetAxesFromStick-72", "wt-global-api-JoystickGetStickFromAxis-73", "wt-global-api-JoystickMouseDisable-74", "wt-global-api-JoystickName-75", "wt-global-api-JoystickSwingCamera-76", "wt-global-api-MouseEnableDefault-77", "wt-global-api-MouseEnableTemporary-78", "wt-global-api-MouseEnableUI-79", "wt-global-api-PickupEquipmentSet-92", "wt-global-api-PickupEquipmentSetByName-93", "wt-global-api-RespondInstanceLock-136", "wt-global-api-SaveEquipmentSet-95", "wt-global-api-SetTrackedAchievement-46", "wt-global-api-TargetDirectionEnemy-108", "wt-global-api-TargetDirectionFinished-109", "wt-global-api-TargetDirectionFriend-110", "wt-global-api-TargetNearest-111", "wt-global-api-UnitAura-167", "wt-global-api-UnitBuff-168", "wt-global-api-UnitDebuff-169", "wt-global-api-UnitIsTappedByAllThreatList-112", "wt-global-api-UseQuestLogSpecialItem-118"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 patch_3_1_0_publication_sweep --nocapture` (exit status: 1)

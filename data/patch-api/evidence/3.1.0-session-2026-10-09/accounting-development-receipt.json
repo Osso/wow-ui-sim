@@ -1,0 +1,10 @@
+{
+  "revision": "9d949d52d0240572ef8484a28e69ae6c21ff9941",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "tools/build_patch_3_1_0_accounting.py"
+  ],
+  "exit_code": 0,
+  "scope": "source data generation only; no model/native credit"
+}

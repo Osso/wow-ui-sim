@@ -1,0 +1,25 @@
+{
+  "policy": "Read-only queued actual retail source/register overlaps; coordinator owns ordered integration. Wrath Classic 3.4.x excluded. No placeholder credit.",
+  "overlaps": {
+    "3.3.3": [],
+    "3.3.5": [],
+    "4.0.1": [
+      {
+        "own_id": "wt-global-api-IsPlayerResolutionAvailable-135",
+        "later_id": "wt-global-api-IsPlayerResolutionAvailable-67",
+        "symbol": "IsPlayerResolutionAvailable",
+        "later_direction": "removed"
+      }
+    ],
+    "3.2.0": {
+      "source_mentions_only": [
+        "GetInstanceLockTimeRemaining"
+      ],
+      "credit": "No register integrated; literal mentions only, no direction or supersession inferred."
+    },
+    "3.3.0": {
+      "source_mentions_only": [],
+      "credit": "No register integrated; literal mentions only, no direction or supersession inferred."
+    }
+  }
+}

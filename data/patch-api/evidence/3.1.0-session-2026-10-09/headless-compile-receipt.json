@@ -1,0 +1,18 @@
+{
+  "revision": "c7f6e49ae452f951b061c3e22e0ac5c502c5a7e9",
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--no-default-features",
+    "--features",
+    "client-retail",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_3_1_0_publication_sweep",
+    "--nocapture"
+  ],
+  "exit_code": 101,
+  "scope": "own cached retail publication discovery; no model/native credit"
+}

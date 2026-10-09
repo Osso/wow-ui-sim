@@ -1,0 +1,109 @@
+FEEEEEEF
+======================================================================
+ERROR: test_tampered_sealed_inputs_fail_then_restore_exact_bytes (__main__.HistoricalReplayTests.test_tampered_sealed_inputs_fail_then_restore_exact_bytes) (name='historical-source.wikitext')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 50, in test_tampered_sealed_inputs_fail_then_restore_exact_bytes
+    original = path.read_bytes()
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpwdaigx55/frozen/historical-source.wikitext'
+
+======================================================================
+ERROR: test_tampered_sealed_inputs_fail_then_restore_exact_bytes (__main__.HistoricalReplayTests.test_tampered_sealed_inputs_fail_then_restore_exact_bytes) (name='own-sweep-green.log')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 50, in test_tampered_sealed_inputs_fail_then_restore_exact_bytes
+    original = path.read_bytes()
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpwdaigx55/frozen/own-sweep-green.log'
+
+======================================================================
+ERROR: test_tampered_sealed_inputs_fail_then_restore_exact_bytes (__main__.HistoricalReplayTests.test_tampered_sealed_inputs_fail_then_restore_exact_bytes) (name='historical-page-coverage.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 50, in test_tampered_sealed_inputs_fail_then_restore_exact_bytes
+    original = path.read_bytes()
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpwdaigx55/frozen/historical-page-coverage.json'
+
+======================================================================
+ERROR: test_tampered_sealed_inputs_fail_then_restore_exact_bytes (__main__.HistoricalReplayTests.test_tampered_sealed_inputs_fail_then_restore_exact_bytes) (name='historical-known-gaps.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 50, in test_tampered_sealed_inputs_fail_then_restore_exact_bytes
+    original = path.read_bytes()
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpwdaigx55/frozen/historical-known-gaps.json'
+
+======================================================================
+ERROR: test_tampered_sealed_inputs_fail_then_restore_exact_bytes (__main__.HistoricalReplayTests.test_tampered_sealed_inputs_fail_then_restore_exact_bytes) (name='historical-bundle.json.gz')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 50, in test_tampered_sealed_inputs_fail_then_restore_exact_bytes
+    original = path.read_bytes()
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpwdaigx55/frozen/historical-bundle.json.gz'
+
+======================================================================
+ERROR: test_tampered_sealed_inputs_fail_then_restore_exact_bytes (__main__.HistoricalReplayTests.test_tampered_sealed_inputs_fail_then_restore_exact_bytes) (name='historical-inputs.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 50, in test_tampered_sealed_inputs_fail_then_restore_exact_bytes
+    original = path.read_bytes()
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpwdaigx55/frozen/historical-inputs.json'
+
+======================================================================
+FAIL: test_relocation_and_future_current_changes_do_not_expand_scope (__main__.HistoricalReplayTests.test_relocation_and_future_current_changes_do_not_expand_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 29, in test_relocation_and_future_current_changes_do_not_expand_scope
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : /usr/bin/python3: can't open file '/tmp/tmptjhkdtlp/frozen/validate.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_tampered_sealed_inputs_fail_then_restore_exact_bytes (__main__.HistoricalReplayTests.test_tampered_sealed_inputs_fail_then_restore_exact_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p310-source/tools/test_patch_3_1_0_validator.py", line 58, in test_tampered_sealed_inputs_fail_then_restore_exact_bytes
+    self.assertEqual(restored.returncode, 0, restored.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : /usr/bin/python3: can't open file '/tmp/tmpwdaigx55/frozen/validate.py': [Errno 2] No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.042s
+
+FAILED (failures=2, errors=6)

@@ -1,0 +1,15 @@
+{
+  "revision": "9d949d52d0240572ef8484a28e69ae6c21ff9941",
+  "argv": [
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_3_1_0_publication_sweep",
+    "--nocapture"
+  ],
+  "exit_code": 1,
+  "scope": "own fabricated-global negative replacing one passing occurrence; no source/runtime mutation"
+}

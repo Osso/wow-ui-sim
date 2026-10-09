@@ -1,0 +1,637 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling proc-macro2 v1.0.105
+   Compiling unicode-ident v1.0.22
+   Compiling quote v1.0.43
+   Compiling libc v0.2.180
+   Compiling cfg-if v1.0.4
+   Compiling stable_deref_trait v1.2.1
+   Compiling memchr v2.7.6
+   Compiling smallvec v1.15.1
+   Compiling writeable v0.6.3
+   Compiling crossbeam-utils v0.8.21
+   Compiling autocfg v1.5.0
+   Compiling version_check v0.9.5
+   Compiling litemap v0.8.2
+   Compiling rayon-core v1.13.0
+   Compiling libm v0.2.15
+   Compiling find-msvc-tools v0.1.7
+   Compiling simd-adler32 v0.3.8
+   Compiling once_cell v1.21.3
+   Compiling either v1.15.0
+   Compiling shlex v1.3.0
+   Compiling num-traits v0.2.19
+   Compiling pin-project-lite v0.2.16
+   Compiling cc v1.2.52
+   Compiling bitflags v2.10.0
+   Compiling log v0.4.29
+   Compiling bytes v1.11.0
+   Compiling futures-core v0.3.31
+   Compiling itoa v1.0.17
+   Compiling crossbeam-epoch v0.9.18
+   Compiling icu_properties_data v2.1.2
+   Compiling adler2 v2.0.1
+   Compiling crc32fast v1.5.0
+   Compiling icu_normalizer_data v2.1.1
+   Compiling crossbeam-deque v0.8.6
+   Compiling miniz_oxide v0.8.9
+   Compiling serde_core v1.0.228
+   Compiling mio v1.1.1
+   Compiling socket2 v0.6.1
+   Compiling syn v2.0.114
+   Compiling zerocopy v0.8.33
+   Compiling utf8_iter v1.0.4
+   Compiling core_maths v0.1.1
+   Compiling futures-sink v0.3.31
+   Compiling flate2 v1.1.9
+   Compiling num-integer v0.1.46
+   Compiling tokio v1.49.0
+   Compiling http v1.4.0
+   Compiling typenum v1.19.0
+   Compiling rayon v1.11.0
+   Compiling ring v0.17.14
+   Compiling write16 v1.0.0
+   Compiling weezl v0.1.12
+   Compiling anyhow v1.0.100
+   Compiling percent-encoding v2.3.2
+   Compiling zeroize v1.8.2
+   Compiling utf16_iter v1.0.5
+   Compiling rustls-pki-types v1.14.1
+   Compiling http-body v1.0.1
+   Compiling num-bigint v0.4.6
+   Compiling getrandom v0.2.16
+   Compiling tracing-core v0.1.36
+   Compiling generic-array v0.14.7
+   Compiling futures-io v0.3.31
+   Compiling rustix v1.1.3
+   Compiling pin-utils v0.1.0
+   Compiling icu_locale_data v2.1.2
+   Compiling thiserror v2.0.17
+   Compiling futures-task v0.3.31
+   Compiling arrayvec v0.7.6
+   Compiling httparse v1.10.1
+   Compiling untrusted v0.9.0
+   Compiling slab v0.4.11
+   Compiling num-rational v0.4.2
+   Compiling futures-util v0.3.31
+   Compiling fdeflate v0.3.7
+   Compiling synstructure v0.13.2
+   Compiling as-slice v0.2.1
+   Compiling serde v1.0.228
+   Compiling tower-service v0.3.3
+   Compiling winnow v0.7.14
+   Compiling built v0.8.0
+   Compiling rustls v0.23.40
+   Compiling color_quant v1.1.0
+   Compiling try-lock v0.2.5
+   Compiling av-scenechange v0.14.1
+   Compiling linux-raw-sys v0.11.0
+   Compiling paste v1.0.15
+   Compiling want v0.3.1
+   Compiling aligned v0.4.3
+   Compiling toml_datetime v0.7.5+spec-1.1.0
+   Compiling serde_spanned v1.1.1
+   Compiling rav1e v0.8.1
+   Compiling form_urlencoded v1.2.2
+   Compiling futures-channel v0.3.31
+   Compiling core2 v0.4.0
+   Compiling nom v8.0.0
+   Compiling aho-corasick v1.1.4
+   Compiling zune-inflate v0.2.54
+   Compiling slotmap v1.1.1
+   Compiling y4m v0.8.0
+   Compiling pastey v0.1.1
+   Compiling bit_field v0.10.3
+   Compiling zerofrom-derive v0.1.6
+   Compiling yoke-derive v0.8.1
+   Compiling zerovec-derive v0.11.2
+   Compiling displaydoc v0.2.5
+   Compiling bytemuck_derive v1.10.2
+   Compiling equator-macro v0.4.2
+   Compiling zerocopy-derive v0.8.33
+   Compiling tracing-attributes v0.1.31
+   Compiling thiserror-impl v2.0.17
+   Compiling rustls-webpki v0.103.13
+   Compiling bytemuck v1.24.0
+   Compiling zerofrom v0.1.7
+   Compiling yoke v0.8.1
+   Compiling font-types v0.10.1
+   Compiling equator v0.4.2
+   Compiling zerovec v0.11.5
+   Compiling zerotrie v0.2.3
+   Compiling aligned-vec v0.6.4
+   Compiling tracing v0.1.44
+   Compiling v_frame v0.3.9
+   Compiling read-fonts v0.35.0
+   Compiling arg_enum_proc_macro v0.3.4
+   Compiling serde_derive v1.0.228
+   Compiling profiling-procmacros v1.0.17
+   Compiling toml_parser v1.0.6+spec-1.1.0
+   Compiling rand_core v0.6.4
+   Compiling tinystr v0.8.2
+   Compiling potential_utf v0.1.4
+   Compiling subtle v2.6.1
+   Compiling icu_locale_core v2.1.1
+   Compiling icu_collections v2.1.1
+   Compiling ryu v1.0.23
+   Compiling lebe v0.5.3
+   Compiling quick-error v2.0.1
+   Compiling atomic-waker v1.1.2
+   Compiling utf8parse v0.2.2
+   Compiling regex-syntax v0.8.8
+   Compiling siphasher v1.0.2
+   Compiling icu_provider v2.1.1
+   Compiling half v2.7.1
+   Compiling phf_shared v0.11.3
+   Compiling icu_properties v2.1.2
+   Compiling icu_normalizer v2.1.1
+   Compiling icu_locale v2.1.1
+   Compiling exr v1.74.0
+   Compiling anstyle-parse v0.2.7
+   Compiling hyper v1.9.0
+   Compiling regex-automata v0.4.13
+   Compiling idna_adapter v1.2.1
+   Compiling idna v1.1.0
+   Compiling toml v0.9.11+spec-1.1.0
+   Compiling profiling v1.0.17
+   Compiling rand v0.8.5
+   Compiling av1-grain v0.2.5
+   Compiling qoi v0.4.1
+   Compiling fax_derive v0.2.0
+   Compiling num-derive v0.4.2
+   Compiling bitstream-io v4.9.0
+   Compiling jpeg-decoder v0.3.2
+   Compiling maybe-rayon v0.1.1
+   Compiling simd_helpers v0.1.0
+   Compiling sync_wrapper v1.0.2
+   Compiling itertools v0.14.0
+   Compiling tower-layer v0.3.3
+   Compiling new_debug_unreachable v1.0.6
+   Compiling base64 v0.22.1
+   Compiling anstyle-query v1.1.5
+   Compiling noop_proc_macro v0.3.0
+   Compiling zune-core v0.4.12
+   Compiling scopeguard v1.2.0
+   Compiling zmij v1.0.14
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling icu_casemap_data v2.1.1
+   Compiling icu_collator_data v2.1.1
+   Compiling imgref v1.12.0
+   Compiling tinyvec_macros v0.1.1
+   Compiling bitflags v1.3.2
+   Compiling colorchoice v1.0.4
+   Compiling anstyle v1.0.13
+   Compiling icu_segmenter_data v2.1.1
+   Compiling roxmltree v0.20.0
+   Compiling thiserror v1.0.69
+   Compiling ipnet v2.12.0
+   Compiling icu_plurals_data v2.1.1
+   Compiling hyper-util v0.1.20
+   Compiling fontconfig-parser v0.5.8
+   Compiling anstream v0.6.21
+   Compiling tokio-rustls v0.26.4
+   Compiling png v0.17.16
+   Compiling tinyvec v1.10.0
+   Compiling loop9 v0.1.5
+   Compiling lock_api v0.4.14
+   Compiling zune-jpeg v0.4.21
+   Compiling tiff v0.9.1
+   Compiling tower v0.5.3
+   Compiling fax v0.2.6
+   Compiling phf_generator v0.11.3
+   Compiling skrifa v0.37.0
+   Compiling winresource v0.1.30
+   Compiling url v2.5.8
+   Compiling thiserror-impl v1.0.69
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling gif v0.13.3
+   Compiling avif-serialize v0.8.6
+   Compiling webpki-roots v1.0.7
+   Compiling ttf-parser v0.25.1
+   Compiling pxfm v0.1.27
+   Compiling memmap2 v0.9.9
+   Compiling serde_json v1.0.149
+   Compiling lazy_static v1.5.0
+   Compiling heck v0.5.0
+   Compiling clap_lex v0.7.7
+   Compiling zune-core v0.5.0
+   Compiling zeno v0.3.3
+   Compiling byteorder-lite v0.1.0
+   Compiling vcpkg v0.2.15
+   Compiling yazi v0.2.1
+   Compiling rgb v0.8.52
+   Compiling minimal-lexical v0.2.1
+   Compiling pkg-config v0.3.32
+   Compiling byteorder v1.5.0
+   Compiling option-ext v0.2.0
+   Compiling strsim v0.11.1
+   Compiling image v0.24.9
+   Compiling dirs-sys v0.4.1
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p310-source)
+   Compiling clap_builder v4.5.56
+   Compiling moxcms v0.7.11
+   Compiling nom v7.1.3
+   Compiling fontdb v0.23.0
+   Compiling ravif v0.12.0
+   Compiling swash v0.2.6
+   Compiling image-webp v0.2.4
+   Compiling clap_derive v4.5.55
+   Compiling zune-jpeg v0.5.8
+   Compiling sharded-slab v0.1.7
+   Compiling hyper-rustls v0.27.9
+   Compiling tower-http v0.6.10
+   Compiling digest v0.10.7
+   Compiling tiff v0.10.3
+   Compiling phf_macros v0.11.3
+   Compiling spin v0.9.8
+   Compiling matchers v0.2.0
+   Compiling harfrust v0.3.2
+   Compiling serde_urlencoded v0.7.1
+   Compiling fixed_decimal v0.7.0
+   Compiling xattr v1.6.1
+   Compiling gif v0.14.1
+   Compiling png v0.18.0
+   Compiling texpresso v2.0.2
+   Compiling tracing-log v0.2.0
+   Compiling http-body-util v0.1.3
+   Compiling filetime v0.2.28
+   Compiling thread_local v1.1.9
+   Compiling cpufeatures v0.2.17
+   Compiling rustc-hash v1.1.0
+   Compiling linebender_resource_handle v0.1.1
+   Compiling nu-ansi-term v0.50.3
+   Compiling unicode-segmentation v1.12.0
+   Compiling sys-locale v0.3.2
+   Compiling same-file v1.0.6
+   Compiling unicode-linebreak v0.1.5
+   Compiling self_cell v1.2.2
+   Compiling smol_str v0.2.2
+   Compiling rangemap v1.7.1
+   Compiling unicode-script v0.5.8
+   Compiling unicode-bidi v0.3.18
+   Compiling walkdir v2.5.0
+   Compiling tracing-subscriber v0.3.22
+   Compiling cosmic-text v0.15.0
+   Compiling sha2 v0.10.9
+   Compiling reqwest v0.12.28
+   Compiling tar v0.4.45
+   Compiling image-blp v1.2.0
+   Compiling image v0.25.9
+   Compiling icu_plurals v2.1.1
+   Compiling icu_segmenter v2.1.1
+   Compiling icu_collator v2.1.1
+   Compiling icu_casemap v2.1.1
+   Compiling phf v0.11.3
+   Compiling phf_codegen v0.11.3
+   Compiling clap v4.5.56
+   Compiling dirs v5.0.1
+   Compiling regex v1.12.2
+   Compiling quick-xml v0.37.5
+   Compiling rilua v0.1.21 (https://github.com/Osso/rilua.git?rev=842e4d3ff8592af45a5a93058eddf93419d29012#842e4d3f)
+   Compiling rustc-hash v2.1.2
+   Compiling glob v0.3.3
+   Compiling unicode-blocks v0.1.10
+   Compiling httpdate v1.0.3
+   Compiling getrandom v0.3.4
+   Compiling fastrand v2.3.0
+   Compiling console v0.15.11
+   Compiling similar v2.7.0
+   Compiling tempfile v3.24.0
+   Compiling pollster v0.4.0
+   Compiling insta v1.46.0
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 5 warnings
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+error[E0432]: unresolved import `iced`
+ --> /home/osso/.worktrees/wow-ui-sim-p310-source/tests/game_menu.rs:9:5
+  |
+9 | use iced::Point;
+  |     ^^^^ use of unresolved module or unlinked crate `iced`
+  |
+  = help: if you wanted to use a crate named `iced`, use `cargo add iced` to add it to your `Cargo.toml`
+
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2087:81
+     |
+2087 | ...frame_layout_stays_locked", crate::chat_frame::layout_lock::chat_frame_layout_stays_locked::run), // /home/osso/.worktrees/wow-...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2088:103
+     |
+2088 | ..._to_chat_frame_right_edge", crate::chat_frame::scrollbar::chat_scrollbar_stays_attached_to_chat_frame_right_edge::run), // /hom...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2091:92
+     |
+2091 | ...ault_black_tint_and_alpha", crate::chat_frame::test_chat_background_uses_default_black_tint_and_alpha::run), // /home/osso/.wor...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2092:80
+     |
+2092 | ...can_be_enabled_explicitly", crate::chat_frame::test_chat_frame2_can_be_enabled_explicitly::run), // /home/osso/.worktrees/wow-u...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2093:70
+     |
+2093 |     Case::new("chat_frame::test_chat_frame2_starts_disabled", crate::chat_frame::test_chat_frame2_starts_disabled::run), // /home/...
+     |                                                                      ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2094:74
+     |
+2094 | ...essage_contains_timestamp", crate::chat_frame::test_chat_message_contains_timestamp::run), // /home/osso/.worktrees/wow-ui-sim-...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2095:94
+     |
+2095 | ...plate_sized_centered_icon", crate::chat_frame::test_chat_voice_button_uses_template_sized_centered_icon::run), // /home/osso/.w...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2096:92
+     |
+2096 | ..._round_trips_through_info", crate::chat_frame::test_chat_window_docked_state_round_trips_through_info::run), // /home/osso/.wor...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `chat_frame` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2097:84
+     |
+2097 | ..._round_trips_through_info", crate::chat_frame::test_chat_window_name_round_trips_through_info::run), // /home/osso/.worktrees/w...
+     |                                       ^^^^^^^^^^ could not find `chat_frame` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2721:5
+     |
+2721 | mod chat_frame;
+     |     ^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/chat_frame.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `compact_raid_manager_quads` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2103:122
+     |
+2103 | ...ad_bounds", crate::compact_raid_manager_quads::compact_raid_manager_emits_background_and_forward_toggle_quad_bounds::run), // /...
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^ could not find `compact_raid_manager_quads` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:2837:5
+     |
+2837 | mod compact_raid_manager_quads;
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/compact_raid_manager_quads.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `objective_tracker_tree` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2115:98
+     |
+2115 | ...after_startup", crate::objective_tracker_tree::objective_tracker_frame_is_visible_after_startup::run), // /home/osso/.worktrees...
+     |                           ^^^^^^^^^^^^^^^^^^^^^^ could not find `objective_tracker_tree` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:3941:5
+     |
+3941 | mod objective_tracker_tree;
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/objective_tracker_tree.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `objective_tracker_tree` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2116:90
+     |
+2116 | ...out_is_locked", crate::objective_tracker_tree::objective_tracker_frame_layout_is_locked::run), // /home/osso/.worktrees/wow-ui-...
+     |                           ^^^^^^^^^^^^^^^^^^^^^^ could not find `objective_tracker_tree` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:3941:5
+     |
+3941 | mod objective_tracker_tree;
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/objective_tracker_tree.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `objective_tracker_tree` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2117:100
+     |
+2117 | ...jectives_text", crate::objective_tracker_tree::objective_tracker_header_shows_all_objectives_text::run), // /home/osso/.worktre...
+     |                           ^^^^^^^^^^^^^^^^^^^^^^ could not find `objective_tracker_tree` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:3941:5
+     |
+3941 | mod objective_tracker_tree;
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/objective_tracker_tree.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `objective_tracker_tree` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2118:105
+     |
+2118 | ...s_glyph_quads", crate::objective_tracker_tree::objective_tracker_quest_module_header_emits_glyph_quads::run), // /home/osso/.wo...
+     |                           ^^^^^^^^^^^^^^^^^^^^^^ could not find `objective_tracker_tree` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:3941:5
+     |
+3941 | mod objective_tracker_tree;
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/objective_tracker_tree.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `objective_tracker_tree` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2119:121
+     |
+2119 | ...me_corruption", crate::objective_tracker_tree::objective_tracker_quest_module_header_recovers_after_runtime_corruption::run), /...
+     |                           ^^^^^^^^^^^^^^^^^^^^^^ could not find `objective_tracker_tree` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:3941:5
+     |
+3941 | mod objective_tracker_tree;
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/objective_tracker_tree.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+error[E0433]: cannot find `objective_tracker_tree` in the crate root
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/prefork_full_ui_cases.rs:2120:105
+     |
+2120 | ...s_quests_text", crate::objective_tracker_tree::objective_tracker_quest_module_header_shows_quests_text::run), // /home/osso/.wo...
+     |                           ^^^^^^^^^^^^^^^^^^^^^^ could not find `objective_tracker_tree` in the crate root
+     |
+note: found an item that was configured out
+    --> /home/osso/.worktrees/wow-ui-sim-p310-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs:3941:5
+     |
+3941 | mod objective_tracker_tree;
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+    ::: /home/osso/.worktrees/wow-ui-sim-p310-source/tests/objective_tracker_tree.rs:1:8
+     |
+   1 | #![cfg(feature = "gui")]
+     |        --------------- the item is gated behind the `gui` feature
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `wow-ui-sim` (test "prefork_full_ui") due to 17 previous errors
