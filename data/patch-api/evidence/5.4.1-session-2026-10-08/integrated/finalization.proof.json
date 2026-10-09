@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/finalize_integration.py",
+    "3312295"
+  ],
+  "revision": "1452ef875dca6ed8bc167c0734223b951cfd1437",
+  "scope": "finalization",
+  "cwd": ".",
+  "target": "dedicated p541-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "finalization.txt",
+  "log_sha256": "2757b8ac6250201eb1bdb4a957d28b8afe321d1bfdf2d7579ea89d06244aebec",
+  "seconds": 445.5021128869994,
+  "invalidated": false
+}

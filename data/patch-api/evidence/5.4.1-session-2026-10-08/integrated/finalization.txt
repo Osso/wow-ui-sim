@@ -1,0 +1,33 @@
+{"receipts": 23, "sweep_pages": 61, "other_sweeps_unchanged": 60}
+[p541-page 85109bfc4] Seal 5.4.1 sweep receipts and unchanged retail and Classic comparisons
+ 16 files changed, 130 insertions(+), 75 deletions(-)
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/master/mists-line-control-results.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/mists-line-control-results.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/mists-routing-correction.launcher.txt
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/mists-routing-correction.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/mists-routing-correction.txt
+
+CONTEXT_SHA256 = '1e5938f82e47abd493801d606a808c1f82e8ad8bbfacf1bb78f73dd112664b00'
+[p541-page 970bde78d] Pin portable integrated 5.4.1 context and evidence seals
+ 2 files changed, 39 insertions(+), 16 deletions(-)
+
+integrated-validator 0
+own-seal-controls 0
+[p541-page 1abffe224] Retain passing 5.4.1 integrated validator and own-log tamper controls
+ 7 files changed, 82 insertions(+)
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/historical-tamper-validator.txt
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/integrated-tamper-validator.txt
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/integrated-validator.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/integrated-validator.txt
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/own-log-tamper.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/own-seal-controls.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/own-seal-controls.txt
+
+validator-gate 0
+[p541-page de70d4d1b] Record passing 5.4.1 clean and later-audit portability gates
+ 6 files changed, 654 insertions(+), 2 deletions(-)
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/gate-summary.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/validator-gate.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/validator-gate.txt
+
+{"status": "PASS", "head": "de70d4d1b900ffe4d4724bbb9f9fce535e7e7e05", "gate": {"clean": {"failed": 0, "passed": 48}, "later_audit": {"failed": 0, "passed": 49}}}
