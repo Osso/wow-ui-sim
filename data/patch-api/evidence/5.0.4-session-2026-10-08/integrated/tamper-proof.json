@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "name": "historical-log",
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py"
+      ],
+      "revision": "1a842bea4dee4da03bceba41077facc568bf0d2f",
+      "scope": "data/patch-api/evidence/5.0.4-session-2026-10-08/own-prefork.log",
+      "exit": 1,
+      "diagnostic": "own evidence drift: own-prefork.log",
+      "log": "tamper-validator-historical-log.txt",
+      "log_sha256": "38d0eecf0fe67f312f1bcee1849a00d98328000c3736d92851e7f7aacb825e8b",
+      "restored_sha256": "85f346de9551dab705ce16284c9a236f8d77b27b2605d223e5402612c60f6ef1",
+      "restored": true
+    },
+    {
+      "name": "integrated-log",
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/validate.py"
+      ],
+      "revision": "1a842bea4dee4da03bceba41077facc568bf0d2f",
+      "scope": "data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/all-sweeps.txt",
+      "exit": 1,
+      "diagnostic": "integrated artifact drift",
+      "log": "tamper-validator-integrated-log.txt",
+      "log_sha256": "44e3b531dd625cabaf2cce81e764c3a75ef3efc3cb95360e1ea2fb70a9c92c19",
+      "restored_sha256": "8d9402d15afa4b4be4a3e69358905f25f735bbb0c9fbca8dd73366bec00b92c4",
+      "restored": true
+    },
+    {
+      "name": "current-source",
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/validate.py"
+      ],
+      "revision": "1a842bea4dee4da03bceba41077facc568bf0d2f",
+      "scope": "data/patch-api/sources/5.0.4-page-coverage.json",
+      "exit": 1,
+      "diagnostic": "own source drift",
+      "log": "tamper-validator-current-source.txt",
+      "log_sha256": "0adf928cae932448b0cee472bc7e8900aa972837c02835e08614432c91c4ce1e",
+      "restored_sha256": "994258b2e81174dbf1b8d5adac592ff79def6034e67f689e1ad156714340e664",
+      "restored": true
+    }
+  ]
+}

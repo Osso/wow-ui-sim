@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/validate.py", line 5, in <module>
+    runpy.run_path(str(Path(__file__).resolve().parent / 'integrated/replay_history.py'), run_name='__main__')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/replay_history.py", line 73, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/replay_history.py", line 65, in main
+    namespace['validate']()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "historical-validator.py.txt", line 172, in validate
+  File "historical-validator.py.txt", line 33, in validate_seals
+AssertionError: own evidence drift: own-prefork.log
