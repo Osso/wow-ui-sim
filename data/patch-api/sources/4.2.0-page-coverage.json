@@ -1,0 +1,408 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "4.2.0",
+  "source_sha256": "28c494994d05f69c41bb6c914fb416bf5bfe22a062bde0cdc0c388ea317b8225",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/4.2.0-api-changes.txt",
+    "sha256": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577"
+  },
+  "proof_policy": "Publication/absence only. Source has no behavior prose or signatures. Pending 4.3.0/4.3.4 successors require coordinator reconciliation; Classic excluded. Native parity not claimed.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-BNGetFriendIndex-10",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-BNInviteFriend-11",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-CollapseWarGameHeader-12",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-ConfirmOnUse-13",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-CreateNewRaidProfile-14",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-DeleteRaidProfile-15",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_ClearSearch-16",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetAvailableClasses-17",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetCreatureInfo-18",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetCurrentInstance-19",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetEncounterInfoByIndex-20",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetEncounterInfo-21",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetInstanceByIndex-22",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetInstanceInfo-23",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetLootInfoByIndex-24",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetLootInfo-25",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetMapEncounter-26",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetNumLoot-27",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetNumSearchResults-28",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetSearchResult-29",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetSectionInfo-30",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetSectionPath-31",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetTierInfo-32",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_HandleLinkPath-33",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_InstanceIsRaid-34",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SelectEncounter-35",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SelectInstance-36",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SelectTier-37",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SetClassLootFilter-38",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SetDifficultyByMask-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SetDifficulty-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SetSearch-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-ExpandWarGameHeader-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrencyLink-43",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrencyListLink-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentRefresh-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetMaxNumCUFProfiles-46",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetMerchantCurrencies-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetNumRaidProfiles-48",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetNumWarGameTypes-49",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetOSLocale-50",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetPVPRewards-51",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetRaidProfileFlattenedOptions-52",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetRaidProfileName-53",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetRaidProfileOption-54",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetRaidProfileSavedPosition-55",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetRestrictedAccountData-56",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetSelectedWarGameType-57",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-GetWarGameTypeInfo-58",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-HasTravelPass-59",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-LoadURLIndex-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-PetAssistMode-61",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-RaidProfileExists-62",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-RaidProfileHasUnsavedChanges-63",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-RequestPVPRewards-64",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-RestoreRaidProfileFromCopy-65",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-SaveRaidProfileCopy-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-SetRaidProfileOption-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-SetRaidProfileSavedPosition-68",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-SetRefresh-69",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-SetSelectedWarGameType-70",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-UnitHasIncomingResurrection-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-UpdateWarGamesList-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-KeyRingButtonIDToInvSlotID-75",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "wt-global-api-strreplace-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication/absence development probe pending; no signature or behavior supplied by this inventory reference."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Navigation: historical 4.1.0 → 4.2.0 → 4.3.0; not a behavior statement. Entire source contains only navigation and the global inventory; no prose or signatures."
+    }
+  ]
+}

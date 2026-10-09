@@ -632,3 +632,7 @@ Pinned source retained; default generator handles 83 identities, both headers ma
 ## 2026-10-09 — Patch 4.3.0 bounded handoff
 
 [[patch-4-3-0-api-audit]]: focused accounting/source/seal fixtures 8/8 and added tree identity fixtures 2/2. Publication negative 25 → 26 rejected. Compact root-identity manifests retained below 5 MB per artifact. No final gate; queued 4.3.4 replacement and acceptance remain coordinator-owned.
+
+## 2026-10-09 — Patch 4.2.0 source accounting
+
+Pinned revision 3045158: 63 additions/two removals, one navigation metadata row, no prose/signatures. Existing flags; own retail sweep with two pending successors. [Audit](investigations/patch-4-2-0-api-audit.md).
