@@ -8,8 +8,8 @@ Bounded accounting of page278324/revision2690597/timestamp2020-04-05T21:06:37Z f
 - [x] Reject populated-boundary omissions, count mutations, invented inventory/signatures/defaults/prose/headers/templates and model/runtime/native claims; reject source mutations.
 - [x] Preserve unexpanded redirect and precise UNPROVEN contracts; zero meaningful modeled/runtime/native subset.
 - [x] Keep original Retail, Era and Forever histories separate; newer1.10.0 separately queued unapplied.
-- [ ] Retain own SOURCE RED/GREEN, own-base default-byte/error replay and copied archive replay without Git/target/current tools/network.
-- [ ] Reject serialized ledger/log tampering and exactly restore bytes/seal map; preserve immutable original seals/archive separately from later actual revision/cwd/argv/env-key/time/fullstream/hash receipts.
+- [x] Retain own SOURCE RED/GREEN, own-base default-byte/error replay and copied archive replay without Git/target/current tools/network.
+- [x] Reject serialized ledger/log tampering and exactly restore bytes/seal map; preserve immutable original seals/archive separately from later actual revision/cwd/argv/env-key/time/fullstream/hash receipts.
 
 ## How it works
 

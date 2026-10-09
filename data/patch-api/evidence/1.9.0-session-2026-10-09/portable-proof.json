@@ -1,0 +1,52 @@
+{
+  "scope": "portable SOURCE development controls",
+  "success": true,
+  "tests": 3,
+  "receipts": [
+    {
+      "control": "copied-historical-replay",
+      "result": {
+        "seals": 30,
+        "totals": {
+          "physical_lines": 1,
+          "nonblank_rows": 1,
+          "metadata_rows": 1,
+          "unproven_source_rows": 0,
+          "references": 1,
+          "unproven_contracts": 1,
+          "inventory": 0,
+          "signatures": 0,
+          "defaults": 0,
+          "prose": 0,
+          "headers": 0,
+          "templates": 0
+        }
+      },
+      "original_seals_sha256": "70f4d6a102ba93defa5fab63ff9bb81a99001501f5f4277a0824eaf19e741a28"
+    },
+    {
+      "control": "serialized-tamper-rejected",
+      "file": "ledger.json",
+      "original_sha256": "a3ba3c17dd874c9e261e52e9ab5d2db5ad121c36d5d1d9e3d85216a565552152",
+      "tampered_sha256": "4507a1676625c69655bfe06d95bb54628aaebd6eeb72860a77b8c08a16510394"
+    },
+    {
+      "control": "exact-restoration",
+      "file": "ledger.json",
+      "restored_sha256": "a3ba3c17dd874c9e261e52e9ab5d2db5ad121c36d5d1d9e3d85216a565552152",
+      "original_seals_sha256": "70f4d6a102ba93defa5fab63ff9bb81a99001501f5f4277a0824eaf19e741a28"
+    },
+    {
+      "control": "serialized-tamper-rejected",
+      "file": "green.log",
+      "original_sha256": "68a9e3a6278c5426f04dd293874f67196b10b17783e00cb9f44235cc624f65fb",
+      "tampered_sha256": "38c8c16022e1c6b82b1983536cc877385887ab47e0ae150abfc9d44fc04aa6cf"
+    },
+    {
+      "control": "exact-restoration",
+      "file": "green.log",
+      "restored_sha256": "68a9e3a6278c5426f04dd293874f67196b10b17783e00cb9f44235cc624f65fb",
+      "original_seals_sha256": "70f4d6a102ba93defa5fab63ff9bb81a99001501f5f4277a0824eaf19e741a28"
+    }
+  ]
+}

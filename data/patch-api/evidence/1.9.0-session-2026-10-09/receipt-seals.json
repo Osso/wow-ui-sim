@@ -1,0 +1,18 @@
+{
+  "schema": "separate-receipt-seals/v1",
+  "original_archive_sha256": "6706bbcd2bea4939572702cb39c241666521dbab3a31ebb39e0929f562b66afe",
+  "original_map_sha256": "70f4d6a102ba93defa5fab63ff9bb81a99001501f5f4277a0824eaf19e741a28",
+  "original_seals_unchanged": true,
+  "files": {
+    "completion-summary.json": "42bbbea8618d2d6993fbda085bb387056b28daa771463986005c58f38812373d",
+    "portable-context.json": "60f78b0e47f105d7d2fd65115d62c4f9d72125cfea8a52d339328612947a5ca5",
+    "historical-replay.log": "f7acaeb7c31152ad95baf4e7ae7cd110234f6376af7428f09c8e8d8b0210313e",
+    "portable-proof.json": "e4b79cb87999eeaa02f52a70d7638e86c247607d20ab48dd8a0cf91b3774e57d",
+    "later-proof-ledger.json": "f9a4ea05a046507957ab8a972ce57532815886bd845687314007d0e29080a5fc",
+    "HANDOFF.md": "d73bd784266d545773beaf530e081995fbe002d3d040517c461516ac7fa5d355",
+    "copied-source-green.log": "7641779c9f6c43f9efb6266e76157879913a77f7d184aef9f860aeb68cd06dcf",
+    "REPLAY.md": "4e887dc5671a196d18cfed5b1ab41c6200f87b681818ea7dfc900b9018c1f5c6",
+    "portable-green.log": "3d3d91cf673db2e4c5c16c529de7be7619b1a7e6ae4fa5d49cc497baef03d144",
+    "later-retention-review.json": "7319fcebe9d23cf957f0a59d8fd1874c20c8d488dd9643c70834021d804970cf"
+  }
+}
