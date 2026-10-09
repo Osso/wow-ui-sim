@@ -1,0 +1,13 @@
+{
+  "captured": "2026-10-08 final boundary; not the original scan timestamp",
+  "files": {
+    ".wow-ui-sim-blizzard-ui-provenance": {
+      "sha256": "b2731aefb37aa23ae78853d4b6159745131048b4bb57dc8c7376e99bfad2e0a4",
+      "content": "schema=1\nprofile=retail\nproduct=wow\nversion=12.1.0.69933\nbuild_key=dcfc90fffd79ba00406ae46f5f657592\ninstall_key=\nmanifest_sha256=aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd\nsource=casc-local-or-cdn\nfallback=none\n"
+    },
+    ".wow-ui-sim-blizzard-ui-complete": {
+      "sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+      "content": "ok\n"
+    }
+  }
+}

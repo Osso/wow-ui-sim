@@ -557,4 +557,4 @@ Integrated real 5.3.0–5.4.2 registers against pinned master 5e4e82ef6. Exact 5
 
 ## 2026-10-08 — Retail Patch 5.1.0 audit
 
-Pinned retail 2012 source/diff, added exhaustive ledger and prefork sweep. Two no-consumer C_PetJournal ID spellings retired at namespace synthesis boundary; existing interval model gets bounded behavior coverage. See [[patch-5-1-0-api-audit]]; targeted acceptance pending.
+Pinned retail 2012 source/diff, added exhaustive ledger and prefork sweep. Two no-consumer C_PetJournal ID spellings retired at namespace synthesis boundary; existing interval model gets bounded behavior coverage. See [[patch-5-1-0-api-audit]]; targeted proofs pass, including exact same-root/full-frozen-addon startup comparison to master (505 inherited errors), 61 register/58 extract reproductions and 92 Python fixtures. Portable gate pending.

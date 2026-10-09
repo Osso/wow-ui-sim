@@ -1,0 +1,2 @@
+src/c_api/patch_retired_members.rs:35:    &[("C_PetJournal", &["GetSummonedPetID", "SummonPetByID"])];
+tests/patch_5_1_0_behavior.rs:10:        for _, name in ipairs({'GetSummonedPetID', 'SummonPetByID'}) do

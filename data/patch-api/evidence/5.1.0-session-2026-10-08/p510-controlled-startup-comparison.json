@@ -1,0 +1,9 @@
+{
+  "master_revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
+  "branch_revision": "e75738c1c881975761506e333db5caa51b1d18bc",
+  "identical": true,
+  "unique_errors": 505,
+  "occurrences": 519,
+  "exit": 1,
+  "scope": "Full frozen addon tree, same compile-time worktree path, bytecode cache disabled; no addon enable-state filtering. Earlier archive-root comparisons were not equivalent and remain retained, not acceptance proof."
+}

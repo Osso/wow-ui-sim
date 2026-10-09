@@ -1,30 +1,37 @@
 [
   {
     "path": "tools/test_check_patch_validators.py",
-    "exit": 0
+    "exit": 0,
+    "tests": 4
   },
   {
     "path": "tools/test_extract_patch_non_inventory.py",
-    "exit": 0
+    "exit": 0,
+    "tests": 37
   },
   {
     "path": "tools/test_gen_patch_wikitext_register.py",
-    "exit": 0
+    "exit": 0,
+    "tests": 35
   },
   {
     "path": "tools/test_patch_5_1_register.py",
-    "exit": 0
+    "exit": 0,
+    "tests": 3
   },
   {
     "path": "tools/test_patch_audit_validation.py",
-    "exit": 0
+    "exit": 0,
+    "tests": 8
   },
   {
     "path": "tools/test_patch_mists_register.py",
-    "exit": 0
+    "exit": 0,
+    "tests": 2
   },
   {
     "path": "tools/test_patch_warlords_register.py",
-    "exit": 0
+    "exit": 0,
+    "tests": 3
   }
 ]

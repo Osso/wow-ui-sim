@@ -2772,4 +2772,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-08] investigation | Retail Patch 5.1.0 API audit
 
-[Audit](investigations/patch-5-1-0-api-audit.md): pinned API 2736212/diff 4546247; parent TOC 50100/build 16309 confirms 2012 retail. 63 API/21 extract IDs, two consumer-free pet ID retirements, 17 API gaps and fifteen prose limits. Acceptance pending; queued retail placeholders and Classic separation explicit.
+[Audit](investigations/patch-5-1-0-api-audit.md): pinned API 2736212/diff 4546247; parent TOC 50100/build 16309 confirms 2012 retail. 63 API/21 extract IDs, two consumer-free pet ID retirements, 17 API gaps and fifteen prose limits. 59/59 sweeps, own 3/3 prefork and 1/1 bare, 92 Python fixtures and warning-clean non-vendor Mists pass; controlled startup equals master (505 inherited errors). Portable gate pending; queued retail placeholders and Classic separation explicit.

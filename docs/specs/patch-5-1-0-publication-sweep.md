@@ -4,10 +4,10 @@ Audit the pinned 2012 retail [source](../../data/patch-api/sources/5.1.0-api-cha
 
 ## What it must do
 
-- [ ] Account for all register occurrences and extract statements without equating publication with behavior.
-- [ ] Apply only later retail registers, with queued 5.2.0, 5.3.0, 5.4.0 and 5.4.1 placeholders first; never 5.5.x Classic.
-- [ ] Keep consumer-free `C_PetJournal.GetSummonedPetID` and `SummonPetByID` absent under raw and repeated ordinary lookup; retain GUID successors and current journal publication.
-- [ ] Read/update/clear a concrete existing action/spell loss-control interval through the cached legacy global wrapper.
+- [x] Account for all register occurrences and extract statements without equating publication with behavior.
+- [x] Apply only later retail registers, with queued 5.2.0, 5.3.0, 5.4.0 and 5.4.1 placeholders first; never 5.5.x Classic.
+- [x] Keep consumer-free `C_PetJournal.GetSummonedPetID` and `SummonPetByID` absent under raw and repeated ordinary lookup; retain GUID successors and current journal publication.
+- [x] Read/update/clear a concrete existing action/spell loss-control interval through the cached legacy global wrapper.
 - [ ] Reproduce saved sources/registers and pass clean-checkout/later-audit validators using committed, pinned inputs.
 
 ## How it works

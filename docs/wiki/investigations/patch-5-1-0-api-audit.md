@@ -25,7 +25,11 @@ Whole-word `/usr/bin/grep` scans retain qualified/bare retail results (excluding
 
 ## Verification
 
-Acceptance pending; receipts and the portable validator will record exact revisions, scope, derived counts, failures and immutable log seals. Required gates: all publication sweeps, own bare/prefork and journal/namespace caller controls, library comparison to pinned master, matching addons-enabled startup errors, Python fixtures, every saved reproduction, warning-clean non-vendor Mists check and format. No full integration suite, push, merge or delegation.
+Targeted runtime/tool proof completed at pinned revisions; portable gate pending. Publication sweeps: branch 59/59, master 58/58; all 9,817 observations on 57 other retail pages identical. Own prefork 3/3 and bare retirement 1/1. Journal/namespace integration controls 19/13/2 pass on both revisions; prefork pet controls 22 branch/21 master (one new absence case). Namespace library controls 24/24 on both. The touched retirement module's library selector has zero unit cases on both: no coverage credited; bare/full-LoD behavior supplies its positive proof. All 92 Python fixtures, cargo format and Mists tests check pass with zero non-vendor warnings. 61 registers and 58 extracts reproduce; inherited failures remain exactly 12.0.5, 12.0.7 and 12.1.0. The committed negative input creates exactly one extra gap, 17 → 18.
+
+Addons-enabled startup is **not clean**: both pinned master and branch report the same 505 unique errors / 519 occurrences, exit 1. A same-source repeat is identical. Acceptance uses the complete frozen 6,658-file addon tree, bytecode caching disabled, and both binaries compiled in the same worktree path. No addon enable-state filtering or source patching. Earlier live/archive-root comparisons were not equivalent and are retained as failed probes, not accepted proof; input drift was suspected, not established. The frozen manifest is unchanged. Existing third-party failures remain outside this audit.
+
+All runtime changes are the two retirement markers. No new gameplay model, vendor change, full integration suite, push, merge or delegation. The existing action/spell interval model supplies meaningful bounded read/update/clear behavior, not native 2012 parity.
 
 ## Sources
 
