@@ -12,6 +12,10 @@ The housing compatibility probe now expects its separately modeled catalog searc
 
 [Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/report.md) records default-Retail library tests **2/2 chat + 2/2 scenario + 1/1 housing**, workspace formatting and changed-Rust readability at `9252c6cc9`. Six existing manifest deprecation warnings remain. Integration-test deletion was source-inspected, not freshly compiled/listed; no full-suite or alternate-profile acceptance. [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-corrections/main-retention.json) preserves 30 top-level artifacts byte-for-byte; no commands rerun.
 
+## Era standalone target gate — restoration
+
+The 1.13.2 target insertion accidentally left `patch_1_13_3_npc_health` without its former `client-era` required-feature gate. The NPC target gate is restored; the new CVar target keeps its own gate. Test bodies and runtime APIs remain unchanged. Original source/proof epochs retain the defect rather than being rewritten. Cargo target-selection verification follows this one-line configuration repair; existing Era execution still concerns explicitly enabled `client-era`.
+
 ## Historical TransmogSituation fixture — exact epoch, proof pending
 
 `src/loader/tests/wow_api_globals/transmog_situation.rs` asserts the explicitly named 12.0.0 register: 22 members and metadata through 21. Its former cumulative feature gate also ran it under current 12.1.0, where later sourced additions extend metadata through 31. The gate now selects 12.0.0 without 12.0.5; every historical assertion is unchanged, and existing current weather/time-category publication coverage remains untouched. No runtime enum values or snapshots changed. An independent memo discussed a different integration additions test instead of this exact failing library identity; that target attribution was rejected. Historical/current scoped execution is pending.
