@@ -1,0 +1,20 @@
+{
+  "scope": "targeted development only",
+  "base": "9252c6cc93c087518f25e64987e095ed76312a51",
+  "epochs": [
+    {
+      "command": "python3 -B data/patch-api/evidence/1.12.0-session-2026-10-09/test_source_accounting.py",
+      "code_scope": "retained red-scaffold.py, corrected tests",
+      "result": "RED5/5",
+      "log": "red-corrected.log",
+      "invalidated_for_current_code": true
+    },
+    {
+      "command": "same targeted command",
+      "code_scope": "audit.py and fixtures in source commit containing this ledger",
+      "result": "GREEN5/5",
+      "log": "green.log",
+      "later_changes_invalidate_if": "audit, tests, fixtures, historical tools change; docs-only changes do not"
+    }
+  ]
+}

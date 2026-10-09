@@ -1050,3 +1050,11 @@ SOURCE8/8 ata3cc2a2269, existing bare Era storage1/1 at15d12138f, portable3/3 at
 ## 2026-10-09 — Patch1.13.2 bounded page handoff
 
 SOURCE8/8, current Era generic-storage1/1, portable3/3, actual-successor3/3 and receipt-validator3/3 preserved at their exact epochs. Original89seals/archive unchanged; separate receipt map extended administratively. All5011historical contracts remain UNPROVEN;20same-Era actual inputs yield581identity overlaps, zero semantic/native closures.13existing manifest/library/binary diagnostic warnings retained. No runtime edits or final gates. [Audit](investigations/patch-1-13-2-api-audit.md).
+
+## [2026-10-09] investigation | Historical Retail 1.12.0 frozen redirect
+
+[Audit](investigations/patch-1-12-0-api-audit.md): exact frozen redirect, registry101, SOURCE RED5/GREEN5 and unchanged historical tool default bytes; one UNPROVEN target contract, no meaningful model/native credit. Original Retail successors separate from Classic/Forever; queued1.13.2 integration order only.
+
+## [2026-10-09] measurement | Historical Retail 1.12.0 portable SOURCE epoch
+
+[Audit](investigations/patch-1-12-0-api-audit.md): source361348ba1/log cleanup a14e7e536/archive3364a24c8;23original seals/24members/47,289bytes unchanged. Fresh copied SOURCE5/5, portable3/3, validator/default byte replay pass with PATH disabled; serialized ledger/log rejected and exactly restored. Seven separate receipt seals. Zero model/native credit; main owns integration/final gates.

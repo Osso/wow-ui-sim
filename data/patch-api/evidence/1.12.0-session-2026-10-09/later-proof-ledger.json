@@ -1,0 +1,26 @@
+{
+  "scope": "targeted development receipts only",
+  "source_green_revision": "361348ba1",
+  "archive_revision": "3364a24c8",
+  "portable_commands_file": "portable-context.json",
+  "portable_results_file": "portable-proof.json",
+  "proof": [
+    {
+      "command": "fresh copied audit.py",
+      "result": "exit0,23original seals/default-byte replay",
+      "scope": "3364a24c8 archive"
+    },
+    {
+      "command": "fresh copied test_source_accounting.py",
+      "result": "GREEN5/5",
+      "scope": "3364a24c8 archive"
+    },
+    {
+      "command": "fresh copied test_portable.py",
+      "result": "GREEN3/3; both serialized tampers rejected/restored",
+      "scope": "3364a24c8 archive"
+    }
+  ],
+  "later_invalidations": "none: only docs and receipts added; original source code and seals unchanged",
+  "final_native_parent_gates": "unperformed"
+}
