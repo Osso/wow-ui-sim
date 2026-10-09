@@ -31,7 +31,7 @@ def main():
     assert not git('diff', '--name-only', revision, '--', *SCOPES), 'dirty proof inputs'
     identities = {path: git('rev-parse', revision + ':' + path) for path in SCOPES}
     env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
-               CARGO_TARGET_DIR=TARGET + ('-mists' if 'client-mists' in command else ''))
+               CARGO_TARGET_DIR=TARGET + ('-mists' if any('client-mists' in argument for argument in command) else ''))
     for path in (ROOT / 'tests').glob('patch_*_publication_sweep.rs'):
         match = re.search(r'out_env: "([^"]+)"', path.read_text())
         if match:
