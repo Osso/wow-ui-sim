@@ -17,9 +17,9 @@ fn patch_5_4_1_publication_sweep(env: &WowLuaEnv) {
         register_env: "P541_SWEEP_REGISTER",
         out_env: "P541_SWEEP_OUT",
         later_registers: &[
-            // Queued retail 5.4.2: replace after integration.
-            // Queued retail 5.4.7: replace after integration.
-            // Queued retail 5.4.8: replace after integration.
+            include_str!("../data/patch-api/sources/5.4.2-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/5.4.7-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/5.4.8-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.0.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.1.0-wikitext-register.json"),
