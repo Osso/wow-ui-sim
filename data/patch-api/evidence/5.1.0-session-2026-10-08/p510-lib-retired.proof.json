@@ -1,0 +1,16 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "cargo",
+    "test",
+    "--lib",
+    "c_api::patch_retired_members"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 0.4269285202026367,
+  "log": "p510-lib-retired.log",
+  "log_sha256": "56d59b331e51c428327a32b0ac6347cce1b5d40fa28ac9831580819e190b6eed",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
+  "git_tree": "1166e85ede125ad2af87a4b775d9d747ef9b13a6",
+  "method": "git archive at pinned master; temporary source snapshot, not validator input",
+  "location": "master-snapshot"
+}

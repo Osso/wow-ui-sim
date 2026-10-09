@@ -1,0 +1,5 @@
+src/paths.rs:195:    push_env_path(&mut paths, "WOW_SIM_ADDONS_PATH");
+src/paths.rs:211:    paths.push(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("Interface/AddOns"));
+/usr/bin/grep: src/paths: No such file or directory
+/usr/bin/grep: src/loader/bytecode_cache: No such file or directory
+/usr/bin/grep: src/bytecode_cache: No such file or directory

@@ -1,0 +1,18 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "cargo",
+    "test",
+    "--lib",
+    "namespace",
+    "--",
+    "--test-threads=4"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 180.04104328155518,
+  "log": "p510-lib-namespace.log",
+  "log_sha256": "c2d564ebd29855d0ae83ee8e5cc78d5346619562df998c45a80c0565cd1d3f01",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

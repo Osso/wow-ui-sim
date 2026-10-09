@@ -1,0 +1,10 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "files": [
+    "src/c_api/patch_retired_members.rs",
+    "tests/patch_5_1_0_behavior.rs",
+    "tests/patch_5_1_0_publication_sweep.rs"
+  ],
+  "method": "Manual changed-line audit per rust-readability skill; constants and straight-line tests only. No warning suppressions, nested control flow or opaque new runtime helpers.",
+  "violations": []
+}

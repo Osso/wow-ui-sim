@@ -1,0 +1,18 @@
+{
+  "revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
+  "command": [
+    "cargo",
+    "build",
+    "--manifest-path",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/master-snapshot/Cargo.toml",
+    "--bin",
+    "wow-sim"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 0.31626152992248535,
+  "log": "p510-master-build.log",
+  "log_sha256": "73dfd187d0729214de5ec9dfefb23502990de5aca0d32eb8d39b577a8bf4795b",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

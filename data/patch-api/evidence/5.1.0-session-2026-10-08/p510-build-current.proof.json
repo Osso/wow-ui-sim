@@ -1,0 +1,17 @@
+{
+  "revision": "47887bbecdf334c17fdb82546daecb110c92ef5f",
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 0.42178893089294434,
+  "log": "p510-build-current.log",
+  "log_sha256": "4b1ab736fcbac13c373dad6be7c1d3310c671ca86c8e4e322106f435ea4cb83b",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page",
+    "WOW_SIM_ADDONS_PATH": "/home/osso/.worktrees/wow-ui-sim-p510-page/Interface/AddOns"
+  }
+}

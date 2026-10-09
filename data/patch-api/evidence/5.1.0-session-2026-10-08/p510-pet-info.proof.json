@@ -1,0 +1,19 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "pet_info",
+    "--",
+    "--test-threads=4"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 1.0713725090026855,
+  "log": "p510-pet-info.log",
+  "log_sha256": "8975d47af7869def2bb51e412596351e73dfc0f9c1a0dcf2c75dceba60b33267",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

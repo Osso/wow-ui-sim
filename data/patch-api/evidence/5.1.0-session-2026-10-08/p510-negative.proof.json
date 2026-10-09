@@ -1,0 +1,20 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_1_0_publication_sweep"
+  ],
+  "exit": 1,
+  "elapsed_seconds": 12.379495620727539,
+  "log": "p510-negative.log",
+  "log_sha256": "61043439ce4e24af7b8d7162f2d41f5a008919298c0612bb253cd4775539e111",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page",
+    "P510_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/p510-negative-register.json",
+    "P510_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/p510-negative-results.json"
+  }
+}

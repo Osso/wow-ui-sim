@@ -1,0 +1,39 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/master-snapshot)
+    Finished `test` profile [optimized + debuginfo] target(s) in 4m 40s
+     Running unittests src/lib.rs (/home/osso/.cache/wow-ui-sim-targets/p510-page/debug/deps/wow_ui_sim-bcad23723a7b3b0d)
+
+running 24 tests
+test loader::bytecode_cache::tests::cache_namespace_distinguishes_parallel_worktrees ... ok
+test loader::tests::wow_api_globals::startup_namespaces::test_bootstrap_fills_existing_namespace_defaults ... ok
+test loader::tests::wow_api_globals::startup_globals::test_patch_12_1_removed_namespace_keys_accept_blizzard_fallback_assignments ... ok
+test loader::tests::wow_api_globals::startup_globals::test_addon_startup_frame_scale_and_merchant_namespaces_exist ... ok
+test loader::tests::wow_api_globals::patch_12_1_5_weather::patch_12_1_5_weather_namespace_absent_on_retail ... ok
+test lua_api::workarounds::temporary::auto_complete_defaults::tests::bootstrap_keeps_retired_globals_absent_and_namespace_callable ... ok
+test loader::tests::wow_api_globals::startup_namespaces::test_startup_bootstrap_namespaces_exist ... ok
+test loader::tests::wow_api_globals::startup_namespaces::test_startup_runtime_method_and_namespace_gaps_exist ... ok
+test loader::tests::wow_api_globals::startup_namespaces::test_startup_service_namespaces_exist ... ok
+test lua_api::workarounds::temporary::character_create_defaults::tests::installs_character_creation_namespace_defaults ... ok
+test lua_api::workarounds::temporary::collections_journal_namespace::tests::preserves_existing_collections_filter_defaults ... ok
+test lua_api::workarounds::temporary::collections_journal_namespace::tests::guards_dynamic_flight_animation_when_popup_is_missing ... ok
+test lua_api::workarounds::temporary::collections_journal_namespace::tests::preserves_existing_journal_defaults ... ok
+test lua_api::workarounds::temporary::collections_journal_namespace::tests::seeds_missing_collections_filter_defaults ... ok
+test lua_api::workarounds::temporary::collections_journal_namespace::tests::seeds_missing_mount_and_pet_journal_defaults ... ok
+test lua_api::workarounds::temporary::game_rules_namespace_fallback::tests::preserves_rust_backed_methods_and_adds_unmodeled_member_fallback ... ok
+test lua_api::workarounds::temporary::environment_cleanup_restore::tests::post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory ... ok
+test lua_api::workarounds::temporary::environment_cleanup_restore::tests::post_cleanup_restore_does_not_report_its_own_store_namespace_lookup ... ok
+test lua_api::workarounds::temporary::guild_info_namespace_fallback::tests::preserves_rust_backed_methods_and_adds_unmodeled_member_fallback ... ok
+test lua_api::workarounds::temporary::kiosk_namespace_defaults::tests::installs_inert_kiosk_defaults ... ok
+test lua_api::workarounds::temporary::kiosk_namespace_defaults::tests::preserves_existing_kiosk_members ... ok
+test lua_api::workarounds::temporary::tracking_namespace_defaults::tests::installs_empty_tracking_namespace_defaults ... ok
+test lua_api::workarounds::temporary::secure_transfer_state::tests::installs_state_queries_actions_and_namespace_fallback ... ok
+test lua_api::workarounds::temporary::tracking_namespace_defaults::tests::preserves_existing_tracking_namespace_provider ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 1955 filtered out; finished in 2.10s
+

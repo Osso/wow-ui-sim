@@ -1,0 +1,17 @@
+{
+  "revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p510-page/debug/wow-sim",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "exit": 1,
+  "elapsed_seconds": 9.669849872589111,
+  "log": "p510-master-startup.log",
+  "log_sha256": "d1b5f617333bf08d8380ee08a3794855a5c5cbe7ebf4f68fa453dcaa4a810a23",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

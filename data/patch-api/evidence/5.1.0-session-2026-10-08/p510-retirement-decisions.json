@@ -1,0 +1,226 @@
+[
+  {
+    "source_id": "diff-wt-global-api-C_PetJournal.GetSummonedPetID-36",
+    "member": "C_PetJournal.GetSummonedPetID",
+    "scans": {
+      "retail": 0,
+      "callers": 0
+    },
+    "later_readds": [],
+    "decision": "retired",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.GetSummonedPetID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_PetJournal.SummonPetByID-37",
+    "member": "C_PetJournal.SummonPetByID",
+    "scans": {
+      "retail": 0,
+      "callers": 0
+    },
+    "later_readds": [],
+    "decision": "retired",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.SummonPetByID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetFriendshipReputationByID-38",
+    "member": "GetFriendshipReputationByID",
+    "scans": {
+      "retail": 0,
+      "callers": 0
+    },
+    "later_readds": [],
+    "decision": "already absent; no runtime change",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetFriendshipReputationByID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-CheckForMapInBlacklist-58",
+    "member": "CheckForMapInBlacklist",
+    "scans": {
+      "retail": 0,
+      "callers": 0
+    },
+    "later_readds": [],
+    "decision": "already absent; no runtime change",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "CheckForMapInBlacklist"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "diff-wt-events-CHAT_MSG_BATTLEGROUND-78",
+    "member": "CHAT_MSG_BATTLEGROUND",
+    "scans": {
+      "retail": 0,
+      "callers": 0
+    },
+    "later_readds": [],
+    "decision": "already absent; no runtime change",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CHAT_MSG_BATTLEGROUND"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_BATTLEGROUND\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "diff-wt-events-CHAT_MSG_BATTLEGROUND_LEADER-79",
+    "member": "CHAT_MSG_BATTLEGROUND_LEADER",
+    "scans": {
+      "retail": 0,
+      "callers": 0
+    },
+    "later_readds": [],
+    "decision": "already absent; no runtime change",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CHAT_MSG_BATTLEGROUND_LEADER"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_BATTLEGROUND_LEADER\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Animation OnEvent-115",
+    "member": "Animation OnEvent",
+    "scans": {
+      "retail": 1719,
+      "callers": 1077
+    },
+    "later_readds": [],
+    "decision": "already absent; no runtime change",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Animation OnEvent"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Animation HasScript=false",
+        "kind": "widget-script",
+        "value": null
+      },
+      "ok": true
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-AnimationGroup OnEvent-116",
+    "member": "AnimationGroup OnEvent",
+    "scans": {
+      "retail": 1719,
+      "callers": 1077
+    },
+    "later_readds": [],
+    "decision": "already absent; no runtime change",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "AnimationGroup OnEvent"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "AnimationGroup HasScript=false",
+        "kind": "widget-script",
+        "value": null
+      },
+      "ok": true
+    }
+  }
+]

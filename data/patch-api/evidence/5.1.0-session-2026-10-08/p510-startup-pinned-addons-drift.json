@@ -1,0 +1,12 @@
+{
+  "only_branch": [
+    "Lua Error: @Interface/AddOns/SavedInstances/Modules/Progress.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Progress.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "@Interface/AddOns/CraftSim/Classes/ReagentItem.lua: Lua error: Interface/AddOns/CraftSim/Classes/ReagentItem.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "@Interface/AddOns/Plumber/Modules/TransmogRestorePending.lua: Lua error: Interface/AddOns/Plumber/Modules/TransmogRestorePending.lua:840: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "Lua Error: @Interface/AddOns/CraftSim/Classes/ReagentItem.lua: Lua error: Interface/AddOns/CraftSim/Classes/ReagentItem.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "Lua Error: @Interface/AddOns/Plumber/Modules/TransmogRestorePending.lua: Lua error: Interface/AddOns/Plumber/Modules/TransmogRestorePending.lua:840: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "@Interface/AddOns/SavedInstances/Modules/Progress.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Progress.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk"
+  ],
+  "only_master": [],
+  "changed_counts": []
+}

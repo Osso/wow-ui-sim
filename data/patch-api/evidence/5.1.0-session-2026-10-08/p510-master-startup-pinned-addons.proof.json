@@ -1,0 +1,18 @@
+{
+  "revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p510-page/debug/wow-sim",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "exit": 1,
+  "elapsed_seconds": 4.9727044105529785,
+  "log": "p510-master-startup-pinned-addons.log",
+  "log_sha256": "88125e9dc71d221579cc52a35953286439b74646ee58a7fa2966128fd1fc5aed",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page",
+    "WOW_SIM_ADDONS_PATH": "/home/osso/.worktrees/wow-ui-sim-p510-page/Interface/AddOns"
+  }
+}

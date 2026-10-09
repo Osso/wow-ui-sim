@@ -1,0 +1,4 @@
+src/lua_api/addon_scan.rs:42:pub(crate) fn scan_addon_entries(addons_path: &std::path::Path) -> Vec<AddonInfo> {
+src/lua_api/addon_scan.rs:43:    let Ok(entries) = std::fs::read_dir(addons_path) else {
+src/lua_api/env_runtime.rs:180:    pub fn scan_and_register_addons(&self, addons_path: &std::path::Path) {
+src/lua_api/env_runtime.rs:181:        let mut addons = super::addon_scan::scan_addon_entries(addons_path);

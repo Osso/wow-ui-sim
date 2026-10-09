@@ -1,0 +1,13 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_mists_register.py"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 0.0731358528137207,
+  "log": "test_patch_mists_register.log",
+  "log_sha256": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658",
+  "env": {}
+}

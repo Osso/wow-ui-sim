@@ -1,0 +1,15 @@
+src/bin/wow_sim/addon_loading/enable_state.rs:159:            let previous = std::env::var_os("WOW_SIM_ADDONS_TXT");
+src/bin/wow_sim/addon_loading/enable_state.rs:161:                std::env::set_var("WOW_SIM_ADDONS_TXT", path);
+src/bin/wow_sim/addon_loading/enable_state.rs:171:                    Some(previous) => std::env::set_var("WOW_SIM_ADDONS_TXT", previous),
+src/bin/wow_sim/addon_loading/enable_state.rs:172:                    None => std::env::remove_var("WOW_SIM_ADDONS_TXT"),
+src/bin/wow_sim/addon_loading.rs:385:    std::env::var_os("WOW_SIM_LOAD_OUT_OF_DATE_ADDONS").is_some_and(|value| {
+src/bin/wow_sim/main.rs:176:            || std::env::var("WOW_SIM_NO_ADDONS")
+src/bin/wow_cli/audit_api/patch_manifest.rs:1881:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+src/bin/wow_cli/audit_api/patch_manifest.rs:1920:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+src/bin/wow_cli/audit_api/patch_manifest.rs:1950:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+src/bin/wow_cli/audit_api/patch_manifest.rs:1959:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+src/bin/wow_cli/audit_api/patch_manifest.rs:1970:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+src/bin/wow_cli/audit_api/patch_manifest.rs:1989:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+src/bin/wow_cli/audit_api/patch_manifest.rs:2009:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+src/bin/wow_cli/audit_api/patch_manifest.rs:2517:        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+/usr/bin/grep: src/settings.rs: No such file or directory

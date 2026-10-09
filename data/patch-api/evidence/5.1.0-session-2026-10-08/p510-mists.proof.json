@@ -1,0 +1,19 @@
+{
+  "revision": "47887bbecdf334c17fdb82546daecb110c92ef5f",
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 165.0932023525238,
+  "log": "p510-mists.log",
+  "log_sha256": "4a9ce0ce7a11293b00dc0e17a99bcc46ab83dd93fc5eb0a9f6df6c60ab99174c",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page",
+    "WOW_SIM_ADDONS_PATH": "/home/osso/.worktrees/wow-ui-sim-p510-page/Interface/AddOns"
+  }
+}

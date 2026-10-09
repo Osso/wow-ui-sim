@@ -82,7 +82,7 @@
   {
     "source_id": "diff-wt-global-api-C_PetJournal.FindPetIDByName-12",
     "symbol": "C_PetJournal.FindPetIDByName",
-    "reason": "Raw missing; namespace lookup is fabricated. No owned-pet GUID/name search model, duplicate-name resolution or input contract is backed; a lookup shim would falsely claim pet identity.",
+    "reason": "Raw missing; namespace lookup is fabricated. The existing world.pets catalog contains pet IDs, species names and custom names, but no search API or documented name/custom-name, duplicate-name and not-found contract. Do not invent those historical selection rules from catalog iteration.",
     "observed": {
       "default": null,
       "default_mismatch": false,
@@ -102,7 +102,7 @@
   {
     "source_id": "diff-wt-global-api-C_PetJournal.GetOwnedBattlePetString-14",
     "symbol": "C_PetJournal.GetOwnedBattlePetString",
-    "reason": "Raw missing; fabricated lookup. Owned-pet species counts and localized text contract are unmodeled; existing zero-count/default pet journal does not supply owned-pet inventory.",
+    "reason": "Raw missing; fabricated lookup. An existing collected-pet catalog supplies counts, but this page supplies no GetOwnedBattlePetString input, localized formatting or ownership-label output contract. A fabricated string would not prove the historical API.",
     "observed": {
       "default": null,
       "default_mismatch": false,

@@ -117,7 +117,7 @@
       "source_id": "diff-wt-global-api-C_PetJournal.FindPetIDByName-12",
       "status": "audit-pending",
       "capabilities": [],
-      "note": "Raw missing; namespace lookup is fabricated. No owned-pet GUID/name search model, duplicate-name resolution or input contract is backed; a lookup shim would falsely claim pet identity."
+      "note": "Raw missing; namespace lookup is fabricated. The existing world.pets catalog contains pet IDs, species names and custom names, but no search API or documented name/custom-name, duplicate-name and not-found contract. Do not invent those historical selection rules from catalog iteration."
     },
     {
       "source_id": "diff-wt-global-api-C_PetJournal.GetNumCollectedInfo-13",
@@ -131,7 +131,7 @@
       "source_id": "diff-wt-global-api-C_PetJournal.GetOwnedBattlePetString-14",
       "status": "audit-pending",
       "capabilities": [],
-      "note": "Raw missing; fabricated lookup. Owned-pet species counts and localized text contract are unmodeled; existing zero-count/default pet journal does not supply owned-pet inventory."
+      "note": "Raw missing; fabricated lookup. An existing collected-pet catalog supplies counts, but this page supplies no GetOwnedBattlePetString input, localized formatting or ownership-label output contract. A fabricated string would not prove the historical API."
     },
     {
       "source_id": "diff-wt-global-api-C_PetJournal.GetPetSortParameter-15",
@@ -580,7 +580,7 @@
       "source_id": "prose-undated-019",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Historical prose behavioral contract remains unproved: Cooldown SetCooldown stores timing, but automatic show/hide at activation/completion is not proven by publication or existing timing tests."
+      "note": "Historical CanExitVehicle publication inside RestrictedEnvironment remains unproved; an ordinary global function does not prove restricted access or security."
     },
     {
       "source_id": "prose-undated-020",

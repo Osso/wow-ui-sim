@@ -1,0 +1,116 @@
+src/loader/tests/runtime_template_xml.rs:621:        addon_root: toc.addon_dir.as_path(),
+src/loader/tests/runtime_template_xml.rs:701:        addon_root: toc.addon_dir.as_path(),
+src/loader/tests/screen_selection.rs:12:        "CARGO_MANIFEST_DIR"
+src/loader/tests/screen_selection.rs:83:        let addon_dir = self.path.join(name);
+src/loader/tests/screen_selection.rs:84:        std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/screen_selection.rs:85:        std::fs::write(addon_dir.join(toc_name), toc_contents).unwrap();
+src/loader/tests/toc_discovery.rs:6:fn make_addon_dir(root: &std::path::Path, folder: &str, toc_names: &[&str]) -> std::path::PathBuf {
+src/loader/tests/toc_discovery.rs:21:    let dir = make_addon_dir(
+src/loader/tests/toc_discovery.rs:43:    let dir = make_addon_dir(tmp.path(), "MyAddon", &["MyAddon.toc"]);
+src/loader/tests/toc_discovery.rs:51:    let dir = make_addon_dir(tmp.path(), "MyAddon", &[&filename]);
+src/loader/tests/toc_discovery.rs:58:    let dir = make_addon_dir(tmp.path(), "MyAddon", &["SomethingElse.toc"]);
+src/loader/tests/toc_discovery.rs:66:    let dir = make_addon_dir(tmp.path(), "MyAddon", &["MyAddon.toc", &filename]);
+src/loader/tests/toc_discovery.rs:75:    let dir = make_addon_dir(tmp.path(), "MyAddon", &[&dash, "MyAddon.toc", &underscore]);
+src/loader/tests/toc_discovery.rs:89:    let dir = make_addon_dir(tmp.path(), "MyAddon", &[&dash, &lower, "MyAddon.toc"]);
+src/loader/tests/toc_discovery.rs:104:        let dir = make_addon_dir(&tmp.path().join(label), "MyAddon", &names);
+src/loader/tests/toc_discovery.rs:113:    let dir = make_addon_dir(tmp.path(), "MyAddon", &[]);
+src/loader/tests/toc_discovery.rs:138:    let dir = make_addon_dir(
+src/loader/tests/toc_discovery.rs:150:    let dir = make_addon_dir(
+src/loader/tests/toc_discovery.rs:169:    let dir = make_addon_dir(
+src/loader/tests/toc_discovery.rs:190:        let dir = make_addon_dir(tmp.path(), folder, &[&dash, &generic, &underscore]);
+src/loader/tests/mod.rs:96:        "CARGO_MANIFEST_DIR"
+src/loader/tests/mod.rs:266:    let addon_dir = temp_dir.path().join("TestAddon");
+src/loader/tests/mod.rs:268:    std::fs::create_dir_all(&addon_dir).expect("addon dir");
+src/loader/tests/mod.rs:271:        addon_dir.join("TestAddon.toc"),
+src/loader/tests/mod.rs:275:    std::fs::write(addon_dir.join("TestAddon.lua"), "TestDB = {}").expect("write addon lua");
+src/loader/tests/mod.rs:285:        &addon_dir.join("TestAddon.toc"),
+src/loader/tests/lua_loading.rs:179:    let addon_dir = temp_root.join("ThirdPartyBootstrapProbe");
+src/loader/tests/lua_loading.rs:180:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:182:        addon_dir.join("Before.lua"),
+src/loader/tests/lua_loading.rs:187:        addon_dir.join("Bootstrap.lua"),
+src/loader/tests/lua_loading.rs:192:        addon_dir.join("After.lua"),
+src/loader/tests/lua_loading.rs:198:        &addon_dir,
+src/loader/tests/lua_loading.rs:220:    let addon_dir = temp_root.join("Blizzard_BootstrapProbe");
+src/loader/tests/lua_loading.rs:221:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:223:        addon_dir.join("Blizzard_BootstrapProbe.toc"),
+src/loader/tests/lua_loading.rs:233:        addon_dir.join("Bootstrap.lua"),
+src/loader/tests/lua_loading.rs:246:        addon_dir.join("Normal.lua"),
+src/loader/tests/lua_loading.rs:377:    let addon_dir = temp_root.join("Blizzard_SharedXMLBase");
+src/loader/tests/lua_loading.rs:378:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:380:        addon_dir.join("Core.lua"),
+src/loader/tests/lua_loading.rs:385:        addon_dir.join("GlobalOnly.lua"),
+src/loader/tests/lua_loading.rs:391:        &addon_dir,
+src/loader/tests/lua_loading.rs:425:    let addon_dir = temp_root.join("Blizzard_FrameXMLUtil");
+src/loader/tests/lua_loading.rs:426:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:428:        addon_dir.join("AuraUtil.lua"),
+src/loader/tests/lua_loading.rs:438:        &addon_dir,
+src/loader/tests/lua_loading.rs:475:    let addon_dir = temp_root.join("Blizzard_GameTooltip");
+src/loader/tests/lua_loading.rs:476:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:478:        addon_dir.join("GameTooltip.lua"),
+src/loader/tests/lua_loading.rs:484:        &addon_dir,
+src/loader/tests/lua_loading.rs:513:    let addon_dir = temp_root.join("Blizzard_AsyncRequest");
+src/loader/tests/lua_loading.rs:514:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:516:        addon_dir.join("Blizzard_AsyncRequest.lua"),
+src/loader/tests/lua_loading.rs:522:        &addon_dir,
+src/loader/tests/lua_loading.rs:551:    let addon_dir = temp_root.join("Blizzard_AuraContainerProbe");
+src/loader/tests/lua_loading.rs:552:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:553:    std::fs::write(addon_dir.join("Secure.lua"), r#"SecureOnly = "secure""#).unwrap();
+src/loader/tests/lua_loading.rs:554:    std::fs::write(addon_dir.join("Inbound.lua"), r#"InboundOnly = "global""#).unwrap();
+src/loader/tests/lua_loading.rs:556:        addon_dir.join("Frame.xml"),
+src/loader/tests/lua_loading.rs:564:        &addon_dir,
+src/loader/tests/lua_loading.rs:637:    let addon_dir = temp_root.join("SecureXmlAddon");
+src/loader/tests/lua_loading.rs:638:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:640:        addon_dir.join("Frame.xml"),
+src/loader/tests/lua_loading.rs:648:        &addon_dir,
+src/loader/tests/lua_loading.rs:677:    let addon_dir = temp_root.join("Blizzard_SharedXML");
+src/loader/tests/lua_loading.rs:678:    std::fs::create_dir_all(&addon_dir).unwrap();
+src/loader/tests/lua_loading.rs:680:        addon_dir.join("LoopingSoundEffect.lua"),
+src/loader/tests/lua_loading.rs:686:        &addon_dir,
+src/loader/mod.rs:202:fn read_toc_candidates(addon_dir: &Path) -> Option<Vec<PathBuf>> {
+src/loader/mod.rs:203:    let entries = std::fs::read_dir(addon_dir).ok()?;
+src/loader/mod.rs:258:pub fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {
+src/loader/mod.rs:259:    let addon_name = addon_dir.file_name()?.to_str()?;
+src/loader/mod.rs:260:    let candidates = read_toc_candidates(addon_dir)?;
+src/loader/bytecode_cache.rs:177:    cache_namespace_for_manifest(env!("CARGO_MANIFEST_DIR"))
+src/loader/addon.rs:130:        .addon_dir
+src/loader/addon.rs:199:        .addon_dir
+src/loader/addon.rs:397:        addon_root: &toc.addon_dir,
+src/loader/addon.rs:429:    addon.addon_dir = Some(toc.addon_dir.clone());
+src/loader/addon.rs:671:        let addon_dir = Path::new("/repo/Interface/BlizzardUI/Blizzard_TalentUI");
+src/loader/addon.rs:673:            addon_dir,
+src/loader/addon.rs:688:        let addon_dir = Path::new("/tmp/wow-ui-sim/blizzard-ui/Blizzard_Menu");
+src/loader/addon.rs:690:            addon_dir,
+src/loader/addon.rs:705:        let addon_dir = Path::new("/tmp/wow-ui-sim/blizzard-ui/Blizzard_ClassTrialSecure");
+src/loader/addon.rs:707:            addon_dir,
+src/loader/addon.rs:723:        let addon_dir = Path::new("/tmp/wow-ui-sim/blizzard-ui/Blizzard_PersonalResourceDisplay");
+src/loader/addon.rs:725:            addon_dir,
+src/loader/addon.rs:741:        let addon_dir = Path::new("/tmp/wow-ui-sim/blizzard-ui/TestAddon");
+src/loader/addon.rs:742:        let toc = TocFile::parse(addon_dir, "## Title: TestAddon\nMain.lua");
+src/loader/addon.rs:755:        let addon_dir = Path::new("/repo/Interface/AddOns/TestAddon");
+src/loader/addon.rs:756:        let toc = TocFile::parse(addon_dir, "## Title: Test Addon\nMain.lua");
+src/loader/addon.rs:778:        let addon_dir = temp.path().join("MissingFiles");
+src/loader/addon.rs:779:        std::fs::create_dir(&addon_dir).unwrap();
+src/loader/addon.rs:781:            &addon_dir,
+src/bin/wow_sim/addon_loading/tests.rs:16:    let addon_dir = root.join(name);
+src/bin/wow_sim/addon_loading/tests.rs:17:    std::fs::create_dir_all(&addon_dir).expect("create addon dir");
+src/bin/wow_sim/addon_loading/tests.rs:18:    let toc_path = addon_dir.join(format!("{name}.toc"));
+src/bin/wow_sim/addon_loading/tests.rs:20:    std::fs::write(addon_dir.join("main.lua"), "").expect("write lua");
+src/bin/wow_sim/addon_loading/tests.rs:25:    let addon_dir = root.join(name);
+src/bin/wow_sim/addon_loading/tests.rs:26:    std::fs::create_dir_all(&addon_dir).expect("create addon dir");
+src/bin/wow_sim/addon_loading/tests.rs:27:    let toc_path = addon_dir.join(format!("{name}.toc"));
+src/bin/wow_sim/addon_loading/tests.rs:34:    std::fs::write(addon_dir.join("main.lua"), lua).expect("write lua");
+src/bin/wow_sim/addon_loading/blizzard_dependencies.rs:82:        let addon_dir = root.join(name);
+src/bin/wow_sim/addon_loading/blizzard_dependencies.rs:83:        std::fs::create_dir_all(&addon_dir).expect("create addon dir");
+src/bin/wow_sim/addon_loading/blizzard_dependencies.rs:84:        let toc_path = addon_dir.join(format!("{name}.toc"));
+src/bin/wow_sim/addon_loading/blizzard_dependencies.rs:86:        std::fs::write(addon_dir.join("main.lua"), "").expect("write lua");
+src/bin/wow_sim/addon_loading/enable_state.rs:226:            addon_dir: None,
+src/bin/wow_sim/addon_loading/enable_state.rs:238:        let addon_dir = root.join(name);
+src/bin/wow_sim/addon_loading/enable_state.rs:239:        std::fs::create_dir_all(&addon_dir).expect("create addon dir");
+src/bin/wow_sim/addon_loading/enable_state.rs:240:        let toc_path = addon_dir.join(format!("{name}.toc"));
+src/bin/wow_sim/addon_loading.rs:355:    if should_skip_addon_dir(&name, exclude) {
+src/bin/wow_sim/addon_loading.rs:362:fn should_skip_addon_dir(name: &str, exclude: &[&str]) -> bool {
+src/bin/wow_sim/addon_loading.rs:413:    addon_dir: Option<PathBuf>,
+src/bin/wow_sim/addon_loading.rs:426:            addon_dir: None,
+src/bin/wow_sim/addon_loading.rs:438:        addon_dir: Some(toc.addon_dir.clone()),
+src/bin/wow_sim/addon_loading.rs:514:        addon.addon_dir = metadata.addon_dir;
+src/bin/wow_sim/addon_loading.rs:528:        addon_dir: metadata.addon_dir,

@@ -1,0 +1,17 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_5_1_0"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 104.27383589744568,
+  "log": "p510-bare.log",
+  "log_sha256": "fe2be12d8fb0d9f4cb833abba4e920e2bef5acb1182c64ca6e65ebc87da6a759",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "revision": "e75738c1c881975761506e333db5caa51b1d18bc",
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p510-page/debug/wow-sim",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "exit": 1,
+  "elapsed_seconds": 9.293610572814941,
+  "log": "p510-startup-frozen-repeat.log",
+  "log_sha256": "c5866fd8ee709e89f2fed773b00fc9ec33ec04a402cf54765484f2f0066aa3ea",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page",
+    "WOW_SIM_ADDONS_PATH": "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/addon-snapshot",
+    "WOW_SIM_DISABLE_BYTECODE_CACHE": "1"
+  }
+}

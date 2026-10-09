@@ -1,0 +1,16 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 0.33565306663513184,
+  "log": "p510-build.log",
+  "log_sha256": "2c083d7868ec4f84b27a6c7db8998a4d002aded3fbcff8698b67286421af315c",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

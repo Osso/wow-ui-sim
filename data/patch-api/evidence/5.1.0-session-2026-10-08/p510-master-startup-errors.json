@@ -1,0 +1,1902 @@
+[
+  {
+    "message": "@Interface/AddOns/AdvancedInterfaceOptions/cvars.lua: Lua error: Interface/AddOns/AdvancedInterfaceOptions/cvars.lua:1165: attempt to call local '(for state)' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AdvancedInterfaceOptions/cvars.lua: Lua error: Interface/AddOns/AdvancedInterfaceOptions/cvars.lua:1165: attempt to call local '(for state)' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AdvancedInterfaceOptions/browser.lua: Lua error: Interface/AddOns/AdvancedInterfaceOptions/browser.lua:2: attempt to call method 'Eve' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AdvancedInterfaceOptions/browser.lua: Lua error: Interface/AddOns/AdvancedInterfaceOptions/browser.lua:2: attempt to call method 'Eve' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AdvancedInterfaceOptions/basicOptions.lua: Lua error: Interface/AddOns/AdvancedInterfaceOptions/basicOptions.lua:2: attempt to call method 'Eve' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AdvancedInterfaceOptions/basicOptions.lua: Lua error: Interface/AddOns/AdvancedInterfaceOptions/basicOptions.lua:2: attempt to call method 'Eve' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/AstralKeys/Libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/AstralKeys/Libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AstralKeys/Dialog.lua: Lua error: Interface/AddOns/AstralKeys/Localization/Localization.lua:17: stack overflow\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AstralKeys/Dialog.lua: Lua error: Interface/AddOns/AstralKeys/Localization/Localization.lua:17: stack overflow\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AstralKeys/Communications.lua: Lua error: Interface/AddOns/AstralKeys/Communications.lua:252: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AstralKeys/Communications.lua: Lua error: Interface/AddOns/AstralKeys/Communications.lua:252: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AstralKeys/Lists/Friends.lua: Lua error: Interface/AddOns/AstralKeys/Lists/Friends.lua:75: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AstralKeys/Lists/Friends.lua: Lua error: Interface/AddOns/AstralKeys/Lists/Friends.lua:75: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AstralKeys/Lists/Guild.lua: Lua error: Interface/AddOns/AstralKeys/Lists/Guild.lua:19: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AstralKeys/Lists/Guild.lua: Lua error: Interface/AddOns/AstralKeys/Lists/Guild.lua:19: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AstralKeys/Dungeons.lua: Lua error: Interface/AddOns/AstralKeys/Localization/Localization.lua:17: stack overflow\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AstralKeys/Dungeons.lua: Lua error: Interface/AddOns/AstralKeys/Localization/Localization.lua:17: stack overflow\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AstralKeys/AstralKeys.lua: Lua error: Interface/AddOns/AstralKeys/AstralKeys.lua:93: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AstralKeys/AstralKeys.lua: Lua error: Interface/AddOns/AstralKeys/AstralKeys.lua:93: attempt to index global 'AstralEvents' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/AstralKeys/Frame.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/AstralKeys/Frame.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/AstralKeys/MinimapButton.lua: Lua error: Interface/AddOns/AstralKeys/MinimapButton.lua:4: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/AstralKeys/MinimapButton.lua: Lua error: Interface/AddOns/AstralKeys/MinimapButton.lua:4: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BetterBlizzFrames/libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BetterBlizzFrames/libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BetterBlizzFrames/shared/functions.lua: Lua error: Interface/AddOns/BetterBlizzFrames/shared/functions.lua:329: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BetterBlizzFrames/shared/functions.lua: Lua error: Interface/AddOns/BetterBlizzFrames/shared/functions.lua:329: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BetterBlizzFrames/shared/ImportExport.lua: Lua error: Interface/AddOns/BetterBlizzFrames/shared/ImportExport.lua:2: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BetterBlizzFrames/shared/ImportExport.lua: Lua error: Interface/AddOns/BetterBlizzFrames/shared/ImportExport.lua:2: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BetterBlizzFrames/retail/modules/prd.lua: Lua error: Interface/AddOns/BetterBlizzFrames/retail/modules/prd.lua:1: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BetterBlizzFrames/retail/modules/prd.lua: Lua error: Interface/AddOns/BetterBlizzFrames/retail/modules/prd.lua:1: attempt to call a nil value\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BetterBlizzFrames/retail/gui.lua: Lua error: Interface/AddOns/BetterBlizzFrames/retail/gui.lua:2: attempt to index global 'LibStub' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BetterBlizzFrames/retail/gui.lua: Lua error: Interface/AddOns/BetterBlizzFrames/retail/gui.lua:2: attempt to index global 'LibStub' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BlizzMove/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BlizzMove/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "XML error: IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BlizzMove/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: XML error: IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BlizzMove/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BlizzMove/Locale/enUS.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BlizzMove/Locale/enUS.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BlizzMove/BlizzMove.lua: Lua error: Interface/AddOns/BlizzMove/BlizzMove.lua:34: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BlizzMove/BlizzMove.lua: Lua error: Interface/AddOns/BlizzMove/BlizzMove.lua:34: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BlizzMove/BlizzMoveConfig.lua: Lua error: Interface/AddOns/BlizzMove/BlizzMoveConfig.lua:13: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BlizzMove/BlizzMoveConfig.lua: Lua error: Interface/AddOns/BlizzMove/BlizzMoveConfig.lua:13: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/Core/BossData.lua: Lua error: Interface/AddOns/BossHelper/Core/BossData.lua:37: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/Core/BossData.lua: Lua error: Interface/AddOns/BossHelper/Core/BossData.lua:37: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/Core/AffixData.lua: Lua error: Interface/AddOns/BossHelper/Core/AffixData.lua:8: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/Core/AffixData.lua: Lua error: Interface/AddOns/BossHelper/Core/AffixData.lua:8: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/Core/Functions.lua: Lua error: Interface/AddOns/BossHelper/Core/Functions.lua:10: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/Core/Functions.lua: Lua error: Interface/AddOns/BossHelper/Core/Functions.lua:10: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/Core/EditModeLogic.lua: Lua error: Interface/AddOns/BossHelper/Core/EditModeLogic.lua:3: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/Core/EditModeLogic.lua: Lua error: Interface/AddOns/BossHelper/Core/EditModeLogic.lua:3: attempt to index global 'BossHelper' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/UI/StartPage.lua: Lua error: Interface/AddOns/BossHelper/UI/StartPage.lua:12: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/UI/StartPage.lua: Lua error: Interface/AddOns/BossHelper/UI/StartPage.lua:12: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/UI/Settings.lua: Lua error: Interface/AddOns/BossHelper/UI/Settings.lua:40: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/UI/Settings.lua: Lua error: Interface/AddOns/BossHelper/UI/Settings.lua:40: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/UI/EditTactics.lua: Lua error: Interface/AddOns/BossHelper/UI/EditTactics.lua:28: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/UI/EditTactics.lua: Lua error: Interface/AddOns/BossHelper/UI/EditTactics.lua:28: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/UI/Affixes.lua: Lua error: Interface/AddOns/BossHelper/UI/Affixes.lua:10: attempt to index field 'AffixData' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/UI/Affixes.lua: Lua error: Interface/AddOns/BossHelper/UI/Affixes.lua:10: attempt to index field 'AffixData' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/UI/QuickStart.lua: Lua error: Interface/AddOns/BossHelper/UI/QuickStart.lua:11: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/UI/QuickStart.lua: Lua error: Interface/AddOns/BossHelper/UI/QuickStart.lua:11: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/BossHelper/Modules/MiniWindow.lua: Lua error: Interface/AddOns/BossHelper/Modules/MiniWindow.lua:97: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/BossHelper/Modules/MiniWindow.lua: Lua error: Interface/AddOns/BossHelper/Modules/MiniWindow.lua:97: attempt to index field 'UI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BugSack/Libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/BugSack/Libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Chattynator/Libs/LibSharedMedia-3.0/LibSharedMedia-3.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Chattynator/Libs/LibSharedMedia-3.0/LibSharedMedia-3.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Core/Config.lua: Lua error: Interface/AddOns/Chattynator/Core/Config.lua:77: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Core/Config.lua: Lua error: Interface/AddOns/Chattynator/Core/Config.lua:77: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Core/Utilities.lua: Lua error: Interface/AddOns/Chattynator/Core/Utilities.lua:4: attempt to index field 'Utilities' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Core/Utilities.lua: Lua error: Interface/AddOns/Chattynator/Core/Utilities.lua:4: attempt to index field 'Utilities' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Core/Fonts.lua: Lua error: Interface/AddOns/Chattynator/Core/Fonts.lua:4: Cannot find a library instance of \"LibSharedMedia-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Core/Fonts.lua: Lua error: Interface/AddOns/Chattynator/Core/Fonts.lua:4: Cannot find a library instance of \"LibSharedMedia-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Core/Overrides.lua: Lua error: Interface/AddOns/Chattynator/Core/Overrides.lua:4: attempt to index field 'Core' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Core/Overrides.lua: Lua error: Interface/AddOns/Chattynator/Core/Overrides.lua:4: attempt to index field 'Core' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Core/Initialize.lua: Lua error: Interface/AddOns/Chattynator/Core/Initialize.lua:6: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Core/Initialize.lua: Lua error: Interface/AddOns/Chattynator/Core/Initialize.lua:6: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Display/Tabs.lua: Lua error: Interface/AddOns/Chattynator/Display/Tabs.lua:23: attempt to index field 'Display' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Display/Tabs.lua: Lua error: Interface/AddOns/Chattynator/Display/Tabs.lua:23: attempt to index field 'Display' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Modifiers/URLs.lua: Lua error: Interface/AddOns/Chattynator/Modifiers/URLs.lua:23: attempt to index field 'Modifiers' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Modifiers/URLs.lua: Lua error: Interface/AddOns/Chattynator/Modifiers/URLs.lua:23: attempt to index field 'Modifiers' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Modifiers/RedundantText.lua: Lua error: Interface/AddOns/Chattynator/Modifiers/RedundantText.lua:37: attempt to index field 'Modifiers' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Modifiers/RedundantText.lua: Lua error: Interface/AddOns/Chattynator/Modifiers/RedundantText.lua:37: attempt to index field 'Modifiers' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Skins/Main.lua: Lua error: Interface/AddOns/Chattynator/Skins/Main.lua:4: attempt to index field 'Skins' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Skins/Main.lua: Lua error: Interface/AddOns/Chattynator/Skins/Main.lua:4: attempt to index field 'Skins' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Skins/Blizzard.lua: Lua error: Interface/AddOns/Chattynator/Skins/Blizzard.lua:294: attempt to index field 'Skins' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Skins/Blizzard.lua: Lua error: Interface/AddOns/Chattynator/Skins/Blizzard.lua:294: attempt to index field 'Skins' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/Skins/Dark.lua: Lua error: Interface/AddOns/Chattynator/Skins/Dark.lua:457: attempt to index field 'Skins' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/Skins/Dark.lua: Lua error: Interface/AddOns/Chattynator/Skins/Dark.lua:457: attempt to index field 'Skins' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/CustomiseDialog/Initialize.lua: Lua error: Interface/AddOns/Chattynator/CustomiseDialog/Initialize.lua:5: attempt to index field 'CustomiseDialog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/CustomiseDialog/Initialize.lua: Lua error: Interface/AddOns/Chattynator/CustomiseDialog/Initialize.lua:5: attempt to index field 'CustomiseDialog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Chattynator/CustomiseDialog/Filtering.lua: Lua error: Interface/AddOns/Chattynator/CustomiseDialog/Filtering.lua:4: attempt to index field 'CustomiseDialog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Chattynator/CustomiseDialog/Filtering.lua: Lua error: Interface/AddOns/Chattynator/CustomiseDialog/Filtering.lua:4: attempt to index field 'CustomiseDialog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Clicked/Libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Clicked/Libs/LibStub/LibStub.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Clicked/Widgets/AceGUIContainer-ClickedTreeGroup.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Clicked/Widgets/AceGUIContainer-ClickedTreeGroup.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Clicked/Core/BindingProcessor.lua: Lua error: Interface/AddOns/Clicked/Core/BindingProcessor.lua:24: attempt to index global 'Clicked' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Clicked/Core/BindingProcessor.lua: Lua error: Interface/AddOns/Clicked/Core/BindingProcessor.lua:24: attempt to index global 'Clicked' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Clicked/Conditions/ConditionUtils.lua: Lua error: Interface/AddOns/Clicked/Conditions/ConditionUtils.lua:37: Cannot find a library instance of \"LibTalentInfo-1.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Clicked/Conditions/ConditionUtils.lua: Lua error: Interface/AddOns/Clicked/Conditions/ConditionUtils.lua:37: Cannot find a library instance of \"LibTalentInfo-1.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Clicked/Conditions/LoadConditions.lua: Lua error: Interface/AddOns/Clicked/Conditions/LoadConditions.lua:47: attempt to call method 'IsForever' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Clicked/Conditions/LoadConditions.lua: Lua error: Interface/AddOns/Clicked/Conditions/LoadConditions.lua:47: attempt to call method 'IsForever' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Clicked/Config/Profile.lua: Lua error: Interface/AddOns/Clicked/Config/Profile.lua:17: Cannot find a library instance of \"AceConfig-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Clicked/Config/Profile.lua: Lua error: Interface/AddOns/Clicked/Config/Profile.lua:17: Cannot find a library instance of \"AceConfig-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Clicked/Config/KeyVisualizer.lua: Lua error: Interface/AddOns/Clicked/Config/KeyVisualizer.lua:17: Cannot find a library instance of \"AceGUI-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Clicked/Config/KeyVisualizer.lua: Lua error: Interface/AddOns/Clicked/Config/KeyVisualizer.lua:17: Cannot find a library instance of \"AceGUI-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Clicked/Debug/StatusOutput.lua: Lua error: Interface/AddOns/Clicked/Debug/StatusOutput.lua:17: Cannot find a library instance of \"AceGUI-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Clicked/Debug/StatusOutput.lua: Lua error: Interface/AddOns/Clicked/Debug/StatusOutput.lua:17: Cannot find a library instance of \"AceGUI-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Clicked/BindingConfig/Tabs/Action.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Clicked/BindingConfig/Tabs/Action.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Clicked/BindingConfig/BindingConfig.lua: Lua error: Interface/AddOns/Clicked/BindingConfig/BindingConfig.lua:31: Cannot find a library instance of \"AceGUI-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Clicked/BindingConfig/BindingConfig.lua: Lua error: Interface/AddOns/Clicked/BindingConfig/BindingConfig.lua:31: Cannot find a library instance of \"AceGUI-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "Collectionator missing required TOC dependencies: Auctionator",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CursorRing/Locales/enUS.lua: Lua error: Interface/AddOns/CursorRing/Locales/enUS.lua:2: attempt to call field 'NewLocale' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CursorRing/Locales/enUS.lua: Lua error: Interface/AddOns/CursorRing/Locales/enUS.lua:2: attempt to call field 'NewLocale' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CursorRing/Locales/deDE.lua: Lua error: Interface/AddOns/CursorRing/Locales/deDE.lua:2: attempt to call field 'NewLocale' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CursorRing/Locales/deDE.lua: Lua error: Interface/AddOns/CursorRing/Locales/deDE.lua:2: attempt to call field 'NewLocale' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CursorRing/Modules/Resources/Druid.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Druid.lua:5: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CursorRing/Modules/Resources/Druid.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Druid.lua:5: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CursorRing/Modules/Resources/Paladin.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Paladin.lua:5: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CursorRing/Modules/Resources/Paladin.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Paladin.lua:5: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CursorRing/Modules/Resources/Monk.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Monk.lua:5: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CursorRing/Modules/Resources/Monk.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Monk.lua:5: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CursorRing/Modules/Resources/Warlock.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Warlock.lua:30: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CursorRing/Modules/Resources/Warlock.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Warlock.lua:30: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CursorRing/Modules/Resources/Evoker.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Evoker.lua:18: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CursorRing/Modules/Resources/Evoker.lua: Lua error: Interface/AddOns/CursorRing/Modules/Resources/Evoker.lua:18: attempt to call field 'RegisterResourceModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DandersFrames/Core/AutoProfiles.lua: Lua error: Interface/AddOns/DandersFrames/Core/AutoProfiles.lua:97: attempt to index upvalue 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DandersFrames/Core/AutoProfiles.lua: Lua error: Interface/AddOns/DandersFrames/Core/AutoProfiles.lua:97: attempt to index upvalue 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DandersFrames/Frames/Headers.lua: Lua error: Interface/AddOns/DandersFrames/Frames/Headers.lua:506: attempt to call method 'RegisterDebugSlash' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DandersFrames/Frames/Headers.lua: Lua error: Interface/AddOns/DandersFrames/Frames/Headers.lua:506: attempt to call method 'RegisterDebugSlash' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DandersFrames/Frames/Position.lua: Lua error: Interface/AddOns/DandersFrames/Frames/Position.lua:72: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DandersFrames/Frames/Position.lua: Lua error: Interface/AddOns/DandersFrames/Frames/Position.lua:72: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DandersFrames/Features/Range.lua: Lua error: Interface/AddOns/DandersFrames/Features/Range.lua:984: attempt to call method 'RegisterRosterUnitEvent' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DandersFrames/Features/Range.lua: Lua error: Interface/AddOns/DandersFrames/Features/Range.lua:984: attempt to call method 'RegisterRosterUnitEvent' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DandersFrames/Features/Dispel.lua: Lua error: Interface/AddOns/DandersFrames/Features/Dispel.lua:3133: attempt to call method 'RegisterDebugSlash' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DandersFrames/Features/Dispel.lua: Lua error: Interface/AddOns/DandersFrames/Features/Dispel.lua:3133: attempt to call method 'RegisterDebugSlash' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DeModal/DeModal.lua: Lua error: Interface/AddOns/DeModal/DeModal.lua:9: attempt to call field 'LoadSlashCommands' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DeModal/DeModal.lua: Lua error: Interface/AddOns/DeModal/DeModal.lua:9: attempt to call field 'LoadSlashCommands' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Dejunk/src/addon.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Dejunk/src/addon.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Utility/FontUtil.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Utility/FontUtil.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DialogueUI/Code/Sound.lua: Lua error: Interface/AddOns/DialogueUI/Code/Sound.lua:78: attempt to index field 'CallbackRegistry' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DialogueUI/Code/Sound.lua: Lua error: Interface/AddOns/DialogueUI/Code/Sound.lua:78: attempt to index field 'CallbackRegistry' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Scroll/Scroll_Swipe.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Scroll/Scroll_Swipe.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Settings/Settings_Definitions.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Settings/Settings_Definitions.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DialogueUI/Code/NameplateGossip.lua: Lua error: Interface/AddOns/DialogueUI/Code/NameplateGossip.lua:260: attempt to index field 'CallbackRegistry' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DialogueUI/Code/NameplateGossip.lua: Lua error: Interface/AddOns/DialogueUI/Code/NameplateGossip.lua:260: attempt to index field 'CallbackRegistry' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Dialogue/Clipboard.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Dialogue/Clipboard.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DialogueUI/Code/Book/BookUI_Component.lua: Lua error: Interface/AddOns/DialogueUI/Code/Book/BookUI_Component.lua:440: attempt to index field 'TooltipAPI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DialogueUI/Code/Book/BookUI_Component.lua: Lua error: Interface/AddOns/DialogueUI/Code/Book/BookUI_Component.lua:440: attempt to index field 'TooltipAPI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Widget/WidgetManager.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/DialogueUI/Code/Widget/WidgetManager.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/DialogueUI/Code/Core.lua: Lua error: Interface/AddOns/DialogueUI/Code/Core.lua:74: attempt to call field 'AddCustomLinkType' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/DialogueUI/Code/Core.lua: Lua error: Interface/AddOns/DialogueUI/Code/Core.lua:74: attempt to call field 'AddCustomLinkType' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=#48560 addon=DialogueUI source=@Interface/AddOns/DialogueUI/Initialization.lua:204: Interface/AddOns/DialogueUI/Initialization.lua:137: attempt to index field 'CallbackRegistry' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function <(string):10>\n\tInterface/AddOns/DialogueUI/Initialization.lua:137: in function 'SetDBValue'\n\tInterface/AddOns/DialogueUI/Initialization.lua:177: in function 'LoadDatabase'\n\tInterface/AddOns/DialogueUI/Initialization.lua:209: in function <Interface/AddOns/DialogueUI/Initialization.lua:204>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 2
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=#48560 addon=DialogueUI source=@Interface/AddOns/DialogueUI/Initialization.lua:204: Interface/AddOns/DialogueUI/Initialization.lua:137: attempt to index field 'CallbackRegistry' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function <(string):10>\n\tInterface/AddOns/DialogueUI/Initialization.lua:137: in function 'SetDBValue'\n\tInterface/AddOns/DialogueUI/Initialization.lua:177: in function 'LoadDatabase'\n\tInterface/AddOns/DialogueUI/Initialization.lua:209: in function <Interface/AddOns/DialogueUI/Initialization.lua:204>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 2
+  },
+  {
+    "message": "EXBOSS-LocaleBase missing required TOC dependencies: ExwindCore, EXBossData",
+    "count": 1
+  },
+  {
+    "message": "EllesmereUICooldownManager missing required TOC dependencies: EllesmereUI",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/libs/AceLocale-3.0/AceLocale-3.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/libs/AceLocale-3.0/AceLocale-3.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Init.lua: Lua error: Interface/AddOns/EnhanceQoL/Init.lua:70: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Init.lua: Lua error: Interface/AddOns/EnhanceQoL/Init.lua:70: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/libs/LibDeflate/LibDeflate.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/libs/LibDeflate/LibDeflate.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/libs/LibSettingsDesigner/LibSettingsDesignerConfig.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/libs/LibSettingsDesigner/LibSettingsDesignerConfig.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Core/EditMode.lua: Lua error: EnhanceQoL Edit Mode integration is not loaded\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Core/EditMode.lua: Lua error: EnhanceQoL Edit Mode integration is not loaded\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Core/SharedAnchors.lua: Lua error: Interface/AddOns/EnhanceQoL/Core/SharedAnchors.lua:14: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Core/SharedAnchors.lua: Lua error: Interface/AddOns/EnhanceQoL/Core/SharedAnchors.lua:14: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Core/EditModeAnchors.lua: Lua error: Interface/AddOns/EnhanceQoL/Core/EditModeAnchors.lua:8: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Core/EditModeAnchors.lua: Lua error: Interface/AddOns/EnhanceQoL/Core/EditModeAnchors.lua:8: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Core/EditModeAnchorUI.lua: Lua error: Interface/AddOns/EnhanceQoL/Core/EditModeAnchorUI.lua:6: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Core/EditModeAnchorUI.lua: Lua error: Interface/AddOns/EnhanceQoL/Core/EditModeAnchorUI.lua:6: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Core/Streams/Stream_Currency.lua: Lua error: ...rface/AddOns/EnhanceQoL/Core/Streams/Stream_Currency.lua:18: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Core/Streams/Stream_Currency.lua: Lua error: ...rface/AddOns/EnhanceQoL/Core/Streams/Stream_Currency.lua:18: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Submodules/GemHelper.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/GemHelper.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Submodules/GemHelper.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/GemHelper.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Submodules/MountActions.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/MountActions.lua:9: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Submodules/MountActions.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/MountActions.lua:9: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Submodules/ActionTracker.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/ActionTracker.lua:13: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Submodules/ActionTracker.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/ActionTracker.lua:13: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Submodules/GroupTools.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/GroupTools.lua:14: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Submodules/GroupTools.lua: Lua error: Interface/AddOns/EnhanceQoL/Submodules/GroupTools.lua:14: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/Settings/SettingsUI.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/Settings/SettingsUI.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/EnhanceQoL/Modules/Mouse/Mouse.lua: Lua error: Interface/AddOns/EnhanceQoL/Modules/Mouse/Mouse.lua:10: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/EnhanceQoL/Modules/Mouse/Mouse.lua: Lua error: Interface/AddOns/EnhanceQoL/Modules/Mouse/Mouse.lua:10: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/Modules/Food/Drinks.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/EnhanceQoL/Modules/Food/Drinks.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/InTime/InTime_UI.lua: Lua error: Interface/AddOns/InTime/InTime_UI.lua:131: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/InTime/InTime_UI.lua: Lua error: Interface/AddOns/InTime/InTime_UI.lua:131: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/InTime/InTime_Core.lua: Lua error: Interface/AddOns/InTime/InTime_Core.lua:20: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/InTime/InTime_Core.lua: Lua error: Interface/AddOns/InTime/InTime_Core.lua:20: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/ItemVersion/Locales/enUS.lua: Lua error: Interface/AddOns/ItemVersion/Locales/enUS.lua:6: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/ItemVersion/Locales/enUS.lua: Lua error: Interface/AddOns/ItemVersion/Locales/enUS.lua:6: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/ItemVersion/Locales/zhCN.lua: Lua error: Interface/AddOns/ItemVersion/Locales/zhCN.lua:6: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/ItemVersion/Locales/zhCN.lua: Lua error: Interface/AddOns/ItemVersion/Locales/zhCN.lua:6: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/ItemVersion/Profile.lua: Lua error: Interface/AddOns/ItemVersion/Profile.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/ItemVersion/Profile.lua: Lua error: Interface/AddOns/ItemVersion/Profile.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/ItemVersion/Expansion.lua: Lua error: Interface/AddOns/ItemVersion/Expansion.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/ItemVersion/Expansion.lua: Lua error: Interface/AddOns/ItemVersion/Expansion.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/ItemVersion/Options.lua: Lua error: Interface/AddOns/ItemVersion/Options.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/ItemVersion/Options.lua: Lua error: Interface/AddOns/ItemVersion/Options.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/ItemVersion/SlashCommands.lua: Lua error: Interface/AddOns/ItemVersion/SlashCommands.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/ItemVersion/SlashCommands.lua: Lua error: Interface/AddOns/ItemVersion/SlashCommands.lua:3: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Leatrix_Plus/Leatrix_Plus_Media.lua: Lua error: Interface/AddOns/Leatrix_Plus/Leatrix_Plus_Media.lua:10: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Leatrix_Plus/Leatrix_Plus_Media.lua: Lua error: Interface/AddOns/Leatrix_Plus/Leatrix_Plus_Media.lua:10: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Leatrix_Plus/Leatrix_Plus.lua: Lua error: Interface/AddOns/Leatrix_Plus/Leatrix_Plus.lua:61: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Leatrix_Plus/Leatrix_Plus.lua: Lua error: Interface/AddOns/Leatrix_Plus/Leatrix_Plus.lua:61: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Locales/enUS.lua: Lua error: Interface/AddOns/Plumber/Locales/enUS.lua:17: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Locales/enUS.lua: Lua error: Interface/AddOns/Plumber/Locales/enUS.lua:17: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/Shared/SharedData.lua: Lua error: Interface/AddOns/Plumber/Modules/Shared/SharedData.lua:51: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/Shared/SharedData.lua: Lua error: Interface/AddOns/Plumber/Modules/Shared/SharedData.lua:51: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/Shared/SharedWidgets.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/Shared/SharedWidgets.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "XML error: IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/Shared/SharedWidgets.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: XML error: IO error loading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/Shared/SharedWidgets.xml: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/ScenarioTracker.lua: Lua error: Interface/AddOns/Plumber/Modules/ScenarioTracker.lua:150: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/ScenarioTracker.lua: Lua error: Interface/AddOns/Plumber/Modules/ScenarioTracker.lua:150: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/ControlCenter/Preload.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/ControlCenter/Preload.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/Macros.lua: Lua error: Interface/AddOns/Plumber/Modules/Macros.lua:47: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/Macros.lua: Lua error: Interface/AddOns/Plumber/Modules/Macros.lua:47: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/BackpackItemTracker.lua: Lua error: Interface/AddOns/Plumber/Modules/BackpackItemTracker.lua:20: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/BackpackItemTracker.lua: Lua error: Interface/AddOns/Plumber/Modules/BackpackItemTracker.lua:20: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/PlayerChoiceFrameToken.lua: Lua error: Interface/AddOns/Plumber/Modules/PlayerChoiceFrameToken.lua:5: attempt to index field 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/PlayerChoiceFrameToken.lua: Lua error: Interface/AddOns/Plumber/Modules/PlayerChoiceFrameToken.lua:5: attempt to index field 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/QuickSlot.lua: Lua error: Interface/AddOns/Plumber/Modules/QuickSlot.lua:4: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/QuickSlot.lua: Lua error: Interface/AddOns/Plumber/Modules/QuickSlot.lua:4: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/RareAnnouncement.lua: Lua error: Interface/AddOns/Plumber/Modules/RareAnnouncement.lua:6: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/RareAnnouncement.lua: Lua error: Interface/AddOns/Plumber/Modules/RareAnnouncement.lua:6: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/MerchantPrice.lua: Lua error: Interface/AddOns/Plumber/Modules/MerchantPrice.lua:27: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/MerchantPrice.lua: Lua error: Interface/AddOns/Plumber/Modules/MerchantPrice.lua:27: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/DelvesAutomation.lua: Lua error: Interface/AddOns/Plumber/Modules/DelvesAutomation.lua:75: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/DelvesAutomation.lua: Lua error: Interface/AddOns/Plumber/Modules/DelvesAutomation.lua:75: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/GameTooltip_Core.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/GameTooltip_Core.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/UnderlightAngler.lua: Lua error: Interface/AddOns/Plumber/Modules/UnderlightAngler.lua:69: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/UnderlightAngler.lua: Lua error: Interface/AddOns/Plumber/Modules/UnderlightAngler.lua:69: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/ChatOptions.lua: Lua error: Interface/AddOns/Plumber/Modules/ChatOptions.lua:205: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/ChatOptions.lua: Lua error: Interface/AddOns/Plumber/Modules/ChatOptions.lua:205: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/StaticPopup_QuestItemDestroyAlert.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/StaticPopup_QuestItemDestroyAlert.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/ProfessionsBook.lua: Lua error: Interface/AddOns/Plumber/Modules/ProfessionsBook.lua:7: attempt to index field 'GameTooltipManager' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/ProfessionsBook.lua: Lua error: Interface/AddOns/Plumber/Modules/ProfessionsBook.lua:7: attempt to index field 'GameTooltipManager' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/HolidayDungeon.lua: Lua error: Interface/AddOns/Plumber/Modules/HolidayDungeon.lua:90: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/HolidayDungeon.lua: Lua error: Interface/AddOns/Plumber/Modules/HolidayDungeon.lua:90: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/SourceAchievementLink.lua: Lua error: Interface/AddOns/Plumber/Modules/SourceAchievementLink.lua:6: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/SourceAchievementLink.lua: Lua error: Interface/AddOns/Plumber/Modules/SourceAchievementLink.lua:6: attempt to index local 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/OutfitSelect.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Plumber/Modules/OutfitSelect.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/CatalystUI.lua: Lua error: Interface/AddOns/Plumber/Modules/CatalystUI.lua:178: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/CatalystUI.lua: Lua error: Interface/AddOns/Plumber/Modules/CatalystUI.lua:178: attempt to index field 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Plumber/Modules/HuntTable.lua: Lua error: Interface/AddOns/Plumber/Modules/HuntTable.lua:3: attempt to index field 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Plumber/Modules/HuntTable.lua: Lua error: Interface/AddOns/Plumber/Modules/HuntTable.lua:3: attempt to index field 'API' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Init.lua: Lua error: Interface/AddOns/SavedInstances/Init.lua:2: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Init.lua: Lua error: Interface/AddOns/SavedInstances/Init.lua:2: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Locales/Locale.lua: Lua error: bad argument #1 to 'setmetatable' (table expected)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Locales/Locale.lua: Lua error: bad argument #1 to 'setmetatable' (table expected)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Core/Tooltip.lua: Lua error: Interface/AddOns/SavedInstances/Core/Tooltip.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Core/Tooltip.lua: Lua error: Interface/AddOns/SavedInstances/Core/Tooltip.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Core/Debug.lua: Lua error: Interface/AddOns/SavedInstances/Core/Debug.lua:18: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Core/Debug.lua: Lua error: Interface/AddOns/SavedInstances/Core/Debug.lua:18: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Modules/BonusRoll.lua: Lua error: Interface/AddOns/SavedInstances/Modules/BonusRoll.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Modules/BonusRoll.lua: Lua error: Interface/AddOns/SavedInstances/Modules/BonusRoll.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Modules/Calling.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Calling.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Modules/Calling.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Calling.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Modules/Emissary.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Emissary.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Modules/Emissary.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Emissary.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Modules/MythicPlus.lua: Lua error: Interface/AddOns/SavedInstances/Modules/MythicPlus.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Modules/MythicPlus.lua: Lua error: Interface/AddOns/SavedInstances/Modules/MythicPlus.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Modules/Paragon.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Paragon.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Modules/Paragon.lua: Lua error: Interface/AddOns/SavedInstances/Modules/Paragon.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Modules/TradeSkill.lua: Lua error: Interface/AddOns/SavedInstances/Modules/TradeSkill.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Modules/TradeSkill.lua: Lua error: Interface/AddOns/SavedInstances/Modules/TradeSkill.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/SavedInstances/Modules/WorldBoss.lua: Lua error: Interface/AddOns/SavedInstances/Modules/WorldBoss.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/SavedInstances/Modules/WorldBoss.lua: Lua error: Interface/AddOns/SavedInstances/Modules/WorldBoss.lua:2: attempt to index local 'SI' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Simulationcraft/libs/AceDB-3.0/AceDB-3.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Simulationcraft/libs/AceDB-3.0/AceDB-3.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Syndicator/Libs/LibBattlePetTooltipLine/LibBattlePetTooltipLine.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/Syndicator/Libs/LibBattlePetTooltipLine/LibBattlePetTooltipLine.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Syndicator/Core/Utilities.lua: Lua error: Interface/AddOns/Syndicator/Core/Utilities.lua:66: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Syndicator/Core/Utilities.lua: Lua error: Interface/AddOns/Syndicator/Core/Utilities.lua:66: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Syndicator/Core/Initialize.lua: Lua error: Interface/AddOns/Syndicator/Core/Initialize.lua:6: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Syndicator/Core/Initialize.lua: Lua error: Interface/AddOns/Syndicator/Core/Initialize.lua:6: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Syndicator/Tracking/BagCache.lua: Lua error: Interface/AddOns/Syndicator/Tracking/BagCache.lua:10: attempt to index local '(for state)' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Syndicator/Tracking/BagCache.lua: Lua error: Interface/AddOns/Syndicator/Tracking/BagCache.lua:10: attempt to index local '(for state)' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Syndicator/Tracking/Tooltips.lua: Lua error: Interface/AddOns/Syndicator/Tracking/Tooltips.lua:6: Cannot find a library instance of \"LibBattlePetTooltipLine-1-0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Syndicator/Tracking/Tooltips.lua: Lua error: Interface/AddOns/Syndicator/Tracking/Tooltips.lua:6: Cannot find a library instance of \"LibBattlePetTooltipLine-1-0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Syndicator/Search/CheckItem.lua: Lua error: Interface/AddOns/Syndicator/Search/CheckItem.lua:25: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Syndicator/Search/CheckItem.lua: Lua error: Interface/AddOns/Syndicator/Search/CheckItem.lua:25: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Syndicator/Search/UI/Builder.lua: Lua error: Interface/AddOns/Syndicator/Search/UI/Builder.lua:283: attempt to index field 'Locales' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Syndicator/Search/UI/Builder.lua: Lua error: Interface/AddOns/Syndicator/Search/UI/Builder.lua:283: attempt to index field 'Locales' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/Syndicator/Search/Utilities.lua: Lua error: Interface/AddOns/Syndicator/Search/Utilities.lua:47: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Syndicator/Search/Utilities.lua: Lua error: Interface/AddOns/Syndicator/Search/Utilities.lua:47: attempt to index field 'Constants' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Init/GLibs.lua: Lua error: Interface/AddOns/CraftSim/Init/GLibs.lua:6: Cannot find a library instance of \"GGUI-2.1\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Init/GLibs.lua: Lua error: Interface/AddOns/CraftSim/Init/GLibs.lua:6: Cannot find a library instance of \"GGUI-2.1\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Locals/enUS.lua: Lua error: Interface/AddOns/CraftSim/Locals/enUS.lua:5: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Locals/enUS.lua: Lua error: Interface/AddOns/CraftSim/Locals/enUS.lua:5: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Locals/Localization.lua: Lua error: Interface/AddOns/CraftSim/Locals/Localization.lua:24: attempt to index field 'LOCAL_EN' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Locals/Localization.lua: Lua error: Interface/AddOns/CraftSim/Locals/Localization.lua:24: attempt to index field 'LOCAL_EN' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Debug/Debug.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Debug/Debug.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Util/Util.lua: Lua error: Interface/AddOns/CraftSim/Util/Util.lua:7: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Util/Util.lua: Lua error: Interface/AddOns/CraftSim/Util/Util.lua:7: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Util/RecipeAcquisition.lua: Lua error: Interface/AddOns/CraftSim/Util/RecipeAcquisition.lua:10: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Util/RecipeAcquisition.lua: Lua error: Interface/AddOns/CraftSim/Util/RecipeAcquisition.lua:10: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/DB/DB.lua: Lua error: Interface/AddOns/CraftSim/DB/DB.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/DB/DB.lua: Lua error: Interface/AddOns/CraftSim/DB/DB.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/DB/patronMoxieValuesDB.lua: Lua error: Interface/AddOns/CraftSim/DB/patronMoxieValuesDB.lua:9: attempt to index field 'DB' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/DB/patronMoxieValuesDB.lua: Lua error: Interface/AddOns/CraftSim/DB/patronMoxieValuesDB.lua:9: attempt to index field 'DB' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/DB/ItemCountDB.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/DB/ItemCountDB.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/DB/craftQueueDB.lua: Lua error: Interface/AddOns/CraftSim/DB/craftQueueDB.lua:10: attempt to index field 'DB' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/DB/craftQueueDB.lua: Lua error: Interface/AddOns/CraftSim/DB/craftQueueDB.lua:10: attempt to index field 'DB' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/DB/multicraftPreloadDB.lua: Lua error: Interface/AddOns/CraftSim/DB/multicraftPreloadDB.lua:10: attempt to index field 'DB' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/DB/multicraftPreloadDB.lua: Lua error: Interface/AddOns/CraftSim/DB/multicraftPreloadDB.lua:10: attempt to index field 'DB' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Util/Widgets/QualityMeter.lua: Lua error: Interface/AddOns/CraftSim/Util/Widgets/QualityMeter.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Util/Widgets/QualityMeter.lua: Lua error: Interface/AddOns/CraftSim/Util/Widgets/QualityMeter.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Pricing/ProfitCalculation.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Pricing/ProfitCalculation.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/DataSource/PriceSource.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/DataSource/PriceSource.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/DataSource/InventorySource.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/DataSource/InventorySource.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Modules.lua: Lua error: Interface/AddOns/CraftSim/Modules/Modules.lua:63: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Modules.lua: Lua error: Interface/AddOns/CraftSim/Modules/Modules.lua:63: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/ControlPanel/ControlPanel.lua: Lua error: ...ce/AddOns/CraftSim/Modules/ControlPanel/ControlPanel.lua:9: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/ControlPanel/ControlPanel.lua: Lua error: ...ce/AddOns/CraftSim/Modules/ControlPanel/ControlPanel.lua:9: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/ItemCount/ItemCount.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/ItemCount/ItemCount.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Disenchant/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Disenchant/UI.lua:8: attempt to index field 'DISENCHANT' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Disenchant/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Disenchant/UI.lua:8: attempt to index field 'DISENCHANT' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Explanations/Explanations.lua: Lua error: ...ce/AddOns/CraftSim/Modules/Explanations/Explanations.lua:9: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Explanations/Explanations.lua: Lua error: ...ce/AddOns/CraftSim/Modules/Explanations/Explanations.lua:9: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/CraftQueue/CraftQueue.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftQueue/CraftQueue.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/CraftQueue/CraftQueue.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftQueue/CraftQueue.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/CraftQueue/CraftLists.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftQueue/CraftLists.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/CraftQueue/CraftLists.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftQueue/CraftLists.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/CraftQueue/EditRecipe.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftQueue/EditRecipe.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/CraftQueue/EditRecipe.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftQueue/EditRecipe.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Cooldowns/Cooldowns.lua: Lua error: Interface/AddOns/CraftSim/Modules/Cooldowns/Cooldowns.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Cooldowns/Cooldowns.lua: Lua error: Interface/AddOns/CraftSim/Modules/Cooldowns/Cooldowns.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Cooldowns/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Cooldowns/UI.lua:8: attempt to index field 'COOLDOWNS' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Cooldowns/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Cooldowns/UI.lua:8: attempt to index field 'COOLDOWNS' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/CustomerHistory/CustomerHistory.lua: Lua error: ...Ons/CraftSim/Modules/CustomerHistory/CustomerHistory.lua:10: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/CustomerHistory/CustomerHistory.lua: Lua error: ...Ons/CraftSim/Modules/CustomerHistory/CustomerHistory.lua:10: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Statistics/Statistics.lua: Lua error: Interface/AddOns/CraftSim/Modules/Statistics/Statistics.lua:10: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Statistics/Statistics.lua: Lua error: Interface/AddOns/CraftSim/Modules/Statistics/Statistics.lua:10: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Statistics/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Statistics/UI.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Statistics/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Statistics/UI.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/CraftLog/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftLog/UI.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/CraftLog/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftLog/UI.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Pricing/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Pricing/UI.lua:8: attempt to index field 'PRICING' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Pricing/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Pricing/UI.lua:8: attempt to index field 'PRICING' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/SpecializationInfo/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/SpecializationInfo/UI.lua:7: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/SpecializationInfo/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/SpecializationInfo/UI.lua:7: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/SimulationMode/Debug.lua: Lua error: Interface/AddOns/CraftSim/Modules/SimulationMode/Debug.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/SimulationMode/Debug.lua: Lua error: Interface/AddOns/CraftSim/Modules/SimulationMode/Debug.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/SimulationMode/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/SimulationMode/UI.lua:7: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/SimulationMode/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/SimulationMode/UI.lua:7: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/ReagentOptimization/ReagentOptimization.lua: Lua error: ...tSim/Modules/ReagentOptimization/ReagentOptimization.lua:87: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/ReagentOptimization/ReagentOptimization.lua: Lua error: ...tSim/Modules/ReagentOptimization/ReagentOptimization.lua:87: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/ReagentOptimization/UI.lua: Lua error: ...rface/AddOns/CraftSim/Modules/ReagentOptimization/UI.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/ReagentOptimization/UI.lua: Lua error: ...rface/AddOns/CraftSim/Modules/ReagentOptimization/UI.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/TopGear/TopGear.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/TopGear/TopGear.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/TopGear/UI.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/TopGear/UI.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/RecipeScan/RecipeScan.lua: Lua error: Interface/AddOns/CraftSim/Modules/RecipeScan/RecipeScan.lua:11: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/RecipeScan/RecipeScan.lua: Lua error: Interface/AddOns/CraftSim/Modules/RecipeScan/RecipeScan.lua:11: attempt to call method 'RegisterModule' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/RecipeScan/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/RecipeScan/UI.lua:7: attempt to index field 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/RecipeScan/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/RecipeScan/UI.lua:7: attempt to index field 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Supporters/Supporters.lua: Lua error: Interface/AddOns/CraftSim/Modules/Supporters/Supporters.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Supporters/Supporters.lua: Lua error: Interface/AddOns/CraftSim/Modules/Supporters/Supporters.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/Supporters/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Supporters/UI.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/Supporters/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/Supporters/UI.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/CraftBuffs/CraftBuffs.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/CraftBuffs/CraftBuffs.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/CraftBuffs/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftBuffs/UI.lua:11: attempt to index field 'CRAFT_BUFFS' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/CraftBuffs/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/CraftBuffs/UI.lua:11: attempt to index field 'CRAFT_BUFFS' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/ConcentrationTracker/ConcentrationTracker.lua: Lua error: ...im/Modules/ConcentrationTracker/ConcentrationTracker.lua:5: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/ConcentrationTracker/ConcentrationTracker.lua: Lua error: ...im/Modules/ConcentrationTracker/ConcentrationTracker.lua:5: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/ConcentrationTracker/UI.lua: Lua error: ...face/AddOns/CraftSim/Modules/ConcentrationTracker/UI.lua:11: attempt to index field 'CONCENTRATION_TRACKER' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/ConcentrationTracker/UI.lua: Lua error: ...face/AddOns/CraftSim/Modules/ConcentrationTracker/UI.lua:11: attempt to index field 'CONCENTRATION_TRACKER' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/WorkOrderTracker/WorkOrderTracker.lua: Lua error: ...s/CraftSim/Modules/WorkOrderTracker/WorkOrderTracker.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/WorkOrderTracker/WorkOrderTracker.lua: Lua error: ...s/CraftSim/Modules/WorkOrderTracker/WorkOrderTracker.lua:8: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Modules/WorkOrderTracker/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/WorkOrderTracker/UI.lua:8: attempt to index field 'WORK_ORDER_TRACKER' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Modules/WorkOrderTracker/UI.lua: Lua error: Interface/AddOns/CraftSim/Modules/WorkOrderTracker/UI.lua:8: attempt to index field 'WORK_ORDER_TRACKER' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Blacksmithing.lua: Lua error: ...m/Data/SpecializationData/Dragonflight/Blacksmithing.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Blacksmithing.lua: Lua error: ...m/Data/SpecializationData/Dragonflight/Blacksmithing.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Enchanting.lua: Lua error: ...tSim/Data/SpecializationData/Dragonflight/Enchanting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Enchanting.lua: Lua error: ...tSim/Data/SpecializationData/Dragonflight/Enchanting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Leatherworking.lua: Lua error: .../Data/SpecializationData/Dragonflight/Leatherworking.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Leatherworking.lua: Lua error: .../Data/SpecializationData/Dragonflight/Leatherworking.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Engineering.lua: Lua error: ...Sim/Data/SpecializationData/Dragonflight/Engineering.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Dragonflight/Engineering.lua: Lua error: ...Sim/Data/SpecializationData/Dragonflight/Engineering.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Blacksmithing.lua: Lua error: ...Data/SpecializationData/The_War_Within/Blacksmithing.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Blacksmithing.lua: Lua error: ...Data/SpecializationData/The_War_Within/Blacksmithing.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Inscription.lua: Lua error: ...m/Data/SpecializationData/The_War_Within/Inscription.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Inscription.lua: Lua error: ...m/Data/SpecializationData/The_War_Within/Inscription.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Jewelcrafting.lua: Lua error: ...Data/SpecializationData/The_War_Within/Jewelcrafting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Jewelcrafting.lua: Lua error: ...Data/SpecializationData/The_War_Within/Jewelcrafting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Engineering.lua: Lua error: ...m/Data/SpecializationData/The_War_Within/Engineering.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/The_War_Within/Engineering.lua: Lua error: ...m/Data/SpecializationData/The_War_Within/Engineering.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Alchemy.lua: Lua error: ...ns/CraftSim/Data/SpecializationData/Midnight/Alchemy.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Alchemy.lua: Lua error: ...ns/CraftSim/Data/SpecializationData/Midnight/Alchemy.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Enchanting.lua: Lua error: ...CraftSim/Data/SpecializationData/Midnight/Enchanting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Enchanting.lua: Lua error: ...CraftSim/Data/SpecializationData/Midnight/Enchanting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Jewelcrafting.lua: Lua error: ...ftSim/Data/SpecializationData/Midnight/Jewelcrafting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Jewelcrafting.lua: Lua error: ...ftSim/Data/SpecializationData/Midnight/Jewelcrafting.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Tailoring.lua: Lua error: .../CraftSim/Data/SpecializationData/Midnight/Tailoring.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Tailoring.lua: Lua error: .../CraftSim/Data/SpecializationData/Midnight/Tailoring.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Engineering.lua: Lua error: ...raftSim/Data/SpecializationData/Midnight/Engineering.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Data/SpecializationData/Midnight/Engineering.lua: Lua error: ...raftSim/Data/SpecializationData/Midnight/Engineering.lua:3: attempt to index field 'SPECIALIZATION_DATA' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/ProfessionData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/ProfessionData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/RecipeData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/RecipeData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/ProfessionStats.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionStats.lua:6: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/ProfessionStats.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionStats.lua:6: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/ProfessionStat.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionStat.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/ProfessionStat.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionStat.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/ProfessionGearSet.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionGearSet.lua:6: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/ProfessionGearSet.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionGearSet.lua:6: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/ProfessionGear.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionGear.lua:8: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/ProfessionGear.lua: Lua error: Interface/AddOns/CraftSim/Classes/ProfessionGear.lua:8: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/ResultData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/ResultData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/SalvageReagentSlot.lua: Lua error: Interface/AddOns/CraftSim/Classes/SalvageReagentSlot.lua:8: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/SalvageReagentSlot.lua: Lua error: Interface/AddOns/CraftSim/Classes/SalvageReagentSlot.lua:8: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/SpecializationData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/SpecializationData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/NodeData.lua: Lua error: Interface/AddOns/CraftSim/Classes/NodeData.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/NodeData.lua: Lua error: Interface/AddOns/CraftSim/Classes/NodeData.lua:6: attempt to index local 'GUTIL' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/PerkData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/PerkData.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/CraftRecipeData.lua: Lua error: Interface/AddOns/CraftSim/Classes/CraftRecipeData.lua:65: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/CraftRecipeData.lua: Lua error: Interface/AddOns/CraftSim/Classes/CraftRecipeData.lua:65: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/JSONBuilder.lua: Lua error: Interface/AddOns/CraftSim/Classes/JSONBuilder.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/JSONBuilder.lua: Lua error: Interface/AddOns/CraftSim/Classes/JSONBuilder.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/Buff.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/Buff.lua: Lua error: Interface/AddOns/CraftSim/Debug/Debug.lua:60: attempt to index upvalue 'LibLog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/CraftQueue.lua: Lua error: Interface/AddOns/CraftSim/Classes/CraftQueue.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/CraftQueue.lua: Lua error: Interface/AddOns/CraftSim/Classes/CraftQueue.lua:7: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/CraftSim/Classes/CraftQueueItem.lua: Lua error: Interface/AddOns/CraftSim/Classes/CraftQueueItem.lua:8: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/CraftSim/Classes/CraftQueueItem.lua: Lua error: Interface/AddOns/CraftSim/Classes/CraftQueueItem.lua:8: attempt to index field 'CraftSimObject' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/XIV_Databar_Continued/Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 2
+  },
+  {
+    "message": "Lua Error: IO error reading /syncthing/World of Warcraft/_retail_/Interface/AddOns/XIV_Databar_Continued/Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua: No such file or directory (os error 2)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 2
+  },
+  {
+    "message": "@Interface/AddOns/XIV_Databar_Continued/locales/enUS.lua: Lua error: Interface/AddOns/XIV_Databar_Continued/locales/enUS.lua:4: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/XIV_Databar_Continued/locales/enUS.lua: Lua error: Interface/AddOns/XIV_Databar_Continued/locales/enUS.lua:4: Cannot find a library instance of \"AceLocale-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/XIV_Databar_Continued/core.lua: Lua error: Interface/AddOns/XIV_Databar_Continued/core.lua:6: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/XIV_Databar_Continued/core.lua: Lua error: Interface/AddOns/XIV_Databar_Continued/core.lua:6: Cannot find a library instance of \"AceAddon-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/XIV_Databar_Continued/options.lua: Lua error: Interface/AddOns/XIV_Databar_Continued/options.lua:5: Cannot find a library instance of \"AceConfig-3.0\".\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/XIV_Databar_Continued/options.lua: Lua error: Interface/AddOns/XIV_Databar_Continued/options.lua:5: Cannot find a library instance of \"AceConfig-3.0\".\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/XIV_Databar_Continued/Core/utils/changelog/Old/v1/1.0.lua: Lua error: ...IV_Databar_Continued/Core/utils/changelog/Old/v1/1.0.lua:3: attempt to index field 'Changelog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/XIV_Databar_Continued/Core/utils/changelog/Old/v1/1.0.lua: Lua error: ...IV_Databar_Continued/Core/utils/changelog/Old/v1/1.0.lua:3: attempt to index field 'Changelog' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "@Interface/AddOns/XIV_Databar_Continued/Core/utils/mythicteleports/expansions/classic.lua: Lua error: ...tinued/Core/utils/mythicteleports/expansions/classic.lua:6: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/XIV_Databar_Continued/Core/utils/mythicteleports/expansions/classic.lua: Lua error: ...tinued/Core/utils/mythicteleports/expansions/classic.lua:6: attempt to index local 'L' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=#48509 addon=DandersFrames source=@Interface/AddOns/DandersFrames/ClickCasting/Events.lua:569: Interface/AddOns/DandersFrames/ClickCasting/Frames.lua:333: attempt to call method 'CreateHovercastButton' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'CreateHovercastButton'\n\tInterface/AddOns/DandersFrames/ClickCasting/Frames.lua:333: in function 'InitializeSecureFrames'\n\tInterface/AddOns/DandersFrames/ClickCasting/Frames.lua:49: in function 'Initialize'\n\tInterface/AddOns/DandersFrames/ClickCasting/Events.lua:572: in function <Interface/AddOns/DandersFrames/ClickCasting/Events.lua:569>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=#48509 addon=DandersFrames source=@Interface/AddOns/DandersFrames/ClickCasting/Events.lua:569: Interface/AddOns/DandersFrames/ClickCasting/Frames.lua:333: attempt to call method 'CreateHovercastButton' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'CreateHovercastButton'\n\tInterface/AddOns/DandersFrames/ClickCasting/Frames.lua:333: in function 'InitializeSecureFrames'\n\tInterface/AddOns/DandersFrames/ClickCasting/Frames.lua:49: in function 'Initialize'\n\tInterface/AddOns/DandersFrames/ClickCasting/Events.lua:572: in function <Interface/AddOns/DandersFrames/ClickCasting/Events.lua:569>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=FalconAddOnFrame addon=Falcon source=@Interface/AddOns/Falcon/Falcon.lua:333: Interface/AddOns/Falcon/Falcon.lua:334: attempt to call method 'IsInEditMode' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'IsInEditMode'\n\tInterface/AddOns/Falcon/Falcon.lua:334: in function <Interface/AddOns/Falcon/Falcon.lua:333>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 5
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=FalconAddOnFrame addon=Falcon source=@Interface/AddOns/Falcon/Falcon.lua:333: Interface/AddOns/Falcon/Falcon.lua:334: attempt to call method 'IsInEditMode' (a nil value)\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'IsInEditMode'\n\tInterface/AddOns/Falcon/Falcon.lua:334: in function <Interface/AddOns/Falcon/Falcon.lua:333>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 5
+  },
+  {
+    "message": "...face/AddOns/BetterBlizzFrames/retail/modules/castbar.lua:1688: attempt to perform arithmetic on local 'w' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 2
+  },
+  {
+    "message": "Lua Error: ...face/AddOns/BetterBlizzFrames/retail/modules/castbar.lua:1688: attempt to perform arithmetic on local 'w' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 2
+  },
+  {
+    "message": "Interface/AddOns/DandersFrames/Features/Dispel.lua:2974: attempt to call method 'IterateAllFrames' (a nil value)\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: Interface/AddOns/DandersFrames/Features/Dispel.lua:2974: attempt to call method 'IterateAllFrames' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  }
+]

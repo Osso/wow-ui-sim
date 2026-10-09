@@ -1,0 +1,20 @@
+{
+  "revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/master-snapshot/Cargo.toml",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 317.9967031478882,
+  "log": "p510-master-all-sweeps.log",
+  "log_sha256": "3daf09ad0a371c55f08c393b78aab1c441a902db907c2c15559e9a55a2c4b0fa",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

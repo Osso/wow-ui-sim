@@ -1,0 +1,18 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "pet"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 9.243627309799194,
+  "log": "p510-prefork-pet.log",
+  "log_sha256": "5e6521bc6bc310bd03594a847247bf6f870adda6daa41487c1d40d8b6c61e138",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p510-page"
+  }
+}

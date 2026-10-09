@@ -1,0 +1,13 @@
+{
+  "revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_extract_patch_non_inventory.py"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 0.15136241912841797,
+  "log": "test_extract_patch_non_inventory.log",
+  "log_sha256": "19664c49e9d111eccd8195894bff21acecf8c8ce16c2c70507edd225fbf03aa6",
+  "env": {}
+}

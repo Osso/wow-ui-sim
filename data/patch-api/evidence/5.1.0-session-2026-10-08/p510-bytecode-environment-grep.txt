@@ -1,0 +1,8 @@
+src/loader/bytecode_cache.rs:30:static BYTECODE_CACHE_MODE: AtomicU8 = AtomicU8::new(CacheMode::WRITABLE);
+src/loader/bytecode_cache.rs:45:        match BYTECODE_CACHE_MODE.load(Ordering::Acquire) {
+src/loader/bytecode_cache.rs:63:    BYTECODE_CACHE_MODE.store(CacheMode::PARENT_BYPASS, Ordering::Release);
+src/loader/bytecode_cache.rs:67:    BYTECODE_CACHE_MODE.store(CacheMode::READ_ONLY, Ordering::Release);
+src/loader/bytecode_cache.rs:143:        if let Ok(enable) = std::env::var("WOW_SIM_ENABLE_BYTECODE_CACHE") {
+src/loader/bytecode_cache.rs:147:        std::env::var("WOW_SIM_DISABLE_BYTECODE_CACHE")
+src/asset_resolver_config.rs:91:        if let Ok(mode) = std::env::var("WOW_SIM_GUI_CACHE_TEST_MODE") {
+src/asset_resolver_config.rs:161:            .env("WOW_SIM_GUI_CACHE_TEST_MODE", mode)
