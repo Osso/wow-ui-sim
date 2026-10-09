@@ -1,0 +1,188 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.13.3",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 6472111,
+    "sha256": "5aac9c7ecacf17d3d3f2961045252ac27b91884a4a2abde60f817ee2f099e85b"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-C_SummonInfo.CancelSummon-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.CancelSummon",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.ConfirmSummon-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmTimeLeft-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonReason-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonReason",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.IsSummonSkippingStartExperience-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.IsSummonSkippingStartExperience",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsChannelJoinPending-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsChannelJoinPending",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-GetCombatRating-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRating",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-GetCombatRatingBonus-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRatingBonus",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-HasKey-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasKey",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-KeyRingButtonIDToInvSlotID-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "KeyRingButtonIDToInvSlotID",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-CancelSummon-37",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelSummon",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-ConfirmSummon-38",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmAreaName-39",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmSummoner-40",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmTimeLeft-41",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-GetTotemCannotDismiss-42",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemCannotDismiss",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-GetTotemInfo-43",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemInfo",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-GetTotemTimeLeft-44",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemTimeLeft",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-IsKioskModeEnabled-45",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsKioskModeEnabled",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-TargetTotem-46",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "TargetTotem",
+      "annotation": "",
+      "wikitext_line": 46
+    }
+  ]
+}

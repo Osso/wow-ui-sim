@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+    "1.13.3",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/source.wikitext",
+    "6472111",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/default-register.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+  "epoch": "base3de874658; frozen inputs; no runtime change",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}

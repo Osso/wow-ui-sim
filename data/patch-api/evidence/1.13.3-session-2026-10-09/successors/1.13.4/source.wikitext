@@ -1,0 +1,63 @@
+{{apichanges|1.13.4|prev=1.13.3|next=1.13.5}}
+
+==Diffs==
+1.13.3 (32790) to 1.13.4 (33491)
+* FrameXML: https://github.com/Gethe/wow-ui-source/commit/1977612d0fd23d01a80d44b504bee70039df1782
+* API resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/30ee4c00d5620733b5b7f2ff4f743cefc998c558
+
+==Changes==
+* [[Getting_the_current_interface_number|TOC version]]: <code>11304</code>
+* Reinstated [[Totem]] API
+* Supports [[WoW Token]]s in China
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 17 new functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_Commentator.GetUnitTeamIndex}}
+: {{Wow-inline}} {{api|C_StorePublic.HasPurchaseableProducts}}
+: {{api|C_SummonInfo.ConfirmSummon}}
+: {{api|CanInitiateWarGame}}
+: {{api|GetInstanceLockTimeRemaining}}
+: {{api|GetInstanceLockTimeRemainingEncounter}}
+: {{api|GetTotemInfo}}
+: {{api|GetTotemTimeLeft}}
+: {{api|GetWarGameQueueStatus}}
+: {{api|IsUsingFixedTimeStep}}
+: {{api|IsWargame}}
+: {{api|RespondInstanceLock}}
+: {{api|StartSpectatorWarGame}}
+: {{api|StartWarGame}}
+: {{api|StartWarGameByName}}
+: {{api|TargetTotem}}
+: {{api|WarGameRespond}}
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 5 new events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|COMMENTATOR_IMMEDIATE_FOV_UPDATE}}
+: {{api|t=e|INSTANCE_LOCK_START}}
+: {{api|t=e|INSTANCE_LOCK_STOP}}
+: {{api|t=e|INSTANCE_LOCK_WARNING}}
+: {{api|t=e|WARGAME_REQUESTED}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 1 new CVar
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{Wow-inline}} {{api|t=c|ColorNameplateNameBySelection}}
+</div>
+|}
+
+==References==
