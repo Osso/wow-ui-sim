@@ -1,0 +1,58 @@
+{
+  "scope": "Static code observation only; no executed behavior or native parity.",
+  "contexts": [
+    {
+      "path": "src/loader/mod.rs",
+      "code_revision": "34c303c108d55e6c9d4919878abbb9a0efc08c00",
+      "sha256": "9adc6ef887929101f8631552a558a5075517a49844d99b47423c18b211c3e934",
+      "snippets": [
+        {
+          "first_line": 189,
+          "last_line": 266,
+          "text": "fn active_profile_toc_suffixes() -> &'static [&'static str] {\n    match crate::client_profile::ACTIVE {\n        crate::client_profile::ClientProfile::Retail\n        | crate::client_profile::ClientProfile::Ptr => &[\"_Mainline\", \"\", \"_Standard\"],\n        crate::client_profile::ClientProfile::Wrath => &[\"_Wrath\", \"\", \"_Classic\"],\n        crate::client_profile::ClientProfile::Mists => &[\"_Mists\", \"\", \"_Classic\"],\n        crate::client_profile::ClientProfile::Era\n        | crate::client_profile::ClientProfile::Anniversary => &[\"_Vanilla\", \"\", \"_Classic\"],\n        crate::client_profile::ClientProfile::WowForever => &[\"_Camelot\", \"\", \"_Mainline\"],\n    }\n}\n\n/// Read only TOC files, sorting case collisions independently of directory order.\nfn read_toc_candidates(addon_dir: &Path) -> Option<Vec<PathBuf>> {\n    let entries = std::fs::read_dir(addon_dir).ok()?;\n    let mut paths: Vec<_> = entries\n        .flatten()\n        .map(|entry| entry.path())\n        .filter(|path| {\n            let extension = path.extension().and_then(|value| value.to_str());\n            extension.is_some_and(|value| value.eq_ignore_ascii_case(\"toc\")) && path.is_file()\n        })\n        .collect();\n    paths.sort();\n    Some(paths)\n}\n\nfn find_named_toc(candidates: &[PathBuf], filename: &str) -> Option<PathBuf> {\n    candidates\n        .iter()\n        .filter(|path| {\n            path.file_name()\n                .and_then(|name| name.to_str())\n                .is_some_and(|name| name.eq_ignore_ascii_case(filename))\n        })\n        .min_by_key(|path| path.file_name().and_then(|name| name.to_str()) != Some(filename))\n        .cloned()\n}\n\n/// Keep existing underscore precedence; native ordering between both separators\n/// is not established. Both spellings occupy the same profile-specific tier.\nfn build_toc_variant_filenames(addon_name: &str, suffix: &str) -> Vec<String> {\n    let underscore = format!(\"{addon_name}{suffix}.toc\");\n    match suffix.strip_prefix('_') {\n        Some(flavor) => vec![underscore, format!(\"{addon_name}-{flavor}.toc\")],\n        None => vec![underscore],\n    }\n}\n\nfn select_profile_specific_toc_suffix(addon_name: &str) -> Option<&'static str> {\n    match crate::client_profile::ACTIVE {\n        crate::client_profile::ClientProfile::Mists if addon_name == \"Blizzard_GameMenu\" => {\n            Some(\"_Mainline\")\n        }\n        crate::client_profile::ClientProfile::Mists\n            if addon_name == \"Blizzard_UIParentPanelManager\" =>\n        {\n            Some(\"_Classic\")\n        }\n        _ => None,\n    }\n}\n\n/// Find the TOC file for an addon directory.\n///\n/// Uses ordered supported profile variants, with `_` then `-` spellings before\n/// moving to the next tier (including generic). Names are matched case-insensitively,\n/// preferring exact case within each spelling. Foreign and unknown flavors are not\n/// guessed from directory entries; renaming an addon folder still disables its TOC.\npub fn find_toc_file(addon_dir: &Path) -> Option<PathBuf> {\n    let addon_name = addon_dir.file_name()?.to_str()?;\n    let candidates = read_toc_candidates(addon_dir)?;\n    select_profile_specific_toc_suffix(addon_name)\n        .into_iter()\n        .chain(active_profile_toc_suffixes().iter().copied())\n        .flat_map(|suffix| build_toc_variant_filenames(addon_name, suffix))\n        .find_map(|filename| find_named_toc(&candidates, &filename))\n}\n"
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/auras.rs",
+      "code_revision": "34c303c108d55e6c9d4919878abbb9a0efc08c00",
+      "sha256": "b9e11655d4fcd2e1c4c74e7bd535f0c28486d9634900aaa0cab61f4ced209b6c",
+      "snippets": [
+        {
+          "first_line": 680,
+          "last_line": 697,
+          "text": "fn unit_aura(state: &mut LuaState) -> LuaResult<u32> {\n    // INFERRED AllowedWhenUntainted for this undeclared legacy global.\n    #[cfg(feature = \"retail-12-0-7\")]\n    let unit = crate::lua_api::unsupported_unit_inputs::authenticate_unit_arguments(state)?;\n    #[cfg(not(feature = \"retail-12-0-7\"))]\n    let unit = Option::<String>::from_stack(state, 1)?.unwrap_or_default();\n    let index = Option::<f64>::from_stack(state, 2)?.unwrap_or_default() as i32;\n    let filter_str = Option::<String>::from_stack(state, 3)?.unwrap_or_default();\n    #[cfg(feature = \"retail-12-0-7\")]\n    if crate::lua_api::unsupported_unit_inputs::is_unsupported(state, &unit)? {\n        state.push(Val::Nil);\n        return Ok(1);\n    }\n    let aura = collect_visible_unit_auras(state, &unit, filter_from_str(&filter_str))\n        .into_iter()\n        .nth(index.saturating_sub(1) as usize);\n    Ok(push_legacy_aura_result(state, aura.as_ref(), &unit))\n}\n"
+        },
+        {
+          "first_line": 808,
+          "last_line": 848,
+          "text": "fn push_legacy_aura_result(state: &mut LuaState, aura: Option<&AuraInfo>, unit: &str) -> u32 {\n    match aura {\n        Some(aura) => {\n            let aura_table = build_aura_table(state, aura, unit);\n            push_legacy_aura_tuple(state, aura_table)\n        }\n        None => {\n            state.push(Val::Nil);\n            1\n        }\n    }\n}\n\nfn push_legacy_aura_tuple(state: &mut LuaState, aura: Val) -> u32 {\n    let Val::Table(_) = aura else {\n        state.push(Val::Nil);\n        return 1;\n    };\n\n    let name = table_get(state, aura, \"name\");\n    let icon = table_get(state, aura, \"icon\");\n    let applications = table_get(state, aura, \"applications\");\n    let dispel_name = table_get(state, aura, \"dispelName\");\n    let duration = table_get(state, aura, \"duration\");\n    let expiration_time = table_get(state, aura, \"expirationTime\");\n    let source_unit = table_get(state, aura, \"sourceUnit\");\n    let is_stealable = table_get(state, aura, \"isStealable\");\n    let spell_id = table_get(state, aura, \"spellId\");\n\n    state.push(name);\n    state.push(icon);\n    state.push(applications);\n    state.push(dispel_name);\n    state.push(duration);\n    state.push(expiration_time);\n    state.push(source_unit);\n    state.push(is_stealable);\n    state.push(Val::Nil);\n    state.push(spell_id);\n    10\n}\n"
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/game_data.rs",
+      "code_revision": "34c303c108d55e6c9d4919878abbb9a0efc08c00",
+      "sha256": "55872dd1c1b907a4cee448b89dda8de35f0445f59d2ee54f8d4c230c473a7bc0",
+      "snippets": [
+        {
+          "first_line": 78,
+          "last_line": 100,
+          "text": "pub struct AuraInfo {\n    pub name: String,\n    pub spell_id: i32,\n    pub icon: i32,\n    /// Total duration in seconds (0 = permanent/no duration).\n    pub duration: f64,\n    /// Absolute GetTime() value at which this aura expires (0 = permanent).\n    pub expiration_time: f64,\n    /// Stack count.\n    pub applications: i32,\n    pub source_unit: String,\n    pub is_helpful: bool,\n    /// Explicit public classification; seed values preserve legacy simulator outputs.\n    pub is_raid: bool,\n    /// Explicit public classification, independent of polarity and raid status.\n    pub is_nameplate_only: bool,\n    pub is_stealable: bool,\n    pub can_apply_aura: bool,\n    pub is_from_player_or_player_pet: bool,\n    /// Magic, Curse, Disease, or Poison for dispellable debuffs.\n    pub dispel_type: Option<String>,\n    /// Unique instance ID for this aura.\n    pub aura_instance_id: i32,\n"
+        }
+      ]
+    },
+    {
+      "path": "src/client_profile.rs",
+      "code_revision": "34c303c108d55e6c9d4919878abbb9a0efc08c00",
+      "sha256": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+      "snippets": [
+        {
+          "first_line": 137,
+          "last_line": 147,
+          "text": "            ClientProfile::Era => \"era\",\n            ClientProfile::Anniversary => \"anniversary\",\n            ClientProfile::WowForever => \"wowforever\",\n        }\n    }\n\n    pub const fn interface_version(self) -> u32 {\n        match self {\n            ClientProfile::Retail | ClientProfile::Ptr => RETAIL_API_INTERFACE_VERSION,\n            ClientProfile::Wrath => 38001,\n            ClientProfile::Mists => 50504,\n"
+        }
+      ]
+    }
+  ]
+}

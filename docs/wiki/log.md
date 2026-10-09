@@ -717,3 +717,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## 2026-10-09 — Retail Patch 4.0.1 current documentation reconciliation
 
 [[patch-4-0-1-api-audit]]: actual four retail 4.x successors replace placeholders; 419 rows now have 304 current matches/115 gaps. Only CanTransform/Transform additions are superseded by 4.1 removal, without model credit. Sealed historical 302/117, negative 118 and 42 archive/evidence seals unchanged. Four breaking statements and separate GetItemCooldown numeric-only signature remain UNPROVEN; skill-header retirements remain retail-only, Mists registration unchanged. Separate current receipts and portable-v2 note cross-linked. Main publication 70/70, Mists check/build and built startup `[]` exit 0. Independent formatting check, 75 Python fixtures and v2 fresh-root/no-target/no-Git fixtures 5/5 pass; 74/74 registers reproduce with exits captured, 74/77 extracts reproduce with three inherited failures. Exact v1 validator/context preserved; v2 removes only ROOT/target temporary dependency and updates self-seal metadata. Shared portable gate/current negative/runtime smoke/CI/full suite pending; no all-green acceptance claim. Docs-only reconciliation.
+
+## [2026-10-09] source audit | Wrath Classic Patch 3.4.0
+
+[[patch-3-4-0-api-audit]] records 331 inventory/four summary contracts and 386 raw rows at frozen revision 165668. Partial UnitAura and suffix contracts separate from configured Wrath38001/native30400 proof; no runtime edits. Owned source fixture proof pending.

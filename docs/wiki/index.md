@@ -6,6 +6,10 @@
 
 [Audit](investigations/patch-3-4-1-api-audit.md): frozen page 379792/revision 3656581, TOC 30401. 333 inventory occurrences (211 globals, 44 events, 77 CVars, one command), six reconciled headers, 376 nonblank source rows, two prose limits and 211 unspecified signatures. All 335 substantive source rows UNPROVEN; supported Wrath interface 38001 is not native/runtime proof. Own source-accounting RED/GREEN 7/7 and exact extraction/replay pass. Raw widget-equivalence prose preserved despite stock extractor omission. Only Wrath 3.4.2/3.4.3 queued; no retail/Cata supersession, runtime changes or broad/final gates. Serialized ledger/log tamper controls each reject at exact seals and restore hashes; relocated Git-free replay exits 0 at `e6ed237fa`. Parent integrates after 3.4.2.
 
+## [2026-10-09] investigation | Patch 3.4.0 Wrath Classic source contracts
+
+[Audit](investigations/patch-3-4-0-api-audit.md): frozen revision 165668; 331 inventory/four summary contracts, 386 raw rows. Command and bare CVar removal retained; partial UnitAura return placement explicitly limited. Wrath38001 static model is not Classic30400 native proof; no runtime changes, parent owns measurement/integration. Source fixtures pending.
+
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 
 [Audit](investigations/patch-4-3-4-api-audit.md): pinned revision 3743181; 11 inventory rows and one navigation context, no prose/signature contracts. Existing default parsers; literal 5.0.1 and separate 5.0.4 successors exclude Classic. Own discovery RED: seven missing globals, three superseded removals, one current absence; 12 ledger IDs. Reviewed GREEN 1/1, negative 7 → 8, own default register/extract replay byte-identical. Compact 64-successor pins and historical seven-gap receipts retained. Current retail client-clock model has bounded behavioral GREEN 2/2; six publication gaps remain. No retirements or native parity; coordinator owns pending broader gates.

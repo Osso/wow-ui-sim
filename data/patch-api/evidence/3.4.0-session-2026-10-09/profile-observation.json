@@ -1,0 +1,14 @@
+{
+  "profile": "wrath",
+  "feature": "client-wrath",
+  "supported_profile": true,
+  "source_toc": 30400,
+  "configured_interface": 38001,
+  "cache_subdir": "wrath",
+  "code_revision": "34c303c108d55e6c9d4919878abbb9a0efc08c00",
+  "client_profile_sha256": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+  "runtime_observations": 0,
+  "native_observations": 0,
+  "cache_inspected": false,
+  "note": "Static source observation; Wrath38001 architecture is not native Wrath Classic TOC30400 parity."
+}
