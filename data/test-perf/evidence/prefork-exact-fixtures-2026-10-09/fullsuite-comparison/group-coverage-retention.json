@@ -1,0 +1,8 @@
+{
+  "retained_at": "2026-10-09T17:34:09.901239+00:00",
+  "source": "/tmp/prefork-full-suite-group-coverage.md",
+  "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/fullsuite-comparison/prefork-full-suite-group-coverage.md",
+  "sha256": "6f93b028d63c1d1b6ef96d91057f5040568f29e392f0cdcabe8ded115ad1974d",
+  "bytes": 2458,
+  "scope": "Read-only adjudication: all four exact-fixture cases executed in completed3de log; no missing execution or failure-parser defect. No tests rerun."
+}
