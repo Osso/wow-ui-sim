@@ -18,9 +18,11 @@ Audit frozen page 522376/revision 6055853, not Wrath Classic 3.4.x. [Audit](../w
 
 ## Tests asserting this spec
 - `tools/test_patch_3_3_0_source.py`: literal frozen inventory and markup/default-output controls.
+- `tests/patch_3_3_0_motion_xml.rs`: actual addon XML loading, getter, inheritance and Lua mutation.
 
 ## Known gaps (current cycle)
 - [ ] Targeted publication/accounting proof pending.
+- [ ] XML motionScriptsWhileDisabled applies the existing button flag before OnLoad, preserves template inheritance and explicit false; behavioral RED captured, GREEN pending.
 
 ## Out of scope
 Native historical-client parity, linked diff expansion, speculative models, shims, Classic supersession and final integration acceptance.

@@ -178,6 +178,8 @@ pub struct FrameXml {
     pub clip_children: Option<bool>,
     #[serde(rename = "@enableMouse")]
     pub enable_mouse: Option<bool>,
+    #[serde(rename = "@motionScriptsWhileDisabled")]
+    pub motion_scripts_while_disabled: Option<bool>,
     #[serde(rename = "@enableKeyboard")]
     pub enable_keyboard: Option<bool>,
     #[serde(rename = "@clampedToScreen")]

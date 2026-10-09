@@ -17,3 +17,6 @@ Parser RED records missing opt-in summary support. New generator `--wrath-retail
 
 ## See Also
 - [[patch-4-1-0-api-audit]] — actual later Retail source.
+
+## Established model closure
+XML `motionScriptsWhileDisabled` was silently discarded by FrameXml deserialization. Add the bool attribute and apply it to the existing Frame motion flag in both XML loading and Lua CreateFrame template application before scripts. Explicit instance/derived false overrides inherited true. No new backing model, API shim or vendor modification. Behavioral RED: real XML addon loads but inherited getter returns false. GREEN pending. `registerForClicks` remains deferred: source does not establish its token/delimiter grammar. Texture source-file dimensions remain deferred; widget/atlas dimensions are not interchangeable.

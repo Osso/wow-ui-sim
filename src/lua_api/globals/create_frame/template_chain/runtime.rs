@@ -603,6 +603,9 @@ fn apply_runtime_child_direct_properties_with_inherits(
     crate::lua_api::globals::template::direct::apply_xml_propagation_flags(
         state, frame_id, frame, inherits,
     );
+    crate::lua_api::globals::template::direct::apply_xml_motion_scripts_while_disabled(
+        state, frame_id, frame, inherits,
+    );
     crate::lua_api::globals::template::direct::apply_xml_clips_children(
         state, frame_id, frame, inherits,
     );

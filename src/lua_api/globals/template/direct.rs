@@ -511,6 +511,25 @@ pub fn apply_xml_enable_mouse(
     }
 }
 
+/// Apply the Button XML motion flag, preserving explicit false overrides.
+pub fn apply_xml_motion_scripts_while_disabled(
+    state: &Rc<RefCell<SimState>>,
+    frame_id: u64,
+    frame: &FrameXml,
+    inherits: &str,
+) {
+    let mut enabled = None;
+    for entry in &*crate::xml::get_template_chain(inherits) {
+        enabled = entry.frame.motion_scripts_while_disabled.or(enabled);
+    }
+    enabled = frame.motion_scripts_while_disabled.or(enabled);
+    if let Some(enabled) = enabled
+        && let Some(frame) = state.borrow_mut().widgets.get_mut(frame_id)
+    {
+        frame.motion_scripts_while_disabled = enabled;
+    }
+}
+
 /// Resolve and apply enableKeyboard from template chain + instance XML.
 pub fn apply_xml_enable_keyboard(
     state: &Rc<RefCell<SimState>>,
