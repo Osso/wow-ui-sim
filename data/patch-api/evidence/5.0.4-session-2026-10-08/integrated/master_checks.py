@@ -30,6 +30,7 @@ def main():
         ('master-pet-battle-prefork', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'pet_battle']),
         ('master-retail-line-controls', ['cargo', 'test', '--test', 'integration', 'publication_sweep_client_lines', '--', '--test-threads=2']),
         ('master-lib-namespace', ['cargo', 'test', '--lib', 'namespace', '--', '--test-threads=2']),
+        ('master-lib-pet-battle', ['cargo', 'test', '--lib', 'pet_battle', '--', '--test-threads=2']),
     ]
     failures = []
     for name, command in jobs:
