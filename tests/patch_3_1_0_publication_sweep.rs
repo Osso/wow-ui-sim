@@ -1,4 +1,5 @@
-//! Publication/absence only: no signature, output, security, or behavior parity claim.
+//! Publication/absence and one bounded player-orientation state read.
+//! No historical/native security or complete signature parity claim.
 #![cfg(feature = "client-retail")]
 
 #[path = "common/publication_sweep.rs"]
@@ -88,5 +89,19 @@ fn patch_3_1_0_publication_sweep(env: &WowLuaEnv) {
             include_str!("../data/patch-api/sources/12.1.0-wikitext-register.json"),
         ],
     });
+}
+}
+
+prefork_full_ui_case! {
+fn patch_3_1_0_player_facing_reads_radians_state(env: &WowLuaEnv) {
+    let original = env.state().borrow().player.facing;
+    for radians in [0.0, std::f64::consts::FRAC_PI_2, std::f64::consts::PI] {
+        env.state().borrow_mut().player.facing = Some(radians);
+        let observed: f64 = env.eval("return GetPlayerFacing()").unwrap();
+        assert_eq!(observed, radians, "player orientation must stay in radians");
+        let returns: i64 = env.eval("return select('#', GetPlayerFacing())").unwrap();
+        assert_eq!(returns, 1, "one player-orientation result");
+    }
+    env.state().borrow_mut().player.facing = original;
 }
 }
