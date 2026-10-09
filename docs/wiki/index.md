@@ -6,6 +6,10 @@
 
 [Audit](investigations/patch-1-12-0-api-audit.md): frozen326189/3145618,45 exact bytes; one metadata redirect/one UNPROVEN linked contract, zero local API/signature/default/prose/header/template declarations. SOURCE RED5/GREEN5 preserves registry101 and historical default bytes. Portable GREEN3 and fresh copied SOURCE5 at3364a24c8 retain23original seals/24archive members, both serialized tamper rejections and exact restoration. No grounded model/native subset; original Retail2.0.1+ references separate from Classic/Forever, queued1.13.2 order only. Main owns integration/native/final gates.
 
+## [2026-10-09] investigation | Patch 1.10.1 frozen redirect SOURCE audit
+
+[Audit](investigations/patch-1-10-1-api-audit.md): frozen152527/1493942;45 bytes, one literal row/link/UNPROVEN contract; zero local inventory/signatures/defaults/model/runtime/native. Own SOURCE RED5/portable RED3 retained; SOURCE GREEN5/5 at3c927000f; fresh copied SOURCE5/5/portable3/3 atcb9c8e5d8, default-byte/error replay and both serialized tamper rejections/exact restorations.29 original/six later seals;30-member51,670-byte archive unchanged. Queued1.10.2 separately unapplied behind1.13.2/1.12.0/1.11.0. Main owns integration/full acceptance.
+
 ## [2026-10-09] investigation | Patch 1.13.4 frozen Era audit
 
 [Audit](investigations/patch-1-13-4-api-audit.md): frozen333398/3216451,2146 bytes,57 raw/23 inventory/23 unspecified signatures/30 UNPROVEN contracts. Exact SOURCE RED8 retained; current Era totem-slot lifecycle GREEN1/1 at ce0c5c59a, no native historical signature/default credit. SOURCE GREEN8/8 at c9c0262e3; successor3/3 at acddd6ef6, portable3/3 at bec06a7a2.112 original seals unchanged; copied no-Git/target/current-tools default-byte replay and both serialized tamper restorations pass.18 actual same-Era ledgers separately applied, one1.14.0 commentator removal overlap; all30 historical contracts UNPROVEN. Frozen queue immutable. Main integrates1.13.4 before1.13.3.
