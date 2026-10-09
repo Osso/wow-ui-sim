@@ -217,7 +217,7 @@ def verify_receipts(context):
     return len(receipts), len(prior)
 
 
-CONTEXT_SHA256 = 'pending-seal'
+CONTEXT_SHA256 = '574895df35588554e60be5a475601bdc95a64780b77551bdff2b11937e709631'
 
 
 def main():
