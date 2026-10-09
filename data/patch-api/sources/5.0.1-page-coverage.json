@@ -1,0 +1,18 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "5.0.1",
+  "source_sha256": "2e9a294c4c1f984b039f61abcad1f787d39f179471ebfb83375499343e204431",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.0.1-api-changes.txt",
+    "sha256": "59ab41f9fbd8cc19a5f14810757300a1bdf06474a3282ee27630d025bc97eedc"
+  },
+  "proof_policy": "Redirect-only audit; zero publication rows does not prove API or behavior coverage of the target page.",
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Literal redirect to Patch 5.0.4/API changes only; destination owned separately by p504-page. No API or behavior statements in this pinned source."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+"""Reproduce recorded artifacts and preserve the complete pre-audit source set."""
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+sys.dont_write_bytecode = True
+ROOT = Path(__file__).resolve().parents[4]
+HERE = Path(__file__).resolve().parent
+SOURCES = ROOT / 'data/patch-api/sources'
+BASE = '83e5d3c3b2643a360bf32e73f343faa987eeb39b'
+
+
+def read(path):
+    return json.loads(path.read_text())
+
+
+def dump(name, value):
+    (HERE / name).write_text(json.dumps(value, indent=2) + '\n')
+
+
+def digest(value):
+    return hashlib.sha256(value).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=ROOT)
+
+
+def outcome(extract, raw, flags):
+    options = {flag.removeprefix('--').replace('-', '_'): True for flag in flags}
+    try:
+        return {'sha256': digest(extract(raw, **options).encode()), 'error': None}
+    except ValueError as error:
+        return {'sha256': None, 'error': str(error)}
+
+
+def reproduce(extractor, revision):
+    prior = json.loads(git('show', BASE + ':data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/p510-register-reproduction.json'))
+    recipes = {r['patch']: {'verified_flags': r['verified_flags']} for r in prior}
+    extracts = {r['patch']: r for r in json.loads(git('show', BASE + ':data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/p510-saved-extract-reproduction.json'))}
+    registers, saved = [], []
+    with tempfile.TemporaryDirectory(prefix='p501-reproduction-') as temporary:
+        for path in sorted(SOURCES.glob('*-wikitext-register.json')):
+            patch = path.name.removesuffix('-wikitext-register.json')
+            provenance = read(SOURCES / f'{patch}-api-changes.provenance.json')
+            flags = provenance.get('generator_flags')
+            verified = flags if flags is not None else recipes[patch]['verified_flags']
+            output = Path(temporary) / path.name
+            command = ['python3', '-B', str(ROOT / 'tools/gen_patch_wikitext_register.py'), patch,
+                       str(SOURCES / f'{patch}-api-changes.wikitext'), str(read(path)['source']['revid']),
+                       str(output), *verified]
+            result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+            identical = result.returncode == 0 and output.read_bytes() == path.read_bytes()
+            registers.append({'patch': patch, 'verified_flags': verified, 'recorded_flags': flags,
+                              'revision': revision, 'exit': result.returncode, 'byte_identical': identical,
+                              'sha256': digest(path.read_bytes()), 'stderr': result.stderr})
+            assert identical, registers[-1]
+            flags = provenance.get('extractor_flags')
+            verified = flags if flags is not None else extracts[patch]['verified_flags']
+            generated = outcome(extractor.extract_text,
+                                (SOURCES / f'{patch}-api-changes.wikitext').read_text(), verified)
+            text_digest = digest((SOURCES / f'{patch}-api-changes.txt').read_bytes())
+            identical = generated['sha256'] == text_digest
+            saved.append({'patch': patch, 'verified_flags': verified, 'recorded_flags': flags,
+                          'revision': revision, 'byte_identical': identical,
+                          'sha256': text_digest, **generated, 'saved_sha256': text_digest})
+            if patch in extracts:
+                assert (identical, generated['error']) == (extracts[patch]['byte_identical'], extracts[patch]['error']), saved[-1]
+            else:
+                assert identical, saved[-1]
+    dump('p501-register-reproduction.json', registers)
+    dump('p501-saved-extract-reproduction.json', saved)
+    return {'registers': len(registers), 'extracts': sum(r['byte_identical'] for r in saved),
+            'inherited_extract_failures': [r['patch'] for r in saved if not r['byte_identical']]}
+
+
+def reproduce_supplemental(extractor, revision):
+    provenance = read(SOURCES / '5.4.0-api-changes.provenance.json')
+    flags = provenance['diff_source']['extractor_flags']
+    generated = outcome(extractor.extract_text,
+                        (SOURCES / '5.4.0-api-changes-diff.wikitext').read_text(), flags)
+    saved = digest((SOURCES / '5.4.0-api-changes-diff.txt').read_bytes())
+    assert generated['error'] is None and generated['sha256'] == saved
+    dump('supplemental-extract-reproduction.json', {
+        'revision': revision, 'path': 'data/patch-api/sources/5.4.0-api-changes-diff.txt',
+        'flags': flags, 'byte_identical': True, 'sha256': saved})
+
+
+def main():
+    spec = importlib.util.spec_from_file_location('extractor', ROOT / 'tools/extract_patch_non_inventory.py')
+    extractor = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(extractor)
+    revision = git('rev-parse', 'HEAD').decode().strip()
+    result = reproduce(extractor, revision)
+    reproduce_supplemental(extractor, revision)
+    print(json.dumps(result))
+
+
+if __name__ == '__main__':
+    main()

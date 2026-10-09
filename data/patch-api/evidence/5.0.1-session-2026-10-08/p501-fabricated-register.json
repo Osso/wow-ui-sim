@@ -1,0 +1,20 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.0.1",
+  "source": {
+    "path": "data/patch-api/sources/5.0.1-api-changes.wikitext",
+    "revid": 5344081,
+    "sha256": "a4fd086dfb7893dbd912a283c37c9242a4386af82e8e2e330a97c4f137f7484b"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "fabricated-p501",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P501FabricatedMissingAPI",
+      "annotation": "negative control only",
+      "wikitext_line": 1
+    }
+  ]
+}
