@@ -1,0 +1,80 @@
+{
+  "source_commit": "3d224c81a",
+  "archive_commit": "27e8ba9c10a9f51ca4e81718f0b4ac8b0a18ada8",
+  "scope": "targeted copied SOURCE5 and portable3 development only",
+  "archive_sha256": "7a1829c0cf28def9883071990113b56f2a0742fd5620e2c58ba29f6e7cf9cc2e",
+  "archive_bytes": 48326,
+  "archive_members": 25,
+  "original_seals": 24,
+  "original_seals_sha256": "2c83739aed9735bc52791dee68df7f2b83aadad6300e6b94449866286e70ef22",
+  "credential_inspection": "environment key names inspected; no environment values retained; explicit PATH/PYTHONNOUSERSITE overrides only; credential-value regex scan before retention",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/env",
+        "PATH=/nonexistent",
+        "PYTHONNOUSERSITE=1",
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1110-page/.p1110-replay-y60oyrd2/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+      "revision": "27e8ba9c10a9f51ca4e81718f0b4ac8b0a18ada8",
+      "scope": "fresh-process copied immutable SOURCE archive; no Git/target/current-tools in copy; no native/final acceptance",
+      "started": "2026-10-09T17:33:05.376105+00:00",
+      "finished": "2026-10-09T17:33:05.430889+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"scope\": \"SOURCE-only historical replay\",\n  \"seals\": 24,\n  \"totals\": {\n    \"physical_lines\": 1,\n    \"nonblank_rows\": 1,\n    \"metadata_rows\": 1,\n    \"unproven_source_rows\": 0,\n    \"references\": 1,\n    \"unproven_contracts\": 1,\n    \"inventory\": 0,\n    \"signatures\": 0,\n    \"defaults\": 0,\n    \"prose\": 0,\n    \"headers\": 0,\n    \"templates\": 0\n  }\n}\n",
+      "stderr": "",
+      "log": "historical-replay.log",
+      "fresh_process": true,
+      "git_target_current_tools_absent_from_copy": true
+    },
+    {
+      "argv": [
+        "/usr/bin/env",
+        "PATH=/nonexistent",
+        "PYTHONNOUSERSITE=1",
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1110-page/.p1110-replay-y60oyrd2/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+      "revision": "27e8ba9c10a9f51ca4e81718f0b4ac8b0a18ada8",
+      "scope": "fresh-process copied immutable SOURCE archive; no Git/target/current-tools in copy; no native/final acceptance",
+      "started": "2026-10-09T17:33:05.431070+00:00",
+      "finished": "2026-10-09T17:33:05.494853+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... ok\ntest_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... ok\ntest_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... ok\ntest_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... ok\ntest_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.018s\n\nOK\n",
+      "log": "copied-source-green.log",
+      "fresh_process": true,
+      "git_target_current_tools_absent_from_copy": true
+    },
+    {
+      "argv": [
+        "/usr/bin/env",
+        "PATH=/nonexistent",
+        "PYTHONNOUSERSITE=1",
+        "/usr/bin/python3",
+        "-I",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1110-page/.p1110-replay-y60oyrd2/test_portable.py",
+        "/home/osso/.worktrees/wow-ui-sim-p1110-page/data/patch-api/evidence/1.11.0-session-2026-10-09/portable-proof.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1110-page",
+      "revision": "27e8ba9c10a9f51ca4e81718f0b4ac8b0a18ada8",
+      "scope": "fresh-process copied immutable SOURCE archive; no Git/target/current-tools in copy; no native/final acceptance",
+      "started": "2026-10-09T17:33:05.495015+00:00",
+      "finished": "2026-10-09T17:33:05.590192+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay) ... ok\ntest_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored) ... ok\ntest_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.051s\n\nOK\n",
+      "log": "portable-green.log",
+      "fresh_process": true,
+      "git_target_current_tools_absent_from_copy": true
+    }
+  ]
+}

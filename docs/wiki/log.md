@@ -1058,3 +1058,7 @@ SOURCE8/8, current Era generic-storage1/1, portable3/3, actual-successor3/3 and 
 ## [2026-10-09] measurement | Historical Retail 1.12.0 portable SOURCE epoch
 
 [Audit](investigations/patch-1-12-0-api-audit.md): source361348ba1/log cleanup a14e7e536/archive3364a24c8;23original seals/24members/47,289bytes unchanged. Fresh copied SOURCE5/5, portable3/3, validator/default byte replay pass with PATH disabled; serialized ledger/log rejected and exactly restored. Seven separate receipt seals. Zero model/native credit; main owns integration/final gates.
+
+## [2026-10-09] investigation | Historical Retail Patch 1.11.0 redirect SOURCE audit
+
+[Audit](investigations/patch-1-11-0-api-audit.md): frozen109825/1074793, 45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero local inventory/model/runtime/native credit. Own RED5/SOURCE GREEN5 at3d224c81a; portable RED3/copied SOURCE5/portable GREEN3 at27e8ba9c1, serialized ledger/log rejection and exact restoration. Original24 seals unchanged; six separate receipts,25-member48326byte archive. Queued1.12.0 retained separately, pending behind1.13.2 and unapplied. Main owns integration/native/final gates.
