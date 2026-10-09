@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE audit
+
+[Audit](investigations/patch-1-14-0-api-audit.md): frozen71995/710568;776 literal rows/723 inventory,560 unspecified signature records,163 unknown CVar defaults,8 matching count headers,720 unexpanded templates/10 links. Foreign2.5.2 baseline claim separate from unapplied same-Era1.14.1..1.15.9. Own SOURCE/portable RED retained; GREEN pending. Zero runtime/model/native credit; shared tools unchanged; main owns integration/gates.
+
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE audit
 
 [Audit](investigations/patch-1-15-0-api-audit.md): frozen564510/5950848,915 bytes; ten rows, eleven UNPROVEN prose/link boundaries, explicit C_Engraving namespace/functions unspecified. Wrath3.4.3 all-inclusion claim distinct from Dragonflight10.1.7..10.2.0 subset, neither expanded. Own SOURCE RED10/portable RED3 retained; SOURCE GREEN10/10 atba551827d, portable GREEN3/3 ate6bf4be1c: copied SOURCE/default-byte replay and ledger/log tamper rejection/exact restoration. Original64 seals unchanged; five separate receipts,65-member archive. No seasonal-rune/native/model credit; main owns successor/integration/final gates.
