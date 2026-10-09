@@ -1,8 +1,7 @@
-//! Temporary housing/catalog seeded state surface.
+//! Temporary housing compatibility surface.
 //!
-//! The housing service flag is Rust-backed, but catalog/decor/neighborhood
-//! data is still a seeded UI fixture. Keep those compatibility namespaces out
-//! of the generic runtime surface until housing has a real backing subsystem.
+//! Catalog variants/search are state-backed and start empty. Remaining legacy
+//! decor/neighborhood fixtures stay isolated here until their backing models exist.
 
 const HOUSING_CATALOG_STATE_LUA: &str = include_str!("housing_catalog_state.lua");
 
@@ -26,7 +25,7 @@ mod tests {
     use crate::lua_api::WowLuaEnv;
 
     #[test]
-    fn installs_seeded_housing_catalog_surface() {
+    fn installs_housing_catalog_surface() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
 
         let result: String = env
@@ -49,8 +48,11 @@ mod tests {
                     return "bad_featured"
                 end
                 local searcher = C_HousingCatalog.CreateCatalogSearcher()
-                if type(searcher) ~= "table" or searcher:GetSearchCount() == 0 then
-                    return "bad_searcher"
+                if type(searcher) ~= "table" then
+                    return "bad_searcher_type"
+                end
+                if searcher:GetSearchCount() ~= 0 then
+                    return "searcher_count_not_empty"
                 end
                 return "ok"
                 "#,

@@ -8,6 +8,8 @@ Main-provided integration identifiers: p303 `4470912f5`, p302 `16b9658da`, p242 
 
 Two source-only chat/scenario placement tests were removed: broad module-name matches falsely rejected legitimate state-backed C API modules, while their remaining check read a deleted legacy shim file and could pass vacuously. Existing return-value and provider-preservation tests in `c_chat_info_defaults.rs` and `scenario_defaults.rs` remain unchanged. No runtime module moved or behavior changed; removal follows the prohibition on substituting source shape for behavior. This does not repair unrelated structural tests or establish a passing overall suite.
 
+The housing compatibility probe now expects its separately modeled catalog searcher to start with count zero, rather than requiring invented variants. Type and count failures have separate sentinels; other compatibility assertions remain unchanged. Catalog registration is unconditional across profiles, and the existing catalog spec defines empty host-backed inputs. This is a test-expectation correction, not a runtime seed/fallback or native owned-instance-count claim; targeted verification remains pending.
+
 ## Bare Retail factory: bounded PASS, mixed checkout
 
 [Independent report](../../../data/patch-api/evidence/3.0.2-factory-2026-10-09/integrated/p30x-integrated-independent-report.md) records ten tests passing: p302 7/7, p303 3/3. Exact observations: p302 **373 rows / 185 matches / 188 gaps**; p303 **3 CVars / 1 match / 2 gaps**. Every observation equals retained GREEN JSON. `syncronizeConfig` and `synchronizeMacros` are nil/nil; `synchronizeBindings` is `"1"`/`"1"`. These are present factory observations, not historical defaults or synchronization semantics.
