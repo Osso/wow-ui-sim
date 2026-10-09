@@ -1,4 +1,5 @@
 //! Bare simulator Wrath (interface 38001), not native Wrath Classic 3.4.2 (30402).
+#![cfg(feature = "client-wrath")]
 #[path = "common/publication_sweep.rs"]
 mod publication_sweep;
 

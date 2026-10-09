@@ -62,6 +62,10 @@ For 26 added CVars, 14 lack current value/default, 12 are published: 11 defaults
 
 [Current evidence](../../../data/patch-api/evidence/3.4.2-factory-2026-10-09/) retains first classifier RED, all 155 discovery observations, strict-gap discovery RED, GREEN observations, a current per-occurrence measurement ledger and exact proof commands. Historical source ledger and all 23 seals remain untouched. Two substantive summary claims remain UNPROVEN; linked contracts, full Blizzard UI and native Wrath Classic remain unmeasured. Main owns integration, broad/profile/readability/final gates; no production API/vendor edits, push, merge, deploy or delegation.
 
+## Aggregate profile compilation boundary
+
+Main default-retail publication and Mists `--tests` checks reproduced E0432: generated aggregate test modules included the Wrath factory file even though its standalone Cargo target required `client-wrath`. Its import of the Wrath-only factory helper therefore failed under other profiles. A file-level `client-wrath` guard excludes the complete test module at that aggregation boundary; no runtime method, historical receipt or Wrath measurement changes. Follow-up compilation proof is separate from the retained original 6/6 factory run. Current profile checks/CI remain pending; failed commands are retained, not suppressed.
+
 ## Sources
 
 - [Frozen wikitext](../../../data/patch-api/sources/3.4.2-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/3.4.2-api-changes.txt), [source inventory](../../../data/patch-api/sources/3.4.2-source-inventory.json), [ledger](../../../data/patch-api/sources/3.4.2-page-coverage.json).
