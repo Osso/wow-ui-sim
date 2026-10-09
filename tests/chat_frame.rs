@@ -75,7 +75,7 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 /// Create a fully loaded environment with all Blizzard addons and startup events.
-fn setup_env() -> WowLuaEnv {
+pub(crate) fn setup_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
 
@@ -349,11 +349,8 @@ fn assert_message_sent(env: &WowLuaEnv, expected_text: &str, expected_type: &str
     assert_eq!(text_after, "", "EditBox should be cleared after submit");
 }
 
-#[test]
-fn test_chat_editbox_click_type_and_submit() {
-    test_timeout! {
-        let env = setup_env();
-
+prefork_fixture_case! {
+fn test_chat_editbox_click_type_and_submit(env: &WowLuaEnv) {
         let exists: bool = env
             .eval("return ChatFrame1EditBox ~= nil")
             .expect("eval failed");
@@ -393,6 +390,15 @@ fn test_chat_editbox_click_type_and_submit() {
             .eval("return ChatFrame1EditBox:GetText() or ''")
             .expect("GetText failed");
         assert_eq!(text_after, "", "EditBox should be cleared after submit");
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn test_chat_editbox_click_type_and_submit() {
+    test_timeout! {
+        let env = setup_env();
+        test_chat_editbox_click_type_and_submit::run(&env);
     }
 }
 
@@ -432,11 +438,8 @@ fn test_chat_message_contains_timestamp(env: &WowLuaEnv) {
 }
 }
 
-#[test]
-fn test_chat_editbox_text_color_after_activation() {
-    test_timeout! {
-        let env = setup_env();
-
+prefork_fixture_case! {
+fn test_chat_editbox_text_color_after_activation(env: &WowLuaEnv) {
         click_chat_editbox(&env);
 
         // After activation, ActivateChat should have called UpdateHeader
@@ -457,6 +460,15 @@ fn test_chat_editbox_text_color_after_activation() {
             (alpha - 1.0).abs() < 0.01,
             "EditBox alpha should be 1.0 after activation, got {alpha}"
         );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn test_chat_editbox_text_color_after_activation() {
+    test_timeout! {
+        let env = setup_env();
+        test_chat_editbox_text_color_after_activation::run(&env);
     }
 }
 
