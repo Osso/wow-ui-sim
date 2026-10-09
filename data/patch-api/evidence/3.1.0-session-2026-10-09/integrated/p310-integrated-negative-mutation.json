@@ -1,0 +1,20 @@
+{
+  "before": {
+    "id": "wt-global-api-GetNumArenaOpponents-99",
+    "section": "global-api",
+    "direction": "added",
+    "symbol": "GetNumArenaOpponents",
+    "annotation": "* NEW - GetNumArenaOpponents",
+    "wikitext_line": 99
+  },
+  "after": {
+    "id": "wt-global-api-GetNumArenaOpponents-99",
+    "section": "global-api",
+    "direction": "added",
+    "symbol": "P310_Nonexistent_IntegratedNegative_614402d56_20261009",
+    "annotation": "* NEW - GetNumArenaOpponents",
+    "wikitext_line": 99
+  },
+  "rows": 110,
+  "baseline_gaps": 58
+}
