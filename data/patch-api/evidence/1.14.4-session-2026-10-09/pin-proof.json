@@ -1,0 +1,11 @@
+{
+  "scope": "identity verified before derivation",
+  "pageid": 267043,
+  "revid": 2581777,
+  "timestamp": "2023-07-19T19:32:56Z",
+  "returned_bytes": 775,
+  "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+  "raw_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+  "manifest_match": true,
+  "registry_match": true
+}
