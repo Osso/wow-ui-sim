@@ -1,0 +1,19 @@
+{
+  "pageid": 261776,
+  "title": "Patch 3.3.3/API changes",
+  "revid": 2531935,
+  "timestamp": "2010-05-13T22:15:52Z",
+  "sha256": "42a0c8c050382279d726a00d14e290bca3c3cb285cf66af14aa355d03c1071ca",
+  "fetched": "2026-10-09",
+  "fetch_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2531935&format=json",
+  "generator_flags": [
+    "--historical-api-headings",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [],
+  "client_line": "retail",
+  "source_kind": "substantive-page",
+  "toc": 30303,
+  "toc_note": "Version mapping only; no fetched parent-page TOC proof."
+}

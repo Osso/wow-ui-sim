@@ -1,0 +1,93 @@
+Patch 3.2.0 API changes
+
+== Development Tools ==
+* The default UI now contains versions of some popular (I may be biassed) tools for UI developers - /dump, /eventtrace, /framestack, and /reloadIriel on Wow 3.2 API Changes topic
+
+== Saved Instances ==
+* updated GetSavedInstanceInfo(index) -- added two bools to return: instanceIDMostSig, isRaid
+* updated GetInstanceLockTimeRemaining() -- Added Bool isPreviousInstance to return (part of the extend instance stuff)
+
+== Quest Difficulty ==
+=== Functions ===
+* removed GetDifficutlyColor(level) -- Replaced by GetQuestDifficultyColor(level)Speeddymon  on Wow 3.2 API Changes topic
+* new GetQuestDifficultyColor(level) -- exact replacement for GetDifficutlyColor(level)
+
+=== Arrays ===
+Not sure of where these arrays live (global? FrameUI? QuestUI?), but this very subtle change broke several addons, so it's being included here
+* removed "QuestDifficultyColor" array -- Replaced by "QuestDifficultyColors" array
+* new "QuestDifficultyColors"array -- exact replacement for "QuestDifficultyColor" array
+
+== Unit Functions ==
+* updated or removed UnitIsPlusMob(unitID) -- (not 100% sure, but believed to have been removed)
+
+== Quest Maps ==
+There's support for points of interest on the map associated with quests, the API functions are:
+* new QuestMapUpdateQuest(index) -- Is 'index' the normal quest log index?
+* new QuestMapGetQuestName(index)
+* new QuestMapGetPOIInfoForQuest(questIndex, poiIndex)
+
+=== Quest API ===
+* undocumented GetAbandonedQuestName()
+* undocumented GetAbandonQuestItems()
+* undocumented GetQuestLogSpellLink()
+
+== Spell Casting ==
+=== Casting Events ===
+Spell casting events and queries indicate whether enemy spells/channeling can be interrupted:
+* new UNIT_SPELLCAST_INTERRUPTIBLE
+* new UNIT_SPELLCAST_NOT_INTERRUPTIBLE
+
+=== Casting Functions ===
+* updated UnitCastingInfo(unit) -- added interrupt result
+* updated UnitChannelInfo(unit) -- added interrupt result
+
+== Calendar Functions ==
+
+* updated CalendarGetDayEvent()
+* new CalendarGetDayEventSequenceInfo()
+
+== Mail functions ==
+
+* updated GetInboxNumItems() -- added totalItems
+== Gamemaster Functions ==
+
+* new  GMResponseNeedMoreHelp(text)
+
+== Loot Trading/Refunding ==
+* new END_REFUND -- triggered when a returnable item's refund period ends (or maybe would end if action performed?)
+* new END_BOUND_TRADEABLE -- Not 100% sure of this is the right event name
+* new EndBoundTradeable(someVar) -- inferred from staticPopupDialogs.lua
+* new GetSocketItemBoundTradeable()Nafe on Wow 3.2 API Changes topic
+
+== Other Information ==
+* new GetPlayerInfoByGUID(string) - Returns basic information about another player from their GUID
+* new FillLocalizedClassList(table, boolean)
+* new IsXPUserDisabled()
+* new CanQueueForWintergrasp()
+* updated IsFlyableArea() -- updated to work properly in dalaran (returning 1 in Karsus landing)Gello on Wow 3.2 API Changes topic
+
+== Other Useful Events ==
+=== Combatlog Events ===
+* updated COMBAT_LOG_EVENT
+=== ChatLog Events ===
+* new UPDATE_CHAT_COLOR_NAME_BY_CLASS
+=== Inventory Events ===
+* new EQUIPMENT_SWAP_FINISHED
+=== Unit Events ===
+* new UNIT_DISSIPATES
+=== GameMaster Events ===
+* new GMRESPONSE_RECEIVED
+=== Battlefield Events ===
+* new BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE
+* new BATTLEFIELD_MGR_QUEUE_INVITE
+* new BATTLEFIELD_MGR_ENTRY_INVITE
+* new BATTLEFIELD_MGR_EJECT_PENDING
+* new BATTLEFIELD_MGR_EJECTED
+* new NPC_PVPQUEUE_ANYWHERE
+
+=== Reputation Events ===
+* new ENABLE_XP_GAIN
+* new DISABLE_XP_GAIN
+
+== References ==
+[References list; columns=2; not expanded]

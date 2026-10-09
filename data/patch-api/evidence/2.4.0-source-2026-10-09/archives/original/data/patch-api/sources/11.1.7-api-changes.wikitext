@@ -1,0 +1,130 @@
+{{apichanges|11.1.7|prev=11.1.5|next=11.2.0}}
+
+==Summary==
+* Added a new {{api|t=a|C_AddOnProfiler.MeasureCall(func, ...)}} API for profiling individual function calls.
+* Added a new {{api|t=a|C_AddOns.GetAddOnLocalTable(name)}} API that can retrieve the namespace table of an addon that opts-in to sharing it via a new AllowAddOnTableAccess TOC directive.
+* Added a new {{api|t=a|table.create(arraySizeHint[, nodeSizeHint])}} API that preallocates a table with a specified internal size.
+
+==Resources==
+* TOC: <code>110107</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24206706/legacy-of-arathor-update-notes#item9 Legacy of Arathor Update Notes]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/11.1.5..11.1.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/11.1.5..11.1.7 BlizzardInterfaceResources]
+* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/11.1.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_1_7.lua Blizzard_Deprecated]
+
+==Consolidated changes==
+: <font color="pink">11.1.5 (61265)</font> &rarr; <font color="lightgreen">11.1.7 (61559)</font> Jun 17 2025
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(16)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ActionBar.FindAssistedCombatActionButtons}}
+: {{api|t=a|C_ActionBar.ForceUpdateAction}}
+: {{api|t=a|C_ActionBar.HasAssistedCombatActionButtons}}
+: {{api|t=a|C_ActionBar.IsAssistedCombatAction}}
+: {{api|t=a|C_AddOnProfiler.AddMeasuredCallEvent}}
+: {{api|t=a|C_AddOnProfiler.GetTicksPerSecond}}
+: {{api|t=a|C_AddOnProfiler.MeasureCall}}
+: {{api|t=a|C_AddOns.GetAddOnLocalTable}}
+: {{api|t=a|C_AssistedCombat.GetActionSpell}}
+: {{api|t=a|C_AssistedCombat.GetNextCastSpell}}
+: {{api|t=a|C_AssistedCombat.GetRotationSpells}}
+: {{api|t=a|C_AssistedCombat.IsAvailable}}
+: {{api|t=a|C_CurrencyInfo.IsCurrencyTransferInProgress}}
+: {{api|t=a|C_Spell.GetBaseSpell}}
+: {{api|t=a|C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo}}
+: {{api|t=a|table.create}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_Debug.PrintToDebugWindow}}
+: {{api|t=a|C_Debug.ViewInDebugWindow}}
+</div>
+|}
+ {{api|t=a|C_CooldownViewer.IsCooldownViewerAvailable}}
+   # ret 1: <font color="#ff6767">available</font> -> <font color="#00b400">isAvailable</font>
+   + ret 2: <font color="#00b400">failureReason</font>
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(1)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Frame:GetHighestFrameLevel}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(2)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ASSISTED_COMBAT_ACTION_SPELL_CAST}}
+: {{api|t=e|CURRENCY_TRANSFER_INITIATED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=e|REPORT_PLAYER_RESULT}}
+   # 1: <font color="#ff6767">success</font> -> <font color="#00b400">result</font>
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(22)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(3)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=assistedCombatHighlight|default=0|scope=Character|cat=4|desc=If enabled, a highlight will be displayed on the next spell that should be cast in combat}}
+: {{apitooltip|type=cvar|name=assistedCombatIconUpdateRate|default=0.100000|scope=Account|cat=4|desc=How often (in seconds) to update the icon on the action bar, 0 for every frame, max 1 second}}
+: {{apitooltip|type=cvar|name=ClientSettings_ClusteredShading}}
+: {{apitooltip|type=cvar|name=ClientSettings_CMAA2}}
+: {{apitooltip|type=cvar|name=ClientSettings_CMD_LIST_MT}}
+: {{apitooltip|type=cvar|name=ClientSettings_FSR}}
+: {{apitooltip|type=cvar|name=ClientSettings_HIGH_MEM_FEATURES}}
+: {{apitooltip|type=cvar|name=ClientSettings_LowLatency}}
+: {{apitooltip|type=cvar|name=ClientSettings_MemoryAllocationTraces}}
+: {{apitooltip|type=cvar|name=ClientSettings_MSAA}}
+: {{apitooltip|type=cvar|name=ClientSettings_NeedsGxRestart}}
+: {{apitooltip|type=cvar|name=ClientSettings_OPT_FEATURES}}
+: {{apitooltip|type=cvar|name=ClientSettings_RAY_TRACING}}
+: {{apitooltip|type=cvar|name=ClientSettings_RTShadows}}
+: {{apitooltip|type=cvar|name=ClientSettings_SHADER_MT}}
+: {{apitooltip|type=cvar|name=ClientSettings_SM6}}
+: {{apitooltip|type=cvar|name=ClientSettings_VolumeFog}}
+: {{apitooltip|type=cvar|name=ClientSettings_WORK_OPTIMS}}
+: {{apitooltip|type=cvar|name=GxCompatAllowSM6|default=1|desc=When disabled, DX12 will use Shader Model 5 shaders instead of Shader Model 6}}
+: {{apitooltip|type=cvar|name=GxCompatAsyncShaderCompilation|default=1|desc=Allows async resource shader loading. Disabling this may cause hitching}}
+: ''{{apitooltip|type=command|name=GxMemReport|cat=0}}''
+: ''{{apitooltip|type=command|name=GxSimulateEvent|cat=0}}''
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=GxCompatAsyncFrameEnd|default=1|desc=Disables rendering and submit of frame N to overlap with frame N+1}}
+: {{apitooltip|type=cvar|name=GxCompatDeviceMultiThreading|default=1|desc=Async resource creation such as texture and shader loading. Disabling this may cause hitching}}
+: {{apitooltip|type=cvar|name=worldMaxMipLevel|default=12|cat=1|desc=World maximum texture mip level}}
+</div>
+|}
+
+===Enums===
+ Enum.AccountCurrencyTransferResult
+   + <font color="#00b400">CurrencyTransferDisabled</font>
+ Enum.ReportMinorCategory
+   + <font color="#00b400">TerroristAndViolentExtremistContent</font>
+   + <font color="#00b400">ChildSexualExploitationAndAbuse</font>
+ Enum.UIWidgetVisualizationType
+   + <font color="#00b400">ButtonHeader</font>
+
+===Structures===
+ BattlemasterListInfo
+   # <font color="#ff6767">instanceType</font> -> <font color="#00b400">matchmakingType</font>
+ PlayerChoiceOptionButtonInfo
+   + <font color="#00b400">selected</font>
+ TransmogCategoryAppearanceInfo
+   - <font color="#ff6767">restrictedSlotID</font>

@@ -1,0 +1,75 @@
+{{apichanges|3.0.8|prev=3.0.3|next=3.1.0|misc=Adapted from on Iriel's posts [http://forums.worldofwarcraft.com/thread.html?topicId=8202271194&sid=1#4] [http://forums.worldofwarcraft.com/thread.html?topicId=14637474367&sid=1] on the official forums.}}
+
+== General changes ==
+* {{api|t=w|ScriptObject:HookScript|HookScript}}() will now function like {{api|t=w|ScriptObject:SetScript|SetScript}}() if there is no script currently on the object. 
+* Both Dropdown menus and the Vehicle Action Bar have been made less susceptible to taint. 
+* Lua closures can now be directly assigned to [[widget script handlers]] from XML using the following new format: <OnClick function="FunctionName"/>. The old format will continue to be supported indefinitely. 
+* Several functions no longer accept unit tokens as parameters, and should now be used in conjunction with UnitName("token") instead. These functions include: {{api|AddFriend}}, {{api|RemoveFriend}}, {{api|SetFriendNotes}}, {{api|AddMute}}, {{api|DelMute}}, {{api|AddIgnore}}, {{api|DelIgnore}}, {{api|InviteUnit}}, {{api|UninviteUnit}}, {{api|GuildInvite}}, {{api|GuildUninvite}}, {{api|GuildPromote}}, {{api|GuildDemote}}, {{api|GuildSetLeaderByName}}, {{api|CalenderEventInvite}}.
+* The [[SecureHandlers|secure handlers]] system was restricted with respect to OnUpdate/Timer handling and the ability to react to frame visibility. There is a new SetupAnimation method that addresses some of the restrictions. This change unfortunately removed some otherwise useful functionality around auto-hiding frames (and animation) but hopefully a future patch will address this.
+
+== Widget API ==
+=== Frame Methods ===
+
+* NEW - depth = {{api|t=w|Frame:GetDepth()}}
+* NEW - depth = {{api|t=w|Frame:GetEffectiveDepth()}}
+* NEW - {{api|t=w|Frame:IgnoreDepth(ignoreFlag)}}
+* NEW - ignoreFlag = {{api|t=w|Frame:IsIgnoringDepth()}}
+* NEW - {{api|t=w|Frame:SetDepth(depth)}}
+
+=== ScrollingMessageFrame ===
+* NEW - enableFlag = {{api|t=w|Frame:GetHyperlinksEnabled()|ScrollingMessageFrame:GetHyperlinksEnabled}}
+* NEW - {{api|t=w|Frame:SetHyperlinksEnabled(enableFlag)|ScrollingMessageFrame:SetHyperlinksEnabled}}
+
+=== SimpleHTML ===
+* NEW - enableFlag = {{api|t=w|Frame:GetHyperlinksEnabled()|SimpleHTML:GetHyperlinksEnabled}}
+* NEW -{{api|t=w|Frame:SetHyperlinksEnabled(enableFlag)|SimpleHTML:SetHyperlinksEnabled}}
+
+== API ==
+
+=== Calendar  ===
+
+* NEW - {{api|CalendarContextDeselectEvent()}}
+* NEW - monthOfs, eventDay, eventIndex = {{api|CalendarContextGetEventIndex()}}
+* NEW - {{api|CalendarContextSelectEvent(monthOfs, eventDay, eventIndex)}}
+* NEW - {{api|OpenCalendar()}}
+
+=== Stereo Video ===
+* NEW - available = {{api|IsStereoVideoAvailable()}}
+* NEW - {{api|RestoreVideoStereoDefaults()}}
+* See also the {{api|t=c|gxStereoEnabled}}, {{api|t=c|gxStereoConvergence}}, {{api|t=c|gxStereoSeparation}} CVars 
+
+=== Chat Management  ===
+* NEW - {{api|SetChatWindowUninteractable(id, isUninteractable)}}
+
+=== Glyphs ===
+* NEW - link = {{api|GetGlyphLink(glyphId)}}
+
+=== Debugging ===
+* NEW - {{api|ConsoleAddMessage(message)}}
+
+=== Unknown ===
+* NEW - GetArenaTeamGdfInfo 
+* NEW - ResurrectGetOfferer 
+* NEW - TargetTotem 
+
+=== Secure Handlers ===
+* REMOVED - [[SecureHandlerShowHideTemplate]]
+* NEW - [[SecureHandlerMouseUpDownTemplate]]
+* NEW - [[SecureHandlerMouseWheelTemplate]]
+
+* REMOVED - FrameHandle:IsShown() 
+* REMOVED - FrameHandle:IsVisible() 
+* REMOVED - FrameHandle:GetWidth() 
+* REMOVED - FrameHandle:GetHeight() 
+* REMOVED - FrameHandle:GetRect() 
+* REMOVED - FrameHandle:GetScale() 
+* REMOVED - FrameHandle:GetEffectiveScale() 
+
+* Removed ability to wrap OnShow / OnHide 
+
+* REMOVED - Control:SetTimer(elapsed, message, body) 
+* REMOVED - Control:GetTIme() 
+* REMOVED - Control:SetAnimating(flag, body) 
+* REMOVED - Control:IsAnimating() 
+
+* NEW - SetUpAnimation(frame, updateFunc, posBody, totalTime, postFunc, reverse) - Sets the current 'animation' function for the frame (Available update functions are Show, Hide, SetPoint, SetScale, SetHeight, SetWidth, SetAlpha)

@@ -1,0 +1,15 @@
+{
+  "patch": "10.2.0",
+  "title": "Patch 10.2.0/API changes",
+  "pageid": 12983,
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_10.2.0/API_changes",
+  "wikitext": {
+    "file": "10.2.0-api-changes.wikitext",
+    "method": "MediaWiki action=query prop=revisions rvprop=ids|timestamp|content rvslots=main via curl read-only GET",
+    "revid": 6473470,
+    "revision_timestamp": "2025-09-15T16:50:03Z",
+    "retrieved": "2026-10-07T09:13:40.127571+00:00",
+    "sha256": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5",
+    "register": "10.2.0-wikitext-register.json"
+  }
+}

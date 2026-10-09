@@ -1,0 +1,17 @@
+Patch 6.1.0 API changes
+
+== New ==
+* New Blizzard addons
+:* Blizzard_Collections - Blizzard_MountJournal + Blizzard_PetJournal + Blizzard_ToyBox + the new heirlooms UI
+:* Blizzard_DeathRecap - Watches combat log to see what killed you and inform you of this
+::* DeathRecap_HasEvents
+::* DeathRecap_GetEvents
+::* GetDeathRecapLink
+:* Blizzard_SocialUI - Twitter integration and in-game screenshot browsing
+
+== Changes ==
+* Currently, all TGA/PNG loading by addons is broken and will cause the game to exit.
+* SendChatMessage() no longer accepts non-UTF8 characters.
+
+== Automated diff ==
+[Transcluded source: Patch 6.1.0/API changes/diff; not expanded]

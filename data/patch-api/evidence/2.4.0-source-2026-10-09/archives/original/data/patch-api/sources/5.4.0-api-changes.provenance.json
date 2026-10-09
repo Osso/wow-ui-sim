@@ -1,0 +1,33 @@
+{
+  "pageid": 414879,
+  "title": "Patch 5.4.0/API changes",
+  "revid": 6200158,
+  "timestamp": "2024-12-21T14:07:57Z",
+  "classification": "retail-api-page",
+  "redirect": false,
+  "sha256": "0ece64098024279814fdec4b6aa6ea40dbae1d58c97ffb3d8a9af56eae742fa8",
+  "client": "2013 retail Mists of Pandaria",
+  "toc": 50400,
+  "build": 17345,
+  "diff_build": 17359,
+  "release": "2013-09-10",
+  "parent_revid": 6902277,
+  "generator_flags": [
+    "--mists-summary",
+    "--mists-diff",
+    "data/patch-api/sources/5.4.0-api-changes-diff.wikitext"
+  ],
+  "extractor_flags": [
+    "--retain-patch-diff-reference",
+    "--mists-source-markup"
+  ],
+  "diff_source": {
+    "pageid": 389126,
+    "revid": 3741686,
+    "sha256": "e3344340310c68a596c35337673ec0e1ae0a40d7defabf230c7225afa2e8caa1",
+    "extractor_flags": [
+      "--mists-automated-diff",
+      "--mists-source-markup"
+    ]
+  }
+}

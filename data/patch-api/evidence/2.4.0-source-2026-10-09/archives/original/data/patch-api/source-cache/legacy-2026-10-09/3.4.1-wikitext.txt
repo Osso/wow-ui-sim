@@ -1,0 +1,382 @@
+{{apichanges|3.4.1|prev=3.4.0|next=3.4.2}}
+
+==Summary==
+* The client has pulled in a subset of API changes from [[Patch 10.0.2/API changes|Patch 10.0.2]].
+
+==Resources==
+* TOC: <code>30401</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/3.4.0..3.4.1 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/3.4.0..3.4.1 BlizzardInterfaceResources]
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 3.4.0 (45435) &rarr; 3.4.1 (47612) Jan 11 2023
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(146)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(65)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_BarberShop.GetViewingChrModel}}
+: {{api|t=a|C_BarberShop.SetViewingChrModel}}
+: {{api|t=a|C_CharacterServices.AssignPFCDistribution}}
+: {{api|t=a|C_CharacterServices.GetCharacterServiceDisplayDataByVASType}}
+: {{api|t=a|C_CharacterServices.GetCharacterServiceDisplayInfo}}
+: {{api|t=a|C_CharacterServices.GetVASDistributions}}
+: {{api|t=a|C_Container.ContainerIDToInventoryID}}
+: {{api|t=a|C_Container.ContainerRefundItemPurchase}}
+: {{api|t=a|C_Container.GetBagName}}
+: {{api|t=a|C_Container.GetBagSlotFlag}}
+: {{api|t=a|C_Container.GetContainerFreeSlots}}
+: {{api|t=a|C_Container.GetContainerItemCooldown}}
+: {{api|t=a|C_Container.GetContainerItemDurability}}
+: {{api|t=a|C_Container.GetContainerItemGems}}
+: {{api|t=a|C_Container.GetContainerItemID}}
+: {{api|t=a|C_Container.GetContainerItemInfo}}
+: {{api|t=a|C_Container.GetContainerItemLink}}
+: {{api|t=a|C_Container.GetContainerItemPurchaseCurrency}}
+: {{api|t=a|C_Container.GetContainerItemPurchaseInfo}}
+: {{api|t=a|C_Container.GetContainerItemPurchaseItem}}
+: {{api|t=a|C_Container.GetContainerItemQuestInfo}}
+: {{api|t=a|C_Container.GetContainerNumFreeSlots}}
+: {{api|t=a|C_Container.GetContainerNumSlots}}
+: {{api|t=a|C_Container.GetInsertItemsLeftToRight}}
+: {{api|t=a|C_Container.GetItemCooldown}}
+: {{api|t=a|C_Container.IsBagSlotFlagEnabledOnOtherBankBags}}
+: {{api|t=a|C_Container.IsContainerFiltered}}
+: {{api|t=a|C_Container.PickupContainerItem}}
+: {{api|t=a|C_Container.SetBagPortraitTexture}}
+: {{api|t=a|C_Container.SetBagSlotFlag}}
+: {{api|t=a|C_Container.SetInsertItemsLeftToRight}}
+: {{api|t=a|C_Container.SetItemSearch}}
+: {{api|t=a|C_Container.ShowContainerSellCursor}}
+: {{api|t=a|C_Container.SocketContainerItem}}
+: {{api|t=a|C_Container.SplitContainerItem}}
+: {{api|t=a|C_Container.UseContainerItem}}
+: {{api|t=a|C_CurrencyInfo.GetCurrencyListLink}}
+: {{api|t=a|C_Debug.PrintToDebugWindow}}
+: {{api|t=a|C_EventUtils.IsEventValid}}
+: {{api|t=a|C_EventUtils.NotifySettingsLoaded}}
+: {{api|t=a|C_FunctionContainers.CreateCallback}}
+: {{api|t=a|C_GossipInfo.CloseGossip}}
+: {{api|t=a|C_GossipInfo.ForceGossip}}
+: {{api|t=a|C_GossipInfo.GetActiveQuests}}
+: {{api|t=a|C_GossipInfo.GetAvailableQuests}}
+: {{api|t=a|C_GossipInfo.GetCompletedOptionDescriptionString}}
+: {{api|t=a|C_GossipInfo.GetFriendshipReputationRanks}}
+: {{api|t=a|C_GossipInfo.GetFriendshipReputation}}
+: {{api|t=a|C_GossipInfo.GetNumActiveQuests}}
+: {{api|t=a|C_GossipInfo.GetNumAvailableQuests}}
+: {{api|t=a|C_GossipInfo.GetOptions}}
+: {{api|t=a|C_GossipInfo.GetText}}
+: {{api|t=a|C_GossipInfo.SelectActiveQuest}}
+: {{api|t=a|C_GossipInfo.SelectAvailableQuest}}
+: {{api|t=a|C_GossipInfo.SelectOption}}
+: {{api|t=a|C_Item.GetItemMaxStackSizeByID}}
+: {{api|t=a|C_Item.GetItemMaxStackSize}}
+: {{api|t=a|C_KeyBindings.GetBindingIndex}}
+: {{api|t=a|C_LFGList.GetRedirectedMapDifficultyID}}
+: {{api|t=a|C_LFGList.GetSavedRoles}}
+: {{api|t=a|C_Minimap.ClearAllTracking}}
+: {{api|t=a|C_Minimap.GetNumTrackingTypes}}
+: {{api|t=a|C_Minimap.GetObjectIconTextureCoords}}
+: {{api|t=a|C_Minimap.GetPOITextureCoords}}
+: {{api|t=a|C_Minimap.GetTrackingInfo}}
+: {{api|t=a|C_Minimap.SetTracking}}
+: {{api|t=a|C_PlayerInfo.HasVisibleInvSlot}}
+: {{api|t=a|C_PlayerInteractionManager.ClearInteraction}}
+: {{api|t=a|C_PlayerInteractionManager.ConfirmationInteraction}}
+: {{api|t=a|C_PlayerInteractionManager.InteractUnit}}
+: {{api|t=a|C_PlayerInteractionManager.IsInteractingWithNpcOfType}}
+: {{api|t=a|C_PlayerInteractionManager.IsReplacingUnit}}
+: {{api|t=a|C_PlayerInteractionManager.IsValidNPCInteraction}}
+: {{api|t=a|C_PlayerInteractionManager.ReopenInteraction}}
+: {{api|t=a|C_PvP.GetBattlefieldVehicleInfo}}
+: {{api|t=a|C_PvP.GetBattlefieldVehicles}}
+: {{api|t=a|C_PvP.GetHolidayBGLossRewards}}
+: {{api|t=a|C_PvP.GetHolidayBGRewards}}
+: {{api|t=a|C_PvP.IsRatedMap}}
+: {{api|t=a|C_Reputation.SetWatchedFaction}}
+: {{api|t=a|C_Sound.GetSoundScaledVolume}}
+: {{api|t=a|C_Sound.IsPlaying}}
+: {{api|t=a|C_Sound.PlayItemSound}}
+: {{api|t=a|C_SystemVisibilityManager.IsSystemVisible}}
+: {{api|t=a|C_Texture.GetFilenameFromFileDataID}}
+: {{api|t=a|C_Timer.NewTicker}}
+: {{api|t=a|C_Timer.NewTimer}}
+: {{api|t=a|C_Traits.CanPurchaseRank}}
+: {{api|t=a|C_Traits.CanRefundRank}}
+: {{api|t=a|C_Traits.CascadeRepurchaseRanks}}
+: {{api|t=a|C_Traits.ClearCascadeRepurchaseHistory}}
+: {{api|t=a|C_Traits.CloseTraitSystemInteraction}}
+: {{api|t=a|C_Traits.CommitConfig}}
+: {{api|t=a|C_Traits.ConfigHasStagedChanges}}
+: {{api|t=a|C_Traits.GetConditionInfo}}
+: {{api|t=a|C_Traits.GetConfigIDBySystemID}}
+: {{api|t=a|C_Traits.GetConfigIDByTreeID}}
+: {{api|t=a|C_Traits.GetConfigInfo}}
+: {{api|t=a|C_Traits.GetConfigsByType}}
+: {{api|t=a|C_Traits.GetDefinitionInfo}}
+: {{api|t=a|C_Traits.GetEntryInfo}}
+: {{api|t=a|C_Traits.GetLoadoutSerializationVersion}}
+: {{api|t=a|C_Traits.GetNodeCost}}
+: {{api|t=a|C_Traits.GetNodeInfo}}
+: {{api|t=a|C_Traits.GetStagedChangesCost}}
+: {{api|t=a|C_Traits.GetStagedPurchases}}
+: {{api|t=a|C_Traits.GetTraitCurrencyInfo}}
+: {{api|t=a|C_Traits.GetTraitDescription}}
+: {{api|t=a|C_Traits.GetTraitSystemWidgetSetID}}
+: {{api|t=a|C_Traits.GetTreeCurrencyInfo}}
+: {{api|t=a|C_Traits.GetTreeHash}}
+: {{api|t=a|C_Traits.GetTreeInfo}}
+: {{api|t=a|C_Traits.GetTreeNodes}}
+: {{api|t=a|C_Traits.HasValidInspectData}}
+: {{api|t=a|C_Traits.PurchaseRank}}
+: {{api|t=a|C_Traits.RefundAllRanks}}
+: {{api|t=a|C_Traits.RefundRank}}
+: {{api|t=a|C_Traits.ResetTree}}
+: {{api|t=a|C_Traits.RollbackConfig}}
+: {{api|t=a|C_Traits.SetSelection}}
+: {{api|t=a|C_Traits.StageConfig}}
+: {{api|t=a|C_Traits.TalentTestUnlearnSpells}}
+: {{api|t=a|C_UIColor.GetColors}}
+: {{api|t=a|C_VideoOptions.GetCurrentGameWindowSize}}
+: {{api|t=a|C_VideoOptions.GetDefaultGameWindowSize}}
+: {{api|t=a|C_VideoOptions.GetGameWindowSizes}}
+: {{api|t=a|C_VideoOptions.SetGameWindowSize}}
+: {{api|t=a|C_VoiceChat.IsVoiceChatConnected}}
+: {{api|t=a|C_XMLUtil.GetTemplateInfo}}
+: {{api|t=a|C_XMLUtil.GetTemplates}}
+: {{api|t=a|CanEjectPassengerFromSeat}}
+: {{api|t=a|CanSwitchVehicleSeat}}
+: {{api|t=a|DumpMovementCapture}}
+: {{api|t=a|EjectPassengerFromSeat}}
+: {{api|t=a|GetGraphicsCVarOffsetForCVar}}
+: {{api|t=a|GetGraphicsCVarOffsetForUI}}
+: {{api|t=a|GetVehicleUIIndicatorSeat}}
+: {{api|t=a|GetVehicleUIIndicator}}
+: {{api|t=a|IsTargetLoose}}
+: {{api|t=a|SetUnitCursorTexture}}
+: {{api|t=a|TargetToggle}}
+: {{api|t=a|UnitIsGameObject}}
+: {{api|t=a|UnitIsInteractable}}
+: {{api|t=a|UnitSwitchToVehicleSeat}}
+: {{api|t=a|UnitVehicleSeatCount}}
+: {{api|t=a|UnitVehicleSeatInfo}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AcceptXPLoss}}
+: {{api|t=a|C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec}}
+: {{api|t=a|CheckBinderDist}}
+: {{api|t=a|CheckSpiritHealerDist}}
+: {{api|t=a|ClearAllTracking}}
+: {{api|t=a|CloseGossip}}
+: {{api|t=a|ContainerIDToInventoryID}}
+: {{api|t=a|ContainerRefundItemPurchase}}
+: {{api|t=a|ForceGossip}}
+: {{api|t=a|GetBagName}}
+: {{api|t=a|GetBagSlotFlag}}
+: {{api|t=a|GetBankBagSlotFlag}}
+: {{api|t=a|GetContainerFreeSlots}}
+: {{api|t=a|GetContainerItemCooldown}}
+: {{api|t=a|GetContainerItemDurability}}
+: {{api|t=a|GetContainerItemGems}}
+: {{api|t=a|GetContainerItemID}}
+: {{api|t=a|GetContainerItemInfo}}
+: {{api|t=a|GetContainerItemLink}}
+: {{api|t=a|GetContainerItemPurchaseCurrency}}
+: {{api|t=a|GetContainerItemPurchaseInfo}}
+: {{api|t=a|GetContainerItemPurchaseItem}}
+: {{api|t=a|GetContainerItemQuestInfo}}
+: {{api|t=a|GetContainerNumFreeSlots}}
+: {{api|t=a|GetContainerNumSlots}}
+: {{api|t=a|GetCurrencyListLink}}
+: {{api|t=a|GetGossipActiveQuests}}
+: {{api|t=a|GetGossipAvailableQuests}}
+: {{api|t=a|GetGossipOptions}}
+: {{api|t=a|GetGossipText}}
+: {{api|t=a|GetInsertItemsLeftToRight}}
+: {{api|t=a|GetItemCooldown}}
+: {{api|t=a|GetNumGossipActiveQuests}}
+: {{api|t=a|GetNumGossipAvailableQuests}}
+: {{api|t=a|GetNumGossipOptions}}
+: {{api|t=a|GetNumTrackingTypes}}
+: {{api|t=a|GetObjectIconTextureCoords}}
+: {{api|t=a|GetPOITextureCoords}}
+: {{api|t=a|GetTrackingInfo}}
+: {{api|t=a|InteractUnit}}
+: {{api|t=a|IsBagSlotFlagEnabledOnOtherBags}}
+: {{api|t=a|IsBagSlotFlagEnabledOnOtherBankBags}}
+: {{api|t=a|IsBattlePayItem}}
+: {{api|t=a|IsContainerFiltered}}
+: {{api|t=a|IsReplacingUnit}}
+: {{api|t=a|PickupContainerItem}}
+: {{api|t=a|PlayerHasHearthstone}}
+: {{api|t=a|ReopenInteraction}}
+: {{api|t=a|SelectGossipActiveQuest}}
+: {{api|t=a|SelectGossipAvailableQuest}}
+: {{api|t=a|SelectGossipOption}}
+: {{api|t=a|SetBagPortraitTexture}}
+: {{api|t=a|SetBagSlotFlag}}
+: {{api|t=a|SetBankBagSlotFlag}}
+: {{api|t=a|SetInsertItemsLeftToRight}}
+: {{api|t=a|SetItemSearch}}
+: {{api|t=a|SetTracking}}
+: {{api|t=a|ShowContainerSellCursor}}
+: {{api|t=a|SocketContainerItem}}
+: {{api|t=a|SplitContainerItem}}
+: {{api|t=a|UseContainerItem}}
+: {{api|t=a|UseHearthstone}}
+: {{api|t=a|VehicleAimGetAngle}}
+: {{api|t=a|VehicleAimGetNormAngle}}
+: {{api|t=a|VehicleAimRequestNormAngle}}
+</div>
+|}
+
+==Widgets==
+It's the same Widget API as [[Patch_10.0.0/API_changes#Widgets|Patch 10.0.0]].
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(35)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(9)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACTIVE_PLAYER_SPECIALIZATION_CHANGED}}
+: {{api|t=e|BAG_CONTAINER_UPDATE}}
+: {{api|t=e|CONFIG_COMMIT_FAILED}}
+: {{api|t=e|EDIT_MODE_LAYOUTS_UPDATED}}
+: {{api|t=e|EXPAND_BAG_BAR_CHANGED}}
+: {{api|t=e|GENERIC_WIDGET_DISPLAY_SHOW}}
+: {{api|t=e|HIDE_HYPERLINK_TOOLTIP}}
+: {{api|t=e|PLAYER_INTERACTION_MANAGER_FRAME_HIDE}}
+: {{api|t=e|PLAYER_INTERACTION_MANAGER_FRAME_SHOW}}
+: {{api|t=e|PLAYER_SOFT_ENEMY_CHANGED}}
+: {{api|t=e|PLAYER_SOFT_FRIEND_CHANGED}}
+: {{api|t=e|PLAYER_SOFT_INTERACT_CHANGED}}
+: {{api|t=e|PLAYER_SOFT_TARGET_INTERACTION}}
+: {{api|t=e|PVP_VEHICLE_INFO_UPDATED}}
+: {{api|t=e|REPLACE_TRADESKILL_ENCHANT}}
+: {{api|t=e|SETTINGS_LOADED}}
+: {{api|t=e|SHOW_HYPERLINK_TOOLTIP}}
+: {{api|t=e|STOP_TIMER_OF_TYPE}}
+: {{api|t=e|SYSTEM_VISIBILITY_CHANGED}}
+: {{api|t=e|TOOLTIP_DATA_UPDATE}}
+: {{api|t=e|TRAIT_COND_INFO_CHANGED}}
+: {{api|t=e|TRAIT_CONFIG_CREATED}}
+: {{api|t=e|TRAIT_CONFIG_DELETED}}
+: {{api|t=e|TRAIT_CONFIG_LIST_UPDATED}}
+: {{api|t=e|TRAIT_CONFIG_UPDATED}}
+: {{api|t=e|TRAIT_NODE_CHANGED_PARTIAL}}
+: {{api|t=e|TRAIT_NODE_CHANGED}}
+: {{api|t=e|TRAIT_NODE_ENTRY_UPDATED}}
+: {{api|t=e|TRAIT_SYSTEM_INTERACTION_STARTED}}
+: {{api|t=e|TRAIT_SYSTEM_NPC_CLOSED}}
+: {{api|t=e|TRAIT_TREE_CHANGED}}
+: {{api|t=e|TRAIT_TREE_CURRENCY_INFO_UPDATED}}
+: {{api|t=e|UNIT_FORM_CHANGED}}
+: {{api|t=e|USE_COMBINED_BAGS_CHANGED}}
+: {{api|t=e|VOICE_CHAT_VAD_SETTINGS_UPDATED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ITEM_UPGRADE_MASTER_CLOSED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_OPENED}}
+: {{api|t=e|OBLITERUM_FORGE_CLOSE}}
+: {{api|t=e|OBLITERUM_FORGE_SHOW}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_OPENED}}
+: {{api|t=e|VOID_STORAGE_CLOSE}}
+: {{api|t=e|VOID_STORAGE_OPEN}}
+: {{api|t=e|WEAR_EQUIPMENT_SET}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(63)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(15)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=auctionSortByBuyoutPrice|default=0|scope=Character|cat=4|desc=Sort auction items by buyout price instead of current bid price}}
+: {{apitooltip|type=cvar|name=auctionSortByUnitPrice|default=0|scope=Character|cat=4|desc=Sort auction items by unit price instead of total stack price}}
+: {{apitooltip|type=cvar|name=CMAA2HalfFloat|default=0|cat=1|desc=0: 32-bit Float. 1: 16-bit Float.}}
+: {{apitooltip|type=cvar|name=DynamicVRSSensitivityThreshold|default=0|cat=1|desc=Enable dynamic sensitivity threshold based on target FPS for VRS}}
+: {{apitooltip|type=cvar|name=ForceGenerateSlug|default=0|cat=0|desc=Generate .slug files for all loaded fonts before they are actually used rather than deferred load.}}
+: {{apitooltip|type=cvar|name=fstack_enabled|default=0|cat=0|desc=0: Hide Framestack Tooltip (Default), 1: Show Framestack Tooltip.}}
+: {{apitooltip|type=cvar|name=fstack_preferParentKeys|default=0|cat=0|desc=0: Prefer Global Names, 1: Prefer ParentKeys (Default).}}
+: {{apitooltip|type=cvar|name=fstack_showRaisedFrameLevels|default=0|cat=0|desc=0: Show normal frame levels (default), 1: Show raised frame levels instead}}
+: {{apitooltip|type=cvar|name=GameDataVisualizer|default=0}}
+: {{apitooltip|type=cvar|name=GamePadOverlapMouseMs|default=2000|desc=Duration after gamepad+mouse input to switch to just one or the other.}}
+: {{apitooltip|type=cvar|name=GamePadRunThreshold|default=0.5|desc=0-1 Amount of stick movement before character transitions from walk to run}}
+: {{apitooltip|type=cvar|name=GxAllowCachelessShaderMode|default=0|cat=1|desc=CPU memory saving mode, if supported by backend. When enabled, shaders are fetched from disk as needed instead of being kept resident. This mode may slightly increase the time objects take to appear the first time they are encountered. Computers without solid state drives may want to disable this feature}}
+: {{apitooltip|type=cvar|name=interactQuestItems|default=0|scope=Account|cat=4|desc=Enable Quest Item use as an interaction}}
+: {{apitooltip|type=cvar|name=LowLatencyMode|default=0|cat=1|desc=0=None, 1=BuiltIn, 2=Reflex}}
+: {{apitooltip|type=cvar|name=luaErrorExceptions|default=1|cat=4|desc=Enable exceptions for non-tainted lua errors}}
+: {{apitooltip|type=cvar|name=outlineSoftInteractFadeDuration|default=0.3|cat=0}}
+: {{apitooltip|type=cvar|name=reloadUIOnAspectChange|default=0|cat=1|desc=Reload the UI on aspect change}}
+: {{apitooltip|type=cvar|name=SlugOpticalWeight|default=0|cat=0|desc=When rendering, coverage values are remapped to increase the optical weight of the glyphs. This can improve the appearance of small text, but usually looks good only for dark text on a light background.}}
+: {{apitooltip|type=cvar|name=SlugSupersampling|default=1|cat=0|desc=The slug glyph shader performs adaptive supersampling for high-quality rendering at small font sizes}}
+: {{apitooltip|type=cvar|name=SoftTargetEnemyArc|default=2|scope=Character|cat=4|desc=0 = No yaw arc allowance, must be directly in front. 1 = Must be in front yaw arc. 2 = Can be anywhere in targeting area.}}
+: {{apitooltip|type=cvar|name=SoftTargetEnemyRange|default=45|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetEnemy|default=0|scope=Character|cat=4|desc=Sets when enemy soft targeting should be enabled. 0=off, 1=gamepad, 2=KBM, 3=always}}
+: {{apitooltip|type=cvar|name=SoftTargetForce|default=1|cat=4|desc=Auto-set target to match soft target. 1 = for enemies, 2 = for friends}}
+: {{apitooltip|type=cvar|name=SoftTargetFriendArc|default=2|scope=Character|cat=4|desc=0 = No yaw arc allowance, must be directly in front. 1 = Must be in front yaw arc. 2 = Can be anywhere in targeting area.}}
+: {{apitooltip|type=cvar|name=SoftTargetFriendRange|default=45|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetFriend|default=0|scope=Character|cat=4|desc=Sets when friend soft targeting should be enabled. 0=off, 1=gamepad, 2=KBM, 3=always}}
+: {{apitooltip|type=cvar|name=SoftTargetIconEnemy|default=0|scope=Account|cat=4|desc=Show icon for soft enemy target}}
+: {{apitooltip|type=cvar|name=SoftTargetIconFriend|default=0|scope=Account|cat=4|desc=Show icon for soft friend target}}
+: {{apitooltip|type=cvar|name=SoftTargetIconGameObject|default=0|scope=Account|cat=4|desc=Show icon for sot interact game objects (interactable objects you cannot normally target)}}
+: {{apitooltip|type=cvar|name=SoftTargetIconInteract|default=1|scope=Account|cat=4|desc=Show icon for soft interact target}}
+: {{apitooltip|type=cvar|name=SoftTargetInteractArc|default=0|scope=Account|cat=4|desc=0 = No yaw arc allowance, must be directly in front. 1 = Must be in front yaw arc. 2 = Can be anywhere in targeting area.}}
+: {{apitooltip|type=cvar|name=SoftTargetInteractRangeIsHard|default=0|scope=Account|cat=4|desc=Sets if it should be a hard range cutoff, even for something you can interact with right now.}}
+: {{apitooltip|type=cvar|name=SoftTargetInteractRange|default=10|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetInteract|default=0|scope=Account|cat=4|desc=Sets when soft interact should be enabled. 0=off, 1=gamepad, 2=KBM, 3=always}}
+: {{apitooltip|type=cvar|name=SoftTargetLowPriorityIcons|default=0|scope=Account|cat=4|desc=Show interact icons even when there is other visual indicators, such as quest or loot effects}}
+: {{apitooltip|type=cvar|name=SoftTargetMatchLocked|default=1|cat=4|desc=Match appropriate soft target to locked target. 1 = hard locked target only, 2 = for targets you attack}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateEnemy|default=1|scope=Account|cat=4|desc=Always show nameplates for soft enemy target}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateFriend|default=0|scope=Account|cat=4|desc=Always show nameplates for soft friend target}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateInteract|default=0|scope=Account|cat=4|desc=Always show nameplates for soft interact target}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateSize|default=19|scope=Account|cat=4|desc=Size of soft target icon on nameplate (0 to disable)}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipDurationMs|default=2000|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipEnemy|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipFriend|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipInteract|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipLocked|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWithLocked|default=1|cat=4|desc=Allows soft target selection while player has a locked target. 2 = always do soft targeting}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextFarDist|default=40|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextNearDist|default=4|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextNearScale|default=1|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextSize|default=32|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=TargetAutoEnemy|default=0|scope=Character|cat=4|desc=Auto-Target from your single target helpful spells}}
+: {{apitooltip|type=cvar|name=TargetAutoFriend|default=0|scope=Character|cat=4|desc=Auto-Target from your single target helpful spells}}
+: {{apitooltip|type=cvar|name=TargetEnemyAttacker|default=1|scope=Character|cat=4|desc=Auto-Target Enemy when they attack you}}
+: {{apitooltip|type=cvar|name=TTSUseCharacterSettings|default=1|scope=Character|desc=If character-specific TTS settings are being used.}}
+: {{apitooltip|type=cvar|name=uieditor_enabled|default=0|cat=0|desc=0: Hide UI Editor (default), 1: Show UI Editor.}}
+: {{apitooltip|type=cvar|name=useMaxFPSBk|default=1|cat=1|desc=Enables or disables background FPS limit}}
+: {{apitooltip|type=cvar|name=useMaxFPS|default=0|cat=1|desc=Enables or disables FPS limit}}
+: {{apitooltip|type=cvar|name=UseSlug|default=1|cat=0|desc=Render with slug text}}
+: {{apitooltip|type=cvar|name=useTargetFPS|default=1|cat=1|desc=Enables or disables background FPS limit}}
+: {{apitooltip|type=cvar|name=validateFrameXML|default=0|desc=Display warning when FrameXML detects unparsed elements}}
+: {{apitooltip|type=cvar|name=WorldTextMinAlpha|default=0.5|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextMinSize|default=0|scope=Account|cat=4}}
+: '''Commands'''
+: LogFps
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: bspcache
+: GamePadAbbreviatedBindingReverse
+: GamePadEmulateEsc
+: hardTrackedWorldQuests
+: physDraw
+: physDrawBroadphase
+: physDrawCenterOfMass
+: physDrawContacts
+: physDrawDMStats
+: physDrawFixtures
+: physDrawJoints
+: physDrawStats
+: physDrawTransparent
+: trackedWorldQuests
+: worldEntityLinkMode
+</div>
+|}

@@ -1,0 +1,24 @@
+{
+  "pageid": 549368,
+  "title": "Patch 5.4.7/API changes",
+  "revid": 5298169,
+  "timestamp": "2014-05-31T17:45:19Z",
+  "sha256": "9f0be17f51e16801f94e7306862184e3e4ad80c4025d9c751d39ff64bae99b89",
+  "fetch_url": "https://warcraft.wiki.gg/api.php",
+  "fetched": "2026-10-08",
+  "extractor_flags": [
+    "--legacy-api-tables"
+  ],
+  "generator_flags": [
+    "--legacy-api-tables",
+    "--prose-api-links"
+  ],
+  "client_line": "retail",
+  "toc": 50400,
+  "toc_source": {
+    "pageid": 491086,
+    "revid": 6854922,
+    "evidence": "data/patch-api/evidence/5.4.7-session-2026-10-08/p547-patch.json"
+  },
+  "source_kind": "substantive-page"
+}

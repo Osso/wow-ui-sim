@@ -1,0 +1,413 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "2.4.0",
+  "source": {
+    "path": "data/patch-api/sources/2.4.0-api-changes.wikitext",
+    "revid": 6471380,
+    "sha256": "e2269b1705daa604bd16aff912e92b5cbd7ee2e11681137b4543d74150ce1909"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-events-PARTY_MEMBER_ENABLE-9-1",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "PARTY_MEMBER_ENABLE",
+      "annotation": "* {{api|t=e|PARTY_MEMBER_ENABLE}} and {{api|t=e|PARTY_MEMBER_DISABLE}} will no longer provide information about which party member was enabled or disabled.",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-events-PARTY_MEMBER_DISABLE-9-2",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "PARTY_MEMBER_DISABLE",
+      "annotation": "* {{api|t=e|PARTY_MEMBER_ENABLE}} and {{api|t=e|PARTY_MEMBER_DISABLE}} will no longer provide information about which party member was enabled or disabled.",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-debugstack-15-1",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "debugstack",
+      "annotation": "* In 2.4, you'll be able to pass a coroutine as a first (optional) parameter to [[API debugstack|debugstack]]()",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-cvars-unitHighlights-18",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "unitHighlights",
+      "annotation": "* There's a new cVar unitHighlights; 0 = no model highlighting with Alt-Z, 1 = model highlighting on with Alt-Z. (e.g. /console unitHighlights 1)",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-commands-/console-18",
+      "section": "commands",
+      "direction": "changed",
+      "symbol": "/console",
+      "annotation": "* There's a new cVar unitHighlights; 0 = no model highlighting with Alt-Z, 1 = model highlighting on with Alt-Z. (e.g. /console unitHighlights 1)",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetTotem-22-1",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetTotem",
+      "annotation": "* NEW - [[API GameTooltip SetTotem|GameTooltip:SetTotem]](slot)",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-GetArmorPenetration-29-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetArmorPenetration",
+      "annotation": "* NEW - armorPenetration = [[API GetArmorPenetration|GetArmorPenetration]]()",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-DeclineInvite-32-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeclineInvite",
+      "annotation": "* NEW - [[API DeclineInvite|DeclineInvite]](channel)",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-CombatLogAddFilter-35-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogAddFilter",
+      "annotation": "* NEW - [[API CombatLogAddFilter|CombatLogAddFilter]]",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-CombatLogAdvanceEntry-36-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogAdvanceEntry",
+      "annotation": "* NEW - [[API CombatLogAdvanceEntry|CombatLogAdvanceEntry]]",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-CombatLogClearEntries-37-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogClearEntries",
+      "annotation": "* NEW - [[API CombatLogClearEntries|CombatLogClearEntries]]",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-CombatLogGetCurrentEntry-38-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogGetCurrentEntry",
+      "annotation": "* NEW - [[API CombatLogGetCurrentEntry|CombatLogGetCurrentEntry]]",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-CombatLogGetNumEntries-39-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogGetNumEntries",
+      "annotation": "* NEW - [[API CombatLogGetNumEntries|CombatLogGetNumEntries]]",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-CombatLogGetRetentionTime-40-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogGetRetentionTime",
+      "annotation": "* NEW - [[API CombatLogGetRetentionTime|CombatLogGetRetentionTime]]",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-CombatLogResetFilter-41-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogResetFilter",
+      "annotation": "* NEW - [[API CombatLogResetFilter|CombatLogResetFilter]]",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-CombatLogSetCurrentEntry-42-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogSetCurrentEntry",
+      "annotation": "* NEW - [[API CombatLogSetCurrentEntry|CombatLogSetCurrentEntry]]",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-CombatLogSetRetentionTime-43-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLogSetRetentionTime",
+      "annotation": "* NEW - [[API CombatLogSetRetentionTime|CombatLogSetRetentionTime]]",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-SetFriendNotes-46-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetFriendNotes",
+      "annotation": "* NEW - [[API SetFriendNotes|SetFriendNotes]](\"name\" or index, \"notes\")",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-CanEditGuildTabInfo-49-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanEditGuildTabInfo",
+      "annotation": "* NEW - canEdit = [[API CanEditGuildTabInfo|CanEditGuildTabInfo]](tab)",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-QueryGuildBankText-52-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QueryGuildBankText",
+      "annotation": "* NEW - [[API QueryGuildBankText|QueryGuildBankText]](tab)",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-SetGuildBankText-53-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetGuildBankText",
+      "annotation": "* NEW - [[SetGuildBankText|SetGuildBankText]](tab, \"text\")",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-GetContainerNumFreeSlots-56-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetContainerNumFreeSlots",
+      "annotation": "* NEW - freeSlots, itemFamily = [[API GetContainerNumFreeSlots|GetContainerNumFreeSlots]]([[bagIndex]]) -- Returns the number of free slots in a bag, and the type of items that can go in the bag. For [[bagType]], 0 means any item can go in the bag.",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-GetItemFamily-59-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetItemFamily",
+      "annotation": "* NEW - [[bagType]] = [[API GetItemFamily|GetItemFamily]](itemId or itemName or itemLink or itemString) -- When used with a container, this returns the type of container. When used with an item, it returns the type of container the item can go in. However, [[bagType]] is a bitflag, so [[API GetItemFamily|GetItemFamily]] for something that could go in a quiver ([[bagType]] 1) and an ammo pouch ([[bagType]] 2) would return 3. A bag that can hold both arrows and bullets would also return 3. ",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-GetItemFamily-59-2",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetItemFamily",
+      "annotation": "* NEW - [[bagType]] = [[API GetItemFamily|GetItemFamily]](itemId or itemName or itemLink or itemString) -- When used with a container, this returns the type of container. When used with an item, it returns the type of container the item can go in. However, [[bagType]] is a bitflag, so [[API GetItemFamily|GetItemFamily]] for something that could go in a quiver ([[bagType]] 1) and an ammo pouch ([[bagType]] 2) would return 3. A bag that can hold both arrows and bullets would also return 3. ",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-GetItemIcon-74-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetItemIcon",
+      "annotation": "* NEW - icon = [[API GetItemIcon|GetItemIcon]](itemId or itemName or itemLink or itemString) -- Returns the icon for an item (as long as the item is valid), even if [[API GetItemInfo|GetItemInfo]] returns nil.",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-GetItemInfo-74-2",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetItemInfo",
+      "annotation": "* NEW - icon = [[API GetItemIcon|GetItemIcon]](itemId or itemName or itemLink or itemString) -- Returns the icon for an item (as long as the item is valid), even if [[API GetItemInfo|GetItemInfo]] returns nil.",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-GetQuestLink-77-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLink",
+      "annotation": "* NEW - questLink = [[API GetQuestLink|GetQuestLink]](questLogId)",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-GetRewardTitle-78-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRewardTitle",
+      "annotation": "* NEW - [[API GetRewardTitle|GetRewardTitle]]()",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-GetNumLanguages-81-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumLanguages",
+      "annotation": "* NEW - numLanguages = [[API GetNumLanguages|GetNumLanguages]]()",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-GetOptOutOfLoot-84-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetOptOutOfLoot",
+      "annotation": "* NEW - isOptOutOfLoot = [[API GetOptOutOfLoot|GetOptOutOfLoot]]()",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-SetOptOutOfLoot-85-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetOptOutOfLoot",
+      "annotation": "* NEW - [[API SetOptOutOfLoot|SetOptOutOfLoot]](boolean)",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-GetSpellInfo-90-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSpellInfo",
+      "annotation": "* NEW - name, rank, icon, cost, isFunnel, powerType, castTime, minRange, maxRange = [[API GetSpellInfo|GetSpellInfo]](spellId or spellName or spellLink)",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-GetSpellLink-91-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSpellLink",
+      "annotation": "* NEW - spellLink = [[API GetSpellLink|GetSpellLink]](spellId or spellName or spellLink)",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-GetTalentLink-92-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTalentLink",
+      "annotation": "* NEW - spellLink = [[API GetTalentLink|GetTalentLink]](tab, index[, inspect])",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-CanSummonFriend-95-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanSummonFriend",
+      "annotation": "* NEW - canSummon = [[API CanSummonFriend|CanSummonFriend]]()",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-SummonFriend-96-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SummonFriend",
+      "annotation": "* NEW - [[API SummonFriend|SummonFriend]]()",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-GetTotemInfo-99-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTotemInfo",
+      "annotation": "* NEW - haveTotem, name, startTime, duration, icon = [[API GetTotemInfo|GetTotemInfo]](slot)",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-GetTotemTimeLeft-104-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTotemTimeLeft",
+      "annotation": "* NEW - timeleft = [[API GetTotemTimeLeft|GetTotemTimeLeft]](slot)",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-GetUnitMaxHealthModifier-107-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitMaxHealthModifier",
+      "annotation": "* NEW - healthMod = [[API GetUnitMaxHealthModifier|GetUnitMaxHealthModifier]](\"[[unitId|unit]]\")",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-UnitInRange-108-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitInRange",
+      "annotation": "* NEW - inRange = [[API UnitInRange|UnitInRange]](\"[[unitId|unit]]\") -- Determines if a unit is within a (fixed by Blizzard) useful range based on flash heal/cure range) This is now used by the Blizzard Raid UI",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-UnitClassBase-109-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitClassBase",
+      "annotation": "* NEW - classLocal, class = [[API UnitClassBase|UnitClassBase]](\"[[unitId|unit]]\")",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-UnitRaceBase-110-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitRaceBase",
+      "annotation": "* NEW - raceLocal, race = [[API UnitRaceBase|UnitRaceBase]](\"[[unitId|unit]]\")",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-UnitGUID-111-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitGUID",
+      "annotation": "* NEW - [[GUID|guid]] = [[API UnitGUID|UnitGUID]](\"[[unitId|unit]]\") -- Returns a string representing a unique identifier for the given unit. This is the same string that is used in the combat log to identify a unit.",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-DeclineName-114-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeclineName",
+      "annotation": "* NEW - [[API DeclineName|DeclineName]](\"name\", gender, declensionSet)",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-GetNumDeclensionSets-115-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumDeclensionSets",
+      "annotation": "* NEW - [[API GetNumDeclensionSets|GetNumDeclensionSets]](\"name\", gender)",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-CanGrantLevel-116-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanGrantLevel",
+      "annotation": "* NEW - [[API CanGrantLevel|CanGrantLevel]]()",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-GrantLevel-117-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GrantLevel",
+      "annotation": "* NEW - [[API GrantLevel|GrantLevel]]()",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-CommentatorSetCameraCollision-118-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorSetCameraCollision",
+      "annotation": "* NEW - [[API CommentatorSetCameraCollision|CommentatorSetCameraCollision]]()",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-CommentatorSetTargetHeightOffset-119-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorSetTargetHeightOffset",
+      "annotation": "* NEW - [[API CommentatorSetTargetHeightOffset|CommentatorSetTargetHeightOffset]]()",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-TogglePerformancePause-120-1",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TogglePerformancePause",
+      "annotation": "* NEW - [[API TogglePerformancePause|TogglePerformancePause]]()",
+      "wikitext_line": 120
+    }
+  ],
+  "client_line": "retail"
+}

@@ -1,0 +1,38 @@
+Patch 11.0.5 API changes
+
+== Resources ==
+* TOC: 110005
+* Official patch notes: 20th Anniversary Celebration Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+
+== Consolidated changes ==
+: 11.0.2 (56819) → 11.0.5 (57212) Oct 22 2024
+
+=== Enumerations ===
+ Enum.AccountCurrencyTransferResult
+   + TransactionInProgress
+ Enum.AccountTransType
+   + CharacterDataMerge
+ Enum.BagFlag
+   + AllowSoulboundItemInAccountBank
+ Enum.CurrencyFlags
+   # DeprecatedCurrencyFlag -> CurrencyUsesLedgerBalance
+ Enum.PowerType
+   # Obsolete -> BurningEmbers
+   # Obsolete2 -> DemonicFury
+   + Happiness
+   + ShadowOrbs
+   + RuneChromatic
+ Enum.SubcontainerType
+   + KeyringObsolete -> Keyring
+ Enum.TraitSystemFlag
+   + AllowEditInCombat
+
+=== Structures ===
+ BNetGameAccountInfo
+   - isWowMobile
+ FriendInfo
+   - mobile
+ IconAndTextWidgetVisualizationInfo
+   + shiftTextType

@@ -1,0 +1,328 @@
+Patch 10.1.0 API changes
+
+== Summary ==
+* A new Private Auras system has been added to display buffs and debuffs applied to units without exposing information about the aura to addons.
+* A new addon link type has been added for local addon-only chat links.
+* A new talentbuild link type has been added for inspecting loadouts.
+* A new ScrollFrame template has been added as a replacement for various other templates which are now deprecated.
+* A new set of TOC metadata fields have been added to control the display of an icon in the addon list.
+* A new set of TOC metadata fields have been added to automatically register dropdown entries into the minimap Addon compartment.
+* The addon list no longer displays addons out-of-order if their names contain UI escape sequences.
+* The C_TooltipInfo APIs now return data with all data and line arguments surfaced, removing the need to call TooltipUtil.SurfaceArgs().
+* The TOOLTIP_DATA_UPDATE event now has an additional dataInstanceID argument. This can be correlated with a field of the same name on tables returned by the C_TooltipInfo APIs to more accurately process data update events.
+
+== Resources ==
+* TOC: 100100
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: Embers of Neltharion Content Update Notes
+
+== Private Auras ==
+
+A new private aura system has been added through which the UI can display buffs and debuffs active on units without exposing information on the auras to addons. This works as a separate system to the existing buff and debuff display and must be configured through a set of new APIs.
+
+The following example configures a private aura anchor in the center of the screen for the first private aura applied to the player. A cooldown frame is configured to represent the duration, and the icon is displayed in the center of the frame. A textual duration will be displayed in a fontstring below the icon.
+
+Multiple anchors for a single aura can be created by addons with their own independent settings. The C_UnitAuras.AddPrivateAuraAnchor function returns an ID which can be later supplied to C_UnitAuras.RemovePrivateAuraAnchor to remove the aura display from the UI.
+
+```lua
+local PrivateAuraFrame1 = CreateFrame("Frame", UIParent)
+PrivateAuraFrame1:SetPoint("CENTER")
+PrivateAuraFrame1:SetSize(32, 32)
+
+local auraAnchorID = C_UnitAuras.AddPrivateAuraAnchor({
+    unitToken = "player",
+    auraIndex = 1,
+    parent = PrivateAuraFrame1,
+    showCountdownFrame = true,
+    showCountdownNumbers = true,
+    iconInfo = {
+        iconWidth = 32,
+        iconHeight = 32,
+        iconAnchor = {
+            point = "CENTER",
+            relativeTo = PrivateAuraFrame1,
+            relativePoint = "CENTER",
+            offsetX = 0,
+            offsetY = 0,
+        },
+    },
+    durationAnchor = {
+        point = "TOP",
+        relativeTo = PrivateAuraFrame1,
+        relativePoint = "BOTTOM",
+        offsetX = 0,
+        offsetY = 0,
+    },
+})
+```
+
+A sound alert can be configured to be played upon application of an aura. This works through spell IDs rather than aura indices.  The C_UnitAuras.AddPrivateAuraAppliedSound function returns an ID which can be later supplied to C_UnitAuras.RemovePrivateAuraAppliedSound to disable the sound effect being played.
+
+```lua
+local auraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
+    unitToken = "player",
+    spellID = 12345,
+    soundFileName = "Interface\\AddOns\\MyAddOn\\Alert.ogg",
+    outputChannel = "SFX",
+})
+```
+
+Finally, a raid message style alert can be configured to display text when a private aura is applied. Unlike the previous APIs this is a global resource; individual addons cannot configure their own raid message displays for private auras.
+
+```lua
+C_UnitAuras.SetPrivateWarningTextAnchor(UIParent, {
+    point = "CENTER",
+    relativeTo = UIParent,
+    relativePoint = "CENTER",
+    offsetX = 0,
+    offsetY = 0,
+})
+```
+
+== Addon Compartment Changes ==
+
+The Addon compartment has been updated to support automatically registering dropdown entries for addons from TOC fields. The following TOC fields have been added.
+
+{| class="darktable zebra"
+|+
+|-
+! Field Name !! Example Value !! Description
+|-
+| AddonCompartmentFunc || MyAddOn_OnAddonCompartmentClick || The name of a global function to be executed when the compartment dropdown entry is clicked. This field is required.
+|-
+| AddonCompartmentFuncOnEnter || MyAddOn_OnAddonCompartmentEnter || The name of a global function to be executed when the compartment dropdown entry is highlighted. Optional.
+|-
+| AddonCompartmentFuncOnLeave || MyAddOn_OnAddonCompartmentLeave || The name of a global function to be executed when the compartment dropdown entry is no longer highlighted. Optional.
+|-
+| IconTexture || Interface\Icons\TEMP.blp || The full path to a texture file or a file ID to show as an icon in both the addon list and compartment dropdown. Optional.
+|-
+| IconAtlas || TaskPOI-Icon|| The name of a texture atlas to use as the icon in both the addon list and compartment dropdown. Optional, and is only used if the IconTexture field has not been set.
+
+The example below demonstrates the use of these TOC fields.
+
+MyAddOn.toc
+ ## Interface: [API LatestInterface]
+ ## Title: My Addon
+ ## Notes: Does something neat
+ ## Author: Your Name
+ ## AddonCompartmentFunc: MyAddOn_OnAddonCompartmentClick
+ ## IconTexture: Interface\Icons\TEMP.blp
+
+ MyAddOn.lua
+
+MyAddOn.lua
+```lua
+ function MyAddOn_OnAddonCompartmentClick(addonName, buttonName)
+     print("Hello from the addon compartment!")
+ end
+```
+
+== Addon Chat Links ==
+
+A new addon link type has been added to the chat frame infrastructure to better support addon-created chat links. This new link type is local-only and cannot be sent in chat messages. This serves as a replacement for garrmission links without needing to rely on their current implementation details to avoid taint.
+
+```lua
+EventRegistry:RegisterCallback("SetItemRef", function(_, link, text, button, chatFrame)
+    local linkType, addonName, linkData = string.split(":", link, 3)
+
+    if linkType == "addon" and addonName == "SomeAddon" then
+        print("Link clicked: ", linkData)
+    end
+end)
+
+ChatFrame1:AddMessage("|cFFFFFF00|Haddon:SomeAddon:hidden-data|h[Some Clickable Message]|h|r")
+```
+
+== Scroll Templates ==
+
+A new ScrollFrame template named ScrollFrameTemplate has been added. This serves as a replacement for many old scrolling related templates that are now deprecated as of this patch. This template can be used as a simpler alternative to ScrollBox views, and automatically creates and configures a scrollbar for use with the frame. An Lua example can be found below to demonstrate the use of this new template.
+
+```lua
+local ScrollFrame = CreateFrame("ScrollFrame", nil, UIParent, "ScrollFrameTemplate")
+ScrollFrame:SetSize(300, 300)
+ScrollFrame:SetPoint("CENTER")
+
+local ScrollChild = CreateFrame("Frame")
+ScrollChild:SetSize(300, 600)
+
+local ScrollTexture = ScrollChild:CreateTexture(nil, "OVERLAY")
+ScrollTexture:SetAllPoints(ScrollChild)
+ScrollTexture:SetColorTexture(1, 0, 0, 1)
+ScrollTexture:SetGradient("VERTICAL", CreateColor(1, 0, 0, 1), CreateColor(0, 0, 0, 1))
+
+ScrollFrame:SetScrollChild(ScrollChild)
+```
+
+For XML use cases, refer to the following example.
+
+```xml
+<ScrollFrame name="MyAddon_ScrollFrame" inherits="ScrollFrameTemplate" parent="UIParent">
+    <Size x="300" y="300"/>
+    <Anchors>
+        <Anchor point="CENTER"/>
+    </Anchors>
+    <ScrollChild>
+        <Frame>
+            <Size x="300" y="600"/>
+            <Layers>
+                <Layer level="OVERLAY">
+                    <Texture setAllPoints="true">
+                        <Color r="1"/>
+                        <Gradient orientation="VERTICAL">
+                            <MinColor r="1"/>
+                            <MaxColor r="0"/>
+                        </Gradient>
+                    </Texture>
+                </Layer>
+            </Layers>
+        </Frame>
+    </ScrollChild>
+</ScrollFrame>
+```
+
+The following key values pairs can be assigned via XML to customize the creation of the scrollbar.
+
+{| class="darktable zebra"
+|+
+|-
+! Key !! Description
+|-
+| noScrollBar || If true, don't create a scrollbar when the template is loaded.
+|-
+| scrollBarBottomY || Bottom anchor offest for the scroll bar.
+|-
+| scrollBarHideIfUnscrollable || If true, hide the scrollbar automatically if the scrollframe contents cannot be scrolled.
+|-
+| scrollBarHideTrackIfThumbExceedsTrack || If true, hide the scrollbar track and thumb if the thumb would be too large to fit in the scrollbar.
+|-
+| scrollBarTemplate || The name of a template to instantiate for the scrollbar. Defaults to MinimalScrollBar.
+|-
+| scrollBarTopY || Top anchor Vertical offset for the scroll bar.
+|-
+| scrollBarX || Left anchor offset for the scroll bar. ||
+
+== Deprecated Templates ==
+
+The following templates have been deprecated and will be removed in a future patch. Many of these can be replaced by ScrollFrameTemplate with minimal changes required.
+
+* FauxScrollFrameTemplate
+* FauxScrollFrameTemplateLight
+* ListScrollFrameTemplate
+* MinimalScrollBarTemplate
+* MinimalScrollBarWithBorderTemplate
+* MinimalScrollFrameTemplate
+* UIPanelInputScrollFrameTemplate
+* UIPanelScrollBarTemplate
+* UIPanelScrollBarTemplateLightBorder
+* UIPanelScrollBarTrimTemplate
+* UIPanelScrollFrameCodeTemplate
+* UIPanelScrollFrameTemplate
+* UIPanelStretchableArtScrollBarTemplate
+
+The ScrollFrame_OnLoad function was renamed to UIPanelScrollFrame_OnLoad, however the old function name was reused and now refers to an entirely new and different function. If you are having issues with multiple scrollbars appearing on a scroll frame, renaming these function calls may be a solution.
+
+== Structures ==
+ Enum.BattlepetDeletedReason
+   + TradingPost = 6
+ Enum.CraftingReagentType
+   # Optional -> Modifying = 0
+   + Automatic = 3
+ Enum.CurrencySource
+   + AccountHwmUpdate = 61
+ Enum.Cursormode
+   + QuestLegendaryCursor = 28
+   + QuestLegendaryTurninCursor = 29
+   + QuestLegendaryErrorCursor = 61
+   + QuestLegendaryTurninErrorCursor = 62
+ Enum.EditModeAccountSetting
+   # ShowBuffFrame -> ShowBuffsAndDebuffs = 10
+   # ShowDebuffFrame -> DeprecatedShowDebuffFrame = 11
+   # ShowReputationBar -> ShowStatusTrackingBar2 = 20
+   + EnableAdvancedOptions = 23
+   + ShowPetFrame = 24
+ Enum.EditModeCastBarSetting
+   + ShowCastTime = 2
+ Enum.EditModeLayoutType
+   + Override = 3
+ Enum.EditModeMicroMenuSetting
+   + EyeSize = 3
+ Enum.EditModeMinimapSetting
+   + Size = 2
+ Enum.EditModeObjectiveTrackerSetting
+   + Opacity = 1
+ Enum.EditModeStatusTrackingBarSystemIndices
+   # ExperienceBar -> StatusTrackingBar1 = 1
+   # ReputationBar -> StatusTrackingBar2 = 2
+ Enum.EditModeUnitFrameSystemIndices
+   + Pet = 8
+ Enum.InventoryType
+   # IndexEquipablespellMobilityType -> IndexEquipablespellWeaponType = 34
+ Enum.PointsModifierSourceType
+   + CreatureHealthMod = 64
+ Enum.PowerType
+   + AlternateQuest = 23
+   + AlternateEncounter = 24
+   + AlternateMount = 25
+ Enum.TooltipDataLineType
+   + Separator = 30
+ Enum.UIMapFlag
+   + AlwaysAllowTaxiPathing = 0x20000
+ Enum.UIWidgetVisualizationType
+   + WorldLootObject = 26
+   + ItemDisplay = 27
+ Enum.VignetteType
+   + FyrakkFlight = 4
+ Enum.WidgetEnabledState
+   # Enabled -> Yellow = 1
+   # Gold -> Artifact = 5
+
+ Constants.TraitConsts
+   + VIEW_TRAIT_CONFIG_ID = -3
+
+ AreaPOIInfo
+   + 13: addPaddingAboveWidgets
+ CharCustomizationChoice
+   + 7: soundKit
+ CraftingReagentSlotSchematic
+   + 9: required
+ GenericWidgetDisplayFrameInfo
+   + 6: extraButtonText
+   + 7: closeButtonText
+ ItemUpgradeCurrencyCost
+   + 3: discountInfo
+ ItemUpgradeItemCost
+   + 3: discountInfo
+ ItemUpgradeItemInfo
+   + 5: highWatermarkSlot
+   + 8: minItemLevel
+   + 9: maxItemLevel
+   + 11: customUpgradeString
+   + 12: upgradeCostTypesForSeason
+ MatchPVPStatColumn
+   + 5: tooltipTitle
+ PVPScoreInfo
+   + 17: postmatchMMR
+ PartyPoseInfo
+   + 8: uiTextureKit
+   + 9: titleText
+ PerksActivitiesInfo
+   + 3: secondsRemaining
+ PerksActivityInfo
+   + 7: supersedes
+   + 8: uiPriority
+ ProfessionInfo
+   + 3: sourceCounter
+ QuestInfo
+   + 23: isLegendarySort
+ StatusBarWidgetVisualizationInfo
+   + 17: textEnabledState
+   + 18: textFontType
+   + 19: textSizeType
+ TaxiNodeInfo
+   + 9: isMapLayerTransition
+ UIWidgetSpellInfo
+   # 5: iconSizeType, Type: SpellDisplayIconSizeType -> WidgetIconSizeType
+ UiMapDetails
+   # 5: flags, Type: number -> UIMapFlag
+ VignetteInfo
+   + 16: addPaddingAboveWidgets

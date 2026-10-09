@@ -1,0 +1,20 @@
+{
+  "title": "Patch 4.2.0/API changes",
+  "version": "4.2.0",
+  "pageid": 315583,
+  "revid": 3045158,
+  "timestamp": "2021-08-22T03:01:41Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3045158&format=json",
+  "retrieved": "2026-10-09T08:41:58.986597+00:00",
+  "response_sha256": "aa978b9359b288b25f29d93f07b54c7791cc6114c90d17e8f79cb7fec128d770",
+  "wikitext_sha256": "699e1b8b9794a244f8421929cd4603ee04f4686a03cc1cd8b5478b31d7316bcd",
+  "wikitext_bytes": 2651,
+  "sha256": "699e1b8b9794a244f8421929cd4603ee04f4686a03cc1cd8b5478b31d7316bcd",
+  "generator_flags": [
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [],
+  "classification": "historical-retail-inventory",
+  "scope": "Pinned historical retail inventory. Complete per-ID bounded publication/source accounting; 31 retained gaps, 4.3.0/4.3.4 successor integration pending. No native signature or behavior parity claim."
+}

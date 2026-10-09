@@ -1,0 +1,678 @@
+
+== Resources ==
+TOC: 120005
+Official patch notes: 12.0.5 Content Update Notes
+
+
+== Blue posts ==
+
+
+=== 2026-03-12 ===
+Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace
+
+Hello again from Blizzard! With 12.0.5 PTR slated to start today, here is the list of addon API changes you can expect to see in next couple builds, followed by a discussion about some longer-term changes we are considering for the aura system.
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+Coming in 12.0.5 PTR 1
+Numeric Formatting
+
+We have added three new Lua object types for numeric formatting: AbbreviatedNumberFormatter, NumericRuleFormatter, and SecondsFormatter. These types can be supplied with secret numbers through the Format functions on duration objects.
+We're considering adjusting the various "display count" APIs (eg. GetSpellDisplayCount) to accept formatter objects, but this would be a breaking change (let us know your thoughts).
+Spell & Item Charge APIs
+
+The following APIs will now return a zero-span duration object when the queried spell is at maximum charges: GetSpellBookItemChargeDuration, GetSpellChargeDuration, GetActionChargeDuration.
+Duration Objects
+
+Duration objects that measure a zero-span are now considered fully elapsed.
+Auras
+
+The isHelpful, isHarmful, isRaid, isNameplateOnly, and isFromPlayerOrPlayerPet booleans on aura data tables are no longer secret.
+Transmog
+
+Added GetTransmogOutfitIndex to the restricted environment. Values returned from this can be used with the new /outfit slash command.
+Lua Documentation
+
+Added a new Predicates table to out Lua API documentation, which will provide a description of the restrictions on each API.
+Misc.
+
+The Ambiguate function now accepts secrets from addons.
+Added a Cooldown:SetCountdownMillisecondsThreshold(seconds) API. When a cooldown frame is rendering a time below this number of seconds, it will be displayed as a decimal value with one decimal place (e.g. "8.7").
+String formatting APIs no longer honor field width modifiers for secret string values (e.g. the "%.5s" format will no longer truncate a secret string).
+The UnitSpellTargetName API now only returns names for player units.
+Bug fixes
+The C_EncounterEvents.GetEventSound API no longer errors when called.
+
+Coming in upcoming 12.0.5 PTRs
+Misc.
+
+The UnitTokenFromGUID API (and various others) will no longer return arena, nameplate, boss, party, raid, or target-of-target unit tokens when unit identities are secret.
+UnitTokenNamePlate APIs will no longer accept party, raid, or target-of-target unit tokens.
+Addon execution throttles will no longer apply while the PLAYER_LOGOUT and ADDONS_UNLOADING events are being processed.
+
+Future Plans
+
+While we have a variety of plans for future patches (12.0.7 and beyond), including many more quality-of-life fixes for addon developers, we wanted to take a moment to talk about one area in particular that we are putting a lot of thought into: Auras (particularly of the Private variety).
+We created the Private Aura system back in 10.1 as a means to prevent addons from automating certain very specific fight mechanics. In some ways Private Auras can be viewed as the beginning of our experimentation with adjusting addon capabilities, and while they certainly had their issues, for the most part they served their purpose (albeit in a rather heavy-handed way). When we started developing the Secret Value system, we had hoped (planned even) to be able to essentially retire the Private Aura system and replace it with just secrets.
+Unfortunately, as Midnight Alpha & Beta progressed it became clear that relying on Secret Values alone was not going to be enough to prevent addon automation involving auras. And so, we ended up having to go in almost the exact opposite direction: we made MOST encounter debuffs private auras rather than just a select few. While this approach gave us the security we needed for Midnight Season 1, it also came with some significant downsides. Our own private aura displays don't currently have full parity with normal auras, and they aren’t supported in nameplates. On top of that they also require our encounter designers to be very diligent about flagging almost every encounter debuff as private, which is cumbersome and very easy to get wrong.
+All this is to say that we are not happy with the current state of auras as they pertain to addons, and we are planning to make some large changes to them. We don't have a hard target yet for when this rework will happen, but just to ease your minds a little it definitely will NOT be in 12.0.5 or 12.0.7. What shape this new aura system will take is also nowhere near decided yet so we won't have any specifics for a while yet, but the overarching goals can be summed up as:
+
+Auras need to be more secure than they currently are (with less upkeep for designers).
+Auras still need to be customizable and displayable by addons.
+And then as a bonus goal we would like auras to be more performant for addons.
+We will be consulting with addon developers as we start to plan out work on this new system, so don't worry about this being dropped on you out of the blue. We just wanted to give you an idea of where our heads are at, so it doesn't come as a surprise later.
+Oh and just to make Meo happy, Jar Jar would like to say: Wesa will have mooie tings to share berry soon!
+
+
+=== 2026-03-25 ===
+Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets
+
+Hello again from Blizzard! Below you will find a list of changes we have made to addon restriction APIs in the last two 12.0.5 PTR builds, followed by the changes we plan to make in next week's PTR build. We begin with a few changes we will be hotfixing to live.
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+Changes being Hotfixed to 12.0.1
+
+The following APIs will no longer be able to be called by addons during combat: PromoteToLeader, PromoteToAssistant, DemoteAssistant, SetEveryoneIsAssistant, DoReadyCheck, ConfirmReadyCheck, ConvertToParty, ConvertToRaid, ConfirmConvertToRaid, C_PartyInfo.DoCountdown, C_PartyInfo.SetRestrictPings, C_PartyInfo.SetLootMethod.
+Text lines in tooltips that contain secret text will no longer remain secret permanently.
+Fixing a bug where some players randomly become unable to set raid markers until they restart their client.
+
+Changes in 12.0.5 PTR 2 and 3
+Nameplate HitRect APIs
+
+Added an API to allow addons to override the offsets of nameplate hit-rects.
+UnitToken APIs
+
+The UnitTokenFromGUID API (and various others) no longer return arena, nameplate, boss, party, raid, or target-of-target unit tokens when unit identities are secret.
+UnitTokenNamePlate APIs no longer accept party, raid, or target-of-target unit tokens.
+UnitIsUnit API
+
+UnitIsUnit now returns secrets if either unit in the comparison is "targettarget" or "focustarget".
+Misc
+
+Added new Get/SetSmoothScaling APIs to font string objects (XML attributes were added for this back in 12.0.0).
+C_Navigation.GetNearestPartyMemberToken can no longer be called by addons.
+Added improved error messaging for various security-related errors involving tables.
+Addons can now use the table.freeze/table.isfrozen APIs to make their own tables read-only.
+Addon execution throttles will no longer be applied while processing PLAYER_LOGOUT and ADDONS_UNLOADING events.
+Bug fixes
+
+Using macro conditions with /tm commands (e.g. /tm [condition] 1) will no longer cause Lua errors.
+Fixed an issue with the IsUnderMouse] API where it would incorrectly return false for parent frames that were actually under the mouse.
+
+Changes coming in 12.0.5 PTR 4
+UnitIsUnit API
+
+The UnitIsUnit API is being adjusted to apply the following rules:
+If either unit is one of the following, the comparison is permitted: "player", "pet", "vehicle", "mouseover", "target", "softenemy", "softfriend", "softinteract", "focus", "none", "npc", "questnpc"
+If either unit is a party/raid token (or a pet of one) and the other is NOT a compound unit token ("boss1target"), nameplate token, or "targettarget"/"focustarget", the comparison is permitted.
+All other comparisons are disallowed and return nil.
+Misc
+
+We are adding 2 new APIs to C_TransmogOutfitInfo: GetOutfitInfoByName and GetOutfitInfoByPlayerFacingIndex.
+We are adding a new secure action ("outfit") for changing/clearing transmog outfits.
+Permanent auras will be sorted after long duration auras in SecureAuraHeaderTemplate (short < long < permanent).
+We are adding a new UnitHasPowerType API that returns a non-secret bool indicating if the unit uses a power type.
+We are adding a new ignoreGCD parameter to APIs that construct and return duration objects for cooldowns.
+We are adding numeric formatter support for Cooldown frame fontstrings.
+We are removing the restrictions that we recently placed on the AddPrivateAuraAnchor, RemovePrivateAuraAnchor and SetPrivateWarningTextAnchor APIs.
+Existing restrictions will remain on the AddPrivateAuraAppliedSound and RemovePrivateAuraAppliedSound APIs.
+Bug fixes
+
+ClassTalentHelper functions for changing specializations and loadouts will no longer taint the talent frame or player castbar.
+Using the /equipset command with an unknown or invalid set name will no longer cause Lua errors.
+Using macro conditions with /outfit command (e.g. /outfit [@player,noexists] 1) will no longer cause Lua errors.
+The GetRaidRosterInfo API will no longer return nil for name if the name is not in the name cache yet. Instead, it will return "Unknown" during that period.
+
+Jar Jar says: Meesa wishin' Meo a mooey mooey Happy Birthday!!
+
+
+=== 2026-03-31 ===
+Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets
+
+Hello again from Blizzard! Below you will find a list of changes we have made to addon restriction APIs in the new 12.0.5 PTR build. We begin with a small change we will be hotfixing to live.
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+Changes being Hotfixed to 12.0.1
+
+Fixing a bug that would cause tooltips to get marked secret incorrectly when textures were added to them.
+
+Changes in 12.0.5 PTR 4
+UnitIsUnit API
+
+The UnitIsUnit API has been adjusted to apply the following rules:
+If either unit is one of the following, the comparison is permitted: "player", "pet", "vehicle", "mouseover", "target", "softenemy", "softfriend", "softinteract", "focus", "none", "npc", "questnpc"
+If either unit is a party/raid token (or a pet of one) and the other is NOT a compound unit token ("boss1target"), nameplate token, or "targettarget"/"focustarget", the comparison is permitted.
+All other comparisons are disallowed and return nil.
+Stat APIs
+
+Most APIs that return player stats now return secrets if auras are secret. See the Lua documentation files for the full list of APIs affected.
+Auras
+
+Aura instance ID values now re-randomize when the player enters an encounter/M+/PvP match.
+Permanent auras are now sorted after long duration auras in SecureAuraHeaderTemplate (short < long < permanent).
+UnitName
+
+The UnitName API no longer accepts secret unit tokens.
+Unit Power
+
+Added a new UnitHasPowerType API that returns a non-secret bool indicating if the unit uses a power type.
+Cooldowns
+
+Added a new ignoreGCD parameter to APIs that construct and return duration objects for cooldowns.
+Added numeric formatter support for Cooldown frame fontstrings.
+Transmog
+
+Added 2 new APIs to C_TransmogOutfitInfo: GetOutfitInfoByName and GetOutfitInfoByPlayerFacingIndex.
+Added a new secure action "outfit" for changing/clearing transmog outfits.
+Misc
+
+Removed the restrictions that we recently placed on the AddPrivateAuraAnchor, RemovePrivateAuraAnchor, SetPrivateWarningTextAnchor and RemovePrivateAuraAppliedSound APIs. The AddPrivateAuraAppliedSound API is still restricted, but this restriction is now only in place during encounters and during M+/PvP matches.
+The recent restrictions to countdown, ready check, ping and loot method APIs have been loosened to only apply when in chat messaging lockdown rather than in all combat.
+Added a new C_ActionBar.UsesActionText API and switched to using it inside ActionBarActionButtonMixin:Update. This should fix some Lua errors that were getting thrown for addons in that code due to secrets.
+Added questID to the QuestAcceptConfirm event.
+Added a secure delegate for ClearSelectedSystem in EditMode, so addons can call it without taint concerns while not in combat.
+Add the following insecure templates for addon usage: InsecureMouseMotionPropagatorTemplate, InsecureMouseClicksPropagatorTemplate, InsecureKeyboardInputPropagatorTemplate and InsecureHyperlinkPropagatorTemplate.
+NPC followers are now treated as player units by nameplates, allowing the nameplateUseClassColorForFriendlyPlayerUnitNames and nameplateShowOnlyNameForFriendlyPlayerUnits cvars to work for them.
+Bug fixes
+
+ClassTalentHelper functions for changing specializations and loadouts no longer taint the talent frame or player castbar.
+Using the /equipset command with an unknown or invalid set name no longer causes Lua errors.
+Using macro conditions with /outfit commands (e.g. /outfit [@player,noexists] 1) no longer causes Lua errors.
+The GetRaidRosterInfo API no longer returns nil for name if the name is not in the name cache yet. Instead, it will return "Unknown" during that period.
+Fixed an issue where the IsInInstance API would not always return true when the player was in certain instances (mostly delves).
+Fixed an issue where the UNIT_CONNECTION event was not getting sent correctly when a party member disconnected or connected.
+
+
+=== 2026-04-10 ===
+Midnight 12.0.5 Upcoming Restriction Changes
+
+Hello again from Blizzard! Below you will find a small list of changes to addon restriction APIs we will be making to 12.0.5 before it goes live. These changes will likely be in an upcoming 12.0.5 PTR build before they go live (this is not guaranteed though depending on build timing).
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+Changes being Hotfixed to 12.0.5 before it goes live
+
+Instant-cast spells that are secret will no longer cause the UNIT_SPELLCAST_SUCCEEDED event to get sent for any units other than the player.
+The ModelSceneActor:SetModelByUnit and Model:SetUnit APIs will no longer accept unit tokens for units which have secret identity.
+These will not error - instead, they'll return a nil value in-place of the existing success return.
+Various chat channel APIs are no longer usable while chat lockdown is in effect, or from within macros.
+Unit identity restrictions have been adjusted; identities are secret while on instanced maps for any unit that isn't the player, their pet/vehicle, or a raid/party member.
+Previously, identity was restricted on instanced maps for attackable units.
+Mind control effects on allies no longer impact identity secrecy.
+Fixed a bug that caused taint logging to stop working after a reload UI.
+Fixed a bug that caused taint logging to not correctly write messages for tainted reads from tables.
+Fixed a bug that could cause some auras showing in the cooldown manager to have incorrect tooltips if they were active when an encounter begins.
+
+
+=== 2026-04-17 ===
+Midnight 12.0.5 and Classic PTR Update
+
+Hello again from Blizzard! Below you will find a (very) small list of changes to addon restriction APIs we will be making to 12.0.5 before it goes live.
+But first, a quick update about what to expect in regard to addon security in the upcoming Classic 5.5.4 PTR (and all future Classic releases).
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+Addon Security in Classic
+By and large, the addon security systems we put in place for Midnight will not be active in Classic. The secret value system is entirely disabled on Classic builds, and any API that returns secrets on Mainline will return non-secrets in Classic.
+The new chat restrictions will also be inactive in Classic, and combat log events will work just like they do currently in Classic. Additional restrictions to various APIs added in Midnight (guild APIs, etc.) will also not be active in Classic. The existing pre-Midnight security systems (taint, restricted actions, etc.) will still be active of course. Brand new functionality and objects that were added in Midnight (duration objects, curves, etc. and their associated APIs) will be available in Classic.
+One thing to note here is that Lua API documentation files do currently still reference secret values despite them not actually applying in Classic. We are working on fixing that, as well as doing an overall pass to make sure everything is working as expected in Classic. If you notice specific APIs that appear to not be working as expected please pass those along to us in the feedback channel.
+
+Changes being Hotfixed to 12.0.5 before it goes live
+
+Added a new API C_ScenarioInfo.GetUnitCriteriaProgressValues(unitToken) API which returns the M+ Enemy Forces value of the unit as an int (plain value), float (percent) and string (percent). Returns are secret when unit identity is secret.
+
+
+== Consolidated changes ==
+12.0.1 (66838) → 12.0.5 (67602) May 14 2026
+
+
+=== Global API ===
+
+C_ActionBar.FindSpellActionButtons
+  # arg1.Type number -> SpellIdentifier
+C_ActionBar.GetActionCharges
+  SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted
+C_ActionBar.GetActionCooldown
+  SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted
+C_ActionBar.GetActionCooldownDuration
+  + arg2 = ignoreGCD
+C_ActionBar.GetActionDisplayCount
+  SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted
+C_ActionBar.GetActionLossOfControlCooldownInfo
+  SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted
+C_ActionBar.GetActionUseCount
+  SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted
+C_ActionBar.HasSpellActionButtons
+  # arg1.Type number -> SpellIdentifier
+C_ActionBar.IsOnBarOrSpecialBar
+  # arg1.Type number -> SpellIdentifier
+C_CatalogShop.GetProductInfo
+  + HasRestrictions
+C_CatalogShop.PurchaseProduct
+  + HasRestrictions
+C_ChatInfo.InChatMessagingLockdown
+  - ret2 = lockdownReason
+C_ChatInfo.ReplaceIconAndGroupExpressions
+  + arg2,3 NeverSecret
+C_ClickBindings.CanSpellBeClickBound
+  # arg1.Type number -> SpellIdentifier
+C_DelvesUI.GetCurioLink
+  # arg1.Type number -> SpellIdentifier
+  + arg2 NeverSecret
+C_DelvesUI.GetTieredEntrancePDEID
+  - MayReturnNothing
+C_DelvesUI.HasActiveDelve
+  - arg1 = mapID
+  - SecretArguments = AllowedWhenUntainted
+C_DelvesUI.RequestPartyEligibilityForDelveTiers
+  # arg1.Name gossipOption -> mapID
+C_HouseExterior.RemoveFixtureFromSelectedPoint
+  + arg1 = attachedDecorAction
+  + SecretArguments = AllowedWhenUntainted
+C_HouseExterior.SelectCoreFixtureOption
+  + arg2 = attachedDecorAction
+C_HouseExterior.SelectFixtureOption
+  + arg2 = attachedDecorAction
+C_HouseExterior.SetHouseExteriorSize
+  + arg2 = attachedDecorAction
+C_HouseExterior.SetHouseExteriorType
+  + arg2 = attachedDecorAction
+C_HousingBasicMode.StartPlacingNewDecor
+  # arg1.Name catalogEntryID -> catalogEntryVariantID
+  # arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID
+C_HousingCatalog.DestroyEntry
+  # arg1.Name entryID -> entryVariantID
+  # arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID
+C_HousingCatalog.GetCatalogEntryInfoByItem
+  - arg2 = tryGetOwnedInfo
+C_HousingCatalog.GetCatalogEntryInfoByRecordID
+  - arg3 = tryGetOwnedInfo
+C_HousingCatalog.GetDestroyableInstanceCount
+  # arg1.Name entryID -> entryVariantID
+  # arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID
+C_MountJournal.GetMountFromSpell
+  # arg1.Type number -> SpellIdentifier
+C_QuestInfoSystem.GetQuestLogRewardFavor
+  # arg1.Nilable false -> true
+C_Spell.GetBaseSpell
+  + arg2 NeverSecret
+C_Spell.GetMawPowerBorderAtlasBySpellID
+  # arg1.Type number -> SpellIdentifier
+C_Spell.GetMawPowerLinkBySpellID
+  # arg1.Type number -> SpellIdentifier
+C_Spell.GetSpellCastCount
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_Spell.GetSpellCharges
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_Spell.GetSpellCooldown
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_Spell.GetSpellCooldownDuration
+  + arg2 = ignoreGCD
+C_Spell.GetSpellDisplayCount
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_Spell.GetSpellLink
+  + arg2 NeverSecret
+C_Spell.GetSpellLossOfControlCooldownInfo
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_Spell.GetSpellMaxCumulativeAuraApplications
+  # arg1.Type number -> SpellIdentifier
+  # SecretWhenSpellAuraRestricted -> SecretWhenUnitAuraRestricted
+C_SpellBook.GetSpellBookItemCastCount
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_SpellBook.GetSpellBookItemCharges
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_SpellBook.GetSpellBookItemCooldown
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_SpellBook.GetSpellBookItemCooldownDuration
+  + arg3 = ignoreGCD
+C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo
+  # SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted
+C_StringUtil.RemoveContiguousSpaces
+  + arg2 NeverSecret
+C_TooltipInfo.GetItemByID
+  + arg3 = itemContext
+  + arg4 = treasureContextLevel
+C_TooltipInfo.GetMountBySpellID
+  # arg1.Type number -> SpellIdentifier
+  + arg2 NeverSecret
+C_TooltipInfo.GetSpellByID
+  # arg1.Type number -> SpellIdentifier
+  + arg2-6 NeverSecret
+C_TooltipInfo.GetUnitAuraByAuraInstanceID
+  - arg1 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_TooltipInfo.GetUnitBuff
+  - arg1 NeverSecret
+C_TooltipInfo.GetUnitBuffByAuraInstanceID
+  - arg1 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_TooltipInfo.GetUnitDebuff
+  - arg1 NeverSecret
+C_TooltipInfo.GetUnitDebuffByAuraInstanceID
+  - arg1 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_TransmogCollection.GetIllusions
+  + arg1 = category
+  + SecretArguments = AllowedWhenUntainted
+C_TransmogOutfitInfo.GetOutfitInfo
+  # ret1.Name outfitsInfo -> outfitInfo
+C_TransmogOutfitInfo.GetPendingTransmogCost
+  + ret2 = modifierFlags
+C_UnitAuras.AddPrivateAuraAnchor
+  - HasRestrictions
+C_UnitAuras.AuraIsBigDefensive
+  # arg1.Type number -> SpellIdentifier
+C_UnitAuras.AuraIsPrivate
+  # arg1.Type number -> SpellIdentifier
+C_UnitAuras.DoesAuraHaveExpirationTime
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetAuraApplicationDisplayCount
+  + arg3 NeverSecret
+  + arg4 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetAuraBaseDuration
+  # arg3.Type number -> SpellIdentifier
+C_UnitAuras.GetAuraDataByIndex
+  - arg1 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetAuraDataBySlot
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetAuraDispelTypeColor
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetAuraDuration
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetAuraSlots
+  - arg1 NeverSecret
+C_UnitAuras.GetBuffDataByIndex
+  - arg1 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetCooldownAuraBySpellID
+  # arg1.Type number -> SpellIdentifier
+C_UnitAuras.GetDebuffDataByIndex
+  - arg1 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.GetPlayerAuraBySpellID
+  # arg1.Type number -> SpellIdentifier
+C_UnitAuras.GetRefreshExtendedDuration
+  # arg3.Type number -> SpellIdentifier
+C_UnitAuras.GetUnitAuraBySpellID
+  # arg2.Type number -> SpellIdentifier
+C_UnitAuras.IsAuraFilteredOutByInstanceID
+  - arg1 NeverSecret
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_UnitAuras.RemovePrivateAuraAnchor
+  - HasRestrictions
+C_UnitAuras.RemovePrivateAuraAppliedSound
+  - HasRestrictions
+C_UnitAuras.SetPrivateWarningTextAnchor
+  - HasRestrictions
+C_UnitAuras.WantsAlteredForm
+  # SecretArguments AllowedWhenTainted -> AllowedWhenUntainted
+C_VoiceChat.SpeakText
+  + arg1,3-5 NeverSecret
+Localization BreakUpLargeNumbers
+  + arg2 NeverSecret
+Localization CreateAbbreviateConfig
+  + RequiresRestrictedAbbreviationBreakpoints
+PlayerScript Ambiguate
+  + arg2 NeverSecret
+  # SecretArguments AllowedWhenUntainted -> AllowedWhenTainted
+PlayerScript GetAttackPowerForStat
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetAvoidance
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetBlockChance
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetCombatRating
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetCombatRatingBonus
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetCritChance
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetDodgeChance
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetDodgeChanceFromAttribute
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetExpertise
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetExpertisePercent
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetHaste
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetHitModifier
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetLifesteal
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetManaRegen
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetMastery
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetMasteryEffect
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetMeleeHaste
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetModResilienceDamageReduction
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetOverrideAPBySpellPower
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetOverrideSpellPowerByAP
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetParryChance
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetParryChanceFromAttribute
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetPetMeleeHaste
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetPetSpellBonusDamage
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetPowerRegen
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetPowerRegenForPowerType
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetPvpPowerDamage
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetPvpPowerHealing
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetRangedCritChance
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetRangedHaste
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetShieldBlock
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetSpeed
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetSpellBonusDamage
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetSpellBonusHealing
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetSpellCritChance
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetSpellHitModifier
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetSpellPenetration
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetSturdiness
+  + SecretWhenUnitStatsRestricted
+PlayerScript GetVersatilityBonus
+  + SecretWhenUnitStatsRestricted
+PlayerScript PlayerEffectiveAttackPower
+  + SecretWhenUnitStatsRestricted
+Unit GetUnitSpeed
+  + SecretWhenUnitStatsRestricted
+Unit UnitArmor
+  + SecretWhenUnitStatsRestricted
+Unit UnitAttackPower
+  + SecretWhenUnitStatsRestricted
+Unit UnitAttackSpeed
+  + SecretWhenUnitStatsRestricted
+Unit UnitDamage
+  + SecretWhenUnitStatsRestricted
+Unit UnitRangedAttackPower
+  + SecretWhenUnitStatsRestricted
+Unit UnitRangedDamage
+  + SecretWhenUnitStatsRestricted
+Unit UnitSpellHaste
+  + SecretWhenUnitStatsRestricted
+Unit UnitStat
+  + SecretWhenUnitStatsRestricted
+Unit UnitWeaponAttackPower
+  + SecretWhenUnitStatsRestricted
+
+
+=== ScriptObjects ===
+
+AbbreviateConfig:SetAbbreviateNumberData
+  + RequiresRestrictedAbbreviationBreakpoints
+HousingCatalogSearcher:GetAllSearchItems
+  # ret1.Name matchingEntryIDs -> matchingEntryVariantIDs
+  # ret1.InnerType HousingCatalogEntryID -> HousingCatalogEntryVariantID
+HousingCatalogSearcher:GetCatalogSearchResults
+  # ret1.Name matchingEntryIDs -> matchingEntryVariantIDs
+  # ret1.InnerType HousingCatalogEntryID -> HousingCatalogEntryVariantID
+
+
+=== Widgets ===
+
+PlayerModel:SetUnit
+  + RequiresDeclassifiedUnitIdentity
+Cooldown:GetMinimumCountdownDuration
+  # ret1.Type number -> DurationMillisecondsPrimitive
+Cooldown:SetCountdownAbbrevThreshold
+  # arg1.Type number -> DurationSecondsPrimitive
+Cooldown:SetMinimumCountdownDuration
+  # arg1.Type number -> DurationMillisecondsPrimitive
+ModelSceneActorBase:SetModelByUnit
+  + RequiresDeclassifiedUnitIdentity
+FontString:GetFont
+  # ret1.Type cstring -> FontAsset
+FontString:SetFont
+  # arg1.Type cstring -> FontAsset
+  # arg2.Type uiUnit -> number
+  # arg3.Nilable false -> true
+  + ret1 = success
+
+
+=== Events ===
+
+HOUSING_STORAGE_ENTRY_UPDATED
+  # [1].Name entryID -> entryVariantID
+  # [1].Type HousingCatalogEntryID -> HousingCatalogEntryVariantID
+QUEST_ACCEPT_CONFIRM
+  + [3] = questID
+SPELL_CONFIRMATION_PROMPT
+  + [8] = displayItemID
+  + [9] = itemContext
+  + [10] = treasureContextLevel
+
+
+=== CVars ===
+
+
+=== Enums ===
+Enum.AbbreviationDataError
+  - InvalidAbbreviation
+Enum.AddOnRestrictionType
+  + Chat
+Enum.CurrencyFlagsB
+  + CurrencyBNoBonusXP
+Enum.EditModeAccountSetting
+  + ShowTotemActionBar
+Enum.EditModeStatusTrackingBarSetting
+  + Size
+Enum.EditModeSystem
+  + TotemActionBar
+Enum.EditModeUnitFrameSetting
+  + BigDefensiveIconSize
+Enum.FragmentID
+  + FPathingDynamicLinks
+  + TagHousingDecorProxyGameObject
+Enum.FrameTutorialAccount
+  + HousingEndeavorsTabSeen
+Enum.HouseExteriorWMODataFlags
+  + HiddenUnlessOwned
+Enum.HouseFinderSuggestionReason
+  + HomeOwner
+Enum.HousingDecorPlacementRestriction
+  + InvalidLightOverlap
+Enum.HousingItemToastType
+  # House -> HouseType
+Enum.HousingResult
+  + BoundToStartingArea
+  + InvalidLightOverlap
+Enum.LootMethodStyles
+  + Mainline
+  - PersonalOnly
+Enum.PhotoSharingUploadStatus
+  + Disabled
+Enum.SurveyDeliveryMoment
+  + EncounterEnd
+Enum.TransmogIllusionFlags
+  + AllowedRangedShieldsHoldables
+Enum.TransmogSituation
+  + AllWeather
+  + WeatherClear
+  + WeatherRain
+  + WeatherSnow
+  + WeatherSand
+  + AllTime
+  + TimeMorning
+  + TimeDay
+  + TimeEvening
+  + TimeNight
+Enum.TransmogSituationTrigger
+  + Weather
+  + TimeOfDay
+
+
+=== Structures ===
+AddPrivateAuraAnchorArgs
+  + isContainer
+AreaPOIInfo
+  + isSuppressible
+  + isLocked
+CatalogShopProductDisplayInfo
+  + additionalProductPMTURLs
+  + houseTextureAtlas
+CatalogShopProductInfo
+  + previewBGOverrideProductURL
+  + previewSmallBGOverrideProductURL
+  + decorQuantity
+  - consumableQuantity
+DamageMeterCombatSource
+  + sourceDisplayType
+HousingBundleInfo
+  + nonDecorProducts
+HousingCatalogCategoryInfo
+  # anyOwnedEntries -> anyStoredEntries
+HousingCatalogEntryID
+  - entrySubtype
+  - subtypeIdentifier
+HousingCatalogEntryInfo
+  + recordID
+  + entryType
+  + totalNumStored
+  + totalNumPlaced
+  - entryID
+  - showQuantity
+  - quantity
+  - numPlaced
+  - customizations
+  - dyeIDs
+HousingCatalogSubcategoryInfo
+  # anyOwnedEntries -> anyStoredEntries
+HousingCategorySearchInfo
+  # withOwnedEntriesOnly -> withStoredEntriesOnly
+HousingDecorDyeSlot
+  + dyeColorName
+MajorFactionRenownRewardInfo
+  + isCollected
+PvpBrawlInfo
+  + shouldHideRewardIcon
+RecentAllyStateData
+  # hasFriendRequestPending -> friendRequestSentThisSession
+TransmogAppearanceSourceInfoData
+  + ignoreModelAttachmentChecksForIllusion
+TransmogOutfitEntryInfo
+  + playerFacingOutfitIndex
+UnitPrivateAuraAnchorInfo
+  + isContainer
+  + parent
+ViewedTransmogOutfitSlotInfo
+  + sheatheCategory

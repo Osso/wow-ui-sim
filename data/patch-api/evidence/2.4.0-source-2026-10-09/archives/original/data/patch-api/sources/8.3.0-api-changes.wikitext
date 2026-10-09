@@ -1,0 +1,293 @@
+{{apichanges|8.3.0|prev=8.2.5|next=8.3.7}}
+
+==Changes==
+* TOC: <code>80300</code>
+* The [[Auction House]] was revamped <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=[[Kaivax]]|date=2019-10-07|title=Feedback – Auction House Revamp}}</ref>
+* Deprecated API: [https://www.townlong-yak.com/framexml/8.3.0/Blizzard_Deprecated/Deprecated_8_3_0.lua Deprecated_8_3_0.lua]
+
+==Diffs==
+===8.2.5 (32978) to 8.3.0 (33062) Jan 14 2020===
+: [https://github.com/Gethe/wow-ui-source/commit/356d028f9d245f6e75dc8a806deb3c38aa0aa77f FrameXML], [https://github.com/Ketho/BlizzardInterfaceResources/commit/896f3ba53697f11b2c3705a1298daa48cb8aa38f InterfaceResources]
+
+===8.3.0 (34601) May 29 2020===
+: [https://github.com/Gethe/wow-ui-source/commit/479bb55438dcafb6898e919591b2659e5e27835b FrameXML], [https://github.com/Ketho/BlizzardInterfaceResources/commit/907b6f51751e78e7115a0965f2f9e928abc2c486 InterfaceResources]
+* New functions: {{api|C_AzeriteEssence.GetNumUsableEssences}}, {{api|C_Item.IsItemCorruptable}}, {{api|TargetSpellHasApplyCorruption}}
+
+===8.3.0 (34769) Jun 11 2020===
+: [https://github.com/Gethe/wow-ui-source/commit/424379ff64268b92097ab52fe5e7b6af6c5e70ff FrameXML], [https://github.com/Ketho/BlizzardInterfaceResources/commit/380fe7459cbf34141be77fc9d58805fde5b1c324 InterfaceResources]
+* New event: {{api|t=e|LFG_GROUP_DELISTED_LEADERSHIP_CHANGE}}
+
+==Global API==
+ {| class="wikitable" style="min-width: 600px"
+|+ Global API 8.2.5 (32978) &rarr; 8.3.0 (33237)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 123 new functions
+! style="width: 50%; padding-right: 1em;"| 42 removed/renamed functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_AuctionHouse.CalculateCommodityDeposit}}
+: {{api|C_AuctionHouse.CalculateItemDeposit}}
+: {{api|C_AuctionHouse.CanCancelAuction}}
+: {{api|C_AuctionHouse.CancelAuction}}
+: {{api|C_AuctionHouse.CancelCommoditiesPurchase}}
+: {{api|C_AuctionHouse.CancelSell}}
+: {{api|C_AuctionHouse.CloseAuctionHouse}}
+: {{api|C_AuctionHouse.ConfirmCommoditiesPurchase}}
+: {{api|C_AuctionHouse.FavoritesAreAvailable}}
+: {{api|C_AuctionHouse.GetAuctionItemSubClasses}}
+: {{api|C_AuctionHouse.GetAvailablePostCount}}
+: {{api|C_AuctionHouse.GetBidInfo}}
+: {{api|C_AuctionHouse.GetBidType}}
+: {{api|C_AuctionHouse.GetBrowseResults}}
+: {{api|C_AuctionHouse.GetCancelCost}}
+: {{api|C_AuctionHouse.GetCommoditySearchResultInfo}}
+: {{api|C_AuctionHouse.GetCommoditySearchResultsQuantity}}
+: {{api|C_AuctionHouse.GetExtraBrowseInfo}}
+: {{api|C_AuctionHouse.GetFilterGroups}}
+: {{api|C_AuctionHouse.GetItemCommodityStatus}}
+: {{api|C_AuctionHouse.GetItemKeyFromItem}}
+: {{api|C_AuctionHouse.GetItemKeyInfo}}
+: {{api|C_AuctionHouse.GetItemSearchResultInfo}}
+: {{api|C_AuctionHouse.GetItemSearchResultsQuantity}}
+: {{api|C_AuctionHouse.GetMaxBidItemBid}}
+: {{api|C_AuctionHouse.GetMaxBidItemBuyout}}
+: {{api|C_AuctionHouse.GetMaxCommoditySearchResultPrice}}
+: {{api|C_AuctionHouse.GetMaxItemSearchResultBid}}
+: {{api|C_AuctionHouse.GetMaxItemSearchResultBuyout}}
+: {{api|C_AuctionHouse.GetMaxOwnedAuctionBid}}
+: {{api|C_AuctionHouse.GetMaxOwnedAuctionBuyout}}
+: {{api|C_AuctionHouse.GetNumBidTypes}}
+: {{api|C_AuctionHouse.GetNumBids}}
+: {{api|C_AuctionHouse.GetNumCommoditySearchResults}}
+: {{api|C_AuctionHouse.GetNumItemSearchResults}}
+: {{api|C_AuctionHouse.GetNumOwnedAuctionTypes}}
+: {{api|C_AuctionHouse.GetNumOwnedAuctions}}
+: {{api|C_AuctionHouse.GetNumReplicateItems}}
+: {{api|C_AuctionHouse.GetOwnedAuctionInfo}}
+: {{api|C_AuctionHouse.GetOwnedAuctionType}}
+: {{api|C_AuctionHouse.GetQuoteDurationRemaining}}
+: {{api|C_AuctionHouse.GetReplicateItemBattlePetInfo}}
+: {{api|C_AuctionHouse.GetReplicateItemInfo}}
+: {{api|C_AuctionHouse.GetReplicateItemLink}}
+: {{api|C_AuctionHouse.GetReplicateItemTimeLeft}}
+: {{api|C_AuctionHouse.GetTimeLeftBandInfo}}
+: {{api|C_AuctionHouse.HasFavorites}}
+: {{api|C_AuctionHouse.HasFullBidResults}}
+: {{api|C_AuctionHouse.HasFullBrowseResults}}
+: {{api|C_AuctionHouse.HasFullCommoditySearchResults}}
+: {{api|C_AuctionHouse.HasFullItemSearchResults}}
+: {{api|C_AuctionHouse.HasFullOwnedAuctionResults}}
+: {{api|C_AuctionHouse.HasMaxFavorites}}
+: {{api|C_AuctionHouse.HasSearchResults}}
+: {{api|C_AuctionHouse.IsFavoriteItem}}
+: {{api|C_AuctionHouse.IsSellItemValid}}
+: {{api|C_AuctionHouse.IsThrottledMessageSystemReady}}
+: {{api|C_AuctionHouse.MakeItemKey}}
+: {{api|C_AuctionHouse.PlaceBid}}
+: {{api|C_AuctionHouse.PostCommodity}}
+: {{api|C_AuctionHouse.PostItem}}
+: {{api|C_AuctionHouse.QueryBids}}
+: {{api|C_AuctionHouse.QueryOwnedAuctions}}
+: {{api|C_AuctionHouse.RefreshCommoditySearchResults}}
+: {{api|C_AuctionHouse.RefreshItemSearchResults}}
+: {{api|C_AuctionHouse.ReplicateItems}}
+: {{api|C_AuctionHouse.RequestMoreBrowseResults}}
+: {{api|C_AuctionHouse.RequestMoreCommoditySearchResults}}
+: {{api|C_AuctionHouse.RequestMoreItemSearchResults}}
+: {{api|C_AuctionHouse.SearchForFavorites}}
+: {{api|C_AuctionHouse.SearchForItemKeys}}
+: {{api|C_AuctionHouse.SendBrowseQuery}}
+: {{api|C_AuctionHouse.SendSearchQuery}}
+: {{api|C_AuctionHouse.SendSellSearchQuery}}
+: {{api|C_AuctionHouse.SetFavoriteItem}}
+: {{api|C_AuctionHouse.StartCommoditiesPurchase}}
+: {{api|C_AzeriteItem.GetUnlimitedPowerLevel}}
+: {{api|C_Calendar.IsEventOpen}}
+: {{api|C_ClubFinder.GetPostingIDFromClubFinderGUID}}
+: {{api|C_Garrison.GetGarrisonTalentTreeCurrencyTypes}}
+: {{api|C_Garrison.GetGarrisonTalentTreeType}}
+: {{api|C_Garrison.GetTalentPointsSpentInTalentTree}}
+: {{api|C_Garrison.GetTalentTreeTalentPointResearchInfo}}
+: {{api|C_GuildInfo.GetGuildTabardInfo}}
+: {{api|C_Item.GetStackCount}}
+: {{api|C_Item.IsItemCorrupted}}
+: {{api|C_Item.IsItemCorruptionRelated}}
+: {{api|C_Item.IsItemCorruptionResistant}}
+: {{api|C_Item.LockItemByGUID}}
+: {{api|C_Item.UnlockItemByGUID}}
+: {{api|C_ItemInteraction.ClearPendingItem}}
+: {{api|C_ItemInteraction.CloseUI}}
+: {{api|C_ItemInteraction.GetItemInteractionInfo}}
+: {{api|C_ItemInteraction.GetItemInteractionSpellId}}
+: {{api|C_ItemInteraction.InitializeFrame}}
+: {{api|C_ItemInteraction.PerformItemInteraction}}
+: {{api|C_ItemInteraction.Reset}}
+: {{api|C_ItemInteraction.SetCorruptionReforgerItemTooltip}}
+: {{api|C_ItemInteraction.SetPendingItem}}
+: {{api|C_LFGuildInfo.GetRecruitingGuildTabardInfo}}
+: {{api|C_Mail.CanCheckInbox}}
+: {{api|C_Map.CloseWorldMapInteraction}}
+: {{api|C_PartyInfo.GetMinLevel}}
+: {{api|C_QuestLog.GetActiveThreatMaps}}
+: {{api|C_QuestLog.HasActiveThreats}}
+: {{api|C_QuestLog.IsThreatQuest}}
+: {{api|C_TaskQuest.GetThreatQuests}}
+: {{api|C_UIWidgetManager.GetPowerBarWidgetSetID}}
+: {{api|C_WowTokenUI.StartTokenSell}}
+: {{api|GetCorruption}}
+: {{api|GetCorruptionResistance}}
+: {{api|GetNegativeCorruptionEffectInfo}}
+: {{api|GetUnitPowerBarInfo}}
+: {{api|GetUnitPowerBarInfoByID}}
+: {{api|GetUnitPowerBarStrings}}
+: {{api|GetUnitPowerBarStringsByID}}
+: {{api|GetUnitPowerBarTextureInfo}}
+: {{api|GetUnitPowerBarTextureInfoByID}}
+: {{api|IsCorruptedItem}}
+: {{api|IsUnitModelReadyForUI}}
+: {{api|IsUsingFixedTimeStep}}
+: {{api|PetDefensiveAssistMode}}
+: {{api|UnitPowerBarID}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_ProductChoice.GetChoices}}
+: {{api|C_ProductChoice.GetNumSuppressed}}
+: {{api|C_ProductChoice.GetProducts}}
+: {{api|C_ProductChoice.MakeSelection}}
+: {{api|C_WowTokenPublic.SellToken}}
+: {{api|CalculateAuctionDeposit}}
+: {{api|CanCancelAuction}}
+: {{api|CanSendAuctionQuery}}
+: {{api|CancelAuction}}
+: {{api|CancelSell}}
+: {{api|ClickAuctionSellItemButton}}
+: {{api|CloseAuctionHouse}}
+: {{api|ConfirmPostAuction}}
+: {{api|GetAlternatePowerInfoByID}}
+: {{api|GetAuctionDeposit}}
+: {{api|GetAuctionHouseDepositRate}}
+: {{api|GetAuctionItemBattlePetInfo}}
+: {{api|GetAuctionItemInfo}}
+: {{api|GetAuctionItemLink}}
+: {{api|GetAuctionItemSubClasses}}
+: {{api|GetAuctionItemTimeLeft}}
+: {{api|GetAuctionSellItemInfo}}
+: {{api|GetAuctionSort}}
+: {{api|GetBidderAuctionItems}}
+: {{api|GetNumAuctionItems}}
+: {{api|GetOwnerAuctionItems}}
+: {{api|GetRecruitingGuildTabardInfo}}
+: {{api|GetSelectedAuctionItem}}
+: {{api|IsAuctionSortReversed}}
+: {{api|PlaceAuctionBid}}
+: {{api|PostAuction}}
+: {{api|QueryAuctionItems}}
+: {{api|SetAuctionsTabShowing}}
+: {{api|SetSelectedAuctionItem}}
+: {{api|SortAuctionApplySort}}
+: {{api|SortAuctionClearSort}}
+: {{api|SortAuctionItems}}
+: {{api|SortAuctionSetSort}}
+: {{api|StartAuction}}
+: {{api|UnitAlternatePowerCounterInfo}}
+: {{api|UnitAlternatePowerInfo}}
+: {{api|UnitAlternatePowerTextureInfo}}
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API 8.2.5 (32978) &rarr; 8.3.0 (33062)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 2 new methods
+! style="width: 50%; padding-right: 1em;"| 2 removed methods
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Button:RegisterForMouse}}
+: {{api|t=w|GameTooltip:SetItemKey}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|GameTooltip:SetAuctionItem}}
+: {{api|t=w|GameTooltip:SetAuctionSellItem}}
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|+ Events 8.2.5 (32978) &rarr; 8.3.0 ([https://github.com/Ketho/BlizzardInterfaceResources/commit/44a019b8fd0b745fe8d973a7a5c346c09f719b0b 33237])
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 39 new events
+! style="width: 50%; padding-right: 1em;"| 6 removed events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|AUCTION_CANCELED}}
+: {{api|t=e|AUCTION_HOUSE_AUCTION_CREATED}}
+: {{api|t=e|AUCTION_HOUSE_BROWSE_FAILURE}}
+: {{api|t=e|AUCTION_HOUSE_BROWSE_RESULTS_ADDED}}
+: {{api|t=e|AUCTION_HOUSE_BROWSE_RESULTS_UPDATED}}
+: {{api|t=e|AUCTION_HOUSE_FAVORITES_UPDATED}}
+: {{api|t=e|AUCTION_HOUSE_NEW_BID_RECEIVED}}
+: {{api|t=e|AUCTION_HOUSE_NEW_RESULTS_RECEIVED}}
+: {{api|t=e|AUCTION_HOUSE_THROTTLED_MESSAGE_DROPPED}}
+: {{api|t=e|AUCTION_HOUSE_THROTTLED_MESSAGE_QUEUED}}
+: {{api|t=e|AUCTION_HOUSE_THROTTLED_MESSAGE_RESPONSE_RECEIVED}}
+: {{api|t=e|AUCTION_HOUSE_THROTTLED_MESSAGE_SENT}}
+: {{api|t=e|AUCTION_HOUSE_THROTTLED_SPECIFIC_SEARCH_READY}}
+: {{api|t=e|AUCTION_HOUSE_THROTTLED_SYSTEM_READY}}
+: {{api|t=e|BIDS_UPDATED}}
+: {{api|t=e|BID_ADDED}}
+: {{api|t=e|COMMENTATOR_IMMEDIATE_FOV_UPDATE}}
+: {{api|t=e|COMMODITY_PRICE_UNAVAILABLE}}
+: {{api|t=e|COMMODITY_PRICE_UPDATED}}
+: {{api|t=e|COMMODITY_PURCHASED}}
+: {{api|t=e|COMMODITY_PURCHASE_FAILED}}
+: {{api|t=e|COMMODITY_PURCHASE_SUCCEEDED}}
+: {{api|t=e|COMMODITY_SEARCH_RESULTS_ADDED}}
+: {{api|t=e|COMMODITY_SEARCH_RESULTS_UPDATED}}
+: {{api|t=e|EXTRA_BROWSE_INFO_RECEIVED}}
+: {{api|t=e|GLOBAL_MOUSE_DOWN}}
+: {{api|t=e|GLOBAL_MOUSE_UP}}
+: {{api|t=e|ITEM_INTERACTION_CLOSE}}
+: {{api|t=e|ITEM_INTERACTION_ITEM_SELECTION_UPDATED}}
+: {{api|t=e|ITEM_INTERACTION_OPEN}}
+: {{api|t=e|ITEM_KEY_ITEM_INFO_RECEIVED}}
+: {{api|t=e|ITEM_PURCHASED}}
+: {{api|t=e|ITEM_SEARCH_RESULTS_ADDED}}
+: {{api|t=e|ITEM_SEARCH_RESULTS_UPDATED}}
+: {{api|t=e|OWNED_AUCTIONS_UPDATED}}
+: {{api|t=e|REPLICATE_ITEM_LIST_UPDATE}}
+: {{api|t=e|TOKEN_SELL_CONFIRMED}}
+: {{api|t=e|WORLD_MAP_CLOSE}}
+: {{api|t=e|WORLD_MAP_OPEN}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|AUCTION_BIDDER_LIST_UPDATE}}
+: {{api|t=e|AUCTION_HOUSE_POST_ERROR}}
+: {{api|t=e|AUCTION_HOUSE_POST_WARNING}}
+: {{api|t=e|AUCTION_ITEM_LIST_UPDATE}}
+: {{api|t=e|AUCTION_OWNED_LIST_UPDATE}}
+: {{api|t=e|NEW_AUCTION_UPDATE}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|+ CVars 8.2.5 (32978) &rarr; 8.3.0 (33062)
+|- class="mw-customtoggle-cvars" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 5 new cvars
+! style="width: 50%; padding-right: 1em;"| 1 removed command
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=c|calendarShowHolidays}}
+: {{api|t=c|Collision}}
+: {{api|t=c|NamePlateClassificationScale}}
+: {{api|t=c|NamePlateMaximumClassificationScale}}
+: {{api|t=c|PreventOsIdleSleep}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=c|DumpSoundKits}}
+</div>
+|}
+
+==References==
+{{Reflist}}

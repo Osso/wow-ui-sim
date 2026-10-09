@@ -1,0 +1,17 @@
+{
+  "pageid": 149302,
+  "title": "Patch 8.0.1/API changes",
+  "revid": 1463362,
+  "timestamp": "2023-07-20T21:26:53Z",
+  "retrieved": "2026-10-08",
+  "method": "MediaWiki revisions API; p801-fetch.json and p801-fetch-attempts.json",
+  "wikitext_sha256": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4",
+  "generator_flags": [
+    "--bfa-prepatch"
+  ],
+  "extractor_flags": [
+    "--bfa-prepatch"
+  ],
+  "register_generator": "tools/gen_patch_wikitext_register.py",
+  "extract_generator": "tools/extract_patch_non_inventory.py"
+}

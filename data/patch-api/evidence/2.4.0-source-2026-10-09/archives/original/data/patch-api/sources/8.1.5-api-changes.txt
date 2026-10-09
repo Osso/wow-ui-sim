@@ -1,0 +1,26 @@
+Patch 8.1.5 API changes
+
+Diff: 8.1.0 (29482) to 8.1.5 (29701)
+* https://github.com/Gethe/wow-ui-source/commit/93e7041bf9340ca2bcfca8a56feab94ff0bee066
+Blizzard Deprecated
+* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_5.lua
+
+== API ==
+==== New ====
+New C_CVar table
+New C_ClassColor table
+New C_ItemSocketInfo table
+New C_Texture table
+
+==== Changes ====
+?
+
+==== Removals ====
+
+== Widgets ==
+?
+
+== Events ==
+
+== CVars ==
+?

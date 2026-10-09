@@ -1,0 +1,37 @@
+{{apichanges|3.3.0|next=3.3.3|prev=3.2.0|misc=Based on [http://forums.worldofwarcraft.com/thread.html?topicId=20437376853&sid=1 Iriel's post] on the official forums.}}
+
+== API changes ==
+=== AddOn Namespace ===
+* The Lua script files in an AddOn now have access to a [[Using_the_AddOn_namespace|private table]].
+
+=== Quests ===
+* NEW - QueryQuestsCompleted() requests that the server send the client a list of completed quest ids. Once the list is received the QUEST_QUERY_COMPLETE event is fired. (There is a limit on how frequently this can be called)
+* NEW - tbl = GetQuestsCompleted([tbl]) populates a table (creating one if necessary) with the ids of completed quests as keys with true values.
+
+=== GUIDs  ===
+* The format of NPC GUId's has changed, the creature ID is now two hex digits (8 bits) to the left, e.g. Hogger (0x1C0) is now xF13001C0000005D2 (formerly xF1300001C00005D2)
+
+== Widget API ==
+* The deprecated GetFrameType method has been completely removed (GetObjectType offers the same result)
+
+=== Region ===
+* NEW - isOver = region:IsMouseOver() -- Tests whether the mouse is over the region, replaces the MouseIsOver FrameXML lua function.
+
+=== Button ===
+* NEW - Button:SetMotionScriptsWhileDisabled(enable) --Allows OnEnter and OnLeave to fire while the button is disabled.
+* NEW - isEnabled = Button:GetMotionScriptsWhileDisabled()
+* This can also be set from XML: <Button motionScriptsWhileDisabled="true">
+* The registerForClicks property can now be set from XML.
+
+=== Texture ===
+* NEW - width = Texture:GetFileWidth() --Gets the width/height of the actual file in use by the texture. (0 if we can't access the texture for some reason) (Note: These currently aren't returning the right values for some Blizzard UI images)
+* NEW - height = Texture:GetFileHeight()
+
+== Macros ==
+* The @ symbol has been added as a synonym for 'target=' to help avoid confusion and compact macros, you can do /cast [@focus] Obliterate
+* The following new macro conditionals have been added:
+*; vehicleui : the PLAYER has a vehicle UI
+*; unithasvehicleui : the target of the macro has a vehicle UI
+
+== See also ==
+*[[Special:Diff/4997637/4997649|Global API Changes: 3.2.2 -> 3.3.0]]

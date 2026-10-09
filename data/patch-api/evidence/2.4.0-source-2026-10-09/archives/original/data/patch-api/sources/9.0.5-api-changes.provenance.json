@@ -1,0 +1,10 @@
+{
+  "pageid": 447309,
+  "revid": 4298844,
+  "timestamp": "2021-05-06T12:06:16Z",
+  "retrieved": "2026-10-08",
+  "url": "https://warcraft.wiki.gg/wiki/Patch_9.0.5/API_changes",
+  "fetch": "MediaWiki API query via curl",
+  "wikitext_sha256": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673",
+  "generator_flags": []
+}

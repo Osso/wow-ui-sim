@@ -1,0 +1,7 @@
+Patch 4.4.1 API changes
+
+== Resources ==
+* TOC: 40401
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== Consolidated diffs ==

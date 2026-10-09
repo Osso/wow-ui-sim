@@ -1,0 +1,87 @@
+Patch 11.2.0 API changes
+
+== Summary ==
+* Added support for user-configurable font scaling to some parts of the UI, such as dialogs.
+* Added support for the [TextLocale] variable expansion in TOC files, which will expand out to the client text locale (eg. "enUS").
+* Added support for the [AllowLoadTextLocale ...] conditional line directive in TOC files, which allows restricting files to only load under specific client text locales.
+* The API documentation has been expanded with annotations for functions that have security restrictions in place.
+* The CreateFromMixins and Mixin APIs are now implemented as native functions. Previously, they were defined in Lua.
+* Region:ClearAllPoints() now immediately invalidates the rect. Any measurement calculations relying on the previous rect should occur before calling ClearAllPoints.
+
+== Breaking changes ==
+* The StaticPopup_DisplayedFrames and STATICPOPUP_NUMDIALOGS global variables have been removed.
+** Addons wanting to iterate over shown static popup dialogs should instead use StaticPopup_ForEachShownDialog.
+* Various child key references on StaticPopup dialogs have been renamed.
+** Addons should prefer to use the new accessor methods on StaticPopup frames to access regions such as Buttons and EditBoxes.
+
+== Resources ==
+* TOC: 110200
+* Official patch notes: Ghosts of K'aresh Content Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated APIs:
+** Deprecated_11_2_0.lua
+** Deprecated_ChatInfo.lua
+** Blizzard_DeprecatedSpecialization
+** Deprecated_SpellBook.lua
+** Deprecated_UnitScript.lua
+
+== Consolidated changes ==
+: 11.1.7 (61559) → 11.2.0 (62438) Aug  5 2025
+=== Enumerations ===
+Enum.BagFlag
+   # LookInBankOnly -> LookInCharacterBankOnly
+   - LookInReagentsBankOnly
+ Enum.BagIndex
+   - Bankbag = -4
+   - Reagentbank = -3
+   # Accountbanktab = -5 -> -3
+   + Characterbanktab = -2
+   - Bank = -1
+   # Keyring = -2 -> -1
+   # BankBag_1 = 6 -> CharacterBankTab_1 = 6
+   # BankBag_2 = 7 -> CharacterBankTab_2 = 7
+   # BankBag_3 = 8 -> CharacterBankTab_3 = 8
+   # BankBag_4 = 9 -> CharacterBankTab_4 = 9
+   # BankBag_5 = 10 -> CharacterBankTab_5 = 10
+   # BankBag_6 = 11 -> CharacterBankTab_6 = 11
+   - BankBag_7 = 12
+   # AccountBankTab_1 = 13 -> 12
+   # AccountBankTab_2 = 14 -> 13
+   # AccountBankTab_3 = 15 -> 14
+   # AccountBankTab_4 = 16 -> 15
+   # AccountBankTab_5 = 17 -> 16
+ Enum.CooldownSetSpellFlags
+   + PlaceHolder1
+ Enum.ItemGemColor
+   - FutureUse -> Fiber
+ Enum.ItemSocketType
+   - FutureUse -> Fiber
+ Enum.QuestCompleteSpellType
+   + PossibleReward
+ Enum.WarbandScenePlacementType
+   + Chair
+ Enum.SlotRegion
+   # Bank -> CharacterBank
+   - ReagentBank
+ Enum.SlotRegionMask
+   + CharacterBank -> Bank
+   - ReagentBank
+ Enum.SubcontainerType
+   + CharacterBankTabs
+   + HousingDecorConversion
+
+=== Structures ===
+ BankTabData
+   + tabCleanupConfirmation
+   + tabNameEditBoxHeader
+ CraftingReagentSlotSchematic
+   + hiddenInCraftingForm
+ ExpansionDisplayInfo
+   + textureKit
+ FontScriptInfo
+   + canBeUserScaled
+ LfgSearchResultPlayerInfo
+   + isLeaver
+ RandomBGInfo
+   + bgIndex
+   + name

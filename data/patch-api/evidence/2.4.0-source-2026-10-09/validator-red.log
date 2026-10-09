@@ -1,0 +1,34 @@
+FFF
+======================================================================
+FAIL: test_fresh_copy_without_git_target_or_current_sources (__main__.ReplayTests.test_fresh_copy_without_git_target_or_current_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_replay.py", line 29, in test_fresh_copy_without_git_target_or_current_sources
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : /usr/bin/python3: can't open file '/tmp/tmp6zmeym19/historical/validate.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_omitted_literal_line_cannot_become_closure (__main__.ReplayTests.test_omitted_literal_line_cannot_become_closure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_replay.py", line 64, in test_omitted_literal_line_cannot_become_closure
+    self.assertTrue(path.exists(), 'missing serialized original ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing serialized original ledger
+
+======================================================================
+FAIL: test_serialized_tamper_rejects_then_restores (__main__.ReplayTests.test_serialized_tamper_rejects_then_restores)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_replay.py", line 41, in test_serialized_tamper_rejects_then_restores
+    self.assertEqual(clean.returncode, 0, clean.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : /usr/bin/python3: can't open file '/tmp/tmpoyf698cl/historical/validate.py': [Errno 2] No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.013s
+
+FAILED (failures=3)

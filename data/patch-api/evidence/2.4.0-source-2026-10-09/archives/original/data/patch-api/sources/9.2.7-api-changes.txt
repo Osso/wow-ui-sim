@@ -1,0 +1,27 @@
+Patch 9.2.7 API changes
+
+== Summary ==
+* Blizzard API documentation was moved to Blizzard_APIDocumentationGenerated.
+
+== Resources ==
+* TOC: 90207
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: User Interface and Accessibility
+
+== Enumerations ==
+ + Enum.GamePadPowerLevel
+ + Enum.ItemGemColor
+ + Enum.ItemSocketType
+ + Enum.ItemSubclassDisplay
+ + Enum.ItemSubclassFlag
+ # Enum.AuctionHouseError
+   + DoubleBid
+   + FavoritesMaxed
+   + ItemNotAvailable
+ # Enum.ReportType
+   + PvPScoreboard
+
+== Structures ==
+ # ItemKeyInfo (C_AuctionHouse.GetItemKeyInfo)
+   + itemID
+   + battlePetSpeciesID

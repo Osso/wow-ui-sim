@@ -1,0 +1,17 @@
+Patch 8.2.5 API changes
+
+== Changes ==
+* TOC: 80205
+* C_FriendList.SendWho() is hardware event protected.
+* SendChatMessage() is partially hw event protected:
+:: "CHANNEL" is protected, "SAY", "YELL" are protected while outside of instances/raids. [Reference: url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It’s ALSO disabled from SAY/YELL out in world. It’s permitted in raid/party/guild chat, and SAY/YELL within instances.]
+* Added Party Sync and revamped Recruit-A-Friend
+* Deprecated API: Deprecated_8_2_5.lua
+
+== Diffs ==
+8.2.0 (31429) to 8.2.5 (31921)
+: FrameXML: https://github.com/Gethe/wow-ui-source/commit/cf91ea29e5b84b9dd5b204de61d9349d578d73d8
+: InterfaceResources: https://github.com/Ketho/BlizzardInterfaceResources/commit/139c0ae4ea4533a49965079e6fb222c9f60862d6
+
+== References ==
+[References list; not expanded]

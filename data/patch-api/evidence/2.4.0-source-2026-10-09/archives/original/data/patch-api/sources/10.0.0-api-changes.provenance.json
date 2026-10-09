@@ -1,0 +1,11 @@
+{
+  "pageid": 530068,
+  "title": "Patch 10.0.0/API changes",
+  "revid": 6789768,
+  "timestamp": "2026-07-31T04:32:53Z",
+  "retrieved": "2026-10-07",
+  "method": "MediaWiki revisions API rvslots=main; response retained in evidence/p1000-fetch.json",
+  "wikitext_sha256": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c",
+  "register_generator": "python3 tools/gen_patch_wikitext_register.py 10.0.0 data/patch-api/sources/10.0.0-api-changes.wikitext 6789768 data/patch-api/sources/10.0.0-wikitext-register.json --expand-shared-changes",
+  "extract_generator": "python3 tools/extract_patch_non_inventory.py --patch 10.0.0 --text-only --preserve-examples"
+}

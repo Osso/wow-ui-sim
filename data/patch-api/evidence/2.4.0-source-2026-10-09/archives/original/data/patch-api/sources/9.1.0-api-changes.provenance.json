@@ -1,0 +1,15 @@
+{
+  "pageid": 17181,
+  "title": "Patch 9.1.0/API changes",
+  "revid": 167980,
+  "timestamp": "2022-03-02T05:11:06Z",
+  "retrieved": "2026-10-07",
+  "method": "MediaWiki revisions API via curl; response retained in evidence/p910-fetch.json",
+  "wikitext_sha256": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c",
+  "generator_flags": [
+    "--expand-shared-changes",
+    "--skip-plain-scripts-label"
+  ],
+  "register_generator": "python3 tools/gen_patch_wikitext_register.py 9.1.0 /home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/sources/9.1.0-api-changes.wikitext 167980 /home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/sources/9.1.0-wikitext-register.json --expand-shared-changes --skip-plain-scripts-label",
+  "extract_generator": "python3 tools/extract_patch_non_inventory.py --patch 9.1.0 --text-only --preserve-examples"
+}

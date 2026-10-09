@@ -1,0 +1,178 @@
+Patch 12.0.7/API changes - Warcraft Wiki source snapshot from https://warcraft.wiki.gg/wiki/Patch_12.0.7/API_changes (searched 2026-07-06).
+
+Resources: TOC 120007. Previous patch 12.0.5. Next patch 12.1.0.
+Undocumented: Removed IMPORTANT from AuraFilters.
+
+Blue posts / notes:
+- Added GameTooltip_AddMoneyLine API using embedded atlases/MoneyFormatter; Blizzard removed usages of SetTooltipMoney.
+- Unit identity: APIs restricting unit token types (UnitGUID, UnitAura, health/power APIs when called with PvP-restricted tokens) no longer raise Lua errors for unsupported tokens; return nil/default.
+- ENCOUNTER_END includes additional payload: list of EncounterUnitStatus tables for all boss units engaged; fields creatureID, creatureName, remainingHealthPercent as non-secrets.
+- C_EncounterEvents allows configuration of different colors for text warnings/timeline events; custom color for 5 seconds remaining signaled via ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED; color APIs accept alpha.
+- Added C_UIFileAsset namespace: GetFileID(asset), IsKnownFile(asset), IsLooseFile(asset).
+- Profiling APIs available to addons again: GetEventCPUUsage, GetFunctionCPUUsage, GetScriptCPUUsage.
+- SimulateMouse APIs no longer carry taint when used, restricted to gamepad action and disallowed with forbidden/locked/script-inaccessible/protected mouse foci in combat.
+- debugstack and debuglocals return secret values if current function or caller accessed secret value.
+- Added secure action raidtarget option "set-unmarked" and /tm ~marker syntax.
+- C_MythicPlus.GetRunHistory, GetWeeklyBestForMap, GetSeasonBestForMap now return CalendarTime structs instead of MythicPlusDate structs.
+- GROUP_FORMED sent when player joins a follower dungeon or delve alone.
+- AuraData.isFromPlayerOrPlayerPet true if aura came from player-controlled vehicle.
+- Addons allowed to call C_UnitAuras.AddPrivateAuraAppliedSound during active M+ if player not in combat.
+- Fixed secret value errors in SetFrameStrata.
+- BNInviteFriend migrated to C_BattleNet.InviteFriend.
+- Added DurationTextBinding script object type.
+
+Consolidated changes 12.0.5 (67602) -> 12.0.7 (68182) Jun 12 2026.
+
+Global API Added (35):
+C_BattleNet.InviteFriend
+C_Container.CalculateTotalNumberOfFreeBagSlots
+C_DelvesUI.GetDelveEntranceTitleString
+C_DelvesUI.GetWorldTierDifficultyForActivePlayer
+C_DurationUtil.CreateDurationTextBinding
+C_DurationUtil.CreateManualClock
+C_EncounterTimeline.GetEventColor
+C_HousingCatalog.GetCatalogCategoryAndSubcategoryNames
+C_HousingCustomizeMode.RoomConnectionSupportsDoorType
+C_HousingLayout.CanSetViewedFloor
+C_MerchantFrame.GetMerchantCurrencies
+C_PartyInfo.ConfirmReadyCheck
+C_PartyInfo.DemoteAssistant
+C_PartyInfo.DoReadyCheck
+C_PartyInfo.IsGUIDInGroup
+C_PartyInfo.PromoteToAssistant
+C_PartyInfo.PromoteToLeader
+C_PartyInfo.SetEveryoneIsAssistant
+C_PartyInfo.UninviteUnit
+C_PingSecure.ClearPendingPingOffScreenCallback
+C_PingSecure.SetPendingPingOffScreenCallback
+C_QuestHub.GetDragonridingRacesForAreaPOI
+C_UIFileAsset.GetFileID
+C_UIFileAsset.IsKnownFile
+C_UIFileAsset.IsLooseFile
+GetEventCPUUsage
+GetFunctionCPUUsage
+GetScriptCPUUsage
+GetSecurePendingButtonCallback
+GetSecurePendingPingOffScreenCallback
+GetSecurePendingToggleRunCallback
+GameTooltip_AddMoneyLine
+SetSecurePendingButtonCallback
+SetSecurePendingPingOffScreenCallback
+SetSecurePendingToggleRunCallback
+
+Global API Removed (17):
+BNInviteFriend
+C_ClickBindings.GetStringFromModifiers
+C_ClickBindings.MakeModifiers
+C_Spell.GetMawPowerBorderAtlasBySpellID
+ConfirmReadyCheck
+DemoteAssistant
+DoReadyCheck
+GetMerchantCurrencies
+IsGUIDInGroup
+PromoteToAssistant
+PromoteToLeader
+SetEveryoneIsAssistant
+UninviteUnit
+GetAutoCompletePresenceID
+GetAutoCompleteResults
+GetAutoCompleteRealms
+IsRecognizedName
+
+ScriptObjects Added (36):
+DurationClock:GetTime
+DurationManualClock:AdvanceTime
+DurationManualClock:ResetTime
+DurationManualClock:RewindTime
+DurationManualClock:SetTime
+DurationObject:GetClock
+DurationObject:HasExpired
+DurationObject:HasStarted
+DurationObject:IsActive
+DurationObject:SetClock
+DurationTextBinding:CanFormatText
+DurationTextBinding:CanUpdateFontString
+DurationTextBinding:Disable
+DurationTextBinding:Enable
+DurationTextBinding:GetDuration
+DurationTextBinding:GetExpiredText
+DurationTextBinding:GetFontString
+DurationTextBinding:GetFormattedText
+DurationTextBinding:GetTimeModifier
+DurationTextBinding:GetUpdateInterval
+DurationTextBinding:GetZeroDurationText
+DurationTextBinding:IsEnabled
+DurationTextBinding:SetDuration
+DurationTextBinding:SetExpiredText
+DurationTextBinding:SetFontString
+DurationTextBinding:SetTimeModifier
+DurationTextBinding:SetUpdateInterval
+DurationTextBinding:SetZeroDurationText
+DurationTextFormattingOptions:GetAddRemainingText
+DurationTextFormattingOptions:GetDurationType
+DurationTextFormattingOptions:SetAddRemainingText
+DurationTextFormattingOptions:SetDurationType
+DurationTextRawValue:GetMilliseconds
+DurationTextRawValue:GetSeconds
+DurationTextRawValue:SetMilliseconds
+DurationTextRawValue:SetSeconds
+
+Widgets Removed (6):
+Minimap:SetBlipTexture
+Minimap:SetCorpsePOIArrowTexture
+Minimap:SetIconTexture
+Minimap:SetPOIArrowTexture
+Minimap:SetPlayerTexture
+Minimap:SetStaticPOIArrowTexture
+
+Widget Changes:
+Button:GetButtonState + SecretReturnsForAspect
+Button:IsEnabled + SecretReturnsForAspect
+Button:SetButtonState + SecretArgumentsAddAspect
+Button:SetEnabled + SecretArgumentsAddAspect, SecretArguments NotAllowed -> AllowedWhenUntainted
+EditBox:SetFont + RequiresValidFontHeight + RequiresValidFontAsset
+Font:SetFont + RequiresValidFontHeight + RequiresValidFontAsset
+FontString:SetFont + RequiresValidFontHeight + RequiresValidFontAsset, arg2.Type number -> uiFontHeight
+MessageFrame:SetFont + RequiresValidFontHeight + RequiresValidFontAsset
+ModelSceneActorBase:GetModelUnitGUID - ret1.ConditionalSecret
+ScrollFrame:GetHorizontalScroll + SecretReturnsForAspect
+ScrollFrame:GetVerticalScroll + SecretReturnsForAspect
+ScrollFrame:SetHorizontalScroll SecretArguments NotAllowed -> AllowedWhenUntainted + SecretArgumentsAddAspect
+ScrollFrame:SetVerticalScroll SecretArguments NotAllowed -> AllowedWhenUntainted + SecretArgumentsAddAspect
+SimpleHTML:SetFont + RequiresValidFontHeight + RequiresValidFontAsset
+
+Events Added (2):
+ENCOUNTER_TIMELINE_EVENT_COLOR_CHANGED
+URL_TEXTURE_REQUEST_RESULT
+
+Event Changes:
+CHAT_MSG_COMBAT_FACTION_CHANGE - SecretInChatMessagingLockdown
+CHAT_MSG_COMBAT_HONOR_GAIN - SecretInChatMessagingLockdown
+CHAT_MSG_COMBAT_MISC_INFO - SecretInChatMessagingLockdown
+CHAT_MSG_COMBAT_XP_GAIN - SecretInChatMessagingLockdown
+CHAT_MSG_CURRENCY - SecretInChatMessagingLockdown
+CHAT_MSG_FILTERED - SecretInChatMessagingLockdown
+CHAT_MSG_LOOT - SecretInChatMessagingLockdown
+CHAT_MSG_MONEY - SecretInChatMessagingLockdown
+CHAT_MSG_RESTRICTED - SecretInChatMessagingLockdown
+CLUB_MEMBER_ADDED [2].Type number -> ClubMemberOpaqueId
+CLUB_MEMBER_PRESENCE_UPDATED [2].Type number -> ClubMemberOpaqueId
+CLUB_MEMBER_REMOVED [2].Type number -> ClubMemberOpaqueId
+CLUB_MEMBER_ROLE_UPDATED [2].Type number -> ClubMemberOpaqueId
+CLUB_MEMBER_UPDATED [2].Type number -> ClubMemberOpaqueId
+ENCOUNTER_END + encounterUnitStatus
+
+CVars Added examples from crawled page:
+assistedCombatReduceHighlights
+developerLogFilterDebug
+developerLogFilterError
+developerLogFilterFatal
+developerLogFilterNormal
+developerLogFilterSpam
+(20 added, 5 removed; crawler excerpt did not include full list.)
+
+Deprecated API added:
+12.0.7 Deprecated_12_0_7.lua: C_ClickBindings.MakeModifiers -> MakeModifiers; C_ClickBindings.GetStringFromModifiers -> GetStringFromModifiers; C_Spell.GetMawPowerBorderAtlasBySpellID -> C_Spell.GetMawPowerRarityInfoBySpellID; GetMerchantCurrencies -> C_MerchantFrame.GetMerchantCurrencies.
+Deprecated_BattleNet.lua: BNInviteFriend -> C_BattleNet.InviteFriend.
+Deprecated_PartyInfo.lua: ConfirmReadyCheck/DemoteAssistant/DoReadyCheck/PromoteToAssistant/PromoteToLeader/SetEveryoneIsAssistant/UninviteUnit/IsGUIDInGroup -> C_PartyInfo namespace.
+12.0.5 Deprecated_AutoComplete.lua wrappers: GetAutoCompletePresenceID/GetAutoCompleteResults/GetAutoCompleteRealms/IsRecognizedName -> C_AutoComplete namespace.

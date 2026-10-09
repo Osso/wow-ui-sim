@@ -1,0 +1,136 @@
+Patch 3.3.5 API changes
+
+== New API functions ==
+: BNAcceptFriendInvite(inviteId)
+: isConnected = BNConnected()
+: BNCreateConversation(player1, player2)
+: BNDeclineFriendInvite(inviteId)
+: isEnabled = BNFeaturesEnabled
+: isEnabledAndConnected = BNFeaturesEnabledAndConnected()
+: presenceId, blockName = BNGetBlockedInfo(blockId)
+: blockID, blockName = BNGetBlockedToonInfo(blockId or index)
+: conversationType = BNGetConversationInfo(conversationId)
+: accountId, toonId, name = BNGetConversationMemberInfo(conversationId, participantId)
+: BNetBroadcasts, numOnlineBroadcasts, numOfflineBroadcasts = BNGetCustomMessageTable([BNetBroadcasts])
+: friendID, givenName, surname, isMutual = BNGetFOFInfo(presenceId, showMutual, showPotential, friendsIndex)
+: presenceID, givenName, surname = BNGetFriendInfo(friendId)
+: presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText = BNGetFriendInfoByID(presenceID)
+: inviteId, name, surname, message, timeSent, days = BNGetFriendInviteInfo(offset);
+: hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText = BNGetFriendToonInfo(friendId, toonIdx)
+: presenceID, toonID, broadcastText, bnetAFK, bnetDND = BNGetInfo()
+: isEnabled = BNGetMatureLanguageFilter()
+: maxPlayers = BNGetMaxPlayersInConversation();
+: numBlocks = BNGetNumBlocked();
+: numToonBlocks = BNGetNumBlockedToons()
+: numMembers = BNGetNumConversationMembers(conversationId)
+: numMutual, numPotential = BNGetNumFOF(presenceId)
+: numPendingInvites = BNGetNumFriendInvites();
+: numToons = BNGetNumFriendToons(friendId)
+: numTotal, numOnline = BNGetNumFriends();
+: friendId = BNGetSelectedFriend();
+: blockIndex = BNGetSelectedToonBlock();
+: hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText, broadcastText, broadcastTime, ? = BNGetToonInfo(toonId);
+: BNInviteToConversation(conversationId, player)
+: BNIsBlocked
+: isFriend = BNIsFriend(presenceId)
+: isSelf = BNIsSelf(presenceId)
+: isBlocked = BNIsToonBlocked(presenceId)
+: BNLeaveConversation(conversationId)
+: BNListConversation(conversationId)
+: BNRemoveFriend(presenceId)
+: BNReportFriendInvite(inviteId)
+: BNReportPlayer(presenceId, reportType, comments)
+: BNRequestFOFInfo(presenceId)
+: BNSendConversationMessage(target, text)
+: BNSendFriendInvite(name, note)
+: BNSendFriendInviteByID(presenceId, note)
+: BNSendWhisper(presenceId, text)
+: BNSetAFK(isAFK)
+: BNSetBlocked(presenceId, isBlocked)
+: BNSetCustomMessage(text)
+: BNSetDND(isDND)
+: BNSetFocus
+: BNSetFriendNote(presenceId, note)
+: BNSetMatureLanguageFilter(enable)
+: BNSetSelectedFriend(id)
+: BNSetSelectedToonBlock(id)
+: BNSetToonBlocked(presenceId, block)
+: CommentatorGetSkirmishMode
+: CommentatorGetSkirmishQueueCount
+: CommentatorGetSkirmishQueuePlayerInfo
+: CommentatorRequestSkirmishMode
+: CommentatorRequestSkirmishQueueData
+: CommentatorSetSkirmishMatchmakingMode
+: CommentatorStartSkirmishMatch
+: GetAutoCompletePresenceID(name)
+: width, height = GetChatWindowSavedDimensions(chatFrameId)
+: point, xOfs, yOfs = GetChatWindowSavedPosition(chatFrameId)
+: IsBNLogin
+: SendSystemMessage(message)
+: SetChatWindowSavedDimensions(chatFrameId, width, height)
+: SetChatWindowSavedPosition(chatFrameId, point, xOfs, yOfs)
+
+== New FrameXML API ==
+: ignoreId = BNGetSelectedBlock()
+: BNSetSelectedBlock(id)
+: CanCooperateWithToon(toonId)
+: SynchronizeBNetStatus()
+: BetterDate(format, time)
+: link = GetFixedLink(text)
+
+
+== New Events ==
+: BN_BLOCK_LIST_UPDATED
+: BN_CHAT_CHANNEL_CLOSED
+: BN_CHAT_CHANNEL_CREATE_FAILED
+: BN_CHAT_CHANNEL_CREATE_SUCCEEDED
+: BN_CHAT_CHANNEL_INVITE_FAILED
+: BN_CHAT_CHANNEL_INVITE_SUCCEEDED
+: BN_CHAT_CHANNEL_JOINED
+: BN_CHAT_CHANNEL_LEFT
+: BN_CHAT_CHANNEL_MEMBER_JOINED
+: BN_CHAT_CHANNEL_MEMBER_LEFT
+: BN_CHAT_CHANNEL_MEMBER_UPDATED
+: BN_CHAT_CHANNEL_MESSAGE_BLOCKED
+: BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE
+: BN_CHAT_WHISPER_UNDELIVERABLE
+: BN_CONNECTED
+: BN_CUSTOM_MESSAGE_CHANGED(presenceId)
+: BN_CUSTOM_MESSAGE_LOADED
+: BN_DISCONNECTED
+: BN_FRIEND_ACCOUNT_OFFLINE(presenceId)
+: BN_FRIEND_ACCOUNT_ONLINE(presenceId)
+: BN_FRIEND_INFO_CHANGED(presenceId)
+: BN_FRIEND_INVITE_ADDED
+: BN_FRIEND_INVITE_LIST_INITIALIZED
+: BN_FRIEND_INVITE_REMOVED
+: BN_FRIEND_INVITE_SEND_RESULT
+: BN_FRIEND_LIST_SIZE_CHANGED
+: BN_FRIEND_TOON_OFFLINE
+: BN_FRIEND_TOON_ONLINE
+: BN_MATURE_LANGUAGE_FILTER
+: BN_NEW_PRESENCE(presenceId, name)
+: BN_REQUEST_FOF_FAILED
+: BN_REQUEST_FOF_SUCCEEDED
+: BN_SELF_OFFLINE
+: BN_SELF_ONLINE
+: BN_SYSTEM_MESSAGE
+: BN_TOON_NAME_UPDATED(presenceId, name)
+: CHAT_MSG_BN_CONVERSATION
+: CHAT_MSG_BN_CONVERSATION_LIST
+: CHAT_MSG_BN_CONVERSATION_NOTICE
+: CHAT_MSG_BN_INLINE_TOAST_ALERT
+: CHAT_MSG_BN_INLINE_TOAST_BROADCAST
+: CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM
+: CHAT_MSG_BN_INLINE_TOAST_CONVERSATION
+: CHAT_MSG_BN_WHISPER
+: CHAT_MSG_BN_WHISPER_INFORM
+: COMMENTATOR_SKIRMISH_MODE_REQUEST
+: COMMENTATOR_SKIRMISH_QUEUE_REQUEST
+
+== API Changes ==
+* It is no longer guaranteed that the server will provide inventory information for every NotifyInspect request; should the server choose to throttle a particular request, events indicating availability of inspection data will not fire.
+
+== Removed FrameXML API ==
+: UIFrameFlashSwitch
+: ToggleCombatLog

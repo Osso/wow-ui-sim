@@ -1,0 +1,11 @@
+Patch 5.4.7 API changes
+
+== Changes ==
+*CHAT_MSG_ADDON arg4's value for sender now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+*CHAT_MSG_WHISPER arg2's value for author now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+* I haven't checked all other CHAT_MSG_* events but its not unlikely they will also include realm names
+
+== Automated diff ==
+=== Global API ===
+
+=== Events ===

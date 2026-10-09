@@ -1,0 +1,15 @@
+{
+  "pageid": 549091,
+  "title": "Patch 7.0.3/API changes",
+  "revid": 5295335,
+  "timestamp": "2017-09-18T11:16:26Z",
+  "sha256": "d8951bad884b04b4686fdc7a0cc26b305b35c31ecc8872035d209937f13f3484",
+  "fetched_at": "2026-10-08",
+  "url": "https://warcraft.wiki.gg/wiki/Patch_7.0.3/API_changes",
+  "generator_flags": [
+    "--legion-prepatch"
+  ],
+  "extractor_flags": [
+    "--legion-prepatch"
+  ]
+}

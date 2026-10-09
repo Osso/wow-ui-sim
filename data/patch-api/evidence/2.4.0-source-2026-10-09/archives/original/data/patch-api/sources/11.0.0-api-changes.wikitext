@@ -1,0 +1,995 @@
+{{apichanges|11.0.0|prev=10.2.7|next=11.0.2}}
+
+==Summary==
+
+* A new menuing system has been implemented, intended to serve as a replacement for UIDropDownMenu going forward. See [[#New menu system|New menu system]] for details.
+* Regions can now be configured to propagate mouse input to other obscured regions. See [[#Mouse input propagation|Mouse input propagation]].
+* Hero Talent Trees are introduced into the C_ClassTalents and C_Traits APIs. See [[Dragonflight_Talent_System#Hero_Talent_Trees|Dragonflight Talent System - Hero Talent Trees]].
+
+==Resources==
+* TOC: <code>110000</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24119590/the-war-within-pre-expansion-content-update-notes#item10 The War Within Pre-Expansion Content Update Notes]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.2.7..11.0.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.2.7..11.0.0 BlizzardInterfaceResources]
+* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/11.0.0/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_0_0.lua Blizzard_Deprecated]
+
+==Breaking changes==
+
+* The {{api|t=a|GetMouseFocus}} function has been replaced by {{api|t=a|GetMouseFoci}}.
+** This new function returns a table that potentially contains multiple regions based upon the state of mouse input propagation.
+** For the common use case of checking if a region has focus, the {{api|t=w|ScriptRegion:IsMouseMotionFocus()}} function can be used. This API exists on all client flavors.
+
+* Updated Spell/SpellBook APIs post-SpellBook-UI-revamp.
+** Most functions have simply been moved under the <code>C_SpellBook</code> or <code>C_Spell</code> namespaces, but some changes/conversions are less obvious.
+** Important Function Parameter changes
+*** SpellBook "bookType" string parameters have been replaced by "spellBank" Enum.SpellBookSpellBank parameters
+**** "spell" / BOOKTYPE_SPELL = Enum.SpellBookSpellBank.Player
+**** "pet" / BOOKTYPE_PET = Enum.SpellBookSpellBank.Pet
+**** (Any other bookType values passed were being treated as "spell" so just use Enum.SpellBookSpellBank.Player for anything else)
+*** New "spellIdentifier" parameter type accepts a Spell ID, name, name(subtext), or link
+
+==New menu system==
+
+A replacement menuing system has been implemented that serves as a replacement for the existing UIDropDownMenu framework.
+
+* All Blizzard defined menus have been migrated to the new menu system.
+* Documentation and examples have been provided by Blizzard in the [https://www.townlong-yak.com/framexml/go/11_0_0_MenuImplementationGuide.lua 11.0.0 Menu Implementation Guide] script in the user interface code export. Simplified examples for common use cases are provided below.
+* The new menu system ''may'' eventually make its way into Classic, but this isn't expected to be the case for potentially quite some time.
+* UIDropDownMenu has been retained for addon compatibility only, and is otherwise considered deprecated.
+** Utilities built around UIDropDownMenu such as EasyMenu have however been removed.
+
+===Dropdown menus===
+
+Dropdown menus can be created via the new DropdownButton intrinsic frame type. The following example sets up a basic dropdown in the middle of the screen that when clicked will open a menu with a non-interactive title, and three clickable buttons.
+
+<syntaxhighlight lang="lua">
+local Dropdown = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1DropdownTemplate")
+Dropdown:SetDefaultText("Default Text")
+Dropdown:SetPoint("CENTER")
+Dropdown:SetupMenu(function(dropdown, rootDescription)
+    rootDescription:CreateTitle("Test Menu")
+    rootDescription:CreateButton("Button 1", function() print("Clicked button 1") end)
+    rootDescription:CreateButton("Button 2", function() print("Clicked button 2") end)
+    rootDescription:CreateButton("Button 3", function() print("Clicked button 3") end)
+end)
+</syntaxhighlight>
+
+===Context menus===
+
+Context menus can be spawned via the new {{api|MenuUtil.CreateContextMenu(ownerRegion, generator)}} function that should typically be called within an OnMouseDown handler on a button. When invoked, the context menu will be immediately populated and opened at the location of the mouse cursor. There is at present no support for explicitly anchoring a context menu to a region.
+
+<syntaxhighlight lang="lua">
+MenuUtil.CreateContextMenu(UIParent, function(ownerRegion, rootDescription)
+    rootDescription:CreateTitle("Test Menu")
+    rootDescription:CreateButton("Button 1", function() print("Clicked button 1") end)
+    rootDescription:CreateButton("Button 2", function() print("Clicked button 2") end)
+    rootDescription:CreateButton("Button 3", function() print("Clicked button 3") end)
+end)
+</syntaxhighlight>
+
+===Basic menu factories===
+
+For basic menus that only consist of a list of elements that each share the same type, the following utility functions can be used to generate a menu description from a table of values. These may serve as suitable replacements for some usages of the now removed EasyMenu functionality.
+
+* {{api|MenuUtil.CreateButtonMenu(dropdown, ...)}}
+* {{api|MenuUtil.CreateButtonContextMenu(ownerRegion, ...)}}
+* {{api|MenuUtil.CreateCheckboxMenu(dropdown, isSelected, setSelected, ...)}}
+* {{api|MenuUtil.CreateCheckboxContextMenu(ownerRegion, isSelected, setSelected, ...)}}
+* {{api|MenuUtil.CreateRadioMenu(dropdown, isSelected, setSelected, ...)}}
+* {{api|MenuUtil.CreateRadioContextMenu(ownerRegion, isSelected, setSelected, ...)}}
+
+The following example creates a dropdown menu button that when clicked will open up to a list of three radio buttons.
+
+<syntaxhighlight lang="lua">
+local RadioDropdown = CreateFrame("DropdownButton", nil, UIParent, "WowStyle1DropdownTemplate")
+RadioDropdown:SetDefaultText("No selection")
+RadioDropdown:SetPoint("CENTER")
+
+local selectedValue = nil
+
+local function IsSelected(value)
+    return value == selectedValue
+end
+
+local function SetSelected(value)
+    selectedValue = value
+end
+
+MenuUtil.CreateRadioMenu(RadioDropdown,
+    IsSelected, 
+    SetSelected,
+    {"Radio 1", 1},
+    {"Radio 2", 2},
+    {"Radio 3", 3},
+)
+</syntaxhighlight>
+
+===Hooking menus===
+
+Menus can be tagged with an arbitrary identifier for hooking. The {{api|Menu.ModifyMenu("tag", callback)}} function can be used to run a callback whenever the menu with the specified tag is shown.
+
+* Blizzard have pre-tagged many menus in the client, allowing them to be hooked immediately.
+* The menu modification callback may additionally receive a table of menu-specific contextual data as the third parameter.
+** In the case of unit popup menus, this contextual data includes attributes such as the unit token and the "which" parameter.
+
+The following example demonstrates this by modifying the players' unit popup menu and inserting buttons into its root description.
+
+<syntaxhighlight lang="lua">
+Menu.ModifyMenu("MENU_UNIT_SELF", function(ownerRegion, rootDescription, contextData)
+    -- Append a new section to the end of the menu.
+    rootDescription:CreateDivider()
+    rootDescription:CreateTitle(addonName)
+    rootDescription:CreateButton("Appended button", function() print("Clicked the appended button!") end)
+
+    -- Insert a new section at the start of the menu.
+    local title = MenuUtil.CreateTitle(addonName)
+    rootDescription:Insert(title, 1)
+    local button = MenuUtil.CreateButton("Inserted button", function() print("Clicked the inserted button!") end)
+    rootDescription:Insert(button, 2)
+    local divider = MenuUtil.CreateDivider()
+    rootDescription:Insert(divider, 3)
+end)
+</syntaxhighlight>
+
+==Mouse input propagation==
+Support has been added to allow configuring a region to propagate mouse click and mouse motion events to other regions in the mouse focus stack. See the linked pages for further details.
+
+* {{api|t=w|ScriptRegion:SetPropagateMouseClicks(propagate)}} - Configures the propagation of OnMouseDown and OnMouseDown events.
+* {{api|t=w|ScriptRegion:SetPropagateMouseMotion(propagate)}} - Configures the propagation of OnEnter and OnLeave events.
+* {{api|t=a|GetMouseFoci()}} - This is the replacement API for GetMouseFocus. It returns a table of regions capable of receiving mouse input ordered top-to-bottom.
+
+==Consolidated changes==
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|+ 10.2.7 (55664) &rarr; 11.0.0 (55818) Jul 19 2024
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(247)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(82)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AchievementInfo.AreGuildAchievementsEnabled}}
+: {{api|t=a|C_AdventureMap.GetAdventureMapTextureKit}}
+: {{api|t=a|C_AreaPoiInfo.GetDelvesForMap}}
+: {{api|t=a|C_AreaPoiInfo.GetEventsForMap}}
+: {{api|t=a|C_AreaPoiInfo.GetQuestHubsForMap}}
+: {{api|t=a|C_Bank.AutoDepositItemsIntoBank}}
+: {{api|t=a|C_Bank.CanDepositMoney}}
+: {{api|t=a|C_Bank.CanPurchaseBankTab}}
+: {{api|t=a|C_Bank.CanUseBank}}
+: {{api|t=a|C_Bank.CanViewBank}}
+: {{api|t=a|C_Bank.CanWithdrawMoney}}
+: {{api|t=a|C_Bank.CloseBankFrame}}
+: {{api|t=a|C_Bank.DepositMoney}}
+: {{api|t=a|C_Bank.FetchDepositedMoney}}
+: {{api|t=a|C_Bank.FetchNextPurchasableBankTabCost}}
+: {{api|t=a|C_Bank.FetchNumPurchasedBankTabs}}
+: {{api|t=a|C_Bank.FetchPurchasedBankTabData}}
+: {{api|t=a|C_Bank.FetchPurchasedBankTabIDs}}
+: {{api|t=a|C_Bank.HasMaxBankTabs}}
+: {{api|t=a|C_Bank.IsItemAllowedInBankType}}
+: {{api|t=a|C_Bank.PurchaseBankTab}}
+: {{api|t=a|C_Bank.UpdateBankTabSettings}}
+: {{api|t=a|C_Bank.WithdrawMoney}}
+: {{api|t=a|C_CharacterServices.ArePaidCharacterTransfersBetweenBnetAccountsEnabled}}
+: {{api|t=a|C_ChatInfo.IsValidCombatFilterName}}
+: {{api|t=a|C_ClassTalents.GetActiveHeroTalentSpec}}
+: {{api|t=a|C_ClassTalents.GetHeroTalentSpecsForClassSpec}}
+: {{api|t=a|C_ClassTalents.HasUnspentHeroTalentPoints}}
+: {{api|t=a|C_Container.SortAccountBankBags}}
+: {{api|t=a|C_CurrencyInfo.CanTransferCurrency}}
+: {{api|t=a|C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters}}
+: {{api|t=a|C_CurrencyInfo.FetchCurrencyTransferTransactions}}
+: {{api|t=a|C_CurrencyInfo.GetCostToTransferCurrency}}
+: {{api|t=a|C_CurrencyInfo.GetMaxTransferableAmountFromQuantity}}
+: {{api|t=a|C_CurrencyInfo.IsAccountCharacterCurrencyDataReady}}
+: {{api|t=a|C_CurrencyInfo.IsAccountTransferableCurrency}}
+: {{api|t=a|C_CurrencyInfo.IsAccountWideCurrency}}
+: {{api|t=a|C_CurrencyInfo.IsCurrencyTransferTransactionDataReady}}
+: {{api|t=a|C_CurrencyInfo.PlayerHasMaxQuantity}}
+: {{api|t=a|C_CurrencyInfo.PlayerHasMaxWeeklyQuantity}}
+: {{api|t=a|C_CurrencyInfo.RequestCurrencyDataForAccountCharacters}}
+: {{api|t=a|C_CurrencyInfo.RequestCurrencyFromAccountCharacter}}
+: {{api|t=a|C_DateAndTime.GetWeeklyResetStartTime}}
+: {{api|t=a|C_Debug.ToggleWindDebugMenu}}
+: {{api|t=a|C_DelvesUI.GetCreatureDisplayInfoForCompanion}}
+: {{api|t=a|C_DelvesUI.GetCurioNodeForCompanion}}
+: {{api|t=a|C_DelvesUI.GetCurioRarityByTraitCondAccountElementID}}
+: {{api|t=a|C_DelvesUI.GetCurrentDelvesSeasonNumber}}
+: {{api|t=a|C_DelvesUI.GetDelvesAffixSpellsForSeason}}
+: {{api|t=a|C_DelvesUI.GetDelvesFactionForSeason}}
+: {{api|t=a|C_DelvesUI.GetDelvesMinRequiredLevel}}
+: {{api|t=a|C_DelvesUI.GetFactionForCompanion}}
+: {{api|t=a|C_DelvesUI.GetModelSceneForCompanion}}
+: {{api|t=a|C_DelvesUI.GetRoleNodeForCompanion}}
+: {{api|t=a|C_DelvesUI.GetRoleSubtreeForCompanion}}
+: {{api|t=a|C_DelvesUI.GetTraitTreeForCompanion}}
+: {{api|t=a|C_DelvesUI.GetUnseenCuriosBySlotType}}
+: {{api|t=a|C_DelvesUI.HasActiveDelve}}
+: {{api|t=a|C_DelvesUI.IsEligibleForActiveDelveRewards}}
+: {{api|t=a|C_DelvesUI.SaveSeenCuriosBySlotType}}
+: {{api|t=a|C_GossipInfo.GetActiveDelveGossip}}
+: {{api|t=a|C_GossipInfo.GetGossipDelveMapID}}
+: {{api|t=a|C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID}}
+: {{api|t=a|C_GuildInfo.IsEncounterGuildNewsEnabled}}
+: {{api|t=a|C_GuildInfo.IsGuildReputationEnabled}}
+: {{api|t=a|C_ImmersiveInteraction.HasImmersiveInteraction}}
+: {{api|t=a|C_Item.DoesItemMatchTargetEnchantingSpell}}
+: {{api|t=a|C_Item.IsBoundToAccountUntilEquip}}
+: {{api|t=a|C_Item.IsCurioItem}}
+: {{api|t=a|C_Macro.RunMacroText}}
+: {{api|t=a|C_MajorFactions.GetMajorFactionRenownInfo}}
+: {{api|t=a|C_Map.IsCityMap}}
+: {{api|t=a|C_Map.IsMapValidForNavBarDropdown}}
+: {{api|t=a|C_Minimap.GetDefaultTrackingValue}}
+: {{api|t=a|C_Minimap.IsTrackingAccountCompletedQuests}}
+: {{api|t=a|C_MountJournal.GetDynamicFlightModeSpellID}}
+: {{api|t=a|C_MountJournal.IsDragonridingUnlocked}}
+: {{api|t=a|C_MountJournal.PickupDynamicFlightMode}}
+: {{api|t=a|C_MountJournal.SwapDynamicFlightMode}}
+: {{api|t=a|C_PaperDollInfo.GetInspectGuildInfo}}
+: {{api|t=a|C_PaperDollInfo.GetInspectRatedBGBlitzData}}
+: {{api|t=a|C_PartyInfo.DelveTeleportOut}}
+: {{api|t=a|C_PartyInfo.IsDelveComplete}}
+: {{api|t=a|C_PartyInfo.IsDelveInProgress}}
+: {{api|t=a|C_PartyInfo.IsPartyWalkIn}}
+: {{api|t=a|C_PetInfo.IsPetActionPassive}}
+: {{api|t=a|C_PlayerInfo.HasAccountInventoryLock}}
+: {{api|t=a|C_PvP.GetBrawlSoloRBGMinItemLevel}}
+: {{api|t=a|C_PvP.GetPersonalRatedBGBlitzSpecStats}}
+: {{api|t=a|C_PvP.GetRatedSoloRBGMinItemLevel}}
+: {{api|t=a|C_PvP.GetRatedSoloRBGRewards}}
+: {{api|t=a|C_PvP.IsRatedSoloRBG}}
+: {{api|t=a|C_PvP.JoinRatedBGBlitz}}
+: {{api|t=a|C_PvP.StartSoloRBGWarGameByName}}
+: {{api|t=a|C_PvP.StartSpectatorSoloRBGWarGame}}
+: {{api|t=a|C_QuestHub.IsQuestCurrentlyRelatedToHub}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestClassification}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestRewardCurrencies}}
+: {{api|t=a|C_QuestInfoSystem.HasQuestRewardCurrencies}}
+: {{api|t=a|C_QuestLine.QuestLineIgnoresAccountCompletedFiltering}}
+: {{api|t=a|C_QuestLog.GetHeaderIndexForQuest}}
+: {{api|t=a|C_QuestLog.GetQuestRewardCurrencies}}
+: {{api|t=a|C_QuestLog.GetQuestRewardCurrencyInfo}}
+: {{api|t=a|C_QuestLog.IsMetaQuest}}
+: {{api|t=a|C_QuestLog.IsQuestFlaggedCompletedOnAccount}}
+: {{api|t=a|C_QuestLog.IsQuestRepeatableType}}
+: {{api|t=a|C_QuestLog.QuestIgnoresAccountCompletedFiltering}}
+: {{api|t=a|C_QuestOffer.GetQuestRequiredCurrencyInfo}}
+: {{api|t=a|C_QuestOffer.GetQuestRewardCurrencyInfo}}
+: {{api|t=a|C_Reputation.AreLegacyReputationsShown}}
+: {{api|t=a|C_Reputation.CollapseAllFactionHeaders}}
+: {{api|t=a|C_Reputation.CollapseFactionHeader}}
+: {{api|t=a|C_Reputation.ExpandAllFactionHeaders}}
+: {{api|t=a|C_Reputation.ExpandFactionHeader}}
+: {{api|t=a|C_Reputation.GetFactionDataByID}}
+: {{api|t=a|C_Reputation.GetFactionDataByIndex}}
+: {{api|t=a|C_Reputation.GetGuildFactionData}}
+: {{api|t=a|C_Reputation.GetGuildRepExpirationTime}}
+: {{api|t=a|C_Reputation.GetNumFactions}}
+: {{api|t=a|C_Reputation.GetReputationSortType}}
+: {{api|t=a|C_Reputation.GetSelectedFaction}}
+: {{api|t=a|C_Reputation.GetWatchedFactionData}}
+: {{api|t=a|C_Reputation.IsAccountWideReputation}}
+: {{api|t=a|C_Reputation.IsFactionActive}}
+: {{api|t=a|C_Reputation.SetFactionActive}}
+: {{api|t=a|C_Reputation.SetLegacyReputationsShown}}
+: {{api|t=a|C_Reputation.SetReputationSortType}}
+: {{api|t=a|C_Reputation.SetSelectedFaction}}
+: {{api|t=a|C_Reputation.SetWatchedFactionByID}}
+: {{api|t=a|C_Reputation.SetWatchedFactionByIndex}}
+: {{api|t=a|C_Reputation.ToggleFactionAtWar}}
+: {{api|t=a|C_ScenarioInfo.GetCriteriaInfoByStep}}
+: {{api|t=a|C_ScenarioInfo.GetCriteriaInfo}}
+: {{api|t=a|C_Spell.GetDeadlyDebuffInfo}}
+: {{api|t=a|C_Spell.GetOverrideSpell}}
+: {{api|t=a|C_Spell.GetSpellAutoCast}}
+: {{api|t=a|C_Spell.GetSpellCastCount}}
+: {{api|t=a|C_Spell.GetSpellCharges}}
+: {{api|t=a|C_Spell.GetSpellCooldown}}
+: {{api|t=a|C_Spell.GetSpellDescription}}
+: {{api|t=a|C_Spell.GetSpellIDForSpellIdentifier}}
+: {{api|t=a|C_Spell.GetSpellInfo}}
+: {{api|t=a|C_Spell.GetSpellLevelLearned}}
+: {{api|t=a|C_Spell.GetSpellLink}}
+: {{api|t=a|C_Spell.GetSpellLossOfControlCooldown}}
+: {{api|t=a|C_Spell.GetSpellName}}
+: {{api|t=a|C_Spell.GetSpellPowerCost}}
+: {{api|t=a|C_Spell.GetSpellSkillLineAbilityRank}}
+: {{api|t=a|C_Spell.GetSpellSubtext}}
+: {{api|t=a|C_Spell.GetSpellTexture}}
+: {{api|t=a|C_Spell.GetSpellTradeSkillLink}}
+: {{api|t=a|C_Spell.IsAutoAttackSpell}}
+: {{api|t=a|C_Spell.IsAutoRepeatSpell}}
+: {{api|t=a|C_Spell.IsClassTalentSpell}}
+: {{api|t=a|C_Spell.IsCurrentSpell}}
+: {{api|t=a|C_Spell.IsPressHoldReleaseSpell}}
+: {{api|t=a|C_Spell.IsPvPTalentSpell}}
+: {{api|t=a|C_Spell.IsRangedAutoAttackSpell}}
+: {{api|t=a|C_Spell.IsSpellDisabled}}
+: {{api|t=a|C_Spell.IsSpellHarmful}}
+: {{api|t=a|C_Spell.IsSpellHelpful}}
+: {{api|t=a|C_Spell.IsSpellInRange}}
+: {{api|t=a|C_Spell.IsSpellPassive}}
+: {{api|t=a|C_Spell.IsSpellUsable}}
+: {{api|t=a|C_Spell.PickupSpell}}
+: {{api|t=a|C_Spell.SetSpellAutoCastEnabled}}
+: {{api|t=a|C_Spell.SpellHasRange}}
+: {{api|t=a|C_Spell.TargetSpellIsEnchanting}}
+: {{api|t=a|C_Spell.ToggleSpellAutoCast}}
+: {{api|t=a|C_SpellBook.CastSpellBookItem}}
+: {{api|t=a|C_SpellBook.FindSpellBookSlotForSpell}}
+: {{api|t=a|C_SpellBook.GetNumSpellBookSkillLines}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemAutoCast}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemCastCount}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemCharges}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemCooldown}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemDescription}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemInfo}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemLevelLearned}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemLink}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemLossOfControlCooldown}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemName}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemPowerCost}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemSkillLineIndex}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemTexture}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemTradeSkillLink}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemType}}
+: {{api|t=a|C_SpellBook.GetSpellBookSkillLineInfo}}
+: {{api|t=a|C_SpellBook.HasPetSpells}}
+: {{api|t=a|C_SpellBook.IsAutoAttackSpellBookItem}}
+: {{api|t=a|C_SpellBook.IsClassTalentSpellBookItem}}
+: {{api|t=a|C_SpellBook.IsPvPTalentSpellBookItem}}
+: {{api|t=a|C_SpellBook.IsRangedAutoAttackSpellBookItem}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemHarmful}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemHelpful}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemInRange}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemOffSpec}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemPassive}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemUsable}}
+: {{api|t=a|C_SpellBook.PickupSpellBookItem}}
+: {{api|t=a|C_SpellBook.SetSpellBookItemAutoCastEnabled}}
+: {{api|t=a|C_SpellBook.SpellBookItemHasRange}}
+: {{api|t=a|C_SpellBook.ToggleSpellBookItemAutoCast}}
+: {{api|t=a|C_SuperTrack.ClearAllSuperTracked}}
+: {{api|t=a|C_SuperTrack.ClearSuperTrackedMapPin}}
+: {{api|t=a|C_SuperTrack.GetSuperTrackedMapPin}}
+: {{api|t=a|C_SuperTrack.GetSuperTrackedVignette}}
+: {{api|t=a|C_SuperTrack.IsSuperTrackingMapPin}}
+: {{api|t=a|C_SuperTrack.SetSuperTrackedMapPin}}
+: {{api|t=a|C_SuperTrack.SetSuperTrackedVignette}}
+: {{api|t=a|C_TradeSkillUI.GetConcentrationCurrencyID}}
+: {{api|t=a|C_TradeSkillUI.IsGuildTradeSkillsEnabled}}
+: {{api|t=a|C_Traits.GetStagedChanges}}
+: {{api|t=a|C_Traits.GetSubTreeInfo}}
+: {{api|t=a|C_Traits.GetSystemIDByTreeID}}
+: {{api|t=a|C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer}}
+: {{api|t=a|C_TransmogCollection.GetAllFactionsShown}}
+: {{api|t=a|C_TransmogCollection.GetAllRacesShown}}
+: {{api|t=a|C_TransmogCollection.GetClassFilter}}
+: {{api|t=a|C_TransmogCollection.GetFilteredCategoryCollectedCount}}
+: {{api|t=a|C_TransmogCollection.GetFilteredCategoryTotal}}
+: {{api|t=a|C_TransmogCollection.GetValidAppearanceSourcesForClass}}
+: {{api|t=a|C_TransmogCollection.SetAllFactionsShown}}
+: {{api|t=a|C_TransmogCollection.SetAllRacesShown}}
+: {{api|t=a|C_TransmogCollection.SetClassFilter}}
+: {{api|t=a|C_TransmogSets.GetFilteredBaseSetsCounts}}
+: {{api|t=a|C_TransmogSets.GetFullBaseSetsCounts}}
+: {{api|t=a|C_TransmogSets.GetTransmogSetsClassFilter}}
+: {{api|t=a|C_TransmogSets.GetValidBaseSetsCountsForCharacter}}
+: {{api|t=a|C_TransmogSets.SetTransmogSetsClassFilter}}
+: {{api|t=a|CinematicFinished}}
+: {{api|t=a|CinematicStarted}}
+: {{api|t=a|ClearCursorHoveredItem}}
+: {{api|t=a|ClearPendingBindConversionItem}}
+: {{api|t=a|ConvertItemToBindToAccount}}
+: {{api|t=a|GetCallstackHeight}}
+: {{api|t=a|GetErrorCallstackHeight}}
+: {{api|t=a|GetMouseFoci}}
+: {{api|t=a|GetUnitTotalModifiedMaxHealthPercent}}
+: {{api|t=a|GuildControlGetRank}}
+: {{api|t=a|HasKey}}
+: {{api|t=a|IsBetaBuild}}
+: {{api|t=a|IsItemPreferredArmorType}}
+: {{api|t=a|IsMovieReadable}}
+: {{api|t=a|SetCursorHoveredItemTradeItem}}
+: {{api|t=a|SetCursorHoveredItem}}
+: {{api|t=a|SetErrorCallstackHeight}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_MajorFactions.GetFeatureAbilities}}
+: {{api|t=a|C_MajorFactions.IsPlayerInRenownCatchUpMode}}
+: {{api|t=a|C_MajorFactions.RequestCatchUpState}}
+: {{api|t=a|C_Map.IsMapValidForNavBarDropDown}}
+: {{api|t=a|C_PvP.GetSoloRBGMinItemLevel}}
+: {{api|t=a|C_Reputation.SetWatchedFaction}}
+: {{api|t=a|C_Scenario.GetCriteriaInfoByStep}}
+: {{api|t=a|C_Scenario.GetCriteriaInfo}}
+: {{api|t=a|C_SpellBook.GetDeadlyDebuffInfo}}
+: {{api|t=a|C_SpellBook.GetOverrideSpell}}
+: {{api|t=a|C_SpellBook.GetSpellInfo}}
+: {{api|t=a|C_SpellBook.GetSpellLinkFromSpellID}}
+: {{api|t=a|C_SpellBook.IsSpellDisabled}}
+: {{api|t=a|C_Traits.GetStagedPurchases}}
+: {{api|t=a|C_TransmogSets.GetBaseSetsCounts}}
+: {{api|t=a|CloseBankFrame}}
+: {{api|t=a|CollapseAllFactionHeaders}}
+: {{api|t=a|CollapseFactionHeader}}
+: {{api|t=a|DisableSpellAutocast}}
+: {{api|t=a|DoesSpellExist}}
+: {{api|t=a|EnableSpellAutocast}}
+: {{api|t=a|ExpandAllFactionHeaders}}
+: {{api|t=a|ExpandFactionHeader}}
+: {{api|t=a|FactionToggleAtWar}}
+: {{api|t=a|GameMovieFinished}}
+: {{api|t=a|GetFactionInfoByID}}
+: {{api|t=a|GetFactionInfo}}
+: {{api|t=a|GetGuildExpirationTime}}
+: {{api|t=a|GetGuildFactionInfo}}
+: {{api|t=a|GetInspectGuildInfo}}
+: {{api|t=a|GetMouseFocus}}
+: {{api|t=a|GetNumFactions}}
+: {{api|t=a|GetNumQuestLogRewardCurrencies}}
+: {{api|t=a|GetNumRewardCurrencies}}
+: {{api|t=a|GetNumSpellTabs}}
+: {{api|t=a|GetQuestCurrencyInfo}}
+: {{api|t=a|GetQuestLogRewardCurrencyInfo}}
+: {{api|t=a|GetSelectedFaction}}
+: {{api|t=a|GetSpellAutocast}}
+: {{api|t=a|GetSpellAvailableLevel}}
+: {{api|t=a|GetSpellBookItemInfo}}
+: {{api|t=a|GetSpellBookItemName}}
+: {{api|t=a|GetSpellBookItemTexture}}
+: {{api|t=a|GetSpellCharges}}
+: {{api|t=a|GetSpellCooldown}}
+: {{api|t=a|GetSpellCount}}
+: {{api|t=a|GetSpellDescription}}
+: {{api|t=a|GetSpellInfo}}
+: {{api|t=a|GetSpellLevelLearned}}
+: {{api|t=a|GetSpellLink}}
+: {{api|t=a|GetSpellLossOfControlCooldown}}
+: {{api|t=a|GetSpellPowerCost}}
+: {{api|t=a|GetSpellRank}}
+: {{api|t=a|GetSpellSubtext}}
+: {{api|t=a|GetSpellTabInfo}}
+: {{api|t=a|GetSpellTexture}}
+: {{api|t=a|GetSpellTradeSkillLink}}
+: {{api|t=a|GetWatchedFactionInfo}}
+: {{api|t=a|HasPetSpells}}
+: {{api|t=a|IsAttackSpell}}
+: {{api|t=a|IsAutoRepeatSpell}}
+: {{api|t=a|IsCurrentSpell}}
+: {{api|t=a|IsFactionInactive}}
+: {{api|t=a|IsHarmfulSpell}}
+: {{api|t=a|IsHelpfulSpell}}
+: {{api|t=a|IsPassiveSpell}}
+: {{api|t=a|IsPressHoldReleaseSpell}}
+: {{api|t=a|IsPvpTalentSpell}}
+: {{api|t=a|IsSpellInRange}}
+: {{api|t=a|IsTalentSpell}}
+: {{api|t=a|IsUsableSpell}}
+: {{api|t=a|PickupSpellBookItem}}
+: {{api|t=a|PickupSpell}}
+: {{api|t=a|QuestPOIGetIconInfo}}
+: {{api|t=a|QuestPOIGetSecondaryLocations}}
+: {{api|t=a|RunMacroText}}
+: {{api|t=a|SetFactionActive}}
+: {{api|t=a|SetFactionInactive}}
+: {{api|t=a|SetSelectedFaction}}
+: {{api|t=a|SetWatchedFactionIndex}}
+: {{api|t=a|SpellHasRange}}
+: {{api|t=a|ToggleSpellAutocast}}
+</div>
+|}
+ {{api|t=a|C_ArtifactUI.GetArtifactInfo}}
+   # ret 13: <font color="#ecbc2a">tier</font>, Type: luaIndex -> ArtifactTiers
+ {{api|t=a|C_ArtifactUI.GetArtifactTier}}
+   # ret 1: <font color="#ecbc2a">tier</font>, Type: luaIndex -> ArtifactTiers
+ {{api|t=a|C_ArtifactUI.GetCostForPointAtRank}}
+   # arg 2: <font color="#ecbc2a">tier</font>, Type: luaIndex -> ArtifactTiers
+ {{api|t=a|C_ArtifactUI.GetEquippedArtifactInfo}}
+   # ret 13: <font color="#ecbc2a">tier</font>, Type: luaIndex -> ArtifactTiers
+ {{api|t=a|C_ArtifactUI.GetRespecArtifactInfo}}
+   # ret 13: <font color="#ecbc2a">tier</font>, Type: luaIndex -> ArtifactTiers
+ {{api|t=a|C_ArtifactUI.GetTotalPowerCost}}
+   # arg 3: <font color="#ecbc2a">artifactTier</font>, Type: luaIndex -> ArtifactTiers
+ {{api|t=a|C_Container.UseContainerItem}}
+   + arg 4: <font color="#00b400">bankType</font>
+ {{api|t=a|C_Item.GetItemCount}}
+   + arg 5: <font color="#00b400">includeAccountBank</font>
+ {{api|t=a|C_Minimap.GetTrackingInfo}}
+   + ret 1: <font color="#00b400">trackingInfo</font>
+   - ret 1: <font color="#ff6767">name</font>
+   - ret 2: <font color="#ff6767">textureFileID</font>
+   - ret 3: <font color="#ff6767">active</font>
+   - ret 4: <font color="#ff6767">type</font>
+   - ret 5: <font color="#ff6767">subType</font>
+   - ret 6: <font color="#ff6767">spellID</font>
+ {{api|t=a|C_MountJournal.GetDisplayedMountInfo}}
+   # ret 13: <font color="#ff6767">isForDragonriding</font> -> <font color="#00b400">isSteadyFlight</font>
+ {{api|t=a|C_MountJournal.GetMountInfoByID}}
+   # ret 13: <font color="#ff6767">isForDragonriding</font> -> <font color="#00b400">isSteadyFlight</font>
+ {{api|t=a|C_PartyInfo.GetRestrictPings}}
+   # ret 1: <font color="#ff6767">restrictToAssistants</font> -> <font color="#00b400">restrictTo</font>
+ {{api|t=a|C_PartyInfo.SetRestrictPings}}
+   # arg 1: <font color="#ff6767">restrictToAssistants</font> -> <font color="#00b400">restrictTo</font>
+ {{api|t=a|C_PetBattles.GetBreedQuality}}
+   # arg 1: <font color="#ecbc2a">petOwner</font>, Type: number -> BattlePetOwner
+   # ret 1: <font color="#ecbc2a">quality</font>, Type: luaIndex -> BattlePetBreedQuality
+ {{api|t=a|C_PetBattles.GetIcon}}
+   # arg 1: <font color="#ecbc2a">petOwner</font>, Type: number -> BattlePetOwner
+ {{api|t=a|C_PetBattles.GetName}}
+   # arg 1: <font color="#ecbc2a">petOwner</font>, Type: number -> BattlePetOwner
+ {{api|t=a|C_QuestLine.GetQuestLineInfo}}
+   # arg 2: <font color="#ecbc2a">uiMapID</font>, Nilable: false -> true
+   + arg 3: <font color="#00b400">displayableOnly</font>
+ {{api|t=a|C_QuestLog.AddQuestWatch}}
+   - arg 2: <font color="#ff6767">watchType</font>
+ {{api|t=a|C_QuestLog.GetQuestLogMajorFactionReputationRewards}}
+   # ret 1: <font color="#ecbc2a">reputationRewards</font>, InnerType: QuestReputationRewardInfo -> QuestRewardReputationInfo
+ {{api|t=a|C_QuestOffer.GetQuestOfferMajorFactionReputationRewards}}
+   # ret 1: <font color="#ecbc2a">reputationRewards</font>, InnerType: QuestReputationRewardInfo -> QuestRewardReputationInfo
+ {{api|t=a|C_Social.GetLastAchievement}}
+   # ret 4: <font color="#ecbc2a">iconFileID</font>, Type: number -> fileID
+ {{api|t=a|C_Social.GetLastItem}}
+   # ret 3: <font color="#ecbc2a">iconFileID</font>, Type: number -> fileID
+ {{api|t=a|C_Social.GetScreenshotInfoByIndex}}
+   # arg 1: <font color="#ecbc2a">index</font>, Type: number -> luaIndex
+ {{api|t=a|C_Spell.DoesSpellExist}}
+   # arg 1: <font color="#ff6767">spellID</font> -> <font color="#00b400">spellIdentifier</font>
+ {{api|t=a|C_Spell.IsSpellDataCached}}
+   # arg 1: <font color="#ff6767">spellID</font> -> <font color="#00b400">spellIdentifier</font>
+ {{api|t=a|C_Spell.RequestLoadSpellData}}
+   # arg 1: <font color="#ff6767">spellID</font> -> <font color="#00b400">spellIdentifier</font>
+ {{api|t=a|C_TooltipInfo.GetSpellBookItem}}
+   # arg 1: <font color="#ff6767">slot</font> -> <font color="#00b400">spellBookItemSlotIndex</font>
+   # arg 2: <font color="#ff6767">spellBookType</font> -> <font color="#00b400">spellBookItemSpellBank</font>
+ {{api|t=a|C_TradeSkillUI.CraftEnchant}}
+   + arg 5: <font color="#00b400">applyConcentration</font>
+ {{api|t=a|C_TradeSkillUI.CraftRecipe}}
+   + arg 6: <font color="#00b400">applyConcentration</font>
+ {{api|t=a|C_TradeSkillUI.CraftSalvage}}
+   + arg 4: <font color="#00b400">craftingReagents</font>
+   + arg 5: <font color="#00b400">applyConcentration</font>
+ {{api|t=a|C_TradeSkillUI.GetCraftingOperationInfo}}
+   + arg 4: <font color="#00b400">applyConcentration</font>
+ {{api|t=a|C_TradeSkillUI.GetCraftingOperationInfoForOrder}}
+   + arg 4: <font color="#00b400">applyConcentration</font>
+ {{api|t=a|C_TradeSkillUI.RecraftRecipe}}
+   + arg 4: <font color="#00b400">applyConcentration</font>
+ {{api|t=a|C_TradeSkillUI.RecraftRecipeForOrder}}
+   + arg 5: <font color="#00b400">applyConcentration</font>
+ {{api|t=a|UnitPartialPower}}
+   # arg 2: <font color="#ecbc2a">powerType</font>, Nilable: false -> true
+ {{api|t=a|UnitPower}}
+   # arg 2: <font color="#ecbc2a">powerType</font>, Nilable: false -> true
+ {{api|t=a|UnitPowerMax}}
+   # arg 2: <font color="#ecbc2a">powerType</font>, Nilable: false -> true
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(5)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|ScriptRegion:SetPropagateMouseClicks}}
+: {{api|t=w|ScriptRegion:SetPropagateMouseMotion}}
+: {{api|t=w|FontString:SetTextToFit}}
+: {{api|t=w|Frame:IsUsingParentLevel}}
+: {{api|t=w|Frame:SetUsingParentLevel}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=w|Frame:InterceptStartDrag}}
+   + ret 1: <font color="#00b400">success</font>
+ {{api|t=w|ModelSceneActor:SetPlayerModelFromGlues}}
+   + arg 1: <font color="#00b400">characterIndex</font>
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(28)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED}}
+: {{api|t=e|ACCOUNT_MONEY}}
+: {{api|t=e|ACTIVE_DELVE_DATA_UPDATE}}
+: {{api|t=e|BANK_TAB_SETTINGS_UPDATED}}
+: {{api|t=e|BANK_TABS_CHANGED}}
+: {{api|t=e|CLUB_FINDER_GUILD_REALM_NAME_UPDATED}}
+: {{api|t=e|COMBO_TARGET_CHANGED}}
+: {{api|t=e|CONVERT_TO_BIND_TO_ACCOUNT_CONFIRM}}
+: {{api|t=e|CRAFTINGORDERS_CRAFT_ORDER_RESPONSE}}
+: {{api|t=e|CURRENCY_TRANSFER_FAILED}}
+: {{api|t=e|CURRENCY_TRANSFER_LOG_UPDATE}}
+: {{api|t=e|DAILY_RESET_INSTANCE_WELCOME}}
+: {{api|t=e|ENCHANT_SPELL_COMPLETED}}
+: {{api|t=e|ENCHANT_SPELL_SELECTED}}
+: {{api|t=e|IMMERSIVE_INTERACTION_BEGIN}}
+: {{api|t=e|IMMERSIVE_INTERACTION_END}}
+: {{api|t=e|INSTANCE_RESET_WARNING}}
+: {{api|t=e|LEARNED_SPELL_IN_SKILL_LINE}}
+: {{api|t=e|PERKS_ACTIVITIES_TRACKED_LIST_CHANGED}}
+: {{api|t=e|PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED}}
+: {{api|t=e|PLAYER_MAP_CHANGED}}
+: {{api|t=e|SHOW_DELVES_DISPLAY_UI}}
+: {{api|t=e|SPELL_TEXT_UPDATE}}
+: {{api|t=e|TAXI_NODE_STATUS_CHANGED}}
+: {{api|t=e|TRAIT_SUB_TREE_CHANGED}}
+: {{api|t=e|UNIT_MAX_HEALTH_MODIFIERS_CHANGED}}
+: {{api|t=e|UPDATE_SPELL_TARGET_ITEM_CONTEXT}}
+: {{api|t=e|WALK_IN_DATA_UPDATE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|MAJOR_FACTION_RENOWN_CATCH_UP_STATE_UPDATE}}
+: {{api|t=e|SPELL_TEXT_UPDATE}}
+</div>
+|}
+ {{api|t=e|ARTIFACT_ENDGAME_REFUND}}
+   # 2: <font color="#ecbc2a">refundedTier</font>, Type: number -> ArtifactTiers
+ {{api|t=e|CANCEL_PLAYER_COUNTDOWN}}
+   + 2: <font color="#00b400">informChat</font>
+   + 3: <font color="#00b400">initiatedByName</font>
+ {{api|t=e|EQUIP_BIND_CONFIRM}}
+   + 2: <font color="#00b400">itemLocation</font>
+ {{api|t=e|EQUIP_BIND_REFUNDABLE_CONFIRM}}
+   + 2: <font color="#00b400">itemLocation</font>
+ {{api|t=e|EQUIP_BIND_TRADEABLE_CONFIRM}}
+   + 2: <font color="#00b400">itemLocation</font>
+ {{api|t=e|PVP_TYPES_ENABLED}}
+   + 5: <font color="#00b400">ratedBGBlitz</font>
+ {{api|t=e|START_PLAYER_COUNTDOWN}}
+   + 4: <font color="#00b400">informChat</font>
+   + 5: <font color="#00b400">initiatedByName</font>
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(66)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(19)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=AllowSoftwareRendererDX12|default=0|cat=1|desc=DX11 software render is used by default, due to issues with the DX12 software renderer}}
+: {{apitooltip|type=cvar|name=AllowSoftwareRenderer|default=0|cat=1|desc=Allows WoW to run without a GPU. Performance will be very bad}}
+: {{apitooltip|type=cvar|name=AllowWinRT|default=0|desc=Disable if WoW is crashing due to issues with the Windows GameBar}}
+: {{apitooltip|type=cvar|name=arachnophobiaMode|default=0|cat=4|desc=swaps out spider creatures for other variants}}
+: {{apitooltip|type=cvar|name=bankAutoDepositReagents|default=1|scope=Character|cat=4|desc=Stores whether to include reagents when auto depositing items into your bank}}
+: {{apitooltip|type=cvar|name=cameraIndirectOffset|default=1.500000|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=cameraIndirectVisibility|default=1|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=casContainerSizeLimit|default=0|desc=Approximate limit in GB for the amount of game data to keep on disk at a time}}
+: {{apitooltip|type=cvar|name=ClientCastLimitDebug|default=100|cat=0|desc=Limits the maximum allowed initiated casts in progress.}}
+: {{apitooltip|type=cvar|name=clusteredShading|default=1|cat=1|desc=Allow forward transparent lighting}}
+: {{apitooltip|type=cvar|name=collapsedCurrencyCategoryDefaults|default=0|scope=Character|cat=4|desc=Stores the IDs of currency categories that should be collapsed by default in the Token UI}}
+: {{apitooltip|type=cvar|name=collapsedReputationHeaderDefaults|scope=Character|cat=4|desc=Stores the IDs of headers that should be collapsed by default in the Reputation Panel}}
+: {{apitooltip|type=cvar|name=collapsedWarbandGroups|cat=4|desc=Stores the IDs of which warband groups are collapsed.}}
+: {{apitooltip|type=cvar|name=dragonRidingRacesFilterWQ|default=1|scope=Character|cat=4|desc=If enabled, dragonriding races WQ will display on the world map at zone level.}}
+: {{apitooltip|type=cvar|name=enableMultiActionBars|default=0|scope=Character|cat=4|desc=Bits for which additional action bars to show}}
+: {{apitooltip|type=cvar|name=ExclusiveWindowMode|default=0|desc=Accessibility option for preventing the game window from losing focus}}
+: {{apitooltip|type=cvar|name=findYourselfModeCircle|default=0|scope=Account|cat=4|desc=Highlight your character with a circle.}}
+: {{apitooltip|type=cvar|name=findYourselfModeIcon|default=0|scope=Account|cat=4|desc=Highlight your character with an icon.}}
+: {{apitooltip|type=cvar|name=findYourselfModeOutline|default=0|scope=Account|cat=4|desc=Highlight your character with an outline.}}
+: {{apitooltip|type=cvar|name=forceClusteredShading|default=0|cat=1|desc=Force clustered forward lighting for all transparent objects}}
+: {{apitooltip|type=cvar|name=GxCompatAsyncFrameEnd|default=1|desc=Disables rendering and submit of frame N to overlap with frame N+1}}
+: {{apitooltip|type=cvar|name=GxCompatCommandListMultiThreading|default=1|desc=Allow multi-threaded rendering. Disabling this will significantly reduce framerate}}
+: {{apitooltip|type=cvar|name=GxCompatDeviceMultiThreading|default=1|desc=Async resource creation such as texture and shader loading. Disabling this may cause hitching}}
+: {{apitooltip|type=cvar|name=GxCompatOptionalGpuFeatures|default=1|desc=When disabled, makes the engine act as if the GPU only supports the minimum supported feature set}}
+: {{apitooltip|type=cvar|name=GxCompatWorkSubmitOptimizations|default=1|desc=Disables DX11 submission thread. Disables Metal from submitting work more frequently than once per frame}}
+: {{apitooltip|type=cvar|name=heroTalentsCollapse|default=0|scope=Account|cat=4|desc=Whether to show the Hero Talents in the Talent Frame as collapsed}}
+: {{apitooltip|type=cvar|name=lastLockedDelvesCompanionAbilities|scope=Account|cat=4|desc=Stores the nodeIDs of the locked delve companion abilities, to highlight them when unlocked.}}
+: {{apitooltip|type=cvar|name=lastRenownForDelvesSeason|default=0|scope=Account|cat=4|desc=Stores the Delves Season faction renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2570|default=0|scope=Account|cat=4|desc=Stores the Hallowfall Arathi renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2590|default=0|scope=Account|cat=4|desc=Stores the Council of Dornogal renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2594|default=0|scope=Account|cat=4|desc=Stores the Assembly of the Deeps renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2600|default=0|scope=Account|cat=4|desc=Stores the Severed Threads renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastSelectedDelvesTier|default=0|scope=Account|cat=4|desc=Stores the last selected delve difficulty tier. If 0, the player will be forced to select a tier.}}
+: {{apitooltip|type=cvar|name=MaxCharacterComponentLoadStartsPerFrame|default=4|cat=1|desc=Maximum number of character component textures to composit per frame - range 1-8}}
+: {{apitooltip|type=cvar|name=mouseAccel|default=1|cat=4}}
+: {{apitooltip|type=cvar|name=MouseHiddenInRelativeMode|default=1|cat=4|desc=Disabling may work around issues in relative mode in some rare cases}}
+: {{apitooltip|type=cvar|name=numCurrencyCategories|default=0|scope=Character|cat=4|desc=Stores the number of currency categories that existed the last time we logged in}}
+: {{apitooltip|type=cvar|name=numReputationHeaders|default=0|scope=Character|cat=4|desc=Stores the number of reputation headers that existed the last time we logged in}}
+: {{apitooltip|type=cvar|name=occludedSilhouettePlayer|default=0|scope=Account|cat=4|desc=Show a silhouette of your character when obstructed}}
+: {{apitooltip|type=cvar|name=questPOILocalStory|default=0|scope=Character|cat=4|desc=Worldmap filter setting for showing any local story quest offers on the map, this is an independent setting for the world map only.}}
+: {{apitooltip|type=cvar|name=questPOIWQ|default=1|scope=Character|cat=4|desc=Worldmap filter setting for showing any WQs on the map, this is in conjunction with the questPOI cvar.}}
+: {{apitooltip|type=cvar|name=RAIDclusteredShading|default=1|cat=1|desc=Allow forward transparent lighting}}
+: {{apitooltip|type=cvar|name=ResizeConstraints|default=1|cat=1|desc=0=None,1=AspectRatioLocked,2=DisableResizing}}
+: {{apitooltip|type=cvar|name=scrollToLogQuest|default=0|scope=Character|cat=4|desc=Whether to scroll to a quest in the quest log when mousing over its map pin}}
+: {{apitooltip|type=cvar|name=seenCharacterSelectWarbandHelpTip|default=0|scope=Account|cat=4|desc=Seen and acknowledged the character select warband help tip}}
+: {{apitooltip|type=cvar|name=showCreateCharacterRealmConfirmDialog|default=1|scope=Account|cat=4|desc=Show the character create realm confirmation dialog}}
+: {{apitooltip|type=cvar|name=showDelveEntrancesOnMap|default=1|scope=Character|cat=4|desc=If enabled, delve entrances will display on the world map.}}
+: {{apitooltip|type=cvar|name=showPhotosensitivityWarning|default=0}}
+: {{apitooltip|type=cvar|name=showQuestObjectivesInLog|default=1|scope=Character|cat=4|desc=Stores whether to show quest objectives in the quest list in the log}}
+: {{apitooltip|type=cvar|name=showTamersWQ|default=1|scope=Character|cat=4|desc=If enabled, WQ pet battle icons will be shown on world maps}}
+: {{apitooltip|type=cvar|name=showTempMaxHealthLoss|default=0|scope=Account|cat=4|desc=Weather or not to show temporary max health changes on unit health bars}}
+: {{apitooltip|type=cvar|name=spellBookHidePassives|default=0|scope=Account|cat=4|desc=Stores whether to hide Passive spells in the SpellBook pane}}
+: {{apitooltip|type=cvar|name=spellBookMinimize|default=0|scope=Account|cat=4|desc=Stores whether to always show the the SpellBook pane in half-screen minimized mode}}
+: {{apitooltip|type=cvar|name=titleBarShortName|default=0}}
+: {{apitooltip|type=cvar|name=titleBarShowAccountName|default=0}}
+: {{apitooltip|type=cvar|name=titleBarShowBuildInfo|default=0}}
+: {{apitooltip|type=cvar|name=titleBarShowCharacterName|default=0}}
+: {{apitooltip|type=cvar|name=titleBarShowConfigName|default=0}}
+: {{apitooltip|type=cvar|name=titleBarShowGxInfo|default=0}}
+: {{apitooltip|type=cvar|name=titleBarShowPID|default=0}}
+: {{apitooltip|type=cvar|name=titleBarShowRealmName|default=0}}
+: {{apitooltip|type=cvar|name=vrsValarAlwaysOn|default=0|cat=1|desc=Use VRS even when not GPU bound}}
+: {{apitooltip|type=cvar|name=vrsValarGPUMode|default=0|cat=1|desc=0 - Auto-detect, 1 - Standard (discrete GPU default), 2 - Low Power (integrated GPU default) modes for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValarLPUseCornerSampling|default=1|cat=1|desc=Use corner sampling for VALAR Low Power}}
+: {{apitooltip|type=cvar|name=wardrobeShowAllFactions|default=0|scope=Character|cat=4|desc=Stores whether to show both Alliance and Horde transmogs in the Wardrobe}}
+: {{apitooltip|type=cvar|name=wardrobeShowAllRaces|default=0|scope=Character|cat=4|desc=Stores whether to show race restricted transmogs in the Wardrobe}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=debugLog0|default=0}}
+: {{apitooltip|type=cvar|name=debugLog1|default=0}}
+: {{apitooltip|type=cvar|name=debugLog2|default=0}}
+: {{apitooltip|type=cvar|name=EnableAirlockLogging|default=0|cat=4|desc=If 1, enables airlock logging, which will print out the various steps as they happen so that timing can be done.}}
+: {{apitooltip|type=cvar|name=gxAftermathEnabled|default=1|cat=1|desc=Enable frame crash debugging}}
+: {{apitooltip|type=cvar|name=gxAspect|default=1|cat=1|desc=constrain window aspect}}
+: {{apitooltip|type=cvar|name=modelLightShaftsColor|default=0xFFFFFFFF}}
+: {{apitooltip|type=cvar|name=modelLightShaftsSpread|default=32.0}}
+: {{apitooltip|type=cvar|name=MouseNoRepositioning|default=0|cat=4|desc=Disables repositioning of mouse cursor during relative movement to keep it in the game's window frame}}
+: {{apitooltip|type=cvar|name=MouseUseLazyRepositioning|default=1|cat=4|desc=During camera control, only reposition mouse cursor when nearing edge of window, rather than every input event}}
+: {{apitooltip|type=cvar|name=rawMouseAccelerationEnable|default=1|cat=4|desc=Enable acceleration for raw mouse input}}
+: {{apitooltip|type=cvar|name=rawMouseRate|default=125|cat=4|desc=Raw mouse update rate}}
+: {{apitooltip|type=cvar|name=rawMouseResolution|default=400|cat=4|desc=Raw mouse resolution}}
+: {{apitooltip|type=cvar|name=shadowInstancing|default=1|desc=enable instancing when rendering shadowmaps}}
+: {{apitooltip|type=cvar|name=spellBookSort|default=1|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=useHighResolutionUITextures|default=0|cat=4|desc=Whether to use high resolution UI Textures}}
+: {{apitooltip|type=cvar|name=windowResizeLock|default=0|cat=1|desc=prevent resizing in windowed mode}}
+: {{apitooltip|type=cvar|name=wowLabsClosedTutorials|scope=Character|cat=4|desc=Bitfield for which help frames have been acknowledged by the user, specifically for WoW Labs}}
+: {{apitooltip|type=command|name=D3D11_LEGACY|cat=1}}
+</div>
+|}
+
+===Enums===
+ Enum.AccountData
+   + <font color="#00b400">CharacterListOrder</font>
+ Enum.AuctionHouseError
+   + <font color="#00b400">ItemBoundToAccountUntilEquip</font>
+ Enum.BagIndex
+   + <font color="#00b400">Accountbanktab</font>
+   + <font color="#00b400">AccountBankTab_1</font>
+   + <font color="#00b400">AccountBankTab_2</font>
+   + <font color="#00b400">AccountBankTab_3</font>
+   + <font color="#00b400">AccountBankTab_4</font>
+   + <font color="#00b400">AccountBankTab_5</font>
+ Enum.BagSlotFlags
+   # <font color="#ff6767">PriorityEquipment</font> -> <font color="#00b400">ClassEquipment</font>
+   # <font color="#ff6767">PriorityConsumables</font> -> <font color="#00b400">ClassConsumables</font>
+   # <font color="#ff6767">PriorityTradeGoods</font> -> <font color="#00b400">ClassProfessionGoods</font>
+   # <font color="#ff6767">PriorityJunk</font> -> <font color="#00b400">ClassJunk</font>
+   # <font color="#ff6767">PriorityQuestItems</font> -> <font color="#00b400">ClassQuestItems</font>
+   + <font color="#00b400">ClassReagents</font>
+   + <font color="#00b400">ExpansionCurrent</font>
+   + <font color="#00b400">ExpansionLegacy</font>
+   - <font color="#ff6767">BagSlotValidFlagsAll</font>
+   - <font color="#ff6767">BagSlotPriorityFlagsAll</font>
+ Enum.CalendarInviteBits
+   + <font color="#00b400">None</font>
+ Enum.ChrCustomizationOptionType
+   # <font color="#ff6767">SelectionPopout</font> -> <font color="#00b400">Dropdown</font>
+ Enum.CraftingOrderItemType
+   + <font color="#00b400">NpcProvided</font>
+ Enum.CraftingOrderResult
+   + <font color="#00b400">InvalidRecraftItem</font>
+   + <font color="#00b400">NoAccountItems</font>
+ Enum.CraftingOrderType
+   + <font color="#00b400">Npc</font>
+ Enum.CurrencyDestroyReason
+   + <font color="#00b400">ConcentrationCast</font>
+   + <font color="#00b400">AccountTransfer</font>
+   - <font color="#ff6767">Last</font>
+ Enum.CurrencyFlagsB
+   + <font color="#00b400">CurrencyBScaleMaxQuantityByWeeksSinceStart</font>
+ Enum.CurrencySource
+   + <font color="#00b400">AccountTransfer</font>
+   - <font color="#ff6767">Last</font>
+ Enum.Cursormode
+   + <font color="#00b400">QuestMetaCursor</font>
+   + <font color="#00b400">QuestMetaTurninCursor</font>
+   + <font color="#00b400">QuestRecurringCursor</font>
+   + <font color="#00b400">QuestRecurringTurninCursor</font>
+   + <font color="#00b400">EnchantCursor</font>
+   + <font color="#00b400">QuestMetaErrorCursor</font>
+   + <font color="#00b400">QuestMetaTurninErrorCursor</font>
+   + <font color="#00b400">QuestRecurringErrorCursor</font>
+   + <font color="#00b400">QuestRecurringTurninErrorCursor</font>
+   + <font color="#00b400">EnchantErrorCursor</font>
+ Enum.Damageclass
+   - <font color="#ff6767">NumClasses</font>
+ Enum.EditModeObjectiveTrackerSetting
+   + <font color="#00b400">TextSize</font>
+ Enum.EventToastDisplayType
+   + <font color="#00b400">FlightpointDiscovered</font>
+   + <font color="#00b400">CapstoneUnlocked</font>
+ Enum.EventToastEventType
+   + <font color="#00b400">FlightpointDiscovered</font>
+ Enum.ExpansionLandingPageType
+   + <font color="#00b400">WarWithin</font>
+ Enum.GossipNpcOption
+   + <font color="#00b400">CharacterBanker</font>
+   + <font color="#00b400">AccountBanker</font>
+ Enum.GraphicsValidationResult
+   + <font color="#00b400">CompatMode</font>
+ Enum.ItemBind
+   + <font color="#00b400">ToWoWAccount</font>
+   + <font color="#00b400">ToBnetAccount</font>
+   + <font color="#00b400">ToBnetAccountUntilEquipped</font>
+ Enum.ItemConsumableSubclass
+   + <font color="#00b400">Flasksphials</font>
+   + <font color="#00b400">VantusRune</font>
+   + <font color="#00b400">UtilityCurio</font>
+   + <font color="#00b400">CombatCurio</font>
+ Enum.ItemGemColor
+   # <font color="#ff6767">FutureUse</font> -> <font color="#00b400">Fragrance</font>
+ Enum.ItemSocketType
+   # <font color="#ff6767">FutureUse</font> -> <font color="#00b400">Fragrance</font>
+ Enum.JournalEncounterFlags
+   + <font color="#00b400">DoNotDisplayEncounter</font>
+ Enum.MinimapTrackingFilter
+   + <font color="#00b400">AccountCompletedQuests</font>
+   + <font color="#00b400">AccountBanker</font>
+ Enum.NodeOpFailureReason
+   + <font color="#00b400">AccountDataNoMatch</font>
+ Enum.PetJournalError
+   - <font color="#ff6767">InvalidCovenant</font>
+ Enum.PlayerInteractionType
+   + <font color="#00b400">CharacterBanker</font>
+   + <font color="#00b400">AccountBanker</font>
+ Enum.PointsModifierSourceType
+   + <font color="#00b400">PointsModifierSet</font>
+ Enum.PowerType
+   - <font color="#ff6767">HealthCost</font>
+   - <font color="#ff6767">None</font>
+   - <font color="#ff6767">NumPowerTypes</font>
+ Enum.ProfessionEffect
+   + <font color="#00b400">StatIngenuity</font>
+   + <font color="#00b400">ModConcentration</font>
+   + <font color="#00b400">Tokenizer</font>
+   + <font color="#00b400">ModIngenuity</font>
+   + <font color="#00b400">ConcentrationRefund</font>
+ Enum.ProfessionRating
+   # <font color="#ff6767">Unused_1</font> -> <font color="#00b400">Ingenuity</font>
+ Enum.QuestCompleteSpellType
+   + <font color="#00b400">QuestlineUnlock</font>
+   + <font color="#00b400">QuestlineReward</font>
+   + <font color="#00b400">QuestlineUnlockPart</font>
+ Enum.QuestFrequency
+   + <font color="#00b400">ResetByScheduler</font>
+ Enum.QuestTag
+   + <font color="#00b400">Delve</font>
+ Enum.QuestTagType
+   + <font color="#00b400">Capstone</font>
+   + <font color="#00b400">WorldBoss</font>
+ Enum.ReportMinorCategory
+   + <font color="#00b400">HarmfulToMinors</font>
+ Enum.SlotRegion
+   + <font color="#00b400">PlayerBags</font>
+   + <font color="#00b400">AccountBank</font>
+ Enum.SuperTrackingType
+   + <font color="#00b400">MapPin</font>
+   + <font color="#00b400">Vignette</font>
+ Enum.TimeEventFlag
+   + <font color="#00b400">WeeklyReset</font>
+   + <font color="#00b400">GlobalLaunch</font>
+ Enum.TraitNodeType
+   + <font color="#00b400">SubTreeSelection</font>
+ Enum.TransmogUseErrorType
+   + <font color="#00b400">Reputation</font>
+   + <font color="#00b400">Class</font>
+   + <font color="#00b400">Race</font>
+   + <font color="#00b400">ItemProficiency</font>
+ Enum.UIMapFlag
+   + <font color="#00b400">IsCityMap</font>
+ Enum.ViewArenaSize
+   - <font color="#ff6767">Five</font>
+
+===Structures===
+ AppearanceSourceInfo
+   + <font color="#00b400">playerCanCollect</font>
+   + <font color="#00b400">isValidSourceForPlayer</font>
+ AreaPOIInfo
+   + <font color="#00b400">linkedUiMapID</font>
+   + <font color="#00b400">isCurrentEvent</font>
+ ArtifactInfo
+   # <font color="#ecbc2a">tier</font>, Type: luaIndex -> ArtifactTiers
+ CraftingItemResultData
+   + <font color="#00b400">hasIngenuityProc</font>
+   + <font color="#00b400">concentrationCurrencyID</font>
+   + <font color="#00b400">concentrationSpent</font>
+   + <font color="#00b400">ingenuityRefund</font>
+ CraftingOperationInfo
+   + <font color="#00b400">concentrationCurrencyID</font>
+   + <font color="#00b400">concentrationCost</font>
+   + <font color="#00b400">ingenuityRefund</font>
+ CraftingOrderCustomerOptionInfo
+   + <font color="#00b400">expansionID</font>
+ CraftingOrderCustomerSearchParams
+   + <font color="#00b400">currentExpansionOnly</font>
+ CraftingOrderInfo
+   + <font color="#00b400">npcCustomerCreatureID</font>
+   + <font color="#00b400">npcOrderRewards</font>
+   + <font color="#00b400">npcCraftingOrderSetID</font>
+   + <font color="#00b400">npcTreasureID</font>
+ CurrencyInfo
+   + <font color="#00b400">currencyID</font>
+   + <font color="#00b400">currencyListDepth</font>
+   + <font color="#00b400">isAccountWide</font>
+   + <font color="#00b400">isAccountTransferable</font>
+   + <font color="#00b400">transferPercentage</font>
+   + <font color="#00b400">rechargingCycleDurationMS</font>
+   + <font color="#00b400">rechargingAmountPerCycle</font>
+ GossipOptionUIInfo
+   + <font color="#00b400">failureDescription</font>
+ GossipQuestUIInfo
+   + <font color="#00b400">isMeta</font>
+ ImportLoadoutEntryInfo
+   + <font color="#00b400">ranksGranted</font>
+ LfgSearchResultData
+   + <font color="#00b400">partyGUID</font>
+ MajorFactionRenownRewardInfo
+   + <font color="#00b400">isAccountUnlock</font>
+ MapTaxiNodeInfo
+   + <font color="#00b400">isUndiscovered</font>
+ MinimapScriptTrackingInfo
+   # <font color="#ff6767">textureFileID</font> -> <font color="#00b400">texture</font>
+ MountInfo
+   # <font color="#ff6767">isForDragonriding</font> -> <font color="#00b400">isSteadyFlight</font>
+ PartyPoseInfo
+   + <font color="#00b400">flags</font>
+ QuestInfo
+   + <font color="#00b400">headerSortKey</font>
+ QuestLineInfo
+   + <font color="#00b400">isLocalStory</font>
+   + <font color="#00b400">isAccountCompleted</font>
+   + <font color="#00b400">isCombatAllyQuest</font>
+   + <font color="#00b400">isMeta</font>
+   + <font color="#00b400">inProgress</font>
+   + <font color="#00b400">isQuestStart</font>
+ RecruitingClubInfo
+   + <font color="#00b400">realmName</font>
+ SpellInfo
+   + <font color="#00b400">originalIconID</font>
+ SplashScreenInfo
+   + <font color="#00b400">gameMenuRequest</font>
+ TaskPOIData
+   + <font color="#00b400">isMeta</font>
+ TextureAndTextRowVisualizationInfo
+   + <font color="#00b400">groupAlignment</font>
+ TraitCondInfo
+   + <font color="#00b400">traitCondAccountElementID</font>
+ TraitEntryInfo
+   # <font color="#ecbc2a">definitionID</font>, Nilable: false -> true
+   + <font color="#00b400">subTreeID</font>
+ TraitNodeInfo
+   + <font color="#00b400">subTreeID</font>
+   + <font color="#00b400">subTreeActive</font>
+ TraitNodeInfoPartial
+   + <font color="#00b400">subTreeActive</font>
+ TransmogAppearanceInfoBySourceData
+   + <font color="#00b400">canDisplayOnPlayer</font>
+   + <font color="#00b400">isAnySourceValidForPlayer</font>
+ TransmogCategoryAppearanceInfo
+   + <font color="#00b400">canDisplayOnPlayer</font>
+ TransmogSetInfo
+   + <font color="#00b400">validForCharacter</font>
+ UIWidgetSpellInfo
+   + <font color="#00b400">tint</font>
+   - <font color="#ff6767">isLootObject</font>
+
+==Deprecated API==
+These API functions have been deprecated and will be removed in patch 11.0.2
+{| class="darktable"
+|
+'''[https://github.com/Gethe/wow-ui-source/blob/11.0.0/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_0_0.lua Deprecated_11_0_0.lua]'''
+: {{api|GetSpellInfo}} → {{api|C_Spell.GetSpellInfo}}
+: {{api|GetNumSpellTabs}} → {{api|C_SpellBook.GetNumSpellBookSkillLines}}
+: {{api|GetSpellTabInfo}} → {{api|C_SpellBook.GetSpellBookSkillLineInfo}}
+: {{api|GetSpellCooldown}} → {{api|C_Spell.GetSpellCooldown}}
+: {{api|GetSpellBookItemName}} → {{api|C_SpellBook.GetSpellBookItemName}}
+: {{api|GetSpellTexture}} → {{api|C_Spell.GetSpellTexture}}
+: {{api|GetSpellCharges}} → {{api|C_Spell.GetSpellCharges}}
+: {{api|GetSpellDescription}} → {{api|C_Spell.GetSpellDescription}}
+: {{api|GetSpellCount}} → {{api|C_Spell.GetSpellCastCount}}
+: {{api|IsUsableSpell}} → {{api|C_Spell.IsSpellUsable}}
+There is no deprecation for {{api|GetSpellLink}}
+|}

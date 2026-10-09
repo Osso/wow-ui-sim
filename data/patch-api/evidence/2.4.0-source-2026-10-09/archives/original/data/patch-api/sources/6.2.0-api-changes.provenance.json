@@ -1,0 +1,14 @@
+{
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=149103&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&formatversion=2",
+  "retrieved": "2026-10-08T18:54:57.261504+00:00",
+  "pageid": 149103,
+  "title": "Patch 6.2.0/API changes",
+  "revid": 1460518,
+  "timestamp": "2023-09-27T22:20:46Z",
+  "sha256": "9764021dddec261a049020c7ba37445d68af705c86ff1785075da6154f909d9c",
+  "wikitext_sha256": "d091f4ebd2592b24fb6f1da267cbd178d69bd9a1a17b07fa96f9c96fac79033a",
+  "generator_flags": [],
+  "extractor_flags": [
+    "--retain-patch-diff-reference"
+  ]
+}

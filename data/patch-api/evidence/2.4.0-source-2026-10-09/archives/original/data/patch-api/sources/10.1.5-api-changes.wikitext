@@ -1,0 +1,265 @@
+{{apichanges|10.1.5|prev=10.1.0|next=10.1.7}}
+
+==Summary==
+* Various API changes have been made to optimize range checks for actions and units.
+* The following widget API functions are now restricted and may not be called by insecure code while in combat:
+** {{api|t=w|Frame:SetPropagateKeyboardInput}}
+** {{api|t=w|ScriptRegion:SetPassThroughButtons}}
+
+==Resources==
+* TOC: <code>100105</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.1.0..10.1.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.1.0..1a44ece BlizzardInterfaceResources]
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/23968772/updated-july-11-dragonflight-fractures-in-time-content-update-notes-now-live#item15 Dragonflight: Fractures in Time Content Update Notes]
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 10.1.0 (49365) &rarr; 10.1.5 (50438) Jul 12 2023
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(36)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(3)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ActionBar.EnableActionRangeCheck}}
+: {{api|t=a|C_CharacterServices.RPEResetCharacter}}
+: {{api|t=a|C_Item.GetItemIDForItemInfo}}
+: {{api|t=a|C_Commentator.GetPlayerItemCooldownInfoByUnit}}
+: {{api|t=a|C_Commentator.GetPlayerItemCooldownInfo}}
+: {{api|t=a|C_Commentator.SetBlocklistedItemCooldowns}}
+: {{api|t=a|C_Commentator.SetRequestedItemCooldowns}}
+: {{api|t=a|C_ContentTracking.GetBestMapForTrackable}}
+: {{api|t=a|C_ContentTracking.GetCollectableSourceTrackingEnabled}}
+: {{api|t=a|C_ContentTracking.GetCollectableSourceTypes}}
+: {{api|t=a|C_ContentTracking.GetCurrentTrackingTarget}}
+: {{api|t=a|C_ContentTracking.GetEncounterTrackingInfo}}
+: {{api|t=a|C_ContentTracking.GetNextWaypointForTrackable}}
+: {{api|t=a|C_ContentTracking.GetObjectiveText}}
+: {{api|t=a|C_ContentTracking.GetTitle}}
+: {{api|t=a|C_ContentTracking.GetTrackablesOnMap}}
+: {{api|t=a|C_ContentTracking.GetTrackedIDs}}
+: {{api|t=a|C_ContentTracking.GetVendorTrackingInfo}}
+: {{api|t=a|C_ContentTracking.GetWaypointText}}
+: {{api|t=a|C_ContentTracking.IsNavigable}}
+: {{api|t=a|C_ContentTracking.IsTrackable}}
+: {{api|t=a|C_ContentTracking.IsTracking}}
+: {{api|t=a|C_ContentTracking.StartTracking}}
+: {{api|t=a|C_ContentTracking.StopTracking}}
+: {{api|t=a|C_ContentTracking.ToggleTracking}}
+: {{api|t=a|C_EncounterJournal.GetEncounterJournalLink}}
+: {{api|t=a|C_EncounterJournal.GetInstanceForGameMap}}
+: {{api|t=a|C_Loot.GetLootRollDuration}}
+: {{api|t=a|C_MerchantFrame.GetNumJunkItems}}
+: {{api|t=a|C_PetInfo.GetSpellForPetAction}}
+: {{api|t=a|C_PvP.IsMatchActive}}
+: {{api|t=a|C_PvP.IsMatchComplete}}
+: {{api|t=a|C_QuestLine.GetForceVisibleQuests}}
+: {{api|t=a|C_QuestLog.IsImportantQuest}}
+: {{api|t=a|C_SpecializationInfo.GetClassIDFromSpecID}}
+: {{api|t=a|C_SuperTrack.ClearSuperTrackedContent}}
+: {{api|t=a|C_SuperTrack.GetSuperTrackedContent}}
+: {{api|t=a|C_SuperTrack.IsSuperTrackingContent}}
+: {{api|t=a|C_SuperTrack.SetSuperTrackedContent}}
+: {{api|t=a|UpdateUIParentPosition}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AddTrackedAchievement}}
+: {{api|t=a|C_CampaignInfo.UsesNormalQuestIcons}}
+: {{api|t=a|GetClassIDFromSpecID}}
+: {{api|t=a|GetNumTrackedAchievements}}
+: {{api|t=a|GetTrackedAchievements}}
+: {{api|t=a|IsTrackedAchievement}}
+: {{api|t=a|RemoveTrackedAchievement}}
+: {{api|t=a|RequestArtifactCompletionHistory}}
+</div>
+|}
+ {{api|t=a|C_PvP.GetArenaRewards}}
+   + ret 5: <font color="#00b400">roleShortageBonus</font>
+ {{api|t=a|C_PvP.GetArenaSkirmishRewards}}
+   + ret 5: <font color="#00b400">roleShortageBonus</font>
+ {{api|t=a|C_PvP.GetBrawlRewards}}
+   + ret 5: <font color="#00b400">roleShortageBonus</font>
+ {{api|t=a|C_PvP.GetRandomBGRewards}}
+   + ret 5: <font color="#00b400">roleShortageBonus</font>
+ {{api|t=a|C_PvP.GetRandomEpicBGRewards}}
+   + ret 5: <font color="#00b400">roleShortageBonus</font>
+ {{api|t=a|C_PvP.GetRatedBGRewards}}
+   + ret 5: <font color="#00b400">roleShortageBonus</font>
+ {{api|t=a|C_PvP.GetRatedSoloShuffleRewards}}
+   + ret 5: <font color="#00b400">roleShortageBonus</font>
+ {{api|t=a|C_TradeSkillUI.IsEnchantTargetValid}}
+   + arg 3: <font color="#00b400">craftingReagents</font>
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(2)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(3)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Frame:AbortDrag}}
+: {{api|t=w|Frame:InterceptStartDrag}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|PlayerModel:SetCustomRace}}
+: {{api|t=w|UnitPositionFrame:AddUnitAtlas}}
+: {{api|t=w|UnitPositionFrame:AddUnitFileID}}
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(17)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACTION_RANGE_CHECK_UPDATE}}
+: {{api|t=e|AJ_OPEN_COLLECTIONS_ACTION}}
+: {{api|t=e|AUCTION_HOUSE_ITEM_DELIVERY_DELAY_UPDATE}}
+: {{api|t=e|CANCEL_ALL_LOOT_ROLLS}}
+: {{api|t=e|CONTENT_TRACKING_IS_ENABLED_UPDATE}}
+: {{api|t=e|CONTENT_TRACKING_LIST_UPDATE}}
+: {{api|t=e|CONTENT_TRACKING_UPDATE}}
+: {{api|t=e|DUEL_TO_THE_DEATH_REQUESTED}}
+: {{api|t=e|MAIN_SPEC_NEED_ROLL}}
+: {{api|t=e|PERKS_PROGRAM_ADD_PENDING_SHOP_ITEM}}
+: {{api|t=e|PERKS_PROGRAM_REMOVE_PENDING_SHOP_ITEM}}
+: {{api|t=e|TRACKABLE_INFO_UPDATE}}
+: {{api|t=e|TRACKING_TARGET_INFO_UPDATE}}
+: {{api|t=e|UNIT_DISTANCE_CHECK_UPDATE}}
+: {{api|t=e|UNIT_IN_RANGE_UPDATE}}
+: {{api|t=e|UNIT_SPELLCAST_RETICLE_CLEAR}}
+: {{api|t=e|UNIT_SPELLCAST_RETICLE_TARGET}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE}}
+: {{api|t=e|RESEARCH_ARTIFACT_HISTORY_READY}}
+</div>
+|}
+ {{api|t=e|CINEMATIC_START}}
+   + 2: <font color="#00b400">forcedAspectRatio</font>
+ {{api|t=e|LOSS_OF_CONTROL_ADDED}}
+   + 1: <font color="#00b400">unitTarget</font>
+ {{api|t=e|LOSS_OF_CONTROL_UPDATE}}
+   + 1: <font color="#00b400">unitTarget</font>
+ {{api|t=e|UNIT_SPELLCAST_EMPOWER_STOP}}
+   + 4: <font color="#00b400">complete</font>
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(15)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=contentTrackingFilter|default=1|scope=Character|cat=4|desc=If enabled, tracked items will display on the world map.}}
+: {{apitooltip|type=cvar|name=gxMTAlphaWater|default=1|cat=1|desc=Render Alpha Water Volumes in parallel.}}
+: {{apitooltip|type=cvar|name=gxMTParticulateVolumes|default=0|cat=1|desc=Render Particulate Volumes in parallel.}}
+: {{apitooltip|type=cvar|name=pvpFramesDisplayClassColor|default=0|scope=Character|cat=4|desc=Colors pvp frames with the class color}}
+: {{apitooltip|type=cvar|name=pvpFramesDisplayOnlyHealerPowerBars|default=0|scope=Character|cat=4|desc=Whether to display power bars only for healers on Pvp Frames}}
+: {{apitooltip|type=cvar|name=pvpFramesDisplayPowerBars|default=0|scope=Character|cat=4|desc=Whether to display mana, rage, etc. on Pvp Frames}}
+: {{apitooltip|type=cvar|name=pvpFramesHealthText|default=none|scope=Character|cat=4|desc=How to display health text on the pvp frames}}
+: {{apitooltip|type=cvar|name=pvpOptionDisplayPets|default=0|scope=Character|cat=4|desc=Whether to display pets on the pvp frames}}
+: {{apitooltip|type=cvar|name=raidFramesDisplayOnlyHealerPowerBars|default=0|scope=Character|cat=4|desc=Whether to display power bars only for healers on Raid Frames}}
+: {{apitooltip|type=cvar|name=ReplaceMyPlayerPortrait|default=0|scope=Account|cat=4|desc=Replaces local player's unit frame portrait with their class icon}}
+: {{apitooltip|type=cvar|name=ReplaceOtherPlayerPortraits|default=0|scope=Account|cat=4|desc=Replaces other player unit frame portraits with their class icon}}
+: {{apitooltip|type=cvar|name=SpellVisuals|default=0}}
+: {{apitooltip|type=cvar|name=TargetAutoLock|default=0|scope=Character|cat=4|desc=Lock targets auto-set by the game}}
+: {{apitooltip|type=cvar|name=wmoPortalFadeScale|default=1000|cat=1|desc=Wmo portal fade scale}}
+: {{apitooltip|type=cvar|name=wmoPortalInteriorFade|default=0|cat=1|desc=Wmo portal interior fade}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=uieditor_enabled|default=0|cat=0|desc=0: Hide UI Editor (default), 1: Show UI Editor.}}
+: {{apitooltip|type=cvar|name=wmoPortalMinScreenSize|default=0|cat=1|desc=Wmo portal min screen size}}
+</div>
+|}
+
+==Enums==
+ Enum.ChatWhisperTargetStatus
+   + <font color="#00b400">CanWhisperGuild</font> = 1
+ Enum.ClickBindingType
+   + <font color="#00b400">PetAction</font> = 4
+ Enum.CraftingOrderItemType
+   + <font color="#00b400">RemoveReagent</font> = 3
+ Enum.ContentTrackingTargetType
+   + <font color="#00b400">Quest</font> = 4
+ Enum.Cursormode
+   + <font color="#00b400">QuestImportantCursor</font> = 30
+   + <font color="#00b400">QuestImportantTurninCursor</font> = 31
+   + <font color="#00b400">QuestImportantErrorCursor</font> = 65
+   + <font color="#00b400">QuestImportantTurninErrorCursor</font> = 66
+ Enum.EditModeAccountSetting
+   + <font color="#00b400">ShowTimerBars</font> = 25
+   + <font color="#00b400">ShowVehicleSeatIndicator</font> = 26
+   + <font color="#00b400">ShowArchaeologyBar</font> = 27
+ Enum.EditModeSystem
+   + <font color="#00b400">TimerBars</font> = 17
+   + <font color="#00b400">VehicleSeatIndicator</font> = 18
+   + <font color="#00b400">ArchaeologyBar</font> = 19
+ Enum.EditModeUnitFrameSetting
+   + <font color="#00b400">ViewArenaSize</font> = 17
+ Enum.PvPMatchState
+   + <font color="#00b400">Waiting</font> = 1
+   + <font color="#00b400">StartUp</font> = 2
+   + <font color="#00b400">Engaged</font> = 3
+   + <font color="#00b400">PostRound</font> = 4
+   - <font color="#ff6767">Active</font>
+ Enum.SuperTrackingType
+   + <font color="#00b400">Content</font> = 4
+ Enum.TooltipDataLineType
+   + <font color="#00b400">ToyName</font> = 31
+   + <font color="#00b400">ToyText</font> = 32
+   + <font color="#00b400">ToyEffect</font> = 33
+   + <font color="#00b400">ToyDuration</font> = 34
+   + <font color="#00b400">RestrictedArena</font> = 35
+   + <font color="#00b400">RestrictedBg</font> = 36
+   + <font color="#00b400">ToyFlavorText</font> = 37
+   + <font color="#00b400">ToyDescription</font> = 38
+   + <font color="#00b400">ToySource</font> = 39
+ Enum.ReportType
+   + <font color="#00b400">CraftingOrder</font> = 16
+ Enum.TrackedSpellCategory
+   + <font color="#00b400">None</font> = 0
+   - <font color="#ff6767">Count</font>
+ Enum.UIMapFlag
+   + <font color="#00b400">ForceAllowMapLinks</font> = 0x40000
+
+==Constants==
+ ContentTrackingConsts
+   + <font color="#00b400">MaxTrackedAchievements</font> = 10
+   + <font color="#00b400">MaxTrackedCollectableSources</font> = 15
+
+==Structures==
+ BattlefieldRewards
+   + <font color="#00b400">roleShortageBonus</font>
+ CampaignInfo ({{api|C_CampaignInfo.GetCampaignInfo}})
+   + <font color="#00b400">usesNormalQuestIcons</font>
+   + <font color="#00b400">isContainerCampaign</font>
+ CharCustomizationCategory ({{api|C_BarberShop.GetAvailableCustomizations}})
+   + <font color="#00b400">needsNativeFormCategory</font>
+ ChromieTimeExpansionInfo ({{api|C_ChromieTime.GetChromieTimeExpansionOption}}, {{api|C_ChromieTime.GetChromieTimeExpansionOptions}})
+   + <font color="#00b400">recommended</font>
+   + <font color="#00b400">sortPriority</font>
+ ContainerItemInfo ({{api|C_Container.GetContainerItemInfo}})
+   + <font color="#00b400">itemName</font>
+ CraftingOrderClaimsRemainingInfo ({{api|C_CraftingOrders.GetOrderClaimInfo}})
+   # <font color="#ff6767">hoursToRecharge</font> -> <font color="#00b400">secondsToRecharge</font>
+ CraftingOrderReagentInfo ({{api|C_CraftingOrders.GetCrafterOrders}}, ...)
+   # <font color="#ff6767">reagentSlot</font> -> <font color="#00b400">slotIndex</font>
+ DeadlyDebuffInfo ({{api|C_SpellBook.GetDeadlyDebuffInfo}})
+   + <font color="#00b400">criticalTimeRemainingMs</font>
+   + <font color="#00b400">criticalStacks</font>
+   - <font color="#ff6767">overrideCriticalTimeRemaining</font>
+ GossipQuestUIInfo ({{api|C_GossipInfo.GetActiveQuests}}, {{api|C_GossipInfo.GetAvailableQuests}})
+   + <font color="#00b400">isImportant</font>
+ LossOfControlData ({{api|C_LossOfControl.GetActiveLossOfControlData}})
+   + <font color="#00b400">auraInstanceID</font>
+ PerksProgramItemDisplayInfo ({{api|C_PerksProgram.GetPerksProgramItemDisplayInfo}})
+   + <font color="#00b400">creatureDisplayInfoID</font>
+ PerksVendorItemInfo ({{api|C_PerksProgram.GetVendorItemInfo}}, {{api|C_PerksProgram.GetFrozenPerksVendorItemInfo}})
+   + <font color="#00b400">pending</font>
+ QuestLineInfo ({{api|C_QuestLine.GetQuestLineInfo}}, {{api|C_QuestLine.GetAvailableQuestLines}})
+   + <font color="#00b400">isImportant</font>
+ ScenarioInformation ({{api|C_ScenarioInfo.GetScenarioInfo}})
+   + <font color="#00b400">scenarioID</font>
+ TradeSkillRecipeInfo ({{api|C_TradeSkillUI.GetRecipeInfo}}, {{api|C_TradeSkillUI.GetRecipeInfoForSkillLineAbility}})
+   + <font color="#00b400">alwaysUsesLowestQuality</font>

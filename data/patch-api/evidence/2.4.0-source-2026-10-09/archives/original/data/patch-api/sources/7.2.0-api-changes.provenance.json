@@ -1,0 +1,15 @@
+{
+  "pageid": 412195,
+  "title": "Patch 7.2.0/API changes",
+  "revid": 6767100,
+  "parentid": 3959560,
+  "timestamp": "2026-07-09T22:13:57Z",
+  "fetched_at": "2026-10-08T16:28:45.956371+00:00",
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=412195&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+  "sha256": "8441bd7ac745b2f839156b4e7e37a14f63f4f001649c5cecfb5110ea45db08cf",
+  "generator_flags": [
+    "--legacy-widget-summaries",
+    "--prose-namespace-migrations"
+  ],
+  "extractor_flags": []
+}

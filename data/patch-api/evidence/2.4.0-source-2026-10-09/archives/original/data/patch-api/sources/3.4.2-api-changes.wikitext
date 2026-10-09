@@ -1,0 +1,214 @@
+{{apichanges|3.4.2|prev=3.4.1|next=3.4.3}}
+
+==Summary==
+* The client has pulled in many API changes from [[Patch 10.1.0/API changes|Patch 10.1.0]].
+* The new Settings panel introduced in Dragonflight is now also used in Classic.
+
+==Resources==
+* TOC: <code>30402</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/3.4.1..classic_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/3.4.1..3.4.2 BlizzardInterfaceResources]
+* Official patch notes: [https://eu.forums.blizzard.com/en/wow/t/wrath-classic-patch-notes-version-342/454361#user-interface-11 Wrath Classic Patch Notes Version 3.4.2]
+
+==Global API==
+{| class="wikitable" style="min-width: 600px
+|+ 3.4.1 (47612) &rarr; 3.4.2 (50375) Jul  7 2023
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(63)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(31)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AccountInfo.GetIDFromBattleNetAccountGUID}}
+: {{api|t=a|C_AccountServices.IsAccountLockedPostSave}}
+: {{api|t=a|C_AccountServices.IsAccountSaveEnabled}}
+: {{api|t=a|C_AccountServices.IsAccountSaveInProgress}}
+: {{api|t=a|C_AccountServices.SaveAccountData}}
+: {{api|t=a|C_AddOns.GetAddOnMetadata}}
+: {{api|t=a|C_ArrowCalloutManager.AcknowledgeCallout}}
+: {{api|t=a|C_ArrowCalloutManager.HideCallout}}
+: {{api|t=a|C_ArrowCalloutManager.HideWorldLootObjectCallout}}
+: {{api|t=a|C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID}}
+: {{api|t=a|C_ArrowCalloutManager.SwapWorldLootObjectCallout}}
+: {{api|t=a|C_AzeriteItem.IsUnlimitedLevelingUnlocked}}
+: {{api|t=a|C_CameraDefaults.GetCameraFOVDefaults}}
+: {{api|t=a|C_CharacterServices.AssignPCTDistribution}}
+: {{api|t=a|C_CharacterServices.AssignRaceOrFactionChangeDistribution}}
+: {{api|t=a|C_ChatInfo.GetChatLineSenderGUID}}
+: {{api|t=a|C_ChatInfo.GetChatLineSenderName}}
+: {{api|t=a|C_ChatInfo.GetChatLineText}}
+: {{api|t=a|C_ChatInfo.IsChatLineCensored}}
+: {{api|t=a|C_ChatInfo.UncensorChatLine}}
+: {{api|t=a|C_ConsoleScriptCollection.GetCollectionDataByID}}
+: {{api|t=a|C_ConsoleScriptCollection.GetCollectionDataByTag}}
+: {{api|t=a|C_ConsoleScriptCollection.GetElements}}
+: {{api|t=a|C_ConsoleScriptCollection.GetScriptData}}
+: {{api|t=a|C_Debug.ViewInDebugWindow}}
+: {{api|t=a|C_GenericWidgetDisplay.Acknowledge}}
+: {{api|t=a|C_GenericWidgetDisplay.Close}}
+: {{api|t=a|C_GossipInfo.SelectOptionByIndex}}
+: {{api|t=a|C_GuildInfo.MemberExistsByName}}
+: {{api|t=a|C_PlayerInfo.CanUseItem}}
+: {{api|t=a|C_PlayerInfo.GetDisplayID}}
+: {{api|t=a|C_PlayerInfo.GetPlayerCharacterData}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestRewardSpellInfo}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestRewardSpells}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestShouldToastCompletion}}
+: {{api|t=a|C_QuestInfoSystem.HasQuestRewardSpells}}
+: {{api|t=a|C_SpectatingUI.IsSpectating}}
+: {{api|t=a|C_SpellBook.GetSpellLinkFromSpellID}}
+: {{api|t=a|C_Texture.ClearTitleIconTexture}}
+: {{api|t=a|C_Texture.GetTitleIconTexture}}
+: {{api|t=a|C_Texture.IsTitleIconTextureReady}}
+: {{api|t=a|C_Texture.SetTitleIconTexture}}
+: {{api|t=a|C_Traits.GenerateInspectImportString}}
+: {{api|t=a|C_Traits.GetTraitSystemFlags}}
+: {{api|t=a|C_Traits.IsReadyForCommit}}
+: {{api|t=a|C_Traits.ResetTreeByCurrency}}
+: {{api|t=a|GetButtonMetatable}}
+: {{api|t=a|GetCurrentGraphicsAPI}}
+: {{api|t=a|GetEditBoxMetatable}}
+: {{api|t=a|GetEquivalentDynamicDifficultyID}}
+: {{api|t=a|GetFontStringMetatable}}
+: {{api|t=a|GetFrameMetatable}}
+: {{api|t=a|GetGraphicsCVarValueForQualityLevel}}
+: {{api|t=a|GetQuestLogSelectedID}}
+: {{api|t=a|GetSoundEntryCount}}
+: {{api|t=a|IsGraphicsCVarValueSupported}}
+: {{api|t=a|IsGraphicsSettingValueSupported}}
+: {{api|t=a|IsUsingGamepad}}
+: {{api|t=a|IsUsingMouse}}
+: {{api|t=a|pcallwithenv}}
+: {{api|t=a|QuestFlagsPVP}}
+: {{api|t=a|StripHyperlinks}}
+: {{api|t=a|SupportsClipCursor}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|BNSendSoR}}
+: {{api|t=a|C_CharacterServices.AssignPFCDistribution}}
+: {{api|t=a|C_Social.GetLastItem}}
+: {{api|t=a|C_Social.GetLastScreenshot}}
+: {{api|t=a|C_Social.GetNumCharactersPerMedia}}
+: {{api|t=a|C_Social.GetScreenshotByIndex}}
+: {{api|t=a|C_Social.GetTweetLength}}
+: {{api|t=a|C_Social.IsSocialEnabled}}
+: {{api|t=a|C_Social.RegisterSocialBrowser}}
+: {{api|t=a|C_Social.SetTextureToScreenshot}}
+: {{api|t=a|C_Social.TwitterCheckStatus}}
+: {{api|t=a|C_Social.TwitterConnect}}
+: {{api|t=a|C_Social.TwitterDisconnect}}
+: {{api|t=a|C_Social.TwitterGetMSTillCanPost}}
+: {{api|t=a|C_Social.TwitterPostAchievement}}
+: {{api|t=a|C_Social.TwitterPostMessage}}
+: {{api|t=a|C_Social.TwitterPostScreenshot}}
+: {{api|t=a|CanSendSoRByText}}
+: {{api|t=a|GetAddOnMetadata}}
+: {{api|t=a|GetMouseClickFocus}}
+: {{api|t=a|GetMouseMotionFocus}}
+: {{api|t=a|GetNumFrames}}
+: {{api|t=a|GetNumQuestLogRewardSpells}}
+: {{api|t=a|GetNumRewardSpells}}
+: {{api|t=a|GetNumSoRRemaining}}
+: {{api|t=a|GetQuestLogRewardSpell}}
+: {{api|t=a|GetQuestLogSpellLink}}
+: {{api|t=a|GetQuestSpellLink}}
+: {{api|t=a|GetRewardSpell}}
+: {{api|t=a|GuildRosterSendSoR}}
+: {{api|t=a|SendSoRByText}}
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(16)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Region:EnableMouseMotion}}
+: {{api|t=w|Region:IsMouseMotionFocus}}
+: {{api|t=w|AnimationGroup:GetElapsed}}
+: {{api|t=w|EditBox:OnUiMapChanged}}
+: {{api|t=w|EditBox:GetFogOfWarBackgroundAtlas}}
+: {{api|t=w|EditBox:GetFogOfWarBackgroundTexture}}
+: {{api|t=w|FogOfWarFrame:GetFogOfWarMaskAtlas}}
+: {{api|t=w|FogOfWarFrame:GetFogOfWarMaskTexture}}
+: {{api|t=w|FogOfWarFrame:GetMaskScalar}}
+: {{api|t=w|FogOfWarFrame:GetUiMapID}}
+: {{api|t=w|FogOfWarFrame:SetFogOfWarBackgroundAtlas}}
+: {{api|t=w|FogOfWarFrame:SetFogOfWarBackgroundTexture}}
+: {{api|t=w|FogOfWarFrame:SetFogOfWarMaskAtlas}}
+: {{api|t=w|FogOfWarFrame:SetFogOfWarMaskTexture}}
+: {{api|t=w|FogOfWarFrame:SetMaskScalar}}
+: {{api|t=w|FogOfWarFrame:SetUiMapID}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|GameTooltip:SetQuestLogRewardSpell}}
+: {{api|t=w|GameTooltip:SetQuestRewardSpell}}
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(4)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(4)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|PLAYER_CAN_GLIDE_CHANGED}}
+: {{api|t=e|SHOW_PARTY_POSE_UI}}
+: {{api|t=e|UNIT_SPELLCAST_INTERRUPTIBLE}}
+: {{api|t=e|UNIT_SPELLCAST_NOT_INTERRUPTIBLE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|SOCIAL_ITEM_RECEIVED}}
+: {{api|t=e|TWITTER_LINK_RESULT}}
+: {{api|t=e|TWITTER_POST_RESULT}}
+: {{api|t=e|TWITTER_STATUS_UPDATE}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(26)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(9)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=acknowledgedArrowCallouts|default=0|scope=Character|cat=4|desc=Bit field of Looking for guild player settings}}
+: {{apitooltip|type=cvar|name=dnMTUpdate|default=1|cat=1|desc=Update Daynight in parralel.}}
+: {{apitooltip|type=cvar|name=EnableAirlockLogging|default=0|cat=4|desc=If 1, enables airlock logging, which will print out the various steps as they happen so that timing can be done.}}
+: {{apitooltip|type=cvar|name=excludedCensorSources|default=1|scope=Account|cat=4|desc=Inappropriate message source exemptions. 0 = Exempt nobody, 1 = Exempt Friends, 3 = Exempt Friends and Guildmates, 255 = Exempt All}}
+: {{apitooltip|type=cvar|name=friendInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=frontendMatchingModes_WowLabs|default=1|cat=4|desc=0=All,1=DuoOnly,2=TrioOnly,3=DuoAndTrio}}
+: {{apitooltip|type=cvar|name=guildAnnounceMemberDeaths|default=1|scope=Character|cat=4|desc=Announce deaths of guild members}}
+: {{apitooltip|type=cvar|name=GxFrameEndMode|default=0|cat=1|desc=Allow GxFrameEnd to overlap next frame (0=Disabled, 1=Safe, 2=Experimental)}}
+: {{apitooltip|type=cvar|name=locateViewerMaxJobs|default=32|cat=1|desc=Maximum job threads for LocateViewer}}
+: {{apitooltip|type=cvar|name=NamePlateClassificationScale|default=1.0|scope=Character|cat=4|desc=Applied to the classification icon for nameplates.}}
+: {{apitooltip|type=cvar|name=partyInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=pendingInviteInfoShown_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=RAIDshadowBlendCascades|default=0|cat=1|desc=Blend between shadow cascades (0/1)}}
+: {{apitooltip|type=cvar|name=shadowBlendCascades|default=0|cat=1|desc=Blend between shadow cascades (0/1)}}
+: {{apitooltip|type=cvar|name=softTargettingInteractKeySound|default=0|scope=Account|cat=4|desc=Setting for soft targeting that enables sound cues}}
+: {{apitooltip|type=cvar|name=TargetAutoLock|default=1|scope=Character|cat=4|desc=Lock targets auto-set by the game}}
+: {{apitooltip|type=cvar|name=vrsValarEnvLuma|default=0.05|cat=1|desc=Env. Luma for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValarK|default=2.13|cat=1|desc=Quarter Rate Sensitivity (K) for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValarSensitivityThreshold|default=0.31|cat=1|desc=Sensitivity Threshold for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValarUseAsyncCompute|default=0|cat=1|desc=Use async compute for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValarUseMotionVectors|default=0|cat=1|desc=Use motion vectors for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValarUseWeberFechner|default=0|cat=1|desc=Use Weber-Fechner Algo for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValarWeberFechnerConstant|default=1.0|cat=1|desc=Weber-Fechner Constant for VALAR}}
+: {{apitooltip|type=cvar|name=vrsValar|default=0|cat=1|desc=Generate a shading rate mask based on velocity and luminance. Requires VRS Tier 2.}}
+: {{apitooltip|type=cvar|name=WalkableSurfacesValidationLog|default=0}}
+: {{apitooltip|type=cvar|name=worldIntersectMaxJobs|default=32|cat=1|desc=Maximum job threads for culling}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=DynamicVRSSensitivityThreshold|default=0|cat=1|desc=Enable dynamic sensitivity threshold based on target FPS for VRS}}
+: {{apitooltip|type=cvar|name=enableTwitter|default=0|scope=Account|cat=4|desc=Whether Twitter integration is enabled}}
+: {{apitooltip|type=cvar|name=seenTBCInfoPane|default=0|cat=4|desc=Whether or not the user has seen the TBC Info Pane at least once.}}
+: {{apitooltip|type=cvar|name=showUnactivatedCharacters|default=1|cat=4|desc=Show unactivated characters on Character Select.}}
+: {{apitooltip|type=cvar|name=TargetPriorityValueBank|default=1|cat=4|desc=Selects the active targeting values bank for calculating target priority order}}
+: {{apitooltip|type=cvar|name=twitterCharactersPerMedia|default=23|cat=4|desc=Number of characters needed when attaching media to a Twitter post}}
+: {{apitooltip|type=cvar|name=twitterGetConfigTime|default=0|cat=4|desc=Last time that we got Twitter configuration data successfully}}
+: {{apitooltip|type=cvar|name=twitterShortUrlLengthHttps|default=23|cat=4|desc=Number of characters that https URLS get shortened to}}
+: {{apitooltip|type=cvar|name=twitterShortUrlLength|default=22|cat=4|desc=Number of characters that non-https URLS get shortened to}}
+</div>
+|}

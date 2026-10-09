@@ -1,0 +1,466 @@
+{{apichanges|2.5.4|prev=2.5.3|next=3.4.0}}
+
+==Resources==
+* TOC: <code>20504</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/commit/bc779043df19164bbe2478ab47305231e60c8899 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/c1c8511423580a0e606258726d889a7c51a55ae9 BlizzardInterfaceResources]
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 2.5.3 (41812) &rarr; 2.5.4 (44833) Jul 25 2022
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(187)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AzeriteEmpoweredItem.CanSelectPower}}
+: {{api|t=a|C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec}}
+: {{api|t=a|C_AzeriteEmpoweredItem.ConfirmAzeriteEmpoweredItemRespec}}
+: {{api|t=a|C_AzeriteEmpoweredItem.GetAllTierInfoByItemID}}
+: {{api|t=a|C_AzeriteEmpoweredItem.GetAllTierInfo}}
+: {{api|t=a|C_AzeriteEmpoweredItem.GetAzeriteEmpoweredItemRespecCost}}
+: {{api|t=a|C_AzeriteEmpoweredItem.GetPowerInfo}}
+: {{api|t=a|C_AzeriteEmpoweredItem.GetPowerText}}
+: {{api|t=a|C_AzeriteEmpoweredItem.GetSpecsForPower}}
+: {{api|t=a|C_AzeriteEmpoweredItem.HasAnyUnselectedPowers}}
+: {{api|t=a|C_AzeriteEmpoweredItem.HasBeenViewed}}
+: {{api|t=a|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID}}
+: {{api|t=a|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem}}
+: {{api|t=a|C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable}}
+: {{api|t=a|C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped}}
+: {{api|t=a|C_AzeriteEmpoweredItem.IsPowerAvailableForSpec}}
+: {{api|t=a|C_AzeriteEmpoweredItem.IsPowerSelected}}
+: {{api|t=a|C_AzeriteEmpoweredItem.SelectPower}}
+: {{api|t=a|C_AzeriteEmpoweredItem.SetHasBeenViewed}}
+: {{api|t=a|C_AzeriteEssence.ActivateEssence}}
+: {{api|t=a|C_AzeriteEssence.CanActivateEssence}}
+: {{api|t=a|C_AzeriteEssence.CanDeactivateEssence}}
+: {{api|t=a|C_AzeriteEssence.CanOpenUI}}
+: {{api|t=a|C_AzeriteEssence.ClearPendingActivationEssence}}
+: {{api|t=a|C_AzeriteEssence.CloseForge}}
+: {{api|t=a|C_AzeriteEssence.GetEssenceHyperlink}}
+: {{api|t=a|C_AzeriteEssence.GetEssenceInfo}}
+: {{api|t=a|C_AzeriteEssence.GetEssences}}
+: {{api|t=a|C_AzeriteEssence.GetMilestoneEssence}}
+: {{api|t=a|C_AzeriteEssence.GetMilestoneInfo}}
+: {{api|t=a|C_AzeriteEssence.GetMilestoneSpell}}
+: {{api|t=a|C_AzeriteEssence.GetMilestones}}
+: {{api|t=a|C_AzeriteEssence.GetNumUnlockedEssences}}
+: {{api|t=a|C_AzeriteEssence.GetNumUsableEssences}}
+: {{api|t=a|C_AzeriteEssence.GetPendingActivationEssence}}
+: {{api|t=a|C_AzeriteEssence.HasNeverActivatedAnyEssences}}
+: {{api|t=a|C_AzeriteEssence.HasPendingActivationEssence}}
+: {{api|t=a|C_AzeriteEssence.IsAtForge}}
+: {{api|t=a|C_AzeriteEssence.SetPendingActivationEssence}}
+: {{api|t=a|C_AzeriteEssence.UnlockMilestone}}
+: {{api|t=a|C_AzeriteItem.FindActiveAzeriteItem}}
+: {{api|t=a|C_AzeriteItem.GetAzeriteItemXPInfo}}
+: {{api|t=a|C_AzeriteItem.GetPowerLevel}}
+: {{api|t=a|C_AzeriteItem.GetUnlimitedPowerLevel}}
+: {{api|t=a|C_AzeriteItem.HasActiveAzeriteItem}}
+: {{api|t=a|C_AzeriteItem.IsAzeriteItemAtMaxLevel}}
+: {{api|t=a|C_AzeriteItem.IsAzeriteItemByID}}
+: {{api|t=a|C_AzeriteItem.IsAzeriteItemEnabled}}
+: {{api|t=a|C_AzeriteItem.IsAzeriteItem}}
+: {{api|t=a|C_Calendar.AddEvent}}
+: {{api|t=a|C_Calendar.AreNamesReady}}
+: {{api|t=a|C_Calendar.CanAddEvent}}
+: {{api|t=a|C_Calendar.CanSendInvite}}
+: {{api|t=a|C_Calendar.CloseEvent}}
+: {{api|t=a|C_Calendar.ContextMenuEventCanComplain}}
+: {{api|t=a|C_Calendar.ContextMenuEventCanEdit}}
+: {{api|t=a|C_Calendar.ContextMenuEventCanRemove}}
+: {{api|t=a|C_Calendar.ContextMenuEventClipboard}}
+: {{api|t=a|C_Calendar.ContextMenuEventComplain}}
+: {{api|t=a|C_Calendar.ContextMenuEventCopy}}
+: {{api|t=a|C_Calendar.ContextMenuEventGetCalendarType}}
+: {{api|t=a|C_Calendar.ContextMenuEventPaste}}
+: {{api|t=a|C_Calendar.ContextMenuEventRemove}}
+: {{api|t=a|C_Calendar.ContextMenuEventSignUp}}
+: {{api|t=a|C_Calendar.ContextMenuGetEventIndex}}
+: {{api|t=a|C_Calendar.ContextMenuInviteAvailable}}
+: {{api|t=a|C_Calendar.ContextMenuInviteDecline}}
+: {{api|t=a|C_Calendar.ContextMenuInviteRemove}}
+: {{api|t=a|C_Calendar.ContextMenuInviteTentative}}
+: {{api|t=a|C_Calendar.ContextMenuSelectEvent}}
+: {{api|t=a|C_Calendar.CreateCommunitySignUpEvent}}
+: {{api|t=a|C_Calendar.CreateGuildAnnouncementEvent}}
+: {{api|t=a|C_Calendar.CreateGuildSignUpEvent}}
+: {{api|t=a|C_Calendar.CreatePlayerEvent}}
+: {{api|t=a|C_Calendar.EventAvailable}}
+: {{api|t=a|C_Calendar.EventCanEdit}}
+: {{api|t=a|C_Calendar.EventClearAutoApprove}}
+: {{api|t=a|C_Calendar.EventClearLocked}}
+: {{api|t=a|C_Calendar.EventClearModerator}}
+: {{api|t=a|C_Calendar.EventDecline}}
+: {{api|t=a|C_Calendar.EventGetCalendarType}}
+: {{api|t=a|C_Calendar.EventGetClubId}}
+: {{api|t=a|C_Calendar.EventGetInviteResponseTime}}
+: {{api|t=a|C_Calendar.EventGetInviteSortCriterion}}
+: {{api|t=a|C_Calendar.EventGetInvite}}
+: {{api|t=a|C_Calendar.EventGetSelectedInvite}}
+: {{api|t=a|C_Calendar.EventGetStatusOptions}}
+: {{api|t=a|C_Calendar.EventGetTextures}}
+: {{api|t=a|C_Calendar.EventGetTypesDisplayOrdered}}
+: {{api|t=a|C_Calendar.EventGetTypes}}
+: {{api|t=a|C_Calendar.EventHasPendingInvite}}
+: {{api|t=a|C_Calendar.EventHaveSettingsChanged}}
+: {{api|t=a|C_Calendar.EventInvite}}
+: {{api|t=a|C_Calendar.EventRemoveInviteByGuid}}
+: {{api|t=a|C_Calendar.EventRemoveInvite}}
+: {{api|t=a|C_Calendar.EventSelectInvite}}
+: {{api|t=a|C_Calendar.EventSetAutoApprove}}
+: {{api|t=a|C_Calendar.EventSetClubId}}
+: {{api|t=a|C_Calendar.EventSetDate}}
+: {{api|t=a|C_Calendar.EventSetDescription}}
+: {{api|t=a|C_Calendar.EventSetInviteStatus}}
+: {{api|t=a|C_Calendar.EventSetLocked}}
+: {{api|t=a|C_Calendar.EventSetModerator}}
+: {{api|t=a|C_Calendar.EventSetTextureID}}
+: {{api|t=a|C_Calendar.EventSetTime}}
+: {{api|t=a|C_Calendar.EventSetTitle}}
+: {{api|t=a|C_Calendar.EventSetType}}
+: {{api|t=a|C_Calendar.EventSignUp}}
+: {{api|t=a|C_Calendar.EventSortInvites}}
+: {{api|t=a|C_Calendar.EventTentative}}
+: {{api|t=a|C_Calendar.GetClubCalendarEvents}}
+: {{api|t=a|C_Calendar.GetDayEvent}}
+: {{api|t=a|C_Calendar.GetDefaultGuildFilter}}
+: {{api|t=a|C_Calendar.GetEventIndexInfo}}
+: {{api|t=a|C_Calendar.GetEventIndex}}
+: {{api|t=a|C_Calendar.GetEventInfo}}
+: {{api|t=a|C_Calendar.GetFirstPendingInvite}}
+: {{api|t=a|C_Calendar.GetGuildEventInfo}}
+: {{api|t=a|C_Calendar.GetGuildEventSelectionInfo}}
+: {{api|t=a|C_Calendar.GetHolidayInfo}}
+: {{api|t=a|C_Calendar.GetMaxCreateDate}}
+: {{api|t=a|C_Calendar.GetMinDate}}
+: {{api|t=a|C_Calendar.GetMonthInfo}}
+: {{api|t=a|C_Calendar.GetNextClubId}}
+: {{api|t=a|C_Calendar.GetNumDayEvents}}
+: {{api|t=a|C_Calendar.GetNumGuildEvents}}
+: {{api|t=a|C_Calendar.GetNumInvites}}
+: {{api|t=a|C_Calendar.GetNumPendingInvites}}
+: {{api|t=a|C_Calendar.GetRaidInfo}}
+: {{api|t=a|C_Calendar.IsActionPending}}
+: {{api|t=a|C_Calendar.IsEventOpen}}
+: {{api|t=a|C_Calendar.MassInviteCommunity}}
+: {{api|t=a|C_Calendar.MassInviteGuild}}
+: {{api|t=a|C_Calendar.OpenCalendar}}
+: {{api|t=a|C_Calendar.OpenEvent}}
+: {{api|t=a|C_Calendar.RemoveEvent}}
+: {{api|t=a|C_Calendar.SetAbsMonth}}
+: {{api|t=a|C_Calendar.SetMonth}}
+: {{api|t=a|C_Calendar.SetNextClubId}}
+: {{api|t=a|C_Calendar.UpdateEvent}}
+: {{api|t=a|C_ChatInfo.GetChannelInfoFromIdentifier}}
+: {{api|t=a|C_ChatInfo.GetChannelShortcutForChannelID}}
+: {{api|t=a|C_ChatInfo.GetChannelShortcut}}
+: {{api|t=a|C_ChatInfo.GetChatTypeName}}
+: {{api|t=a|C_GamePad.AddSDLMapping}}
+: {{api|t=a|C_ReportSystem.CanReportPlayerForLanguage}}
+: {{api|t=a|C_ReportSystem.CanReportPlayer}}
+: {{api|t=a|C_ReportSystem.InitiateReportPlayer}}
+: {{api|t=a|C_ReportSystem.OpenReportPlayerDialog}}
+: {{api|t=a|C_ReportSystem.ReportServerLag}}
+: {{api|t=a|C_ReportSystem.ReportStuckInCombat}}
+: {{api|t=a|C_ReportSystem.SendReportPlayer}}
+: {{api|t=a|C_ReportSystem.SetPendingReportPetTarget}}
+: {{api|t=a|C_ReportSystem.SetPendingReportTargetByGuid}}
+: {{api|t=a|C_ReportSystem.SetPendingReportTarget}}
+: {{api|t=a|C_System.GetFrameStack}}
+: {{api|t=a|C_TTSSettings.GetChannelEnabled}}
+: {{api|t=a|C_TTSSettings.GetCharacterSettingsSaved}}
+: {{api|t=a|C_TTSSettings.GetChatTypeEnabled}}
+: {{api|t=a|C_TTSSettings.GetSetting}}
+: {{api|t=a|C_TTSSettings.GetSpeechRate}}
+: {{api|t=a|C_TTSSettings.GetSpeechVolume}}
+: {{api|t=a|C_TTSSettings.GetVoiceOptionID}}
+: {{api|t=a|C_TTSSettings.GetVoiceOptionName}}
+: {{api|t=a|C_TTSSettings.MarkCharacterSettingsSaved}}
+: {{api|t=a|C_TTSSettings.SetChannelEnabled}}
+: {{api|t=a|C_TTSSettings.SetChannelKeyEnabled}}
+: {{api|t=a|C_TTSSettings.SetChatTypeEnabled}}
+: {{api|t=a|C_TTSSettings.SetDefaultSettings}}
+: {{api|t=a|C_TTSSettings.SetSetting}}
+: {{api|t=a|C_TTSSettings.SetSpeechRate}}
+: {{api|t=a|C_TTSSettings.SetSpeechVolume}}
+: {{api|t=a|C_TTSSettings.SetVoiceOptionName}}
+: {{api|t=a|C_TTSSettings.SetVoiceOption}}
+: {{api|t=a|C_TTSSettings.ShouldOverrideMessage}}
+: {{api|t=a|C_UI.DoesAnyDisplayHaveNotch}}
+: {{api|t=a|C_UI.GetTopLeftNotchSafeRegion}}
+: {{api|t=a|C_UI.GetTopRightNotchSafeRegion}}
+: {{api|t=a|C_UI.ShouldUIParentAvoidNotch}}
+: {{api|t=a|C_VoiceChat.IsSpeakForMeActive}}
+: {{api|t=a|C_VoiceChat.IsSpeakForMeAllowed}}
+: {{api|t=a|C_VoiceChat.IsTranscriptionAllowed}}
+: {{api|t=a|GetTradeSkillItemLevelFilter}}
+: {{api|t=a|GetTradeSkillItemNameFilter}}
+: {{api|t=a|SetTradeSkillItemLevelFilter}}
+: {{api|t=a|SetTradeSkillItemNameFilter}}
+: {{api|t=a|UnitGroupRolesAssigned}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(1)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Frame:SetAttributeNoHandler}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(200)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACHIEVEMENT_EARNED}}
+: {{api|t=e|ACHIEVEMENT_PLAYER_NAME}}
+: {{api|t=e|ACHIEVEMENT_SEARCH_UPDATED}}
+: {{api|t=e|ACTIVATE_GLYPH}}
+: {{api|t=e|ADVENTURE_MAP_CLOSE}}
+: {{api|t=e|ADVENTURE_MAP_OPEN}}
+: {{api|t=e|ADVENTURE_MAP_QUEST_UPDATE}}
+: {{api|t=e|ADVENTURE_MAP_UPDATE_INSETS}}
+: {{api|t=e|ADVENTURE_MAP_UPDATE_POIS}}
+: {{api|t=e|AJ_DUNGEON_ACTION}}
+: {{api|t=e|AJ_OPEN}}
+: {{api|t=e|AJ_PVE_LFG_ACTION}}
+: {{api|t=e|AJ_PVP_ACTION}}
+: {{api|t=e|AJ_PVP_LFG_ACTION}}
+: {{api|t=e|AJ_PVP_RBG_ACTION}}
+: {{api|t=e|AJ_PVP_SKIRMISH_ACTION}}
+: {{api|t=e|AJ_QUEST_LOG_OPEN}}
+: {{api|t=e|AJ_RAID_ACTION}}
+: {{api|t=e|AJ_REFRESH_DISPLAY}}
+: {{api|t=e|AJ_REWARD_DATA_RECEIVED}}
+: {{api|t=e|ALERT_REGIONAL_CHAT_DISABLED}}
+: {{api|t=e|AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED}}
+: {{api|t=e|AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED}}
+: {{api|t=e|AZERITE_ESSENCE_ACTIVATED}}
+: {{api|t=e|AZERITE_ESSENCE_ACTIVATION_FAILED}}
+: {{api|t=e|AZERITE_ESSENCE_CHANGED}}
+: {{api|t=e|AZERITE_ESSENCE_FORGE_CLOSE}}
+: {{api|t=e|AZERITE_ESSENCE_FORGE_OPEN}}
+: {{api|t=e|AZERITE_ESSENCE_MILESTONE_UNLOCKED}}
+: {{api|t=e|AZERITE_ESSENCE_UPDATE}}
+: {{api|t=e|AZERITE_ITEM_ENABLED_STATE_CHANGED}}
+: {{api|t=e|AZERITE_ITEM_EXPERIENCE_CHANGED}}
+: {{api|t=e|AZERITE_ITEM_POWER_LEVEL_CHANGED}}
+: {{api|t=e|BEHAVIORAL_NOTIFICATION}}
+: {{api|t=e|BLACK_MARKET_BID_RESULT}}
+: {{api|t=e|BLACK_MARKET_CLOSE}}
+: {{api|t=e|BLACK_MARKET_ITEM_UPDATE}}
+: {{api|t=e|BLACK_MARKET_OPEN}}
+: {{api|t=e|BLACK_MARKET_OUTBID}}
+: {{api|t=e|BLACK_MARKET_UNAVAILABLE}}
+: {{api|t=e|BLACK_MARKET_WON}}
+: {{api|t=e|CALENDAR_ACTION_PENDING}}
+: {{api|t=e|CALENDAR_CLOSE_EVENT}}
+: {{api|t=e|CALENDAR_EVENT_ALARM}}
+: {{api|t=e|CALENDAR_NEW_EVENT}}
+: {{api|t=e|CALENDAR_OPEN_EVENT}}
+: {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_COUNT}}
+: {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME}}
+: {{api|t=e|CALENDAR_UPDATE_ERROR}}
+: {{api|t=e|CALENDAR_UPDATE_EVENT_LIST}}
+: {{api|t=e|CALENDAR_UPDATE_EVENT}}
+: {{api|t=e|CALENDAR_UPDATE_GUILD_EVENTS}}
+: {{api|t=e|CALENDAR_UPDATE_INVITE_LIST}}
+: {{api|t=e|CALENDAR_UPDATE_PENDING_INVITES}}
+: {{api|t=e|CANCEL_GLYPH_CAST}}
+: {{api|t=e|CHAT_DISABLED_CHANGE_FAILED}}
+: {{api|t=e|CHAT_DISABLED_CHANGED}}
+: {{api|t=e|CLASS_TRIAL_TIMER_START}}
+: {{api|t=e|CLASS_TRIAL_UPGRADE_COMPLETE}}
+: {{api|t=e|CRITERIA_COMPLETE}}
+: {{api|t=e|CRITERIA_EARNED}}
+: {{api|t=e|CRITERIA_UPDATE}}
+: {{api|t=e|ENTITLEMENT_DELIVERED}}
+: {{api|t=e|EQUIPMENT_SETS_CHANGED}}
+: {{api|t=e|EQUIPMENT_SWAP_FINISHED}}
+: {{api|t=e|EQUIPMENT_SWAP_PENDING}}
+: {{api|t=e|FIRST_FRAME_RENDERED}}
+: {{api|t=e|GAME_PAD_ACTIVE_CHANGED}}
+: {{api|t=e|GAME_PAD_CONFIGS_CHANGED}}
+: {{api|t=e|GAME_PAD_CONNECTED}}
+: {{api|t=e|GAME_PAD_DISCONNECTED}}
+: {{api|t=e|GLOBAL_MOUSE_DOWN}}
+: {{api|t=e|GLOBAL_MOUSE_UP}}
+: {{api|t=e|GUILDBANK_ITEM_LOCK_CHANGED}}
+: {{api|t=e|GUILDBANK_TEXT_CHANGED}}
+: {{api|t=e|GUILDBANK_UPDATE_MONEY}}
+: {{api|t=e|GUILDBANK_UPDATE_TABS}}
+: {{api|t=e|GUILDBANK_UPDATE_TEXT}}
+: {{api|t=e|GUILDBANK_UPDATE_WITHDRAWMONEY}}
+: {{api|t=e|GUILDBANKBAGSLOTS_CHANGED}}
+: {{api|t=e|GUILDBANKFRAME_CLOSED}}
+: {{api|t=e|GUILDBANKFRAME_OPENED}}
+: {{api|t=e|GUILDBANKLOG_UPDATE}}
+: {{api|t=e|HEIRLOOM_UPGRADE_TARGETING_CHANGED}}
+: {{api|t=e|HEIRLOOMS_UPDATED}}
+: {{api|t=e|INSPECT_ACHIEVEMENT_READY}}
+: {{api|t=e|ISLAND_COMPLETED}}
+: {{api|t=e|ITEM_UPGRADE_FAILED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_CLOSED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_OPENED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_SET_ITEM}}
+: {{api|t=e|LFG_BOOT_PROPOSAL_UPDATE}}
+: {{api|t=e|LFG_COMPLETION_REWARD}}
+: {{api|t=e|LFG_INVALID_ERROR_MESSAGE}}
+: {{api|t=e|LFG_LOCK_INFO_RECEIVED}}
+: {{api|t=e|LFG_OFFER_CONTINUE}}
+: {{api|t=e|LFG_OPEN_FROM_GOSSIP}}
+: {{api|t=e|LFG_PROPOSAL_DONE}}
+: {{api|t=e|LFG_PROPOSAL_FAILED}}
+: {{api|t=e|LFG_PROPOSAL_SHOW}}
+: {{api|t=e|LFG_PROPOSAL_SUCCEEDED}}
+: {{api|t=e|LFG_PROPOSAL_UPDATE}}
+: {{api|t=e|LFG_QUEUE_STATUS_UPDATE}}
+: {{api|t=e|LFG_READY_CHECK_DECLINED}}
+: {{api|t=e|LFG_READY_CHECK_HIDE}}
+: {{api|t=e|LFG_READY_CHECK_PLAYER_IS_READY}}
+: {{api|t=e|LFG_READY_CHECK_SHOW}}
+: {{api|t=e|LFG_READY_CHECK_UPDATE}}
+: {{api|t=e|LFG_ROLE_CHECK_DECLINED}}
+: {{api|t=e|LFG_ROLE_CHECK_HIDE}}
+: {{api|t=e|LFG_ROLE_CHECK_ROLE_CHOSEN}}
+: {{api|t=e|LFG_ROLE_CHECK_SHOW}}
+: {{api|t=e|LFG_ROLE_CHECK_UPDATE}}
+: {{api|t=e|LFG_ROLE_UPDATE}}
+: {{api|t=e|LFG_UPDATE_RANDOM_INFO}}
+: {{api|t=e|LFG_UPDATE}}
+: {{api|t=e|NEW_TOY_ADDED}}
+: {{api|t=e|NOTCHED_DISPLAY_MODE_CHANGED}}
+: {{api|t=e|OPEN_REPORT_PLAYER}}
+: {{api|t=e|PENDING_AZERITE_ESSENCE_CHANGED}}
+: {{api|t=e|PET_BATTLE_ABILITY_CHANGED}}
+: {{api|t=e|PET_BATTLE_ACTION_SELECTED}}
+: {{api|t=e|PET_BATTLE_AURA_APPLIED}}
+: {{api|t=e|PET_BATTLE_AURA_CANCELED}}
+: {{api|t=e|PET_BATTLE_AURA_CHANGED}}
+: {{api|t=e|PET_BATTLE_CAPTURED}}
+: {{api|t=e|PET_BATTLE_CLOSE}}
+: {{api|t=e|PET_BATTLE_FINAL_ROUND}}
+: {{api|t=e|PET_BATTLE_HEALTH_CHANGED}}
+: {{api|t=e|PET_BATTLE_LEVEL_CHANGED}}
+: {{api|t=e|PET_BATTLE_MAX_HEALTH_CHANGED}}
+: {{api|t=e|PET_BATTLE_OPENING_DONE}}
+: {{api|t=e|PET_BATTLE_OPENING_START}}
+: {{api|t=e|PET_BATTLE_OVERRIDE_ABILITY}}
+: {{api|t=e|PET_BATTLE_OVER}}
+: {{api|t=e|PET_BATTLE_PET_CHANGED}}
+: {{api|t=e|PET_BATTLE_PET_ROUND_PLAYBACK_COMPLETE}}
+: {{api|t=e|PET_BATTLE_PET_ROUND_RESULTS}}
+: {{api|t=e|PET_BATTLE_PET_TYPE_CHANGED}}
+: {{api|t=e|PET_BATTLE_PVP_DUEL_REQUEST_CANCEL}}
+: {{api|t=e|PET_BATTLE_PVP_DUEL_REQUESTED}}
+: {{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_ACCEPTED}}
+: {{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_DECLINED}}
+: {{api|t=e|PET_BATTLE_QUEUE_PROPOSE_MATCH}}
+: {{api|t=e|PET_BATTLE_QUEUE_STATUS}}
+: {{api|t=e|PET_BATTLE_XP_CHANGED}}
+: {{api|t=e|PLAYER_GAINS_VEHICLE_DATA}}
+: {{api|t=e|PLAYER_LOSES_VEHICLE_DATA}}
+: {{api|t=e|QUEST_SESSION_CREATED}}
+: {{api|t=e|QUEST_SESSION_DESTROYED}}
+: {{api|t=e|QUEST_SESSION_ENABLED_STATE_CHANGED}}
+: {{api|t=e|QUEST_SESSION_JOINED}}
+: {{api|t=e|QUEST_SESSION_LEFT}}
+: {{api|t=e|QUEST_SESSION_MEMBER_CONFIRM}}
+: {{api|t=e|QUEST_SESSION_MEMBER_START_RESPONSE}}
+: {{api|t=e|QUEST_SESSION_NOTIFICATION}}
+: {{api|t=e|RAF_ENTITLEMENT_DELIVERED}}
+: {{api|t=e|RECEIVED_ACHIEVEMENT_LIST}}
+: {{api|t=e|RECEIVED_ACHIEVEMENT_MEMBER_LIST}}
+: {{api|t=e|REPORT_PLAYER_RESULT}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_OPENED}}
+: {{api|t=e|SHOW_LFG_EXPAND_SEARCH_PROMPT}}
+: {{api|t=e|SOCKET_INFO_ACCEPT}}
+: {{api|t=e|SOCKET_INFO_CLOSE}}
+: {{api|t=e|SOCKET_INFO_FAILURE}}
+: {{api|t=e|SOCKET_INFO_REFUNDABLE_CONFIRM}}
+: {{api|t=e|SOCKET_INFO_SUCCESS}}
+: {{api|t=e|SOCKET_INFO_UPDATE}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_HIDE}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_SHOW}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_HIDE}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_SHOW}}
+: {{api|t=e|STOP_MOVIE}}
+: {{api|t=e|TOYS_UPDATED}}
+: {{api|t=e|TRACKED_ACHIEVEMENT_LIST_CHANGED}}
+: {{api|t=e|TRACKED_ACHIEVEMENT_UPDATE}}
+: {{api|t=e|TRANSMOG_OUTFITS_CHANGED}}
+: {{api|t=e|UNIT_ENTERED_VEHICLE}}
+: {{api|t=e|UNIT_ENTERING_VEHICLE}}
+: {{api|t=e|UNIT_EXITED_VEHICLE}}
+: {{api|t=e|UNIT_EXITING_VEHICLE}}
+: {{api|t=e|UPDATE_LFG_LIST}}
+: {{api|t=e|USE_GLYPH}}
+: {{api|t=e|VEHICLE_ANGLE_SHOW}}
+: {{api|t=e|VEHICLE_PASSENGERS_CHANGED}}
+: {{api|t=e|VEHICLE_POWER_SHOW}}
+: {{api|t=e|VEHICLE_UPDATE}}
+: {{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED}}
+: {{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED}}
+: {{api|t=e|VOID_DEPOSIT_WARNING}}
+: {{api|t=e|VOID_STORAGE_CLOSE}}
+: {{api|t=e|VOID_STORAGE_CONTENTS_UPDATE}}
+: {{api|t=e|VOID_STORAGE_DEPOSIT_UPDATE}}
+: {{api|t=e|VOID_STORAGE_OPEN}}
+: {{api|t=e|VOID_STORAGE_UPDATE}}
+: {{api|t=e|VOID_TRANSFER_DONE}}
+: {{api|t=e|VOID_TRANSFER_SUCCESS}}
+: {{api|t=e|WARFRONT_COMPLETED}}
+: {{api|t=e|WEAR_EQUIPMENT_SET}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(15)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(9)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: <span class="tttemplatelink">[[CVar BeckonTriggerEventlog|BeckonTriggerEventlog]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code></span>
+: <span class="tttemplatelink">[[CVar calendarShowHolidays|calendarShowHolidays]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Character</span><br><small>Whether holidays should appear in the calendar</small></span>
+: <span class="tttemplatelink">[[CVar CameraKeepCharacterCentered|CameraKeepCharacterCentered]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Account</span><br><small>Motion sickness control to keep character's head at center of screen to act as motion reference point. Can override other cvar settings.</small></span>
+: <span class="tttemplatelink">[[CVar CameraReduceUnexpectedMovement|CameraReduceUnexpectedMovement]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Motion sickness control to reduce camera movement without player input. Can override other cvar settings.</small></span>
+: <span class="tttemplatelink">[[CVar cameraZSmooth|cameraZSmooth]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Account</span><br><small>Smooths camera vertical movement. 1 = only while moving, 2 = also while standing still</small></span>
+: <span class="tttemplatelink">[[CVar CMAA2ExtraSharpness|CMAA2ExtraSharpness]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Set to 1 to preserve even more text and shape clarity at the expense of less AA</small></span>
+: <span class="tttemplatelink">[[CVar CMAA2Quality|CMAA2Quality]]</span><span style="display:none">Default: <code><span class="apitype">2</span></code><br><small>CMAA2 Quality Level. 0 - LOW, 1 - MEDIUM, 2 - HIGH, 3 - ULTRA</small></span>
+: <span class="tttemplatelink">[[CVar GamePadEmulateTapWindowMs|GamePadEmulateTapWindowMs]]</span><span style="display:none">Default: <code><span class="apitype">350</span></code><br><small>GamePad buttons emulating Ctrl/Alt/Shift will be 'tapped' if released withing this time in MS</small></span>
+: <span class="tttemplatelink">[[CVar GameplayContext|GameplayContext]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code></span>
+: <span class="tttemplatelink">[[CVar NotchedDisplayMode|NotchedDisplayMode]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Do nothing = 0. Shift UI down = 1. Shift everything down = 2.</small></span>
+: <span class="tttemplatelink">[[CVar overrideScreenFlash|overrideScreenFlash]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Overrides fade color options so that it always fades to black</small></span>
+: <span class="tttemplatelink">[[CVar ShakeStrengthCamera|ShakeStrengthCamera]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Account</span><br><small>Motion sickness control for how much effects can shake the camera</small></span>
+: <span class="tttemplatelink">[[CVar ShakeStrengthUI|ShakeStrengthUI]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Account</span><br><small>Motion sickness control for how much effects can shake in 2D UI</small></span>
+: <span class="tttemplatelink">[[CVar speechToText|speechToText]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Allows enabling transcription on a voice channel in order to see written text based on the words spoken by other players</small></span>
+: <span class="tttemplatelink">[[CVar textToSpeech|textToSpeech]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Reads chat text out loud using the voice text to speech system based on the selected options</small></span>
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: [[CVar AIProcessDebugger|AIProcessDebugger]]
+: [[CVar cameraZDamp|cameraZDamp]]
+: [[CVar particulatesEnabled|particulatesEnabled]]
+: [[CVar RAIDParticulatesEnabled|RAIDParticulatesEnabled]]
+: [[CVar RAIDVolumeFogLevel|RAIDVolumeFogLevel]]
+: [[CVar RAIDVolumeFog|RAIDVolumeFog]]
+: [[CVar volumeFogInterior|volumeFogInterior]]
+: [[CVar volumeFogLevel|volumeFogLevel]]
+: [[CVar volumeFog|volumeFog]]
+</div>
+|}

@@ -1,0 +1,15 @@
+Patch 9.1.0 API changes
+
+== Summary ==
+* The client now supports loading a MyAddOn_Mainline.toc file and otherwise fall back to MyAddOn.toc.[https://github.com/Stanzilla/WoWUIBugs/issues/68#issuecomment-889431675]
+* The event trace debug tool been rewritten.
+* Transmogrification APIs have been reworked.
+
+== Resources ==
+* TOC: 90100
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Deprecated_9_1_0.lua
+* Community patch notes: 9.1.0 Consolidated UI Changes
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+
+== References ==

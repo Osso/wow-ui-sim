@@ -1,0 +1,146 @@
+Patch 9.0.1 API changes
+
+== Summary ==
+Patch 9.0.1 is the pre-patch for Shadowlands API and systems.
+* TOC: 90001
+* Frames no longer provide any form of Backdrop API by default. See Backdrop System Changes.
+* Various LE_* enumerations have been moved to the global Enum table. See Enum Changes.
+* APIs deprecated during the lifetime of 8.x and present within the Blizzard_Deprecated addon have been removed. See Deprecated API Removals.
+* New files and TOC format metadata changes no longer require a client restart to take effect, only a /reload (on Windows).
+* The |r escape sequence now pops nested |c color sequences in-order, instead of resetting the text to the default color.
+
+== Resources ==
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Shadowlands Pre-Expansion Patch Notes
+* Community patch notes: 9.0.1 Consolidated UI Changes
+
+== Deprecated API ==
+APIs deprecated over the course of the 8.x expansion lifecycle were removed with 9.0.1 https://github.com/Gethe/wow-ui-source/tree/8.3.7/AddOns/Blizzard_Deprecated
+
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-deprecated" style="cursor: pointer"
+! Deprecated 8.x API
+|- class="mw-collapsible" id="mw-customcollapsible-deprecated"
+=== 8.1.0 ===
+: GetSummonConfirmTimeLeft → C_SummonInfo.GetSummonConfirmTimeLeft
+: GetSummonConfirmSummoner → C_SummonInfo.GetSummonConfirmSummoner
+: GetSummonConfirmAreaName → C_SummonInfo.GetSummonConfirmAreaName
+: ConfirmSummon → C_SummonInfo.ConfirmSummon
+: CancelSummon → C_SummonInfo.CancelSummon
+: C_Calendar.GetDate → C_DateAndTime.GetCurrentCalendarTime
+: C_DateAndTime.GetDateFromEpoch → C_DateAndTime.GetCalendarTimeFromEpoch
+: C_DateAndTime.GetTodaysDate → C_DateAndTime.GetCurrentCalendarTime
+: C_DateAndTime.GetYesterdaysDate → C_DateAndTime.AdjustTimeByDays
+: GetNumFriends → C_FriendList.GetNumFriends, C_FriendList.GetNumOnlineFriends
+: GetFriendInfo → C_FriendList.GetFriendInfo, C_FriendList.GetFriendInfoByIndex
+: SetSelectedFriend → C_FriendList.SetSelectedFriend
+: GetSelectedFriend → C_FriendList.GetSelectedFriend
+: AddOrRemoveFriend → C_FriendList.AddOrRemoveFriend
+: AddFriend → C_FriendList.AddFriend
+: RemoveFriend → C_FriendList.RemoveFriend, C_FriendList.RemoveFriendByIndex
+: ShowFriends → C_FriendList.ShowFriends
+: SetFriendNotes → C_FriendList.SetFriendNotes, C_FriendList.SetFriendNotesByIndex
+: IsCharacterFriend → C_FriendList.IsFriend
+: GetNumIgnores → C_FriendList.GetNumIgnores
+: GetIgnoreName → C_FriendList.GetIgnoreName
+: SetSelectedIgnore → C_FriendList.SetSelectedIgnore
+: GetSelectedIgnore → C_FriendList.GetSelectedIgnore
+: AddOrDelIgnore → C_FriendList.AddOrDelIgnore
+: AddIgnore → C_FriendList.AddIgnore
+: DelIgnore → C_FriendList.DelIgnore, C_FriendList.DelIgnoreByIndex
+: IsIgnored → C_FriendList.IsIgnored
+: SendWho → C_FriendList.SendWho
+: GetNumWhoResults → C_FriendList.GetNumWhoResults
+: GetWhoInfo → C_FriendList.GetWhoInfo
+: SetWhoToUI → C_FriendList.SetWhoToUi
+: SortWho → C_FriendList.SortWho
+: GetInviteReferralInfo → C_PartyInfo.GetInviteReferralInfo
+: SetPendingReportPetTarget → C_ReportSystem.SetPendingReportPetTarget
+: SetPendingReportTarget → C_ReportSystem.SetPendingReportTarget
+: C_ChatInfo.CanReportPlayer → C_ReportSystem.CanReportPlayer
+: C_Club.AddClubStreamToChatWindow → C_Club.AddClubStreamChatChannel
+: GetAtlasInfo → C_Texture.GetAtlasInfo
+: GetQuestChoiceInfo → C_QuestChoice.GetQuestChoiceInfo
+: GetQuestChoiceOptionInfo → C_QuestChoice.GetQuestChoiceOptionInfo
+: C_AreaPoiInfo.GetAreaPOITimeLeft → C_AreaPoiInfo.GetAreaPOISecondsLeft
+
+=== 8.1.5 ===
+: InActiveBattlefield → C_PvP.IsActiveBattlefield
+: HasInspectHonorData → function() return true end
+: RequestInspectHonorData → function() end
+: C_PvP.GetBrawlInfo → C_PvP.GetAvailableBrawlInfo
+: C_Social.GetLastScreenshot → C_Social.GetLastScreenshotIndex
+: C_Social.GetScreenshotByIndex → C_Social.GetScreenshotInfoByIndex
+
+=== 8.2.0 ===
+: IsRatedBattleground → C_PvP.IsRatedBattleground
+: IsRatedArena → C_PvP.IsRatedArena
+: IsRatedMap →  C_PvP.IsRatedMap
+: GetNumBattlefieldStats → C_PvP.GetMatchPVPStatIDs
+: GetBattlefieldStatInfo → C_PvP.GetMatchPVPStatIDs, C_PvP.GetMatchPVPStatColumn
+: C_ChatInfo.ReportPlayer → function() end
+: GetGuildNewsInfo → C_GuildInfo.GetGuildNewsInfo
+: GuildRoster → C_GuildInfo.GuildRoster
+: CanEditOfficerNote → C_GuildInfo.CanEditOfficerNote
+: CanViewOfficerNote → C_GuildInfo.CanViewOfficerNote
+: GetTimeStringFromSeconds → SecondsToClock
+
+=== 8.2.5 ===
+: C_RecruitAFriend.IsSendingEnabled → C_RecruitAFriend.IsEnabled
+: C_RecruitAFriend.CheckEmailEnabled → C_RecruitAFriend.IsEnabled
+: C_RecruitAFriend.SendRecruit → function() end
+: SendSoRByText → function() return false end
+: CanSendSoRByText  → function() return false end
+: GetNumSoRRemaining  → function() return 0 end
+: GuildRosterSendSoR → function() return false end
+: IsQuestFlaggedCompleted → C_QuestLog.IsQuestFlaggedCompleted
+: BNGetFriendInfo → C_BattleNet.GetFriendAccountInfo
+: BNGetFriendInfoByID → C_BattleNet.GetAccountInfoByID
+: BNGetFriendGameAccountInfo → C_BattleNet.GetFriendGameAccountInfo, C_BattleNet.GetFriendAccountInfo
+: BNGetGameAccountInfo → C_BattleNet.GetGameAccountInfoByID, C_BattleNet.GetAccountInfoByID
+: BNGetGameAccountInfoByGUID →  C_BattleNet.GetGameAccountInfoByGUID, C_BattleNet.GetAccountInfoByGUID
+: BNGetNumFriendGameAccounts → C_BattleNet.GetFriendNumGameAccounts
+: LeaveParty → C_PartyInfo.LeaveParty
+: ConvertToRaid → C_PartyInfo.ConvertToRaid
+: ConvertToParty → C_PartyInfo.ConvertToParty
+: CanGroupInvite → C_PartyInfo.CanInvite
+: InviteToGroup → C_PartyInfo.InviteUnit
+: InviteUnit → C_PartyInfo.InviteUnit
+: RequestInviteFromUnit → C_PartyInfo.RequestInviteFromUnit
+: C_PvP.GetMatchPVPStatIDs → C_PvP.GetMatchPVPStatColumns
+
+=== 8.3.0 ===
+: GetAlternatePowerInfoByID → GetUnitPowerBarInfoByID, GetUnitPowerBarStringsByID
+: UnitAlternatePowerInfo → UnitPowerBarID, GetAlternatePowerInfoByID
+: UnitAlternatePowerTextureInfo → GetUnitPowerBarTextureInfo
+: UnitAlternatePowerCounterInfo → GetUnitPowerBarInfo
+
+The following bag constants are no longer available to the global environment.
+```lua
+MAX_CONTAINER_ITEMS = 36
+NUM_CONTAINER_COLUMNS = 4
+ROWS_IN_BG_TEXTURE = 6
+MAX_BG_TEXTURES = 2
+BG_TEXTURE_HEIGHT = 512
+CONTAINER_WIDTH = 192
+CONTAINER_SPACING = 0
+VISIBLE_CONTAINER_SPACING = 3
+MINIMUM_CONTAINER_OFFSET_X = 10
+CONTAINER_SCALE = 0.75
+BACKPACK_MONEY_OFFSET_DEFAULT = -231
+BACKPACK_MONEY_HEIGHT_OFFSET_PER_EXTRA_ROW = 41
+BACKPACK_BASE_HEIGHT = 255
+BACKPACK_HEIGHT_OFFSET_PER_EXTRA_ROW = 43
+BACKPACK_DEFAULT_TOPHEIGHT = 255
+BACKPACK_EXTENDED_TOPHEIGHT = 226
+BACKPACK_BASE_SIZE = 16
+FIRST_BACKPACK_BUTTON_OFFSET_BASE = -225
+FIRST_BACKPACK_BUTTON_OFFSET_PER_EXTRA_ROW = 41
+CONTAINER_BOTTOM_TEXTURE_DEFAULT_HEIGHT = 10
+CONTAINER_BOTTOM_TEXTURE_DEFAULT_TOP_COORD = 0.330078125
+CONTAINER_BOTTOM_TEXTURE_DEFAULT_BOTTOM_COORD = 0.349609375
+```
+
+
+== References ==
+[References list; not expanded]

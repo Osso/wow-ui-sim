@@ -1,0 +1,35 @@
+{
+  "schema": "patch-api-provenance/v1",
+  "patch": "5.1.0",
+  "pageid": 282785,
+  "revid": 2736212,
+  "timestamp": "2013-01-06T16:37:16Z",
+  "fetched_on": "2026-10-08",
+  "client_line": "retail",
+  "generator_flags": [
+    "--mists-summary",
+    "--mists-diff",
+    "data/patch-api/sources/5.1.0-api-changes-diff.wikitext",
+    "--mists-widget-handlers",
+    "--mists-code-removals",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [
+    "--retain-patch-diff-reference"
+  ],
+  "retail_confirmation": {
+    "parent_pageid": 30231,
+    "parent_revid": 6544843,
+    "toc": 50100,
+    "build": 16309,
+    "release": "2012-11-27"
+  },
+  "transcluded_diff": {
+    "pageid": 472925,
+    "revid": 4546247,
+    "path": "data/patch-api/sources/5.1.0-api-changes-diff.wikitext",
+    "sha256": "c74024c7ed971ec3993f2dbc2fa31a4e1264bc553c1c03482da6cab6e4286713"
+  },
+  "sha256": "6f6f3ce35868a731d2eede70c0ba839c02aba6ad870a608d65a8e68e56a1ca26"
+}

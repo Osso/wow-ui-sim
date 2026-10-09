@@ -1,0 +1,6 @@
+{{apichanges|3.0.3|next=3.0.8|prev=3.0.2|misc=Based on [http://forums.worldofwarcraft.com/thread.html?topicId=8202271194&sid=1#4 Iriel's post] on the official forums.}}
+
+== New CVars ==
+; syncronizeConfig : Flag - 0/1 to disable/enable synchronization of UI settings.
+; synchronizeBindings : Flag - 0/1 to disable/enable synchronization of key bindings.
+; synchronizeMacros : Flag - 0/1 to disable/enable synchronization of macros.

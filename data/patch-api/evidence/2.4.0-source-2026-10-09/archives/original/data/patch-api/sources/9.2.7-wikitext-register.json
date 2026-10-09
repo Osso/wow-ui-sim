@@ -1,0 +1,43 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "9.2.7",
+  "source": {
+    "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+    "revid": 5227425,
+    "sha256": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157"
+  },
+  "header_counts": [
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-events-AUCTION_HOUSE_PURCHASE_COMPLETED-19",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_PURCHASE_COMPLETED",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE-20",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION-25",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION",
+      "annotation": "+ auctionID",
+      "wikitext_line": 25
+    }
+  ]
+}

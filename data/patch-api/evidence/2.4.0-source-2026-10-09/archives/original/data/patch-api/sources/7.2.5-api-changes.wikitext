@@ -1,0 +1,14 @@
+{{apichanges|7.2.5|prev=7.2.0|next=7.3.0}}
+
+== New ==
+* {{api|t=n|C_ChatBubbles}} added with {{api|C_ChatBubbles.GetAllChatBubbles|GetAllChatBubbles}}()
+* {{api|t=n|C_Commentator}} added with various functions.
+* Events added to [[APILink|API documentation]]
+
+== Changes ==
+* {{api|t=n|C_ActionBar}} now includes {{api|C_ActionBar.IsOnBarOrSpecialBar}}()
+* {{api|t=n|C_Garrison}}  now includes {{api|C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID|GetCurrentGarrTalentTreeFriendshipFactionID}}(), {{api|C_Garrison.GetCurrentGarrTalentTreeID|GetCurrentGarrTalentTreeID}}() and {{api|C_Garrison.GetTalentTreeIDsByClassID|GetTalentTreeIDsByClassID}}()
+* {{api|t=n|C_LFGList}} now includes {{api|C_LFGList.Search|Search}}()
+* {{api|t=n|C_Unit}} now includes {{api|UnitIsOwnerOrControllerOfUnit}}()
+* {{api|t=n|C_TransmogSets}} now includes several added functions.
+* {{api|ReloadUI}}() renamed to {{api|C_UI.Reload}}()

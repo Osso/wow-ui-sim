@@ -1,0 +1,190 @@
+{{apichanges|8.1.0|prev=8.0.1|next=8.1.5}}
+
+Diff: 8.0.1 (28153) to 8.1.0 (28724)
+* https://github.com/Gethe/wow-ui-source/commit/3a045adeac5c520f9115293cbe1311eb75d3ad77
+Blizzard Deprecated
+* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_0.lua
+Resike/BlizzardInterfaceResources
+* https://github.com/Resike/BlizzardInterfaceResources
+
+==API==
+====New====
+* {{api|C_AchievementInfo.GetRewardItemID}}
+* {{api|C_AchievementInfo.GetSupercedingAchievements}}
+* {{api|C_AreaPoiInfo.GetAreaPOISecondsLeft}}
+* {{api|C_ArtifactUI.GetArtifactItemID}}
+* {{api|C_ArtifactUI.GetEquippedArtifactItemID}}
+* {{api|C_AzeriteEmpoweredItem.GetPowerText}}
+* {{api|C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped}}
+* {{api|C_Calendar.GetClubCalendarEvents}}
+* {{api|C_Calendar.GetEventIndexInfo}}
+* {{api|C_Calendar.GetNextClubId}}
+* {{api|C_Calendar.SetNextClubId}}
+* {{api|C_ChatInfo.IsValidChatLine}}
+* {{api|C_ChatInfo.ResetDefaultZoneChannels}}
+* {{api|C_ChatInfo.SwapChatChannelsByChannelIndex}}
+* {{api|C_Club.AddClubStreamChatChannel}}
+* {{api|C_Club.Flush}}
+* {{api|C_Club.GetClubLimits}}
+* {{api|C_CurrencyInfo.DoesWarModeBonusApply}}
+* {{api|C_DateAndTime.AdjustTimeByDays}}
+* {{api|C_DateAndTime.AdjustTimeByMinutes}}
+* {{api|C_DateAndTime.CompareCalendarTime}}
+* {{api|C_DateAndTime.GetCalendarTimeFromEpoch}}
+* {{api|C_DateAndTime.GetCurrentCalendarTime}}
+* {{api|C_Debug.DashboardIsEnabled}}
+* {{api|C_EncounterJournal.InstanceHasLoot}}
+New C_FriendList table
+* {{api|C_FriendList.AddFriend}}
+* {{api|C_FriendList.AddIgnore}}
+* {{api|C_FriendList.AddOrDelIgnore}}
+* {{api|C_FriendList.AddOrRemoveFriend}}
+* {{api|C_FriendList.DelIgnore}}
+* {{api|C_FriendList.DelIgnoreByIndex}}
+* {{api|C_FriendList.GetFriendInfo}}
+* {{api|C_FriendList.GetFriendInfoByIndex}}
+* {{api|C_FriendList.GetIgnoreName}}
+* {{api|C_FriendList.GetNumFriends}}
+* {{api|C_FriendList.GetNumIgnores}}
+* {{api|C_FriendList.GetNumOnlineFriends}}
+* {{api|C_FriendList.GetNumWhoResults}}
+* {{api|C_FriendList.GetSelectedFriend}}
+* {{api|C_FriendList.GetSelectedIgnore}}
+* {{api|C_FriendList.GetWhoInfo}}
+* {{api|C_FriendList.IsFriend}}
+* {{api|C_FriendList.IsIgnored}}
+* {{api|C_FriendList.IsIgnoredByGuid}}
+* {{api|C_FriendList.RemoveFriend}}
+* {{api|C_FriendList.RemoveFriendByIndex}}
+* {{api|C_FriendList.SendWho}}
+* {{api|C_FriendList.SetFriendNotes}}
+* {{api|C_FriendList.SetFriendNotesByIndex}}
+* {{api|C_FriendList.SetSelectedFriend}}
+* {{api|C_FriendList.SetSelectedIgnore}}
+* {{api|C_FriendList.SetWhoToUi}}
+* {{api|C_FriendList.ShowFriends}}
+* {{api|C_FriendList.SortWho}}
+* {{api|C_Garrison.IsEnvironmentCountered}}
+New C_IncomingSummon table
+* {{api|C_IncomingSummon.HasIncomingSummon}}
+* {{api|C_IncomingSummon.IncomingSummonStatus}}
+* {{api|C_Item.CanScrapItem}}
+* {{api|C_Item.CanViewItemPowers}}
+* {{api|C_LFGList.HasActiveEntryInfo}}
+* {{api|C_LFGList.HasSearchResultInfo}}
+New C_Loot table
+* {{api|C_Loot.IsLegacyLootModeEnabled}}
+* {{api|C_Map.GetBountySetMaps}}
+* {{api|C_MountJournal.GetMountFromItem}}
+* {{api|C_MountJournal.GetMountUsabilityByID}}
+* {{api|C_MythicPlus.GetCurrentSeason}}
+* {{api|C_PartyInfo.GetInviteReferralInfo}}
+* {{api|C_PetJournal.GetPetInfoByItemID}}
+* {{api|C_PlayerInfo.GUIDIsPlayer}}
+* {{api|C_PvP.CanToggleWarModeInArea}}
+* {{api|C_PvP.GetRewardItemLevelsByTierEnum}}
+* {{api|C_PvP.GetWarModeRewardBonus}}
+* {{api|C_PvP.GetWarModeRewardBonusDefault}}
+* {{api|C_PvP.GetWeeklyChestInfo}}
+New C_QuestChoice table
+* {{api|C_QuestChoice.GetQuestChoiceInfo}}
+* {{api|C_QuestChoice.GetQuestChoiceOptionInfo}}
+* {{api|C_QuestLine.RequestQuestLinesForMap}}
+* {{api|C_QuestLog.GetNumQuestObjectives}}
+* {{api|C_QuestLog.IsLegendaryQuest}}
+New C_ReportSystem table
+* {{api|C_ReportSystem.CanReportPlayer}}
+* {{api|C_ReportSystem.ReportPlayer}}
+* {{api|C_ReportSystem.ReportServerLag}}
+* {{api|C_ReportSystem.SetPendingReportPetTarget}}
+* {{api|C_ReportSystem.SetPendingReportTarget}}
+* {{api|C_ReportSystem.SetPendingReportTargetByGuid}}
+* {{api|C_Social.TwitterPostItem}}
+New C_SummonInfo table
+* {{api|C_SummonInfo.CancelSummon}}
+* {{api|C_SummonInfo.ConfirmSummon}}
+* {{api|C_SummonInfo.GetSummonConfirmAreaName}}
+* {{api|C_SummonInfo.GetSummonConfirmSummoner}}
+* {{api|C_SummonInfo.GetSummonConfirmTimeLeft}}
+* {{api|C_SummonInfo.GetSummonReason}}
+* {{api|C_SummonInfo.IsSummonSkippingStartExperience}}
+* {{api|C_TaxiMap.ShouldMapShowTaxiNodes}}
+* {{api|C_TradeSkillUI.GetAllProfessionTradeSkillLines}}
+* {{api|C_TradeSkillUI.GetTradeSkillLineInfoByID}}
+* {{api|C_UIWidgetManager.GetSpellDisplayVisualizationInfo}}
+
+====Changes====
+?
+
+====Renamed====
+* {{api|C_Calendar.EventGetClubID}} to {{api|C_Calendar.EventGetClubId}}
+* {{api|C_Calendar.EventSetClubID}} to {{api|C_Calendar.EventSetClubId}}
+
+====Removals====
+* {{api|C_Map.GetBountySetIDForMap}}
+Removed C_ConfigurationWarnings table
+* {{api|C_ConfigurationWarnings.GetConfigurationWarningSeen}}
+* {{api|C_ConfigurationWarnings.GetConfigurationWarningString}}
+* {{api|C_ConfigurationWarnings.GetConfigurationWarnings}}
+* {{api|C_ConfigurationWarnings.SetConfigurationWarningSeen}}
+
+==Widgets==
+?
+
+==Events==
+====Added====
+* {{api|t=e|AUCTION_HOUSE_SCRIPT_DEPRECATED}}
+* {{api|t=e|AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED}}
+* {{api|t=e|INCOMING_SUMMON_CHANGED}}
+* {{api|t=e|MYTHIC_PLUS_CURRENT_AFFIX_UPDATE}}
+* {{api|t=e|MYTHIC_PLUS_NEW_SEASON_RECORD}}
+* {{api|t=e|MYTHIC_PLUS_NEW_WEEKLY_RECORD}}
+* {{api|t=e|REPORT_PLAYER_RESULT}}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|+ 8.0.1 &rarr; 8.1.0 (28333) 19 Dec 2018<ref>{{ref web|author=Ketho|url=https://www.wowinterface.com/forums/showthread.php?p=331293|title=Bfa console variables|publisher=[[WoWInterface]]|date=2019-01-07}}</ref>
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(18)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(14)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=c|fstack_showanchors}}
+: {{api|t=c|fstack_showhidden}}
+: {{api|t=c|fstack_showregions}}
+: {{api|t=c|gxMTAlphaM2}}
+: {{api|t=c|gxMTBeginDraw}}
+: {{api|t=c|gxMTDisable}}
+: {{api|t=c|gxMTOpaque}}
+: {{api|t=c|gxMTPrepass}}
+: {{api|t=c|gxMTShadow}}
+: {{api|t=c|HealHandler}}
+: {{api|t=c|newMythicPlusSeason}}
+: {{api|t=c|newPvpSeason}}
+: {{api|t=c|seenAlliedRaceUnlocks}}
+: {{api|t=c|splashScreenSeason}}
+: {{api|t=c|videoOptionsVersionDefault}}
+: {{api|t=c|worldEntityLinkMode}}
+: {{api|t=c|worldPreloadNonCriticalTimeout}}
+: {{api|t=c|worldQuestFilterReputation}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=c|gxRefresh}}
+: {{api|t=c|gxWindow}}
+: {{api|t=c|RAIDSSAOBlur}}
+: {{api|t=c|spellClutterDefaultTargetScalar}}
+: {{api|t=c|spellClutterHostileScalar}}
+: {{api|t=c|spellClutterMinSpellCount}}
+: {{api|t=c|spellClutterMinWeaponTrailCount}}
+: {{api|t=c|spellClutterPartySizeScalar}}
+: {{api|t=c|spellClutterPlayerScalarMultiplier}}
+: {{api|t=c|spellClutterRangeConstant}}
+: {{api|t=c|spellClutterRangeConstantRaid}}
+: {{api|t=c|SSAOBlur}}
+: {{api|t=c|SSAODistance}}
+: {{api|t=c|worldPoolUsage}}
+</div>
+|}
+
+==References==
+{{reflist}}

@@ -1,0 +1,17 @@
+Patch 9.2.0 API changes
+
+== Summary ==
+* New Feature: Click Casting - allows you to cast spells by simply clicking on a unit frame.
+* New Setting: Unit Frame Mouseover Casting - allows you to mouse over a unit frame and cast a spell on that character without targeting them.
+* Supports setting the Gamepad LED color.
+* Supports "Notch Aware" UI for MacBook Pro systems.
+* Added Cosmic spell school.
+* Removed raid target icons 9-18.
+
+== Resources ==
+* TOC: 90200
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Deprecated_9_2_0.lua
+* Official patch notes: User Interface and Accessibility
+* Community patch notes: 9.2.0 Consolidated UI Changes
+

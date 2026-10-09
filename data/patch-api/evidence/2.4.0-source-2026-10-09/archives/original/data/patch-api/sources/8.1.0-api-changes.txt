@@ -1,0 +1,37 @@
+Patch 8.1.0 API changes
+
+Diff: 8.0.1 (28153) to 8.1.0 (28724)
+* https://github.com/Gethe/wow-ui-source/commit/3a045adeac5c520f9115293cbe1311eb75d3ad77
+Blizzard Deprecated
+* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_0.lua
+Resike/BlizzardInterfaceResources
+* https://github.com/Resike/BlizzardInterfaceResources
+
+== API ==
+==== New ====
+New C_FriendList table
+New C_IncomingSummon table
+New C_Loot table
+New C_QuestChoice table
+New C_ReportSystem table
+New C_SummonInfo table
+
+==== Changes ====
+?
+
+==== Renamed ====
+
+==== Removals ====
+Removed C_ConfigurationWarnings table
+
+== Widgets ==
+?
+
+== Events ==
+==== Added ====
+
+== CVars ==
+|+ 8.0.1 → 8.1.0 (28333) 19 Dec 2018[Reference: author=Ketho|url=https://www.wowinterface.com/forums/showthread.php?p=331293|title=Bfa console variables|publisher=WoWInterface|date=2019-01-07]
+
+== References ==
+{{reflist}}

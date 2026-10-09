@@ -1,0 +1,93 @@
+{{apichanges|3.2.0|prev=3.1.0|next=3.3.0}}
+
+== Development Tools ==
+* The default UI now contains versions of some popular (I may be biassed) tools for UI developers - /dump, /eventtrace, /framestack, and /reload<ref name="Iriel">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=180294922372#180294922372 Iriel on Wow 3.2 API Changes topic]</ref>
+
+== Saved Instances ==
+* ''updated'' {{api|GetSavedInstanceInfo(index)}} -- added two bools to return: instanceIDMostSig, isRaid<ref name="Iriel" />
+* ''updated'' {{api|GetInstanceLockTimeRemaining()}} -- Added Bool isPreviousInstance to return (part of the extend instance stuff)<ref name="Iriel" />
+
+== Quest Difficulty ==
+=== Functions ===
+* ''removed'' {{api|GetDifficutlyColor(level)}} -- Replaced by GetQuestDifficultyColor(level)<ref name="Speeddymon">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=180295262370#180295262370 Speeddymon  on Wow 3.2 API Changes topic]</ref>
+* ''new'' {{api|GetQuestDifficultyColor(level)}} -- exact replacement for GetDifficutlyColor(level)<ref name="Speeddymon" />
+
+=== Arrays ===
+Not sure of where these arrays live (global? FrameUI? QuestUI?), but this very subtle change broke several addons, so it's being included here
+* ''removed'' "QuestDifficultyColor" array -- Replaced by "QuestDifficultyColors" array
+* ''new'' "QuestDifficultyColors"array -- exact replacement for "QuestDifficultyColor" array
+
+== Unit Functions ==
+* ''updated'' or ''removed'' {{api|UnitIsPlusMob(unitID)}} -- (not 100% sure, but believed to have been removed)
+
+== Quest Maps ==
+There's support for points of interest on the map associated with quests, the API functions are:
+* ''new'' {{api|QuestMapUpdateQuest(index)}} -- Is 'index' the normal quest log index?<ref name="Iriel" />
+* ''new'' {{api|QuestMapGetQuestName(index)}}<ref name="Iriel" />
+* ''new'' {{api|QuestMapGetPOIInfoForQuest(questIndex, poiIndex)}}<ref name="Iriel" />
+
+=== Quest API ===
+* ''undocumented'' {{api|GetAbandonedQuestName()}}
+* ''undocumented'' {{api|GetAbandonQuestItems()}}
+* ''undocumented'' {{api|GetQuestLogSpellLink()}} 
+
+== Spell Casting ==
+=== Casting Events ===
+Spell casting events and queries indicate whether enemy spells/channeling can be interrupted:
+* ''new'' {{api|t=e|UNIT_SPELLCAST_INTERRUPTIBLE}}<ref name="Iriel" />
+* ''new'' {{api|t=e|UNIT_SPELLCAST_NOT_INTERRUPTIBLE}}<ref name="Iriel" />
+
+=== Casting Functions ===
+* ''updated'' {{api|UnitCastingInfo(unit)}} -- ''added interrupt result''<ref name="Iriel" />
+* ''updated'' {{api|UnitChannelInfo(unit)}} -- ''added interrupt result''<ref name="Iriel" />
+
+== Calendar Functions ==
+
+* ''updated'' {{api|CalendarGetDayEvent()}}
+* ''new'' {{api|CalendarGetDayEventSequenceInfo()}}
+
+== Mail functions ==
+
+* ''updated'' {{api|GetInboxNumItems()}} -- ''added totalItems''
+== Gamemaster Functions ==
+
+* ''new''  {{api|GMResponseNeedMoreHelp(text)}}
+
+== Loot Trading/Refunding ==
+* ''new'' {{api|t=e|END_REFUND}} -- triggered when a returnable item's refund period ends (or maybe would end if action performed?)<ref name="Iriel" />
+* ''new'' {{api|t=e|END_BOUND_TRADEABLE}} -- Not 100% sure of this is the right event name<ref name="Iriel" />
+* ''new'' {{api|EndBoundTradeable(someVar)}} -- inferred from staticPopupDialogs.lua<ref name="Iriel" />
+* ''new'' {{api|GetSocketItemBoundTradeable()}}<ref name="Nafe">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=180295297941#180295297941 Nafe on Wow 3.2 API Changes topic]</ref>
+
+== Other Information ==
+* ''new'' {{api|GetPlayerInfoByGUID(string)}} - Returns basic information about another player from their GUID<ref name="Iriel" />
+* ''new'' {{api|FillLocalizedClassList(table, boolean)}}
+* ''new'' {{api|IsXPUserDisabled()}}
+* ''new'' {{api|CanQueueForWintergrasp()}}
+* ''updated'' {{api|IsFlyableArea()}} -- updated to work properly in dalaran (returning 1 in Karsus landing)<ref name="Gello">[http://forums.worldofwarcraft.com/thread.html?topicId=18031134556&postId=182652553198#182652553198 Gello on Wow 3.2 API Changes topic]</ref>
+
+== Other Useful Events ==
+=== Combatlog Events ===
+* ''updated'' {{api|t=e|COMBAT_LOG_EVENT}}
+=== ChatLog Events ===
+* ''new'' {{api|t=e|UPDATE_CHAT_COLOR_NAME_BY_CLASS}}<ref name="Nafe" />
+=== Inventory Events ===
+* ''new'' {{api|t=e|EQUIPMENT_SWAP_FINISHED}}<ref name="Iriel" />
+=== Unit Events ===
+* ''new'' {{api|t=e|UNIT_DISSIPATES}}
+=== GameMaster Events ===
+* ''new'' {{api|t=e|GMRESPONSE_RECEIVED}}
+=== Battlefield Events ===
+* ''new'' {{api|t=e|BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE}}
+* ''new'' {{api|t=e|BATTLEFIELD_MGR_QUEUE_INVITE}}
+* ''new'' {{api|t=e|BATTLEFIELD_MGR_ENTRY_INVITE}}
+* ''new'' {{api|t=e|BATTLEFIELD_MGR_EJECT_PENDING}}
+* ''new'' {{api|t=e|BATTLEFIELD_MGR_EJECTED}}
+* ''new'' {{api|t=e|NPC_PVPQUEUE_ANYWHERE}}
+
+=== Reputation Events ===
+* ''new'' {{api|t=e|ENABLE_XP_GAIN}}
+* ''new'' {{api|t=e|DISABLE_XP_GAIN}}
+
+== References ==
+{{Reflist|2}}

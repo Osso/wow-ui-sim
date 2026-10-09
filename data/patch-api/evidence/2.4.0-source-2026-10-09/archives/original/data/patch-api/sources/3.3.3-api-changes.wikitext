@@ -1,0 +1,45 @@
+{{apichanges|3.3.3|prev=3.3.0|next=3.3.5}}
+
+== New API functions ==
+* {{api|CancelSell}}()
+* forced = {{api|ForceGossip}}()
+* allowed = {{api|GetAllowLowLevelRaid}}()
+* isTrivial, isDaily, isRepeatable = {{api|GetAvailableQuestInfo}}(id)
+* isQuestItem, startsQuestId, isActiveQuest = {{api|GetContainerItemQuestInfo}}(bag, slot)
+* hasWin, winHonor, winArena, lossHonor, lossArena = {{api|GetHolidayBGHonorCurrencyBonuses}}()
+* time = {{api|GetLFGDeserterExpiration}}()
+* time = {{api|GetLFGRandomCooldownExpiration}}()
+* bonus = {{api|GetPetSpellBonusDamage}}()
+* watchIndex = {{api|GetQuestWatchIndex}}(questLogIndex)
+* hasWin, winHonor, winArena, lossHonor, lossArena = {{api|GetRandomBGHonorCurrencyBonuses}}()
+* isDaily = {{api|QuestIsDaily}}()
+* isWeekly = {{api|QuestIsWeekly}}()
+* {{api|SetAllowLowLevelRaid}}(allowed)
+* {{api|SetAuctionsTabShowing}}(isShowing)
+* {{api|ShiftQuestWatches}}(id1, id2)
+* {{api|SortBGList}}()
+* {{api|SortQuestWatches}}()
+* {{api|SummonRandomCritter}}()
+* hasDeserter = {{api|UnitHasLFGDeserter}}("unit")
+* hasRandomCooldown = {{api|UnitHasLFGRandomCooldown}}("unit")
+
+== New events ==
+* {{api|AUCTION_HOUSE_DISABLED|t=e}} ()
+* {{api|AUCTION_MULTISELL_FAILURE|t=e}} ()
+* {{api|AUCTION_MULTISELL_START|t=e}} (total)
+* {{api|AUCTION_MULTISELL_UPDATE|t=e}} (done, total)
+* {{api|DISABLE_LOW_LEVEL_RAID|t=e}} ()
+* {{api|ENABLE_LOW_LEVEL_RAID|t=e}} ()
+* {{api|LFG_OPEN_FROM_GOSSIP|t=e}} (dungeonId)
+* {{api|PET_SPELL_POWER_UPDATE|t=e}} ()
+* {{api|VOTE_KICK_REASON_NEEDED|t=e}} (targetName)
+
+== API function changes ==
+* {{api|AcceptProposal}}() now requires a hardware event
+* {{api|GetLFGBootProposal}}() now returns an additional ''reason'' value.
+* {{api|UninviteUnit}}("name" [, "reason"]) added reason argument for LFD kick votes.
+
+== Removed API ==
+* {{api|ShowBattlefieldList}}()
+* {{api|Texture:GetTexCoordModifiesRect|t=w}}()
+* {{api|Texture:SetTexCoordModifiesRect|t=w}}(modifiesRect)

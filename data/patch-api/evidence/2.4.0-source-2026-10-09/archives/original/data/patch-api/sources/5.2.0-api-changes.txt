@@ -1,0 +1,28 @@
+Patch 5.2.0 API changes
+
+== New features ==
+* Display both text/percent on status bars option
+* Monk Stagger bar displays the amount of staggered damage the monk will take in the next 10 seconds.
+* Absorption effects are now displayed over the default UI's health bars; it is possible for addons to retrieve the total amount of absorption stacked on a unit.
+* SecureActionButtonTemplate has a new "togglemenu" action type, which (securely) opens a unit popup menu for the unit specified by the action button.
+* Items in void storage can now be used to transmogrify items in your inventory. (API calls implemented, but no UI added: PrepVoidStorageForTransmogrify() and UseVoidItemForTransmogrify())
+
+== Global API changes ==
+* Raid difficulty functions SetRaidDifficulty and GetRaidDifficulty were renamed to SetRaidDifficultyID and GetRaidDifficultyID respectively.
+* New GetDifficultyInfo API exposes basic information about difficulty IDs.
+* Battle pet cooldowns are now exposed through C_PetJournal.GetPetCooldownByGUID.
+* GetSchoolString replaces the global SchoolStringTable.
+* Almost all (if not all) C_PetJournal functions have had their "isWild" argument removed.
+* Passing a nil PetID to a C_PetJournal function will now cause a Lua error. Previously, the function would just return nil.
+* GetCurrencyInfo now returns a full texture path.
+* GetTradeSkillReagentItemLink is broken and always returns nil.
+* IsConsumableItem appears to always return nil.
+
+== FrameXML changes ==
+* Global MAX_BLACKLIST_BATTLEGROUNDS has moved from FrameXML into the addon Blizzard_PVPUI. Addons relying on MAX_BLACKLIST_BATTLEGROUNDS will have to find a workaround (it's a constant value, 2 right now, so you can use that) or watch "ADDON_LOADED" for the PVPUI.
+* The global values in the form "MAP_BAR_"..tag..stringType..phase are now more easily accessed through MapBarFrame_GetString(stringType, tag, phase).
+
+== Automated diff ==
+Click on the headers to expand the tables below.
+
+[Transcluded source: Patch 5.2.0/API changes/diff; not expanded]

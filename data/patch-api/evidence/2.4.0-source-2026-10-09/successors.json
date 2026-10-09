@@ -1,0 +1,735 @@
+{
+  "actual_retail_registers": [
+    {
+      "patch": "3.2.0",
+      "path": "data/patch-api/sources/3.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "3.3.0",
+      "path": "data/patch-api/sources/3.3.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "3.3.3",
+      "path": "data/patch-api/sources/3.3.3-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "3.3.5",
+      "path": "data/patch-api/sources/3.3.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "4.0.1",
+      "path": "data/patch-api/sources/4.0.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "4.1.0",
+      "path": "data/patch-api/sources/4.1.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "4.2.0",
+      "path": "data/patch-api/sources/4.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "4.3.0",
+      "path": "data/patch-api/sources/4.3.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "4.3.4",
+      "path": "data/patch-api/sources/4.3.4-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.0.1",
+      "path": "data/patch-api/sources/5.0.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.0.4",
+      "path": "data/patch-api/sources/5.0.4-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-UnitInRange-108-1",
+          "later_id": "wt-global-api-UnitInRange-74",
+          "direction": "changed"
+        },
+        {
+          "own_id": "wt-global-api-UnitGUID-111-1",
+          "later_id": "wt-global-api-UnitGUID-77",
+          "direction": "changed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.1.0",
+      "path": "data/patch-api/sources/5.1.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.2.0",
+      "path": "data/patch-api/sources/5.2.0-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-DeclineInvite-32-1",
+          "later_id": "diff-wt-global-api-DeclineInvite-63",
+          "direction": "removed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.3.0",
+      "path": "data/patch-api/sources/5.3.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.4.0",
+      "path": "data/patch-api/sources/5.4.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.4.1",
+      "path": "data/patch-api/sources/5.4.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.4.2",
+      "path": "data/patch-api/sources/5.4.2-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.4.7",
+      "path": "data/patch-api/sources/5.4.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "5.4.8",
+      "path": "data/patch-api/sources/5.4.8-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "6.0.1",
+      "path": "data/patch-api/sources/6.0.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "6.0.2",
+      "path": "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-GetSpellInfo-90-1",
+          "later_id": "wt-global-api-GetSpellInfo-46",
+          "direction": "changed"
+        },
+        {
+          "own_id": "wt-global-api-GetTalentLink-92-1",
+          "later_id": "wt-global-api-GetTalentLink-36",
+          "direction": "changed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "6.1.0",
+      "path": "data/patch-api/sources/6.1.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "6.2.0",
+      "path": "data/patch-api/sources/6.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "6.2.2",
+      "path": "data/patch-api/sources/6.2.2-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "6.2.4",
+      "path": "data/patch-api/sources/6.2.4-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "7.0.1",
+      "path": "data/patch-api/sources/7.0.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "7.0.3",
+      "path": "data/patch-api/sources/7.0.3-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-GetSpellInfo-90-1",
+          "later_id": "wt-global-api-GetSpellInfo-99",
+          "direction": "changed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "7.1.0",
+      "path": "data/patch-api/sources/7.1.0-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-GetItemInfo-74-2",
+          "later_id": "wt-global-api-GetItemInfo-19",
+          "direction": "changed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "7.2.0",
+      "path": "data/patch-api/sources/7.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "7.2.5",
+      "path": "data/patch-api/sources/7.2.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "7.3.0",
+      "path": "data/patch-api/sources/7.3.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "7.3.2",
+      "path": "data/patch-api/sources/7.3.2-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "8.0.1",
+      "path": "data/patch-api/sources/8.0.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "8.1.0",
+      "path": "data/patch-api/sources/8.1.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "8.1.5",
+      "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "8.2.0",
+      "path": "data/patch-api/sources/8.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "8.2.5",
+      "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-CanGrantLevel-116-1",
+          "later_id": "wt-global-api-CanGrantLevel-149",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-GrantLevel-117-1",
+          "later_id": "wt-global-api-GrantLevel-156",
+          "direction": "removed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "8.3.0",
+      "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "8.3.7",
+      "path": "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.0.1",
+      "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.0.2",
+      "path": "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.0.5",
+      "path": "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.1.0",
+      "path": "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.1.5",
+      "path": "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.2.0",
+      "path": "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.2.5",
+      "path": "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "9.2.7",
+      "path": "data/patch-api/sources/9.2.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.0.0",
+      "path": "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.0.2",
+      "path": "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-widgets-GameTooltip:SetTotem-22-1",
+          "later_id": "wt-widgets-GameTooltip:SetTotem-505",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-GetContainerNumFreeSlots-56-1",
+          "later_id": "wt-global-api-GetContainerNumFreeSlots-360",
+          "direction": "removed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.0.5",
+      "path": "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.0.7",
+      "path": "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.1.0",
+      "path": "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.1.5",
+      "path": "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.1.7",
+      "path": "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.2.0",
+      "path": "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.2.5",
+      "path": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.2.6",
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-GetItemFamily-59-1",
+          "later_id": "wt-global-api-GetItemFamily-169",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-GetItemFamily-59-2",
+          "later_id": "wt-global-api-GetItemFamily-169",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-GetItemIcon-74-1",
+          "later_id": "wt-global-api-GetItemIcon-171",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-GetItemInfo-74-2",
+          "later_id": "wt-global-api-GetItemInfo-173",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CanSummonFriend-95-1",
+          "later_id": "wt-global-api-CanSummonFriend-149",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-SummonFriend-96-1",
+          "later_id": "wt-global-api-SummonFriend-220",
+          "direction": "removed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "10.2.7",
+      "path": "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.0.0",
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-GetSpellInfo-90-1",
+          "later_id": "wt-global-api-GetSpellInfo-445",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-GetSpellLink-91-1",
+          "later_id": "wt-global-api-GetSpellLink-447",
+          "direction": "removed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.0.2",
+      "path": "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.0.5",
+      "path": "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.0.7",
+      "path": "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.1.0",
+      "path": "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-GetTotemInfo-99-1",
+          "later_id": "wt-global-api-GetTotemInfo-132",
+          "direction": "changed"
+        },
+        {
+          "own_id": "wt-global-api-DeclineName-114-1",
+          "later_id": "wt-global-api-DeclineName-120",
+          "direction": "changed"
+        },
+        {
+          "own_id": "wt-global-api-GetNumDeclensionSets-115-1",
+          "later_id": "wt-global-api-GetNumDeclensionSets-122",
+          "direction": "changed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.1.5",
+      "path": "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-GetTotemInfo-99-1",
+          "later_id": "wt-global-api-GetTotemInfo-150",
+          "direction": "changed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.1.7",
+      "path": "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.2.0",
+      "path": "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.2.5",
+      "path": "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "11.2.7",
+      "path": "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "12.0.0",
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "overlaps": [
+        {
+          "own_id": "wt-global-api-CombatLogAddFilter-35-1",
+          "later_id": "wt-global-api-CombatLogAddFilter-553",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogAdvanceEntry-36-1",
+          "later_id": "wt-global-api-CombatLogAdvanceEntry-554",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogClearEntries-37-1",
+          "later_id": "wt-global-api-CombatLogClearEntries-555",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogGetCurrentEntry-38-1",
+          "later_id": "wt-global-api-CombatLogGetCurrentEntry-556",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogGetNumEntries-39-1",
+          "later_id": "wt-global-api-CombatLogGetNumEntries-558",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogGetRetentionTime-40-1",
+          "later_id": "wt-global-api-CombatLogGetRetentionTime-559",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogResetFilter-41-1",
+          "later_id": "wt-global-api-CombatLogResetFilter-560",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogSetCurrentEntry-42-1",
+          "later_id": "wt-global-api-CombatLogSetCurrentEntry-561",
+          "direction": "removed"
+        },
+        {
+          "own_id": "wt-global-api-CombatLogSetRetentionTime-43-1",
+          "later_id": "wt-global-api-CombatLogSetRetentionTime-562",
+          "direction": "removed"
+        }
+      ],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "12.0.1",
+      "path": "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "12.0.5",
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "12.0.7",
+      "path": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    },
+    {
+      "patch": "12.1.0",
+      "path": "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "overlaps": [],
+      "credit": "literal tuple overlap only; no closure or native credit"
+    }
+  ],
+  "queued_placeholders": [
+    {
+      "patch": "2.4.2",
+      "path": "data/patch-api/sources/2.4.2-wikitext-register.json",
+      "status": "queued-placeholder-main-adds-real-register",
+      "pin": {
+        "title": "Patch 2.4.2/API changes",
+        "version": "2.4.2",
+        "pageid": 81145,
+        "revid": 803933,
+        "timestamp": "2021-12-28T02:03:05Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=803933&format=json",
+        "retrieved": "2026-10-09T08:51:36.394037+00:00",
+        "response_sha256": "334db0c7e0245ae9fd4255663f811456e18405c38688175ab0ef4286894163a8",
+        "wikitext_sha256": "c3602daf94581eb87a0974d68bc0cf476be5d35015cae0c10792690782c07c29",
+        "wikitext_bytes": 2769,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.4.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.4.2-wikitext.txt"
+      },
+      "lexical_symbol_overlap": [
+        "CombatLogGetNumEntries",
+        "CombatLogSetCurrentEntry"
+      ],
+      "credit": "lexical source overlap is not supersession"
+    },
+    {
+      "patch": "3.0.2",
+      "path": "data/patch-api/sources/3.0.2-wikitext-register.json",
+      "status": "queued-placeholder-main-adds-real-register",
+      "pin": {
+        "title": "Patch 3.0.2/API changes",
+        "version": "3.0.2",
+        "pageid": 482353,
+        "revid": 4638841,
+        "timestamp": "2020-02-23T21:55:29Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4638841&format=json",
+        "retrieved": "2026-10-09T08:51:36.393452+00:00",
+        "response_sha256": "df8a410fa6c9648c98eb74f3f5d7f77924008d4d9dccec47f51a735499481d2a",
+        "wikitext_sha256": "378d50cd422c48559714b2ddfe5f04942615d87cc131cc49eaf3e8622b326f2d",
+        "wikitext_bytes": 25613,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.2-wikitext.txt"
+      },
+      "lexical_symbol_overlap": [],
+      "credit": "lexical source overlap is not supersession"
+    },
+    {
+      "patch": "3.0.3",
+      "path": "data/patch-api/sources/3.0.3-wikitext-register.json",
+      "status": "queued-placeholder-main-adds-real-register",
+      "pin": {
+        "title": "Patch 3.0.3/API changes",
+        "version": "3.0.3",
+        "pageid": 560990,
+        "revid": 5407654,
+        "timestamp": "2010-03-28T14:26:47Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5407654&format=json",
+        "retrieved": "2026-10-09T08:51:36.393340+00:00",
+        "response_sha256": "7f92737b406439465ce223f4318208c045fe17afd0bca363ca6b3a4fe891599f",
+        "wikitext_sha256": "434740b793ade76d3c459f142cf07577accd6da23c9f97be5fc4ff2d69d59911",
+        "wikitext_bytes": 431,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.3-wikitext.txt"
+      },
+      "lexical_symbol_overlap": [],
+      "credit": "lexical source overlap is not supersession"
+    },
+    {
+      "patch": "3.0.8",
+      "path": "data/patch-api/sources/3.0.8-wikitext-register.json",
+      "status": "queued-placeholder-main-adds-real-register",
+      "pin": {
+        "title": "Patch 3.0.8/API changes",
+        "version": "3.0.8",
+        "pageid": 95599,
+        "revid": 947144,
+        "timestamp": "2021-12-04T02:32:44Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=947144&format=json",
+        "retrieved": "2026-10-09T08:51:36.393281+00:00",
+        "response_sha256": "942182a99e1fdc05ad376845f2608c02a84e359670ea3291e28f28fb65a5d0b4",
+        "wikitext_sha256": "4f5b48b4b17c3ddcc3838c61eb015d0d2d18772e323d08733e06ea79d6833417",
+        "wikitext_bytes": 4021,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.8-wikitext.txt"
+      },
+      "lexical_symbol_overlap": [
+        "SetFriendNotes"
+      ],
+      "credit": "lexical source overlap is not supersession"
+    },
+    {
+      "patch": "3.1.0",
+      "path": "data/patch-api/sources/3.1.0-wikitext-register.json",
+      "status": "queued-placeholder-main-adds-real-register",
+      "pin": {
+        "title": "Patch 3.1.0/API changes",
+        "version": "3.1.0",
+        "pageid": 233195,
+        "revid": 2259594,
+        "timestamp": "2013-05-22T17:34:42Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2259594&format=json",
+        "retrieved": "2026-10-09T08:51:36.393212+00:00",
+        "response_sha256": "5bc80be36f7fc07640e7c09a0bec9b12349f04410242c85df50286aa7067dee7",
+        "wikitext_sha256": "93ec244c5d6619cbe168e2a39623ac18d63314e69b2d2d9c779709a7fe347dcd",
+        "wikitext_bytes": 12571,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.1.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.1.0-wikitext.txt"
+      },
+      "lexical_symbol_overlap": [
+        "GetTalentLink"
+      ],
+      "credit": "lexical source overlap is not supersession"
+    }
+  ],
+  "excluded_client_lines": [
+    "TBC Classic 2.5.x",
+    "Wrath Classic 3.4.x",
+    "Classic Era/Anniversary",
+    "Cata Classic 4.4.x",
+    "Mists Classic 5.5.x"
+  ]
+}

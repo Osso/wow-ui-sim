@@ -1,0 +1,123 @@
+{{apichanges|7.0.3|prev=6.2.4|next=7.1.0}}
+
+==New==
+* New Widget types: [[UIOBJECT Line|Line]] - derived from Texture, and [[UIOBJECT UiCamera|UiCamera]] - derived from Model
+* New [[UIOBJECT Region|Region]] method: [[API Region GetDebugName|Region:GetDebugName]]()
+* New [[UIOBJECT Frame|Frame]] methods: [[API Frame CreateLine|Frame:CreateLine]](), [[API Frame GetFlattensRenderLayers|Frame:GetFlattensRenderLayers]](), [[API Frame SetFlattensRenderLayers|Frame:SetFlattensRenderLayers]]()
+* New [[UIOBJECT Texture|Texture]] method: [[API Texture SetColorTexture|Texture:SetColorTexture]]()
+* Adventure Map - AddOns/Blizzard_AdventureMap, C_AdventureMap
+* Artifacts - AddOns/Blizzard_ArtifactUI, C_ArtifactUI
+* Wardrobe - AddOns/Blizzard_Collections/Blizzard_Wardrobe, C_Transmog and C_TransmogCollection
+
+* New C_TradeSkillUI table.
+**{{api|C_TradeSkillUI.ClearRecipeCategoryFilter}},
+**{{api|C_TradeSkillUI.IsRecipeSourceTypeFiltered}},
+**{{api|C_TradeSkillUI.GetRecipeRepeatCount}},
+**{{api|C_TradeSkillUI.DropPendingObliterateItemFromCursor}},
+**{{api|C_TradeSkillUI.ObliterateItem}},
+**{{api|C_TradeSkillUI.GetRecipeInfo}},
+**{{api|C_TradeSkillUI.IsTradeSkillReady}},
+**{{api|C_TradeSkillUI.GetRecipeItemNameFilter}},
+**{{api|C_TradeSkillUI.GetCategoryInfo}},
+**{{api|C_TradeSkillUI.GetPendingObliterateItemID}},
+**{{api|C_TradeSkillUI.SetRecipeItemNameFilter}},
+**{{api|C_TradeSkillUI.SetInventorySlotFilter}},
+**{{api|C_TradeSkillUI.IsTradeSkillGuild}},
+**{{api|C_TradeSkillUI.GetOnlyShowUnlearnedRecipes}},
+**{{api|C_TradeSkillUI.SetRecipeRepeatCount}},
+**{{api|C_TradeSkillUI.IsNPCCrafting}},
+**{{api|C_TradeSkillUI.GetOnlyShowSkillUpRecipes}},
+**{{api|C_TradeSkillUI.GetAllRecipeIDs}},
+**{{api|C_TradeSkillUI.SetOnlyShowSkillUpRecipes}},
+**{{api|C_TradeSkillUI.StopRecipeRepeat}},
+**{{api|C_TradeSkillUI.AnyRecipeCategoriesFiltered}},
+**{{api|C_TradeSkillUI.SetOnlyShowLearnedRecipes}},
+**{{api|C_TradeSkillUI.IsInventorySlotFiltered}},
+**{{api|C_TradeSkillUI.CanObliterateCursorItem}},
+**{{api|C_TradeSkillUI.ClearPendingObliterateItem}},
+**{{api|C_TradeSkillUI.GetCategories}},
+**{{api|C_TradeSkillUI.GetObliterateSpellID}},
+**{{api|C_TradeSkillUI.GetRecipeTools}},
+**{{api|C_TradeSkillUI.IsTradeSkillLinked}},
+**{{api|C_TradeSkillUI.GetOnlyShowLearnedRecipes}},
+**{{api|C_TradeSkillUI.CloseObliterumForge}},
+**{{api|C_TradeSkillUI.AreAnyInventorySlotsFiltered}},
+**{{api|C_TradeSkillUI.GetTradeSkillTexture}},
+**{{api|C_TradeSkillUI.SetRecipeFavorite}},
+**{{api|C_TradeSkillUI.GetOnlyShowMakeableRecipes}},
+**{{api|C_TradeSkillUI.GetTradeSkillListLink}},
+**{{api|C_TradeSkillUI.IsRecipeSearchInProgress}},
+**{{api|C_TradeSkillUI.SetRecipeItemLevelFilter}},
+**{{api|C_TradeSkillUI.GetSubCategories}},
+**{{api|C_TradeSkillUI.CraftRecipe}},
+**{{api|C_TradeSkillUI.GetRecipeNumReagents}},
+**{{api|C_TradeSkillUI.GetTradeSkillLine}},
+**{{api|C_TradeSkillUI.SetOnlyShowMakeableRecipes}},
+**{{api|C_TradeSkillUI.IsRecipeFavorite}},
+**{{api|C_TradeSkillUI.CanTradeSkillListLink}},
+**{{api|C_TradeSkillUI.GetRecipeSourceText}},
+**{{api|C_TradeSkillUI.ClearRecipeSourceTypeFilter}},
+**{{api|C_TradeSkillUI.GetFilterableInventorySlots}},
+**{{api|C_TradeSkillUI.IsRecipeRepeating}},
+**{{api|C_TradeSkillUI.GetRecipeItemLevelFilter}},
+**{{api|C_TradeSkillUI.GetTradeSkillLineForRecipe}},
+**{{api|C_TradeSkillUI.GetAllFilterableInventorySlots}},
+**{{api|C_TradeSkillUI.GetRecipeReagentItemLink}},
+**{{api|C_TradeSkillUI.OpenTradeSkill}},
+**{{api|C_TradeSkillUI.SetRecipeSourceTypeFilter}},
+**{{api|C_TradeSkillUI.GetFilteredRecipeIDs}},
+**{{api|C_TradeSkillUI.GetPendingObliterateItemLink}},
+**{{api|C_TradeSkillUI.CloseTradeSkill}},
+**{{api|C_TradeSkillUI.GetRecipeReagentInfo}},
+**{{api|C_TradeSkillUI.IsDataSourceChanging}},
+**{{api|C_TradeSkillUI.GetRecipeLink}},
+**{{api|C_TradeSkillUI.ClearInventorySlotFilter}},
+**{{api|C_TradeSkillUI.SetRecipeCategoryFilter}},
+**{{api|C_TradeSkillUI.GetRecipeNumItemsProduced}},
+**{{api|C_TradeSkillUI.GetRecipeCooldown}},
+**{{api|C_TradeSkillUI.SetOnlyShowUnlearnedRecipes}},
+**{{api|C_TradeSkillUI.GetRecipeDescription}},
+**{{api|C_TradeSkillUI.GetRecipeItemLink}},
+**{{api|C_TradeSkillUI.IsAnyRecipeFromSource}},
+**{{api|C_TradeSkillUI.IsRecipeCategoryFiltered}},
+* [[API GetNumQuestLogRewardSpells|GetNumQuestLogRewardSpells]]
+
+==Changes==
+* Zeroes have been removed from item links. They now look like: |cff0070dd|Hitem:128955::::::::99:577::11::::|h[The Spider Queen's Veil]|h|r
+* The way nameplates are created has changed completely.
+** New addon: Blizzard_Nameplates
+** New events: {{api|t=e|NAME_PLATE_CREATED}}, {{api|t=e|NAME_PLATE_UNIT_ADDED}}, {{api|t=e|NAME_PLATE_UNIT_REMOVED}}
+** Functions like GetNumNamePlateMotionTypes and GetNameplateFrames have been moved to a new C_Nameplates table.
+***{{api|C_NamePlate.GetNamePlateForUnit}},
+***{{api|C_NamePlate.GetNamePlateSizes}},
+***{{api|C_NamePlate.GetNamePlates}},
+***{{api|C_NamePlate.GetNumNamePlateMotionTypes}},
+***{{api|C_NamePlate.SetNamePlateSizes}},
+* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexture|Texture:SetTexture]](R, G, B[, A]) no longer works properly in many cases. Use the new method [[API Texture SetColorTexture|Texture:SetColorTexture]] instead.
+* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexCoord|Texture:SetTexCoord]] no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method [[API Texture SetTexture|Texture:SetTexture]](texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, [[API Texture SetVertTile|Texture:SetVertTile]](<bool>) and [[API Texture SetHorizTile|Texture:SetHorizTile]](<bool>) might be the intended replacements for this behavior.
+* The [[UIOBJECT Texture|Texture]] method [[API Texture SetToFileData|Texture:SetToFileData]] has been removed and is now handled by [[API Texture SetTexture|Texture:SetTexture]] instead.
+* [[API GetSpellInfo|GetSpellInfo]](spellid) now returns [[fileID]] for its 3rd return instead if iconPath.
+* The deprecated animation method [[API Alpha SetChange|Alpha:SetChange]] has been removed. Use [[API Alpha SetFromAlpha|Alpha:SetFromAlpha]] and/or [[API Alpha SetToAlpha|Alpha:SetToAlpha]] instead.
+* [[API GetInboxItem|GetInboxItem]] now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality, canUse = [[API GetInboxItem|GetInboxItem]](index, itemIndex)
+* [[API GetSendMailItem|GetSendMailItem]] now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality = [[API GetSendMailItem|GetSendMailItem]](sendMailIndex)
+* [[API GetNumDungeonMapLevels|GetNumDungeonMapLevels]] now returns an array of level numbers. To get the count of levels, get the length of the returned array
+* [[API GetMapLandmarkInfo|GetMapLandmarkInfo]] now returns a type integer as its first return value, before name which used to be the first return value
+* Frame type [[XML/Minimap|Minimap]] are no longer creatable by [[API CreateFrame|CreateFrame]] and will be ignored in xml files for 3rd party addons.
+* [[API GameTooltip SetTradeSkillItem|GameTooltip:SetTradeSkillItem]](tradeItemIndex[, reagentIndex]) replaced by [[API GameTooltip SetRecipeReagentItem|GameTooltip:SetRecipeReagentItem]](recipeID, reagentIndex).
+* [[API GetQuestLogRewardSpell|GetQuestLogRewardSpell]](rewardSpellIndex) requires rewardSpellIndex parameter now
+* GarrisonUI API have been updated and multiple of the C_Garrison.* now requires a LE_* filter and new return values have been added.
+* Some Mountjournal Functions got renamed
+** {{api|C_MountJournal.GetMountInfo}} has been renamed to {{api|C_MountJournal.GetMountInfoByID}}
+** {{api|C_MountJournal.GetMountInfoExtra}} has been renamed to {{api|C_MountJournal.GetMountInfoExtraByID}}
+** {{api|C_MountJournal.Summon}} has been renamed to {{api|C_MountJournal.SummonByID}}
+
+==Removals==
+* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.
+* GetInventoryItemGems and GetContainerItemGems (but gem information is still apparently extractable from the itemString)
+* GetQuestLogRewardTalents
+* API regarding in-field visibility changes to helms and cloaks:  ShowHelm, ShowCloak, ShowingHelm, ShowingCloak
+* Functions regarding defunct stats [[Multistrike]] and Amplify
+* Frame method: [[API Frame AllowAttributeChanges|Frame:AllowAttributeChanges]]()
+* Event UNIT_COMBO_POINTS (streamlined into UNIT_POWER)
+* CVar [[CVar floatingCombatTextComboPoints|floatingCombatTextComboPoints]] (streamlined into [[CVar floatingCombatTextEnergyGains]])
+* [[API Model GetModel|Model:GetModel()]] has been replaced by [[API Model GetModelFileID|Model:GetModelFileID()]]

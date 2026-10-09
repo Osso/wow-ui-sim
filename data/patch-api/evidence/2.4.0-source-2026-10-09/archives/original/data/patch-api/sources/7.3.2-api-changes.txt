@@ -1,0 +1,7 @@
+Patch 7.3.2 API changes
+
+== Changes ==
+*Logout and Quit lua functions are now protected.[Reference: url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit]
+
+== References ==
+[References list; not expanded]

@@ -1,0 +1,256 @@
+Patch 11.0.2 API changes
+
+== Resources ==
+* TOC: 110002
+* Official patch notes: 11.0.2 Updates
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== Breaking changes ==
+* The Settings API has been changed, particularly around the creation of settings. Refer to Settings API changes for more details.
+* Macros and the macrotext attribute of SecureActionButtonTemplate have new limitations:
+** macrotext limited to 255 characters (same length as real macros)
+** All macros (real and macrotext-based) can no longer chain macros. One macro cannot /click a button that would execute another macro
+
+== Settings API changes ==
+
+The Settings API has been updated to resolve a few usability issues with respect to the creation and management of settings.
+
+* The Settings.RegisterAddOnSetting function has had its signature changed significantly and now requires two additional parameters (variableKey and variableTbl) in the middle of the parameter list. These are used to directly read and write settings from a supplied table, which is typically expected to be the addon's saved variables.
+* The Settings.RegisterProxySetting function has been adjusted and can now be called from insecure code. Proxy settings can be used to execute author-supplied callbacks when reading and writing settings as an alternative to RegisterAddOnSetting.
+* The Settings.OpenToCategory function has been improved and now supports directly opening to a subcategory, as well as automatically expanding any categories that it opens.
+
+[Transcluded source: Settings_API; not expanded]
+
+== Consolidated changes ==
+: 11.0.0 (55818) → 11.0.2 (56819) Sep 27 2024
+
+=== Enumerations ===
+ Enum.BagFlag
+   + SkipValidCountCheck
+ Enum.EventToastDisplayType
+   + SingleLineWithIcon
+ Enum.MountType
+   + RideAlong
+ Enum.MountTypeFlag
+   + IsRideAlongMount
+ Enum.QuestClassification
+   + BonusObjective
+   + Threat
+   + WorldQuest
+ Enum.TooltipDataItemBinding
+   + AccountUntilEquipped
+ Enum.TraitConditionType
+   + DisplayError
+ Enum.UIMapFlag
+   + IgnoreInTranslationsToParent
+ Enum.UIWidgetVisualizationType
+   + ScenarioHeaderDelves
+
+=== Structures ===
+ CampaignInfo
+   + sortAsNormalQuest
+ CharacterCurrencyData
+   + fullCharacterName
+ CraftingOrderRewardInfo
+   # currencyAmount -> count
+ CurrencyTransferTransaction
+   + fullSourceCharacterName
+   + fullDestinationCharacterName
+ GossipOptionRewardInfo
+   + context
+ HorizontalCurrenciesWidgetVisualizationInfo
+   - updateAnimType
+ PlayerChoiceOptionInfo
+   + consolidateWidgets
+ QuestInfo
+   + sortAsNormalQuest
+   + questClassification
+   - isLegendarySort
+ ScenarioCriteriaInfo
+   + quantityString
+ SpellDisplayVisualizationInfo
+   - shownState
+   - enabledState
+ TraitCondInfo
+   + isSufficient
+   + type
+ TraitEntryInfo
+   + isDisplayError
+ TraitNodeInfo
+   + isDisplayError
+ UIWidgetCurrencyInfo
+   + textEnabledState
+   + iconSizeType
+   + updateAnimType
+ UIWidgetItemInfo
+   + itemNameCustomColor
+   + itemNameCustomColorOverrideState
+ UIWidgetSpellInfo
+   + shownState
+   + enabledState
+   + showGlowState
+
+== Deprecated API ==
+These API functions are deprecated and will be removed in patch 11.0.2
+=== 10.0.0 ===
+: CursorCanGoInSlot → C_PaperDollInfo.CanCursorCanGoInSlot
+: C_TradeSkillUI.GetRecipeRepeatCount → C_TradeSkillUI.GetRemainingRecasts
+
+=== 10.0.7 ===
+
+Enum.GarrisonType["Type_6_0"] = Enum.GarrisonType["Type_6_0_Garrison"]
+Enum.GarrisonType["Type_7_0"] = Enum.GarrisonType["Type_7_0_Garrison"]
+Enum.GarrisonType["Type_8_0"] = Enum.GarrisonType["Type_8_0_Garrison"]
+Enum.GarrisonType["Type_9_0"] = Enum.GarrisonType["Type_9_0_Garrison"]
+
+Enum.GarrisonFollowerType["FollowerType_6_0"] = Enum.GarrisonFollowerType["FollowerType_6_0_GarrisonFollower"]
+Enum.GarrisonFollowerType["FollowerType_6_2"] = Enum.GarrisonFollowerType["FollowerType_6_0_Boat"]
+Enum.GarrisonFollowerType["FollowerType_7_0"] = Enum.GarrisonFollowerType["FollowerType_7_0_GarrisonFollower"]
+Enum.GarrisonFollowerType["FollowerType_8_0"] = Enum.GarrisonFollowerType["FollowerType_8_0_GarrisonFollower"]
+Enum.GarrisonFollowerType["FollowerType_9_0"] = Enum.GarrisonFollowerType["FollowerType_9_0_GarrisonFollower"]
+
+
+=== 10.1.0 ===
+: GetAddOnMetadata → C_AddOns.GetAddOnMetadata
+
+=== 10.1.5 ===
+: GetClassIDFromSpecID → C_SpecializationInfo.GetClassIDFromSpecID
+
+=== 10.2.0 ===
+: GetCVarInfo → C_CVar.GetCVarInfo
+: EnableAddOn → C_AddOns.EnableAddOn
+: DisableAddOn → C_AddOns.DisableAddOn
+: GetAddOnEnableState → C_AddOns.GetAddOnEnableState
+: LoadAddOn → C_AddOns.LoadAddOn
+: IsAddOnLoaded → C_AddOns.IsAddOnLoaded
+: EnableAllAddOns → C_AddOns.EnableAllAddOns
+: DisableAllAddOns → C_AddOns.DisableAllAddOns
+: GetAddOnInfo → C_AddOns.GetAddOnInfo
+: GetAddOnDependencies → C_AddOns.GetAddOnDependencies
+: GetAddOnOptionalDependencies → C_AddOns.GetAddOnOptionalDependencies
+: GetNumAddOns → C_AddOns.GetNumAddOns
+: SaveAddOns → C_AddOns.SaveAddOns
+: ResetAddOns → C_AddOns.ResetAddOns
+: ResetDisabledAddOns → C_AddOns.ResetDisabledAddOns
+: IsAddonVersionCheckEnabled → C_AddOns.IsAddonVersionCheckEnabled
+: SetAddonVersionCheck → C_AddOns.SetAddonVersionCheck
+: IsAddOnLoadOnDemand → C_AddOns.IsAddOnLoadOnDemand
+
+=== 10.2.5 ===
+: FillLocalizedClassList → LocalizedClassList
+: GetSetBonusesForSpecializationByItemID → C_Item.GetSetBonusesForSpecializationByItemID
+: GetItemStats → C_Item.GetItemStats
+: GetItemStatDelta →  C_Item.GetItemStatDelta
+: UnitAura → C_UnitAuras.GetAuraDataByIndex
+: UnitBuff → C_UnitAuras.GetBuffDataByIndex
+: UnitDebuff → C_UnitAuras.GetDebuffDataByIndex
+: UnitAuraBySlot → C_UnitAuras.GetAuraDataBySlot
+: UnitAuraSlots → C_UnitAuras.GetAuraSlots
+
+=== 10.2.6 ===
+: FrameXML_Debug → C_Debug.FrameXMLDebug
+: GetMawPowerLinkBySpellID → C_Spell.GetMawPowerLinkBySpellID
+: C_TaskQuest.GetUIWidgetSetIDFromQuestID → C_TaskQuest.GetQuestTooltipUIWidgetSet
+
+=== 10.2.7 ===
+: ClosePetStables → C_StableInfo.ClosePetStables
+: GetStablePetInfo → C_StableInfo.GetStablePetInfo
+: PickupStablePet → C_StableInfo.PickupStablePet
+: GetStablePetFoodTypes → C_StableInfo.GetStablePetFoodTypes
+: IsAtStableMaster → C_StableInfo.IsAtStableMaster
+: SetPetSlot → C_StableInfo.SetPetSlot
+: PetAbandon → C_PetInfo.PetAbandon
+: PetRename → C_PetInfo.PetRename
+: PetCanBeRenamed
+
+=== 11.0.0 ===
+: GetSpellInfo → C_Spell.GetSpellInfo
+: GetNumSpellTabs → C_SpellBook.GetNumSpellBookSkillLines
+: GetSpellTabInfo → C_SpellBook.GetSpellBookSkillLineInfo
+: GetSpellCooldown → C_Spell.GetSpellCooldown
+: GetSpellBookItemName → C_SpellBook.GetSpellBookItemName
+: GetSpellTexture → C_Spell.GetSpellTexture
+: GetSpellCharges → C_Spell.GetSpellCharges
+: GetSpellDescription → C_Spell.GetSpellDescription
+: GetSpellCount → C_Spell.GetSpellCastCount
+: IsUsableSpell → C_Spell.IsSpellUsable
+
+These functions were deprecated in patch 10.2.6 but do not appear to be removed on the 11.0.2 beta.
+Deprecated_CurrencyScript.lua
+: GetCoinIcon → C_CurrencyInfo.GetCoinIcon
+: GetCoinText → C_CurrencyInfo.GetCoinText
+: GetCoinTextureString → C_CurrencyInfo.GetCoinTextureString
+
+Deprecated_GuildScript.lua
+: GuildInvite → C_GuildInfo.Invite
+: GuildUninvite → C_GuildInfo.Uninvite
+: GuildPromote → C_GuildInfo.Promote
+: GuildDemote → C_GuildInfo.Demote
+: GuildSetLeader → C_GuildInfo.SetLeader
+: GuildSetMOTD → C_GuildInfo.SetMOTD
+: GuildLeave → C_GuildInfo.Leave
+: GuildDisband → C_GuildInfo.Disband
+
+Deprecated_ItemScript.lua
+: GetItemQualityColor → C_Item.GetItemQualityColor
+: GetItemInfoInstant → C_Item.GetItemInfoInstant
+: GetItemSetInfo → C_Item.GetItemSetInfo
+: GetItemChildInfo → C_Item.GetItemChildInfo
+: DoesItemContainSpec → C_Item.DoesItemContainSpec
+: GetItemGem → C_Item.GetItemGem
+: GetItemCreationContext → C_Item.GetItemCreationContext
+: GetItemIcon → C_Item.GetItemIconByID
+: GetItemFamily → C_Item.GetItemFamily
+: GetItemSpell → C_Item.GetItemSpell
+: IsArtifactPowerItem → C_Item.IsArtifactPowerItem
+: IsCurrentItem → C_Item.IsCurrentItem
+: IsUsableItem → C_Item.IsUsableItem
+: IsHelpfulItem → C_Item.IsHelpfulItem
+: IsHarmfulItem → C_Item.IsHarmfulItem
+: IsConsumableItem → C_Item.IsConsumableItem
+: IsEquippableItem → C_Item.IsEquippableItem
+: IsEquippedItem → C_Item.IsEquippedItem
+: IsEquippedItemType → C_Item.IsEquippedItemType
+: ItemHasRange → C_Item.ItemHasRange
+: IsItemInRange → C_Item.IsItemInRange
+: GetItemClassInfo → C_Item.GetItemClassInfo
+: GetItemInventorySlotInfo → C_Item.GetItemInventorySlotInfo
+: BindEnchant → C_Item.BindEnchant
+: ActionBindsItem → C_Item.ActionBindsItem
+: ReplaceEnchant → C_Item.ReplaceEnchant
+: ReplaceTradeEnchant → C_Item.ReplaceTradeEnchant
+: ConfirmBindOnUse → C_Item.ConfirmBindOnUse
+: ConfirmOnUse → C_Item.ConfirmOnUse
+: ConfirmNoRefundOnUse → C_Item.ConfirmNoRefundOnUse
+: DropItemOnUnit → C_Item.DropItemOnUnit
+: EndBoundTradeable → C_Item.EndBoundTradeable
+: EndRefund → C_Item.EndRefund
+: GetItemInfo → C_Item.GetItemInfo
+: GetDetailedItemLevelInfo → C_Item.GetDetailedItemLevelInfo
+: GetItemSpecInfo → C_Item.GetItemSpecInfo
+: GetItemUniqueness → C_Item.GetItemUniqueness
+: GetItemCount → C_Item.GetItemCount
+: PickupItem → C_Item.PickupItem
+: GetItemSubClassInfo → C_Item.GetItemSubClassInfo
+: UseItemByName → C_Item.UseItemByName
+: EquipItemByName → C_Item.EquipItemByName
+: ReplaceTradeskillEnchant → C_Item.ReplaceTradeskillEnchant
+: GetItemCooldown → C_Item.GetItemCooldown
+: IsCorruptedItem → C_Item.IsCorruptedItem
+: IsCosmeticItem → C_Item.IsCosmeticItem
+: IsDressableItem → C_Item.IsDressableItem C_Item.IsDressableItemByID
+
+Deprecated_PvpScript.lua
+: IsSubZonePVPPOI → C_PvP.IsSubZonePVPPOI
+: GetZonePVPInfo → C_PvP.GetZonePVPInfo
+: TogglePVP → C_PvP.TogglePVP
+: SetPVP → C_PvP.SetPVP
+
+Deprecated_SoundScript.lua
+: PlayVocalErrorSoundID → C_Sound.PlayVocalErrorSound
+
+Deprecated_SpellScript.lua
+: TargetSpellReplacesBonusTree → C_Spell.TargetSpellReplacesBonusTree
+: GetMaxSpellStartRecoveryOffset → C_Spell.GetSpellQueueWindow
+: GetSpellQueueWindow → C_Spell.GetSpellQueueWindow
+: GetSchoolString → C_Spell.GetSchoolString

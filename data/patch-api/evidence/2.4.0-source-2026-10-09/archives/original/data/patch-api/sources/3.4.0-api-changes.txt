@@ -1,0 +1,12 @@
+Patch 3.4.0 API changes
+
+== Summary ==
+* The client has pulled in a subset of API changes from Patch 9.2.5. This includes various breaking changes around the UnitPopup menu system.
+* The client now supports a new _Wrath suffix for loading client-specific TOC files. An alternative suffix of -WOTLKC is also supported for consistency with other legacy TOC suffixes.
+* UnitAura has gained an additional return value (shouldConsolidate) immediately before the variable returns.
+* The CURSOR_UPDATE event has been replaced by CURSOR_CHANGED.
+
+== Resources ==
+* TOC: 30400
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+

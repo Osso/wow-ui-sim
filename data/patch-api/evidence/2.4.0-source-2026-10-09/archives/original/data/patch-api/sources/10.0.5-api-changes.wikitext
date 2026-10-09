@@ -1,0 +1,218 @@
+{{apichanges|10.0.5|prev=10.0.2|next=10.0.7}}
+
+==Summary==
+* Added <code>instanceId</code> to {{api|GetSavedInstanceInfo}} as the 14th return value.
+* Certain items and spells no longer return information from the server. For example itemID [https://www.wowhead.com/item=17/martin-fury 17] still returns <code>true</code> for {{api|C_Item.DoesItemExistByID}} but {{api|t=e|ITEM_DATA_LOAD_RESULT}} will have <code>success:false</code> and {{api|GetItemInfo}} will never return information, resulting in [[ItemMixin#ContinueOnItemLoad|ItemMixin:ContinueOnItemLoad]] never firing the callback.
+
+==Resources==
+* TOC: <code>100005</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.0.2..10.0.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.0.2..10.0.5 BlizzardInterfaceResources]
+* Official patch notes: [https://worldofwarcraft.com/en-us/news/23892227/updated-january-24-dragonflight-1005-content-update-notes#item14 Dragonflight: 10.0.5 Content Update Notes]
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 10.0.2 (47631) &rarr; 10.0.5 (47825) Jan 25 2023
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(49)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(4)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_CraftingOrders.GetNumFavoriteCustomerOptions}}
+: {{api|t=a|C_CraftingOrders.GetPersonalOrdersInfo}}
+: {{api|t=a|C_Mail.SetOpeningAll}}
+: {{api|t=a|C_MountJournal.GetAllCreatureDisplayIDsForMountID}}
+: {{api|t=a|C_PerksActivities.AddTrackedPerksActivity}}
+: {{api|t=a|C_PerksActivities.ClearPerksActivitiesPendingCompletion}}
+: {{api|t=a|C_PerksActivities.GetAllPerksActivityTags}}
+: {{api|t=a|C_PerksActivities.GetPerksActivitiesInfo}}
+: {{api|t=a|C_PerksActivities.GetPerksActivitiesPendingCompletion}}
+: {{api|t=a|C_PerksActivities.GetPerksActivityChatLink}}
+: {{api|t=a|C_PerksActivities.GetPerksActivityInfo}}
+: {{api|t=a|C_PerksActivities.GetTrackedPerksActivities}}
+: {{api|t=a|C_PerksActivities.RemoveTrackedPerksActivity}}
+: {{api|t=a|C_PerksProgram.ClearFrozenPerksVendorItem}}
+: {{api|t=a|C_PerksProgram.CloseInteraction}}
+: {{api|t=a|C_PerksProgram.GetAvailableCategoryIDs}}
+: {{api|t=a|C_PerksProgram.GetAvailableVendorItemIDs}}
+: {{api|t=a|C_PerksProgram.GetCategoryInfo}}
+: {{api|t=a|C_PerksProgram.GetCurrencyAmount}}
+: {{api|t=a|C_PerksProgram.GetDraggedPerksVendorItem}}
+: {{api|t=a|C_PerksProgram.GetFrozenPerksVendorItemInfo}}
+: {{api|t=a|C_PerksProgram.GetPendingChestRewards}}
+: {{api|t=a|C_PerksProgram.GetPerksProgramItemDisplayInfo}}
+: {{api|t=a|C_PerksProgram.GetTimeRemaining}}
+: {{api|t=a|C_PerksProgram.GetVendorItemInfoRefundTimeLeft}}
+: {{api|t=a|C_PerksProgram.GetVendorItemInfo}}
+: {{api|t=a|C_PerksProgram.ItemSelectedTelemetry}}
+: {{api|t=a|C_PerksProgram.PickupPerksVendorItem}}
+: {{api|t=a|C_PerksProgram.RequestPendingChestRewards}}
+: {{api|t=a|C_PerksProgram.RequestPurchase}}
+: {{api|t=a|C_PerksProgram.RequestRefund}}
+: {{api|t=a|C_PerksProgram.ResetHeldItemDragAndDrop}}
+: {{api|t=a|C_PerksProgram.SetFrozenPerksVendorItem}}
+: {{api|t=a|C_PlayerInfo.CanUseItem}}
+: {{api|t=a|C_PlayerInfo.GetDisplayID}}
+: {{api|t=a|C_PlayerInfo.GetGlidingInfo}}
+: {{api|t=a|C_PlayerInfo.GetPlayerCharacterData}}
+: {{api|t=a|C_PlayerInfo.IsTradingPostAvailable}}
+: {{api|t=a|C_PlayerInfo.IsTravelersLogAvailable}}
+: {{api|t=a|C_PvP.ArePvpTalentsUnlocked}}
+: {{api|t=a|C_PvP.GetPVPActiveRatedMatchDeserterPenalty}}
+: {{api|t=a|C_PvP.GetPvpTalentsUnlockedLevel}}
+: {{api|t=a|C_PvP.IsInRatedMatchWithDeserterPenalty}}
+: {{api|t=a|C_TradeSkillUI.GetRemainingRecasts}}
+: {{api|t=a|C_TradeSkillUI.IsRecipeFirstCraft}}
+: {{api|t=a|C_Traits.GenerateInspectImportString}}
+: {{api|t=a|C_Traits.ResetTreeByCurrency}}
+: {{api|t=a|IsUsingGamepad}}
+: {{api|t=a|IsUsingMouse}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|BNSendSoR}}
+: {{api|t=a|C_TradeSkillUI.ContinueRecast}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeRepeatCount}}
+: {{api|t=a|C_TradeSkillUI.HasRecipesTracked}}
+</div>
+|}
+ {{api|t=a|C_BarberShop.GetCurrentCharacterData}}
+   # ret 1: <font color="#ecbc2a">characterData</font>, Type: BarberShopCharacterData -> PlayerInfoCharacterData
+ {{api|t=a|C_ClassTalents.LoadConfig}}
+   + ret 2: <font color="#00b400">changeError</font>
+   + ret 3: <font color="#00b400">newLearnedNodeIDs</font>
+ {{api|t=a|C_EditMode.OnLayoutAdded}}
+   + arg 2: <font color="#00b400">activateNewLayout</font>
+   + arg 3: <font color="#00b400">isLayoutImported</font>
+ {{api|t=a|C_ModelInfo.GetModelSceneInfoByID}}
+   + ret 4: <font color="#00b400">flags</font>
+ {{api|t=a|C_TradeSkillUI.GetRecipeOutputItemData}}
+   + arg 5: <font color="#00b400">recraftOrderID</font>
+ {{api|t=a|C_TradeSkillUI.GetRecipesTracked}}
+   + arg 1: <font color="#00b400">isRecraft</font>
+ {{api|t=a|C_TradeSkillUI.IsRecipeTracked}}
+   + arg 2: <font color="#00b400">isRecraft</font>
+ {{api|t=a|C_TradeSkillUI.SetRecipeTracked}}
+   + arg 3: <font color="#00b400">isRecraft</font>
+
+==Widgets==
+None
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(17)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CHEST_REWARDS_UPDATED_FROM_SERVER}}
+: {{api|t=e|CRAFTINGORDERS_UNEXPECTED_ERROR}}
+: {{api|t=e|CRAFTINGORDERS_UPDATE_PERSONAL_ORDER_COUNTS}}
+: {{api|t=e|PERKS_ACTIVITIES_TRACKED_UPDATED}}
+: {{api|t=e|PERKS_ACTIVITIES_UPDATED}}
+: {{api|t=e|PERKS_ACTIVITY_COMPLETED}}
+: {{api|t=e|PERKS_PROGRAM_CLOSE}}
+: {{api|t=e|PERKS_PROGRAM_CURRENCY_AWARDED}}
+: {{api|t=e|PERKS_PROGRAM_CURRENCY_REFRESH}}
+: {{api|t=e|PERKS_PROGRAM_DATA_REFRESH}}
+: {{api|t=e|PERKS_PROGRAM_DATA_SPECIFIC_ITEM_REFRESH}}
+: {{api|t=e|PERKS_PROGRAM_DISABLED}}
+: {{api|t=e|PERKS_PROGRAM_OPEN}}
+: {{api|t=e|PERKS_PROGRAM_PURCHASE_SUCCESS}}
+: {{api|t=e|PERKS_PROGRAM_REFUND_SUCCESS}}
+: {{api|t=e|PERKS_PROGRAM_SET_FROZEN_ITEM}}
+: {{api|t=e|PLAYER_CAN_GLIDE_CHANGED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|WEAR_EQUIPMENT_SET}}
+</div>
+|}
+ {{api|t=e|AZERITE_ITEM_POWER_LEVEL_CHANGED}}
+   + 5: <font color="#00b400">azeriteItemID</font>
+ {{api|t=e|EDIT_MODE_LAYOUTS_UPDATED}}
+   + 2: <font color="#00b400">reconcileLayouts</font>
+   - 2: <font color="#ff6767">fromServer</font>
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(9)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(3)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=DisableAdvancedFlyingVelocityVFX|default=0|scope=Account|cat=4|desc=Disable the advanced flying velocity VFX}}
+: {{apitooltip|type=cvar|name=motionSicknessFocalCircle|default=0|scope=Account|cat=4|desc=Enables a focal circle showing up when mounted}}
+: {{apitooltip|type=cvar|name=motionSicknessLandscapeDarkening|default=0|scope=Account|cat=4|desc=Enables landscape darkening at higher speeds}}
+: {{apitooltip|type=cvar|name=perksActivitiesCurrentMonth|default=0|scope=Account|cat=4|desc=Current month for perks activities}}
+: {{apitooltip|type=cvar|name=perksActivitiesLastPoints|default=0|scope=Account|cat=4|desc=Last seen number of influence points in the perks progress bar}}
+: {{apitooltip|type=cvar|name=perksActivitiesPendingCompletion|scope=Account|cat=4|desc=List of completed activities that are pending completion animation in the UI}}
+: {{apitooltip|type=cvar|name=professionsAllocateBestQualityReagentsCustomer|default=1|scope=Account|cat=4|desc=Indicates if best quality reagents should be automatically allocated in the customer crafting order UI.}}
+: {{apitooltip|type=cvar|name=trackedPerksActivities|scope=Character|cat=4|desc=Internal cvar for saving tracked perks activities in order}}
+: {{apitooltip|type=cvar|name=trackedProfessionRecraftRecipes|scope=Character|cat=4|desc=Internal cvar for saving tracked recraft recipes in order}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=autoOpenLootHistory|default=0|scope=Account|cat=4|desc=Automatically opens the Loot History window when certain items drop}}
+: {{apitooltip|type=cvar|name=nameplateShowOnlyNames|default=0|scope=Character|cat=4|desc=Whether to hide the nameplate bars}}
+: {{apitooltip|type=cvar|name=TargetPriorityValueBank|default=1|cat=4|desc=Selects the active targeting values bank for calculating target priority order}}
+</div>
+|}
+
+==Structures==
+ Enum.BattlepetDbFlags
+   + 12: <font color="#00b400">TradingPost</font>
+ Enum.CraftingOrderResult
+   + 2: <font color="#00b400">Aborted</font>
+   + 23: <font color="#00b400">InvalidRealm</font>
+   + 42: <font color="#00b400">TargetLocked</font>
+ Enum.CurrencyFlagsB
+   + 4: <font color="#00b400">CurrencyBBattlenetVirtualCurrency</font>
+ Enum.EditModeAccountSetting
+   + 21: <font color="#00b400">ShowReputationBar</font>
+   + 22: <font color="#00b400">ShowDurabilityFrame</font>
+ Enum.EditModeAuraFrameSetting
+   + 8: <font color="#00b400">DeprecatedShowFull</font>
+   - 8: <font color="#ff6767">ShowFull</font>
+ Enum.EditModeSystem
+   + 14: <font color="#00b400">MicroMenu</font>
+   + 15: <font color="#00b400">Bags</font>
+   + 16: <font color="#00b400">StatusTrackingBar</font>
+   + 17: <font color="#00b400">DurabilityFrame</font>
+ Enum.HolidayFlags
+   + 7: <font color="#00b400">BeginEventOnlyOnStageChange</font>
+ Enum.QuestTagType
+   + 17: <font color="#00b400">DragonRiderRacing</font>
+ Enum.ReportType
+   + 16: <font color="#00b400">PvPGroupMember</font>
+ Enum.TooltipDataLineType
+   + 22: <font color="#00b400">RestrictedRaceClass</font>
+   + 23: <font color="#00b400">RestrictedFaction</font>
+   + 24: <font color="#00b400">RestrictedSkill</font>
+   + 25: <font color="#00b400">RestrictedPvPMedal</font>
+   + 26: <font color="#00b400">RestrictedReputation</font>
+   + 27: <font color="#00b400">RestrictedSpellKnown</font>
+   + 28: <font color="#00b400">RestrictedLevel</font>
+   + 29: <font color="#00b400">EquipSlot</font>
+   + 30: <font color="#00b400">ItemName</font>
+ Enum.TrackedSpellCategory
+   + 4: <font color="#00b400">RacialAbility</font>
+ Enum.TradeskillRecipeType
+   + 5: <font color="#00b400">Gathering</font>
+ Enum.UICursorType
+   + 21: <font color="#00b400">PerksProgramVendorItem</font>
+
+ Constants.CurrencyConsts.CURRENCY_ID_PERKS_PROGRAM_DISPLAY_INFO = 2032
+ Constants.ProfessionConsts.CRAFTING_ORDER_ITEM_RETENTION = 30
+
+ CraftingItemResultData
+   + 3: <font color="#00b400">qualityProgress</font>
+   + 15: <font color="#00b400">isEnchant</font>
+ CraftingOrderCustomerOptionInfo
+   + 9: <font color="#00b400">canUse</font>
+   + 10: <font color="#00b400">bindOnPickup</font>
+ CraftingRecipeSchematic
+   - 12: <font color="#ff6767">hasGatheringOperationInfo</font>
+ ItemUpgradeLevelInfo
+   + 5: <font color="#00b400">currencyCostsToUpgrade</font>
+   + 6: <font color="#00b400">itemCostsToUpgrade</font>
+   - 5: <font color="#ff6767">costsToUpgrade</font>
+ TradeSkillRecipeInfo
+   + 33: <font color="#00b400">canCreateMultiple</font>
+   - 33: <font color="#ff6767">createsItem</font>

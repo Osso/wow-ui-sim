@@ -1,0 +1,678 @@
+[
+  {
+    "source_id": "raw-004",
+    "note": "UNPROVEN: combat logging changes from text strings to explicit data, relationship flags and unique same-name unit identifiers. Actual event payload schema and GUID-format/transport proof absent; cited forum not expanded."
+  },
+  {
+    "source_id": "raw-005",
+    "note": "UNPROVEN source boundary: linked Guide to the New Combat Log is not fetched or reconstructed."
+  },
+  {
+    "source_id": "raw-006",
+    "note": "UNPROVEN: addon Interface Options extension and taint issues require actual panel integration/security proof; future PTR experiment and UIOptionsPanels.lua comments are not supplied evidence."
+  },
+  {
+    "source_id": "raw-009",
+    "note": "UNPROVEN: both party-member events must omit which-member information; source does not enumerate the remaining payload, ordering or dispatch conditions."
+  },
+  {
+    "source_id": "raw-012",
+    "note": "UNPROVEN: SecureStateHeader changes its own attributes on state changes; mechanism, driver grammar, combat restrictions and taint semantics unspecified."
+  },
+  {
+    "source_id": "raw-015",
+    "note": "UNPROVEN: optional first coroutine accepted by debugstack; remaining signature, suspended/dead coroutine handling and output grammar unspecified."
+  },
+  {
+    "source_id": "raw-018",
+    "note": "UNPROVEN: unitHighlights 0/1 controls model highlighting while Alt-Z hides UI; not a declared default. /console is an example, not a newly added command. Name toggles have no named CVars or command signatures."
+  },
+  {
+    "source_id": "raw-019",
+    "note": "UNPROVEN: unitHighlights 0/1 controls model highlighting while Alt-Z hides UI; not a declared default. /console is an example, not a newly added command. Name toggles have no named CVars or command signatures."
+  },
+  {
+    "source_id": "raw-022",
+    "note": "UNPROVEN: GameTooltip:SetTotem(slot) requires totem-tooltip state/content; return values and invalid-slot rules unspecified."
+  },
+  {
+    "source_id": "raw-025",
+    "note": "UNPROVEN: literal inline texture path/width and optional height/xOffset/yOffset grammar needs parsing and layout/render proof. {star} chat substitution needs transport allowlist; source does not list all selected textures."
+  },
+  {
+    "source_id": "raw-026",
+    "note": "UNPROVEN: literal inline texture path/width and optional height/xOffset/yOffset grammar needs parsing and layout/render proof. {star} chat substitution needs transport allowlist; source does not list all selected textures."
+  },
+  {
+    "source_id": "raw-029",
+    "note": "UNPROVEN: armorPenetration scalar from GetArmorPenetration; source gives no units, formula, missing-character or secrecy rules."
+  },
+  {
+    "source_id": "raw-032",
+    "note": "UNPROVEN: DeclineInvite(channel) mutates channel invitation state; channel identity/coercion, return values and event effects unspecified."
+  },
+  {
+    "source_id": "raw-035",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-036",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-037",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-038",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-039",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-040",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-041",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-042",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-043",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified."
+  },
+  {
+    "source_id": "raw-046",
+    "note": "UNPROVEN: SetFriendNotes accepts name or index and notes; actual friend lookup/update, events, invalid inputs and return values unspecified."
+  },
+  {
+    "source_id": "raw-049",
+    "note": "UNPROVEN: CanEditGuildTabInfo(tab) reads permission state; actual rank/tab rights required; absent-guild and invalid-tab behavior unspecified."
+  },
+  {
+    "source_id": "raw-052",
+    "note": "UNPROVEN: QueryGuildBankText(tab) and SetGuildBankText(tab,text) require server request/tab text state; replies, ordering, permissions and returns unspecified."
+  },
+  {
+    "source_id": "raw-053",
+    "note": "UNPROVEN: QueryGuildBankText(tab) and SetGuildBankText(tab,text) require server request/tab text state; replies, ordering, permissions and returns unspecified."
+  },
+  {
+    "source_id": "raw-056",
+    "note": "UNPROVEN: GetContainerNumFreeSlots(bagIndex) returns freeSlots,itemFamily; family zero means general capacity. Need actual bag occupancy/family state, bag index and unknown bag rules."
+  },
+  {
+    "source_id": "raw-059",
+    "note": "UNPROVEN: GetItemFamily returns item/container eligibility bits; quiver 1 OR ammo pouch 2 equals 3, for items or combined-capacity bags. Exact bit catalog follows; no modern equivalence assumed."
+  },
+  {
+    "source_id": "raw-060",
+    "note": "UNPROVEN: historical bag-family catalog 0 = Unspecified (for bags it means any item, for items it means no special bag type). Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-061",
+    "note": "UNPROVEN: historical bag-family catalog 1 = Quiver. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-062",
+    "note": "UNPROVEN: historical bag-family catalog 2 = Ammo Pouch. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-063",
+    "note": "UNPROVEN: historical bag-family catalog 4 = Soul Bag. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-064",
+    "note": "UNPROVEN: historical bag-family catalog 8 = Leatherworking Bag. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-065",
+    "note": "UNPROVEN: historical bag-family catalog 16 = Unknown. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-066",
+    "note": "UNPROVEN: historical bag-family catalog 32 = Herb Bags. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-067",
+    "note": "UNPROVEN: historical bag-family catalog 64 = Enchanting Bags. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-068",
+    "note": "UNPROVEN: historical bag-family catalog 128 = Engineering Bag. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-069",
+    "note": "UNPROVEN: historical bag-family catalog 256 = Keyring. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-070",
+    "note": "UNPROVEN: historical bag-family catalog 512 = Gem Bag. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-071",
+    "note": "UNPROVEN: historical bag-family catalog 1024 = Mining Bag. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-072",
+    "note": "UNPROVEN: historical bag-family catalog 2048 = Unknown. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-073",
+    "note": "UNPROVEN: historical bag-family catalog 4096 = Vanity Pets. Preserve literal bit value; Unknown labels do not establish a meaning, modern bag enums are not parity proof."
+  },
+  {
+    "source_id": "raw-074",
+    "note": "UNPROVEN: GetItemIcon accepts ID/name/link/string and returns a valid item icon even if GetItemInfo returns nil. GetItemInfo is contextual, not a new addition; real independent metadata/cache lookup unproven."
+  },
+  {
+    "source_id": "raw-077",
+    "note": "UNPROVEN: GetQuestLink(questLogId) needs quest log identity/link format; GetRewardTitle() has no declared output; quest reward/title state and invalid-index handling unproven."
+  },
+  {
+    "source_id": "raw-078",
+    "note": "UNPROVEN: GetQuestLink(questLogId) needs quest log identity/link format; GetRewardTitle() has no declared output; quest reward/title state and invalid-index handling unproven."
+  },
+  {
+    "source_id": "raw-081",
+    "note": "UNPROVEN: GetNumLanguages returns count of learned languages; actual language state, race defaults and secrecy unspecified."
+  },
+  {
+    "source_id": "raw-084",
+    "note": "UNPROVEN: GetOptOutOfLoot() returns current random-loot opt-out boolean; default and server synchronization unspecified."
+  },
+  {
+    "source_id": "raw-085",
+    "note": "UNPROVEN: SetOptOutOfLoot(boolean) changes random-loot eligibility; returns/events unspecified."
+  },
+  {
+    "source_id": "raw-086",
+    "note": "UNPROVEN: false makes player eligible for random loot; actual loot participation proof absent."
+  },
+  {
+    "source_id": "raw-087",
+    "note": "UNPROVEN: true makes player pass on random loot; actual loot participation proof absent."
+  },
+  {
+    "source_id": "raw-090",
+    "note": "UNPROVEN: GetSpellInfo(ID/name/link) returns name,rank,icon,cost,isFunnel,powerType,castTime,minRange,maxRange in that order. Current namespace outputs do not prove this historical tuple."
+  },
+  {
+    "source_id": "raw-091",
+    "note": "UNPROVEN: historical nine-field GetSpellInfo tuple includes rank,cost,isFunnel and accepts spell ID/name/link; not modern C_Spell tuple equivalence. Spell/talent hyperlink format, inspect state and invalid-input rules unproven."
+  },
+  {
+    "source_id": "raw-092",
+    "note": "UNPROVEN: historical nine-field GetSpellInfo tuple includes rank,cost,isFunnel and accepts spell ID/name/link; not modern C_Spell tuple equivalence. Spell/talent hyperlink format, inspect state and invalid-input rules unproven."
+  },
+  {
+    "source_id": "raw-095",
+    "note": "UNPROVEN: CanSummonFriend()/SummonFriend() need friend summon eligibility and command lifecycle; target/context, cooldown and event behavior unspecified."
+  },
+  {
+    "source_id": "raw-096",
+    "note": "UNPROVEN: CanSummonFriend()/SummonFriend() need friend summon eligibility and command lifecycle; target/context, cooldown and event behavior unspecified."
+  },
+  {
+    "source_id": "raw-099",
+    "note": "UNPROVEN: slot 1 Fire/2 Earth/3 Water/4 Air; five-field GetTotemInfo and GetTotemTimeLeft require live totem lifecycle/timebase; missing totem and invalid-slot semantics unspecified."
+  },
+  {
+    "source_id": "raw-100",
+    "note": "UNPROVEN: historical totem slot mapping 1 = Fire. Actual slot-specific lifecycle/timebase proof absent."
+  },
+  {
+    "source_id": "raw-101",
+    "note": "UNPROVEN: historical totem slot mapping 2 = Earth. Actual slot-specific lifecycle/timebase proof absent."
+  },
+  {
+    "source_id": "raw-102",
+    "note": "UNPROVEN: historical totem slot mapping 3 = Water. Actual slot-specific lifecycle/timebase proof absent."
+  },
+  {
+    "source_id": "raw-103",
+    "note": "UNPROVEN: historical totem slot mapping 4 = Air. Actual slot-specific lifecycle/timebase proof absent."
+  },
+  {
+    "source_id": "raw-104",
+    "note": "UNPROVEN: slot 1 Fire/2 Earth/3 Water/4 Air; five-field GetTotemInfo and GetTotemTimeLeft require live totem lifecycle/timebase; missing totem and invalid-slot semantics unspecified."
+  },
+  {
+    "source_id": "raw-107",
+    "note": "UNPROVEN: historical unit health modifier, useful healing-range predicate, base class/race and shared combat-log GUID require resolved unit state. Units, formatting/localization, invalid tokens and secret-value rules unspecified."
+  },
+  {
+    "source_id": "raw-108",
+    "note": "UNPROVEN: UnitInRange(unit) is fixed useful range based on flash-heal/cure range; source gives no numerical threshold or modern two-return equivalence."
+  },
+  {
+    "source_id": "raw-109",
+    "note": "UNPROVEN: UnitClassBase(unit) returns classLocal,class; not the current UnitClass tuple without proof."
+  },
+  {
+    "source_id": "raw-110",
+    "note": "UNPROVEN: UnitRaceBase(unit) returns raceLocal,race; not an invented UnitRace alias."
+  },
+  {
+    "source_id": "raw-111",
+    "note": "UNPROVEN: UnitGUID(unit) yields unique string identical to combat-log identifier; historical layout and unknown-unit behavior absent."
+  },
+  {
+    "source_id": "raw-114",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent."
+  },
+  {
+    "source_id": "raw-115",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent."
+  },
+  {
+    "source_id": "raw-116",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent."
+  },
+  {
+    "source_id": "raw-117",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent."
+  },
+  {
+    "source_id": "raw-118",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent."
+  },
+  {
+    "source_id": "raw-119",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent."
+  },
+  {
+    "source_id": "raw-120",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent."
+  },
+  {
+    "source_id": "wt-events-PARTY_MEMBER_ENABLE-9-1",
+    "note": "UNPROVEN: both party-member events must omit which-member information; source does not enumerate the remaining payload, ordering or dispatch conditions. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-events-PARTY_MEMBER_DISABLE-9-2",
+    "note": "UNPROVEN: both party-member events must omit which-member information; source does not enumerate the remaining payload, ordering or dispatch conditions. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-debugstack-15-1",
+    "note": "UNPROVEN: optional first coroutine accepted by debugstack; remaining signature, suspended/dead coroutine handling and output grammar unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-cvars-unitHighlights-18",
+    "note": "UNPROVEN: unitHighlights 0/1 controls model highlighting while Alt-Z hides UI; not a declared default. /console is an example, not a newly added command. Name toggles have no named CVars or command signatures. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-commands-/console-18",
+    "note": "UNPROVEN: unitHighlights 0/1 controls model highlighting while Alt-Z hides UI; not a declared default. /console is an example, not a newly added command. Name toggles have no named CVars or command signatures. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetTotem-22-1",
+    "note": "UNPROVEN: GameTooltip:SetTotem(slot) requires totem-tooltip state/content; return values and invalid-slot rules unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetArmorPenetration-29-1",
+    "note": "UNPROVEN: armorPenetration scalar from GetArmorPenetration; source gives no units, formula, missing-character or secrecy rules. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-DeclineInvite-32-1",
+    "note": "UNPROVEN: DeclineInvite(channel) mutates channel invitation state; channel identity/coercion, return values and event effects unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogAddFilter-35-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogAdvanceEntry-36-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogClearEntries-37-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogGetCurrentEntry-38-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogGetNumEntries-39-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogGetRetentionTime-40-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogResetFilter-41-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogSetCurrentEntry-42-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CombatLogSetRetentionTime-43-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-SetFriendNotes-46-1",
+    "note": "UNPROVEN: SetFriendNotes accepts name or index and notes; actual friend lookup/update, events, invalid inputs and return values unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CanEditGuildTabInfo-49-1",
+    "note": "UNPROVEN: CanEditGuildTabInfo(tab) reads permission state; actual rank/tab rights required; absent-guild and invalid-tab behavior unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-QueryGuildBankText-52-1",
+    "note": "UNPROVEN: QueryGuildBankText(tab) and SetGuildBankText(tab,text) require server request/tab text state; replies, ordering, permissions and returns unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-SetGuildBankText-53-1",
+    "note": "UNPROVEN: QueryGuildBankText(tab) and SetGuildBankText(tab,text) require server request/tab text state; replies, ordering, permissions and returns unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetContainerNumFreeSlots-56-1",
+    "note": "UNPROVEN: GetContainerNumFreeSlots(bagIndex) returns freeSlots,itemFamily; family zero means general capacity. Need actual bag occupancy/family state, bag index and unknown bag rules. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetItemFamily-59-1",
+    "note": "UNPROVEN: GetItemFamily returns item/container eligibility bits; quiver 1 OR ammo pouch 2 equals 3, for items or combined-capacity bags. Exact bit catalog follows; no modern equivalence assumed. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetItemFamily-59-2",
+    "note": "UNPROVEN: GetItemFamily returns item/container eligibility bits; quiver 1 OR ammo pouch 2 equals 3, for items or combined-capacity bags. Exact bit catalog follows; no modern equivalence assumed. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetItemIcon-74-1",
+    "note": "UNPROVEN: GetItemIcon accepts ID/name/link/string and returns a valid item icon even if GetItemInfo returns nil. GetItemInfo is contextual, not a new addition; real independent metadata/cache lookup unproven. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetItemInfo-74-2",
+    "note": "UNPROVEN: GetItemIcon accepts ID/name/link/string and returns a valid item icon even if GetItemInfo returns nil. GetItemInfo is contextual, not a new addition; real independent metadata/cache lookup unproven. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetQuestLink-77-1",
+    "note": "UNPROVEN: GetQuestLink(questLogId) needs quest log identity/link format; GetRewardTitle() has no declared output; quest reward/title state and invalid-index handling unproven. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetRewardTitle-78-1",
+    "note": "UNPROVEN: GetQuestLink(questLogId) needs quest log identity/link format; GetRewardTitle() has no declared output; quest reward/title state and invalid-index handling unproven. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetNumLanguages-81-1",
+    "note": "UNPROVEN: GetNumLanguages returns count of learned languages; actual language state, race defaults and secrecy unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetOptOutOfLoot-84-1",
+    "note": "UNPROVEN: GetOptOutOfLoot() returns current random-loot opt-out boolean; default and server synchronization unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-SetOptOutOfLoot-85-1",
+    "note": "UNPROVEN: SetOptOutOfLoot(boolean) changes random-loot eligibility; returns/events unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetSpellInfo-90-1",
+    "note": "UNPROVEN: GetSpellInfo(ID/name/link) returns name,rank,icon,cost,isFunnel,powerType,castTime,minRange,maxRange in that order. Current namespace outputs do not prove this historical tuple. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetSpellLink-91-1",
+    "note": "UNPROVEN: historical nine-field GetSpellInfo tuple includes rank,cost,isFunnel and accepts spell ID/name/link; not modern C_Spell tuple equivalence. Spell/talent hyperlink format, inspect state and invalid-input rules unproven. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetTalentLink-92-1",
+    "note": "UNPROVEN: historical nine-field GetSpellInfo tuple includes rank,cost,isFunnel and accepts spell ID/name/link; not modern C_Spell tuple equivalence. Spell/talent hyperlink format, inspect state and invalid-input rules unproven. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CanSummonFriend-95-1",
+    "note": "UNPROVEN: CanSummonFriend()/SummonFriend() need friend summon eligibility and command lifecycle; target/context, cooldown and event behavior unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-SummonFriend-96-1",
+    "note": "UNPROVEN: CanSummonFriend()/SummonFriend() need friend summon eligibility and command lifecycle; target/context, cooldown and event behavior unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetTotemInfo-99-1",
+    "note": "UNPROVEN: slot 1 Fire/2 Earth/3 Water/4 Air; five-field GetTotemInfo and GetTotemTimeLeft require live totem lifecycle/timebase; missing totem and invalid-slot semantics unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetTotemTimeLeft-104-1",
+    "note": "UNPROVEN: slot 1 Fire/2 Earth/3 Water/4 Air; five-field GetTotemInfo and GetTotemTimeLeft require live totem lifecycle/timebase; missing totem and invalid-slot semantics unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetUnitMaxHealthModifier-107-1",
+    "note": "UNPROVEN: historical unit health modifier, useful healing-range predicate, base class/race and shared combat-log GUID require resolved unit state. Units, formatting/localization, invalid tokens and secret-value rules unspecified. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-UnitInRange-108-1",
+    "note": "UNPROVEN: UnitInRange(unit) is fixed useful range based on flash-heal/cure range; source gives no numerical threshold or modern two-return equivalence. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-UnitClassBase-109-1",
+    "note": "UNPROVEN: UnitClassBase(unit) returns classLocal,class; not the current UnitClass tuple without proof. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-UnitRaceBase-110-1",
+    "note": "UNPROVEN: UnitRaceBase(unit) returns raceLocal,race; not an invented UnitRace alias. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-UnitGUID-111-1",
+    "note": "UNPROVEN: UnitGUID(unit) yields unique string identical to combat-log identifier; historical layout and unknown-unit behavior absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-DeclineName-114-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GetNumDeclensionSets-115-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CanGrantLevel-116-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-GrantLevel-117-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CommentatorSetCameraCollision-118-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-CommentatorSetTargetHeightOffset-119-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "wt-global-api-TogglePerformancePause-120-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Publication in current Retail is not measured here."
+  },
+  {
+    "source_id": "signature-wt-global-api-debugstack-15-1",
+    "note": "UNPROVEN: optional first coroutine accepted by debugstack; remaining signature, suspended/dead coroutine handling and output grammar unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-widgets-GameTooltip:SetTotem-22-1",
+    "note": "UNPROVEN: GameTooltip:SetTotem(slot) requires totem-tooltip state/content; return values and invalid-slot rules unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetArmorPenetration-29-1",
+    "note": "UNPROVEN: armorPenetration scalar from GetArmorPenetration; source gives no units, formula, missing-character or secrecy rules. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-DeclineInvite-32-1",
+    "note": "UNPROVEN: DeclineInvite(channel) mutates channel invitation state; channel identity/coercion, return values and event effects unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogAddFilter-35-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogAdvanceEntry-36-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogClearEntries-37-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogGetCurrentEntry-38-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogGetNumEntries-39-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogGetRetentionTime-40-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogResetFilter-41-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogSetCurrentEntry-42-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-CombatLogSetRetentionTime-43-1",
+    "note": "UNPROVEN: combat-log filter/cursor/entry/retention names published, but arguments, return tuples, iteration bounds, time units and lifecycle unspecified. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-SetFriendNotes-46-1",
+    "note": "UNPROVEN: SetFriendNotes accepts name or index and notes; actual friend lookup/update, events, invalid inputs and return values unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-CanEditGuildTabInfo-49-1",
+    "note": "UNPROVEN: CanEditGuildTabInfo(tab) reads permission state; actual rank/tab rights required; absent-guild and invalid-tab behavior unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-QueryGuildBankText-52-1",
+    "note": "UNPROVEN: QueryGuildBankText(tab) and SetGuildBankText(tab,text) require server request/tab text state; replies, ordering, permissions and returns unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-SetGuildBankText-53-1",
+    "note": "UNPROVEN: QueryGuildBankText(tab) and SetGuildBankText(tab,text) require server request/tab text state; replies, ordering, permissions and returns unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetContainerNumFreeSlots-56-1",
+    "note": "UNPROVEN: GetContainerNumFreeSlots(bagIndex) returns freeSlots,itemFamily; family zero means general capacity. Need actual bag occupancy/family state, bag index and unknown bag rules. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetItemFamily-59-1",
+    "note": "UNPROVEN: GetItemFamily returns item/container eligibility bits; quiver 1 OR ammo pouch 2 equals 3, for items or combined-capacity bags. Exact bit catalog follows; no modern equivalence assumed. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetItemFamily-59-2",
+    "note": "UNPROVEN: GetItemFamily returns item/container eligibility bits; quiver 1 OR ammo pouch 2 equals 3, for items or combined-capacity bags. Exact bit catalog follows; no modern equivalence assumed. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetItemIcon-74-1",
+    "note": "UNPROVEN: GetItemIcon accepts ID/name/link/string and returns a valid item icon even if GetItemInfo returns nil. GetItemInfo is contextual, not a new addition; real independent metadata/cache lookup unproven. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetItemInfo-74-2",
+    "note": "UNPROVEN: GetItemIcon accepts ID/name/link/string and returns a valid item icon even if GetItemInfo returns nil. GetItemInfo is contextual, not a new addition; real independent metadata/cache lookup unproven. No complete call signature established at this occurrence; do not infer arity from a bare name or contextual mention."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetQuestLink-77-1",
+    "note": "UNPROVEN: GetQuestLink(questLogId) needs quest log identity/link format; GetRewardTitle() has no declared output; quest reward/title state and invalid-index handling unproven. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetRewardTitle-78-1",
+    "note": "UNPROVEN: GetQuestLink(questLogId) needs quest log identity/link format; GetRewardTitle() has no declared output; quest reward/title state and invalid-index handling unproven. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetNumLanguages-81-1",
+    "note": "UNPROVEN: GetNumLanguages returns count of learned languages; actual language state, race defaults and secrecy unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetOptOutOfLoot-84-1",
+    "note": "UNPROVEN: GetOptOutOfLoot() returns current random-loot opt-out boolean; default and server synchronization unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-SetOptOutOfLoot-85-1",
+    "note": "UNPROVEN: SetOptOutOfLoot(boolean) changes random-loot eligibility; returns/events unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetSpellInfo-90-1",
+    "note": "UNPROVEN: GetSpellInfo(ID/name/link) returns name,rank,icon,cost,isFunnel,powerType,castTime,minRange,maxRange in that order. Current namespace outputs do not prove this historical tuple. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetSpellLink-91-1",
+    "note": "UNPROVEN: historical nine-field GetSpellInfo tuple includes rank,cost,isFunnel and accepts spell ID/name/link; not modern C_Spell tuple equivalence. Spell/talent hyperlink format, inspect state and invalid-input rules unproven. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetTalentLink-92-1",
+    "note": "UNPROVEN: historical nine-field GetSpellInfo tuple includes rank,cost,isFunnel and accepts spell ID/name/link; not modern C_Spell tuple equivalence. Spell/talent hyperlink format, inspect state and invalid-input rules unproven. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-CanSummonFriend-95-1",
+    "note": "UNPROVEN: CanSummonFriend()/SummonFriend() need friend summon eligibility and command lifecycle; target/context, cooldown and event behavior unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-SummonFriend-96-1",
+    "note": "UNPROVEN: CanSummonFriend()/SummonFriend() need friend summon eligibility and command lifecycle; target/context, cooldown and event behavior unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetTotemInfo-99-1",
+    "note": "UNPROVEN: slot 1 Fire/2 Earth/3 Water/4 Air; five-field GetTotemInfo and GetTotemTimeLeft require live totem lifecycle/timebase; missing totem and invalid-slot semantics unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetTotemTimeLeft-104-1",
+    "note": "UNPROVEN: slot 1 Fire/2 Earth/3 Water/4 Air; five-field GetTotemInfo and GetTotemTimeLeft require live totem lifecycle/timebase; missing totem and invalid-slot semantics unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetUnitMaxHealthModifier-107-1",
+    "note": "UNPROVEN: historical unit health modifier, useful healing-range predicate, base class/race and shared combat-log GUID require resolved unit state. Units, formatting/localization, invalid tokens and secret-value rules unspecified. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-UnitInRange-108-1",
+    "note": "UNPROVEN: UnitInRange(unit) is fixed useful range based on flash-heal/cure range; source gives no numerical threshold or modern two-return equivalence. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-UnitClassBase-109-1",
+    "note": "UNPROVEN: UnitClassBase(unit) returns classLocal,class; not the current UnitClass tuple without proof. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-UnitRaceBase-110-1",
+    "note": "UNPROVEN: UnitRaceBase(unit) returns raceLocal,race; not an invented UnitRace alias. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-UnitGUID-111-1",
+    "note": "UNPROVEN: UnitGUID(unit) yields unique string identical to combat-log identifier; historical layout and unknown-unit behavior absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-DeclineName-114-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GetNumDeclensionSets-115-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-CanGrantLevel-116-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-GrantLevel-117-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-CommentatorSetCameraCollision-118-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-CommentatorSetTargetHeightOffset-119-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  },
+  {
+    "source_id": "signature-wt-global-api-TogglePerformancePause-120-1",
+    "note": "UNPROVEN: literal names/call fragments only; source explicitly labels Unknown. Declension inputs named but grammar/results absent; grant-level, commentator camera and performance-pause state/authorization contracts absent. Literal call fragment retained; result/validation/lifecycle not established by spelling."
+  }
+]

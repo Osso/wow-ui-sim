@@ -1,0 +1,3350 @@
+{
+  "defaults": [
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.0.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "91e7e3b11473684d75ab8bf492e555a4632939393a69a8c5903b21e6f5b66d59"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "1ecf969c883131498c8c1caf79d04330edb68d9cf988eb397cb18f25f9fe4064"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.1.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "54770d338e909de6931d31b37d5119211b63adce9172359ce972479accc908a5"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "4929aeb89592afabcf158abafe10f6a52922b6a78bbc6455f30340be9e50fcb5"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.10.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "d306c8c0941f91a227f8dc8b90f6a879ccadd890e76ef122f76b335ebd6b7b8c"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.10.1-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "326dbb4c6fa584392eaaa23fc9674c447d845e6f07a063504813c6a3d66c0fb1"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.10.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "7f1e2621fb9bde2ddae097547223c803e49e541a7d6b6d1cc47a6d03a43f78c6"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.11.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "e8e84734de74ea3d6a52d32c211e4929207369020a1ec259e9f7e2e13fad25e7"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.12.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "cabab97dfac1b39e9159e0ae4e13c7624e6ce4ed8aae088f8f83f3ed70ba08f9"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "7281ede483b238fc166f8c368187b7d66280a1ecf9cbd863e591dd2ef5ebc5f3"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * The [[COMBAT_LOG_EVENT|Combat Log]] is restricted to events within 50 yards of the player. (Build 32600, Nov 20 2019) <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/in-game-combat-log-range-decreased/370390|author=Kaivax|date=2019-11-22|title=In-Game Combat Log Range Decreased}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.3-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "dbd0b2a3a71805bcd4c2ae6169c62d1a8dbfba74fb90dca2f1ec12159e50d9a4"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * Removed the \"CHANNEL\" chat type from {{api|SendAddonMessage}}() and added \"SAY\" and \"YELL\" types. <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.4-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "d7220a5c0448410e77072738f9fe8362f966efb4fa4846a3e4abfaecfc87a844"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "ba14237c50e75cb377f90dc1ef8505deb46f2816adac2a319c58d6fe0ce0d466"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.5-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "ff7e9f44a3a92e8f4d0df0a0285e97fe520c38942719e80a7c7449c8b0d8d3b4"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.6-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "ddc168a9ebe0a024cfbd6e3490dedee6e9ad633f3f434f16cabbd5145590502d"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "a12d068def55d113e7e4b6f4579ceee62d224a6288ce82bab494ad180aaf49c5"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.7-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "366ebd36c4ba9c95ce2cc8a97014f046fbb607897a78dcecd47fb01984515dab"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "7098652a409728143d8721187a476f7e36371c721d167226363284e3e175e7f6"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.0-wikitext.txt",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': Scripts'"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "7d5cb59fffcb7ef82031072877d518983aa27609dcc6df831115f6211e3bc912"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "9e49ff9726b305963dac61a51d71bab4715f70c3ceff6266318e705b52956db1"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "063c5f8589749f85991395c0d1ae5932617c2e2561b6d4c9b4daf10e185e8c9a"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "38d5660483a3d77b154c1ae265ea3bf02908f49f006d502e394df391e7b72744"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "c4f3c8ae7caedaea93cec9052dc9245d85226096de48cb179f300a63178c5b4b"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "0971554fcb7b2d66668c347bb340f052d33333084c57371d2bc12097d189c25c"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "3544f270e90805527f510c94683b29c9ece0ee61213214af18896f9f83a721f6"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "32f53d56e7cb34dcef132805012e3861e6b3eceec63afe588980c7bd73fe284c"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "c1cac74add7ea0ef03b7835e77614b1221ad5069ccbc8e7e547cec4eaca189ba"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "b934baaac41970ba6a76dde27db8680ae2f19bbe9c666b6a892cba5b3ba46b41"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "963c95c1c3be71e500038b81234a32a0d164ebe5c42e4ab493a43fbcbbd47030"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "534ae67f5cc149933e9c8b3a9167b0f28e1d387182692bf74892c1d40ce12b19"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "f878d7aff8239d1f50b4828ff1ba2f25dfe5a9a336e5b0c1086ed3101fe0b953"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "69f74660fa558dceecf060664378bc0f9899da5f337c11738bc6da11fb191a96"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "eca2b027e4d8523e8e61c2951ff5a165f1767be4f536ef10a2f8a1561e76a0c6"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "5b7939b4cffc742172bd6cfe08ea2074397b1164e00b9a64572f796bb116216a"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "d30068972bc3d0342857fffb9b81df77d7e2c95e6a5021eeb248a93d481da40a"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "c4db00d7e76c7f3cdb3fb8534bcc6e895b2a28802551bcedfd3d2173a743440c"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "7d9236e7a0e82eec3dc8701fd871e9e176fd0f2dd32d8bcbe14ee2c63500b972"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "7fbc0c38496cb3447abd37fe89cb1627549a757fc24246b7f0853dab1d8ff614"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9c55f5282a06818f8fd5a5f28129c33bb374ad7a274715b92ea7b733a4a47f1c"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "c2e50992b34fbb4e09576ddf6d828d51de3589ce9db822f1a7b38ecb6390c3e3"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "666949e5274816976e1bb38b7c8496693a09187c093f0276dd0829ab8093cae1"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "ab8f4a92e2232dcff53cff58a338558e2f483bd9997daf0294c50cb5804c7d42"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "3bd975e5db4e7c53caa62cbed9682ffd9c8ba985e7a62d6d1725fa3271c58fb5"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "69a34964db7a95df15867175cdc18495635db50e74a0aa3e1e80d3d218189bb1"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "bc9e6368391ca33fccfc8f0f6f8534c3f5dc8509e0f7e9c016958c7c57d59001"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "6f82ca5ffdf09569144b7ff801487e35ae84dfaf0bbe4d3d3c237b364bb3d005"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: <onlyinclude>{{Bluepost"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.3.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "72f64764080109829245a01ba86ee00e0010a324d3e8beb3ad5f5704a17c286b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "4e022b9aa04e016b1d1352780ca88d414172dd8204430a36c4a1936694b185d1"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.4.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "416c62805ef975270486e4691151ed779477b6de6ced5a37c92224ecebadafb5"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "f44518819adc64cd6c848e02846e3f2d86b6929a43d5ab10e9477d49df4c7081"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.5.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "135f14852552dfe0febfb66cdb7ebef059d1528ba8ba156567f81efef7d47be1"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.6.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "947afdcc9ee2d19132e8f120414fd46915be76d37d802256e0ae43c27be84aab"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.60.1-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "014549957318b070226069206543e5098476d16dce387237b6a6d9b21c4ef90e"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{#description2:1.60.1 (70205) Oct  2 2026}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.7.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "4ab47ed9c7a37bdd927d8ca4ff3eb3ba589c43e2486998f89a1929be357c6415"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.8.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "d0cd5787a22a7736378977e71fdb0c5a94e7db660d8672728692f7c0452f41dc"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/1.9.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "5e6fe3d95a68da506838423f2779f32bea2e04271ec604be98c410f103cc6c69"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "54809451cb42faab158f645b4040c6efd4b19c22250310edda8db2583b4ad54f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.0.1-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "17f4173230118d68f9806c3453c2218389882d46a7ca3cabe21b6ecc7527a537"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "0b6108f4804fd3329c5a72897eb9b01e58944e555406e17ce11f3d99e96b1153"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.1.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "97b9a1f045aaaed8485672bee559241ef759aecae53cdfcd73c46901d2f9768e"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "1853ba930776bacba5b4d18ad29f42d15f36f107ba88ed810a1a8ac676dd2168"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.2.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "7a5736a5e5670735482496a073a9e38dcb53acb652255b6e7a39fd0277fee146"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "81f818306650ef12bfff4d5ff5240ed41663f11a8efc5c10b502dfd03c75cc58"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.3.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "7008aec81e2f1fb9b801017f3746d8b4de245c69c067801fc5b841c078dfe54a"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "3c36f43615b5d1e27a59f650c614691b96d1c8133353e53d42552fc46fde5b4e"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.4.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "c0c6b5b71aab5dcb97db078c696af6fa735d9095085c7ddbc38a161273247844"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * The combat logging mechanism is completely overhauled with explicit data instead of text strings delivered to the UI. Highlights include detailed flags indicating relationship of involved units to player, unique identifiers for units with the same name within the combat log -- great for log analysis.<ref>{{Ref web|url=http://forums.worldofwarcraft.com/thread.html?topicId=2968233433&pageNo=1&sid=1#9|date=20071119|archivedate=20071119|archiveurl=http://blue.cardplace.com/newcache/us/2968233433.htm|title=Upcoming 2.4 API changes - concise list}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.4.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "527b465e36d2d0f56afd0db3ab4343878327cbdbf83f3203aba32ad7cf8c5b32"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * {{api|t=w|Minimap:PingLocation}}(x,y) is now protected while you are targeting an area of effect spell.<ref>{{Ref web|author={{blizz}}[[slouken]]|date=2008-05-14 06:08 PST|url=http://forums.worldofwarcraft.com/thread.html?topicId=6440985857&sid=1&pageNo=1#1|archiveurl=https://www.bluetracker.gg/wow/topic/us-en/6440985857-minimap-ping-macros-disabled-/|title=Re: Minimap Ping Macros Disabled?}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.1-wikitext.txt",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': Scripts'"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "f5d28b0100ba1fa13c9ca00586fc1d1cd835fe20dfd190ada932e30cc5e09d25"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "91571b8d69e35528e1c71e10a5ecf2a37f17b383648c1dc05e00ae5b9f5db661"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "ed3651a6ff97e5d08f62d90364d373ef501afed6646b5ef4d9b7d85c94c70eb3"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.3-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "cb461c8ac35012f2027c839e86f186ecdcebf03b68ed53cf06b6fa1a7d2afb9d"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "4df3fd26e2a6f8667fdc0894e6f760338fc99bf68e7eebf89e83a3b9623c6e72"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.4-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "876a576fef3d75d0a4c3e7eca2da193cf1ab94361ed8686280f6a27e7b96bb24"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "704b6df9f4a87fc7169a3c909017a58a9189879d60375c8e673bbeb4d9abcd63"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.5-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "613ac22c43d32fc60f9775b435e44e9bb43be0590ef094269a3240f7c8d435fc"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "fcf6e0757c99e474c1cc072144f3a6674bd532b534704fb85d8ff999ecb3b41d"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.6-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "6ad0a41b2218262ae361881e432f413f0683e3232c09c70e78532d267e5570d1"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch_1.15.9/API_changes}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "5d3fd497122c1cfd53d436b85d6c0aca109a67641f495cb0c8905a50d8580db9"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "b3eb2631d9bd71a73056aad3bb6ecb9b14431b80404af634b489e33bbb911e3f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.3-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "d414576ad6c4b860f2acaff4698c0360ff6b90ac69d8a0d029ed01e4d38cb7ca"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "2f8a14f3f5c1593bf7a3d66acb63a6ec0011075752dd75b3a2b8a79f173fe06c"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.0.8-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "12d99fb6da7bc169ffc15a3d03ad5d8f064b27a2830c054cd32242337420b774"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9342da2cad271e6a4516f26d5c4044332db3a241ea941786909e04be906c49c9"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.1.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "3c3a1af224e4e3581a424f258705cb26e94d0f5430e993412109b29c4bf5e9c0"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "6438b46df825e8f6eef09796247bddb91b857cebe390ff6f720cdfd5e656505b"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.2.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "ad80b3d4c62268ed6072b6b49c935cd8ef3473c0843d08a3add2f8db2e6558ac"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{Reflist|2}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.3.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "6ca9ae4ed0c33a884c4dad66eee1f892066bbda0b9030a17a89636844f4a32be"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "8b4bb7b0b3ffc9c2f4ffee6354857ae44235c030c8bf0d2b5af85acfbfd8cb70"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.3.3-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "eaf35e1dcca765ccae96b051a497d748739123588d2937ebdf264409b8d3a152"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "19b6ed480844dd02ee2e63527062650c8f15597eb7adeabc53bf6697b9d9354c"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.3.5-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "9646cee91ed3b55b46b2901f4a43421d64db3613bb6a2f3d30c752204af3452f"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "90264a874817543bed83d3f2b4306e99296587214309b25db3b33ce03e89872b"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "9dd70abd8f29bdca953cd402ae1bb18e06dbb194142ac43f9836ae3c5620f064"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "601607afe53d4cccfbc3677fe92d7ebd514e66bfeb9f241b2b6dc72a0157de58"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.1-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "751dc3f085702c99952820dc12946b9fc418dec52c4f4fd414ff178470a8dad1"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9ff94a5562b6a17dd9e55de6c038b06612abe6a72fdffe722472be89b664cd0e"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.2-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "13ec091edae75362eba7f340a1e4bb9d81b5270d750fb729fdf5a2eb0e22ba6f"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "cf9747e921e1b70bb9d4ed44dd8246cfa265fe700fd0f4ca33a6598cbcb1a7b3"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.3-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "bcc7a69f6d1b46b5daeee9f54bf1bf860e64a99c4ba5a7f07e5da1a0b7f5c1b2"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "288903874f44a46594f7521dd4b9d51b94cd7bd431bdd9e45bfd333d5eac488f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/4.0.1-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "b2dd8ed6b8463a6605c95cea56325508c85a498c3aee1e13cd72d8744ca007db"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9a03aa82af0909d064ce6e025dbaea0a68f58c672de379994737446c3db115fe"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/4.1.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "d37d6580698806ef08f66acd856a27fa82d93ea07f1c964bd598a5fde0c2e76b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "756288f8a23a1b6f45db9f54398f05a4daaf20a6838485ca650fc05f30ed332d"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/4.2.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "d3f7d9e2472a6e3e1d0e9647d1a945055ae827c3ea2744ac51808522cf9ac46c"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/4.3.0-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "2d71d9fae0f873816d9ff8f37b0198d608780f574ef4052dbedf1c042dc3abbf"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "e2a222caa5066efb87658e3af7b65456684164a6fbaa02443e41d6c9cab2ca78"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/source-cache/legacy-2026-10-09/4.3.4-wikitext.txt",
+      "register": {
+        "exit": 0,
+        "sha256": "c7067c3513bac8651803069bce91873cc72de7eef0ee4fcc280fc73e65b0ae88"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "545e7c2c1781446d5e0ea25144090552fd40d1d6d003f5010b20ddd49add969b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "ef7d29d844e4770cc46f473bea5b22e1162aa8cc67218d3670b1d95923e4d437"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "c51dc4ddbac9f5dff4de63e989ec9f68b5f5d1172240ed2f7ffe78574e713108"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "c15e7678ed782253d1b41168b142df2be57913655052bb4eb2e97e3ce0c97896"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "b0caea0ad5c327e25856c175aaca7af7f564b5b45f5abc42c7b6f461f994d9cb"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "93ac4cd4a509fb9c8819cd809c8f9b179c3b9302f6a50de94911fef49b706445"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "752111b2336d7be6ce964249f840f4980333b0f09477e7c0612a1fe68b5b9376"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "7d516a15d9c3d330e99876522d6cbeffc52e173b103f46933e3e18e89856c603"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "9584dbae948c8f3b3c47339ad03d5b2632963d1b585c311f434addbd510a7968"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "7d34f107522ad9c31b8a9f886c6f406324f775a80e0ccc286f3ca4133025d954"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "6186b1d6351a1590ecc03f97314d8d7e7ad02c8477cb697f118a00f9b7f6f03d"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "1d2ff14ba358d64cb7571e781b6cb7629e2fabc0a9ee9103a5646fb63c0c515a"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "a10fd6ab9a73617f3e30104d7ca361b756d67346791e62030bca3ed485cf1351"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "7433f362f3dbc687daa886831bd4e6b8b45e6b8c9c231452519033d677f79aa7"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "23eecb1f85f22c083dc20929f4b50437d68c907647700816aef571902dceee66"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "012cea096f0862fbf9dbab21494c13566cc78c8a0b390b57b863b0b15533ad06"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "570eed30f9ed4d9369e266df237e8245ac67182a08bfc0483d2fff71fd83b541"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "776ecee77c8f2b8919952beb7385a23d51d82db0f2438ba4c6bdaaa113d02438"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "a63f1cf66c712e7a85e6ee91a1db6fb50304a28d769a4b3af90522c2c6ef4412"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "de5dd4b9ed7cf6cc51cfcc6974f7a7254b4b1fb8cf327b58597f477005b9b9e7"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "3277a6d3c3b441b4149258e0e8ea74c8a8a1931636dfe1e2f7b8fde0652880e9"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "c89d670b9718530004828287a1716ba6726c6bda20a91a82a158aee94916d977"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "fb303cf1866ddb0e3fa32d42f7ce19aafc59f8b82015f9b9aba571ecd7c6065d"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "5f567b2b49780b6a472b6d5e12bc6bdef4eb07840cf891da2c871a52878bbb6a"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "3a26fdc11de7b8a875e4f48cf9e3c0ed09c4c2a8598ad8ab3268b264e40819a9"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "279ec0aa8d8b0f203e4c8b0c56df1e22dd37ab7cc3e0f2c0e266bbf0f43c9655"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "71af62e2e860b934efa823c3bb1a3d524d077177ba5277e31cf2dc8523cbb4d2"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "7203df3ca3b755ed69d8cacd6ba161904f9585c5131ab1cf1413dc64745f8873"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "91e5a8ee398ff4ba0421c124f57e147355443fd0754863b6a10e11ef86871f22"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "917836a0b4a9bdb1349d57c0028fab42f354f4fcd8d906efc24eaa78ff4ae9c9"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "976678fbf28720619e9acaa2df81b155646566feb68b76ec8e97622e39183542"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula’tek)}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/2.4.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "f38d01490c41eded5fb3493a71029c696d1d79bb83127559988ae68d691b8ef4"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * The combat logging mechanism is completely overhauled with explicit data instead of text strings delivered to the UI. Highlights include detailed flags indicating relationship of involved units to player, unique identifiers for units with the same name within the combat log -- great for log analysis.<ref>{{Ref web|url=http://forums.worldofwarcraft.com/thread.html?topicId=2968233433&pageNo=1&sid=1#9|date=20071119|archivedate=20071119|archiveurl=http://blue.cardplace.com/newcache/us/2968233433.htm|title=Upcoming 2.4 API changes - concise list}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "366ee491d768cc8c07287a6d9c4844fcfd3de7f04a1f828e02ef4e2bd681c45d"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{Reflist|2}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.3.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "8c5cabde0b27314729f03fbca5d991b48c08abbefeab16f4783f979a2885372b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "8b4bb7b0b3ffc9c2f4ffee6354857ae44235c030c8bf0d2b5af85acfbfd8cb70"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.3.3-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "e94b4eed8c0ded47e11cdbf327a99ddec4b6dc60780b7ed8ef1f0ca5c11a9f61"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "19b6ed480844dd02ee2e63527062650c8f15597eb7adeabc53bf6697b9d9354c"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.3.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "4496d8d875f49f723773626f6b55b70aefb57cd299e6207ff5dc2038e11f6cfe"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "90264a874817543bed83d3f2b4306e99296587214309b25db3b33ce03e89872b"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.4.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "40fbb535fef26cb245447f6918813377c249aac25997ad8da5d7f773c6a303a3"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "601607afe53d4cccfbc3677fe92d7ebd514e66bfeb9f241b2b6dc72a0157de58"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.4.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "ac5bebd7930f08669018925f52ef9ee4772b8579a5bf118a68e0014737d09c6b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9ff94a5562b6a17dd9e55de6c038b06612abe6a72fdffe722472be89b664cd0e"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.4.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "825b4d2b7056995bb82570aad16f263685db25e85c9f10a6974a217980848557"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "cf9747e921e1b70bb9d4ed44dd8246cfa265fe700fd0f4ca33a6598cbcb1a7b3"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/3.4.3-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "ec2e97168625abe952effa5c7b514ee68eb33864a291c0e2eb882b54ac634441"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "288903874f44a46594f7521dd4b9d51b94cd7bd431bdd9e45bfd333d5eac488f"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.0.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "5713914715aa48b847c95b3d2cd653bcbdae446fb26a489031d96ded8f059e3e"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9a03aa82af0909d064ce6e025dbaea0a68f58c672de379994737446c3db115fe"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "47fd0c35d3f870c1dfcd824db81be66d6f4a60f451ae1b7d4cd1a97eff0231dc"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "756288f8a23a1b6f45db9f54398f05a4daaf20a6838485ca650fc05f30ed332d"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "7b4856986513909beb47d3466073ac50bf80aae015bdcd1c1059e22b7c33d7e6"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.3.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "209702fe2fb3438dc4dc5805fac6987e3ac778ab7cc16606b7f9c641d54edf8c"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "e2a222caa5066efb87658e3af7b65456684164a6fbaa02443e41d6c9cab2ca78"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.3.4-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "326c4bc4696413f61381a3a9da3cdff9df5968ba99688672ad5c1b6a93cdb925"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.4.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "513259f13816abad75406d22991f0c0ee3b91a04417f27b842bddfd8b361cf14"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "e424ca462d923241d977198ad11f910afc9d7a85dcf172068f17bf4cba22de4d"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.4.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "b66cae1574d8132313d2fd7bd335b73e5f1f5bb5b429cb037ed45151a4f2cd7e"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "c27d366a643a97442af4cf11344153de401492753bca984e49f7b7f83a3b7400"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/4.4.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "ade99fda22798cefad16fcda4572e10d4f62e578ab2a7edc48bffe5e62469053"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "b93f153298af6230550f920084fee802bead9357929541505fa5538e2dcd7442"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.0.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "37f7c16b984490c7f5f3d8fc277425b6ab916387ed43c43273014651d8ca8730"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "59ab41f9fbd8cc19a5f14810757300a1bdf06474a3282ee27630d025bc97eedc"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.0.4-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "4c6ccac44161b511f81ac66928be36938c7dd138891f08f30dd78f3ae5b396b2"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 5.0.4/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.1.0-api-changes-diff.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': <code>C_PetJournal.GetSummonedPetID</code>'"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: <noinclude>{{Transclude}}</noinclude>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "548d69cfba1ad09b3a89ebf5c9f983a9bac05d277a35754e382b5d48829cf81e"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 5.1.0/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': ClearChannelWatch'"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: <noinclude>{{Transclude}}</noinclude>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "477932f6003939cfd2a073c2c3a8aa1331127be4f1de4ac6fcf6486989293f97"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 5.2.0/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.3.0-api-changes.diff.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': PrepVoidStorageForTransmogrify'"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: <noinclude>{{Transclude|}}</noinclude>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.3.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "a51ead6ce74dbe4c8451f137700a69c472158c30812e599c82819214cc00c60b"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 5.3.0/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-api-changes-diff.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': AcceptArenaTeam'"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: <noinclude>{{Transclude|}}</noinclude>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "24ce2e9c8dcbdc3ee5af9cd5b6679df5c0c1baf7120ca999b46768066eaaab68"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 5.4.0/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.4.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "5827b9f31c39023c1a971925d3142c9f859663cf90537b31ccde311a975ee2a1"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "5a70d1f12270605efaa30877dbb8606ab886e21c4ca832d71a672e60468a7701"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.4.2-api-changes.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': StartUnratedArena'"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "bd91e23ed7369d20283902db9311658c4e4c5f2bb96dbe28fa367adee361e910"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.4.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "c3f2c273cf886f9caf7cb889f4e1cd83b7f231eee1593693731c67936a251699"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "704e63555dc4da96b0be176329b884842465e2e2f44767f6de1c894e32622fa0"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.4.8-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "234b44213a2cb9c7695706dc3158dd925b9b311e58d28e84722924b605c1d9eb"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.5.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "7babd2150e6b9dc973067e183a2ac196d50d3639e6846da35cf20f8a0381db3b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "ab12ad3af0590a74f9127ece4fcef9fa2fe445f6ab16b0bac55e3cbf6cb3ca79"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.5.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "0f7226e475636d235bd9004d5236a5f9aa18ed95f4b5228662f6fa5c3bd17057"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "22d466d5b56253a689ff184bc3fafb11b668bbc7ea7243449f2c17326a72cc19"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.5.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "d2a45c4b046214e667328d378da061a3cb8528f610cebc33da57bf8ad2fb704b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.5.3-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "ea8332dab6d55bda325168bde7f315e33a58a863e5fba25b1b0c8044c226c47f"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "676cd776ac4d981b277382dfc8083de1b427d57274f6481adc457e9bfa74f618"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/5.5.4-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "4d3e24f35993447e062852a7a715b43807c704bd54fc9965aecb9b40ec61d350"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "5d9d422291e3a8ee43d7eda3ce7ab3880e22f9e2f32b24478f2541810debf2c1"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/6.0.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "42930312cc5a2a93d58d3bdd3e73cac56dc37c67496d4ef0e4904e8ffb90db5f"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-api-changes.diff.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': BNGetFriendInviteInfoByAddon'"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: <noinclude>{{Transclude|}}</noinclude>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "87ca893f40e758da7bd35fa71d2ef901e9c3762aed764a572971a49382a6a191"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 6.0.2/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/6.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "05765fb4150cbb18a68457a7cc954a2360d2717f47f09108b5b3cdbe3c2cb8e0"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 6.1.0/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/6.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "d1af2fa8f8ab5b7a8598acc2ae22143e43ffbc2531c78c304f30f40edd67b55c"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 6.2.0/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/6.2.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "79d767f4bc66015e4234a36e6797f2e94b07d5423133653f98323e619bd960ad"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "c576adf55c1193eb1a50be38592568718a5b93bf2bd10d95d7946e238c190f30"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{:Patch 6.2.4/API changes/diff}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/7.0.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "0b3839067e6088566b823831717ef3ff2086b7eb2fad46b52722cda576d34824"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/7.0.3-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "a80369b7f1d9e41809da7bf7431f370cf213a1d6a3f0fab886f9842ad3aff40d"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "27f1b21c9a65948288494d9dc5ad47ec3749e5e85076e57489c370351c1fc1e5"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/7.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "e573c07771e9d2cb3b5e1754705207053b6d4f03bbc56669b08c2053d6709277"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/7.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "236a51dfc6253df038ab581e3060eea76b38a9a2f9d141e4c9042facb700f66f"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "ad3efa07838357453182498375ceef118428f572bde0eb3a09bf07b2e1cf9683"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "f84ae75a39cf82eb808ddfcb87b5884fa049f235749cae9ce7de174e204baf3a"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "6022fe4f654b5a695e7059d58d5bf062c3cd88357fdac887d85bd74e34ca573d"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: *[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "bc28defb8902a1dc8c8befa1774121f2c4e832c0ff618c8ce7b3231fe6c601e0"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "36d855a8fffcda66b41f088d5d81914933a5841ec2f41ee584517c7d22534e69"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "015649d0773209ef144c8ac4ac949dd254b9a50407af9665d1a32994529b872d"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{reflist}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "3886a8ac81a9b4d1c91afeddf724c447636b7628a3fcaf61f941cc7a1b7ca646"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "0feae5f888e364f639bcd3dbad58b1dbe75f04553030c2d681901112f1faa48d"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "8f2e77fe9dceb4960e9e6afa41d19f1e268d4ec4b9233e5808f3242c9d85b9ae"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "fb9dede3591a6a6449fd9239861de70635e3a7bb6bf75c88fd3a9d5f783cfe48"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: :: \"CHANNEL\" is protected, \"SAY\", \"YELL\" are protected while outside of instances/raids. <ref>{{ref web|url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=''Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It’s ALSO disabled from SAY/YELL out in world. It’s permitted in raid/party/guild chat, and SAY/YELL within instances.''}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "bca34e1f0f870c181cee175fcb48534ae6dec200e42df5059ea539147768bdc2"
+      },
+      "extract": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: * The [[Auction House]] was revamped <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=[[Kaivax]]|date=2019-10-07|title=Feedback – Auction House Revamp}}</ref>"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "763109de69ecaf1c4ad983907d8a90a79ecd2e6b8064c77180bff057b0693731"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': Scripts'"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "84434d37d36271b4599d9c95b26a49dcfc265538cd45b62990209d29e35186aa"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "e532fb2a34c44a88cd4c486a4bc8af6697688976c61da1495188178d76510a9b"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "6a65c102cbdb8a213c7ab5a0df9c35cec57a4cb69ed2e34c8997279277bbabe5"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+      "register": {
+        "exit": 1,
+        "error": "ValueError: no symbol reference in: ': Scripts'"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "9dd9da4abf5ebd2065e584a5598393da6f00fa6a5082693ac07024d1ef1d3e7f"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "9e22b2908b49c1d1ad60fcd062ffdc863b037b326d259e9bbc28c5d742b5f2f1"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "634597e11f0aa84ba199d618c03faf49f5044e33c6a6f4b04ce80045d1524002"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "880f6526d7cd9651e65fc7865f90c88f9ac149633dab1975ad06a9ff31c002ec"
+      },
+      "base_equal": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+      "register": {
+        "exit": 0,
+        "sha256": "ccdfcd64a217b9dea3d8dd8313fb5eeb07a66b524c23976d77e65283b5477d08"
+      },
+      "extract": {
+        "exit": 0,
+        "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b"
+      },
+      "base_equal": true
+    }
+  ],
+  "recorded": [
+    {
+      "patch": "10.0.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "988230c0030055177eb06dd078a4a905d4043272cea069473a9780ad4b67839c"
+      },
+      "register_matches_recorded": false,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "ef7d29d844e4770cc46f473bea5b22e1162aa8cc67218d3670b1d95923e4d437"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "10.0.2",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "c15e7678ed782253d1b41168b142df2be57913655052bb4eb2e97e3ce0c97896"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "10.0.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "10.0.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "10.1.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "7d516a15d9c3d330e99876522d6cbeffc52e173b103f46933e3e18e89856c603"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "10.1.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "10.1.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "6186b1d6351a1590ecc03f97314d8d7e7ad02c8477cb697f118a00f9b7f6f03d"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "10.2.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "10.2.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "7433f362f3dbc687daa886831bd4e6b8b45e6b8c9c231452519033d677f79aa7"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "10.2.6",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "10.2.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.0.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.0.2",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.0.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.0.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.1.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.1.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.1.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.2.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.2.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "11.2.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "12.0.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "12.0.1",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "12.0.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "12.0.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "12.1.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "ce28abde1fd9bbb8774a802102e4ab727a4e46157924726b78949123fb6ab029"
+      },
+      "register_matches_recorded": false,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 1,
+        "error": "ValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula’tek)}}"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "2.4.0",
+      "generator_flags": [
+        "--retail-240-summary",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "468972b397820e097d69e481e01018eb0e450169d78e2198ad9b4ac0dc9a0dcf"
+      },
+      "register_matches_recorded": true,
+      "base_equal": false,
+      "extractor_flags": [
+        "--retail-240-summary"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "e2269b1705daa604bd16aff912e92b5cbd7ee2e11681137b4543d74150ce1909"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "3.2.0",
+      "generator_flags": [
+        "--wrath-retail-change-bullets",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "69aa203697a58b43c936098568b7c44d051e9be045156c5b266ce2789552b21b"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--numbered-reflist"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "580a691695ac1c2f535231b8972b0746ada43b6b642bc0ccbb2be971b10523b8"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "3.3.0",
+      "generator_flags": [
+        "--wrath-retail-summary",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "e6c6f0097c2a85229e2eb9c3569f41ec548de8818fd3ada059d2c2a48eed13ef"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--wrath-summary-markup"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "d1537922d82d18cc8737879f1632b9d56cbd6652912a9217cfabd20c0c9fe3d0"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "3.3.3",
+      "generator_flags": [
+        "--historical-api-headings",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "32b76babc1e45c765e59bb4aa10d8343148089a7d888f9ccedac869e993bd72e"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "19b6ed480844dd02ee2e63527062650c8f15597eb7adeabc53bf6697b9d9354c"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "3.3.5",
+      "generator_flags": [
+        "--legacy-section-lists",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "8a60b88b2d15dc0943e7359947fa072ad2489caf4e485e754a3f20468d77fb7c"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "90264a874817543bed83d3f2b4306e99296587214309b25db3b33ce03e89872b"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "4.0.1",
+      "generator_flags": [
+        "--cataclysm-labeled-inventory",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "cfdef52eb38da73f43f015b1b44486a0e0aa0ac31cd567cd281e83d7f34b5123"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--cataclysm-labeled-inventory"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "7e998153d8bb163fbb70bd597a6f48ac3dfaf0ec29cbc3eef50adb3e0ee85447"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "4.1.0",
+      "generator_flags": [
+        "--cataclysm-change-bullets",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "86b5f4bd40ece2633fc9720690a85fcfee52c8d6b750643238aa3d5a4d667eaf"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "756288f8a23a1b6f45db9f54398f05a4daaf20a6838485ca650fc05f30ed332d"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "4.2.0",
+      "generator_flags": [
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "28c494994d05f69c41bb6c914fb416bf5bfe22a062bde0cdc0c388ea317b8225"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "4.3.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "a3315f75e518d010f3b3e67043db5a7b2f9ecd1406462557fae8ccd45f9a7f67"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--legacy-api-tables"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "e2a222caa5066efb87658e3af7b65456684164a6fbaa02443e41d6c9cab2ca78"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "4.3.4",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "0e9cd6e45cb995566422e9cf1245745a9ff3506a4a15d60a163f6ede55b6e25b"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.0.1",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "2e9a294c4c1f984b039f61abcad1f787d39f179471ebfb83375499343e204431"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "59ab41f9fbd8cc19a5f14810757300a1bdf06474a3282ee27630d025bc97eedc"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.0.4",
+      "generator_flags": [
+        "--mists-prepatch",
+        "--mists-diff",
+        "data/patch-api/evidence/5.0.4-session-2026-10-08/diff.wikitext",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 1,
+        "error": "FileNotFoundError: [Errno 2] No such file or directory: 'data/patch-api/evidence/5.0.4-session-2026-10-08/diff.wikitext'"
+      },
+      "register_matches_recorded": false,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "f69f6634d8ac6fe789719b20d4da3d5022ec95a2fd936a151a40ca3f7200f54e"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.1.0",
+      "generator_flags": [
+        "--mists-summary",
+        "--mists-diff",
+        "data/patch-api/sources/5.1.0-api-changes-diff.wikitext",
+        "--mists-widget-handlers",
+        "--mists-code-removals",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "cbff1b9930302a83a78f9fb9c58dbeef8fa80769e08919f4833cee792992fe52"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "5d03f5e9dfa66db18fb5d2c24fec4df9b195aa71d473baab7ad0130d2656ac0e"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.2.0",
+      "generator_flags": [
+        "--mists-diff",
+        "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
+        "--mists-bare-widget-handlers",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "6cc143520773f5902a580d84379845ce9291c34dd6c3a8f4932853ffde2fe93f"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "c05e3293fec4ce9ad4b0d7b569e3944a65cdcba19edd0f37d8f9147b49bb639a"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.3.0",
+      "generator_flags": [
+        "--mists-diff",
+        "data/patch-api/sources/5.3.0-api-changes.diff.wikitext",
+        "--mists-widget-handlers",
+        "--client-line",
+        "retail"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "562d9a12ac47de6d7c64275ab049e5dad16c6bb7521d7eda14481f4a035e8b4c"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "6c1feaa3b840e459c4c21245df30a18164a8f83266396d06131938a95f1f1bb8"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.4.0",
+      "generator_flags": [
+        "--mists-summary",
+        "--mists-diff",
+        "data/patch-api/sources/5.4.0-api-changes-diff.wikitext"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "913268dda4b67403586fd5c76f922f37e423ddeb208e493314792a9841f95da1"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference",
+        "--mists-source-markup"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "15226d5fe1409e68ef89c39b94bbb027292bbc5e87da3384f73b0506c939c2e7"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.4.1",
+      "generator_flags": [
+        "--mists-automated-diff"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "c24d0f45a77aa4123ac9af977ad75bd710aa272657aa3e15f5e2b2128ad593d5"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--mists-automated-diff",
+        "--lowercase-reflist"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "2e9a7139991da34deafdfd1e7dabc760b37006791572f259efe34b6c5d5f5e73"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.4.2",
+      "generator_flags": [
+        "--mists-automated-diff"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "d079278f9323c1139b7772224e40b28fa482206f3fc7400e70fb969cc672fc87"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--mists-automated-diff"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.4.7",
+      "generator_flags": [
+        "--legacy-api-tables",
+        "--prose-api-links"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "4a7912b4684667480123d7ebc2004832405e7ba37bedcfad7485fa09b911bf09"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--legacy-api-tables"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "b622423ac5aa436320fceb5f980588903360079f4be497f65ce13612b838e37b"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.4.8",
+      "generator_flags": [
+        "--combat-restriction-bullets"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "bff0a33a4df525cac8e73899cb318947358d699ffacbb2e736fed948b21c49e5"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.5.0",
+      "generator_flags": [
+        "--client-line",
+        "mists-classic"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "7530406cb6e8a6315652bb431c1c1a365b47900c6ad8e9d9f56df4f24f8f83e1"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--canonical-patch-navigation"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "ab12ad3af0590a74f9127ece4fcef9fa2fe445f6ab16b0bac55e3cbf6cb3ca79"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.5.1",
+      "generator_flags": [
+        "--client-line",
+        "mists-classic"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "cde35e51c1bd4618d199f0f8e9125b25a8e6047a9d939dbe88f490b7ebf33f58"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--canonical-patch-navigation"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "22d466d5b56253a689ff184bc3fafb11b668bbc7ea7243449f2c17326a72cc19"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.5.2",
+      "generator_flags": [
+        "--client-line",
+        "mists-classic"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "eb233b6273050fb2ffe659accc22f9926d07863faa14db5049e4923319dd262f"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--canonical-patch-navigation"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.5.3",
+      "generator_flags": [
+        "--client-line",
+        "mists-classic"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "c27e8c05fb1815e7c07a7b704d397a087e44d83b8a0b85a5b65a23a7ef45fda8"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--canonical-patch-navigation"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "4e17219957f0a7c416bb68958c42d474b88f5f3ee625060dc92b6c167c3f7b56"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "5.5.4",
+      "generator_flags": [
+        "--client-line",
+        "mists-classic"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "4050696662fd622bd06899be1765e81352e42eb7182778cce691ea72e9753cd4"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--canonical-patch-navigation"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "6.0.1",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "32a4b6b7db6b7fbb2bc3156514dce47e8679d057b8d911264430d81e5d0186c7"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "6.0.2",
+      "generator_flags": [
+        "--warlords-prepatch",
+        "--warlords-diff",
+        "data/patch-api/sources/6.0.2-api-changes.diff.wikitext"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "9c4e83c1306ca3e8143840afbc5c3981a64fa37ed332e05dadc0457faa1566e0"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "6.1.0",
+      "generator_flags": [
+        "--colon-api-bullets",
+        "--prose-api-links"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "707e1512c0591afe8037d53c79f21ca197b01a8922ee3eb377a636ce4dd05418"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "6.2.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "b4662f1f6b4abbed24dee47d8fe8f50de184788f93e6798c8e853c011a91e76c"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "6.2.2",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "4eee04950b20e3bd79f4fd3b724b5c0d4d531c796534e810c090c168f6cbd6f0"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "6.2.4",
+      "generator_flags": [
+        "--indented-api-lists"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "ddcdfcec25740fed9c531a2a602323d9534ef3a44aa02edf045a7ad338bb6d64"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--preserve-examples",
+        "--retain-patch-diff-reference"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "7.0.1",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "0e3321174be76f59454f4257cd2a69b2c878d58409c4a003ee63d004371bcc16"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "7.0.3",
+      "generator_flags": [
+        "--legion-prepatch"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "7c10a7a2a07b37ab1f92792de89ee28913aed9d12cf37c967f91d1f6fc026660"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--legion-prepatch"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "7.1.0",
+      "generator_flags": [
+        "--top-level-api-bullets",
+        "--legacy-widget-cvar-bullets"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "b7e2779fc45c104a7ca6a33e321a2672b0a2d5b1844d98595f189db7c9b25e83"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "7.2.0",
+      "generator_flags": [
+        "--legacy-widget-summaries",
+        "--prose-namespace-migrations"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "2b0589b9d07639b02e420dce174f8e373758bb6d86475c5305de745499a32973"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "7.2.5",
+      "generator_flags": [
+        "--top-level-api-bullets"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "753351c0b4616c5259fd9ec2ef3980248c83f0e3de88ae5c40a88b4ad8399bdd"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "7.3.0",
+      "generator_flags": [
+        "--legacy-summary-tables"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "b0f06f6e0f8ce4fd8be89845fce0fa0ef5ac2ddf71de7885b8adcd49af3daa10"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "7.3.2",
+      "generator_flags": [
+        "--prose-api-links"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "32b35ec0157db219051eeddc58d5e8d0ab34afe0f7d99690c1c3e112bfac1a35"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--retain-reference-notes"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "8.0.1",
+      "generator_flags": [
+        "--bfa-prepatch"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--bfa-prepatch"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "8.1.0",
+      "generator_flags": [
+        "--legacy-api-bullets",
+        "--legacy-api-renames"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--legacy-api-bullets",
+        "--legacy-cvar-tables",
+        "--retain-reference-notes"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "8.1.5",
+      "generator_flags": [
+        "--legacy-api-bullets"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--legacy-api-bullets"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "8.2.0",
+      "generator_flags": [
+        "--legacy-api-tables"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--legacy-api-tables"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "8.2.5",
+      "generator_flags": [
+        "--legacy-inventory-labels"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--preserve-examples",
+        "--retain-reference-notes"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "8.3.0",
+      "generator_flags": [
+        "--legacy-column-headers",
+        "--diff-api-additions"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--preserve-examples",
+        "--normalize-inventory-headings",
+        "--retain-reference-notes"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "8.3.7",
+      "generator_flags": [
+        "--simple-api-list"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "9.0.1",
+      "generator_flags": [
+        "--skip-plain-scripts-label"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [
+        "--normalize-inventory-headings",
+        "--preserve-examples"
+      ],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "9.0.2",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "9.0.5",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "9.1.0",
+      "generator_flags": [
+        "--expand-shared-changes",
+        "--skip-plain-scripts-label"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "9.1.5",
+      "generator_flags": [
+        "--expand-shared-changes",
+        "--capture-span-defaults"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "9.2.0",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e"
+      },
+      "extract_matches_recorded": true
+    },
+    {
+      "patch": "9.2.5",
+      "generator_flags": [
+        "--expand-shared-changes",
+        "--separate-inline-structures",
+        "--capture-span-defaults"
+      ],
+      "register_result": {
+        "exit": 0,
+        "sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "880f6526d7cd9651e65fc7865f90c88f9ac149633dab1975ad06a9ff31c002ec"
+      },
+      "extract_matches_recorded": false
+    },
+    {
+      "patch": "9.2.7",
+      "generator_flags": [],
+      "register_result": {
+        "exit": 0,
+        "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7"
+      },
+      "register_matches_recorded": true,
+      "base_equal": true,
+      "extractor_flags": [],
+      "extract_result": {
+        "exit": 0,
+        "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b"
+      },
+      "extract_matches_recorded": true
+    }
+  ],
+  "proof_boundary": "parser replay only; inherited mismatches/errors retained"
+}

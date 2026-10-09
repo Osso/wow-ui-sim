@@ -1,0 +1,11 @@
+[
+  "original/ledger.json",
+  "original/gaps.json",
+  "original/logs/parser-green.log",
+  "archives/original/tools/gen_patch_wikitext_register.py",
+  "archives/original/data/patch-api/sources/2.4.0-wikitext-register.json",
+  "archives/original/data/patch-api/source-cache/legacy-2026-10-09/2.4.0-wikitext.txt",
+  "archives/original/data/patch-api/sources/api-change-pages-remaining.json",
+  "closures/ledger.json",
+  "original-seals.json"
+]

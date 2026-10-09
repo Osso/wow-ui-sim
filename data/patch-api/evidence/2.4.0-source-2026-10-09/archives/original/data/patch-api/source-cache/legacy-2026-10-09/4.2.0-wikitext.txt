@@ -1,0 +1,78 @@
+{{apichanges|4.2.0|prev=4.1.0|next=4.3.0}}
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(63)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|BNGetFriendIndex}}
+: {{api|t=a|BNInviteFriend}}
+: {{api|t=a|CollapseWarGameHeader}}
+: {{api|t=a|ConfirmOnUse}}
+: {{api|t=a|CreateNewRaidProfile}}
+: {{api|t=a|DeleteRaidProfile}}
+: {{api|t=a|EJ_ClearSearch}}
+: {{api|t=a|EJ_GetAvailableClasses}}
+: {{api|t=a|EJ_GetCreatureInfo}}
+: {{api|t=a|EJ_GetCurrentInstance}}
+: {{api|t=a|EJ_GetEncounterInfoByIndex}}
+: {{api|t=a|EJ_GetEncounterInfo}}
+: {{api|t=a|EJ_GetInstanceByIndex}}
+: {{api|t=a|EJ_GetInstanceInfo}}
+: {{api|t=a|EJ_GetLootInfoByIndex}}
+: {{api|t=a|EJ_GetLootInfo}}
+: {{api|t=a|EJ_GetMapEncounter}}
+: {{api|t=a|EJ_GetNumLoot}}
+: {{api|t=a|EJ_GetNumSearchResults}}
+: {{api|t=a|EJ_GetSearchResult}}
+: {{api|t=a|EJ_GetSectionInfo}}
+: {{api|t=a|EJ_GetSectionPath}}
+: {{api|t=a|EJ_GetTierInfo}}
+: {{api|t=a|EJ_HandleLinkPath}}
+: {{api|t=a|EJ_InstanceIsRaid}}
+: {{api|t=a|EJ_SelectEncounter}}
+: {{api|t=a|EJ_SelectInstance}}
+: {{api|t=a|EJ_SelectTier}}
+: {{api|t=a|EJ_SetClassLootFilter}}
+: {{api|t=a|EJ_SetDifficultyByMask}}
+: {{api|t=a|EJ_SetDifficulty}}
+: {{api|t=a|EJ_SetSearch}}
+: {{api|t=a|ExpandWarGameHeader}}
+: {{api|t=a|GetCurrencyLink}}
+: {{api|t=a|GetCurrencyListLink}}
+: {{api|t=a|GetCurrentRefresh}}
+: {{api|t=a|GetMaxNumCUFProfiles}}
+: {{api|t=a|GetMerchantCurrencies}}
+: {{api|t=a|GetNumRaidProfiles}}
+: {{api|t=a|GetNumWarGameTypes}}
+: {{api|t=a|GetOSLocale}}
+: {{api|t=a|GetPVPRewards}}
+: {{api|t=a|GetRaidProfileFlattenedOptions}}
+: {{api|t=a|GetRaidProfileName}}
+: {{api|t=a|GetRaidProfileOption}}
+: {{api|t=a|GetRaidProfileSavedPosition}}
+: {{api|t=a|GetRestrictedAccountData}}
+: {{api|t=a|GetSelectedWarGameType}}
+: {{api|t=a|GetWarGameTypeInfo}}
+: {{api|t=a|HasTravelPass}}
+: {{api|t=a|LoadURLIndex}}
+: {{api|t=a|PetAssistMode}}
+: {{api|t=a|RaidProfileExists}}
+: {{api|t=a|RaidProfileHasUnsavedChanges}}
+: {{api|t=a|RequestPVPRewards}}
+: {{api|t=a|RestoreRaidProfileFromCopy}}
+: {{api|t=a|SaveRaidProfileCopy}}
+: {{api|t=a|SetRaidProfileOption}}
+: {{api|t=a|SetRaidProfileSavedPosition}}
+: {{api|t=a|SetRefresh}}
+: {{api|t=a|SetSelectedWarGameType}}
+: {{api|t=a|UnitHasIncomingResurrection}}
+: {{api|t=a|UpdateWarGamesList}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|KeyRingButtonIDToInvSlotID}}
+: {{api|t=a|strreplace}}
+</div>
+|}
