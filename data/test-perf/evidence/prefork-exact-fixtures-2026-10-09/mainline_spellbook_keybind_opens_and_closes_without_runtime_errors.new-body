@@ -1,0 +1,37 @@
+env.state().borrow_mut().lua_errors.clear();
+
+    env.send_key_press("S", None)
+        .expect("first spellbook keybind dispatch succeeds");
+    wow_ui_sim::startup::run_extra_update_ticks(&env, 10);
+
+    let (spellbook_exists, spellbook_shown): (bool, bool) = env
+        .eval(
+            r#"
+            local frame = PlayerSpellsFrame or SpellBookFrame
+            return frame ~= nil, frame ~= nil and frame:IsShown() or false
+            "#,
+        )
+        .expect("active profile spellbook visibility is readable");
+    assert!(spellbook_exists, "active profile publishes a spellbook frame");
+    assert!(spellbook_shown, "first S press opens the spellbook");
+
+    env.send_key_press("S", None)
+        .expect("second spellbook keybind dispatch succeeds");
+    wow_ui_sim::startup::run_extra_update_ticks(&env, 10);
+
+    let spellbook_shown: bool = env
+        .eval(
+            r#"
+            local frame = PlayerSpellsFrame or SpellBookFrame
+            return frame ~= nil and frame:IsShown() or false
+            "#,
+        )
+        .expect("active profile spellbook visibility remains readable");
+    assert!(!spellbook_shown, "second S press closes the spellbook");
+
+    let errors = env.state().borrow().lua_errors.clone();
+    assert!(
+        errors.is_empty(),
+        "opening and closing the active profile spellbook emitted Lua errors:\n{}",
+        errors.join("\n")
+    );

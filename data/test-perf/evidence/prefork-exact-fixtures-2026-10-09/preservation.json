@@ -1,0 +1,38 @@
+[
+  {
+    "case": "chat_frame::test_chat_editbox_click_type_and_submit",
+    "exact_body_text_equal": true,
+    "old_sha256": "f2020b1eea13dd0542eed76374b6e59b87bc13089f1cf910c95043af42c32100",
+    "new_sha256": "f2020b1eea13dd0542eed76374b6e59b87bc13089f1cf910c95043af42c32100"
+  },
+  {
+    "case": "chat_frame::test_chat_editbox_text_color_after_activation",
+    "exact_body_text_equal": true,
+    "old_sha256": "3e2d886cd01b1172a96c58a1b5f0424cb87713528e749bfb3b47c22bb3485392",
+    "new_sha256": "3e2d886cd01b1172a96c58a1b5f0424cb87713528e749bfb3b47c22bb3485392"
+  },
+  {
+    "case": "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+    "exact_body_text_equal": true,
+    "old_sha256": "1df8ff474561dfccc31d1fcad601f1f4a443a216856371c8d6a6c5bbe4d121c3",
+    "new_sha256": "1df8ff474561dfccc31d1fcad601f1f4a443a216856371c8d6a6c5bbe4d121c3"
+  },
+  {
+    "case": "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
+    "exact_body_text_equal": true,
+    "old_sha256": "7916498ef727d75c6a29cedfe3ec346af580d2c37dce64c4075237c09f00fef9",
+    "new_sha256": "7916498ef727d75c6a29cedfe3ec346af580d2c37dce64c4075237c09f00fef9"
+  },
+  {
+    "fixture": "chat_frame",
+    "exact_constructor_and_adjacent_startup_text_equal": true
+  },
+  {
+    "fixture": "spell_casting",
+    "exact_constructor_and_adjacent_startup_text_equal": true
+  },
+  {
+    "fixture": "blizzard_player_spells_loads",
+    "exact_constructor_and_adjacent_startup_text_equal": true
+  }
+]

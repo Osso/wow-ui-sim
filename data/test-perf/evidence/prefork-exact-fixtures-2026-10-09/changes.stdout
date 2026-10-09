@@ -1,0 +1,388 @@
+diff --git a/tests/blizzard_player_spells_loads.rs b/tests/blizzard_player_spells_loads.rs
+index 7cf82f2ed..1236a7f06 100644
+--- a/tests/blizzard_player_spells_loads.rs
++++ b/tests/blizzard_player_spells_loads.rs
+@@ -130,7 +130,7 @@ const PVP_AND_WARMODE_MIXINS: &[&str] = &[
+     "WarmodeIncentiveMixin",
+ ];
+ 
+-fn load_runtime_game_ui() -> WowLuaEnv {
++pub(crate) fn load_runtime_game_ui() -> WowLuaEnv {
+     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+     env.set_screen_size(1024.0, 768.0);
+     env.set_screen_mode(ScreenKind::Game);
+@@ -173,7 +173,6 @@ fn load_runtime_game_ui() -> WowLuaEnv {
+ fn load_player_spells_after_fork(env: &WowLuaEnv) {
+     load_addon(&env.loader_env(), &player_spells_toc())
+         .expect("explicit load_addon for Blizzard_PlayerSpells succeeds");
+-
+ }
+ 
+ fn load_full_game_ui_with_player_spells() -> WowLuaEnv {
+@@ -206,10 +205,9 @@ fn load_full_game_ui_with_player_spells() -> WowLuaEnv {
+ 
+ // Retail, PTR, and Forever share the Mainline PlayerSpells keybinding lifecycle.
+ // Mists uses its Cata panel implementation; older profiles use legacy SpellBookFrame.
+-#[test]
+ #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
+-fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
+-    let env = load_runtime_game_ui();
++prefork_fixture_case! {
++fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors(env: &WowLuaEnv) {
+     env.state().borrow_mut().lua_errors.clear();
+ 
+     env.send_key_press("S", None)
+@@ -248,6 +246,17 @@ fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
+         errors.join("\n")
+     );
+ }
++}
++
++#[cfg(all(
++    not(feature = "client-retail"),
++    any(feature = "retail-12-1-0", feature = "client-wowforever")
++))]
++#[test]
++fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors() {
++    let env = load_runtime_game_ui();
++    mainline_spellbook_keybind_opens_and_closes_without_runtime_errors::run(&env);
++}
+ 
+ #[test]
+ fn blizzard_player_spells_find_toc_resolves_bare_variant() {
+diff --git a/tests/chat_frame.rs b/tests/chat_frame.rs
+index 85fedd087..5f6d9431c 100644
+--- a/tests/chat_frame.rs
++++ b/tests/chat_frame.rs
+@@ -75,7 +75,7 @@ fn blizzard_ui_dir() -> PathBuf {
+ }
+ 
+ /// Create a fully loaded environment with all Blizzard addons and startup events.
+-fn setup_env() -> WowLuaEnv {
++pub(crate) fn setup_env() -> WowLuaEnv {
+     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
+     env.set_screen_size(1024.0, 768.0);
+ 
+@@ -349,11 +349,8 @@ fn assert_message_sent(env: &WowLuaEnv, expected_text: &str, expected_type: &str
+     assert_eq!(text_after, "", "EditBox should be cleared after submit");
+ }
+ 
+-#[test]
+-fn test_chat_editbox_click_type_and_submit() {
+-    test_timeout! {
+-        let env = setup_env();
+-
++prefork_fixture_case! {
++fn test_chat_editbox_click_type_and_submit(env: &WowLuaEnv) {
+         let exists: bool = env
+             .eval("return ChatFrame1EditBox ~= nil")
+             .expect("eval failed");
+@@ -393,6 +390,15 @@ fn test_chat_editbox_click_type_and_submit() {
+             .eval("return ChatFrame1EditBox:GetText() or ''")
+             .expect("GetText failed");
+         assert_eq!(text_after, "", "EditBox should be cleared after submit");
++}
++}
++
++#[cfg(not(feature = "client-retail"))]
++#[test]
++fn test_chat_editbox_click_type_and_submit() {
++    test_timeout! {
++        let env = setup_env();
++        test_chat_editbox_click_type_and_submit::run(&env);
+     }
+ }
+ 
+@@ -432,11 +438,8 @@ fn test_chat_message_contains_timestamp(env: &WowLuaEnv) {
+ }
+ }
+ 
+-#[test]
+-fn test_chat_editbox_text_color_after_activation() {
+-    test_timeout! {
+-        let env = setup_env();
+-
++prefork_fixture_case! {
++fn test_chat_editbox_text_color_after_activation(env: &WowLuaEnv) {
+         click_chat_editbox(&env);
+ 
+         // After activation, ActivateChat should have called UpdateHeader
+@@ -457,6 +460,15 @@ fn test_chat_editbox_text_color_after_activation() {
+             (alpha - 1.0).abs() < 0.01,
+             "EditBox alpha should be 1.0 after activation, got {alpha}"
+         );
++}
++}
++
++#[cfg(not(feature = "client-retail"))]
++#[test]
++fn test_chat_editbox_text_color_after_activation() {
++    test_timeout! {
++        let env = setup_env();
++        test_chat_editbox_text_color_after_activation::run(&env);
+     }
+ }
+ 
+diff --git a/tests/common/mod.rs b/tests/common/mod.rs
+index a51267408..5c8015748 100644
+--- a/tests/common/mod.rs
++++ b/tests/common/mod.rs
+@@ -122,6 +122,14 @@ macro_rules! prefork_full_ui_case {
+     };
+ }
+ 
++/// Emit a prefork case for an explicit fixture group, not the generated Game registry.
++#[macro_export]
++macro_rules! prefork_fixture_case {
++    ($($case:tt)*) => {
++        $crate::prefork_full_ui_case! { $($case)* }
++    };
++}
++
+ /// Convenience macro: wraps a test body with a 120s timeout.
+ ///
+ /// ```ignore
+diff --git a/tests/prefork_full_ui.rs b/tests/prefork_full_ui.rs
+index 6654cdc8a..9cd299f8e 100644
+--- a/tests/prefork_full_ui.rs
++++ b/tests/prefork_full_ui.rs
+@@ -30,6 +30,7 @@ use wow_ui_sim::loader::{
+ use wow_ui_sim::lua_api::WowLuaEnv;
+ 
+ const CONFORMANCE_MODE_ENV: &str = "PREFORK_CONFORMANCE_SUITE";
++const EXACT_FIXTURE_GROUP_ENV: &str = "PREFORK_EXACT_FIXTURE_GROUP";
+ const DRIVER_MODE_ENV: &str = "PREFORK_CONFORMANCE_DRIVER";
+ const TREE_CHILD_MODE_ENV: &str = "PREFORK_CONFORMANCE_TREE_CHILD";
+ const START_THREAD_ENV: &str = "PREFORK_CONFORMANCE_START_THREAD";
+@@ -104,6 +105,10 @@ const CONFORMANCE_CASES: &[Case<ConformanceState>] = &[
+         "conformance::generated_registry_lists_post_start_generic_batch",
+         generated_registry_lists_post_start_generic_batch,
+     ),
++    Case::new(
++        "conformance::exact_fixture_groups_list_each_case_once",
++        exact_fixture_groups_list_each_case_once,
++    ),
+     Case::new(
+         "conformance::environment_cleanup_restore_errors_are_contextual",
+         environment_cleanup_restore_errors_are_contextual,
+@@ -187,6 +192,29 @@ const MANUAL_FULL_UI_CASES: &[Case<WowLuaEnv>] = &[
+ const GENERATED_FULL_UI_CASES: &[Case<WowLuaEnv>] =
+     include!(concat!(env!("OUT_DIR"), "/prefork_full_ui_cases.rs"));
+ 
++#[cfg(feature = "gui")]
++const CHAT_FIXTURE_CASES: &[Case<WowLuaEnv>] = &[
++    Case::new(
++        "chat_frame::test_chat_editbox_click_type_and_submit",
++        chat_frame::test_chat_editbox_click_type_and_submit::run,
++    ),
++    Case::new(
++        "chat_frame::test_chat_editbox_text_color_after_activation",
++        chat_frame::test_chat_editbox_text_color_after_activation::run,
++    ),
++];
++
++const CAST_BAR_FIXTURE_CASES: &[Case<WowLuaEnv>] = &[Case::new(
++    "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
++    spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix::run,
++)];
++
++#[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
++const SPELLBOOK_FIXTURE_CASES: &[Case<WowLuaEnv>] = &[Case::new(
++    "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
++    blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors::run,
++)];
++
+ fn full_ui_cases() -> Vec<Case<WowLuaEnv>> {
+     MANUAL_FULL_UI_CASES
+         .iter()
+@@ -195,6 +223,23 @@ fn full_ui_cases() -> Vec<Case<WowLuaEnv>> {
+         .collect()
+ }
+ 
++fn listed_full_ui_cases() -> Vec<Case<WowLuaEnv>> {
++    let default_cases = full_ui_cases();
++    let groups = [
++        default_cases.as_slice(),
++        #[cfg(feature = "gui")]
++        CHAT_FIXTURE_CASES,
++        CAST_BAR_FIXTURE_CASES,
++        #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
++        SPELLBOOK_FIXTURE_CASES,
++    ];
++    groups
++        .into_iter()
++        .flatten()
++        .map(|case| Case::new(case.name, case.test))
++        .collect()
++}
++
+ const FIXTURE_CASES: &[Case<FixtureState>] = &[
+     Case::new("alpha::one", fixture_pass),
+     Case::new("alpha::two", fixture_pass),
+@@ -235,12 +280,92 @@ fn main() -> ExitCode {
+         child_setup: wow_ui_sim::loader::enter_bytecode_cache_read_only_mode,
+         ..Config::default()
+     };
++    if let Some(group) = env::var_os(EXACT_FIXTURE_GROUP_ENV) {
++        return prefork_workload_gate::with_shared_lock(|| run_exact_fixture_group(&group, config));
++    }
++    prefork_workload_gate::with_shared_lock(|| run_full_ui_and_exact_fixtures(config))
++}
++
++fn run_full_ui_and_exact_fixtures(config: Config) -> ExitCode {
++    if env::args_os().skip(1).any(|argument| argument == "--list") {
++        return prefork::run_with_setup(&listed_full_ui_cases(), config, || {
++            Err::<WowLuaEnv, _>("listing must not initialize fixtures")
++        });
++    }
+     let full_ui_cases = full_ui_cases();
+-    prefork_workload_gate::with_shared_lock(|| {
++    let results = [
+         prefork::run_with_setup(&full_ui_cases, config, || {
+             run_conformance_subprocess()?;
+             prefork_full_ui_preload::preload_full_game_ui()
+-        })
++        }),
++        #[cfg(feature = "gui")]
++        run_exact_fixture_subprocess("chat"),
++        run_exact_fixture_subprocess("cast-bar"),
++        #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
++        run_exact_fixture_subprocess("spellbook"),
++    ];
++    if results
++        .into_iter()
++        .all(|result| result == ExitCode::SUCCESS)
++    {
++        ExitCode::SUCCESS
++    } else {
++        ExitCode::FAILURE
++    }
++}
++
++fn run_exact_fixture_subprocess(group: &str) -> ExitCode {
++    let status = env::current_exe().and_then(|executable| {
++        Command::new(executable)
++            .args(env::args_os().skip(1))
++            .env(EXACT_FIXTURE_GROUP_ENV, group)
++            .status()
++    });
++    match status {
++        Ok(status) if status.success() => ExitCode::SUCCESS,
++        Ok(_) => ExitCode::FAILURE,
++        Err(error) => {
++            eprintln!("run exact prefork fixture group {group}: {error}");
++            ExitCode::FAILURE
++        }
++    }
++}
++
++fn run_exact_fixture_group(group: &std::ffi::OsStr, config: Config) -> ExitCode {
++    match group.to_str() {
++        #[cfg(feature = "gui")]
++        Some("chat") => run_exact_fixture(CHAT_FIXTURE_CASES, config, chat_frame::setup_env),
++        Some("cast-bar") => run_exact_fixture(
++            CAST_BAR_FIXTURE_CASES,
++            config,
++            spell_casting::env_with_full_blizzard_ui,
++        ),
++        #[cfg(any(feature = "retail-12-1-0", feature = "client-wowforever"))]
++        Some("spellbook") => run_exact_fixture(
++            SPELLBOOK_FIXTURE_CASES,
++            config,
++            blizzard_player_spells_loads::load_runtime_game_ui,
++        ),
++        _ => {
++            eprintln!("unsupported exact prefork fixture group");
++            ExitCode::FAILURE
++        }
++    }
++}
++
++fn run_exact_fixture(
++    cases: &[Case<WowLuaEnv>],
++    config: Config,
++    create_env: fn() -> WowLuaEnv,
++) -> ExitCode {
++    prefork::run_with_setup(cases, config, || {
++        run_conformance_subprocess()?;
++        enter_bytecode_cache_parent_bypass_mode();
++        let env = create_env();
++        release_prefork_parent_bytecode_cache_memory().map_err(|error| {
++            format!("release exact-fixture parent bytecode cache memory: {error}")
++        })?;
++        Ok::<_, String>(env)
+     })
+ }
+ 
+@@ -256,6 +381,7 @@ fn run_conformance_subprocess() -> Result<(), String> {
+         .map_err(|error| format!("resolve prefork conformance executable: {error}"))?;
+     let output = Command::new(executable)
+         .env(CONFORMANCE_MODE_ENV, "1")
++        .env_remove(EXACT_FIXTURE_GROUP_ENV)
+         .env_remove(DRIVER_MODE_ENV)
+         .env_remove(TREE_CHILD_MODE_ENV)
+         .output()
+@@ -616,6 +742,30 @@ fn filtering_and_listing(state: &ConformanceState) {
+     );
+ }
+ 
++fn exact_fixture_groups_list_each_case_once(state: &ConformanceState) {
++    const NAMES: &[&str] = &[
++        "chat_frame::test_chat_editbox_click_type_and_submit",
++        "chat_frame::test_chat_editbox_text_color_after_activation",
++        "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
++        "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
++    ];
++    for name in NAMES {
++        let output = Command::new(&state.executable)
++            .args(["--list", name, "--exact"])
++            .env_remove(CONFORMANCE_MODE_ENV)
++            .env_remove(EXACT_FIXTURE_GROUP_ENV)
++            .env_remove(DRIVER_MODE_ENV)
++            .env_remove(TREE_CHILD_MODE_ENV)
++            .output()
++            .expect("list exact-fixture prefork case");
++        assert_success(&output);
++        assert_eq!(
++            stdout(&output),
++            format!("{name}: test\n\n1 test, 0 benchmarks\n")
++        );
++    }
++}
++
+ fn generated_registry_lists_nested_marker_case(state: &ConformanceState) {
+     const CASE_NAME: &str =
+         "prefork_full_ui_nested::fixture::preloaded_parent_has_normal_game_startup";
+diff --git a/tests/spell_casting.rs b/tests/spell_casting.rs
+index 631629699..246fedf28 100644
+--- a/tests/spell_casting.rs
++++ b/tests/spell_casting.rs
+@@ -387,10 +387,8 @@ fn cast_bar_visible_during_cast() {
+     cast_bar_visible_during_cast::run(&env);
+ }
+ 
+-#[test]
+-fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
+-    test_timeout! {
+-        let env = env_with_full_blizzard_ui();
++prefork_fixture_case! {
++fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
+ 
+         let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
+             .eval(
+@@ -469,6 +467,15 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
+             "locked cast-bar edit-mode anchor path should attach to PlayerFrame"
+         );
+         assert_eq!(parent_after_cast_anchor, "PlayerFrame");
++}
++}
++
++#[cfg(not(feature = "client-retail"))]
++#[test]
++fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
++    test_timeout! {
++        let env = env_with_full_blizzard_ui();
++        cast_bar_respects_edit_mode_lock_setting_after_startup_fix::run(&env);
+     }
+ }
+ 

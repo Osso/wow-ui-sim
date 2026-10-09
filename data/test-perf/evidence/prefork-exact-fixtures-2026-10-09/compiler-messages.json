@@ -1,0 +1,397 @@
+[
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "prefork_full_ui",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/tests/prefork_full_ui.rs",
+      "edition": "2024",
+      "required-features": [
+        "client-retail"
+      ],
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    "message": {
+      "rendered": "error: macro-expanded `macro_export` macros from the current crate cannot be referred to by absolute paths\n   --> /home/osso/Projects/wow/wow-ui-sim/tests/common/mod.rs:129:9\n    |\n129 |           $crate::prefork_full_ui_case! { $($case)* }\n    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |\n   ::: /home/osso/Projects/wow/wow-ui-sim/tests/blizzard_player_spells_loads.rs:209:1\n    |\n209 | / prefork_fixture_case! {\n210 | | fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors(env: &WowLuaEnv) {\n211 | |     env.state().borrow_mut().lua_errors.clear();\n...   |\n249 | | }\n    | |_- in this macro invocation\n    |\nnote: the macro is defined here\n   --> /home/osso/Projects/wow/wow-ui-sim/tests/common/mod.rs:115:1\n    |\n115 | / macro_rules! prefork_full_ui_case {\n116 | |     (fn $name:ident($env:ident: &WowLuaEnv) $body:block) => {\n117 | |         pub(crate) mod $name {\n118 | |             use super::*;\n...   |\n122 | |     };\n123 | | }\n    | |_^\n    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!\n    = note: for more information, see issue #52234 <https://github.com/rust-lang/rust/issues/52234>\n    = note: `#[deny(macro_expanded_macro_exports_accessed_by_absolute_paths)]` (part of `#[deny(future_incompatible)]`) on by default\n    = note: this error originates in the macro `prefork_fixture_case` (in Nightly builds, run with -Z macro-backtrace for more info)\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "the macro is defined here",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 3705,
+              "byte_start": 3477,
+              "column_end": 2,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "/home/osso/Projects/wow/wow-ui-sim/tests/common/mod.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 123,
+              "line_start": 115,
+              "suggested_replacement": null,
+              "suggestion_applicability": null,
+              "text": [
+                {
+                  "highlight_end": 36,
+                  "highlight_start": 1,
+                  "text": "macro_rules! prefork_full_ui_case {"
+                },
+                {
+                  "highlight_end": 62,
+                  "highlight_start": 1,
+                  "text": "    (fn $name:ident($env:ident: &WowLuaEnv) $body:block) => {"
+                },
+                {
+                  "highlight_end": 31,
+                  "highlight_start": 1,
+                  "text": "        pub(crate) mod $name {"
+                },
+                {
+                  "highlight_end": 26,
+                  "highlight_start": 1,
+                  "text": "            use super::*;"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": ""
+                },
+                {
+                  "highlight_end": 54,
+                  "highlight_start": 1,
+                  "text": "            pub(crate) fn run($env: &WowLuaEnv) $body"
+                },
+                {
+                  "highlight_end": 10,
+                  "highlight_start": 1,
+                  "text": "        }"
+                },
+                {
+                  "highlight_end": 7,
+                  "highlight_start": 1,
+                  "text": "    };"
+                },
+                {
+                  "highlight_end": 2,
+                  "highlight_start": 1,
+                  "text": "}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "children": [],
+          "code": null,
+          "level": "warning",
+          "message": "this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!",
+          "rendered": null,
+          "spans": []
+        },
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "for more information, see issue #52234 <https://github.com/rust-lang/rust/issues/52234>",
+          "rendered": null,
+          "spans": []
+        },
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "`#[deny(macro_expanded_macro_exports_accessed_by_absolute_paths)]` (part of `#[deny(future_incompatible)]`) on by default",
+          "rendered": null,
+          "spans": []
+        }
+      ],
+      "level": "error",
+      "message": "macro-expanded `macro_export` macros from the current crate cannot be referred to by absolute paths",
+      "spans": [
+        {
+          "byte_end": 3907,
+          "byte_start": 3879,
+          "column_end": 37,
+          "column_start": 9,
+          "expansion": {
+            "def_site_span": {
+              "byte_end": 3844,
+              "byte_start": 3811,
+              "column_end": 34,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "/home/osso/Projects/wow/wow-ui-sim/tests/common/mod.rs",
+              "is_primary": false,
+              "label": null,
+              "line_end": 127,
+              "line_start": 127,
+              "suggested_replacement": null,
+              "suggestion_applicability": null,
+              "text": [
+                {
+                  "highlight_end": 34,
+                  "highlight_start": 1,
+                  "text": "macro_rules! prefork_fixture_case {"
+                }
+              ]
+            },
+            "macro_decl_name": "prefork_fixture_case!",
+            "span": {
+              "byte_end": 8979,
+              "byte_start": 7454,
+              "column_end": 2,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "/home/osso/Projects/wow/wow-ui-sim/tests/blizzard_player_spells_loads.rs",
+              "is_primary": false,
+              "label": null,
+              "line_end": 249,
+              "line_start": 209,
+              "suggested_replacement": null,
+              "suggestion_applicability": null,
+              "text": [
+                {
+                  "highlight_end": 24,
+                  "highlight_start": 1,
+                  "text": "prefork_fixture_case! {"
+                },
+                {
+                  "highlight_end": 89,
+                  "highlight_start": 1,
+                  "text": "fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors(env: &WowLuaEnv) {"
+                },
+                {
+                  "highlight_end": 49,
+                  "highlight_start": 1,
+                  "text": "    env.state().borrow_mut().lua_errors.clear();"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": ""
+                },
+                {
+                  "highlight_end": 34,
+                  "highlight_start": 1,
+                  "text": "    env.send_key_press(\"S\", None)"
+                },
+                {
+                  "highlight_end": 62,
+                  "highlight_start": 1,
+                  "text": "        .expect(\"first spellbook keybind dispatch succeeds\");"
+                },
+                {
+                  "highlight_end": 59,
+                  "highlight_start": 1,
+                  "text": "    wow_ui_sim::startup::run_extra_update_ticks(&env, 10);"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": ""
+                },
+                {
+                  "highlight_end": 64,
+                  "highlight_start": 1,
+                  "text": "    let (spellbook_exists, spellbook_shown): (bool, bool) = env"
+                },
+                {
+                  "highlight_end": 15,
+                  "highlight_start": 1,
+                  "text": "        .eval("
+                },
+                {
+                  "highlight_end": 16,
+                  "highlight_start": 1,
+                  "text": "            r#\""
+                },
+                {
+                  "highlight_end": 62,
+                  "highlight_start": 1,
+                  "text": "            local frame = PlayerSpellsFrame or SpellBookFrame"
+                },
+                {
+                  "highlight_end": 75,
+                  "highlight_start": 1,
+                  "text": "            return frame ~= nil, frame ~= nil and frame:IsShown() or false"
+                },
+                {
+                  "highlight_end": 16,
+                  "highlight_start": 1,
+                  "text": "            \"#,"
+                },
+                {
+                  "highlight_end": 10,
+                  "highlight_start": 1,
+                  "text": "        )"
+                },
+                {
+                  "highlight_end": 68,
+                  "highlight_start": 1,
+                  "text": "        .expect(\"active profile spellbook visibility is readable\");"
+                },
+                {
+                  "highlight_end": 77,
+                  "highlight_start": 1,
+                  "text": "    assert!(spellbook_exists, \"active profile publishes a spellbook frame\");"
+                },
+                {
+                  "highlight_end": 67,
+                  "highlight_start": 1,
+                  "text": "    assert!(spellbook_shown, \"first S press opens the spellbook\");"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": ""
+                },
+                {
+                  "highlight_end": 34,
+                  "highlight_start": 1,
+                  "text": "    env.send_key_press(\"S\", None)"
+                },
+                {
+                  "highlight_end": 63,
+                  "highlight_start": 1,
+                  "text": "        .expect(\"second spellbook keybind dispatch succeeds\");"
+                },
+                {
+                  "highlight_end": 59,
+                  "highlight_start": 1,
+                  "text": "    wow_ui_sim::startup::run_extra_update_ticks(&env, 10);"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": ""
+                },
+                {
+                  "highlight_end": 36,
+                  "highlight_start": 1,
+                  "text": "    let spellbook_shown: bool = env"
+                },
+                {
+                  "highlight_end": 15,
+                  "highlight_start": 1,
+                  "text": "        .eval("
+                },
+                {
+                  "highlight_end": 16,
+                  "highlight_start": 1,
+                  "text": "            r#\""
+                },
+                {
+                  "highlight_end": 62,
+                  "highlight_start": 1,
+                  "text": "            local frame = PlayerSpellsFrame or SpellBookFrame"
+                },
+                {
+                  "highlight_end": 61,
+                  "highlight_start": 1,
+                  "text": "            return frame ~= nil and frame:IsShown() or false"
+                },
+                {
+                  "highlight_end": 16,
+                  "highlight_start": 1,
+                  "text": "            \"#,"
+                },
+                {
+                  "highlight_end": 10,
+                  "highlight_start": 1,
+                  "text": "        )"
+                },
+                {
+                  "highlight_end": 73,
+                  "highlight_start": 1,
+                  "text": "        .expect(\"active profile spellbook visibility remains readable\");"
+                },
+                {
+                  "highlight_end": 70,
+                  "highlight_start": 1,
+                  "text": "    assert!(!spellbook_shown, \"second S press closes the spellbook\");"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": ""
+                },
+                {
+                  "highlight_end": 58,
+                  "highlight_start": 1,
+                  "text": "    let errors = env.state().borrow().lua_errors.clone();"
+                },
+                {
+                  "highlight_end": 13,
+                  "highlight_start": 1,
+                  "text": "    assert!("
+                },
+                {
+                  "highlight_end": 27,
+                  "highlight_start": 1,
+                  "text": "        errors.is_empty(),"
+                },
+                {
+                  "highlight_end": 84,
+                  "highlight_start": 1,
+                  "text": "        \"opening and closing the active profile spellbook emitted Lua errors:\\n{}\","
+                },
+                {
+                  "highlight_end": 26,
+                  "highlight_start": 1,
+                  "text": "        errors.join(\"\\n\")"
+                },
+                {
+                  "highlight_end": 7,
+                  "highlight_start": 1,
+                  "text": "    );"
+                },
+                {
+                  "highlight_end": 2,
+                  "highlight_start": 1,
+                  "text": "}"
+                },
+                {
+                  "highlight_end": 2,
+                  "highlight_start": 1,
+                  "text": "}"
+                }
+              ]
+            }
+          },
+          "file_name": "/home/osso/Projects/wow/wow-ui-sim/tests/common/mod.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 129,
+          "line_start": 129,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 37,
+              "highlight_start": 9,
+              "text": "        $crate::prefork_full_ui_case! { $($case)* }"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "macro_expanded_macro_exports_accessed_by_absolute_paths",
+        "explanation": null
+      }
+    }
+  }
+]

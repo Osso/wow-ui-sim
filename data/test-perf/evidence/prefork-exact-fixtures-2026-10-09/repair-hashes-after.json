@@ -1,0 +1,12 @@
+{
+  "tests/chat_frame.rs": "04a28365393696de25d0f40942fb46339872993b154b5f172ff7ab6ad213f998",
+  "tests/blizzard_player_spells_loads.rs": "91032d21eb390665f0702419aa19a0e5f1634ffaf073f05880a682a8f2d26a19",
+  "tests/common/mod.rs": "cef6dfddeb305bc296794b66af8096e83df8c7727b96e5c49a578fc6754d374f",
+  "tests/prefork_full_ui.rs": "274988bd499ca75f555abd26f0be39c96e72feb562b4dc55f2fab21dd20cac86",
+  "tests/spell_casting.rs": "b846e9b3a80a51537c960d5375a7d4fca8eaaa81ee0d280fe582e9e8ee86bc2f",
+  "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2",
+  "Cargo.toml": "fed0ae352547ad8b3b06d41e77e4b75ae5f11186e823c706724896b6c3cc1c73",
+  "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+  "tests/common/prefork.rs": "08d10acf775d79d135a778d7697caa56d007e932a0091183e2c6e771f91ecc8d",
+  "tests/common/prefork_full_ui_preload.rs": "2b705069fa59bde48c4ba46e97425e377e0ff6f24b9b72204b70047d68f693ae"
+}

@@ -1,0 +1,16 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 2394584b5..0762d027d 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -181,6 +181,11 @@ path = "tests/prefork_full_ui.rs"
+ harness = false
+ required-features = ["client-retail"]
+ 
++[[test]]
++name = "patch_1_13_6_factory"
++path = "patch-tests/patch_1_13_6_factory.rs"
++required-features = ["client-era"]
++
+ [[test]]
+ name = "patch_1_14_2_cvars"
+ path = "patch-tests/patch_1_14_2_cvars.rs"

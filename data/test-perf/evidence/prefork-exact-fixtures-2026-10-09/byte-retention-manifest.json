@@ -1,0 +1,593 @@
+{
+  "schema": 1,
+  "date": "2026-10-09",
+  "source_directory": "/tmp/prefork-exact-independent",
+  "proof_revision": "3de87465828db7cc7f6f900d4b63e24f1b399825",
+  "environment_review": {
+    "method": "JSON key names only, recursively; secret/token/password/APIkey/cookie field-name scan before copying",
+    "sensitive_fields_found": [],
+    "environment_json": "byte-identical ordinary environment; no actual secret fields identified",
+    "mode_is_not_safety_evidence": true,
+    "other_artifacts": "field-name matches in listings are WoW test/module names, not credentials",
+    "sanitized_derivatives": [],
+    "excluded_secret_artifacts": []
+  },
+  "files": [
+    {
+      "source": "/tmp/prefork-exact-independent/binary.txt",
+      "retained": "binary.txt",
+      "bytes": 85,
+      "source_sha256": "80f3c57504fe0b78cc2484cf6e6809fa8e00eea21820e00b28ba1e71da24d63a",
+      "retained_sha256": "80f3c57504fe0b78cc2484cf6e6809fa8e00eea21820e00b28ba1e71da24d63a",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/cast-bar-repair.stderr",
+      "retained": "cast-bar-repair.stderr",
+      "bytes": 6940,
+      "source_sha256": "9e806bfd16a406c0eced478d9eb8eec04852147417a0500f1965541d711448e6",
+      "retained_sha256": "9e806bfd16a406c0eced478d9eb8eec04852147417a0500f1965541d711448e6",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/cast-bar-repair.stdout",
+      "retained": "cast-bar-repair.stdout",
+      "bytes": 334,
+      "source_sha256": "c41d208c499e358792f2203ad1dcc4e1c59a4fee840af9360b811010ccb6b2da",
+      "retained_sha256": "c41d208c499e358792f2203ad1dcc4e1c59a4fee840af9360b811010ccb6b2da",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/cast_bar_respects_edit_mode_lock_setting_after_startup_fix.new-body",
+      "retained": "cast_bar_respects_edit_mode_lock_setting_after_startup_fix.new-body",
+      "bytes": 3065,
+      "source_sha256": "1df8ff474561dfccc31d1fcad601f1f4a443a216856371c8d6a6c5bbe4d121c3",
+      "retained_sha256": "1df8ff474561dfccc31d1fcad601f1f4a443a216856371c8d6a6c5bbe4d121c3",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/cast_bar_respects_edit_mode_lock_setting_after_startup_fix.old-body",
+      "retained": "cast_bar_respects_edit_mode_lock_setting_after_startup_fix.old-body",
+      "bytes": 3065,
+      "source_sha256": "1df8ff474561dfccc31d1fcad601f1f4a443a216856371c8d6a6c5bbe4d121c3",
+      "retained_sha256": "1df8ff474561dfccc31d1fcad601f1f4a443a216856371c8d6a6c5bbe4d121c3",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/changes.stderr",
+      "retained": "changes.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/changes.stdout",
+      "retained": "changes.stdout",
+      "bytes": 14230,
+      "source_sha256": "1f651b5ff5ba13bf7b76a6c3551c047b4061c061c04e5185673a83367cd1f863",
+      "retained_sha256": "1f651b5ff5ba13bf7b76a6c3551c047b4061c061c04e5185673a83367cd1f863",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/chat-repair.stderr",
+      "retained": "chat-repair.stderr",
+      "bytes": 6941,
+      "source_sha256": "d92e8b9ad0438c272bc493effb5d8422cba3ed2999f27c5d3cb4244edb2e0bfa",
+      "retained_sha256": "d92e8b9ad0438c272bc493effb5d8422cba3ed2999f27c5d3cb4244edb2e0bfa",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/chat-repair.stdout",
+      "retained": "chat-repair.stdout",
+      "bytes": 382,
+      "source_sha256": "8bb7b8aff6ca5d09dc87f23604d53fa10202b68b58ab484274e93f9e1b12f1d8",
+      "retained_sha256": "8bb7b8aff6ca5d09dc87f23604d53fa10202b68b58ab484274e93f9e1b12f1d8",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/commands.json",
+      "retained": "commands.json",
+      "bytes": 9130,
+      "source_sha256": "5eedf41501db234a022757cd9824b114eeada6b1aa3357fe9adfb459354a42a7",
+      "retained_sha256": "5eedf41501db234a022757cd9824b114eeada6b1aa3357fe9adfb459354a42a7",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/commit-file-inventory.stderr",
+      "retained": "commit-file-inventory.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/commit-file-inventory.stdout",
+      "retained": "commit-file-inventory.stdout",
+      "bytes": 203,
+      "source_sha256": "a3315b3937c81be1a7ac35ce2472b080ab86c8b19d6a72e0221d3cc92f19794e",
+      "retained_sha256": "a3315b3937c81be1a7ac35ce2472b080ab86c8b19d6a72e0221d3cc92f19794e",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/compiler-messages.json",
+      "retained": "compiler-messages.json",
+      "bytes": 15041,
+      "source_sha256": "2937f8b47a76d8e42e65b4a15ece600de563ae5ced4f82a13a4710d852b4af52",
+      "retained_sha256": "2937f8b47a76d8e42e65b4a15ece600de563ae5ced4f82a13a4710d852b4af52",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/conformance-repair.stderr",
+      "retained": "conformance-repair.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/conformance-repair.stdout",
+      "retained": "conformance-repair.stdout",
+      "bytes": 1260,
+      "source_sha256": "db65354e5e8e02c44831f39561bcca1e2c9f57b8a3cf8a1faa924a13d5d0f758",
+      "retained_sha256": "db65354e5e8e02c44831f39561bcca1e2c9f57b8a3cf8a1faa924a13d5d0f758",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/environment.json",
+      "retained": "environment.json",
+      "bytes": 1229,
+      "source_sha256": "917deee4f5311ab0682139170003d27109ac7b0290090e90230a240e88578ded",
+      "retained_sha256": "917deee4f5311ab0682139170003d27109ac7b0290090e90230a240e88578ded",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/format.stderr",
+      "retained": "format.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/format.stdout",
+      "retained": "format.stdout",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/hashes-after.json",
+      "retained": "hashes-after.json",
+      "bytes": 953,
+      "source_sha256": "31f76be1cdc41924bb84f4804571b701d363dbf029d773c16e777d8e80a8ca71",
+      "retained_sha256": "31f76be1cdc41924bb84f4804571b701d363dbf029d773c16e777d8e80a8ca71",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/hashes-before.json",
+      "retained": "hashes-before.json",
+      "bytes": 953,
+      "source_sha256": "31f76be1cdc41924bb84f4804571b701d363dbf029d773c16e777d8e80a8ca71",
+      "retained_sha256": "31f76be1cdc41924bb84f4804571b701d363dbf029d773c16e777d8e80a8ca71",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/integration-list-repair.stderr",
+      "retained": "integration-list-repair.stderr",
+      "bytes": 1275,
+      "source_sha256": "950e42bff4d976b38fa24c89b3632bc14013a85c2e5d34f3696167ef49cd87dc",
+      "retained_sha256": "950e42bff4d976b38fa24c89b3632bc14013a85c2e5d34f3696167ef49cd87dc",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/integration-list-repair.stdout",
+      "retained": "integration-list-repair.stdout",
+      "bytes": 1092702,
+      "source_sha256": "04d8829796bf8e963fe540b8c9ef53abd66693ab21a3cc672e7b25bed0c5d892",
+      "retained_sha256": "04d8829796bf8e963fe540b8c9ef53abd66693ab21a3cc672e7b25bed0c5d892",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/integration-list.stderr",
+      "retained": "integration-list.stderr",
+      "bytes": 2915,
+      "source_sha256": "ae3c74bbda21a83897d281a28a297ee9b6f8358f7d913bba1cb79563c09f320a",
+      "retained_sha256": "ae3c74bbda21a83897d281a28a297ee9b6f8358f7d913bba1cb79563c09f320a",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/integration-list.stdout",
+      "retained": "integration-list.stdout",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/listing-observations.json",
+      "retained": "listing-observations.json",
+      "bytes": 911,
+      "source_sha256": "7019fba612140fa2c98f4a2a0a477e99c9165df84dc43ebde06133bfd6bf147e",
+      "retained_sha256": "7019fba612140fa2c98f4a2a0a477e99c9165df84dc43ebde06133bfd6bf147e",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/mainline_spellbook_keybind_opens_and_closes_without_runtime_errors.new-body",
+      "retained": "mainline_spellbook_keybind_opens_and_closes_without_runtime_errors.new-body",
+      "bytes": 1404,
+      "source_sha256": "7916498ef727d75c6a29cedfe3ec346af580d2c37dce64c4075237c09f00fef9",
+      "retained_sha256": "7916498ef727d75c6a29cedfe3ec346af580d2c37dce64c4075237c09f00fef9",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/mainline_spellbook_keybind_opens_and_closes_without_runtime_errors.old-body",
+      "retained": "mainline_spellbook_keybind_opens_and_closes_without_runtime_errors.old-body",
+      "bytes": 1404,
+      "source_sha256": "7916498ef727d75c6a29cedfe3ec346af580d2c37dce64c4075237c09f00fef9",
+      "retained_sha256": "7916498ef727d75c6a29cedfe3ec346af580d2c37dce64c4075237c09f00fef9",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/old-blizzard_player_spells_loads.stderr",
+      "retained": "old-blizzard_player_spells_loads.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/old-blizzard_player_spells_loads.stdout",
+      "retained": "old-blizzard_player_spells_loads.stdout",
+      "bytes": 33887,
+      "source_sha256": "1dd5bd166178a1cc77d1a32c75cda5ec706a543c0d1a2fbe18eaa012910fb40d",
+      "retained_sha256": "1dd5bd166178a1cc77d1a32c75cda5ec706a543c0d1a2fbe18eaa012910fb40d",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/old-chat_frame.stderr",
+      "retained": "old-chat_frame.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/old-chat_frame.stdout",
+      "retained": "old-chat_frame.stdout",
+      "bytes": 24204,
+      "source_sha256": "ca8c8ef3d3a3afc30a4d5ec5f107d92ad704c0e9b95fe1eb6018dd62d49dbb41",
+      "retained_sha256": "ca8c8ef3d3a3afc30a4d5ec5f107d92ad704c0e9b95fe1eb6018dd62d49dbb41",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/old-spell_casting.stderr",
+      "retained": "old-spell_casting.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/old-spell_casting.stdout",
+      "retained": "old-spell_casting.stdout",
+      "bytes": 25059,
+      "source_sha256": "ca99df20ed04adb852545b583bda58422b7b5fa36b273de1b99f927f09398c8b",
+      "retained_sha256": "ca99df20ed04adb852545b583bda58422b7b5fa36b273de1b99f927f09398c8b",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-artifacts-repair.json",
+      "retained": "prefork-artifacts-repair.json",
+      "bytes": 1487,
+      "source_sha256": "74a8b5099d4d1c950b0f3cf33697c087bd20e991116fa05b463dd3bdb3175f01",
+      "retained_sha256": "74a8b5099d4d1c950b0f3cf33697c087bd20e991116fa05b463dd3bdb3175f01",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-artifacts.json",
+      "retained": "prefork-artifacts.json",
+      "bytes": 2,
+      "source_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "retained_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-build-repair.stderr",
+      "retained": "prefork-build-repair.stderr",
+      "bytes": 1275,
+      "source_sha256": "cd9e6fcdf28d60325fc878fa75645f1d51e394b9662a27dfd2c338ff5ba7ed77",
+      "retained_sha256": "cd9e6fcdf28d60325fc878fa75645f1d51e394b9662a27dfd2c338ff5ba7ed77",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-build-repair.stdout",
+      "retained": "prefork-build-repair.stdout",
+      "bytes": 572465,
+      "source_sha256": "83dc6aa05db063f76137c12ace51f30d5b4454b7fb4095d1c1c01afda131f378",
+      "retained_sha256": "83dc6aa05db063f76137c12ace51f30d5b4454b7fb4095d1c1c01afda131f378",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-build.stderr",
+      "retained": "prefork-build.stderr",
+      "bytes": 1291,
+      "source_sha256": "7b9f25a10b272dda857f5c2d4a3f34b38cf5af66dcaae8993d3f28f721370306",
+      "retained_sha256": "7b9f25a10b272dda857f5c2d4a3f34b38cf5af66dcaae8993d3f28f721370306",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-build.stdout",
+      "retained": "prefork-build.stdout",
+      "bytes": 579946,
+      "source_sha256": "f248a5e16f95d261ee08bf53554f55721a2aabf9346784b4b9e6bf6b38058245",
+      "retained_sha256": "f248a5e16f95d261ee08bf53554f55721a2aabf9346784b4b9e6bf6b38058245",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-list-repair.stderr",
+      "retained": "prefork-list-repair.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/prefork-list-repair.stdout",
+      "retained": "prefork-list-repair.stdout",
+      "bytes": 222512,
+      "source_sha256": "d0628a420f26d316303c32edb3dd8abfa0c520f335b22567e05cf53bee2b9a29",
+      "retained_sha256": "d0628a420f26d316303c32edb3dd8abfa0c520f335b22567e05cf53bee2b9a29",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/preservation.json",
+      "retained": "preservation.json",
+      "bytes": 1524,
+      "source_sha256": "ef93e612ffaf1dcca6d0b3bb955eab598a4bba6271fc85b51cbc9b7c976b388a",
+      "retained_sha256": "ef93e612ffaf1dcca6d0b3bb955eab598a4bba6271fc85b51cbc9b7c976b388a",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/process-after.stderr",
+      "retained": "process-after.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/process-after.stdout",
+      "retained": "process-after.stdout",
+      "bytes": 43950,
+      "source_sha256": "e9e0c35c764d97f323c8aff0d05080ee6bb13ff7915ebe30a9be3b3bbaff3690",
+      "retained_sha256": "e9e0c35c764d97f323c8aff0d05080ee6bb13ff7915ebe30a9be3b3bbaff3690",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/process-repair-after.stderr",
+      "retained": "process-repair-after.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/process-repair-after.stdout",
+      "retained": "process-repair-after.stdout",
+      "bytes": 44156,
+      "source_sha256": "f85ad921a62543a3d2458255b2759975a63bb5221768c0876fb03264a9ca963d",
+      "retained_sha256": "f85ad921a62543a3d2458255b2759975a63bb5221768c0876fb03264a9ca963d",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/proof.py",
+      "retained": "proof.py",
+      "bytes": 921,
+      "source_sha256": "a45770087852a811f8c94dcb5038023ea6c915f76470cb7e403e707112edacca",
+      "retained_sha256": "a45770087852a811f8c94dcb5038023ea6c915f76470cb7e403e707112edacca",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-delta.stderr",
+      "retained": "repair-delta.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-delta.stdout",
+      "retained": "repair-delta.stdout",
+      "bytes": 680,
+      "source_sha256": "f1f411454fd720a8f9582b6e9c4c2c7a25dc4cb4265de729dca31138ee1507b6",
+      "retained_sha256": "f1f411454fd720a8f9582b6e9c4c2c7a25dc4cb4265de729dca31138ee1507b6",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-hashes-after.json",
+      "retained": "repair-hashes-after.json",
+      "bytes": 953,
+      "source_sha256": "5de8ac69c06c271a0c39afaeeb166ca0b49c31f02b2af7f79604a0ee690f39e7",
+      "retained_sha256": "5de8ac69c06c271a0c39afaeeb166ca0b49c31f02b2af7f79604a0ee690f39e7",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-hashes-before.json",
+      "retained": "repair-hashes-before.json",
+      "bytes": 953,
+      "source_sha256": "5de8ac69c06c271a0c39afaeeb166ca0b49c31f02b2af7f79604a0ee690f39e7",
+      "retained_sha256": "5de8ac69c06c271a0c39afaeeb166ca0b49c31f02b2af7f79604a0ee690f39e7",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-revision-after.stderr",
+      "retained": "repair-revision-after.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-revision-after.stdout",
+      "retained": "repair-revision-after.stdout",
+      "bytes": 41,
+      "source_sha256": "81b4639fc6e7bab290e2b130542249a5bbd5adced4fdf18885781d6492b007c7",
+      "retained_sha256": "81b4639fc6e7bab290e2b130542249a5bbd5adced4fdf18885781d6492b007c7",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-revision.stderr",
+      "retained": "repair-revision.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/repair-revision.stdout",
+      "retained": "repair-revision.stdout",
+      "bytes": 41,
+      "source_sha256": "81b4639fc6e7bab290e2b130542249a5bbd5adced4fdf18885781d6492b007c7",
+      "retained_sha256": "81b4639fc6e7bab290e2b130542249a5bbd5adced4fdf18885781d6492b007c7",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/report-red.md",
+      "retained": "report-red.md",
+      "bytes": 7528,
+      "source_sha256": "3794bb35b2ac5b6d86e8e60ed458b268373744a667a5f01eb6d492c83fb05936",
+      "retained_sha256": "3794bb35b2ac5b6d86e8e60ed458b268373744a667a5f01eb6d492c83fb05936",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/report.md",
+      "retained": "report.md",
+      "bytes": 7110,
+      "source_sha256": "0e30af5705195014929ca286bcbc8f2b5d9e6660ea9ab22501d28bb895eafc73",
+      "retained_sha256": "0e30af5705195014929ca286bcbc8f2b5d9e6660ea9ab22501d28bb895eafc73",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/revision-after.stderr",
+      "retained": "revision-after.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/revision-after.stdout",
+      "retained": "revision-after.stdout",
+      "bytes": 41,
+      "source_sha256": "8c1847da3142cf3c2681cb345b0ec112ae9945510546a2b55e9723d385583241",
+      "retained_sha256": "8c1847da3142cf3c2681cb345b0ec112ae9945510546a2b55e9723d385583241",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/revision-before.stderr",
+      "retained": "revision-before.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/revision-before.stdout",
+      "retained": "revision-before.stdout",
+      "bytes": 41,
+      "source_sha256": "9f8d890f36dd298a04d833398f8440585079390e1a010563bed24ed1b7147471",
+      "retained_sha256": "9f8d890f36dd298a04d833398f8440585079390e1a010563bed24ed1b7147471",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/scope-delta.stderr",
+      "retained": "scope-delta.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/scope-delta.stdout",
+      "retained": "scope-delta.stdout",
+      "bytes": 426,
+      "source_sha256": "74eebbe730b5ef734a4c08e6a7bf800bdf2fb3ed7ddab4f748d97c5dd5373e91",
+      "retained_sha256": "74eebbe730b5ef734a4c08e6a7bf800bdf2fb3ed7ddab4f748d97c5dd5373e91",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/spellbook-repair.stderr",
+      "retained": "spellbook-repair.stderr",
+      "bytes": 8767,
+      "source_sha256": "829a16948869cd8bb402674b3fc18ae5726d889a05d495c17a3f3722e869cabb",
+      "retained_sha256": "829a16948869cd8bb402674b3fc18ae5726d889a05d495c17a3f3722e869cabb",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/spellbook-repair.stdout",
+      "retained": "spellbook-repair.stdout",
+      "bytes": 357,
+      "source_sha256": "1d78b3c2b37fc8a0584dbc596fea16b3554a8dcfa4d9b5d1c1ab0dbe7372cce1",
+      "retained_sha256": "1d78b3c2b37fc8a0584dbc596fea16b3554a8dcfa4d9b5d1c1ab0dbe7372cce1",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/status-before.stderr",
+      "retained": "status-before.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retained_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/status-before.stdout",
+      "retained": "status-before.stdout",
+      "bytes": 9619,
+      "source_sha256": "890c705e486a0534c287a9e1b9063bba01c222b80c9e3decdc5bcc14d2a95258",
+      "retained_sha256": "890c705e486a0534c287a9e1b9063bba01c222b80c9e3decdc5bcc14d2a95258",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/test_chat_editbox_click_type_and_submit.new-body",
+      "retained": "test_chat_editbox_click_type_and_submit.new-body",
+      "bytes": 1522,
+      "source_sha256": "f2020b1eea13dd0542eed76374b6e59b87bc13089f1cf910c95043af42c32100",
+      "retained_sha256": "f2020b1eea13dd0542eed76374b6e59b87bc13089f1cf910c95043af42c32100",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/test_chat_editbox_click_type_and_submit.old-body",
+      "retained": "test_chat_editbox_click_type_and_submit.old-body",
+      "bytes": 1522,
+      "source_sha256": "f2020b1eea13dd0542eed76374b6e59b87bc13089f1cf910c95043af42c32100",
+      "retained_sha256": "f2020b1eea13dd0542eed76374b6e59b87bc13089f1cf910c95043af42c32100",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/test_chat_editbox_text_color_after_activation.new-body",
+      "retained": "test_chat_editbox_text_color_after_activation.new-body",
+      "bytes": 849,
+      "source_sha256": "3e2d886cd01b1172a96c58a1b5f0424cb87713528e749bfb3b47c22bb3485392",
+      "retained_sha256": "3e2d886cd01b1172a96c58a1b5f0424cb87713528e749bfb3b47c22bb3485392",
+      "byte_equivalent": true
+    },
+    {
+      "source": "/tmp/prefork-exact-independent/test_chat_editbox_text_color_after_activation.old-body",
+      "retained": "test_chat_editbox_text_color_after_activation.old-body",
+      "bytes": 849,
+      "source_sha256": "3e2d886cd01b1172a96c58a1b5f0424cb87713528e749bfb3b47c22bb3485392",
+      "retained_sha256": "3e2d886cd01b1172a96c58a1b5f0424cb87713528e749bfb3b47c22bb3485392",
+      "byte_equivalent": true
+    }
+  ],
+  "retained_file_count": 71,
+  "retained_bytes": 2758400,
+  "limits": [
+    "No new runtime execution; retained bounded Retail proof only",
+    "Non-Retail execution UNVERIFIED",
+    "Full suite unitfull-suite-1791563703.service submitted asynchronously, NOT passed",
+    "No parent completion; historical seal/count epochs unchanged"
+  ]
+}

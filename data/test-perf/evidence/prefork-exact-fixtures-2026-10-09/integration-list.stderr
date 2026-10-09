@@ -1,0 +1,41 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/Projects/wow/wow-ui-sim)
+error: macro-expanded `macro_export` macros from the current crate cannot be referred to by absolute paths
+   --> /home/osso/Projects/wow/wow-ui-sim/tests/common/mod.rs:129:9
+    |
+129 |           $crate::prefork_full_ui_case! { $($case)* }
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+   ::: /home/osso/Projects/wow/wow-ui-sim/tests/blizzard_player_spells_loads.rs:209:1
+    |
+209 | / prefork_fixture_case! {
+210 | | fn mainline_spellbook_keybind_opens_and_closes_without_runtime_errors(env: &WowLuaEnv) {
+211 | |     env.state().borrow_mut().lua_errors.clear();
+...   |
+249 | | }
+    | |_- in this macro invocation
+    |
+note: the macro is defined here
+   --> /home/osso/Projects/wow/wow-ui-sim/tests/common/mod.rs:115:1
+    |
+115 | / macro_rules! prefork_full_ui_case {
+116 | |     (fn $name:ident($env:ident: &WowLuaEnv) $body:block) => {
+117 | |         pub(crate) mod $name {
+118 | |             use super::*;
+...   |
+122 | |     };
+123 | | }
+    | |_^
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #52234 <https://github.com/rust-lang/rust/issues/52234>
+    = note: `#[deny(macro_expanded_macro_exports_accessed_by_absolute_paths)]` (part of `#[deny(future_incompatible)]`) on by default
+    = note: this error originates in the macro `prefork_fixture_case` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: could not compile `wow-ui-sim` (test "integration") due to 2 previous errors
+error: command `/usr/bin/cargo '--color=auto' test --no-run --message-format json-render-diagnostics --test integration --locked --offline` exited with code 101

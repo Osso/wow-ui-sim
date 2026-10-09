@@ -1,0 +1,58 @@
+[
+  {
+    "reason": "compiler-artifact",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "prefork_full_ui",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/tests/prefork_full_ui.rs",
+      "edition": "2024",
+      "required-features": [
+        "client-retail"
+      ],
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    "profile": {
+      "opt_level": "1",
+      "debuginfo": "line-tables-only",
+      "debug_assertions": true,
+      "overflow_checks": true,
+      "test": true
+    },
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "filenames": [
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6"
+    ],
+    "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "fresh": false
+  }
+]

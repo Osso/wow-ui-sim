@@ -50,7 +50,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] Prove nested-module discovery and inherited startup state with `prefork_full_ui_nested::fixture::preloaded_parent_has_normal_game_startup`.
 - [x] Register the generated default-retail full-UI registry with stable `<module>::<function>` names and retain 9 manual/nested prefork cases.
 
-### Final coverage and eligibility
+### Final coverage and eligibility (historical sealed audit epoch)
 
 - [x] List exactly 1,965 cases in the dedicated default-retail prefork target: 1,956 marker-generated full-environment cases and 9 manual/nested prefork cases.
 - [x] Retain exactly 8,412 ordinary integration cases after 14 one-for-one migrations.
@@ -58,12 +58,16 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 - [x] Classify exclusions as dependency/load-order/absence, pre-start, lifecycle, partial-fixture, alternate-screen, render-sensitive, thread-sensitive, profile-specific, post-drop, or version-specific; none is equivalent to normal complete retail startup.
 - [x] Preserve exclusion rationale: the finalized parent is incompatible with pre-start and lifecycle cases, while partial/custom, alternate-screen, render-sensitive, and thread-sensitive cases are not normal-retail startup; migrated cases retain the same 120-second child timeout and process-tree cleanup.
 
-### Exact startup fixtures (verification pending)
+### Exact startup fixtures (bounded Retail proof at `3de874658`, 2026-10-09)
 
-- [ ] Migrate the two chat editbox cases, cast-bar edit-mode case, and Mainline spellbook keybinding case using their original fixture constructors and unchanged assertions, not completed Game preload or post-fork state normalization.
-- [ ] Preserve manual chat startup without `UPDATE_CHAT_WINDOWS`, initial SAY/white behavior, original cast-bar startup and anchor transitions, and profile-specific spellbook loading and key dispatch.
-- [ ] List each stable case name exactly once in the existing `prefork_full_ui` target; exclude migrated Retail cases from ordinary integration and retain original non-Retail feature gates and fixture behavior.
-- [ ] Apply existing filtering, timeout, process cleanup, parent-isolation and bytecode-cache contracts to every fixture group; propagate any group failure to the target exit status.
+- [x] Migrate the two chat editbox cases, cast-bar edit-mode case, and Mainline spellbook keybinding case using their original fixture constructors and unchanged assertions, not completed Game preload or post-fork state normalization.
+- [x] Preserve manual chat startup without `UPDATE_CHAT_WINDOWS`, initial SAY/white behavior, original cast-bar startup and anchor transitions, and profile-specific spellbook loading and key dispatch.
+- [x] List each stable case name exactly once in the existing `prefork_full_ui` target and exclude migrated Retail cases from ordinary integration.
+- [x] Inspect original non-Retail feature gates and constructor/body preservation without execution credit.
+- [ ] Verify retained non-Retail fixture behavior through execution.
+- [ ] Apply existing filtering, timeout, process cleanup, parent-isolation and bytecode-cache contracts to every fixture group; propagate any group failure to the target exit status. Retained runner conformance passes 21/21, but exhaustive per-group failure/selection coverage is not established.
+
+[Bounded proof SSOT](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) links immutable RED/GREEN reports and byte retention. At `3de874658`, four original bodies pass after fork; prefork lists 2,325 names with each selected case once, Retail integration lists 10,681 with all four absent. These counts are a new epoch, not replacements for historical sealed counts. Fresh single-fixture parent processes preserve one-shot global bytecode sealing; no reset, normalization or callback framework. Original constructors, bodies and gates remain unchanged. Non-Retail execution is UNVERIFIED; no speedup or parent completion credit. Full suite `unitfull-suite-1791563703.service` was submitted asynchronously, NOT passed.
 
 ### Bytecode-cache child contract
 
@@ -89,7 +93,7 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 ### Subsequent behavior migrations
 
 - [x] Move 17 additional normal complete-retail-startup behaviors: six `Blizzard_AddOnList` surface cases, five micro-menu/game-menu cases, and six CharacterFrame `ShowUIPanel`/`HideUIPanel` cases. Independent verification records 8,393 integration cases, 1,984 prefork cases, zero overlap, and 17/17 passing.
-- [x] Verify commit `2995da11d` after moving eight equivalent `chat_frame::test_chat_*` cases: 8/8 pass, integration lists 8,385 cases, prefork lists 1,992, and overlap is zero. The 13.1985s-to-6.326s runtime change is directional only because power mode changed. Keep `test_chat_editbox_click_type_and_submit` and `test_chat_editbox_text_color_after_activation` in ordinary integration because complete startup changes their asserted initial channel and edit-box color.
+- [x] Verify commit `2995da11d` after moving eight equivalent `chat_frame::test_chat_*` cases: 8/8 pass, integration lists 8,385 cases, prefork lists 1,992, and overlap is zero. The 13.1985s-to-6.326s runtime change is directional only because power mode changed. At this historical epoch, keep `test_chat_editbox_click_type_and_submit` and `test_chat_editbox_text_color_after_activation` in ordinary integration because complete startup changes their asserted initial channel and edit-box color; the later exact-fixture epoch above supersedes their placement, not these counts.
 - [x] Verify commit `465acd9da` after moving the two equivalent GroupFinder post-start behaviors: 2/2 pass, integration lists 8,383 cases, prefork lists 1,994, and overlap is zero. The 4.224s integration baseline versus 6.245s standalone prefork run does not establish a speedup because shared preload is included.
 - [x] Verify commit `279bbb8d5` after moving four equivalent WorldMap/GameMenu behaviors: 4/4 pass, integration lists 8,379 cases, prefork lists 1,998, and overlap is zero. The 4.325s integration baseline versus 5.703s standalone prefork run includes shared preload and does not establish a speedup.
 - [x] Verify commit `2c0441c22` after moving seven equivalent Collection/Escape behaviors: five Wardrobe surface/interaction cases plus Collections Journal and Adventure Guide Escape-close cases. Independent proof records 7/7 pass, integration 8,372, prefork 2,005, and zero overlap. The 14.840s-to-5.799s runtime change is directional only because power mode changed after the baseline.

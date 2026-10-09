@@ -1,0 +1,24 @@
+running 21 tests
+test conformance::generated_registry_lists_nested_marker_case ... ok
+test conformance::generated_registry_lists_path_declared_marker_case ... ok
+test conformance::filtering_and_listing ... ok
+test conformance::generated_registry_lists_foundation_batch ... ok
+test conformance::generated_registry_lists_post_start_explicit_batch ... ok
+test conformance::generated_registry_lists_post_start_housing_batch ... ok
+test conformance::exact_fixture_groups_list_each_case_once ... ok
+test conformance::generated_registry_lists_post_start_generic_batch ... ok
+test conformance::copy_on_write ... ok
+test conformance::panic_and_capture ... ok
+test conformance::nocapture ... ok
+test conformance::environment_cleanup_restore_errors_are_contextual ... ok
+test conformance::exit_classification ... ok
+test conformance::timeout_and_tree_cleanup ... ok
+test conformance::rejects_multithreaded_fork ... ok
+test conformance::rejects_bad_arguments ... ok
+test conformance::validates_worker_counts ... ok
+test conformance::bounded_workers ... ok
+test conformance::read_only_bytecode_cache_child ... ok
+test conformance::parent_bypass_bytecode_cache ... ok
+test conformance::cleans_up_after_resource_failure ... ok
+
+test result: ok. 21 passed; 0 failed; 21 total

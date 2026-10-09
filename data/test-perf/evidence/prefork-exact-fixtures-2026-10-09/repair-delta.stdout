@@ -1,0 +1,21 @@
+commit 3de87465828db7cc7f6f900d4b63e24f1b399825
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 11:29:10 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 11:29:10 2026 -0500
+
+    Resolve prefork fixture emitter through imported macro scope
+
+diff --git a/tests/common/mod.rs b/tests/common/mod.rs
+index 5c8015748..6945e9351 100644
+--- a/tests/common/mod.rs
++++ b/tests/common/mod.rs
+@@ -126,7 +126,7 @@ macro_rules! prefork_full_ui_case {
+ #[macro_export]
+ macro_rules! prefork_fixture_case {
+     ($($case:tt)*) => {
+-        $crate::prefork_full_ui_case! { $($case)* }
++        prefork_full_ui_case! { $($case)* }
+     };
+ }
+ 

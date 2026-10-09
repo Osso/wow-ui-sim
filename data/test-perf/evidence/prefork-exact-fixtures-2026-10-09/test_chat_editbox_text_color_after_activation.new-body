@@ -1,0 +1,20 @@
+click_chat_editbox(&env);
+
+        // After activation, ActivateChat should have called UpdateHeader
+        // which sets text color to white (ChatTypeInfo default = 1.0, 1.0, 1.0)
+        let (r, g, b): (f64, f64, f64) = env
+            .eval("return ChatFrame1EditBox:GetTextColor()")
+            .expect("GetTextColor failed");
+        assert!(
+            (r - 1.0).abs() < 0.01 && (g - 1.0).abs() < 0.01 && (b - 1.0).abs() < 0.01,
+            "EditBox text color should be white after activation, got ({r}, {g}, {b})"
+        );
+
+        // Alpha should be 1.0 after activation
+        let alpha: f64 = env
+            .eval("return ChatFrame1EditBox:GetAlpha()")
+            .expect("GetAlpha failed");
+        assert!(
+            (alpha - 1.0).abs() < 0.01,
+            "EditBox alpha should be 1.0 after activation, got {alpha}"
+        );

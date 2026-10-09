@@ -1,0 +1,7 @@
+docs/specs/prefork-test-harness.md
+docs/wiki/systems/prefork-test-harness.md
+tests/blizzard_player_spells_loads.rs
+tests/chat_frame.rs
+tests/common/mod.rs
+tests/prefork_full_ui.rs
+tests/spell_casting.rs

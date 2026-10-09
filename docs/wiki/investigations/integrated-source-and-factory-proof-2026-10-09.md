@@ -78,7 +78,7 @@ Copied SOURCE **8/8 each**, corrected portable **3/3 each**; original/current se
 
 Twelve new integration cases and two new prefork cases PASS. Exactly 75 executed publication sweeps plus three helpers PASS; selected-name inventories are not extra sweep credit. Excluded Era/Forever profile targets receive no credit. The runner's `new_failures` flag is not the direct `614` comparison; its precise baseline selection remains unproven.
 
-Main's four partial-startup cases remain in ordinary integration. The new Cargo/shared-helper refactor was in flight and not proven by this retained suite; the later bounded Era-helper proof above is separate, not full-suite acceptance; ignored, untracked PLAN is not acceptance evidence. No fresh tests or broad gates run here. **Broader goal remains open**, including native/full-UI and final integration gaps.
+At this saved-suite epoch, main's four partial-startup cases remained in ordinary integration; the later bounded exact-fixture proof below supersedes placement, not this suite's result. The new Cargo/shared-helper refactor was in flight and not proven by this retained suite; the later bounded Era-helper proof above is separate, not full-suite acceptance; ignored, untracked PLAN is not acceptance evidence. No fresh tests or broad gates run here. **Broader goal remains open**, including native/full-UI and final integration gaps.
 
 ## Era1.14.1/1.14.0: independent bounded epoch
 
@@ -91,6 +91,18 @@ Main's four partial-startup cases remain in ordinary integration. The new Cargo/
 [Exact report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/report.md) records **3/3** at actual `045e396b0c6f717c2d962b97cdf46b736a3328ce`, with [compiled-scope equivalence](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/equivalence.json) to requested `f611a6752a14b4d660902417c59e14073de9ac31`. Later SOURCE merges do not promote that epoch to latest prefork-runtime acceptance. [Function-gate SSOT](forever-cfg-failure-and-function-gates.md#independent-standalone-proof-epoch) details ordered records, environment isolation, two invalid-prefix results with one shared final snapshot, and exact getter absence. Formatting and manual changed-Rust readability pass; **14 warnings retained**, not warning-free proof.
 
 [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/main-retention.json) binds 14 byte-identical report/receipt/scope/comparison/stream files; original seals unchanged. No native/security/transport/inbound-delivery or fresh Retail restriction credit. Prefork migration remains outside this retention task; no migration-pass claim.
+
+## Exact startup fixtures: retained RED/GREEN epoch
+
+[Immutable GREEN report](../../../data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/report.md) is the bounded runtime count/status SSOT at `3de87465828db7cc7f6f900d4b63e24f1b399825`: **4/4 original case bodies actually execute after fork**, runner conformance **21/21**, prefork listing **2,325** with all four stable names once, Retail integration listing **10,681** with all four absent. These are new-epoch counts; no historical sealed numbers were replaced.
+
+[Immutable initial RED report](../../../data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/report-red.md) retains denied absolute `$crate::` macro invocation before runtime execution. Repair `3de874658` uses imported unqualified macro scope without fixture/body/gate changes. `cargo fmt --check` passed before repair; repair layout was inspected afterward, not command-reverified. Six existing vendor manifest deprecations remain; no zero-warnings claim.
+
+Three fresh single-fixture parent-process groups preserve the process-global one-shot bytecode seal. Original chat manual startup/SAY/white assertions, cast-bar parent/anchor transitions and profile-specific spellbook S dispatch remain unchanged; no normalization, reset or callback framework. Non-Retail gates and preservation inspected only: execution **UNVERIFIED**. Runner conformance is not exhaustive per-group failure/selection proof or measured speed improvement.
+
+[Separate byte-retention manifest](../../../data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/byte-retention-manifest.json) binds **71 original files / 2,758,400 bytes**, each source/retained SHA-256 equal: command ledger, complete streams, both hash scopes, listings, preservation/body ranges, conformance and reports. Inherited environment JSON key names were inspected before copying for secret/token/password/APIkey/cookie fields; no actual secret fields identified, so ordinary environment bytes retained unchanged. File mode is not safety evidence; no secret-bearing raw file or sanitized derivative was required.
+
+Full suite at `3de874658`, `unitfull-suite-1791563703.service`, was submitted asynchronously, **NOT passed**. Retention performs no fresh execution or suite status inference. Broader integration/native/full-UI/final gates remain open; no parent completion.
 
 ## Sources
 

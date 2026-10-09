@@ -1,0 +1,39 @@
+let exists: bool = env
+            .eval("return ChatFrame1EditBox ~= nil")
+            .expect("eval failed");
+        assert!(exists, "ChatFrame1EditBox should exist after loading Blizzard UI");
+
+        hook_send_chat_message(&env);
+
+        let has_focus: bool = env
+            .eval("return ChatFrame1EditBox:HasFocus()")
+            .expect("HasFocus failed");
+        assert!(!has_focus, "ChatFrame1EditBox should not have focus initially");
+
+        click_chat_editbox(&env);
+        type_text(&env, "hello world");
+
+        let text: String = env
+            .eval("return ChatFrame1EditBox:GetText()")
+            .expect("GetText failed");
+        assert_eq!(text, "hello world", "EditBox should contain typed text");
+
+        env.send_key_press("ENTER", None)
+            .expect("ENTER key press failed");
+
+        assert_message_sent(&env, "hello world", "SAY");
+
+        let message: String = env
+            .eval("return _G.__test_sent_messages[1].message")
+            .expect("eval failed");
+        assert_eq!(message, "hello world", "Sent message should match typed text");
+
+        let chat_type: String = env
+            .eval("return _G.__test_sent_messages[1].chatType")
+            .expect("eval failed");
+        assert_eq!(chat_type, "SAY", "Default chat type should be SAY");
+
+        let text_after: String = env
+            .eval("return ChatFrame1EditBox:GetText() or ''")
+            .expect("GetText failed");
+        assert_eq!(text_after, "", "EditBox should be cleared after submit");

@@ -1,0 +1,20 @@
+{
+  "prefork_total": 2325,
+  "chat_filter_selection": [
+    "chat_frame::test_chat_editbox_click_type_and_submit",
+    "chat_frame::test_chat_editbox_text_color_after_activation"
+  ],
+  "counts": {
+    "chat_frame::test_chat_editbox_click_type_and_submit": 1,
+    "chat_frame::test_chat_editbox_text_color_after_activation": 1,
+    "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix": 1,
+    "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors": 1
+  },
+  "integration_counts": {
+    "chat_frame::test_chat_editbox_click_type_and_submit": 0,
+    "chat_frame::test_chat_editbox_text_color_after_activation": 0,
+    "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix": 0,
+    "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors": 0
+  },
+  "integration_listed_lines": 10681
+}

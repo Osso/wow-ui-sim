@@ -998,3 +998,7 @@ SOURCE GREEN8/8 at0b39afb17,77 omission controls; portable GREEN3/3 at7fe5edac1 
 ## [2026-10-09] proof | Patch 1.13.5 copied SOURCE controls
 
 [Audit](investigations/patch-1-13-5-api-audit.md): SOURCE8/8 atb1a35a773;103 omission controls. Portable3/3 and own historical validator exit0 atb6efab100: copied SOURCE8/default-generator byte replay/default-extractor existing failure, both serialized ledger/log seal rejections and exact restorations.70 original seals unchanged;71-member157330-byte archive and7 separate later receipt seals. All14contracts UNPROVEN; no runtime/model/native credit or final gates. Concurrent1.13.6 placeholder separate; main orders1.13.6 before1.13.5.
+
+## [2026-10-09] ingest | Exact prefork fixture RED/GREEN retention
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch): immutable initial macro RED and `3de874658` GREEN, 4/4 original bodies postfork, conformance21/21, epoch listings2325/10681. Separate retention manifest binds71 original files/2,758,400bytes with71/71 matching hashes; environment key-name review found no actual secret fields. Spec marks only bounded proven criteria; non-Retail execution and exhaustive per-group coverage open. Pre-repair fmt command/post-repair layout inspection distinguished; six vendor deprecations remain. Full suite `unitfull-suite-1791563703.service` submitted, NOT passed; no parent completion or fresh execution.

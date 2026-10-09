@@ -1,0 +1,77 @@
+let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
+            .eval(
+                r#"
+                local cast = PlayerCastingBarFrame
+                local parent = cast and cast:GetParent()
+                local lockValue = cast and cast.GetSettingValue
+                    and cast:GetSettingValue(Enum.EditModeCastBarSetting.LockToPlayerFrame)
+                    or -1
+                return lockValue,
+                    cast:IsAttachedToPlayerFrame() or false,
+                    parent and parent:GetName() or "nil"
+                "#,
+            )
+            .unwrap();
+
+        assert_eq!(lock_value, 0, "default layout keeps the cast bar unlocked");
+        assert!(
+            !attached_after_post_event,
+            "unlocked startup cast bar should stay under the frame manager"
+        );
+        assert_eq!(
+            parent_after_post_event, "BottomManagedFrameContainer",
+            "unlocked startup cast bar should remain frame-manager parented"
+        );
+
+        let (player_apply_ok, attached_after_player_anchor): (bool, bool) = env
+            .eval(
+                r#"
+                PlayerFrame_DetachCastBar()
+                local playerApplyOk = pcall(function()
+                    PlayerFrame:ApplySystemAnchor()
+                end)
+                return playerApplyOk, PlayerCastingBarFrame:IsAttachedToPlayerFrame() or false
+                "#,
+            )
+            .unwrap();
+
+        assert!(player_apply_ok, "PlayerFrame:ApplySystemAnchor should still run successfully");
+        assert!(
+            !attached_after_player_anchor,
+            "player-frame anchoring should not override the cast bar's unlocked edit-mode setting"
+        );
+
+        let (cast_apply_ok, attached_after_cast_anchor, parent_after_cast_anchor): (
+            bool,
+            bool,
+            String,
+        ) = env
+            .eval(
+                r#"
+                for _, settingInfo in ipairs(PlayerCastingBarFrame.systemInfo.settings or {}) do
+                    if settingInfo.setting == Enum.EditModeCastBarSetting.LockToPlayerFrame then
+                        settingInfo.value = 1
+                    end
+                end
+                PlayerCastingBarFrame:UpdateSettingMap(true)
+
+                local castApplyOk = pcall(function()
+                    PlayerCastingBarFrame:ApplySystemAnchor()
+                end)
+                local parent = PlayerCastingBarFrame:GetParent()
+                return castApplyOk,
+                    PlayerCastingBarFrame:IsAttachedToPlayerFrame() or false,
+                    parent and parent:GetName() or "nil"
+                "#,
+            )
+            .unwrap();
+
+        assert!(
+            cast_apply_ok,
+            "PlayerCastingBarFrame:ApplySystemAnchor should handle locked mode"
+        );
+        assert!(
+            attached_after_cast_anchor,
+            "locked cast-bar edit-mode anchor path should attach to PlayerFrame"
+        );
+        assert_eq!(parent_after_cast_anchor, "PlayerFrame");

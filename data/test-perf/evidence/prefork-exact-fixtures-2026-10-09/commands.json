@@ -1,0 +1,363 @@
+[
+  {
+    "label": "revision-before",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:26:55.347179-05:00",
+    "end": "2026-10-09T11:26:55.348515-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "changes",
+    "argv": [
+      "git",
+      "diff",
+      "29e48f225^",
+      "911c980fc",
+      "--",
+      "tests/chat_frame.rs",
+      "tests/blizzard_player_spells_loads.rs",
+      "tests/common/mod.rs",
+      "tests/prefork_full_ui.rs",
+      "tests/spell_casting.rs"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:26:55.348774-05:00",
+    "end": "2026-10-09T11:26:55.351963-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "status-before",
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:26:55.352982-05:00",
+    "end": "2026-10-09T11:26:55.374211-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "prefork-build",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--test",
+      "prefork_full_ui",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:27:27.195649-05:00",
+    "end": "2026-10-09T11:27:47.538018-05:00",
+    "exit_code": 101
+  },
+  {
+    "label": "format",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:27:54.929438-05:00",
+    "end": "2026-10-09T11:28:04.446917-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "integration-list",
+    "argv": [
+      "cargo",
+      "nextest",
+      "list",
+      "--offline",
+      "--locked",
+      "--test",
+      "integration"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:04.447207-05:00",
+    "end": "2026-10-09T11:28:11.706316-05:00",
+    "exit_code": 101
+  },
+  {
+    "label": "revision-after",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:48.379899-05:00",
+    "end": "2026-10-09T11:28:48.381101-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "scope-delta",
+    "argv": [
+      "git",
+      "diff",
+      "911c980fc",
+      "HEAD",
+      "--",
+      "tests/chat_frame.rs",
+      "tests/blizzard_player_spells_loads.rs",
+      "tests/common/mod.rs",
+      "tests/prefork_full_ui.rs",
+      "tests/spell_casting.rs",
+      "build.rs",
+      "Cargo.toml",
+      "Cargo.lock"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:48.381277-05:00",
+    "end": "2026-10-09T11:28:48.382563-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "commit-file-inventory",
+    "argv": [
+      "git",
+      "diff",
+      "--name-only",
+      "29e48f225^",
+      "911c980fc"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:48.382737-05:00",
+    "end": "2026-10-09T11:28:48.384453-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "process-after",
+    "argv": [
+      "ps",
+      "-eo",
+      "pid,ppid,stat,lstart,args"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:48.384589-05:00",
+    "end": "2026-10-09T11:28:48.394215-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "old-chat_frame",
+    "argv": [
+      "git",
+      "show",
+      "29e48f225^:tests/chat_frame.rs"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:48.394383-05:00",
+    "end": "2026-10-09T11:28:48.396735-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "old-spell_casting",
+    "argv": [
+      "git",
+      "show",
+      "29e48f225^:tests/spell_casting.rs"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:48.396870-05:00",
+    "end": "2026-10-09T11:28:48.399586-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "old-blizzard_player_spells_loads",
+    "argv": [
+      "git",
+      "show",
+      "29e48f225^:tests/blizzard_player_spells_loads.rs"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:28:48.399709-05:00",
+    "end": "2026-10-09T11:28:48.403228-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "repair-delta",
+    "argv": [
+      "git",
+      "show",
+      "--format=fuller",
+      "3de874658",
+      "--",
+      "tests/common/mod.rs"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:30:16.850956-05:00",
+    "end": "2026-10-09T11:30:16.853278-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "repair-revision",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:30:16.853530-05:00",
+    "end": "2026-10-09T11:30:16.854503-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "prefork-build-repair",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--test",
+      "prefork_full_ui",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:30:16.854956-05:00",
+    "end": "2026-10-09T11:30:45.177351-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "prefork-list-repair",
+    "argv": [
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+      "--list"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:30:57.255017-05:00",
+    "end": "2026-10-09T11:30:57.272628-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "conformance-repair",
+    "argv": [
+      "timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {
+      "PREFORK_CONFORMANCE_SUITE": "1"
+    },
+    "start": "2026-10-09T11:30:57.273400-05:00",
+    "end": "2026-10-09T11:30:58.875890-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "chat-repair",
+    "argv": [
+      "timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+      "chat_frame::test_chat_editbox_",
+      "--test-threads=2"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:31:06.348442-05:00",
+    "end": "2026-10-09T11:31:10.682964-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "cast-bar-repair",
+    "argv": [
+      "timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+      "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+      "--exact",
+      "--test-threads=1"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:31:10.683615-05:00",
+    "end": "2026-10-09T11:31:15.028602-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "spellbook-repair",
+    "argv": [
+      "timeout",
+      "90",
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+      "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
+      "--exact",
+      "--test-threads=1"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:31:15.029284-05:00",
+    "end": "2026-10-09T11:31:19.757064-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "integration-list-repair",
+    "argv": [
+      "cargo",
+      "nextest",
+      "list",
+      "--offline",
+      "--locked",
+      "--test",
+      "integration"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:31:29.983800-05:00",
+    "end": "2026-10-09T11:31:54.426715-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "repair-revision-after",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:32:07.255371-05:00",
+    "end": "2026-10-09T11:32:07.256601-05:00",
+    "exit_code": 0
+  },
+  {
+    "label": "process-repair-after",
+    "argv": [
+      "ps",
+      "-eo",
+      "pid,ppid,stat,lstart,args"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "environment_overrides": {},
+    "start": "2026-10-09T11:32:07.256786-05:00",
+    "end": "2026-10-09T11:32:07.265742-05:00",
+    "exit_code": 0
+  }
+]
