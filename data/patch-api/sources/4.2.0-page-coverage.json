@@ -28,7 +28,7 @@
       "source_id": "wt-global-api-CollapseWarGameHeader-12",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "war-games"
     },
     {
@@ -43,14 +43,14 @@
       "source_id": "wt-global-api-CreateNewRaidProfile-14",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-DeleteRaidProfile-15",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
@@ -121,7 +121,7 @@
       "source_id": "wt-global-api-EJ_GetLootInfoByIndex-24",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Later retail removal expects absence, but the existing simulator Rust global remains callable. No cached Lua whole-word consumers found; no retirement change in this older-page slice. Related namespace behavior is not proof of legacy/native retirement parity. Observed: raw=function; lookup=function. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Later retail removal expects absence, but the existing simulator Rust global remains callable. No cached Lua whole-word consumers found; no retirement change in this older-page slice. Related namespace behavior is not proof of legacy/native retirement parity. Observed: raw=function; lookup=function. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "legacy-retirement-mismatch"
     },
     {
@@ -136,7 +136,7 @@
       "source_id": "wt-global-api-EJ_GetMapEncounter-26",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy map encounter-index query; journal data does not establish this historical argument/return contract. Cached PTRFeedback calls exist; no alias/shim introduced. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy map encounter-index query; journal data does not establish this historical argument/return contract. Cached PTRFeedback calls exist; no alias/shim introduced. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "encounter-journal"
     },
     {
@@ -167,7 +167,7 @@
       "source_id": "wt-global-api-EJ_GetSectionInfo-30",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy section-info global despite a related C_EncounterJournal query. Source gives no tuple/signature; namespace publication cannot justify a guessed legacy adapter. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy section-info global despite a related C_EncounterJournal query. Source gives no tuple/signature; namespace publication cannot justify a guessed legacy adapter. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "encounter-journal"
     },
     {
@@ -260,7 +260,7 @@
       "source_id": "wt-global-api-ExpandWarGameHeader-42",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "war-games"
     },
     {
@@ -283,14 +283,14 @@
       "source_id": "wt-global-api-GetCurrentRefresh-45",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing display refresh-rate query/model; do not substitute frame/update rate or a constant. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing display refresh-rate query/model; do not substitute frame/update rate or a constant. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "display-refresh"
     },
     {
       "source_id": "wt-global-api-GetMaxNumCUFProfiles-46",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
@@ -305,56 +305,56 @@
       "source_id": "wt-global-api-GetNumRaidProfiles-48",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetNumWarGameTypes-49",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-GetOSLocale-50",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing distinct OS locale input; current game locale is not proof of OS locale semantics. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing distinct OS locale input; current game locale is not proof of OS locale semantics. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "os-locale"
     },
     {
       "source_id": "wt-global-api-GetPVPRewards-51",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy reward result contract/state. Modern PVP/honor state and published RequestPVPRewards do not prove the old reward tuple. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy reward result contract/state. Modern PVP/honor state and published RequestPVPRewards do not prove the old reward tuple. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "pvp-rewards"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileFlattenedOptions-52",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileName-53",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileOption-54",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-GetRaidProfileSavedPosition-55",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
@@ -369,28 +369,28 @@
       "source_id": "wt-global-api-GetSelectedWarGameType-57",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-GetWarGameTypeInfo-58",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "war-games"
     },
     {
       "source_id": "wt-global-api-HasTravelPass-59",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy Battle.net travel-pass eligibility policy; no constant predicate or inferred service entitlement. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy Battle.net travel-pass eligibility policy; no constant predicate or inferred service entitlement. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "travel-pass"
     },
     {
       "source_id": "wt-global-api-LoadURLIndex-60",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing URL-index catalog and launch behavior. Current cached Game/Shared/Glue callers retained; no external URL side effects or no-op shim introduced. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing URL-index catalog and launch behavior. Current cached Game/Shared/Glue callers retained; no external URL side effects or no-op shim introduced. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "url-launch"
     },
     {
@@ -405,14 +405,14 @@
       "source_id": "wt-global-api-RaidProfileExists-62",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-RaidProfileHasUnsavedChanges-63",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
@@ -427,42 +427,42 @@
       "source_id": "wt-global-api-RestoreRaidProfileFromCopy-65",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SaveRaidProfileCopy-66",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SetRaidProfileOption-67",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SetRaidProfileSavedPosition-68",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy raid-profile CRUD/options/copy/position storage. Classic-only compatibility defaults remain untouched; no real legacy profile model or source signatures justify a retail stub. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "raid-profiles"
     },
     {
       "source_id": "wt-global-api-SetRefresh-69",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing display refresh-rate mutation/model and accepted-rate policy; no no-op setter added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing display refresh-rate mutation/model and accepted-rate policy; no no-op setter added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "display-refresh"
     },
     {
       "source_id": "wt-global-api-SetSelectedWarGameType-70",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "war-games"
     },
     {
@@ -477,7 +477,7 @@
       "source_id": "wt-global-api-UpdateWarGamesList-72",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
+      "note": "Missing legacy war-game list/header selection model. Cached Mists-path references are not proof of loaded retail use; no list fixtures or no-op commands added. Observed: raw=nil; lookup=nil. Actual 4.3.0/4.3.4 successors leave this publication gap unresolved.",
       "gap_group": "war-games"
     },
     {
