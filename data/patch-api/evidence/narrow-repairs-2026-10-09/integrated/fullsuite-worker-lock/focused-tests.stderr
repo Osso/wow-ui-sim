@@ -1,0 +1,8 @@
+test_missing_shared_wrapper_fails_without_starting_cargo (tools.test_full_suite.FullSuiteWorkerTests.test_missing_shared_wrapper_fails_without_starting_cargo) ... ok
+test_shared_lock_covers_successful_children (tools.test_full_suite.FullSuiteWorkerTests.test_shared_lock_covers_successful_children) ... ok
+test_shared_lock_releases_after_failure_and_retains_result (tools.test_full_suite.FullSuiteWorkerTests.test_shared_lock_releases_after_failure_and_retains_result) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.490s
+
+OK

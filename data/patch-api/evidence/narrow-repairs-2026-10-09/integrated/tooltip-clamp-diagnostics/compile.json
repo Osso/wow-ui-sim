@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "/usr/bin/cargo",
+    "test",
+    "--test",
+    "integration",
+    "--no-run",
+    "--offline",
+    "--locked",
+    "--jobs",
+    "4",
+    "--message-format=json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "9f91aca971a8d66c02e81f602923aea6f6f23f68",
+  "started": "2026-10-09T20:22:52.785927+00:00",
+  "status": "capture interrupted; wrapper and waiter exited; exit unavailable",
+  "observed_finished_by": "2026-10-09T20:25:57.707250+00:00",
+  "exit": null,
+  "stdout_saved": false,
+  "stderr_saved": false,
+  "artifact_receipt_available": false,
+  "rerun": false
+}

@@ -1,0 +1,32 @@
+{
+  "start_utc": "2026-10-09T20:20:40.385907+00:00",
+  "end_utc": "2026-10-09T20:20:50.474792+00:00",
+  "revision": "51e0b4e36ab439dcb0e2f9618aec54117a3ff8c2",
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "argv": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_vendor_map": {
+    "/home/osso/Projects/wow/wow-ui-sim/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs": {
+      "sha256": "0d47d418c5bb4db4e4ff78199e6985c88986a9655b72edf514e80d76dc6ee7bc",
+      "bytes": 21608
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/src/lua_api/workarounds_editmode_tests/apply_system_anchors/singletons.rs": {
+      "sha256": "ebbff03c98568ccc66a25bfbe1b240e8505fa270c2b6bc66644c67023ac6cf97",
+      "bytes": 27018
+    },
+    "/home/osso/Projects/wow/wow-ui-sim/src/lua_api/workarounds_editmode_tests/apply_system_anchors/unit_frames.rs": {
+      "sha256": "12fb7ccf3e0fca911a7f99da42e249553b54e7be1a5b996546cb5a6d3668f994",
+      "bytes": 16900
+    },
+    "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua": {
+      "sha256": "96afef741f8d471f44e8d9d32d317cf9124b771fcbe33bec18600edae7255d11",
+      "bytes": 107241
+    }
+  }
+}

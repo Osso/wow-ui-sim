@@ -1,0 +1,9 @@
+{
+  "path": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+  "sha256": "6d93fda8fc392c78201bffeafe8d8ec309983802df58f51187ac8661e15110ce",
+  "size": 466732008,
+  "modified": "2026-10-09T20:17:53.992353+00:00",
+  "observed": "2026-10-09T20:25:57.688451+00:00",
+  "executed": false,
+  "validity": "Predates diagnostic commit/compile request; not current-revision proof."
+}

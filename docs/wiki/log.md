@@ -1,3 +1,7 @@
+## [2026-10-09] ingest | Worker coordination and interrupted fixture proof
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#asynchronous-full-suite-worker--bounded-coordination-proof) records worker coordination3/3 and installed nextest flag acceptance ataa9004aca. EditMode formatting/source audit passes but GREEN0/3 executed; tooltip diagnostic predicates unchanged, RED/control0/2 executed after capture loss. Forty-five artifacts retained byte-identically with exclusion hashes and bounded privacy limits. No duplicate compile, actual full-suite, native or parent acceptance.
+
 ## [2026-10-09] ingest | ManagedAura native-phase bounded proof retained
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#managedaura--editmode--reproduced-failures-repairs-pending) records actual dcc101d85 fmt0/compile0/on_update_modes5/5, six manifest deprecations, preserved historical RED and initialized-template scheduling boundary. Twenty proof files/9,180,597 bytes retained byte-identically; bounded credential-pattern scan no matches, not exhaustive. Separate exact-SHA successful CI receipt credits enabled CI, not runtime. No visual aura/native/profile/full-suite/parent acceptance; no proof reruns, source/spec changes or operations.

@@ -1,0 +1,400 @@
+commit aa9004aca92a4ef09592bf4b98753b32ebea0f78
+Author: Alessio Deiana <adeiana@gmail.com>
+Date:   Fri Oct 9 15:24:29 2026 -0500
+
+    Coordinate detached full-suite Cargo steps with shared build lock
+
+diff --git a/docs/remote-builds.md b/docs/remote-builds.md
+index 76e34f156..805da5d93 100644
+--- a/docs/remote-builds.md
++++ b/docs/remote-builds.md
+@@ -44,6 +44,28 @@ Normal desktop GUI failed before its first frame: `target/native-desktop-gui-lon
+ 
+ The actual local `wow-cli` helper built and printed `--help` in 0.35 seconds: bounded local CLI proof, not GUI acceptance or a local server pass. Local capability remains supported; actual local runtime acceptance is deferred, not required now for the current gate. User rejected local server build attempts; actual local server proof is deferred and its no-local-compile guard remains. Corrected source gate passed: two repaired fixtures, zero Ruff diagnostics across 14 files, and pycompile for nine changed files. The prior 94 passing fixtures retain revision-scoped credit; this is not a fresh 96-test run. Evidence: engine `target/native-migration-corrected-verify.md`. Historical focused-test/check reports are not a fresh current-tree gate. Normal desktop GUI remains unresolved; source-gate success would not complete the whole workflow.
+ 
++## Asynchronous full suite
++
++`python3 tools/full_suite.py submit [REF]` schedules the detached worker;
++`python3 tools/full_suite.py status [REF]` reads stored results. The worker keeps
++its existing suite lock and dedicated checkout/results under `~/Projects/wow/`.
++Each actual Cargo step runs through the required installed
++`/home/osso/.worktrees/build-lock.sh`, sharing the builder lock with sibling
++builds for the entire child lifetime, including unsuccessful exits. Locking the
++submit launcher alone does not coordinate detached workloads. A missing wrapper
++fails explicitly; there is no unlocked execution path.
++
++Cargo steps use `--offline --locked` and `CARGO_BUILD_JOBS=4`; dependencies must
++already be cached and the lockfile current. `FULL_SUITE_JOBS` controls nextest
++test workers only (default 16), independently of compilation jobs. Nonzero Cargo
++exits and parsed test failures remain in the stored JSON and log, and later
++steps still run. Submission/status behavior is unchanged.
++
++Bounded worker regression tests (temporary executable fixtures and a real flock,
++no actual builds or systemd): `python3 -m unittest tools.test_full_suite -v`.
++Changes to the tracked runner do not update `/home/osso/bin/full-suite`;
++installation is a separate deployment step.
++
+ ## Related
+ 
+ - [Build-host contract](specs/build-host.md)
+diff --git a/tools/full_suite.py b/tools/full_suite.py
+index 1d402d0ea..c9d1f7268 100755
+--- a/tools/full_suite.py
++++ b/tools/full_suite.py
+@@ -10,6 +10,7 @@ Runs serialize on a lock. Each run uses a dedicated checkout and target dir so a
+ working copies are never touched. Results: RESULTS/<sha>.json plus <sha>.log; master runs
+ also update RESULTS/master-latest.json, which later runs compare against to list NEW failures.
+ """
++
+ import fcntl
+ import json
+ import os
+@@ -24,14 +25,18 @@ REPO = ROOT / "wow-ui-sim"
+ CHECKOUT = ROOT / "full-suite-checkout"
+ RESULTS = ROOT / "full-suite-results"
+ LOCK = RESULTS / ".lock"
++BUILD_LOCK = Path("/home/osso/.worktrees/build-lock.sh")
+ JOBS = os.environ.get("FULL_SUITE_JOBS", "16")
+-FAILED = re.compile(r"^\s*(?:FAIL|SIGSEGV|SIGABRT|TIMEOUT) \[.*?\] (?:\(\s*\d+/\d+\) )?\S+ (\S+)", re.M)
++FAILED = re.compile(
++    r"^\s*(?:FAIL|SIGSEGV|SIGABRT|TIMEOUT) \[.*?\] (?:\(\s*\d+/\d+\) )?\S+ (\S+)", re.M
++)
+ PREFORK_FAILED = re.compile(r"^test (\S+) \.\.\. FAILED", re.M)
+ 
+ 
+ def git(*args, cwd=REPO):
+-    return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True,
+-                          text=True).stdout.strip()
++    return subprocess.run(
++        ["git", *args], cwd=cwd, check=True, capture_output=True, text=True
++    ).stdout.strip()
+ 
+ 
+ def resolve(ref):
+@@ -41,18 +46,26 @@ def resolve(ref):
+ 
+ def prepare_checkout(sha):
+     if not (CHECKOUT / ".git").exists():
+-        subprocess.run(["git", "clone", "-q", "--shared", str(REPO), str(CHECKOUT)], check=True)
++        subprocess.run(
++            ["git", "clone", "-q", "--shared", str(REPO), str(CHECKOUT)], check=True
++        )
+     git("fetch", "-q", str(REPO), sha, cwd=CHECKOUT)
+     git("checkout", "-q", "--force", sha, cwd=CHECKOUT)
+     git("clean", "-q", "-fdx", "-e", "target", cwd=CHECKOUT)
+ 
+ 
+ def run_step(name, cmd, log, env):
++    if not BUILD_LOCK.is_file():
++        raise FileNotFoundError(f"Required shared build wrapper missing: {BUILD_LOCK}")
++    cmd = [str(BUILD_LOCK), *cmd, "--offline", "--locked"]
+     start = time.monotonic()
+     proc = subprocess.run(cmd, cwd=CHECKOUT, env=env, capture_output=True, text=True)
+     output = proc.stdout + proc.stderr
+     log.write(f"===== {name}: {' '.join(cmd)} (exit {proc.returncode})\n{output}\n")
+-    return {"exit": proc.returncode, "seconds": round(time.monotonic() - start, 1)}, output
++    return {
++        "exit": proc.returncode,
++        "seconds": round(time.monotonic() - start, 1),
++    }, output
+ 
+ 
+ def summarize(output, pattern):
+@@ -65,16 +78,48 @@ def run(ref):
+         fcntl.flock(lock, fcntl.LOCK_EX)
+         sha = resolve(ref)
+         prepare_checkout(sha)
+-        env = dict(os.environ, CARGO_BUILD_JOBS=JOBS, CARGO_TERM_COLOR="never")
+-        result = {"ref": ref, "sha": sha, "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+-                  "steps": {}, "failures": {}}
++        env = dict(os.environ, CARGO_BUILD_JOBS="4", CARGO_TERM_COLOR="never")
++        result = {
++            "ref": ref,
++            "sha": sha,
++            "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
++            "steps": {},
++            "failures": {},
++        }
+         with open(RESULTS / f"{sha}.log", "w") as log:
+             steps = [
+-                ("integration", ["cargo", "nextest", "run", "--test", "integration",
+-                                 "--no-fail-fast", "--test-threads", JOBS], FAILED),
+-                ("prefork", ["cargo", "test", "--test", "prefork_full_ui"], PREFORK_FAILED),
+-                ("lib", ["cargo", "nextest", "run", "--lib", "--no-fail-fast",
+-                         "--test-threads", JOBS], FAILED),
++                (
++                    "integration",
++                    [
++                        "cargo",
++                        "nextest",
++                        "run",
++                        "--test",
++                        "integration",
++                        "--no-fail-fast",
++                        "--test-threads",
++                        JOBS,
++                    ],
++                    FAILED,
++                ),
++                (
++                    "prefork",
++                    ["cargo", "test", "--test", "prefork_full_ui"],
++                    PREFORK_FAILED,
++                ),
++                (
++                    "lib",
++                    [
++                        "cargo",
++                        "nextest",
++                        "run",
++                        "--lib",
++                        "--no-fail-fast",
++                        "--test-threads",
++                        JOBS,
++                    ],
++                    FAILED,
++                ),
+             ]
+             for name, cmd, pattern in steps:
+                 result["steps"][name], output = run_step(name, cmd, log, env)
+@@ -83,8 +128,14 @@ def run(ref):
+         result["new_failures"] = new_failures(result)
+         (RESULTS / f"{sha}.json").write_text(json.dumps(result, indent=2) + "\n")
+         if ref in ("origin/master", "master"):
+-            (RESULTS / "master-latest.json").write_text(json.dumps(result, indent=2) + "\n")
+-        print(json.dumps({k: result[k] for k in ("sha", "steps", "new_failures")}, indent=2))
++            (RESULTS / "master-latest.json").write_text(
++                json.dumps(result, indent=2) + "\n"
++            )
++        print(
++            json.dumps(
++                {k: result[k] for k in ("sha", "steps", "new_failures")}, indent=2
++            )
++        )
+ 
+ 
+ def new_failures(result):
+@@ -92,15 +143,31 @@ def new_failures(result):
+     if not base_path.exists():
+         return None
+     base = json.loads(base_path.read_text())
+-    return {name: sorted(set(fails) - set(base["failures"].get(name, [])))
+-            for name, fails in result["failures"].items()}
++    return {
++        name: sorted(set(fails) - set(base["failures"].get(name, [])))
++        for name, fails in result["failures"].items()
++    }
+ 
+ 
+ def submit(ref):
+     unit = f"full-suite-{int(time.time())}"
+-    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect",
+-                    "-p", "MemoryHigh=28G", "-p", "MemoryMax=34G",
+-                    sys.executable, os.path.abspath(__file__), "run", ref], check=True)
++    subprocess.run(
++        [
++            "systemd-run",
++            "--user",
++            f"--unit={unit}",
++            "--collect",
++            "-p",
++            "MemoryHigh=28G",
++            "-p",
++            "MemoryMax=34G",
++            sys.executable,
++            os.path.abspath(__file__),
++            "run",
++            ref,
++        ],
++        check=True,
++    )
+     print(unit)
+ 
+ 
+diff --git a/tools/test_full_suite.py b/tools/test_full_suite.py
+new file mode 100644
+index 000000000..bbff1bfe8
+--- /dev/null
++++ b/tools/test_full_suite.py
+@@ -0,0 +1,181 @@
++"""Bounded subprocess coverage of the detached full-suite worker."""
++
++import fcntl
++import json
++import os
++from pathlib import Path
++import signal
++import subprocess
++import sys
++import tempfile
++import time
++import unittest
++
++
++RUNNER = Path(__file__).with_name("full_suite.py")
++
++
++def write_executable(path, body):
++    path.write_text(f"#!{sys.executable}\n" + body)
++    path.chmod(0o755)
++
++
++def wait_for(path, process):
++    deadline = time.monotonic() + 5
++    while not path.exists():
++        if process.poll() is not None:
++            raise AssertionError(
++                f"Worker exited before {path.name}: {process.communicate()}"
++            )
++        if time.monotonic() >= deadline:
++            raise AssertionError(f"Timed out waiting for {path.name}")
++        time.sleep(0.01)
++
++
++class FullSuiteWorkerTests(unittest.TestCase):
++    def setUp(self):
++        self.temp = tempfile.TemporaryDirectory()
++        self.addCleanup(self.temp.cleanup)
++        self.root = Path(self.temp.name)
++        self.bin = self.root / "bin"
++        self.bin.mkdir()
++        self.checkout = self.root / "Projects/wow/full-suite-checkout"
++        (self.checkout / ".git").mkdir(parents=True)
++        (self.root / "Projects/wow/wow-ui-sim").mkdir()
++        self.wrapper = self.bin / "build-lock"
++        self.lock_path = self.root / "builder.lock"
++        write_executable(
++            self.bin / "git",
++            "import sys\nif sys.argv[1] == 'rev-parse': print('sandbox-sha')\n",
++        )
++        write_executable(
++            self.wrapper,
++            "import fcntl, os, pathlib, subprocess, sys\n"
++            "root = pathlib.Path(os.environ['HOME'])\n"
++            "with (root / 'builder.lock').open('w') as lock:\n"
++            "    (root / 'waiting').touch()\n"
++            "    fcntl.flock(lock, fcntl.LOCK_EX)\n"
++            "    sys.exit(subprocess.call(sys.argv[1:]))\n",
++        )
++        write_executable(
++            self.bin / "cargo",
++            "import json, os, pathlib, sys, time\n"
++            "root = pathlib.Path(os.environ['HOME'])\n"
++            "name = 'lib' if '--lib' in sys.argv else sys.argv[sys.argv.index('--test') + 1]\n"
++            "(root / (name + '.started')).write_text(json.dumps({\n"
++            "    'argv': sys.argv[1:], 'jobs': os.environ.get('CARGO_BUILD_JOBS')}))\n"
++            "deadline = time.monotonic() + 5\n"
++            "while not (root / (name + '.release')).exists():\n"
++            "    if time.monotonic() > deadline: sys.exit(98)\n"
++            "    time.sleep(0.01)\n"
++            "if name == 'prefork_full_ui' and os.environ['FAIL_PREFORK'] == '1':\n"
++            "    print('test sandbox::failure ... FAILED')\n"
++            "    sys.exit(7)\n",
++        )
++        self.harness = self.root / "worker.py"
++        self.harness.write_text(
++            "import pathlib, runpy, sys\n"
++            f"worker = runpy.run_path({str(RUNNER)!r})\n"
++            # Redirect only the installed dependency path; run every real worker function.
++            "worker['run'].__globals__['BUILD_LOCK'] = pathlib.Path(sys.argv[1])\n"
++            "worker['run']('sandbox-ref')\n"
++        )
++        self.env = dict(
++            os.environ,
++            HOME=str(self.root),
++            PATH=f"{self.bin}{os.pathsep}{os.environ['PATH']}",
++            FULL_SUITE_JOBS="3",
++            CARGO_BUILD_JOBS="29",
++            FAIL_PREFORK="0",
++        )
++
++    def start_worker(self):
++        process = subprocess.Popen(
++            [sys.executable, str(self.harness), str(self.wrapper)],
++            env=self.env,
++            stdout=subprocess.PIPE,
++            stderr=subprocess.PIPE,
++            text=True,
++            start_new_session=True,
++        )
++        self.addCleanup(self.stop_worker, process)
++        return process
++
++    @staticmethod
++    def stop_worker(process):
++        if process.poll() is None:
++            os.killpg(process.pid, signal.SIGKILL)
++        process.communicate(timeout=5)
++
++    def assert_lock_held(self, lock):
++        with self.assertRaises(BlockingIOError):
++            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
++
++    def exercise_worker(self, fail_prefork):
++        self.env["FAIL_PREFORK"] = str(int(fail_prefork))
++        with self.lock_path.open("w") as lock:
++            fcntl.flock(lock, fcntl.LOCK_EX)
++            process = self.start_worker()
++            # Both old and new workers have a deterministic observable first boundary.
++            deadline = time.monotonic() + 5
++            while (
++                not (self.root / "waiting").exists()
++                and not (self.root / "integration.started").exists()
++            ):
++                self.assertIsNone(process.poll())
++                self.assertLess(time.monotonic(), deadline)
++                time.sleep(0.01)
++            time.sleep(0.05)
++            self.assertFalse(
++                (self.root / "integration.started").exists(),
++                "Cargo bypassed shared lock",
++            )
++            fcntl.flock(lock, fcntl.LOCK_UN)
++            for name in ("integration", "prefork_full_ui", "lib"):
++                started = self.root / f"{name}.started"
++                wait_for(started, process)
++                self.assert_lock_held(lock)
++                record = json.loads(started.read_text())
++                self.assertIn("--offline", record["argv"])
++                self.assertIn("--locked", record["argv"])
++                self.assertEqual(record["jobs"], "4")
++                if name != "prefork_full_ui":
++                    index = record["argv"].index("--test-threads")
++                    self.assertEqual(record["argv"][index + 1], "3")
++                (self.root / f"{name}.release").touch()
++            stdout, stderr = process.communicate(timeout=5)
++            self.assertEqual(process.returncode, 0, stderr)
++            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
++        results = self.root / "Projects/wow/full-suite-results"
++        result = json.loads((results / "sandbox-sha.json").read_text())
++        self.assertEqual(result["steps"]["prefork"]["exit"], 7 if fail_prefork else 0)
++        self.assertEqual(result["steps"]["lib"]["exit"], 0)
++        self.assertEqual(
++            result["failures"]["prefork"], ["sandbox::failure"] if fail_prefork else []
++        )
++        self.assertEqual(json.loads(stdout)["steps"], result["steps"])
++        log = (results / "sandbox-sha.log").read_text()
++        self.assertIn("exit 7" if fail_prefork else "exit 0", log)
++        if fail_prefork:
++            self.assertIn("test sandbox::failure ... FAILED", log)
++
++    def test_shared_lock_covers_successful_children(self):
++        self.exercise_worker(False)
++
++    def test_shared_lock_releases_after_failure_and_retains_result(self):
++        self.exercise_worker(True)
++
++    def test_missing_shared_wrapper_fails_without_starting_cargo(self):
++        self.wrapper.unlink()
++        for name in ("integration", "prefork_full_ui", "lib"):
++            (self.root / f"{name}.release").touch()
++        process = self.start_worker()
++        _, stderr = process.communicate(timeout=5)
++        self.assertNotEqual(process.returncode, 0)
++        self.assertIn("Required shared build wrapper missing", stderr)
++        self.assertIn(str(self.wrapper), stderr)
++        self.assertFalse((self.root / "integration.started").exists())
++
++
++if __name__ == "__main__":
++    unittest.main()

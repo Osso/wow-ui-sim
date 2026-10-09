@@ -1,0 +1,143 @@
+{
+  "retained_at": "2026-10-09T20:27:39.967685+00:00",
+  "scope": "aa9004aca: three fake-Cargo subprocess tests and installed nextest help; no actual builds/submission/installed copy update.",
+  "files": [
+    {
+      "source": "/tmp/fullsuite-lock-independent/commit-diff.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/commit-diff.json",
+      "bytes": 123,
+      "source_sha256": "7fd7769fb55e52fa354cfb6d8b601e4b07986c5224f62918794271538e99f1de",
+      "target_sha256": "7fd7769fb55e52fa354cfb6d8b601e4b07986c5224f62918794271538e99f1de"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/commit-diff.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/commit-diff.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/commit-diff.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/commit-diff.stdout",
+      "bytes": 16999,
+      "source_sha256": "ad3c357bcc232c5ae8a86e6d048b6789224666d754ae887cb46f7683a26cdbb9",
+      "target_sha256": "ad3c357bcc232c5ae8a86e6d048b6789224666d754ae887cb46f7683a26cdbb9"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/focused-tests.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/focused-tests.json",
+      "bytes": 123,
+      "source_sha256": "de09d4d813527b039b27d2654d52f5527edf5da1346b263530d65da5f0e14a1e",
+      "target_sha256": "de09d4d813527b039b27d2654d52f5527edf5da1346b263530d65da5f0e14a1e"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/focused-tests.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/focused-tests.stderr",
+      "bytes": 574,
+      "source_sha256": "eccf714c39f63e3af89ad1636b0666a5926f440c59e1a312a350ec4dc61ab9c7",
+      "target_sha256": "eccf714c39f63e3af89ad1636b0666a5926f440c59e1a312a350ec4dc61ab9c7"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/focused-tests.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/focused-tests.stdout",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/hashes.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/hashes.json",
+      "bytes": 796,
+      "source_sha256": "e08c55fc7d723a5f351e46bbf96d96423cd04a62a1807b792a0828ad3a8183f2",
+      "target_sha256": "e08c55fc7d723a5f351e46bbf96d96423cd04a62a1807b792a0828ad3a8183f2"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/nextest-help.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/nextest-help.json",
+      "bytes": 123,
+      "source_sha256": "44928c597fc5879ab0f1fe5b1635bd6b505a513274a2e52d9719cfb924cbae96",
+      "target_sha256": "44928c597fc5879ab0f1fe5b1635bd6b505a513274a2e52d9719cfb924cbae96"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/nextest-help.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/nextest-help.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/nextest-help.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/nextest-help.stdout",
+      "bytes": 16853,
+      "source_sha256": "4d78cb984289b3b44a33666c4a42ae7f22b2972237801eacc0746d52338f3a4c",
+      "target_sha256": "4d78cb984289b3b44a33666c4a42ae7f22b2972237801eacc0746d52338f3a4c"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/report.md",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/report.md",
+      "bytes": 5054,
+      "source_sha256": "272d2f909d5d0c69a3772bafdfa776d8f8b1aa2f2a94a3cd6506a38744bf434d",
+      "target_sha256": "272d2f909d5d0c69a3772bafdfa776d8f8b1aa2f2a94a3cd6506a38744bf434d"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/revision.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/revision.json",
+      "bytes": 123,
+      "source_sha256": "ab1d02e54187f903e6e8721becfbe930a4cc97ddff4f08745b3f6de6a91abc54",
+      "target_sha256": "ab1d02e54187f903e6e8721becfbe930a4cc97ddff4f08745b3f6de6a91abc54"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/revision.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/revision.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/revision.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/revision.stdout",
+      "bytes": 41,
+      "source_sha256": "bb80da6dd1ede037aba2cf6e31f746fd6494a4c80382adcd7ff5d8ca615d681a",
+      "target_sha256": "bb80da6dd1ede037aba2cf6e31f746fd6494a4c80382adcd7ff5d8ca615d681a"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/scope.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/scope.json",
+      "bytes": 742,
+      "source_sha256": "8d9e2e6118f8c7a7f7f4bb850bd9ae77aa66a1f6a36ba45c31ff6b350b3e2db2",
+      "target_sha256": "8d9e2e6118f8c7a7f7f4bb850bd9ae77aa66a1f6a36ba45c31ff6b350b3e2db2"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/status.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/status.json",
+      "bytes": 123,
+      "source_sha256": "28eb9b666935fbead80b5b2824a5fdfd60209a2969031a0fed141d7b457c6cb1",
+      "target_sha256": "28eb9b666935fbead80b5b2824a5fdfd60209a2969031a0fed141d7b457c6cb1"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/status.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/status.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/fullsuite-lock-independent/status.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fullsuite-worker-lock/status.stdout",
+      "bytes": 18,
+      "source_sha256": "afbbaa89fd2dd18e916d24c76db7f59cecba0e0cefc23e3b9745ec5bed252acb",
+      "target_sha256": "afbbaa89fd2dd18e916d24c76db7f59cecba0e0cefc23e3b9745ec5bed252acb"
+    }
+  ],
+  "exclusions": [],
+  "privacy": {
+    "patterns": [
+      "(?i)authorization\\s*[:=]\\s*[\"\\x27]?Bearer\\s+\\S+",
+      "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+      "\\b(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})\\b",
+      "(?i)(?:password|api_key|access_token|refresh_token)\\s*[\"\\x27]?\\s*[:=]\\s*[\"\\x27][^\"\\x27]{8,}"
+    ],
+    "matches": 0,
+    "limits": "Bounded credential-pattern scan; not exhaustive, no entropy analysis or external dependency/environment review. Process inventory excluded where noted."
+  }
+}

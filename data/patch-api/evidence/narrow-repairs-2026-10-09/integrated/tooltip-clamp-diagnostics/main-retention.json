@@ -1,0 +1,155 @@
+{
+  "retained_at": "2026-10-09T20:27:39.965295+00:00",
+  "scope": "9f91aca97 diagnostics only; compile result lost, RED/control unexecuted and actual rect values unknown.",
+  "files": [
+    {
+      "source": "/tmp/tooltip-clamp-repro/commit.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/commit.json",
+      "bytes": 376,
+      "source_sha256": "9ddb4b27fe540a10d0dd75bcf68f619f51ca870bbd86b5620bcbc3680f6ac523",
+      "target_sha256": "9ddb4b27fe540a10d0dd75bcf68f619f51ca870bbd86b5620bcbc3680f6ac523"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/commit.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/commit.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/commit.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/commit.stdout",
+      "bytes": 122,
+      "source_sha256": "afe59bdbd5548d8f5b97b20c450f3446d111d9a7f273b7395915798ed88ca58f",
+      "target_sha256": "afe59bdbd5548d8f5b97b20c450f3446d111d9a7f273b7395915798ed88ca58f"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/compile.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/compile.json",
+      "bytes": 648,
+      "source_sha256": "5027b99f1fb24e8aa612c41050bbe31c4f70802b54eac8df0ad4547db7289fa2",
+      "target_sha256": "5027b99f1fb24e8aa612c41050bbe31c4f70802b54eac8df0ad4547db7289fa2"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/diff.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/diff.json",
+      "bytes": 304,
+      "source_sha256": "aac2ad1bd00aef65729aa37646b46ab368775dcab51cf6ec76242e6d103da890",
+      "target_sha256": "aac2ad1bd00aef65729aa37646b46ab368775dcab51cf6ec76242e6d103da890"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/diff.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/diff.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/diff.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/diff.stdout",
+      "bytes": 1499,
+      "source_sha256": "e3c12a37eff2130270ee2314f89d5a05e795f0c2fc8ee0aba727619c9bbd837b",
+      "target_sha256": "e3c12a37eff2130270ee2314f89d5a05e795f0c2fc8ee0aba727619c9bbd837b"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/final-status.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/final-status.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/final-status.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/final-status.stdout",
+      "bytes": 46,
+      "source_sha256": "31ccb693b4a624a823f40b0bcab7760285ca87912b49dfef07c8bac466a30b09",
+      "target_sha256": "31ccb693b4a624a823f40b0bcab7760285ca87912b49dfef07c8bac466a30b09"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/format.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/format.json",
+      "bytes": 359,
+      "source_sha256": "2369c6d6a8f664afcafd066ad0b4a4f9ad537738dce2c6df2c31a8cf24e78641",
+      "target_sha256": "2369c6d6a8f664afcafd066ad0b4a4f9ad537738dce2c6df2c31a8cf24e78641"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/format.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/format.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/format.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/format.stdout",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/preexisting-artifact.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/preexisting-artifact.json",
+      "bytes": 408,
+      "source_sha256": "5dfd187eb71264de5f3237891d59e12e6686f36a28cb4ab18594b96677956313",
+      "target_sha256": "5dfd187eb71264de5f3237891d59e12e6686f36a28cb4ab18594b96677956313"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/report.md",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/report.md",
+      "bytes": 1927,
+      "source_sha256": "8c36179624d05d54fd44872ee891906acdad9500ad3f5f94628d936cc3a02e13",
+      "target_sha256": "8c36179624d05d54fd44872ee891906acdad9500ad3f5f94628d936cc3a02e13"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/stage.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/stage.json",
+      "bytes": 303,
+      "source_sha256": "bbc9d8f79dab5c054a47b9c1c888567e06fc6a13ea5d875b1689f63359c562e7",
+      "target_sha256": "bbc9d8f79dab5c054a47b9c1c888567e06fc6a13ea5d875b1689f63359c562e7"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/stage.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/stage.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/tooltip-clamp-repro/stage.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/tooltip-clamp-diagnostics/stage.stdout",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "exclusions": [
+    {
+      "file": "incident-process-snapshot.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "reason": "excluded inventory paired stream"
+    },
+    {
+      "file": "incident-process-snapshot.stdout",
+      "sha256": "856918719dab0d113b018d99789984715464bf7c7ca6bf8fbb186395e7a9f23c",
+      "bytes": 27882,
+      "reason": "process inventory excluded for privacy"
+    },
+    {
+      "file": "wiki-index-read.txt",
+      "sha256": "876b65536a66dc80ba16ec897afc27292b4198069ab81487c914352ae53bd5f0",
+      "bytes": 644334,
+      "reason": "duplicate wiki content"
+    }
+  ],
+  "privacy": {
+    "patterns": [
+      "(?i)authorization\\s*[:=]\\s*[\"\\x27]?Bearer\\s+\\S+",
+      "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+      "\\b(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})\\b",
+      "(?i)(?:password|api_key|access_token|refresh_token)\\s*[\"\\x27]?\\s*[:=]\\s*[\"\\x27][^\"\\x27]{8,}"
+    ],
+    "matches": 0,
+    "limits": "Bounded credential-pattern scan; not exhaustive, no entropy analysis or external dependency/environment review. Process inventory excluded where noted."
+  }
+}

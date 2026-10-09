@@ -1,0 +1,35 @@
+{
+  "commit_content_matches": {
+    "tools/full_suite.py": true,
+    "tools/test_full_suite.py": true,
+    "docs/remote-builds.md": true
+  },
+  "unchanged_function_ast": {
+    "submit": true,
+    "status": true,
+    "new_failures": true,
+    "summarize": true,
+    "resolve": true,
+    "prepare_checkout": true
+  },
+  "hashes_stable_after_verification": true,
+  "cargo_executable": "/usr/bin/cargo",
+  "commands": {
+    "focused-tests": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "tools.test_full_suite",
+      "-v"
+    ],
+    "nextest-help": [
+      "cargo",
+      "nextest",
+      "run",
+      "--help"
+    ]
+  },
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "recorded_utc": "2026-10-09T20:26:39.711325+00:00"
+}

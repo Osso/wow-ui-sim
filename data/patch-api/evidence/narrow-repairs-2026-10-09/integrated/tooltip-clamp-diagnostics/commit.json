@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "git",
+    "commit",
+    "-m",
+    "Add rectangle diagnostics to tooltip edge assertions",
+    "--",
+    "tests/tooltip_text_layout.rs"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "2ff994d78326befcb7b15891cc4f9214ed9c36cb",
+  "started": "2026-10-09T20:22:37.633959+00:00",
+  "finished": "2026-10-09T20:22:37.670975+00:00",
+  "exit": 0
+}

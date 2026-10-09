@@ -1,0 +1,22 @@
+{
+  "/home/osso/Projects/wow/wow-ui-sim/tools/full_suite.py": {
+    "sha256": "0158b69453835eb22cf1d0b2cbb0b957c78405aca2853d11e302b7f5c4d06541",
+    "bytes": 6270
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/tools/test_full_suite.py": {
+    "sha256": "f3a3977f07d77643a3769b70b8e3ac726f1ea52e6cb9bb3a23a779040efd07fb",
+    "bytes": 7305
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/docs/remote-builds.md": {
+    "sha256": "5118a79b4784c159187f55373d83112f813f26762cffe45502d7e3c4a07b61f1",
+    "bytes": 6589
+  },
+  "/home/osso/.worktrees/build-lock.sh": {
+    "sha256": "3300e1d3e5a705cf74fce093c42ba81b601be3e78911a784d39d3d448cae9b4f",
+    "bytes": 453
+  },
+  "/home/osso/bin/full-suite": {
+    "sha256": "0ac303eac456c237375c89d7f96f5c3123cfaaa0d3bee78f865dadf446995908",
+    "bytes": 5126
+  }
+}

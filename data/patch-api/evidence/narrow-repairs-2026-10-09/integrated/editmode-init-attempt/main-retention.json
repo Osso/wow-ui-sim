@@ -1,0 +1,94 @@
+{
+  "retained_at": "2026-10-09T20:27:39.963543+00:00",
+  "scope": "51e0b4e36: formatting and fixture/source audit only; lost compile exit/output, three GREEN tests unexecuted. Report uses formatter to mean cargo fmt, not numeric formatter execution.",
+  "files": [
+    {
+      "source": "/tmp/editmode-init-green-independent/capture-recovery.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/capture-recovery.json",
+      "bytes": 793,
+      "source_sha256": "16fc779339082411c64b2acf3618448e3a2660d7d0e086bf48e2ab93dcf4c222",
+      "target_sha256": "16fc779339082411c64b2acf3618448e3a2660d7d0e086bf48e2ab93dcf4c222"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/fmt.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/fmt.json",
+      "bytes": 1401,
+      "source_sha256": "2dda45e7b1ed8f8df0b7f27d69231d4c606978ffffc80c63e22a42adb72a76c4",
+      "target_sha256": "2dda45e7b1ed8f8df0b7f27d69231d4c606978ffffc80c63e22a42adb72a76c4"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/fmt.stderr",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/fmt.stderr",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/fmt.stdout",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/fmt.stdout",
+      "bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/log-inventory.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/log-inventory.json",
+      "bytes": 1427,
+      "source_sha256": "d8042c55fb0ce1f5ba48c23ee8be39a7a33ef580b422d691a8e09214d768fea2",
+      "target_sha256": "d8042c55fb0ce1f5ba48c23ee8be39a7a33ef580b422d691a8e09214d768fea2"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/maps-after.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/maps-after.json",
+      "bytes": 888,
+      "source_sha256": "5337f0e5f27a967150232f4af7940906d03b7fa4e2bb0416c8def14ebeec3ec8",
+      "target_sha256": "5337f0e5f27a967150232f4af7940906d03b7fa4e2bb0416c8def14ebeec3ec8"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/maps-before.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/maps-before.json",
+      "bytes": 888,
+      "source_sha256": "5337f0e5f27a967150232f4af7940906d03b7fa4e2bb0416c8def14ebeec3ec8",
+      "target_sha256": "5337f0e5f27a967150232f4af7940906d03b7fa4e2bb0416c8def14ebeec3ec8"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/observed-binary.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/observed-binary.json",
+      "bytes": 308,
+      "source_sha256": "72f3bfa50c6349ee7802a26493aaca23a73c0a73fa89a29ef60e8d4deb00ca6b",
+      "target_sha256": "72f3bfa50c6349ee7802a26493aaca23a73c0a73fa89a29ef60e8d4deb00ca6b"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/report.md",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/report.md",
+      "bytes": 4208,
+      "source_sha256": "73c90e6f2f04215787953c02f2d76ba2ae23fa894ee1a07925fe9cdfe08a41d5",
+      "target_sha256": "73c90e6f2f04215787953c02f2d76ba2ae23fa894ee1a07925fe9cdfe08a41d5"
+    },
+    {
+      "source": "/tmp/editmode-init-green-independent/tooltip-observed.json",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/editmode-init-attempt/tooltip-observed.json",
+      "bytes": 289,
+      "source_sha256": "b4f94eed967519568749c2b0a996bee29fe38c0bca43eb8c41a08ff05346233e",
+      "target_sha256": "b4f94eed967519568749c2b0a996bee29fe38c0bca43eb8c41a08ff05346233e"
+    }
+  ],
+  "exclusions": [
+    {
+      "file": "receipt.py",
+      "sha256": "a55624341e617e4a01db99eb45b23deaff5b5ab238244a49b01c3d9fcaa0c0e8",
+      "bytes": 1200,
+      "reason": "capture helper, not executed proof"
+    }
+  ],
+  "privacy": {
+    "patterns": [
+      "(?i)authorization\\s*[:=]\\s*[\"\\x27]?Bearer\\s+\\S+",
+      "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+      "\\b(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})\\b",
+      "(?i)(?:password|api_key|access_token|refresh_token)\\s*[\"\\x27]?\\s*[:=]\\s*[\"\\x27][^\"\\x27]{8,}"
+    ],
+    "matches": 0,
+    "limits": "Bounded credential-pattern scan; not exhaustive, no entropy analysis or external dependency/environment review. Process inventory excluded where noted."
+  }
+}

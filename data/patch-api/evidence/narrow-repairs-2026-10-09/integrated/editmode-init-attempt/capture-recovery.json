@@ -1,0 +1,32 @@
+[
+  {
+    "path": "/tmp/pi-tool-e9b15b4c554c5260.log",
+    "mentions_compile_argv": false,
+    "has_build_finished": false,
+    "has_receipt_helper": false
+  },
+  {
+    "path": "/tmp/pi-tool-737cf34c37249b35.log",
+    "mentions_compile_argv": true,
+    "has_build_finished": false,
+    "has_receipt_helper": false
+  },
+  {
+    "path": "/tmp/pi-tool-e7df89af84c917b4.log",
+    "mentions_compile_argv": true,
+    "has_build_finished": false,
+    "has_receipt_helper": false
+  },
+  {
+    "path": "/tmp/pi-tool-ea1760252e62f63f.log",
+    "mentions_compile_argv": true,
+    "has_build_finished": false,
+    "has_receipt_helper": false
+  },
+  {
+    "path": "/tmp/pi-tool-58d196c10215a9c1.log",
+    "mentions_compile_argv": true,
+    "has_build_finished": false,
+    "has_receipt_helper": false
+  }
+]
