@@ -1121,4 +1121,4 @@ Fresh immutable copied validator/SOURCE5/portable3 ata3e47eb41; exact default by
 
 ## 2026-10-09: Patch 1.3.0 frozen literal SOURCE accounting
 
-Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch-1-3-0-source-accounting.md). Verified350208/3376287 frozen source/registry101; own RED8/portable RED3 retained, targeted GREEN pending. SOURCE only; no runtime/native acceptance.
+Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch-1-3-0-source-accounting.md). Verified350208/3376287 frozen source/registry101; own RED8/portable RED3 retained; SOURCE GREEN8/8 atbe25624b1, copied portable proof pending. SOURCE only; no runtime/native acceptance.

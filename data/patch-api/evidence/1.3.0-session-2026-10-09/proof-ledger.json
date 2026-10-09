@@ -167,5 +167,75 @@
     },
     "env_keys": [],
     "combined_log_order": "stdout then stderr; not chronological"
+  },
+  {
+    "label": "ledger-capture-fixed",
+    "revision": "be25624b14d9d050a4aa1529ffbfa497c6b32f16",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p130-page",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/audit.py",
+      "capture"
+    ],
+    "started": "2026-10-09T19:38:00.622489+00:00",
+    "ended": "2026-10-09T19:38:00.651496+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "scope_hashes": {
+      "default-register.json": "11022c0957a293995207a9758a86d586e977217e301286d73f5b55dbd5e26685",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "source-response.json": "a821d5a31396c9ad5bed90799f63cee7921a8460b6982477a63856338e6f55c4",
+      "audit.py": "eb696c09c563935f40030e1ac0e62dc4e8d75eb02d3f6b5efda0d38ca25a157a",
+      "test_source_accounting.py": "038e6ab1217b943dfb94a5a5cfc84f93c79f4d66d6f6a80c4c7320554ba9bdc6",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "capture_defaults.py": "2b8f313a8f2e26a53067fc7d57c2c55899f60771966b243da36434e5a704a0c9",
+      "source.wikitext": "8c9dd641e26d95da146202fbe8bb82999d22d6536e139d761390fce18f7145fd",
+      "red-test_source_accounting.py": "038e6ab1217b943dfb94a5a5cfc84f93c79f4d66d6f6a80c4c7320554ba9bdc6",
+      "source-pin.json": "1ca0c858fa70373a242be7c9d683b439f0640e4baca1dd9b7622850a84d9a463",
+      "test_portable.py": "eb045040a8ae5e0429e1ee1b50352fdcb706a1d2cb01d2ac32ce9372a6cf766b",
+      "red-scaffold.py": "6618ae3c68a6c15a95ab23a3974eb2ddd3b566f7bd6da552400becb9745dddd1",
+      "default-errors.json": "ccde64154a9ba56727908f233f0fccde2ab080d6ff411dfddb00a188481c9328",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "env_keys": [],
+    "combined_log_order": "stdout then stderr; not chronological"
+  },
+  {
+    "label": "green",
+    "revision": "be25624b14d9d050a4aa1529ffbfa497c6b32f16",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p130-page",
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "started": "2026-10-09T19:38:00.652305+00:00",
+    "ended": "2026-10-09T19:38:00.939203+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_all_literal_declarations_and_old_rename_identity (__main__.FrozenPage.test_all_literal_declarations_and_old_rename_identity) ... ok\ntest_each_omission_and_count_mutation_rejected (__main__.FrozenPage.test_each_omission_and_count_mutation_rejected) ... ok\ntest_every_row_header_link_template_prose_and_default_limit (__main__.FrozenPage.test_every_row_header_link_template_prose_and_default_limit) ... ok\ntest_exact_frozen_body_response_identity_mutations_rejected (__main__.FrozenPage.test_exact_frozen_body_response_identity_mutations_rejected) ... ok\ntest_invented_alias_default_expansion_or_native_credit_rejected (__main__.FrozenPage.test_invented_alias_default_expansion_or_native_credit_rejected) ... ok\ntest_manifest_registry_identity_mutations_rejected (__main__.FrozenPage.test_manifest_registry_identity_mutations_rejected) ... ok\ntest_own_base_default_bytes_and_error_replay (__main__.FrozenPage.test_own_base_default_bytes_and_error_replay) ... ok\ntest_queued_successors_separate_and_foreign_histories_not_applied (__main__.FrozenPage.test_queued_successors_separate_and_foreign_histories_not_applied) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.241s\n\nOK\n",
+    "scope_hashes": {
+      "default-register.json": "11022c0957a293995207a9758a86d586e977217e301286d73f5b55dbd5e26685",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "source-response.json": "a821d5a31396c9ad5bed90799f63cee7921a8460b6982477a63856338e6f55c4",
+      "audit.py": "eb696c09c563935f40030e1ac0e62dc4e8d75eb02d3f6b5efda0d38ca25a157a",
+      "test_source_accounting.py": "038e6ab1217b943dfb94a5a5cfc84f93c79f4d66d6f6a80c4c7320554ba9bdc6",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "capture_defaults.py": "2b8f313a8f2e26a53067fc7d57c2c55899f60771966b243da36434e5a704a0c9",
+      "source.wikitext": "8c9dd641e26d95da146202fbe8bb82999d22d6536e139d761390fce18f7145fd",
+      "red-test_source_accounting.py": "038e6ab1217b943dfb94a5a5cfc84f93c79f4d66d6f6a80c4c7320554ba9bdc6",
+      "source-pin.json": "1ca0c858fa70373a242be7c9d683b439f0640e4baca1dd9b7622850a84d9a463",
+      "test_portable.py": "eb045040a8ae5e0429e1ee1b50352fdcb706a1d2cb01d2ac32ce9372a6cf766b",
+      "red-scaffold.py": "6618ae3c68a6c15a95ab23a3974eb2ddd3b566f7bd6da552400becb9745dddd1",
+      "default-errors.json": "ccde64154a9ba56727908f233f0fccde2ab080d6ff411dfddb00a188481c9328",
+      "ledger.json": "038806186c9ed6850440cd987f527de38f992bb39f204dd59dc79569e67e7388",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "env_keys": [],
+    "combined_log_order": "stdout then stderr; not chronological"
   }
 ]

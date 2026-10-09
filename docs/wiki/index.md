@@ -3110,4 +3110,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] investigation | Patch 1.3.0 frozen literal SOURCE audit
 
-[Audit](investigations/patch-1-3-0-api-audit.md): frozen350208/3376287,1364bytes;31 declarations,44 raw rows,76 UNPROVEN contracts. Own SOURCE RED8/portable RED3 retained; GREEN pending. Zero model/runtime/native credit;1.4/1.5 separate/unapplied. Main owns integration/acceptance.
+[Audit](investigations/patch-1-3-0-api-audit.md): frozen350208/3376287,1364bytes;31 declarations,44 raw rows,76 UNPROVEN contracts. Own SOURCE RED8/portable RED3 retained; SOURCE GREEN8/8 atbe25624b1, copied portable proof pending. Zero model/runtime/native credit;1.4/1.5 separate/unapplied. Main owns integration/acceptance.
