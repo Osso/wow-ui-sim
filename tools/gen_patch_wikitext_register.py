@@ -29,6 +29,24 @@ FONT = re.compile(r"</?font[^>]*>")
 COUNT = re.compile(r"<small>\((\d+)\)</small>")
 
 
+def parse_retail_tbc_summary(text):
+    """Literal 2008 New/Changed API bullets; prose links are not additions."""
+    entries, direction = [], None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'=+\s*([^=]+?)\s*=+', line)
+        if heading:
+            direction = {'New APIs': 'added', 'Changed APIs': 'changed'}.get(heading[1])
+        elif direction and line.startswith('* '):
+            references = [m[0] for m in TEMPLATE.finditer(line)]
+            references += re.findall(r'\[\[API [^\]]+\]\]', line)
+            for reference in references:
+                symbol, params = parse_symbol(reference)
+                section = 'widgets' if params.get('t') == 'w' else 'global-api'
+                entry = make_entry(section, direction, number, reference)
+                entries.append(dict(entry, annotation=line))
+    return entries
+
+
 def with_client_line(register, client_line):
     """Keep legacy bytes by default; explicitly label separate client histories."""
     return register if client_line is None else dict(register, client_line=client_line)
@@ -1021,6 +1039,8 @@ def main():
                         help='Normalize 2012 code-wrapped removals in the pinned diff; opt-in')
     parser.add_argument('--wrath-retail-summary', action='store_true',
                         help='Retain 2009 bare-call/method/event summary identities; opt-in')
+    parser.add_argument('--retail-tbc-summary', action='store_true',
+                        help='Retain 2008 retail New/Changed API bullets; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -1051,6 +1071,8 @@ def main():
         entries.extend(parse_cataclysm_change_bullets(raw.decode('utf-8')))
     if args.wrath_retail_summary:
         entries.extend(parse_wrath_retail_summary(raw.decode('utf-8')))
+    if args.retail_tbc_summary:
+        entries.extend(parse_retail_tbc_summary(raw.decode('utf-8')))
     if args.wrath_retail_change_bullets:
         entries.extend(parse_wrath_retail_change_bullets(raw.decode('utf-8')))
     if args.legacy_api_bullets:
