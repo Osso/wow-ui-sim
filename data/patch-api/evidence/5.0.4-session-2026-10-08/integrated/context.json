@@ -1,6 +1,6 @@
 {
   "master_revision": "1c9984d2e8a5e672c5109d2234197303e6190317",
-  "runtime_revision": "1ccccf68af0185c25d84c167d1f30df6229ca149",
+  "runtime_revision": "baf60fb7fd7fce6c46d1b894e3297e22927731ab",
   "dispatcher_sha256": "7ccf53672acae1a14c93b502aba376924f828cf82a921cf25ef5ba835a6d6063",
   "directory_trees": {
     "src": "338c07704ad0a2405547d560f976f1070dc6f2ea",
@@ -127,7 +127,8 @@
     "test_patch_mists_prepatch": 0,
     "test_patch_mists_register": 0,
     "test_patch_mists_transclusion": 0,
-    "test_patch_warlords_register": 0
+    "test_patch_warlords_register": 0,
+    "validator-gate": 0
   },
   "test_counts": {
     "all-sweeps": [
@@ -218,7 +219,7 @@
     "checks.launcher.txt": "6095ca8b54ef93a508b9493e19e6ebc881873cc7e5d787df3ccc0bdb2d158d85",
     "checks.proof.json": "afc80e50af277869a500e7074038590f87e141f459b63eb03a4c4795d649a408",
     "checks.txt": "d12e7555f5fa250725befa4a00ad989ebe6bd10ac6616d19460be666826ef018",
-    "command-ledger.md": "444f0fa7a0b7a64bcdc8f08df14cede8acd629e2743359da22f7e8d934b75c78",
+    "command-ledger.md": "5088a481e11c0c72b402215776fd134082c7f11a7eae1c95bfa8fea4e081cc49",
     "default-check.proof.json": "2385b384f029620e1c800ec4bf69977cfa7c79faaa9debbabd24060e68baca34",
     "default-check.txt": "555f932fc6b79549f5a1dda4434c7891fd49c7fbf0fca75a3ffd7ac3a9c41bc0",
     "format.proof.json": "624467f9e27d47897a987c68cdd8716a6ef0d52ff7a8a40e1b835a1d8c48e79e",
