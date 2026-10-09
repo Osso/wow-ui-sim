@@ -1,0 +1,32 @@
+{
+  "exit": 0,
+  "stdout": "",
+  "stderr": "Running as unit: wow-startup-warnings-20261009t230718z.service\n",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--no-block",
+    "--unit=wow-startup-warnings-20261009t230718z",
+    "--property=Type=oneshot",
+    "--property=RemainAfterExit=yes",
+    "--property=WorkingDirectory=/home/osso/Projects/wow/wow-ui-sim",
+    "--property=StandardOutput=append:/home/osso/.local/state/wow-ui-sim/verification/standalone-startup-warnings/20261009T230718Z/stdout",
+    "--property=StandardError=append:/home/osso/.local/state/wow-ui-sim/verification/standalone-startup-warnings/20261009T230718Z/stderr",
+    "--setenv=WOW_SIM_NO_SOUND=1",
+    "--setenv=WOW_SIM_VERBOSE=1",
+    "--setenv=WOW_SIM_DEBUG_NIL_GLOBALS=1",
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+    "--no-saved-vars",
+    "--exec-lua",
+    "print('[StartupWarningAuditComplete]')",
+    "dump-tree",
+    "--filter",
+    "__StartupWarningAudit_NoMatchingFrame__",
+    "--width",
+    "1600",
+    "--height",
+    "1200"
+  ]
+}

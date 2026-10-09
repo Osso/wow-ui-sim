@@ -1,0 +1,4355 @@
+{
+  "schema": 1,
+  "audited_at_utc": "2026-10-09T23:16:24.837992+00:00",
+  "capture": "/home/osso/.local/state/wow-ui-sim/verification/standalone-startup-warnings/20261009T230718Z",
+  "result": "FAIL_CLEAN_STARTUP; PASS_CAPTURE_COMPLETION",
+  "coverage": {
+    "stdout": {
+      "lines_read": 4636,
+      "bytes_read": 314634,
+      "categories": {
+        "timed_status": 14,
+        "file_loading": 3707,
+        "addon_status": 341,
+        "detail_diagnostic": 539,
+        "frame_timing_breakdown": 3,
+        "blank": 2,
+        "summary": 30
+      },
+      "unclassified": 0
+    },
+    "stderr": {
+      "lines_read": 359,
+      "bytes_read": 21215,
+      "categories": {
+        "timed_status": 257,
+        "addon_start": 48,
+        "lua_error_or_trace": 27,
+        "completion_marker": 1,
+        "frame_layout_diagnostic": 24,
+        "blank": 2
+      },
+      "unclassified": 0
+    }
+  },
+  "lua_errors": [
+    {
+      "stream": "stderr",
+      "line": 164,
+      "message": "@Interface/AddOns/EnhanceQoL/Settings/GroupTools.lua: Lua error: instruction budget exhausted for owner 'EnhanceQoL'",
+      "occurrences": 1,
+      "suppressed_additional": 0
+    },
+    {
+      "stream": "stderr",
+      "line": 167,
+      "message": "@Interface/AddOns/EnhanceQoL/Modules/Aura/FocusInterruptTracker.lua: Lua error: instruction budget exhausted for owner 'EnhanceQoL'",
+      "occurrences": 1,
+      "suppressed_additional": 0
+    },
+    {
+      "stream": "stderr",
+      "line": 170,
+      "message": "@Interface/AddOns/EnhanceQoL/Modules/Mouse/Init.lua: Lua error: instruction budget exhausted for owner 'EnhanceQoL'",
+      "occurrences": 1,
+      "suppressed_additional": 0
+    },
+    {
+      "stream": "stderr",
+      "line": 173,
+      "message": "@Interface/AddOns/EnhanceQoL/Modules/Food/Init.lua: Lua error: instruction budget exhausted for owner 'EnhanceQoL'",
+      "occurrences": 1,
+      "suppressed_additional": 0
+    },
+    {
+      "stream": "stderr",
+      "line": 176,
+      "message": "[OnEvent] frame=#69210 addon=EnhanceQoL source=@Interface/AddOns/EnhanceQoL/Core/DynamicAnchors.lua:997: instruction budget exhausted for owner 'EnhanceQoL'",
+      "occurrences": 88,
+      "suppressed_additional": 87
+    },
+    {
+      "stream": "stderr",
+      "line": 270,
+      "message": "[OnEvent] frame=#48610 addon=AllTheThings source=@Interface/AddOns/AllTheThings/lib/EventRegistration.lua:26: instruction budget exhausted for owner 'AllTheThings'",
+      "occurrences": 3,
+      "suppressed_additional": 2
+    },
+    {
+      "stream": "stderr",
+      "line": 317,
+      "message": "Interface/AddOns/EllesmereUI/EllesmereUI_UICore.lua:1073: attempt to call a nil value",
+      "occurrences": 1,
+      "suppressed_additional": 0
+    }
+  ],
+  "suppression": [
+    {
+      "stream": "stderr",
+      "line": 354,
+      "additional": 87,
+      "first_error_line": 176
+    },
+    {
+      "stream": "stderr",
+      "line": 357,
+      "additional": 2,
+      "first_error_line": 270
+    }
+  ],
+  "lua_totals": {
+    "distinct_logged_signatures": 7,
+    "first_occurrences": 7,
+    "suppressed_additional": 89,
+    "recorded_occurrences": 96,
+    "budget_exhaustion_occurrences": 95,
+    "nil_call_occurrences": 1
+  },
+  "addon_status_rows": [
+    {
+      "addon": "Blizzard_ProjectConstants",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 7
+    },
+    {
+      "addon": "Blizzard_LoadLocale",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 9
+    },
+    {
+      "addon": "Blizzard_Fonts_Shared",
+      "lua_files": 2,
+      "xml_files": 11,
+      "warnings": 0,
+      "nil_observations": 4,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 21
+    },
+    {
+      "addon": "Blizzard_ScriptErrors",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 27
+    },
+    {
+      "addon": "Blizzard_SharedXMLBase",
+      "lua_files": 73,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 106
+    },
+    {
+      "addon": "Blizzard_PrintHandler",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 108
+    },
+    {
+      "addon": "Blizzard_Menu",
+      "lua_files": 10,
+      "xml_files": 4,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 124
+    },
+    {
+      "addon": "Blizzard_Colors",
+      "lua_files": 4,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 129
+    },
+    {
+      "addon": "Blizzard_HelpPlate",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 132
+    },
+    {
+      "addon": "Blizzard_Narration",
+      "lua_files": 6,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 7,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 139
+    },
+    {
+      "addon": "Blizzard_SharedXML",
+      "lua_files": 294,
+      "xml_files": 73,
+      "warnings": 0,
+      "nil_observations": 7,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 578
+    },
+    {
+      "addon": "Blizzard_SharedXMLGame",
+      "lua_files": 10,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 597
+    },
+    {
+      "addon": "Blizzard_FrameXMLBase",
+      "lua_files": 10,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 609
+    },
+    {
+      "addon": "Blizzard_ObjectAPI",
+      "lua_files": 12,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 623
+    },
+    {
+      "addon": "Blizzard_StaticPopup",
+      "lua_files": 3,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 627
+    },
+    {
+      "addon": "Blizzard_FrameXMLUtil",
+      "lua_files": 80,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 4,
+      "missing_requirements": 3,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 712
+    },
+    {
+      "addon": "Blizzard_UIPanelTemplates",
+      "lua_files": 4,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 727
+    },
+    {
+      "addon": "Blizzard_ManagedFrameSystem",
+      "lua_files": 1,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 731
+    },
+    {
+      "addon": "Blizzard_GameMenuEsc",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 733
+    },
+    {
+      "addon": "Blizzard_UIParentUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 735
+    },
+    {
+      "addon": "Blizzard_EditMode",
+      "lua_files": 13,
+      "xml_files": 4,
+      "warnings": 0,
+      "nil_observations": 7,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 753
+    },
+    {
+      "addon": "Blizzard_GarrisonBase",
+      "lua_files": 4,
+      "xml_files": 4,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 765
+    },
+    {
+      "addon": "Blizzard_GameTooltip",
+      "lua_files": 6,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 774
+    },
+    {
+      "addon": "Blizzard_RaidWarning",
+      "lua_files": 4,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 783
+    },
+    {
+      "addon": "Blizzard_VisualAlerts",
+      "lua_files": 4,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 790
+    },
+    {
+      "addon": "Blizzard_PrivateAurasUI",
+      "lua_files": 4,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 797
+    },
+    {
+      "addon": "Blizzard_AuraContainer",
+      "lua_files": 14,
+      "xml_files": 5,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 819
+    },
+    {
+      "addon": "Blizzard_AuthChallengeUI",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 821
+    },
+    {
+      "addon": "Blizzard_CatalogShopSharedUtil",
+      "lua_files": 4,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 826
+    },
+    {
+      "addon": "Blizzard_CatalogShopSharedTemplates",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 831
+    },
+    {
+      "addon": "Blizzard_CatalogShop",
+      "lua_files": 12,
+      "xml_files": 5,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 849
+    },
+    {
+      "addon": "Blizzard_AsyncRequest",
+      "lua_files": 2,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 852
+    },
+    {
+      "addon": "Blizzard_CatalogShopRefundFlow",
+      "lua_files": 4,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 859
+    },
+    {
+      "addon": "Blizzard_CatalogShopTopUpFlow",
+      "lua_files": 3,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 865
+    },
+    {
+      "addon": "Blizzard_ClassTrialSecure",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 867
+    },
+    {
+      "addon": "Blizzard_CombatLogBase",
+      "lua_files": 8,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 876
+    },
+    {
+      "addon": "Blizzard_CombatLogProcessor",
+      "lua_files": 3,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 880
+    },
+    {
+      "addon": "Blizzard_CommunitiesSecure",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 883
+    },
+    {
+      "addon": "Blizzard_DebugUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 885
+    },
+    {
+      "addon": "Blizzard_UIErrorsFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 888
+    },
+    {
+      "addon": "Blizzard_UIParentPanelManager",
+      "lua_files": 5,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 894
+    },
+    {
+      "addon": "Blizzard_ItemButton",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 898
+    },
+    {
+      "addon": "Blizzard_AutoComplete",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 901
+    },
+    {
+      "addon": "Blizzard_MoneyFrame",
+      "lua_files": 5,
+      "xml_files": 4,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 911
+    },
+    {
+      "addon": "Blizzard_AccessibilityTemplates",
+      "lua_files": 6,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 921
+    },
+    {
+      "addon": "Blizzard_StaticPopup_Game",
+      "lua_files": 5,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 929
+    },
+    {
+      "addon": "Blizzard_Settings_Shared",
+      "lua_files": 18,
+      "xml_files": 7,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 954
+    },
+    {
+      "addon": "Blizzard_TextStatusBar",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 957
+    },
+    {
+      "addon": "Blizzard_SettingsDefinitions_Shared",
+      "lua_files": 12,
+      "xml_files": 7,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 974
+    },
+    {
+      "addon": "Blizzard_SettingsDefinitions_Frame",
+      "lua_files": 23,
+      "xml_files": 7,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1001
+    },
+    {
+      "addon": "Blizzard_TransmogShared",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1003
+    },
+    {
+      "addon": "Blizzard_LFGUtil",
+      "lua_files": 2,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1006
+    },
+    {
+      "addon": "Blizzard_FrameXML",
+      "lua_files": 59,
+      "xml_files": 50,
+      "warnings": 0,
+      "nil_observations": 5,
+      "missing_requirements": 5,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1114
+    },
+    {
+      "addon": "Blizzard_SimpleCheckout",
+      "lua_files": 3,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1129
+    },
+    {
+      "addon": "Blizzard_StoreUI",
+      "lua_files": 14,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1137
+    },
+    {
+      "addon": "Blizzard_QuickKeybind",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1140
+    },
+    {
+      "addon": "Blizzard_POIButton",
+      "lua_files": 4,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1147
+    },
+    {
+      "addon": "Blizzard_UIPanels_Game",
+      "lua_files": 48,
+      "xml_files": 38,
+      "warnings": 0,
+      "nil_observations": 5,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1234
+    },
+    {
+      "addon": "Blizzard_Flyout",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1244
+    },
+    {
+      "addon": "Blizzard_GuildControlUI",
+      "lua_files": 3,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1249
+    },
+    {
+      "addon": "Blizzard_TimerunningUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1253
+    },
+    {
+      "addon": "Blizzard_ChatFrameBase",
+      "lua_files": 27,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1284
+    },
+    {
+      "addon": "Blizzard_VoiceToggleButton",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1291
+    },
+    {
+      "addon": "Blizzard_ChatFrame",
+      "lua_files": 12,
+      "xml_files": 9,
+      "warnings": 0,
+      "nil_observations": 7,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1313
+    },
+    {
+      "addon": "Blizzard_Communities",
+      "lua_files": 26,
+      "xml_files": 22,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1352
+    },
+    {
+      "addon": "Blizzard_MicroMenu",
+      "lua_files": 4,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 4,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1360
+    },
+    {
+      "addon": "Blizzard_PingUI",
+      "lua_files": 3,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1369
+    },
+    {
+      "addon": "Blizzard_ActionBar",
+      "lua_files": 28,
+      "xml_files": 20,
+      "warnings": 0,
+      "nil_observations": 12,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1418
+    },
+    {
+      "addon": "Blizzard_Minimap",
+      "lua_files": 3,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1439
+    },
+    {
+      "addon": "Blizzard_BuffFrame",
+      "lua_files": 2,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1445
+    },
+    {
+      "addon": "Blizzard_SpellDiminishUI",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1448
+    },
+    {
+      "addon": "Blizzard_ColorPickerFrame",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1452
+    },
+    {
+      "addon": "Blizzard_StatusTrayManager",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1454
+    },
+    {
+      "addon": "Blizzard_UnitFrame",
+      "lua_files": 46,
+      "xml_files": 37,
+      "warnings": 0,
+      "nil_observations": 11,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1518
+    },
+    {
+      "addon": "Blizzard_ScriptErrorsFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1533
+    },
+    {
+      "addon": "Blizzard_RestrictedAddOnEnvironment",
+      "lua_files": 8,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1544
+    },
+    {
+      "addon": "Blizzard_EnvironmentCleanup",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 3,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1546
+    },
+    {
+      "addon": "Blizzard_TimeManager",
+      "lua_files": 3,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1554
+    },
+    {
+      "addon": "Blizzard_CooldownBroadcaster",
+      "lua_files": 4,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1561
+    },
+    {
+      "addon": "middleclass",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1563
+    },
+    {
+      "addon": "Blizzard_Dispatcher",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1565
+    },
+    {
+      "addon": "Blizzard_BoostTutorial",
+      "lua_files": 11,
+      "xml_files": 4,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1577
+    },
+    {
+      "addon": "Blizzard_CombatLog",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1584
+    },
+    {
+      "addon": "Blizzard_Game",
+      "lua_files": 8,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1593
+    },
+    {
+      "addon": "Blizzard_MapCanvasSecureUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1595
+    },
+    {
+      "addon": "Blizzard_SecureTransferUI",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1597
+    },
+    {
+      "addon": "Blizzard_WowTokenUI",
+      "lua_files": 4,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1602
+    },
+    {
+      "addon": "Blizzard_APIDocumentation",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1604
+    },
+    {
+      "addon": "Blizzard_AccountStore",
+      "lua_files": 6,
+      "xml_files": 5,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1616
+    },
+    {
+      "addon": "Blizzard_AchievementUI",
+      "lua_files": 3,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1622
+    },
+    {
+      "addon": "Blizzard_OverrideActionBar",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1625
+    },
+    {
+      "addon": "Blizzard_ActionBarController",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1628
+    },
+    {
+      "addon": "Blizzard_ActionStatus",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1631
+    },
+    {
+      "addon": "Blizzard_AddFriend",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1634
+    },
+    {
+      "addon": "Blizzard_AddOnList",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1638
+    },
+    {
+      "addon": "Blizzard_AddOnPerformance",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1640
+    },
+    {
+      "addon": "Blizzard_MapCanvas",
+      "lua_files": 5,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1644
+    },
+    {
+      "addon": "Blizzard_SharedMapDataProviders",
+      "lua_files": 42,
+      "xml_files": 39,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1691
+    },
+    {
+      "addon": "Blizzard_AdventureMap",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1693
+    },
+    {
+      "addon": "Blizzard_AlliedRacesUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1695
+    },
+    {
+      "addon": "Blizzard_AnimaDiversionUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1697
+    },
+    {
+      "addon": "Blizzard_AnimatedShine",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1700
+    },
+    {
+      "addon": "Blizzard_ArchaeologyUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1702
+    },
+    {
+      "addon": "Blizzard_ArdenwealdGardening",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1705
+    },
+    {
+      "addon": "Blizzard_ArtifactUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1707
+    },
+    {
+      "addon": "Blizzard_AuctionHouseUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1709
+    },
+    {
+      "addon": "Blizzard_AzeriteEssenceUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1711
+    },
+    {
+      "addon": "Blizzard_AzeriteRespecUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1713
+    },
+    {
+      "addon": "Blizzard_AzeriteUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1715
+    },
+    {
+      "addon": "Blizzard_SocialToast",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1718
+    },
+    {
+      "addon": "Blizzard_SocialUIShared",
+      "lua_files": 5,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1725
+    },
+    {
+      "addon": "Blizzard_BNet",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1729
+    },
+    {
+      "addon": "Blizzard_BarbershopUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1731
+    },
+    {
+      "addon": "Blizzard_UIFrameManager",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1734
+    },
+    {
+      "addon": "Blizzard_MawBuffs",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1736
+    },
+    {
+      "addon": "Blizzard_SpellSearch",
+      "lua_files": 9,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1747
+    },
+    {
+      "addon": "Blizzard_SharedTalentUI",
+      "lua_files": 21,
+      "xml_files": 17,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1782
+    },
+    {
+      "addon": "Blizzard_TieredEntranceTraits",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1785
+    },
+    {
+      "addon": "Blizzard_UIWidgets",
+      "lua_files": 40,
+      "xml_files": 39,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1865
+    },
+    {
+      "addon": "Blizzard_ObjectiveTracker",
+      "lua_files": 20,
+      "xml_files": 20,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1908
+    },
+    {
+      "addon": "Blizzard_BattlefieldMap",
+      "lua_files": 2,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1913
+    },
+    {
+      "addon": "Blizzard_GMChatUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1915
+    },
+    {
+      "addon": "Blizzard_BehavioralMessaging",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1917
+    },
+    {
+      "addon": "Blizzard_BlackMarketUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1919
+    },
+    {
+      "addon": "Blizzard_ButtonPulse",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1921
+    },
+    {
+      "addon": "Blizzard_CUFProfiles",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1923
+    },
+    {
+      "addon": "Blizzard_Calendar",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1925
+    },
+    {
+      "addon": "Blizzard_ChallengesUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1927
+    },
+    {
+      "addon": "Blizzard_Channels",
+      "lua_files": 10,
+      "xml_files": 11,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1940
+    },
+    {
+      "addon": "Blizzard_ChatBubble",
+      "lua_files": 0,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1942
+    },
+    {
+      "addon": "Blizzard_ChatFrameUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1944
+    },
+    {
+      "addon": "Blizzard_ChromieTimeUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1946
+    },
+    {
+      "addon": "Blizzard_ClassMenu",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1948
+    },
+    {
+      "addon": "Blizzard_ClassTrial",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1951
+    },
+    {
+      "addon": "Blizzard_ClickBindingUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1953
+    },
+    {
+      "addon": "Blizzard_ClientSavedVariables",
+      "lua_files": 0,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1954
+    },
+    {
+      "addon": "Blizzard_UIModes",
+      "lua_files": 2,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1957
+    },
+    {
+      "addon": "Blizzard_ClientSceneVisManager",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1960
+    },
+    {
+      "addon": "Blizzard_CodeOfConduct",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1964
+    },
+    {
+      "addon": "Blizzard_ContentTracking",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1967
+    },
+    {
+      "addon": "Blizzard_PagedContent",
+      "lua_files": 5,
+      "xml_files": 5,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1979
+    },
+    {
+      "addon": "Blizzard_Collections",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1981
+    },
+    {
+      "addon": "Blizzard_CombatAudioAlerts",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 3,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1984
+    },
+    {
+      "addon": "Blizzard_CombatText",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1989
+    },
+    {
+      "addon": "Blizzard_CommandLineUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1991
+    },
+    {
+      "addon": "Blizzard_Commentator",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1993
+    },
+    {
+      "addon": "Blizzard_UnitPopupShared",
+      "lua_files": 5,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 1999
+    },
+    {
+      "addon": "Blizzard_RecentAllies",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2003
+    },
+    {
+      "addon": "Blizzard_UnitPopup",
+      "lua_files": 7,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2012
+    },
+    {
+      "addon": "Blizzard_FriendsFrame",
+      "lua_files": 7,
+      "xml_files": 4,
+      "warnings": 0,
+      "nil_observations": 7,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2024
+    },
+    {
+      "addon": "Blizzard_RaidFrame",
+      "lua_files": 3,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2038
+    },
+    {
+      "addon": "Blizzard_CompactRaidFrames",
+      "lua_files": 4,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2047
+    },
+    {
+      "addon": "Blizzard_Console",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2055
+    },
+    {
+      "addon": "Blizzard_Contribution",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2057
+    },
+    {
+      "addon": "Blizzard_CooldownViewer",
+      "lua_files": 18,
+      "xml_files": 8,
+      "warnings": 0,
+      "nil_observations": 39,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2084
+    },
+    {
+      "addon": "Blizzard_CovenantCallings",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2126
+    },
+    {
+      "addon": "Blizzard_CovenantPreviewUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2128
+    },
+    {
+      "addon": "Blizzard_CovenantRenown",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2130
+    },
+    {
+      "addon": "Blizzard_CovenantSanctum",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2132
+    },
+    {
+      "addon": "Blizzard_CovenantToasts",
+      "lua_files": 3,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2139
+    },
+    {
+      "addon": "Blizzard_DamageMeter",
+      "lua_files": 6,
+      "xml_files": 5,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2151
+    },
+    {
+      "addon": "Blizzard_DeathRecap",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2153
+    },
+    {
+      "addon": "Blizzard_DebugTools",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2155
+    },
+    {
+      "addon": "Blizzard_DeclensionFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2158
+    },
+    {
+      "addon": "Blizzard_DelvesCompanionConfiguration",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2163
+    },
+    {
+      "addon": "Blizzard_DelvesDifficultyPicker",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2165
+    },
+    {
+      "addon": "Blizzard_DelvesToast",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2168
+    },
+    {
+      "addon": "Blizzard_Deprecated",
+      "lua_files": 5,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 1,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2174
+    },
+    {
+      "addon": "Blizzard_DeprecatedActionBar",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2177
+    },
+    {
+      "addon": "Blizzard_DeprecatedAuraFilters",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2179
+    },
+    {
+      "addon": "Blizzard_DeprecatedAutoComplete",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2181
+    },
+    {
+      "addon": "Blizzard_DeprecatedBattleNet",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2183
+    },
+    {
+      "addon": "Blizzard_DeprecatedChatInfo",
+      "lua_files": 2,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2186
+    },
+    {
+      "addon": "Blizzard_DeprecatedCombatLog",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 4,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2188
+    },
+    {
+      "addon": "Blizzard_DeprecatedCurrencyScript",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2194
+    },
+    {
+      "addon": "Blizzard_DeprecatedGlue",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2196
+    },
+    {
+      "addon": "Blizzard_DeprecatedGuildScript",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 3,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2198
+    },
+    {
+      "addon": "Blizzard_DeprecatedInstanceEncounter",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2203
+    },
+    {
+      "addon": "Blizzard_DeprecatedItemScript",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 33,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2205
+    },
+    {
+      "addon": "Blizzard_DeprecatedItemSocketInfo",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2240
+    },
+    {
+      "addon": "Blizzard_DeprecatedLFG",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2242
+    },
+    {
+      "addon": "Blizzard_DeprecatedPartyInfo",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2244
+    },
+    {
+      "addon": "Blizzard_DeprecatedPetInfo",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2246
+    },
+    {
+      "addon": "Blizzard_DeprecatedPvpScript",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 3,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2250
+    },
+    {
+      "addon": "Blizzard_DeprecatedRaidWarning",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2255
+    },
+    {
+      "addon": "Blizzard_DeprecatedSoundScript",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2257
+    },
+    {
+      "addon": "Blizzard_DeprecatedSpecialization",
+      "lua_files": 2,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2260
+    },
+    {
+      "addon": "Blizzard_DeprecatedSpellBook",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2262
+    },
+    {
+      "addon": "Blizzard_DeprecatedSpellScript",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2264
+    },
+    {
+      "addon": "Blizzard_DeprecatedTradeInfo",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2266
+    },
+    {
+      "addon": "Blizzard_DeprecatedUnitScript",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2268
+    },
+    {
+      "addon": "Blizzard_DeprecatedWorldElapsedTimerTypes",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2270
+    },
+    {
+      "addon": "Blizzard_DurabilityFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2273
+    },
+    {
+      "addon": "Blizzard_Deprecated_ArenaUI",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2275
+    },
+    {
+      "addon": "Blizzard_EncounterJournal",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2277
+    },
+    {
+      "addon": "Blizzard_EncounterTimeline",
+      "lua_files": 15,
+      "xml_files": 7,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2300
+    },
+    {
+      "addon": "Blizzard_EncounterWarnings",
+      "lua_files": 6,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2310
+    },
+    {
+      "addon": "Blizzard_EventTrace",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2312
+    },
+    {
+      "addon": "Blizzard_ExpansionLandingPage",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2317
+    },
+    {
+      "addon": "Blizzard_ExpansionTrial",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2319
+    },
+    {
+      "addon": "Blizzard_FlightMap",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2321
+    },
+    {
+      "addon": "Blizzard_FrameEffects",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2325
+    },
+    {
+      "addon": "Blizzard_FrameStack",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2327
+    },
+    {
+      "addon": "Blizzard_FramerateFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2329
+    },
+    {
+      "addon": "Blizzard_FullscreenBrowser",
+      "lua_files": 0,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2330
+    },
+    {
+      "addon": "Blizzard_GameMenu",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2334
+    },
+    {
+      "addon": "Blizzard_GarrisonUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2337
+    },
+    {
+      "addon": "Blizzard_GenericTraitUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2339
+    },
+    {
+      "addon": "Blizzard_GlobalFXModelScenes",
+      "lua_files": 0,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2341
+    },
+    {
+      "addon": "Blizzard_GroupFinder",
+      "lua_files": 11,
+      "xml_files": 9,
+      "warnings": 0,
+      "nil_observations": 4,
+      "missing_requirements": 3,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2362
+    },
+    {
+      "addon": "Blizzard_GuildBankUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2371
+    },
+    {
+      "addon": "Blizzard_GuildRename",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2374
+    },
+    {
+      "addon": "Blizzard_HelpFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2377
+    },
+    {
+      "addon": "Blizzard_HousingTemplates",
+      "lua_files": 9,
+      "xml_files": 7,
+      "warnings": 0,
+      "nil_observations": 14,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2394
+    },
+    {
+      "addon": "Blizzard_HousingBulletinBoard",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2410
+    },
+    {
+      "addon": "Blizzard_HousingControls",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2412
+    },
+    {
+      "addon": "Blizzard_HousingEventHandler",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2414
+    },
+    {
+      "addon": "Blizzard_HousingHouseFinder",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2416
+    },
+    {
+      "addon": "Blizzard_TutorialManager",
+      "lua_files": 9,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2426
+    },
+    {
+      "addon": "Blizzard_Tutorials",
+      "lua_files": 14,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 3,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2442
+    },
+    {
+      "addon": "Blizzard_HousingTutorials",
+      "lua_files": 6,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2452
+    },
+    {
+      "addon": "Blizzard_HybridMinimap",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2454
+    },
+    {
+      "addon": "Blizzard_IME",
+      "lua_files": 0,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2456
+    },
+    {
+      "addon": "Blizzard_InspectUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2458
+    },
+    {
+      "addon": "Blizzard_PartyPoseUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2460
+    },
+    {
+      "addon": "Blizzard_IslandsPartyPoseUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2462
+    },
+    {
+      "addon": "Blizzard_IslandsQueueUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2464
+    },
+    {
+      "addon": "Blizzard_ItemInteractionUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2466
+    },
+    {
+      "addon": "Blizzard_ItemSocketingUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2468
+    },
+    {
+      "addon": "Blizzard_ItemUpgradeUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2470
+    },
+    {
+      "addon": "Blizzard_Kiosk",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2472
+    },
+    {
+      "addon": "Blizzard_LandingSoulbinds",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2474
+    },
+    {
+      "addon": "Blizzard_MacroUI",
+      "lua_files": 5,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2481
+    },
+    {
+      "addon": "Blizzard_MailFrame",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2485
+    },
+    {
+      "addon": "Blizzard_MainMenuBarBagButtons",
+      "lua_files": 3,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 7,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2490
+    },
+    {
+      "addon": "Blizzard_MajorFactions",
+      "lua_files": 5,
+      "xml_files": 4,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2505
+    },
+    {
+      "addon": "Blizzard_MatchCelebrationPartyPoseUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2507
+    },
+    {
+      "addon": "Blizzard_MatchmakingQueueDisplay",
+      "lua_files": 2,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2510
+    },
+    {
+      "addon": "Blizzard_MirrorTimer",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2513
+    },
+    {
+      "addon": "Blizzard_MoneyReceipt",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2515
+    },
+    {
+      "addon": "Blizzard_MovePad",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2517
+    },
+    {
+      "addon": "Blizzard_NamePlates",
+      "lua_files": 21,
+      "xml_files": 13,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2552
+    },
+    {
+      "addon": "Blizzard_NewPlayerExperience",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2554
+    },
+    {
+      "addon": "Blizzard_Notification",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2557
+    },
+    {
+      "addon": "Blizzard_ObliterumUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2559
+    },
+    {
+      "addon": "Blizzard_OrderHallUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2561
+    },
+    {
+      "addon": "Blizzard_PVPMatch",
+      "lua_files": 4,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2566
+    },
+    {
+      "addon": "Blizzard_PVPUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2568
+    },
+    {
+      "addon": "Blizzard_PerformanceBar",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2570
+    },
+    {
+      "addon": "Blizzard_PerksProgram",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2572
+    },
+    {
+      "addon": "Blizzard_PersonalResourceDisplay",
+      "lua_files": 5,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2579
+    },
+    {
+      "addon": "Blizzard_PetBattleUI",
+      "lua_files": 3,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 4,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2585
+    },
+    {
+      "addon": "Blizzard_PhotoSharing",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2594
+    },
+    {
+      "addon": "Blizzard_PlayerChoice",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2596
+    },
+    {
+      "addon": "Blizzard_PlayerSpells",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2598
+    },
+    {
+      "addon": "Blizzard_Professions",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2600
+    },
+    {
+      "addon": "Blizzard_ProfessionsBook",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2602
+    },
+    {
+      "addon": "Blizzard_ProfessionsCustomerOrders",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2604
+    },
+    {
+      "addon": "Blizzard_QuestNavigation",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2606
+    },
+    {
+      "addon": "Blizzard_QueueStatusFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2609
+    },
+    {
+      "addon": "Blizzard_QuickJoin",
+      "lua_files": 3,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2614
+    },
+    {
+      "addon": "Blizzard_RPE_TurnStrafe",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2617
+    },
+    {
+      "addon": "Blizzard_RaidUI",
+      "lua_files": 4,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2621
+    },
+    {
+      "addon": "Blizzard_RecruitAFriend",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2625
+    },
+    {
+      "addon": "Blizzard_RemixArtifactTutorialUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2627
+    },
+    {
+      "addon": "Blizzard_RemixArtifactUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2629
+    },
+    {
+      "addon": "Blizzard_ReportFrameShared",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2632
+    },
+    {
+      "addon": "Blizzard_ReportFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2635
+    },
+    {
+      "addon": "Blizzard_RuneforgeUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2637
+    },
+    {
+      "addon": "Blizzard_SavedSets",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2639
+    },
+    {
+      "addon": "Blizzard_ScrappingMachineUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2641
+    },
+    {
+      "addon": "Blizzard_ShakeUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2643
+    },
+    {
+      "addon": "Blizzard_SharedWidgetFrames",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2646
+    },
+    {
+      "addon": "Blizzard_SocialUI",
+      "lua_files": 3,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 10,
+      "missing_requirements": 2,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2652
+    },
+    {
+      "addon": "Blizzard_Soulbinds",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2666
+    },
+    {
+      "addon": "Blizzard_SplashFrame",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2669
+    },
+    {
+      "addon": "Blizzard_StableUI",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2672
+    },
+    {
+      "addon": "Blizzard_SubscriptionInterstitialUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2674
+    },
+    {
+      "addon": "Blizzard_Subtitles",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2677
+    },
+    {
+      "addon": "Blizzard_TokenUI",
+      "lua_files": 3,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2683
+    },
+    {
+      "addon": "Blizzard_TrainerUI",
+      "lua_files": 3,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2687
+    },
+    {
+      "addon": "Blizzard_TransformManipulator",
+      "lua_files": 2,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2692
+    },
+    {
+      "addon": "Blizzard_Transmog",
+      "lua_files": 5,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2699
+    },
+    {
+      "addon": "Blizzard_UIParent",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2701
+    },
+    {
+      "addon": "Blizzard_WarfrontsPartyPoseUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2704
+    },
+    {
+      "addon": "Blizzard_WeeklyRewards",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2706
+    },
+    {
+      "addon": "Blizzard_WeeklyRewardsUtil",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2708
+    },
+    {
+      "addon": "Blizzard_WorldMap",
+      "lua_files": 7,
+      "xml_files": 5,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2716
+    },
+    {
+      "addon": "Blizzard_WowSurveyUI",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2719
+    },
+    {
+      "addon": "Blizzard_ZoneAbility",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2722
+    },
+    {
+      "addon": "Deprecated_PaperDoll",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2724
+    },
+    {
+      "addon": "Blizzard_ProfessionsTemplates",
+      "lua_files": 16,
+      "xml_files": 11,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2748
+    },
+    {
+      "addon": "Blizzard_Professions",
+      "lua_files": 13,
+      "xml_files": 11,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 7,
+      "class": "Blizzard/plain",
+      "stream": "stdout",
+      "line": 2762
+    },
+    {
+      "addon": "!BugGrabber",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 2772
+    },
+    {
+      "addon": "AdvancedInterfaceOptions",
+      "lua_files": 43,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 24,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 2787
+    },
+    {
+      "addon": "AllTheThings",
+      "lua_files": 187,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 38,
+      "missing_requirements": 41,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 2908
+    },
+    {
+      "addon": "AstralKeys",
+      "lua_files": 41,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3024
+    },
+    {
+      "addon": "Auctionator",
+      "lua_files": 243,
+      "xml_files": 8,
+      "warnings": 0,
+      "nil_observations": 12,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3034
+    },
+    {
+      "addon": "AutoRoll",
+      "lua_files": 3,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3051
+    },
+    {
+      "addon": "AztarecHelper",
+      "lua_files": 12,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3064
+    },
+    {
+      "addon": "BetterBlizzFrames",
+      "lua_files": 56,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 2,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3104
+    },
+    {
+      "addon": "BlizzMove",
+      "lua_files": 50,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3113
+    },
+    {
+      "addon": "BossHelper",
+      "lua_files": 79,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 2,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3193
+    },
+    {
+      "addon": "BugSack",
+      "lua_files": 14,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3201
+    },
+    {
+      "addon": "Chattynator",
+      "lua_files": 39,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3243
+    },
+    {
+      "addon": "ClickableRaidBuffs",
+      "lua_files": 140,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3384
+    },
+    {
+      "addon": "Clicked",
+      "lua_files": 134,
+      "xml_files": 7,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3424
+    },
+    {
+      "addon": "Collectionator",
+      "lua_files": 79,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3430
+    },
+    {
+      "addon": "CooldownFlash",
+      "lua_files": 5,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3436
+    },
+    {
+      "addon": "CursedSurgeTracker",
+      "lua_files": 1,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3439
+    },
+    {
+      "addon": "CursorRing",
+      "lua_files": 28,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 5,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3468
+    },
+    {
+      "addon": "DandersFrames",
+      "lua_files": 91,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 3,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3561
+    },
+    {
+      "addon": "DeModal",
+      "lua_files": 7,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3569
+    },
+    {
+      "addon": "Dejunk",
+      "lua_files": 69,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3572
+    },
+    {
+      "addon": "DialogueUI",
+      "lua_files": 97,
+      "xml_files": 13,
+      "warnings": 0,
+      "nil_observations": 34,
+      "missing_requirements": 19,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3591
+    },
+    {
+      "addon": "EXBossData",
+      "lua_files": 18,
+      "xml_files": 0,
+      "warnings": 1,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3664
+    },
+    {
+      "addon": "EllesmereUI",
+      "lua_files": 55,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 3,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3720
+    },
+    {
+      "addon": "EllesmereUICooldownManager",
+      "lua_files": 11,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3732
+    },
+    {
+      "addon": "ExtraQuestButton",
+      "lua_files": 32,
+      "xml_files": 2,
+      "warnings": 1,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3744
+    },
+    {
+      "addon": "Falcon",
+      "lua_files": 19,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3755
+    },
+    {
+      "addon": "InTime",
+      "lua_files": 11,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3767
+    },
+    {
+      "addon": "ItemVersion",
+      "lua_files": 56,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3788
+    },
+    {
+      "addon": "Leatrix_Maps",
+      "lua_files": 5,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3795
+    },
+    {
+      "addon": "Leatrix_Plus",
+      "lua_files": 5,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3802
+    },
+    {
+      "addon": "ExwindCore",
+      "lua_files": 83,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 3,
+      "missing_requirements": 2,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3861
+    },
+    {
+      "addon": "EXBOSS-LocaleBase",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 1,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3864
+    },
+    {
+      "addon": "EXBOSS-Locale",
+      "lua_files": 12,
+      "xml_files": 0,
+      "warnings": 1,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3878
+    },
+    {
+      "addon": "Plumber",
+      "lua_files": 153,
+      "xml_files": 14,
+      "warnings": 0,
+      "nil_observations": 13,
+      "missing_requirements": 22,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3933
+    },
+    {
+      "addon": "SavedInstances",
+      "lua_files": 56,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 9,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 3989
+    },
+    {
+      "addon": "Silence",
+      "lua_files": 1,
+      "xml_files": 0,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4002
+    },
+    {
+      "addon": "SimpleItemLevel",
+      "lua_files": 6,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4008
+    },
+    {
+      "addon": "Simulationcraft",
+      "lua_files": 12,
+      "xml_files": 5,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4021
+    },
+    {
+      "addon": "Syndicator",
+      "lua_files": 33,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4056
+    },
+    {
+      "addon": "Baganator",
+      "lua_files": 115,
+      "xml_files": 32,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 2,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4207
+    },
+    {
+      "addon": "CraftSim",
+      "lua_files": 184,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 1,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4377
+    },
+    {
+      "addon": "EnhanceQoL",
+      "lua_files": 91,
+      "xml_files": 9,
+      "warnings": 4,
+      "nil_observations": 2,
+      "missing_requirements": 3,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4444
+    },
+    {
+      "addon": "TalentLoadoutManager",
+      "lua_files": 63,
+      "xml_files": 2,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4461
+    },
+    {
+      "addon": "UnifiedProfileManager",
+      "lua_files": 36,
+      "xml_files": 1,
+      "warnings": 0,
+      "nil_observations": 0,
+      "missing_requirements": 0,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4464
+    },
+    {
+      "addon": "WaypointUI",
+      "lua_files": 144,
+      "xml_files": 10,
+      "warnings": 0,
+      "nil_observations": 2,
+      "missing_requirements": 13,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4481
+    },
+    {
+      "addon": "WorldQuestTracker",
+      "lua_files": 133,
+      "xml_files": 3,
+      "warnings": 0,
+      "nil_observations": 10,
+      "missing_requirements": 1,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4534
+    },
+    {
+      "addon": "XIV_Databar_Continued",
+      "lua_files": 180,
+      "xml_files": 7,
+      "warnings": 0,
+      "nil_observations": 4,
+      "missing_requirements": 2,
+      "class": "third-party",
+      "stream": "stdout",
+      "line": 4558
+    }
+  ],
+  "detail_tags_emitted": {
+    "failure": 1,
+    "nil-observation": 328,
+    "missing-requirement": 210
+  },
+  "conditional_detail_gap": {
+    "warnings_not_detailed_on_stdout": 7,
+    "nil_observations_not_detailed": 22,
+    "missing_requirements_not_detailed": 12
+  },
+  "selected_lines": [
+    {
+      "stream": "stdout",
+      "line": 1,
+      "text": "[  0.104s] Sound disabled",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 2,
+      "text": "[  0.104s] SavedVariables loading disabled",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 3,
+      "text": "[  0.104s] EditMode cache source (read-only): [ACCOUNT/REALM/CHARACTER REDACTED]",
+      "redacted": true
+    },
+    {
+      "stream": "stdout",
+      "line": 4,
+      "text": "[  0.106s] Loaded EditMode layout cache from WTF",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 5,
+      "text": "[  0.111s] Loading 291 Blizzard addons...",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 2725,
+      "text": "[  1.689s] Blizzard addons loaded in 1.58s (io=5.55ms xml=124.70ms xmlproc=1.10s frames⊂xmlproc=1.09s lua=187.92ms [compile=115.31ms call=72.61ms] gc=deferred, bytecode cache: 1569/1569 hits (100%, lookup_miss=0 replay_fail=0 stored=0 store_fail=0))",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 2731,
+      "text": "[  1.957s] Loading 9 Blizzard addon dependencies for third-party addons...",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 2770,
+      "text": "[  2.126s] Loading 78 addons...",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 3745,
+      "text": "  [failure] Interface/AddOns/ExtraQuestButton/locale/enUS.lua: IO error: No such file or directory (os error 2)",
+      "redacted": true
+    },
+    {
+      "stream": "stdout",
+      "line": 4560,
+      "text": "=== Addon loading summary (before startup events) ===",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4561,
+      "text": "Loaded: 48/78 addons",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4562,
+      "text": "Failed during loading: 1",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4563,
+      "text": "Load failures: 0",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4564,
+      "text": "Loaded with Lua errors during loading: 1",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4565,
+      "text": "Total: 2934 Lua files, 149 XML files, 8 warnings",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4566,
+      "text": "Total time: 6.78s",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4577,
+      "text": "  SavedVars:  12.53µs (0.0%)",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4578,
+      "text": "Bytecode cache: 3/2957 hits (0%, lookup_miss=2954 replay_fail=0 stored=2954 store_fail=0)",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4591,
+      "text": "[  9.918s] [Startup] applying post-load workarounds",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4592,
+      "text": "[ 10.313s] [Startup] post-load workarounds complete in 394.85ms",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4593,
+      "text": "[ 10.313s] [Startup] restarting GC after bootstrap",
+      "redacted": false
+    },
+    {
+      "stream": "stdout",
+      "line": 4594,
+      "text": "[ 10.781s] [Startup] GC restart complete in 468.41ms",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 14,
+      "text": "[  0.103s] [Startup] screen size set to 1600x1200 in 31.57µs",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 25,
+      "text": "[  0.104s] [Startup] begin configure saved variables",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 26,
+      "text": "[  0.104s] [Startup] end configure saved variables in 862.00ns",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 29,
+      "text": "[  0.104s] [Startup] begin configure edit mode cache",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 30,
+      "text": "[  0.104s] [Startup] end configure edit mode cache in 25.40µs",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 31,
+      "text": "[  0.104s] [Startup] begin read ServerSnapshot edit mode layout",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 32,
+      "text": "[  0.104s] [Startup] end read ServerSnapshot edit mode layout in 30.00ns",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 33,
+      "text": "[  0.104s] [Startup] begin load edit mode cache",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 34,
+      "text": "[  0.106s] [Startup] end load edit mode cache in 1.29ms",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 37,
+      "text": "[  0.106s] [Startup] begin load Blizzard addons",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 38,
+      "text": "[  1.689s] [Startup] end load Blizzard addons in 1.58s",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 120,
+      "text": "[  1.915s] [Startup] begin load third-party addons",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 184,
+      "text": "[  9.917s] [Startup] end load third-party addons in 8.00s",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 264,
+      "text": "[ 10.783s] [Startup] begin login sequence",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 265,
+      "text": "[ 10.783s] [Startup] Firing ADDON_LOADED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 266,
+      "text": "[ 10.787s] [Startup] Firing VARIABLES_LOADED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 267,
+      "text": "[ 10.982s] [Startup] Firing DISPLAY_SIZE_CHANGED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 268,
+      "text": "[ 11.070s] [Startup] Firing UI_SCALE_CHANGED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 269,
+      "text": "[ 11.088s] [Startup] Firing PLAYER_LOGIN",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 273,
+      "text": "[ 13.145s] [Startup] end login sequence in 2.36s",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 274,
+      "text": "[ 13.145s] [Startup] begin world enter sequence",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 275,
+      "text": "[ 13.145s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 276,
+      "text": "[ 13.145s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 277,
+      "text": "[ 13.145s] [Startup] Firing PLAYER_ENTERING_WORLD",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 292,
+      "text": "[ 13.752s] [Startup] end world enter sequence in 607.60ms",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 293,
+      "text": "[ 13.752s] [Startup] begin post-login events",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 294,
+      "text": "[ 13.754s] [Startup] Firing UNIT_AURA",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 295,
+      "text": "[ 13.762s] [Startup] Firing PET_UI_UPDATE",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 296,
+      "text": "[ 13.764s] [Startup] Firing BAG_UPDATE_DELAYED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 297,
+      "text": "[ 13.768s] [Startup] Firing QUEST_LOG_UPDATE",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 298,
+      "text": "[ 13.770s] [Startup] Firing GROUP_ROSTER_UPDATE",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 299,
+      "text": "[ 13.899s] [Startup] Firing ACTIONBAR_UPDATE_STATE",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 300,
+      "text": "[ 13.900s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 301,
+      "text": "[ 13.900s] [Startup] Firing UPDATE_BONUS_ACTIONBAR",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 302,
+      "text": "[ 13.907s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 303,
+      "text": "[ 13.907s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 304,
+      "text": "[ 13.907s] [Startup] Firing UPDATE_BINDINGS",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 305,
+      "text": "[ 13.911s] [Startup] Firing UPDATE_CHAT_WINDOWS",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 306,
+      "text": "[ 13.914s] [Startup] Firing LFG_UPDATE_RANDOM_INFO",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 307,
+      "text": "[ 13.915s] [Startup] end post-login events in 162.33ms",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 308,
+      "text": "[ 13.915s] [Startup] begin close startup special windows",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 309,
+      "text": "[ 13.916s] [Startup] end close startup special windows in 748.94µs",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 310,
+      "text": "[ 13.916s] [Startup] begin FIRST_FRAME_RENDERED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 311,
+      "text": "[ 13.916s] [Startup] Firing FIRST_FRAME_RENDERED",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 312,
+      "text": "[ 13.916s] [Startup] end FIRST_FRAME_RENDERED in 123.91µs",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 313,
+      "text": "[ 13.916s] [Startup] begin unblock hidden splash alerts",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 314,
+      "text": "[ 13.916s] [Startup] end unblock hidden splash alerts in 12.47µs",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 315,
+      "text": "[ 13.916s] [Startup] begin post-event workarounds",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 316,
+      "text": "[ 13.916s] [Startup] end post-event workarounds in 941.00ns",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 320,
+      "text": "[StartupWarningAuditComplete]",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 328,
+      "text": "Anchored: 87683, Unanchored: 17628",
+      "redacted": false
+    },
+    {
+      "stream": "stderr",
+      "line": 352,
+      "text": "=== Frame Tree ===",
+      "redacted": false
+    }
+  ],
+  "scope": {
+    "third_party_loading_enabled": true,
+    "saved_variables_loading": false,
+    "edit_mode_cache_loaded": true,
+    "sound_runtime_enabled": false,
+    "width": 1600,
+    "height": 1200,
+    "tree_filter": "__StartupWarningAudit_NoMatchingFrame__",
+    "runtime_bound_seconds": 90,
+    "gui_loop": false,
+    "tests_or_builds_executed_by_auditor": false
+  },
+  "provenance": {
+    "compiled_source_revision_recorded": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111",
+    "binary_sha256_recorded_and_matched": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d",
+    "cache_provenance_recorded_and_matched": {
+      "schema": "1",
+      "profile": "retail",
+      "product": "wow",
+      "version": "12.1.0.69933",
+      "build_key": "dcfc90fffd79ba00406ae46f5f657592",
+      "install_key": "",
+      "manifest_sha256": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd",
+      "source": "casc-local-or-cdn",
+      "fallback": "none"
+    },
+    "cache_entries_hash_matched": 4044,
+    "cache_entries_changed": 0,
+    "cache_entries_missing": 0
+  },
+  "service": {
+    "observed": "2026-10-09T23:09:25.767079+00:00",
+    "status_query_exit": 0,
+    "result": "success",
+    "exec_main_status": 0,
+    "start_utc": "2026-10-09T23:07:18Z",
+    "exit_utc": "2026-10-09T23:07:34Z"
+  }
+}

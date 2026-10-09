@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "screened_before_publication": true,
+  "policy": "Publish only selected public technical diagnostics, normalized addon-relative paths, counts, hashes and public build/cache provenance. Withhold account, realm, character, layout names, private filesystem prefixes, ambient/secret environment and configuration values.",
+  "redacted_selected_lines": [
+    {
+      "stream": "stdout",
+      "line": 3,
+      "kind": "account/realm/character"
+    },
+    {
+      "stream": "stdout",
+      "line": 3745,
+      "kind": "private filesystem prefix"
+    }
+  ],
+  "not_inspected": [
+    "raw SavedVariables files",
+    "WTF/account/realm/character profiles",
+    "secret or ambient environment",
+    "profile configuration values"
+  ],
+  "environment_fields_selected": [
+    "WOW_SIM_NO_SOUND",
+    "WOW_SIM_VERBOSE",
+    "WOW_SIM_DEBUG_NIL_GLOBALS"
+  ],
+  "raw_capture_copied_to_audit": false,
+  "source_changes": false,
+  "delegation": false,
+  "builds_tests_reruns_services": false,
+  "tool_failures": [
+    {
+      "tool": "functions.grep",
+      "attempts": 2,
+      "error": "ripgrep (rg) is not available on PATH",
+      "resolution": "Read-only native Pyrun Path scanning; no delegation."
+    },
+    {
+      "tool": "functions.pyrun_eval",
+      "error": "name 'texts' is not defined",
+      "resolution": "Subsequent evaluations load their own inputs; no capture rerun."
+    },
+    {
+      "tool": "functions.pyrun_eval",
+      "error": "unsupported operand type(s) for +: 'int' and 'dict_values'",
+      "resolution": "Corrected readback line-count aggregation; no simulator command executed."
+    }
+  ]
+}

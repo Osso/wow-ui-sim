@@ -332,6 +332,20 @@ Source governance remains main's `/home/osso/.local/state/wow-ui-sim/handoff/enu
 
 [Development retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/fixture-preconditions/retention-manifest.json) binds **11 byte-identical files /61,758 bytes**, excluding itself, from the two local `verification/{two-fixture-inputs,three-fixture-preconds}/development` directories. SHA-256/size/source identities retained; three bounded credential-pattern scans across selected UTF-8 bytes found zero candidates. Local paths/revision IDs/source snapshots remain; not exhaustive privacy certification or publication approval. No raw whole logs, binaries or new native artifacts copied. Existing controlled receipts are linked, not duplicated. No runtime/tests/index/GC-audit/spec edits, tests/builds/checks, push/merge/deploy/services or delegation. Parent **OPEN**; main retains integration and final acceptance.
 
+## Standalone startup warnings — independent audit COMPLETE, not clean
+
+Verified: 2026-10-09. [Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/standalone-startup-warnings/report.md) covers fresh capture **20261009T230718Z**, compiled source **`1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111`**. Normal full third-party headless startup, ordinary SavedVariables disabled, sound disabled; no other-profile or GUI/audio credit. Later `21b513f3e` test work is not validated by this binary epoch. Older Mists diagnostics and audit96 remain distinct and unchanged.
+
+| Requested evidence | Exact result and boundary |
+|---|---|
+| Complete emitted streams / completion | 4,636 stdout + 359 stderr = **4,995 lines**, zero unclassified; one completion marker; service normal exit0. Submission/status-query exit0 are separate receipts. Completion does not prove handler success. |
+| Lua failures / suppression | **7 distinct errors + 89 suppressed additional = 96 occurrences**: 95 instruction-budget occurrences, one nil call. Tracebacks/nested headers are not extra errors; no budget or runtime fix. |
+| Loader summary / conditional warnings | **8 warnings; 1 loading-phase Lua-error addon; 0 load failures**. Loaded48/78; failed-during-loading union1 is a different counter. **7 warning details conditionally hidden** by allowlist; never reconstruct their text or add warning counts to Lua counts as disjoint events. |
+| SavedVariables / provenance | **EditMode cache still loaded** despite noSavedVars. Binary hash matches; **4,044 cache entry hashes match**, zero changed/missing at audit time. No continuous immutability, cold-cache or exact third-party-file provenance claim. |
+| Verdict | Independent native-tool artifact/source audit **COMPLETE**; bounded completion PASS, **clean startup FAIL**. Sustained runtime, native-client parity, other profiles and current test-source acceptance excluded. |
+
+[Byte-hash/privacy retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/standalone-startup-warnings/retention-manifest.json) binds **7 byte-identical selected artifacts /123,339 bytes**, excluding itself: four screened audit artifacts, submission, submission exit and service status. Raw stdout/stderr, binary, cache-entry inventory and account/nickname/layout payload are not retained; excluded inputs have private-safe aggregate file hashes only. Independent privacy screening plus explicit receipt judgment permits this bounded retention, not indiscriminate publication. No tests/builds/checks, push/deploy/services, delegation, index/runtime/test/GC-audit/spec edits performed. Parent remains **OPEN**.
+
 ## Sources
 
 - Retained independent reports, comparisons, hash evidence and retention manifests linked above — bounded execution epochs, not latest-HEAD blanket proof.

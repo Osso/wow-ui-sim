@@ -1,0 +1,6 @@
+{
+  "observed": "2026-10-09T23:09:25.767079+00:00",
+  "exit": 0,
+  "stdout": "LoadState=loaded\nActiveState=active\nSubState=exited\nResult=success\nExecMainStartTimestamp=Fri 2026-10-09 18:07:18 CDT\nExecMainExitTimestamp=Fri 2026-10-09 18:07:34 CDT\nExecMainCode=1\nExecMainStatus=0\n",
+  "stderr": ""
+}

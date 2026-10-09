@@ -1,0 +1,105 @@
+{
+  "unit": "wow-startup-warnings-20261009t230718z",
+  "started": "2026-10-09T23:07:18.172890+00:00",
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+    "--no-saved-vars",
+    "--exec-lua",
+    "print('[StartupWarningAuditComplete]')",
+    "dump-tree",
+    "--filter",
+    "__StartupWarningAudit_NoMatchingFrame__",
+    "--width",
+    "1600",
+    "--height",
+    "1200"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "artifact": {
+    "record": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "target": {
+        "kind": [
+          "bin"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "wow-sim",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/bin/wow_sim/main.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": false,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": false
+      },
+      "features": [
+        "aura-containers",
+        "aura-instance-enumeration",
+        "aura-xml-widgets",
+        "base-spell-relationships",
+        "casc",
+        "client-retail",
+        "default",
+        "forbidden-aspects",
+        "gui",
+        "native-duration-formatting",
+        "numeric-rule-formatters",
+        "on-update-modes",
+        "player-cast-durations",
+        "profile-retail",
+        "retail-12-0-0",
+        "retail-12-0-5",
+        "retail-12-0-7",
+        "retail-12-1-0",
+        "rodio",
+        "sound"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim"
+      ],
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/wow-sim",
+      "fresh": false
+    },
+    "sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d"
+  },
+  "compiled_source_revision": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111",
+  "cache_ready_checked": {
+    "marker": true,
+    "required_files_utf8": true,
+    "runeforge_template": true
+  },
+  "cache_provenance": {
+    "schema": "1",
+    "profile": "retail",
+    "product": "wow",
+    "version": "12.1.0.69933",
+    "build_key": "dcfc90fffd79ba00406ae46f5f657592",
+    "install_key": "",
+    "manifest_sha256": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd",
+    "source": "casc-local-or-cdn",
+    "fallback": "none"
+  },
+  "environment_overrides": {
+    "WOW_SIM_NO_SOUND": "1",
+    "WOW_SIM_VERBOSE": "1",
+    "WOW_SIM_DEBUG_NIL_GLOBALS": "1"
+  },
+  "runtime_bound_seconds": 90,
+  "scope": "Normalheadlessdump-tree startup withthird-partyloading enabled, noSavedVariables, noSound/GUI/GPU/service changes; outputtree filterednomatchonly, warnings remainunfiltered; no lua-errors stderr suppression",
+  "limits": [
+    "Loader warningdetails fornonallowlistedaddons remainconditional",
+    "EditMode cache reads mayhave separatebehavior; no cleanstartupclaimuntilaudit",
+    "nativeparity/otherprofiles excluded"
+  ]
+}

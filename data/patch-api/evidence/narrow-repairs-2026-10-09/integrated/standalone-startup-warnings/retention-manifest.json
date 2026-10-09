@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "capture": "20261009T230718Z",
+  "compiled_source_revision": "1fac15bd0e477cd0fdf1f03dd0219dbbedfd4111",
+  "files": [
+    {
+      "path": "report.md",
+      "bytes": 11040,
+      "sha256": "232374ab8819286f6f3a44449eaad21eac33ab8333c9f707673adc1f5efe79ee",
+      "source": "audit/report.md"
+    },
+    {
+      "path": "selected-diagnostics.json",
+      "bytes": 104131,
+      "sha256": "d63e141937f457ddeadbdeb5d71a3806e07f681b98e8cedccda703ed520c8389",
+      "source": "audit/selected-diagnostics.json"
+    },
+    {
+      "path": "privacy.json",
+      "bytes": 1624,
+      "sha256": "4eba28bf5aaa5b9373dc7e430ca70e16b6151272bb96c7578b7e65178fd44613",
+      "source": "audit/privacy.json"
+    },
+    {
+      "path": "hashmanifest.sha256",
+      "bytes": 1966,
+      "sha256": "6c30efbb07860adfd176c263d88adab6f4c473628fbc437c32190d816c3a0775",
+      "source": "audit/hashmanifest.sha256"
+    },
+    {
+      "path": "submission.json",
+      "bytes": 3193,
+      "sha256": "7d660385770d5a05959591cdf6ec953217aa041844cae3b9dca8b066896456b9",
+      "source": "20261009T230718Z/submission.json"
+    },
+    {
+      "path": "submit-result.json",
+      "bytes": 1080,
+      "sha256": "363c80f59c29b461c0239c0605abc1cb5e094af58bfea80f97b10f41a8cac057",
+      "source": "20261009T230718Z/submit-result.json"
+    },
+    {
+      "path": "service-status.json",
+      "bytes": 305,
+      "sha256": "0385bfeb4a7ef0e298ceaea342013ac5fa15cd26006f28c97e2a62f876c2e089",
+      "source": "20261009T230718Z/service-status.json"
+    }
+  ],
+  "source_hashes": [
+    {
+      "artifact": "cache-before.json",
+      "sha256": "8edee3f6dbba360ed88056d8b2948a7d7dfcfd9bcb4d4f1f922efaeba44ea555"
+    },
+    {
+      "artifact": "service-status.json",
+      "sha256": "0385bfeb4a7ef0e298ceaea342013ac5fa15cd26006f28c97e2a62f876c2e089"
+    },
+    {
+      "artifact": "stderr",
+      "sha256": "b16daf13a037eb1d1c62ffd828fd5a49492dfbb05630b54a45cc96c6ca34e926"
+    },
+    {
+      "artifact": "stdout",
+      "sha256": "dcdc53e4b76e357009d0f7f32aaef461a9f94ecd02aefd48ecaa1c6d492db5ad"
+    },
+    {
+      "artifact": "submission.json",
+      "sha256": "7d660385770d5a05959591cdf6ec953217aa041844cae3b9dca8b066896456b9"
+    },
+    {
+      "artifact": "submit-result.json",
+      "sha256": "363c80f59c29b461c0239c0605abc1cb5e094af58bfea80f97b10f41a8cac057"
+    },
+    {
+      "artifact": "wow-sim",
+      "sha256": "a5e7c397129ec917ea32eb081bf5631b3cdccb8ae69c5e8c997cac981885988d"
+    },
+    {
+      "artifact": ".wow-ui-sim-blizzard-ui-complete",
+      "sha256": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22"
+    },
+    {
+      "artifact": ".wow-ui-sim-blizzard-ui-provenance",
+      "sha256": "b2731aefb37aa23ae78853d4b6159745131048b4bb57dc8c7376e99bfad2e0a4"
+    },
+    {
+      "artifact": "report.md",
+      "sha256": "232374ab8819286f6f3a44449eaad21eac33ab8333c9f707673adc1f5efe79ee"
+    },
+    {
+      "artifact": "selected-diagnostics.json",
+      "sha256": "d63e141937f457ddeadbdeb5d71a3806e07f681b98e8cedccda703ed520c8389"
+    },
+    {
+      "artifact": "privacy.json",
+      "sha256": "4eba28bf5aaa5b9373dc7e430ca70e16b6151272bb96c7578b7e65178fd44613"
+    }
+  ],
+  "privacy": {
+    "judgment": "Retain independently screened audit diagnostics and public technical submission/service receipts only. Receipts contain local tool paths, build/cache metadata, public environment overrides and exit status, no account/nickname payload. Audit privacy.json generic WTF/account/realm/character exclusion label is not an identity. Bounded credential scan found no candidates; this is not exhaustive privacy certification.",
+    "raw_streams_retained": false,
+    "cache_entry_inventory_retained": false,
+    "excluded": [
+      "stdout",
+      "stderr",
+      "cache-before.json",
+      "binary",
+      "private profiles"
+    ],
+    "source_hash_policy": "Excluded inputs represented by aggregate file hashes only; no private profile or cache-entry paths/payload copied."
+  }
+}
