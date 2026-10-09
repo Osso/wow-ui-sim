@@ -181,10 +181,9 @@ fn numeric_rule_formatter_updates_duration_binding_text() {
         copy:SetBreakpoints({{threshold = 0, step = 1, rounding = Enum.NumericRuleFormatRounding.Down, format = '%.0f'}})
         binding:SetFormatter(copy)
         assert(binding:GetFormattedText() == '8')
-        binding:SetFormatter({Format = function(_, duration)
-            return 'custom:' .. duration:GetRemainingDuration()
-        end})
-        assert(binding:GetFormattedText() == 'custom:8.2', 'custom table formatter contract is unchanged')
+        local custom = {Format = function() return 'custom' end}
+        assert(not pcall(binding.SetFormatter, binding, custom), 'SetFormatter requires a NumericFormatter')
+        assert(binding:GetFormattedText() == '8', 'rejected formatter preserves configured numeric output')
         "#,
     )
     .expect("native formatter feeds the duration binding consumer");

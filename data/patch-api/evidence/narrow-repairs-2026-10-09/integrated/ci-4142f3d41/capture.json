@@ -1,0 +1,7 @@
+{
+  "captured_at": "2026-10-09T19:56:01.725682+00:00",
+  "actual_head": "4142f3d416ff0fa9d5505926e85e5d48ac662f7c",
+  "workflow_sha256": "5002dc2830038a01853abf41faa526f818338ab2f863a270f638a6a53d975e83",
+  "api_response_sha256": "9c681e9393db9c522fc2d1cbd4ad147bd018d3aedf6fe458549f81fa6dd1f9fa",
+  "scope": "API200exact4142f3d41run37982754270success. Workflowruntimegatesdisabled; noactualtestsmoke/parity/releaseexecutionclaim. NoCIrerun/configedit."
+}

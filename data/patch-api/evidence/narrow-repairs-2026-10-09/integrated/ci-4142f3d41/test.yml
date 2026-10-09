@@ -1,0 +1,167 @@
+name: Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  WOW_SIM_CASC: "0"
+  WOW_INSTALL_PATH: ""
+  WOW_DATA_PATH: ""
+
+jobs:
+  cargo-test:
+    name: cargo test (retail)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install mold
+        run: sudo apt-get update && sudo apt-get install -y mold libasound2-dev
+
+      - name: Fetch Blizzard UI source (retail)
+        if: false
+        run: ./scripts/setup-blizzard-ui.sh retail
+
+      - name: Use CI cargo config
+        run: cp .cargo/config.ci.toml .cargo/config.toml
+
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run cargo test (requires WoW install)
+        if: false
+        run: cargo test -- --test-threads=1
+
+      - name: Compile tests without WoW install
+        run: cargo check --all-targets
+
+  client-profile-smoke:
+    name: ${{ matrix.profile }} build + lua-errors smoke
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [mists]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install mold
+        run: sudo apt-get update && sudo apt-get install -y mold libasound2-dev
+
+      - name: Fetch Blizzard UI source (${{ matrix.profile }})
+        if: false
+        run: ./scripts/setup-blizzard-ui.sh ${{ matrix.profile }}
+
+      - name: Use CI cargo config
+        run: cp .cargo/config.ci.toml .cargo/config.toml
+
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.profile }}
+
+      - name: cargo build wow-sim
+        run: cargo build --bin wow-sim --no-default-features --features "sound gui casc client-${{ matrix.profile }}"
+
+      - name: cargo check --tests (catch profile-gated test rot)
+        run: cargo check --tests --no-default-features --features "sound gui casc client-${{ matrix.profile }}"
+
+      - name: lua-errors smoke (requires WoW install)
+        if: ${{ env.WOW_INSTALL_PATH != '' || env.WOW_DATA_PATH != '' }}
+        run: WOW_SIM_NO_ADDONS=1 WOW_SIM_NO_SAVED_VARS=1 timeout 90 ./target/debug/wow-sim --no-addons --no-saved-vars lua-errors > lua-errors.json
+
+      - name: Diff against committed baseline
+        if: false
+        # Compares the just-captured lua-errors.json against the committed
+        # Mists baseline at docs/baselines/mists-lua-errors.json. Reports
+        # regressed (new) and fixed (gone) error messages for visibility
+        # in the PR; does NOT fail the job on regression — baselines move
+        # quickly during dev. Bump to --exit-on-regression once they
+        # stabilize.
+        run: ./scripts/diff-lua-errors.sh docs/baselines/${{ matrix.profile }}-lua-errors.json lua-errors.json
+
+      - name: Enforce Mists zero-error and panel parity guard
+        if: false
+        run: ./scripts/ci-mists-guard.sh --skip-build
+
+      - name: Upload error baseline
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.profile }}-lua-errors
+          path: lua-errors.json
+          if-no-files-found: ignore
+
+      - name: Upload Mists panel parity artifacts
+        if: always() && matrix.profile == 'mists'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mists-panel-parity
+          path: target/mists-panel-parity
+          if-no-files-found: ignore
+
+  mists-release-proof:
+    name: Mists release proof
+    runs-on: ubuntu-latest
+    env:
+      LIBGL_ALWAYS_SOFTWARE: "1"
+      MISTS_PANEL_SIGNAL_ONLY: "1"
+      WOW_SIM_SOFTWARE_RENDER: "1"
+      WGPU_BACKEND: gl
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install mold
+        run: sudo apt-get update && sudo apt-get install -y mold libasound2-dev
+
+      - name: Fetch Blizzard UI source (mists)
+        if: false
+        run: ./scripts/setup-blizzard-ui.sh mists
+
+      - name: Use CI cargo config
+        run: cp .cargo/config.ci.toml .cargo/config.toml
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            jq \
+            libasound2-dev \
+            libegl1 \
+            libgl1-mesa-dri \
+            libglx-mesa0 \
+            libosmesa6 \
+            libudev-dev \
+            mesa-utils \
+            mesa-vulkan-drivers \
+            pkg-config \
+            xvfb
+
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: mists-release-proof
+
+      - name: Run Mists release proof
+        if: false
+        run: xvfb-run -a ./scripts/ci-mists-release-proof.sh --skip-clone
+
+      - name: Upload Mists release proof artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mists-release-proof
+          path: target/mists-release-proof
+          if-no-files-found: ignore

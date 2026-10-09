@@ -1,0 +1,19 @@
+{
+  "captured_at": "2026-10-09T19:58:21.311821+00:00",
+  "actual_head": "4142f3d416ff0fa9d5505926e85e5d48ac662f7c",
+  "files": [
+    {
+      "path": "decision.md",
+      "source": "/tmp/formatter-policy-conflict.md",
+      "sha256": "d64de90aab7c7b7a7b3af5a4e2493a668d5ba88614bbd1873c250ee0d826ef70",
+      "bytes": 5428
+    },
+    {
+      "path": "DurationTextBindingObjectAPIDocumentation.lua",
+      "source": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DurationTextBindingObjectAPIDocumentation.lua",
+      "sha256": "4c3f6bb476f6f2d4e05f4f15dfb107a25f49e3dfa9be2d75e9425902ab832e17",
+      "bytes": 9181
+    }
+  ],
+  "scope": "Pinned currentprofileAPI object documents SetFormatter nonnilNumericFormatter; metadata typing, NOT nativeexecution. Independent legacybranchfinding accepted; earliercallbackrecommendation inapplicable to modernsetter. Capturebeforetest/speccommit disclosed workingtreechanges. No vendorwrites."
+}

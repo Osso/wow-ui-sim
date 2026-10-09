@@ -1,0 +1,34 @@
+commit 4142f3d416ff0fa9d5505926e85e5d48ac662f7c
+Author: Alessio Deiana <adeiana@gmail.com>
+Date:   Fri Oct 9 14:48:34 2026 -0500
+
+    Use typed deterministic duration inputs in formatter fixture
+
+ .../artifacts/concurrent-head-diff.txt             |   252 +
+ .../artifacts/duration-list.json                   |    15 +
+ .../artifacts/duration-list.stderr                 |     0
+ .../artifacts/duration-list.stdout                 |     3 +
+ .../artifacts/duration-test.json                   |    23 +
+ .../artifacts/duration-test.stderr                 |    15 +
+ .../artifacts/duration-test.stdout                 |    11 +
+ .../artifacts/epoch-current-name-status.txt        |  1253 ++
+ .../artifacts/excluded-code-diff.txt               |    61 +
+ .../artifacts/final-state.json                     |     6 +
+ .../artifacts/initial-identity.json                |     9 +
+ .../current-cvar-duration-red/artifacts/list.json  |    17 +
+ .../artifacts/list.stderr                          |     0
+ .../artifacts/list.stdout                          |     3 +
+ .../artifacts/manifest.json                        |    23 +
+ .../artifacts/retained-binary-artifact.json        |    56 +
+ .../artifacts/retained-command-ledger.json         |   278 +
+ .../artifacts/source-equivalence.json              | 19517 +++++++++++++++++++
+ .../current-cvar-duration-red/artifacts/test.json  |    57 +
+ .../artifacts/test.stderr                          |    11 +
+ .../artifacts/test.stdout                          |     6 +
+ .../current-cvar-duration-red/main-retention.json  |   116 +
+ .../integrated/current-cvar-duration-red/report.md |    37 +
+ docs/specs/numeric-rule-formatter.md               |     2 +-
+ ...tegrated-source-and-factory-proof-2026-10-09.md |     8 +
+ docs/wiki/log.md                                   |     4 +
+ tests/numeric_rule_formatter.rs                    |    15 +-
+ 27 files changed, 21794 insertions(+), 4 deletions(-)

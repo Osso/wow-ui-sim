@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exit_code": 0,
+  "timing_note": "Exact start/end variables were lost across Pyrun evaluations; initial scope-before.json epoch precedes formatting. Observed CommandResult(stdout=\"\", stderr=\"\", exit_code=0). Not rerun."
+}

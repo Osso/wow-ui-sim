@@ -1,0 +1,41 @@
+{
+  "retained": [
+    {
+      "path": "code-before.json",
+      "bytes": 460274,
+      "sha256": "9da8984bddefaa0d887dc6c712a99390cade0bcef0ea2213cbbe2e42ac363a7c"
+    },
+    {
+      "path": "commit-stat.stdout",
+      "bytes": 1942,
+      "sha256": "7c49bad4f79c05028bb48a09ac8da90a16119110ab8a3ac42e9ce2cade476a66"
+    },
+    {
+      "path": "format.json",
+      "bytes": 331,
+      "sha256": "cbb20b5c75b77f9ecebe83e3a2642102ff7b32d8fddbc11dc673678aa2369945"
+    },
+    {
+      "path": "format.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "format.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "report.md",
+      "bytes": 3698,
+      "sha256": "7ef389fae04d2dd11904aa4f6dc91050fb1ddb947d1145612e8ca401969d1554"
+    },
+    {
+      "path": "scope-before.json",
+      "bytes": 553,
+      "sha256": "c853d19fd3bf16e73dda38c359036e308754ed5e600c61d02a69f69cd984a228"
+    }
+  ],
+  "privacy": "Scoped credential/private-key/Bearer pattern reviewbeforecopy no matches; no envvalues/processsnapshots. Heuristic notexhaustive. Byte-identical /tmp originals untouched.",
+  "scope": "Staticpending and actual4142f3d41compile0/module101 6/7 remainseparate. No rerun/green/parentclosure; originalformattimestamp loss retained."
+}

@@ -1158,3 +1158,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] fixture correction | Typed deterministic duration binding
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md): retained source-equivalent41f1abbebartifactCVar1/1 and scalar-durationRED0/1. Duration consumer now supplies real objects on explicitmanualclock0 and customcallback readsremainingduration; allvisible strings unchanged. No runtimechange; correctedexecutionpending serializedcompile.22proofartifacts retained.
+
+## [2026-10-09] formatter policy | Modern typed setter versus stale callback fixture
+
+[SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md):4142f3d41compileexit0,batch6/7failure atcustomtableSetFormatter. PinnedAPIrequiresNumericFormatter; modernvalidatorpreventslegacycallback. Fixture/spec nowtesttypedrejectionandretainnumericoutput8; no runtimepatch/nativeparity. EarlierRED/static/compiledreceipts retainedseparately. ExactSHA CI success iscompilecoverage: actualretailtests/Mistssmoke/parity/releaseproof disabled/skipped; fullparentstillopen.

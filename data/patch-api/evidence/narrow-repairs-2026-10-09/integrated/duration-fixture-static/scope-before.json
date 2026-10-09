@@ -1,0 +1,10 @@
+{
+  "epoch": 1791575390.7945752,
+  "hashes": {
+    "tests/numeric_rule_formatter.rs": "12c126215c4827e1621edc5b0a1da63caf895cb91dfe5b492cdc6d2da6aa6c8e",
+    "docs/specs/numeric-rule-formatter.md": "5e6dee3b76cdfd14498aa041f6ccc654338ba26b4a927a278dfe81950a8ca6a8",
+    "docs/specs/duration-text-binding.md": "2a6c93736ee1c91a2769bb7984b622705e8d149d66e9fffbb2e224f55b042469",
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "Cargo.toml": "1c56b9a80149ea739d8fc647391b4c45dc32ad70cf5ec7a3576dba92989f3341"
+  }
+}

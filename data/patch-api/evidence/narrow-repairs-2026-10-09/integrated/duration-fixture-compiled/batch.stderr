@@ -1,0 +1,82 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.65ms
+[  0.002s] [Startup] SimState::default complete in 1.64ms
+[  0.002s] [Startup] SimState::default complete in 1.65ms
+[  0.002s] [Startup] SimState::default complete in 1.65ms
+[  0.002s] [Startup] SimState::default complete in 1.64ms
+[  0.002s] [Startup] SimState::default complete in 1.77ms
+[  0.002s] [Startup] rilua VM created in 105.20µs
+[  0.002s] [Startup] rilua VM created in 106.03µs
+[  0.002s] [Startup] rilua VM created in 109.56µs
+[  0.002s] [Startup] rilua VM created in 105.06µs
+[  0.002s] [Startup] SimState::default complete in 1.77ms
+[  0.002s] [Startup] rilua VM created in 112.62µs
+[  0.002s] [Startup] builtin frames initialized in 69.17µs
+[  0.002s] [Startup] builtin frames initialized in 71.02µs
+[  0.002s] [Startup] template registry cleared in 7.42µs
+[  0.002s] [Startup] builtin frames initialized in 81.90µs
+[  0.002s] [Startup] rilua VM created in 80.70µs
+[  0.002s] [Startup] builtin frames initialized in 84.12µs
+[  0.002s] [Startup] template registry cleared in 1.97µs
+[  0.002s] [Startup] template registry cleared in 3.74µs
+[  0.002s] [Startup] template registry cleared in 1.53µs
+[  0.002s] [Startup] intrinsic templates registered in 2.88µs
+[  0.002s] [Startup] initial app_data lua handle installed in 480.00ns
+[  0.002s] [Startup] intrinsic templates registered in 4.01µs
+[  0.002s] [Startup] rilua VM created in 83.67µs
+[  0.002s] [Startup] initial app_data lua handle installed in 431.00ns
+[  0.002s] [Startup] builtin frames initialized in 83.43µs
+[  0.002s] [Startup] intrinsic templates registered in 6.21µs
+[  0.002s] [Startup] template registry cleared in 1.48µs
+[  0.002s] [Startup] intrinsic templates registered in 2.82µs
+[  0.002s] [Startup] initial app_data lua handle installed in 140.00ns
+[  0.002s] [Startup] initial app_data lua handle installed in 150.00ns
+[  0.002s] [Startup] intrinsic templates registered in 3.26µs
+[  0.002s] [Startup] initial app_data lua handle installed in 140.00ns
+[  0.002s] [Startup] builtin frames initialized in 52.10µs
+[  0.002s] [Startup] template registry cleared in 1.49µs
+[  0.002s] [Startup] intrinsic templates registered in 2.72µs
+[  0.002s] [Startup] initial app_data lua handle installed in 151.00ns
+[  0.002s] [Startup] builtin frames initialized in 60.94µs
+[  0.002s] [Startup] template registry cleared in 1.62µs
+[  0.002s] [Startup] intrinsic templates registered in 2.83µs
+[  0.002s] [Startup] initial app_data lua handle installed in 161.00ns
+[  0.111s] [Startup] init_lua_state complete in 108.70ms
+[  0.111s] [Startup] final app_data lua handle installed in 340.00ns
+[  0.111s] [Startup] initial screen globals installed in 127.15µs
+[  0.111s] [Startup] WowLuaEnv::new complete
+[  0.112s] [Startup] init_lua_state complete in 109.88ms
+[  0.112s] [Startup] final app_data lua handle installed in 371.00ns
+[  0.112s] [Startup] initial screen globals installed in 113.28µs
+[  0.112s] [Startup] WowLuaEnv::new complete
+[  0.112s] [Startup] init_lua_state complete in 110.39ms
+[  0.112s] [Startup] final app_data lua handle installed in 351.00ns
+[  0.112s] [Startup] init_lua_state complete in 110.41ms
+[  0.112s] [Startup] final app_data lua handle installed in 301.00ns
+[  0.112s] [Startup] initial screen globals installed in 98.94µs
+[  0.112s] [Startup] initial screen globals installed in 83.25µs
+[  0.112s] [Startup] WowLuaEnv::new complete
+[  0.112s] [Startup] WowLuaEnv::new complete
+
+thread 'numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text' (4074594) panicked at /home/osso/Projects/wow/wow-ui-sim/tests/numeric_rule_formatter.rs:190:6:
+native formatter feeds the duration binding consumer: Lua(Runtime(RuntimeError { message: "(string):27: NumericFormatter expected", level: 2, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.113s] [Startup] init_lua_state complete in 111.11ms
+[  0.113s] [Startup] final app_data lua handle installed in 471.00ns
+[  0.113s] [Startup] init_lua_state complete in 111.16ms
+[  0.113s] [Startup] final app_data lua handle installed in 70.00ns
+[  0.113s] [Startup] initial screen globals installed in 92.04µs
+[  0.113s] [Startup] WowLuaEnv::new complete
+[  0.113s] [Startup] initial screen globals installed in 90.93µs
+[  0.113s] [Startup] WowLuaEnv::new complete
+[  0.113s] [Startup] init_lua_state complete in 111.39ms
+[  0.113s] [Startup] final app_data lua handle installed in 161.00ns
+[  0.113s] [Startup] initial screen globals installed in 83.54µs
+[  0.113s] [Startup] WowLuaEnv::new complete
+ELLESMERE_NUMERIC_RULE_FORMATTER_GREEN

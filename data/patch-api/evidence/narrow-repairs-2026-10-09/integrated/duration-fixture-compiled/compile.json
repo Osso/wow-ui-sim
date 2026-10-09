@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--jobs",
+    "4",
+    "--test",
+    "integration",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "start": "2026-10-09T19:53:20.327630+00:00",
+  "end": "2026-10-09T19:53:53.841916+00:00",
+  "elapsed_seconds": 33.514599023008486,
+  "exit_code": 0,
+  "stdout_sha256": "5f16633a8c95d1e6a7245cff3f68d36251e2b9280216645b2ccc9cd9cd77e1da",
+  "stderr_sha256": "c3829c526428af813573a7beab633563e92fff9e5d4ee8d33d51a1b1498a2ed2"
+}

@@ -1,0 +1,76 @@
+{
+  "retained": [
+    {
+      "path": "artifact.json",
+      "bytes": 1628,
+      "sha256": "dfb9b040dc373d016dc54d447870f09b1672df0e2b9c4a036998c8ca378d7498"
+    },
+    {
+      "path": "batch.json",
+      "bytes": 557,
+      "sha256": "3ca82eaaed4e1ef58b93d7d7d0ab83c9993ac9dc92fbace1db3784a1bdce8a53"
+    },
+    {
+      "path": "batch.stderr",
+      "bytes": 4939,
+      "sha256": "8d7b3baeda500695d6c98e7d1459cf0222cb34abbb07de8edbad6a13f32c4a69"
+    },
+    {
+      "path": "batch.stdout",
+      "bytes": 973,
+      "sha256": "130cd5241bad0e531edcd670391246a967f7a6b8248f3272f412bf5cc7b25071"
+    },
+    {
+      "path": "compile.json",
+      "bytes": 549,
+      "sha256": "58bfe71bfbd7db9845ccc0a0aa8a0c01c0407987b9d2371ce74a49c4affe6bee"
+    },
+    {
+      "path": "compile.stderr",
+      "bytes": 1275,
+      "sha256": "c3829c526428af813573a7beab633563e92fff9e5d4ee8d33d51a1b1498a2ed2"
+    },
+    {
+      "path": "compile.stdout",
+      "bytes": 572411,
+      "sha256": "5f16633a8c95d1e6a7245cff3f68d36251e2b9280216645b2ccc9cd9cd77e1da"
+    },
+    {
+      "path": "evidence-hashes.json",
+      "bytes": 1667,
+      "sha256": "d354204345fc69e20cd9e11157523e3d73f8c5c4df030540594388801ffeffc3"
+    },
+    {
+      "path": "list.json",
+      "bytes": 527,
+      "sha256": "3b3cf17ff74c4ead13f80b19336d42e78701d07bf06dc6bbb45455a9892c60b8"
+    },
+    {
+      "path": "list.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "list.stdout",
+      "bytes": 726,
+      "sha256": "f736b3960a650dd19ea57ae04a1465e025eb49a0079085cc21fdac1d3540ca98"
+    },
+    {
+      "path": "post.json",
+      "bytes": 460334,
+      "sha256": "f4ddb30bf0dad6ae05a00e570a10a8911758655715bdba1cb7c1dce30b23b42d"
+    },
+    {
+      "path": "pre.json",
+      "bytes": 460992,
+      "sha256": "0f3195e4d53741018f2480a79628e30c1681ffbc7bb68c528fe26759cdcbadc8"
+    },
+    {
+      "path": "report.md",
+      "bytes": 14837,
+      "sha256": "da1ac878a15f03b0a47d6d67fffd646eeca3486154fd656771a902977907abf6"
+    }
+  ],
+  "privacy": "Scoped credential/private-key/Bearer pattern reviewbeforecopy no matches; no envvalues/processsnapshots. Heuristic notexhaustive. Byte-identical /tmp originals untouched.",
+  "scope": "Staticpending and actual4142f3d41compile0/module101 6/7 remainseparate. No rerun/green/parentclosure; originalformattimestamp loss retained."
+}
