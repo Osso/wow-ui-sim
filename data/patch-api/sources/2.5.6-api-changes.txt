@@ -1,0 +1,8 @@
+Patch 2.5.6 API changes
+
+== Resources ==
+* TOC: 20506
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== Blue posts ==
+[Transcluded source: Patch_1.15.9/API_changes; not expanded]

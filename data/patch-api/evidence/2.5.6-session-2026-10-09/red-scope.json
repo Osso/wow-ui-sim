@@ -1,0 +1,13 @@
+{
+  "base_revision": "864b4f7e46319704732ba82eef8ffc0757771610",
+  "argv": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p256-source/data/patch-api/evidence/2.5.6-session-2026-10-09/test_source_accounting.py",
+    "SourceAccounting.test_exact_source_accounting_derives_counts"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p256-source",
+  "exit": 1,
+  "validator_sha256": "8daa285400ce42d55438f036cc3b03e41a40fdd50848a5ec769c9b0ab1209c6c",
+  "test_sha256": "6b6ebf4b505b73be82dd4137b62d0e03d712a3bd8471930682673f4c604103ba",
+  "scope": "Temporary empty validator fails required derived source result. No runtime/native proof."
+}

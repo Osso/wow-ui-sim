@@ -1,0 +1,114 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "2.5.6",
+  "client_line": "tbc-classic",
+  "profile": null,
+  "scope": "source-and-configured-profile-accounting",
+  "source": {
+    "title": "Patch 2.5.6/API changes",
+    "version": "2.5.6",
+    "pageid": 685353,
+    "revid": 6778086,
+    "timestamp": "2026-07-22T05:42:00Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778086&format=json",
+    "retrieved": "2026-10-09T08:51:36.393528+00:00",
+    "response_sha256": "4b5c835e8f549a1e578be9a57b31c995c455d1f35560dffb44d74989d3a711f0",
+    "wikitext_sha256": "9ea30f11808982a5c3f0a051b5a41bd8f7472ec7450c8e3576cdb515a4f9978a",
+    "wikitext_bytes": 307,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.6-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.6-wikitext.txt"
+  },
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/2.5.6-api-changes.txt",
+    "sha256": "d962df6c23ecfb75b8905ad7274b33db28f025b7edfaf5d8c41e4661dd0ef4d0",
+    "extractor_flags": [
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "local_transform": {
+      "from": "{{:Patch_1.15.9/API_changes}}",
+      "to": "[Transcluded source: Patch_1.15.9/API_changes; not expanded]"
+    }
+  },
+  "inventory": {
+    "enumerated_api_occurrences": 0,
+    "header_counts": [],
+    "register_created": false,
+    "removals": 0,
+    "explicit_signatures": 0,
+    "local_summary_contracts": 0
+  },
+  "later_registers": [],
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Literal navigation prev=2.5.5, positional 2.5.6; no successor or native/runtime credit.",
+      "wikitext_line": 1,
+      "text_line": 1,
+      "source_text": "{{apichanges|prev=2.5.5|2.5.6}}"
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Resources heading; metadata only.",
+      "wikitext_line": 3,
+      "text_line": 3,
+      "source_text": "==Resources=="
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Literal source TOC 20506 selects the 205xx Classic/TBC accounting boundary, not a measured build or configured profile.",
+      "wikitext_line": 4,
+      "text_line": 4,
+      "source_text": "* TOC: <code>20506</code>"
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Both 2.5.5 to 2.5.6 external diffs remain unexpanded; no inferred member/signature/behavior inventory.",
+      "wikitext_line": 5,
+      "text_line": 5,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/2.5.5..2.5.6 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/2.5.5...2.5.6 BlizzardInterfaceResources]"
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Blue posts heading; no locally specified summary behavior.",
+      "wikitext_line": 7,
+      "text_line": 7,
+      "source_text": "==Blue posts=="
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "UNPROVEN",
+      "note": "UNPROVEN unexpanded Patch_1.15.9/API_changes transclusion: no local blue-post text, member identities, arguments, returns, event triggers/payloads, state transitions or security rules. Era reference is not an established TBC successor/equivalence contract.",
+      "wikitext_line": 8,
+      "text_line": 8,
+      "source_text": "{{:Patch_1.15.9/API_changes}}"
+    }
+  ],
+  "contracts": [
+    {
+      "source_id": "prose-undated-008",
+      "status": "UNPROVEN",
+      "kind": "unexpanded-blue-post-transclusion",
+      "target": "Patch_1.15.9/API_changes",
+      "member_identities": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null
+    }
+  ],
+  "proof_policy": "Source accounting only. No unsupported-client diagnosis, positive empty-inventory parity, publication/model/native/full-UI closure or cross-line supersession."
+}
