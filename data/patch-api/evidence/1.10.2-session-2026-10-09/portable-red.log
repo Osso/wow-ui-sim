@@ -1,0 +1,47 @@
+test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay) ... FAIL
+test_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored) ... FAIL
+test_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored) ... FAIL
+
+======================================================================
+FAIL: test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py", line 16, in setUp
+    self.assertTrue(
+    ~~~~~~~~~~~~~~~^
+        (EVIDENCE / "seals.json").is_file(), "original immutable seal map absent"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: False is not true : original immutable seal map absent
+
+======================================================================
+FAIL: test_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py", line 16, in setUp
+    self.assertTrue(
+    ~~~~~~~~~~~~~~~^
+        (EVIDENCE / "seals.json").is_file(), "original immutable seal map absent"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: False is not true : original immutable seal map absent
+
+======================================================================
+FAIL: test_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py", line 16, in setUp
+    self.assertTrue(
+    ~~~~~~~~~~~~~~~^
+        (EVIDENCE / "seals.json").is_file(), "original immutable seal map absent"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: False is not true : original immutable seal map absent
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)

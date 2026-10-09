@@ -1,0 +1,10 @@
+test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... ok
+test_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... ok
+test_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... ok
+test_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... ok
+test_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.017s
+
+OK

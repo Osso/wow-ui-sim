@@ -1,0 +1,141 @@
+{
+  "branch": "p1102-page",
+  "base_revision": "c5124f4c9366063f4096fa61e72bf2c0a3e31b38",
+  "source": {
+    "title": "Patch 1.10.2/API changes",
+    "version": "1.10.2",
+    "pageid": 465540,
+    "revid": 4475520,
+    "timestamp": "2020-04-23T00:43:35Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4475520&format=json",
+    "retrieved": "2026-10-09T08:51:36.402904+00:00",
+    "response_sha256": "743b231ef5e69d827be0ff7d9a1e0219d114db81e9d5024100226c0a209ddb7c",
+    "wikitext_sha256": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+    "wikitext_bytes": 45,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.10.2-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.10.2-wikitext.txt"
+  },
+  "totals": {
+    "physical_lines": 1,
+    "nonblank_rows": 1,
+    "metadata_rows": 1,
+    "unproven_source_rows": 0,
+    "references": 1,
+    "unproven_contracts": 1,
+    "inventory": 0,
+    "signatures": 0,
+    "defaults": 0,
+    "prose": 0,
+    "headers": 0,
+    "templates": 0
+  },
+  "measurements": {
+    "model": 0,
+    "runtime": 0,
+    "native": 0
+  },
+  "separate_retail_successor_references": 47,
+  "applied_successors": 0,
+  "original_seals": 26,
+  "later_receipt_seals": 6,
+  "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8",
+  "archive_sha256": "4fb9f82549447aad5aa054152d9ecac4e3656379be3f1df14eb53f56f79d0111",
+  "archive_bytes": 50127,
+  "archive_members": 27,
+  "proof_epochs": [
+    {
+      "revision": "c5124f4c9366063f4096fa61e72bf2c0a3e31b38",
+      "scope": "uncommitted own tests and missing-accounting scaffold RED",
+      "exit_code": 1,
+      "tests": 5
+    },
+    {
+      "revision": "c5124f4c9366063f4096fa61e72bf2c0a3e31b38",
+      "scope": "own-base immutable tool default output capture; uncommitted source implementation",
+      "exit_code": 0,
+      "tests": null
+    },
+    {
+      "revision": "d69bbfdcc1668af2c6f17ea1b1fe69b1f41facbf",
+      "scope": "committed SOURCE accounting/default-byte/error/omission controls",
+      "exit_code": 0,
+      "tests": 5
+    },
+    {
+      "revision": "d69bbfdcc1668af2c6f17ea1b1fe69b1f41facbf",
+      "scope": "portable RED: immutable seals/archive not yet implemented",
+      "exit_code": 1,
+      "tests": 3
+    },
+    {
+      "revision": "4e34482d24ade273e4abf83552f4367c6bcfba91",
+      "scope": "fresh archive copy audit.py; original sealed bytes unchanged; no Git/target/current-tools",
+      "exit_code": 0,
+      "tests": null
+    },
+    {
+      "revision": "4e34482d24ade273e4abf83552f4367c6bcfba91",
+      "scope": "fresh archive copy test_source_accounting.py; original sealed bytes unchanged; no Git/target/current-tools",
+      "exit_code": 0,
+      "tests": 5
+    },
+    {
+      "revision": "4e34482d24ade273e4abf83552f4367c6bcfba91",
+      "scope": "fresh archive copy test_portable.py; original sealed bytes unchanged; no Git/target/current-tools",
+      "exit_code": 0,
+      "tests": 3
+    }
+  ],
+  "portable_controls": [
+    {
+      "control": "copied-historical-replay",
+      "result": {
+        "seals": 26,
+        "totals": {
+          "physical_lines": 1,
+          "nonblank_rows": 1,
+          "metadata_rows": 1,
+          "unproven_source_rows": 0,
+          "references": 1,
+          "unproven_contracts": 1,
+          "inventory": 0,
+          "signatures": 0,
+          "defaults": 0,
+          "prose": 0,
+          "headers": 0,
+          "templates": 0
+        }
+      },
+      "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+    },
+    {
+      "control": "serialized-tamper-rejected",
+      "file": "ledger.json",
+      "original_sha256": "d087e383c9d6a574e67a948a3476628c90013bdf268a812cf52fa8266c7c6e65",
+      "tampered_sha256": "8f51a4c9744b1bf613c11e52675dcffbd8899b8bde1dc37a5303966ff3fea896"
+    },
+    {
+      "control": "exact-restoration",
+      "file": "ledger.json",
+      "restored_sha256": "d087e383c9d6a574e67a948a3476628c90013bdf268a812cf52fa8266c7c6e65",
+      "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+    },
+    {
+      "control": "serialized-tamper-rejected",
+      "file": "green.log",
+      "original_sha256": "5bdd5cca7dfa8601569dc7274a952ba34038f83b07a4461f717f399d59b85dd1",
+      "tampered_sha256": "82e3328e807e55aa1a0d2d79000e090d7c1ccb74e2bd1f9550fce8eb68aa82ae"
+    },
+    {
+      "control": "exact-restoration",
+      "file": "green.log",
+      "restored_sha256": "5bdd5cca7dfa8601569dc7274a952ba34038f83b07a4461f717f399d59b85dd1",
+      "original_seals_sha256": "9cb21a1ceb027dc287d2f4f0e5bea880f53a2fb3c6274ab1603c58faef0af5e8"
+    }
+  ],
+  "limits": [
+    "SOURCE development only",
+    "No meaningful runtime/model/native subset",
+    "Main integration/independent proof/acceptance pending"
+  ]
+}

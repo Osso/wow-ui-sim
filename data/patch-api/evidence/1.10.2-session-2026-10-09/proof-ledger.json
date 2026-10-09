@@ -1,0 +1,68 @@
+[
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "c5124f4c9366063f4096fa61e72bf2c0a3e31b38",
+    "scope": "uncommitted own tests and missing-accounting scaffold RED",
+    "started": "2026-10-09T17:36:29.465479+00:00",
+    "finished": "2026-10-09T17:36:29.504361+00:00",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... FAIL\ntest_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... FAIL\ntest_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... FAIL\ntest_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... FAIL\ntest_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... FAIL\n\n======================================================================\nFAIL: test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py\", line 69, in test_every_boundary_and_derived_count_is_required\n    self.assertTrue(ledger.get(name), f\"missing boundary: {name}\")\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: [] is not true : missing boundary: source_rows\n\n======================================================================\nFAIL: test_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py\", line 53, in test_exact_source_pin_response_registry\n    raw, pin, registry = audit.validate_source()\n                         ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/audit.py\", line 9, in validate_source\n    raise AssertionError(\"frozen source validation missing\")\nAssertionError: frozen source validation missing\n\n======================================================================\nFAIL: test_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py\", line 86, in test_foreign_histories_never_become_successors\n    self.assertIn(\"2.0.1\", [row[\"version\"] for row in refs])\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: '2.0.1' not found in []\n\n======================================================================\nFAIL: test_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py\", line 105, in test_historical_default_tools_reproduce_exact_bytes\n    audit.replay_defaults()\n    ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/audit.py\", line 21, in replay_defaults\n    raise AssertionError(\"historical default replay missing\")\nAssertionError: historical default replay missing\n\n======================================================================\nFAIL: test_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py\", line 18, in test_literal_redirect_and_empty_publication_inventory\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        ledger[\"source_rows\"],\n        ^^^^^^^^^^^^^^^^^^^^^^\n    ...<8 lines>...\n        ],\n        ^^\n    )\n    ^\nAssertionError: Lists differ: [] != [{'id': 'raw-1.10.2-001', 'line': 1, 'lite[97 chars] []}]\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n{'id': 'raw-1.10.2-001', 'line': 1, 'literal': '#REDIRECT [[API change summaries/Historical]]', 'status': 'metadata-only', 'capabilities': []}\n\n- []\n+ [{'capabilities': [],\n+   'id': 'raw-1.10.2-001',\n+   'line': 1,\n+   'literal': '#REDIRECT [[API change summaries/Historical]]',\n+   'status': 'metadata-only'}]\n\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nFAILED (failures=5)\n"
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+      "1.10.2",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/source.wikitext",
+      "4475520",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/default-register.json"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "c5124f4c9366063f4096fa61e72bf2c0a3e31b38",
+    "scope": "own-base immutable tool default output capture; uncommitted source implementation",
+    "started": "2026-10-09T17:37:01.632037+00:00",
+    "finished": "2026-10-09T17:37:01.678683+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "d69bbfdcc1668af2c6f17ea1b1fe69b1f41facbf",
+    "scope": "committed SOURCE accounting/default-byte/error/omission controls",
+    "started": "2026-10-09T17:38:05.059746+00:00",
+    "finished": "2026-10-09T17:38:05.110609+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... ok\ntest_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... ok\ntest_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... ok\ntest_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... ok\ntest_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.007s\n\nOK\n",
+    "stream_sha256": "5bdd5cca7dfa8601569dc7274a952ba34038f83b07a4461f717f399d59b85dd1"
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "d69bbfdcc1668af2c6f17ea1b1fe69b1f41facbf",
+    "scope": "portable RED: immutable seals/archive not yet implemented",
+    "started": "2026-10-09T17:38:05.111076+00:00",
+    "finished": "2026-10-09T17:38:05.152699+00:00",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay) ... FAIL\ntest_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored) ... FAIL\ntest_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored) ... FAIL\n\n======================================================================\nFAIL: test_copied_historical_replay (__main__.PortableReplay.test_copied_historical_replay)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n======================================================================\nFAIL: test_serialized_ledger_omission_rejected_restored (__main__.PortableReplay.test_serialized_ledger_omission_rejected_restored)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n======================================================================\nFAIL: test_serialized_log_fabrication_rejected_restored (__main__.PortableReplay.test_serialized_log_fabrication_rejected_restored)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py\", line 16, in setUp\n    self.assertTrue(\n    ~~~~~~~~~~~~~~~^\n        (EVIDENCE / \"seals.json\").is_file(), \"original immutable seal map absent\"\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: False is not true : original immutable seal map absent\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (failures=3)\n",
+    "stream_sha256": "a906c953c81ac87e8ca49b1ede8fb47f858728fa05c077b13cc55db3172c87b8"
+  }
+]
