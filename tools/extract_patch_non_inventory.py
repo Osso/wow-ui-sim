@@ -142,6 +142,13 @@ def render_wrath_summary_markup(raw):
                   lambda match: '`' + html.escape(match[0], quote=False) + '`', raw)
 
 
+def render_retail_tbc_markup(raw):
+    """Retain literal placeholder and nested 2008 citation fields without expansion."""
+    raw = raw.replace('<CONSTANT_NAME>', '&lt;CONSTANT_NAME&gt;')
+    raw = raw.replace('{{blizz}}', 'Blizzard ')
+    return re.sub(r'\{\{Ref web\|([^{}]+)\}\}', r'[Reference: \1]', raw)
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
                  legacy_api_bullets=False, legacy_cvar_tables=False,
@@ -149,7 +156,10 @@ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=F
                  retain_patch_diff_reference=False, canonical_patch_navigation=False,
                  mists_automated_diff=False, lowercase_reflist=False,
                  mists_source_markup=False, cataclysm_labeled_inventory=False,
-                 wrath_summary_markup=False, numbered_reflist=False):
+                 wrath_summary_markup=False, numbered_reflist=False,
+                 retail_tbc_markup=False):
+    if retail_tbc_markup:
+        raw = render_retail_tbc_markup(raw)
     if cataclysm_labeled_inventory:
         raw = '\n'.join(line for line in raw.splitlines()
                         if not re.fullmatch(r': (NEW|REMOVED) \{\{api\|[^{}]+\}\}', line)) + '\n'
@@ -406,6 +416,8 @@ def main():
                         help='Keep 2009 summary attribution and inline Button XML; opt-in')
     parser.add_argument('--numbered-reflist', action='store_true',
                         help='Retain numbered Reflist markers without expanding citations; opt-in')
+    parser.add_argument('--retail-tbc-markup', action='store_true',
+                        help='Keep 2008 retail placeholders/nested citation fields; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -430,7 +442,8 @@ def main():
                         mists_source_markup=args.mists_source_markup,
                         cataclysm_labeled_inventory=args.cataclysm_labeled_inventory,
                         wrath_summary_markup=args.wrath_summary_markup,
-                        numbered_reflist=args.numbered_reflist)
+                        numbered_reflist=args.numbered_reflist,
+                        retail_tbc_markup=args.retail_tbc_markup)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

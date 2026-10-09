@@ -1,0 +1,101 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "2.4.2",
+  "source": {
+    "path": "data/patch-api/sources/2.4.2-api-changes.wikitext",
+    "revid": 803933,
+    "sha256": "c3602daf94581eb87a0974d68bc0cf476be5d35015cae0c10792690782c07c29"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "p242-negative-control",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P242IntentionallyMissingPublication",
+      "annotation": "* [[API AcceptLevelGrant|AcceptLevelGrant]]",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-global-api-CombatLog_Object_IsA-6",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CombatLog_Object_IsA",
+      "annotation": "* [[API CombatLog_Object_IsA|CombatLog_Object_IsA]]",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-global-api-DeclineLevelGrant-7",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeclineLevelGrant",
+      "annotation": "* [[API DeclineLevelGrant|DeclineLevelGrant]]",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-GetCoinText-8",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCoinText",
+      "annotation": "* [[API GetCoinText|GetCoinText]](amount, \"separator\")",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-GetQuestLogSpellLink-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogSpellLink",
+      "annotation": "* [[API GetQuestLogSpellLink|GetQuestLogSpellLink]]",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-GetQuestSpellLink-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestSpellLink",
+      "annotation": "* [[API GetQuestSpellLink|GetQuestSpellLink]]",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-strreplace-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "strreplace",
+      "annotation": "* [[API strreplace|strreplace]]",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-GuildRosterSetOfficerNote-19",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GuildRosterSetOfficerNote",
+      "annotation": "* {{api|GuildRosterSetOfficerNote}}() - escape characters are now strictly evaluated and require escaping <ref>http://code.google.com/p/epgp/issues/detail?id=162</ref>",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-widgets-Minimap:PingLocation-20",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Minimap:PingLocation",
+      "annotation": "* {{api|t=w|Minimap:PingLocation}}(x,y) is now protected while you are targeting an area of effect spell.<ref>{{Ref web|author={{blizz}}[[slouken]]|date=2008-05-14 06:08 PST|url=http://forums.worldofwarcraft.com/thread.html?topicId=6440985857&sid=1&pageNo=1#1|archiveurl=https://www.bluetracker.gg/wow/topic/us-en/6440985857-minimap-ping-macros-disabled-/|title=Re: Minimap Ping Macros Disabled?}}</ref>",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-CombatLogSetCurrentEntry-21",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "CombatLogSetCurrentEntry",
+      "annotation": "* {{api|CombatLogSetCurrentEntry}}() behavior for negative and zero ids is shifted by 1 position. Newest is at 0 (was at -1), oldest is at <code>-CombatLogGetNumEntries() + 1</code> (was at -CombatLogGetNumEntries())",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-widgets-ScrollingMessageFrame:AddMessage-22",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "ScrollingMessageFrame:AddMessage",
+      "annotation": "* {{api|t=w|ScrollingMessageFrame:AddMessage}}() has an additional argument, ''addToStart'', that appends messages to the opposite end of the message frame.",
+      "wikitext_line": 22
+    }
+  ],
+  "client_line": "retail"
+}

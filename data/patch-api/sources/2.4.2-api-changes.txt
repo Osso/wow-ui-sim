@@ -1,0 +1,31 @@
+Patch 2.4.2 API changes
+
+== New APIs ==
+
+* AcceptLevelGrant
+* CombatLog_Object_IsA
+* DeclineLevelGrant
+* GetCoinText(amount, "separator")
+* GetQuestLogSpellLink
+* GetQuestSpellLink
+* strreplace
+
+=== New plural selector ===
+
+|4 added to UI escape codes, to toggle singular and plural forms: I have %d |4apple:apples;.. The "|4singular:plural;" operator looks at the last seen number in the string and selects the appropriate form based on it, e.g. "I have 1 apple." / "I have 2 apples.".  Most constants for plural forms (<CONSTANT_NAME>_P1) are eliminated, and singular ones updated to use new escape sequence.
+
+== Changed APIs ==
+* Constants GOLD,SILVER and COPPER changed to GOLD_AMOUNT, SILVER_AMOUNT and COPPER_AMOUNT http://forums.worldofwarcraft.com/thread.html?topicId=6440785021&sid=1
+* GuildRosterSetOfficerNote() - escape characters are now strictly evaluated and require escaping http://code.google.com/p/epgp/issues/detail?id=162
+* Minimap:PingLocation(x,y) is now protected while you are targeting an area of effect spell.[Reference: author=Blizzard slouken|date=2008-05-14 06:08 PST|url=http://forums.worldofwarcraft.com/thread.html?topicId=6440985857&sid=1&pageNo=1#1|archiveurl=https://www.bluetracker.gg/wow/topic/us-en/6440985857-minimap-ping-macros-disabled-/|title=Re: Minimap Ping Macros Disabled?]
+* CombatLogSetCurrentEntry() behavior for negative and zero ids is shifted by 1 position. Newest is at 0 (was at -1), oldest is at -CombatLogGetNumEntries() + 1 (was at -CombatLogGetNumEntries())
+* ScrollingMessageFrame:AddMessage() has an additional argument, addToStart, that appends messages to the opposite end of the message frame.
+
+=== Name resolution queue ===
+
+Internally, the WoW client is usually fed a bunch of player GUIDs rather than names, which it then has to resolve and keep a cache of.  The rate at which these queries are sent out is now artificially throttled to 128 queries every 30 seconds (queued).
+
+This affects for instance AH "getall" scans (see API QueryAuctionItems and API GetAuctionItemInfo). Such a query followed by looping all records in the AH (15000+ for a medium pop server) results in the name resolver queue being tied up for 5-10 minutes.  I.e. if you hearth to Shattrath immediately after doing such a scan, everyone you see (that you have not previously seen that session), will be named "Unknown" for the next 5-10 minutes.
+
+== References ==
+[References list; not expanded]

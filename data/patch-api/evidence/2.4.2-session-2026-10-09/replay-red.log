@@ -1,0 +1,15 @@
+F
+======================================================================
+FAIL: test_fresh_copy_replays_and_serialized_tampers_reject_then_restore (__main__.ReplayTests.test_fresh_copy_replays_and_serialized_tampers_reject_then_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p242-source/tools/test_patch_2_4_2_replay.py", line 29, in test_fresh_copy_replays_and_serialized_tampers_reject_then_restore
+    self.assertEqual(initial.returncode, 0, initial.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : /usr/bin/python3: can't open file '/tmp/tmpypx7g45f/historical-only/validate.py': [Errno 2] No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)

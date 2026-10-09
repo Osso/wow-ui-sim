@@ -1,0 +1,34 @@
+[
+  {
+    "patch": "3.0.2",
+    "sha256": "378d50cd422c48559714b2ddfe5f04942615d87cc131cc49eaf3e8622b326f2d",
+    "state": "queued source only; no supersession credit",
+    "literal_overlaps": [
+      {
+        "line": 363,
+        "literal": "* NEW - text = GetCoinTextureString(amount, fontHeight) ",
+        "own_symbols": [
+          "GetCoinText"
+        ]
+      }
+    ]
+  },
+  {
+    "patch": "3.0.3",
+    "sha256": "434740b793ade76d3c459f142cf07577accd6da23c9f97be5fc4ff2d69d59911",
+    "state": "queued source only; no supersession credit",
+    "literal_overlaps": []
+  },
+  {
+    "patch": "3.0.8",
+    "sha256": "4f5b48b4b17c3ddcc3838c61eb015d0d2d18772e323d08733e06ea79d6833417",
+    "state": "queued source only; no supersession credit",
+    "literal_overlaps": []
+  },
+  {
+    "patch": "3.1.0",
+    "sha256": "93ec244c5d6619cbe168e2a39623ac18d63314e69b2d2d9c779709a7fe347dcd",
+    "state": "queued source only; no supersession credit",
+    "literal_overlaps": []
+  }
+]

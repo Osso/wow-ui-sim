@@ -1,0 +1,149 @@
+{
+  "commands": [
+    {
+      "artifact": "source-red.log",
+      "revision": "f827c5e9a",
+      "exit": 1,
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_4_2_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Missing opt-in parser/extractor API; expected interface RED.",
+      "invalidated": false
+    },
+    {
+      "artifact": "source-green.log",
+      "revision": "040c37714",
+      "exit": 0,
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_4_2_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Own frozen inventory/extract/default controls; 2/2.",
+      "invalidated": false
+    },
+    {
+      "artifact": "factory-red.log",
+      "revision": "d6662ec9d90a1fa6c07b6af1252283d80b3839b1",
+      "exit": 101,
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "patch_2_4_2_factory",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Own factory discovery with empty gap set; nine missing globals. Existing current currency model passes.",
+      "invalidated": false
+    },
+    {
+      "artifact": "factory-green.log",
+      "revision": "acf89c976",
+      "exit": 0,
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "patch_2_4_2_factory",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Own retail factory 2/2; known publication gaps remain, current namespace amount/separator behavior only.",
+      "invalidated": false
+    },
+    {
+      "artifact": "initial-negative.log",
+      "revision": "acf89c976",
+      "exit": 101,
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "patch_2_4_2_factory",
+        "patch_2_4_2_factory_publication",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Initial ID/symbol replacement of already missing global detects new/stale gap, nine non-ok rows; not extra-gap control.",
+      "invalidated": false
+    },
+    {
+      "artifact": "negative.log",
+      "revision": "acf89c976",
+      "exit": 101,
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "patch_2_4_2_factory",
+        "patch_2_4_2_factory_publication",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Published widget method replaced with nonexistent method; 9 -> 10 gaps, exactly negative-control new gap.",
+      "invalidated": false
+    },
+    {
+      "artifact": "accounting-red.log",
+      "revision": "d02bee963",
+      "exit": 1,
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_4_2_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Missing occurrence-accounting module expected RED.",
+      "invalidated": false
+    },
+    {
+      "artifact": "accounting-green.log",
+      "revision": "c8bdc1c1c",
+      "exit": 0,
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_4_2_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "53 literal ledger IDs plus every API/observation omission; 2/2.",
+      "invalidated": false
+    },
+    {
+      "artifact": "replay-red.log",
+      "revision": "1a5e3860d",
+      "exit": 1,
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_4_2_replay.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p242-source",
+      "scope": "Fresh copied evidence validator missing; expected RED.",
+      "invalidated": false
+    }
+  ],
+  "warnings": "Six inherited iced manifest deprecations and six inherited headless non-vendor warnings. No suppressions or adjacent fixes.",
+  "proof_policy": "Development evidence only; no final gate, cached Game or native acceptance."
+}

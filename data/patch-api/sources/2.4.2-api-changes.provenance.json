@@ -1,0 +1,28 @@
+{
+  "title": "Patch 2.4.2/API changes",
+  "version": "2.4.2",
+  "pageid": 81145,
+  "revid": 803933,
+  "timestamp": "2021-12-28T02:03:05Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=803933&format=json",
+  "retrieved": "2026-10-09T08:51:36.394037+00:00",
+  "response_sha256": "334db0c7e0245ae9fd4255663f811456e18405c38688175ab0ef4286894163a8",
+  "wikitext_sha256": "c3602daf94581eb87a0974d68bc0cf476be5d35015cae0c10792690782c07c29",
+  "wikitext_bytes": 2769,
+  "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.4.2-response.json",
+  "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.4.2-wikitext.txt",
+  "client_line": "retail",
+  "historical_release": "2008 retail; not TBC Classic 2.5.x",
+  "base_revision": "f95eed96e",
+  "manifest_sha256": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+  "generator_flags": [
+    "--retail-tbc-summary",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [
+    "--retail-tbc-markup",
+    "--lowercase-reflist"
+  ],
+  "source_kind": "substantive-page"
+}

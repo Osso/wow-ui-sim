@@ -1,0 +1,11 @@
+[
+  "wt-global-api-AcceptLevelGrant-5",
+  "wt-global-api-CombatLogSetCurrentEntry-21",
+  "wt-global-api-CombatLog_Object_IsA-6",
+  "wt-global-api-DeclineLevelGrant-7",
+  "wt-global-api-GetCoinText-8",
+  "wt-global-api-GetQuestLogSpellLink-9",
+  "wt-global-api-GetQuestSpellLink-10",
+  "wt-global-api-GuildRosterSetOfficerNote-19",
+  "wt-global-api-strreplace-11"
+]

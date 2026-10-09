@@ -29,6 +29,9 @@
 ## [2026-10-09] measurement | Separate Patch 3.0.2 current-retail bare factories
 
 [Bounded factory measurement](investigations/patch-3-0-2-api-audit.md#separate-current-retail-factory-measurement--2026-10-09): exact 373 occurrences, 76 actual ordered retail successors, empty-gap discovery at `982ccc3d9`: 185 matches / 188 gaps. Handler/click/template/console/event limits explicit. Corrected own targeted GREEN 7/7 at `57c9f73e3`, all 373 observations identical to discovery; same-373 fabricated-global negative 188 → 189 at `1fdb73aa6`. First 6/7 console-control RED retained; current retail catalog has 14 Command records distinct from CVars. Original 36+1+2 seals unchanged. Historical/native/model claims zero; no runtime changes or source-accounting rewrite credit.
+## [2026-10-09] investigation | Historical retail Patch 2.4.2 bounded audit
+
+[Audit](investigations/patch-2-4-2-api-audit.md): frozen page 81145/revision 803933 (2021 revision timestamp, 2008 retail). Eleven publication occurrences, 22 literal raw rows, eleven separate signatures, six constants/three contextual APIs: 53 IDs (2 bounded / 44 pending / 7 metadata). Own bare-retail factory 2/2: two widget publications/nine global gaps; concrete existing current currency model only, no legacy/native/model closure. Source/accounting 2/2 each, negative 9 → 10; fresh evidence-only no-Git replay/tamper/restore 1/1. Original 23 seals/2,229 archived blobs, 4,287,031-byte archive; 151 default/78 recorded-option differential controls unchanged, inherited fixture differences/errors retained. Only actual 3.2.0/3.3.0/3.3.3/3.3.5/4.0.1 successors; changed quest-link overlap gives no supersession. Queued 3.0.2/3.0.3/3.0.8/3.1.0 exact overlap zero, no Classic credit. Main owns integration/full-Game/native acceptance; no runtime changes or broad/final gates.
 
 ## [2026-10-09] investigation | Patch 3.4.2 Wrath Classic source audit
 
