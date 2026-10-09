@@ -676,6 +676,36 @@ def parse_colon_api_bullets(text):
     return entries
 
 
+def parse_legacy_section_lists(text):
+    """Retain 2010 sectioned API/event lists and literal signature fragments."""
+    sections = {
+        'New API functions': ('global-api', 'added'),
+        'New FrameXML API': ('framexml', 'added'),
+        'New Events': ('events', 'added'),
+        'API Changes': ('global-api', 'changed'),
+        'Removed FrameXML API': ('framexml', 'removed'),
+    }
+    entries, current = [], None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            current = sections.get(heading[1])
+            continue
+        if current is None or not line.startswith((':', '*')):
+            continue
+        for match in re.finditer(r'\[\[API [^\]]+\]\]|\{\{api\|[^{}]+\}\}', line):
+            entry = make_entry(*current, number, match[0])
+            entry['annotation'] = line
+            signature = re.match(r'\([^\n)]*\)', line[match.end():])
+            if signature:
+                entry['signature'] = signature[0]
+            returns = re.fullmatch(r':\s*(.*?)\s*=\s*', line[:match.start()])
+            if returns:
+                entry['returns'] = returns[1]
+            entries.append(entry)
+    return entries
+
+
 def parse_combat_restriction_bullets(text):
     """Retain 5.4.8 Breaking changes identities, never infer removal."""
     entries = []
@@ -890,6 +920,8 @@ def main():
     parser.add_argument('--warlords-prepatch', action='store_true',
                         help='Retain compact Warlords summary references and canonical widget owners; opt-in')
     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
+    parser.add_argument('--legacy-section-lists', action='store_true',
+                        help='Retain 2010 sectioned API/event lists and literal signatures; opt-in')
     parser.add_argument('--combat-restriction-bullets', action='store_true',
                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
     parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
@@ -969,6 +1001,8 @@ def main():
         diff_entries, diff_counts = parse_warlords_diff(Path(args.warlords_diff).read_text())
         entries.extend(diff_entries)
         counts.extend(diff_counts)
+    if args.legacy_section_lists:
+        entries.extend(parse_legacy_section_lists(raw.decode('utf-8')))
     if args.combat_restriction_bullets:
         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
     if args.mists_automated_diff:

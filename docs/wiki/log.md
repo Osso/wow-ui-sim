@@ -729,3 +729,8 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## [2026-10-09] portable source fixture | Wrath Classic Patch 3.4.0
 
 [[patch-3-4-0-api-audit]] two serialized-source/log seal rejections exit1, originals restored, relocated no-Git replay exit0 with17 historical seals at `30071d654`. Evidence/source scope509611 bytes. Zero runtime/native/factory observations; source-only handoff, parent owns integration/final gates.
+
+## [2026-10-09] investigation | Historical retail Patch 3.3.5 API audit
+
+[Audit](investigations/patch-3-3-5-api-audit.md): local source identity/hashes validated; opt-in list parser, 124 inventory, 69 signatures and 130 extract rows retained. No Classic supersession, runtime changes or native parity credit. Targeted accounting/proof follows.
+

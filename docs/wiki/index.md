@@ -2864,3 +2864,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 [Audit](investigations/patch-4-1-0-api-audit.md#integration-boundary): actual 4.2.0/4.3.0/4.3.4 successors; sole overlap is 4.3.0 IsIPv6Available removal, 51 matches / 30 gaps, no IPv6 model/native credit. Historical 81 inventory, 50/31 observations, 86 extract rows (78 metadata/eight prose), four signatures and 171 IDs (50 bounded/43 pending/78 metadata) remain frozen; negative 31 → 32 unchanged. Explicit sidecar hashes at 216568b5e preserve all 23 original seals, archive and logs. Retail GetPetHappiness absent; non-retail/Mists state retained. Main reports 69 sweeps pass; Mists missing-file rebase failure awaits retry, runtime build, portability and independent verifier. Native/full-suite/CI unproven. Earlier queued descriptions record historical capture boundaries, not current successor state.
 
+## [2026-10-09] investigation | Historical retail Patch 3.3.5 API audit
+
+[Audit](investigations/patch-3-3-5-api-audit.md): page 25049/revision 247986, 2010 retail (not Wrath Classic). Literal local manifest/content hashes validated before copy. Opt-in sectioned-list parser retains 124 inventory occurrences, 69 signature fragments and unchanged 130-row full extract; no numeric headers. Complete accounting and targeted proof pending; no runtime/retirement changes or integration claim.
+
