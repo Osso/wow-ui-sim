@@ -1,0 +1,18 @@
+{
+  "retained_at": "2026-10-09T17:30:19.986413+00:00",
+  "scope": "Byte-identical independent comparison artifacts; completed full-suite logs read only, no tests rerun. Original suite epochs remain unchanged.",
+  "files": [
+    {
+      "source": "/tmp/fullsuite-3de-dd-independent-comparison.md",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/fullsuite-comparison/fullsuite-3de-dd-independent-comparison.md",
+      "sha256": "c9227e76780afd6c1e0fcc08816879be7c52630fd4c2ccd6f68319bb760a5ffc",
+      "bytes": 5639
+    },
+    {
+      "source": "/tmp/fullsuite-3de-dd-independent-comparison.json",
+      "retained": "data/test-perf/evidence/prefork-exact-fixtures-2026-10-09/fullsuite-comparison/fullsuite-3de-dd-independent-comparison.json",
+      "sha256": "74f6634d60a75bd0e96afc463bd0a66cbee3d402ec6f24fdb090fc92786a4a61",
+      "bytes": 29703
+    }
+  ]
+}

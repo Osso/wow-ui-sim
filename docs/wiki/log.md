@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Completed prefork migration suite failure comparison
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) records completed `3de874658` FAIL versus `dd710c6fc`, unchanged failure identities, and an unresolved difference between prefork listing and full-suite totals. Independent comparison artifacts retained without rerunning tests; prior submission-only notes updated. Later fixture corrections remain distinct epochs.
+
 ## [2026-10-09] ingest | Era1.13.4/1.13.3 and fixture-correction proof
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#fixture-corrections--bounded-pass-at-9252c6cc9) links independent bounded results at `9252c6cc9` and 96 byte-identical top-level artifacts. Copied scratch subdirectories excluded; sealed originals remain separate. Environment keys and credential patterns inspected before retention. No reruns, production changes, full-suite acceptance or parent closure.
