@@ -762,3 +762,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## [2026-10-09] development handoff | Retail Patch 3.3.0
 
 [Audit](investigations/patch-3-3-0-api-audit.md): 11 inventory/29 extract/seven signature rows = 47 IDs. Original 9 bounded/25 pending/13 metadata sealed; one literal XML disabled-motion existing-model closure makes current 10/24/13. Own probe 1/1, XML 1/1, real pointer dispatch 1/1, parser 2/2; negative gaps 2→3. Fresh-process portable fixture 1/1 with five serialized tamper/restores, 77 default outcomes unchanged. Separate original/closure archives; queued Retail 333/335/401 main-owned, never Classic3.4. No final gates or native parity claim.
+
+## [2026-10-09] source audit | Historical retail Patch 3.2.0
+
+[Audit](investigations/patch-3-2-0-api-audit.md): supplied page499137/rev4812266 identity and hashes verified; opt-in labelled bullets preserve literal misspelling, signatures, arrays and uncertain removal. Retail queued 3.3.0/3.3.3/3.3.5/4.0.1 slots; actual 4.1+ successors, never Wrath Classic. Accounting and runtime development proof remain open.

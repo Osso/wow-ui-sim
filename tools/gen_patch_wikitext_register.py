@@ -318,6 +318,34 @@ def parse_wrath_retail_summary(text):
     return entries
 
 
+def parse_wrath_retail_change_bullets(text):
+    """Retain labelled historical retail bullets, including literal uncertainty."""
+    entries = []
+    marker = re.compile(r"^\*\s+''(new|updated|removed|undocumented)''(?:\s+or\s+''(removed)'')?\s+")
+    for number, line in enumerate(text.splitlines(), 1):
+        change = marker.match(line)
+        if not change:
+            continue
+        label = change[1] + (' or ' + change[2] if change[2] else '')
+        direction = {'new': 'added', 'removed': 'removed'}.get(label, 'changed')
+        reference = TEMPLATE.search(line)
+        if reference:
+            signature, params = parse_symbol(line)
+            symbol = signature.split('(', 1)[0].strip()
+            category = 'events' if params.get('t') == 'e' else 'global-api'
+            entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+            if '(' in signature:
+                entry['source_signature'] = signature
+        else:
+            array = re.match(r'"([A-Za-z_][A-Za-z0-9_]*)"\s*array\b', line[change.end():])
+            if not array:
+                raise ValueError(f'unrecognized labelled Wrath retail bullet: {line}')
+            entry = make_entry('global-api', direction, number, '{{api|' + array[1] + '}}')
+            entry['kind'] = 'table'
+        entries.append(dict(entry, annotation=line, source_change=label))
+    return entries
+
+
 def parse_legacy_api_bullets(text):
     """Retain New/Removals API bullets and unqualified event additions (8.1.5)."""
     entries = []
@@ -940,6 +968,8 @@ def main():
                         help='Retain New API functions/New events/Removed API headings; opt-in')
     parser.add_argument('--cataclysm-change-bullets', action='store_true',
                         help='Retain NEW/REMOVED API groups and changed events in Cataclysm summaries; opt-in')
+    parser.add_argument('--wrath-retail-change-bullets', action='store_true',
+                        help='Retain labelled historical retail bullets, signatures and uncertain removals; opt-in')
     parser.add_argument('--legacy-api-bullets', action='store_true',
                         help='Retain API New/Removals and event bullet inventories; opt-in')
     parser.add_argument('--legacy-api-renames', action='store_true',
@@ -1021,6 +1051,8 @@ def main():
         entries.extend(parse_cataclysm_change_bullets(raw.decode('utf-8')))
     if args.wrath_retail_summary:
         entries.extend(parse_wrath_retail_summary(raw.decode('utf-8')))
+    if args.wrath_retail_change_bullets:
+        entries.extend(parse_wrath_retail_change_bullets(raw.decode('utf-8')))
     if args.legacy_api_bullets:
         entries.extend(parse_legacy_api_bullets(raw.decode('utf-8')))
     if args.legacy_api_renames:
