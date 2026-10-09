@@ -1,0 +1,37 @@
+{
+  "retained_at": "2026-10-09T20:29:03.780728+00:00",
+  "files": [
+    {
+      "source": "/tmp/browser-launch-provenance-current.md",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/runtime-provenance-observations/browser-launch-provenance-current.md",
+      "bytes": 1671,
+      "source_sha256": "0daaa30c5e49eb922d5a8b69022c85717927e7b6b24749c94fafc779c6f348fe",
+      "target_sha256": "0daaa30c5e49eb922d5a8b69022c85717927e7b6b24749c94fafc779c6f348fe"
+    },
+    {
+      "source": "/tmp/diagnostic-rollout-current.md",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/runtime-provenance-observations/diagnostic-rollout-current.md",
+      "bytes": 3016,
+      "source_sha256": "a14348a2c3ec662b7992242dc91253c446e97c4614ea2476aa599f9e547a52c4",
+      "target_sha256": "a14348a2c3ec662b7992242dc91253c446e97c4614ea2476aa599f9e547a52c4"
+    },
+    {
+      "source": "/tmp/pyrun-durable-capture-current.md",
+      "target": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/runtime-provenance-observations/pyrun-durable-capture-current.md",
+      "bytes": 4859,
+      "source_sha256": "7221eafdd27c6f372ecaf798c1051c21a6a0c2d2019e2d6fb10b416fdf71affd",
+      "target_sha256": "7221eafdd27c6f372ecaf798c1051c21a6a0c2d2019e2d6fb10b416fdf71affd"
+    }
+  ],
+  "privacy": {
+    "patterns": [
+      "(?i)authorization\\s*[:=]\\s*[\"\\x27]?Bearer\\s+\\S+",
+      "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+      "\\b(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})\\b",
+      "(?i)(?:password|api_key|access_token|refresh_token)\\s*[\"\\x27]?\\s*[:=]\\s*[\"\\x27][^\"\\x27]{8,}"
+    ],
+    "matches": 0,
+    "limits": "Bounded patterns only, not exhaustive. Only three supplied read-only reports retained; no process/env/cookie/profile/session raw data."
+  },
+  "scope": "Observational provenance gaps only: absent CDP/unknown original launch; installed Pi/source receipt unresolved; capture interruption cause unproven. No operational changes or stronger capture guarantee."
+}

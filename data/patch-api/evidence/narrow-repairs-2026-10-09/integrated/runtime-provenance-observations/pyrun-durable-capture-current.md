@@ -1,0 +1,24 @@
+# Pyrun durable command capture: bounded investigation
+
+Date: 2026-10-09. Read-only; no builds, tests, edits to project sources, restart, network, delegation, or session/transcript filesystem access. Inspected only the two supplied `/tmp` report directories, local Pi documentation/CHANGELOG, and this runtime's documented Pyrun helper surface. The supplied results evidence that the two Cargo attempts lost capture; they do not establish why.
+
+## Findings
+
+- **Supported structured capture helper:** in Pi-hosted Pyrun, `cli.<program>(*args).cwd(path).capture().run()` returns a structured `CommandResult` with stdout, stderr, and exit code. `capture()` is documented for retrieving structured streams; default `.run()` forwards output and returns only an integer. The current development instructions explicitly say long-running evaluations auto-detach around ten minutes, reporting a `/tmp/pi-pyrun-*.log` path, and instruct reading that artifact rather than rerunning. These are the supported documented interfaces; see current Pi agent instructions `08-cli-tools.md` (“Pyrun Long-Running Commands” and “cli.* Pyrun command-builder style”) and the developer Pyrun helper documentation included in this session.
+- **Limits of that guarantee:** documentation describes the `pyrun_eval` background-job log as the recovery mechanism *when auto-backgrounding occurs*. It does not state that output from a completed structured `CommandResult` is independently persisted to a durable per-command receipt before the tool call returns, or that such a receipt survives interruption before result delivery. I found no local Pi user-facing doc claiming this stronger property. `CHANGELOG.md` records fixes for durable foreground Pyrun runner failures and unfinished foreground recovery (entries around lines 253–254), but that is not proof that these two observed invocations produced a success/error artifact.
+- **User-provided reports:** `/tmp/tooltip-clamp-repro/report.md` says invocation metadata exists in `compile.json`, but stdout/stderr were not saved, no exit/result/artifact receipt was recovered, and wrapper/waiter later exited. `/tmp/editmode-init-green-independent/report.md` likewise records `No result provided`, no recovered stdout/stderr/exit, and no `/tmp/pi-pyrun-*.log` at the time its inventory was inspected. Its inventory contains tool logs, but records no build-finished marker or receipt helper; these files are not evidence of command completion. Both reports explicitly say the relevant commands were not rerun.
+- **Mailbox/context cancellation:** no source-level evidence was inspected or established showing that mailbox messages, steering, or context transitions cancel a Pyrun tool call or kill/release its child command. The reports establish observed process exit after interruption, not causation. Do not infer a cancellation mechanism from timing or process ancestry.
+
+## Smallest safe workflow next time
+
+1. For command duration expected to exceed the synchronous evaluation window, use one `pyrun_eval` that starts the command through `cli...cwd(...).capture().run()`, then immediately writes a command-specific receipt outside the repo containing argv, cwd, timestamp, exit code, stdout, and stderr (or hashes plus durable stream files); print that receipt path. Do not rely solely on output delivered by the tool call.
+2. If Pyrun reports auto-backgrounding, inspect the exact `/tmp/pi-pyrun-*.log` path it reports; do not repeat the Cargo command. Only claim success when a final structured result/receipt contains exit status and completion evidence. If absent, report output/exit as unknown and stop rather than rerunning implicitly.
+3. The runtime's existing documented API supplies command execution and structured result capture, but not an explicit durable command-receipt helper. The explicit receipt write is ordinary Pyrun filesystem I/O, not a documented atomic command-capture guarantee; for interruption-proof collection, first establish that the final result/receipt was written before initiating the potentially interruptible command workflow.
+
+## Source references
+
+- `/home/osso/.local/share/pi/CHANGELOG.md`, entries 253–254: unfinished foreground Pyrun recovery and runner-error sidecars; entry 274: `.capture().run()` guidance.
+- `/home/osso/.local/share/pi/docs/session-format.md`: inspected completely; session transcript persistence is not a command-output receipt mechanism.
+- Runtime/developer instructions in the current Pi session, section “Pyrun Long-Running Commands” and `08-cli-tools.md`: auto-background behavior and exact log-inspection instruction; command builder capture API.
+- `/tmp/tooltip-clamp-repro/report.md` and `/tmp/tooltip-clamp-repro/compile.json`.
+- `/tmp/editmode-init-green-independent/report.md` and `/tmp/editmode-init-green-independent/log-inventory.json`.

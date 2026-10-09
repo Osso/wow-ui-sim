@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Current browser and Pi provenance gaps
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#browser-readiness-handoff) separates earlier readable-browser proof from later absentCDP/current loopbackVNC. Original launch/profile and current Pi source/live diagnostics provenance unresolved. Three read-only reports retained with bounded privacy limits. Interrupted capture cause remains unproven; no restart/deploy/model/provider change.
+
 ## [2026-10-09] ingest | Worker coordination and interrupted fixture proof
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#asynchronous-full-suite-worker--bounded-coordination-proof) records worker coordination3/3 and installed nextest flag acceptance ataa9004aca. EditMode formatting/source audit passes but GREEN0/3 executed; tooltip diagnostic predicates unchanged, RED/control0/2 executed after capture loss. Forty-five artifacts retained byte-identically with exclusion hashes and bounded privacy limits. No duplicate compile, actual full-suite, native or parent acceptance.

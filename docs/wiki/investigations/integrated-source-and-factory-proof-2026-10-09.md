@@ -128,9 +128,15 @@ Original p302 36+1+2 seals, p303 16 seals, factory p302 112 seals and p303 16 se
 
 ## Browser readiness handoff
 
-[Main-thread readiness report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/browser-vnc-independent-report.md) retains loopback-only CDP 9222/VNC 5901 and a readable current GetSessionTime page with no visible challenge at observation. No remote access/authentication test, frozen-revision validation or native API proof. Earlier direct HTTP403 and current browser readability are distinct observations.
+[Historical main-thread readiness report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/browser-vnc-independent-report.md) retains earlier loopback-only CDP9222/VNC5901 and readable GetSessionTime without visible challenge at that observation. It is not current readiness. [Later launch-provenance observation](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/runtime-provenance-observations/browser-launch-provenance-current.md), verified 2026-10-09T20:22:37.906918Z: no CDP9222 listener or Chromium; loopback VNC5901/Xvnc3441151 present. Narrow startup-unit/autostart inspection yields no original browser launch/profile recipe; generic skill flags are not provenance. No launch/restart/authentication or remote end-to-end access performed. Direct HTTP403 cause, noVNC and native/frozen-revision proof remain unresolved.
 
 [Pre-auth VNC observation](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/private-vnc-security-observation.json), verified 2026-10-09T16:45:06Z: loopback endpoint responds with RFB 3.8 and advertises security type 2 only. No authentication attempted; remote login remains unverified. SSH local forwarding provides the private client access path; no public listener or noVNC deployment claim.
+
+## Pi/provider diagnostics — installed/live provenance unresolved
+
+[Read-only provenance report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/runtime-provenance-observations/diagnostic-rollout-current.md) observes installed Pi SHA256 `1fb3647b…`, unlike historical diagnostics deployment `0815da1d…`. Current source revision and live diagnostics inclusion remain unproven; historical live-process receipts are not contemporaneous identity proof. The sibling lane reports no matching build/deploy receipt. No redeploy/restart or model/provider change performed.
+
+[Capture-limit investigation](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/runtime-provenance-observations/pyrun-durable-capture-current.md) establishes missing EditMode/tooltip command results, not their cause. Mailbox/context cancellation is unproven. Structured `capture().run()` and reported auto-background logs are supported interfaces, not an established interruption-proof per-command receipt guarantee. Keep lost output/exit unknown; do not repeat commands solely for logs. [Retention](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/runtime-provenance-observations/main-retention.json) preserves three read-only reports byte-identically, bounded privacy scan no matches; no raw process/env/profile/session data retained.
 
 ## 2.4.x shared-tool integration: source/historical PASS
 
