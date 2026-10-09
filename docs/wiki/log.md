@@ -546,3 +546,5 @@ Pinned page/transclusion and confirmed 2013 retail TOC 50200. Added opt-in parse
 ## 2026-10-08 — Retail 5.2.0 integration
 
 Integrated real 5.3.0–5.4.2 registers against pinned master 5e4e82ef6. Exact 5.4.0 arena-team and 5.3.0 transmog removals resolve gaps 57 → 55, no new gaps. Historical receipts preserved; compact own/external patch-ID and directory-tree mappings replace parser-copy provenance. All 66 registers/63 extracts and supplemental diff reproduce; inherited extract failures unchanged. Logged branch/master retail and Classic acceptance running; no runtime/vendor edits.
+
+5.2.0 integrated acceptance: retail branch/master 62/62 and 61/61; Mists 6/6 each. All 65 other pages/9,990 observations identical. Own prefork 2/2, integration 1/1, Python 98/98, format and Mists check pass; zero non-vendor warnings. Negative rejects exactly 55 → 56. Historical 294 artifacts unchanged; compact mapping 15,523 bytes, largest evidence 568,492 bytes.

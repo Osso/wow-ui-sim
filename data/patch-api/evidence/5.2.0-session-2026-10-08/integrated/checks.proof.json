@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/integrated/run_checks.py"
+  ],
+  "revision": "be12a5a778dd2f3791a330d2e3dbdabb8ceebbcd",
+  "scope": "checks",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "checks.txt",
+  "log_sha256": "999e23a8f1e00ed240f5a6e3134822fc7a25f2fd54fcbf20af66b5a2836de72b",
+  "seconds": 808.838809274006,
+  "invalidated": false
+}
