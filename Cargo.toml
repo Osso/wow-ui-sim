@@ -257,6 +257,11 @@ name = "classic_guild_roster_selection"
 path = "tests/classic_guild_roster_selection.rs"
 
 [[test]]
+name = "patch_3_4_1_factory"
+path = "tests/patch_3_4_1_factory.rs"
+required-features = ["client-wrath"]
+
+[[test]]
 name = "patch_3_4_2_factory"
 path = "tests/patch_3_4_2_factory.rs"
 required-features = ["client-wrath"]
