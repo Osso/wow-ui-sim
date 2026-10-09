@@ -1,0 +1,122 @@
+test_configured_profiles_are_not_native_measurements (__main__.SourceAccounting.test_configured_profiles_are_not_native_measurements) ... FAIL
+test_every_literal_row_occurrence_retained (__main__.SourceAccounting.test_every_literal_row_occurrence_retained) ... FAIL
+test_full_literal_rows_and_contract_counts (__main__.SourceAccounting.test_full_literal_rows_and_contract_counts) ... FAIL
+test_partial_calls_are_tbc_prose_not_era_defaults (__main__.SourceAccounting.test_partial_calls_are_tbc_prose_not_era_defaults) ... FAIL
+test_removal_does_not_guess_return_position (__main__.SourceAccounting.test_removal_does_not_guess_return_position) ... FAIL
+test_response_revision_content_and_raw_hash_controls (__main__.SourceAccounting.test_response_revision_content_and_raw_hash_controls) ... FAIL
+test_scope_not_number_or_shared_code_equivalence (__main__.SourceAccounting.test_scope_not_number_or_shared_code_equivalence) ... FAIL
+test_serialized_contract_omission_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_serialized_contract_omission_credit_and_foreign_history_rejected) ... FAIL
+
+======================================================================
+FAIL: test_configured_profiles_are_not_native_measurements (__main__.SourceAccounting.test_configured_profiles_are_not_native_measurements)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 60, in test_configured_profiles_are_not_native_measurements
+    self.assertEqual([(p['feature'], p['configured_interface']) for p in configured],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [('client-era', 11507), ('client-anniversary', 11507)])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('client-era', 11507), ('client-anniversary', 11507)]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('client-era', 11507)
+
+- []
++ [('client-era', 11507), ('client-anniversary', 11507)]
+
+======================================================================
+FAIL: test_every_literal_row_occurrence_retained (__main__.SourceAccounting.test_every_literal_row_occurrence_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 29, in test_every_literal_row_occurrence_retained
+    self.assertEqual([(r['line'], r['literal']) for r in rows],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     [(n, s) for n, s in enumerate(raw.splitlines(), 1) if s.strip()])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|prev=1.15.8|1.15.9}}'),[4329 chars]e>')]
+
+Second list contains 37 additional elements.
+First extra element 0:
+(1, '{{apichanges|prev=1.15.8|1.15.9}}')
+
+Diff is 4802 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_full_literal_rows_and_contract_counts (__main__.SourceAccounting.test_full_literal_rows_and_contract_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 15, in test_full_literal_rows_and_contract_counts
+    self.assertEqual(ledger.get('totals'), {
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+        'nonblank_rows': 37, 'contracts': 14, 'explicit_api_reference_occurrences': 4,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        'runtime_observations': 0, 'model_observations': 0, 'native_observations': 0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    })
+    ^^
+AssertionError: None != {'nonblank_rows': 37, 'contracts': 14, 'e[481 chars]': 0}
+
+======================================================================
+FAIL: test_partial_calls_are_tbc_prose_not_era_defaults (__main__.SourceAccounting.test_partial_calls_are_tbc_prose_not_era_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 43, in test_partial_calls_are_tbc_prose_not_era_defaults
+    self.assertEqual([(c['cvar'], c['value']) for c in calls], [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('nameplateShowClassColor', 1), ('nameplateShowFriendlyClassColor', 1),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ('raidFramesDispelIndicatorOverlay', 0)])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('nameplateShowClassColor', 1), ('namepla[66 chars], 0)]
+
+Second list contains 3 additional elements.
+First extra element 0:
+('nameplateShowClassColor', 1)
+
+- []
++ [('nameplateShowClassColor', 1),
++  ('nameplateShowFriendlyClassColor', 1),
++  ('raidFramesDispelIndicatorOverlay', 0)]
+
+======================================================================
+FAIL: test_removal_does_not_guess_return_position (__main__.SourceAccounting.test_removal_does_not_guess_return_position)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 52, in test_removal_does_not_guess_return_position
+    self.assertEqual(len(notes), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_response_revision_content_and_raw_hash_controls (__main__.SourceAccounting.test_response_revision_content_and_raw_hash_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 87, in test_response_revision_content_and_raw_hash_controls
+    self.assertIn('source', audit.build())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source' not found in {}
+
+======================================================================
+FAIL: test_scope_not_number_or_shared_code_equivalence (__main__.SourceAccounting.test_scope_not_number_or_shared_code_equivalence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 35, in test_scope_not_number_or_shared_code_equivalence
+    self.assertEqual(ledger.get('client_line'), 'classic-era')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'classic-era'
+
+======================================================================
+FAIL: test_serialized_contract_omission_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_serialized_contract_omission_credit_and_foreign_history_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py", line 66, in test_serialized_contract_omission_credit_and_foreign_history_rejected
+    self.assertIn('contracts', expected)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=8)
