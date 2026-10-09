@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/originals.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/portable-proof.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+  "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+  "exit_code": 0,
+  "log": "portable-green.log",
+  "scope": "copied historical SOURCE; no runtime/model/native/final acceptance"
+}

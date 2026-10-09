@@ -28,9 +28,15 @@ Retained Era/Anniversary configuration11507 differs from source11305/build34713.
 
 ## Development proof
 
-SOURCE RED8 assertion failures at `c33717e54` retained. Literal implementation includes103 per-occurrence omission controls and fabricated signature/default/alias/history/native-credit rejection. Targeted GREEN and copied historical receipts pending; not acceptance.
+SOURCE RED8 assertion failures at `c33717e54` retained; GREEN8/8 at `b1a35a773`. Literal implementation includes103 per-occurrence omission controls and fabricated signature/default/alias/history/native-credit rejection. Portable RED3 retained at the same source revision; GREEN3/3 at `b6efab100` runs copied SOURCE8/8 and validator in fresh processes with empty PATH, no copied Git/target/current tools or source-checkout lookup. Generator bytes match; default extractor failure reproduces exactly. Both serialized ledger omission and fabricated GREEN log reject by seal; exact original bytes restored, all70 original seals and post-restoration validator pass. No native/model/runtime/final acceptance.
 
 Historical generator defaults flags[] produce all5 inventory entries byte-exact. Default extractor flags[] raises existing `ValueError: unhandled template` at the threat prose's ref-web template; failure retained, no extracted output or fallback. All raw prose and references remain in ledger. Shared tools unchanged; no runtime/vendor/Wowless changes, Cargo/build/cache changes, network or final gates.
+
+## Historical evidence versus later receipts
+
+Original70 seals/975379bytes and mapSHA256 `872ffcab1e3a5464378607c4e50ca810c2940319e38d6fff927a9c32e859a71b` remain unchanged. Archive71members/157330bytes copies all originals and the map. Seven separately sealed current receipt/archive/map files record later portable GREEN, not backfill of original proof. Derived receipts contain8 copied process runs and2 exact disk restorations. [Historical proof ledger](../../../data/patch-api/evidence/1.13.5-session-2026-10-09/proof-ledger.json), [current proof ledger](../../../data/patch-api/evidence/1.13.5-session-2026-10-09/current-proof-ledger.json), [portable receipts](../../../data/patch-api/evidence/1.13.5-session-2026-10-09/portable-proof.json), [replay](../../../data/patch-api/evidence/1.13.5-session-2026-10-09/REPLAY.md).
+
+Python targeted tests emitted no warnings; expected default extractor error is retained, not suppressed. Cargo/native/model tests not run; no Rust warning-free claim. Formatting used Python AST serialization on only the three own Python files before implementation commits. No final checks/lint/readability/coverage/broad suites. Source accounting and controls closed; all14 substantive/reference contracts remain UNPROVEN. Parent goal, actual successor supersession and final/native gates remain main-owned.
 
 ## Sources
 

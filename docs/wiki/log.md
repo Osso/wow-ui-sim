@@ -986,3 +986,7 @@ SOURCE GREEN8/8 at0b39afb17,77 omission controls; portable GREEN3/3 at7fe5edac1 
 ## [2026-10-09] investigation | Patch 1.13.5 frozen SOURCE accounting
 
 [Audit](investigations/patch-1-13-5-api-audit.md): frozen398847/3835002;31nonblank rows,3globals/2events,5unknown signatures,2prose rows,5headings/2matching counts,7links/7templates/2named refs;14UNPROVEN contracts. Threat defaults and generic bag capacity do not model reinstatement/log range/authenticator entitlement. Concurrent1.13.6 queued separately; main orders1.13.6 before1.13.5. Own SOURCE RED8 retained; no runtime/model/native credit. Default register exact; default extractor existing ref-web failure retained. Targeted/copy proof pending; main owns integration/final gates.
+
+## [2026-10-09] proof | Patch 1.13.5 copied SOURCE controls
+
+[Audit](investigations/patch-1-13-5-api-audit.md): SOURCE8/8 atb1a35a773;103 omission controls. Portable3/3 and own historical validator exit0 atb6efab100: copied SOURCE8/default-generator byte replay/default-extractor existing failure, both serialized ledger/log seal rejections and exact restorations.70 original seals unchanged;71-member157330-byte archive and7 separate later receipt seals. All14contracts UNPROVEN; no runtime/model/native credit or final gates. Concurrent1.13.6 placeholder separate; main orders1.13.6 before1.13.5.

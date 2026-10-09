@@ -1,0 +1,127 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"seals\": 70,\n  \"totals\": {\n    \"physical_lines\": 36,\n    \"source_rows\": 31,\n    \"extracted_rows\": 0,\n    \"inventory\": 5,\n    \"signatures\": 5,\n    \"headers\": 5,\n    \"inventory_headers\": 2,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 7,\n    \"templates\": 7,\n    \"references\": 2,\n    \"contracts\": 14,\n    \"configured_profiles\": 2,\n    \"successors\": 16,\n    \"model_review\": 4,\n    \"source_statuses\": {\n      \"metadata-only\": 22,\n      \"UNPROVEN\": 9\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 3,\n      \"events\": 2\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 14\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 103\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok\ntest_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok\ntest_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok\ntest_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok\ntest_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok\ntest_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok\ntest_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok\ntest_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.181s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/historical-tools/gen_patch_wikitext_register.py",
+        "1.13.5",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/source.wikitext",
+        "3835002",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/audit.py",
+        "default-extract"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/audit.py\", line 167, in <module>\n    print(load_tool('extract_patch_non_inventory.py').extract_text(raw), end='')\n          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpvsucfeyw/historical-tools/extract_patch_non_inventory.py\", line 279, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: * Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpfutmjc40/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpfutmjc40/audit.py\", line 175, in <module>\n    seals = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpfutmjc40/audit.py\", line 155, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpfutmjc40/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"seals\": 70,\n  \"totals\": {\n    \"physical_lines\": 36,\n    \"source_rows\": 31,\n    \"extracted_rows\": 0,\n    \"inventory\": 5,\n    \"signatures\": 5,\n    \"headers\": 5,\n    \"inventory_headers\": 2,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 7,\n    \"templates\": 7,\n    \"references\": 2,\n    \"contracts\": 14,\n    \"configured_profiles\": 2,\n    \"successors\": 16,\n    \"model_review\": 4,\n    \"source_statuses\": {\n      \"metadata-only\": 22,\n      \"UNPROVEN\": 9\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 3,\n      \"events\": 2\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 14\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 103\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "71b81eccec657487047ffbe5cad2cfec079f7c19c657da47f9fc94862f373667",
+      "all_original_seals": 70
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpg9pc9hbi/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpg9pc9hbi/audit.py\", line 175, in <module>\n    seals = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpg9pc9hbi/audit.py\", line 155, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green/tmpg9pc9hbi/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"seals\": 70,\n  \"totals\": {\n    \"physical_lines\": 36,\n    \"source_rows\": 31,\n    \"extracted_rows\": 0,\n    \"inventory\": 5,\n    \"signatures\": 5,\n    \"headers\": 5,\n    \"inventory_headers\": 2,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 7,\n    \"templates\": 7,\n    \"references\": 2,\n    \"contracts\": 14,\n    \"configured_profiles\": 2,\n    \"successors\": 16,\n    \"model_review\": 4,\n    \"source_statuses\": {\n      \"metadata-only\": 22,\n      \"UNPROVEN\": 9\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 3,\n      \"events\": 2\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 14\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 103\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "20deeed57b66052019361638897a30b9e1c787215575b5ce922f83f7881e7ab2",
+      "all_original_seals": 70
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

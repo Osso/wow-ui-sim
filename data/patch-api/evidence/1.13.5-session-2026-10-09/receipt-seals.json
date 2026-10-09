@@ -1,0 +1,9 @@
+{
+  "portable-proof.json": "7dbf2313a19a31102d9aecf6c2dfac8fd8dd8a32d08c504530f47673614621a7",
+  "portable-command.json": "fda8d12e56f0b1db9cd204b8731eb2fb9f31fc76a1f0647392cc8b39897e5cc1",
+  "portable-green.log": "a984dab91839f12e5638bebd2fcef3369fcf4a65e5a097073fe21f05ced2e179",
+  "historical-validator-proof.json": "4253f28e6cf795de1ea553d26f6b320026f4e8bdc9f10cc9783f2639dbcd1cce",
+  "current-proof-ledger.json": "e9c1f4ed2641f2a6858583701b1a8156b3c2892b57ee21f353ffd3250a47f3a9",
+  "originals.tar.gz": "bc2db9b0e805c82c851c17cf658339d1f2af1ee8372f63ff789933bfca9cbfed",
+  "seals.json": "872ffcab1e3a5464378607c4e50ca810c2940319e38d6fff927a9c32e859a71b"
+}
