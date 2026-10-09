@@ -34,11 +34,12 @@ class LegacyFunctionLabelsTests(unittest.TestCase):
                              [('GetNumTalentGroups', 'added'), ('GetActiveTalentGroup', 'added'),
                               ('SetActiveTalentGroup', 'added'), ('GetGlyphLink', 'changed')])
             self.assertEqual(rows[3]['annotation'], '* UPDATED - link = GetGlyphLink(index [,talentGroup])')
-            self.assertEqual([(row['symbol'], row['direction']) for row in rows[-9:]],
+            self.assertEqual([(row['symbol'], row['direction']) for row in rows[-10:]],
                              [('UnitAura', 'changed'), ('UnitBuff', 'changed'), ('UnitDebuff', 'changed'),
                               ('RegisterAutoHide', 'added'), ('UnregisterAutoHide', 'added'),
                               ('AddToAutoHide', 'added'), ('GetInventoryItemsForSlot', 'added'),
-                              ('GameTooltip:SetGlyph', 'changed'), ('GetPlayerFacing', 'changed')])
+                              ('GameTooltip:SetGlyph', 'changed'), ('GetPlayerFacing', 'changed'),
+                              ('GetPlayerFacing', 'changed')])
             lines = SOURCE.read_text().splitlines()
             for row in rows:
                 self.assertEqual(row['annotation'], lines[row['wikitext_line'] - 1])
