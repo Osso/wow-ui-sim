@@ -1,0 +1,9 @@
+{
+  "argv": ["cargo", "fmt", "--check"],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p430-source",
+  "revision": "4eaadd2333b655426237fa154bdf42a221b2bde4",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "capture": "Exact CommandResult observed in fresh Pyrun execution; command not repeated"
+}

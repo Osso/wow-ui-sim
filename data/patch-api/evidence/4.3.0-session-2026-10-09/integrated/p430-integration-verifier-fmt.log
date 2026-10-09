@@ -1,0 +1,6 @@
+COMMAND: cargo fmt --check
+CWD: /home/osso/.worktrees/wow-ui-sim-p430-source
+REVISION: 4eaadd2333b655426237fa154bdf42a221b2bde4
+STDOUT: (empty)
+STDERR: (empty)
+EXIT: 0
