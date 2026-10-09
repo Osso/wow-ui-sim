@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_2_0"
+  ],
+  "revision": "50ce62db5cef2ccf4ecbb4e125af262da7429d3c",
+  "scope": "discovery",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {
+    "P520_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/discovery-results.json"
+  },
+  "exit": 1,
+  "log": "discovery.txt",
+  "log_sha256": "244041657b91e45de62d4bc6f61ead73d20ea1947c2cf354a48fcd9c92b84bd6",
+  "seconds": 302.4829511040007,
+  "invalidated": false
+}

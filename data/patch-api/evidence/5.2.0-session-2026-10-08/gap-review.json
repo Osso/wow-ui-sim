@@ -1,0 +1,1313 @@
+[
+  {
+    "source_id": "diff-wt-global-api-C_MapBar.BarIsShown-10",
+    "symbol": "C_MapBar.BarIsShown",
+    "reason": "No raw publication for C_MapBar.BarIsShown; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MapBar.BarIsShown"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_MapBar.GetCurrentValue-11",
+    "symbol": "C_MapBar.GetCurrentValue",
+    "reason": "No raw publication for C_MapBar.GetCurrentValue; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MapBar.GetCurrentValue"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_MapBar.GetMaxValue-12",
+    "symbol": "C_MapBar.GetMaxValue",
+    "reason": "No raw publication for C_MapBar.GetMaxValue; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MapBar.GetMaxValue"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13",
+    "symbol": "C_MapBar.GetParticipationPercentage",
+    "reason": "No raw publication for C_MapBar.GetParticipationPercentage; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MapBar.GetParticipationPercentage"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_MapBar.GetPhaseIndex-14",
+    "symbol": "C_MapBar.GetPhaseIndex",
+    "reason": "No raw publication for C_MapBar.GetPhaseIndex; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MapBar.GetPhaseIndex"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_MapBar.GetTag-15",
+    "symbol": "C_MapBar.GetTag",
+    "reason": "No raw publication for C_MapBar.GetTag; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MapBar.GetTag"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16",
+    "symbol": "C_PetBattles.GetForfeitPenalty",
+    "reason": "Namespace lookup fabricates a function but no raw member/backing forfeit-penalty lifecycle exists. Pet-battle forfeiture and penalty state are not modeled; no shim added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetForfeitPenalty"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-DeclineChannelInvite-18",
+    "symbol": "DeclineChannelInvite",
+    "reason": "Legacy channel-invitation decline global is absent; no modeled invitation acceptance/decline lifecycle or pending inviter state. Chat sending is not invite handling.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "DeclineChannelInvite"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetArenaTeamIndexBySize-20",
+    "symbol": "GetArenaTeamIndexBySize",
+    "reason": "Historical arena-team roster/size indexing is absent. Current rated PvP queries do not establish the 2013 persistent arena-team contract.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetArenaTeamIndexBySize"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetBlacklistMapName-21",
+    "symbol": "GetBlacklistMapName",
+    "reason": "Historical random-battleground blacklist slots/map catalog are absent. Existing PvP fixtures do not model blacklist selection or names.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetBlacklistMapName"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetQuestChoiceInfo-25",
+    "symbol": "GetQuestChoiceInfo",
+    "reason": "Historical global is absent. Existing missing_surface/quest_choice.rs publishes C_QuestChoice with a fixed fixture; restoring the global would be an unrequested compatibility alias, not proof of a 2013 quest producer.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetQuestChoiceInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetQuestChoiceOptionInfo-26",
+    "symbol": "GetQuestChoiceOptionInfo",
+    "reason": "Historical global is absent. Modern C_QuestChoice fixture uses response IDs/zero-based option lookup, but the source page supplies no 2013 argument/output contract. No fabricated global alias.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetQuestChoiceOptionInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetRandomBGInfo-32",
+    "symbol": "GetRandomBGInfo",
+    "reason": "Historical global is absent; current PvP backing exposes a seeded C_PvP random-battleground row, not this historical global. No legacy alias or random queue/service parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetRandomBGInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsAllowedToUserTeleport-35",
+    "symbol": "IsAllowedToUserTeleport",
+    "reason": "Source spelling retained literally (User, not Use); raw member absent. No documented argument/teleport permission policy or consumer found; do not invent a predicate.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsAllowedToUserTeleport"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsTradeSkillReady-36",
+    "symbol": "IsTradeSkillReady",
+    "reason": "Historical global is absent; modern C_TradeSkillUI readiness does not establish historical global publication. No shim alias; profession loading behavior remains scoped to the current namespace.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsTradeSkillReady"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-37",
+    "symbol": "PrepVoidStorageForTransmogrify",
+    "reason": "Void-storage transmog preparation global is absent. The void-storage source-to-transmog pending transaction and selection ownership are unmodeled; current outfit models are not that service.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "PrepVoidStorageForTransmogrify"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetRaidDifficultyID-41",
+    "symbol": "SetRaidDifficultyID",
+    "reason": "Getter is state-backed, but this setter global is absent. The page does not define group-leader permissions, supported IDs, in-instance restrictions or change events. Getter proof does not imply setter parity.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetRaidDifficultyID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-UpdateWorldMapArrow-44",
+    "symbol": "UpdateWorldMapArrow",
+    "reason": "Historical map-arrow update global is absent. Current map APIs do not model the old arrow frames/camera-position ownership; the removed arrow family is not restored.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "UpdateWorldMapArrow"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-UseVoidItemForTransmogrify-45",
+    "symbol": "UseVoidItemForTransmogrify",
+    "reason": "Void-storage transmog use global is absent. No source-item/slot selection, pending transmog transaction or transfer lifecycle is modeled; no no-op implementation.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "UseVoidItemForTransmogrify"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-ControlGetActiveCvarValue-88",
+    "symbol": "ControlGetActiveCvarValue",
+    "reason": "Historical FrameXML helper is absent in the SharedXML preload. Source gives no active-control/CVar comparison contract; current CVar lookup is not sufficient. No Blizzard patch or substitute helper.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "ControlGetActiveCvarValue"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:AdvanceTime-172",
+    "symbol": "Model:AdvanceTime",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:AdvanceTime remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:AdvanceTime"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ClearFog-173",
+    "symbol": "Model:ClearFog",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:ClearFog remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:ClearFog"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ClearModel-174",
+    "symbol": "Model:ClearModel",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:ClearModel remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:ClearModel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraDistance-175",
+    "symbol": "Model:GetCameraDistance",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraDistance remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetCameraDistance"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraFacing-176",
+    "symbol": "Model:GetCameraFacing",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetCameraFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraPosition-177",
+    "symbol": "Model:GetCameraPosition",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetCameraPosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraTarget-178",
+    "symbol": "Model:GetCameraTarget",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraTarget remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetCameraTarget"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFacing-179",
+    "symbol": "Model:GetFacing",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogColor-180",
+    "symbol": "Model:GetFogColor",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetFogColor remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetFogColor"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogFar-181",
+    "symbol": "Model:GetFogFar",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetFogFar remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetFogFar"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogNear-182",
+    "symbol": "Model:GetFogNear",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetFogNear remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetFogNear"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetLight-183",
+    "symbol": "Model:GetLight",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetLight remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetLight"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetModel-184",
+    "symbol": "Model:GetModel",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetModel remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetModel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetModelScale-185",
+    "symbol": "Model:GetModelScale",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetModelScale remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetModelScale"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetPosition-186",
+    "symbol": "Model:GetPosition",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetPosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetWorldScale-187",
+    "symbol": "Model:GetWorldScale",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:GetWorldScale remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:GetWorldScale"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:HasCustomCamera-188",
+    "symbol": "Model:HasCustomCamera",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:HasCustomCamera remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:HasCustomCamera"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ReplaceIconTexture-189",
+    "symbol": "Model:ReplaceIconTexture",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:ReplaceIconTexture remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:ReplaceIconTexture"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCamera-190",
+    "symbol": "Model:SetCamera",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetCamera remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetCamera"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraDistance-191",
+    "symbol": "Model:SetCameraDistance",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraDistance remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetCameraDistance"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraFacing-192",
+    "symbol": "Model:SetCameraFacing",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetCameraFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraPosition-193",
+    "symbol": "Model:SetCameraPosition",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetCameraPosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraTarget-194",
+    "symbol": "Model:SetCameraTarget",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraTarget remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetCameraTarget"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCustomCamera-195",
+    "symbol": "Model:SetCustomCamera",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetCustomCamera remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetCustomCamera"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFacing-196",
+    "symbol": "Model:SetFacing",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogColor-197",
+    "symbol": "Model:SetFogColor",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetFogColor remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetFogColor"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogFar-198",
+    "symbol": "Model:SetFogFar",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetFogFar remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetFogFar"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogNear-199",
+    "symbol": "Model:SetFogNear",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetFogNear remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetFogNear"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetGlow-200",
+    "symbol": "Model:SetGlow",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetGlow remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetGlow"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetLight-201",
+    "symbol": "Model:SetLight",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetLight remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetLight"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetModel-202",
+    "symbol": "Model:SetModel",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetModel remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetModel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetModelScale-203",
+    "symbol": "Model:SetModelScale",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetModelScale remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetModelScale"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetPosition-204",
+    "symbol": "Model:SetPosition",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetPosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetSequence-205",
+    "symbol": "Model:SetSequence",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetSequence remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetSequence"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetSequenceTime-206",
+    "symbol": "Model:SetSequenceTime",
+    "reason": "Historical removal conflicts with the simulator common frame method surface: Model:SetSequenceTime remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim.",
+    "observed": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Model:SetSequenceTime"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-PlayerModel OnAnimFinished-217",
+    "symbol": "PlayerModel OnAnimFinished",
+    "reason": "HasScript is false for PlayerModel OnAnimFinished. The simulator has no 3D model animation/update producer. Advertising a script without that producer would be a shortcut; intentional 3D exclusion retained.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "PlayerModel OnAnimFinished"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "PlayerModel HasScript=false",
+        "kind": "widget-script",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-PlayerModel OnUpdateModel-218",
+    "symbol": "PlayerModel OnUpdateModel",
+    "reason": "HasScript is false for PlayerModel OnUpdateModel. The simulator has no 3D model animation/update producer. Advertising a script without that producer would be a shortcut; intentional 3D exclusion retained.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "PlayerModel OnUpdateModel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "PlayerModel HasScript=false",
+        "kind": "widget-script",
+        "value": null
+      },
+      "ok": false
+    }
+  }
+]

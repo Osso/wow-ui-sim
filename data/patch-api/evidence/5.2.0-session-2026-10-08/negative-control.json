@@ -1,0 +1,5 @@
+{
+  "id": "diff-wt-global-api-GetRaidDifficultyID-31",
+  "mutation": "GetRaidDifficultyID -> P520_NEGATIVE_SENTINEL; preserve source ID",
+  "expected_extra_gaps": 1
+}

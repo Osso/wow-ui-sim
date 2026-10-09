@@ -1,0 +1,704 @@
+[
+  {
+    "source_id": "diff-wt-global-api-ClearChannelWatch-48",
+    "symbol": "ClearChannelWatch",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorAddPlayer-49",
+    "symbol": "CommentatorAddPlayer",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetPartyInfo-50",
+    "symbol": "CommentatorGetPartyInfo",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetSkirmishMode-51",
+    "symbol": "CommentatorGetSkirmishMode",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetSkirmishQueueCount-52",
+    "symbol": "CommentatorGetSkirmishQueueCount",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-53",
+    "symbol": "CommentatorGetSkirmishQueuePlayerInfo",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorRemovePlayer-54",
+    "symbol": "CommentatorRemovePlayer",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorRequestSkirmishMode-55",
+    "symbol": "CommentatorRequestSkirmishMode",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorRequestSkirmishQueueData-56",
+    "symbol": "CommentatorRequestSkirmishQueueData",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorSetPlayerIndex-57",
+    "symbol": "CommentatorSetPlayerIndex",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorSetSkirmishMatchmakingMode-58",
+    "symbol": "CommentatorSetSkirmishMatchmakingMode",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorStartInstance-59",
+    "symbol": "CommentatorStartInstance",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorStartSkirmishMatch-60",
+    "symbol": "CommentatorStartSkirmishMatch",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CreateMiniWorldMapArrowFrame-61",
+    "symbol": "CreateMiniWorldMapArrowFrame",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-CreateWorldMapArrowFrame-62",
+    "symbol": "CreateWorldMapArrowFrame",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-DeclineInvite-63",
+    "symbol": "DeclineInvite",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-GetCurrentRaidDifficulty-64",
+    "symbol": "GetCurrentRaidDifficulty",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-GetInstanceDifficulty-65",
+    "symbol": "GetInstanceDifficulty",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMinigameState-66",
+    "symbol": "GetMinigameState",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMinigameType-67",
+    "symbol": "GetMinigameType",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-GetRaidDifficulty-68",
+    "symbol": "GetRaidDifficulty",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-MakeMinigameMove-69",
+    "symbol": "MakeMinigameMove",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-PlayDance-70",
+    "symbol": "PlayDance",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-PositionMiniWorldMapArrowFrame-71",
+    "symbol": "PositionMiniWorldMapArrowFrame",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-PositionWorldMapArrowFrame-72",
+    "symbol": "PositionWorldMapArrowFrame",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-SetChannelWatch-73",
+    "symbol": "SetChannelWatch",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-SetRaidDifficulty-74",
+    "symbol": "SetRaidDifficulty",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-ShowMiniWorldMapArrowFrame-75",
+    "symbol": "ShowMiniWorldMapArrowFrame",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-ShowWorldMapArrowFrame-76",
+    "symbol": "ShowWorldMapArrowFrame",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-global-api-UpdateWorldMapArrowFrames-77",
+    "symbol": "UpdateWorldMapArrowFrames",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-framexml-BattlegroundShineFadeIn-93",
+    "symbol": "BattlegroundShineFadeIn",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-framexml-BattlegroundShineFadeOut-94",
+    "symbol": "BattlegroundShineFadeOut",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-framexml-IsAlreadyInQueue-95",
+    "symbol": "IsAlreadyInQueue",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-framexml-IsPvPFrameSelected-96",
+    "symbol": "IsPvPFrameSelected",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-framexml-TogglePVPFrame-97",
+    "symbol": "TogglePVPFrame",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 3,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-117",
+    "symbol": "COMMENTATOR_SKIRMISH_MODE_REQUEST",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-118",
+    "symbol": "COMMENTATOR_SKIRMISH_QUEUE_REQUEST",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-events-MINIGAME_UPDATE-119",
+    "symbol": "MINIGAME_UPDATE",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-events-START_MINIGAME-120",
+    "symbol": "START_MINIGAME",
+    "action": "no-retirement",
+    "reason": "Already absent or cached deprecated fallback; no simulator retirement needed.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Minimap:SetPlayerTextureHeight-170",
+    "symbol": "Minimap:SetPlayerTextureHeight",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 3,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Minimap:SetPlayerTextureWidth-171",
+    "symbol": "Minimap:SetPlayerTextureWidth",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 4,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:AdvanceTime-172",
+    "symbol": "Model:AdvanceTime",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 23,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ClearFog-173",
+    "symbol": "Model:ClearFog",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 9,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ClearModel-174",
+    "symbol": "Model:ClearModel",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 21,
+    "caller_matching_lines": 5,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraDistance-175",
+    "symbol": "Model:GetCameraDistance",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraFacing-176",
+    "symbol": "Model:GetCameraFacing",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraPosition-177",
+    "symbol": "Model:GetCameraPosition",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 2,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetCameraTarget-178",
+    "symbol": "Model:GetCameraTarget",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFacing-179",
+    "symbol": "Model:GetFacing",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 4,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogColor-180",
+    "symbol": "Model:GetFogColor",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogFar-181",
+    "symbol": "Model:GetFogFar",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetFogNear-182",
+    "symbol": "Model:GetFogNear",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetLight-183",
+    "symbol": "Model:GetLight",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetModel-184",
+    "symbol": "Model:GetModel",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 5,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetModelScale-185",
+    "symbol": "Model:GetModelScale",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 3,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetPosition-186",
+    "symbol": "Model:GetPosition",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 23,
+    "caller_matching_lines": 8,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:GetWorldScale-187",
+    "symbol": "Model:GetWorldScale",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:HasCustomCamera-188",
+    "symbol": "Model:HasCustomCamera",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:ReplaceIconTexture-189",
+    "symbol": "Model:ReplaceIconTexture",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCamera-190",
+    "symbol": "Model:SetCamera",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 6,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraDistance-191",
+    "symbol": "Model:SetCameraDistance",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraFacing-192",
+    "symbol": "Model:SetCameraFacing",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraPosition-193",
+    "symbol": "Model:SetCameraPosition",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 11,
+    "caller_matching_lines": 3,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCameraTarget-194",
+    "symbol": "Model:SetCameraTarget",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 4,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetCustomCamera-195",
+    "symbol": "Model:SetCustomCamera",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFacing-196",
+    "symbol": "Model:SetFacing",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 6,
+    "caller_matching_lines": 5,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogColor-197",
+    "symbol": "Model:SetFogColor",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogFar-198",
+    "symbol": "Model:SetFogFar",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetFogNear-199",
+    "symbol": "Model:SetFogNear",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetGlow-200",
+    "symbol": "Model:SetGlow",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetLight-201",
+    "symbol": "Model:SetLight",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 6,
+    "caller_matching_lines": 1,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetModel-202",
+    "symbol": "Model:SetModel",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 3,
+    "caller_matching_lines": 3,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetModelScale-203",
+    "symbol": "Model:SetModelScale",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 2,
+    "caller_matching_lines": 5,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetPosition-204",
+    "symbol": "Model:SetPosition",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 72,
+    "caller_matching_lines": 8,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetSequence-205",
+    "symbol": "Model:SetSequence",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 6,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model:SetSequenceTime-206",
+    "symbol": "Model:SetSequenceTime",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 0,
+    "caller_matching_lines": 2,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model OnAnimFinished-221",
+    "symbol": "Model OnAnimFinished",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 57,
+    "caller_matching_lines": 8,
+    "readded_in_pinned_later_registers": false
+  },
+  {
+    "source_id": "diff-wt-widgets-Model OnUpdateModel-222",
+    "symbol": "Model OnUpdateModel",
+    "action": "no-retirement",
+    "reason": "Retain: current whole-word cache/src/tests consumer or declaration; no common-method removal.",
+    "cache_matching_lines": 1,
+    "caller_matching_lines": 0,
+    "readded_in_pinned_later_registers": false
+  }
+]

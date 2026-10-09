@@ -1,0 +1,1376 @@
+{
+  "patch": "5.2.0",
+  "source_revid": 4057299,
+  "proof_policy": "Publication/absence, bounded existing backing and pending 2013 contracts remain distinct.",
+  "source_rows": [
+    {
+      "source_id": "diff-wt-global-api-C_MapBar.BarIsShown-10",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw publication for C_MapBar.BarIsShown; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_MapBar.GetCurrentValue-11",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw publication for C_MapBar.GetCurrentValue; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_MapBar.GetMaxValue-12",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw publication for C_MapBar.GetMaxValue; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw publication for C_MapBar.GetParticipationPercentage; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_MapBar.GetPhaseIndex-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw publication for C_MapBar.GetPhaseIndex; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_MapBar.GetTag-15",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw publication for C_MapBar.GetTag; lookup-only namespace defaults are not credit. No scenario map-bar participation/value/phase/tag producer or state model exists; the 2013 map-bar backing cannot be replaced with a plausible default."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Namespace lookup fabricates a function but no raw member/backing forfeit-penalty lifecycle exists. Pet-battle forfeiture and penalty state are not modeled; no shim added."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetPetCooldownByGUID-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Fixed-zero/default implementation is NOT modeled credit; absorption, stagger or pet-cooldown producer/state remains pending."
+    },
+    {
+      "source_id": "diff-wt-global-api-DeclineChannelInvite-18",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legacy channel-invitation decline global is absent; no modeled invitation acceptance/decline lifecycle or pending inviter state. Chat sending is not invite handling."
+    },
+    {
+      "source_id": "diff-wt-global-api-DevTest1-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetArenaTeamIndexBySize-20",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical arena-team roster/size indexing is absent. Current rated PvP queries do not establish the 2013 persistent arena-team contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetBlacklistMapName-21",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical random-battleground blacklist slots/map catalog are absent. Existing PvP fixtures do not model blacklist selection or names."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetDifficultyInfo-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetHolidayBGInfo-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetLFGBonusFactionID-24",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestChoiceInfo-25",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical global is absent. Existing missing_surface/quest_choice.rs publishes C_QuestChoice with a fixed fixture; restoring the global would be an unrequested compatibility alias, not proof of a 2013 quest producer."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestChoiceOptionInfo-26",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical global is absent. Modern C_QuestChoice fixture uses response IDs/zero-based option lookup, but the source page supplies no 2013 argument/output contract. No fabricated global alias."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestChoiceRewardCurrency-27",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestChoiceRewardFaction-28",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestChoiceRewardInfo-29",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestChoiceRewardItem-30",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetRaidDifficultyID-31",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence",
+        "state-backed-instance-difficulty"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. New integration and prefork proof reads distinct state values 14/16; no setter/permissions claim."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetRandomBGInfo-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical global is absent; current PvP backing exposes a seeded C_PvP random-battleground row, not this historical global. No legacy alias or random queue/service parity claim."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetSchoolString-33",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence",
+        "bounded-school-name-mapping"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Existing C_Spell mapping and unmodified cached deprecated alias; scoped school integration case proves Physical school mask 1, not historical locale/composite-mask completeness."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetSpellLossOfControlCooldown-34",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsAllowedToUserTeleport-35",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Source spelling retained literally (User, not Use); raw member absent. No documented argument/teleport permission policy or consumer found; do not invent a predicate."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsTradeSkillReady-36",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical global is absent; modern C_TradeSkillUI readiness does not establish historical global publication. No shim alias; profession loading behavior remains scoped to the current namespace."
+    },
+    {
+      "source_id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-37",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Void-storage transmog preparation global is absent. The void-storage source-to-transmog pending transaction and selection ownership are unmodeled; current outfit models are not that service."
+    },
+    {
+      "source_id": "diff-wt-global-api-RequestRandomBattlegroundInstanceInfo-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-SendQuestChoiceResponse-39",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetLFGBonusFactionID-40",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetRaidDifficultyID-41",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Getter is state-backed, but this setter global is absent. The page does not define group-leader permissions, supported IDs, in-instance restrictions or change events. Getter proof does not imply setter parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-UnitGetTotalAbsorbs-42",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Fixed-zero/default implementation is NOT modeled credit; absorption, stagger or pet-cooldown producer/state remains pending."
+    },
+    {
+      "source_id": "diff-wt-global-api-UnitStagger-43",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Fixed-zero/default implementation is NOT modeled credit; absorption, stagger or pet-cooldown producer/state remains pending."
+    },
+    {
+      "source_id": "diff-wt-global-api-UpdateWorldMapArrow-44",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical map-arrow update global is absent. Current map APIs do not model the old arrow frames/camera-position ownership; the removed arrow family is not restored."
+    },
+    {
+      "source_id": "diff-wt-global-api-UseVoidItemForTransmogrify-45",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Void-storage transmog use global is absent. No source-item/slot selection, pending transmog transaction or transfer lifecycle is modeled; no no-op implementation."
+    },
+    {
+      "source_id": "diff-wt-global-api-ClearChannelWatch-48",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorAddPlayer-49",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorGetPartyInfo-50",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorGetSkirmishMode-51",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorGetSkirmishQueueCount-52",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-53",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorRemovePlayer-54",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorRequestSkirmishMode-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorRequestSkirmishQueueData-56",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorSetPlayerIndex-57",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorSetSkirmishMatchmakingMode-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorStartInstance-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CommentatorStartSkirmishMatch-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CreateMiniWorldMapArrowFrame-61",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-CreateWorldMapArrowFrame-62",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-DeclineInvite-63",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetCurrentRaidDifficulty-64",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetInstanceDifficulty-65",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetMinigameState-66",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetMinigameType-67",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetRaidDifficulty-68",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-MakeMinigameMove-69",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-PlayDance-70",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-PositionMiniWorldMapArrowFrame-71",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-PositionWorldMapArrowFrame-72",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetChannelWatch-73",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetRaidDifficulty-74",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-ShowMiniWorldMapArrowFrame-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-ShowWorldMapArrowFrame-76",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-global-api-UpdateWorldMapArrowFrames-77",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-ControlGetActiveCvarValue-88",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical FrameXML helper is absent in the SharedXML preload. Source gives no active-control/CVar comparison contract; current CVar lookup is not sufficient. No Blizzard patch or substitute helper."
+    },
+    {
+      "source_id": "diff-wt-framexml-GetApplicableMultisampleSetting-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-TogglePVPUI-90",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-BattlegroundShineFadeIn-93",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-BattlegroundShineFadeOut-94",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-IsAlreadyInQueue-95",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-IsPvPFrameSelected-96",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-TogglePVPFrame-97",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-BATTLEPET_FORCE_NAME_DECLENSION-108",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-LFG_BONUS_FACTION_ID_UPDATED-109",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-LOADING_SCREEN_DISABLED-110",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-LOADING_SCREEN_ENABLED-111",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-MAP_BAR_UPDATE-112",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-QUEST_CHOICE_UPDATE-113",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-UNIT_ABSORB_AMOUNT_CHANGED-114",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-117",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-118",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-MINIGAME_UPDATE-119",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-START_MINIGAME-120",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-widgets-Cooldown:GetCooldownDuration-131",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence",
+        "state-backed-cooldown-duration"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Existing cooldown_widget tests assert timing updates and clear transitions in milliseconds; no 2013-specific rate semantics claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Cooldown:SetBlingDuration-132",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:AdvanceTime-133",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:ClearFog-134",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:ClearModel-135",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetCameraDistance-136",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetCameraFacing-137",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetCameraPosition-138",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetCameraTarget-139",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetFacing-140",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetFogColor-141",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetFogFar-142",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetFogNear-143",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetLight-144",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetModel-145",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetModelScale-146",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetPosition-147",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:GetWorldScale-148",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:HasCustomCamera-149",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:ReplaceIconTexture-150",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetCamera-151",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetCameraDistance-152",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetCameraFacing-153",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetCameraPosition-154",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetCameraTarget-155",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetCustomCamera-156",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetFacing-157",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetFogColor-158",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetFogFar-159",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetFogNear-160",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetGlow-161",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetLight-162",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetModel-163",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetModelScale-164",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetPosition-165",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetSequence-166",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel:SetSequenceTime-167",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity. Permanent 3D/model compatibility surface only; rendering is intentionally unsupported."
+    },
+    {
+      "source_id": "diff-wt-widgets-Minimap:SetPlayerTextureHeight-170",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-widgets-Minimap:SetPlayerTextureWidth-171",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:AdvanceTime-172",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:AdvanceTime remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:ClearFog-173",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:ClearFog remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:ClearModel-174",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:ClearModel remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraDistance-175",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraDistance remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraFacing-176",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraPosition-177",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraTarget-178",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetCameraTarget remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetFacing-179",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetFogColor-180",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetFogColor remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetFogFar-181",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetFogFar remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetFogNear-182",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetFogNear remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetLight-183",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetLight remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetModel-184",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetModel remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetModelScale-185",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetModelScale remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetPosition-186",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetWorldScale-187",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:GetWorldScale remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:HasCustomCamera-188",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:HasCustomCamera remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:ReplaceIconTexture-189",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:ReplaceIconTexture remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCamera-190",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetCamera remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraDistance-191",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraDistance remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraFacing-192",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraPosition-193",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraTarget-194",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetCameraTarget remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCustomCamera-195",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetCustomCamera remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetFacing-196",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetFacing remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetFogColor-197",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetFogColor remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetFogFar-198",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetFogFar remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetFogNear-199",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetFogNear remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetGlow-200",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetGlow remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetLight-201",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetLight remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetModel-202",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetModel remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetModelScale-203",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetModelScale remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetPosition-204",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetPosition remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetSequence-205",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetSequence remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetSequenceTime-206",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with the simulator common frame method surface: Model:SetSequenceTime remains published. Model/PlayerModel 3D is intentionally unsupported. Current whole-word bare-name consumers and shared method dispatch forbid removing common methods merely to satisfy a 2013 owner migration. No rendering or historical method-ownership parity claim."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel OnAnimFinished-217",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "HasScript is false for PlayerModel OnAnimFinished. The simulator has no 3D model animation/update producer. Advertising a script without that producer would be a shortcut; intentional 3D exclusion retained."
+    },
+    {
+      "source_id": "diff-wt-widgets-PlayerModel OnUpdateModel-218",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "HasScript is false for PlayerModel OnUpdateModel. The simulator has no 3D model animation/update producer. Advertising a script without that producer would be a shortcut; intentional 3D exclusion retained."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model OnAnimFinished-221",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model OnUpdateModel-222",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current retail publication/absence after explicit later-retail supersession only; no 2013 output, signature, security or domain parity."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Dual text/percent status-bar option is a vendor UI/CVar presentation contract. No current 2013 configuration/render observation; publication does not establish it."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitStagger is a temporary zero default in unit_stagger_defaults.rs; no rolling ten-second monk stagger damage pool/producer or bar rendering proof."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitGetTotalAbsorbs returns constant zero in utility_system_spell/spell_api.rs; no stacked absorb pool, mutation producer, UNIT_ABSORB_AMOUNT_CHANGED payload lifecycle or health-bar overlay proof."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SecureActionButtonTemplate togglemenu execution requires protected action dispatch and unit-popup authorization, not mere template existence. No source-era security/input proof; no vendor monkey-patch."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Void-storage transmog preparation/use transaction is unmodeled; inventory existence and outfit models are not void-storage source transfer."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetRaidDifficultyID reads state values 14/16 in new tests; SetRaidDifficultyID is absent. Renaming and setter permission/change-event contract remain pending."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetDifficultyInfo is a temporary lookup/default in difficulty_pvp_util_defaults.rs, not proof of a complete 2013 difficulty catalog and outputs."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PetJournal GetPetCooldownByGUID returns fixed 0/0/false. No per-GUID cooldown state or expiry transitions; no model credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current C_Spell school-name mask mapping is behaviorally covered; cached deprecated alias is unmodified. SchoolStringTable has no cache/src/tests consumer in supplemental whole-word scans. Historical localization/composite-mask completeness remains unproven."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source says almost all (if not all) PetJournal functions: no complete member list/argument signatures. Cannot invent a universal isWild removal assertion."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source nil-PetID failure contract spans unspecified PetJournal members; current default cooldown function accepts/ignores arguments. No blanket pcall-validation shim; exact per-member error parity remains pending."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy GetCurrencyInfo full texture-path return is source-era output semantics, not current modern icon ID publication. No captured 2013 currency/texture fixture; no fabricated path."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reported GetTradeSkillReagentItemLink breakage is a historical client defect. Do not replace working current profession backing with always-nil behavior."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source uncertainty (appears to always return nil) for IsConsumableItem is retained. Do not turn an unverified historical bug report into a current modeled contract."
+    },
+    {
+      "source_id": "source-context-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "MAX_BLACKLIST_BATTLEGROUNDS relocation is PVPUI load-order scope, not global retirement. Supplemental whole-word cache/src/tests scans find no consumer; no 2013 PVPUI dependency/order fixture."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "MapBarFrame_GetString depends on historical MAP_BAR_* localized keys and phase/tag formatting. MapBar model is missing; no fabricated string helper."
+    },
+    {
+      "source_id": "source-context-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Expansion instructions only; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Transclusion separately fetched/pinned; every inventory row accounted above."
+    },
+    {
+      "source_id": "diff-caption-004",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Pinned retail diff build context, not runtime credit: Global API (5.1.0.16309 &rarr; 5.2.0.16650)",
+      "wikitext_line": 4
+    },
+    {
+      "source_id": "diff-caption-082",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Pinned retail diff build context, not runtime credit: FrameXML (5.1.0.16309 &rarr; 5.2.0.16650)",
+      "wikitext_line": 82
+    },
+    {
+      "source_id": "diff-caption-102",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Pinned retail diff build context, not runtime credit: Events (5.1.0.16309 &rarr; 5.2.0.16650)",
+      "wikitext_line": 102
+    },
+    {
+      "source_id": "diff-caption-125",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Pinned retail diff build context, not runtime credit: Widget API (5.1.0.16309 &rarr; 5.2.0.16650)",
+      "wikitext_line": 125
+    },
+    {
+      "source_id": "diff-caption-211",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Pinned retail diff build context, not runtime credit: Widget Handlers (5.1.0.16309 &rarr; 5.2.0.16650)",
+      "wikitext_line": 211
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.2.0-api-changes.txt"
+  }
+}

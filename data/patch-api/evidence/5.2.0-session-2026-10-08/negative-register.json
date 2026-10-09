@@ -1,0 +1,1382 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.2.0",
+  "source": {
+    "path": "data/patch-api/sources/5.2.0-api-changes.wikitext",
+    "revid": 4057299,
+    "sha256": "3feae2c6e4d1d07dfdf77e714f904f5b76226a7bd7b7cdabd0e92e7bb8566568"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 36,
+      "parsed_count": 36
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 30,
+      "parsed_count": 30
+    },
+    {
+      "section": "framexml",
+      "direction": "added",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "framexml",
+      "direction": "removed",
+      "header_count": 5,
+      "parsed_count": 5
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 7,
+      "parsed_count": 7
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 37,
+      "parsed_count": 37
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 37,
+      "parsed_count": 37
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    }
+  ],
+  "entries": [
+    {
+      "id": "diff-wt-global-api-C_MapBar.BarIsShown-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MapBar.BarIsShown",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "diff-wt-global-api-C_MapBar.GetCurrentValue-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MapBar.GetCurrentValue",
+      "annotation": "",
+      "wikitext_line": 11
+    },
+    {
+      "id": "diff-wt-global-api-C_MapBar.GetMaxValue-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MapBar.GetMaxValue",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MapBar.GetParticipationPercentage",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "diff-wt-global-api-C_MapBar.GetPhaseIndex-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MapBar.GetPhaseIndex",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "diff-wt-global-api-C_MapBar.GetTag-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MapBar.GetTag",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetBattles.GetForfeitPenalty",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "diff-wt-global-api-C_PetJournal.GetPetCooldownByGUID-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetPetCooldownByGUID",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "diff-wt-global-api-DeclineChannelInvite-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeclineChannelInvite",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "diff-wt-global-api-DevTest1-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DevTest1",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "diff-wt-global-api-GetArenaTeamIndexBySize-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetArenaTeamIndexBySize",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "diff-wt-global-api-GetBlacklistMapName-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBlacklistMapName",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "diff-wt-global-api-GetDifficultyInfo-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDifficultyInfo",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "diff-wt-global-api-GetHolidayBGInfo-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetHolidayBGInfo",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "diff-wt-global-api-GetLFGBonusFactionID-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGBonusFactionID",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "diff-wt-global-api-GetQuestChoiceInfo-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestChoiceInfo",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "diff-wt-global-api-GetQuestChoiceOptionInfo-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestChoiceOptionInfo",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "diff-wt-global-api-GetQuestChoiceRewardCurrency-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestChoiceRewardCurrency",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "diff-wt-global-api-GetQuestChoiceRewardFaction-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestChoiceRewardFaction",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "diff-wt-global-api-GetQuestChoiceRewardInfo-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestChoiceRewardInfo",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "diff-wt-global-api-GetQuestChoiceRewardItem-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestChoiceRewardItem",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "diff-wt-global-api-GetRaidDifficultyID-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P520_NEGATIVE_SENTINEL",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "diff-wt-global-api-GetRandomBGInfo-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRandomBGInfo",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "diff-wt-global-api-GetSchoolString-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSchoolString",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "diff-wt-global-api-GetSpellLossOfControlCooldown-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSpellLossOfControlCooldown",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "diff-wt-global-api-IsAllowedToUserTeleport-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsAllowedToUserTeleport",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "diff-wt-global-api-IsTradeSkillReady-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTradeSkillReady",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PrepVoidStorageForTransmogrify",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "diff-wt-global-api-RequestRandomBattlegroundInstanceInfo-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestRandomBattlegroundInstanceInfo",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "diff-wt-global-api-SendQuestChoiceResponse-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SendQuestChoiceResponse",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "diff-wt-global-api-SetLFGBonusFactionID-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetLFGBonusFactionID",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "diff-wt-global-api-SetRaidDifficultyID-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetRaidDifficultyID",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "diff-wt-global-api-UnitGetTotalAbsorbs-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitGetTotalAbsorbs",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "diff-wt-global-api-UnitStagger-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitStagger",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "diff-wt-global-api-UpdateWorldMapArrow-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UpdateWorldMapArrow",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "diff-wt-global-api-UseVoidItemForTransmogrify-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UseVoidItemForTransmogrify",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "diff-wt-global-api-ClearChannelWatch-48",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClearChannelWatch",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorAddPlayer-49",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorAddPlayer",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorGetPartyInfo-50",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorGetPartyInfo",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorGetSkirmishMode-51",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorGetSkirmishMode",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorGetSkirmishQueueCount-52",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorGetSkirmishQueueCount",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-53",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorGetSkirmishQueuePlayerInfo",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorRemovePlayer-54",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorRemovePlayer",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorRequestSkirmishMode-55",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorRequestSkirmishMode",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorRequestSkirmishQueueData-56",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorRequestSkirmishQueueData",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorSetPlayerIndex-57",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorSetPlayerIndex",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorSetSkirmishMatchmakingMode-58",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorSetSkirmishMatchmakingMode",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorStartInstance-59",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorStartInstance",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "diff-wt-global-api-CommentatorStartSkirmishMatch-60",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CommentatorStartSkirmishMatch",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "diff-wt-global-api-CreateMiniWorldMapArrowFrame-61",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CreateMiniWorldMapArrowFrame",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "diff-wt-global-api-CreateWorldMapArrowFrame-62",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CreateWorldMapArrowFrame",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "diff-wt-global-api-DeclineInvite-63",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "DeclineInvite",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "diff-wt-global-api-GetCurrentRaidDifficulty-64",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCurrentRaidDifficulty",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "diff-wt-global-api-GetInstanceDifficulty-65",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetInstanceDifficulty",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "diff-wt-global-api-GetMinigameState-66",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMinigameState",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "diff-wt-global-api-GetMinigameType-67",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMinigameType",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "diff-wt-global-api-GetRaidDifficulty-68",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRaidDifficulty",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "diff-wt-global-api-MakeMinigameMove-69",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "MakeMinigameMove",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "diff-wt-global-api-PlayDance-70",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PlayDance",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "diff-wt-global-api-PositionMiniWorldMapArrowFrame-71",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PositionMiniWorldMapArrowFrame",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "diff-wt-global-api-PositionWorldMapArrowFrame-72",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PositionWorldMapArrowFrame",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "diff-wt-global-api-SetChannelWatch-73",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetChannelWatch",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "diff-wt-global-api-SetRaidDifficulty-74",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetRaidDifficulty",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "diff-wt-global-api-ShowMiniWorldMapArrowFrame-75",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowMiniWorldMapArrowFrame",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "diff-wt-global-api-ShowWorldMapArrowFrame-76",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowWorldMapArrowFrame",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "diff-wt-global-api-UpdateWorldMapArrowFrames-77",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UpdateWorldMapArrowFrames",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "diff-wt-framexml-ControlGetActiveCvarValue-88",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "ControlGetActiveCvarValue",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "diff-wt-framexml-GetApplicableMultisampleSetting-89",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "GetApplicableMultisampleSetting",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "diff-wt-framexml-TogglePVPUI-90",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "TogglePVPUI",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "diff-wt-framexml-BattlegroundShineFadeIn-93",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "BattlegroundShineFadeIn",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "diff-wt-framexml-BattlegroundShineFadeOut-94",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "BattlegroundShineFadeOut",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "diff-wt-framexml-IsAlreadyInQueue-95",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "IsAlreadyInQueue",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "diff-wt-framexml-IsPvPFrameSelected-96",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "IsPvPFrameSelected",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "diff-wt-framexml-TogglePVPFrame-97",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "TogglePVPFrame",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "diff-wt-events-BATTLEPET_FORCE_NAME_DECLENSION-108",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEPET_FORCE_NAME_DECLENSION",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "diff-wt-events-LFG_BONUS_FACTION_ID_UPDATED-109",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LFG_BONUS_FACTION_ID_UPDATED",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "diff-wt-events-LOADING_SCREEN_DISABLED-110",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LOADING_SCREEN_DISABLED",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "diff-wt-events-LOADING_SCREEN_ENABLED-111",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LOADING_SCREEN_ENABLED",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "diff-wt-events-MAP_BAR_UPDATE-112",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MAP_BAR_UPDATE",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "diff-wt-events-QUEST_CHOICE_UPDATE-113",
+      "section": "events",
+      "direction": "added",
+      "symbol": "QUEST_CHOICE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "diff-wt-events-UNIT_ABSORB_AMOUNT_CHANGED-114",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_ABSORB_AMOUNT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "diff-wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-117",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COMMENTATOR_SKIRMISH_MODE_REQUEST",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "diff-wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-118",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COMMENTATOR_SKIRMISH_QUEUE_REQUEST",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "diff-wt-events-MINIGAME_UPDATE-119",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "MINIGAME_UPDATE",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "diff-wt-events-START_MINIGAME-120",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "START_MINIGAME",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "diff-wt-widgets-Cooldown:GetCooldownDuration-131",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Cooldown:GetCooldownDuration",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "diff-wt-widgets-Cooldown:SetBlingDuration-132",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Cooldown:SetBlingDuration",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:AdvanceTime-133",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:AdvanceTime",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:ClearFog-134",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:ClearFog",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:ClearModel-135",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:ClearModel",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetCameraDistance-136",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetCameraDistance",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetCameraFacing-137",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetCameraFacing",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetCameraPosition-138",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetCameraPosition",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetCameraTarget-139",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetCameraTarget",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetFacing-140",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetFacing",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetFogColor-141",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetFogColor",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetFogFar-142",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetFogFar",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetFogNear-143",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetFogNear",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetLight-144",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetLight",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetModel-145",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetModel",
+      "annotation": "",
+      "wikitext_line": 145
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetModelScale-146",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetModelScale",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetPosition-147",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetPosition",
+      "annotation": "",
+      "wikitext_line": 147
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:GetWorldScale-148",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:GetWorldScale",
+      "annotation": "",
+      "wikitext_line": 148
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:HasCustomCamera-149",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:HasCustomCamera",
+      "annotation": "",
+      "wikitext_line": 149
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:ReplaceIconTexture-150",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:ReplaceIconTexture",
+      "annotation": "",
+      "wikitext_line": 150
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetCamera-151",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCamera",
+      "annotation": "",
+      "wikitext_line": 151
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetCameraDistance-152",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCameraDistance",
+      "annotation": "",
+      "wikitext_line": 152
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetCameraFacing-153",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCameraFacing",
+      "annotation": "",
+      "wikitext_line": 153
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetCameraPosition-154",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCameraPosition",
+      "annotation": "",
+      "wikitext_line": 154
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetCameraTarget-155",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCameraTarget",
+      "annotation": "",
+      "wikitext_line": 155
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetCustomCamera-156",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetCustomCamera",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetFacing-157",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetFacing",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetFogColor-158",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetFogColor",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetFogFar-159",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetFogFar",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetFogNear-160",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetFogNear",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetGlow-161",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetGlow",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetLight-162",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetLight",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetModel-163",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetModel",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetModelScale-164",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetModelScale",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetPosition-165",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetPosition",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetSequence-166",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetSequence",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel:SetSequenceTime-167",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:SetSequenceTime",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "diff-wt-widgets-Minimap:SetPlayerTextureHeight-170",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetPlayerTextureHeight",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "diff-wt-widgets-Minimap:SetPlayerTextureWidth-171",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Minimap:SetPlayerTextureWidth",
+      "annotation": "",
+      "wikitext_line": 171
+    },
+    {
+      "id": "diff-wt-widgets-Model:AdvanceTime-172",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:AdvanceTime",
+      "annotation": "",
+      "wikitext_line": 172
+    },
+    {
+      "id": "diff-wt-widgets-Model:ClearFog-173",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:ClearFog",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "diff-wt-widgets-Model:ClearModel-174",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:ClearModel",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetCameraDistance-175",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetCameraDistance",
+      "annotation": "",
+      "wikitext_line": 175
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetCameraFacing-176",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetCameraFacing",
+      "annotation": "",
+      "wikitext_line": 176
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetCameraPosition-177",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetCameraPosition",
+      "annotation": "",
+      "wikitext_line": 177
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetCameraTarget-178",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetCameraTarget",
+      "annotation": "",
+      "wikitext_line": 178
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetFacing-179",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetFacing",
+      "annotation": "",
+      "wikitext_line": 179
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetFogColor-180",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetFogColor",
+      "annotation": "",
+      "wikitext_line": 180
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetFogFar-181",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetFogFar",
+      "annotation": "",
+      "wikitext_line": 181
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetFogNear-182",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetFogNear",
+      "annotation": "",
+      "wikitext_line": 182
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetLight-183",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetLight",
+      "annotation": "",
+      "wikitext_line": 183
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetModel-184",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetModel",
+      "annotation": "",
+      "wikitext_line": 184
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetModelScale-185",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetModelScale",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetPosition-186",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetPosition",
+      "annotation": "",
+      "wikitext_line": 186
+    },
+    {
+      "id": "diff-wt-widgets-Model:GetWorldScale-187",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetWorldScale",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "diff-wt-widgets-Model:HasCustomCamera-188",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:HasCustomCamera",
+      "annotation": "",
+      "wikitext_line": 188
+    },
+    {
+      "id": "diff-wt-widgets-Model:ReplaceIconTexture-189",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:ReplaceIconTexture",
+      "annotation": "",
+      "wikitext_line": 189
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetCamera-190",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetCamera",
+      "annotation": "",
+      "wikitext_line": 190
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetCameraDistance-191",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetCameraDistance",
+      "annotation": "",
+      "wikitext_line": 191
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetCameraFacing-192",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetCameraFacing",
+      "annotation": "",
+      "wikitext_line": 192
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetCameraPosition-193",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetCameraPosition",
+      "annotation": "",
+      "wikitext_line": 193
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetCameraTarget-194",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetCameraTarget",
+      "annotation": "",
+      "wikitext_line": 194
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetCustomCamera-195",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetCustomCamera",
+      "annotation": "",
+      "wikitext_line": 195
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetFacing-196",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetFacing",
+      "annotation": "",
+      "wikitext_line": 196
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetFogColor-197",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetFogColor",
+      "annotation": "",
+      "wikitext_line": 197
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetFogFar-198",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetFogFar",
+      "annotation": "",
+      "wikitext_line": 198
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetFogNear-199",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetFogNear",
+      "annotation": "",
+      "wikitext_line": 199
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetGlow-200",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetGlow",
+      "annotation": "",
+      "wikitext_line": 200
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetLight-201",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetLight",
+      "annotation": "",
+      "wikitext_line": 201
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetModel-202",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetModel",
+      "annotation": "",
+      "wikitext_line": 202
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetModelScale-203",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetModelScale",
+      "annotation": "",
+      "wikitext_line": 203
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetPosition-204",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetPosition",
+      "annotation": "",
+      "wikitext_line": 204
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetSequence-205",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetSequence",
+      "annotation": "",
+      "wikitext_line": 205
+    },
+    {
+      "id": "diff-wt-widgets-Model:SetSequenceTime-206",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:SetSequenceTime",
+      "annotation": "",
+      "wikitext_line": 206
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel OnAnimFinished-217",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel OnAnimFinished",
+      "annotation": "",
+      "wikitext_line": 217,
+      "kind": "widget-script"
+    },
+    {
+      "id": "diff-wt-widgets-PlayerModel OnUpdateModel-218",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel OnUpdateModel",
+      "annotation": "",
+      "wikitext_line": 218,
+      "kind": "widget-script"
+    },
+    {
+      "id": "diff-wt-widgets-Model OnAnimFinished-221",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model OnAnimFinished",
+      "annotation": "",
+      "wikitext_line": 221,
+      "kind": "widget-script"
+    },
+    {
+      "id": "diff-wt-widgets-Model OnUpdateModel-222",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model OnUpdateModel",
+      "annotation": "",
+      "wikitext_line": 222,
+      "kind": "widget-script"
+    }
+  ],
+  "client_line": "retail"
+}

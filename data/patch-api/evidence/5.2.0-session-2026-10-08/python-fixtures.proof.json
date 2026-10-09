@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools",
+    "-p",
+    "test_*.py"
+  ],
+  "revision": "af5e6586348c19441e56af0267f9714770143942",
+  "scope": "python-fixtures",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "python-fixtures.txt",
+  "log_sha256": "a4348ff878c8e309171f323bfa7ff22d9f6752f462a0f0f48d02da087b700706",
+  "seconds": 0.9622664349953993,
+  "invalidated": false
+}

@@ -1,0 +1,34 @@
+{
+  "inventory": 163,
+  "publication_gaps": 57,
+  "total_ids": 191,
+  "statuses": {
+    "audit-pending": 73,
+    "bounded-coverage": 106,
+    "metadata-only": 12
+  },
+  "pending_prose": [
+    "prose-undated-004",
+    "prose-undated-005",
+    "prose-undated-006",
+    "prose-undated-007",
+    "prose-undated-008",
+    "prose-undated-011",
+    "prose-undated-012",
+    "prose-undated-013",
+    "prose-undated-014",
+    "prose-undated-015",
+    "prose-undated-016",
+    "prose-undated-017",
+    "prose-undated-018",
+    "prose-undated-019",
+    "prose-undated-022",
+    "prose-undated-023"
+  ],
+  "modeled_inventory": [
+    "diff-wt-global-api-GetRaidDifficultyID-31",
+    "diff-wt-global-api-GetSchoolString-33",
+    "diff-wt-widgets-Cooldown:GetCooldownDuration-131"
+  ],
+  "retirements": 0
+}
