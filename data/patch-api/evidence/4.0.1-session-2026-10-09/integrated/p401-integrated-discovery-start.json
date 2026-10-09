@@ -1,0 +1,16 @@
+{
+  "revision": "1deb337b7888450b313bad7af738004171a9f4f4",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "patch_4_0_1_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "env": {
+    "P401_SWEEP_OUT": "/tmp/p401-integrated-discovery-results.json"
+  }
+}

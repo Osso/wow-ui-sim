@@ -771,9 +771,9 @@
     },
     {
       "source_id": "wt-global-api-CanTransform-105",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "CanTransform: raw=nil; lookup=nil. Missing class transformation or dual-wield eligibility contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+      "status": "bounded-coverage",
+      "capabilities": ["publication-absence"],
+      "note": "Actual retail 4.1.0 removal wt-global-api-CanTransform-8 supersedes this addition; current raw/lookup absence satisfies publication expectation. No transformation model or native behavior credit; Classic unchanged."
     },
     {
       "source_id": "wt-global-api-CanViewGuildRecipes-106",
@@ -2431,9 +2431,9 @@
     },
     {
       "source_id": "wt-global-api-Transform-336",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "Transform: raw=nil; lookup=nil. Missing class transformation or dual-wield eligibility contract/model. Page supplies identity only, no call signature or meaningful state semantics; do not fabricate constants, aliases or no-op defaults."
+      "status": "bounded-coverage",
+      "capabilities": ["publication-absence"],
+      "note": "Actual retail 4.1.0 removal wt-global-api-Transform-8 supersedes this addition; current raw/lookup absence satisfies publication expectation. No transformation model or native behavior credit; Classic unchanged."
     },
     {
       "source_id": "wt-global-api-UnitAlternatePowerInfo-337",
