@@ -116,7 +116,7 @@ def check_source(evidence, context, inputs):
 
 
 def check_reproduction(context, inputs, provenance):
-    with tempfile.TemporaryDirectory(prefix='p401-reproduce-') as directory:
+    with tempfile.TemporaryDirectory(prefix='p401-reproduce-', dir=ROOT / 'target') as directory:
         snapshot = Path(directory)
         for path, raw in inputs.items():
             destination = snapshot / path
