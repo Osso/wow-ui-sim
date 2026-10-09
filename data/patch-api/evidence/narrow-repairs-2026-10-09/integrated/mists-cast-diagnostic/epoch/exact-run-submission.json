@@ -1,0 +1,16 @@
+{
+  "unit": "mists-cast-probe-exact-20261009t221327z",
+  "argv": [
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/mists-wrapper-durable/debug/deps/integration-f15e4c1da9a8b8f4",
+    "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "sha256": "fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5",
+  "started": "2026-10-09T22:14:59.454412+00:00",
+  "prior_attempt": "zero selected; no behavioral credit"
+}

@@ -1,0 +1,26 @@
+{
+  "revision": "96e88494a6844833b79a574d37a2115dc03b44eb",
+  "path": "src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+  "sha256": "d05b9914405e7ebf23cc0585cfabb7aab9e292865112ea9a092e7f8e7780827e",
+  "current_byte_equal": true,
+  "lua_probe_line_map": {
+    "1": "",
+    "2": "local marker = function() return \"wrapped\" end",
+    "3": "if CreateSecureDelegate(marker)() ~= \"wrapped\" then return \"secure_delegate\" end",
+    "4": "if type(GetButtonMetatable()) ~= \"table\" then return \"button_metatable\" end",
+    "5": "if type(GetEditBoxMetatable()) ~= \"table\" then return \"editbox_metatable\" end",
+    "6": "if secretwrap(marker)() ~= \"wrapped\" then return \"secretwrap\" end",
+    "7": "if GetCallstackHeight() ~= 0 then return \"callstack_height\" end",
+    "8": "if GetErrorCallstackHeight() ~= 0 then return \"error_callstack_height\" end",
+    "9": "if type(debugstack) ~= \"function\" then return \"debugstack_type\" end",
+    "10": "if not string.find(debugstack(1), \"in main chunk\", 1, true) then return \"debugstack_value\" end",
+    "11": "if type(debuglocals) ~= \"function\" then return \"debuglocals_type\" end",
+    "12": "if type(debuglocals(1)) ~= \"string\" then return \"debuglocals_value\" end",
+    "13": "SetErrorCallstackHeight(4)",
+    "14": "AddSourceLocationExclude(\"example.lua\")",
+    "15": "return \"ok\"",
+    "16": ""
+  },
+  "observed": "2026-10-09T22:17:44.909057+00:00",
+  "correction": "(string):7 maps GetCallstackHeight(), not GetErrorCallstackHeight(); first-writer target in prior summaries/reports incorrect unless Lua line attribution is separately proven off by one"
+}

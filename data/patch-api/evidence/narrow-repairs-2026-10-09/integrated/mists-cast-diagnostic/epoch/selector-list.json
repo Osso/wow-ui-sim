@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/mists-wrapper-durable/debug/deps/integration-f15e4c1da9a8b8f4",
+    "cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+    "--list"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "exit": 0,
+  "stdout": "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix: test\n\n1 test, 0 benchmarks\n",
+  "stderr": ""
+}

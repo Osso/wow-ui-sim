@@ -1,0 +1,269 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.001s] [Startup] SimState::default complete in 1.45ms
+[  0.002s] [Startup] rilua VM created in 86.07µs
+[  0.002s] [Startup] builtin frames initialized in 54.74µs
+[  0.002s] [Startup] template registry cleared in 4.09µs
+[  0.002s] [Startup] intrinsic templates registered in 866.65µs
+[  0.002s] [Startup] initial app_data lua handle installed in 491.00ns
+[  0.094s] [Startup] init_lua_state complete in 91.62ms
+[  0.094s] [Startup] final app_data lua handle installed in 190.00ns
+[  0.094s] [Startup] initial screen globals installed in 48.30µs
+[  0.094s] [Startup] WowLuaEnv::new complete
+Lua error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: [OnLoad] AchievementFrameAchievements: generated/template-scripts-no-global-slots/937f2e658386b74d:5: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementShield_OnLoad'
+	generated/template-scripts-no-global-slots/937f2e658386b74d:5: in function <generated/template-scripts-no-global-slots/937f2e658386b74d:3>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function '(for index)'
+	Interface/AddOns/Blizzard_SharedXML/HybridScrollFrame.lua:244: in function 'HybridScrollFrame_CreateButtons'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:522: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:500>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+=(string):19: in main chunk
+
+Lua error: Lua Error: [OnLoad] AchievementFrameAchievements: generated/template-scripts-no-global-slots/937f2e658386b74d:5: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementShield_OnLoad'
+	generated/template-scripts-no-global-slots/937f2e658386b74d:5: in function <generated/template-scripts-no-global-slots/937f2e658386b74d:3>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function '(for index)'
+	Interface/AddOns/Blizzard_SharedXML/HybridScrollFrame.lua:244: in function 'HybridScrollFrame_CreateButtons'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:522: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:500>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+=(string):19: in main chunk
+
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: [OnLoad] AchievementFrameStats: attempt to call global 'AchievementFrameStats_OnLoad' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Lua Error: [OnLoad] AchievementFrameStats: attempt to call global 'AchievementFrameStats_OnLoad' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: [OnLoad] AchievementFrameComparison: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:2022: attempt to call a nil value
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Lua Error: [OnLoad] AchievementFrameComparison: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:2022: attempt to call a nil value
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: bad argument #1 to 'next' (table expected)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/1f6a08f0276c3958:15: in function <generated/loader-exec-no-global-slots/1f6a08f0276c3958:12>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+Lua error: Lua Error: bad argument #1 to 'next' (table expected)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/1f6a08f0276c3958:15: in function <generated/loader-exec-no-global-slots/1f6a08f0276c3958:12>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__wow_original_securecall'
+=(string):13: in function 'securecall'
+[generated/loader-exec-no-global-slots/1f6a08f0276c3958]:15: in function <[generated/loader-exec-no-global-slots/1f6a08f0276c3958]:12>
+=[C]:: in function 'pcall'
+=(string):16: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_CombatLogBase/Wrath/CombatLogColors.lua: table index is nil
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_CombatLogBase/Wrath/CombatLogColors.lua: table index is nil
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+MISTS_CAST_PARENT [after-addon-load/before-post-load-workarounds] cast=table: 0x00006697; systemInfo=nil; systemInfo.isInDefaultPosition=READ_ERROR:(string):13: attempt to index field 'systemInfo' (a nil value); IsInitialized=false; IsInDefaultPosition=false; isManagedFrame=true; isBottomManagedFrame=true; ignoreFramePositionManager=nil; layoutOnBottom=nil; IsShown=false; attachedToPlayerFrame=nil; parent=table: 0x0000077b; parent.name=UIParent; layoutParent=table: 0x00001dc3; layoutParent.name=UIParentBottomManagedFrameContainer; bottom=table: 0x00001dc3; bottom.name=UIParentBottomManagedFrameContainer; layoutParent==bottom=true; parent==bottom=false; bottom.BottomManagedLayoutContainer=table: 0x00001dc8; parent==bottom.BottomManagedLayoutContainer=false; bottom.showingFrames=table: 0x00001dd0; bottom.showingFrames[cast]=nil; bottom.showingFrames[cast]==cast=false; layoutParent.showingFrames[cast]=nil
+[  1.198s] [Startup] apply_post_load_workarounds: begin
+[  1.198s] [Workarounds] starting patch_edit_mode_manager
+[  1.198s] [Workarounds] finished patch_edit_mode_manager in 200.81µs
+[  1.198s] [Workarounds] starting init_edit_mode_layout
+[  1.198s] [EditMode] starting setup_layout_info
+[  1.201s] [EditMode] finished setup_layout_info in 2.62ms
+[  1.201s] [EditMode] starting apply_system_anchors
+[  1.215s] [EditMode] finished apply_system_anchors in 13.74ms
+[  1.215s] [EditMode] starting finalize_action_bar_positions
+[  1.215s] [EditMode] finished finalize_action_bar_positions in 359.74µs
+[  1.215s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.215s] [EditMode] finished invoke_anchor_changed_hooks in 370.59µs
+[  1.215s] [EditMode] starting fix_action_bar_nan_size
+[  1.216s] [EditMode] finished fix_action_bar_nan_size in 56.78µs
+[  1.216s] [EditMode] starting fix_action_bar_scale
+[  1.216s] [EditMode] finished fix_action_bar_scale in 3.47µs
+[  1.216s] [Workarounds] finished init_edit_mode_layout in 17.17ms
+[  1.216s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  1.216s] [Workarounds] finished patch_ui_parent_panel_toggles in 235.05µs
+[  1.216s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  1.216s] [Workarounds] finished patch_uiparent_onupdate_worklists in 56.33µs
+[  1.216s] [Workarounds] starting init_chat_type_colors
+[  1.216s] [Workarounds] finished init_chat_type_colors in 93.04µs
+[  1.216s] [Workarounds] starting patch_chat_voice_button_surface
+[  1.216s] [Workarounds] finished patch_chat_voice_button_surface in 97.34µs
+[  1.216s] [Workarounds] starting patch_item_socketing_tooltips
+[  1.216s] [Workarounds] finished patch_item_socketing_tooltips in 41.01µs
+[  1.216s] [Workarounds] starting patch_character_select_selected_name
+[  1.216s] [Workarounds] finished patch_character_select_selected_name in 20.87µs
+[  1.216s] [Workarounds] starting patch_character_create_defaults
+[  1.216s] [Workarounds] finished patch_character_create_defaults in 156.97µs
+[  1.216s] [Workarounds] starting patch_character_frame_title_refresh
+[  1.216s] [Workarounds] finished patch_character_frame_title_refresh in 246.26µs
+[  1.216s] [Workarounds] starting patch_vignette_pin_template
+[  1.217s] [Workarounds] finished patch_vignette_pin_template in 40.20µs
+[  1.217s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  1.217s] [Workarounds] finished patch_fog_of_war_pin_mixin in 157.23µs
+[  1.217s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  1.217s] [Workarounds] finished patch_map_exploration_pin_mixin in 229.10µs
+[  1.217s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  1.217s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 40.08µs
+[  1.217s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  1.217s] [Workarounds] finished ensure_adventure_map_frame_surface in 284.42µs
+[  1.217s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  1.217s] [Workarounds] finished patch_action_bar_button_event_fanout in 74.10µs
+[  1.217s] [Workarounds] starting patch_paging_controls_page_text
+[  1.217s] [Workarounds] finished patch_paging_controls_page_text in 28.26µs
+[  1.217s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  1.217s] [Workarounds] finished patch_talent_edge_frame_level_sync in 22.68µs
+[  1.217s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  1.217s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 59.79µs
+[  1.217s] [Workarounds] starting patch_game_time_defaults
+[  1.217s] [Workarounds] finished patch_game_time_defaults in 13.86µs
+[  1.217s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  1.217s] [Workarounds] finished patch_tooltip_nineslice_surface in 27.84µs
+[  1.217s] [Workarounds] starting patch_container_frame_token_tracker
+[  1.218s] [Workarounds] finished patch_container_frame_token_tracker in 40.67µs
+[  1.218s] [Workarounds] starting patch_achievement_display_set_achievements
+[  1.218s] [Workarounds] finished patch_achievement_display_set_achievements in 6.47µs
+[  1.218s] [Workarounds] starting patch_housing_dashboard_preload
+[  1.218s] [Workarounds] finished patch_housing_dashboard_preload in 70.37µs
+[  1.218s] [Workarounds] starting patch_lfg_lock_list
+[  1.218s] [Workarounds] finished patch_lfg_lock_list in 17.52µs
+[  1.218s] [Workarounds] starting patch_auction_house_browse_results_event
+[  1.218s] [Workarounds] finished patch_auction_house_browse_results_event in 56.67µs
+[  1.218s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  1.218s] [Workarounds] finished patch_auction_house_search_context_aliases in 19.03µs
+[  1.218s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  1.218s] [Workarounds] finished patch_auth_challenge_frame_parent in 51.56µs
+[  1.218s] [Workarounds] starting patch_settings_surface_defaults
+[  1.218s] [Workarounds] finished patch_settings_surface_defaults in 316.36µs
+[  1.218s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  1.218s] [Workarounds] finished patch_settings_canvas_layout_visibility in 89.00µs
+[  1.218s] [Workarounds] starting mists::post_load
+[  1.219s] [Workarounds] finished mists::post_load in 625.33µs
+[  1.219s] [Startup] apply_post_load_workarounds: workarounds complete
+[  1.267s] [Startup] apply_post_load_workarounds: globals restored
+[  1.267s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+MISTS_CAST_PARENT [after-post-load-workarounds/before-startup-events] cast=table: 0x00006697; systemInfo=nil; systemInfo.isInDefaultPosition=READ_ERROR:(string):13: attempt to index field 'systemInfo' (a nil value); IsInitialized=false; IsInDefaultPosition=false; isManagedFrame=true; isBottomManagedFrame=true; ignoreFramePositionManager=nil; layoutOnBottom=nil; IsShown=false; attachedToPlayerFrame=nil; parent=table: 0x0000077b; parent.name=UIParent; layoutParent=table: 0x00001dc3; layoutParent.name=UIParentBottomManagedFrameContainer; bottom=table: 0x00001dc3; bottom.name=UIParentBottomManagedFrameContainer; layoutParent==bottom=true; parent==bottom=false; bottom.BottomManagedLayoutContainer=table: 0x00001dc8; parent==bottom.BottomManagedLayoutContainer=false; bottom.showingFrames=table: 0x00001dd0; bottom.showingFrames[cast]=nil; bottom.showingFrames[cast]==cast=false; layoutParent.showingFrames[cast]=nil
+Lua error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+[  1.367s] [EditMode] starting setup_layout_info
+[  1.369s] [EditMode] finished setup_layout_info in 1.91ms
+[  1.369s] [EditMode] starting apply_system_anchors
+[  1.375s] [EditMode] finished apply_system_anchors in 6.03ms
+[  1.375s] [EditMode] starting finalize_action_bar_positions
+[  1.375s] [EditMode] finished finalize_action_bar_positions in 359.41µs
+[  1.375s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.377s] [EditMode] finished invoke_anchor_changed_hooks in 1.73ms
+[  1.377s] [EditMode] starting fix_action_bar_nan_size
+[  1.377s] [EditMode] finished fix_action_bar_nan_size in 54.79µs
+[  1.377s] [EditMode] starting fix_action_bar_scale
+[  1.377s] [EditMode] finished fix_action_bar_scale in 4.09µs
+[  1.377s] [EditMode] starting reapply_player_frame_anchor
+[  1.377s] [EditMode] finished reapply_player_frame_anchor in 91.67µs
+MISTS_CAST_PARENT [before-EDIT_MODE_LAYOUTS_UPDATED] cast=table: 0x00006697; systemInfo=nil; systemInfo.isInDefaultPosition=READ_ERROR:(string):13: attempt to index field 'systemInfo' (a nil value); IsInitialized=false; IsInDefaultPosition=false; isManagedFrame=true; isBottomManagedFrame=true; ignoreFramePositionManager=nil; layoutOnBottom=nil; IsShown=false; attachedToPlayerFrame=nil; parent=table: 0x0000077b; parent.name=UIParent; layoutParent=table: 0x00001dc3; layoutParent.name=UIParentBottomManagedFrameContainer; bottom=table: 0x00001dc3; bottom.name=UIParentBottomManagedFrameContainer; layoutParent==bottom=true; parent==bottom=false; bottom.BottomManagedLayoutContainer=table: 0x00001dc8; parent==bottom.BottomManagedLayoutContainer=false; bottom.showingFrames=table: 0x00001dd0; bottom.showingFrames[cast]=nil; bottom.showingFrames[cast]==cast=false; layoutParent.showingFrames[cast]=nil
+MISTS_CAST_PARENT [after-EDIT_MODE_LAYOUTS_UPDATED] cast=table: 0x00006697; systemInfo=table: 0x000183e7; systemInfo.isInDefaultPosition=true; IsInitialized=true; IsInDefaultPosition=true; isManagedFrame=true; isBottomManagedFrame=true; ignoreFramePositionManager=nil; layoutOnBottom=nil; IsShown=false; attachedToPlayerFrame=false; parent=table: 0x0000077b; parent.name=UIParent; layoutParent=table: 0x00001dc3; layoutParent.name=UIParentBottomManagedFrameContainer; bottom=table: 0x00001dc3; bottom.name=UIParentBottomManagedFrameContainer; layoutParent==bottom=true; parent==bottom=false; bottom.BottomManagedLayoutContainer=table: 0x00001dc8; parent==bottom.BottomManagedLayoutContainer=false; bottom.showingFrames=table: 0x00001dd0; bottom.showingFrames[cast]=nil; bottom.showingFrames[cast]==cast=false; layoutParent.showingFrames[cast]=nil
+MISTS_CAST_PARENT [after-startup-events] cast=table: 0x00006697; systemInfo=table: 0x000183e7; systemInfo.isInDefaultPosition=true; IsInitialized=true; IsInDefaultPosition=true; isManagedFrame=true; isBottomManagedFrame=true; ignoreFramePositionManager=nil; layoutOnBottom=nil; IsShown=false; attachedToPlayerFrame=false; parent=table: 0x0000077b; parent.name=UIParent; layoutParent=table: 0x00001dc3; layoutParent.name=UIParentBottomManagedFrameContainer; bottom=table: 0x00001dc3; bottom.name=UIParentBottomManagedFrameContainer; layoutParent==bottom=true; parent==bottom=false; bottom.BottomManagedLayoutContainer=table: 0x00001dc8; parent==bottom.BottomManagedLayoutContainer=false; bottom.showingFrames=table: 0x00001dd0; bottom.showingFrames[cast]=nil; bottom.showingFrames[cast]==cast=false; layoutParent.showingFrames[cast]=nil
+MISTS_CAST_PARENT [cast-case-before-original-assertions] cast=table: 0x00006697; systemInfo=table: 0x000183e7; systemInfo.isInDefaultPosition=true; IsInitialized=true; IsInDefaultPosition=true; isManagedFrame=true; isBottomManagedFrame=true; ignoreFramePositionManager=nil; layoutOnBottom=nil; IsShown=false; attachedToPlayerFrame=false; parent=table: 0x0000077b; parent.name=UIParent; layoutParent=table: 0x00001dc3; layoutParent.name=UIParentBottomManagedFrameContainer; bottom=table: 0x00001dc3; bottom.name=UIParentBottomManagedFrameContainer; layoutParent==bottom=true; parent==bottom=false; bottom.BottomManagedLayoutContainer=table: 0x00001dc8; parent==bottom.BottomManagedLayoutContainer=false; bottom.showingFrames=table: 0x00001dd0; bottom.showingFrames[cast]=nil; bottom.showingFrames[cast]==cast=false; layoutParent.showingFrames[cast]=nil
+
+thread 'spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix' (8059) panicked at /home/osso/Projects/wow/wow-ui-sim/tests/spell_casting.rs:470:9:
+assertion `left == right` failed: unlocked startup cast bar should remain frame-manager parented
+  left: "UIParent"
+ right: "BottomManagedFrameContainer"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix' (8055) panicked at /home/osso/Projects/wow/wow-ui-sim/tests/common/timeout_reexec.rs:181:9:
+timeout child for `spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix` failed (exit code 101)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Retained Mists cast-parent diagnostics and callstack attribution correction
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#mists-diagnostic-epoch--fail-native-oracle-conflict): new diagnostic one-case FAIL101, initial zero selection excluded; Cargo JSON success with compile OS exit unknown. Hidden cast state matches native AddManagedFrame early return; original parent oracle unresolved, no runtime fix/assertion weakening. Separate revision-bound line map corrects callstack failure to GetCallstackHeight. Twenty-six byte-identical files retained with privacy/provenance limits; lost prior receipts not reconstructed. Parent OPEN.
+
 ## [2026-10-09] ingest | Completed saved 96 fullsuite comparison
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#completed-saved-fullsuite-96-comparison--fail-parent-open) retains independent completed FAIL15+1+1, zero new exact failures against fixed3de/dd, all original fixtures/groups executed, exactEditMode3/3 formatter7/7 OnUpdate5/5 and manifest pass. Five disappeared identities absent-not-pass; conformance source-gated without individual transcripts; tooltip416.7 in400. Nine byte-identical comparison/public-CI files with SHA256/privacy manifest; CI96/7e8 success not runtime acceptance. Historical attempts immutable; lost recent /tmp Mists streams not reconstructed. Parent OPEN. Docs/evidence only, no execution gates or operations.

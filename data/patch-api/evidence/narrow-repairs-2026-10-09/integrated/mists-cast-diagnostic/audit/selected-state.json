@@ -1,0 +1,344 @@
+{
+  "epoch": "20261009T221327Z",
+  "goal": "OPEN",
+  "audit_mode": "retained artifacts only; no commands/tests/builds/services/delegation",
+  "observed_at": "2026-10-09T22:17:25.857220+00:00",
+  "source_revision_documented": "7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd",
+  "toolchain_documented": {
+    "cargo": "1.99.0",
+    "rustc": "1.99.0"
+  },
+  "compile": {
+    "json_record_counts": {
+      "compiler-artifact": 663,
+      "build-script-executed": 74,
+      "build-finished": 1
+    },
+    "build_finished": [
+      {
+        "reason": "build-finished",
+        "success": true
+      }
+    ],
+    "os_exit": "unknown; not retained after transient-unit garbage collection (retained metadata statement)",
+    "submission_exit": 0,
+    "integration_compiler_artifact": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "target": {
+        "kind": [
+          "test"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "integration",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/tests/integration.rs",
+        "edition": "2024",
+        "doc": false,
+        "doctest": false,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [
+        "casc",
+        "client-mists",
+        "gui",
+        "rodio",
+        "sound"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/mists-wrapper-durable/debug/deps/integration-f15e4c1da9a8b8f4"
+      ],
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/mists-wrapper-durable/debug/deps/integration-f15e4c1da9a8b8f4",
+      "fresh": false
+    },
+    "current_artifact_sha256": "fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5",
+    "current_artifact_bytes": 438004976,
+    "matches_both_run_submissions": true,
+    "warnings": {
+      "manifest_deprecation_items": 6,
+      "manifest_summary_lines": 1,
+      "compiler_message_records": 0
+    }
+  },
+  "snapshots": {
+    "source": {
+      "before_count": 3845,
+      "after_count": 3845,
+      "equal": true,
+      "changed_entries": 0,
+      "before_manifest_sha256": "b202753e268aea8ee82e82e31ec33eee8541ce4b08ff5608541a4ef70f41f0ef",
+      "after_manifest_sha256": "b202753e268aea8ee82e82e31ec33eee8541ce4b08ff5608541a4ef70f41f0ef",
+      "temporal_scope": "retained before/after-build only; not after-run or current live-tree verification"
+    },
+    "cache": {
+      "before_count": 3982,
+      "after_count": 3982,
+      "equal": true,
+      "changed_entries": 0,
+      "before_manifest_sha256": "4ee24037286539909351c61fe4d139bab04e7ae78502809a3b038c3366e30722",
+      "after_manifest_sha256": "4ee24037286539909351c61fe4d139bab04e7ae78502809a3b038c3366e30722",
+      "temporal_scope": "retained before/after-build only; not after-run or current live-tree verification"
+    }
+  },
+  "initial_run": {
+    "selected": 0,
+    "passed": 0,
+    "failed": 0,
+    "filtered_out": 8182,
+    "behavioral_credit": false,
+    "service": {
+      "observed": "2026-10-09T22:14:44.505796+00:00",
+      "exit": 0,
+      "stdout": "ActiveState=active\nSubState=exited\nResult=success\nExecMainStartTimestamp=Fri 2026-10-09 17:14:36 CDT\nExecMainExitTimestamp=Fri 2026-10-09 17:14:36 CDT\nExecMainCode=1\nExecMainStatus=0\n",
+      "stderr": ""
+    }
+  },
+  "corrected_run": {
+    "selector": "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+    "distinct_selected_cases": 1,
+    "nested_child_execution": true,
+    "passed": 0,
+    "failed": 1,
+    "filtered_out": 8181,
+    "inner_duration_seconds": 1.61,
+    "outer_duration_seconds": 1.63,
+    "service": {
+      "observed": "2026-10-09T22:15:11.801585+00:00",
+      "exit": 0,
+      "stdout": "ActiveState=failed\nSubState=failed\nResult=exit-code\nExecMainStartTimestamp=Fri 2026-10-09 17:14:59 CDT\nExecMainExitTimestamp=Fri 2026-10-09 17:15:01 CDT\nExecMainCode=1\nExecMainStatus=101\n",
+      "stderr": ""
+    },
+    "submit_result_exit": 1,
+    "assertion": {
+      "file": "tests/spell_casting.rs",
+      "line": 470,
+      "actual": "UIParent",
+      "expected": "BottomManagedFrameContainer"
+    },
+    "child_failure": {
+      "file": "tests/common/timeout_reexec.rs",
+      "line": 181,
+      "exit": 101
+    }
+  },
+  "lua_errors": {
+    "raw_header_count": 14,
+    "normalized_message_count": 7,
+    "normalized_messages": {
+      "Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.": 2,
+      "[OnLoad] AchievementFrameAchievements: generated/template-scripts-no-global-slots/937f2e658386b74d:5: attempt to call a nil value": 2,
+      "[OnLoad] AchievementFrameStats: attempt to call global 'AchievementFrameStats_OnLoad' (a nil value)": 2,
+      "[OnLoad] AchievementFrameComparison: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:2022: attempt to call a nil value": 2,
+      "bad argument #1 to 'next' (table expected)": 2,
+      "@Interface/AddOns/Blizzard_CombatLogBase/Wrath/CombatLogColors.lua: table index is nil": 2,
+      "[OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value": 2
+    },
+    "header_lines": [
+      12,
+      15,
+      21,
+      41,
+      66,
+      73,
+      85,
+      92,
+      104,
+      112,
+      128,
+      131,
+      217,
+      228
+    ]
+  },
+  "probes": [
+    {
+      "line": 137,
+      "stage": "after-addon-load/before-post-load-workarounds",
+      "fields": {
+        "systemInfo": "nil",
+        "systemInfo.isInDefaultPosition": "READ_ERROR:(string):13: attempt to index field 'systemInfo' (a nil value)",
+        "IsInitialized": "false",
+        "IsInDefaultPosition": "false",
+        "isManagedFrame": "true",
+        "isBottomManagedFrame": "true",
+        "ignoreFramePositionManager": "nil",
+        "layoutOnBottom": "nil",
+        "IsShown": "false",
+        "attachedToPlayerFrame": "nil",
+        "parent": "=bottom.BottomManagedLayoutContainer=false",
+        "parent.name": "UIParent",
+        "layoutParent": "=bottom=true",
+        "layoutParent.name": "UIParentBottomManagedFrameContainer",
+        "bottom.name": "UIParentBottomManagedFrameContainer",
+        "bottom.showingFrames[cast]": "=cast=false",
+        "layoutParent.showingFrames[cast]": "nil"
+      }
+    },
+    {
+      "line": 216,
+      "stage": "after-post-load-workarounds/before-startup-events",
+      "fields": {
+        "systemInfo": "nil",
+        "systemInfo.isInDefaultPosition": "READ_ERROR:(string):13: attempt to index field 'systemInfo' (a nil value)",
+        "IsInitialized": "false",
+        "IsInDefaultPosition": "false",
+        "isManagedFrame": "true",
+        "isBottomManagedFrame": "true",
+        "ignoreFramePositionManager": "nil",
+        "layoutOnBottom": "nil",
+        "IsShown": "false",
+        "attachedToPlayerFrame": "nil",
+        "parent": "=bottom.BottomManagedLayoutContainer=false",
+        "parent.name": "UIParent",
+        "layoutParent": "=bottom=true",
+        "layoutParent.name": "UIParentBottomManagedFrameContainer",
+        "bottom.name": "UIParentBottomManagedFrameContainer",
+        "bottom.showingFrames[cast]": "=cast=false",
+        "layoutParent.showingFrames[cast]": "nil"
+      }
+    },
+    {
+      "line": 256,
+      "stage": "before-EDIT_MODE_LAYOUTS_UPDATED",
+      "fields": {
+        "systemInfo": "nil",
+        "systemInfo.isInDefaultPosition": "READ_ERROR:(string):13: attempt to index field 'systemInfo' (a nil value)",
+        "IsInitialized": "false",
+        "IsInDefaultPosition": "false",
+        "isManagedFrame": "true",
+        "isBottomManagedFrame": "true",
+        "ignoreFramePositionManager": "nil",
+        "layoutOnBottom": "nil",
+        "IsShown": "false",
+        "attachedToPlayerFrame": "nil",
+        "parent": "=bottom.BottomManagedLayoutContainer=false",
+        "parent.name": "UIParent",
+        "layoutParent": "=bottom=true",
+        "layoutParent.name": "UIParentBottomManagedFrameContainer",
+        "bottom.name": "UIParentBottomManagedFrameContainer",
+        "bottom.showingFrames[cast]": "=cast=false",
+        "layoutParent.showingFrames[cast]": "nil"
+      }
+    },
+    {
+      "line": 257,
+      "stage": "after-EDIT_MODE_LAYOUTS_UPDATED",
+      "fields": {
+        "systemInfo.isInDefaultPosition": "true",
+        "IsInitialized": "true",
+        "IsInDefaultPosition": "true",
+        "isManagedFrame": "true",
+        "isBottomManagedFrame": "true",
+        "ignoreFramePositionManager": "nil",
+        "layoutOnBottom": "nil",
+        "IsShown": "false",
+        "attachedToPlayerFrame": "false",
+        "parent": "=bottom.BottomManagedLayoutContainer=false",
+        "parent.name": "UIParent",
+        "layoutParent": "=bottom=true",
+        "layoutParent.name": "UIParentBottomManagedFrameContainer",
+        "bottom.name": "UIParentBottomManagedFrameContainer",
+        "bottom.showingFrames[cast]": "=cast=false",
+        "layoutParent.showingFrames[cast]": "nil"
+      }
+    },
+    {
+      "line": 258,
+      "stage": "after-startup-events",
+      "fields": {
+        "systemInfo.isInDefaultPosition": "true",
+        "IsInitialized": "true",
+        "IsInDefaultPosition": "true",
+        "isManagedFrame": "true",
+        "isBottomManagedFrame": "true",
+        "ignoreFramePositionManager": "nil",
+        "layoutOnBottom": "nil",
+        "IsShown": "false",
+        "attachedToPlayerFrame": "false",
+        "parent": "=bottom.BottomManagedLayoutContainer=false",
+        "parent.name": "UIParent",
+        "layoutParent": "=bottom=true",
+        "layoutParent.name": "UIParentBottomManagedFrameContainer",
+        "bottom.name": "UIParentBottomManagedFrameContainer",
+        "bottom.showingFrames[cast]": "=cast=false",
+        "layoutParent.showingFrames[cast]": "nil"
+      }
+    },
+    {
+      "line": 259,
+      "stage": "cast-case-before-original-assertions",
+      "fields": {
+        "systemInfo.isInDefaultPosition": "true",
+        "IsInitialized": "true",
+        "IsInDefaultPosition": "true",
+        "isManagedFrame": "true",
+        "isBottomManagedFrame": "true",
+        "ignoreFramePositionManager": "nil",
+        "layoutOnBottom": "nil",
+        "IsShown": "false",
+        "attachedToPlayerFrame": "false",
+        "parent": "=bottom.BottomManagedLayoutContainer=false",
+        "parent.name": "UIParent",
+        "layoutParent": "=bottom=true",
+        "layoutParent.name": "UIParentBottomManagedFrameContainer",
+        "bottom.name": "UIParentBottomManagedFrameContainer",
+        "bottom.showingFrames[cast]": "=cast=false",
+        "layoutParent.showingFrames[cast]": "nil"
+      }
+    }
+  ],
+  "privacy": {
+    "candidate_files": [
+      "artifact-run-submission.json",
+      "cache-after-build.json",
+      "cache-before.json",
+      "compile.stderr",
+      "compile.stdout",
+      "exact-run-service-status.json",
+      "exact-run-submission.json",
+      "exact-run-submit-result.json",
+      "exact-run.stderr",
+      "exact-run.stdout",
+      "run-service-status.json",
+      "run-submit-result.json",
+      "run.stderr",
+      "run.stdout",
+      "selector-list.json",
+      "source-after-build.json",
+      "source-before.json",
+      "submission.json",
+      "submit-result.json",
+      "submit.stderr",
+      "submit.stdout"
+    ],
+    "candidate_bytes": 2610228,
+    "regex_match_counts": {
+      "private_key": 0,
+      "credential_assignment": 0,
+      "bearer": 0,
+      "provider_token": 0,
+      "email": 0,
+      "ipv4_shape": 3
+    },
+    "ipv4_adjudication": "all 3 matches are spirv SDK version 1.3.268.0, not addresses",
+    "limits": "bounded heuristic text scan, not certification; binary not privacy-scanned; inherited environment/external dependencies/live caches/history excluded; reports retain necessary local paths but omit VM pointer values and full logs"
+  },
+  "limits": [
+    "untracked .code-index.db",
+    "external path dependency contents not captured",
+    "inherited environment not dumped to avoid secrets",
+    "no native-contract validation",
+    "no runtime fix",
+    "no compile systemd status retained",
+    "no after-run source/cache snapshots"
+  ]
+}

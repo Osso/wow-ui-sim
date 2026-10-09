@@ -1,0 +1,22 @@
+
+running 1 test
+test spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix ... 
+running 1 test
+test spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix ... FAILED
+
+failures:
+
+failures:
+    spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 1.61s
+
+FAILED
+
+failures:
+
+failures:
+    spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 1.63s
+

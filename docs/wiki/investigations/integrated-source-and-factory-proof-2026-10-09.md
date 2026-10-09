@@ -1,5 +1,19 @@
 # Integrated source and factory proof — 2026-10-09
 
+## Mists diagnostic epoch — FAIL, native oracle conflict
+
+[Independent audit](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-cast-diagnostic/audit/report.md) covers new diagnostic source at `7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd`, not reconstruction of lost `/tmp` receipts. Cargo JSON confirms build success; compile OS exit was not retained after transient-unit collection. Installed Cargo/rustc 1.99.0 differs from documented 1.98.1; six manifest deprecations remain. Artifact SHA256 `fa359d740be335938c91be89a6d3fb530360c4f46189ed3ab420bd49e2cce5b5`; 3,845 source and 3,982 cache hashes unchanged across build. External dependency contents and inherited environment excluded.
+
+The first unqualified exact selector ran **0 tests**. Listing identified `spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix`; corrected invocation ran **one nested parent/child case, FAIL exit101**, UTC22:14:59–22:15:01. Original assertions unchanged. Seven distinct startup Lua error categories were reported twice each; this is not clean-startup proof. After layout update: initialized/default-position true, managed/bottom true, hidden/unattached, parent UIParent, layoutParent UIParentBottomManagedFrameContainer, no showingFrames membership.
+
+[Main native-source falsification](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-cast-diagnostic/corrections/mists-parent-main-falsification.md): native `AddManagedFrame` explicitly returns for hidden frames before registration/reparenting; native `OnShow` calls it. Its named container is UIParentBottomManagedFrameContainer; BottomManagedLayoutContainer is a child. Observed hidden state is consistent with native source, not proof of a missed simulator transition. The fixture's unconditional parent-name oracle needs reconciliation with the original-fixture preservation constraint; no runtime patch or assertion weakening made. Shown transition and native-client behavior unexecuted.
+
+[Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-cast-diagnostic/main-retention.json) preserves 26 byte-identical epoch/audit/correction files and hashes two native sources without copying them. Bounded privacy patterns found no credential candidates; local paths/VM pointers remain, no exhaustive privacy certification or indiscriminate-publication approval. Parent remains OPEN.
+
+## Callstack failure attribution — correction, producer unproven
+
+[Exact revision-bound Lua line map](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/mists-cast-diagnostic/corrections/debug-probe-line-map.json) corrects earlier investigation targeting: saved96 test bytes equal current; `(string):7` calls **GetCallstackHeight**, while GetErrorCallstackHeight is line8. Earlier getter attribution is not producer proof. No getter overwrite or fallback change made; initialization tracing remains diagnostic work, not acceptance.
+
 ## Integration scope
 
 Main-provided integration identifiers: p303 `4470912f5`, p302 `16b9658da`, p242 `0b3144090`, p240 `923b0c986`, p230 `48691e5a8`, p220 `c2481c4c5`, p210 `8877566d2`, p201 `88217d328`, p1601 `861e7ae5e`, p1159 `60524271c`, p1158 `dd710c6fc`. Integration alone gives no execution or native credit. Existing per-page source ledgers, immutable source/factory seals and counts remain authoritative; new source slices remain source-only unless explicit bounded proof says otherwise.

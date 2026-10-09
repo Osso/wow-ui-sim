@@ -1,0 +1,22 @@
+{
+  "exit": 0,
+  "stdout": "",
+  "stderr": "Running as unit: mists-cast-probe-20261009t221327z.service; invocation ID: d4df065875ca493aa152b31a1d921a57\n",
+  "argv": [
+    "systemd-run",
+    "--user",
+    "--unit=mists-cast-probe-20261009t221327z",
+    "--property=Type=oneshot",
+    "--property=RemainAfterExit=yes",
+    "--property=WorkingDirectory=/home/osso/Projects/wow/wow-ui-sim",
+    "--property=StandardOutput=append:/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/run.stdout",
+    "--property=StandardError=append:/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/run.stderr",
+    "/usr/bin/timeout",
+    "90",
+    "/home/osso/Projects/wow/wow-ui-sim/target/mists-wrapper-durable/debug/deps/integration-f15e4c1da9a8b8f4",
+    "cast_bar_respects_edit_mode_lock_setting_after_startup_fix",
+    "--exact",
+    "--nocapture",
+    "--test-threads=1"
+  ]
+}

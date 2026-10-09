@@ -1,0 +1,183 @@
+{
+  "retained": "2026-10-09T22:19:47.104233+00:00",
+  "files": [
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/exact-run.stdout",
+      "retained": "epoch/exact-run.stdout",
+      "bytes": 618,
+      "sha256": "e466bb0e0031c88218db95206c6837113efe0ffe97b8b1f41483e9b947245a49"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/run.stderr",
+      "retained": "epoch/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/cache-after-build.json",
+      "retained": "epoch/cache-after-build.json",
+      "bytes": 537592,
+      "sha256": "4ee24037286539909351c61fe4d139bab04e7ae78502809a3b038c3366e30722"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/compile.stdout",
+      "retained": "epoch/compile.stdout",
+      "bytes": 598086,
+      "sha256": "dfc5637116313a765cef079e6b02df25d4dc765d5a3e2bf4efa922dad65b5b56"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/run.stdout",
+      "retained": "epoch/run.stdout",
+      "bytes": 116,
+      "sha256": "07b8f90cdccae63bc74f202642c26e1cdc15e05dc3f6e0f639d4db4b2a646de3"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/run-submit-result.json",
+      "retained": "epoch/run-submit-result.json",
+      "bytes": 936,
+      "sha256": "9da8bd4d20e0e8d6b91bd6e07d0dded8035944c0126520e1615bf9d7daeba25b"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/submission.json",
+      "retained": "epoch/submission.json",
+      "bytes": 1028,
+      "sha256": "f08118f80805c2d6ba6ecacfd49fef61c2af00f77f13d3a39fa31b07e6be637a"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/compile.stderr",
+      "retained": "epoch/compile.stderr",
+      "bytes": 1304,
+      "sha256": "14714d1f7a3ed2b78656013b58ec93b6174f64f5bc2cda302c4df03aaaf9eeb0"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/source-after-build.json",
+      "retained": "epoch/source-after-build.json",
+      "bytes": 453054,
+      "sha256": "b202753e268aea8ee82e82e31ec33eee8541ce4b08ff5608541a4ef70f41f0ef"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/exact-run-service-status.json",
+      "retained": "epoch/exact-run-service-status.json",
+      "bytes": 291,
+      "sha256": "d78debeae51bad3aa40f9d6409cad2e60e166be98c9b6c4d5389abde65551f63"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/source-before.json",
+      "retained": "epoch/source-before.json",
+      "bytes": 453054,
+      "sha256": "b202753e268aea8ee82e82e31ec33eee8541ce4b08ff5608541a4ef70f41f0ef"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/exact-run-submit-result.json",
+      "retained": "epoch/exact-run-submit-result.json",
+      "bytes": 1149,
+      "sha256": "9c665f99f9104312b7b0b6bb4046352364ff475b939089f22988f47f85b6309b"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/submit.stdout",
+      "retained": "epoch/submit.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/cache-before.json",
+      "retained": "epoch/cache-before.json",
+      "bytes": 537592,
+      "sha256": "4ee24037286539909351c61fe4d139bab04e7ae78502809a3b038c3366e30722"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/exact-run-submission.json",
+      "retained": "epoch/exact-run-submission.json",
+      "bytes": 589,
+      "sha256": "d3d64eceb5080ea95c18ed6a10c67d1a5bb28e66f7ab4ef55247c05955c24427"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/exact-run.stderr",
+      "retained": "epoch/exact-run.stderr",
+      "bytes": 21312,
+      "sha256": "0e00a4446b5bc6ab6ae11fca7827e470d38bce4c8d8472624d472f3db66848c5"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/run-service-status.json",
+      "retained": "epoch/run-service-status.json",
+      "bytes": 287,
+      "sha256": "c25a6348dcad2934223858d54a7b3805a912cc976863875bbcf8b8abd9fa30cc"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/selector-list.json",
+      "retained": "epoch/selector-list.json",
+      "bytes": 406,
+      "sha256": "e43d06775e749f46eac1edbda589952a8609f29559c2e12f1efb6cd8e592f1d8"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/submit.stderr",
+      "retained": "epoch/submit.stderr",
+      "bytes": 113,
+      "sha256": "ded6a6cd853662ac7186a89aad7c6b47a0e09384958d441cd12b682c22001b9e"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/submit-result.json",
+      "retained": "epoch/submit-result.json",
+      "bytes": 831,
+      "sha256": "c531b3be144fa4f2c7f304c2c03d58f253238a438b24b4885210ea4d8087662d"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/20261009T221327Z/artifact-run-submission.json",
+      "retained": "epoch/artifact-run-submission.json",
+      "bytes": 1870,
+      "sha256": "72d0ea6cb0e3cd7222166f16c5d3c815d6a6dbb5523fbbc44f1703b788e5bb82"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/audit/report.md",
+      "retained": "audit/report.md",
+      "bytes": 6432,
+      "sha256": "0f0285dfba955ac5d66512781a8f1e2023dbc3ae741d5a984f25efabcd070d9e"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/audit/selected-state.json",
+      "retained": "audit/selected-state.json",
+      "bytes": 12620,
+      "sha256": "69740b978a61a847344fd6de0a29201a9b170b0c7d0c988163f939a4f3ee53b5"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/mists-cast-diagnostic/audit/hashmanifest.sha256",
+      "retained": "audit/hashmanifest.sha256",
+      "bytes": 4110,
+      "sha256": "909c7b13b85ce7ed69cbaff9b9dd1f7cdf721890e440e4be5eb2078465b81dc2"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/handoff/mists-parent-main-falsification.md",
+      "retained": "corrections/mists-parent-main-falsification.md",
+      "bytes": 2327,
+      "sha256": "9c33bba78966a7becebc294a9a68749bcadea2d23fae75731ba85202b9291e50"
+    },
+    {
+      "source": "/home/osso/.local/state/wow-ui-sim/handoff/debug-probe-line-map.json",
+      "retained": "corrections/debug-probe-line-map.json",
+      "bytes": 1646,
+      "sha256": "05f02e5738e24871023adb8b00153e7d1ebc7f20505cbdfe3adccb2dae2658b4"
+    }
+  ],
+  "native_source_hashes": [
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_UIParent/Shared/UIParent.lua",
+      "bytes": 28001,
+      "sha256": "dc6bf774c7af48caaa03184be3315885a5c7303a88d19a77d701bae2bd8a41fa",
+      "copied": false
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_UIParent/Mainline/UIParent.xml",
+      "bytes": 3761,
+      "sha256": "3552df317b3c647403b23c1c3c921c935fdcd822f00cb4475340b67e0bd6fdb4",
+      "copied": false
+    }
+  ],
+  "privacy": "Independent bounded pattern audit:21epochfiles no credential candidates; not exhaustive. VM pointers/local paths preserved in raw diagnostics; public posting not privacy-certified. No binary/environment/profile secret copied.",
+  "limits": [
+    "New diagnostic epoch only; lost prior /tmp Mists receipts not reconstructed",
+    "compileOSexit unknown; Cargojsonsuccess retained",
+    "zero-test attempt no behavioralcredit; correctedonecase FAIL101",
+    "native hidden earlyreturn source evidence, not client execution",
+    "debuggetter corrected exactLua line7 mapping retained separately"
+  ]
+}

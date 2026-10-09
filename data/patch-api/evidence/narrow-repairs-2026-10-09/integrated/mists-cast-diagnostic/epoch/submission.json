@@ -1,0 +1,37 @@
+{
+  "source_revision": "7e8acd2bd9e9a4d2f5c2885a0ec00d75d8f916bd",
+  "started": "2026-10-09T22:13:27.892911+00:00",
+  "argv": [
+    "/home/osso/.worktrees/build-lock.sh",
+    "/usr/bin/cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "integration",
+    "--no-run",
+    "--target-dir",
+    "target/mists-wrapper-durable",
+    "--message-format=json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "unit": "mists-cast-diagnostic-20261009t221327z",
+  "environment_overrides": {
+    "CARGO_BUILD_JOBS": "4"
+  },
+  "toolchain": {
+    "cargo": "1.99.0",
+    "rustc": "1.99.0"
+  },
+  "source_file_count": 3845,
+  "cache_file_count": 3982,
+  "exclusions": [
+    "untracked .code-index.db",
+    "external path dependency contents not captured",
+    "inherited environment not dumped to avoid secrets"
+  ],
+  "purpose": "new Mists cast-bar diagnostics b910099 included at current HEAD; not duplicate recovery of lost streams"
+}
