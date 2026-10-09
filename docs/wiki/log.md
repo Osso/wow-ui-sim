@@ -1086,3 +1086,7 @@ SOURCE8/8, current Era generic-storage1/1, portable3/3, actual-successor3/3 and 
 ## 2026-10-09 | Patch 1.8.0 frozen SOURCE implementation
 
 Own exact body/response/manifest-linked registry101 verified before derivation. Retained SOURCE RED5/portable RED3; redirect only, target unexpanded, zero meaningful model/runtime/native subset. [Audit](investigations/patch-1-8-0-api-audit.md); GREEN pending, main owns integration/gates.
+
+## 2026-10-09 | Patch 1.8.0 SOURCE GREEN and immutable archive
+
+SOURCE GREEN5/5 at44ebe2cb2; copied own-base defaults/errors retained. Original source/evidence seals and data-only replay archive frozen; portable GREEN pending.

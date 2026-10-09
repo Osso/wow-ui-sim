@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.8.0 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-8-0-api-audit.md): frozen360905/3476931;45 bytes, one metadata row/link/UNPROVEN contract; no local inventory/signatures/defaults or meaningful model/native subset. Own SOURCE/portable RED retained; GREEN and copied replay pending. Newer1.9.0 queued separately/unapplied; main owns integration/final gates.
+[Audit](investigations/patch-1-8-0-api-audit.md): frozen360905/3476931;45 bytes, one metadata row/link/UNPROVEN contract; no local inventory/signatures/defaults or meaningful model/native subset. Own SOURCE RED5/GREEN5 at44ebe2cb2 and portable RED3 retained; copied replay pending. Newer1.9.0 queued separately/unapplied; main owns integration/final gates.
 
 ## [2026-10-09] investigation | Patch 1.13.2 frozen Era audit
 
