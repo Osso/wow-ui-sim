@@ -1,0 +1,21 @@
+{
+  "archive_sha256": "6706bbcd2bea4939572702cb39c241666521dbab3a31ebb39e0929f562b66afe",
+  "archive_bytes": 51931,
+  "archive_members": 31,
+  "original_seals": 30,
+  "original_map_sha256": "70f4d6a102ba93defa5fab63ff9bb81a99001501f5f4277a0824eaf19e741a28",
+  "original_inputs_unchanged": true,
+  "isolated_python": true,
+  "safe_path_override": "/nonexistent",
+  "forbidden_copied_roots": [
+    ".git",
+    "target",
+    "tools",
+    "Interface"
+  ],
+  "source_tests": 6,
+  "portable_tests": 3,
+  "target_meaningful_subset": 0,
+  "native_subset": 0,
+  "runtime_subset": 0
+}

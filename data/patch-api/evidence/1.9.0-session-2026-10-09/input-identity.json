@@ -1,0 +1,10 @@
+{
+  "verified_before_derivation": true,
+  "base_revision": "3d1a4140734c9fbc82cd3ec6dfaf0536767a9edd",
+  "hashes": {
+    "source.wikitext": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+    "source-response.json": "506f008a1792fc53fbb2b01f83aaa0677b1ab1f3b26ab92470a5764a6c1435b7",
+    "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+    "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+  }
+}

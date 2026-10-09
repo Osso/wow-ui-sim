@@ -1,0 +1,71 @@
+{
+  "scope": "Frozen1.9.0 SOURCE-only development slice; not parent meaningful closure",
+  "identity": {
+    "pageid": 278324,
+    "revid": 2690597,
+    "timestamp": "2020-04-05T21:06:37Z",
+    "body_bytes": 45
+  },
+  "totals": {
+    "physical_lines": 1,
+    "nonblank_rows": 1,
+    "metadata_rows": 1,
+    "unproven_source_rows": 0,
+    "references": 1,
+    "unproven_contracts": 1,
+    "inventory": 0,
+    "signatures": 0,
+    "defaults": 0,
+    "prose": 0,
+    "headers": 0,
+    "templates": 0
+  },
+  "measurements": {
+    "model": 0,
+    "runtime": 0,
+    "native": 0
+  },
+  "proof_epochs": [
+    {
+      "revision": "3d1a4140734c9fbc82cd3ec6dfaf0536767a9edd",
+      "source_red_failures": 5,
+      "separate_identity_red_failures": 1,
+      "portable_red_failures": 3
+    },
+    {
+      "revision": "4e3807887",
+      "source_green": 6
+    },
+    {
+      "revision": "011964fcb",
+      "copied_source_green": 6,
+      "portable_green": 3,
+      "historical_replay_exit": 0,
+      "serialized_tamper_rejections": 2,
+      "exact_restorations": 2
+    }
+  ],
+  "original_seals": 30,
+  "archive_members": 31,
+  "archive_bytes": 51931,
+  "archive_sha256": "6706bbcd2bea4939572702cb39c241666521dbab3a31ebb39e0929f562b66afe",
+  "source_control_counts": {
+    "populated_omissions": 3,
+    "derived_count_mutations": 12,
+    "invented_empty_categories": 6,
+    "invented_measurements": 3,
+    "raw_mutations": 2,
+    "response_mutations": 1,
+    "copied_manifest_registry_pin_mutations": 3
+  },
+  "queued_successor": "1.10.0 separate unapplied",
+  "runtime_changes": false,
+  "main_owned": [
+    "separate target revision/content research",
+    "ordered integration",
+    "independent acceptance",
+    "historical/native/parent meaningful closure"
+  ],
+  "handoff": "HANDOFF.md",
+  "replay": "REPLAY.md"
+}

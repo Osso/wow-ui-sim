@@ -1,0 +1,21 @@
+STDOUT
+{
+  "scope": "SOURCE-only historical replay",
+  "seals": 30,
+  "totals": {
+    "physical_lines": 1,
+    "nonblank_rows": 1,
+    "metadata_rows": 1,
+    "unproven_source_rows": 0,
+    "references": 1,
+    "unproven_contracts": 1,
+    "inventory": 0,
+    "signatures": 0,
+    "defaults": 0,
+    "prose": 0,
+    "headers": 0,
+    "templates": 0
+  }
+}
+
+STDERR
