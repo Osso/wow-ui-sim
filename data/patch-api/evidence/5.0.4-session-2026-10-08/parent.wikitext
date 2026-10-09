@@ -1,0 +1,101 @@
+{{Patchbox
+|Patchname = Mists of Pandaria
+|Image = [[File:Patch 5.0.4 logo.jpg|265px|]]
+|Caption = 
+|Release = August 28, 2012
+|Version = 16016
+|toc = 50001
+|api = 1
+|Highlights = 
+*[[Attack on Theramore Isle]]
+*Systems changes
+|Related = 
+* [http://us.battle.net/wow/en/blog/7080372 Official patch notes]
+|Prev = 4.3.4
+|Current = 5.0.4
+|Next = 5.0.5
+}}{{tocright}}
+
+'''Patch 5.0.4''' was the [[Patch#FAQ|systems patch]] of ''[[World of Warcraft: Mists of Pandaria]]'', following ''[[World of Warcraft: Cataclysm]]''. This patch brought the {{Alliance}}[[Theramore's Fall (Alliance)|Theramore's Fall]]/{{Horde}}[[Theramore's Fall (Horde)|Theramore's Fall]] [[scenario]] in place of a [[world event]], along with a major overhaul of game mechanics.
+
+==General==
+* Account-wide [[Achievements]], [[Companions|pets]], and [[mounts]]
+** In Patch 5.0.4 and beyond, the majority of your character's Achievements, pets, and mounts will be shared with your other characters.
+** Please read: [https://web.archive.org/web/20150310052447/http://us.battle.net/wow/en/blog/5367158/bringing-achievements-to-the-account-level-5-8-2012 Bringing Achievements to the Account Level], by [[Greg Street|Greg "Ghostcrawler" Street]]
+* World Event: Attack on Theramore Isle
+** {{NPC||Garrosh Hellscream||Warchief Garrosh}}, obsessed with assuring the [[Horde|Horde's]] supremacy over [[Kalimdor]], launches an all-out attack against {{NPC||Jaina Proudmoore||Jaina's}} island home of [[Theramore]]. Though valiant [[Alliance]] defenders rush to repel the sudden onslaught, they’ll soon find themselves unprepared for the terrible scope of Garrosh's true plans…
+** This [[Scenario]] will become available for level 85 characters for the week prior to the launch of ''Mists of Pandaria'', from September 18th to the 24th. Upon the launch of ''Mists of Pandaria'', it will become level 90.<ref>[http://eu.battle.net/wow/en/forum/topic/5208782233#1 Battle of Theramore: One Week at Level 85 - Forums - World of Warcraft]. eu.battle.net.</ref>
+* AOE Looting
+** Area of effect [[looting]] comes to World of Warcraft with this patch. After killing a group of enemies in close proximity, when you loot one of their corpses, the loot window will include items from all of the nearby corpses for which you have loot rights.
+* [[BattleTag]] support in World of Warcraft
+** Players who have [http://www.battle.net/account/management/battletag-create.html enabled their BattleTag] will now be able to:
+*** See BattleTag friends in your friends list.
+*** Add and remove BattleTag friends.
+*** Send BattleTag invites to other players via right-click.
+* [[Cross-realm zones|Cross-Realm Zones]]
+** In some zones, players are now able to form a group with other players from a select pool of [[realm]]s.
+** When a player is in a zone that is set as a "cross-realm zone", in addition to seeing other players from their native realm, they'll also seamlessly see (and be able to play with) players from other realms.
+** Players will always be able to group and quest as they normally would with players from their native realm.
+** This functionality will be enabled for a limited number of realms at first, and will be granted to additional realms as we near the release of Mists of Pandaria.
+
+== Classes: General ==
+* All classes have been updated with a [http://us.battle.net/wow/en/game/mists-of-pandaria/feature/talent-specification#f! new talent system], improved abilities, and spells (accessible throughout levels 1-85). Your character's talents have been reset.
+** Many old talents have been converted to specialization abilities.
+** [[Druid]]s now have access to a fourth class specialization: [[Guardian]].
+** New spells are now learned automatically. Class trainers are only needed to change talents, [[glyph]]s, class specialization, or to utilize the dual specialization feature.
+** All characters now take 40% less damage from other players.
+
+== Currency Conversion ==
+* [[Valor Points]] have been converted to [[Justice Points]], and [[Conquest Points]] have been converted to [[Honor Points]].
+* Neither of the resultant currencies (Justice and Honor) have an enforced hard-cap at this time.
+* Players are no longer able to earn Valor or Conquest points (bosses drop Justice, and arenas are closed).
+* Items formerly purchasable for Valor/Conquest are available for Justice/Honor.
+
+== Items ==
+* [[Spell Penetration]] has been replaced by [[PvP Power]] on existing items.
+* [[Enchantments by slot#Head|Head enchants]] removed
+** Enchants that modify the gear in your head slot [http://us.battle.net/wow/en/blog/6195247 have been removed] from the game. This includes older head enchants of every type.
+* [[Relic]]s, [[ranged]], and [[thrown]] items
+** The slot in which ranged, relics, and thrown items were previously equipped has been removed. All weapons should now be equipped in the weapon slot.
+** Ranged weapons, including [[wand]]s, have been adjusted to be more powerful.
+** Wands are now equipped in the caster's main hand slot and can be used together with an [[off-hand]] item instead of a melee weapon.
+** Ranged weapons no longer have a minimum range.
+
+== Professions ==
+* The [[glyph]] system has been updated. Many class glyphs have been added, altered, or moved to different glyph types.
+* Prime glyphs have been removed.
+* [[Chef's Award]] and [[Dalaran Cooking Award]] have been removed. Existing awards have been converted to [[Epicurean's Award]].
+
+== Quests ==
+* The cap for [[daily quest]]s has been removed.
+* There is no longer a displayed count of daily quests completed.
+
+== User Interface ==
+* There is a new [[user interface]] for your [[mount]]s and [[pet]]s.
+* Character creation screens have been updated.
+* [[Buff]]s have been consolidated in the UI.
+* New roll results frame added. This new feature can be accessed by clicking the word "[Loot]" in chat, or by typing "/loot".
+* The PvE queue frames have been unified. You can now queue for dungeons, raids, and other queue-able content in one handy place.
+* Vendors now offer item filtering.
+* [[Spellbook]]s have been updated to reflect changes to core abilities, and now include a brief overview of specializations.
+* The [[Dungeon Journal]] has been expanded with information on all pre-Cataclysm Dungeons.
+* A new [[Help icon|help system]] has been added to many frames. You can toggle this on and off by clicking the "i" button in the upper left corner of the frame.
+
+== Mac ==
+* Mac OS X 10.5 is no longer supported.
+* Added full support for Retina displays.
+* Added support for game resolutions that match Mac screen aspect ratios.
+* Switching between Windowed and Fullscreen display modes should be faster.
+* A "Help" menu has been added, so that players can quickly navigate to support pages.
+* A menu item that allows players to copy system information to the Clipboard has been added.
+* A menu item that reveals various game files and folders in Finder has been added.
+
+==References==
+{{Reflist}}
+
+==External links==
+{{Elink|http://eu.battle.net/wow/en/game/patch-notes/5-0}}
+
+{{Patches}}
+
+[[Category:World of Warcraft patches|5.0.4]]

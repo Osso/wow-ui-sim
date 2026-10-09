@@ -1,0 +1,10 @@
+{
+  "pageid": 385020,
+  "title": "Patch 5.0.4/API changes",
+  "revid": 3706382,
+  "timestamp": "2021-02-12T21:08:15Z",
+  "retrieved": "2026-10-08",
+  "method": "MediaWiki revisions API; complete responses retained",
+  "wikitext_sha256": "b8ac5f350bba3ac9669428b005ac9d5a2340ff85caed6c2792ab07e1be1264b9",
+  "scope": "source-only pin; parser, ledger and behavior audit pending"
+}
