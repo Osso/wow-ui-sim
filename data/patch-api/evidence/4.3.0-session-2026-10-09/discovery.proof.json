@@ -1,0 +1,28 @@
+{
+  "schema": "bounded-patch-development-proof/v1",
+  "revision": "2ffd97c5ea6b04da887ce88c79ed084202b016d5",
+  "tree": "6bd19503b3b2d8ffba56cfd0743cb090417879c5",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_3_0",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p430-source",
+  "environment": {
+    "P430_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p430-source/data/patch-api/evidence/4.3.0-session-2026-10-09/discovery-results.json"
+  },
+  "exit_code": 1,
+  "scope": "own current cached retail discovery only; expected mismatch against initially empty reviewed gap set",
+  "log": "discovery.log",
+  "log_sha256": "e3f824544dbe8b39f666cfa18119c3732f2f0b6316d4bca9152f4380d5cc2b0b",
+  "results": "discovery-results.json",
+  "results_sha256": "6ee43399eb5fc0e042a611309c8f94af3fe0b444ccc26d845d9751d2b5a44543",
+  "inputs": {
+    "data/patch-api/sources/4.3.0-wikitext-register.json": "a3315f75e518d010f3b3e67043db5a7b2f9ecd1406462557fae8ccd45f9a7f67",
+    "tests/patch_4_3_0_publication_sweep.rs": "79f838bdf0f492baf6a3336c33c9864fe993db72fc51ff5cb2367512449471cb"
+  }
+}

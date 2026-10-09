@@ -1,0 +1,1569 @@
+{
+  "code_revision": "2ffd97c5e",
+  "policy": "whole src/tests including Rust Lua strings; entire cached retail Lua/XML; literal global qualified and bare spellings coincide; no retirement performed",
+  "cache_root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+  "scopes": {
+    "retail-cache": {
+      "file_count": 3642,
+      "tree_digest": "a9645119a913c652eab9629bac4b0ec36cc42443821dd401a23c58ad9162c16f",
+      "hits": {
+        "ApplyTransmogrifications": [],
+        "BNSendSoR": [],
+        "CanReplaceGuildMaster": [
+          {
+            "path": "Blizzard_Communities/GuildNews.lua",
+            "line": 67,
+            "text": "\tif ( CanReplaceGuildMaster() ) then"
+          }
+        ],
+        "CanSendSoRByText": [],
+        "CanTransmogrifyItemWithItem": [],
+        "CanUpgradeExpansion": [],
+        "CanUseVoidStorage": [],
+        "ClearBattlemaster": [
+          {
+            "path": "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua",
+            "line": 154,
+            "text": "\tClearBattlemaster();"
+          }
+        ],
+        "ClearTransmogrifySlot": [],
+        "ClearVoidTransferDepositSlot": [],
+        "ClickTransmogrifySlot": [],
+        "ClickVoidStorageSlot": [],
+        "ClickVoidTransferDepositSlot": [],
+        "ClickVoidTransferWithdrawalSlot": [],
+        "CloseTransmogrifyFrame": [],
+        "CloseVoidStorageFrame": [],
+        "EJ_GetClassFilter": [],
+        "EJ_GetDifficulty": [
+          {
+            "path": "Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua",
+            "line": 474,
+            "text": "\t\treturn EJ_GetDifficulty() == difficultyID;"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua",
+            "line": 927,
+            "text": "\tlocal difficultyID = EJ_GetDifficulty();"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua",
+            "line": 1258,
+            "text": "\tself.tooltipFrame:SetHyperlink(link, EJ_GetDifficulty(), EJ_GetContentTuningID());"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 566,
+            "text": "\t\treturn EJ_GetDifficulty() == difficultyID;"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 1242,
+            "text": "\tlocal difficultyID = EJ_GetDifficulty();"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 1579,
+            "text": "\tself.tooltipFrame:SetHyperlink(link, EJ_GetDifficulty(), EJ_GetContentTuningID());"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 3578,
+            "text": "\t\tlocal difficultyID = EJ_GetDifficulty();"
+          }
+        ],
+        "EJ_IsValidInstanceDifficulty": [
+          {
+            "path": "Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua",
+            "line": 485,
+            "text": "\t\t\tif EJ_IsValidInstanceDifficulty(difficultyID) then"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua",
+            "line": 564,
+            "text": "\t\tif ( EJ_IsValidInstanceDifficulty(difficultyID) ) then"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua",
+            "line": 2507,
+            "text": "\t\tif ( EJ_IsValidInstanceDifficulty(data.difficultyID) ) then"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 580,
+            "text": "\t\t\tif EJ_IsValidInstanceDifficulty(difficultyID) then"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 582,
+            "text": "\t\t\t\tif (baseDifficultyID ~= difficultyID) and EJ_IsValidInstanceDifficulty(baseDifficultyID) then"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 587,
+            "text": "\t\t\t\t\t-- EJ_IsValidInstanceDifficulty alone doesn't suffice because new difficulties have IDs above the mask limit (64) that it checks."
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 601,
+            "text": "\t\t\tif EJ_IsValidInstanceDifficulty(difficultyID) and not difficultiesOverridden[difficultyID] then"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 768,
+            "text": "\t\tif ( EJ_IsValidInstanceDifficulty(difficultyID) ) then"
+          },
+          {
+            "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+            "line": 3563,
+            "text": "\t\tif ( EJ_IsValidInstanceDifficulty(data.difficultyID) ) then"
+          }
+        ],
+        "ExecuteVoidTransfer": [],
+        "GetAlternatePowerInfoByID": [],
+        "GetBestRFChoice": [
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 15,
+            "text": "\t\t\tRaidFinderQueueFrame_SetRaid(GetBestRFChoice());"
+          }
+        ],
+        "GetCurrentMapLevelRange": [],
+        "GetDetailColumnString": [
+          {
+            "path": "Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionData.lua",
+            "line": 32,
+            "text": "\treturn categoryInfo and categoryInfo:GetDetailColumnString() or REQ_LEVEL_ABBR;"
+          },
+          {
+            "path": "Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionData.lua",
+            "line": 61,
+            "text": "function AuctionCategoryMixin:GetDetailColumnString()"
+          },
+          {
+            "path": "Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionData.lua",
+            "line": 66,
+            "text": "\t\treturn self.parent:GetDetailColumnString();"
+          }
+        ],
+        "GetExtraBarOffset": [],
+        "GetGuildRenameRequired": [
+          {
+            "path": "Blizzard_Communities/CommunitiesFrame.lua",
+            "line": 131,
+            "text": "\tself:SetNeedsGuildNameChange(GetGuildRenameRequired());"
+          },
+          {
+            "path": "Blizzard_Communities/CommunitiesFrame.lua",
+            "line": 267,
+            "text": "\t\t\tself:SetNeedsGuildNameChange(GetGuildRenameRequired());"
+          }
+        ],
+        "GetItemTransmogrifyInfo": [],
+        "GetLFGDungeonEncounterInfo": [
+          {
+            "path": "Blizzard_GroupFinder/Shared/LFGFrame.lua",
+            "line": 1518,
+            "text": "\t\t\tlocal bossName, _, isKilled = GetLFGDungeonEncounterInfo(dungeonID, i);"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 270,
+            "text": "\t\t\t\t\tlocal bossName, _, isKilled = GetLFGDungeonEncounterInfo(dungeon.id, j);"
+          }
+        ],
+        "GetLFGDungeonNumEncounters": [
+          {
+            "path": "Blizzard_GroupFinder/Shared/LFGFrame.lua",
+            "line": 1401,
+            "text": "\tlocal numEncounters, numCompleted = GetLFGDungeonNumEncounters(dungeonID);"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/LFGFrame.lua",
+            "line": 1512,
+            "text": "\tlocal numEncounters, numCompleted = GetLFGDungeonNumEncounters(dungeonID);"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 269,
+            "text": "\t\t\t\tfor j = 1, GetLFGDungeonNumEncounters(dungeon.id) do"
+          }
+        ],
+        "GetMacroIcons": [
+          {
+            "path": "Blizzard_FrameXMLBase/IconDataProvider.lua",
+            "line": 18,
+            "text": "\tGetMacroIcons(BaseIconFilenames[IconDataProviderIconType.Spell]);"
+          },
+          {
+            "path": "Blizzard_GuildBankUI/TBC/Blizzard_GuildBankUI.lua",
+            "line": 894,
+            "text": "\tGetMacroIcons(GB_ICON_FILENAMES);"
+          }
+        ],
+        "GetMacroItemIcons": [
+          {
+            "path": "Blizzard_FrameXMLBase/IconDataProvider.lua",
+            "line": 19,
+            "text": "\tGetMacroItemIcons(BaseIconFilenames[IconDataProviderIconType.Item]);"
+          },
+          {
+            "path": "Blizzard_GuildBankUI/TBC/Blizzard_GuildBankUI.lua",
+            "line": 893,
+            "text": "\tGetMacroItemIcons(GB_ICON_FILENAMES);"
+          }
+        ],
+        "GetMaxBattlefieldID": [
+          {
+            "path": "Blizzard_FrameXMLUtil/PVPUtil.lua",
+            "line": 17,
+            "text": "\tfor i = 1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_Game/Mainline/EventImplementation.lua",
+            "line": 355,
+            "text": "\t\tfor i = 1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Mainline/LFGList.lua",
+            "line": 4343,
+            "text": "\tfor i=1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Mainline/PVPHelper.lua",
+            "line": 38,
+            "text": "\tfor i=1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_LFGUtil/Classic/LFGUtil.lua",
+            "line": 45,
+            "text": "\tfor i = 1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_LFGUtil/Mainline/LFGUtil.lua",
+            "line": 77,
+            "text": "\tfor i = 1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_QueueStatusFrame/Mainline/QueueStatusFrame.lua",
+            "line": 252,
+            "text": "\t\tfor i=1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_QueueStatusFrame/Mainline/QueueStatusFrame.lua",
+            "line": 684,
+            "text": "\tfor i=1, GetMaxBattlefieldID() do"
+          },
+          {
+            "path": "Blizzard_QueueStatusFrame/Mainline/QueueStatusFrame.lua",
+            "line": 1599,
+            "text": "\tfor i=1, GetMaxBattlefieldID() do"
+          }
+        ],
+        "GetMaxMultisampleFormatOnCvar": [],
+        "GetMissingLootItemInfo": [],
+        "GetMissingLootItemLink": [],
+        "GetNumMissingLootItems": [],
+        "GetNumRFDungeons": [
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 53,
+            "text": "\tfor i=1, GetNumRFDungeons() do"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 76,
+            "text": "\tfor i = 1, GetNumRFDungeons() do"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 219,
+            "text": "\t\tfor i=1, GetNumRFDungeons() do"
+          }
+        ],
+        "GetNumVoidTransferDeposit": [],
+        "GetNumVoidTransferWithdrawal": [],
+        "GetOverrideSpellPowerByAP": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+            "line": 559,
+            "text": "\t\t\tName = \"GetOverrideSpellPowerByAP\","
+          },
+          {
+            "path": "Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua",
+            "line": 964,
+            "text": "\tif (GetOverrideSpellPowerByAP() > 0) then"
+          },
+          {
+            "path": "Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua",
+            "line": 965,
+            "text": "\t\tstatFrame.tooltip2 = format(MELEE_ATTACK_POWER_SPELL_POWER_TOOLTIP, damageBonus, BreakUpLargeNumbers(effectiveAP * GetOverrideSpellPowerByAP() + 0.5));"
+          }
+        ],
+        "GetPartyLFGID": [
+          {
+            "path": "Blizzard_FrameXMLUtil/PartyUtil.lua",
+            "line": 103,
+            "text": "\tlocal partyLFGSlot = GetPartyLFGID();"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/LFGFrame.lua",
+            "line": 158,
+            "text": "\t\tlocal slot = GetPartyLFGID();"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/LFGFrame.lua",
+            "line": 2142,
+            "text": "\t\tlocal currentSubtypeID = select(LFG_RETURN_VALUES.subtypeID, GetLFGDungeonInfo(GetPartyLFGID()));"
+          },
+          {
+            "path": "Blizzard_LFGUtil/Shared/LFGUtilShared.lua",
+            "line": 7,
+            "text": "\t\tlocal partyLFGSlot = GetPartyLFGID();"
+          },
+          {
+            "path": "Blizzard_LFGUtil/Shared/LFGUtilShared.lua",
+            "line": 41,
+            "text": "\tlocal partySlot = GetPartyLFGID();"
+          },
+          {
+            "path": "Blizzard_LFGUtil/Shared/LFGUtilShared.lua",
+            "line": 83,
+            "text": "\tlocal partySlot = GetPartyLFGID();"
+          },
+          {
+            "path": "Blizzard_QueueStatusFrame/Mainline/QueueStatusFrame.lua",
+            "line": 827,
+            "text": "\tlocal partySlot = GetPartyLFGID();"
+          }
+        ],
+        "GetRFDungeonInfo": [
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 54,
+            "text": "\t\tlocal id, name, typeID, subtype, minLevel, maxLevel = GetRFDungeonInfo(i);"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 77,
+            "text": "\t\tlocal id, name = GetRFDungeonInfo(i);"
+          },
+          {
+            "path": "Blizzard_GroupFinder/Shared/RaidFinder.lua",
+            "line": 220,
+            "text": "\t\t\tlocal dungeonInfo = { GetRFDungeonInfo(i) };"
+          }
+        ],
+        "GetSheathState": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+            "line": 840,
+            "text": "\t\t\tName = \"GetSheathState\","
+          },
+          {
+            "path": "Blizzard_SharedXMLBase/ModelSceneUtil.lua",
+            "line": 38,
+            "text": "\t\tlocal sheatheWeapon = GetSheathState() == 1;"
+          }
+        ],
+        "GetSpellBaseCooldown": [],
+        "GetTransmogrifyCost": [],
+        "GetTransmogrifySlotInfo": [],
+        "GetVoidItemHyperlinkString": [],
+        "GetVoidItemInfo": [],
+        "GetVoidTransferCost": [],
+        "GetVoidTransferDepositInfo": [],
+        "GetVoidTransferWithdrawalInfo": [],
+        "GuildMasterAbsent": [],
+        "GuildRosterSendSoR": [],
+        "HasExtraActionBar": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/ActionBarFrameDocumentation.lua",
+            "line": 492,
+            "text": "\t\t\tName = \"HasExtraActionBar\","
+          },
+          {
+            "path": "Blizzard_ActionBar/Shared/ExtraActionBar.lua",
+            "line": 12,
+            "text": "\tif ( C_ActionBar.HasExtraActionBar() ) then"
+          },
+          {
+            "path": "Blizzard_ActionBar/Shared/ExtraActionBar.lua",
+            "line": 53,
+            "text": "\tif not C_ActionBar.HasExtraActionBar() and bar:IsShown() then"
+          },
+          {
+            "path": "Blizzard_ActionBar/Shared/ExtraActionBar.lua",
+            "line": 64,
+            "text": "\tif not C_ActionBar.HasExtraActionBar() then"
+          },
+          {
+            "path": "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua",
+            "line": 124,
+            "text": "function HasExtraActionBar()"
+          },
+          {
+            "path": "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua",
+            "line": 125,
+            "text": "\treturn C_ActionBar.HasExtraActionBar();"
+          },
+          {
+            "path": "Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua",
+            "line": 150,
+            "text": "ENV.HasExtraActionBar = C_ActionBar.HasExtraActionBar;"
+          }
+        ],
+        "HasLoadedCUFProfiles": [],
+        "Is64BitClient": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/BuildDocumentation.lua",
+            "line": 39,
+            "text": "\t\t\tName = \"Is64BitClient\","
+          }
+        ],
+        "IsContainerFiltered": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+            "line": 405,
+            "text": "\t\t\tName = \"IsContainerFiltered\","
+          },
+          {
+            "path": "Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.lua",
+            "line": 136,
+            "text": "\tself:SetMatchesSearch(not C_Container.IsContainerFiltered(self:GetBagID()));"
+          },
+          {
+            "path": "Blizzard_UIPanels_Game/Mainline/BankFrame.lua",
+            "line": 346,
+            "text": "\tself.SearchOverlay:SetShown(self.tabData.ID and not self:IsPurchaseTab() and C_Container.IsContainerFiltered(self.tabData.ID));"
+          }
+        ],
+        "IsEveryoneAssistant": [
+          {
+            "path": "Blizzard_CompactRaidFrames/Classic/Blizzard_CompactRaidFrameManager.xml",
+            "line": 578,
+            "text": "\t\t\t\t\t\t\t\tself:SetChecked(IsEveryoneAssistant());"
+          },
+          {
+            "path": "Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua",
+            "line": 1219,
+            "text": "\tself:SetChecked(IsEveryoneAssistant());"
+          },
+          {
+            "path": "Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua",
+            "line": 1223,
+            "text": "\tself:SetChecked(IsEveryoneAssistant());"
+          },
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrame.lua",
+            "line": 275,
+            "text": "\tself:SetChecked(IsEveryoneAssistant());"
+          },
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua",
+            "line": 35,
+            "text": "\tself:SetChecked(IsEveryoneAssistant());"
+          },
+          {
+            "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+            "line": 1950,
+            "text": "\tif IsEveryoneAssistant() then"
+          },
+          {
+            "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+            "line": 2044,
+            "text": "\t\t\tif IsEveryoneAssistant() then"
+          }
+        ],
+        "IsVoidStorageReady": [],
+        "ReplaceGuildMaster": [
+          {
+            "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+            "line": 2914,
+            "text": "\tOnAccept = function(dialog, data) ReplaceGuildMaster(); end,"
+          }
+        ],
+        "SendSoRByText": [],
+        "SetActionUIButton": [
+          {
+            "path": "Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua",
+            "line": 84,
+            "text": "function SetActionUIButton(checkboxFrame, actionID, cooldownFrame)"
+          }
+        ],
+        "SetEveryoneIsAssistant": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/PartyInfoDocumentation.lua",
+            "line": 534,
+            "text": "\t\t\tName = \"SetEveryoneIsAssistant\","
+          },
+          {
+            "path": "Blizzard_CompactRaidFrames/Classic/Blizzard_CompactRaidFrameManager.xml",
+            "line": 589,
+            "text": "\t\t\t\t\t\t\t\tC_PartyInfo.SetEveryoneIsAssistant(self:GetChecked());"
+          },
+          {
+            "path": "Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua",
+            "line": 1233,
+            "text": "\tC_PartyInfo.SetEveryoneIsAssistant(self:GetChecked());"
+          },
+          {
+            "path": "Blizzard_DeprecatedPartyInfo/Deprecated_PartyInfo.lua",
+            "line": 32,
+            "text": "function SetEveryoneIsAssistant(isAssistant)"
+          },
+          {
+            "path": "Blizzard_DeprecatedPartyInfo/Deprecated_PartyInfo.lua",
+            "line": 33,
+            "text": "\treturn C_PartyInfo.SetEveryoneIsAssistant(isAssistant);"
+          },
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrame.xml",
+            "line": 169,
+            "text": "\t\t\t\t\t\tC_PartyInfo.SetEveryoneIsAssistant(self:GetChecked());"
+          },
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua",
+            "line": 12,
+            "text": "\tC_PartyInfo.SetEveryoneIsAssistant(self:GetChecked());"
+          },
+          {
+            "path": "Blizzard_RaidFrame/Wrath/RaidFrame.xml",
+            "line": 174,
+            "text": "\t\t\t\t\t\tC_PartyInfo.SetEveryoneIsAssistant(self:GetChecked());"
+          }
+        ],
+        "SetItemSearch": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/ContainerDocumentation.lua",
+            "line": 503,
+            "text": "\t\t\tName = \"SetItemSearch\","
+          },
+          {
+            "path": "Blizzard_UIPanelTemplates/Shared/UIPanelTemplatesShared.lua",
+            "line": 30,
+            "text": "\tC_Container.SetItemSearch(self:GetText());"
+          }
+        ],
+        "SetSelectedScreenResolutionIndex": [],
+        "SpellGetVisibilityInfo": [
+          {
+            "path": "Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua",
+            "line": 30,
+            "text": "\tfunction SpellGetVisibilityInfo(spellID, visiblityTypeName)"
+          }
+        ],
+        "SpellIsSelfBuff": [
+          {
+            "path": "Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua",
+            "line": 20,
+            "text": "\tfunction SpellIsSelfBuff(spellID)"
+          }
+        ],
+        "SubmitRequiredGuildRename": [
+          {
+            "path": "Blizzard_Communities/GuildNameChange.xml",
+            "line": 131,
+            "text": "\t\t\t\t\t\t\tSubmitRequiredGuildRename(self:GetParent().EditBox:GetText());"
+          }
+        ],
+        "TestCreatePill": [],
+        "UnitAlternatePowerCounterInfo": [],
+        "UnitNumPowerBarTimers": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/UnitDocumentation.lua",
+            "line": 2466,
+            "text": "\t\t\tName = \"UnitNumPowerBarTimers\","
+          }
+        ],
+        "UnitPowerBarTimerInfo": [
+          {
+            "path": "Blizzard_APIDocumentationGenerated/UnitDocumentation.lua",
+            "line": 2676,
+            "text": "\t\t\tName = \"UnitPowerBarTimerInfo\","
+          },
+          {
+            "path": "Blizzard_UnitFrame/Mainline/UnitPowerBarAlt.lua",
+            "line": 866,
+            "text": "\tlocal duration, expiration, barID, auraID = UnitPowerBarTimerInfo(\"player\", index);"
+          },
+          {
+            "path": "Blizzard_UnitFrame/Mainline/UnitPowerBarAlt.lua",
+            "line": 892,
+            "text": "\t\tduration, expiration, barID, auraID = UnitPowerBarTimerInfo(\"player\", index);"
+          }
+        ],
+        "UnlearnSpecialization": [],
+        "UnlockVoidStorage": [],
+        "UseItemForTransmogrify": [],
+        "ValidateTransmogrifications": [],
+        "EJ_SetDifficultyByMask": [],
+        "GetLFDChoiceInfo": [],
+        "GetMacroIconInfo": [],
+        "GetMacroItemIconInfo": [],
+        "GetNumMacroIcons": [],
+        "GetNumMacroItemIcons": [],
+        "IsIPv6Available": []
+      }
+    },
+    "src-tests": {
+      "file_count": 3713,
+      "tree_digest": "08790f2e104f50c5a43148d5f93aad7059aa77feeaf859dafa322fa1af7e0ed2",
+      "hits": {
+        "ApplyTransmogrifications": [],
+        "BNSendSoR": [],
+        "CanReplaceGuildMaster": [
+          {
+            "path": "src/lua_api/globals/guild_probes.rs",
+            "line": 6,
+            "text": "//! - `CanReplaceGuildMaster()`     -> `SimState.can_replace_guild_master`"
+          },
+          {
+            "path": "src/lua_api/globals/guild_probes.rs",
+            "line": 375,
+            "text": "    LuaApiMut::register_function(lua, \"CanReplaceGuildMaster\", can_replace_guild_master)?;"
+          },
+          {
+            "path": "tests/guild_probes.rs",
+            "line": 98,
+            "text": "// \u2500\u2500 CanReplaceGuildMaster \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+          },
+          {
+            "path": "tests/guild_probes.rs",
+            "line": 103,
+            "text": "    let b: bool = env.eval(\"return CanReplaceGuildMaster()\").unwrap();"
+          },
+          {
+            "path": "tests/guild_probes.rs",
+            "line": 111,
+            "text": "    let b: bool = env.eval(\"return CanReplaceGuildMaster()\").unwrap();"
+          }
+        ],
+        "CanSendSoRByText": [],
+        "CanTransmogrifyItemWithItem": [],
+        "CanUpgradeExpansion": [],
+        "CanUseVoidStorage": [],
+        "ClearBattlemaster": [
+          {
+            "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+            "line": 1303,
+            "text": "            if ClearBattlemaster() ~= nil then return \"clear\" end"
+          },
+          {
+            "path": "src/lua_api/globals/pvp_probes.rs",
+            "line": 524,
+            "text": "    LuaApiMut::register_function(lua, \"ClearBattlemaster\", clear_battlemaster)?;"
+          }
+        ],
+        "ClearTransmogrifySlot": [],
+        "ClearVoidTransferDepositSlot": [],
+        "ClickTransmogrifySlot": [],
+        "ClickVoidStorageSlot": [],
+        "ClickVoidTransferDepositSlot": [],
+        "ClickVoidTransferWithdrawalSlot": [],
+        "CloseTransmogrifyFrame": [],
+        "CloseVoidStorageFrame": [],
+        "EJ_GetClassFilter": [],
+        "EJ_GetDifficulty": [
+          {
+            "path": "src/lua_api/globals/missing_surface/encounter_journal.rs",
+            "line": 80,
+            "text": "    (\"EJ_GetDifficulty\", ej_get_difficulty),"
+          }
+        ],
+        "EJ_IsValidInstanceDifficulty": [
+          {
+            "path": "src/lua_api/globals/missing_surface/encounter_journal.rs",
+            "line": 84,
+            "text": "        \"EJ_IsValidInstanceDifficulty\","
+          },
+          {
+            "path": "tests/c_namespace_noop_replacements.rs",
+            "line": 595,
+            "text": "                EJ_IsValidInstanceDifficulty(14)"
+          }
+        ],
+        "ExecuteVoidTransfer": [],
+        "GetAlternatePowerInfoByID": [],
+        "GetBestRFChoice": [
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 39,
+            "text": "//! - `GetBestRFChoice()`               \u2192 first seeded raid-finder dungeon, or nil."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 448,
+            "text": "/// `GetBestRFChoice()` \u2192 first seeded raid-finder dungeon id, or nil."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 687,
+            "text": "    LuaApiMut::register_function(lua, \"GetBestRFChoice\", get_best_rf_choice)?;"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 56,
+            "text": "            if GetBestRFChoice() ~= id then return \"best=\" .. tostring(GetBestRFChoice()) end"
+          },
+          {
+            "path": "tests/mists_lfg_lfr_panel.rs",
+            "line": 58,
+            "text": "            local bestRaid = GetBestRFChoice()"
+          }
+        ],
+        "GetCurrentMapLevelRange": [],
+        "GetDetailColumnString": [],
+        "GetExtraBarOffset": [],
+        "GetGuildRenameRequired": [
+          {
+            "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+            "line": 235,
+            "text": "if GetGuildRenameRequired == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+            "line": 236,
+            "text": "    function GetGuildRenameRequired()"
+          },
+          {
+            "path": "tests/runtime_bootstrap_boundaries.rs",
+            "line": 539,
+            "text": "        \"GetGuildRenameRequired\","
+          },
+          {
+            "path": "tests/startup_targeted_regressions.rs",
+            "line": 242,
+            "text": "                    || record.message.contains(\"GetGuildRenameRequired\")"
+          },
+          {
+            "path": "tests/startup_targeted_regressions.rs",
+            "line": 283,
+            "text": "                    GetGuildRenameRequired() == false,"
+          }
+        ],
+        "GetItemTransmogrifyInfo": [],
+        "GetLFGDungeonEncounterInfo": [
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 14,
+            "text": "//! - `GetLFGDungeonEncounterInfo(id, idx)` \u2192 `(name, texture, isKilled)`."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 634,
+            "text": "        \"GetLFGDungeonEncounterInfo\","
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 109,
+            "text": "    // GetLFGDungeonEncounterInfo is SimState-backed in"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 303,
+            "text": "            local bossName, _, isKilled = GetLFGDungeonEncounterInfo(1203, 1)"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 306,
+            "text": "            if GetLFGDungeonEncounterInfo(1203, 99) ~= nil then return \"unexpected_boss\" end"
+          }
+        ],
+        "GetLFGDungeonNumEncounters": [
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 13,
+            "text": "//! - `GetLFGDungeonNumEncounters(id)`  \u2192 `(numEncounters, numCompleted)`."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 233,
+            "text": "/// `GetLFGDungeonNumEncounters(dungeonID)` \u2192 `(numEncounters, numCompleted)`."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 624,
+            "text": "        \"GetLFGDungeonNumEncounters\","
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 183,
+            "text": "    // GetLFGDungeonInfo / GetLFGDungeonNumEncounters / GetLFGMode are"
+          },
+          {
+            "path": "tests/battlefield_lfg_probes.rs",
+            "line": 127,
+            "text": "    let n: i32 = env.eval(\"return GetLFGDungeonNumEncounters(1)\").unwrap();"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 299,
+            "text": "            local n, c = GetLFGDungeonNumEncounters(1203)"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 307,
+            "text": "            local n2, c2 = GetLFGDungeonNumEncounters(9999)"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 313,
+            "text": "    assert_eq!(result, \"ok\", \"GetLFGDungeonNumEncounters: {result}\");"
+          }
+        ],
+        "GetMacroIcons": [
+          {
+            "path": "src/lua_api/workarounds/temporary/macro_defaults.rs",
+            "line": 63,
+            "text": "if GetMacroIcons == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/macro_defaults.rs",
+            "line": 64,
+            "text": "    function GetMacroIcons(iconTable)"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/macro_defaults.rs",
+            "line": 127,
+            "text": "                if GetMacroIcons(spellIcons) ~= spellIcons then return \"macro_icons_return\" end"
+          },
+          {
+            "path": "tests/system_api_seeded.rs",
+            "line": 405,
+            "text": "        local returnedSpellIcons = GetMacroIcons(spellIcons)"
+          }
+        ],
+        "GetMacroItemIcons": [
+          {
+            "path": "src/lua_api/workarounds/temporary/macro_defaults.rs",
+            "line": 68,
+            "text": "if GetMacroItemIcons == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/macro_defaults.rs",
+            "line": 69,
+            "text": "    function GetMacroItemIcons(iconTable)"
+          },
+          {
+            "path": "tests/system_api_seeded.rs",
+            "line": 421,
+            "text": "        local returnedItemIcons = GetMacroItemIcons(itemIcons)"
+          }
+        ],
+        "GetMaxBattlefieldID": [
+          {
+            "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+            "line": 34,
+            "text": "if GetMaxBattlefieldID == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+            "line": 35,
+            "text": "    function GetMaxBattlefieldID() return 0 end"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+            "line": 292,
+            "text": "                if GetMaxBattlefieldID() ~= 0 then return \"battlefield_id\" end"
+          }
+        ],
+        "GetMaxMultisampleFormatOnCvar": [],
+        "GetMissingLootItemInfo": [],
+        "GetMissingLootItemLink": [],
+        "GetNumMissingLootItems": [],
+        "GetNumRFDungeons": [
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 19,
+            "text": "//! - `GetNumRFDungeons()`              \u2192 count of raid-finder entries."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 336,
+            "text": "/// `GetNumRFDungeons()` \u2192 count of raid-finder entries."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 644,
+            "text": "    LuaApiMut::register_function(lua, \"GetNumRFDungeons\", get_num_rf_dungeons)?;"
+          },
+          {
+            "path": "src/startup.rs",
+            "line": 517,
+            "text": "    // additional unmodeled APIs (GetNumRFDungeons, GetNumRandomScenarios,"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 45,
+            "text": "            if type(GetNumRFDungeons) ~= \"function\" then"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 46,
+            "text": "                return \"count_type=\" .. type(GetNumRFDungeons)"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 51,
+            "text": "            local count = GetNumRFDungeons()"
+          },
+          {
+            "path": "tests/mists_lfg_lfr_panel.rs",
+            "line": 59,
+            "text": "            if type(bestRaid) ~= \"number\" or GetNumRFDungeons() < 1 then"
+          }
+        ],
+        "GetNumVoidTransferDeposit": [],
+        "GetNumVoidTransferWithdrawal": [],
+        "GetOverrideSpellPowerByAP": [
+          {
+            "path": "src/lua_api/globals/real/combat_stats/retail_inputs.rs",
+            "line": 105,
+            "text": "        \"GetOverrideSpellPowerByAP\","
+          },
+          {
+            "path": "src/lua_api/globals/real/combat_stats.rs",
+            "line": 400,
+            "text": "    (\"GetOverrideSpellPowerByAP\", get_override_spell_power_by_ap),"
+          },
+          {
+            "path": "src/mists/compat_bootstrap.lua",
+            "line": 994,
+            "text": "if rawget(_G, \"GetOverrideSpellPowerByAP\") == nil then"
+          },
+          {
+            "path": "src/mists/compat_bootstrap.lua",
+            "line": 995,
+            "text": "  function GetOverrideSpellPowerByAP() return 0 end"
+          },
+          {
+            "path": "tests/character_stats/missing_apis.rs",
+            "line": 103,
+            "text": "    assert_outputs(&env, \"GetOverrideSpellPowerByAP()\", &[42.0]);"
+          },
+          {
+            "path": "tests/character_stats/missing_apis.rs",
+            "line": 109,
+            "text": "    assert_outputs(&env, \"GetOverrideSpellPowerByAP()\", &[67.0]);"
+          },
+          {
+            "path": "tests/character_stats/missing_apis.rs",
+            "line": 266,
+            "text": "        {'GetOverrideSpellPowerByAP', {}, {42}},"
+          },
+          {
+            "path": "tests/forever_character_remaining_stats.rs",
+            "line": 29,
+            "text": "                 and type(GetOverrideSpellPowerByAP) == 'function' \\"
+          },
+          {
+            "path": "tests/forever_character_remaining_stats.rs",
+            "line": 70,
+            "text": "             GetOverrideSpellPowerByAP(), haste, quiver, GetHaste()\","
+          },
+          {
+            "path": "tests/forever_character_remaining_stats.rs",
+            "line": 80,
+            "text": "            .eval(\"local _, q = GetRangedHaste(); return GetRangedHitModifier(), GetArmorPenetration(), GetSpellPenetration(), GetOverrideAPBySpellPower(), GetOverrideSpellPowerByAP(), q\")"
+          },
+          {
+            "path": "tests/mists_interactive_legacy_apis.rs",
+            "line": 31,
+            "text": "                type(GetOverrideSpellPowerByAP) == \"function\" and GetOverrideSpellPowerByAP() == 0,"
+          }
+        ],
+        "GetPartyLFGID": [
+          {
+            "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+            "line": 168,
+            "text": "if GetPartyLFGID == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+            "line": 169,
+            "text": "    function GetPartyLFGID() return 0 end"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+            "line": 331,
+            "text": "            GetPartyLFGID = nil"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/lfg_legacy_defaults.rs",
+            "line": 375,
+            "text": "                if GetPartyLFGID() ~= 0 then return \"party_id\" end"
+          },
+          {
+            "path": "tests/onupdate_handler_audit.rs",
+            "line": 207,
+            "text": "                local originalGetPartyLFGID = GetPartyLFGID"
+          },
+          {
+            "path": "tests/onupdate_handler_audit.rs",
+            "line": 208,
+            "text": "                GetPartyLFGID = function(...)"
+          }
+        ],
+        "GetRFDungeonInfo": [
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 20,
+            "text": "//! - `GetRFDungeonInfo(index)`         \u2192 id plus dungeon info for a RF entry."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 346,
+            "text": "/// `GetRFDungeonInfo(index)` \u2192 `(id, name, typeID, ...)` for a 1-based RF"
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_lfg_probes.rs",
+            "line": 645,
+            "text": "    LuaApiMut::register_function(lua, \"GetRFDungeonInfo\", get_rf_dungeon_info)?;"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 48,
+            "text": "            if type(GetRFDungeonInfo) ~= \"function\" then"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 49,
+            "text": "                return \"info_type=\" .. type(GetRFDungeonInfo)"
+          },
+          {
+            "path": "tests/lfd_random_globals.rs",
+            "line": 53,
+            "text": "            local id, name = GetRFDungeonInfo(1)"
+          },
+          {
+            "path": "tests/mists_lfg_lfr_panel.rs",
+            "line": 62,
+            "text": "            local firstRaidID, firstRaidName = GetRFDungeonInfo(1)"
+          }
+        ],
+        "GetSheathState": [],
+        "GetSpellBaseCooldown": [],
+        "GetTransmogrifyCost": [],
+        "GetTransmogrifySlotInfo": [],
+        "GetVoidItemHyperlinkString": [],
+        "GetVoidItemInfo": [],
+        "GetVoidTransferCost": [],
+        "GetVoidTransferDepositInfo": [],
+        "GetVoidTransferWithdrawalInfo": [],
+        "GuildMasterAbsent": [],
+        "GuildRosterSendSoR": [],
+        "HasExtraActionBar": [
+          {
+            "path": "src/lua_api/globals/action_bar_api/registration.rs",
+            "line": 138,
+            "text": "        (\"HasExtraActionBar\", has_extra_action_bar),"
+          },
+          {
+            "path": "src/lua_api/state/support_types.rs",
+            "line": 182,
+            "text": "/// The flag drives `C_ActionBar.HasExtraActionBar()`"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_action_bar_globals.rs",
+            "line": 161,
+            "text": "__wow_legacy_action_bar_forward(\"HasExtraActionBar\", \"HasExtraActionBar\")"
+          },
+          {
+            "path": "src/mists/compat_bootstrap.lua",
+            "line": 282,
+            "text": "if rawget(_G, \"HasExtraActionBar\") == nil then"
+          },
+          {
+            "path": "src/mists/compat_bootstrap.lua",
+            "line": 283,
+            "text": "  function HasExtraActionBar() return false end"
+          },
+          {
+            "path": "tests/blizzard_deprecated_action_bar_loads.rs",
+            "line": 198,
+            "text": "                and type(HasExtraActionBar) == 'function' \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_action_bar_loads.rs",
+            "line": 208,
+            "text": "         / HasExtraActionBar / HasOverrideActionBar / HasTempShapeshiftActionBar / \\"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 2,
+            "text": "//! firing `UPDATE_EXTRA_ACTIONBAR` flips `C_ActionBar.HasExtraActionBar()`"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 36,
+            "text": "//!        if ( C_ActionBar.HasExtraActionBar() ) then"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 49,
+            "text": "//!    The `if` branch is selected by `C_ActionBar.HasExtraActionBar()`,"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 93,
+            "text": "//! `HasExtraActionBar` is purely a server-pushed read \u2014 there is no"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 108,
+            "text": "//! - `extra_action_button.spell_id` drives `HasExtraActionBar()`, which"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 119,
+            "text": "//! HasExtraActionBar flag). The simulator splits them across two state"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 160,
+            "text": "//!    `C_ActionBar.HasExtraActionBar() == false`.** Pinned by the"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 168,
+            "text": "//!    - `HasExtraActionBar() == true` (state-field read)."
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 189,
+            "text": "//!   regardless of `HasExtraActionBar()`: observation 3 fails."
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 190,
+            "text": "//! - `HasExtraActionBar` regresses to a hardcoded boolean (the previous"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 260,
+            "text": "            .eval(\"return C_ActionBar.HasExtraActionBar()\")"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 261,
+            "text": "            .expect(\"cold HasExtraActionBar probe must run cleanly\");"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 264,
+            "text": "            \"Cold-state `C_ActionBar.HasExtraActionBar()` must be false. \\"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 298,
+            "text": "            .eval(\"return C_ActionBar.HasExtraActionBar()\")"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 299,
+            "text": "            .expect(\"post-show HasExtraActionBar probe must run cleanly\");"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 303,
+            "text": "             `C_ActionBar.HasExtraActionBar()` must return true. Pinned by \\"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 314,
+            "text": "            \"After UPDATE_EXTRA_ACTIONBAR fires with `HasExtraActionBar()` \\"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs",
+            "line": 323,
+            "text": "             `HasExtraActionBar()` returned true. A false reading means \\"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/surface_globals.rs",
+            "line": 68,
+            "text": "//!   Early-returns when `C_ActionBar.HasExtraActionBar()` is false (the"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/surface_globals.rs",
+            "line": 449,
+            "text": "///   driver. Three-way branch on `C_ActionBar.HasExtraActionBar()`:"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/surface_globals.rs",
+            "line": 466,
+            "text": "///   bar visible regardless of `HasExtraActionBar()`. When the bar is"
+          },
+          {
+            "path": "tests/blizzard_ui/blizzard_actionbar/surface_globals.rs",
+            "line": 474,
+            "text": "///   action exists. Gated by `not C_ActionBar.HasExtraActionBar() and"
+          }
+        ],
+        "HasLoadedCUFProfiles": [
+          {
+            "path": "src/era/compat_bootstrap.lua",
+            "line": 91,
+            "text": "if rawget(_G, \"HasLoadedCUFProfiles\") == nil then"
+          },
+          {
+            "path": "src/era/compat_bootstrap.lua",
+            "line": 92,
+            "text": "  function HasLoadedCUFProfiles() return false end"
+          },
+          {
+            "path": "src/mists/compat_bootstrap.lua",
+            "line": 290,
+            "text": "if rawget(_G, \"HasLoadedCUFProfiles\") == nil then"
+          },
+          {
+            "path": "src/mists/compat_bootstrap.lua",
+            "line": 291,
+            "text": "  function HasLoadedCUFProfiles() return false end"
+          }
+        ],
+        "Is64BitClient": [],
+        "IsContainerFiltered": [
+          {
+            "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+            "line": 27,
+            "text": "if rawget(C_Container, \"IsContainerFiltered\") == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+            "line": 28,
+            "text": "    function C_Container.IsContainerFiltered(_bag)"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+            "line": 75,
+            "text": "                       C_Container.IsContainerFiltered(0),"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+            "line": 96,
+            "text": "            function C_Container.IsContainerFiltered(_bag)"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/container_default_shapes.rs",
+            "line": 109,
+            "text": "                       C_Container.IsContainerFiltered(0)"
+          },
+          {
+            "path": "tests/bags.rs",
+            "line": 166,
+            "text": "            return C_Container.IsContainerFiltered(0) == false,"
+          },
+          {
+            "path": "tests/c_item_api/c_container.rs",
+            "line": 279,
+            "text": "                   C_Container.IsContainerFiltered(0),"
+          }
+        ],
+        "IsEveryoneAssistant": [
+          {
+            "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+            "line": 283,
+            "text": "            if IsEveryoneAssistant() ~= true then return \"party-everyone-assistant\" end"
+          },
+          {
+            "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+            "line": 285,
+            "text": "            if IsEveryoneAssistant() ~= true or UnitIsGroupAssistant(\"player\") ~= false then return \"party-demote-assistant\" end"
+          },
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 54,
+            "text": "    set_global(state, \"IsEveryoneAssistant\", is_everyone_assistant);"
+          },
+          {
+            "path": "tests/blizzard_raid_frame_loads.rs",
+            "line": 208,
+            "text": "         IsEveryoneAssistant / UnitIsGroupLeader the \\"
+          },
+          {
+            "path": "tests/blizzard_raid_frame_loads.rs",
+            "line": 406,
+            "text": "             reads IsEveryoneAssistant + UnitIsGroupLeader to enable/disable \\"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 53,
+            "text": "        assert(not IsEveryoneAssistant())"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 70,
+            "text": "        assert(not IsEveryoneAssistant())"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 79,
+            "text": "        assert(IsEveryoneAssistant())"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 308,
+            "text": "        assert(not IsEveryoneAssistant())"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 349,
+            "text": "        assert(not UnitIsGroupAssistant('party2') and not IsEveryoneAssistant())"
+          },
+          {
+            "path": "tests/party_raid_probes.rs",
+            "line": 24,
+            "text": "            \"return IsInGroup(), IsInRaid(), IsPartyLFG(), IsGroupLeader(), IsEveryoneAssistant()\","
+          },
+          {
+            "path": "tests/party_raid_probes.rs",
+            "line": 98,
+            "text": "// \u2500\u2500 IsEveryoneAssistant \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+          },
+          {
+            "path": "tests/party_raid_probes.rs",
+            "line": 104,
+            "text": "    let b: bool = env.eval(\"return IsEveryoneAssistant()\").unwrap();"
+          },
+          {
+            "path": "tests/patch_12_0_5_pending_party.rs",
+            "line": 49,
+            "text": "            assert(not IsEveryoneAssistant())"
+          },
+          {
+            "path": "tests/patch_12_0_5_pending_party.rs",
+            "line": 81,
+            "text": "            assert(IsEveryoneAssistant())"
+          }
+        ],
+        "IsVoidStorageReady": [],
+        "ReplaceGuildMaster": [],
+        "SendSoRByText": [],
+        "SetActionUIButton": [
+          {
+            "path": "src/loader/tests/runtime_template_parenting.rs",
+            "line": 53,
+            "text": "            SetActionUIButton(__test_button, 1)"
+          },
+          {
+            "path": "src/loader/tests/runtime_templates.rs",
+            "line": 464,
+            "text": "            SetActionUIButton(__test_button, 1)"
+          },
+          {
+            "path": "src/lua_api/globals/missing_surface.rs",
+            "line": 138,
+            "text": "    LuaApiMut::register_function(lua, \"SetActionUIButton\", set_action_ui_button)?;"
+          },
+          {
+            "path": "tests/blizzard_deprecated_action_bar_loads.rs",
+            "line": 145,
+            "text": "                and type(SetActionUIButton) == 'function'\","
+          },
+          {
+            "path": "tests/blizzard_deprecated_action_bar_loads.rs",
+            "line": 159,
+            "text": "         C_ActionBar.HasRangeRequirements) / IsActionInRange / SetActionUIButton (renamed to \\"
+          }
+        ],
+        "SetEveryoneIsAssistant": [
+          {
+            "path": "src/c_api/c_party_info.rs",
+            "line": 99,
+            "text": "        \"SetEveryoneIsAssistant\","
+          },
+          {
+            "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+            "line": 282,
+            "text": "            C_PartyInfo.SetEveryoneIsAssistant(true)"
+          },
+          {
+            "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+            "line": 345,
+            "text": "                \"SetEveryoneIsAssistant\","
+          },
+          {
+            "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+            "line": 396,
+            "text": "        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil\""
+          },
+          {
+            "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+            "line": 401,
+            "text": "        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=nil,C_ClickBindings.MakeModifiers=nil,C_Spell.GetMawPowerBorderAtlasBySpellID=nil,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=nil,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=nil,GetAutoCompleteRealms=nil,IsRecognizedName=nil\""
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 52,
+            "text": "        check(C_PartyInfo.SetEveryoneIsAssistant(true))"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 76,
+            "text": "        assert(C_PartyInfo.SetEveryoneIsAssistant(true))"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 77,
+            "text": "        assert(not C_PartyInfo.SetEveryoneIsAssistant(true))"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 83,
+            "text": "        assert(C_PartyInfo.SetEveryoneIsAssistant(false))"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 243,
+            "text": "        local updated = C_PartyInfo.SetEveryoneIsAssistant(SEnabled, SExtra)"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 269,
+            "text": "            {C_PartyInfo.SetEveryoneIsAssistant, {true}},"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 331,
+            "text": "        assert(not pcall(C_PartyInfo.SetEveryoneIsAssistant, 1))"
+          },
+          {
+            "path": "tests/party_1207_audit.rs",
+            "line": 346,
+            "text": "        assert(not pcall(C_PartyInfo.SetEveryoneIsAssistant, true))"
+          },
+          {
+            "path": "tests/patch_12_0_5_pending_party.rs",
+            "line": 18,
+            "text": "            function() C_PartyInfo.SetEveryoneIsAssistant(true) end,"
+          },
+          {
+            "path": "tests/patch_12_0_7_removed_native_surface.rs",
+            "line": 131,
+            "text": "    assert_native_absent(&env, \"SetEveryoneIsAssistant\");"
+          },
+          {
+            "path": "tests/patch_12_0_7_removed_native_surface.rs",
+            "line": 294,
+            "text": "        \"SetEveryoneIsAssistant\","
+          },
+          {
+            "path": "tests/patch_12_0_7_removed_native_surface.rs",
+            "line": 329,
+            "text": "        function C_PartyInfo.SetEveryoneIsAssistant(value, ...)"
+          },
+          {
+            "path": "tests/patch_12_0_7_removed_native_surface.rs",
+            "line": 364,
+            "text": "        checkAssistant(SetEveryoneIsAssistant(false, 'discarded'))"
+          },
+          {
+            "path": "tests/patch_12_0_7_removed_native_surface.rs",
+            "line": 523,
+            "text": "    \"SetEveryoneIsAssistant\","
+          }
+        ],
+        "SetItemSearch": [],
+        "SetSelectedScreenResolutionIndex": [],
+        "SpellGetVisibilityInfo": [
+          {
+            "path": "src/era/compat_bootstrap.lua",
+            "line": 57,
+            "text": "if rawget(_G, \"SpellGetVisibilityInfo\") == nil then"
+          },
+          {
+            "path": "src/era/compat_bootstrap.lua",
+            "line": 58,
+            "text": "  function SpellGetVisibilityInfo()"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 52,
+            "text": "         SpellGetVisibilityInfo) plus the in-place C_Spell.GetSpellLossOfControlCooldown \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 208,
+            "text": "                and type(SpellGetVisibilityInfo) == 'function'\","
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 217,
+            "text": "         c_spell.rs:107 returning bool based on implicit_target); SpellGetVisibilityInfo \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 233,
+            "text": "                and SpellGetVisibilityInfo ~= C_Spell.GetVisibilityInfo\","
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 254,
+            "text": "                    SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 261,
+            "text": "        \"Calling SpellGetVisibilityInfo(0, 'RAID_INCOMBAT') must return the canonical \\"
+          }
+        ],
+        "SpellIsSelfBuff": [
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 51,
+            "text": "         GetSpellQueueWindow / GetSchoolString / SpellIsPriorityAura / SpellIsSelfBuff / \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 207,
+            "text": "                and type(SpellIsSelfBuff) == 'function' \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 216,
+            "text": "         SpellIsSelfBuff (1-line delegation to C_Spell.IsSelfBuff, registered at \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 232,
+            "text": "                and SpellIsSelfBuff ~= C_Spell.IsSelfBuff \\"
+          },
+          {
+            "path": "tests/blizzard_deprecated_spell_script_loads.rs",
+            "line": 241,
+            "text": "         SpellIsSelfBuff (which look like trivial 1-call passthroughs) are still distinct \\"
+          }
+        ],
+        "SubmitRequiredGuildRename": [],
+        "TestCreatePill": [],
+        "UnitAlternatePowerCounterInfo": [],
+        "UnitNumPowerBarTimers": [],
+        "UnitPowerBarTimerInfo": [
+          {
+            "path": "src/lua_api/globals/state_backed_queries.rs",
+            "line": 35,
+            "text": "    LuaApiMut::register_function(lua, \"UnitPowerBarTimerInfo\", unit_power_bar_timer_info)?;"
+          },
+          {
+            "path": "tests/admin_pvp_guild_api.rs",
+            "line": 91,
+            "text": "        .eval(r#\"return UnitPowerBarTimerInfo(\"player\", 1) == nil\"#)"
+          }
+        ],
+        "UnlearnSpecialization": [],
+        "UnlockVoidStorage": [],
+        "UseItemForTransmogrify": [],
+        "ValidateTransmogrifications": [],
+        "EJ_SetDifficultyByMask": [],
+        "GetLFDChoiceInfo": [],
+        "GetMacroIconInfo": [],
+        "GetMacroItemIconInfo": [],
+        "GetNumMacroIcons": [],
+        "GetNumMacroItemIcons": [],
+        "IsIPv6Available": []
+      }
+    }
+  }
+}

@@ -1,0 +1,633 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "4.3.0",
+  "source": "data/patch-api/sources/4.3.0-wikitext-register.json",
+  "source_sha256": "a3315f75e518d010f3b3e67043db5a7b2f9ecd1406462557fae8ccd45f9a7f67",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/4.3.0-api-changes.txt",
+    "sha256": "e2a222caa5066efb87658e3af7b65456684164a6fbaa02443e41d6c9cab2ca78"
+  },
+  "proof_policy": "Historical retail identities; current cached retail discovery only. Queued 4.3.4 excluded until coordinator replaces first placeholder; actual 5.0.1+ retail registers only. No native/behavior/signature parity. No retirements or runtime changes.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-ApplyTransmogrifications-10",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy pending-slot transaction/apply model; modern outfit state does not prove historical slot, cost, validation or event semantics."
+    },
+    {
+      "source_id": "wt-global-api-BNSendSoR-11",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CanReplaceGuildMaster-12",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CanSendSoRByText-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CanTransmogrifyItemWithItem-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy source/target item eligibility relation; modern source IDs are not the historical item-pair contract."
+    },
+    {
+      "source_id": "wt-global-api-CanUpgradeExpansion-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CanUseVoidStorage-16",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ClearBattlemaster-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ClearTransmogrifySlot-18",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy pending transmogrification slots; clearing a modern outfit is a different operation."
+    },
+    {
+      "source_id": "wt-global-api-ClearVoidTransferDepositSlot-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ClickTransmogrifySlot-20",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy slot/cursor selection transaction; historical arguments and selection effects absent from this page."
+    },
+    {
+      "source_id": "wt-global-api-ClickVoidStorageSlot-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ClickVoidTransferDepositSlot-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ClickVoidTransferWithdrawalSlot-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CloseTransmogrifyFrame-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No historical transmogrifier interaction session/close event contract; hiding a UI frame would be a shim."
+    },
+    {
+      "source_id": "wt-global-api-CloseVoidStorageFrame-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetClassFilter-26",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetDifficulty-27",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-EJ_IsValidInstanceDifficulty-28",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ExecuteVoidTransfer-29",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAlternatePowerInfoByID-30",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetBestRFChoice-31",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentMapLevelRange-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Map data does not establish the historical selected-map min/max level range; page has no output or no-selection contract."
+    },
+    {
+      "source_id": "wt-global-api-GetDetailColumnString-33",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Cached auction FrameXML calls this missing formatter; page gives no detail-column schema/formatting contract. Do not invent formatter outputs. Current cached consumer: Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionData.lua:32."
+    },
+    {
+      "source_id": "wt-global-api-GetExtraBarOffset-34",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRenameRequired-35",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetItemTransmogrifyInfo-36",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy per-item eligibility/appearance result contract; modern outfit fields do not establish historical return shape."
+    },
+    {
+      "source_id": "wt-global-api-GetLFGDungeonEncounterInfo-37",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetLFGDungeonNumEncounters-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetMacroIcons-39",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetMacroItemIcons-40",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetMaxBattlefieldID-41",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetMaxMultisampleFormatOnCvar-42",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetMissingLootItemInfo-43",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing loot slots/rolls do not model missing-loot records or indexed info shape."
+    },
+    {
+      "source_id": "wt-global-api-GetMissingLootItemLink-44",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing loot links do not establish a missing-loot collection or out-of-range behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetNumMissingLootItems-45",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No missing-loot collection/producer exists; zero would be a placeholder, not modeled count."
+    },
+    {
+      "source_id": "wt-global-api-GetNumRFDungeons-46",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetNumVoidTransferDeposit-47",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetNumVoidTransferWithdrawal-48",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetOverrideSpellPowerByAP-49",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetPartyLFGID-50",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetRFDungeonInfo-51",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetSheathState-52",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No player weapon sheath state/transition model; outfit sheatheCategory metadata is not equipped-player state. Current cached consumer: Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua:840."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellBaseCooldown-53",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Runtime cooldowns do not encode base spell cooldown/global-cooldown metadata or historical output units; page provides no signature."
+    },
+    {
+      "source_id": "wt-global-api-GetTransmogrifyCost-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy pending transmogrification pricing transaction; modern outfit cost is a different API contract."
+    },
+    {
+      "source_id": "wt-global-api-GetTransmogrifySlotInfo-55",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy pending-slot info/result schema; modern outfit slots cannot be aliased without proof."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidItemHyperlinkString-56",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidItemInfo-57",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidTransferCost-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidTransferDepositInfo-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetVoidTransferWithdrawalInfo-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GuildMasterAbsent-61",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CanReplaceGuildMaster reads an explicit permission flag, not leader last-login/absence policy."
+    },
+    {
+      "source_id": "wt-global-api-GuildRosterSendSoR-62",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-HasExtraActionBar-63",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-HasLoadedCUFProfiles-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Classic bootstrap supplies a constant only; no retail compact-unit-frame profile loading lifecycle. Do not promote a shim."
+    },
+    {
+      "source_id": "wt-global-api-Is64BitClient-65",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Host pointer width is not pinned simulated client executable architecture; no modeled client architecture field. Native output not established. Current cached consumer: Blizzard_APIDocumentationGenerated/BuildDocumentation.lua:39."
+    },
+    {
+      "source_id": "wt-global-api-IsContainerFiltered-66",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-IsEveryoneAssistant-67",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-IsVoidStorageReady-68",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ReplaceGuildMaster-69",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Guild roster/permission flag lacks replacement eligibility, authoritative leader transfer and completion-event semantics. Current cached consumer: Blizzard_StaticPopup_Game/GameDialogDefs.lua:2914."
+    },
+    {
+      "source_id": "wt-global-api-SendSoRByText-70",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SetActionUIButton-71",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SetEveryoneIsAssistant-72",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SetItemSearch-73",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SetSelectedScreenResolutionIndex-74",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No modeled resolution catalog/index selection; viewport metrics do not establish historical catalog ordering/validation."
+    },
+    {
+      "source_id": "wt-global-api-SpellGetVisibilityInfo-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SpellIsSelfBuff-76",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SubmitRequiredGuildRename-77",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Guild name exists, but no rename-required request/validation/acknowledgement lifecycle or historical event contract. Current cached consumer: Blizzard_Communities/GuildNameChange.xml:131."
+    },
+    {
+      "source_id": "wt-global-api-TestCreatePill-78",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-UnitAlternatePowerCounterInfo-79",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-UnitNumPowerBarTimers-80",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing UnitPowerBarTimerInfo returns nil without reading state; no per-unit timer collection/producer to count. Current cached consumer: Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:2466."
+    },
+    {
+      "source_id": "wt-global-api-UnitPowerBarTimerInfo-81",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-UnlearnSpecialization-82",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Active specialization index alone does not establish historical unlearning restrictions, costs or resulting spell/talent transitions."
+    },
+    {
+      "source_id": "wt-global-api-UnlockVoidStorage-83",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-UseItemForTransmogrify-84",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy source-item cursor transaction; modern appearance selection is not historical item application."
+    },
+    {
+      "source_id": "wt-global-api-ValidateTransmogrifications-85",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy pending-slot eligibility validation model or validation result contract."
+    },
+    {
+      "source_id": "wt-global-api-EJ_SetDifficultyByMask-88",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetLFDChoiceInfo-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetMacroIconInfo-90",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetMacroItemIconInfo-91",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetNumMacroIcons-92",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetNumMacroItemIcons-93",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "wt-global-api-IsIPv6Available-94",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current cached retail publication/absence only after later retail add/remove supersession. No historical signature, outputs, gameplay, security or native parity claim."
+    },
+    {
+      "source_id": "source-context-001",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Navigation only: patch 4.3.0, previous 4.2.0, next 4.3.4. No prose/signature statements or linked-page reconstruction."
+    }
+  ]
+}

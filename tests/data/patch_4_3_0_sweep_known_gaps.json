@@ -1,1 +1,27 @@
-[]
+[
+  "wt-global-api-ApplyTransmogrifications-10",
+  "wt-global-api-CanTransmogrifyItemWithItem-14",
+  "wt-global-api-ClearTransmogrifySlot-18",
+  "wt-global-api-ClickTransmogrifySlot-20",
+  "wt-global-api-CloseTransmogrifyFrame-24",
+  "wt-global-api-GetCurrentMapLevelRange-32",
+  "wt-global-api-GetDetailColumnString-33",
+  "wt-global-api-GetItemTransmogrifyInfo-36",
+  "wt-global-api-GetMissingLootItemInfo-43",
+  "wt-global-api-GetMissingLootItemLink-44",
+  "wt-global-api-GetNumMissingLootItems-45",
+  "wt-global-api-GetSheathState-52",
+  "wt-global-api-GetSpellBaseCooldown-53",
+  "wt-global-api-GetTransmogrifyCost-54",
+  "wt-global-api-GetTransmogrifySlotInfo-55",
+  "wt-global-api-GuildMasterAbsent-61",
+  "wt-global-api-HasLoadedCUFProfiles-64",
+  "wt-global-api-Is64BitClient-65",
+  "wt-global-api-ReplaceGuildMaster-69",
+  "wt-global-api-SetSelectedScreenResolutionIndex-74",
+  "wt-global-api-SubmitRequiredGuildRename-77",
+  "wt-global-api-UnitNumPowerBarTimers-80",
+  "wt-global-api-UnlearnSpecialization-82",
+  "wt-global-api-UseItemForTransmogrify-84",
+  "wt-global-api-ValidateTransmogrifications-85"
+]
