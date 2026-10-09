@@ -1,0 +1,17 @@
+{
+  "revision": "43b28275d62cf22aa0623dfe8783317f445e092c",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "patch_4_0_1_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "env": {
+    "P401_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/fabricated-register.json",
+    "P401_SWEEP_OUT": "/tmp/p401-current-negative-results.json"
+  }
+}

@@ -1,0 +1,5 @@
+# Integrated4.0.1 acceptance
+
+Current419observations:304publication/absence matches,115gaps. Historical302/117and118negative immutable. Currentnegative115→116expectedexit1. All70sweeps,Mistscheck/build andbuiltstartup[]exit0. Independentfmt+75Pythonfixturespass;74/74registersbyteidenticalwithfullsubprocessexits;74/77extractsretainexactthreeinheritedfailures. OriginalretirementGREENscopehashesapplicable.
+
+Sharedgate43b28275:69clean/70syntheticlater validators,zero failures. V2historicalvalidator removesonlytemporary-workspaceROOTtargetdependency; exactv1code/contextpreservedand42originalarchive/evidencesealsunchanged. No native/full-suite/CIacceptance inferred.
