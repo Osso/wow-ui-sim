@@ -1,0 +1,26 @@
+test_frozen_queue_and_source_ledger_unchanged (__main__.SuccessorAccounting.test_frozen_queue_and_source_ledger_unchanged) ... ok
+test_omission_reordering_and_foreign_credit_rejected (__main__.SuccessorAccounting.test_omission_reordering_and_foreign_credit_rejected) ... FAIL
+test_serialized_exact_precedence (__main__.SuccessorAccounting.test_serialized_exact_precedence) ... FAIL
+
+======================================================================
+FAIL: test_omission_reordering_and_foreign_credit_rejected (__main__.SuccessorAccounting.test_omission_reordering_and_foreign_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_successors.py", line 23, in test_omission_reordering_and_foreign_credit_rejected
+    self.assertTrue((E / 'successor-application.json').is_file(), 'separate application receipt absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : separate application receipt absent
+
+======================================================================
+FAIL: test_serialized_exact_precedence (__main__.SuccessorAccounting.test_serialized_exact_precedence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_successors.py", line 12, in test_serialized_exact_precedence
+    self.assertTrue((E / 'successor-application.json').is_file(), 'separate application receipt absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : separate application receipt absent
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.020s
+
+FAILED (failures=2)

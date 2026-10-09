@@ -22,9 +22,9 @@ Current generic token commerce and temporary store code do not prove China regio
 
 ## History and proof status
 
-Configured Era/Anniversary11507 is distinct from source11304. Frozen18 same-Era successor pins/responses/bodies preserved as not-applied input queue. Actual integrated successor assessment is separate; no frozen queue/seal rewrite or retail/TBC/Wrath/Mists/Forever supersession.
+Configured Era/Anniversary11507 is distinct from source11304. Frozen18 same-Era successor pins/responses/bodies preserved as not-applied input queue. Separate application of18 actual same-Era ledgers finds exactly one overlapping publication:1.14.0 removes C_Commentator.GetUnitTeamIndex. Neither name removal nor imported later audit status proves historical/native semantics. No other explicit overlap; contextual1.15.* occurrences and linked subset/diff claims remain unexpanded. All30 original contracts remain UNPROVEN; source queue unchanged. See [application](../../../data/patch-api/evidence/1.13.4-session-2026-10-09/successor-application.json).
 
-Own SOURCE RED8 assertions retained; implementation covers212 occurrence omissions plus invented signature/default/alias/history/native-credit controls. SOURCE GREEN and portable receipts pending at this implementation commit. Offline/locked own-target Era GREEN1/1 above; six library warnings, one binary unused-import warning, six vendor manifest deprecations retained, not suppressed. No broad/final gates or native parity claim.
+Own SOURCE RED8 assertions retained; implementation covers212 occurrence omissions plus invented signature/default/alias/history/native-credit controls. SOURCE GREEN8/8 at `c9c0262e3`; successor development RED2/3 (application absent), portable RED3/3 (archive absent) retained. Separate successor GREEN and portable receipts pending at this implementation commit. Offline/locked own-target Era GREEN1/1 above; six library warnings, one binary unused-import warning, six vendor manifest deprecations retained, not suppressed. No broad/final gates or native parity claim.
 
 ## Sources
 

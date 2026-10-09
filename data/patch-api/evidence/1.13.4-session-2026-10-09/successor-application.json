@@ -1,0 +1,633 @@
+{
+  "schema": "separate-same-era-publication-precedence/v1",
+  "patch": "1.13.4",
+  "base_revision": "3de87465828db7cc7f6f900d4b63e24f1b399825",
+  "inputs": [
+    {
+      "patch": "1.13.5",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.13.5/ledger.json",
+      "original_path": "data/patch-api/evidence/1.13.5-session-2026-10-09/ledger.json",
+      "sha256": "71b81eccec657487047ffbe5cad2cfec079f7c19c657da47f9fc94862f373667",
+      "inventory_field": "inventory",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "patch": "1.13.6",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.13.6/ledger.json",
+      "original_path": "data/patch-api/evidence/1.13.6-session-2026-10-09/ledger.json",
+      "sha256": "72d923000ed6ff4418b13554b52dc3f654ed141a38cbd2acb78335e4125e762c",
+      "inventory_field": "inventory",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "patch": "1.13.7",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.13.7/ledger.json",
+      "original_path": "data/patch-api/evidence/1.13.7-session-2026-10-09/ledger.json",
+      "sha256": "cb3415ca8bea5f9068389adb906c4df662b01e336903027451b8fb5d9e15128e",
+      "inventory_field": "inventory",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "patch": "1.14.0",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.14.0/ledger.json",
+      "original_path": "data/patch-api/evidence/1.14.0-session-2026-10-09/ledger.json",
+      "sha256": "f9c610da7c89c884b9b201740386078e7a66ba56028e37ecea6957beddb56241",
+      "inventory_field": "inventory",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "patch": "1.14.1",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.14.1/ledger.json",
+      "original_path": "data/patch-api/evidence/1.14.1-session-2026-10-09/ledger.json",
+      "sha256": "cf7079ee4c6c0dd0877aac59f9c84aee36e66605c6cc62ea4f2f2175cb31eba4",
+      "inventory_field": "inventory",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "patch": "1.14.2",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.14.2/ledger.json",
+      "original_path": "data/patch-api/evidence/1.14.2-session-2026-10-09/ledger.json",
+      "sha256": "0052716897759cf473c700ebe000dcf2e0ebe2e4018b14082117325aed01ec54",
+      "inventory_field": "inventory",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "patch": "1.14.3",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.14.3/ledger.json",
+      "original_path": "data/patch-api/evidence/1.14.3-session-2026-10-09/original/ledger.json",
+      "sha256": "4f69fecb88c7b4201898cea4c15a84f91708c2232dfcf48df3cd021af257cee6",
+      "inventory_field": "inventory_rows",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "patch": "1.14.4",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.14.4/ledger.json",
+      "original_path": "data/patch-api/evidence/1.14.4-session-2026-10-09/ledger.json",
+      "sha256": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.0",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.0/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.0-session-2026-10-09/ledger.json",
+      "sha256": "ac2d227ce84c5e1ec013808236037b28a2ce1070529159620f31c7668ff3c6eb",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.1",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.1/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.1-session-2026-10-09/ledger.json",
+      "sha256": "ad60adbab94fbb7e35d7d44c506d8e6d6f66b0398df3bda02cebe2f7a26c73e1",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.2",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.2/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.2-session-2026-10-09/ledger.json",
+      "sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.3",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.3/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.3-session-2026-10-09/ledger.json",
+      "sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.4",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.4/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.4-session-2026-10-09/ledger.json",
+      "sha256": "f3aa9280a2c56d358756109b52cdc0a817dd0a94eedf904d8126a6b76df71b6d",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.5",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.5/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.5-session-2026-10-09/ledger.json",
+      "sha256": "41e335e655966d9352b6a28a97b453be64ad533010f5a4906fd7817c5966ff62",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.6",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.6/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.6-session-2026-10-09/ledger.json",
+      "sha256": "70cdfac19ed015b0433bb313451b8dd8254c4a7ab1c9e7574badf245546f5577",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.7",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.7/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.7-session-2026-10-09/ledger.json",
+      "sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.8",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.8/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.8-session-2026-10-09/ledger.json",
+      "sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    },
+    {
+      "patch": "1.15.9",
+      "history": "classic-era",
+      "state": "actual-integrated-input-at-base",
+      "path": "applied-successors/1.15.9/ledger.json",
+      "original_path": "data/patch-api/evidence/1.15.9-session-2026-10-09/ledger.json",
+      "sha256": "fe98aaabb773e2bf486747dd0aa2c01bcd25164f12a2319e5503f569c91f1138",
+      "inventory_field": "api_occurrences",
+      "application": "exact-name/direction publication precedence only",
+      "native_credit": false,
+      "model_credit": false,
+      "inventory_scope": "contextual occurrences, not added/removed inventory; no inferred direction"
+    }
+  ],
+  "successor_summaries": [
+    {
+      "patch": "1.13.5",
+      "ledger_sha256": "71b81eccec657487047ffbe5cad2cfec079f7c19c657da47f9fc94862f373667",
+      "inventory_occurrences": 5,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.13.6",
+      "ledger_sha256": "72d923000ed6ff4418b13554b52dc3f654ed141a38cbd2acb78335e4125e762c",
+      "inventory_occurrences": 3,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.13.7",
+      "ledger_sha256": "cb3415ca8bea5f9068389adb906c4df662b01e336903027451b8fb5d9e15128e",
+      "inventory_occurrences": 5,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.14.0",
+      "ledger_sha256": "f9c610da7c89c884b9b201740386078e7a66ba56028e37ecea6957beddb56241",
+      "inventory_occurrences": 723,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 1
+    },
+    {
+      "patch": "1.14.1",
+      "ledger_sha256": "cf7079ee4c6c0dd0877aac59f9c84aee36e66605c6cc62ea4f2f2175cb31eba4",
+      "inventory_occurrences": 59,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.14.2",
+      "ledger_sha256": "0052716897759cf473c700ebe000dcf2e0ebe2e4018b14082117325aed01ec54",
+      "inventory_occurrences": 7,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.14.3",
+      "ledger_sha256": "4f69fecb88c7b4201898cea4c15a84f91708c2232dfcf48df3cd021af257cee6",
+      "inventory_occurrences": 412,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.14.4",
+      "ledger_sha256": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.0",
+      "ledger_sha256": "ac2d227ce84c5e1ec013808236037b28a2ce1070529159620f31c7668ff3c6eb",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 1,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.1",
+      "ledger_sha256": "ad60adbab94fbb7e35d7d44c506d8e6d6f66b0398df3bda02cebe2f7a26c73e1",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 2,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.2",
+      "ledger_sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.3",
+      "ledger_sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.4",
+      "ledger_sha256": "f3aa9280a2c56d358756109b52cdc0a817dd0a94eedf904d8126a6b76df71b6d",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.5",
+      "ledger_sha256": "41e335e655966d9352b6a28a97b453be64ad533010f5a4906fd7817c5966ff62",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.6",
+      "ledger_sha256": "70cdfac19ed015b0433bb313451b8dd8254c4a7ab1c9e7574badf245546f5577",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.7",
+      "ledger_sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.8",
+      "ledger_sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 0,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    },
+    {
+      "patch": "1.15.9",
+      "ledger_sha256": "fe98aaabb773e2bf486747dd0aa2c01bcd25164f12a2319e5503f569c91f1138",
+      "inventory_occurrences": 0,
+      "contextual_occurrences": 4,
+      "contextual_limit": "No added/removed/changed signature semantics inferred from contextual name mentions.",
+      "exact_overlap_occurrences": 0
+    }
+  ],
+  "overlaps": [
+    {
+      "patch": "1.14.0",
+      "source_id": "wt-global-api-C_Commentator.GetUnitTeamIndex-19",
+      "source_line": 19,
+      "symbol": "C_Commentator.GetUnitTeamIndex",
+      "section": "global-api",
+      "later_line": 411,
+      "later_literal": ": {{api|t=a|C_Commentator.GetUnitTeamIndex}}",
+      "later_direction": "removed",
+      "proof": "SOURCE publication precedence only; original semantic/native/model limits remain UNPROVEN"
+    }
+  ],
+  "occurrence_status": [
+    {
+      "source_id": "wt-global-api-C_Commentator.GetUnitTeamIndex-19",
+      "symbol": "C_Commentator.GetUnitTeamIndex",
+      "overlaps": [
+        {
+          "patch": "1.14.0",
+          "source_id": "wt-global-api-C_Commentator.GetUnitTeamIndex-19",
+          "source_line": 19,
+          "symbol": "C_Commentator.GetUnitTeamIndex",
+          "section": "global-api",
+          "later_line": 411,
+          "later_literal": ": {{api|t=a|C_Commentator.GetUnitTeamIndex}}",
+          "later_direction": "removed",
+          "proof": "SOURCE publication precedence only; original semantic/native/model limits remain UNPROVEN"
+        }
+      ],
+      "latest": {
+        "patch": "1.14.0",
+        "source_id": "wt-global-api-C_Commentator.GetUnitTeamIndex-19",
+        "source_line": 19,
+        "symbol": "C_Commentator.GetUnitTeamIndex",
+        "section": "global-api",
+        "later_line": 411,
+        "later_literal": ": {{api|t=a|C_Commentator.GetUnitTeamIndex}}",
+        "later_direction": "removed",
+        "proof": "SOURCE publication precedence only; original semantic/native/model limits remain UNPROVEN"
+      },
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-C_StorePublic.HasPurchaseableProducts-20",
+      "symbol": "C_StorePublic.HasPurchaseableProducts",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.ConfirmSummon-21",
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-CanInitiateWarGame-22",
+      "symbol": "CanInitiateWarGame",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-GetInstanceLockTimeRemaining-23",
+      "symbol": "GetInstanceLockTimeRemaining",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-GetInstanceLockTimeRemainingEncounter-24",
+      "symbol": "GetInstanceLockTimeRemainingEncounter",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-GetTotemInfo-25",
+      "symbol": "GetTotemInfo",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-GetTotemTimeLeft-26",
+      "symbol": "GetTotemTimeLeft",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-GetWarGameQueueStatus-27",
+      "symbol": "GetWarGameQueueStatus",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-IsUsingFixedTimeStep-28",
+      "symbol": "IsUsingFixedTimeStep",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-IsWargame-29",
+      "symbol": "IsWargame",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-RespondInstanceLock-30",
+      "symbol": "RespondInstanceLock",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-StartSpectatorWarGame-31",
+      "symbol": "StartSpectatorWarGame",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-StartWarGame-32",
+      "symbol": "StartWarGame",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-StartWarGameByName-33",
+      "symbol": "StartWarGameByName",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-TargetTotem-34",
+      "symbol": "TargetTotem",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-global-api-WarGameRespond-35",
+      "symbol": "WarGameRespond",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-events-COMMENTATOR_IMMEDIATE_FOV_UPDATE-45",
+      "symbol": "COMMENTATOR_IMMEDIATE_FOV_UPDATE",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-events-INSTANCE_LOCK_START-46",
+      "symbol": "INSTANCE_LOCK_START",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-events-INSTANCE_LOCK_STOP-47",
+      "symbol": "INSTANCE_LOCK_STOP",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-events-INSTANCE_LOCK_WARNING-48",
+      "symbol": "INSTANCE_LOCK_WARNING",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-events-WARGAME_REQUESTED-49",
+      "symbol": "WARGAME_REQUESTED",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    },
+    {
+      "source_id": "wt-cvars-ColorNameplateNameBySelection-59",
+      "symbol": "ColorNameplateNameBySelection",
+      "overlaps": [],
+      "latest": null,
+      "semantic_status": "UNPROVEN",
+      "native_credit": false,
+      "model_credit": false
+    }
+  ],
+  "totals": {
+    "actual_registers": 18,
+    "source_inventory": 23,
+    "overlap_occurrences": 1,
+    "source_occurrences_with_overlap": 1,
+    "meaningful_historical_closures": 0,
+    "native_closures": 0
+  },
+  "scope": "No linked/transcluded expansion; no mutation of frozen queue, ledger, seals; no imported runtime proof."
+}

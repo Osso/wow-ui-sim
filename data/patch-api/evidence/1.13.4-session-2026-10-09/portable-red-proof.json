@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/originals.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/portable-red-receipts.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791564157.4288743,
+  "end_epoch": 1791564157.4928427,
+  "revision": "c9c0262e3",
+  "exit_code": 1,
+  "scope": "targeted development missing serialized application/archive boundary"
+}
