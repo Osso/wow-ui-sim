@@ -1,6 +1,7 @@
 //! Startup publication and values for the 12.0.0 TransmogSituation enum.
 
-#![cfg(feature = "retail-12-0-0")]
+// Later cumulative epochs publish additional members and different metadata.
+#![cfg(all(feature = "retail-12-0-0", not(feature = "retail-12-0-5")))]
 
 use super::super::*;
 
