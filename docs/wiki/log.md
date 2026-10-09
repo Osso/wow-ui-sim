@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.13.3 literal SOURCE accounting
 
-[Audit](investigations/patch-1-13-3-api-audit.md): frozen identity and own backing-model assessment retained; RED9 for full-page accounting. Preserve dropped event/four CVars separately from historical22-entry default register and existing extractor error; no fabricated signatures/defaults/aliases/history/model/native credit. Same-Era1.13.4 concurrently active, integrated before1.13.3 by main. GREEN/copy/seal/current health development proof pending.
+[Audit](investigations/patch-1-13-3-api-audit.md): exact frozen identity and own backing-model assessment; SOURCE RED9/GREEN9 at63501af73 preserves27 literal inventory/22 default entries and existing extractor error,266 omissions. Existing current Era NPC absolute-health1/1 atbd091cd6d: three mutations, no runtime fix or historical/native/signature credit. Portable RED3/GREEN3 atde4a7912d: copied SOURCE9/default bytes/error and both serialized ledger/log rejection/restoration; own validator84unchanged seals. Original84map/archive preserved;12later receipt seals separate. All38full historical contracts UNPROVEN. Six vendor/seven headless warnings retained, no suppression/broad/final gates. Main integrates concurrent1.13.4 before1.13.3; no parent-goal closure.
 
 ## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE accounting
 

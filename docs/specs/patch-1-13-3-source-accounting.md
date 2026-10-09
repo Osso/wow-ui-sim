@@ -8,8 +8,8 @@ Bounded Classic Era page audit from the [immutable source pin](../../data/patch-
 - [x] Preserve every nonblank raw row, all literal inventory/signature fragments, prose, headings/counts/captions/navigation and template/link/reference boundaries.
 - [x] Replay historical default bytes/error unchanged, including 22-entry default register versus 27 literal inventory occurrences; never invent omitted signatures, defaults or aliases.
 - [x] Derive totals/statuses/omission controls from source and fixtures; reject omission and fabricated credit.
-- [ ] Replay copied historical source with no Git/target/current tools; reject serialized ledger/log tampering and restore exact bytes under unchanged original seals.
-- [ ] Keep original seals immutable and later GREEN receipts separate.
+- [x] Replay copied historical source with no Git/target/current tools; reject serialized ledger/log tampering and restore exact bytes under unchanged original seals.
+- [x] Keep original seals immutable and later GREEN receipts separate.
 - [x] Test only the grounded current Era NPC health-values subset separately from SOURCE/native credit.
 
 ## How it works
@@ -30,7 +30,7 @@ Bounded Classic Era page audit from the [immutable source pin](../../data/patch-
 
 ## Known gaps (current cycle)
 
-- [ ] Historical copied replay/seal controls pending; SOURCE9/9 and existing current Era NPC-health1/1 passed at separately retained revisions.
+- [ ] Main-owned same-Era1.13.4 integration must precede1.13.3; no successor register applied by this page audit.
 - [ ] All historical runtime/native/signature/security/default contracts remain UNPROVEN.
 
 ## Out of scope

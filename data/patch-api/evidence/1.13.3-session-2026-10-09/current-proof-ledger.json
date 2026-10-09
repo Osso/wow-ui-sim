@@ -1,0 +1,131 @@
+{
+  "scope": "bounded page development proof, not parent/native/final acceptance",
+  "source": {
+    "epoch": "63501af73f4ef6bd5719ddc773b81b1cfe5e4f9f",
+    "tests_run": 9,
+    "exit_code": 0,
+    "totals": {
+      "physical_lines": 62,
+      "source_rows": 56,
+      "extracted_rows": 0,
+      "inventory": 27,
+      "default_inventory": 22,
+      "default_omissions": 5,
+      "signatures": 31,
+      "headers": 8,
+      "inventory_headers": 2,
+      "captions": 2,
+      "prose": 4,
+      "links": 7,
+      "templates": 35,
+      "references": 2,
+      "contracts": 38,
+      "configured_profiles": 2,
+      "successors": 18,
+      "model_review": 7,
+      "source_statuses": {
+        "metadata-only": 23,
+        "UNPROVEN": 33
+      },
+      "inventory_by_section": {
+        "global-api": 22,
+        "events": 1,
+        "cvars": 4
+      },
+      "inventory_by_direction": {
+        "added": 17,
+        "removed": 10
+      },
+      "contract_statuses": {
+        "UNPROVEN": 38
+      },
+      "count_conflicts": 0,
+      "declared_signatures": 0,
+      "defaults": 0,
+      "examples": 0,
+      "registry_pages": 101,
+      "omission_controls": 266
+    }
+  },
+  "portable": {
+    "epoch": "de4a7912dc6aada21ac7a64cbc6e17dd722ab202",
+    "tests_run": 3,
+    "failures": 0,
+    "errors": 0,
+    "process_runs": 8,
+    "restorations": [
+      {
+        "restored": "ledger.json",
+        "sha256": "050632dc0adee2629b702338c109bdbdda25d04975d841b45edb4ce0a68df3c8",
+        "all_original_seals": 84
+      },
+      {
+        "restored": "green.log",
+        "sha256": "5ed89477f9651075e1ed7db36331542f09a739b8f4794c5e38c7167c1cf0c981",
+        "all_original_seals": 84
+      }
+    ]
+  },
+  "model": {
+    "epoch": "bd091cd6dd6c3a7af5b386f28d836896c0a15e86",
+    "tests_passed": 1,
+    "exit_code": 0,
+    "snapshot_pairs": [
+      [
+        7501,
+        16003
+      ],
+      [
+        93,
+        24005
+      ],
+      [
+        18007,
+        24005
+      ]
+    ],
+    "meaningful_closed": [
+      "current Era NPC UnitHealth absolute value across mutations",
+      "current Era NPC UnitHealthMax absolute value across mutations"
+    ],
+    "full_historical_contract_closed": false,
+    "native_credit": false,
+    "runtime_changes": 0,
+    "warnings": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "warning: constant `PROVENANCE_SCHEMA` is never used",
+      "warning: associated function `new` is never used",
+      "warning: function `remove_missing_marker` is never used",
+      "warning: function `ensure_known_asset_cached` is never used",
+      "warning: field `encoding_key_hex` is never read",
+      "warning: methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used",
+      "warning: `wow-ui-sim` (lib) generated 6 warnings",
+      "warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`",
+      "warning: `wow-ui-sim` (bin \"wow-sim\") generated 1 warning (run `cargo fix --bin \"wow-sim\" -p wow-ui-sim` to apply 1 suggestion)"
+    ]
+  },
+  "original_seals": {
+    "count": 84,
+    "map_sha256": "8325cb7578f6007d1533fa06360001be6a0b2667ce3100925814e5e7c623ed9e",
+    "bytes": 1132506
+  },
+  "validator": {
+    "epoch": "de4a7912dc6aada21ac7a64cbc6e17dd722ab202",
+    "exit_code": 0
+  },
+  "successor_scope": {
+    "queued": "1.13.4",
+    "integration_order": [
+      "1.13.4",
+      "1.13.3"
+    ],
+    "applied_registers": [],
+    "native_credit": false
+  }
+}

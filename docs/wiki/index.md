@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.13.3 literal SOURCE audit
 
-[Audit](investigations/patch-1-13-3-api-audit.md): frozen455918/6472111; 27 literal inventory versus22 historical default entries; 56 raw rows,31 signature limits,8headings/2counts,4prose/7links/35templates/2citations. Own SOURCE RED9 retained; GREEN/replay/current NPC-health proof pending. Same-Era1.13.4 queued separately; main integrates it first. Zero native/runtime/model SOURCE credit.
+[Audit](investigations/patch-1-13-3-api-audit.md): frozen455918/6472111; 27 literal inventory versus22 historical default entries; 56raw rows/31signature limits/38UNPROVEN contracts;266 omission controls. SOURCE RED9/GREEN9 at63501af73; existing current Era NPC absolute-health1/1 atbd091cd6d, not historical/native/signature parity. Portable RED3/GREEN3 and own84-seal validator atde4a7912d: copied SOURCE9/default bytes/error, serialized ledger/log rejection/exact restoration.84original +12 separate receipt seals;85-member181311byte archive. Same-Era1.13.4 queued separately; main integrates it first. No runtime fix or parent/final acceptance.
 
 ## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE audit
 
