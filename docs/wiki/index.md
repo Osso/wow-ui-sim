@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 5.5.1 Mists Classic API audit
 
-[Audit](investigations/patch-5-5-1-api-audit.md): pinned revision 6778077, TOC 50501 in the Mists Classic 505xx line. Zero inventory/four metadata IDs, no API credit, gaps or retirements. Only Classic 5.5.2/5.5.3/5.5.4 successors; real cached SharedXML harness. Runtime and portable-gate proof pending; all 60 registers/57 extracts reproduce (three unchanged inherited failures), Python 87/87 and formatting pass. No shared runtime or vendor changes.
+[Audit](investigations/patch-5-5-1-api-audit.md): pinned revision 6778077, ancestor TOC 50501 in the Mists Classic 505xx line. Zero inventory/four metadata IDs; no positive API credit, gaps or retirements. Only Classic 5.5.2/5.5.3/5.5.4 successors; real cached SharedXML harness. Branch/fresh-master sweeps 57/57 each; all 9,749 observations on 56 retail pages identical. Mists page/line cases 5/5, retail controls 3/3, non-vendor warning-clean Mists check, injected-row negative 1 → 0, Python 87/87 and formatting pass. All 60 registers/57 extracts reproduce, three exact inherited failures unchanged. Own validator passes with 157 sealed inputs; source and sealed-log tampering rejected/restored. Branch gate at ea5fb94cd: 45/45 clean and 46/46 later PASS, exact Git-pinned prior sets preserved. No shared runtime/vendor changes, positive API/full-Game/native parity claim, push, merge or delegation.
 
 ## [2026-10-08] investigation | Patch 5.5.2 Mists Classic API audit
 
