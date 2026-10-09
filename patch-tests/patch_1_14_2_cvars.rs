@@ -6,14 +6,14 @@ fn frozen_page_cvar_defaults_against_current_era_getters() {
     assert_eq!(wow_ui_sim::client_profile::ACTIVE_INTERFACE_VERSION, 11507);
     let env = WowLuaEnv::new().expect("current headless Era environment");
     for (name, page_default, expected_current) in [
-        ("GamePadFactionColor", "1", Some("1")),
-        ("GamePadVibrationStrength", "1", Some("1")),
+        ("GamePadFactionColor", Some("1"), Some("1")),
+        ("GamePadVibrationStrength", Some("1"), Some("1")),
         (
             "telemetryTargetPackage",
-            "Blizzard.Telemetry.Wow_Mainline",
+            Some("Blizzard.Telemetry.Wow_Mainline"),
             None,
         ),
-        ("P1142_UNKNOWN_CVAR_CONTROL", "not-a-page-default", None),
+        ("P1142_UNKNOWN_CVAR_CONTROL", None, None),
     ] {
         let observed: (Option<String>, Option<String>) = env
             .eval(&format!(
