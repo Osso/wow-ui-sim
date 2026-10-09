@@ -8,7 +8,7 @@
     "patch_5_0_4"
   ],
   "revision": "f57c16190b99a48b4d861d74cf04c18b1f128184",
-  "scope": "own-prefork",
+  "scope": "initial-own-prefork",
   "cwd": ".",
   "target": "worktree-local target",
   "environment": {
@@ -82,7 +82,7 @@
     "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/patch_9_2_7_publication_sweep-results.json"
   },
   "exit": 1,
-  "log": "own-prefork.txt",
+  "log": "initial-own-prefork.txt",
   "log_sha256": "9ef0a5eff4cad50f3dff00f9fecb0c999b4fbac96eafe88f21feca6350b12041",
   "seconds": 6.729412904009223,
   "invalidated": false

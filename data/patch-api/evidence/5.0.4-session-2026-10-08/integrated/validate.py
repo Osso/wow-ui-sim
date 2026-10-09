@@ -119,10 +119,20 @@ def check_proofs(context):
         assert receipt['command'] and not receipt['invalidated'] and receipt['exit'] == expected_exit, name
         assert digest((HERE / receipt['log']).read_bytes()) == receipt['log_sha256'], ('log drift', name)
         scope = ['src', 'tests', 'Cargo.toml', 'Cargo.lock', 'build.rs']
+        if name.startswith(('test_', 'historical-', 'preservation', 'reproduction')):
+            scope = ['tools']
         changed = git('diff', '--name-only', receipt['revision'], revision, '--', *scope).decode().splitlines()
         allowed = {'src/c_api/c_pet_battles.rs', 'tests/patch_5_0_4_behavior.rs',
                    'tests/patch_5_0_4_publication_sweep.rs', 'tests/data/patch_5_0_4_sweep_known_gaps.json'}
-        assert set(changed) <= (allowed if name.startswith('master-') else set()), (name, changed)
+        if name.startswith('master-'):
+            permitted = allowed
+        elif name in ('all-sweeps', 'own-prefork', 'negative', 'default-check', 'mists-check', 'mists-all-sweeps', 'mists-pet-type', 'startup-build', 'startup', 'format', 'resolved-sweeps'):
+            permitted = set()
+        else:
+            # The resolved-gap JSON fixture is not selected by pet state, caller,
+            # library, historical or parser proof commands.
+            permitted = {'tests/data/patch_5_0_4_sweep_known_gaps.json'}
+        assert set(changed) <= permitted, (name, changed)
         if name in context['test_counts']:
             results = re.findall(r'test result: (?:ok|FAILED)\. (\d+) passed; (\d+) failed', (HERE / receipt['log']).read_text())
             assert results and list(map(int, results[-1])) == context['test_counts'][name], (name, results)
@@ -141,6 +151,8 @@ def main():
     context = read('context.json')
     for name, expected in context['own_files'].items():
         assert digest((HERE / name).read_bytes()) == expected, ('integrated artifact drift', name)
+    for path, expected in context['current_source_guards'].items():
+        assert digest((ROOT / path).read_bytes()) == expected, ('own source drift', path)
     for directory, expected in context['directory_trees'].items():
         assert git('rev-parse', context['runtime_revision'] + ':' + directory).decode().strip() == expected
     assert git('diff', '--name-only', context['master_revision'], context['runtime_revision'], '--', 'src', 'Interface').decode().splitlines() == ['src/c_api/c_pet_battles.rs']

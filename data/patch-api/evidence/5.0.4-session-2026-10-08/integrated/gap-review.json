@@ -1,0 +1,3616 @@
+{
+  "publication_mismatches": [
+    {
+      "source_id": "wt-global-api-SetActiveSpecGroup-6",
+      "symbol": "SetActiveSpecGroup",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetActiveSpecGroup"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetActiveSpecGroup: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "wt-global-api-GetNumUnspentTalents-9",
+      "symbol": "GetNumUnspentTalents",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumUnspentTalents"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumUnspentTalents: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "wt-global-api-GetNumTalentTabs-10",
+      "symbol": "GetNumTalentTabs",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumTalentTabs"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumTalentTabs: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=5. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "wt-global-api-UnitIsRaidOfficer-15",
+      "symbol": "UnitIsRaidOfficer",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "UnitIsRaidOfficer"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "UnitIsRaidOfficer: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=3. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "wt-global-api-GetNumPartyMembers-16",
+      "symbol": "GetNumPartyMembers",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumPartyMembers"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumPartyMembers: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=4. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "wt-global-api-GetNumRaidMembers-17",
+      "symbol": "GetNumRaidMembers",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumRaidMembers"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumRaidMembers: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=7. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "wt-events-RAID_ROSTER_UPDATE-18",
+      "symbol": "RAID_ROSTER_UPDATE",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "RAID_ROSTER_UPDATE"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=true; return=true; registered=true",
+        "kind": "event",
+        "value": null
+      },
+      "reason": "RAID_ROSTER_UPDATE: pcall=true; return=true; registered=true. Cache bare hits=4, full src/tests bare hits=4. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "wt-global-api-LE_PARTY_CATEGORY_HOME-20",
+      "symbol": "LE_PARTY_CATEGORY_HOME",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "LE_PARTY_CATEGORY_HOME"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=number; lookup=number",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "LE_PARTY_CATEGORY_HOME: raw=number; lookup=number. Published as a number, not an API function. Function-only sweep rejects it; separate home roster semantics are not proven."
+    },
+    {
+      "source_id": "wt-global-api-LE_PARTY_CATEGORY_INSTANCE-21",
+      "symbol": "LE_PARTY_CATEGORY_INSTANCE",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "LE_PARTY_CATEGORY_INSTANCE"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=number; lookup=number",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "LE_PARTY_CATEGORY_INSTANCE: raw=number; lookup=number. Published as a number, not an API function. Function-only sweep rejects it; separate instance roster semantics are not proven."
+    },
+    {
+      "source_id": "wt-global-api-SetDungeonDifficultyID-28",
+      "symbol": "SetDungeonDifficultyID",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetDungeonDifficultyID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetDungeonDifficultyID: raw=nil; lookup=nil. Difficulty setter is absent; existing default-only GetDungeonDifficultyID does not supply mutable difficulty state."
+    },
+    {
+      "source_id": "wt-events-SPELL_CAST_SUCCESS-30",
+      "symbol": "SPELL_CAST_SUCCESS",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SPELL_CAST_SUCCESS"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SPELL_CAST_SUCCESS\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "reason": "SPELL_CAST_SUCCESS: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SPELL_CAST_SUCCESS\"; registered=false. Combat-log sub-event, not independently registerable frame event; the historical cast-time producer qualification remains unproved."
+    },
+    {
+      "source_id": "wt-events-COMBAT_LOG_EVENT-30",
+      "symbol": "COMBAT_LOG_EVENT",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "COMBAT_LOG_EVENT"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "reason": "COMBAT_LOG_EVENT: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT\"; registered=false. Historical combat-log frame event is not registerable in this current surface; payload/cast-time/environmental-type contracts remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendInfo-32",
+      "symbol": "BNGetFriendInfo",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-BNGetFriendInfo-131",
+        "symbol": "BNGetFriendInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "BNGetFriendInfo: raw=function; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "wt-global-api-GetMaxTalentTier-52",
+      "symbol": "GetMaxTalentTier",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetMaxTalentTier"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetMaxTalentTier: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "wt-global-api-GetTalentRowSelectionInfo-53",
+      "symbol": "GetTalentRowSelectionInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetTalentRowSelectionInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetTalentRowSelectionInfo: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "wt-global-api-LearnTalents-54",
+      "symbol": "LearnTalents",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "LearnTalents"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "LearnTalents: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "wt-global-api-GetTalentClearInfo-55",
+      "symbol": "GetTalentClearInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetTalentClearInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetTalentClearInfo: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "wt-global-api-RemoveTalent-56",
+      "symbol": "RemoveTalent",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "RemoveTalent"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "RemoveTalent: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "wt-framexml-UIPanelButtonTemplate-68",
+      "symbol": "UIPanelButtonTemplate",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "UIPanelButtonTemplate"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "UIPanelButtonTemplate: raw=nil; lookup=nil. Template identity, not a global function/table; function-only probe is inapplicable. Do not retire or invent a global alias."
+    },
+    {
+      "source_id": "wt-framexml-QueueStatusMinimapButton-69",
+      "symbol": "QueueStatusMinimapButton",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "QueueStatusMinimapButton"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "QueueStatusMinimapButton: raw=nil; lookup=nil. Historical FrameXML identity raw-absent; modern queue/stance frames are not proof of this name or historical renamed UI workflow."
+    },
+    {
+      "source_id": "wt-framexml-StanceBarFrame-70",
+      "symbol": "StanceBarFrame",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "StanceBarFrame"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "StanceBarFrame: raw=nil; lookup=nil. Historical FrameXML identity raw-absent; modern queue/stance frames are not proof of this name or historical renamed UI workflow."
+    },
+    {
+      "source_id": "wt-events-COMBAT_LOG_EVENT-78",
+      "symbol": "COMBAT_LOG_EVENT",
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "COMBAT_LOG_EVENT"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "reason": "COMBAT_LOG_EVENT: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT\"; registered=false. Historical combat-log frame event is not registerable in this current surface; payload/cast-time/environmental-type contracts remain unproved."
+    },
+    {
+      "source_id": "diff-wt-global-api-AcknowledgeAutoAcceptQuest-11",
+      "symbol": "AcknowledgeAutoAcceptQuest",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "AcknowledgeAutoAcceptQuest"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "AcknowledgeAutoAcceptQuest: raw=nil; lookup=nil. No autoaccept acknowledgement state/event lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-BNCheckBattleTagInviteToGuildMember-13",
+      "symbol": "BNCheckBattleTagInviteToGuildMember",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "BNCheckBattleTagInviteToGuildMember"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "BNCheckBattleTagInviteToGuildMember: raw=nil; lookup=nil. No BattleTag guild-member invitation eligibility lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-BNCheckBattleTagInviteToUnit-14",
+      "symbol": "BNCheckBattleTagInviteToUnit",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "BNCheckBattleTagInviteToUnit"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "BNCheckBattleTagInviteToUnit: raw=nil; lookup=nil. No BattleTag unit invitation eligibility lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-BNTokenFindName-16",
+      "symbol": "BNTokenFindName",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "BNTokenFindName"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "BNTokenFindName: raw=nil; lookup=nil. No Battle.net tokenized-name search state/contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.CanActivePetSwapOut-33",
+      "symbol": "C_PetBattles.CanActivePetSwapOut",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.CanActivePetSwapOut"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.CanActivePetSwapOut: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing legal active-slot replacement phase and swap restrictions."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.CancelPVPDuel-35",
+      "symbol": "C_PetBattles.CancelPVPDuel",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.CancelPVPDuel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.CancelPVPDuel: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing pet-battle duel invitation/cancellation lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.DeclineQueuedPVPMatch-37",
+      "symbol": "C_PetBattles.DeclineQueuedPVPMatch",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.DeclineQueuedPVPMatch"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.DeclineQueuedPVPMatch: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing queued match invitation acceptance/decline lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetAbilityEffectInfo-39",
+      "symbol": "C_PetBattles.GetAbilityEffectInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetAbilityEffectInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.GetAbilityEffectInfo: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing ability-effect definition catalog and effect-index lookup."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetAbilityProcTurnIndex-42",
+      "symbol": "C_PetBattles.GetAbilityProcTurnIndex",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetAbilityProcTurnIndex"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.GetAbilityProcTurnIndex: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing ability proc schedule and turn-index producer."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetAbilityStateModification-43",
+      "symbol": "C_PetBattles.GetAbilityStateModification",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetAbilityStateModification"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.GetAbilityStateModification: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing per-ability battle-state modifiers."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetDisplayID-52",
+      "symbol": "C_PetBattles.GetDisplayID",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetDisplayID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.GetDisplayID: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing battle-pet display identity (species ID is not a display ID)."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetPlayerTrapAbility-63",
+      "symbol": "C_PetBattles.GetPlayerTrapAbility",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetPlayerTrapAbility"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.GetPlayerTrapAbility: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing player trap ability selection/availability state."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetStateValue-67",
+      "symbol": "C_PetBattles.GetStateValue",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetStateValue"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.GetStateValue: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing per-pet battle-state value catalog."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.GetTurnTimeInfo-68",
+      "symbol": "C_PetBattles.GetTurnTimeInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.GetTurnTimeInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.GetTurnTimeInfo: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing the historical turn-time return contract (round-time fields alone do not establish it)."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.IsWaitingOnOpponent-74",
+      "symbol": "C_PetBattles.IsWaitingOnOpponent",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.IsWaitingOnOpponent"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.IsWaitingOnOpponent: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing opponent action/wait transition state."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.StopPVPMatchmaking-82",
+      "symbol": "C_PetBattles.StopPVPMatchmaking",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetBattles.StopPVPMatchmaking"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetBattles.StopPVPMatchmaking: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing the stop API registration and matchmaking cancellation transition; current start flag alone is not proof."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.AddAllPetSourcesFilter-85",
+      "symbol": "C_PetJournal.AddAllPetSourcesFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.AddAllPetSourcesFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.AddAllPetSourcesFilter: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal source-filter reset and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.AddAllPetTypesFilter-86",
+      "symbol": "C_PetJournal.AddAllPetTypesFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.AddAllPetTypesFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.AddAllPetTypesFilter: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal pet-type filter reset and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.ClearAllPetSourcesFilter-88",
+      "symbol": "C_PetJournal.ClearAllPetSourcesFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.ClearAllPetSourcesFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.ClearAllPetSourcesFilter: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal source-filter clearing and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.ClearAllPetTypesFilter-89",
+      "symbol": "C_PetJournal.ClearAllPetTypesFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.ClearAllPetTypesFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.ClearAllPetTypesFilter: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal pet-type filter clearing and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.ClearSearchFilter-90",
+      "symbol": "C_PetJournal.ClearSearchFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.ClearSearchFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.ClearSearchFilter: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal search reset and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.IsFlagFiltered-104",
+      "symbol": "C_PetJournal.IsFlagFiltered",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.IsFlagFiltered"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.IsFlagFiltered: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal flag mask and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.IsJournalReadOnly-105",
+      "symbol": "C_PetJournal.IsJournalReadOnly",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.IsJournalReadOnly"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.IsJournalReadOnly: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal write-access/session state."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.IsPetSourceFiltered-107",
+      "symbol": "C_PetJournal.IsPetSourceFiltered",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.IsPetSourceFiltered"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.IsPetSourceFiltered: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal source filter query and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.IsPetTypeFiltered-108",
+      "symbol": "C_PetJournal.IsPetTypeFiltered",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.IsPetTypeFiltered"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.IsPetTypeFiltered: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal type filter query and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.PetCanBeReleased-109",
+      "symbol": "C_PetJournal.PetCanBeReleased",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.PetCanBeReleased"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.PetCanBeReleased: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing owned-pet release eligibility and restrictions."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.PetIsCapturable-110",
+      "symbol": "C_PetJournal.PetIsCapturable",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.PetIsCapturable"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.PetIsCapturable: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing species capture eligibility data."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SetFlagFilter-123",
+      "symbol": "C_PetJournal.SetFlagFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.SetFlagFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.SetFlagFilter: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal flag selection and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SetPetLoadOutInfo-124",
+      "symbol": "C_PetJournal.SetPetLoadOutInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.SetPetLoadOutInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.SetPetLoadOutInfo: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing pet loadout slot mutation/validation and event lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SetPetSourceFilter-125",
+      "symbol": "C_PetJournal.SetPetSourceFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PetJournal.SetPetSourceFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_PetJournal.SetPetSourceFilter: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing journal source selection and filtered list consumption."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_Scenario.IsChallengeMode-133",
+      "symbol": "C_Scenario.IsChallengeMode",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Scenario.IsChallengeMode"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "C_Scenario.IsChallengeMode: raw=nil; lookup=function. Raw namespace member absent; ordinary lookup-only autostub is not publication or behavioral credit. Missing scenario challenge-mode participation state; scenario step fixtures are insufficient."
+    },
+    {
+      "source_id": "diff-wt-global-api-CanAbandonQuest-135",
+      "symbol": "CanAbandonQuest",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-CanAbandonQuest-596",
+        "symbol": "CanAbandonQuest"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "CanAbandonQuest: raw=function; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-global-api-CanCancelScene-136",
+      "symbol": "CanCancelScene",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CanCancelScene"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "CanCancelScene: raw=nil; lookup=nil. No scene cancellation eligibility lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-CanUseSoulstone-137",
+      "symbol": "CanUseSoulstone",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CanUseSoulstone"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "CanUseSoulstone: raw=nil; lookup=nil. No soulstone resurrection-availability producer."
+    },
+    {
+      "source_id": "diff-wt-global-api-CancelMasterLootRoll-138",
+      "symbol": "CancelMasterLootRoll",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CancelMasterLootRoll"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "CancelMasterLootRoll: raw=nil; lookup=nil. Legacy master-loot eligibility/roll lifecycle entry point absent; current group loot method publication is insufficient."
+    },
+    {
+      "source_id": "diff-wt-global-api-CancelScene-139",
+      "symbol": "CancelScene",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "CancelScene"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "CancelScene: raw=nil; lookup=nil. No scene cancellation transition/event lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-ClearBlacklistMap-140",
+      "symbol": "ClearBlacklistMap",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "ClearBlacklistMap"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "ClearBlacklistMap: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-ClearMissingLootDisplay-142",
+      "symbol": "ClearMissingLootDisplay",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "ClearMissingLootDisplay"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "ClearMissingLootDisplay: raw=nil; lookup=nil. No missing-loot display queue/dismissal lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-DoMasterLootRoll-145",
+      "symbol": "DoMasterLootRoll",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "DoMasterLootRoll"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "DoMasterLootRoll: raw=nil; lookup=nil. Legacy master-loot eligibility/roll lifecycle entry point absent; current group loot method publication is insufficient."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetAreaMapInfo-154",
+      "symbol": "GetAreaMapInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetAreaMapInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetAreaMapInfo: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetAreaMaps-155",
+      "symbol": "GetAreaMaps",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetAreaMaps"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetAreaMaps: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetBlacklistMap-158",
+      "symbol": "GetBlacklistMap",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetBlacklistMap"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetBlacklistMap: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeBestTimeInfo-161",
+      "symbol": "GetChallengeBestTimeInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeBestTimeInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeBestTimeInfo: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeBestTimeNum-162",
+      "symbol": "GetChallengeBestTimeNum",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeBestTimeNum"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeBestTimeNum: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeBestTime-163",
+      "symbol": "GetChallengeBestTime",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeBestTime"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeBestTime: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeMapMoney-164",
+      "symbol": "GetChallengeMapMoney",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeMapMoney"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeMapMoney: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeMapRewardInfo-165",
+      "symbol": "GetChallengeMapRewardInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeMapRewardInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeMapRewardInfo: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeModeCompletionInfo-166",
+      "symbol": "GetChallengeModeCompletionInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeModeCompletionInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeModeCompletionInfo: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeModeCompletionReward-167",
+      "symbol": "GetChallengeModeCompletionReward",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeModeCompletionReward"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeModeCompletionReward: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeModeLeaderInfo-168",
+      "symbol": "GetChallengeModeLeaderInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeModeLeaderInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeModeLeaderInfo: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeModeMapInfo-169",
+      "symbol": "GetChallengeModeMapInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeModeMapInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeModeMapInfo: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeModeMapPlayerStats-170",
+      "symbol": "GetChallengeModeMapPlayerStats",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeModeMapPlayerStats"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeModeMapPlayerStats: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeModeMapTable-171",
+      "symbol": "GetChallengeModeMapTable",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeModeMapTable"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeModeMapTable: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeModeMapTimes-172",
+      "symbol": "GetChallengeModeMapTimes",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeModeMapTimes"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeModeMapTimes: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetChallengeMode-173",
+      "symbol": "GetChallengeMode",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetChallengeMode"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetChallengeMode: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetClassInfoByID-174",
+      "symbol": "GetClassInfoByID",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetClassInfoByID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetClassInfoByID: raw=nil; lookup=nil. Legacy class-by-ID entry point is absent. Existing GetClassInfo class catalog is not proof of this old helper's return contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetContinentMapInfo-176",
+      "symbol": "GetContinentMapInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetContinentMapInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetContinentMapInfo: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetContinentMaps-177",
+      "symbol": "GetContinentMaps",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetContinentMaps"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetContinentMaps: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetDungeonMapInfo-181",
+      "symbol": "GetDungeonMapInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetDungeonMapInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetDungeonMapInfo: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetDungeonMaps-182",
+      "symbol": "GetDungeonMaps",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetDungeonMaps"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetDungeonMaps: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetGlyphLinkByID-186",
+      "symbol": "GetGlyphLinkByID",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetGlyphLinkByID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetGlyphLinkByID: raw=nil; lookup=nil. No old glyph-ID hyperlink entry point/definition lookup."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetInspectTalent-189",
+      "symbol": "GetInspectTalent",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetInspectTalent"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetInspectTalent: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetLootSourceInfo-197",
+      "symbol": "GetLootSourceInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetLootSourceInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetLootSourceInfo: raw=nil; lookup=nil. No per-loot-slot source GUID/quantity attribution model."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetMaxTalentTier-199",
+      "symbol": "GetMaxTalentTier",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetMaxTalentTier"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetMaxTalentTier: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumChallengeMapRewards-205",
+      "symbol": "GetNumChallengeMapRewards",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumChallengeMapRewards"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumChallengeMapRewards: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumChallengeModeLeaders-206",
+      "symbol": "GetNumChallengeModeLeaders",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumChallengeModeLeaders"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumChallengeModeLeaders: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumScenarios-211",
+      "symbol": "GetNumScenarios",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumScenarios"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumScenarios: raw=nil; lookup=nil. No legacy scenario catalog enumeration surface."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumUnspentTalents-216",
+      "symbol": "GetNumUnspentTalents",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumUnspentTalents"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumUnspentTalents: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestLogQuestType-221",
+      "symbol": "GetQuestLogQuestType",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetQuestLogQuestType"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetQuestLogQuestType: raw=nil; lookup=nil. No old quest-log index type entry point; current quest IDs are not index-contract proof."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetQuestPOIWorldEffectInfo-222",
+      "symbol": "GetQuestPOIWorldEffectInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetQuestPOIWorldEffectInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetQuestPOIWorldEffectInfo: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetRaidBuffInfo-223",
+      "symbol": "GetRaidBuffInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetRaidBuffInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetRaidBuffInfo: raw=nil; lookup=nil. No raid-buff aggregation/category producer under this old API."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetRaidBuffTrayAuraInfo-224",
+      "symbol": "GetRaidBuffTrayAuraInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetRaidBuffTrayAuraInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetRaidBuffTrayAuraInfo: raw=nil; lookup=nil. No consolidated raid-buff tray aura producer."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetSpecializationSpells-234",
+      "symbol": "GetSpecializationSpells",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetSpecializationSpells"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetSpecializationSpells: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetSpecsForSpell-236",
+      "symbol": "GetSpecsForSpell",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetSpecsForSpell"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetSpecsForSpell: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetSpellLevelLearned-238",
+      "symbol": "GetSpellLevelLearned",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-GetSpellLevelLearned-446",
+        "symbol": "GetSpellLevelLearned"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetSpellLevelLearned: raw=function; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-global-api-GetTalentClearInfo-239",
+      "symbol": "GetTalentClearInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetTalentClearInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetTalentClearInfo: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetTalentRowSelectionInfo-240",
+      "symbol": "GetTalentRowSelectionInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetTalentRowSelectionInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetTalentRowSelectionInfo: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetTradeSkillCategoryFilter-242",
+      "symbol": "GetTradeSkillCategoryFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetTradeSkillCategoryFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetTradeSkillCategoryFilter: raw=nil; lookup=nil. Legacy trade-skill category/subcategory filter entry point absent; current profession fixtures do not implement this filter/list contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetTradeSkillSubCategories-243",
+      "symbol": "GetTradeSkillSubCategories",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetTradeSkillSubCategories"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetTradeSkillSubCategories: raw=nil; lookup=nil. Legacy trade-skill category/subcategory filter entry point absent; current profession fixtures do not implement this filter/list contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetWorldEffectTextureCoords-246",
+      "symbol": "GetWorldEffectTextureCoords",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetWorldEffectTextureCoords"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetWorldEffectTextureCoords: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetWorldLocFromMapPos-249",
+      "symbol": "GetWorldLocFromMapPos",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetWorldLocFromMapPos"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetWorldLocFromMapPos: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetWorldMapTransformInfo-250",
+      "symbol": "GetWorldMapTransformInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetWorldMapTransformInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetWorldMapTransformInfo: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetWorldMapTransforms-251",
+      "symbol": "GetWorldMapTransforms",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetWorldMapTransforms"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetWorldMapTransforms: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsBlizzCon-258",
+      "symbol": "IsBlizzCon",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsBlizzCon"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsBlizzCon: raw=nil; lookup=nil. No event-client identity backing for this legacy flag."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsEuropeanNumbers-260",
+      "symbol": "IsEuropeanNumbers",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsEuropeanNumbers"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsEuropeanNumbers: raw=nil; lookup=nil. Legacy locale/number-convention query is absent; ICU number formatting does not establish this boolean contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsInScenarioGroup-264",
+      "symbol": "IsInScenarioGroup",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsInScenarioGroup"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsInScenarioGroup: raw=nil; lookup=nil. No scenario-specific group participation query under this name."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsLoggingOut-266",
+      "symbol": "IsLoggingOut",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsLoggingOut"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsLoggingOut: raw=nil; lookup=nil. No logout-pending state/transition query is registered."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsMasterLooter-267",
+      "symbol": "IsMasterLooter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsMasterLooter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsMasterLooter: raw=nil; lookup=nil. Legacy master-loot eligibility/roll lifecycle entry point absent; current group loot method publication is insufficient."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsPetActive-268",
+      "symbol": "IsPetActive",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsPetActive"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsPetActive: raw=nil; lookup=nil. No modeled summoned-pet activity lifecycle query under this legacy name."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsPlayerNeutral-270",
+      "symbol": "IsPlayerNeutral",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsPlayerNeutral"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsPlayerNeutral: raw=nil; lookup=nil. No neutral-faction choice lifecycle query under this legacy name."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsRangedWeapon-273",
+      "symbol": "IsRangedWeapon",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsRangedWeapon"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsRangedWeapon: raw=nil; lookup=nil. No legacy ranged-weapon classification entry point; inventory publication alone does not establish its argument contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsSpellClassOrSpec-274",
+      "symbol": "IsSpellClassOrSpec",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsSpellClassOrSpec"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "IsSpellClassOrSpec: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-LearnTalents-276",
+      "symbol": "LearnTalents",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "LearnTalents"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "LearnTalents: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-NeutralPlayerSelectFaction-278",
+      "symbol": "NeutralPlayerSelectFaction",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "NeutralPlayerSelectFaction"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "NeutralPlayerSelectFaction: raw=nil; lookup=nil. No faction-choice validation/transition under this legacy name."
+    },
+    {
+      "source_id": "diff-wt-global-api-PetHasSpellbook-279",
+      "symbol": "PetHasSpellbook",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "PetHasSpellbook"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "PetHasSpellbook: raw=nil; lookup=nil. No pet spellbook presence query under this legacy name."
+    },
+    {
+      "source_id": "diff-wt-global-api-RemoveTalent-283",
+      "symbol": "RemoveTalent",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "RemoveTalent"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "RemoveTalent: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-RequestChallengeModeLeaders-284",
+      "symbol": "RequestChallengeModeLeaders",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "RequestChallengeModeLeaders"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "RequestChallengeModeLeaders: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-RequestChallengeModeMapInfo-285",
+      "symbol": "RequestChallengeModeMapInfo",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "RequestChallengeModeMapInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "RequestChallengeModeMapInfo: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-RequestChallengeModeRewards-286",
+      "symbol": "RequestChallengeModeRewards",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "RequestChallengeModeRewards"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "RequestChallengeModeRewards: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-ResetChallengeMode-287",
+      "symbol": "ResetChallengeMode",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "ResetChallengeMode"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "ResetChallengeMode: raw=nil; lookup=nil. Legacy challenge-mode timed-run/reward/leaderboard catalog or request/reset entry point absent. Current modern challenge publication does not establish this 2012 global contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-ResetSetMerchantFilter-288",
+      "symbol": "ResetSetMerchantFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "ResetSetMerchantFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "ResetSetMerchantFilter: raw=nil; lookup=nil. No reset merchant-filter transition under this legacy name."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetActiveSpecGroup-289",
+      "symbol": "SetActiveSpecGroup",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetActiveSpecGroup"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetActiveSpecGroup: raw=nil; lookup=nil. Legacy tier/spec/spell-membership or mutation entry point absent. Current talent trees lack this tier-era argument/return/cost/selection contract; no synthetic defaults added."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetBlacklistMap-290",
+      "symbol": "SetBlacklistMap",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetBlacklistMap"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetBlacklistMap: raw=nil; lookup=nil. Legacy map hierarchy/coordinate/transform or blacklist entry point absent. Current C_Map/POI records do not prove this historical coordinate/filter contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetDungeonDifficultyID-291",
+      "symbol": "SetDungeonDifficultyID",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetDungeonDifficultyID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetDungeonDifficultyID: raw=nil; lookup=nil. Difficulty setter is absent; existing default-only GetDungeonDifficultyID does not supply mutable difficulty state."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetPendingReportPetTarget-294",
+      "symbol": "SetPendingReportPetTarget",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetPendingReportPetTarget"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetPendingReportPetTarget: raw=nil; lookup=nil. No pet-report pending-target workflow."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetSpecialization-295",
+      "symbol": "SetSpecialization",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-SetSpecialization-102",
+        "symbol": "SetSpecialization"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetSpecialization: raw=function; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-global-api-SetTradeSkillCategoryFilter-296",
+      "symbol": "SetTradeSkillCategoryFilter",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetTradeSkillCategoryFilter"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "SetTradeSkillCategoryFilter: raw=nil; lookup=nil. Legacy trade-skill category/subcategory filter entry point absent; current profession fixtures do not implement this filter/list contract."
+    },
+    {
+      "source_id": "diff-wt-global-api-UnitCanPetBattle-301",
+      "symbol": "UnitCanPetBattle",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "UnitCanPetBattle"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "UnitCanPetBattle: raw=nil; lookup=nil. No per-unit pet-battle challenge eligibility producer."
+    },
+    {
+      "source_id": "diff-wt-global-api-UnitInVehicleHidesPetFrame-303",
+      "symbol": "UnitInVehicleHidesPetFrame",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "UnitInVehicleHidesPetFrame"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "UnitInVehicleHidesPetFrame: raw=nil; lookup=nil. No vehicle pet-frame suppression policy state."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumPartyMembers-342",
+      "symbol": "GetNumPartyMembers",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumPartyMembers"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumPartyMembers: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=4. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumRaidMembers-343",
+      "symbol": "GetNumRaidMembers",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumRaidMembers"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumRaidMembers: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=7. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumTalentTabs-346",
+      "symbol": "GetNumTalentTabs",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetNumTalentTabs"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetNumTalentTabs: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=5. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-global-api-GetRewardHonor-356",
+      "symbol": "GetRewardHonor",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetRewardHonor"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "GetRewardHonor: raw=function; lookup=function. Cache bare hits=1, full src/tests bare hits=2. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-global-api-RequestBattlefieldPositions-378",
+      "symbol": "RequestBattlefieldPositions",
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "RequestBattlefieldPositions"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "RequestBattlefieldPositions: raw=function; lookup=function. Cache bare hits=0, full src/tests bare hits=5. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-framexml-BreakUpLargeNumbers-406",
+      "symbol": "BreakUpLargeNumbers",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "framexml",
+        "superseded_by": "diff-wt-framexml-BreakUpLargeNumbers-465",
+        "symbol": "BreakUpLargeNumbers"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "BreakUpLargeNumbers: raw=function; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. "
+    },
+    {
+      "source_id": "diff-wt-framexml-ShouldShowConsolidatedBuffFrame-418",
+      "symbol": "ShouldShowConsolidatedBuffFrame",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "ShouldShowConsolidatedBuffFrame"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "ShouldShowConsolidatedBuffFrame: raw=nil; lookup=nil. No historical consolidated-buff display policy producer."
+    },
+    {
+      "source_id": "diff-wt-framexml-TogglePetJournal-422",
+      "symbol": "TogglePetJournal",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "TogglePetJournal"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "TogglePetJournal: raw=nil; lookup=nil. Historical journal toggle global is absent; modern collections UI publication is not this toggle contract."
+    },
+    {
+      "source_id": "diff-wt-widgets-ArchaeologyDigSiteFrame:DrawAll-560",
+      "symbol": "ArchaeologyDigSiteFrame:DrawAll",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ArchaeologyDigSiteFrame:DrawAll"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ArchaeologyDigSiteFrame; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "ArchaeologyDigSiteFrame:DrawAll: ArchaeologyDigSiteFrame; lookup=nil. POI drawing/merging/smoothing geometry operation absent. Basic frame construction is not a POI polygon/spline backing system."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraDistance-567",
+      "symbol": "Model:GetCameraDistance",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:GetCameraDistance-175",
+        "symbol": "Model:GetCameraDistance"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:GetCameraDistance: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraFacing-568",
+      "symbol": "Model:GetCameraFacing",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:GetCameraFacing-176",
+        "symbol": "Model:GetCameraFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:GetCameraFacing: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraPosition-569",
+      "symbol": "Model:GetCameraPosition",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:GetCameraPosition-177",
+        "symbol": "Model:GetCameraPosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:GetCameraPosition: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetCameraTarget-570",
+      "symbol": "Model:GetCameraTarget",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:GetCameraTarget-178",
+        "symbol": "Model:GetCameraTarget"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:GetCameraTarget: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:GetWorldScale-571",
+      "symbol": "Model:GetWorldScale",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:GetWorldScale-187",
+        "symbol": "Model:GetWorldScale"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:GetWorldScale: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:HasCustomCamera-572",
+      "symbol": "Model:HasCustomCamera",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:HasCustomCamera-188",
+        "symbol": "Model:HasCustomCamera"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:HasCustomCamera: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraDistance-573",
+      "symbol": "Model:SetCameraDistance",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:SetCameraDistance-191",
+        "symbol": "Model:SetCameraDistance"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:SetCameraDistance: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraFacing-574",
+      "symbol": "Model:SetCameraFacing",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:SetCameraFacing-192",
+        "symbol": "Model:SetCameraFacing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:SetCameraFacing: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraPosition-575",
+      "symbol": "Model:SetCameraPosition",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:SetCameraPosition-193",
+        "symbol": "Model:SetCameraPosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:SetCameraPosition: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCameraTarget-576",
+      "symbol": "Model:SetCameraTarget",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:SetCameraTarget-194",
+        "symbol": "Model:SetCameraTarget"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:SetCameraTarget: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-Model:SetCustomCamera-577",
+      "symbol": "Model:SetCustomCamera",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "widgets",
+        "superseded_by": "diff-wt-widgets-Model:SetCustomCamera-195",
+        "symbol": "Model:SetCustomCamera"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Model; lookup=function",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "Model:SetCustomCamera: Model; lookup=function. Later-retail removal, not an original-page removal; no new retirement inferred. Still published; preserve existing consumers/compatibility instead of removing it to satisfy a historical row. Permanent unsupported 3D camera/model methods remain compatibility stubs, not modeled camera behavior."
+    },
+    {
+      "source_id": "diff-wt-widgets-QuestPOIFrame:DrawAll-581",
+      "symbol": "QuestPOIFrame:DrawAll",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "QuestPOIFrame:DrawAll"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "QuestPOIFrame; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "QuestPOIFrame:DrawAll: QuestPOIFrame; lookup=nil. POI drawing/merging/smoothing geometry operation absent. Basic frame construction is not a POI polygon/spline backing system."
+    },
+    {
+      "source_id": "diff-wt-widgets-ScenarioPOIFrame:DrawAll-582",
+      "symbol": "ScenarioPOIFrame:DrawAll",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ScenarioPOIFrame:DrawAll"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ScenarioPOIFrame; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "ScenarioPOIFrame:DrawAll: ScenarioPOIFrame; lookup=nil. POI drawing/merging/smoothing geometry operation absent. Basic frame construction is not a POI polygon/spline backing system."
+    },
+    {
+      "source_id": "diff-wt-widgets-ScenarioPOIFrame:EnableMerging-585",
+      "symbol": "ScenarioPOIFrame:EnableMerging",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ScenarioPOIFrame:EnableMerging"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ScenarioPOIFrame; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "ScenarioPOIFrame:EnableMerging: ScenarioPOIFrame; lookup=nil. POI drawing/merging/smoothing geometry operation absent. Basic frame construction is not a POI polygon/spline backing system."
+    },
+    {
+      "source_id": "diff-wt-widgets-ScenarioPOIFrame:EnableSmoothing-586",
+      "symbol": "ScenarioPOIFrame:EnableSmoothing",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ScenarioPOIFrame:EnableSmoothing"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ScenarioPOIFrame; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "ScenarioPOIFrame:EnableSmoothing: ScenarioPOIFrame; lookup=nil. POI drawing/merging/smoothing geometry operation absent. Basic frame construction is not a POI polygon/spline backing system."
+    },
+    {
+      "source_id": "diff-wt-widgets-ScenarioPOIFrame:SetMergeThreshold-592",
+      "symbol": "ScenarioPOIFrame:SetMergeThreshold",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ScenarioPOIFrame:SetMergeThreshold"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ScenarioPOIFrame; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "ScenarioPOIFrame:SetMergeThreshold: ScenarioPOIFrame; lookup=nil. POI drawing/merging/smoothing geometry operation absent. Basic frame construction is not a POI polygon/spline backing system."
+    },
+    {
+      "source_id": "diff-wt-widgets-ScenarioPOIFrame:SetNumSplinePoints-593",
+      "symbol": "ScenarioPOIFrame:SetNumSplinePoints",
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "ScenarioPOIFrame:SetNumSplinePoints"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "ScenarioPOIFrame; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "reason": "ScenarioPOIFrame:SetNumSplinePoints: ScenarioPOIFrame; lookup=nil. POI drawing/merging/smoothing geometry operation absent. Basic frame construction is not a POI polygon/spline backing system."
+    }
+  ],
+  "prose_pending": [
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "* Functions pertaining to talents and specializations are renamed:"
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: GetActiveTalentGroup \u2192 GetActiveSpecGroup (NB: player character-only)"
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: SetActiveTalentGroup \u2192 SetActiveSpecGroup"
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: GetNumTalentGroups \u2192 GetNumSpecGroups"
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: GetPrimaryTalentTree \u2192 GetSpecialization"
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: GetUnspentTalentPoints \u2192 GetNumUnspentTalents"
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: GetNumTalentTabs \u2192 GetNumSpecializations"
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: GetTalentTabInfo \u2192 GetSpecializationInfo"
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical rename and player-only/tier-era semantics are not proven by current publication; absent setters/tier reads remain exact sweep gaps.",
+      "text": "*: GetTalentTreeRoles \u2192 GetSpecializationRole"
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "* Many party/raid-related functions and events are merged into group variants."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "*: IsRaidLeader, IsPartyLeader, UnitIsPartyLeader \u2192 UnitIsGroupLeader"
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "*: IsRaidOfficer, UnitIsRaidOfficer \u2192 UnitIsGroupAssistant"
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "*: GetNumPartyMembers, GetRealNumPartyMembers \u2192 GetNumSubgroupMembers"
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "*: GetNumRaidMembers, GetRealNumRaidMembers \u2192 GetNumGroupMembers (NB: non-0 in any group, including parties; use IsInRaid to check for group type)"
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "*: RAID_ROSTER_UPDATE, PARTY_MEMBERS_CHANGED \u2192 GROUP_ROSTER_UPDATE"
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "* Functions pertaining to Real/Fake groups (home realm and instance/battleground-specific groups, respectively) are removed. Instead, group functions take an argument specifying which group you want to query:"
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "** LE_PARTY_CATEGORY_HOME will query information about your \"real\" group -- the group you were in on your Home realm, before entering any instance/battleground."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Real/fake home/instance roster separation and old-to-new group semantics are unproved; current consumers of old aliases remain preserved.",
+      "text": "** LE_PARTY_CATEGORY_INSTANCE will query information about your \"fake\" group -- the group created by the instance/battleground matching mechanism."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Achievement criteria order/ID distinction requires separate argument and return proof; publication is not signature credit.",
+      "text": "* Achievement API:"
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Achievement criteria order/ID distinction requires separate argument and return proof; publication is not signature credit.",
+      "text": "*: GetAchievementCriteriaInfo split into two separate functions:"
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Achievement criteria order/ID distinction requires separate argument and return proof; publication is not signature credit.",
+      "text": "*:* By criteria order: GetAchievementCriteriaInfo(achievementID, criteriaIndex)"
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Achievement criteria order/ID distinction requires separate argument and return proof; publication is not signature credit.",
+      "text": "*:* By internal criteria ID: GetAchievementCriteriaInfoByID(achievementID, criteriaID)"
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "* Other"
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "** GetDungeonDifficulty \u2192 GetDungeonDifficultyID has a new return value."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "** SetDungeonDifficulty \u2192 SetDungeonDifficultyID has a new argument value."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "** LootSlotIsItem \u2192 LootSlotHasItem"
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "** The SPELL_CAST_SUCCESS sub-event of COMBAT_LOG_EVENT no longer fires for spells with cast times."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "** BNGetToonInfo has new return values."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "** BNGetFriendInfo has new return values."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical difficulty/loot/combat-log or Battle.net return change is unspecified/unproved here; current publication alone cannot establish it.",
+      "text": "** BNGetFriendToonInfo has new return values."
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Full feature producer/lifecycle or exact eighth GetInstanceInfo result is unproved. Pet-type read is only one bounded pet-battle capability, not full feature completion.",
+      "text": "* Pet battles"
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Full feature producer/lifecycle or exact eighth GetInstanceInfo result is unproved. Pet-type read is only one bounded pet-battle capability, not full feature completion.",
+      "text": "* Black market auction house"
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Full feature producer/lifecycle or exact eighth GetInstanceInfo result is unproved. Pet-type read is only one bounded pet-battle capability, not full feature completion.",
+      "text": "* Class specializations"
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Full feature producer/lifecycle or exact eighth GetInstanceInfo result is unproved. Pet-type read is only one bounded pet-battle capability, not full feature completion.",
+      "text": "* Challenge modes"
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Full feature producer/lifecycle or exact eighth GetInstanceInfo result is unproved. Pet-type read is only one bounded pet-battle capability, not full feature completion.",
+      "text": "* Upgrading items"
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Full feature producer/lifecycle or exact eighth GetInstanceInfo result is unproved. Pet-type read is only one bounded pet-battle capability, not full feature completion.",
+      "text": "* GetInstanceInfo - Now returns a MapID as its 8th result, allowing addons to identify the current instance/continent without relying on localized names."
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Each listed macro condition needs parser/evaluation and state-transition proof; no such proof credited by this sweep.",
+      "text": "* New macro conditionals:"
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Each listed macro condition needs parser/evaluation and state-transition proof; no such proof credited by this sweep.",
+      "text": ":; [petbattle] : True when the player is participating in a pet battle."
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Each listed macro condition needs parser/evaluation and state-transition proof; no such proof credited by this sweep.",
+      "text": ":; [possessbar]"
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Each listed macro condition needs parser/evaluation and state-transition proof; no such proof credited by this sweep.",
+      "text": ":; [overridebar]"
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Each listed macro condition needs parser/evaluation and state-transition proof; no such proof credited by this sweep.",
+      "text": ":; [extrabar]"
+    },
+    {
+      "source_id": "prose-undated-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Tier-era talent reads/learn/removal/cost lifecycle is missing; current tree/spec models do not establish this old contract.",
+      "text": "* CHANGED GetTalentInfo - Returns information about talents for player/pet/inspected unit/arbitrary classes."
+    },
+    {
+      "source_id": "prose-undated-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Tier-era talent reads/learn/removal/cost lifecycle is missing; current tree/spec models do not establish this old contract.",
+      "text": "* NEW GetMaxTalentTier - Returns maximum level-appropriate talent tier."
+    },
+    {
+      "source_id": "prose-undated-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Tier-era talent reads/learn/removal/cost lifecycle is missing; current tree/spec models do not establish this old contract.",
+      "text": "* NEW GetTalentRowSelectionInfo - Returns whether a talent is not selected in a given tier, and the selected talent's ID."
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Tier-era talent reads/learn/removal/cost lifecycle is missing; current tree/spec models do not establish this old contract.",
+      "text": "* NEW LearnTalents - Learns specified talents."
+    },
+    {
+      "source_id": "prose-undated-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Tier-era talent reads/learn/removal/cost lifecycle is missing; current tree/spec models do not establish this old contract.",
+      "text": "* NEW GetTalentClearInfo - Returns information about the cost of unlearning a single talent."
+    },
+    {
+      "source_id": "prose-undated-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Tier-era talent reads/learn/removal/cost lifecycle is missing; current tree/spec models do not establish this old contract.",
+      "text": "* NEW RemoveTalent - Unlearns a single talent."
+    },
+    {
+      "source_id": "prose-undated-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact new instance-difficulty/saved-instance return fields are not supplied by this prose or independently captured; no inferred values added.",
+      "text": "* GetInstanceDifficulty has new return values."
+    },
+    {
+      "source_id": "prose-undated-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact new instance-difficulty/saved-instance return fields are not supplied by this prose or independently captured; no inferred values added.",
+      "text": "* GetSavedInstanceInfo has new return values."
+    },
+    {
+      "source_id": "prose-undated-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Widget unit-filtered dispatch/enable/visibility signature and behavior is separate from method publication; no historical/native signature credit.",
+      "text": "* NEW Frame:RegisterUnitEvent(\"event\", \"unit1\"[, \"unit2\"]) - Triggers the widget's OnEvent handler when the specified event occurs for the specified units."
+    },
+    {
+      "source_id": "prose-undated-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Widget unit-filtered dispatch/enable/visibility signature and behavior is separate from method publication; no historical/native signature credit.",
+      "text": "* NEW Button:SetEnabled(enable) - Enables or disables the widget (available for any widget with Enable/Disable methods)."
+    },
+    {
+      "source_id": "prose-undated-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Widget unit-filtered dispatch/enable/visibility signature and behavior is separate from method publication; no historical/native signature credit.",
+      "text": "* NEW Region:SetShown(show) - Shows or hides the widget (available for any widget with Show/Hide methods)."
+    },
+    {
+      "source_id": "prose-undated-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical template/frame rename/merge workflow is not native UI parity; template-vs-global probe limits and current frame identities remain explicit.",
+      "text": "* UIPanelButtonTemplate2 is renamed to UIPanelButtonTemplate; the old version of which is removed."
+    },
+    {
+      "source_id": "prose-undated-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical template/frame rename/merge workflow is not native UI parity; template-vs-global probe limits and current frame identities remain explicit.",
+      "text": "* The minimap buttons MiniMapLFGFrame and MiniMapBattlefieldFrame is renamed/merged to QueueStatusMinimapButton."
+    },
+    {
+      "source_id": "prose-undated-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical template/frame rename/merge workflow is not native UI parity; template-vs-global probe limits and current frame identities remain explicit.",
+      "text": "* ShapeshiftBarFrame is removed; druid shapeshifting UI is now handled by the StanceBarFrame."
+    },
+    {
+      "source_id": "prose-undated-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical observed-bug qualification requires a native/order-specific reproduction (leadership, ungrouped range, invalid texture display, initial roster GUID timing, or combat-log case); current publication does not reproduce it.",
+      "text": "* UnitIsGroupAssistant - the new version of UnitIsRaidOfficer returns false if the player is leader. The old function returned true."
+    },
+    {
+      "source_id": "prose-undated-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical observed-bug qualification requires a native/order-specific reproduction (leadership, ungrouped range, invalid texture display, initial roster GUID timing, or combat-log case); current publication does not reproduce it.",
+      "text": "* UnitInRange - when not in a party/raid, the new version of UnitInRange returns false for \"player\" and \"pet\". The old function returned true."
+    },
+    {
+      "source_id": "prose-undated-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical observed-bug qualification requires a native/order-specific reproduction (leadership, ungrouped range, invalid texture display, initial roster GUID timing, or combat-log case); current publication does not reproduce it.",
+      "text": "* Texture:SetTexture - If the path passed into Texture:SetTexture(path) is invalid, the texture will display as solid green."
+    },
+    {
+      "source_id": "prose-undated-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical observed-bug qualification requires a native/order-specific reproduction (leadership, ungrouped range, invalid texture display, initial roster GUID timing, or combat-log case); current publication does not reproduce it.",
+      "text": "* Texture:GetTexture - If the path passed into Texture:SetTexture(path) is invalid, Texture:GetTexture() will still return whatever was passed in. Previously, it would return nil if the texture path was invalid. It seems that it is no longer possible to determine if a texture is valid or not (useful for validating user input)."
+    },
+    {
+      "source_id": "prose-undated-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical observed-bug qualification requires a native/order-specific reproduction (leadership, ungrouped range, invalid texture display, initial roster GUID timing, or combat-log case); current publication does not reproduce it.",
+      "text": "* UnitGUID - requesting the GUID of another party member (possibly raid too - not tested) while responding to the new GROUP_ROSTER_UPDATE event during initial UI load while you are already in a group returns nil.  This was not previously the case with the old PARTY_MEMBERS_CHANGED and RAID_ROSTER_UPDATE events."
+    },
+    {
+      "source_id": "prose-undated-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical observed-bug qualification requires a native/order-specific reproduction (leadership, ungrouped range, invalid texture display, initial roster GUID timing, or combat-log case); current publication does not reproduce it.",
+      "text": "* COMBAT_LOG_EVENT / ENVIRONMENTAL_DAMAGE - the environmental type reported from this event is now reporting non-localized proper case strings (e.g. \"Falling\") instead of non-localized capitalized strings (e.g. \"FALLING\")."
+    }
+  ],
+  "signatures_pending": [
+    {
+      "source_id": "signature-wt-global-api-GetAchievementCriteriaInfo-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "signature": "(achievementID, criteriaIndex)",
+      "inventory_source_id": "wt-global-api-GetAchievementCriteriaInfo-24",
+      "note": "Retained signature independently accounted; function/method publication does not prove argument order, optional arguments, return semantics, or native 2012 signature parity."
+    },
+    {
+      "source_id": "signature-wt-global-api-GetAchievementCriteriaInfoByID-25",
+      "status": "audit-pending",
+      "capabilities": [],
+      "signature": "(achievementID, criteriaID)",
+      "inventory_source_id": "wt-global-api-GetAchievementCriteriaInfoByID-25",
+      "note": "Retained signature independently accounted; function/method publication does not prove argument order, optional arguments, return semantics, or native 2012 signature parity."
+    },
+    {
+      "source_id": "signature-wt-widgets-Frame:RegisterUnitEvent-63",
+      "status": "audit-pending",
+      "capabilities": [],
+      "signature": "(\"event\", \"unit1\"[, \"unit2\"])",
+      "inventory_source_id": "wt-widgets-Frame:RegisterUnitEvent-63",
+      "note": "Retained signature independently accounted; function/method publication does not prove argument order, optional arguments, return semantics, or native 2012 signature parity."
+    },
+    {
+      "source_id": "signature-wt-widgets-Button:SetEnabled-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "signature": "(enable)",
+      "inventory_source_id": "wt-widgets-Button:SetEnabled-64",
+      "note": "Retained signature independently accounted; function/method publication does not prove argument order, optional arguments, return semantics, or native 2012 signature parity."
+    },
+    {
+      "source_id": "signature-wt-widgets-Region:SetShown-65",
+      "status": "audit-pending",
+      "capabilities": [],
+      "signature": "(show)",
+      "inventory_source_id": "wt-widgets-Region:SetShown-65",
+      "note": "Retained signature independently accounted; function/method publication does not prove argument order, optional arguments, return semantics, or native 2012 signature parity."
+    }
+  ],
+  "no_new_retirements": true
+}

@@ -8,7 +8,7 @@
     "publication_sweep"
   ],
   "revision": "b71219471ffe7643b2453cf02238a83edf89ed14",
-  "scope": "all-sweeps",
+  "scope": "initial-all-sweeps",
   "cwd": ".",
   "target": "worktree-local target",
   "environment": {
@@ -82,7 +82,7 @@
     "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/patch_9_2_7_publication_sweep-results.json"
   },
   "exit": 1,
-  "log": "all-sweeps.txt",
+  "log": "initial-all-sweeps.txt",
   "log_sha256": "7638e5c48123be2d0c943e10bdafd1ed33f08394d5d883b80e14db5df891c5ad",
   "seconds": 183.48004008299904,
   "invalidated": false
