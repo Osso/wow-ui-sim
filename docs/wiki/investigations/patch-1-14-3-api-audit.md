@@ -18,7 +18,7 @@ Caption is literally1.14.2(42214) →1.14.3(43639), May10 2022. SourceTOC11403 r
 
 ## Existing-model boundary
 
-No source callable declaration supplies arguments, results, input validation or state transitions. Event names supply no payload or producer behavior. Exact source/test search for GamePadEmulateTapWindowMs/calendarShowHolidays/speechToText/CameraKeepCharacterCentered/NotchedDisplayMode has zero hits. Existing C_GamePad model covers mapped sticks and hover/free-look policy, not modifier-button tap timing. Literal tap-on-release/window/default350 grounds a possible button-emulation model proposal, not a signature or existing model proof; main must own any expanded input-model work. Calendar/camera/AA/notch/voice effects similarly lack demonstrated existing backing models. Widget name alone cannot authorize inferred setter signatures or security rules. No production fixes, new defaults or aliases added. Bare factory target retained unexecuted, separate from SOURCE ledger.
+No source callable declaration supplies arguments, results, input validation or state transitions. Event names supply no payload or producer behavior. Exact source/test search for GamePadEmulateTapWindowMs/calendarShowHolidays/speechToText/CameraKeepCharacterCentered/NotchedDisplayMode has zero hits. Existing C_GamePad model covers mapped sticks and hover/free-look policy, not modifier-button tap timing. Literal tap-on-release/window/default350 grounds a possible button-emulation model proposal, not a signature or existing model proof; main must own any expanded input-model work. Calendar/camera/AA/notch/voice effects similarly lack demonstrated existing backing models. Widget name alone cannot authorize inferred setter signatures or security rules. No production fixes, new defaults or aliases added. Bare factory observations remain separate from SOURCE ledger.
 
 ## Successors
 
@@ -30,9 +30,21 @@ SOURCE RED8 assertion failures against retained empty scaffold, commitc1b8f094b.
 
 ## Current factory execution boundary
 
-`patch-tests/patch_1_14_3_factory.rs` uses existing shared classifier on all412 own inventory rows, current Era11507, no later registers, no CASC or Blizzard loading. It records compatibility GetBuildInfo separately, current value/default and classifier raw/lookup details; nonsense namespace/member rejects generic fallback credit, nonsense event records Classic name nondiscrimination. It invokes no named source API beyond publication/default/factory probes. Test output would be separate current observations, never mutate original SOURCE credit.
+`patch-tests/patch_1_14_3_factory.rs` uses existing shared classifier on all412 own inventory rows, current Era11507, no later registers, no CASC or Blizzard loading. It records compatibility GetBuildInfo separately, current value/default and classifier raw/lookup details; nonsense namespace/member rejects generic fallback credit, nonsense event records Classic name nondiscrimination. It invokes no named source API beyond publication/default/factory probes. Current observations never mutate original SOURCE credit.
 
-Runtime target is **unexecuted**. Cheap CoW isolation probe from existing Cargo registry into owned `build/p1143-cargo-home` failed `Operation not supported`; receipt retained. No shared cache mutations, target copying, alternative cache path or native/runtime/model credit. Main owns package-home decision/execution; no compile-warning-free or factory GREEN claim. Compiler observed cargo1.99.0 differs from documented1.98.1.
+Initial factory GREEN2/2 at3b0989667 (compile103s/test0.27s). Exact mismatch fixture RED at1f82e93a5 against empty list; reviewed126-ID fixture GREEN pending. Main authorized ordinary offline/locked Cargo bookkeeping: optional CoW failure is not a blocker. Existing package home, unchanged cargo1.99.0, owned target; no dependency/network updates, Blizzard/CASC/vendor edits or target copying.
+
+| Current bare-factory feature | Direction match/mismatch | Limit |
+|---|---|---|
+| Global API |68/119 |68 raw function registrations,114 raw-nil/lookup-function,one raw-parent-absent/lookup-function,four raw-nil/lookup-nil; raw registration may itself be stub behavior |
+| Widget |1/0 |Frame factory method lookup only; no attribute suppression behavior |
+| Events |200/0 |Nonsense event also accepted; no catalog/native existence/emission/payload proof |
+| CVars |17/7 |All15 additions published;two removals absent/seven removals still registered; no described camera/input/voice effects proved |
+| All occurrences |286/126 |Strict publication-direction mismatches, not126 established native API defects |
+
+Added defaults:12 exact strings;CMAA2Quality source2/current3;ShakeStrengthCamera and ShakeStrengthUI source1/current1.000000 lexical differences (not asserted numeric inequality). No missing added CVar registrations. Removed seven retained CVars are preserved observations, not authorization to retire current configured surface. GetBuildInfo reports compatibility default12.0.7/build68256/interface120007, distinct from activeEra11507 and source1.14.3/build43639/TOC11403; no client identity rewrite.
+
+18 dead-code warnings arise from importing the unchanged shared test helper solely for its classifier; seven inherited simulator warnings and six vendor-manifest deprecations also retained. No suppression/out-of-scope warning repair; no warning-free/readability/check/lint/type/broad/final acceptance claim. Main owns integration/native/final gates.
 
 ## Sources
 
