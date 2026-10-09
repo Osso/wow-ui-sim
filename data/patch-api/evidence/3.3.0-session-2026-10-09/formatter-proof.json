@@ -1,0 +1,40 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "src/xml/types.rs",
+        "src/lua_api/globals/template/direct.rs",
+        "src/loader/xml_frame/setup.rs",
+        "src/lua_api/globals/create_frame/template_chain/runtime.rs",
+        "tests/patch_3_3_0_motion_xml.rs"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "exit": 0,
+      "revision": "224109b55",
+      "note": "first five changed Rust files formatted before coherent closure commit"
+    },
+    {
+      "argv": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "tests/patch_3_3_0_publication_sweep.rs"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+      "exit": 0,
+      "revision": "9e76d1e4c",
+      "note": "publication test formatted before coherent probe commit"
+    }
+  ],
+  "current_scope_sha256": {
+    "src/xml/types.rs": "47032fbdd208c314fb8cbffa193c5a83e98f414dcafa27ad6fb7d6b250b46c08",
+    "src/lua_api/globals/template/direct.rs": "f551eb91f964c4b7fe06ba8054159d6421e409aa747523bd069a251c2fecaf26",
+    "src/loader/xml_frame/setup.rs": "3b8d5d6a3db97d0ddbfb135c602b60b6d340e3fe619e4f6edc2549ab6f63436d",
+    "src/lua_api/globals/create_frame/template_chain/runtime.rs": "0bd7c0dc5349ed955c69a4dd1a2488d71e7229b7e3c4d6f99ef581c6240e47e2",
+    "tests/patch_3_3_0_motion_xml.rs": "c86272a85329a28e76398ac8416b358a80aaad42ce4e35a1c2febc9369d2089c",
+    "tests/patch_3_3_0_publication_sweep.rs": "d2f895c85a455541d2e0621daf558c66a083ef64d0889399f50343d90fda13c1"
+  }
+}

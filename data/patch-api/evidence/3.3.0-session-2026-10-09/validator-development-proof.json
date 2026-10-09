@@ -1,0 +1,47 @@
+{
+  "fixture_revision": "926ed98c8",
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools",
+    "-p",
+    "test_patch_3_3_0_portable.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p330-source",
+  "exit": 0,
+  "fresh_process_copy_no_git_target_current_files": true,
+  "serialized_controls": [
+    {
+      "input": "source-response.json",
+      "tampered_rejected": true,
+      "restored_equal": true
+    },
+    {
+      "input": "own-sweep-green.log",
+      "tampered_rejected": true,
+      "restored_equal": true
+    },
+    {
+      "input": "historical-page-coverage.json",
+      "tampered_rejected": true,
+      "restored_equal": true
+    },
+    {
+      "input": "historical-blobs.json.gz",
+      "tampered_rejected": true,
+      "restored_equal": true
+    },
+    {
+      "input": "historical-inputs.json",
+      "tampered_rejected": true,
+      "restored_equal": true
+    }
+  ],
+  "log": "validator-green.log",
+  "summary": "validator-summary.json",
+  "scope": "Own development receipts only; no current integration acceptance"
+}
