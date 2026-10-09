@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p542-page/data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/run_mists_sweeps.py",
+    "1789639"
+  ],
+  "revision": "0041b518cdca9379bc5c66c971578ac4df92a9f4",
+  "scope": "mists-sweeps-driver",
+  "cwd": ".",
+  "target": "dedicated p542-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "mists-sweeps-driver.txt",
+  "log_sha256": "a079bd2bbd23a75b484ced24647f18aa291c2e5b16ad3029b52d198e7d85ef15",
+  "seconds": 1213.5592885040023,
+  "invalidated": false
+}

@@ -1,0 +1,28 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "integration",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "896086537a2b3c1ead5886d5ae3e430d56e7ef20",
+  "scope": "master-mists-all-sweeps",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p542-master-proof",
+  "target": "dedicated p542-page target (external to repository)",
+  "environment": {
+    "PATCH_PROOF_REVISION": "896086537a2b3c1ead5886d5ae3e430d56e7ef20",
+    "PATCH_RUN_ROOT": "/home/osso/.worktrees/wow-ui-sim-p542-master-proof",
+    "P553_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p542-page/data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_5_5_3_publication_sweep-results.json",
+    "P554_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p542-page/data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_5_5_4_publication_sweep-results.json"
+  },
+  "exit": 0,
+  "log": "master-mists-all-sweeps.txt",
+  "log_sha256": "2f248f6f7cb2feb7bbef3f2f0c4597fcff0752c7c938da0cde5f6c3e14f8b9d9",
+  "seconds": 190.6864218999981,
+  "invalidated": false
+}
