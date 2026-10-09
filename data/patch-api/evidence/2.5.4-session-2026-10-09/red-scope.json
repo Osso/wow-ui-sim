@@ -1,0 +1,11 @@
+{
+  "revision": "c7c560d4fca37de891b25007447c558786bc4793",
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p254-source/data/patch-api/evidence/2.5.4-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p254-source",
+  "exit": 1,
+  "scope": "461 literal rows / 414 UNPROVEN contracts missing in seed ledger; source-only RED"
+}

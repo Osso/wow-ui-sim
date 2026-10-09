@@ -1,0 +1,112 @@
+{
+  "code_revision": "acf7fbfe9b07dc342b8078cb1c54b702151a23d6",
+  "source_toc": 20504,
+  "source_interface_family": "205xx",
+  "configured_profiles": [
+    {
+      "variant": "Retail",
+      "feature": "client-retail",
+      "cache_subdir": "retail",
+      "configured_interface": 120100,
+      "manifest": {
+        "path": "configured-inputs/data/blizzard-ui-files/retail.txt",
+        "sha256": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd",
+        "entries": 4041,
+        "toc_entries": 394
+      }
+    },
+    {
+      "variant": "Ptr",
+      "feature": "client-ptr",
+      "cache_subdir": "ptr",
+      "configured_interface": 120105,
+      "manifest": {
+        "path": "configured-inputs/data/blizzard-ui-files/ptr.txt",
+        "sha256": "854540ee3daec8355ed1d4ffb72d244a07f1fcf14cfb4c323abe9c1231369216",
+        "entries": 4025,
+        "toc_entries": 374
+      }
+    },
+    {
+      "variant": "Wrath",
+      "feature": "client-wrath",
+      "cache_subdir": "wrath",
+      "configured_interface": 38001,
+      "manifest": {
+        "path": "configured-inputs/data/blizzard-ui-files/wrath.txt",
+        "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+        "entries": 3981,
+        "toc_entries": 360
+      }
+    },
+    {
+      "variant": "Mists",
+      "feature": "client-mists",
+      "cache_subdir": "mists",
+      "configured_interface": 50504,
+      "manifest": {
+        "path": "configured-inputs/data/blizzard-ui-files/mists.txt",
+        "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+        "entries": 3981,
+        "toc_entries": 360
+      }
+    },
+    {
+      "variant": "Era",
+      "feature": "client-era",
+      "cache_subdir": "era",
+      "configured_interface": 11507,
+      "manifest": {
+        "path": "configured-inputs/data/blizzard-ui-files/era.txt",
+        "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+        "entries": 3981,
+        "toc_entries": 360
+      }
+    },
+    {
+      "variant": "Anniversary",
+      "feature": "client-anniversary",
+      "cache_subdir": "anniversary",
+      "configured_interface": 11507,
+      "manifest": {
+        "path": "configured-inputs/data/blizzard-ui-files/anniversary.txt",
+        "sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+        "entries": 3981,
+        "toc_entries": 360
+      }
+    },
+    {
+      "variant": "WowForever",
+      "feature": "client-wowforever",
+      "cache_subdir": "wowforever",
+      "configured_interface": 16001,
+      "manifest": {
+        "path": "configured-inputs/data/blizzard-ui-files/wowforever.txt",
+        "sha256": "36b9f64e39e4031c28218865516635e85e7bdd1042fcf3ef9db0f347037e5c24",
+        "entries": 4398,
+        "toc_entries": 349
+      }
+    }
+  ],
+  "matching_configured_profiles": [],
+  "original_file_hashes": {
+    "Cargo.toml": "ab2ab0841487d02b44ebc2a05eed884944ae9d10982c0becfb2892bc17dd27fb",
+    "data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/blizzard-ui-files/mists.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "data/blizzard-ui-files/ptr.txt": "854540ee3daec8355ed1d4ffb72d244a07f1fcf14cfb4c323abe9c1231369216",
+    "data/blizzard-ui-files/retail.txt": "aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd",
+    "data/blizzard-ui-files/wowforever.txt": "36b9f64e39e4031c28218865516635e85e7bdd1042fcf3ef9db0f347037e5c24",
+    "data/blizzard-ui-files/wrath.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+    "src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839"
+  },
+  "native_profile_correspondence": "UNPROVEN",
+  "unsupported_api_diagnosis": null,
+  "measurements": {
+    "cache": "not-performed",
+    "runtime": "not-performed",
+    "model": "not-performed",
+    "native": "not-performed",
+    "full_ui": "not-performed"
+  }
+}

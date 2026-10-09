@@ -1,0 +1,6 @@
+Patch 2.5.4 API changes
+
+== Resources ==
+* TOC: 20504
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
