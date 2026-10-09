@@ -38,6 +38,11 @@ def validate():
     reproduced = read('reproduction.json')
     assert {p.relative_to(ROOT).as_posix() for p in historical} == {r['path'] for r in reproduced}
     assert all(r['register_identical'] for r in reproduced)
+    for row in reproduced:
+        assert row['revision'] == final['reproduction_revision']
+        assert digest(blob(row['revision'], row['path'])) == row['register_sha256']
+        extract_path = 'data/patch-api/sources/' + row['patch'] + '-api-changes.txt'
+        assert digest(blob(row['revision'], extract_path)) == row['extract_sha256']
     for path in historical_sweep_tests(ROOT, final['revision']):
         source = blob(final['revision'], path.relative_to(ROOT).as_posix()).decode()
         if '#![cfg(feature = "client-retail")]' not in source:
