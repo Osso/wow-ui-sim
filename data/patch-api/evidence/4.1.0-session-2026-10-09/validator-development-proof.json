@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "tools/test_patch_4_1_validator.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p410-source",
+  "revision": "b6b86d223",
+  "exit": 0,
+  "log": "validator-green.txt",
+  "log_sha256": "dba9b5000e6e318d42738bb164009448f56127540c67609c931f1dbe46abf22d",
+  "cases": [
+    "clean historical receipt replay in copied fixture without .git",
+    "source wikitext tamper rejected at exact SHA seal; original bytes restored",
+    "own GREEN log tamper rejected at exact SHA seal; original bytes restored"
+  ],
+  "scope": "one targeted development unittest; no broad or independent final gate; copied fixture retains deterministic helper import from original tools directory, but performs no Git object lookup"
+}

@@ -664,3 +664,7 @@ Source/accounting fixtures 6/6 at `a0db0fa0d`; compact per-command scope/revisio
 ## [2026-10-09] development | Retail Patch 4.1.0 accounting
 
 [Audit](investigations/patch-4-1-0-api-audit.md): 81 publication occurrences, 86 extraction rows, four signatures; 171 IDs, 31 publication/eight prose/four signature limits. Retail happiness absence fixed, Mists state retained. Own prefork 1/1, retail 1/1, Mists 2/2, parser 1/1; negative 31→32. Main owns final acceptance and queued successor integration.
+
+## [2026-10-09] development | Seal retail 4.1.0 receipts
+
+[Audit](investigations/patch-4-1-0-api-audit.md): own validator fixture passes clean copied/no-Git replay and restored source/own-log tamper controls; 23 sealed files, three selected trees, 78 deduplicated blobs in 333,799-byte archive. Frozen register/extract reproduce. Historical proof only; main retains final-gate and queued successor integration ownership.

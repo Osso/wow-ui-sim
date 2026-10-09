@@ -1,6 +1,6 @@
 # Patch 4.1.0 API audit
 
-Pinned historical retail page 426651, revision 4094671, timestamp 2011-07-24T19:40:04Z; supplied locally October 9, 2026. HTTP 200 source receipt retained. No network acquisition or Classic successor credit.
+Pinned historical retail page 426651, revision 4094671, timestamp 2011-07-24T19:40:04Z; supplied locally October 9, 2026. Source body retained; HTTP 200 reported in supplied handoff. No network acquisition or Classic successor credit.
 
 ## Source format
 
@@ -19,7 +19,7 @@ Existing flags produce an empty register for the page's `API changes` / `Event c
 
 ## Bounded retirement
 
-`GetPetHappiness` is incorrectly registered in retail despite explicit 4.1.0 removal. Full cached-retail/source/tests whole-word scans are retained in [retirement scans](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/retirement-scans.json). Zero cached consumers; three test references become Classic-only and a retail raw/lookup absence case is added. Qualified and bare identities are identical for this unnamespaced global. Registration/handler are gated only under `client-retail`; pet state and non-retail behavior remain intact. No Blizzard wrapper or cache edit. Unit RED reproduces publication; GREEN pending. `Transform` and `END_REFUND` have cached bare matches, so no additional retirement changes.
+`GetPetHappiness` is incorrectly registered in retail despite explicit 4.1.0 removal. Full cached-retail/source/tests whole-word scans are retained in [retirement scans](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/retirement-scans.json). Zero cached consumers; three test references become Classic-only and a retail raw/lookup absence case is added. Qualified and bare identities are identical for this unnamespaced global. Registration/handler are gated only under `client-retail`; pet state and non-retail behavior remain intact. No Blizzard wrapper or cache edit. Unit RED reproduces publication; retail and supported Mists GREEN results are recorded below. `Transform` and `END_REFUND` have cached bare matches, so no additional retirement changes.
 
 ## Capability matrix — implementation evidence
 
@@ -41,4 +41,6 @@ Three ordered comments reserve 4.2.0, 4.3.0, 4.3.4 before the actual 5.0.1+ reta
 
 ## Own historical receipt preservation
 
-Dedicated [validator](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/validate.py) derives publication, extraction, signature, gap/status and command-summary counts from sealed inputs. [Compact pins](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/historical-inputs.json) archive 78 deduplicated blobs in three selected Git trees, including the exact 64 real later-retail registers at development time. Gzip archive is 333,799 bytes; 23 source/evidence inputs are SHA-sealed, each under 5 MB. Original commit objects are not needed for receipt replay. The selected trees are not a complete native runtime replay and never prove current-head acceptance. No shared validator or prior audit receipt is modified. Own RED fixture requires missing validator implementation; clean/source-tamper/log-tamper GREEN fixture pending.
+Dedicated [validator](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/validate.py) derives publication, extraction, signature, gap/status and command-summary counts from sealed inputs. [Compact pins](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/historical-inputs.json) archive 78 deduplicated blobs in three selected Git trees, including the exact 64 real later-retail registers at development time. Gzip archive is 333,799 bytes; 23 source/evidence inputs are SHA-sealed, each under 5 MB. Original commit objects are not needed for receipt replay. The selected trees are not a complete native runtime replay and never prove current-head acceptance. No shared validator or prior audit receipt is modified. Own RED fixture requires missing validator implementation. [Targeted GREEN receipt](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/validator-development-proof.json) at `b6b86d223`: one unittest passes clean replay in a copied no-`.git` fixture, rejects source and own-log tampering at exact seals, restores both byte-identically, and confirms clean replay again. This is development proof, not main-thread final acceptance. Registers/extracts reproduce byte-identically with frozen flags against archived parser/extractor blobs; counts are derived, not receipts hard-coded into the validator.
+
+Queued 4.2.0/4.3.0/4.3.4 sources/registers are absent in this owned snapshot, so possible additional named supersessions cannot be independently determined here. Main must insert its actual records and recapture only affected integration expectations. No historical proof is rewritten or replaced.
