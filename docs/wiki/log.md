@@ -805,4 +805,4 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 
 ## [2026-10-09] investigation | Historical retail Patch 2.0.1 SOURCE audit
 
-[Audit](investigations/patch-2-0-1-api-audit.md): frozen 324401/3129557; exact response/body and 101-page registry pin verified. Dedicated literal source auditor; own RED 3/3 missing-tool failures at 9276337ae. All publication/semantics UNPROVEN; no native/runtime or Classic credit. Bounded source/replay proof pending; main owns integration.
+[Audit](investigations/patch-2-0-1-api-audit.md): initial pins/RED retained; bounded SOURCE audit now has 316 rows, 35 headers, 295 occurrences, 206 signature fragments, 280 UNPROVEN prose rows and 12 unexpanded references. SOURCE 6/6 at 5075cf42b; original/current copied historical fixtures 2/2 at 717009936 and 1/1 at 939d8b73b. 1,655/1,657 omission controls; 19/10 disk rejection-restorations. Eighteen original seals/114 snapshots unchanged, nine separate current seals. Zero runtime/native/model/Classic credit; main owns publication/integration.

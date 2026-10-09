@@ -2914,4 +2914,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] investigation | Historical retail Patch 2.0.1 SOURCE audit
 
-[Audit](investigations/patch-2-0-1-api-audit.md): frozen 324401/3129557; exact response/body and 101-page registry pin verified. Dedicated literal source auditor; own RED 3/3 missing-tool failures at 9276337ae. All publication/semantics UNPROVEN; no native/runtime or Classic credit. Bounded source/replay proof pending; main owns integration.
+[Audit](investigations/patch-2-0-1-api-audit.md): frozen 324401/3129557; exact response/body and 101-page registry verified. Current 316 rows, 35 headers, 295 literal occurrences, 206 signature fragments, 280 UNPROVEN prose rows, 12 unexpanded references, 793 gaps; zero CVars/runtime/native/model credit. SOURCE 6/6; original/current copied replay 2/2 and 1/1 with 1,655/1,657 omission controls and 19/10 seal rejection-restorations. Original 18 seals/114 snapshots unchanged; nine current seals separate. Main owns queued successors, publication/native/integration.

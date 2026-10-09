@@ -1,0 +1,79 @@
+{
+  "schema": "patch-api-source-completion-receipt/v1",
+  "scope": "Bounded SOURCE-only 2.0.1 audit; not final acceptance.",
+  "base_revision": "93bcc6afefdc393e0ce58f52e0c00cc3f044e86b",
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_2_0_1_replay.py",
+    "ReplayTests.test_current_closure_copied_source_and_log_seals"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+  "revision": "939d8b73b3ff581c0217b0c85f9522a88509c85c",
+  "exit_code": 0,
+  "log": "current/current-replay-green.log",
+  "current_counts": {
+    "nonblank_rows": 316,
+    "headers": 35,
+    "occurrences": 295,
+    "by_kind": {
+      "api-family": 1,
+      "command": 79,
+      "command-family": 5,
+      "command-placeholder": 1,
+      "constant": 2,
+      "context-identifier": 30,
+      "event": 21,
+      "event-family": 3,
+      "global-api": 87,
+      "global-api-reference": 4,
+      "language-example": 2,
+      "macro-option-suffix": 1,
+      "string-method-reference": 3,
+      "widget-method": 8,
+      "widget-script": 8,
+      "widget-script-signature": 31,
+      "widget-template": 9
+    },
+    "signature_fragments": 206,
+    "prose_contract_rows": 280,
+    "references": 12,
+    "cvars": 0,
+    "runtime_observations": 0,
+    "meaningful_closures": 0,
+    "native_observations": 0
+  },
+  "current_gap_records": 793,
+  "original_gap_records": 792,
+  "original_sealed_files": 18,
+  "current_sealed_files": 9,
+  "historical_snapshots": 114,
+  "archive_bytes": 371564,
+  "original_omission_controls": 1655,
+  "current_omission_controls": 1657,
+  "original_decoded_corruption_controls": 4,
+  "original_disk_tamper_restorations": 19,
+  "current_disk_tamper_restorations": 10,
+  "proofs": [
+    {
+      "revision": "5075cf42b",
+      "scope": "Own SOURCE fixture 6/6, copied frozen replay also 6/6."
+    },
+    {
+      "revision": "717009936",
+      "scope": "Original historical replay 2/2: six archived RED/GREEN commands, four byte-exact register outputs and extracts, copied no-Git/no-target, serialized tamper restoration."
+    },
+    {
+      "revision": "939d8b73b",
+      "scope": "Separate current copied replay 1/1: 1657 decoded omissions, ten serialized tamper-restorations, original 18 seals unchanged."
+    }
+  ],
+  "scope_sha256": {
+    "tools/audit_patch_2_0_1_source.py": "fdf00cb36cd44c981423b3e210bb4b6c1121481f689bfb24450f08fffd1fb3cb",
+    "tools/test_patch_2_0_1_source.py": "bcd4175469574df84c16fa65846e7d241fb5fe6fb8ed17227e5cf95a91fbdf8e",
+    "tools/test_patch_2_0_1_replay.py": "0f07bb8239fcffef15001ade387b80e8a38a5435c2546e3fe6dde0c79bfabfe8",
+    "data/patch-api/sources/2.0.1-page-coverage.json": "8f3ddd79c1986e96f85ee1a0bfba82c48441d3b82e1559e84da812b5dae52cc1"
+  },
+  "later_changes": "Only docs/receipts/PLAN after current proof; no executable/source/accounting change invalidates these scoped proofs.",
+  "limits": "All contracts UNPROVEN; zero supported-publication/native/runtime/model/supersession credit. No final gates. PLAN excluded by explicit governing plan-md skill."
+}

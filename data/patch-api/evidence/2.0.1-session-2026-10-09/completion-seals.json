@@ -1,0 +1,26 @@
+{
+  "completion-proof.json": {
+    "sha256": "cde7a926a7121f6559f8ded5c03d5258c6ce52a35f0cdb7405f0772aa47c498d",
+    "bytes": 3020
+  },
+  "current/current-replay-green.log": {
+    "sha256": "6140d7442c76311cf5d5e495c0174531c72a3e54f625e3dfa1a05e57f300b942",
+    "bytes": 300
+  },
+  "historical-inputs.json": {
+    "sha256": "804da368022a4c27435e9d03d41321d8fb30b946f825cc3a9c028f3125560d41",
+    "bytes": 22106
+  },
+  "validate.py": {
+    "sha256": "bfd1f0fbd7176bb7622d92b7e75bf50422af0710c4f14fc31f2c7aac2d035ef3",
+    "bytes": 11490
+  },
+  "current/inputs.json": {
+    "sha256": "e225dc325f295c5900cedfb7a902d6aeb3e9e0d5188463a2ae69bb06c7ec1c60",
+    "bytes": 1660
+  },
+  "current/validate.py": {
+    "sha256": "ac01e8b0efb50d97e6f7af7e2683ff8f89a468cb003343deacdeba24f3e4b258",
+    "bytes": 3690
+  }
+}
