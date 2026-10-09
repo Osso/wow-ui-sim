@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-9-0-api-audit.md) records exact45byte frozen redirect, all literal/empty boundaries and precise UNPROVEN target contracts. Own SOURCE RED5+identityRED1 and portableRED3 retained; default bytes/errors captured, GREEN pending. No runtime/shared-tool changes or foreign-history supersession; newer1.10.0 separately unapplied.
+[Audit](investigations/patch-1-9-0-api-audit.md) records exact45byte frozen redirect, all literal/empty boundaries and precise UNPROVEN target contracts. Own SOURCE RED5+identityRED1 and portableRED3 retained; default bytes/errors captured, SOURCE GREEN6/6 at4e3807887, portable pending. No runtime/shared-tool changes or foreign-history supersession; newer1.10.0 separately unapplied.
 
 ## [2026-10-09] investigation | Mists wrapper proof capture incident
 
