@@ -1,0 +1,26 @@
+[
+  {
+    "path": "data/patch-api/evidence/1.10.2-session-2026-10-09/audit.py",
+    "reference_revision": "d026c9e6a",
+    "sha256": "eb0d0011912bfe5ca9ab2a2bf186f4ce0583d2b5ba13d504c6bf54724ecc0bf4",
+    "use": "read-only template; no receipts copied"
+  },
+  {
+    "path": "data/patch-api/evidence/1.10.2-session-2026-10-09/test_source_accounting.py",
+    "reference_revision": "d026c9e6a",
+    "sha256": "38e8e400e2d81b2d765186a1b7da0578ce182fc3a02fd7fdf415444ae4de6059",
+    "use": "read-only template; no receipts copied"
+  },
+  {
+    "path": "data/patch-api/evidence/1.10.2-session-2026-10-09/test_portable.py",
+    "reference_revision": "d026c9e6a",
+    "sha256": "a4223df75b300f68180832b15e49288589c631e40e43236d7daf139213e142e8",
+    "use": "read-only template; no receipts copied"
+  },
+  {
+    "path": "docs/wiki/investigations/patch-1-10-2-api-audit.md",
+    "reference_revision": "d026c9e6a",
+    "sha256": "d57bfb8184125a95284d559a13800b9ef463071f860dd938fb6d2635e648770d",
+    "use": "read-only template; no receipts copied"
+  }
+]

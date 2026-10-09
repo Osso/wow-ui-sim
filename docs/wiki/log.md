@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.10.1 frozen redirect SOURCE audit
+
+[Audit](investigations/patch-1-10-1-api-audit.md) records exact own source identity and redirect boundary; own SOURCE RED5/portable RED3 retained. Empty inventory is not parent meaningful-behavior/native closure; queued successors separate. No runtime/shared-tool edits.
+
 ## [2026-10-09] ingest | Retail TOC fixture independent proof
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#retail-toc-fixtures--bounded-pass-at-41f1abbeb) records three exact passing cases, formatting/compile/readability and actual concurrent docs-only epoch. 29 artifacts retained byte-for-byte; no reruns or full-suite/native/profile expansion.
