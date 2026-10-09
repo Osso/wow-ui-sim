@@ -931,3 +931,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] investigation | Patch1.15.1 frozen source and alias boundary
 
 [Audit](investigations/patch-1-15-1-api-audit.md): frozen577687/5998991;9 rows,2 enum occurrences,7 contracts/no signatures. SOURCE RED8/GREEN8 at3045ff2a9; portable RED3/GREEN3 at714277147, copied SOURCE8/default-byte replay, serialized ledger/log reject/restore;57 immutable originals/9 separate receipt seals. Standalone headless Era GREEN1/1 at714277147: unchanged pinned official Lua uses existing IsPublicBuild=true and raw named values2=2. Two bounded direct-existing-state declaration rows/five UNPROVEN; no native/full-loading/C_Seasons credit. Bare absence loading boundary, not defect. Seven existing simulator warnings +six vendor deprecations retained; main owns integration/native/final gates.
+
+## [2026-10-09] investigation | Frozen Era Patch 1.14.3
+
+[Audit](investigations/patch-1-14-3-api-audit.md): page480026/revision4615755, source11403/build43639 distinct from configured11507.412 literal inventory occurrences,463 nonblank rows,188 unspecified signatures,14 headers/14 prose limits/27 unexpanded links. Qualified TBC2.5.4 sync comparison is not foreign supersession. SOURCE/portable RED retained; bounded GREEN/current measurement pending. Main owns integration/native/final gates.
