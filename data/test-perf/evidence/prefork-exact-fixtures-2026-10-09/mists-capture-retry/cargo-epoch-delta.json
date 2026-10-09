@@ -1,0 +1,5 @@
+{
+  "stdout": "diff --git a/Cargo.toml b/Cargo.toml\nindex fff42ec5b..40119bae3 100644\n--- a/Cargo.toml\n+++ b/Cargo.toml\n@@ -184,6 +184,10 @@ required-features = [\"client-retail\"]\n [[test]]\n name = \"patch_1_13_3_npc_health\"\n path = \"patch-tests/patch_1_13_3_npc_health.rs\"\n+\n+[[test]]\n+name = \"patch_1_13_2_cvar_state\"\n+path = \"patch-tests/patch_1_13_2_cvar_state.rs\"\n required-features = [\"client-era\"]\n \n [[test]]\n",
+  "stderr": "",
+  "exit_code": 0
+}

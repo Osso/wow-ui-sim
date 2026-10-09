@@ -1,0 +1,69 @@
+{
+  "source": "/tmp/mists-wrapper-capture-retry",
+  "retained_byte_identical": [
+    {
+      "path": "cargo-epoch-delta.json",
+      "bytes": 479,
+      "sha256": "8e4c7a0ab03df191853ec0bd8faf11f81c78a22d73fc58d6351aa676239d742e"
+    },
+    {
+      "path": "check.json",
+      "bytes": 23482,
+      "sha256": "7a5ca89990c2a409b39cbe2c43d9d8f46d7c2c1c03cb865a85d1bafe6f784e50"
+    },
+    {
+      "path": "check.stderr.log",
+      "bytes": 19816,
+      "sha256": "bf1dfd000337f256ea5471d3801a8c2603d7572ce1bf33f068693591859ea3c7"
+    },
+    {
+      "path": "check.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "compile.json",
+      "bytes": 2032,
+      "sha256": "c2a5a1e662e2ff0cbf6613c6f1b7c32454d3ad216c0207dbb7cc44f4796aed05"
+    },
+    {
+      "path": "final-epoch-delta.json",
+      "bytes": 7976,
+      "sha256": "867a1543bc23c4f1677acc7c3c901b6d7dbce2d63c2355394330c30facec42ba"
+    },
+    {
+      "path": "final-scope.json",
+      "bytes": 1472,
+      "sha256": "ef20fe3b77679019769d782ff13dc456d625b1b2199ce5b99cde099090ee5fe5"
+    },
+    {
+      "path": "report.md",
+      "bytes": 5165,
+      "sha256": "e0458eeb0e82d4548106e1aba5072843415511c06b763ecbe902462a0db7100d"
+    },
+    {
+      "path": "static-equivalence.json",
+      "bytes": 23970,
+      "sha256": "360b6ddbdd333ca35cbb13d17b151627268524cf249a7579056fc46b50cd5e4b"
+    },
+    {
+      "path": "transmog-gate-delta.json",
+      "bytes": 856,
+      "sha256": "ad85194e248ab66d1793f84cce129ccae12716fd8fb2270c4beba723cd725842"
+    }
+  ],
+  "excluded": [
+    {
+      "path": "ledger.json",
+      "bytes": 54300,
+      "sha256": "eca1689a6b6387005af4fa079e23df1aaa80e04d33d86747ec0c0705b14b702e"
+    },
+    {
+      "path": "post-abort-processes.json",
+      "bytes": 54299,
+      "sha256": "aadeed6b3cf830c8dad918a0f931a6ee4022cb7abe65d89c7ab1aa657708f644"
+    }
+  ],
+  "privacy_review": "Secret-value patterns inspected before copying; hits were public futures_task/async_task artifact names and docs/mask-*.md. Environment key names only. Process listings and redundant embedded process-ledger excluded; no values redacted in retained bytes. Complete command streams retained except excluded process-observation streams and tracked path listing. Original /tmp evidence untouched.",
+  "limits": "Reports keep actual execution epochs and missing exits; retention does not rerun tests or establish parent acceptance."
+}

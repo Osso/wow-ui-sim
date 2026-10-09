@@ -1,0 +1,5 @@
+{
+  "command": "git rev-parse HEAD",
+  "stream": "initial-head.log",
+  "issue": "combined_to_file executed and returned CommandResult; trailing run raised AttributeError; exit not retained; no build launched; command not repeated"
+}

@@ -1126,3 +1126,7 @@ Own frozen identity verified before derivation; SOURCE RED6/portable RED3 retain
 ## [2026-10-09] copied SOURCE proof | Patch 1.5.0
 
 Own SOURCE6/6 at231bc7d2e; immutable31-seal/32-member53,739-byte archive ata4f4d59ba. Actual copied SOURCE6/portable3 and validator exit0 atd209973b3; default bytes/errors and both serialized ledger/log reject/exact restoration. Seven later receipts separately sealed. [Audit](investigations/patch-1-5-0-api-audit.md); no native/model/runtime/parent closure, main owns acceptance.
+
+## [2026-10-09] retained proof | Historical/headless, GUI, Mists and target discovery
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md): historical Transmog/headless order1/1 each at4163299fa; GUI order/hit-grid1/1 atb02b9f544, compile success output with missing exit disclosed. Mists typecheck exit0, interrupted integration compile and wrappers0/3 executed. Historical target index HTML only, no revision source/behavior closure. Privacy exclusions and byte-identical retention manifests recorded; no broad reruns or parent completion.

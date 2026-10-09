@@ -1,0 +1,8 @@
+{
+  "normalized_hit_test_equal": true,
+  "transmog_module_equal_f2eebd359": true,
+  "historical_member_count": 22,
+  "frame_before_sha256": "872a5e2af72c5db6e26fc6c7187aab80d7ecdd194f736a1d0112b967e7fc6f96",
+  "frame_current_sha256": "b50f1dc966712d779a9a458d989b3353627975552155d5976c3d329b7c752160",
+  "readability": "Manual changed-line and surrounding test review: no introduced violations. One explicit feature gate and lexical scope, common setup/order assertion unchanged, no suppression or alternate behavior. One lexical level added only to GUI assertions; no branching, state accumulation, naming or side-effect concealment introduced. Tools unavailable; no measured complexity claim."
+}

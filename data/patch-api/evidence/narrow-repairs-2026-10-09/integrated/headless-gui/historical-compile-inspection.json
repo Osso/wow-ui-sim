@@ -1,0 +1,49 @@
+{
+  "artifacts": [
+    {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+      "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "wow_ui_sim",
+        "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": "line-tables-only",
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [
+        "aura-instance-enumeration",
+        "profile-retail",
+        "retail-12-0-0"
+      ],
+      "filenames": [
+        "/home/osso/Projects/wow/wow-ui-sim/target/transmog-epoch-proof/debug/deps/wow_ui_sim-5da96163b92cdc95"
+      ],
+      "executable": "/home/osso/Projects/wow/wow-ui-sim/target/transmog-epoch-proof/debug/deps/wow_ui_sim-5da96163b92cdc95",
+      "fresh": false,
+      "binary_sha256": "b51dc5c060b5971140325378a4ac2bc2cee7165315806e3ac22f6110aec85360"
+    }
+  ],
+  "diagnostic_count": 12,
+  "unparsed_lines": [],
+  "build_finished": [
+    {
+      "reason": "build-finished",
+      "success": true
+    }
+  ]
+}

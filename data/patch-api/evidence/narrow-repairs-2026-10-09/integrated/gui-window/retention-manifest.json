@@ -1,0 +1,38 @@
+{
+  "source": "/tmp/gui-window-independent",
+  "retained_byte_identical": [
+    {
+      "path": "command-ledger.json",
+      "bytes": 3314,
+      "sha256": "8f66d041cf427fc3b1abdc656c1a31a7ca942edbed98e63182c60ecb6059b5b9"
+    },
+    {
+      "path": "compile.combined.log",
+      "bytes": 566421,
+      "sha256": "bfc467dc3b08222c2c061f71a921c7b1d56b07675a2407b63e5b05938c85755b"
+    },
+    {
+      "path": "compile.nonjson.log",
+      "bytes": 1206,
+      "sha256": "81dba03bcd9c8c3d4368cb3ae1992ea4dfa19f7f61b707aec17c886a253d116f"
+    },
+    {
+      "path": "compiler-artifact.json",
+      "bytes": 1282,
+      "sha256": "468e8d8d5d92e2e3ab1998bbde445fb068950c73ac31b16f031ada1b405ef1e5"
+    },
+    {
+      "path": "report.md",
+      "bytes": 3322,
+      "sha256": "a24aff0a95d1299d907a1be9938af529d1ca6a965b05c6c6bf51b21c3761196e"
+    },
+    {
+      "path": "test.combined.log",
+      "bytes": 218,
+      "sha256": "48fdc3c8eb3cbcfc9149b19ad3aababe6b260e815cc7f53951a133087fc929d7"
+    }
+  ],
+  "excluded": [],
+  "privacy_review": "Secret-value patterns inspected before copying; hits were public futures_task/async_task artifact names and docs/mask-*.md. Environment key names only. Process listings and redundant embedded process-ledger excluded; no values redacted in retained bytes. Complete command streams retained except excluded process-observation streams and tracked path listing. Original /tmp evidence untouched.",
+  "limits": "Reports keep actual execution epochs and missing exits; retention does not rerun tests or establish parent acceptance."
+}

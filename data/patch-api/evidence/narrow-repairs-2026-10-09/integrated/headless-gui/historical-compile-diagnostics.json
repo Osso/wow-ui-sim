@@ -1,0 +1,904 @@
+[
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `std::cell::RefCell`\n --> src/blizzard_ui_sync/tests.rs:5:5\n  |\n5 | use std::cell::RefCell;\n  |     ^^^^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "`#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default",
+          "rendered": null,
+          "spans": []
+        },
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the whole `use` item",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 183,
+              "byte_start": 159,
+              "column_end": 1,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "src/blizzard_ui_sync/tests.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 6,
+              "line_start": 5,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 24,
+                  "highlight_start": 1,
+                  "text": "use std::cell::RefCell;"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": "use std::path::PathBuf;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `std::cell::RefCell`",
+      "spans": [
+        {
+          "byte_end": 181,
+          "byte_start": 163,
+          "column_end": 23,
+          "column_start": 5,
+          "expansion": null,
+          "file_name": "src/blizzard_ui_sync/tests.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 5,
+          "line_start": 5,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 23,
+              "highlight_start": 5,
+              "text": "use std::cell::RefCell;"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `c_item::location_item`\n  --> src/c_api/item_spell/mod.rs:20:16\n   |\n20 | pub(crate) use c_item::location_item;\n   |                ^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the whole `use` item",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 593,
+              "byte_start": 521,
+              "column_end": 1,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "src/c_api/item_spell/mod.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 21,
+              "line_start": 19,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 34,
+                  "highlight_start": 1,
+                  "text": "#[cfg(feature = \"retail-12-0-0\")]"
+                },
+                {
+                  "highlight_end": 38,
+                  "highlight_start": 1,
+                  "text": "pub(crate) use c_item::location_item;"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": "pub(crate) use c_item::{"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `c_item::location_item`",
+      "spans": [
+        {
+          "byte_end": 591,
+          "byte_start": 570,
+          "column_end": 37,
+          "column_start": 16,
+          "expansion": null,
+          "file_name": "src/c_api/item_spell/mod.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 20,
+          "line_start": 20,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 37,
+              "highlight_start": 16,
+              "text": "pub(crate) use c_item::location_item;"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `collect_subtree_ids`\n   --> src/iced_app/frame_collect.rs:242:17\n    |\n242 |     use super::{collect_subtree_ids, intra_strata_sort_key};\n    |                 ^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the unused import",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 7798,
+              "byte_start": 7777,
+              "column_end": 38,
+              "column_start": 17,
+              "expansion": null,
+              "file_name": "src/iced_app/frame_collect.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 242,
+              "line_start": 242,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 38,
+                  "highlight_start": 17,
+                  "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+                }
+              ]
+            },
+            {
+              "byte_end": 7777,
+              "byte_start": 7776,
+              "column_end": 17,
+              "column_start": 16,
+              "expansion": null,
+              "file_name": "src/iced_app/frame_collect.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 242,
+              "line_start": 242,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 17,
+                  "highlight_start": 16,
+                  "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+                }
+              ]
+            },
+            {
+              "byte_end": 7820,
+              "byte_start": 7819,
+              "column_end": 60,
+              "column_start": 59,
+              "expansion": null,
+              "file_name": "src/iced_app/frame_collect.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 242,
+              "line_start": 242,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 60,
+                  "highlight_start": 59,
+                  "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `collect_subtree_ids`",
+      "spans": [
+        {
+          "byte_end": 7796,
+          "byte_start": 7777,
+          "column_end": 36,
+          "column_start": 17,
+          "expansion": null,
+          "file_name": "src/iced_app/frame_collect.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 242,
+          "line_start": 242,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 36,
+              "highlight_start": 17,
+              "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `self::preload::should_preload_talent_atlas_key`\n --> src/texture/tests.rs:1:5\n  |\n1 | use self::preload::should_preload_talent_atlas_key;\n  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the whole `use` item",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 52,
+              "byte_start": 0,
+              "column_end": 1,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "src/texture/tests.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 2,
+              "line_start": 1,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 52,
+                  "highlight_start": 1,
+                  "text": "use self::preload::should_preload_talent_atlas_key;"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": "use super::*;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `self::preload::should_preload_talent_atlas_key`",
+      "spans": [
+        {
+          "byte_end": 50,
+          "byte_start": 4,
+          "column_end": 51,
+          "column_start": 5,
+          "expansion": null,
+          "file_name": "src/texture/tests.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 1,
+          "line_start": 1,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 51,
+              "highlight_start": 5,
+              "text": "use self::preload::should_preload_talent_atlas_key;"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: function `remove_missing_marker` is never used\n   --> src/blizzard_ui_sync.rs:663:4\n    |\n663 | fn remove_missing_marker(path: &Path) {\n    |    ^^^^^^^^^^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "`#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default",
+          "rendered": null,
+          "spans": []
+        }
+      ],
+      "level": "warning",
+      "message": "function `remove_missing_marker` is never used",
+      "spans": [
+        {
+          "byte_end": 23519,
+          "byte_start": 23498,
+          "column_end": 25,
+          "column_start": 4,
+          "expansion": null,
+          "file_name": "src/blizzard_ui_sync.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 663,
+          "line_start": 663,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 25,
+              "highlight_start": 4,
+              "text": "fn remove_missing_marker(path: &Path) {"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: function `read_custom_set_items` is never used\n   --> src/c_api/c_transmog_collection.rs:246:15\n    |\n246 | pub(crate) fn read_custom_set_items(state: &LuaState, id: i32) -> LuaResult<Vec<ItemTransmogInfo>> {\n    |               ^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "warning",
+      "message": "function `read_custom_set_items` is never used",
+      "spans": [
+        {
+          "byte_end": 7512,
+          "byte_start": 7491,
+          "column_end": 36,
+          "column_start": 15,
+          "expansion": null,
+          "file_name": "src/c_api/c_transmog_collection.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 246,
+          "line_start": 246,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 36,
+              "highlight_start": 15,
+              "text": "pub(crate) fn read_custom_set_items(state: &LuaState, id: i32) -> LuaResult<Vec<ItemTransmogInfo>> {"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: function `ensure_known_asset_cached` is never used\n  --> src/casc_asset_fallback.rs:93:15\n   |\n93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {\n   |               ^^^^^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "warning",
+      "message": "function `ensure_known_asset_cached` is never used",
+      "spans": [
+        {
+          "byte_end": 3094,
+          "byte_start": 3069,
+          "column_end": 40,
+          "column_start": 15,
+          "expansion": null,
+          "file_name": "src/casc_asset_fallback.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 93,
+          "line_start": 93,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 40,
+              "highlight_start": 15,
+              "text": "pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: field `encoding_key_hex` is never read\n  --> src/render/font.rs:44:5\n   |\n41 | struct WowFontFile {\n   |        ----------- field in this struct\n...\n44 |     encoding_key_hex: Option<&'static str>,\n   |     ^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "warning",
+      "message": "field `encoding_key_hex` is never read",
+      "spans": [
+        {
+          "byte_end": 1234,
+          "byte_start": 1223,
+          "column_end": 19,
+          "column_start": 8,
+          "expansion": null,
+          "file_name": "src/render/font.rs",
+          "is_primary": false,
+          "label": "field in this struct",
+          "line_end": 41,
+          "line_start": 41,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 19,
+              "highlight_start": 8,
+              "text": "struct WowFontFile {"
+            }
+          ]
+        },
+        {
+          "byte_end": 1325,
+          "byte_start": 1309,
+          "column_end": 21,
+          "column_start": 5,
+          "expansion": null,
+          "file_name": "src/render/font.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 44,
+          "line_start": 44,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 21,
+              "highlight_start": 5,
+              "text": "    encoding_key_hex: Option<&'static str>,"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: function `aura_matches_filter_string` is never used\n   --> src/lua_api/globals/auras.rs:251:15\n    |\n251 | pub(crate) fn aura_matches_filter_string(\n    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "warning",
+      "message": "function `aura_matches_filter_string` is never used",
+      "spans": [
+        {
+          "byte_end": 8869,
+          "byte_start": 8843,
+          "column_end": 41,
+          "column_start": 15,
+          "expansion": null,
+          "file_name": "src/lua_api/globals/auras.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 251,
+          "line_start": 251,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 41,
+              "highlight_start": 15,
+              "text": "pub(crate) fn aura_matches_filter_string("
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: function `find_uncached_talent_icons` is never used\n   --> src/texture/tests.rs:640:4\n    |\n640 | fn find_uncached_talent_icons(mgr: &TextureManager, tree_id: u32) -> Vec<String> {\n    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "warning",
+      "message": "function `find_uncached_talent_icons` is never used",
+      "spans": [
+        {
+          "byte_end": 20443,
+          "byte_start": 20417,
+          "column_end": 30,
+          "column_start": 4,
+          "expansion": null,
+          "file_name": "src/texture/tests.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 640,
+          "line_start": 640,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 30,
+              "highlight_start": 4,
+              "text": "fn find_uncached_talent_icons(mgr: &TextureManager, tree_id: u32) -> Vec<String> {"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: function `check_icon_cached` is never used\n   --> src/texture/tests.rs:672:4\n    |\n672 | fn check_icon_cached(mgr: &TextureManager, missing: &mut Vec<String>, node_id: u32, icon_id: u32) {\n    |    ^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "warning",
+      "message": "function `check_icon_cached` is never used",
+      "spans": [
+        {
+          "byte_end": 21572,
+          "byte_start": 21555,
+          "column_end": 21,
+          "column_start": 4,
+          "expansion": null,
+          "file_name": "src/texture/tests.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 672,
+          "line_start": 672,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 21,
+              "highlight_start": 4,
+              "text": "fn check_icon_cached(mgr: &TextureManager, missing: &mut Vec<String>, node_id: u32, icon_id: u32) {"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used\n   --> src/widget/frame.rs:601:19\n    |\n600 | impl Frame {\n    | ---------- methods in this implementation\n601 |     pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {\n    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n...\n610 |     pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {\n    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "warning",
+      "message": "methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used",
+      "spans": [
+        {
+          "byte_end": 28367,
+          "byte_start": 28357,
+          "column_end": 11,
+          "column_start": 1,
+          "expansion": null,
+          "file_name": "src/widget/frame.rs",
+          "is_primary": false,
+          "label": "methods in this implementation",
+          "line_end": 600,
+          "line_start": 600,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 11,
+              "highlight_start": 1,
+              "text": "impl Frame {"
+            }
+          ]
+        },
+        {
+          "byte_end": 28416,
+          "byte_start": 28388,
+          "column_end": 47,
+          "column_start": 19,
+          "expansion": null,
+          "file_name": "src/widget/frame.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 601,
+          "line_start": 601,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 47,
+              "highlight_start": 19,
+              "text": "    pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {"
+            }
+          ]
+        },
+        {
+          "byte_end": 28695,
+          "byte_start": 28669,
+          "column_end": 45,
+          "column_start": 19,
+          "expansion": null,
+          "file_name": "src/widget/frame.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 610,
+          "line_start": 610,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 45,
+              "highlight_start": 19,
+              "text": "    pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "dead_code",
+        "explanation": null
+      }
+    }
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "stdout": "commit f2eebd359a18c127ac228a4750157414086b13d2\nAuthor: Alessio Deiana <adeiana@gmail.com>\nDate:   Fri Oct 9 12:52:11 2026 -0500\n\n    Scope historical TransmogSituation assertions to 12.0.0\n\ndiff --git a/src/loader/tests/wow_api_globals/transmog_situation.rs b/src/loader/tests/wow_api_globals/transmog_situation.rs\nindex f872027c6..da7745076 100644\n--- a/src/loader/tests/wow_api_globals/transmog_situation.rs\n+++ b/src/loader/tests/wow_api_globals/transmog_situation.rs\n@@ -1,6 +1,7 @@\n //! Startup publication and values for the 12.0.0 TransmogSituation enum.\n \n-#![cfg(feature = \"retail-12-0-0\")]\n+// Later cumulative epochs publish additional members and different metadata.\n+#![cfg(all(feature = \"retail-12-0-0\", not(feature = \"retail-12-0-5\")))]\n \n use super::super::*;\n \n",
+  "stderr": "",
+  "exit_code": 0
+}

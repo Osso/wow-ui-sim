@@ -1,0 +1,95 @@
+warning: unused import: `std::cell::RefCell`
+ --> src/blizzard_ui_sync/tests.rs:5:5
+  |
+5 | use std::cell::RefCell;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+
+warning: unused import: `c_item::location_item`
+  --> src/c_api/item_spell/mod.rs:20:16
+   |
+20 | pub(crate) use c_item::location_item;
+   |                ^^^^^^^^^^^^^^^^^^^^^
+
+
+warning: unused import: `collect_subtree_ids`
+   --> src/iced_app/frame_collect.rs:242:17
+    |
+242 |     use super::{collect_subtree_ids, intra_strata_sort_key};
+    |                 ^^^^^^^^^^^^^^^^^^^
+
+
+warning: unused import: `self::preload::should_preload_talent_atlas_key`
+ --> src/texture/tests.rs:1:5
+  |
+1 | use self::preload::should_preload_talent_atlas_key;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+
+warning: function `read_custom_set_items` is never used
+   --> src/c_api/c_transmog_collection.rs:246:15
+    |
+246 | pub(crate) fn read_custom_set_items(state: &LuaState, id: i32) -> LuaResult<Vec<ItemTransmogInfo>> {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+
+warning: function `aura_matches_filter_string` is never used
+   --> src/lua_api/globals/auras.rs:251:15
+    |
+251 | pub(crate) fn aura_matches_filter_string(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+warning: function `find_uncached_talent_icons` is never used
+   --> src/texture/tests.rs:640:4
+    |
+640 | fn find_uncached_talent_icons(mgr: &TextureManager, tree_id: u32) -> Vec<String> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+warning: function `check_icon_cached` is never used
+   --> src/texture/tests.rs:672:4
+    |
+672 | fn check_icon_cached(mgr: &TextureManager, missing: &mut Vec<String>, node_id: u32, icon_id: u32) {
+    |    ^^^^^^^^^^^^^^^^^
+
+
+warning: methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used
+   --> src/widget/frame.rs:601:19
+    |
+600 | impl Frame {
+    | ---------- methods in this implementation
+601 |     pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+610 |     pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+

@@ -1,0 +1,23 @@
+{
+  "source": "/tmp/historical-redirect-target-discovery",
+  "retained_byte_identical": [
+    {
+      "path": "historical-body.html",
+      "bytes": 9724,
+      "sha256": "59ad12d3b8cfee0670fd7bfdcd51342d9b71513910c09f0886f866e0243b9917"
+    },
+    {
+      "path": "index-links-observed.json.txt",
+      "bytes": 63,
+      "sha256": "19bcae41a3a1033ddaefc32eb692ac7c58a131efc55bedf2d906056407fcce75"
+    },
+    {
+      "path": "report.md",
+      "bytes": 2955,
+      "sha256": "f5f263bdde108c6280dcae85bd33fc904c5263eb249160e5522e8522de223624"
+    }
+  ],
+  "excluded": [],
+  "privacy_review": "Secret-value patterns inspected before copying; hits were public futures_task/async_task artifact names and docs/mask-*.md. Environment key names only. Process listings and redundant embedded process-ledger excluded; no values redacted in retained bytes. Complete command streams retained except excluded process-observation streams and tracked path listing. Original /tmp evidence untouched.",
+  "limits": "Reports keep actual execution epochs and missing exits; retention does not rerun tests or establish parent acceptance."
+}
