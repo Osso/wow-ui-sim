@@ -8,6 +8,10 @@ Every nonblank raw line remains literal, including headers, return declarations,
 
 All substantive contracts and publication are UNPROVEN. No runtime observation, new model, alias, shim, fallback, default or retirement. Native historical retail, Classic 2.5.x/Wrath 3.4.x/Era and modern simulator state are not interchangeable. No runtime probe is authorized or credited; existing state cannot establish all page semantics from names alone.
 
+## Current literal refinements
+
+Original sealed ledger retains 295 lexical occurrences and 11 outer references. Current accounting distinguishes `/alt` inside the reset syntax from a command, marks `/command` as a syntax placeholder, and separately retains the forum link nested inside the navigation transclusion. Original evidence is never rewritten; current source fixtures/ledger/receipts remain separate.
+
 ## Development
 
 Own source fixtures committed before RED at `9276337ae`: three missing-auditor failures, exit 1. Dedicated literal auditor implementation and accounting receipts will be recorded separately after bounded GREEN. No formatter is installed; Python source manually formatted. No check/lint/readability/coverage/broad/startup/final gates run. Main owns supported publication/native/integration.

@@ -17,7 +17,9 @@ EVENT = re.compile(r'\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*(?:_\*|\*)|\b[A-Z][A-Z0-9]*(
 COMMAND = re.compile(r'(?<![\w:/<.])/[a-z]+\*?')
 HANDLER = re.compile(r'\b(?:On[A-Z][A-Za-z]+|PreClick|PostClick)\b')
 CONTEXT = re.compile(r'\b(?:[A-Z][a-z]+(?:[A-Z][A-Za-z0-9]*)+|FrameXML|SecureXML|Region|GameTooltip|Button|Frame|MovePad)\b\*?')
-REFERENCE = re.compile(r'\{\{[^{}]*\}\}|\[\[[^\]]+\]\]|\[https?://[^\]]+\]')
+REFERENCES = [re.compile(pattern) for pattern in (
+    r'\{\{[^{}]*\}\}', r'\[\[[^\]]+\]\]', r'\[https?://[^\]]+\]',
+)]
 LANGUAGE = {'function', 'pairs', 'table.getn'}
 
 
@@ -100,7 +102,11 @@ def find_occurrences(line, number, heading, qualifier):
         code_end = line.find('</code>', match.end())
         inside_code = code_start >= 0 and '</code>' not in line[code_start:match.start()]
         fragment = line[match.start():code_end] if inside_code and code_end >= 0 else None
-        append(match, 'command-family' if '*' in match[0] else 'command', fragment,
+        prefix = line[code_start:match.start()] if inside_code else ''
+        kind = ('macro-option-suffix' if 'reset=' in prefix else
+                'command-placeholder' if match[0] == '/command' else
+                'command-family' if '*' in match[0] else 'command')
+        append(match, kind, fragment,
                'literal-command-fragment' if fragment is not None else 'unspecified')
     for match in HANDLER.finditer(line):
         # Named wrappers already have an occurrence at the function fragment.
@@ -147,7 +153,8 @@ def account(raw):
             'id': f'ref-2.0.1-{number:03}-{match.start():04}', 'line': number,
             'literal': match[0], 'status': 'UNPROVEN',
             'limit': 'Unexpanded linked/transcluded content; no inferred contracts.',
-        } for match in REFERENCE.finditer(line))
+        } for match in sorted((match for pattern in REFERENCES for match in pattern.finditer(line)),
+                              key=lambda match: (match.start(), -len(match[0]))))
     kinds = Counter(row['kind'] for row in occurrences)
     return {
         'schema': 'patch-api-literal-source-accounting/v1', 'patch': '2.0.1',
