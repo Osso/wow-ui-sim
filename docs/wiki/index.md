@@ -3067,3 +3067,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.13.5 frozen SOURCE accounting
 
 [Audit](investigations/patch-1-13-5-api-audit.md): frozen398847/3835002;31nonblank rows,3globals/2events,5unknown signatures,2prose rows,5headings/2matching counts,7links/7templates/2named refs;14UNPROVEN contracts. Threat defaults and generic bag capacity do not model reinstatement/log range/authenticator entitlement. Concurrent1.13.6 queued separately; main orders1.13.6 before1.13.5. Own SOURCE RED8/GREEN8 atb1a35a773;103 omissions. Portable RED3/GREEN3 and sealed validator exit0 atb6efab100: fresh copied SOURCE8/default bytes, same extractor ref-web failure, both ledger/log rejection/exact restoration.70 original seals unchanged,71-member157330-byte archive;7 separate later receipt seals. Zero runtime/model/native credit; main owns integration/final gates.
+
+## [2026-10-09] investigation | Historical Retail Patch 1.11.0 redirect SOURCE audit
+
+[Audit](investigations/patch-1-11-0-api-audit.md): frozen109825/1074793, 45-byte redirect; one metadata row/one unexpanded target/one UNPROVEN contract, zero local inventory/model/runtime/native credit. Own RED5 retained; targeted GREEN and portable proof pending. Queued1.12.0 retained separately, pending behind1.13.2 and unapplied. Main owns integration/native/final gates.
