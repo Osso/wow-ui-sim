@@ -1,0 +1,22 @@
+{
+  "revision": "f4c9e5b5048de4812411c8ebe677a7c33debe4c5",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 56
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 57
+    }
+  },
+  "log_sha256": "860a6be3ff4fea0928c819fb703a61ab2e95b2f6d53e3e34dcaf94311070bc83",
+  "tamper_control": {
+    "owned_log": "own-sweep.txt",
+    "exit": 1,
+    "rejection": "('integrated artifact drift', 'own-sweep.txt')",
+    "original_bytes_restored": true
+  },
+  "scope": "Gate pins committed acceptance inputs; subsequent changes only record gate output and wiki results."
+}

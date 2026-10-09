@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p520-page/tools/check_patch_validators.py"
+  ],
+  "revision": "f4c9e5b5048de4812411c8ebe677a7c33debe4c5",
+  "scope": "validator-gate",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "validator-gate.txt",
+  "log_sha256": "860a6be3ff4fea0928c819fb703a61ab2e95b2f6d53e3e34dcaf94311070bc83",
+  "seconds": 146.54088961399975,
+  "invalidated": false
+}
