@@ -1,0 +1,76 @@
+usage: extract_patch_non_inventory.py [-h] [--check] [--self-test]
+                                      [--patch PATCH] [--preserve-examples]
+                                      [--normalize-inventory-headings]
+                                      [--retain-reference-notes]
+                                      [--legacy-api-tables]
+                                      [--legacy-api-bullets] [--text-only]
+                                      [--legacy-cvar-tables] [--bfa-prepatch]
+                                      [--legion-prepatch]
+                                      [--retain-patch-diff-reference]
+                                      [--canonical-patch-navigation]
+                                      [--mists-automated-diff]
+                                      [--lowercase-reflist]
+                                      [--cataclysm-labeled-inventory]
+                                      [--mists-source-markup]
+                                      [--wrath-summary-markup]
+                                      [--numbered-reflist]
+                                      [--retail-tbc-markup]
+                                      [--retail-240-summary]
+
+Extract retained patch non-inventory wikitext and seed supplemental rows. No
+network or dependencies. Line suffixes refer to the generated plaintext,
+including blank lines, as in the 12.1.0 page ledger. --check never writes. The
+12.0.0 capture has no Notes/Blue posts; 12.0.1 retains Blue posts. Linked
+pages are not expanded. --text-only never accesses a coverage ledger.
+
+options:
+  -h, --help            show this help message and exit
+  --check
+  --self-test
+  --patch PATCH
+  --preserve-examples   Retain Lua/XML syntaxhighlight contents verbatim in
+                        fenced blocks
+  --normalize-inventory-headings
+                        Recognize spaced inventory headings without swallowing
+                        earlier deprecated tables
+  --retain-reference-notes
+                        Retain inline ref web citation fields alongside
+                        publication prose
+  --legacy-api-tables   Strip older caption inventories while retaining API
+                        prose and references
+  --legacy-api-bullets  Strip legacy API/event bullets without losing prose or
+                        unknown markers
+  --text-only           Write/check plaintext only; never read or modify a
+                        coverage ledger
+  --legacy-cvar-tables  Strip CVar inventory tables, retaining
+                        captions/citations; opt-in
+  --bfa-prepatch        Strip 8.0.1 nested additions/events, retaining prose
+                        and reference fields; opt-in
+  --legion-prepatch     Strip pure nested Legion inventories, retaining
+                        summaries and renames; opt-in
+  --retain-patch-diff-reference
+                        Retain transcluded patch diffs as unexpanded source
+                        references; opt-in
+  --canonical-patch-navigation
+                        Render positional apichanges patch after named
+                        parameters; opt-in
+  --mists-automated-diff
+                        Strip 2013 Mists API tables while retaining prose and
+                        enums; opt-in
+  --lowercase-reflist   Retain lowercase reflist as an unexpanded reference
+                        marker; opt-in
+  --cataclysm-labeled-inventory
+                        Strip explicit NEW/REMOVED rows, retain breaking
+                        prose/build context; opt-in
+  --mists-source-markup
+                        Retain Mists external-link fields and omit noinclude
+                        wrappers; opt-in
+  --wrath-summary-markup
+                        Keep 2009 summary attribution and inline Button XML;
+                        opt-in
+  --numbered-reflist    Retain numbered Reflist markers without expanding
+                        citations; opt-in
+  --retail-tbc-markup   Keep 2008 retail placeholders/nested citation fields;
+                        opt-in
+  --retail-240-summary  Keep full mixed 2008 Retail source literally, without
+                        linked expansion; opt-in

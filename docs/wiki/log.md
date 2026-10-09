@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.1.0 literal SOURCE audit
 
-[Audit](investigations/patch-1-1-0-api-audit.md) retains own frozen identity/registry101 before derivation,15literal rows/11additions/13UNPROVEN contracts. Own SOURCE RED7/portableRED3;66occurrence omission controls implemented. Historical default generator0 entries/extractor106bytes/errors unchanged. Current GetCVarDefault genuine state/default-separation candidate reported, not executed; UnitRangedAttack has no independent skill/modifier model. Separate queued1.3/1.4/1.5; no invented1.2 pin. No runtime/shared-tool changes.
+[Audit](investigations/patch-1-1-0-api-audit.md) retains own frozen identity/registry101 before derivation,15literal rows/11additions/13UNPROVEN contracts. Own SOURCE RED7/portableRED3; SOURCE GREEN7/7 at515c84bd6 with66occurrence omission controls, first fixture-order failure retained. Historical default generator0 entries/extractor106bytes/errors unchanged. Current GetCVarDefault genuine state/default-separation candidate reported, not executed; UnitRangedAttack has no independent skill/modifier model. Separate queued1.3/1.4/1.5; no invented1.2 pin. No runtime/shared-tool changes.
 
 ## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
 
