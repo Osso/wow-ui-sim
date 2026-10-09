@@ -537,7 +537,7 @@
     {
       "source_id": "wt-global-api-IsIPv6Available-73",
       "status": "bounded-coverage",
-      "capabilities": ["current-retail-publication-or-absence"],
+      "capabilities": ["publication-absence"],
       "note": "Actual retail 4.3.0 removal supersedes this addition; current raw/lookup absence matches. No client transport IPv6 model or native behavior credit; Classic unchanged.",
       "wikitext_line": 73
     },
