@@ -1,0 +1,56 @@
+{
+  "archive_bytes": 317490,
+  "controls": [
+    {
+      "file": "historical-page-coverage.json",
+      "original_sha256": "6400a2afd3328fe6fac7e41d86cc9ef0376587504e05123c8efc815a71512a47",
+      "rejected": true
+    },
+    {
+      "file": "source-green.log",
+      "original_sha256": "4fb3cc9bde1d3e63e0096fc244329de804a5818b61fc6e51b4d5c02e07cd7d6a",
+      "rejected": true
+    }
+  ],
+  "copied_no_git_no_target": true,
+  "counts": {
+    "directions": {
+      "added": 13,
+      "changed": 13,
+      "context": 4,
+      "replaced": 6
+    },
+    "extract_nonblank_rows": 67,
+    "header_counts": [],
+    "headers": 11,
+    "inventory_occurrences": 36,
+    "kinds": {
+      "cvar-setting": 1,
+      "event-family": 1,
+      "global-api": 22,
+      "secure-helper": 1,
+      "secure-template": 1,
+      "widget-method": 6,
+      "widget-script": 4
+    },
+    "literal_signature_fragments": 29,
+    "model_credit": 0,
+    "modified_click_examples": 12,
+    "native_observations": 0,
+    "prose_limits": 53,
+    "raw_nonblank_rows": 67,
+    "raw_statuses": {
+      "UNPROVEN": 53,
+      "metadata-only": 14
+    },
+    "registry_endpoint": "1.0.0",
+    "registry_pages": 101,
+    "runtime_observations": 0,
+    "sealed_inputs": 19,
+    "signature_limits": 33,
+    "unspecified_signature_fragments": 4
+  },
+  "max_file_bytes": 109178,
+  "mutable_later_state_ignored": true,
+  "restored_bytes": true
+}

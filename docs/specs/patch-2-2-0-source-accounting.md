@@ -4,11 +4,11 @@ Account the frozen 2007 retail page, not Classic 2.5 or modern retail runtime be
 
 ## What it must do
 
-- [ ] Validate page 184149/revision 6428980, timestamp 2025-08-03T13:04:54Z, exact response/body hashes and manifest-linked 101-page registry ending at 1.0.0.
-- [ ] Account every API/widget/script/setting/event-family occurrence, header, prose/example and default extract row; never expand linked contracts or infer concrete event members.
-- [ ] Preserve optional/split signature fragments, literal returns, modified-click defaults and source replacement claims without native/model credit.
-- [ ] Reject omissions, fabricated signatures, proof credit and foreign/queued supersession.
-- [ ] Replay compact sealed source/history without Git, target, network or mutable later state; reject serialized ledger/log tampering and restore original bytes.
+- [x] Validate page 184149/revision 6428980, timestamp 2025-08-03T13:04:54Z, exact response/body hashes and manifest-linked 101-page registry ending at 1.0.0.
+- [x] Account every API/widget/script/setting/event-family occurrence, header, prose/example and default extract row; never expand linked contracts or infer concrete event members.
+- [x] Preserve optional/split signature fragments, literal returns, modified-click defaults and source replacement claims without native/model credit.
+- [x] Reject omissions, fabricated signatures, proof credit and foreign/queued supersession.
+- [x] Replay compact sealed source/history without Git, target, network or mutable later state; reject serialized ledger/log tampering and restore original bytes.
 
 ## How it works
 
@@ -21,7 +21,8 @@ Account the frozen 2007 retail page, not Classic 2.5 or modern retail runtime be
 
 ## Tests asserting this spec
 
-- Owned `test_source_accounting.py` — omission, signature, client-history and zero-credit controls. Development RED recorded; GREEN pending at initial implementation commit.
+- Owned `test_source_accounting.py` — RED5/5 before validator; GREEN5/5 at `3045ccee9494e5ce4c09dd9f0c23e0f0bbb4043c`, including 279 omission controls. Later changes do not intersect this proof scope.
+- Owned `replay_controls.py` — RED1/1 before seals; GREEN1/1 at `4f7a2c79797b95402e703e7e10ad87d677a3d926`, copied no-Git/no-target archive, outside later-state drift, two serialized ledger/log seal rejections and exact restoration. Same revision `validate.py` exits0 with 19 seals.
 
 ## Known gaps (current cycle)
 

@@ -36,6 +36,31 @@
       "result": "RED 1/1 expected assertion: historical seals are missing",
       "log": "portable-red.log",
       "invalidated_by": "seals creation; development RED only"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py"
+      ],
+      "revision": "4f7a2c79797b95402e703e7e10ad87d677a3d926",
+      "scope": "historical response/body/registry/extract/complete literal ledger replay",
+      "result": "exit0; 19sealed inputs",
+      "log": "validator-green.log",
+      "invalidated_by": null
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/replay_controls.py"
+      ],
+      "revision": "4f7a2c79797b95402e703e7e10ad87d677a3d926",
+      "scope": "relocated no-Git/no-target; foreign/queued mutable state ignored; serialized ledger/log rejection and SHA256/output restoration",
+      "result": "GREEN1/1 exit0",
+      "log": "portable-green.log",
+      "invalidated_by": null
     }
-  ]
+  ],
+  "current_proof_applicability": "SOURCE validator/tests and all19sealed inputs unchanged since recorded proof; later receipt/docs-only additions do not invalidate it. Main owns runtime/native/integration/final gates."
 }

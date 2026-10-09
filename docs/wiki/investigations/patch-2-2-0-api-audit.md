@@ -11,8 +11,8 @@ Frozen page 184149/revision 6428980 (2025-08-03T13:04:54Z) describes 2007 retail
 | Scope | Literal accounting | Proof level |
 |---|---|---|
 | Raw/extract | 67 nonblank rows each; 11 headings plus navigation, Script API label and reference URL are 14 metadata rows; 53 raw prose/example rows | SOURCE, UNPROVEN substantive behavior |
-| Inventory | 36 occurrences including repeated RegisterStateDriver mention/example | SOURCE only |
-| Signatures | 33 records retaining literal fragments or unspecified signatures | No arity/type/full-return reconstruction |
+| Inventory | 36 occurrences: 22 globals, 6 widget methods, 4 scripts, 1 secure helper, 1 setting, 1 event family, 1 secure template; repeated RegisterStateDriver mention/example distinct | SOURCE only |
+| Signatures | 33 records: 29 literal fragments / 4 unspecified; 6 explicit return fragments, partial OnEnter self and event-family payload separately retained | No arity/type/full-return reconstruction |
 | Modified clicks | 12 XML examples; DRESSUP example occurs twice, 11 listed actions | Source defaults only, no invented runtime configuration |
 | Headers | 11 exact headings; no declared numeric inventory counts | Empty `header_counts` is intentional |
 
@@ -32,7 +32,13 @@ Queued 2.3.0/2.4.0/2.4.2/3.0.x are main-owned, not superseding registers in this
 
 ## Development proof
 
-Owned source fixtures RED 5/5 fail because validator is absent. Formatter applied to owned validator/tests. Initial SOURCE implementation committed before GREEN; targeted source/historical controls pending. No broad/final gates; main owns native/integration/final acceptance. Zero model credit and no new runtime proposal.
+Owned source fixtures RED 5/5 before validator; GREEN 5/5 at `3045ccee9494e5ce4c09dd9f0c23e0f0bbb4043c`. 279 individual omission controls cover all seven serialized ledger layers; fabricated signatures/statuses, source family/default limits and foreign/queued supersession controlled. Owned Python formatter applied; unchanged copied shared tools not reformatted. Bytecode accidentally included in initial commit was removed immediately in `aed5d9bae`; no bytecode in final evidence snapshot.
+
+At `4f7a2c79797b95402e703e7e10ad87d677a3d926`: historical validator exits0 with 19 sealed inputs, exact frozen response/body/registry/extract and full ledger reconstruction. Portable fixture RED1/1 before seals, GREEN1/1 after: copied archive has no Git/target and no tool PATH; outside queued/Classic registers cannot change output. Serialized coverage-ledger row deletion and source-GREEN-log forgery each reject at their exact seal; original SHA256 and replay output restored. Archive 317,490 bytes; largest file 109,178 bytes, below5MB. Initial historical seals are immutable; new proof receipts/command ledger sit separately.
+
+Directions: 13 added, 13 changed, 6 replaced, 4 context occurrences. Raw86 total/67 nonblank (53 UNPROVEN, 14 metadata); default extract67 nonblank. No explicit console command row, no concrete event member expansion. Every linked/full behavioral contract remains UNPROVEN; no publication/native/runtime observation.
+
+[Command ledger](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/command-ledger.json) records commands, exact proof revisions/scopes and invalidation boundaries; [portable receipt](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/portable-proof.json) records seals/counts/restoration. No rerun of already applicable SOURCE proof; no broad/final gates. Main owns native/integration/final acceptance. Zero model credit and no new runtime proposal.
 
 ## Sources
 

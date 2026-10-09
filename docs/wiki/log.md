@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Historical retail Patch 2.2.0 SOURCE audit
 
-[Audit](investigations/patch-2-2-0-api-audit.md): frozen source/registry identity and literal accounting added; owned SOURCE RED5/5, shared generator/extractor unchanged. Initial implementation before targeted GREEN; all native/model contracts UNPROVEN. Main owns integration/final gates.
+[Audit](investigations/patch-2-2-0-api-audit.md): frozen source/registry identity and literal accounting added; owned SOURCE RED5/5, shared generator/extractor unchanged. Initial implementation committed before targeted SOURCE GREEN5/5 at3045ccee9; historical replay/portable GREEN1/1 at4f7a2c797 with19seals, copied no-Git/no-target and two serialized ledger/log seal rejections/restorations. Archive317490bytes/max109178bytes; all native/model contracts UNPROVEN. Main owns integration/final gates.
 
 ## [2026-10-09] measurement | Separate Wrath 3.4.1 bare factory
 

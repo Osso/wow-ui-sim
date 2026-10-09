@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Historical retail Patch 2.2.0 SOURCE audit
 
-[Audit](investigations/patch-2-2-0-api-audit.md): frozen page184149/revision6428980; 36 inventory, 33 signature limits, 67 raw/67 default-extract rows, 53 prose limits, 11 headings/no numeric counts, 12 modified-click examples. Manifest-linked registry101 ends at1.0.0. SOURCE-only; all substantive contracts UNPROVEN, zero model/native/runtime credit; Classic/queued supersession excluded. Owned RED5/5 recorded; targeted GREEN/compact portable receipts pending. Shared tools unchanged; main owns native/integration/final gates.
+[Audit](investigations/patch-2-2-0-api-audit.md): frozen page184149/revision6428980; 36 inventory, 33 signature limits, 67 raw/67 default-extract rows, 53 prose limits, 11 headings/no numeric counts, 12 modified-click examples. Manifest-linked registry101 ends at1.0.0. SOURCE-only; all substantive contracts UNPROVEN, zero model/native/runtime credit; Classic/queued supersession excluded. Own SOURCE GREEN5/5 at3045ccee9 (279 omission controls), historical/portable GREEN at4f7a2c797: 19 seals, copied no-Git/no-target replay, ledger/log rejection and exact restoration. Archive317490bytes/max109178bytes; 29 literal/4 unspecified signatures. Shared tools unchanged; main owns native/integration/final gates.
 
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 
