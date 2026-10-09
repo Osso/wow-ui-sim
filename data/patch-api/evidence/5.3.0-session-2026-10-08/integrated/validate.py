@@ -55,8 +55,11 @@ def main():
         for directory, pins in row['directories'].items():
             assert git('rev-parse', rebased + ':' + directory).decode().strip() == pins['rebased_tree']
         if row['recorded_patch_id'] != row['rebased_patch_id']:
-            assert row['subject'] == 'Audit pinned retail 5.3.0 source and caption inventories'
-            old_patch = (HERE / 'historical-tool-commit.patch').read_bytes()
+            assert row['subject'] in (
+                'Audit pinned retail 5.3.0 source and caption inventories',
+                'Document 5.3.0 scope and historical proof procedure')
+            assert row['conflict_reason']
+            old_patch = (HERE / row['historical_patch']).read_bytes()
             assert git('patch-id', '--stable', input=old_patch).decode().split()[0] == row['recorded_patch_id']
     registers = read('p530-register-reproduction.json')
     extracts = read('p530-saved-extract-reproduction.json')

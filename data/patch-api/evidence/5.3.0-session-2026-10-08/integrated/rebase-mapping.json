@@ -29,7 +29,9 @@
           "recorded_tree": "728d7e94eeaf94ec4a81bdfcdeae7a8bfff623cd",
           "rebased_tree": "7642c4729cc487de0c253a7734a2d013cefd6720"
         }
-      }
+      },
+      "historical_patch": "historical-tool-commit.patch",
+      "conflict_reason": "Drop parser copies already byte-identical to master; retain only additive widget handlers."
     },
     {
       "recorded_revision": "b1e21b6c27eb1e530d62b2cf78a1403c5f4a371b",
@@ -89,7 +91,9 @@
           "recorded_tree": "0cc5c4ceea6f95837fb87dcaf0af3930e60bd307",
           "rebased_tree": "2a69cf16acc1e136eaa228daa855b6c49e2457db"
         }
-      }
+      },
+      "historical_patch": "historical-wiki-commit.patch",
+      "conflict_reason": "Resolve wiki index insertion against newly merged retail and Classic audit pages."
     },
     {
       "recorded_revision": "3021009068a441114d17a425db441b936b59499e",

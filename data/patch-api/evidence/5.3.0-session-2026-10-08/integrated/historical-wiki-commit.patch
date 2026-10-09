@@ -1,0 +1,578 @@
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/build_accounting.py b/data/patch-api/evidence/5.3.0-session-2026-10-08/build_accounting.py
+new file mode 100644
+index 000000000..0a8a47dac
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/build_accounting.py
+@@ -0,0 +1,158 @@
++"""Account for inventory, main-page prose and separately pinned diff captions."""
++import importlib.util
++import json
++from pathlib import Path
++import sys
++
++sys.dont_write_bytecode = True
++ROOT = Path(__file__).resolve().parents[4]
++HERE = Path(__file__).resolve().parent
++SOURCES = ROOT / 'data/patch-api/sources'
++
++
++def read(path):
++    return json.loads(path.read_text())
++
++
++def write(path, value):
++    path.write_text(json.dumps(value, indent=2) + '\n')
++
++
++def gap_reason(entry):
++    symbol = entry['symbol']
++    if symbol.startswith('Browser'):
++        return ('No embedded-browser engine/backing for the 2013 support website. ' + symbol +
++                ' is not supported by the current Browser object publication. Generic frame '
++                'focus methods and two inert navigation methods do not establish browser '
++                'cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.')
++    if entry['section'] == 'events':
++        return ('Strict current retail catalog rejects ' + symbol +
++                '. Its historical battleground, PvP-role, bonus-roll, web-ticket or browser '
++                'service producer is not modeled by this audit. Registration alone would '
++                'not establish lifecycle/payload parity; no catalog-only workaround added.')
++    if symbol in ('AcknowledgeSurvey', 'HideKnowledgeBase', 'ShowKnowledgeBase'):
++        return ('Historical support/knowledge-base/survey service has no state-backed lifecycle '
++                'or embedded-browser integration. Current help-panel consumers do not supply '
++                '2013 survey acknowledgement or old knowledge-base semantics; no shim added.')
++    if symbol in ('GetItemUpgradeEffect', 'GetNumItemUpgradeEffects'):
++        return ('Legacy item-upgrade effect catalog is absent. The later C_ItemUpgrade names '
++                'are themselves publication gaps in the pinned 9.1.0 register; no effect '
++                'records or input/output contract established by this source.')
++    if symbol == 'CanTrackBattlePets':
++        return ('Legacy battle-pet tracking query is absent. Later C_Minimap.CanTrackBattlePets '
++                'also remains a reviewed publication gap; minimap tracking capability/data '
++                'is not inferred from a pet-journal fixture.')
++    if symbol == 'SetLootSpecialization':
++        return ('No legacy loot-specialization setter or loot-award policy backing. '
++                'GetLootSpecialization is only a temporary constant-zero default; selecting '
++                'class/spec IDs cannot be modeled by aliasing character specialization.')
++    if symbol == 'GetBattlegroundPoints':
++        return ('No battleground team score/objective producer or legacy point-query contract. '
++                'The source names the function but supplies no result layout/fixture; '
++                'do not substitute rated PvP statistics or fabricate zero team points.')
++    if symbol == 'GetLFGRoleUpdateBattlegroundInfo':
++        return ('No historical battleground role-update invitation state/query structure. '
++                'Stored lfg_roles booleans support GetPVPRoles/SetPVPRoles only, not '
++                'queue invitation metadata or role-update lifecycle.')
++    return ('Current publication is absent; this source supplies identity only, not a '
++            'complete modeled input/output/lifecycle contract for ' + symbol +
++            '. No compatibility shim or guessed payload added.')
++
++
++def extract_rows():
++    spec = importlib.util.spec_from_file_location('extractor', ROOT / 'tools/extract_patch_non_inventory.py')
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    plaintext = (SOURCES / '5.3.0-api-changes.txt').read_text()
++    rows = module.seed_rows(plaintext, '5.3.0')
++    lines = plaintext.splitlines()
++    for row in rows:
++        if row['status'] != 'audit-pending':
++            continue
++        source = lines[int(row['source_id'].rsplit('-', 1)[1]) - 1]
++        row['note'] = source
++        if source.startswith('[Transcluded source:'):
++            row['status'] = 'metadata-only'
++            row['note'] += ' Separately pinned diff inventoried; this pointer gives no runtime credit.'
++            continue
++        if 'specialization' in source.lower() and 'loot' in source.lower():
++            row['note'] += (' No award-policy state or setter; constant-zero GetLootSpecialization '
++                            'is publication only, not modeled selection.')
++        elif 'stable' in source.lower():
++            row['note'] += (' Historical five-page/fifty-slot stable layout is not demonstrated '
++                            'by current stable APIs/fixtures. No 2013 roster/page model introduced.')
++        elif 'browser' in source.lower():
++            row['note'] += (' Current Browser creation maps to a generic frame, with no embedded '
++                            'web engine, support-service persistence or native browsing. '
++                            'Intentional unsupported browser domain; not modeled parity.')
++        elif 'encoding' in source.lower():
++            row['note'] += (' No before/after four-field trade-link fixture or Cooking '
++                            'specialization encoding supplied. Current hyperlink handling '
++                            'does not prove the historical bit/field layout migration.')
++        elif 'OpenToCategory' in source:
++            row['note'] += (' Historical InterfaceOptions panel list/update ordering and '
++                            'wrong-panel bug are not reproducible in current Settings UI. '
++                            'Do not monkey-patch Blizzard Lua with the page double-call workaround.')
++        else:
++            row['note'] += ' Retained source context; transcluded diff is separately pinned and inventoried.'
++    for number, line in enumerate((SOURCES / '5.3.0-api-changes.diff.wikitext').read_text().splitlines(), 1):
++        if line.startswith('|+'):
++            rows.append({'source_id': f'diff-caption-{number:03}', 'status': 'metadata-only',
++                         'capabilities': [], 'note': '2013 build context, not API behavior: ' + line[2:].strip()})
++    return rows
++
++
++def main():
++    register = read(SOURCES / '5.3.0-wikitext-register.json')
++    observed = read(HERE / 'p530-discovery-results.json')
++    assert set(observed) == {entry['id'] for entry in register['entries']}
++    rows, gaps = [], []
++    for entry in register['entries']:
++        result = observed[entry['id']]
++        note = ('Current publication/absence after ordered later-retail supersession only; '
++                'not historical signature/output/security/domain parity.')
++        capabilities = ['publication-absence'] if result['ok'] else []
++        if not result['ok']:
++            note = gap_reason(entry)
++            gaps.append({'source_id': entry['id'], 'symbol': entry['symbol'],
++                         'reason': note, 'observed': result})
++        elif entry['symbol'] in ('GetPVPRoles', 'SetPVPRoles'):
++            note += (' Existing lfg_roles backing is tested across tank/dps, healer-only '
++                     'and all-false transitions in bare and cached environments. '
++                     'No historical queue/role-update event semantics credited.')
++            capabilities.append('bounded-role-state')
++        elif entry['symbol'] == 'GetLootSpecialization':
++            note += ' Temporary inert constant-zero default, not loot-selection backing.'
++        elif entry['symbol'] == 'GetWebTicket':
++            note += ' Temporary nil default, not web-ticket service backing.'
++        elif entry['symbol'] == 'C_PetBattles.CanAcceptQueuedPVPMatch':
++            note += ' Temporary pet-battle queue compatibility value, not network PvP-match lifecycle.'
++        elif entry['symbol'].startswith('Browser'):
++            note += (' Generic shared frame/script publication or inert navigation only; '
++                     'no native browser engine or focus/history semantics credited.')
++        if result['expected']['superseded_by']:
++            note += ' Superseded by ' + result['expected']['superseded_by'] + '.'
++        rows.append({'source_id': entry['id'], 'status': 'bounded-coverage' if result['ok'] else 'audit-pending',
++                     'capabilities': capabilities, 'note': note})
++    rows.extend(extract_rows())
++    assert len({row['source_id'] for row in rows}) == len(rows)
++    write(SOURCES / '5.3.0-page-coverage.json', {
++        'patch': '5.3.0', 'source_revid': 4065122, 'diff_revid': 3188422,
++        'proof_policy': 'Publication is distinct from bounded existing backing; unsupported historical contracts remain pending.',
++        'source_rows': rows,
++        'non_inventory_source': {'path': 'data/patch-api/sources/5.3.0-api-changes.txt'},
++    })
++    write(ROOT / 'tests/data/patch_5_3_0_sweep_known_gaps.json', [row['source_id'] for row in gaps])
++    write(HERE / 'p530-gap-review.json', gaps)
++    write(HERE / 'p530-accounting-summary.json', {
++        'inventory': len(register['entries']), 'accounted_ids': len(rows), 'publication_gaps': len(gaps),
++        'statuses': {status: sum(row['status'] == status for row in rows)
++                     for status in sorted({row['status'] for row in rows})},
++        'pending_prose': [row['source_id'] for row in rows if row['status'] == 'audit-pending'
++                          and not row['source_id'].startswith('diff-wt-')],
++    })
++    print(json.dumps(read(HERE / 'p530-accounting-summary.json')))
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-final-callers-PrepVoidStorageForTransmogrify.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-final-callers-PrepVoidStorageForTransmogrify.txt
+new file mode 100644
+index 000000000..81f33a78c
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-final-callers-PrepVoidStorageForTransmogrify.txt
+@@ -0,0 +1,2 @@
++/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:22:            assert(rawget(_G, 'PrepVoidStorageForTransmogrify') == nil)
++/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:23:            assert(_G.PrepVoidStorageForTransmogrify == nil)
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-final-callers-UNIT_DYNAMIC_FLAGS.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-final-callers-UNIT_DYNAMIC_FLAGS.txt
+new file mode 100644
+index 000000000..b46901599
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-final-callers-UNIT_DYNAMIC_FLAGS.txt
+@@ -0,0 +1,2 @@
++/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:25:            local ok, err = pcall(frame.RegisterEvent, frame, 'UNIT_DYNAMIC_FLAGS')
++/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:27:            assert(not frame:IsEventRegistered('UNIT_DYNAMIC_FLAGS'))
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-initial-run-note.md b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-initial-run-note.md
+new file mode 100644
+index 000000000..3928dbb1b
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-initial-run-note.md
+@@ -0,0 +1 @@
++Initial cold-build discovery launched before the new test source was committed and without a result-output environment variable. It is diagnostic only, not acceptance proof. Retain its log and receipt; committed-input discovery with results is required. No broad suite was run.
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-readability.md b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-readability.md
+new file mode 100644
+index 000000000..f0f966775
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-readability.md
+@@ -0,0 +1 @@
++Rust changed files reviewed: tests/patch_5_3_0_publication_sweep.rs and tests/patch_5_3_0_behavior.rs. Register declarations intentionally mirror the shared sweep contract; behavior helper has one bounded role-transition loop followed by direct absence assertions. No warning suppressions, runtime changes, new abstractions or deep nesting. Python parser behavior is opt-in; reused function is byte-identical to p542-page and transclusion dispatch to p540-page.
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-decisions.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-decisions.json
+new file mode 100644
+index 000000000..d6dfdebc9
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-decisions.json
+@@ -0,0 +1,28 @@
++[
++  {
++    "symbol": "PrepVoidStorageForTransmogrify",
++    "action": "already absent; no new runtime retirement",
++    "cache_consumers": 0,
++    "src_test_callers_before_new_tests": 0,
++    "later_readditions": 0,
++    "scan_tool": "GNU /usr/bin/grep whole-word -w, qualified and bare names; full logs retained",
++    "queued_pins": [
++      "a016e9393943de703ae070d8ce33b5497113c3fc",
++      "0d05b55b2591ef9413d6ffe374d8b8200d9d5cb5",
++      "9698f09862b6cd91b4f87e840295a3fce304940a"
++    ]
++  },
++  {
++    "symbol": "UNIT_DYNAMIC_FLAGS",
++    "action": "already absent; no new runtime retirement",
++    "cache_consumers": 0,
++    "src_test_callers_before_new_tests": 0,
++    "later_readditions": 0,
++    "scan_tool": "GNU /usr/bin/grep whole-word -w, qualified and bare names; full logs retained",
++    "queued_pins": [
++      "a016e9393943de703ae070d8ce33b5497113c3fc",
++      "0d05b55b2591ef9413d6ffe374d8b8200d9d5cb5",
++      "9698f09862b6cd91b4f87e840295a3fce304940a"
++    ]
++  }
++]
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-runtime-diff.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-runtime-diff.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-scan-receipts.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-scan-receipts.json
+index df7663153..158405827 100644
+--- a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-scan-receipts.json
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-scan-receipts.json
+@@ -138,5 +138,41 @@
+     "exit": 1,
+     "log": "p530-retirement-UNIT_DYNAMIC_FLAGS-callers-bare.txt",
+     "matches": 0
++  },
++  {
++    "symbol": "PrepVoidStorageForTransmogrify",
++    "scope": "final-callers",
++    "pattern": "PrepVoidStorageForTransmogrify",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--",
++      "PrepVoidStorageForTransmogrify",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
++    ],
++    "exit": 0,
++    "log": "p530-final-callers-PrepVoidStorageForTransmogrify.txt",
++    "matches": 2,
++    "classification": "Only new own explicit absence assertions; no runtime consumers and no new retirement changes."
++  },
++  {
++    "symbol": "UNIT_DYNAMIC_FLAGS",
++    "scope": "final-callers",
++    "pattern": "UNIT_DYNAMIC_FLAGS",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--",
++      "UNIT_DYNAMIC_FLAGS",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
++    ],
++    "exit": 0,
++    "log": "p530-final-callers-UNIT_DYNAMIC_FLAGS.txt",
++    "matches": 2,
++    "classification": "Only new own explicit absence assertions; no runtime consumers and no new retirement changes."
+   }
+ ]
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-source-pins.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-source-pins.json
+new file mode 100644
+index 000000000..435f39cef
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-source-pins.json
+@@ -0,0 +1,32 @@
++[
++  {
++    "path": "p530-fetch.json",
++    "pageid": 423274,
++    "title": "Patch 5.3.0/API changes",
++    "revision": 4065122,
++    "timestamp": "2021-07-13T19:26:28Z",
++    "sha256": "06ef9ba95d42ed7a30766a76d6021ae66a55323a1d93520db35ffb732d5b4d53",
++    "retrieved_date": "2026-10-08",
++    "method": "MediaWiki action=query rvprop=ids|timestamp|content rvslots=main; User-Agent wow-ui-sim patch audit/1.0"
++  },
++  {
++    "path": "p530-diff-fetch.json",
++    "pageid": 330804,
++    "title": "Patch 5.3.0/API changes/diff",
++    "revision": 3188422,
++    "timestamp": "2017-04-07T07:59:40Z",
++    "sha256": "d97752e44165d733120a39f40391d55db4c1bee74bd6ee0b4c2d14543d531d88",
++    "retrieved_date": "2026-10-08",
++    "method": "MediaWiki action=query rvprop=ids|timestamp|content rvslots=main; User-Agent wow-ui-sim patch audit/1.0"
++  },
++  {
++    "path": "p530-parent-fetch.json",
++    "pageid": 38992,
++    "title": "Patch 5.3.0",
++    "revision": 6611399,
++    "timestamp": "2026-01-23T11:06:36Z",
++    "sha256": "04580712a63e513ff102f20f84df14dfad0eaa1bd9ee9139a91c6ec3af5dac14",
++    "retrieved_date": "2026-10-08",
++    "method": "MediaWiki action=query rvprop=ids|timestamp|content rvslots=main; User-Agent wow-ui-sim patch audit/1.0"
++  }
++]
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-wiki-commit-checks.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-wiki-commit-checks.json
+new file mode 100644
+index 000000000..007b29b8c
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-wiki-commit-checks.json
+@@ -0,0 +1,22 @@
++[
++  {
++    "revision": "7f15ce9a6",
++    "path": "docs/wiki/index.md",
++    "lines": 2739
++  },
++  {
++    "revision": "7f15ce9a6",
++    "path": "docs/wiki/log.md",
++    "lines": 491
++  },
++  {
++    "revision": "b1e21b6c2",
++    "path": "docs/wiki/index.md",
++    "lines": 2739
++  },
++  {
++    "revision": "b1e21b6c2",
++    "path": "docs/wiki/log.md",
++    "lines": 491
++  }
++]
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/validate.py b/data/patch-api/evidence/5.3.0-session-2026-10-08/validate.py
+new file mode 100644
+index 000000000..5ac0a50d1
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/validate.py
+@@ -0,0 +1,101 @@
++"""Read-only historical retail 5.3.0 proof, portable to later audits."""
++import hashlib
++import json
++from pathlib import Path
++import subprocess
++import sys
++
++sys.dont_write_bytecode = True
++ROOT = Path(__file__).resolve().parents[4]
++HERE = Path(__file__).resolve().parent
++sys.path.insert(0, str(ROOT / 'tools'))
++from patch_audit_validation import historical_registers
++
++
++def read(path):
++    return json.loads(path.read_text())
++
++
++def digest(data):
++    return hashlib.sha256(data).hexdigest()
++
++
++def blob(revision, path):
++    return subprocess.check_output(['git', 'show', revision + ':' + path], cwd=ROOT)
++
++
++def main():
++    seal = read(HERE / 'p530-seal.json')
++    for name, expected in seal['own_files'].items():
++        assert digest((HERE / name).read_bytes()) == expected, ('own artifact drift', name)
++    revision = seal['audit_revision']
++    for path, expected in seal['shared_files'].items():
++        assert digest(blob(revision, path)) == expected, ('historical input drift', path)
++    registers = historical_registers(ROOT, revision)
++    reproduction = read(HERE / 'p530-register-reproduction.json')
++    assert {row['patch'] for row in reproduction} == {
++        path.name.removesuffix('-wikitext-register.json') for path in registers}
++    assert all(row['byte_identical'] and row['exit'] == 0 for row in reproduction)
++    extracts = read(HERE / 'p530-saved-extract-reproduction.json')
++    inherited = json.loads(blob(seal['base_revision'],
++        'data/patch-api/evidence/5.4.7-session-2026-10-08/integrated/p547-saved-extract-reproduction.json'))
++    failures = {row['patch']: row['error'] for row in extracts if not row['byte_identical']}
++    assert failures == {row['patch']: row['error'] for row in inherited if not row['byte_identical']}
++    register = json.loads(blob(revision, 'data/patch-api/sources/5.3.0-wikitext-register.json'))
++    assert register['client_line'] == 'retail'
++    assert all(row['header_count'] == row['parsed_count'] for row in register['header_counts'])
++    observations = read(HERE / 'patch_5_3_0_publication_sweep-results.json')
++    entries = {row['id']: row for row in register['entries']}
++    assert set(observations) == set(entries)
++    known = json.loads(blob(revision, 'tests/data/patch_5_3_0_sweep_known_gaps.json'))
++    assert set(known) == {name for name, row in observations.items() if not row['ok']}
++    coverage = json.loads(blob(revision, 'data/patch-api/sources/5.3.0-page-coverage.json'))['source_rows']
++    ids = [row['source_id'] for row in coverage]
++    assert len(ids) == len(set(ids)) and set(entries) <= set(ids)
++    assert all(row['note'] and row['status'] in ('bounded-coverage', 'audit-pending', 'metadata-only')
++               for row in coverage)
++    assert {row['source_id'] for row in read(HERE / 'p530-gap-review.json')} == set(known)
++    for name, expected_exit in seal['proofs'].items():
++        receipt = read(HERE / (name + '.proof.json'))
++        assert receipt['exit'] == expected_exit and not receipt['invalidated'], name
++        assert digest((HERE / receipt['log']).read_bytes()) == receipt['log_sha256'], name
++        assert receipt['command'], name
++        for path, expected in seal['proof_inputs'][name].items():
++            assert digest(blob(receipt['revision'], path)) == expected, (name, path)
++    negative = read(HERE / 'p530-negative-results.json')
++    assert {name for name, row in negative.items() if not row['ok']} == set(known) | {seal['negative_id']}
++    assert set(negative) == set(observations)
++    for row in read(HERE / 'p530-scan-receipts.json'):
++        assert row['tool'].startswith('/usr/bin/grep') and row['exit'] in (0, 1)
++        assert row['matches'] == len((HERE / row['log']).read_text().splitlines())
++    later = read(HERE / 'p530-later-retirement-check.json')
++    for row in later:
++        data = blob(row['revision'], row['path'])
++        assert digest(data) == row['sha256']
++        assert not any(hit['direction'] == 'added' for hit in row['hits'])
++    # Shared snapshots only, never live wiki/source comparisons.
++    for path, count in read(HERE / 'wiki-baseline.json').items():
++        assert len(blob(revision, path).decode().splitlines()) >= count
++    for name in ('p530-fetch.json', 'p530-diff-fetch.json', 'p530-parent-fetch.json'):
++        page = next(iter(read(HERE / name)['query']['pages'].values()))
++        assert 'missing' not in page and page['revisions'][0]['slots']['main']['*']
++    for name, path, pageid, revid in [
++        ('p530-fetch.json', 'data/patch-api/sources/5.3.0-api-changes.wikitext', 423274, 4065122),
++        ('p530-diff-fetch.json', 'data/patch-api/sources/5.3.0-api-changes.diff.wikitext', 330804, 3188422),
++    ]:
++        page = next(iter(read(HERE / name)['query']['pages'].values()))
++        source = page['revisions'][0]
++        assert page['pageid'] == pageid and source['revid'] == revid
++        assert source['slots']['main']['*'].encode() == blob(revision, path)
++    parent_page = next(iter(read(HERE / 'p530-parent-fetch.json')['query']['pages'].values()))
++    assert parent_page['pageid'] == 38992 and parent_page['revisions'][0]['revid'] == 6611399
++    parent = (HERE / 'p530-parent.wikitext').read_text()
++    assert parent_page['revisions'][0]['slots']['main']['*'] == parent
++    assert '|toc = 50300' in parent and '|Release = May 21, 2013' in parent
++    print(json.dumps({'status': 'PASS', 'inventory': len(entries), 'publication_gaps': len(known),
++                      'accounted_ids': len(ids), 'registers': len(registers),
++                      'inherited_extract_failures': sorted(failures)}))
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/verify_targeted.py b/data/patch-api/evidence/5.3.0-session-2026-10-08/verify_targeted.py
+new file mode 100644
+index 000000000..a583e41b9
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/verify_targeted.py
+@@ -0,0 +1,42 @@
++"""One async targeted acceptance run; no full integration suite or polling."""
++import os
++from pathlib import Path
++import re
++import subprocess
++import sys
++
++from run_proof import run_proof
++
++ROOT = Path(__file__).resolve().parents[4]
++HERE = Path(__file__).resolve().parent
++
++
++def run():
++    names = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', 'HEAD', 'tests'],
++                                    cwd=ROOT, text=True).splitlines()
++    for name in names:
++        if not re.fullmatch(r'tests/patch_.*_publication_sweep.rs', name):
++            continue
++        text = (ROOT / name).read_text()
++        match = re.search(r'out_env:\s*"([^"]+)"', text)
++        if match:
++            os.environ[match[1]] = str(HERE / (Path(name).stem + '-results.json'))
++    jobs = [
++        ('p530-all-sweeps', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'publication_sweep']),
++        ('p530-own-behavior', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_5_3_0_cached']),
++        ('p530-bare-behavior', ['cargo', 'test', '--test', 'integration', 'patch_5_3_0_bare']),
++        ('p530-pvp-lib', ['cargo', 'test', '--lib', 'test_startup_pvp_queue_surfaces_are_safe']),
++        ('p530-mists', ['cargo', 'check', '--no-default-features', '--features', 'sound,gui,casc,client-mists', '--tests']),
++        ('p530-format', ['cargo', 'fmt', '--all', '--check']),
++    ]
++    for name, command in jobs:
++        if run_proof(name, command) != 0:
++            return 1
++    os.environ['P530_SWEEP_REGISTER'] = str(HERE / 'p530-negative-register.json')
++    os.environ['P530_SWEEP_OUT'] = str(HERE / 'p530-negative-results.json')
++    status = run_proof('p530-negative', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_5_3_0_publication_sweep'])
++    return 0 if status in (1, 101) else 1
++
++
++if __name__ == '__main__':
++    sys.exit(run())
+diff --git a/docs/wiki/index.md b/docs/wiki/index.md
+index ed51e511c..536cf1305 100644
+--- a/docs/wiki/index.md
++++ b/docs/wiki/index.md
+@@ -1,3 +1,7 @@
++## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
++
++[Audit](investigations/patch-5-3-0-api-audit.md): pinned revision 4065122 plus transcluded diff 3188422; retail TOC 50300 (2013), 44 inventory occurrences including Browser handlers. Whole-word retirement scans and fixed queued-register checks retained. Targeted verification in progress; no runtime changes.
++
+ ## [2026-10-08] investigation | Patch 5.5.3 Mists Classic API audit
+ 
+ [Audit](investigations/patch-5-5-3-api-audit.md): ancestor TOC 50503 resolved against current 50504 profile; blocker history retained. Zero inventory, four metadata rows, no positive API credit. Retail 56/56 and both control groups 3/3 pass; all 9,740 observations across 55 retail pages equal pinned master. Mists warning check, 87 Python fixtures, format and 1 → 0 negative control pass. All 57 registers/54 extracts reproduce, with three exact inherited failures. Portable gate passes 41/41 clean and 42/42 later; own-log tampering is rejected and restored.
+diff --git a/docs/wiki/investigations/patch-5-3-0-api-audit.md b/docs/wiki/investigations/patch-5-3-0-api-audit.md
+new file mode 100644
+index 000000000..3e7faf12a
+--- /dev/null
++++ b/docs/wiki/investigations/patch-5-3-0-api-audit.md
+@@ -0,0 +1,50 @@
++# Retail Patch 5.3.0 API audit
++
++Pinned pageid 423274 revision 4065122 and separately pinned transcluded diff pageid 330804 revision 3188422. Parent pageid 38992 revision 6611399 states `|toc = 50300`, `|Release = May 21, 2013` and build 16977. Diff captions compare 5.2.0.16650 → 5.3.0.16965. This is the 2013 retail Mists line, not Classic 5.5.x; neither redirect nor stub.
++
++## Source and parser coverage
++
++The main page describes loot specialization, stable expansion, embedded support browsing, trade-link encoding and an InterfaceOptions ordering bug. Its diff is a separate source, not silently expanded HTML. Original responses and both raw pages are retained in the [session evidence](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/).
++
++The register contains 44 occurrences: 15 global APIs, 3 FrameXML functions, 9 events, 14 widget methods and 3 widget handlers. Every table header count matches the parsed count. `parse_mists_automated_diff` and its opt-in dispatch are copied byte-identically from p542-page at a016e9393943de703ae070d8ce33b5497113c3fc; `--mists-diff` dispatch comes byte-identically from p540-page at 9698f09862b6cd91b4f87e840295a3fce304940a. New `parse_mists_widget_handlers`/`--mists-widget-handlers` behavior is additive and opt-in. Handler symbols retain Browser ownership and `widget-script` kind.
++
++Queued retail placeholders start `later_registers` in order: 5.4.0, 5.4.1, 5.4.2, followed by real 5.4.7, 5.4.8, 6.0.1 and subsequent retail registers. Classic registers are excluded.
++
++## Capability coverage
++
++| Contract | Proof level | Limit |
++|---|---|---|
++| Every inventory identity | Register/header reproduction; cached discovery in progress | Publication is not historical output/security parity |
++| GetPVPRoles / SetPVPRoles | New bare/cached tests assert stored tank/dps, healer-only and all-false transitions | Existing shared lfg_roles backing; not historical role-update event production |
++| PrepVoidStorageForTransmogrify / UNIT_DYNAMIC_FLAGS | Whole-word consumer/caller scans; bare/cached absence assertions pending | Already absent; no runtime retirement added |
++| Browser engine, support ticket/survey and history | Problematic native-service domain | Generic frame methods/inert navigation cannot establish a browser engine |
++| Loot award policy, legacy upgrades/tracking/battleground metadata | Discovery/accounting in progress | No fabricated default values or aliases introduced |
++| Stable pages, trade-link field migration, historical InterfaceOptions bug | Pending source contracts | No historical fixtures; current client Settings is not the 2013 panel list |
++
++No runtime source changed. No Blizzard/vendor/Wowless/WowlessData modifications or monkey-patches. Existing temporary defaults are labeled publication-only, never credited as modeled domain behavior.
++
++## Retirement evidence
++
++GNU `/usr/bin/grep -RInwF` scans retain untruncated qualified and bare-name results. Cached retail AddOns scans exclude `*Documentation*` files/directories. Both removed identities had zero cached consumers and zero prior src/tests references. Final caller scans include only this audit's explicit absence assertions. The bare-name scan includes direct calls, `pcall(Name, ...)` and conditional references.
++
++`git ls-tree`/`git show` scans at base 896086537 and pinned p542/p541/p540 revisions find no re-addition in the retail chain. No new retirement action was necessary; existing absence remains the target.
++
++## Verification
++
++Source reproduction: 59 registers byte-identical; 56 extracts match, with the exact inherited 12.0.5/12.0.7/12.1.0 failures preserved. All six `tools/test_*.py` scripts pass. Rust discovery, targeted acceptance, Mists and portable validator gates are running; this page does not yet claim completion.
++
++The initial cold-target launch lacked an output path and preceded the first commit, so it is diagnostic only. Committed-input discovery retains every result. Long commands stream to logs and run asynchronously; no full integration suite is run.
++
++## Sources
++
++- [Source provenance](../../../data/patch-api/sources/5.3.0-api-changes.provenance.json).
++- [Pinned register](../../../data/patch-api/sources/5.3.0-wikitext-register.json).
++- [Publication spec](../../specs/patch-5-3-0-publication-sweep.md).
++- [Parser origin](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/parser-provenance.json).
++- [Validator portability](patch-audit-validator-portability.md).
++
++## See Also
++
++- [[patch-5-4-7-api-audit]] — next merged retail register.
++- [[patch-6-0-2-api-audit]] — later scenario bonus API supersession.
++- [[patch-audit-validator-portability]] — historical proof gate.
+diff --git a/docs/wiki/log.md b/docs/wiki/log.md
+index 8d98b807b..8a2cbb2b8 100644
+--- a/docs/wiki/log.md
++++ b/docs/wiki/log.md
+@@ -489,3 +489,7 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
+ ## 2026-10-08 — Patch 5.5.3 acceptance proof complete
+ 
+ - [[patch-5-5-3-api-audit]]: all requested proof retained; clean/later validator gate 41/41 and 42/42 PASS at 1882e7c99, own-log tamper rejected/restored. Retail observations unchanged; no runtime changes, API coverage credit, push or merge.
++
++## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
++
++Pinned retail 2013 page and diff; 44 source occurrences, opt-in parser reuse, bounded existing PvP role backing tests and consumer-free prior absence scans. [Audit](investigations/patch-5-3-0-api-audit.md). Verification still running.
