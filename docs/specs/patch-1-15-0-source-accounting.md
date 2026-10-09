@@ -10,7 +10,7 @@ Bounded Era audit of exact Warcraft Wiki page564510/revision5950848, timestamp20
 - [x] Record C_Engraving seasonal-rune model requirement without inventing members or treating generic namespace fallback as model/native proof.
 - [x] Separate configured11507 and nine same-Era successor boundaries from source11500/native/supersession credit.
 - [x] Reject omissions, fabricated credit and collapsed histories.
-- [ ] Replay copied sealed inputs without Git/current tools; reject serialized ledger/log tampering and restore exact bytes. Preserve original seals and separate later receipts.
+- [x] Replay copied sealed inputs without Git/current tools; reject serialized ledger/log tampering and restore exact bytes. Preserve original seals and separate later receipts.
 
 ## How it works
 

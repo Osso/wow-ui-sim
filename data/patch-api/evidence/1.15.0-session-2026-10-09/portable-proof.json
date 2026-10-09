@@ -1,0 +1,20 @@
+{
+  "scope": "SOURCE development only; no model/native/integration/final gate",
+  "revision": "e6bf4be1cd587b3c3eaf0d0dfe3776c6c74214e5",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/replay-archive.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/portable-controls.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+  "exit_code": 0,
+  "result": "copied historical validator/SOURCE/default byte replay and serialized ledger/log tamper rejection/restoration",
+  "log": "portable-controls.log",
+  "receipts": "portable-controls.json"
+}
