@@ -45,7 +45,7 @@ GNU `/usr/bin/grep -RInwF` scans retain untruncated qualified and bare-name resu
 
 ## Verification
 
-Source reproduction: 59 registers byte-identical; 56 extracts match, with the exact inherited 12.0.5/12.0.7/12.1.0 failures preserved. All six `tools/test_*.py` scripts pass (89 fixtures). Targeted acceptance passes: 58 publication cases, one cached and one bare behavior case, one existing PvP startup unit test, warning-clean non-vendor Mists check and format. Negative control changes only GetPVPRoles to a missing name and raises the non-ok set from 15 to 16; every other observation is identical. Own fresh-checkout/later-audit validator gate is the remaining audit gate. Master baseline gate passed 43/43 clean and 44/44 later (including its synthetic audit).
+Source reproduction: 59 registers byte-identical; 56 extracts match, with the exact inherited 12.0.5/12.0.7/12.1.0 failures preserved. All six `tools/test_*.py` scripts pass (89 fixtures). Targeted acceptance passes: 58 publication cases, one cached and one bare behavior case, one existing PvP startup unit test, warning-clean non-vendor Mists check and format. Negative control changes only GetPVPRoles to a missing name and raises the non-ok set from 15 to 16; every other observation is identical. Own portability gate passes at 8fdf8c185: 44/44 validators in a clean checkout and 45/45 after synthetic later audit, with zero failures. Own immutable log tampering is rejected and exact restoration passes. All audit gates are complete; 15 publication gaps and six prose contracts remain explicitly pending, not falsely modeled. Master baseline gate passed 43/43 clean and 44/44 later (including its synthetic audit).
 
 The initial cold-target launch lacked an output path and preceded the first commit, so it is diagnostic only. Committed-input discovery retains every result. Long commands stream to logs and run asynchronously; no full integration suite is run.
 
@@ -62,3 +62,5 @@ The initial cold-target launch lacked an output path and preceded the first comm
 - [[patch-5-4-7-api-audit]] — next merged retail register.
 - [[patch-6-0-2-api-audit]] — later scenario bonus API supersession.
 - [[patch-audit-validator-portability]] — historical proof gate.
+
+Runtime code is unchanged, so the conditional master-relative library and addons-enabled startup comparison was not triggered. Targeted integration/prefork/lib coverage still passed. Index/log grew from their recorded baselines; no bytecode cache or ignored scratch input is used. No push, merge or agents were run.

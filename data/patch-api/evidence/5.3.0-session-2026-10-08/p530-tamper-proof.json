@@ -1,0 +1,9 @@
+{
+  "revision": "8fdf8c185698c059502abd6731154bd947359787",
+  "mutated": "p530-all-sweeps.txt",
+  "tamper_exit": 1,
+  "rejected_own_log_drift": true,
+  "restored_sha256": "7989d73e07dda5c9dfb12afbf3641ee8c6b7ee0240888d56c4596d3c2705c233",
+  "restored_exit": 0,
+  "restored_stdout": "{\"status\": \"PASS\", \"inventory\": 44, \"publication_gaps\": 15, \"accounted_ids\": 60, \"registers\": 59, \"inherited_extract_failures\": [\"12.0.5\", \"12.0.7\", \"12.1.0\"]}\n"
+}

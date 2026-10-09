@@ -10,6 +10,8 @@ Audit the pinned retail 2013 API page and its separately pinned diff. [Audit](..
 - [x] Verify the two historical removal names remain absent, without adding retirement gates.
 - [x] Reproduce every saved register and preserve inherited extract failures exactly.
 
+- [x] Own historical validator passes clean checkout, unrelated later audit and own-log tamper rejection.
+
 ## How it works
 
 - [Publication audit](../wiki/investigations/patch-5-3-0-api-audit.md).
@@ -32,7 +34,6 @@ Audit the pinned retail 2013 API page and its separately pinned diff. [Audit](..
 
 - [ ] Fifteen historical publication gaps remain explicitly reviewed in the known-gap fixture.
 - [ ] Six prose contracts remain pending: loot award policy, stable pages, support browsing, Browser domain, trade-link encoding and historical InterfaceOptions ordering.
-- [ ] Own historical validator portability gate awaits completion. Targeted Rust/Mists acceptance passed.
 
 ## Out of scope
 

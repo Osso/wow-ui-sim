@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p530-page/data/patch-api/evidence/5.3.0-session-2026-10-08/validate.py", line 136, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p530-page/data/patch-api/evidence/5.3.0-session-2026-10-08/validate.py", line 31, in main
+    assert digest((HERE / name).read_bytes()) == expected, ('own artifact drift', name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('own artifact drift', 'p530-all-sweeps.txt')

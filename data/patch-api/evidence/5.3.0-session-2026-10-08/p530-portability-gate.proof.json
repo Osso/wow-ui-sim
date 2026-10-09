@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "8fdf8c185698c059502abd6731154bd947359787"
+  ],
+  "revision": "8fdf8c185698c059502abd6731154bd947359787",
+  "scope": "p530-portability-gate",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p530-portability-gate.txt",
+  "log_sha256": "2914d90f5b925c52256f4c2030501ec331a57316d7c7e702da71136b278bddd2",
+  "seconds": 145.71739732800052,
+  "invalidated": false
+}

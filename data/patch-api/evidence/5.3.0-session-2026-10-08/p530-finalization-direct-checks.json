@@ -1,0 +1,40 @@
+{
+  "base_revision": "896086537a2b3c1ead5886d5ae3e430d56e7ef20",
+  "sealed_revision": "c26a269221e95824020edadf0ab44edcbe0c9a93",
+  "counts_derived_from_complete_logs": {
+    "cached_behavior": 1,
+    "bare_behavior": 1,
+    "pvp_lib": 1,
+    "publication_cases": 58
+  },
+  "cache_scan_root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+  "cache_non_documentation_files": 3422,
+  "cache_lua_files": 1931,
+  "cache_xml_files": 1091,
+  "verified": "2026-10-08",
+  "runtime_vendor_diff": [],
+  "bytecode_directories": [],
+  "source_accounting": "44 inventory + 11 main extract IDs + 5 diff captions; 15 publication gaps and 6 prose contracts reviewed",
+  "retirements": "Both names already absent; no new retirement and no unsafe consumer deletion",
+  "conditional_runtime_regression_gate": "Not triggered: src unchanged; bounded integration/prefork/lib proof nevertheless passed",
+  "gate": {
+    "status": "PASS",
+    "revision": "8fdf8c185698c059502abd6731154bd947359787",
+    "summary": {
+      "clean": {
+        "failed": 0,
+        "passed": 44
+      },
+      "later_audit": {
+        "failed": 0,
+        "passed": 45
+      }
+    },
+    "own_log_tamper_rejected": true
+  },
+  "pending_contracts": {
+    "publication_gaps": 15,
+    "prose_contracts": 6,
+    "audit_steps_unfinished": []
+  }
+}
