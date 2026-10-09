@@ -22,5 +22,17 @@
     "scope": "49 literal occurrences and 99 nonblank full extract rows; default own bytes unchanged",
     "result": "EF\n======================================================================\nERROR: test_complete_extract_preserves_literal_texture_and_events (__main__.SourceTests.test_complete_extract_preserves_literal_texture_and_events)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_source.py\", line 51, in test_complete_extract_preserves_literal_texture_and_events\n    default = extractor.extract_text(raw)\n  File \"/home/osso/.worktrees/wow-ui-sim-p240-source/tools/extract_patch_non_inventory.py\", line 270, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: * The combat logging mechanism is completely overhauled with explicit data instead of text strings delivered to the UI. Highlights include detailed flags indicating relationship of involved units to player, unique identifiers for units with the same name within the combat log -- great for log analysis.<ref>{{Ref web|url=http://forums.worldofwarcraft.com/thread.html?topicId=2968233433&pageNo=1&sid=1#9|date=20071119|archivedate=20071119|archiveurl=http://blue.cardplace.com/newcache/us/2968233433.htm|title=Upcoming 2.4 API changes - concise list}}</ref>\n\n======================================================================\nFAIL: test_literal_occurrences_are_opt_in (__main__.SourceTests.test_literal_occurrences_are_opt_in)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_source.py\", line 19, in test_literal_occurrences_are_opt_in\n    self.assertEqual(len(entries), 49)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\nAssertionError: 50 != 49\n\n----------------------------------------------------------------------\nRan 2 tests in 0.011s\n\nFAILED (failures=1, errors=1)\n",
     "invalidated_by": null
+  },
+  {
+    "revision": "00708e36af358933032623acce28ceae469ce3e2",
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_4_source.py"
+    ],
+    "exit": 0,
+    "scope": "50 literal occurrences / 99 nonblank source lines; own generator default byte replay and original extraction error",
+    "result": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.100s\n\nOK\n",
+    "invalidated_by": null
   }
 ]
