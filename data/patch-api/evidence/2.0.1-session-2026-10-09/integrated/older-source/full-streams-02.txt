@@ -1,0 +1,95 @@
+orded_register_replays": 4, "references": 11, "runtime_observations": 0, "same_symbol_mentions": 41, "sealed_files": 18, "signature_fragments": 206, "snapshots": 114}
+STDERR
+
+### 2.0.1-tamper-0 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 214, in <module>
+    print(json.dumps(replay(HERE), sort_keys=True))
+                     ~~~~~~^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 190, in replay
+    manifest, bundle = load_inputs(here)
+                       ~~~~~~~~~~~^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 35, in load_inputs
+    assert digest(content) == seal['sha256'], 'sealed input: ' + name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: historical-page-coverage.json
+
+### 2.0.1-restored-0 exit=0
+STDOUT
+{"actual_successors": 74, "by_kind": {"api-family": 1, "command": 81, "command-family": 5, "constant": 2, "context-identifier": 30, "event": 21, "event-family": 3, "global-api": 87, "global-api-reference": 4, "language-example": 2, "string-method-reference": 3, "widget-method": 8, "widget-script": 8, "widget-script-signature": 31, "widget-template": 9}, "cvars": 0, "gap_records": 792, "headers": 35, "meaningful_closures": 0, "native_observations": 0, "nonblank_rows": 316, "occurrences": 295, "original_command_replays": 6, "prose_contract_rows": 280, "recorded_register_replays": 4, "references": 11, "runtime_observations": 0, "same_symbol_mentions": 41, "sealed_files": 18, "signature_fragments": 206, "snapshots": 114}
+STDERR
+
+### 2.0.1-tamper-1 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 214, in <module>
+    print(json.dumps(replay(HERE), sort_keys=True))
+                     ~~~~~~^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 190, in replay
+    manifest, bundle = load_inputs(here)
+                       ~~~~~~~~~~~^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 35, in load_inputs
+    assert digest(content) == seal['sha256'], 'sealed input: ' + name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: source-green.log
+
+### 2.0.1-restored-1 exit=0
+STDOUT
+{"actual_successors": 74, "by_kind": {"api-family": 1, "command": 81, "command-family": 5, "constant": 2, "context-identifier": 30, "event": 21, "event-family": 3, "global-api": 87, "global-api-reference": 4, "language-example": 2, "string-method-reference": 3, "widget-method": 8, "widget-script": 8, "widget-script-signature": 31, "widget-template": 9}, "cvars": 0, "gap_records": 792, "headers": 35, "meaningful_closures": 0, "native_observations": 0, "nonblank_rows": 316, "occurrences": 295, "original_command_replays": 6, "prose_contract_rows": 280, "recorded_register_replays": 4, "references": 11, "runtime_observations": 0, "same_symbol_mentions": 41, "sealed_files": 18, "signature_fragments": 206, "snapshots": 114}
+STDERR
+
+### 2.0.1-copied-current-validator exit=0
+STDOUT
+{"archived_source_cases": 6, "by_kind": {"api-family": 1, "command": 79, "command-family": 5, "command-placeholder": 1, "constant": 2, "context-identifier": 30, "event": 21, "event-family": 3, "global-api": 87, "global-api-reference": 4, "language-example": 2, "macro-option-suffix": 1, "string-method-reference": 3, "widget-method": 8, "widget-script": 8, "widget-script-signature": 31, "widget-template": 9}, "current_gap_records": 793, "current_sealed_files": 9, "cvars": 0, "headers": 35, "meaningful_closures": 0, "native_observations": 0, "nonblank_rows": 316, "occurrences": 295, "original_seals_unchanged": 18, "prose_contract_rows": 280, "references": 12, "runtime_observations": 0, "signature_fragments": 206}
+STDERR
+
+### 1.60.1-current-source exit=0
+STDOUT
+STDERR
+test_every_nonblank_occurrence_header_signature_prose_and_reference_required (__main__.SourceTests.test_every_nonblank_occurrence_header_signature_prose_and_reference_required) ... ok
+test_foreign_history_native_and_publication_credit_rejected (__main__.SourceTests.test_foreign_history_native_and_publication_credit_rejected) ... ok
+test_frozen_response_manifest_registry (__main__.SourceTests.test_frozen_response_manifest_registry) ... ok
+test_git_free_fresh_replay_and_disk_tamper_restore (__main__.SourceTests.test_git_free_fresh_replay_and_disk_tamper_restore) ... ok
+test_literal_duplicate_and_malformed_fixture_preserved (__main__.SourceTests.test_literal_duplicate_and_malformed_fixture_preserved) ... ok
+test_literal_inventory_headers_and_command (__main__.SourceTests.test_literal_inventory_headers_and_command) ... ok
+test_signatures_do_not_invent_parameters_or_return_tuples (__main__.SourceTests.test_signatures_do_not_invent_parameters_or_return_tuples) ... ok
+test_unexpanded_link_and_template_boundaries (__main__.SourceTests.test_unexpanded_link_and_template_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.246s
+
+OK
+
+### 1.60.1-copied-validator exit=0
+STDOUT
+{"client_line": "wow-forever-camelot", "header_mismatches": [{"direction": "added", "header_count": 176, "parsed_count": 175, "section": "global-api"}, {"direction": "added", "header_count": 24, "parsed_count": 25, "section": "events"}], "headers": 32, "inventory_counts": {"cvars/added": 138, "cvars/removed": 7, "events/added": 25, "events/removed": 2, "framexml/added": 471, "framexml/removed": 1041, "global-api/added": 175, "global-api/removed": 10, "widgets/added": 7}, "inventory_occurrences": 1876, "literal_command_occurrences": 1, "manifest_pages": 65, "meaningful_closures": 0, "metadata_rows": 107, "native_observations": 0, "nonblank_rows": 2070, "prose_limits": 211, "references": 15, "registry_endpoint": "1.0.0", "registry_pages": 101, "runtime_publication_observations": 0, "sealed_inputs": 19, "signatures": 1712, "source_interface": 16001}
+STDERR
+
+### 1.60.1-copied-source exit=0
+STDOUT
+STDERR
+test_every_nonblank_occurrence_header_signature_prose_and_reference_required (__main__.SourceTests.test_every_nonblank_occurrence_header_signature_prose_and_reference_required) ... ok
+test_foreign_history_native_and_publication_credit_rejected (__main__.SourceTests.test_foreign_history_native_and_publication_credit_rejected) ... ok
+test_frozen_response_manifest_registry (__main__.SourceTests.test_frozen_response_manifest_registry) ... ok
+test_git_free_fresh_replay_and_disk_tamper_restore (__main__.SourceTests.test_git_free_fresh_replay_and_disk_tamper_restore) ... ok
+test_literal_duplicate_and_malformed_fixture_preserved (__main__.SourceTests.test_literal_duplicate_and_malformed_fixture_preserved) ... ok
+test_literal_inventory_headers_and_command (__main__.SourceTests.test_literal_inventory_headers_and_command) ... ok
+test_signatures_do_not_invent_parameters_or_return_tuples (__main__.SourceTests.test_signatures_do_not_invent_parameters_or_return_tuples) ... ok
+test_unexpanded_link_and_template_boundaries (__main__.SourceTests.test_unexpanded_link_and_template_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.091s
+
+OK
+
+### 1.60.1-tamper-0 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.60.1/data/patch-api/evidence/1.60.1-session-2026-10-09/validate.py", line 69, in <module>
+    print(json.dumps(replay(EVIDENCE), sort_keys=True))
+                     ~~~~~~^^^^^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.60.1/data/patch-api/evidence/1.60.1-session-2026-10-09/validate.p

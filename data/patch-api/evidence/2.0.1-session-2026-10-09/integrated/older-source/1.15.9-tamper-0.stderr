@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.9/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.9/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 103, in main
+    count = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.9/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 95, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: ledger.json

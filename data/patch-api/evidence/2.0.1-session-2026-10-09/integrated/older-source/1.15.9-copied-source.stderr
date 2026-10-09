@@ -1,0 +1,13 @@
+test_configured_profiles_are_not_native_measurements (__main__.SourceAccounting.test_configured_profiles_are_not_native_measurements) ... ok
+test_every_literal_row_occurrence_retained (__main__.SourceAccounting.test_every_literal_row_occurrence_retained) ... ok
+test_full_literal_rows_and_contract_counts (__main__.SourceAccounting.test_full_literal_rows_and_contract_counts) ... ok
+test_partial_calls_are_tbc_prose_not_era_defaults (__main__.SourceAccounting.test_partial_calls_are_tbc_prose_not_era_defaults) ... ok
+test_removal_does_not_guess_return_position (__main__.SourceAccounting.test_removal_does_not_guess_return_position) ... ok
+test_response_revision_content_and_raw_hash_controls (__main__.SourceAccounting.test_response_revision_content_and_raw_hash_controls) ... ok
+test_scope_not_number_or_shared_code_equivalence (__main__.SourceAccounting.test_scope_not_number_or_shared_code_equivalence) ... ok
+test_serialized_contract_omission_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_serialized_contract_omission_credit_and_foreign_history_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.183s
+
+OK

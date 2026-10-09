@@ -1,0 +1,112 @@
+{
+  "current_integrated_accounting": {
+    "2.1.0": {
+      "inventory_rows": 92,
+      "inventory_sections": {
+        "global-api": 56,
+        "cvars": 2,
+        "widgets": 6,
+        "scriptobjects": 8,
+        "commands": 18,
+        "events": 2
+      },
+      "inventory_directions": {
+        "added": 55,
+        "changed": 29,
+        "removed": 8
+      },
+      "raw_nonblank_rows": 150,
+      "extract_rows": 150,
+      "ledger_rows": 392,
+      "ledger_statuses": {
+        "metadata-only": 22,
+        "UNPROVEN": 220,
+        "cross-reference-only": 150
+      },
+      "named_headers": 19,
+      "numerical_inventory_headers": 0,
+      "signature_rows": 124,
+      "literal_call_spans": 44,
+      "unspecified_signature_records": 49,
+      "contract_gap_records": 344,
+      "meaningful_closures": 0,
+      "runtime_observations": 0,
+      "native_observations": 0
+    },
+    "2.0.1": {
+      "nonblank_rows": 316,
+      "headers": 35,
+      "occurrences": 295,
+      "by_kind": {
+        "api-family": 1,
+        "command": 79,
+        "command-family": 5,
+        "command-placeholder": 1,
+        "constant": 2,
+        "context-identifier": 30,
+        "event": 21,
+        "event-family": 3,
+        "global-api": 87,
+        "global-api-reference": 4,
+        "language-example": 2,
+        "macro-option-suffix": 1,
+        "string-method-reference": 3,
+        "widget-method": 8,
+        "widget-script": 8,
+        "widget-script-signature": 31,
+        "widget-template": 9
+      },
+      "signature_fragments": 206,
+      "prose_contract_rows": 280,
+      "references": 12,
+      "cvars": 0,
+      "runtime_observations": 0,
+      "meaningful_closures": 0,
+      "native_observations": 0,
+      "gap_records": 793
+    }
+  },
+  "separate_receipt_maps": [
+    {
+      "patch": "2.3.0",
+      "map": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/2.3.0-session-2026-10-09/receipt-seals.json",
+      "members": 3,
+      "map_sha256": "8a00742605563448e8901a30f186c784dd8d81e59af80dfb7faed26a19ca97bd"
+    },
+    {
+      "patch": "2.2.0",
+      "map": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/2.2.0-session-2026-10-09/receipt-seals.json",
+      "members": 4,
+      "map_sha256": "75b808fd6f170002c7cf1bf36677c06781dc882e8f71835b0ff449717bb11d53"
+    },
+    {
+      "patch": "2.1.0",
+      "map": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/2.1.0-session-2026-10-09/current-receipts.json",
+      "members": 3
+    },
+    {
+      "patch": "2.0.1",
+      "map": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/2.0.1-session-2026-10-09/completion-seals.json",
+      "members": 6,
+      "map_sha256": "9dd746bc527f452030c8825f81df16b0842d25f8899eca6e02c70ed7718e69ae"
+    },
+    {
+      "patch": "1.60.1",
+      "map": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.60.1-session-2026-10-09/current/seals.json",
+      "members": 8,
+      "map_sha256": "ff8dd8e086948e654e9652a98e0b55037a81142e23cb947f1b6c8630058c811e"
+    },
+    {
+      "patch": "1.15.9",
+      "map": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.9-session-2026-10-09/receipt-seals.json",
+      "members": 5,
+      "map_sha256": "173847ff0b2f6e37b882b87964a47491130029e8cf1c072ffcbfba07322d807e"
+    },
+    {
+      "patch": "1.15.8",
+      "map": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.15.8-session-2026-10-09/receipt-seals.json",
+      "members": 5,
+      "map_sha256": "f4fe0083e6f25fa205e1efa4719560850921723c3c6740ac04fe1ffb294a554d"
+    }
+  ]
+}

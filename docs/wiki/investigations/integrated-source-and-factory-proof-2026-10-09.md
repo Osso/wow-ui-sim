@@ -24,9 +24,19 @@ Original p302 36+1+2 seals, p303 16 seals, factory p302 112 seals and p303 16 se
 
 [Main-thread readiness report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/browser-vnc-independent-report.md) retains loopback-only CDP 9222/VNC 5901 and a readable current GetSessionTime page with no visible challenge at observation. No remote access/authentication test, frozen-revision validation or native API proof. Earlier direct HTTP403 and current browser readability are distinct observations.
 
-## Pending p24x report
+## 2.4.x shared-tool integration: source/historical PASS
 
-Main reports 18/18 own fixtures, 170/170 default outcomes matching archived baseline at `dd710c6fc`; recorded 87 registers, 83 saved-byte matches, 78/87 extracts with inherited/no-flags limits and matching own opt-ins. Final independent report has not arrived in this retention slice. These are main-reported results, not independently retained proof here; no broad/native/model credit.
+[Independent report](../../../data/patch-api/evidence/2.4.0-source-2026-10-09/integrated/p24x-integrated-independent-report.md) covers selected content at `dd710c6fc`: **18/18** targeted fixtures; **170/170** default outcomes equal archived baseline. One whole replay, with a scoped harness correction for the CLI-only `--text-only` flag, not a repeated whole gate. Own 2.4.0/2.4.2/3.0.2/2.1.0 opt-ins match; both parser function returns retained.
+
+Recorded saved outputs: **83/87 registers**, **78/87 extracts**. The report enumerates inherited differences, absent current provenance flags and the exact 12.1.0 template error; baseline equality is not universal saved-byte reproduction. Fresh copied no-Git validators pass; 23+5 and 432+3 seals unchanged. [Full retention](../../../data/patch-api/evidence/2.4.0-source-2026-10-09/integrated/main-retention.json) preserves receipts/output/hash scopes. No native/model acceptance.
+
+## Older source integration: bounded PASS
+
+[Independent report](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/report.md) at `dd710c6fc` records current fixtures: 2.3.0 **6/6**, 2.2.0 **5/5**, 2.1.0 **4/4**, 2.0.1 **6/6**, WowForever1.60.1 **8/8**, Era1.15.9 **8/8**, 1.15.8 **8/8**. Seven copied no-Git historical validators pass; 137 original seals preserved, 14 serialized tamper rejections and 14 exact restorations. One verifier-only wrong path retained and corrected. [Receipts](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/main-retention.json) preserve selected hash scopes. Source-only proof; the separate Forever configured-name test is linked below, not credited to these fixtures.
+
+## Era1.15.7–1.15.5 integration: metadata/link-only PASS
+
+[Independent report](../../../data/patch-api/evidence/1.15.7-session-2026-10-09/integrated/era1157-1155/REPORT.md) at `65b94c050`: each current/copy SOURCE **8/8**, portable **3/3**. Original/separate seals 28+8, 34+6, 38+6 unchanged; disk ledger/log rejections and exact restorations pass. Each page has four nonblank rows, two UNPROVEN links and zero local inventory. Default empty-register byte equality and nine successor identity comparisons are not supersession, runtime/model or native proof. [Receipts](../../../data/patch-api/evidence/1.15.7-session-2026-10-09/integrated/era1157-1155/main-retention.json) retain exact commands, streams and environments. Literal TOCs, absent client names and configured Era11507 remain distinct.
 
 ## See also
 

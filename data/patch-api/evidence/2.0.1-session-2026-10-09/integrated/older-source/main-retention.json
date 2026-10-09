@@ -1,0 +1,758 @@
+[
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-copied-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-copied-source.stderr",
+    "bytes": 1088,
+    "sha256": "8a847d13468586218736c5577c335b6cfacd4af2314712611bc21566fdd629d7"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-copied-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-copied-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-copied-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-copied-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-copied-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-copied-validator.stdout",
+    "bytes": 499,
+    "sha256": "43f799a4b68c1efa41f7bad111fe79120aa145ea826285bf439007dcf84a3994"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-counts.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-counts.json",
+    "bytes": 499,
+    "sha256": "43f799a4b68c1efa41f7bad111fe79120aa145ea826285bf439007dcf84a3994"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-current-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-current-source.stderr",
+    "bytes": 1088,
+    "sha256": "a0e63d4e02b200266d2c8bd52bfc97ff312fed127f06f18cd335c8a7ea34dca7"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-current-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-current-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-restored-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-restored-0.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-restored-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-restored-0.stdout",
+    "bytes": 499,
+    "sha256": "43f799a4b68c1efa41f7bad111fe79120aa145ea826285bf439007dcf84a3994"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-restored-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-restored-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-restored-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-restored-1.stdout",
+    "bytes": 499,
+    "sha256": "43f799a4b68c1efa41f7bad111fe79120aa145ea826285bf439007dcf84a3994"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-tamper-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-tamper-0.stderr",
+    "bytes": 681,
+    "sha256": "2f86ac47eb5a500157c6e0fc77b825a7a7f20ea11cf424954a49ab3275cbf9d6"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-tamper-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-tamper-0.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-tamper-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-tamper-1.stderr",
+    "bytes": 679,
+    "sha256": "b617ca71d26a5bc9e05171b00668eb88be6740b006ad48221447a24b928d8a32"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.8-tamper-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.8-tamper-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-copied-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-copied-source.stderr",
+    "bytes": 1188,
+    "sha256": "33bc000413de934017353fba53666dcb3442905ebf5039c89772d48d8e0921bb"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-copied-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-copied-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-copied-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-copied-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-copied-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-copied-validator.stdout",
+    "bytes": 646,
+    "sha256": "a01519bca97bb45006ea6c777284b5ab7d2265c81229001f55c4bbf3b908de51"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-counts.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-counts.json",
+    "bytes": 646,
+    "sha256": "a01519bca97bb45006ea6c777284b5ab7d2265c81229001f55c4bbf3b908de51"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-current-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-current-source.stderr",
+    "bytes": 1188,
+    "sha256": "2f8a9b02a970f9448facf40005eade20ad5d2d62d13b304832ee0c4cc580c422"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-current-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-current-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-restored-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-restored-0.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-restored-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-restored-0.stdout",
+    "bytes": 646,
+    "sha256": "a01519bca97bb45006ea6c777284b5ab7d2265c81229001f55c4bbf3b908de51"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-restored-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-restored-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-restored-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-restored-1.stdout",
+    "bytes": 646,
+    "sha256": "a01519bca97bb45006ea6c777284b5ab7d2265c81229001f55c4bbf3b908de51"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-tamper-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-tamper-0.stderr",
+    "bytes": 682,
+    "sha256": "4870b92f5a8fb0c5640b59df47a9c9f1b3a64742ce1e759cb3b71b6a63918b89"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-tamper-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-tamper-0.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-tamper-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-tamper-1.stderr",
+    "bytes": 680,
+    "sha256": "a6c3a06e1606122dc2229897481294596164e22433bd8ebcba39c63c8e7f72ce"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.15.9-tamper-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.15.9-tamper-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-copied-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-copied-source.stderr",
+    "bytes": 1194,
+    "sha256": "0f9847c739c746b8ac1085fcbb9e5c025fd450a5ad7d0b9cb60b9f5d45bcc73b"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-copied-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-copied-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-copied-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-copied-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-copied-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-copied-validator.stdout",
+    "bytes": 859,
+    "sha256": "e590aaeea96e4a36d88e1dfa94c7357313520bb1e014880da200729d8a07840f"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-counts.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-counts.json",
+    "bytes": 859,
+    "sha256": "e590aaeea96e4a36d88e1dfa94c7357313520bb1e014880da200729d8a07840f"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-current-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-current-source.stderr",
+    "bytes": 1194,
+    "sha256": "c54d53e71b3e23edc78c12f04c8079dfc6fdb77a90023fe18b7b0b3eea51da4e"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-current-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-current-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-restored-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-restored-0.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-restored-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-restored-0.stdout",
+    "bytes": 859,
+    "sha256": "e590aaeea96e4a36d88e1dfa94c7357313520bb1e014880da200729d8a07840f"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-restored-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-restored-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-restored-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-restored-1.stdout",
+    "bytes": 859,
+    "sha256": "e590aaeea96e4a36d88e1dfa94c7357313520bb1e014880da200729d8a07840f"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-tamper-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-tamper-0.stderr",
+    "bytes": 751,
+    "sha256": "4dbef4989e90b81ee80d1705c1d0af82e6448bcac87c21f2305c536782313a4b"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-tamper-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-tamper-0.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-tamper-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-tamper-1.stderr",
+    "bytes": 747,
+    "sha256": "29bfa85432b94d4079a45795439b5bb6519e29f5fc4992a3cda6c13df9806d02"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/1.60.1-tamper-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/1.60.1-tamper-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-copied-current-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-copied-current-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-copied-current-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-copied-current-validator.stdout",
+    "bytes": 720,
+    "sha256": "25e00674c1e7034d25411d23bd67f4561d3e916048ec3cd2938bb018bbbdef5a"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-copied-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-copied-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-copied-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-copied-validator.stdout",
+    "bytes": 727,
+    "sha256": "853eeb0cdd248a9925023de673a374f286577eda6b1886d3ab35326a419f01fd"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-counts.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-counts.json",
+    "bytes": 727,
+    "sha256": "853eeb0cdd248a9925023de673a374f286577eda6b1886d3ab35326a419f01fd"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-current-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-current-source.stderr",
+    "bytes": 1042,
+    "sha256": "041e84b822e1b60b6f4a3457591e06391b79a14a62b4736fad712cce15421115"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-current-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-current-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-restored-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-restored-0.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-restored-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-restored-0.stdout",
+    "bytes": 727,
+    "sha256": "853eeb0cdd248a9925023de673a374f286577eda6b1886d3ab35326a419f01fd"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-restored-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-restored-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-restored-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-restored-1.stdout",
+    "bytes": 727,
+    "sha256": "853eeb0cdd248a9925023de673a374f286577eda6b1886d3ab35326a419f01fd"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-tamper-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-tamper-0.stderr",
+    "bytes": 807,
+    "sha256": "0c18820eb14ec56106e805151f5814c4906cc7b3013b6953486135a9a69c6d0f"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-tamper-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-tamper-0.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-tamper-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-tamper-1.stderr",
+    "bytes": 794,
+    "sha256": "f1267722d164c2ee76cda68b6fd8e2e345c6d4213f4692228244ac2081335229"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.0.1-tamper-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.0.1-tamper-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-copied-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-copied-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-copied-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-copied-validator.stdout",
+    "bytes": 801,
+    "sha256": "b6689d8985be481178cf5e9b8f6e33fdb2e48dc37ddc33e4a4a5a83b71b80c33"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-counts.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-counts.json",
+    "bytes": 801,
+    "sha256": "b6689d8985be481178cf5e9b8f6e33fdb2e48dc37ddc33e4a4a5a83b71b80c33"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-current-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-current-source.stderr",
+    "bytes": 102,
+    "sha256": "857071d0419422262d21cfdf05b7631601096b06bb9872974ed3cd2bb4a27b15"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-current-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-current-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-restored-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-restored-0.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-restored-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-restored-0.stdout",
+    "bytes": 801,
+    "sha256": "b6689d8985be481178cf5e9b8f6e33fdb2e48dc37ddc33e4a4a5a83b71b80c33"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-restored-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-restored-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-restored-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-restored-1.stdout",
+    "bytes": 801,
+    "sha256": "b6689d8985be481178cf5e9b8f6e33fdb2e48dc37ddc33e4a4a5a83b71b80c33"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-tamper-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-tamper-0.stderr",
+    "bytes": 696,
+    "sha256": "44eeef226739e3e7637f1b24db6314a5c58ef57ba746721b83b6dde07edc70ed"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-tamper-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-tamper-0.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-tamper-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-tamper-1.stderr",
+    "bytes": 683,
+    "sha256": "d28cedbf91ad996796c704352f85bd24aab6c133acc90ada268c79f29217a3a3"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.1.0-tamper-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.1.0-tamper-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-copied-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-copied-source.stderr",
+    "bytes": 741,
+    "sha256": "7ab2b0187de23d62294334cc8793637426e3aa9eb0a4a3f13512dc96e1da571a"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-copied-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-copied-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-copied-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-copied-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-copied-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-copied-validator.stdout",
+    "bytes": 691,
+    "sha256": "2c69755282bac1b05499fef339e66c3a04fa601b1b53835a7415309d09824b2c"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-counts.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-counts.json",
+    "bytes": 691,
+    "sha256": "2c69755282bac1b05499fef339e66c3a04fa601b1b53835a7415309d09824b2c"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-current-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-current-source.stderr",
+    "bytes": 741,
+    "sha256": "52a23df05357f36b6b7122fc504786dee4bdd58d32df827a8535052468fc95c3"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-current-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-current-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-restored-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-restored-0.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-restored-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-restored-0.stdout",
+    "bytes": 691,
+    "sha256": "2c69755282bac1b05499fef339e66c3a04fa601b1b53835a7415309d09824b2c"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-restored-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-restored-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-restored-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-restored-1.stdout",
+    "bytes": 691,
+    "sha256": "2c69755282bac1b05499fef339e66c3a04fa601b1b53835a7415309d09824b2c"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-tamper-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-tamper-0.stderr",
+    "bytes": 699,
+    "sha256": "0b091b1a6a503a6eaf5e874aa3318cbbea9e795833630702b316b98c4a355983"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-tamper-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-tamper-0.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-tamper-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-tamper-1.stderr",
+    "bytes": 686,
+    "sha256": "a2fdb39bfa904ef0771a48e1c8e926d1ecc762d3770de8b6f823400dffadbe69"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.2.0-tamper-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.2.0-tamper-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-copied-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-copied-source.stderr",
+    "bytes": 954,
+    "sha256": "ac0bdfcb9d19899367da87fffe394892af7a614324de6fb64044f55c51d5fc64"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-copied-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-copied-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-copied-validator.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-copied-validator.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-copied-validator.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-copied-validator.stdout",
+    "bytes": 534,
+    "sha256": "1317c841d73e292fa4da33b74d455683bc4fe0b0b826d666a21e4d6b31693e99"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-counts.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-counts.json",
+    "bytes": 534,
+    "sha256": "1317c841d73e292fa4da33b74d455683bc4fe0b0b826d666a21e4d6b31693e99"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-current-source.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-current-source.stderr",
+    "bytes": 954,
+    "sha256": "768ee2655b501ca494bce879714c0db620eac6b9d9975d15d1a7fa7c57e377e0"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-current-source.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-current-source.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-restored-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-restored-0.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-restored-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-restored-0.stdout",
+    "bytes": 534,
+    "sha256": "1317c841d73e292fa4da33b74d455683bc4fe0b0b826d666a21e4d6b31693e99"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-restored-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-restored-1.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-restored-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-restored-1.stdout",
+    "bytes": 534,
+    "sha256": "1317c841d73e292fa4da33b74d455683bc4fe0b0b826d666a21e4d6b31693e99"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-tamper-0.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-tamper-0.stderr",
+    "bytes": 540,
+    "sha256": "8b60c8fca24761ff9a77cba644870c1e03fb573f0c96a704dad5989531c31311"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-tamper-0.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-tamper-0.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-tamper-1.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-tamper-1.stderr",
+    "bytes": 551,
+    "sha256": "a7cdea7146032f956fa33d3ddcf1c7b702530556966286d58a9fd192d91b7e10"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/2.3.0-tamper-1.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/2.3.0-tamper-1.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/commands.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/commands.json",
+    "bytes": 104535,
+    "sha256": "db453a461a72b77fc2131fe83a2755512620dde24cd1d9644086d10da54838d8"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/concurrent-wiki-diff.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/concurrent-wiki-diff.txt",
+    "bytes": 1878,
+    "sha256": "0a7d38380d91fe0051613b040b2218b48e2a0f79a871a02663d6e4b5d6aab3c6"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/current-integrated-accounting-corrected-path.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/current-integrated-accounting-corrected-path.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/current-integrated-accounting-corrected-path.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/current-integrated-accounting-corrected-path.stdout",
+    "bytes": 3551,
+    "sha256": "65aa117daecfa0b4448d149bf7714336a5453f5e3794f5d760d40fd8f6bfd1d3"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/current-integrated-accounting.stderr",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/current-integrated-accounting.stderr",
+    "bytes": 849,
+    "sha256": "3994a8762fd90d0dd79c7f1526e5e7d0cf15139aeb8ddc218e739cf2a912f33e"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/current-integrated-accounting.stdout",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/current-integrated-accounting.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/current_accounting.py",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/current_accounting.py",
+    "bytes": 3403,
+    "sha256": "a081135019cc9166fe604721f206f4f772af15a9a50f492c7aaacbc3f375981b"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/full-streams-00.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/full-streams-00.txt",
+    "bytes": 8000,
+    "sha256": "3ea674955dbc8802802fd134d68231fb63253170b8320ed2f4c01f8b507c7e09"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/full-streams-01.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/full-streams-01.txt",
+    "bytes": 8000,
+    "sha256": "1dc9c09647473c411b247a30aaf9c25b8d491173f8603f8af747fdfb379c38c7"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/full-streams-02.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/full-streams-02.txt",
+    "bytes": 8000,
+    "sha256": "63a8c722e26c2928ccaac3833e1f5c2b501427633443971176cd4ef199371b89"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/full-streams-03.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/full-streams-03.txt",
+    "bytes": 8000,
+    "sha256": "5bf9ee2f6ecdef4d28c7c9d38c1933fd1dfaa79d8746d4163c8d9565e6c78919"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/full-streams-04.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/full-streams-04.txt",
+    "bytes": 8000,
+    "sha256": "5754d835eff413eeaf3a8b00ae7749d674cd1b51c5002fe7163af65497e14a97"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/full-streams-05.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/full-streams-05.txt",
+    "bytes": 2824,
+    "sha256": "ed86d260ef711f7602bfa9be8ca008fb38b010901b0665f4454a84940c3b5763"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/inspected-docs.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/inspected-docs.txt",
+    "bytes": 78805,
+    "sha256": "9d2979ab827f398ece746cb6548487c4812510b6afa93adcf3e59df9abdd1e93"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/report.md",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/report.md",
+    "bytes": 3438,
+    "sha256": "208e7bf04458986d8321f975a38a2fb4044407b1163899fbe53292fa8387c77b"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/retention.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/retention.json",
+    "bytes": 1433,
+    "sha256": "ad616c2bf876d504b885d53b0dad8e8b341bd62b2c198bec9918deb1186e6323"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/revision.txt",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/revision.txt",
+    "bytes": 41,
+    "sha256": "9557b28f6839a68ed43f8725cbc41e2e86e836d0adfb4ac5a5f044c0e86bcd05"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/run_checks.py",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/run_checks.py",
+    "bytes": 5369,
+    "sha256": "628656881caa930a554aef8ad85ff199776130851c87ba18204b5d277183bae6"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/scope-after.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/scope-after.json",
+    "bytes": 39249,
+    "sha256": "393354bb30eae3c4ed8776abe715f38f7b39bc37de34854747c493e974fb4e5f"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/scope-before.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/scope-before.json",
+    "bytes": 39249,
+    "sha256": "393354bb30eae3c4ed8776abe715f38f7b39bc37de34854747c493e974fb4e5f"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/scope-drift.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/scope-drift.json",
+    "bytes": 2,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/scope-final.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/scope-final.json",
+    "bytes": 39249,
+    "sha256": "74ace2e7e8db445463175db2c33b1fd599848b8f3bcec8900d12cbd8925514a7"
+  },
+  {
+    "source": "/tmp/older-source-independent-fna_vx3l/summary.json",
+    "retained": "data/patch-api/evidence/2.0.1-session-2026-10-09/integrated/older-source/summary.json",
+    "bytes": 8399,
+    "sha256": "ab4671c7b58237a96bef570362eac11cf9b9731d22dae8e9bfaff3fb6ac1ae71"
+  }
+]

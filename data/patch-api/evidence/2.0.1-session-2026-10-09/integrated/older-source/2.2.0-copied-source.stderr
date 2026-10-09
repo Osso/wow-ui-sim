@@ -1,0 +1,10 @@
+test_all_serialized_accounting_required (__main__.SourceAccounting.test_all_serialized_accounting_required) ... ok
+test_counts_and_literal_headers (__main__.SourceAccounting.test_counts_and_literal_headers) ... ok
+test_event_family_cvar_and_replaced_functions_limits (__main__.SourceAccounting.test_event_family_cvar_and_replaced_functions_limits) ... ok
+test_literal_optional_and_split_signatures_not_reconstructed (__main__.SourceAccounting.test_literal_optional_and_split_signatures_not_reconstructed) ... ok
+test_no_invented_native_or_foreign_supersession (__main__.SourceAccounting.test_no_invented_native_or_foreign_supersession) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.386s
+
+OK

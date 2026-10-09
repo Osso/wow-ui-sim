@@ -1,0 +1,13 @@
+test_configured_and_queued_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_queued_not_native_or_supersession) ... ok
+test_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok
+test_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok
+test_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok
+test_headers_and_unexpanded_navigation_preserved (__main__.SourceAccounting.test_headers_and_unexpanded_navigation_preserved) ... ok
+test_link_occurrences_do_not_expand_into_api_contracts (__main__.SourceAccounting.test_link_occurrences_do_not_expand_into_api_contracts) ... ok
+test_literal_toc_does_not_invent_client_name (__main__.SourceAccounting.test_literal_toc_does_not_invent_client_name) ... ok
+test_omissions_fabricated_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_omissions_fabricated_credit_and_foreign_history_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.061s
+
+OK

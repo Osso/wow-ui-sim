@@ -1,0 +1,11 @@
+test_every_nonblank_line_and_header_literal (__main__.SourceAccounting.test_every_nonblank_line_and_header_literal) ... ok
+test_every_omission_and_fabricated_credit_rejected (__main__.SourceAccounting.test_every_omission_and_fabricated_credit_rejected) ... ok
+test_literal_return_prefixes_optional_arguments_and_notes (__main__.SourceAccounting.test_literal_return_prefixes_optional_arguments_and_notes) ... ok
+test_mixed_labels_typos_rename_and_consolidated_occurrences (__main__.SourceAccounting.test_mixed_labels_typos_rename_and_consolidated_occurrences) ... ok
+test_parenthetical_prose_is_not_api_or_command_publication (__main__.SourceAccounting.test_parenthetical_prose_is_not_api_or_command_publication) ... ok
+test_precise_prose_and_unexpanded_reference_limits (__main__.SourceAccounting.test_precise_prose_and_unexpanded_reference_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.435s
+
+OK

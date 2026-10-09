@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.60.1/data/patch-api/evidence/1.60.1-session-2026-10-09/validate.py", line 69, in <module>
+    print(json.dumps(replay(EVIDENCE), sort_keys=True))
+                     ~~~~~~^^^^^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.60.1/data/patch-api/evidence/1.60.1-session-2026-10-09/validate.py", line 28, in replay
+    sealed = check_seals(evidence)
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.60.1/data/patch-api/evidence/1.60.1-session-2026-10-09/validate.py", line 18, in check_seals
+    assert accounting.digest(data) == expected, 'seal: ' + path
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: original/ledger.json

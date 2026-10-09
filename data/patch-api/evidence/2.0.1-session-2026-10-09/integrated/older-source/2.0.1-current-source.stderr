@@ -1,0 +1,11 @@
+test_frozen_full_rows_handlers_commands_and_late_qualifiers (__main__.SourceTests.test_frozen_full_rows_handlers_commands_and_late_qualifiers) ... ok
+test_literal_signatures_duplicates_and_unexpanded_references (__main__.SourceTests.test_literal_signatures_duplicates_and_unexpanded_references) ... ok
+test_macro_option_suffix_placeholder_and_nested_reference_are_not_expanded (__main__.SourceTests.test_macro_option_suffix_placeholder_and_nested_reference_are_not_expanded) ... ok
+test_malformed_signature_is_preserved_not_completed (__main__.SourceTests.test_malformed_signature_is_preserved_not_completed) ... ok
+test_prose_parentheses_are_not_apis_and_command_arguments_stay_literal (__main__.SourceTests.test_prose_parentheses_are_not_apis_and_command_arguments_stay_literal) ... ok
+test_replacement_names_and_wrapper_name_have_literal_positions (__main__.SourceTests.test_replacement_names_and_wrapper_name_have_literal_positions) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.027s
+
+OK

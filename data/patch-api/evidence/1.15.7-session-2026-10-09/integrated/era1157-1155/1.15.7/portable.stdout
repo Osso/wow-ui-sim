@@ -1,0 +1,151 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m/audit.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "template_requested_cwd": "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m",
+  "env": {
+    "PATH": "/nonexistent",
+    "HOME": "/home/osso",
+    "LANG": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "stdin": "DEVNULL",
+  "timeout_seconds": 30,
+  "exit_code": 0,
+  "stdout": "{\n  \"historical_seals\": 28,\n  \"totals\": {\n    \"physical_lines\": 5,\n    \"nonblank_rows\": 4,\n    \"metadata_rows\": 3,\n    \"unproven_rows\": 1,\n    \"contracts\": 2,\n    \"headers\": 1,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 0,\n    \"unexpanded_linked_contracts\": 2,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+  "stderr": ""
+}
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "template_requested_cwd": "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m",
+  "env": {
+    "PATH": "/nonexistent",
+    "HOME": "/home/osso",
+    "LANG": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "stdin": "DEVNULL",
+  "timeout_seconds": 30,
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_configured_and_queued_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_queued_not_native_or_supersession) ... ok\ntest_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok\ntest_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok\ntest_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok\ntest_headers_and_unexpanded_navigation_preserved (__main__.SourceAccounting.test_headers_and_unexpanded_navigation_preserved) ... ok\ntest_link_occurrences_do_not_expand_into_api_contracts (__main__.SourceAccounting.test_link_occurrences_do_not_expand_into_api_contracts) ... ok\ntest_literal_toc_does_not_invent_client_name (__main__.SourceAccounting.test_literal_toc_does_not_invent_client_name) ... ok\ntest_omissions_fabricated_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_omissions_fabricated_credit_and_foreign_history_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.057s\n\nOK\n"
+}
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m/historical-tools/gen_patch_wikitext_register.py",
+    "1.15.7",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m/source.wikitext",
+    "6778069",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m/replayed-register.json"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "template_requested_cwd": "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmp5owkfs0m",
+  "env": {
+    "PATH": "/nonexistent",
+    "HOME": "/home/osso",
+    "LANG": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "stdin": "DEVNULL",
+  "timeout_seconds": 30,
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": ""
+}
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpvqtfdva1/audit.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "template_requested_cwd": "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpvqtfdva1",
+  "env": {
+    "PATH": "/nonexistent",
+    "HOME": "/home/osso",
+    "LANG": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "stdin": "DEVNULL",
+  "timeout_seconds": 30,
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpvqtfdva1/audit.py\", line 113, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpvqtfdva1/audit.py\", line 109, in main\n    count = check_seals()\n  File \"/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpvqtfdva1/audit.py\", line 101, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+}
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpvqtfdva1/audit.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "template_requested_cwd": "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpvqtfdva1",
+  "env": {
+    "PATH": "/nonexistent",
+    "HOME": "/home/osso",
+    "LANG": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "stdin": "DEVNULL",
+  "timeout_seconds": 30,
+  "exit_code": 0,
+  "stdout": "{\n  \"historical_seals\": 28,\n  \"totals\": {\n    \"physical_lines\": 5,\n    \"nonblank_rows\": 4,\n    \"metadata_rows\": 3,\n    \"unproven_rows\": 1,\n    \"contracts\": 2,\n    \"headers\": 1,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 0,\n    \"unexpanded_linked_contracts\": 2,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+  "stderr": ""
+}
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpksj55kd7/audit.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "template_requested_cwd": "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpksj55kd7",
+  "env": {
+    "PATH": "/nonexistent",
+    "HOME": "/home/osso",
+    "LANG": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "stdin": "DEVNULL",
+  "timeout_seconds": 30,
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpksj55kd7/audit.py\", line 113, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpksj55kd7/audit.py\", line 109, in main\n    count = check_seals()\n  File \"/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpksj55kd7/audit.py\", line 101, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+}
+{
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpksj55kd7/audit.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "template_requested_cwd": "/tmp/era1157-1155-independent-1791557042628315319/1.15.7/scratch/target/source-replay-1.15.7/tmpksj55kd7",
+  "env": {
+    "PATH": "/nonexistent",
+    "HOME": "/home/osso",
+    "LANG": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1"
+  },
+  "stdin": "DEVNULL",
+  "timeout_seconds": 30,
+  "exit_code": 0,
+  "stdout": "{\n  \"historical_seals\": 28,\n  \"totals\": {\n    \"physical_lines\": 5,\n    \"nonblank_rows\": 4,\n    \"metadata_rows\": 3,\n    \"unproven_rows\": 1,\n    \"contracts\": 2,\n    \"headers\": 1,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 0,\n    \"unexpanded_linked_contracts\": 2,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+  "stderr": ""
+}

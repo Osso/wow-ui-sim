@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 200, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 183, in main
+    manifest = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 32, in check_seals
+    assert digest(content) == expected['sha256'], 'sealed input: ' + name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: historical-page-coverage.json

@@ -1,0 +1,852 @@
+{
+  "revision": "65b94c05023dc5e1e8422de0cea99c0e7bda9c10",
+  "canonical": "/home/osso/Projects/wow/wow-ui-sim",
+  "versions": {
+    "1.15.7": {
+      "seal_maps": {
+        "seals.json": {
+          "count": 28,
+          "map_sha256": "cd8556292209dbe1808f0cdf942465d2d7d25a16bdb77a55db8ab7c7ea3ea0af",
+          "bytes": 669175,
+          "hashes": {
+            "audit.py": "762bec8aefe1038b3e847a2e68401f03860188a988cb4272ff53030c412ec90c",
+            "configured-inputs/Cargo.toml": "e46836e2a1339229b2e0b8f39d570e7ab8c526cbf42a3288c43dfa99d0cafa44",
+            "configured-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "configured-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "configured-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+            "default-generator.log": "9fa3b6ead7afc298499f30c5b70014c78b6686a8269611537606fa5a7c02b6a2",
+            "default-register.json": "19580497279e4308dec60c2c02d2f8d3b9f20efb79f7cf821740505f1bcdb459",
+            "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+            "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+            "green.log": "f74794c089209757ad7583055ffcb405529add00f54abb24bf0c1a1972368f12",
+            "historical-tools/extract_patch_non_inventory.py": "a8db3187a691118b7e1a66db8e0e9262bfdb3d2de1fb4775abfb10f9026c9d11",
+            "historical-tools/gen_patch_wikitext_register.py": "bdcf987489d2491a349817b429d579980680e1259063985e7a424568dc165fda",
+            "ledger.json": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+            "proof-ledger.json": "f374052a264d484e239c5517efc00a91dbf642d05f2e97fdd1808b610addc982",
+            "queued-successors/1.15.8/source-pin.json": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6",
+            "queued-successors/1.15.8/source-response.json": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+            "queued-successors/1.15.8/source.wikitext": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+            "queued-successors/1.15.8/status.json": "bbf122d83e965d269aa1e0c2a62f7b92b82ff9852e8fdc3726ee1c4ad30fcb70",
+            "queued-successors/1.15.9/source-pin.json": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95",
+            "queued-successors/1.15.9/source-response.json": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+            "queued-successors/1.15.9/source.wikitext": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+            "queued-successors/1.15.9/status.json": "906c061dad04e8eec0f031ff3fddd9882ad53633668802dc8d98556c96bf2538",
+            "red-scaffold.py": "a36d1e225a0ee022c759e17c7aab8d1c38f36f4f260136949066cff9e72ca507",
+            "red.log": "4c4d48838faa3bde3e30a00e18705a6793240b5937ddb4001c644dfc3c2dade3",
+            "source-pin.json": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1",
+            "source-response.json": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+            "source.wikitext": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+            "test_source_accounting.py": "cb6db9ec77c41b5bf7b47d2d3922fe4049c6de5dca91adf4ec4e7c4530c18cbb"
+          }
+        },
+        "receipt-seals.json": {
+          "count": 8,
+          "map_sha256": "e74383d2d20b1c50d5500c2452511eefcbf15515f6c36658c8326a32c97c63e6",
+          "bytes": 122909,
+          "hashes": {
+            "seals.json": "cd8556292209dbe1808f0cdf942465d2d7d25a16bdb77a55db8ab7c7ea3ea0af",
+            "replay-archive.tar.gz": "912ada8d0d390aa4c51e6e4735a5b36ddadf2c3be2a716b0b976a9c24d603005",
+            "test_portable.py": "8949c59ac5c18c039934002d0faeaeea7706ddd8fd0d3cb33f24bea71453c955",
+            "portable-red.log": "470e366ec8a5bc8c1d124abe5e3a84fd23500143ccb2f9db18007befe8a720d3",
+            "portable-green.log": "5a9efbbe6639d326ba15ade847a0fd1b66cfd2ac376ba8f19a5a00ab93fe4a44",
+            "portable-proof.json": "f80b47d08727864513ff4e7a568f6ca4df5b10a3b651bc965eb3c058430650f1",
+            "portable-context.json": "8c6cb420ffcd21e1baf26876642584992e3b289f4f103ee4e181cbe49bda7818",
+            "REPLAY.md": "9e24d53feae821420d0b50beaf6ea6abef4207ecec32ce237c78f0b4d7e24aba"
+          }
+        }
+      },
+      "ledger": {
+        "schema": "patch-source-accounting/v1",
+        "patch": "1.15.7",
+        "source": {
+          "title": "Patch 1.15.7/API changes",
+          "version": "1.15.7",
+          "pageid": 626071,
+          "revid": 6778069,
+          "timestamp": "2026-07-22T05:34:20Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+          "retrieved": "2026-10-09T08:51:36.398418+00:00",
+          "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+          "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+        },
+        "source_toc": 11507,
+        "client_line": "UNPROVEN-unexpanded-apichanges",
+        "literal_clients": [],
+        "literal_navigation": {
+          "patch": "1.15.7",
+          "prev": "1.15.6",
+          "next": "1.15.8"
+        },
+        "client_limit": "No named client in literal page. Same-Era pending context comes from task scope and separately attributed queued 1.15.9; do not guess from version/TOC or expand template.",
+        "base_revision": "2d83b9b8088e110e6e170473ed59650d1821612e",
+        "later_registers": [],
+        "queued_successors": [
+          {
+            "patch": "1.15.8",
+            "history": "same-Era-pending-context-not-literal-1.15.7-client-proof",
+            "state": "queued-placeholder-awaiting-main-integration",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed",
+            "source": {
+              "title": "Patch 1.15.8/API changes",
+              "version": "1.15.8",
+              "pageid": 686952,
+              "revid": 6778071,
+              "timestamp": "2026-07-22T05:34:51Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+              "retrieved": "2026-10-09T08:51:36.398359+00:00",
+              "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+              "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+              "wikitext_bytes": 279,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+            }
+          },
+          {
+            "patch": "1.15.9",
+            "history": "same-Era-pending-context-not-literal-1.15.7-client-proof",
+            "state": "queued-placeholder-awaiting-main-integration",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed",
+            "source": {
+              "title": "Patch 1.15.9/API changes",
+              "version": "1.15.9",
+              "pageid": 685352,
+              "revid": 6780591,
+              "timestamp": "2026-07-24T15:29:35Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+              "retrieved": "2026-10-09T08:51:36.398273+00:00",
+              "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+              "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+              "wikitext_bytes": 4085,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+            }
+          }
+        ],
+        "measurements": {
+          "runtime": 0,
+          "model": 0,
+          "native": 0
+        },
+        "source_rows": [
+          {
+            "id": "source-001",
+            "line": 1,
+            "literal": "{{apichanges|1.15.7|prev=1.15.6|next=1.15.8}}",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-003",
+            "line": 3,
+            "literal": "==Resources==",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-004",
+            "line": 4,
+            "literal": "* TOC: <code>11507</code>",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-005",
+            "line": 5,
+            "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.6..1.15.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.6..1.15.7 BlizzardInterfaceResources]",
+            "status": "UNPROVEN",
+            "capabilities": []
+          }
+        ],
+        "contracts": [
+          {
+            "id": "linked-diff-005-1",
+            "line": 5,
+            "kind": "unexpanded-linked-diff",
+            "label": "wow-ui-source",
+            "target": "https://github.com/Gethe/wow-ui-source/compare/1.15.6..1.15.7",
+            "status": "UNPROVEN",
+            "arguments": null,
+            "returns": null,
+            "event_payloads": null,
+            "state_transitions": null,
+            "security_rules": null,
+            "native_equivalence": null,
+            "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+          },
+          {
+            "id": "linked-diff-005-2",
+            "line": 5,
+            "kind": "unexpanded-linked-diff",
+            "label": "BlizzardInterfaceResources",
+            "target": "https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.6..1.15.7",
+            "status": "UNPROVEN",
+            "arguments": null,
+            "returns": null,
+            "event_payloads": null,
+            "state_transitions": null,
+            "security_rules": null,
+            "native_equivalence": null,
+            "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+          }
+        ],
+        "headers": [
+          {
+            "line": 3,
+            "literal": "==Resources==",
+            "label": "Resources",
+            "numerical_count": null,
+            "status": "metadata-only"
+          }
+        ],
+        "transclusions": [
+          {
+            "line": 1,
+            "literal": "{{apichanges|1.15.7|prev=1.15.6|next=1.15.8}}",
+            "expansion": "UNPROVEN",
+            "role": "navigation-metadata-only"
+          }
+        ],
+        "api_occurrences": [],
+        "signatures": [],
+        "configured_profiles": [
+          {
+            "variant": "Era",
+            "feature": "client-era",
+            "feature_dependencies": [],
+            "cache_subdir": "era",
+            "configured_interface": 11507,
+            "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "manifest_entries": 3981,
+            "native_correspondence": "UNPROVEN"
+          },
+          {
+            "variant": "Anniversary",
+            "feature": "client-anniversary",
+            "feature_dependencies": [],
+            "cache_subdir": "anniversary",
+            "configured_interface": 11507,
+            "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "manifest_entries": 3981,
+            "native_correspondence": "UNPROVEN"
+          }
+        ],
+        "preservation": "Raw bytes/all occurrences retained; no normalization, aliases, defaults, shims or link/transclusion expansion.",
+        "totals": {
+          "physical_lines": 5,
+          "nonblank_rows": 4,
+          "metadata_rows": 3,
+          "unproven_rows": 1,
+          "contracts": 2,
+          "headers": 1,
+          "numerical_inventory_headers": 0,
+          "api_occurrences": 0,
+          "event_occurrences": 0,
+          "cvar_occurrences": 0,
+          "widget_method_occurrences": 0,
+          "command_occurrences": 0,
+          "signature_declarations": 0,
+          "prose_contracts": 0,
+          "unexpanded_linked_contracts": 2,
+          "unexpanded_transclusions": 1
+        }
+      }
+    },
+    "1.15.6": {
+      "seal_maps": {
+        "seals.json": {
+          "count": 34,
+          "map_sha256": "eb8b3be2d4944c3da03180e72b602d59e7b96647b9e71afbd881890c5350405a",
+          "bytes": 676948,
+          "hashes": {
+            "audit.py": "eebfb1e97621620954fdaeccaeb070cbfdf1d6cb5d73f1470b80e8aefbe60f0c",
+            "configured-inputs/Cargo.toml": "e46836e2a1339229b2e0b8f39d570e7ab8c526cbf42a3288c43dfa99d0cafa44",
+            "configured-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "configured-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "configured-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+            "default-generator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "default-register.json": "4666f35c8b9b62579a3a882e6c9040b642a8f7cb5ad749a4407407a1f84d6746",
+            "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+            "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+            "green.log": "988a2e30d73e77f5c6f2e0ab8cbe76c489f9886e8931f0da78d3ef85160c9728",
+            "historical-tools/extract_patch_non_inventory.py": "a8db3187a691118b7e1a66db8e0e9262bfdb3d2de1fb4775abfb10f9026c9d11",
+            "historical-tools/gen_patch_wikitext_register.py": "bdcf987489d2491a349817b429d579980680e1259063985e7a424568dc165fda",
+            "ledger.json": "70cdfac19ed015b0433bb313451b8dd8254c4a7ab1c9e7574badf245546f5577",
+            "proof-ledger.json": "256235eafdde45760d081f270c653d574d25391a8e1c3a689ce36ec835293cb9",
+            "queued-successors/1.15.7/source-pin.json": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1",
+            "queued-successors/1.15.7/source-response.json": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+            "queued-successors/1.15.7/source.wikitext": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+            "queued-successors/1.15.7/status.json": "374ea9d1c85cc5a34da780a9f792de4947ad3bbf8f2b12c7a437eef8bdf0158f",
+            "queued-successors/1.15.8/source-pin.json": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6",
+            "queued-successors/1.15.8/source-response.json": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+            "queued-successors/1.15.8/source.wikitext": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+            "queued-successors/1.15.8/status.json": "2cc60bf3f456a3aa610fdc48ad78eb48a54686dc498ece5173d70f7fad576a0f",
+            "queued-successors/1.15.9/source-pin.json": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95",
+            "queued-successors/1.15.9/source-response.json": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+            "queued-successors/1.15.9/source.wikitext": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+            "queued-successors/1.15.9/status.json": "8eb488d6433276dcc9a7ded6636fe976fb00b3bbef930eb2ee79d758af7f16e4",
+            "red-scaffold.py": "f8c7d338f172ec34fa70bcdf0235a60070fd0d2c68439144fcc97b562123b04a",
+            "red.log": "df2b0775ac72f071ed08bb35b487a61f7c61d41d0daa6864f3c99f2b6b564a4a",
+            "source-attribution.md": "6219231565d037c930a197459bb13a663405349e1d09094a95c1590410e67b46",
+            "source-pin.json": "808dfec0a0228d7471e8384ac1199f52bdaca81ce79e078248f8b83abf9fa4a0",
+            "source-response.json": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+            "source.wikitext": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+            "test_portable.py": "4e5677c578735f0f17358e3a0985cfa28e552a9bb24f76a7f9ced3e7f89840d5",
+            "test_source_accounting.py": "259a5e8609153fd9872c35b0d95f4b4cec1d91f56f04235cf0f198e8e46c2b6c"
+          }
+        },
+        "receipt-seals.json": {
+          "count": 6,
+          "map_sha256": "10021f8b1ccdde7392097d1bcfec19833564054a30380e7fb8874685fb109a5c",
+          "bytes": 116705,
+          "hashes": {
+            "REPLAY.md": "3ae43cf975046eb01eb0baa10db2fa77fa2d2754fb354ef7a387908865d50249",
+            "portable-controls.json": "46b93ae2a0afe209b206cded03c20c5c64b41b25876e0e931544d721ab72b6b4",
+            "portable-controls.log": "1a05fc4c5bf7c9f372ec88d499b27804c848c6267456f06c59f62302b026cf0d",
+            "portable-proof.json": "894899fa2ac8ec83898af1d0db41a0f3d4e53c94c9b6fe195a9edf59d533357c",
+            "replay-archive.tar.gz": "b11ef94a1f23e120b1cde778c13637a1d380cf1519665e32c2f690d3413ca502",
+            "seals.json": "eb8b3be2d4944c3da03180e72b602d59e7b96647b9e71afbd881890c5350405a"
+          }
+        }
+      },
+      "ledger": {
+        "schema": "patch-source-accounting/v1",
+        "patch": "1.15.6",
+        "source": {
+          "title": "Patch 1.15.6/API changes",
+          "version": "1.15.6",
+          "pageid": 619994,
+          "revid": 6281951,
+          "timestamp": "2025-04-04T10:14:39Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+          "retrieved": "2026-10-09T08:51:36.398475+00:00",
+          "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+          "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+        },
+        "source_toc": 11506,
+        "client_line": "UNPROVEN-unexpanded-apichanges",
+        "literal_clients": [],
+        "literal_navigation": {
+          "patch": "1.15.6",
+          "prev": "1.15.5",
+          "next": "1.15.7"
+        },
+        "client_limit": "No named client in literal page. Same-Era context/successor attribution remains separate; queued 1.15.7/1.15.8/1.15.9 pending main integration; do not guess from version/TOC or expand template.",
+        "base_revision": "2d83b9b8088e110e6e170473ed59650d1821612e",
+        "later_registers": [],
+        "queued_successors": [
+          {
+            "patch": "1.15.7",
+            "history": "same-Era-context-only",
+            "state": "inflight-pending-main-integration",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed",
+            "source": {
+              "title": "Patch 1.15.7/API changes",
+              "version": "1.15.7",
+              "pageid": 626071,
+              "revid": 6778069,
+              "timestamp": "2026-07-22T05:34:20Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+              "retrieved": "2026-10-09T08:51:36.398418+00:00",
+              "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+              "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+              "wikitext_bytes": 278,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+            }
+          },
+          {
+            "patch": "1.15.8",
+            "history": "same-Era-context-only",
+            "state": "pending-main-integration",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed",
+            "source": {
+              "title": "Patch 1.15.8/API changes",
+              "version": "1.15.8",
+              "pageid": 686952,
+              "revid": 6778071,
+              "timestamp": "2026-07-22T05:34:51Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+              "retrieved": "2026-10-09T08:51:36.398359+00:00",
+              "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+              "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+              "wikitext_bytes": 279,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+            }
+          },
+          {
+            "patch": "1.15.9",
+            "history": "same-Era-context-only",
+            "state": "pending-main-integration",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed",
+            "source": {
+              "title": "Patch 1.15.9/API changes",
+              "version": "1.15.9",
+              "pageid": 685352,
+              "revid": 6780591,
+              "timestamp": "2026-07-24T15:29:35Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+              "retrieved": "2026-10-09T08:51:36.398273+00:00",
+              "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+              "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+              "wikitext_bytes": 4085,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+            }
+          }
+        ],
+        "measurements": {
+          "runtime": 0,
+          "model": 0,
+          "native": 0
+        },
+        "source_rows": [
+          {
+            "id": "source-001",
+            "line": 1,
+            "literal": "{{apichanges|1.15.6|prev=1.15.5|next=1.15.7}}",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-003",
+            "line": 3,
+            "literal": "==Resources==",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-004",
+            "line": 4,
+            "literal": "* TOC: <code>11506</code>",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-005",
+            "line": 5,
+            "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.5..1.15.6 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.5..1.15.6 BlizzardInterfaceResources]",
+            "status": "UNPROVEN",
+            "capabilities": []
+          }
+        ],
+        "contracts": [
+          {
+            "id": "linked-diff-005-1",
+            "line": 5,
+            "kind": "unexpanded-linked-diff",
+            "label": "wow-ui-source",
+            "target": "https://github.com/Gethe/wow-ui-source/compare/1.15.5..1.15.6",
+            "status": "UNPROVEN",
+            "arguments": null,
+            "returns": null,
+            "event_payloads": null,
+            "state_transitions": null,
+            "security_rules": null,
+            "native_equivalence": null,
+            "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+          },
+          {
+            "id": "linked-diff-005-2",
+            "line": 5,
+            "kind": "unexpanded-linked-diff",
+            "label": "BlizzardInterfaceResources",
+            "target": "https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.5..1.15.6",
+            "status": "UNPROVEN",
+            "arguments": null,
+            "returns": null,
+            "event_payloads": null,
+            "state_transitions": null,
+            "security_rules": null,
+            "native_equivalence": null,
+            "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+          }
+        ],
+        "headers": [
+          {
+            "line": 3,
+            "literal": "==Resources==",
+            "label": "Resources",
+            "numerical_count": null,
+            "status": "metadata-only"
+          }
+        ],
+        "transclusions": [
+          {
+            "line": 1,
+            "literal": "{{apichanges|1.15.6|prev=1.15.5|next=1.15.7}}",
+            "expansion": "UNPROVEN",
+            "role": "navigation-metadata-only"
+          }
+        ],
+        "api_occurrences": [],
+        "signatures": [],
+        "configured_profiles": [
+          {
+            "variant": "Era",
+            "feature": "client-era",
+            "feature_dependencies": [],
+            "cache_subdir": "era",
+            "configured_interface": 11507,
+            "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "manifest_entries": 3981,
+            "native_correspondence": "UNPROVEN"
+          },
+          {
+            "variant": "Anniversary",
+            "feature": "client-anniversary",
+            "feature_dependencies": [],
+            "cache_subdir": "anniversary",
+            "configured_interface": 11507,
+            "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "manifest_entries": 3981,
+            "native_correspondence": "UNPROVEN"
+          }
+        ],
+        "preservation": "Raw bytes/all occurrences retained; no normalization, aliases, defaults, shims or link/transclusion expansion.",
+        "totals": {
+          "physical_lines": 5,
+          "nonblank_rows": 4,
+          "metadata_rows": 3,
+          "unproven_rows": 1,
+          "contracts": 2,
+          "headers": 1,
+          "numerical_inventory_headers": 0,
+          "api_occurrences": 0,
+          "event_occurrences": 0,
+          "cvar_occurrences": 0,
+          "widget_method_occurrences": 0,
+          "command_occurrences": 0,
+          "signature_declarations": 0,
+          "prose_contracts": 0,
+          "unexpanded_linked_contracts": 2,
+          "unexpanded_transclusions": 1
+        }
+      }
+    },
+    "1.15.5": {
+      "seal_maps": {
+        "seals.json": {
+          "count": 38,
+          "map_sha256": "243b0644e339a23e048348b8784ba18e6c35f3d9d48790c73d87640a3998005d",
+          "bytes": 687976,
+          "hashes": {
+            "audit.py": "c3f2846438449eb8144da72072ccd5ff6733e9411c86cef78b9d6e2d47769742",
+            "configured-inputs/Cargo.toml": "c0eda4b7303a9472f2059eea940d5b9b10a2bd4c47009078b3b1cd8b100277b1",
+            "configured-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "configured-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "configured-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+            "default-generator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "default-register.json": "f84b2a561a2ae0685eb7f9773875a78d3c03cb5f145bfa1b61c3329b2383712b",
+            "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+            "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+            "green.log": "f2a2f13b281b2ea277d88ec7fe2a453b9e7ff9d95fbdcd339fd6de6cf5443cd2",
+            "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532",
+            "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+            "ledger.json": "41e335e655966d9352b6a28a97b453be64ad533010f5a4906fd7817c5966ff62",
+            "proof-ledger.json": "20b78fef0cdd8f5451a2c14da74d0581805660d32976dfd43672c498c92a83e5",
+            "queued-successors/1.15.6/source-pin.json": "808dfec0a0228d7471e8384ac1199f52bdaca81ce79e078248f8b83abf9fa4a0",
+            "queued-successors/1.15.6/source-response.json": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+            "queued-successors/1.15.6/source.wikitext": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+            "queued-successors/1.15.6/status.json": "650bed07d5a87b775fde5b600d64bc78ceaded1a2ab49555058df0f313b35a04",
+            "queued-successors/1.15.7/source-pin.json": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1",
+            "queued-successors/1.15.7/source-response.json": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+            "queued-successors/1.15.7/source.wikitext": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+            "queued-successors/1.15.7/status.json": "bc40e81f01cab2a2ea8a9b1c2d5a3bc7d9320cb31b58eb1f259ff41ca4dc7dcd",
+            "queued-successors/1.15.8/source-pin.json": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6",
+            "queued-successors/1.15.8/source-response.json": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+            "queued-successors/1.15.8/source.wikitext": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+            "queued-successors/1.15.8/status.json": "0b7faab2318e274c703d37537c62d89c0eb005db9eb05674b18bfe6d6a3d1613",
+            "queued-successors/1.15.9/source-pin.json": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95",
+            "queued-successors/1.15.9/source-response.json": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+            "queued-successors/1.15.9/source.wikitext": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+            "queued-successors/1.15.9/status.json": "6e5e7efef5e2b004885b24067ff2039dda627e096032f27cfedffc6952da8217",
+            "red-scaffold.py": "f8c7d338f172ec34fa70bcdf0235a60070fd0d2c68439144fcc97b562123b04a",
+            "red.log": "d3ae996f010bdf7a2f4f52e2803c5c27b2d3e5083e5c991550fb5e9ac09cf202",
+            "source-attribution.md": "d2c3de85c0f07e3bb2fd0aca124950956221997f09e371c3f2a4b9e68eddbe6b",
+            "source-pin.json": "c25dd5cfa4c500b0d09b40546ee8fa320db418f88e2e5a679e92927d11b5f340",
+            "source-response.json": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+            "source.wikitext": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+            "test_portable.py": "eb63c8058e1e7cf3aabcb425a74b408b10ac8004c5d6318964f6bdee5607f92c",
+            "test_source_accounting.py": "c6a30c865fc00606d7b1136a3ada99eb52a40529f13d3e5d52673effb9d8f51f"
+          }
+        },
+        "receipt-seals.json": {
+          "count": 6,
+          "map_sha256": "a898a6445854e7142dd89dfcf9c12e2e60a4e953431dcd0edc7ebe25d055391a",
+          "bytes": 120136,
+          "hashes": {
+            "portable-controls.json": "1de02d69cb7a755aa58102a7a19bcd00c2cffd26df95b76f78bc265349a69ca0",
+            "portable-controls.log": "ad2dd69643ebf746b4439ced04d9226fadc2a8c0ad1eab74bff450a6a4c1ce0b",
+            "portable-proof.json": "c8d158abdcb6c85901642324e32e2e50b2afbfd93ccbda3e8dcec8b327af2d81",
+            "REPLAY.md": "dd826b6bf22b2f4624f2fa13f44614e6a71e1a71a8c70f285c560fa775845bd8",
+            "replay-archive.tar.gz": "d9d808744749919310172299f2848abc96dadeb4249e7d72339597935d72b5a4",
+            "seals.json": "243b0644e339a23e048348b8784ba18e6c35f3d9d48790c73d87640a3998005d"
+          }
+        }
+      },
+      "ledger": {
+        "schema": "patch-source-accounting/v1",
+        "patch": "1.15.5",
+        "source": {
+          "title": "Patch 1.15.5/API changes",
+          "version": "1.15.5",
+          "pageid": 610284,
+          "revid": 6235411,
+          "timestamp": "2025-02-09T17:32:34Z",
+          "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+          "retrieved": "2026-10-09T08:51:36.398521+00:00",
+          "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+          "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+          "wikitext_bytes": 278,
+          "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+          "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+        },
+        "source_toc": 11505,
+        "client_line": "UNPROVEN-unexpanded-apichanges",
+        "literal_clients": [],
+        "literal_navigation": {
+          "patch": "1.15.5",
+          "prev": "1.15.4",
+          "next": "1.15.6"
+        },
+        "client_limit": "No named client in literal page. Same-Era context/successor attribution remains separate; queued 1.15.6/1.15.7 and canonical-integrated 1.15.8/1.15.9 inputs not applied here; do not guess from version/TOC or expand template.",
+        "base_revision": "dd710c6fc469a53e3b77b97aa6340993ae83e46e",
+        "later_registers": [],
+        "queued_successors": [
+          {
+            "patch": "1.15.6",
+            "history": "same-Era-context-only",
+            "state": "queued-pending-main-integration",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed-for-this-page",
+            "source": {
+              "title": "Patch 1.15.6/API changes",
+              "version": "1.15.6",
+              "pageid": 619994,
+              "revid": 6281951,
+              "timestamp": "2025-04-04T10:14:39Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+              "retrieved": "2026-10-09T08:51:36.398475+00:00",
+              "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+              "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+              "wikitext_bytes": 278,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+            }
+          },
+          {
+            "patch": "1.15.7",
+            "history": "same-Era-context-only",
+            "state": "queued-pending-main-integration",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed-for-this-page",
+            "source": {
+              "title": "Patch 1.15.7/API changes",
+              "version": "1.15.7",
+              "pageid": 626071,
+              "revid": 6778069,
+              "timestamp": "2026-07-22T05:34:20Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+              "retrieved": "2026-10-09T08:51:36.398418+00:00",
+              "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+              "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+              "wikitext_bytes": 278,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+            }
+          },
+          {
+            "patch": "1.15.8",
+            "history": "same-Era-context-only",
+            "state": "integrated-canonical-input-not-applied",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed-for-this-page",
+            "source": {
+              "title": "Patch 1.15.8/API changes",
+              "version": "1.15.8",
+              "pageid": 686952,
+              "revid": 6778071,
+              "timestamp": "2026-07-22T05:34:51Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+              "retrieved": "2026-10-09T08:51:36.398359+00:00",
+              "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+              "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+              "wikitext_bytes": 279,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+            }
+          },
+          {
+            "patch": "1.15.9",
+            "history": "same-Era-context-only",
+            "state": "integrated-canonical-input-not-applied",
+            "applied": false,
+            "native_proof": false,
+            "main_gates": "unperformed-for-this-page",
+            "source": {
+              "title": "Patch 1.15.9/API changes",
+              "version": "1.15.9",
+              "pageid": 685352,
+              "revid": 6780591,
+              "timestamp": "2026-07-24T15:29:35Z",
+              "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+              "retrieved": "2026-10-09T08:51:36.398273+00:00",
+              "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+              "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+              "wikitext_bytes": 4085,
+              "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+              "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+            }
+          }
+        ],
+        "measurements": {
+          "runtime": 0,
+          "model": 0,
+          "native": 0
+        },
+        "source_rows": [
+          {
+            "id": "source-001",
+            "line": 1,
+            "literal": "{{apichanges|1.15.5|prev=1.15.4|next=1.15.6}}",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-003",
+            "line": 3,
+            "literal": "==Resources==",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-004",
+            "line": 4,
+            "literal": "* TOC: <code>11505</code>",
+            "status": "metadata-only",
+            "capabilities": []
+          },
+          {
+            "id": "source-005",
+            "line": 5,
+            "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.4..1.15.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.4..1.15.5 BlizzardInterfaceResources]",
+            "status": "UNPROVEN",
+            "capabilities": []
+          }
+        ],
+        "contracts": [
+          {
+            "id": "linked-diff-005-1",
+            "line": 5,
+            "kind": "unexpanded-linked-diff",
+            "label": "wow-ui-source",
+            "target": "https://github.com/Gethe/wow-ui-source/compare/1.15.4..1.15.5",
+            "status": "UNPROVEN",
+            "arguments": null,
+            "returns": null,
+            "event_payloads": null,
+            "state_transitions": null,
+            "security_rules": null,
+            "native_equivalence": null,
+            "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+          },
+          {
+            "id": "linked-diff-005-2",
+            "line": 5,
+            "kind": "unexpanded-linked-diff",
+            "label": "BlizzardInterfaceResources",
+            "target": "https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.4..1.15.5",
+            "status": "UNPROVEN",
+            "arguments": null,
+            "returns": null,
+            "event_payloads": null,
+            "state_transitions": null,
+            "security_rules": null,
+            "native_equivalence": null,
+            "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+          }
+        ],
+        "headers": [
+          {
+            "line": 3,
+            "literal": "==Resources==",
+            "label": "Resources",
+            "numerical_count": null,
+            "status": "metadata-only"
+          }
+        ],
+        "transclusions": [
+          {
+            "line": 1,
+            "literal": "{{apichanges|1.15.5|prev=1.15.4|next=1.15.6}}",
+            "expansion": "UNPROVEN",
+            "role": "navigation-metadata-only"
+          }
+        ],
+        "api_occurrences": [],
+        "signatures": [],
+        "configured_profiles": [
+          {
+            "variant": "Era",
+            "feature": "client-era",
+            "feature_dependencies": [],
+            "cache_subdir": "era",
+            "configured_interface": 11507,
+            "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "manifest_entries": 3981,
+            "native_correspondence": "UNPROVEN"
+          },
+          {
+            "variant": "Anniversary",
+            "feature": "client-anniversary",
+            "feature_dependencies": [],
+            "cache_subdir": "anniversary",
+            "configured_interface": 11507,
+            "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+            "manifest_entries": 3981,
+            "native_correspondence": "UNPROVEN"
+          }
+        ],
+        "preservation": "Raw bytes/all occurrences retained; no normalization, aliases, defaults, shims or link/transclusion expansion.",
+        "totals": {
+          "physical_lines": 5,
+          "nonblank_rows": 4,
+          "metadata_rows": 3,
+          "unproven_rows": 1,
+          "contracts": 2,
+          "headers": 1,
+          "numerical_inventory_headers": 0,
+          "api_occurrences": 0,
+          "event_occurrences": 0,
+          "cvar_occurrences": 0,
+          "widget_method_occurrences": 0,
+          "command_occurrences": 0,
+          "signature_declarations": 0,
+          "prose_contracts": 0,
+          "unexpanded_linked_contracts": 2,
+          "unexpanded_transclusions": 1
+        }
+      }
+    }
+  }
+}

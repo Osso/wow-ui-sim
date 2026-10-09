@@ -1,0 +1,48 @@
+{
+  "tested_revision": "dd710c6fc469a53e3b77b97aa6340993ae83e46e",
+  "final_revision": "d9a00a294ee35c414e0527ea5d34d1d6c09207e9",
+  "hashed_files": 291,
+  "scope_drift": [
+    "docs/wiki/investigations/patch-1-60-1-api-audit.md"
+  ],
+  "all_original_scope_bytes_unchanged": false,
+  "copied_roots": {
+    "2.3.0": {
+      "git_absent": true,
+      "target_absent": true,
+      "current_tools_absent": true
+    },
+    "2.2.0": {
+      "git_absent": true,
+      "target_absent": true,
+      "current_tools_absent": true
+    },
+    "2.1.0": {
+      "git_absent": true,
+      "target_absent": true,
+      "current_tools_absent": true
+    },
+    "2.0.1": {
+      "git_absent": true,
+      "target_absent": true,
+      "current_tools_absent": true
+    },
+    "1.60.1": {
+      "git_absent": true,
+      "target_absent": true,
+      "current_tools_absent": true
+    },
+    "1.15.9": {
+      "git_absent": true,
+      "target_absent": true,
+      "current_tools_absent": true
+    },
+    "1.15.8": {
+      "git_absent": true,
+      "target_absent": true,
+      "current_tools_absent": true
+    }
+  },
+  "all_original_evidence_and_executed_source_bytes_unchanged": true,
+  "concurrent_doc_delta": "Only patch-1-60-1-api-audit.md gained separately attributed integrated-retention paragraph; no original ledger/status or executed source change. See concurrent-wiki-diff.txt. Independent model proof belongs to verifier276, not credited here."
+}

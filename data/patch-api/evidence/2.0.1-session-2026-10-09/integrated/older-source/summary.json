@@ -1,0 +1,300 @@
+{
+  "status": "PASS",
+  "source_cases": {
+    "2.3.0": 6,
+    "2.2.0": 5,
+    "2.1.0": 4,
+    "2.0.1": 6,
+    "1.60.1": 8,
+    "1.15.9": 8,
+    "1.15.8": 8
+  },
+  "original_seals": 137,
+  "serialized_tamper_rejections": 14,
+  "restored_identical_stdout": 14,
+  "derived_counts": {
+    "2.3.0": {
+      "complete_signatures": 0,
+      "cvar_occurrences": 0,
+      "directions": {
+        "added": 28,
+        "changed": 18,
+        "listed": 82,
+        "noted": 2,
+        "removed": 2
+      },
+      "headers": 11,
+      "inventory_occurrences": 132,
+      "kinds": {
+        "commands": 5,
+        "events": 1,
+        "global-api": 116,
+        "widgets": 10
+      },
+      "literal_call_fragments": 50,
+      "model_credit": 0,
+      "native_observations": 0,
+      "numerical_headers": 0,
+      "prose_limits": 68,
+      "runtime_observations": 0,
+      "sealed_inputs": 22,
+      "signatures": 137,
+      "source_rows": 163,
+      "statuses": {
+        "UNPROVEN": 150,
+        "metadata-only": 13
+      },
+      "unexpanded_links": 82
+    },
+    "2.2.0": {
+      "directions": {
+        "added": 13,
+        "changed": 13,
+        "context": 4,
+        "replaced": 6
+      },
+      "extract_nonblank_rows": 67,
+      "header_counts": [],
+      "headers": 11,
+      "inventory_occurrences": 36,
+      "kinds": {
+        "cvar-setting": 1,
+        "event-family": 1,
+        "global-api": 22,
+        "secure-helper": 1,
+        "secure-template": 1,
+        "widget-method": 6,
+        "widget-script": 4
+      },
+      "literal_signature_fragments": 29,
+      "model_credit": 0,
+      "modified_click_examples": 12,
+      "native_observations": 0,
+      "prose_limits": 53,
+      "raw_nonblank_rows": 67,
+      "raw_statuses": {
+        "UNPROVEN": 53,
+        "metadata-only": 14
+      },
+      "registry_endpoint": "1.0.0",
+      "registry_pages": 101,
+      "runtime_observations": 0,
+      "sealed_inputs": 19,
+      "signature_limits": 33,
+      "unspecified_signature_fragments": 4
+    },
+    "2.1.0": {
+      "actual_retail_successors": 74,
+      "command_receipts": 4,
+      "contract_gap_records": 344,
+      "extract_rows": 150,
+      "inventory_directions": {
+        "added": 55,
+        "changed": 29,
+        "removed": 8
+      },
+      "inventory_rows": 92,
+      "inventory_sections": {
+        "commands": 18,
+        "cvars": 2,
+        "events": 2,
+        "global-api": 56,
+        "scriptobjects": 8,
+        "widgets": 6
+      },
+      "ledger_rows": 392,
+      "ledger_statuses": {
+        "UNPROVEN": 220,
+        "cross-reference-only": 150,
+        "metadata-only": 22
+      },
+      "literal_call_spans": 44,
+      "meaningful_closures": 0,
+      "named_headers": 19,
+      "native_observations": 0,
+      "numerical_inventory_headers": 0,
+      "proof_boundary": "SOURCE-only",
+      "queued_main_owned": 7,
+      "raw_nonblank_rows": 150,
+      "runtime_observations": 0,
+      "same_symbol_overlap_occurrences": 18,
+      "sealed_files": 18,
+      "signature_rows": 124,
+      "snapshots": 101,
+      "unspecified_signature_records": 49
+    },
+    "2.0.1": {
+      "actual_successors": 74,
+      "by_kind": {
+        "api-family": 1,
+        "command": 81,
+        "command-family": 5,
+        "constant": 2,
+        "context-identifier": 30,
+        "event": 21,
+        "event-family": 3,
+        "global-api": 87,
+        "global-api-reference": 4,
+        "language-example": 2,
+        "string-method-reference": 3,
+        "widget-method": 8,
+        "widget-script": 8,
+        "widget-script-signature": 31,
+        "widget-template": 9
+      },
+      "cvars": 0,
+      "gap_records": 792,
+      "headers": 35,
+      "meaningful_closures": 0,
+      "native_observations": 0,
+      "nonblank_rows": 316,
+      "occurrences": 295,
+      "original_command_replays": 6,
+      "prose_contract_rows": 280,
+      "recorded_register_replays": 4,
+      "references": 11,
+      "runtime_observations": 0,
+      "same_symbol_mentions": 41,
+      "sealed_files": 18,
+      "signature_fragments": 206,
+      "snapshots": 114
+    },
+    "1.60.1": {
+      "client_line": "wow-forever-camelot",
+      "header_mismatches": [
+        {
+          "direction": "added",
+          "header_count": 176,
+          "parsed_count": 175,
+          "section": "global-api"
+        },
+        {
+          "direction": "added",
+          "header_count": 24,
+          "parsed_count": 25,
+          "section": "events"
+        }
+      ],
+      "headers": 32,
+      "inventory_counts": {
+        "cvars/added": 138,
+        "cvars/removed": 7,
+        "events/added": 25,
+        "events/removed": 2,
+        "framexml/added": 471,
+        "framexml/removed": 1041,
+        "global-api/added": 175,
+        "global-api/removed": 10,
+        "widgets/added": 7
+      },
+      "inventory_occurrences": 1876,
+      "literal_command_occurrences": 1,
+      "manifest_pages": 65,
+      "meaningful_closures": 0,
+      "metadata_rows": 107,
+      "native_observations": 0,
+      "nonblank_rows": 2070,
+      "prose_limits": 211,
+      "references": 15,
+      "registry_endpoint": "1.0.0",
+      "registry_pages": 101,
+      "runtime_publication_observations": 0,
+      "sealed_inputs": 19,
+      "signatures": 1712,
+      "source_interface": 16001
+    },
+    "1.15.9": {
+      "historical_seals": 18,
+      "totals": {
+        "nonblank_rows": 37,
+        "contracts": 14,
+        "explicit_api_reference_occurrences": 4,
+        "distinct_api_names": 2,
+        "cvar_argument_occurrences": 3,
+        "chat_command_occurrences": 3,
+        "event_occurrences": 0,
+        "widget_method_occurrences": 0,
+        "enumerated_inventory_entries": 0,
+        "numerical_inventory_headers": 0,
+        "explicit_signature_declarations": 0,
+        "partial_call_examples": 3,
+        "partial_return_removal_notes": 1,
+        "prose_contracts": 8,
+        "unexpanded_linked_contracts": 2,
+        "runtime_observations": 0,
+        "model_observations": 0,
+        "native_observations": 0
+      }
+    },
+    "1.15.8": {
+      "historical_seals": 23,
+      "totals": {
+        "physical_lines": 5,
+        "nonblank_rows": 4,
+        "metadata_rows": 3,
+        "unproven_rows": 1,
+        "contracts": 2,
+        "headers": 1,
+        "numerical_inventory_headers": 0,
+        "api_occurrences": 0,
+        "event_occurrences": 0,
+        "cvar_occurrences": 0,
+        "widget_method_occurrences": 0,
+        "command_occurrences": 0,
+        "signature_declarations": 0,
+        "prose_contracts": 0,
+        "unexpanded_linked_contracts": 2,
+        "unexpanded_transclusions": 1
+      }
+    }
+  },
+  "retention": {
+    "tested_revision": "dd710c6fc469a53e3b77b97aa6340993ae83e46e",
+    "final_revision": "d9a00a294ee35c414e0527ea5d34d1d6c09207e9",
+    "hashed_files": 291,
+    "scope_drift": [
+      "docs/wiki/investigations/patch-1-60-1-api-audit.md"
+    ],
+    "all_original_scope_bytes_unchanged": false,
+    "copied_roots": {
+      "2.3.0": {
+        "git_absent": true,
+        "target_absent": true,
+        "current_tools_absent": true
+      },
+      "2.2.0": {
+        "git_absent": true,
+        "target_absent": true,
+        "current_tools_absent": true
+      },
+      "2.1.0": {
+        "git_absent": true,
+        "target_absent": true,
+        "current_tools_absent": true
+      },
+      "2.0.1": {
+        "git_absent": true,
+        "target_absent": true,
+        "current_tools_absent": true
+      },
+      "1.60.1": {
+        "git_absent": true,
+        "target_absent": true,
+        "current_tools_absent": true
+      },
+      "1.15.9": {
+        "git_absent": true,
+        "target_absent": true,
+        "current_tools_absent": true
+      },
+      "1.15.8": {
+        "git_absent": true,
+        "target_absent": true,
+        "current_tools_absent": true
+      }
+    },
+    "all_original_evidence_and_executed_source_bytes_unchanged": true,
+    "concurrent_doc_delta": "Only patch-1-60-1-api-audit.md gained separately attributed integrated-retention paragraph; no original ledger/status or executed source change. See concurrent-wiki-diff.txt. Independent model proof belongs to verifier276, not credited here."
+  },
+  "verifier_incident": "First extra accounting script used nonexistent tests/data/patch_2_1_0_sweep_known_gaps.json. Corrected to required retained own historical-known-gaps.json; both command results preserved. No product failure or fallback."
+}

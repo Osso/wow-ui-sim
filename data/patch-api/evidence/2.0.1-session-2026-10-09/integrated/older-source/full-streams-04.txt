@@ -1,0 +1,216 @@
+ata/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 95, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: green.log
+
+### 1.15.9-restored-1 exit=0
+STDOUT
+{
+  "historical_seals": 18,
+  "totals": {
+    "nonblank_rows": 37,
+    "contracts": 14,
+    "explicit_api_reference_occurrences": 4,
+    "distinct_api_names": 2,
+    "cvar_argument_occurrences": 3,
+    "chat_command_occurrences": 3,
+    "event_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "enumerated_inventory_entries": 0,
+    "numerical_inventory_headers": 0,
+    "explicit_signature_declarations": 0,
+    "partial_call_examples": 3,
+    "partial_return_removal_notes": 1,
+    "prose_contracts": 8,
+    "unexpanded_linked_contracts": 2,
+    "runtime_observations": 0,
+    "model_observations": 0,
+    "native_observations": 0
+  }
+}
+STDERR
+
+### 1.15.8-current-source exit=0
+STDOUT
+STDERR
+test_configured_and_queued_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_queued_not_native_or_supersession) ... ok
+test_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok
+test_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok
+test_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok
+test_headers_and_unexpanded_navigation_preserved (__main__.SourceAccounting.test_headers_and_unexpanded_navigation_preserved) ... ok
+test_link_occurrences_do_not_expand_into_api_contracts (__main__.SourceAccounting.test_link_occurrences_do_not_expand_into_api_contracts) ... ok
+test_literal_toc_does_not_invent_client_name (__main__.SourceAccounting.test_literal_toc_does_not_invent_client_name) ... ok
+test_omissions_fabricated_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_omissions_fabricated_credit_and_foreign_history_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.092s
+
+OK
+
+### 1.15.8-copied-validator exit=0
+STDOUT
+{
+  "historical_seals": 23,
+  "totals": {
+    "physical_lines": 5,
+    "nonblank_rows": 4,
+    "metadata_rows": 3,
+    "unproven_rows": 1,
+    "contracts": 2,
+    "headers": 1,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 0,
+    "unexpanded_linked_contracts": 2,
+    "unexpanded_transclusions": 1
+  }
+}
+STDERR
+
+### 1.15.8-copied-source exit=0
+STDOUT
+STDERR
+test_configured_and_queued_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_queued_not_native_or_supersession) ... ok
+test_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok
+test_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok
+test_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok
+test_headers_and_unexpanded_navigation_preserved (__main__.SourceAccounting.test_headers_and_unexpanded_navigation_preserved) ... ok
+test_link_occurrences_do_not_expand_into_api_contracts (__main__.SourceAccounting.test_link_occurrences_do_not_expand_into_api_contracts) ... ok
+test_literal_toc_does_not_invent_client_name (__main__.SourceAccounting.test_literal_toc_does_not_invent_client_name) ... ok
+test_omissions_fabricated_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_omissions_fabricated_credit_and_foreign_history_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.083s
+
+OK
+
+### 1.15.8-tamper-0 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.8/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.8/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py", line 99, in main
+    count = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.8/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py", line 91, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: ledger.json
+
+### 1.15.8-restored-0 exit=0
+STDOUT
+{
+  "historical_seals": 23,
+  "totals": {
+    "physical_lines": 5,
+    "nonblank_rows": 4,
+    "metadata_rows": 3,
+    "unproven_rows": 1,
+    "contracts": 2,
+    "headers": 1,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 0,
+    "unexpanded_linked_contracts": 2,
+    "unexpanded_transclusions": 1
+  }
+}
+STDERR
+
+### 1.15.8-tamper-1 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.8/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.8/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py", line 99, in main
+    count = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-1.15.8/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py", line 91, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: green.log
+
+### 1.15.8-restored-1 exit=0
+STDOUT
+{
+  "historical_seals": 23,
+  "totals": {
+    "physical_lines": 5,
+    "nonblank_rows": 4,
+    "metadata_rows": 3,
+    "unproven_rows": 1,
+    "contracts": 2,
+    "headers": 1,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 0,
+    "unexpanded_linked_contracts": 2,
+    "unexpanded_transclusions": 1
+  }
+}
+STDERR
+
+### current-integrated-accounting exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/current_accounting.py", line 25, in <module>
+    assert gaps==json.loads((R/'tests/data/patch_2_1_0_sweep_known_gaps.json').read_bytes()),'current 2.1.0 gap ledger'
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/osso/Projects/wow/wow-ui-sim/tests/data/patch_2_1_0_sweep_known_gaps.json'
+
+### current-integrated-accounting-corrected-path exit=0
+STDOUT
+{
+  "current_integrated_accounting": {
+    "2.1.0": {
+      "inventory_rows": 92,
+      "inventory_sections": {
+        "global-api": 56,
+        "cvars": 2,
+        "widgets": 6,
+        "scriptobjects": 8,
+        "commands": 18,
+        "events": 2
+      },
+      "inventory_directions": {
+        "added": 55,
+        "changed": 29,
+        "removed": 8
+      },
+      "raw_nonblank_rows": 150,
+      "extract_rows": 150,
+      "ledger_rows": 392,
+      "ledger_statuses": {
+        "metadata-only": 22,
+        "UNPROVEN": 220,
+        "cross-reference-only": 150
+      },
+      "named_headers": 19,
+      "numerical_inventory_headers": 0,
+      "signature_rows": 124,
+      "literal_call_spans": 44,
+      "unspecified_signature

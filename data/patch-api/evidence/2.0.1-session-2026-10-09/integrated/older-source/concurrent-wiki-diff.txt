@@ -1,0 +1,15 @@
+diff --git a/docs/wiki/investigations/patch-1-60-1-api-audit.md b/docs/wiki/investigations/patch-1-60-1-api-audit.md
+index 82508382a..60b0c6195 100644
+--- a/docs/wiki/investigations/patch-1-60-1-api-audit.md
++++ b/docs/wiki/investigations/patch-1-60-1-api-audit.md
+@@ -74,6 +74,10 @@ If this test reveals a runtime defect, stop before production changes and report
+ 
+ Original source-only ledger and gaps are immutable: **19 original seals**, largest original file 3,326,475 bytes. Later proof/attempt receipts and empty closure claims live separately under `current/` with **eight separate seals**. Both full preparation logs are losslessly gzip-compressed (627,865 / 633,544 bytes); uncompressed hashes are recorded, every retained file is below 5 MB. No original seal or behavioral status changed. Current source proof remains applicable: later changes are receipts/docs only, so no redundant source-suite rerun. No whole-project/check/lint/readability/coverage/startup/final gate is run. Main owns actual successors, integration and native acceptance.
+ 
++## Integrated evidence retention — 2026-10-09
++
++[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration alone is not runtime/native proof; historical log entries remain unchanged. [Separate repaired configured-state proof](forever-cfg-failure-and-function-gates.md#follow-up-bounded-compilestate-pass) at source-worktree `2218c0f41` executes **1/1**: Ada → Grace before test-dispatched login; independent Linus unchanged. This does not rewrite original UNPROVEN rows or prove native login ordering, token consistency, arity/realm/security, loaded UI or source build 70205.
++
+ ## Sources
+ 
+ - [Frozen source pin](../../../data/patch-api/evidence/1.60.1-session-2026-10-09/original/source-pin.json)

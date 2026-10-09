@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 353, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 347, in main
+    sealed = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 340, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: historical-page-coverage.json

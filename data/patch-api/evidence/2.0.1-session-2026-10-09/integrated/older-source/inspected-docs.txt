@@ -1,0 +1,668 @@
+### /home/osso/Projects/wow/wow-ui-sim/docs/specs/patch-2-3-0-source-accounting.md
+# Historical retail Patch 2.3.0 SOURCE accounting
+
+Account only frozen page 44655/revision 6055877, timestamp 2024-06-04T05:03:50Z. [Literal source](../../data/patch-api/sources/2.3.0-api-changes.wikitext), [audit and proof boundaries](../wiki/investigations/patch-2-3-0-api-audit.md).
+
+## What it must do
+
+- [x] Validate response/content identity and hashes against the frozen manifest and 101-page registry through 1.0.0; preserve cache bytes.
+- [x] Retain every nonblank source row, heading, explicit labeled occurrence, rename endpoint, typo, NOTE, consolidated identity and literal call/command syntax without expanding links or inferring additions from consolidated membership.
+- [x] Retain precise prose/signature limits, duplicates and unknowns; reject omitted rows, invented runtime/native/model credit and foreign or unapplied successor registers.
+- [x] Leave shared generator/extractor/default bytes unchanged; use page-owned source accounting and the retained canonical-navigation text extractor.
+- [x] Replay exact serialized register/ledger/text and sealed logs in a relocated copied root without Git/target; reject serialized ledger/log tampering and restore original bytes.
+
+## How it works
+
+- [Source accounting and immutable evidence](../wiki/investigations/patch-2-3-0-api-audit.md).
+
+## Implementation inventory
+
+- `data/patch-api/sources/2.3.0-*`: complete raw/text mirror, occurrence register and literal SOURCE ledger.
+- `data/patch-api/evidence/2.3.0-session-2026-10-09/accounting.py`: page-owned source parser/builder and frozen provenance validation.
+- Owned `test_source_accounting.py`, `validate.py`: source omission/credit fixtures and byte-exact historical replay.
+- Owned frozen manifest/registry/response/pin and historical generator/extractor: immutable inputs, not runtime observations.
+
+## Tests asserting this spec
+
+- Owned `test_source_accounting.py`: targeted RED/GREEN for mixed labels, return prefixes, optional arguments, full raw/header/prose/link accounting, omission and invented-credit controls; references are not publication changes.
+- Owned `validate.py` and `replay_controls.py`: original/copied replay exit 0 at `ffda99b11`, 22 historical seals; both disk tamper controls exit 1 at their exact seals and restore bytes/hashes. Archive 727040 bytes, no Git/target/cache dependencies.
+
+## Known gaps (current cycle)
+
+- [ ] Every historical API/event/widget/command/prose contract remains runtime/native/model UNPROVEN; SOURCE completeness never proves loaded client parity.
+- [ ] Main owns actual pinned retail 2.4.0/2.4.2 and 3.0.2/3.0.3/3.0.8 successor integration and native/final gates; no register is applied here.
+
+## Out of scope
+
+Network, linked-page/transclusion reconstruction, Classic 2.5/Wrath 3.4/Era supersession, runtime/model edits or proposals inferred from mere presence, retirements, caches/vendor/Wowless/canonical writes, rebase/push/merge/deploy/delegation/model CLIs, broad checks/lint/type/readability/coverage/startup/final gates. No runtime change is authorized without a separate proposal and explicit backing-state contract.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/patch-2-3-0-api-audit.md
+# Historical retail Patch 2.3.0 bounded SOURCE audit
+
+Frozen page **44655**, revision **6055877**, timestamp **2024-06-04T05:03:50Z**; audited 2026-10-09 in `p230-source` at base `614402d56f726ec34cedea2f28a9609cdd653462`. Original retail history, not Burning Crusade Classic 2.5, Wrath Classic 3.4 or Era. Only source accounting; no runtime/native/model observations or edits.
+
+## Literal coverage matrix
+
+[Ledger](../../../data/patch-api/sources/2.3.0-page-coverage.json): **163 nonblank raw rows**, 16 blank rows, **132 inventory occurrences**, **137 signature/command-limit rows**, **68 prose rows**, **11 literal headings**, **82 unexpanded API links**. Raw rows: 150 UNPROVEN / 13 metadata (navigation, 11 headings, editorial diff/string-dump comment). No numerical inventory-count headers or explicit CVars exist on this page; zero CVars does not establish a native absence claim.
+
+| Explicit source occurrence | Count | Proof boundary |
+|---|---:|---|
+| Globals | 116 | 34 labeled occurrences plus 82 consolidated links; duplicate identities preserved, not unique-function count |
+| Widget methods | 10 | Includes both tooltip rename endpoints; ScrollFrame automatic recalculation is separate prose/reference evidence |
+| Events | 1 | `INSPECT_TALENT_READY`: availability/update prose, no complete payload/dispatch/lifecycle proof |
+| Slash commands | 5 | Four new identities and changed `/cancelform`; `/dismount` and `/stopcasting` remain references, not inferred changes |
+
+Directions **28 added / 18 changed / 2 removed / 2 noted / 82 listed**. `GetSendMailPrice` and `GetInboxHeaderInfo` NOTE behavior is retained without fabricating addition/removal. `GameTooltip:SetTrackingSpell` → `GameTooltip:SetTracking` retains both endpoints. `UDPATED` and missing NEW hyphen on cursor getter preserved literally. Consolidated links use **listed**, not inferred added: the editorial comparison mentions `Special:Diff/4997529` and a 2.2.0 string dump; neither is expanded or measured here.
+
+**Signature boundary:** 50 literal API call fragments (including examples/references), 82 linked-identity unknown signatures and five literal command-line limits = 137 rows. Named return prefixes, optional-bracket syntax, spaces before talent parentheses and argument alternatives remain exact; empty parentheses in an update do not reconstruct the previous full argument list. `complete_signature=false` means no complete native-contract proof, not absence of explicit call syntax or named outputs. Source describes two boolean outputs for auction query/reversal, sort return types/domains and nil missing sort; those clauses remain in prose as well as literal prefixes. No publication execution.
+
+| Source section | Exact retained contract | UNPROVEN boundary |
+|---|---|---|
+| Casting/macros | Latency/fallthrough; pet toggle, last enemy/friend, exact target, instant cancelform; modifier→mod, button→btn, actionbar→bar, equipped→worn, stance→form and SELFCAST example | Parser dispatch, targets, pet state, timing and conditional evaluation |
+| Frames/support | Automatic scroll-child rect/event recalculation; event registration/enumeration, formatted text/allocation, string height, explicitOnly false/zero behavior, cursor position, tracking rename | Real widget/event state, ordering, metrics, allocation and native correctness |
+| APIs/GC | Message window despite errors disabled; pickup/count/use flags, book/slot spell state/action equivalences, helpful/harmful exceptions, macro item/link/spell/rank; out-of-combat GC and reuse advice | Backing item/spell/macro/display state and collector schedule |
+| Auctions | getAll versus 50-item query, 15-minute throttle; two boolean outputs; indexed sort order/types/nil; clear/prepend without apply, explicit apply and quantity sorting | Auction data, throttle time, ordering/reversal/apply transitions; existing parameters not reconstructed |
+| Mail/talents/bug | Compose slots vs received indices, attachment pricing/count/retrieval/removal; truthy inspect unit selection and readiness event; UnitName absent-unit regression | Source attachSlot/attachIndex wording discrepancy retained; no server lifecycle, corrected UnitName tuple, full event payload or native execution |
+
+Every substantive raw row, inventory/prose/signature/link row has **UNPROVEN** status and no capabilities. Overlapping ledgers are source views, never additive runtime coverage. Linked pages and navigation template remain unexpanded; no extra source fetched or attributed.
+
+## Provenance and parser decision
+
+Before copying any source, validated [manifest](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/frozen-manifest.json) row, [registry](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/frozen-registry.json) hash, 101-page count/1.0.0 endpoint, response page/revision/timestamp and exact returned body. Body **12134 bytes**, SHA-256 `2d87459c71de044511f67565c26c981385f01477d8a4195eca593cf20b4cf283`; response **12776 bytes**, SHA-256 `7052cd94b09d2c1a2fca15d16973b2962f27218a5170c2759069bc38cd4c9dc8`. Registry SHA-256 `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c`.
+
+Existing shared parsers target different labels/headings and cannot fully retain this mixed page. Page-owned `accounting.py` is explicit opt-in by invoking that script; no shared parser/extractor flags or behavior changed. Both historical tools are exact base copies. Text uses retained `extract_text(..., canonical_patch_navigation=True)`; raw ledger is authoritative, including angle-bracket command parameters that stock rendered text strips as markup. No default-byte change or text-based reconstruction.
+
+## Development proof and successor limits
+
+Owned fixture RED: empty accounting failed five assertions. Further targeted RED caught incidental `/dismount` promotion and missing two NOTE identities; corrections are page-owned. Initial pre-correction 5/5 GREEN is developmental, not final proof. Final owned fixtures cover mixed labels, exact prefixes/options, literal raw/header/prose/link rows, **593 individual row omissions**, invented status/capabilities/profile/runtime/native/model/foreign-register credit and ordinary parenthetical words not being APIs. Targeted **6/6 GREEN** only; [source proof ledger](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/source-proof.json) retains commands, exact tested working-scope hashes, base revision and logs. Those bytes equal source commit `766a7343c05f90692ce66be5ab996f08ba7d749f`; [capture receipt](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/capture.json) binds that revision. Tests ran on recorded uncommitted scope before this commit, not as a fresh post-commit execution. RED logs are retained; initial stub code was not archived for historical RED replay. No broad/final gate claim.
+
+Pinned actual retail successors in the frozen registry are **2.4.0, 2.4.2, 3.0.2, 3.0.3, 3.0.8**. Queue identities only; `later_registers=[]`, no overlap/retirement/native claim. Main owns successor integration and native/final gates. No current-runtime investigation is claimed; no backing-state contract was measured, no runtime proposal or edit made.
+
+## Historical replay status
+
+Owned validator derives accounting and verifies exact serialized register/ledger/text using only frozen own inputs. [Portable receipt](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/portable-proof.json) records original and copied replay **exit 0** at `ffda99b11db3d971f58f6a31eb77a1afbc21b04b`. Copied root has no `.git`, `target` or source cache, process PATH `/nonexistent`; absolute Python executable and every command's own root cwd recorded. Both summaries match; **22 historical seals** cover 677816 bytes. Serialized native-credit ledger tamper and fabricated GREEN-log receipt each **exit 1 at the exact artifact seal**, followed by exact byte restoration and SHA-256 equality. All copied member hashes equal trusted original mapping.
+
+[Seal mapping](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/seals.json) SHA-256 `d6a4749886f3f72ce4086050b6ee67e03283867b10afdbeefab481336441f63b`; ephemeral tar **727040 bytes**, SHA-256 `4924f3e02192113692414fecc6affce0a13163bda545ac0cfa81cf5f57775acf`. Mapping plus copied member hashes allow reconstruction; ephemeral tar is not committed. [Control log](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/portable-controls.log) SHA-256 `54c5b962cd127308720cd2dcaff4f1d81ba015bc2a8a10e1a51f652593c6b930`. Separate receipt seals bind mapping/log/receipt without changing 22-input historical seals. Later documentation/receipt additions do not invalidate tested historical bytes. No self-authenticating-seal trust claim: trusted recorded hashes bind historical bytes, not arbitrary replacement of validator plus seal map.
+
+Proof is SOURCE serialization only: no runtime/publication/native/model replay, broad/check/lint/type/readability/coverage/startup/final gate, delegation or operations. `PLAN.md` checkboxes are session state, left uncommitted under PLAN policy.
+
+## Sources
+
+- [Raw wikitext](../../../data/patch-api/sources/2.3.0-api-changes.wikitext), [rendered mirror](../../../data/patch-api/sources/2.3.0-api-changes.txt), [occurrence register](../../../data/patch-api/sources/2.3.0-wikitext-register.json).
+- [Owned evidence](../../../data/patch-api/evidence/2.3.0-session-2026-10-09/), [tracked spec](../../specs/patch-2-3-0-source-accounting.md).
+
+## See Also
+
+- [[patch-3-1-0-api-audit]] — original-retail literal fragment/source-accounting template.
+- [[patch-3-4-0-api-audit]] — frozen registry/seal/replay template; separate Classic history, not a successor.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/specs/patch-2-2-0-source-accounting.md
+# Historical retail Patch 2.2.0 source accounting
+
+Account the frozen 2007 retail page, not Classic 2.5 or modern retail runtime behavior. [Audit](../wiki/investigations/patch-2-2-0-api-audit.md) records scope and proof boundaries; [literal ledger](../../data/patch-api/evidence/2.2.0-session-2026-10-09/historical-page-coverage.json) retains every source row.
+
+## What it must do
+
+- [x] Validate page 184149/revision 6428980, timestamp 2025-08-03T13:04:54Z, exact response/body hashes and manifest-linked 101-page registry ending at 1.0.0.
+- [x] Account every API/widget/script/setting/event-family occurrence, header, prose/example and default extract row; never expand linked contracts or infer concrete event members.
+- [x] Preserve optional/split signature fragments, literal returns, modified-click defaults and source replacement claims without native/model credit.
+- [x] Reject omissions, fabricated signatures, proof credit and foreign/queued supersession.
+- [x] Replay compact sealed source/history without Git, target, network or mutable later state; reject serialized ledger/log tampering and restore original bytes.
+
+## How it works
+
+- [Historical source audit](../wiki/investigations/patch-2-2-0-api-audit.md).
+
+## Implementation inventory
+
+- `data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py` — own literal accounting and frozen replay.
+- Same directory: raw response/body, manifest/registry, copied unchanged tools, default outputs and ledger.
+
+## Tests asserting this spec
+
+- Owned `test_source_accounting.py` — RED5/5 before validator; GREEN5/5 at `3045ccee9494e5ce4c09dd9f0c23e0f0bbb4043c`, including 279 omission controls. Later changes do not intersect this proof scope.
+- Owned `replay_controls.py` — RED1/1 before seals; GREEN1/1 at `4f7a2c79797b95402e703e7e10ad87d677a3d926`, copied no-Git/no-target archive, outside later-state drift, two serialized ledger/log seal rejections and exact restoration. Same revision `validate.py` exits0 with 19 seals.
+
+## Known gaps (current cycle)
+
+- [ ] Main owns runtime/native measurement, actual later-retail integration and final gates. No new runtime proposal or model credit in this SOURCE slice.
+
+## Out of scope
+
+Linked documentation expansion; Classic 2.5/Wrath 3.4/Era supersession; invented state/defaults/shims/fallbacks/aliases; runtime changes, network, push/merge/rebase/deploy/delegation; broad/check/lint/type/readability/coverage/startup/final gates. Shared generator/extractor are unchanged; no new opt-in parsing mode needed for a separate bounded source ledger.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/patch-2-2-0-api-audit.md
+# Historical retail Patch 2.2.0 SOURCE audit
+
+Frozen page 184149/revision 6428980 (2025-08-03T13:04:54Z) describes 2007 retail. All substantive contracts remain UNPROVEN; no runtime/native/model credit. Worktree `p220-source`, base `dd8ca0f19e9f0172851116a7bfae43792a1b78b4`. No network or shared runtime/tool changes.
+
+## Source identity
+
+[Source pin](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/source-pin.json) retains response SHA256 `b8f11baba49fa1fde43e31089b3da183c8c547475c97bdd4769493f51e10a3f4`; body SHA256 `8cbaf1b10b334913ff4a0f2c4ede58fad8b862c7f01f78d32088e5b8fe06590d`, 7,518 bytes. Manifest references `api-change-pages-remaining.json`, 101 rows through 1.0.0 (not the separate 138-page discovery index); registry SHA256 `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c`. The manifest has 65 retained page pins, not 101 fetched payloads.
+
+## Coverage matrix
+
+| Scope | Literal accounting | Proof level |
+|---|---|---|
+| Raw/extract | 67 nonblank rows each; 11 headings plus navigation, Script API label and reference URL are 14 metadata rows; 53 raw prose/example rows | SOURCE, UNPROVEN substantive behavior |
+| Inventory | 36 occurrences: 22 globals, 6 widget methods, 4 scripts, 1 secure helper, 1 setting, 1 event family, 1 secure template; repeated RegisterStateDriver mention/example distinct | SOURCE only |
+| Signatures | 33 records: 29 literal fragments / 4 unspecified; 6 explicit return fragments, partial OnEnter self and event-family payload separately retained | No arity/type/full-return reconstruction |
+| Modified clicks | 12 XML examples; DRESSUP example occurs twice, 11 listed actions | Source defaults only, no invented runtime configuration |
+| Headers | 11 exact headings; no declared numeric inventory counts | Empty `header_counts` is intentional |
+
+## Literal contracts and limits
+
+- Six left/right modifier query APIs and case-sensitive modifier/macro tokens; five modified-click APIs, nested SaveBindings/GetCurrentBindingSet fragments and six explicitly replaced functions. Replacement prose is not a current-retail removal proof.
+- `pitchLimit` re-enabled: no default/value range supplied. Macro targeting errors, range feedback, item:N cache precondition, lowercase conditionals and named uppercase modifiers remain full literal prose. The ~100x rewrite/performance claim has no benchmark proof.
+- Frame size/position recalculation, scaled FontString cropping, doublewide game-menu frames, event registration optimization, periodic tooltip updates and unspecified affected OnEnter `self` callbacks remain UNPROVEN. Frame saved-point prose first says nearest corner, then explicitly enumerates nine points; both claims retained without silently choosing one.
+- Clamp inset signatures/returns and ordered GetAttribute wildcard search retained. `SecureButton_GetModifiedAttrbute` preserves source spelling. `GetPoint()` and empty source parentheses do not prove zero-argument contracts. `UNIT_SPELLCAST_*` partial payload supplies name/rank at arg2/arg3, not an enumerated event set or full payload.
+- Protected pickup domains are not converted to invented API names. RegisterStateDriver visibility example and SecureStateHeader clear-versus-none semantics retained. No explicit console/slash command inventory; macro syntax is not counted as a console command.
+
+Default register emits zero entries for this prose-heavy page; that is not an empty-API/parity claim. Separate owned accounting retains the literal inventory. Unchanged default extractor leaves optional `IsModifiedClick(["action"])` link markup unexpanded; raw ledger captures the exact signature. No shared parser/extractor change or new flag; existing outputs untouched.
+
+## Historical boundary
+
+Queued 2.3.0/2.4.0/2.4.2/3.0.x are main-owned, not superseding registers in this replay. Only actual integrated historical-retail registers may later supersede literal members; Classic 2.5, Wrath Classic 3.4 and Era never do. No mutable later registers consulted. Historical retail source is neither a supported historical simulator profile nor modern native retail proof.
+
+## Development proof
+
+Owned source fixtures RED 5/5 before validator; GREEN 5/5 at `3045ccee9494e5ce4c09dd9f0c23e0f0bbb4043c`. 279 individual omission controls cover all seven serialized ledger layers; fabricated signatures/statuses, source family/default limits and foreign/queued supersession controlled. Owned Python formatter applied; unchanged copied shared tools not reformatted. Bytecode accidentally included in initial commit was removed immediately in `aed5d9bae`; no bytecode in final evidence snapshot.
+
+At `4f7a2c79797b95402e703e7e10ad87d677a3d926`: historical validator exits0 with 19 sealed inputs, exact frozen response/body/registry/extract and full ledger reconstruction. Portable fixture RED1/1 before seals, GREEN1/1 after: copied archive has no Git/target and no tool PATH; outside queued/Classic registers cannot change output. Serialized coverage-ledger row deletion and source-GREEN-log forgery each reject at their exact seal; original SHA256 and replay output restored. Archive 317,490 bytes; largest file 109,178 bytes, below5MB. Initial historical seals are immutable; new proof receipts/command ledger sit separately.
+
+Directions: 13 added, 13 changed, 6 replaced, 4 context occurrences. Raw86 total/67 nonblank (53 UNPROVEN, 14 metadata); default extract67 nonblank. No explicit console command row, no concrete event member expansion. Every linked/full behavioral contract remains UNPROVEN; no publication/native/runtime observation.
+
+[Command ledger](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/command-ledger.json) records commands, exact proof revisions/scopes and invalidation boundaries; [portable receipt](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/portable-proof.json) records seals/counts/restoration. No rerun of already applicable SOURCE proof; no broad/final gates. Main owns native/integration/final acceptance. Zero model credit and no new runtime proposal.
+
+## Sources
+
+- [Frozen source/ledger/evidence](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/) — offline inputs and owned receipts.
+- [Spec](../../specs/patch-2-2-0-source-accounting.md) — bounded requirements.
+
+## See Also
+
+- [Historical 3.0.8 audit](patch-3-0-8-api-audit.md) — raw signature boundaries and separate runtime proof.
+- [Wrath Classic 3.4.0 audit](patch-3-4-0-api-audit.md) — serialized accounting/portable controls; separate client history.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/specs/patch-2-1-0-source-accounting.md
+# Historical retail Patch 2.1.0 SOURCE accounting
+
+Frozen page 279373/revision 6767102, timestamp 2026-07-09T22:15:03Z; describes original 2007 retail, not Classic 2.5.x, Wrath 3.4.x, Era or current native. [Audit](../wiki/investigations/patch-2-1-0-api-audit.md).
+
+## Requirements
+
+- [x] Retain exact response/raw identities and manifest pin; preserve complete 101-page registry through 1.0.0.
+- [x] Account all literal APIs, events, CVars, widget/template references, commands, prose, headings and signature spans, including duplicate identities, malformed spelling and source comments.
+- [x] Keep linked summaries, template/header documentation and transclusions unexpanded; no inferred member list, argument coercion, alias, default or native credit.
+- [x] Add only opt-in inventory parsing; preserve both default bytes and recorded flags for historical templates.
+- [x] Seal compact original ledger, gaps, tools, registry, successor inputs and command logs; replay in copied isolated processes without Git, target or current source files.
+- [x] Reject ledger/log tampering and restore exact bytes; retain later GREEN receipts separately from original seals.
+
+## Proof boundary
+
+Every behavioral contract remains UNPROVEN. Static source inventory is neither supported publication nor native behavior. No runtime/model change or bounded-state closure claimed. Main owns actual queued retail 2.2.0/2.3.0/2.4.0/2.4.2/3.0.x successor integration and final gates. Classic inputs never supersede this retail page.
+
+## Implementation and tests
+
+- `tools/gen_patch_wikitext_register.py`: `--legacy-retail-profiling-summary` only; shared extractor unchanged.
+- `tools/build_patch_2_1_0_accounting.py`: pure literal row/span accounting; no runtime model.
+- `tools/test_patch_2_1_0_source.py`: source/default-byte/recorded-template fixtures and individual omission controls.
+- `data/patch-api/sources/2.1.0-*`: mutable current source accounting.
+- `data/patch-api/evidence/2.1.0-session-2026-10-09/`: immutable original evidence and separate current receipts.
+
+## Targeted development proof
+
+[Proof ledger](../../data/patch-api/evidence/2.1.0-session-2026-10-09/development-proof-ledger.json): four distinct own source fixtures GREEN (parser/default/recorded-template 3/3 at `3f32a7629`, accounting/omission 1/1 at `ab51d7373`); own copied-process fixture GREEN 1/1 at `ab51d7373`. 971 individual omission controls, one fabricated capability control, 19 serialized seal/manifest reject-and-restore controls and missing-gap restoration. Synthetic mutable current drift leaves replay stdout identical. Original 18 seals/101 snapshots unchanged; GREEN logs/receipts separately sealed. No runtime or final acceptance.
+
+## Missing
+
+- [ ] Real profiling attribution/caching/reset and scriptProfile persistence/reload semantics.
+- [ ] Native signature acceptance/returns, event ordering, secure/template, macro/raid, loader, UI layout and bug-fix behavior.
+- [ ] Main supported-publication/native/integration acceptance; no broad gates authorized here.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/patch-2-1-0-api-audit.md
+# Historical retail Patch 2.1.0 SOURCE audit
+
+Frozen 279373/6767102, timestamp 2026-07-09T22:15:03Z, checked against exact cached response and manifest before copying. Page describes 2007 retail; revision timestamp is not patch release date. Branch `p210-source`, base `44df100f1b553c5d717af9d8c14d3405823ecfa7`. No network, runtime or native measurement.
+
+## Literal coverage
+
+| Source | Accounting | Proof limit |
+|---|---|---|
+| Full raw/default rendering | 176 lines, 150 nonblank; 19 named headers, no numerical inventory headers | Raw text authoritative: default renderer strips `<name>` command placeholders and navigation attribution; neither omission loses raw evidence |
+| Named occurrences | 92: 56 globals, six widgets, eight template references, two CVars, 18 command occurrences, two event-order references; 55 added/29 changed/eight removed | Publication claims distinguished from contextual references; no inferred API membership or runtime availability |
+| Signatures | 124 records: 44 literal call-like spans + 80 callable/command boundaries; 31 have a matching span, 49 have none | Literal returns retained where explicitly labeled; observed names stay unspecified; examples and wildcard family removal are not full signatures |
+| Source prose | Every substantive raw row UNPROVEN | No shortcut from callable presence or existing generic model to behavior |
+| Seals/replay | 18 original seals, 101 archived snapshots; 350,913-byte compressed archive, all files below 5 MB | Targeted copied-process GREEN 1/1 at `ab51d7373`; main owns integration/native/final gates |
+
+Duplicate `IsFeignDeath` removals at lines 46/85 retained independently; `likely` rename/replacement qualifications remain literal. `GameTooltip:Set*CompareItem(...)` is one wildcard family, never expanded to guessed methods. `SetId`, `timeused`, `throtting`, `effciently`, `aucion`, malformed quote/parenthesis text and literal escaped name quotes are not corrected. Repeated `/equip` references and source attribution/comment survive. `unit/name` is not slash command `/name`.
+
+## Contract matrix
+
+| Area | Literal contract | Missing proof |
+|---|---|---|
+| Profiling/template handlers | Shared inherited closure identity/setfenv warning; per-addon cached KB, one-byte precision; CPU seconds/about-microsecond precision, optional subtree/count aggregation, reset; disabled profiling with persisted `scriptProfile`/reload activation | No measured attribution, clock/profiler/cache/GC state or lifecycle; 50% highlight not benchmark evidence |
+| Frames/tooltips/APIs | Per-object alpha clamp and inherited product; secure hook equivalence; unitid/comparison index 1/2; taint name/macro empty string; merchant cursor, login event boundary, group feign death, whisper channel, aura castability/time ordering, gem ambiguity and spam line/mail context | No signature acceptance, tuple/state transitions, native retirement or secure enforcement observations |
+| Secure templates/macros/raid | Item ID/link, attribute feedback, saved-state push/pop/swap, state-driver example, group/pet derivation and show attributes; flyability/focus substitutions, OR clauses, bag-slot/item-ID commands, roles/current-target/secure attributes | Linked header usage unexpanded; unnamed protected raid API stays unnamed; no guessed grammar or model |
+| Loading/default UI/layout | Ordered first-success LoadManagers/load-on-demand; reagent counts/top-three memory; `scriptErrors` and error sink/slash cache; UIParent attribute defaults 384/-104/0/80 and panel layout attributes | Attribute defaults are not CVar defaults; no cache/service/vendor changes or UI/loader/combat acceptance |
+| Protection/fixes/world state | Undetermined whisper throttle; GM-ticket protection; persistence, Cooldown alpha, item self-cast, this typo, auction tokens, BG event ordering, ScrollChild parent assignment; eleven WorldState return names with uiType first | No guessed throttle; event producer/payload/order unmeasured; no sort/render/native tuple parity |
+
+Zero model closures, runtime observations, new models, retirements, shims or fallback changes. Static backing review/probes unnecessary for SOURCE-only scope. No claims of simulator absence from names-only evidence.
+
+## Development history
+
+Fixtures committed before RED at `0af6dc600`: expected missing opt-in/validator failures plus a fixture-path error for the separate 3.4.0 template. Corrected template path/header count at `d33481554`: RED 4 tests, two expected failures, two controls pass. The original failing log is retained honestly; it is not called a clean feature RED. No Python formatter installed; own Python formatting manual before commit. No Rust changes or check/lint/readability/coverage/broad/startup/final gates.
+
+## Original sealed boundary
+
+[Historical manifest](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/historical-inputs.json) seals exact raw/response/pin/provenance, original ledger/gaps/register/extract/counts, both default controls, command ledger and four physical RED/GREEN logs. Compressed snapshots retain full manifest and 101-page handoff registry ending 1.0.0, selected tools/tests, current static profile source, template recorded flags/outputs and actual/queued successor inputs. Manifest SHA-256 anchored in [validator](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py); integrity controls are not externally authenticated signatures.
+
+Actual 74 ordered retail registers (3.1.0/3.2.0/3.3.0 then retained 3.3.3 onward) contain 18 exact same-symbol occurrences; these are source comparisons, not automatic semantic closures or native retirements. Seven ordered main-owned placeholders: 2.2.0, 2.3.0, 2.4.0, 2.4.2, 3.0.2, 3.0.3, 3.0.8. Their raw inputs remain archived; no guessed membership or queued supersession. Classic 2.5/3.4/4.4/5.5 never supersedes retail. `PLAYER_LOGIN` timing stays literal in raw line 44, separate from the two event-order inventory references; no inferred new-event publication. All raw UI attributes and contextual methods also remain literal, not new publication inventory.
+
+Parser/default/template GREEN 3/3 at `3f32a7629`; own full accounting GREEN 1/1 and copied historical replay GREEN 1/1 at `ab51d7373`. Original command receipts include expected portable missing-validator RED at `322cac662`. No redundant rerun of parser controls after validator-only changes. [Separate current proof ledger](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/development-proof-ledger.json) and [current receipt seals](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/current-receipts.json) remain outside original seals.
+
+Accounting asserts 392 source-ledger IDs (22 metadata, 220 UNPROVEN, 150 extract cross-references), plus 124 UNPROVEN signature IDs and 344 exact gap records. The 128 substantive raw rows include 80 inventory-bearing lines and 48 prose-only lines. Individual omission controls: 392 ledger + 124 signature + 19 headers + 344 gaps + 92 inventory = 971, plus invented-capability rejection. Every original spelling/span/return/line/status/note is compared, not silently corrected.
+
+Fresh copied isolated Python process runs without Git/Cargo PATH, repository `tools`/`src`, target or current source/gap files. Synthetic later current ledger/queued register/gap drift leaves serialized stdout identical. All 18 sealed inputs plus manifest are tampered serially: 19 reject/restore controls, including actual serialized ledger and parser GREEN log, assert exact filename failure and byte-identical restoration followed by clean replay. Deleted historical gap sidecar rejects and restores. Original evidence/manifest hashes remain unchanged. These are development/source proof, not native or coordinator final acceptance.
+
+Raw SHA-256 `4731263a025f95ff2c7cdb3f734817d7eefa0e4d16b88231c809f2b11a9bed98` (15,431 bytes); response SHA-256 `a22acbf5a295e4414d512c3487506101dc6d991a8950159f88fb78f3e8a45c82`. Neither frozen timestamp nor these integrity hashes imply external authentication. Main owns publication/native/integration. Worktree retains only local PLAN.md changes outside commits under explicit plan-md no-tracking policy; no canonical/runtime/vendor/cache/Wowless writes, rebase/push/merge/deploy/delegation/model CLI.
+
+## Sources
+
+- [Exact source](../../../data/patch-api/sources/2.1.0-api-changes.wikitext), [register](../../../data/patch-api/sources/2.1.0-wikitext-register.json), [ledger](../../../data/patch-api/sources/2.1.0-page-coverage.json).
+- [Pin](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/source-pin.json), [spec](../../specs/patch-2-1-0-source-accounting.md).
+
+## See Also
+
+- [[patch-3-0-3-api-audit]], [[patch-3-0-8-api-audit]], [[patch-3-1-0-api-audit]] — read-only retail templates.
+- [[patch-3-4-0-api-audit]] — separate Classic source template; no supersession or behavioral credit.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/specs/patch-2-0-1-source-accounting.md
+# Historical retail Patch 2.0.1 SOURCE accounting
+
+Frozen page 324401/revision 3129557, timestamp 2019-06-15T12:04:30Z. The page describes historical 2006 retail and includes explicit 2.0.3/2.0.4/2.0.6 qualifications, not Classic 2.5.x, Wrath 3.4.x, Era or current native behavior.
+
+## Requirements
+
+- [x] Verify exact response/body hashes against the frozen manifest and full 101-page handoff registry ending at 1.0.0 before copying.
+- [x] Retain every nonblank source line, header, prose/example contract, literal named occurrence and argument/return declaration; preserve duplicates, spelling and later-patch qualifications.
+- [x] Seal original source/accounting/tools/successor inputs/logs in compact immutable evidence; reproduce in copied isolated processes without Git, target or mutable current inputs; reject serialized tampering and restore exact bytes.
+- [x] Record own targeted RED/GREEN proof with exact revisions and distinct original/current receipts; update linked wiki and PLAN checkboxes.
+
+## Boundaries
+
+Dedicated `tools/audit_patch_2_0_1_source.py` does not alter any shared generator/extractor default or recorded option output. Occurrences are lexical mentions, not reconstructed publication claims. Whole literal rows preserve declarations, return names, inline prose, macro options and malformed spelling without completing unspecified signatures. Linked/transcluded contracts remain UNPROVEN. No guessed alias, defaults, model, shim, fallback or runtime changes; zero publication/native/model credit. Only actual historical retail successor registers may be compared; queued 2.1.0/2.2.0/2.3.0/2.4.0/2.4.2/3.0.x remain main-owned.
+
+## Tests
+
+- `tools/test_patch_2_0_1_source.py`: own literal source fixtures, complete raw row retention, signatures, duplicates, commands, handlers, event families and malformed boundary.
+- `tools/test_patch_2_0_1_replay.py`: original copied replay 2/2 at `717009936`; separate current case 1/1 at `939d8b73b`. Original 1,655/current 1,657 omission controls; original 19/current 10 disk tamper-restoration controls. SOURCE fixtures 6/6 at `5075cf42b`, also replayed from current sealed copies. No integration/final acceptance.
+
+Current accounting: 316 nonblank rows, 35 headers, 295 lexical occurrences, 206 signature fragments, 280 substantive UNPROVEN prose/example rows, 12 unexpanded references and 793 gap records. Original 18 seals/114 snapshots/792 gaps remain unchanged; current nine seals distinct. See [exact proof receipts](../../data/patch-api/evidence/2.0.1-session-2026-10-09/completion-proof.json). Zero publication/runtime/native/model credit.
+
+## Sources
+
+- [Audit](../wiki/investigations/patch-2-0-1-api-audit.md).
+- [Frozen source](../../data/patch-api/source-cache/legacy-2026-10-09/2.0.1-wikitext.txt).
+
+## Pending main-owned work
+
+- [ ] Supported publication, native behavior and integration/final gates. SOURCE-only accounting gives no positive behavioral credit.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/patch-2-0-1-api-audit.md
+# Historical retail Patch 2.0.1 SOURCE audit
+
+Frozen page 324401/revision 3129557, timestamp 2019-06-15T12:04:30Z; describes historical 2006 retail, not Classic 2.5.x, Wrath 3.4.x, Era or current native behavior. Response SHA256 `5f702e6671d16de64f15bc48711ac2bc9ff19dde314e469273b334e98828ea67`, raw SHA256 `2c932b03d47af4668069840292c2b523e70deb52a1402a724a532ac71e40ad86`, 27,891 bytes. Exact response slot and frozen manifest checked before copying; manifest-pinned full registry has 101 pages ending at 1.0.0.
+
+## Literal accounting / capability matrix
+
+| Domain | Current source accounting | Proof / boundary |
+|---|---|---|
+| Full raw page and headers | 316 nonblank lines; 35 named headers; 280 substantive prose/example rows, 36 metadata rows | Every raw line literal, including XML, Lua upgrade/examples, macro conditions/reset/feedback, casting, security/protection, saved variables, performance and bug fixes. No numeric header count claims; headers carry `count_claim: null`. Row count is not a count of independently specified behaviors. |
+| APIs and strings | 87 global call mentions, four bare replacement-name references, one TargetNearest* family, three string-method references | Argument/return declarations remain in `declaration_literal` and the whole source row. Names alone do not establish full callable signatures, defaults, endpoints or models. All UNPROVEN. |
+| Widgets | Eight method calls; eight script-name mentions; 31 wrapper fragments (30 named handlers plus default wrapper); nine secure template names | XML inheritance/metatables, secure handler inheritance, combat protection, tooltip growth, mouseover, attributes and click ordering remain literal, not measured. No broad template/widget equivalence claim. |
+| Events / CVars / commands | 21 event mentions, three unexpanded event-family mentions; zero CVars. 79 command mentions, five command families, one `/command` syntax placeholder, one `/alt` reset-option suffix | Event payloads/prose remain whole literal rows, including obsolete families, protection event ordering and CHAT_MSG_SPELL_SELF_BUFF container exclusion. Command mentions include disallowed/example uses, not 79 newly published commands. No wildcard expansion or guessed CVar/default. |
+| Signatures / references / credit | 206 fragment records: 87 globals, eight methods, 31 wrappers, 78 macro/command fragments, two Lua examples. Twelve reference records. 793 UNPROVEN gap records | Literal fragments do not reconstruct unspecified contracts. All twelve links/transclusions UNPROVEN and unexpanded. Zero runtime/publication/native observations, model closures, aliases, shims, fallbacks or retirements. |
+
+The current ledger contains 864 records across raw rows, headers, occurrences, signature subset and references, with 658 distinct IDs; signature records deliberately reference occurrence IDs. Preserve `ButtoName`, `charaters`, `targetting`, `Programatic`, `interchangably`, `/randomcast` and `/randomuse` exactly. `/randomcast` is not normalized into `/castrandom`. All optional parameters, return-name declarations, ranked/name/ID alternatives and event payload annotations remain literal. The malformed fixture retains an unterminated signature rather than supplying missing syntax.
+
+Explicit raw qualifications: 33 rows under/marked 2.0.3, four under 2.0.4, five under 2.0.6, two under 2.0.1; 272 have no explicit row qualifier. These totals include headers. Later-patch annotations are not silently attributed to launch 2.0.1.
+
+## Successor boundary
+
+[Original successor receipt](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/successor-boundary.json) seals 74 actual later retail registers from this checkout, 41 same-symbol mentions and zero supersession credit. Name overlap is not tuple/behavior parity or proof of indirect changes. Classic histories excluded. Queued 2.1.0/2.2.0/2.3.0/2.4.0/2.4.2/3.0.2/3.0.3/3.0.8 remain main-owned, ordered and unused for supersession even where template artifacts are available.
+
+No backing-state/runtime probe performed. Existing modern simulator state cannot by itself establish historical secure execution, command transitions, event timing, Lua GC/performance or persistence. No new runtime/model proposal made; main owns supported publication, native comparison and integration/final gates.
+
+## Original versus current immutable evidence
+
+[Original manifest](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/historical-inputs.json): 18 sealed files, 114 independently hashed snapshots in a 371,564-byte archive. Includes original ledger/gaps/source/response/logs, full frozen manifest and 101-page registry, exact revision-specific source fixtures/tools, shared tools, actual successor registers, queued raw inputs and canonical 3.0.2/3.0.3/3.0.8/3.4.0 templates. Original ledger retains 295 lexical occurrences, 11 outer references and 792 gap records. Original signatures/headers/source unchanged.
+
+[Original validator](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py) reproduces six revision-specific SOURCE RED/GREEN command results from sealed code, preserving original physical logs. Timing/path normalization affects comparison only, never original logs. Four recorded register outputs reproduce byte-for-byte (default 2.0.1 plus opted-in 3.0.2/3.0.3/3.0.8); default own extract and three recorded template extracts reproduce. Shared parser/extractor untouched relative to `93bcc6afe`; no new shared opt-in required.
+
+[Separate current manifest](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/current/inputs.json): nine sealed files, corrected `/alt` and `/command` classifications and separately retained nested forum reference; 12 references/793 gaps. [Current validator](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/current/validate.py) verifies original 18 seals plus both original outer hashes, replays corrected accounting and six frozen own source cases. It never rewrites or consumes mutable current source ledgers. Manifests anchored in validators; seals are local integrity controls, not externally trusted signatures.
+
+## Exact bounded development proof
+
+[Original command ledger](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/original-command-ledger.json), [current command ledger](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/current/command-ledger.json) and [completion receipt](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/completion-proof.json) retain argv, cwd, exact revisions, logs and scope validity.
+
+| Proof | RED | GREEN / scope |
+|---|---|---|
+| Own SOURCE fixtures | `9276337ae`, three missing-tool failures; `c2f1531e1`, one boundary failure; `68c7d540e`, one identity failure | `19b90446e` 3/3; `24f756e3e` 4/4; `615a5cf74` 5/5. Earlier subset proofs retained historically, not final expanded scope. |
+| Original copied historical replay | `edb2fca5b`, two missing-validator failures | `717009936` 2/2; 1,655 decoded omission controls plus four spelling/signature/history/credit corruptions; all 18 sealed files plus manifest reject serialized tampering and restore exact bytes (19 controls). Synthetic mutable current ledgers do not change stdout. |
+| Current literal refinement | `7e3d66d3a`, one expected boundary failure/five passes | `5075cf42b` 6/6; all final source fixtures also execute from frozen copied files in current replay. |
+| Separate current copied replay | `7afa9df38`, one missing-validator failure | `939d8b73b` 1/1; 1,657 decoded omission controls and all nine current sealed files plus manifest reject/restore (10 controls). Original 18 seals remain unchanged. |
+
+Copied fresh processes use isolated Python with unusable Git/tool PATH and empty PYTHONPATH; copied roots lack Git, target, src and mutable current tools/sources. Temporary tool trees contain only archived inputs. Original/current fixtures are distinct scopes, not a claim that the whole current test module ran in one command. Largest sealed ledger is below 560 KB; every retained file below 5 MB. No formatter installed; Python manually formatted before commits. PLAN.md checkboxes updated locally but excluded by explicit plan-md skill policy (`NEVER track PLAN.md`). No check/lint/readability/coverage/broad/profile/startup/final gates, network, delegation/model CLIs, canonical/vendor/cache/Wowless writes, push/merge/rebase/deploy.
+
+## Sources
+
+- [Spec](../../specs/patch-2-0-1-source-accounting.md).
+- [Literal source](../../../data/patch-api/sources/2.0.1-api-changes.wikitext).
+- [Current source ledger](../../../data/patch-api/sources/2.0.1-page-coverage.json).
+- [Source pin](../../../data/patch-api/evidence/2.0.1-session-2026-10-09/source-pin.json).
+
+## See Also
+
+- [[patch-3-0-2-api-audit]], [[patch-3-0-3-api-audit]], [[patch-3-0-8-api-audit]] — read-only source/replay templates; no inherited behavior credit.
+- [[patch-3-4-0-api-audit]] — separate Classic history, not a retail successor.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/specs/patch-1-60-1-source-accounting.md
+# Patch 1.60.1 full literal SOURCE accounting
+
+Frozen page 707613/revision 6902509 (`2026-10-07T05:30:51Z`) lives in `data/patch-api/source-cache/legacy-2026-10-09`. The literal page identifies Forever/Camelot and TOC 16001, not an epoch inferred from the version number. [Audit/proof matrix](../wiki/investigations/patch-1-60-1-api-audit.md).
+
+## What it must do
+- [x] Validate exact response/body bytes and manifest membership against the 101-page registry ending at 1.0.0, entirely offline.
+- [x] Retain every nonblank row, inventory occurrence, signature/unspecified signature, prose description, reference boundary and heading/count. Preserve literal duplicates, misspellings and count disagreements without inferred aliases or repairs.
+- [x] Reproduce the shared generator's unchanged default bytes with no flags; keep the literal non-inventory mirror explicitly unexpanded, not rendered MediaWiki evidence.
+- [x] Preserve immutable source-only seals below 5 MB per file; reject missing/altered ledger rows, false/foreign proof, disk ledger/log tampering and replay copied without Git/target/current tools.
+- [ ] Separately measure the existing configured player-name read before login under `client-wowforever`, if the offline bounded target can run. Do not infer corrected return tuples or token aliases.
+
+## How it works
+- [Source accounting and limits](../wiki/investigations/patch-1-60-1-api-audit.md)
+- [Portable evidence](../../data/patch-api/evidence/1.60.1-session-2026-10-09/)
+
+## Implementation inventory
+- Evidence `accounting.py`: per-occurrence register enrichment, complete source/signature/prose/reference/header ledgers and literal mirror.
+- Evidence `validate.py`: exact portable historical replay and original byte seals.
+- Evidence `historical-gen_patch_wikitext_register.py`: immutable existing default parser; no shared-parser changes.
+- Evidence `original/`: exact source/manifest/registry/register/ledger/gaps, initial RED and sparse code snapshots.
+- `patch-tests/patch_1_60_1_source_model.rs` and explicit Cargo test target: existing-model player-state read only, no runtime implementation changes.
+
+## Tests asserting this spec
+- Evidence `test_source.py`: eight owned fixtures, per-row omission controls, duplicate/malformed input, literal metadata/signatures, unexpanded links, foreign-credit rejection and copied disk tamper/restoration.
+- `patch-tests/patch_1_60_1_source_model.rs`: two changing names and an isolated second environment, no PLAYER_LOGIN dispatch or loaded UI.
+
+## Known gaps (current cycle)
+- [ ] All 1,876 inventory occurrences, 1,712 signature occurrences and 211 prose limits are behaviorally UNPROVEN in original source accounting.
+- [ ] Owned player-name target remains unexecuted: cheap isolated package-home CoW failed (cross-device, then unsupported on the same filesystem). No original caches mutated; test retained without model credit. Observed local compiler is 1.99.0, not the documented 1.98.1.
+- [ ] Native/historical/security and loaded-UI parity are not proved by source publication or matching interface values. Source build 70205 differs from configured compatibility build 69977.
+- [ ] Main owns actual same-line successors, integration and native/final acceptance. Literal `next=1.60.2` is navigation only; no successor expansion or wholesale Retail/Era/TBC supersession.
+
+## Out of scope
+Network, production runtime changes, shims/coercion/defaults/fallbacks, vendor/cache/Wowless/canonical writes, rebase/push/merge/deploy/delegation/model CLIs, startup, check/lint/readability/coverage/broad tests and final gates. PLAN remains unstaged under the governing plan-md policy.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/patch-1-60-1-api-audit.md
+# Patch 1.60.1 literal SOURCE audit
+
+Independent bounded audit at base `66a5c16599cdf48243ebf8348e78cd3e3c829c26`, branch `p1601-source`. Frozen page 707613/revision 6902509 (`2026-10-07T05:30:51Z`), cached response and body only; no network or native client. Source accounting is not publication, runtime or native parity proof.
+
+## Source, configured and native identities
+
+Literal resources line 5 says `TOC: 16001`; local September 15 blue-post text names “Forever and modern WoW (Midnight)” as game types in the Mainline family, “Camelot … and Standard”. Source examples use `WOW_PROJECT_CAMELOT`, `camelot`, metadata `Camelot` and an interface range strictly between 16000 and 20000. Those are source claims/examples, not installed production policy.
+
+| Evidence | Exact scope | Proof |
+|---|---|---|
+| Source | 1.60.1 (70205), October 2, 2026; comparison 12.1.5 (69952) → 1.60.1 (70205) | Frozen text, not native capture |
+| Source sub-build claims | 70170/October 1; 70009/September 23; local blue-post 70009/September 24 and 70058/October 2 titled October 1 | Separate literal dates/builds retained |
+| Configured feature | `client-wowforever` in `Cargo.toml`; **no `client-wowforever16001` feature** | Static base-code observation |
+| Configured interface | `ClientProfile::WowForever`, `ACTIVE_INTERFACE_VERSION=16001`, interface method returns 16001 | Static source snapshot, not runtime observation |
+| Configured compatibility identity | `client_info_defaults.rs`: version 1.60.1, build **69977**, synthetic date June 17, 2026; explicitly temporary metadata defaults | Not build 70205 or native session identity |
+| Native/client/loaded UI | None measured | UNPROVEN |
+
+The September 15 prose says the “vast majority” of 12.1.5 APIs and secrets/aura UI changes are shared. It does not establish all APIs, historical epochs, security behavior, or loaded UI. No Retail/Era/TBC retirement/supersession is inferred. `next=1.60.2` stays pending navigation; actual successor integration belongs to main.
+
+## Exact frozen byte identities
+
+| Artifact | Bytes / SHA-256 |
+|---|---|
+| Body | 125,873 / `f0e3dc86be50c02dbbc2a5962adda9cf96aa8f3a3959995a4cf7a6a9c8b43ce7` |
+| Response | 128,467 / `687133019ca6e39cfe2c2902fd398ac2c6f161cab5aed52e7809ca562c6ea5e5` |
+| Registry | 101 pages, endpoint 1.0.0 / `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c` |
+
+The original response's main-slot body equals the cached wikitext exactly. Manifest pin membership and every retained manifest page identity are compared to the sealed registry, independent of current Git or collector state.
+
+## Complete coverage matrix
+
+All original behavioral rows are **UNPROVEN**, capabilities empty. Exact row-level contracts and line numbers live in evidence `original/ledger.json`; no names are deduplicated or repaired.
+
+| Literal category | Count | Source contract / limit |
+|---|---:|---|
+| Global API added / removed | 175 / 10 | Names only; arguments/returns/state/coercion/defaults/security unspecified |
+| FrameXML added / removed | 471 / 1,041 | Named UI-source diff, not native-global absence; loaded vendor implementations and effects unmeasured |
+| Widgets added / removed | 7 / 0 | Four ScriptRegion focus/mouse methods, ModelSceneActorBase model-by-unit-display method and two Minimap cursor/mouseover methods; no argument/return/effect definitions |
+| Events added / removed | 25 / 2 | Names only, no payload/producer/order/firing proof |
+| CVar-column added / removed | 138 / 7 | Added column includes one command `dumpSmallAlloc` (type command/category 4), leaving 137 added CVars; seven removed CVars |
+| Total inventory | 1,876 | 816 added / 1,060 removed occurrences; removal is comparison text, not runtime retirement |
+| Nonblank source rows | 2,070 | 1,876 inventory / 107 metadata / 87 other literal substantive rows |
+| Headers | 32 | 22 ordinary/template headings and 10 numeric column headers |
+| Signature ledger | 1,712 | 1,704 identity-only/unspecified signatures; eight literal call occurrences from prose/examples |
+| Prose limits | 211 | 87 other substantive rows plus 124 literal CVar descriptions; identity proof cannot close described effects |
+| Linked reference boundaries | 15 | Nine external links / six wiki links; linked bodies unexpanded and UNPROVEN. Zero explicit transclusions in this frozen page; synthetic transclusion fixture also stays unexpanded |
+
+Numeric headers: global added **176 versus 175** literal rows; events added **24 versus 25** rows. Other eight headers reconcile (10, 471, 1,041, 7, 0, 2, 138, 7). Do not invent a missing API or drop an event to fix counts. All CVar named fields, including absent defaults, scopes, categories, formatting and descriptions, remain literal strings. Examples: `CameraFollowPitchOffset` default `15.000000`/Account; `ClientSettings_LOW_LATENCY_CBS_BY_API_MASK` has no default; `winePlatformTTS` describes a crash risk, not permission to enable it.
+
+No duplicate section/symbol/direction inventory identities occur in the frozen inventory. Repeated headings and repeated literal UnitName citation occurrences remain separate. Misspellings such as `PaperDollItemSlotButton_OnModifableClick`, `GarrisonMissonListTab_SetSelected`, and `GarrisonMonuntmentFrame_*` are preserved. A concrete duplicate/malformed fixture retains both `C_Example.Read` occurrences and `C_Example.Mispelled`; no guessed alias is added.
+
+## Literal signature and prose boundaries
+
+Eight call occurrences are `UnitName("player")` twice on line 12 (statement plus linked citation title), `select(4, GetBuildInfo())` and nested `GetBuildInfo()` on line 54, `C_AddOns.GetAddOnMetadata("MyAddOn", "X-Game")` on line 64, and the three `C_GameRules.IsGameRuleActive(Enum.GameRule.*Ruleset)` conditions on lines 72/74/76. The quoted `"Unknown", nil` is the described **old failure**, not the corrected return tuple. No inventory row supplies a complete signature.
+
+Local prose accounts build-qualified constant 18, UnitName pre-login/token consistency, SavedVariables and RestrictedEnvironment fixes; TOC allow/exclude/file/title-order examples; game-type and ruleset examples; blue-post shared-architecture/secrets/aura statements; cooldown disabled-by-default/class/rank coverage; flyout/bar/targeting/binding/hover/layout gamepad changes; character-sheet low-rank benefit/proc example; character/art/stable/combo/name/auction changes. Every exact statement has its own retained row and limits; linked details are not reconstructed. Non-inventory `literal-extract.wikitext` retains original markup/scaffolding without MediaWiki/template expansion. Shared generator defaults/flags are unchanged; original default register bytes reproduce exactly.
+
+## Existing model candidate and production-edit policy
+
+Selected narrow contract: line 12's `UnitName("player")` must not return the unknown placeholder for a configured player before login. Existing `group_queries.rs` reads `SimState.player.name`; no runtime edit is proposed or made. Owned test sets Ada then Grace, independently holds Linus in a second environment, and reads the names before any test-dispatched PLAYER_LOGIN. This can prove a current configured-state read, not native login ordering, corrected arity/realm returns, unavailable/default handling, arbitrary token aliases, security or loaded UI. Token consistency remains separate and UNPROVEN.
+
+If this test reveals a runtime defect, stop before production changes and report the literal counterexample/proposal. No added aliases/defaults/coercion/shims/fallbacks or production-policy changes are authorized here.
+
+## Bounded proof ledger
+
+| Command / scope | Revision | Result / validity |
+|---|---|---|
+| `python3 -B …/test_source.py` before accounting/validator existed | Base 66a5c1659 plus fixture | RED: 8/8 missing-validator failures; retained original/red.log |
+| Default shared generator, frozen page, no flags | Base 66a5c1659 | Discovery: 1,876 rows; exact original/register.json bytes; no runtime credit |
+| `rustfmt --edition 2024 patch-tests/patch_1_60_1_source_model.rs` | New test only | Exit 0; no check/lint/readability gate |
+| `python3 -B …/test_source.py`: own SOURCE fixtures | `88ce7032563b32bc0b8ccac8fe0097124abe4d37` | GREEN 8/8, 0.592 s; 5,916 per-row omission controls; copied fresh process with empty PATH/no Git/target/current tools passes; disk ledger/red-log tampering rejects and exact bytes restore |
+| Owned model target preparation (`cp -a --reflink=always` dependency snapshot) | Same revision | BLOCKED before Cargo execution: /tmp is cross-device; bounded same-device retry reports Operation not supported. Original caches untouched; no expensive full copy or original-cache fallback |
+| Intended `cargo test --offline --locked --no-default-features --features client-wowforever --test patch_1_60_1_source_model -- --nocapture` | Test committed at `291cc22c8`; receipt at `88ce70325` | **NOT EXECUTED**. Zero meaningful model closures; local observed compiler 1.99.0, unlike documented 1.98.1 |
+
+Original source-only ledger and gaps are immutable: **19 original seals**, largest original file 3,326,475 bytes. Later proof/attempt receipts and empty closure claims live separately under `current/` with **eight separate seals**. Both full preparation logs are losslessly gzip-compressed (627,865 / 633,544 bytes); uncompressed hashes are recorded, every retained file is below 5 MB. No original seal or behavioral status changed. Current source proof remains applicable: later changes are receipts/docs only, so no redundant source-suite rerun. No whole-project/check/lint/readability/coverage/startup/final gate is run. Main owns actual successors, integration and native acceptance.
+
+## Sources
+
+- [Frozen source pin](../../../data/patch-api/evidence/1.60.1-session-2026-10-09/original/source-pin.json)
+- [Exact source ledger](../../../data/patch-api/evidence/1.60.1-session-2026-10-09/original/ledger.json)
+- [Spec](../../specs/patch-1-60-1-source-accounting.md)
+- Base `Cargo.toml`, `src/client_profile.rs`, `src/lua_api/globals/group_queries.rs`, `src/lua_api/workarounds/temporary/client_info_defaults.rs` (sparse sealed code snapshots).
+
+## See Also
+
+- [[client-profiles]] — configured profile architecture, not native identity.
+- [[patch-3-4-2-api-audit]] — publication versus state/native proof boundaries.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/specs/patch-1-15-9-source-accounting.md
+# Patch 1.15.9 literal SOURCE accounting
+
+Account frozen page 685352 / revision 6780591 / timestamp `2026-07-24T15:29:35Z` offline, preserving literal source and independent Classic Era history. [Audit and proof limits](../wiki/investigations/patch-1-15-9-api-audit.md).
+
+## What it must do
+
+- [x] Validate exact response/raw hashes, revision identity, manifest and 101-page registry through 1.0.0; retain all 37 nonblank rows with literal spelling and occurrences.
+- [x] Derive Classic Era/Season of Discovery/Hardcore and TOC 11509 from literal text; keep configured Era/Anniversary 11507 separate from native measurement.
+- [x] Account six headers, 14 contracts, four API occurrences, three quoted TBC chat/CVar examples and one partial return removal; reject omitted rows/contracts/headers, foreign history and invented credit.
+- [x] Keep unexpanded diffs and unspecified signatures/event/state/security/native contracts UNPROVEN; no Era defaults inferred from TBC examples.
+- [x] Replay compact sealed historical inputs in a fresh copied no-Git/target process; reject serialized ledger/log tampering and restore exact bytes/hashes without rewriting original seals.
+
+## How it works
+
+- [Literal coverage matrix and source boundary](../wiki/investigations/patch-1-15-9-api-audit.md).
+
+## Implementation inventory
+
+- `data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py` — own source-specific ledger derivation/validation, not a shared parser or simulator.
+- Same directory: frozen source/response/manifest/registry/configuration/tools, `ledger.json`, `test_source_accounting.py`, targeted RED/GREEN logs.
+
+## Tests asserting this spec
+
+`python3 -B data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py`: eight source-only fixtures; no simulator invocation. RED/GREEN retained. Historical validator exit 0 and copied SOURCE8/8 at `308aeda25`; serialized ledger/log each reject/restored exactly. Original 18 seals unchanged; 20-member copied archive and five separate receipt seals recorded in `portable-proof.json`, `portable-controls.log` and `receipt-seals.json`. No final gates.
+
+## Known gaps (current cycle)
+
+- [ ] Unexpanded linked diffs, UnitAura remaining return layout, full C_CVar signatures and native behaviors remain UNPROVEN.
+- [ ] Main-owned actual successors/current-native/integration and any final acceptance remain unperformed by this source slice.
+
+## Out of scope
+
+Runtime/profile/default/shim/alias/fallback changes, sealed 2.5.6 receipt backfill, foreign history supersession, shared parser/extractor changes, native/model measurements, canonical/vendor/cache/Wowless writes, network, broad/check/lint/readability/coverage/startup/final gates, delegation/model CLI and operational actions. PLAN.md updates excluded from this commit under explicit plan skill policy.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/patch-1-15-9-api-audit.md
+# Patch 1.15.9 literal SOURCE audit
+
+Frozen page 685352 / revision 6780591 / timestamp `2026-07-24T15:29:35Z`, audited offline at base `1174d7a8c9adb3a9933729fc256f3cc3614215f8`. Literal TOC **11509** and blue-post wording **Classic Era, Season of Discovery, Hardcore** establish the Classic Era source history—not a version-number-only guess. No runtime edits or native measurements.
+
+## Source identity
+
+[Own frozen inputs and ledger](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/ledger.json) retain response, source, manifest and 101-page registry ending at 1.0.0. Raw source: 4,085 bytes / SHA256 `beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db`; response SHA256 `2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf`. Page/revision/title/timestamp/content/manifest/registry identities are independently checked offline. Raw rows, duplicate C_CVar occurrences and exact spelling stay literal; no alias/default/signature reconstruction.
+
+## Coverage matrix
+
+| Literal scope | Accounting | Proof level / limit |
+|---|---|---|
+| Entire source | 52 physical lines; 37 nonblank rows: 21 metadata, 16 UNPROVEN | Every literal row retained; no behavior credit |
+| Headers | Resources, Notes, Blue posts; UI Using Shared Code, Modifications Using Chat Commands, Upcoming WoW Classic Patch 1.15.9 – Week of July 19 | Six source headers; zero numerical inventory counts |
+| API/return note | UnitAura; `shouldConsolidate` removed | One partial return contract; return position, remaining outputs and arity unspecified |
+| Calls/CVars/commands | Three C_CVar.SetCVar calls, three /script occurrences; nameplateShowClassColor=1, nameplateShowFriendlyClassColor=1, raidFramesDispelIndicatorOverlay=0 | Three partial call contracts in quoted **TBC 2.5.6** context; values are not defaults or measured Era behavior |
+| Prose | Eight contracts at raw lines 18/21/23/26/43/46/48/50 | Shared-code benefits/history, customization, planned Options, Era Edit Mode/nameplates/raid frames, compatibility advice and future refinement all UNPROVEN |
+| Linked diffs | wow-ui-source and BlizzardInterfaceResources 1.15.8→1.15.9 | Two unexpanded linked contracts; identities/signatures/payloads/state/security/native equivalence UNPROVEN |
+| Events/widgets/signatures | Zero explicit event or widget-method occurrences; zero complete signature declarations; zero consolidated inventory entries | UI prose is not a widget API enumeration; absence is not positive parity proof |
+
+Total: **14 contracts**, four API-reference occurrences / two distinct API names, three partial calls and one partial return-removal note. Header markup and Bluepost attribution/body/wrapper rows remain accounted. Week-of-July-19 and next-week language is preserved as the July 10 quotation's prospective wording, not a verified deployment date.
+
+## Client/model credit limits
+
+Copied base code/Cargo/manifests record **Era and Anniversary configured 11507**, with feature dependencies and manifest hashes. This is static configuration, not native 1.15.9 observation, support diagnosis or publication measurement. No state/model tests run: source does not specify the removed return's position or full remaining signature; TBC chat examples do not justify an Era-default model. Zero runtime/model/native/full-UI credit.
+
+The [2.5.6 audit](patch-2-5-6-api-audit.md) retains an unexpanded reference to this page. This independent audit neither backfills its sealed receipts nor establishes TBC equality. “Very closely matches” and addon-development advice do not prove exact API equivalence. No Retail 2.x, TBC 2.5, Wrath 3.4 or WowForever 1.60 supersession. No later registers applied; actual successors/current-native/integration belong to main.
+
+## Development proof
+
+Own serialized SOURCE fixtures: RED eight assertion failures against empty accounting; GREEN **8/8**, including every row/contract/header/API omission, foreign history, fabricated credit, source/revision tampering and configured-profile limits. Python AST formatting only; no lint/check/readability/coverage/broad/startup/final gates. Shared generator/extractor unchanged, frozen copies retained; own accounting uses raw literal text instead of claiming shared extractor expansion. Source implementation committed at `07c93b3b5`; compact history seals committed at `308aeda25`. No later code changes invalidate the recorded SOURCE proof.
+
+## Historical and portable controls
+
+Original `seals.json`: **18 inputs**, 679,373 aggregate bytes; SHA256 `bc79b129b07ce32bd01b5f3e1676441ba8f041f903d0b5c5483e72a6bb021e69`, unchanged after controls. Largest retained artifact: 219,034 bytes; every file remains under 5 MB. Separate `receipt-seals.json` seals **five** later artifacts/map without extending or rewriting original seals.
+
+[Portable proof](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/portable-proof.json) records exact commands, revision `308aeda25`, member hashes and restoration hashes. Serialized `ledger.json` contract omission rejects at its seal; serialized `green.log` fabricated success rejects at its seal. Both restored byte-for-byte with matching original SHA256; all 18 original seals remain valid.
+
+Fresh archive: **20 members**, 101,361 bytes, SHA256 `ebd2437a59df2ad9f210c1055d7657e5470d82ac3803b079b2da56f3dee32b52`. Copied process has no Git/target/current tools/runtime/cache inputs. Frozen validator exits 0; copied historical SOURCE fixtures pass 8/8; frozen default generator with flags `[]` reproduces its retained JSON bytes exactly. The stock empty register omits these prose contracts and is not parity credit. Shared parser/extractor were not changed; recorded shared flags remain untouched, no all-flags regression expansion was performed.
+
+Replay retained `replay-archive.tar.gz` into a fresh directory and run its own `audit.py` and `test_source_accounting.py` with `python3 -B`. Use the sealed historical tool, raw source, revision 6780591 and flags `[]` for default-register reproduction. Never regenerate the one-time receipts or original seal map. These are bounded SOURCE/historical controls, not native or final integration acceptance.
+
+## Sources
+
+- [Spec](../../specs/patch-1-15-9-source-accounting.md).
+- [Frozen source](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/source.wikitext).
+- [Own tests](../../../data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py).
+
+## See Also
+
+- [Classic/TBC 2.5.6 source boundary](patch-2-5-6-api-audit.md) — unchanged historical receipt boundary.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/specs/patch-1-15-8-source-accounting.md
+# Patch 1.15.8 literal SOURCE accounting
+
+Account frozen page 686952 / revision 6778071 / timestamp `2026-07-22T05:34:51Z` offline. Preserve exact literal source, not expanded wiki/API/native behavior. [Audit](../wiki/investigations/patch-1-15-8-api-audit.md).
+
+## What it must do
+
+- [x] Validate exact response/raw hashes, manifest and 101-page registry through 1.0.0; preserve all four nonblank rows and their occurrences.
+- [x] Derive TOC 11508 and navigation from literal text; leave unnamed client line UNPROVEN rather than guessing from numbers.
+- [x] Account one Resources header, two unexpanded diff contracts and one unexpanded navigation template; no invented API/event/CVar/widget/command/signature/prose contracts.
+- [x] Separate configured Era/Anniversary 11507 from native measurement; retain 1.15.9 only as queued placeholder awaiting main integration, never foreign supersession.
+- [x] Reject omitted rows/contracts/headers, fabricated credit and source/revision tampering.
+- [x] Preserve compact historical originals independently of later receipts; copied Git/target/current-tool-free replay and serialized ledger/log tamper rejection with exact restoration.
+
+## How it works
+
+- [Coverage matrix and proof boundary](../wiki/investigations/patch-1-15-8-api-audit.md).
+
+## Implementation inventory
+
+- `data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py` — own literal derivation/validation, not shared parser or runtime code.
+- Same directory: frozen source/response/manifest/registry/configuration/historical tools, queued successor inputs, ledger and SOURCE fixtures.
+
+## Tests asserting this spec
+
+`python3 -B data/patch-api/evidence/1.15.8-session-2026-10-09/test_source_accounting.py`: eight SOURCE-only fixtures; own RED eight assertion failures retained. GREEN **8/8** at `384699f11`; default historical generator flags `[]` yields empty inventory (not parity). Original 23 seals retain 660,202 bytes, largest 219,034 bytes; at `b02477039`, historical validators pass, both serialized ledger/log seal controls reject/restore, copied SOURCE8/8 and default register byte replay pass. Original23 seals unchanged; 24-member/98,432-byte archive, five separately sealed later artifacts/map. [Exact receipts](../../data/patch-api/evidence/1.15.8-session-2026-10-09/portable-proof.json). No final gates.
+
+## Known gaps (current cycle)
+
+- [ ] Client name is absent from this literal page; template/link contents and precise API/signature/state/security/native contracts remain UNPROVEN.
+- [ ] Main owns actual same-history successors, native observations, integration and final acceptance.
+
+## Out of scope
+
+Runtime/default/profile/shim/alias/fallback edits, shared parser/extractor changes, foreign supersession, model/native measurements, canonical/vendor/cache/Wowless writes, network, check/lint/readability/coverage/broad/startup/final gates, delegation/model CLI and operations. PLAN.md remains excluded under explicit plan skill policy.
+
+### /home/osso/Projects/wow/wow-ui-sim/docs/wiki/investigations/patch-1-15-8-api-audit.md
+# Patch 1.15.8 literal SOURCE audit
+
+Frozen page **686952 / revision 6778071**, timestamp `2026-07-22T05:34:51Z`, audited offline from `fcdf1d151371e894aa19d800eeaaf17aa0a3674a`. No runtime edits, model or native measurements.
+
+## Source identity
+
+[Own ledger and frozen inputs](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/ledger.json): raw 279 bytes, SHA256 `9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45`; response SHA256 `93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc`. Manifest and 101-page registry ending 1.0.0 retained offline. Raw bytes and every occurrence remain literal; no malformed-source repair, deduplication, alias/signature/default reconstruction or expansion.
+
+## Literal coverage matrix
+
+| Scope | Literal accounting | Proof / limit |
+|---|---|---|
+| Entire source | Five physical lines, four nonblank rows: three metadata, one UNPROVEN | No source row omitted; diff row holds two distinct contracts |
+| Navigation | `{{apichanges|1.15.8|prev=1.15.7|next=1.15.9}}` | Labels retained; template expansion UNPROVEN, navigation metadata is not behavior |
+| Header / TOC | `==Resources==`; `11508` | One nonnumerical header; TOC derives from text, not patch-number arithmetic |
+| Linked diffs | wow-ui-source `1.15.7..1.15.8`; BlizzardInterfaceResources `1.15.7...1.15.8` | Two unexpanded contracts UNPROVEN; punctuation/occurrences preserved |
+| APIs/events/CVars/widgets/commands/signatures/prose | Zero explicit local declarations or inventory entries in each category | Zero does not prove compatibility, empty linked content or native parity |
+
+**Client line remains UNPROVEN in this literal page:** it names no Classic Era/Anniversary client. Do not infer from 1.15 or 11508, or silently expand apichanges. Separately attributed queued 1.15.9 literal wording names Classic Era, Season of Discovery and Hardcore; it supplies context only, not retroactive 1.15.8 native proof.
+
+## Configuration and successor limits
+
+Copied base Cargo/client-profile/manifests record **Era and Anniversary configured 11507**, their feature dependencies and manifest hashes separately. Static configuration is neither native11508 measurement nor an unsupported-client/API diagnosis. Source specifies no concrete model behavior: no model test justified, zero runtime/model/native credit.
+
+[Queued successor inputs](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/queued-successor/status.json) retain own immutable copy of sibling 1.15.9 pin/raw source. Sibling source audit reports completion at `07c93b3b5`/`308aeda25`; main gates unperformed, awaiting main integration. Placeholder only: no applied successor register, retirement, equivalence or native credit. Never cross TBC2.5, Retail2.x, Wrath3.4 or WowForever1.60 histories. Main owns actual successors/native/integration.
+
+## Development proof
+
+Own eight fixtures: RED eight expected assertion failures against empty accounting, retained with scaffold. Python AST formatting only. Implementation/source ledger committed at `384699f11`; GREEN **8/8** there, including omission/fabricated-credit/foreign-history/source identity controls. No later code edits. No check/lint/readability/coverage/broad/startup/final gates or runtime calls. Shared generator/extractor unchanged; own frozen copies retain original bytes and default flags `[]` for replay.
+
+## Historical proof
+
+Original `seals.json` pins **23 inputs**, 660,202 bytes total; largest file 219,034 bytes, all under 5 MB. RED/GREEN logs and proof ledger included. Frozen default generator flags `[]` yields retained empty register; no all-flags expansion. Original seal map SHA256 `67df0a1ec34d3cad5b8457d3f08ca95f3f677e35eda351490b6a8d6461e6f0a4` remains unchanged after controls. Five later artifacts/map have independent `receipt-seals.json`; these do not extend or rewrite original seals. 
+[Portable proof](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/portable-proof.json) at `b02477039`: historical validator exit0, both serialized `ledger.json` contract omission and `green.log` fabricated success rejected at exact seals (exit1); original bytes/hashes restored. All 23 originals/map unchanged afterward.
+
+Fresh archive **24 members**, **98,432 bytes**, SHA256 `53e386b8e40c862419533bb54d0de964340872461e5e96153a04a671451e2fed`; copied fresh-process validator exit0 and SOURCE8/8. No Git/target/current tools/runtime/cache inputs in archive. Frozen default generator flags `[]` reproduces retained JSON byte-for-byte; stock empty inventory is not parity. Frozen extractor retained unchanged, not executed or expanded. No all-flags regression or final gates performed.
+
+[Replay instructions](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/REPLAY.md) use copied historical tools and source only. Exact commands, member hashes, restoration hashes and logs retained. Later portable receipts are separately sealed; no original proof rewritten. Zero native/final acceptance claim.
+
+## Sources
+
+- [Spec](../../specs/patch-1-15-8-source-accounting.md).
+- [Frozen raw source](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/source.wikitext) — exact cached Warcraft Wiki content, attributed by source-pin request URL; cache README records CC BY-SA 4.0.
+- [Own fixtures](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/test_source_accounting.py).
+
+## See Also
+
+- [Client profiles](../systems/client-profiles.md) — configuration is not historical native measurement.
+- [TBC 2.5.6 audit](patch-2-5-6-api-audit.md) — separate history, no supersession credit.

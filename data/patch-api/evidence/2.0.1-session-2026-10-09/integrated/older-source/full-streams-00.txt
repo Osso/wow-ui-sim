@@ -1,0 +1,119 @@
+
+### 2.3.0-current-source exit=0
+STDOUT
+STDERR
+test_every_nonblank_line_and_header_literal (__main__.SourceAccounting.test_every_nonblank_line_and_header_literal) ... ok
+test_every_omission_and_fabricated_credit_rejected (__main__.SourceAccounting.test_every_omission_and_fabricated_credit_rejected) ... ok
+test_literal_return_prefixes_optional_arguments_and_notes (__main__.SourceAccounting.test_literal_return_prefixes_optional_arguments_and_notes) ... ok
+test_mixed_labels_typos_rename_and_consolidated_occurrences (__main__.SourceAccounting.test_mixed_labels_typos_rename_and_consolidated_occurrences) ... ok
+test_parenthetical_prose_is_not_api_or_command_publication (__main__.SourceAccounting.test_parenthetical_prose_is_not_api_or_command_publication) ... ok
+test_precise_prose_and_unexpanded_reference_limits (__main__.SourceAccounting.test_precise_prose_and_unexpanded_reference_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.463s
+
+OK
+
+### 2.3.0-copied-validator exit=0
+STDOUT
+{"complete_signatures": 0, "cvar_occurrences": 0, "directions": {"added": 28, "changed": 18, "listed": 82, "noted": 2, "removed": 2}, "headers": 11, "inventory_occurrences": 132, "kinds": {"commands": 5, "events": 1, "global-api": 116, "widgets": 10}, "literal_call_fragments": 50, "model_credit": 0, "native_observations": 0, "numerical_headers": 0, "prose_limits": 68, "runtime_observations": 0, "sealed_inputs": 22, "signatures": 137, "source_rows": 163, "statuses": {"UNPROVEN": 150, "metadata-only": 13}, "unexpanded_links": 82}
+STDERR
+
+### 2.3.0-copied-source exit=0
+STDOUT
+STDERR
+test_every_nonblank_line_and_header_literal (__main__.SourceAccounting.test_every_nonblank_line_and_header_literal) ... ok
+test_every_omission_and_fabricated_credit_rejected (__main__.SourceAccounting.test_every_omission_and_fabricated_credit_rejected) ... ok
+test_literal_return_prefixes_optional_arguments_and_notes (__main__.SourceAccounting.test_literal_return_prefixes_optional_arguments_and_notes) ... ok
+test_mixed_labels_typos_rename_and_consolidated_occurrences (__main__.SourceAccounting.test_mixed_labels_typos_rename_and_consolidated_occurrences) ... ok
+test_parenthetical_prose_is_not_api_or_command_publication (__main__.SourceAccounting.test_parenthetical_prose_is_not_api_or_command_publication) ... ok
+test_precise_prose_and_unexpanded_reference_limits (__main__.SourceAccounting.test_precise_prose_and_unexpanded_reference_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.435s
+
+OK
+
+### 2.3.0-tamper-0 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.3.0/data/patch-api/evidence/2.3.0-session-2026-10-09/validate.py", line 26, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.3.0/data/patch-api/evidence/2.3.0-session-2026-10-09/validate.py", line 13, in main
+    assert digest((ROOT / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: data/patch-api/sources/2.3.0-page-coverage.json
+
+### 2.3.0-restored-0 exit=0
+STDOUT
+{"complete_signatures": 0, "cvar_occurrences": 0, "directions": {"added": 28, "changed": 18, "listed": 82, "noted": 2, "removed": 2}, "headers": 11, "inventory_occurrences": 132, "kinds": {"commands": 5, "events": 1, "global-api": 116, "widgets": 10}, "literal_call_fragments": 50, "model_credit": 0, "native_observations": 0, "numerical_headers": 0, "prose_limits": 68, "runtime_observations": 0, "sealed_inputs": 22, "signatures": 137, "source_rows": 163, "statuses": {"UNPROVEN": 150, "metadata-only": 13}, "unexpanded_links": 82}
+STDERR
+
+### 2.3.0-tamper-1 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.3.0/data/patch-api/evidence/2.3.0-session-2026-10-09/validate.py", line 26, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.3.0/data/patch-api/evidence/2.3.0-session-2026-10-09/validate.py", line 13, in main
+    assert digest((ROOT / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: data/patch-api/evidence/2.3.0-session-2026-10-09/green.log
+
+### 2.3.0-restored-1 exit=0
+STDOUT
+{"complete_signatures": 0, "cvar_occurrences": 0, "directions": {"added": 28, "changed": 18, "listed": 82, "noted": 2, "removed": 2}, "headers": 11, "inventory_occurrences": 132, "kinds": {"commands": 5, "events": 1, "global-api": 116, "widgets": 10}, "literal_call_fragments": 50, "model_credit": 0, "native_observations": 0, "numerical_headers": 0, "prose_limits": 68, "runtime_observations": 0, "sealed_inputs": 22, "signatures": 137, "source_rows": 163, "statuses": {"UNPROVEN": 150, "metadata-only": 13}, "unexpanded_links": 82}
+STDERR
+
+### 2.2.0-current-source exit=0
+STDOUT
+STDERR
+test_all_serialized_accounting_required (__main__.SourceAccounting.test_all_serialized_accounting_required) ... ok
+test_counts_and_literal_headers (__main__.SourceAccounting.test_counts_and_literal_headers) ... ok
+test_event_family_cvar_and_replaced_functions_limits (__main__.SourceAccounting.test_event_family_cvar_and_replaced_functions_limits) ... ok
+test_literal_optional_and_split_signatures_not_reconstructed (__main__.SourceAccounting.test_literal_optional_and_split_signatures_not_reconstructed) ... ok
+test_no_invented_native_or_foreign_supersession (__main__.SourceAccounting.test_no_invented_native_or_foreign_supersession) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.446s
+
+OK
+
+### 2.2.0-copied-validator exit=0
+STDOUT
+{"directions": {"added": 13, "changed": 13, "context": 4, "replaced": 6}, "extract_nonblank_rows": 67, "header_counts": [], "headers": 11, "inventory_occurrences": 36, "kinds": {"cvar-setting": 1, "event-family": 1, "global-api": 22, "secure-helper": 1, "secure-template": 1, "widget-method": 6, "widget-script": 4}, "literal_signature_fragments": 29, "model_credit": 0, "modified_click_examples": 12, "native_observations": 0, "prose_limits": 53, "raw_nonblank_rows": 67, "raw_statuses": {"UNPROVEN": 53, "metadata-only": 14}, "registry_endpoint": "1.0.0", "registry_pages": 101, "runtime_observations": 0, "sealed_inputs": 19, "signature_limits": 33, "unspecified_signature_fragments": 4}
+STDERR
+
+### 2.2.0-copied-source exit=0
+STDOUT
+STDERR
+test_all_serialized_accounting_required (__main__.SourceAccounting.test_all_serialized_accounting_required) ... ok
+test_counts_and_literal_headers (__main__.SourceAccounting.test_counts_and_literal_headers) ... ok
+test_event_family_cvar_and_replaced_functions_limits (__main__.SourceAccounting.test_event_family_cvar_and_replaced_functions_limits) ... ok
+test_literal_optional_and_split_signatures_not_reconstructed (__main__.SourceAccounting.test_literal_optional_and_split_signatures_not_reconstructed) ... ok
+test_no_invented_native_or_foreign_supersession (__main__.SourceAccounting.test_no_invented_native_or_foreign_supersession) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.386s
+
+OK
+
+### 2.2.0-tamper-0 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 353, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 347, in main
+    sealed = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 340, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: historical-page-coverage.json
+
+### 2.2.0-restored-0 exit=0
+STDOU

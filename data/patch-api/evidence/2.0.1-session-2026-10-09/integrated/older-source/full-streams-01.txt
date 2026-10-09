@@ -1,0 +1,93 @@
+T
+{"directions": {"added": 13, "changed": 13, "context": 4, "replaced": 6}, "extract_nonblank_rows": 67, "header_counts": [], "headers": 11, "inventory_occurrences": 36, "kinds": {"cvar-setting": 1, "event-family": 1, "global-api": 22, "secure-helper": 1, "secure-template": 1, "widget-method": 6, "widget-script": 4}, "literal_signature_fragments": 29, "model_credit": 0, "modified_click_examples": 12, "native_observations": 0, "prose_limits": 53, "raw_nonblank_rows": 67, "raw_statuses": {"UNPROVEN": 53, "metadata-only": 14}, "registry_endpoint": "1.0.0", "registry_pages": 101, "runtime_observations": 0, "sealed_inputs": 19, "signature_limits": 33, "unspecified_signature_fragments": 4}
+STDERR
+
+### 2.2.0-tamper-1 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 353, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 347, in main
+    sealed = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.2.0/data/patch-api/evidence/2.2.0-session-2026-10-09/validate.py", line 340, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: source-green.log
+
+### 2.2.0-restored-1 exit=0
+STDOUT
+{"directions": {"added": 13, "changed": 13, "context": 4, "replaced": 6}, "extract_nonblank_rows": 67, "header_counts": [], "headers": 11, "inventory_occurrences": 36, "kinds": {"cvar-setting": 1, "event-family": 1, "global-api": 22, "secure-helper": 1, "secure-template": 1, "widget-method": 6, "widget-script": 4}, "literal_signature_fragments": 29, "model_credit": 0, "modified_click_examples": 12, "native_observations": 0, "prose_limits": 53, "raw_nonblank_rows": 67, "raw_statuses": {"UNPROVEN": 53, "metadata-only": 14}, "registry_endpoint": "1.0.0", "registry_pages": 101, "runtime_observations": 0, "sealed_inputs": 19, "signature_limits": 33, "unspecified_signature_fragments": 4}
+STDERR
+
+### 2.1.0-current-source exit=0
+STDOUT
+STDERR
+....
+----------------------------------------------------------------------
+Ran 4 tests in 4.289s
+
+OK
+
+### 2.1.0-copied-validator exit=0
+STDOUT
+{"actual_retail_successors": 74, "command_receipts": 4, "contract_gap_records": 344, "extract_rows": 150, "inventory_directions": {"added": 55, "changed": 29, "removed": 8}, "inventory_rows": 92, "inventory_sections": {"commands": 18, "cvars": 2, "events": 2, "global-api": 56, "scriptobjects": 8, "widgets": 6}, "ledger_rows": 392, "ledger_statuses": {"UNPROVEN": 220, "cross-reference-only": 150, "metadata-only": 22}, "literal_call_spans": 44, "meaningful_closures": 0, "named_headers": 19, "native_observations": 0, "numerical_inventory_headers": 0, "proof_boundary": "SOURCE-only", "queued_main_owned": 7, "raw_nonblank_rows": 150, "runtime_observations": 0, "same_symbol_overlap_occurrences": 18, "sealed_files": 18, "signature_rows": 124, "snapshots": 101, "unspecified_signature_records": 49}
+STDERR
+
+### 2.1.0-tamper-0 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 200, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 183, in main
+    manifest = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 32, in check_seals
+    assert digest(content) == expected['sha256'], 'sealed input: ' + name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: historical-page-coverage.json
+
+### 2.1.0-restored-0 exit=0
+STDOUT
+{"actual_retail_successors": 74, "command_receipts": 4, "contract_gap_records": 344, "extract_rows": 150, "inventory_directions": {"added": 55, "changed": 29, "removed": 8}, "inventory_rows": 92, "inventory_sections": {"commands": 18, "cvars": 2, "events": 2, "global-api": 56, "scriptobjects": 8, "widgets": 6}, "ledger_rows": 392, "ledger_statuses": {"UNPROVEN": 220, "cross-reference-only": 150, "metadata-only": 22}, "literal_call_spans": 44, "meaningful_closures": 0, "named_headers": 19, "native_observations": 0, "numerical_inventory_headers": 0, "proof_boundary": "SOURCE-only", "queued_main_owned": 7, "raw_nonblank_rows": 150, "runtime_observations": 0, "same_symbol_overlap_occurrences": 18, "sealed_files": 18, "signature_rows": 124, "snapshots": 101, "unspecified_signature_records": 49}
+STDERR
+
+### 2.1.0-tamper-1 exit=1
+STDOUT
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 200, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 183, in main
+    manifest = check_seals()
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.1.0/data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py", line 32, in check_seals
+    assert digest(content) == expected['sha256'], 'sealed input: ' + name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: source-green.log
+
+### 2.1.0-restored-1 exit=0
+STDOUT
+{"actual_retail_successors": 74, "command_receipts": 4, "contract_gap_records": 344, "extract_rows": 150, "inventory_directions": {"added": 55, "changed": 29, "removed": 8}, "inventory_rows": 92, "inventory_sections": {"commands": 18, "cvars": 2, "events": 2, "global-api": 56, "scriptobjects": 8, "widgets": 6}, "ledger_rows": 392, "ledger_statuses": {"UNPROVEN": 220, "cross-reference-only": 150, "metadata-only": 22}, "literal_call_spans": 44, "meaningful_closures": 0, "named_headers": 19, "native_observations": 0, "numerical_inventory_headers": 0, "proof_boundary": "SOURCE-only", "queued_main_owned": 7, "raw_nonblank_rows": 150, "runtime_observations": 0, "same_symbol_overlap_occurrences": 18, "sealed_files": 18, "signature_rows": 124, "snapshots": 101, "unspecified_signature_records": 49}
+STDERR
+
+### 2.0.1-current-source exit=0
+STDOUT
+STDERR
+test_frozen_full_rows_handlers_commands_and_late_qualifiers (__main__.SourceTests.test_frozen_full_rows_handlers_commands_and_late_qualifiers) ... ok
+test_literal_signatures_duplicates_and_unexpanded_references (__main__.SourceTests.test_literal_signatures_duplicates_and_unexpanded_references) ... ok
+test_macro_option_suffix_placeholder_and_nested_reference_are_not_expanded (__main__.SourceTests.test_macro_option_suffix_placeholder_and_nested_reference_are_not_expanded) ... ok
+test_malformed_signature_is_preserved_not_completed (__main__.SourceTests.test_malformed_signature_is_preserved_not_completed) ... ok
+test_prose_parentheses_are_not_apis_and_command_arguments_stay_literal (__main__.SourceTests.test_prose_parentheses_are_not_apis_and_command_arguments_stay_literal) ... ok
+test_replacement_names_and_wrapper_name_have_literal_positions (__main__.SourceTests.test_replacement_names_and_wrapper_name_have_literal_positions) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.027s
+
+OK
+
+### 2.0.1-copied-validator exit=0
+STDOUT
+{"actual_successors": 74, "by_kind": {"api-family": 1, "command": 81, "command-family": 5, "constant": 2, "context-identifier": 30, "event": 21, "event-family": 3, "global-api": 87, "global-api-reference": 4, "language-example": 2, "string-method-reference": 3, "widget-method": 8, "widget-script": 8, "widget-script-signature": 31, "widget-template": 9}, "cvars": 0, "gap_records": 792, "headers": 35, "meaningful_closures": 0, "native_observations": 0, "nonblank_rows": 316, "occurrences": 295, "original_command_replays": 6, "prose_contract_rows": 280, "rec

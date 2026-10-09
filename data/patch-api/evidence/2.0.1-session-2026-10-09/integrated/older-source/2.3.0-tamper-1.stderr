@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.3.0/data/patch-api/evidence/2.3.0-session-2026-10-09/validate.py", line 26, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.3.0/data/patch-api/evidence/2.3.0-session-2026-10-09/validate.py", line 13, in main
+    assert digest((ROOT / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: data/patch-api/evidence/2.3.0-session-2026-10-09/green.log

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/current_accounting.py", line 25, in <module>
+    assert gaps==json.loads((R/'tests/data/patch_2_1_0_sweep_known_gaps.json').read_bytes()),'current 2.1.0 gap ledger'
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/osso/Projects/wow/wow-ui-sim/tests/data/patch_2_1_0_sweep_known_gaps.json'

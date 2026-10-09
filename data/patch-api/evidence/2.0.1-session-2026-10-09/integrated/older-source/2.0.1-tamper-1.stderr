@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 214, in <module>
+    print(json.dumps(replay(HERE), sort_keys=True))
+                     ~~~~~~^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 190, in replay
+    manifest, bundle = load_inputs(here)
+                       ~~~~~~~~~~~^^^^^^
+  File "/tmp/older-source-independent-fna_vx3l/copy-2.0.1/data/patch-api/evidence/2.0.1-session-2026-10-09/validate.py", line 35, in load_inputs
+    assert digest(content) == seal['sha256'], 'sealed input: ' + name
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: sealed input: source-green.log
