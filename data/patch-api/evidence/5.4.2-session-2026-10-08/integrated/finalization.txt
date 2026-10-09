@@ -1,0 +1,103 @@
+{"receipts": 22, "sweep_pages": 59, "other_sweeps_unchanged": 58}
+[p542-page 3ce09822c] Seal complete 5.4.2 integrated receipts and unchanged master comparisons
+ 76 files changed, 179873 insertions(+), 1 deletion(-)
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/checks.launcher.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/checks.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/checks.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/command-ledger.md
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/gap-comparison.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master-all-sweeps.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master-all-sweeps.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master-mists-all-sweeps.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master-mists-all-sweeps.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_0_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_0_2_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_0_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_0_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_1_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_1_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_1_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_2_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_2_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_2_6_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_10_2_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_0_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_0_2_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_0_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_0_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_1_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_1_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_1_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_2_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_2_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_11_2_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_12_0_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_12_0_1_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_12_0_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_12_0_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_12_1_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_5_4_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_5_4_8_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_5_5_3_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_5_5_4_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_6_0_1_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_6_0_2_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_6_1_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_6_2_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_6_2_2_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_6_2_4_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_7_0_1_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_7_0_3_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_7_1_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_7_2_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_7_2_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_7_3_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_7_3_2_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_8_0_1_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_8_1_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_8_1_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_8_2_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_8_2_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_8_3_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_8_3_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_0_1_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_0_2_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_0_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_1_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_1_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_2_0_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_2_5_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/master/patch_9_2_7_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/mists-all-sweeps.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/mists-all-sweeps.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/mists-sweeps-driver.launcher.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/mists-sweeps-driver.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/mists-sweeps-driver.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/patch_5_5_3_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/patch_5_5_4_publication_sweep-results.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/receipts.json
+
+CONTEXT_SHA256 = '83d016c8794413583412a1ad75f11496a2f329b3302695acf464a67c15e05b17'
+[p542-page f06bcc1e2] Pin portable integrated 5.4.2 validator context and seals
+ 2 files changed, 296 insertions(+), 1 deletion(-)
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/context.json
+
+integrated-validator 0
+own-seal-controls 0
+[p542-page dcb39b5d4] Retain passing integrated validator and restored own-log tamper controls
+ 7 files changed, 82 insertions(+)
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/historical-tamper-validator.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/integrated-tamper-validator.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/integrated-validator.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/integrated-validator.txt
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/own-log-tamper.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/own-seal-controls.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/own-seal-controls.txt
+
+validator-gate 0
+[p542-page fba13b002] Record passing 5.4.2 clean and later-audit portability gates
+ 5 files changed, 588 insertions(+), 2 deletions(-)
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/validator-gate.proof.json
+ create mode 100644 data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/validator-gate.txt
+
+{"status": "PASS", "head": "fba13b002de35a6e5ba67170319602da9f45ebf7", "gate": {"clean": {"failed": 0, "passed": 45}, "later_audit": {"failed": 0, "passed": 46}}}
