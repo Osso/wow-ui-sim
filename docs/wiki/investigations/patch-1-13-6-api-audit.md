@@ -20,9 +20,21 @@ Seven contracts remain UNPROVEN: three CVar publication-only declarations, three
 
 Read-only `src/`/`tests/` exact-symbol scan found no modeled callsites for these three names. `src/cvars.yaml` has current `specular: '1'` and `textureErrorColors: '1'`; these are simulator configuration, not source defaults. Current shared CVar getters use `SimState.cvars`; generic storage alone cannot establish the three CVars' effects or native historical contracts. Source has no default/type/range/security/persistence/effect details sufficient for a meaningful production edit. No runtime proposal warranted; leave precise gaps. Current bare-Era getter observations, if taken, remain separate from sealed SOURCE measurements.
 
+## Current bare Era observation matrix
+
+| Source name | Current value/default | Publication | Model/native credit |
+|---|---|---|---|
+| nameplateCommentatorMaxDistance | nil/nil | Missing | None |
+| specular | `1`/`1` | Published | None |
+| textureErrorColors | `1`/`1` | Published | None |
+
+Current getter raw types are both `function`; an unknown CVar returns nil/nil, not invented defaults. Source defaults remain null for all three. Compatibility GetBuildInfo tuple `12.0.7`/`68256`/`120007` is separately observed, neither activeEra11507 nor source11306 native proof. No production identity changes.
+
+At `e44841ae3`, the initially empty exact-gap fixture fails with precisely `wt-cvars-nameplateCommentatorMaxDistance-14`; unknown-name control passes1/1. At `2d2659297`, revised exact one-ID gap fixture plus complete concrete observation equality passes1/1; unchanged negative proof remains valid, not rerun. All RED/GREEN observations byte-identical. Remaining source contracts7/7 UNPROVEN; current publication two matches/one mismatch does not close them. Seven inherited simulator and six vendor-manifest warnings retained unsuppressed; narrow helper adds no unused sweep machinery. Only offline/locked Cargo, own target/TMPDIR and existing package-home bookkeeping used. No CoW/cache/toolchain/dependency/network/vendor changes.
+
 ## Proof and replay
 
-Own SOURCE RED7/7 retained at `fe64d92ca`; GREEN7/7 at `d69734ceb` covers55 omission controls and fabricated defaults/credit/history rejection. Portable RED3 retained; GREEN3/3 at `271ed3a03` runs fresh copied SOURCE7, default register/extract byte replay and both serialized seal rejections/exact restorations. Original88 seals and89-member/138222-byte archive remain immutable; later receipts separate. Shared parser/extractor defaults are unchanged: copied generator reproduces three inventory entries; copied default extractor retains seven nonblank text lines. Original seals/archive are immutable after capture; current receipts stay separate. No broad/check/lint/type/coverage/final gates.
+Own SOURCE RED7/7 retained at `fe64d92ca`; GREEN7/7 at `d69734ceb` covers55 omission controls and fabricated defaults/credit/history rejection. Portable RED3 retained; GREEN3/3 at `271ed3a03` runs fresh copied SOURCE7, default register/extract byte replay and both serialized seal rejections/exact restorations. Original88 seals and89-member/138222-byte archive remain immutable; later receipts separate. Shared parser/extractor defaults are unchanged: copied generator reproduces three inventory entries; copied default extractor retains six nonblank text lines. Original seals/archive are immutable after capture; current receipts stay separate. No broad/check/lint/type/coverage/final gates.
 
 ## Successor boundaries
 

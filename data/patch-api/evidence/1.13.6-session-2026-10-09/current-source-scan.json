@@ -1,0 +1,15 @@
+{
+  "scope": "read-only exact case-sensitive symbol substrings in src/tests .rs/.lua/.yaml/.json at2d2659297; no runtime model inference",
+  "hits": [
+    {
+      "path": "src/cvars.yaml",
+      "line": 1392,
+      "literal": "specular: '1'"
+    },
+    {
+      "path": "src/cvars.yaml",
+      "line": 1467,
+      "literal": "textureErrorColors: '1'"
+    }
+  ]
+}

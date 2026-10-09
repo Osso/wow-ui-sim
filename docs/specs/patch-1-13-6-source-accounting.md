@@ -9,7 +9,7 @@ Account for the literal [frozen page](../../data/patch-api/evidence/1.13.6-sessi
 - [x] Keep unspecified defaults/signatures/effects, unexpanded links and configured11507/source11306 identities separate.
 - [x] Preserve own SOURCE RED/GREEN, no-Git copied replay, historical default bytes, disk ledger/log rejection and exact restoration; seal original inputs immutably and later receipts separately.
 - [x] Keep ordered same-Era successors pending; publication does not create model/native credit.
-- [ ] Observe all three current bare-Era getter results, raw C_CVar registration and unknown-name control separately; strict exact current gaps, no historical behavior claim.
+- [x] Observe all three current bare-Era getter results, raw C_CVar registration and unknown-name control separately; strict exact current gaps, no historical behavior claim.
 
 ## How it works
 

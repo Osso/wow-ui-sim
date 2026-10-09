@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.13.6 literal SOURCE audit
 
-[Audit](investigations/patch-1-13-6-api-audit.md): frozen461367/4435603,827 bytes; three added CVars, zero sourced defaults/signatures/examples, seven UNPROVEN contracts, two headers/one matching count, three unexpanded links/four templates. Own SOURCE RED retained; GREEN7/7 atd69734ceb,55 omission controls. Portable GREEN3/3 at271ed3a03: copied SOURCE/default-byte replay and both serialized seal rejections/restorations. Original88 seals unchanged; current getter proof pending. Ordered same-Era successors unapplied; zero model/native credit. Main owns integration/native/final gates.
+[Audit](investigations/patch-1-13-6-api-audit.md): frozen461367/4435603,827 bytes; three added CVars, zero sourced defaults/signatures/examples, seven UNPROVEN contracts, two headers/one matching count, three unexpanded links/four templates. Own SOURCE RED retained; GREEN7/7 atd69734ceb,55 omission controls. Portable GREEN3/3 at271ed3a03: copied SOURCE/default-byte replay and both serialized seal rejections/restorations. Original88 seals unchanged. Current Era getters: two published/one missing; strict exact gap/observations GREEN1/1 at2d2659297, unchanged unknown control1/1 ate44841ae3. Source defaults unspecified; no modeled effects/native credit. Ordered same-Era successors unapplied. Main owns integration/native/final gates.
 
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE audit
 
