@@ -16,8 +16,7 @@ fn patch_5_0_1_publication_sweep(env: &WowLuaEnv) {
         register_env: "P501_SWEEP_REGISTER",
         out_env: "P501_SWEEP_OUT",
         later_registers: &[
-            // Patch 5.0.4 destination audit is unmerged and separately owned.
-            r#"{"entries":[]}"#,
+            include_str!("../data/patch-api/sources/5.0.4-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.3.0-wikitext-register.json"),
