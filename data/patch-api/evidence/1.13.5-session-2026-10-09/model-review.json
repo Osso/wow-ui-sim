@@ -1,0 +1,58 @@
+[
+  {
+    "scope": "three threat globals",
+    "source_lines": [
+      10,
+      19,
+      20,
+      21
+    ],
+    "observed": "UnitThreatSituation returns nil without threat state. Detailed/lead helpers are explicit temporary false/zero defaults.",
+    "inputs": [
+      "state-inputs/src/lua_api/globals/unit_misc.rs",
+      "state-inputs/src/lua_api/workarounds/temporary/unit_threat_defaults.rs"
+    ],
+    "status": "UNPROVEN",
+    "reason": "Frozen names and reinstatement claim omit signatures, return values, threat calculations, token behavior and security. No real threat table; existing-name factory cannot establish native/model behavior."
+  },
+  {
+    "scope": "two threat events",
+    "source_lines": [
+      31,
+      32
+    ],
+    "observed": "Event identities listed in valid_events_c; Classic registration accepts nonempty event names.",
+    "inputs": [
+      "state-inputs/src/event/valid_events_c.rs",
+      "state-inputs/src/wrath/mod.rs"
+    ],
+    "status": "UNPROVEN",
+    "reason": "No payload, ordering, threat mutation or lifecycle declaration. Generic registration/dispatch is not threat producer behavior."
+  },
+  {
+    "scope": "combat log range",
+    "source_lines": [
+      10
+    ],
+    "observed": "Owned src scan has no combat-log-range declaration or range-gated dungeon/raid delivery model.",
+    "inputs": [
+      "state-scan.json"
+    ],
+    "status": "UNPROVEN",
+    "reason": "Literal increased range gives neither numeric limits nor delivery transition. Cannot invent distance/filtering rules or expand patch-note link."
+  },
+  {
+    "scope": "four additional backpack slots for secured accounts",
+    "source_lines": [
+      11
+    ],
+    "observed": "C_Container.GetContainerNumSlots reads SimState.bag_num_slots from bag_info; missing bag defaults to 0 slots. No authenticator matches in complete src rs/lua scan.",
+    "inputs": [
+      "state-inputs/src/c_api/bag_info.rs",
+      "state-inputs/src/c_api/item_spell/c_container.rs",
+      "state-scan.json"
+    ],
+    "status": "UNPROVEN",
+    "reason": "Existing generic capacity does not model account authenticator entitlement. Page states delta 4, not baseline/final capacity, getter signature, activation/persistence/security transition."
+  }
+]

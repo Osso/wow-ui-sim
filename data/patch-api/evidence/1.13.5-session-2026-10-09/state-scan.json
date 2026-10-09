@@ -1,0 +1,146 @@
+{
+  "revision": "045e396b0c6f717c2d962b97cdf46b736a3328ce",
+  "scope": "complete src rs/lua scan; static only",
+  "terms": [
+    "UnitDetailedThreatSituation",
+    "UnitThreatPercentageOfLead",
+    "UnitThreatSituation",
+    "UNIT_THREAT_LIST_UPDATE",
+    "UNIT_THREAT_SITUATION_UPDATE",
+    "authenticator",
+    "bag_num_slots",
+    "combat log range"
+  ],
+  "matches": [
+    {
+      "path": "src/c_api/bag_info.rs",
+      "line": 48,
+      "literal": "    pub fn bag_num_slots(&self, bag: i32) -> i32 {"
+    },
+    {
+      "path": "src/c_api/bag_info.rs",
+      "line": 53,
+      "literal": "        (1..=self.bag_num_slots(bag))"
+    },
+    {
+      "path": "src/c_api/c_merchant_frame/junk.rs",
+      "line": 43,
+      "literal": "                    sim.bag_num_slots(bag),"
+    },
+    {
+      "path": "src/c_api/crafting_execution.rs",
+      "line": 77,
+      "literal": "    let capacity = sim.bag_num_slots(0);"
+    },
+    {
+      "path": "src/c_api/crafting_execution.rs",
+      "line": 266,
+      "literal": "    (1..=sim.bag_num_slots(0))"
+    },
+    {
+      "path": "src/c_api/item_spell/c_container.rs",
+      "line": 102,
+      "literal": "    let num_slots = borrow_state(state)?.bag_num_slots(bag);"
+    },
+    {
+      "path": "src/c_api/item_spell/c_container.rs",
+      "line": 133,
+      "literal": "        (1..=sim.bag_num_slots(bag))"
+    },
+    {
+      "path": "src/event/valid_events_c.rs",
+      "line": 426,
+      "literal": "    \"UNIT_THREAT_LIST_UPDATE\","
+    },
+    {
+      "path": "src/event/valid_events_c.rs",
+      "line": 427,
+      "literal": "    \"UNIT_THREAT_SITUATION_UPDATE\","
+    },
+    {
+      "path": "src/lua_api/globals/enum_data/addon_system.rs",
+      "line": 363,
+      "literal": "        \"RankRequiresAuthenticator\","
+    },
+    {
+      "path": "src/lua_api/globals/enum_data/missing_constants.lua",
+      "line": 23,
+      "literal": "if LE_AUTH_AUTHENTICATOR == nil then LE_AUTH_AUTHENTICATOR = 2 end"
+    },
+    {
+      "path": "src/lua_api/globals/enum_data/missing_constants.lua",
+      "line": 1004,
+      "literal": "if LE_GAME_ERR_RANK_REQUIRES_AUTHENTICATOR == nil then LE_GAME_ERR_RANK_REQUIRES_AUTHENTICATOR = 895 end"
+    },
+    {
+      "path": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "line": 15598,
+      "literal": "    DbAuthenticatorInsufficient = 20073,"
+    },
+    {
+      "path": "src/lua_api/globals/enum_data/widget.rs",
+      "line": 281,
+      "literal": "        \"DbAuthenticatorInsufficient\","
+    },
+    {
+      "path": "src/lua_api/globals/guild_info.rs",
+      "line": 19,
+      "literal": "//!   per-rank authenticator gate, so every rank is freely assignable."
+    },
+    {
+      "path": "src/lua_api/globals/inventory_verbs.rs",
+      "line": 112,
+      "literal": "    (1..=st.bag_num_slots(0)).find(|slot| !st.bag_items.contains_key(&(0, *slot)))"
+    },
+    {
+      "path": "src/lua_api/globals/missing_surface/heirloom.rs",
+      "line": 275,
+      "literal": "    (1..=sim.bag_num_slots(0))"
+    },
+    {
+      "path": "src/lua_api/globals/strings/string_data/game_enums.rs",
+      "line": 189,
+      "literal": "    (\"LE_FRAME_TUTORIAL_BAG_SLOTS_AUTHENTICATOR\", 53),"
+    },
+    {
+      "path": "src/lua_api/globals/unit_misc.rs",
+      "line": 459,
+      "literal": "    LuaApiMut::register_function(lua, \"UnitThreatSituation\", unit_threat_situation)?;"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/unit_threat_defaults.rs",
+      "line": 3,
+      "literal": "//! Threat state is not modeled yet beyond the Rust-owned `UnitThreatSituation`"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/unit_threat_defaults.rs",
+      "line": 8,
+      "literal": "if UnitDetailedThreatSituation == nil then"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/unit_threat_defaults.rs",
+      "line": 9,
+      "literal": "  function UnitDetailedThreatSituation(_unit, _other_unit)"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/unit_threat_defaults.rs",
+      "line": 14,
+      "literal": "if UnitThreatPercentageOfLead == nil then"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/unit_threat_defaults.rs",
+      "line": 15,
+      "literal": "  function UnitThreatPercentageOfLead(_unit, _other_unit)"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/unit_threat_defaults.rs",
+      "line": 53,
+      "literal": "                    UnitDetailedThreatSituation(\"player\", \"target\")"
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/unit_threat_defaults.rs",
+      "line": 57,
+      "literal": "                if UnitThreatPercentageOfLead(\"player\", \"target\") ~= 0 then return \"lead\" end"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{{apichanges|1.13.7|prev=1.13.6|next=1.14.0}}
+
+== Summary ==
+* TOC: <code>11307</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/0412f2062bd45a4748276b13436d19cc1fde96a3...0fda07f99bf29bdd61d501310897ee921feed976 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/8d470b0fb0450f94f8465fd1cb691265032a6454#diff-e89b30aa1dc30a6ad8c34610689bede83b3ef645a24c3a84a0990826687fb735 BlizzardInterfaceResources]
+
+== Global API ==
+{| class="wikitable" style="min-width: 400px"
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| Added
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|GetDefaultScale}}
+</div>
+|}
+
+== CVars ==
+{| class="wikitable" style="min-width: 400px"
+|- class="mw-customtoggle-cvars" style="cursor: pointer" 
+! style="width: 100%; padding-right: 1em;"| Added
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=c|heardChoiceSFX}}
+: {{api|t=c|lastCharacterGuid}}
+: {{api|t=c|seenTBCInfoPane}}
+: {{api|t=c|showUnactivatedCharacters}}
+</div>
+|}
