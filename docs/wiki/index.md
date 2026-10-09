@@ -1,3 +1,7 @@
+# [2026-10-09] investigation | Patch 1.5.0 bounded frozen SOURCE audit
+
+[Audit](investigations/patch-1-5-0-api-audit.md): frozen372076/3587158; exact45-byte redirect, one row/link/UNPROVEN contract, zero local model/runtime/native subset. Own SOURCE RED6/portable RED3 retained; SOURCE GREEN6/6 at231bc7d2e; copied SOURCE6/portable3 atd209973b3. Original31 seals/32-member53,739-byte archive unchanged; seven separate later receipts, both serialized rejection/exact-restoration controls. Original queued1.6.0/1.7.0 separate/unapplied despite newer1.6.0 integrated at base. Main owns target research/integration/acceptance.
+
 ## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
 
 [Audit](investigations/patch-1-9-0-api-audit.md): frozen278324/2690597,45bytes; one literal redirect/link/UNPROVEN contract; zero local API/signature/default/prose/header/template/model/runtime/native. Own RED5+identityRED1/portableRED3 retained; SOURCE GREEN6/6 at4e3807887; copied SOURCE6/portable3/default-byte/error replay at011964fcb, both serialized tamper rejections/exact restorations. Original30 seals/31-member51,931byte archive unchanged; later receipts separate. Newer1.10.0 separately queued unapplied; main owns target research/integration/meaningful closure.

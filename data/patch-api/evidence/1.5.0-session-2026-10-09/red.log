@@ -1,0 +1,89 @@
+test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... FAIL
+test_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... FAIL
+test_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... FAIL
+test_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... FAIL
+test_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... FAIL
+test_manifest_registry_pin_mutations_reject_in_copied_inputs (__main__.FrozenRedirect.test_manifest_registry_pin_mutations_reject_in_copied_inputs) ... FAIL
+
+======================================================================
+FAIL: test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/test_source_accounting.py", line 71, in test_every_boundary_and_derived_count_is_required
+    self.assertTrue(ledger.get(name), f"missing boundary: {name}")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true : missing boundary: source_rows
+
+======================================================================
+FAIL: test_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/test_source_accounting.py", line 55, in test_exact_source_pin_response_registry
+    raw, pin, registry = audit.validate_source()
+                         ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/audit.py", line 16, in validate_source
+    raise AssertionError("1.5.0 frozen identity accounting absent")
+AssertionError: 1.5.0 frozen identity accounting absent
+
+======================================================================
+FAIL: test_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/test_source_accounting.py", line 106, in test_foreign_histories_never_become_successors
+    self.assertIn("2.0.1", [row["version"] for row in refs])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '2.0.1' not found in []
+
+======================================================================
+FAIL: test_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/test_source_accounting.py", line 152, in test_historical_default_tools_reproduce_exact_bytes
+    audit.replay_defaults()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/audit.py", line 22, in replay_defaults
+    raise AssertionError("1.5.0 default replay absent")
+AssertionError: 1.5.0 default replay absent
+
+======================================================================
+FAIL: test_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/test_source_accounting.py", line 20, in test_literal_redirect_and_empty_publication_inventory
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        ledger["source_rows"],
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        ],
+        ^^
+    )
+    ^
+AssertionError: Lists differ: [] != [{'id': 'raw-1.5.0-001', 'line': 1, 'liter[96 chars] []}]
+
+Second list contains 1 additional elements.
+First extra element 0:
+{'id': 'raw-1.5.0-001', 'line': 1, 'literal': '#REDIRECT [[API change summaries/Historical]]', 'status': 'metadata-only', 'capabilities': []}
+
+- []
++ [{'capabilities': [],
++   'id': 'raw-1.5.0-001',
++   'line': 1,
++   'literal': '#REDIRECT [[API change summaries/Historical]]',
++   'status': 'metadata-only'}]
+
+======================================================================
+FAIL: test_manifest_registry_pin_mutations_reject_in_copied_inputs (__main__.FrozenRedirect.test_manifest_registry_pin_mutations_reject_in_copied_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/test_source_accounting.py", line 132, in test_manifest_registry_pin_mutations_reject_in_copied_inputs
+    audit.validate_source()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/audit.py", line 16, in validate_source
+    raise AssertionError("1.5.0 frozen identity accounting absent")
+AssertionError: 1.5.0 frozen identity accounting absent
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=6)

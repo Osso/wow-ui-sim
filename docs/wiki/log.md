@@ -1118,3 +1118,11 @@ Fresh immutable copied validator/SOURCE5/portable3 ata3e47eb41; exact default by
 ## [2026-10-09] investigation | Patch 1.6.0 frozen redirect SOURCE audit
 
 [Audit](investigations/patch-1-6-0-api-audit.md): frozen310843/2998524;45-byte redirect, one row/link/UNPROVEN contract, registry101. Own SOURCE RED5/GREEN5 at61fa2a1fa (25 ledger controls); copied SOURCE5/portable3/validator at a0e7ba901.30 original seals/31-member53,161-byte archive unchanged; both serialized tamper rejections/exact restorations. Seven separate later receipt seals; no runtime/model/native credit or parent acceptance. No local declarations or grounded model/native subset; target unexpanded, queued1.7.0 and1.8.0 behind1.9.0 separately unapplied. Main owns integration/acceptance.
+
+## [2026-10-09] ingest | Patch 1.5.0 SOURCE accounting
+
+Own frozen identity verified before derivation; SOURCE RED6/portable RED3 retained. [Audit](investigations/patch-1-5-0-api-audit.md) bounds empty local inventory and unapplied frozen contexts; no runtime/native/parent credit. SOURCE GREEN6/6 at231bc7d2e; portable GREEN pending.
+
+## [2026-10-09] copied SOURCE proof | Patch 1.5.0
+
+Own SOURCE6/6 at231bc7d2e; immutable31-seal/32-member53,739-byte archive ata4f4d59ba. Actual copied SOURCE6/portable3 and validator exit0 atd209973b3; default bytes/errors and both serialized ledger/log reject/exact restoration. Seven later receipts separately sealed. [Audit](investigations/patch-1-5-0-api-audit.md); no native/model/runtime/parent closure, main owns acceptance.
