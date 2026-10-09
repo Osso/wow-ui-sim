@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.7.0 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-7-0-api-audit.md): frozen456653/4390984,45 bytes; one literal row/link/UNPROVEN contract, zero local declarations/model/runtime/native. Own SOURCE RED6/portable RED3 retained; targeted GREEN/copy pending. Separately unapplied1.8.0 behind1.9.0. Main owns target research/integration/acceptance.
+[Audit](investigations/patch-1-7-0-api-audit.md): frozen456653/4390984,45 bytes; one literal row/link/UNPROVEN contract, zero local declarations/model/runtime/native. Own SOURCE RED6/portable RED3 retained; SOURCE GREEN6/6 at0718bd85b, copied replay pending. Separately unapplied1.8.0 behind1.9.0. Main owns target research/integration/acceptance.
 
 ## [2026-10-09] investigation | Patch 1.13.2 frozen Era audit
 

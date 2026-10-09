@@ -1,0 +1,11 @@
+{
+  "created_at": "2026-10-09T19:16:05.249477+00:00",
+  "creation_revision": "0718bd85bce07590860af8433ccaea2b5032e1b1",
+  "original_seals": 46,
+  "archive_members": 47,
+  "archive_bytes": 55573,
+  "archive_sha256": "955255a99902a3076c3eebe50798b4fa78f399251e80afbdc3c4e246400822c7",
+  "seals_sha256": "38129730211271ef3223ec1b3a76ec92ebdd0d9eb2c8a444a81c2acc07e9b153",
+  "max_member_bytes": 72712,
+  "limit": "Archive/input seals immutable; copied replay and later execution receipts are separately retained, never backfilled."
+}
