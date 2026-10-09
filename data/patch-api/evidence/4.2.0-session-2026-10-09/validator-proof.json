@@ -1,0 +1,67 @@
+{
+  "scope": "Own historical Python fixtures only. No cargo/check/readability/deploy or current integration acceptance. Relocated clean fixture contains no Git objects or current source tree. Historical 4.3.4 proof untouched.",
+  "revision": "7e9ee5cc1174cbda7c320711cf59fa69851653bc",
+  "input_origin": "git show ebf7d2c91:<path>; exact original bytes retained in gzip archive",
+  "steps": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py",
+        "-v"
+      ],
+      "scope": "RED: pre-format newly written fixture, validator missing",
+      "exit": 1,
+      "log": "validator-red.log",
+      "tests": 13,
+      "failures": 13
+    },
+    {
+      "command": [
+        "uvx",
+        "ruff",
+        "format",
+        "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/validate.py",
+        "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py"
+      ],
+      "exit": 0,
+      "log": "validator-format.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py",
+        "-v"
+      ],
+      "revision": "7e9ee5cc1174cbda7c320711cf59fa69851653bc",
+      "scope": "GREEN: relocated historical replay plus 12 serialized tamper controls",
+      "exit": 0,
+      "log": "validator-green.log",
+      "tests": 13,
+      "failures": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/validate.py"
+      ],
+      "revision": "7e9ee5cc1174cbda7c320711cf59fa69851653bc",
+      "scope": "Historical-only validator report",
+      "exit": 0,
+      "report": "validator-report.json"
+    }
+  ],
+  "artifact_seals": {
+    "historical-inputs.json": "fe7c280903e4d9a70dd9af5119f3030ae7b8a5b0fb7dbedf76fc629c2e7401a6",
+    "historical-inputs.tar.gz": "aa66dd6be028c3ab5ed664566e5adfa6a72aa8f21651f2e8de7563916b94bdc8",
+    "validate.py": "f8665144c0ab968040556d48c733ca131d757f091d2015f96ab7a5f11be50b0a",
+    "test_validate.py": "d4af330dca4c7ccd2630fad83e89640062e3908a072071efcebc61b23e88f710",
+    "validator-red.log": "d2266703fc60a894ad3883686aa3c757d8ecaf61853d9cac54c58193a57b7010",
+    "validator-green.log": "246869f6fed478eb2cd9dbd54d0e6e8f0854d2fc13042c5e7adc8c41771be9f5",
+    "validator-format.log": "7cac9a1048534e1f0b0298408616f47d4457ee0f8a670164566a6bbafa8e0e20",
+    "validator-report.json": "4cbc04c631b250e4a3189c2f54d55f26df9546cb7809ed5d873a8c91f51bf6be"
+  },
+  "total_owned_artifact_bytes": 308639
+}

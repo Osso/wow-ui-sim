@@ -1,0 +1,18 @@
+test_gap_fixture_tampering (__main__.HistoricalValidatorTests.test_gap_fixture_tampering) ... ok
+test_generator_tampering (__main__.HistoricalValidatorTests.test_generator_tampering) ... ok
+test_later_register_tampering (__main__.HistoricalValidatorTests.test_later_register_tampering) ... ok
+test_ledger_tampering (__main__.HistoricalValidatorTests.test_ledger_tampering) ... ok
+test_negative_result_tampering (__main__.HistoricalValidatorTests.test_negative_result_tampering) ... ok
+test_page_identity_tampering (__main__.HistoricalValidatorTests.test_page_identity_tampering) ... ok
+test_receipt_log_tampering (__main__.HistoricalValidatorTests.test_receipt_log_tampering) ... ok
+test_receipt_manifest_tampering (__main__.HistoricalValidatorTests.test_receipt_manifest_tampering) ... ok
+test_relocated_replay_without_git_or_current_inputs (__main__.HistoricalValidatorTests.test_relocated_replay_without_git_or_current_inputs) ... ok
+test_response_tampering (__main__.HistoricalValidatorTests.test_response_tampering) ... ok
+test_result_tampering (__main__.HistoricalValidatorTests.test_result_tampering) ... ok
+test_snapshot_manifest_tampering (__main__.HistoricalValidatorTests.test_snapshot_manifest_tampering) ... ok
+test_source_tampering (__main__.HistoricalValidatorTests.test_source_tampering) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.609s
+
+OK

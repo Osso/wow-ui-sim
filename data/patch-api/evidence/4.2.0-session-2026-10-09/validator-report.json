@@ -1,0 +1,17 @@
+{
+  "inventory_rows": 65,
+  "historical_gaps": 31,
+  "negative_gaps": 32,
+  "ledger_rows": 66,
+  "later_registers": 64,
+  "pending_later_registers": [
+    "4.3.0",
+    "4.3.4"
+  ],
+  "status": "PASS",
+  "source_replay": "byte-identical",
+  "receipt_artifact_seals": 19,
+  "snapshot_members": 73,
+  "native_runtime_replay": false,
+  "scope": "Historical source replay and retained receipt integrity only; no current integration or native/runtime acceptance."
+}
