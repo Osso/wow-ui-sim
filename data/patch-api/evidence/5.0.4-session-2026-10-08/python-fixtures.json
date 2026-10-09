@@ -1,0 +1,112 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_check_patch_validators.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.377s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_extract_patch_non_inventory.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ".....................................\n----------------------------------------------------------------------\nRan 37 tests in 0.043s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_gen_patch_wikitext_register.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "...................................\n----------------------------------------------------------------------\nRan 35 tests in 0.168s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_audit_validation.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.183s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_mists_520_register.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_mists_extract.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_mists_prepatch.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.119s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_mists_register.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.001s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_mists_transclusion.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK\n"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_warlords_register.py"
+    ],
+    "revision": "edf957802",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nOK\n"
+  }
+]

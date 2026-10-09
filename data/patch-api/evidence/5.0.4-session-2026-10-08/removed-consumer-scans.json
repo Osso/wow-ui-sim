@@ -1,0 +1,4053 @@
+{
+  "revision": "3d31dd5e1",
+  "method": "Python re Unicode whole-word qualified and bare scans; all textual src/tests files untruncated, current retail cache excluding Documentation",
+  "input_pins": {
+    "cache": {
+      "files": 3422,
+      "aggregate_sha256": "4d292f4b2b23cc2c749b180aaf693b6d60168927c38b03d1e0b4372ed63c29ac",
+      "root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "excluded": "Documentation path components"
+    },
+    "callers": {
+      "files": 3794,
+      "aggregate_sha256": "af03a8886b82592364165d644e94ef8bd8be305a6f5b02a684fc05300f7cac23",
+      "root": "/home/osso/.worktrees/wow-ui-sim-p504-page",
+      "excluded": null
+    }
+  },
+  "occurrences": [
+    {
+      "id": "wt-global-api-GetActiveTalentGroup-5",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetActiveTalentGroup",
+      "annotation": "*: <code>GetActiveTalentGroup</code> &rarr; {{api|GetActiveSpecGroup}} (NB: player character-only)",
+      "wikitext_line": 5,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 24,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 30,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 24,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 30,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-SetActiveTalentGroup-6",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetActiveTalentGroup",
+      "annotation": "*: <code>SetActiveTalentGroup</code> &rarr; {{api|SetActiveSpecGroup}}",
+      "wikitext_line": 6,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-GetNumTalentGroups-7",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumTalentGroups",
+      "annotation": "*: <code>GetNumTalentGroups</code> &rarr; {{api|GetNumSpecGroups}}",
+      "wikitext_line": 7,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 390,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, false);\t"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 400,
+            "text": "\t\tnumTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 431,
+            "text": "\t\t\t\tlocal numTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 532,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1152,
+            "text": "\t\tactiveTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1293,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1364,
+            "text": "\tlocal petTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1587,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, false), GetNumTalentGroups(false, false);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1619,
+            "text": "\t\tif ( GetNumTalentGroups(false, true) <= 1 and GetNumTalentGroups(false, false) <= 1 ) then"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 390,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, false);\t"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 400,
+            "text": "\t\tnumTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 431,
+            "text": "\t\t\t\tlocal numTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 532,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1152,
+            "text": "\t\tactiveTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1293,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1364,
+            "text": "\tlocal petTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1587,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, false), GetNumTalentGroups(false, false);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1619,
+            "text": "\t\tif ( GetNumTalentGroups(false, true) <= 1 and GetNumTalentGroups(false, false) <= 1 ) then"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-GetPrimaryTalentTree-8",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPrimaryTalentTree",
+      "annotation": "*: <code>GetPrimaryTalentTree</code> &rarr; {{api|GetSpecialization}}",
+      "wikitext_line": 8,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 21,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 27,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 21,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 27,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-GetUnspentTalentPoints-9",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetUnspentTalentPoints",
+      "annotation": "*: <code>GetUnspentTalentPoints</code> &rarr; {{api|GetNumUnspentTalents}}",
+      "wikitext_line": 9,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 378,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(TalentFrame.inspect, TalentFrame.pet, TalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1166,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(false, PlayerTalentFrame.pet, spec.talentGroup);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 378,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(TalentFrame.inspect, TalentFrame.pet, TalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1166,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(false, PlayerTalentFrame.pet, spec.talentGroup);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-GetNumTalentTabs-10",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumTalentTabs",
+      "annotation": "*: <code>GetNumTalentTabs</code> &rarr; {{api|GetNumSpecializations}}",
+      "wikitext_line": 10,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 203,
+            "text": "    // GetNumSkillLines / GetNumTalentTabs live in workarounds::temporary,"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 20,
+            "text": "if rawget(_G, \"GetNumTalentTabs\") == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 21,
+            "text": "    function GetNumTalentTabs()"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 100,
+            "text": "                return GetNumTalentTabs(),"
+          },
+          {
+            "path": "tests/talent_spec_probes.rs",
+            "line": 14,
+            "text": "    let n: i32 = env.eval(\"return GetNumTalentTabs()\").unwrap();"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 203,
+            "text": "    // GetNumSkillLines / GetNumTalentTabs live in workarounds::temporary,"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 20,
+            "text": "if rawget(_G, \"GetNumTalentTabs\") == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 21,
+            "text": "    function GetNumTalentTabs()"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 100,
+            "text": "                return GetNumTalentTabs(),"
+          },
+          {
+            "path": "tests/talent_spec_probes.rs",
+            "line": 14,
+            "text": "    let n: i32 = env.eval(\"return GetNumTalentTabs()\").unwrap();"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-global-api-GetTalentTabInfo-11",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentTabInfo",
+      "annotation": "*: <code>GetTalentTabInfo</code> &rarr; {{api|GetSpecializationInfo}}",
+      "wikitext_line": 11,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-GetTalentTreeRoles-12",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentTreeRoles",
+      "annotation": "*: <code>GetTalentTreeRoles</code> &rarr; {{api|GetSpecializationRole}}",
+      "wikitext_line": 12,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 701,
+            "text": "\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 977,
+            "text": "\t\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 701,
+            "text": "\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 977,
+            "text": "\t\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-IsRaidLeader-14",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsRaidLeader",
+      "annotation": "*: <code>IsRaidLeader, IsPartyLeader, UnitIsPartyLeader</code> &rarr; {{api|UnitIsGroupLeader}}",
+      "wikitext_line": 14,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-IsPartyLeader-14",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsPartyLeader",
+      "annotation": "*: <code>IsRaidLeader, IsPartyLeader, UnitIsPartyLeader</code> &rarr; {{api|UnitIsGroupLeader}}",
+      "wikitext_line": 14,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 191,
+            "text": "\t\t--C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 193,
+            "text": "\t\tlocal canShow = C_WoWLabsMatchmaking.IsPlayer(self.memberGUID) and not C_WoWLabsMatchmaking.IsAloneInWoWLabsParty() or C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self.memberGUID);"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+            "line": 167,
+            "text": "\t\tif C_WoWLabsMatchmaking.IsPlayerReady() and C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 20,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 95,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 121,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 297,
+            "text": "\tif not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 326,
+            "text": "\t\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_PlunderstormPrematchUI/Blizzard_PlunderstormPrematchUI.lua",
+            "line": 281,
+            "text": "\tself:SetText(not C_WoWLabsMatchmaking.IsPartyLeader() and WOWLABS_READY_GAME or WOW_LABS_START_QUEUE);"
+          },
+          {
+            "path": "Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua",
+            "line": 569,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua",
+            "line": 43,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(UnitPopupSharedUtil.GetGUID(contextData));"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 191,
+            "text": "\t\t--C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 193,
+            "text": "\t\tlocal canShow = C_WoWLabsMatchmaking.IsPlayer(self.memberGUID) and not C_WoWLabsMatchmaking.IsAloneInWoWLabsParty() or C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self.memberGUID);"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+            "line": 167,
+            "text": "\t\tif C_WoWLabsMatchmaking.IsPlayerReady() and C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 20,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 95,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 121,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 297,
+            "text": "\tif not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 326,
+            "text": "\t\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_PlunderstormPrematchUI/Blizzard_PlunderstormPrematchUI.lua",
+            "line": 281,
+            "text": "\tself:SetText(not C_WoWLabsMatchmaking.IsPartyLeader() and WOWLABS_READY_GAME or WOW_LABS_START_QUEUE);"
+          },
+          {
+            "path": "Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua",
+            "line": 569,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua",
+            "line": 43,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(UnitPopupSharedUtil.GetGUID(contextData));"
+          }
+        ],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/wowlabs.rs",
+            "line": 67,
+            "text": "        (\"IsPartyLeader\", is_party_leader),"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 212,
+            "text": "if IsPartyLeader == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 213,
+            "text": "  function IsPartyLeader()"
+          },
+          {
+            "path": "tests/blizzard_unit_popup_shared_loads.rs",
+            "line": 503,
+            "text": "             uses RemovePlayerFromParty + IsPartyLeader. All three \\"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 17,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 91,
+            "text": "            if C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 119,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/wowlabs.rs",
+            "line": 67,
+            "text": "        (\"IsPartyLeader\", is_party_leader),"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 212,
+            "text": "if IsPartyLeader == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 213,
+            "text": "  function IsPartyLeader()"
+          },
+          {
+            "path": "tests/blizzard_unit_popup_shared_loads.rs",
+            "line": 503,
+            "text": "             uses RemovePlayerFromParty + IsPartyLeader. All three \\"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 17,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 91,
+            "text": "            if C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 119,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-global-api-UnitIsPartyLeader-14",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnitIsPartyLeader",
+      "annotation": "*: <code>IsRaidLeader, IsPartyLeader, UnitIsPartyLeader</code> &rarr; {{api|UnitIsGroupLeader}}",
+      "wikitext_line": 14,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-IsRaidOfficer-15",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsRaidOfficer",
+      "annotation": "*: <code>IsRaidOfficer, UnitIsRaidOfficer</code> &rarr; {{api|UnitIsGroupAssistant}}",
+      "wikitext_line": 15,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 394,
+            "text": "if IsRaidOfficer == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 395,
+            "text": "  function IsRaidOfficer()"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 394,
+            "text": "if IsRaidOfficer == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 395,
+            "text": "  function IsRaidOfficer()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-global-api-UnitIsRaidOfficer-15",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnitIsRaidOfficer",
+      "annotation": "*: <code>IsRaidOfficer, UnitIsRaidOfficer</code> &rarr; {{api|UnitIsGroupAssistant}}",
+      "wikitext_line": 15,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 184,
+            "text": "        \"UnitIsRaidOfficer\","
+          },
+          {
+            "path": "src/lua_api/globals/group_queries_relationships.rs",
+            "line": 304,
+            "text": "/// `UnitIsRaidOfficer(unit)` \u2014 INFERRED: the raid leader or an assistant while"
+          },
+          {
+            "path": "tests/patch_12_1_0_unit_secrecy.rs",
+            "line": 76,
+            "text": "    UnitIsRaidOfficer = function(u) return UnitIsRaidOfficer(u) end,"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 184,
+            "text": "        \"UnitIsRaidOfficer\","
+          },
+          {
+            "path": "src/lua_api/globals/group_queries_relationships.rs",
+            "line": 304,
+            "text": "/// `UnitIsRaidOfficer(unit)` \u2014 INFERRED: the raid leader or an assistant while"
+          },
+          {
+            "path": "tests/patch_12_1_0_unit_secrecy.rs",
+            "line": 76,
+            "text": "    UnitIsRaidOfficer = function(u) return UnitIsRaidOfficer(u) end,"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-global-api-GetNumPartyMembers-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumPartyMembers",
+      "annotation": "*: <code>GetNumPartyMembers, GetRealNumPartyMembers</code> &rarr; {{api|GetNumSubgroupMembers}}",
+      "wikitext_line": 16,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 47,
+            "text": "    set_global(state, \"GetNumPartyMembers\", get_num_subgroup_members);"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 242,
+            "text": "            return GetNumPartyMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 246,
+            "text": "    assert_eq!(count, 3, \"GetNumPartyMembers aliases GetNumSubgroupMembers\");"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 47,
+            "text": "    set_global(state, \"GetNumPartyMembers\", get_num_subgroup_members);"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 242,
+            "text": "            return GetNumPartyMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 246,
+            "text": "    assert_eq!(count, 3, \"GetNumPartyMembers aliases GetNumSubgroupMembers\");"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-global-api-GetRealNumPartyMembers-16",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRealNumPartyMembers",
+      "annotation": "*: <code>GetNumPartyMembers, GetRealNumPartyMembers</code> &rarr; {{api|GetNumSubgroupMembers}}",
+      "wikitext_line": 16,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-GetNumRaidMembers-17",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumRaidMembers",
+      "annotation": "*: <code>GetNumRaidMembers, GetRealNumRaidMembers</code> &rarr; {{api|GetNumGroupMembers}} (NB: non-0 in any group, including parties; use {{api|IsInRaid}} to check for group type)",
+      "wikitext_line": 17,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 48,
+            "text": "    set_global(state, \"GetNumRaidMembers\", get_num_raid_members);"
+          },
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 287,
+            "text": "/// `GetNumRaidMembers()` \u2014 retail returns total raid size (player + others)"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 148,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 154,
+            "text": "        \"GetNumRaidMembers() should be 0 while the group is still a party\""
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 165,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 171,
+            "text": "        \"GetNumRaidMembers() should return party size + 1 once the raid threshold is crossed\""
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 48,
+            "text": "    set_global(state, \"GetNumRaidMembers\", get_num_raid_members);"
+          },
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 287,
+            "text": "/// `GetNumRaidMembers()` \u2014 retail returns total raid size (player + others)"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 148,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 154,
+            "text": "        \"GetNumRaidMembers() should be 0 while the group is still a party\""
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 165,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 171,
+            "text": "        \"GetNumRaidMembers() should return party size + 1 once the raid threshold is crossed\""
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-global-api-GetRealNumRaidMembers-17",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRealNumRaidMembers",
+      "annotation": "*: <code>GetNumRaidMembers, GetRealNumRaidMembers</code> &rarr; {{api|GetNumGroupMembers}} (NB: non-0 in any group, including parties; use {{api|IsInRaid}} to check for group type)",
+      "wikitext_line": 17,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-events-RAID_ROSTER_UPDATE-18",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "RAID_ROSTER_UPDATE",
+      "annotation": "*: <code>RAID_ROSTER_UPDATE, PARTY_MEMBERS_CHANGED</code> &rarr; {{api|t=e|GROUP_ROSTER_UPDATE}}",
+      "wikitext_line": 18,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua",
+            "line": 157,
+            "text": "\t\"RAID_ROSTER_UPDATE\","
+          },
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua",
+            "line": 189,
+            "text": "\tif event == \"RAID_ROSTER_UPDATE\" then"
+          },
+          {
+            "path": "Blizzard_RaidUI/Mainline/Blizzard_RaidUI.lua",
+            "line": 152,
+            "text": "\tRaidFrame:RegisterEvent(\"RAID_ROSTER_UPDATE\");"
+          },
+          {
+            "path": "Blizzard_RaidUI/Mainline/Blizzard_RaidUI.lua",
+            "line": 187,
+            "text": "\telseif ( event == \"RAID_ROSTER_UPDATE\" ) then"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua",
+            "line": 157,
+            "text": "\t\"RAID_ROSTER_UPDATE\","
+          },
+          {
+            "path": "Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua",
+            "line": 189,
+            "text": "\tif event == \"RAID_ROSTER_UPDATE\" then"
+          },
+          {
+            "path": "Blizzard_RaidUI/Mainline/Blizzard_RaidUI.lua",
+            "line": 152,
+            "text": "\tRaidFrame:RegisterEvent(\"RAID_ROSTER_UPDATE\");"
+          },
+          {
+            "path": "Blizzard_RaidUI/Mainline/Blizzard_RaidUI.lua",
+            "line": 187,
+            "text": "\telseif ( event == \"RAID_ROSTER_UPDATE\" ) then"
+          }
+        ],
+        "callers_qualified": [
+          {
+            "path": "src/event/valid_events_c.rs",
+            "line": 47,
+            "text": "    \"RAID_ROSTER_UPDATE\","
+          },
+          {
+            "path": "tests/blizzard_raid_ui_loads.rs",
+            "line": 85,
+            "text": "    \"RAID_ROSTER_UPDATE\","
+          },
+          {
+            "path": "tests/blizzard_raid_ui_loads.rs",
+            "line": 442,
+            "text": "             PLAYER_ENTERING_WORLD / VARIABLES_LOADED / RAID_ROSTER_UPDATE \\"
+          },
+          {
+            "path": "tests/blizzard_raid_ui_loads.rs",
+            "line": 580,
+            "text": "             RAID_ROSTER_UPDATE (full raid roster changed \u2014 drives \\"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/event/valid_events_c.rs",
+            "line": 47,
+            "text": "    \"RAID_ROSTER_UPDATE\","
+          },
+          {
+            "path": "tests/blizzard_raid_ui_loads.rs",
+            "line": 85,
+            "text": "    \"RAID_ROSTER_UPDATE\","
+          },
+          {
+            "path": "tests/blizzard_raid_ui_loads.rs",
+            "line": 442,
+            "text": "             PLAYER_ENTERING_WORLD / VARIABLES_LOADED / RAID_ROSTER_UPDATE \\"
+          },
+          {
+            "path": "tests/blizzard_raid_ui_loads.rs",
+            "line": 580,
+            "text": "             RAID_ROSTER_UPDATE (full raid roster changed \u2014 drives \\"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-events-PARTY_MEMBERS_CHANGED-18",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PARTY_MEMBERS_CHANGED",
+      "annotation": "*: <code>RAID_ROSTER_UPDATE, PARTY_MEMBERS_CHANGED</code> &rarr; {{api|t=e|GROUP_ROSTER_UPDATE}}",
+      "wikitext_line": 18,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-GetDungeonDifficulty-27",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDungeonDifficulty",
+      "annotation": "** <code>GetDungeonDifficulty</code> &rarr; {{api|GetDungeonDifficultyID}} has a new return value.",
+      "wikitext_line": 27,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-SetDungeonDifficulty-28",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetDungeonDifficulty",
+      "annotation": "** <code>SetDungeonDifficulty</code> &rarr; {{api|SetDungeonDifficultyID}} has a new argument value.",
+      "wikitext_line": 28,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-global-api-LootSlotIsItem-29",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "LootSlotIsItem",
+      "annotation": "** <code>LootSlotIsItem</code> &rarr; {{api|LootSlotHasItem}}",
+      "wikitext_line": 29,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-framexml-UIPanelButtonTemplate2-68",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "UIPanelButtonTemplate2",
+      "annotation": "* <code>UIPanelButtonTemplate2</code> is renamed to <code>UIPanelButtonTemplate</code>; the old version of which is removed.",
+      "wikitext_line": 68,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-framexml-MiniMapLFGFrame-69",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "MiniMapLFGFrame",
+      "annotation": "* The minimap buttons <code>MiniMapLFGFrame</code> and <code>MiniMapBattlefieldFrame</code> is renamed/merged to <code>QueueStatusMinimapButton</code>.",
+      "wikitext_line": 69,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 30,
+            "text": "            if not MiniMapLFGFrame or not MiniMapLFGFrame:IsShown() then"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 31,
+            "text": "                error(\"MiniMapLFGFrame did not show after joining LFD\")"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 33,
+            "text": "            if not MiniMapLFGFrame.eye or not MiniMapLFGFrame.eye:IsShown() then"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 34,
+            "text": "                error(\"MiniMapLFGFrame eye child did not show after joining LFD\")"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 36,
+            "text": "            if not MiniMapLFGFrame.eye.Texture or not MiniMapLFGFrame.eye.Texture:IsShown() then"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 37,
+            "text": "                error(\"MiniMapLFGFrame eye texture did not show after joining LFD\")"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 30,
+            "text": "            if not MiniMapLFGFrame or not MiniMapLFGFrame:IsShown() then"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 31,
+            "text": "                error(\"MiniMapLFGFrame did not show after joining LFD\")"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 33,
+            "text": "            if not MiniMapLFGFrame.eye or not MiniMapLFGFrame.eye:IsShown() then"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 34,
+            "text": "                error(\"MiniMapLFGFrame eye child did not show after joining LFD\")"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 36,
+            "text": "            if not MiniMapLFGFrame.eye.Texture or not MiniMapLFGFrame.eye.Texture:IsShown() then"
+          },
+          {
+            "path": "tests/mists_lfg_eye.rs",
+            "line": 37,
+            "text": "                error(\"MiniMapLFGFrame eye texture did not show after joining LFD\")"
+          }
+        ]
+      }
+    },
+    {
+      "id": "wt-framexml-MiniMapBattlefieldFrame-69",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "MiniMapBattlefieldFrame",
+      "annotation": "* The minimap buttons <code>MiniMapLFGFrame</code> and <code>MiniMapBattlefieldFrame</code> is renamed/merged to <code>QueueStatusMinimapButton</code>.",
+      "wikitext_line": 69,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "wt-framexml-ShapeshiftBarFrame-70",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "ShapeshiftBarFrame",
+      "annotation": "* <code>ShapeshiftBarFrame</code> is removed; druid shapeshifting UI is now handled by the <code>StanceBarFrame</code>.",
+      "wikitext_line": 70,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-AddPreviewTalentPoints-314",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "AddPreviewTalentPoints",
+      "annotation": "",
+      "wikitext_line": 314,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1100,
+            "text": "\t\t\t\tAddPreviewTalentPoints(self:GetParent().talentTree, self:GetID(), 1, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1106,
+            "text": "\t\t\t\tAddPreviewTalentPoints(self:GetParent().talentTree, self:GetID(), -1, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1100,
+            "text": "\t\t\t\tAddPreviewTalentPoints(self:GetParent().talentTree, self:GetID(), 1, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1106,
+            "text": "\t\t\t\tAddPreviewTalentPoints(self:GetParent().talentTree, self:GetID(), -1, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-AppendToFile-315",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "AppendToFile",
+      "annotation": "",
+      "wikitext_line": 315,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-BNTokenCombineGivenAndSurname-316",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BNTokenCombineGivenAndSurname",
+      "annotation": "",
+      "wikitext_line": 316,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-ClearLFGDungeon-317",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClearLFGDungeon",
+      "annotation": "",
+      "wikitext_line": 317,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-DeleteFile-318",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "DeleteFile",
+      "annotation": "",
+      "wikitext_line": 318,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-EJ_GetAvailableClasses-319",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "EJ_GetAvailableClasses",
+      "annotation": "",
+      "wikitext_line": 319,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-EJ_GetClassFilter-320",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "EJ_GetClassFilter",
+      "annotation": "",
+      "wikitext_line": 320,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-EJ_SetClassLootFilter-321",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "EJ_SetClassLootFilter",
+      "annotation": "",
+      "wikitext_line": 321,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetAchievementInfoFromCriteria-322",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAchievementInfoFromCriteria",
+      "annotation": "",
+      "wikitext_line": 322,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua",
+            "line": 1937,
+            "text": "\tlocal id = GetAchievementInfoFromCriteria(criteriaId);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua",
+            "line": 1937,
+            "text": "\tlocal id = GetAchievementInfoFromCriteria(criteriaId);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetActiveTalentGroup-323",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetActiveTalentGroup",
+      "annotation": "",
+      "wikitext_line": 323,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 24,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 30,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 24,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 30,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 21,
+            "text": "\tGetActiveTalentGroup = C_SpecializationInfo.GetActiveSpecGroup;"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetBattlefieldPosition-324",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBattlefieldPosition",
+      "annotation": "",
+      "wikitext_line": 324,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetBonusBarOverrideBarType-325",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBonusBarOverrideBarType",
+      "annotation": "",
+      "wikitext_line": 325,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetCompanionCooldown-326",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCompanionCooldown",
+      "annotation": "",
+      "wikitext_line": 326,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetDefaultRaidDifficulty-327",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDefaultRaidDifficulty",
+      "annotation": "",
+      "wikitext_line": 327,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetDungeonDifficulty-328",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDungeonDifficulty",
+      "annotation": "",
+      "wikitext_line": 328,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetExpertisePercent-329",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetExpertisePercent",
+      "annotation": "",
+      "wikitext_line": 329,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/real/combat_stats.rs",
+            "line": 410,
+            "text": "    (\"GetExpertisePercent\", get_expertise_percent),"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 70,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[0.0, 0.0, 0.0]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 115,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[1.5, 2.5, 3.5]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 118,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[1.5, 2.5, 3.5]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 120,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[1.5, 2.5, 4.5]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 152,
+            "text": "        {'GetExpertisePercent', {1.5, 2.5, 3.5}},"
+          },
+          {
+            "path": "tests/character_stats/stat_restriction_fixtures.lua",
+            "line": 12,
+            "text": "    {'GetExpertisePercent', {}, {0, 0, 0}},"
+          },
+          {
+            "path": "tests/character_stats.rs",
+            "line": 195,
+            "text": "                (GetExpertisePercent()),"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/real/combat_stats.rs",
+            "line": 410,
+            "text": "    (\"GetExpertisePercent\", get_expertise_percent),"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 70,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[0.0, 0.0, 0.0]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 115,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[1.5, 2.5, 3.5]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 118,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[1.5, 2.5, 3.5]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 120,
+            "text": "    assert_outputs(&env, \"GetExpertisePercent()\", &[1.5, 2.5, 4.5]);"
+          },
+          {
+            "path": "tests/character_stats/explicit_inputs.rs",
+            "line": 152,
+            "text": "        {'GetExpertisePercent', {1.5, 2.5, 3.5}},"
+          },
+          {
+            "path": "tests/character_stats/stat_restriction_fixtures.lua",
+            "line": 12,
+            "text": "    {'GetExpertisePercent', {}, {0, 0, 0}},"
+          },
+          {
+            "path": "tests/character_stats.rs",
+            "line": 195,
+            "text": "                (GetExpertisePercent()),"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetExtraBarOffset-330",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetExtraBarOffset",
+      "annotation": "",
+      "wikitext_line": 330,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetGroupPreviewTalentPointsSpent-331",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetGroupPreviewTalentPointsSpent",
+      "annotation": "",
+      "wikitext_line": 331,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 379,
+            "text": "\tlocal unspentPoints = talentPoints - GetGroupPreviewTalentPointsSpent(TalentFrame.pet, TalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 392,
+            "text": "\t\tif (GetPreviewPrimaryTalentTree(false, false, i) or GetGroupPreviewTalentPointsSpent(false, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 402,
+            "text": "\t\t\tif (GetPreviewPrimaryTalentTree(false, true, i) or GetGroupPreviewTalentPointsSpent(true, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1175,
+            "text": "\t\tlocal previewPointsSpent = GetGroupPreviewTalentPointsSpent(PlayerTalentFrame.pet, spec.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1223,
+            "text": "\t\t\tlocal unspentPreviewPoints = talentPoints - GetGroupPreviewTalentPointsSpent(PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1251,
+            "text": "\t\t\tlocal unspentPreviewPoints = talentPoints - GetGroupPreviewTalentPointsSpent(PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 379,
+            "text": "\tlocal unspentPoints = talentPoints - GetGroupPreviewTalentPointsSpent(TalentFrame.pet, TalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 392,
+            "text": "\t\tif (GetPreviewPrimaryTalentTree(false, false, i) or GetGroupPreviewTalentPointsSpent(false, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 402,
+            "text": "\t\t\tif (GetPreviewPrimaryTalentTree(false, true, i) or GetGroupPreviewTalentPointsSpent(true, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1175,
+            "text": "\t\tlocal previewPointsSpent = GetGroupPreviewTalentPointsSpent(PlayerTalentFrame.pet, spec.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1223,
+            "text": "\t\t\tlocal unspentPreviewPoints = talentPoints - GetGroupPreviewTalentPointsSpent(PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1251,
+            "text": "\t\t\tlocal unspentPreviewPoints = talentPoints - GetGroupPreviewTalentPointsSpent(PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetLFGInfoLocal-332",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetLFGInfoLocal",
+      "annotation": "",
+      "wikitext_line": 332,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetLastQueueStatusIndex-333",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetLastQueueStatusIndex",
+      "annotation": "",
+      "wikitext_line": 333,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetMajorTalentTreeBonuses-334",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMajorTalentTreeBonuses",
+      "annotation": "",
+      "wikitext_line": 334,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 790,
+            "text": "\t\tbonuses =  {GetMajorTalentTreeBonuses(self.talentTree, self.inspect, self.pet)};"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 790,
+            "text": "\t\tbonuses =  {GetMajorTalentTreeBonuses(self.talentTree, self.inspect, self.pet)};"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetMaxDailyQuests-335",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMaxDailyQuests",
+      "annotation": "",
+      "wikitext_line": 335,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetMinorTalentTreeBonuses-336",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMinorTalentTreeBonuses",
+      "annotation": "",
+      "wikitext_line": 336,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 810,
+            "text": "\t\tbonuses = {GetMinorTalentTreeBonuses(self.talentTree, self.inspect, self.pet)};"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 810,
+            "text": "\t\tbonuses = {GetMinorTalentTreeBonuses(self.talentTree, self.inspect, self.pet)};"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetMovieResolution-337",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMovieResolution",
+      "annotation": "",
+      "wikitext_line": 337,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetMultiCastBarOffset-338",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMultiCastBarOffset",
+      "annotation": "",
+      "wikitext_line": 338,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 334,
+            "text": "if GetMultiCastBarOffset == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 335,
+            "text": "  function GetMultiCastBarOffset()"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 334,
+            "text": "if GetMultiCastBarOffset == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 335,
+            "text": "  function GetMultiCastBarOffset()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNextPetTalentLevel-339",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNextPetTalentLevel",
+      "annotation": "",
+      "wikitext_line": 339,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1249,
+            "text": "\t\tlocal nextPetTalentLevel = GetNextPetTalentLevel();"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1249,
+            "text": "\t\tlocal nextPetTalentLevel = GetNextPetTalentLevel();"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNextTalentLevel-340",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNextTalentLevel",
+      "annotation": "",
+      "wikitext_line": 340,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1237,
+            "text": "\t\telseif (GetNextTalentLevel()) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1238,
+            "text": "\t\t\tPlayerTalentFrameHeaderText:SetFormattedText(NEXT_TALENT_LEVEL, GetNextTalentLevel());"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1237,
+            "text": "\t\telseif (GetNextTalentLevel()) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1238,
+            "text": "\t\t\tPlayerTalentFrameHeaderText:SetFormattedText(NEXT_TALENT_LEVEL, GetNextTalentLevel());"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNumBattlefieldPositions-341",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumBattlefieldPositions",
+      "annotation": "",
+      "wikitext_line": 341,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNumPartyMembers-342",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumPartyMembers",
+      "annotation": "",
+      "wikitext_line": 342,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 47,
+            "text": "    set_global(state, \"GetNumPartyMembers\", get_num_subgroup_members);"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 242,
+            "text": "            return GetNumPartyMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 246,
+            "text": "    assert_eq!(count, 3, \"GetNumPartyMembers aliases GetNumSubgroupMembers\");"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 47,
+            "text": "    set_global(state, \"GetNumPartyMembers\", get_num_subgroup_members);"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 242,
+            "text": "            return GetNumPartyMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 246,
+            "text": "    assert_eq!(count, 3, \"GetNumPartyMembers aliases GetNumSubgroupMembers\");"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNumRaidMembers-343",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumRaidMembers",
+      "annotation": "",
+      "wikitext_line": 343,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 48,
+            "text": "    set_global(state, \"GetNumRaidMembers\", get_num_raid_members);"
+          },
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 287,
+            "text": "/// `GetNumRaidMembers()` \u2014 retail returns total raid size (player + others)"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 148,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 154,
+            "text": "        \"GetNumRaidMembers() should be 0 while the group is still a party\""
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 165,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 171,
+            "text": "        \"GetNumRaidMembers() should return party size + 1 once the raid threshold is crossed\""
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 48,
+            "text": "    set_global(state, \"GetNumRaidMembers\", get_num_raid_members);"
+          },
+          {
+            "path": "src/lua_api/globals/group_queries.rs",
+            "line": 287,
+            "text": "/// `GetNumRaidMembers()` \u2014 retail returns total raid size (player + others)"
+          },
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 194,
+            "text": "    // GetNumGroupMembers / GetNumPartyMembers / GetNumRaidMembers /"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 148,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 154,
+            "text": "        \"GetNumRaidMembers() should be 0 while the group is still a party\""
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 165,
+            "text": "            return GetNumRaidMembers()"
+          },
+          {
+            "path": "tests/admin_party_api.rs",
+            "line": 171,
+            "text": "        \"GetNumRaidMembers() should return party size + 1 once the raid threshold is crossed\""
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNumTalentGroups-344",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumTalentGroups",
+      "annotation": "",
+      "wikitext_line": 344,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 390,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, false);\t"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 400,
+            "text": "\t\tnumTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 431,
+            "text": "\t\t\t\tlocal numTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 532,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1152,
+            "text": "\t\tactiveTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1293,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1364,
+            "text": "\tlocal petTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1587,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, false), GetNumTalentGroups(false, false);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1619,
+            "text": "\t\tif ( GetNumTalentGroups(false, true) <= 1 and GetNumTalentGroups(false, false) <= 1 ) then"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 390,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, false);\t"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 400,
+            "text": "\t\tnumTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 431,
+            "text": "\t\t\t\tlocal numTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 532,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1152,
+            "text": "\t\tactiveTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, PlayerTalentFrame.pet), GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1293,
+            "text": "\tlocal numTalentGroups = GetNumTalentGroups(false, PlayerTalentFrame.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1364,
+            "text": "\tlocal petTalentGroups = GetNumTalentGroups(false, true);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1587,
+            "text": "\tlocal activeTalentGroup, numTalentGroups = C_SpecializationInfo.GetActiveSpecGroup(false, false), GetNumTalentGroups(false, false);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1619,
+            "text": "\t\tif ( GetNumTalentGroups(false, true) <= 1 and GetNumTalentGroups(false, false) <= 1 ) then"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNumTalentPoints-345",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumTalentPoints",
+      "annotation": "",
+      "wikitext_line": 345,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 608,
+            "text": "\tif (PlayerTalentFrame.primaryTree or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 706,
+            "text": "\t\tif (PlayerTalentFrame.primaryTree or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 733,
+            "text": "\t\tif ((PlayerTalentFrame.primaryTree and self.talentTree ~= PlayerTalentFrame.primaryTree) or (not TalentUIUtil.IsActiveSpecSelected()) or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 936,
+            "text": "\t\tif (not primaryTree and GetNumTalentPoints() > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 959,
+            "text": "\t\telseif (isUnlocked or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1210,
+            "text": "\t\tif (not primaryTree and GetNumTalentPoints() > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 965,
+            "text": "\t\t\t\t\t\tif (PlayerTalentFrame.primaryTree or GetNumTalentPoints() == 0) then"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 608,
+            "text": "\tif (PlayerTalentFrame.primaryTree or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 706,
+            "text": "\t\tif (PlayerTalentFrame.primaryTree or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 733,
+            "text": "\t\tif ((PlayerTalentFrame.primaryTree and self.talentTree ~= PlayerTalentFrame.primaryTree) or (not TalentUIUtil.IsActiveSpecSelected()) or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 936,
+            "text": "\t\tif (not primaryTree and GetNumTalentPoints() > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 959,
+            "text": "\t\telseif (isUnlocked or GetNumTalentPoints() == 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1210,
+            "text": "\t\tif (not primaryTree and GetNumTalentPoints() > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 965,
+            "text": "\t\t\t\t\t\tif (PlayerTalentFrame.primaryTree or GetNumTalentPoints() == 0) then"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetNumTalentTabs-346",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumTalentTabs",
+      "annotation": "",
+      "wikitext_line": 346,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 203,
+            "text": "    // GetNumSkillLines / GetNumTalentTabs live in workarounds::temporary,"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 20,
+            "text": "if rawget(_G, \"GetNumTalentTabs\") == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 21,
+            "text": "    function GetNumTalentTabs()"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 100,
+            "text": "                return GetNumTalentTabs(),"
+          },
+          {
+            "path": "tests/talent_spec_probes.rs",
+            "line": 14,
+            "text": "    let n: i32 = env.eval(\"return GetNumTalentTabs()\").unwrap();"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/stubs/global_stubs.rs",
+            "line": 203,
+            "text": "    // GetNumSkillLines / GetNumTalentTabs live in workarounds::temporary,"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 20,
+            "text": "if rawget(_G, \"GetNumTalentTabs\") == nil then"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 21,
+            "text": "    function GetNumTalentTabs()"
+          },
+          {
+            "path": "src/lua_api/workarounds/temporary/legacy_talent_skill_defaults.rs",
+            "line": 100,
+            "text": "                return GetNumTalentTabs(),"
+          },
+          {
+            "path": "tests/talent_spec_probes.rs",
+            "line": 14,
+            "text": "    let n: i32 = env.eval(\"return GetNumTalentTabs()\").unwrap();"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetPartyLeaderIndex-347",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPartyLeaderIndex",
+      "annotation": "",
+      "wikitext_line": 347,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetPartyMember-348",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPartyMember",
+      "annotation": "",
+      "wikitext_line": 348,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetPreviewPrimaryTalentTree-349",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPreviewPrimaryTalentTree",
+      "annotation": "",
+      "wikitext_line": 349,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 392,
+            "text": "\t\tif (GetPreviewPrimaryTalentTree(false, false, i) or GetGroupPreviewTalentPointsSpent(false, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 402,
+            "text": "\t\t\tif (GetPreviewPrimaryTalentTree(false, true, i) or GetGroupPreviewTalentPointsSpent(true, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 533,
+            "text": "\tPlayerTalentFrame.primaryTree = GetPreviewPrimaryTalentTree(PlayerTalentFrame.inspect, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup) "
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1167,
+            "text": "\tlocal previewPrimaryTree = GetPreviewPrimaryTalentTree(PlayerTalentFrame.inspect, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1560,
+            "text": "\t\tlocal primaryTree = GetPreviewPrimaryTalentTree(false, false, spec.talentGroup) "
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 392,
+            "text": "\t\tif (GetPreviewPrimaryTalentTree(false, false, i) or GetGroupPreviewTalentPointsSpent(false, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 402,
+            "text": "\t\t\tif (GetPreviewPrimaryTalentTree(false, true, i) or GetGroupPreviewTalentPointsSpent(true, i) > 0) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 533,
+            "text": "\tPlayerTalentFrame.primaryTree = GetPreviewPrimaryTalentTree(PlayerTalentFrame.inspect, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup) "
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1167,
+            "text": "\tlocal previewPrimaryTree = GetPreviewPrimaryTalentTree(PlayerTalentFrame.inspect, PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1560,
+            "text": "\t\tlocal primaryTree = GetPreviewPrimaryTalentTree(false, false, spec.talentGroup) "
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetPreviewTalentPointsSpent-350",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPreviewTalentPointsSpent",
+      "annotation": "",
+      "wikitext_line": 350,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetPrimaryTalentTree-351",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPrimaryTalentTree",
+      "annotation": "",
+      "wikitext_line": 351,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 21,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 27,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 21,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 27,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 18,
+            "text": "\tGetPrimaryTalentTree = C_SpecializationInfo.GetSpecialization;"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetRaidRosterSelection-352",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRaidRosterSelection",
+      "annotation": "",
+      "wikitext_line": 352,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetRealNumPartyMembers-353",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRealNumPartyMembers",
+      "annotation": "",
+      "wikitext_line": 353,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetRealNumRaidMembers-354",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRealNumRaidMembers",
+      "annotation": "",
+      "wikitext_line": 354,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetRewardArenaPoints-355",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRewardArenaPoints",
+      "annotation": "",
+      "wikitext_line": 355,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetRewardHonor-356",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRewardHonor",
+      "annotation": "",
+      "wikitext_line": 356,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_UIPanels_Game/Mainline/QuestInfo.lua",
+            "line": 646,
+            "text": "\t\t\thonor = GetRewardHonor();"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_UIPanels_Game/Mainline/QuestInfo.lua",
+            "line": 646,
+            "text": "\t\t\thonor = GetRewardHonor();"
+          }
+        ],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/quest_surface/register.rs",
+            "line": 140,
+            "text": "    (\"GetRewardHonor\", return_zero),"
+          },
+          {
+            "path": "tests/c_quest_log_probes.rs",
+            "line": 501,
+            "text": "                local honor = GetRewardHonor()"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/quest_surface/register.rs",
+            "line": 140,
+            "text": "    (\"GetRewardHonor\", return_zero),"
+          },
+          {
+            "path": "tests/c_quest_log_probes.rs",
+            "line": 501,
+            "text": "                local honor = GetRewardHonor()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetTalentPrereqs-357",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentPrereqs",
+      "annotation": "",
+      "wikitext_line": 357,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 144,
+            "text": "\t\t\t\t\tGetTalentPrereqs(selectedTab, i, TalentFrame.inspect, TalentFrame.pet, TalentFrame.talentGroup));"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 144,
+            "text": "\t\t\t\t\tGetTalentPrereqs(selectedTab, i, TalentFrame.inspect, TalentFrame.pet, TalentFrame.talentGroup));"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetTalentTabInfo-358",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentTabInfo",
+      "annotation": "",
+      "wikitext_line": 358,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 13,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 10,
+            "text": "\tGetTalentTabInfo = function(specializationIndex, isInspect, isPet, groupIndex)"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetTalentTreeEarlySpells-359",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentTreeEarlySpells",
+      "annotation": "",
+      "wikitext_line": 359,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 820,
+            "text": "\t\tbonuses = {GetTalentTreeEarlySpells(self.talentTree, self.inspect, self.pet)};"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 820,
+            "text": "\t\tbonuses = {GetTalentTreeEarlySpells(self.talentTree, self.inspect, self.pet)};"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetTalentTreeMasterySpells-360",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentTreeMasterySpells",
+      "annotation": "",
+      "wikitext_line": 360,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 27,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 33,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 24,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 24,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 24,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 27,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 33,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_TBC.lua",
+            "line": 24,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Vanilla.lua",
+            "line": 24,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Wrath.lua",
+            "line": 24,
+            "text": "\tGetTalentTreeMasterySpells = function(specIndex, isInspect, isPet)"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetTalentTreeRoles-361",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTalentTreeRoles",
+      "annotation": "",
+      "wikitext_line": 361,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 701,
+            "text": "\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 977,
+            "text": "\t\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 701,
+            "text": "\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 977,
+            "text": "\t\tlocal role1, role2 = GetTalentTreeRoles(self.talentTree, self.inspect, self.pet);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetTradeSkillSubClassFilter-362",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTradeSkillSubClassFilter",
+      "annotation": "",
+      "wikitext_line": 362,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs",
+            "line": 61,
+            "text": "        \"GetTradeSkillSubClassFilter\","
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs",
+            "line": 61,
+            "text": "        \"GetTradeSkillSubClassFilter\","
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-GetUnspentTalentPoints-363",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetUnspentTalentPoints",
+      "annotation": "",
+      "wikitext_line": 363,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 378,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(TalentFrame.inspect, TalentFrame.pet, TalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1166,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(false, PlayerTalentFrame.pet, spec.talentGroup);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 378,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(TalentFrame.inspect, TalentFrame.pet, TalentFrame.talentGroup);"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1166,
+            "text": "\tlocal talentPoints = GetUnspentTalentPoints(false, PlayerTalentFrame.pet, spec.talentGroup);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsInFakeRaid-364",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsInFakeRaid",
+      "annotation": "",
+      "wikitext_line": 364,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsListedInLFR-365",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsListedInLFR",
+      "annotation": "",
+      "wikitext_line": 365,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 206,
+            "text": "if IsListedInLFR == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 207,
+            "text": "  function IsListedInLFR()"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 206,
+            "text": "if IsListedInLFR == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 207,
+            "text": "  function IsListedInLFR()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsOnePersonParty-366",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsOnePersonParty",
+      "annotation": "",
+      "wikitext_line": 366,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsPartyLeader-367",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsPartyLeader",
+      "annotation": "",
+      "wikitext_line": 367,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 191,
+            "text": "\t\t--C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 193,
+            "text": "\t\tlocal canShow = C_WoWLabsMatchmaking.IsPlayer(self.memberGUID) and not C_WoWLabsMatchmaking.IsAloneInWoWLabsParty() or C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self.memberGUID);"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+            "line": 167,
+            "text": "\t\tif C_WoWLabsMatchmaking.IsPlayerReady() and C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 20,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 95,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 121,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 297,
+            "text": "\tif not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 326,
+            "text": "\t\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_PlunderstormPrematchUI/Blizzard_PlunderstormPrematchUI.lua",
+            "line": 281,
+            "text": "\tself:SetText(not C_WoWLabsMatchmaking.IsPartyLeader() and WOWLABS_READY_GAME or WOW_LABS_START_QUEUE);"
+          },
+          {
+            "path": "Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua",
+            "line": 569,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua",
+            "line": 43,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(UnitPopupSharedUtil.GetGUID(contextData));"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 191,
+            "text": "\t\t--C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/GluePartyPoseUI.lua",
+            "line": 193,
+            "text": "\t\tlocal canShow = C_WoWLabsMatchmaking.IsPlayer(self.memberGUID) and not C_WoWLabsMatchmaking.IsAloneInWoWLabsParty() or C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self.memberGUID);"
+          },
+          {
+            "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+            "line": 167,
+            "text": "\t\tif C_WoWLabsMatchmaking.IsPlayerReady() and C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 20,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 95,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 121,
+            "text": "\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 297,
+            "text": "\tif not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua",
+            "line": 326,
+            "text": "\t\tlocal isPartyLeader = C_WoWLabsMatchmaking.IsPartyLeader();"
+          },
+          {
+            "path": "Blizzard_PlunderstormPrematchUI/Blizzard_PlunderstormPrematchUI.lua",
+            "line": 281,
+            "text": "\tself:SetText(not C_WoWLabsMatchmaking.IsPartyLeader() and WOWLABS_READY_GAME or WOW_LABS_START_QUEUE);"
+          },
+          {
+            "path": "Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua",
+            "line": 569,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(self:GetGUID())"
+          },
+          {
+            "path": "Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua",
+            "line": 43,
+            "text": "\treturn C_WoWLabsMatchmaking.IsPartyLeader() and not C_WoWLabsMatchmaking.IsPlayer(UnitPopupSharedUtil.GetGUID(contextData));"
+          }
+        ],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/wowlabs.rs",
+            "line": 67,
+            "text": "        (\"IsPartyLeader\", is_party_leader),"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 212,
+            "text": "if IsPartyLeader == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 213,
+            "text": "  function IsPartyLeader()"
+          },
+          {
+            "path": "tests/blizzard_unit_popup_shared_loads.rs",
+            "line": 503,
+            "text": "             uses RemovePlayerFromParty + IsPartyLeader. All three \\"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 17,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 91,
+            "text": "            if C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 119,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/wowlabs.rs",
+            "line": 67,
+            "text": "        (\"IsPartyLeader\", is_party_leader),"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 212,
+            "text": "if IsPartyLeader == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 213,
+            "text": "  function IsPartyLeader()"
+          },
+          {
+            "path": "tests/blizzard_unit_popup_shared_loads.rs",
+            "line": 503,
+            "text": "             uses RemovePlayerFromParty + IsPartyLeader. All three \\"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 17,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 91,
+            "text": "            if C_WoWLabsMatchmaking.IsPartyLeader() then"
+          },
+          {
+            "path": "tests/wowlabs_matchmaking.rs",
+            "line": 119,
+            "text": "            if not C_WoWLabsMatchmaking.IsPartyLeader() then"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsRaidLeader-368",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsRaidLeader",
+      "annotation": "",
+      "wikitext_line": 368,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsRaidOfficer-369",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsRaidOfficer",
+      "annotation": "",
+      "wikitext_line": 369,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 394,
+            "text": "if IsRaidOfficer == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 395,
+            "text": "  function IsRaidOfficer()"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 394,
+            "text": "if IsRaidOfficer == nil then"
+          },
+          {
+            "path": "src/wrath/compat_bootstrap.lua",
+            "line": 395,
+            "text": "  function IsRaidOfficer()"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsRealPartyLeader-370",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsRealPartyLeader",
+      "annotation": "",
+      "wikitext_line": 370,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-IsRealRaidLeader-371",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsRealRaidLeader",
+      "annotation": "",
+      "wikitext_line": 371,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-LearnPreviewTalents-372",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "LearnPreviewTalents",
+      "annotation": "",
+      "wikitext_line": 372,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 6,
+            "text": "\t\tLearnPreviewTalents(PlayerTalentFrame.pet);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 6,
+            "text": "\t\tLearnPreviewTalents(PlayerTalentFrame.pet);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-LootSlotIsCoin-373",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "LootSlotIsCoin",
+      "annotation": "",
+      "wikitext_line": 373,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-LootSlotIsCurrency-374",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "LootSlotIsCurrency",
+      "annotation": "",
+      "wikitext_line": 374,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-LootSlotIsItem-375",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "LootSlotIsItem",
+      "annotation": "",
+      "wikitext_line": 375,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-QueryQuestsCompleted-376",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "QueryQuestsCompleted",
+      "annotation": "",
+      "wikitext_line": 376,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-ReadFile-377",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ReadFile",
+      "annotation": "",
+      "wikitext_line": 377,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-RequestBattlefieldPositions-378",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RequestBattlefieldPositions",
+      "annotation": "",
+      "wikitext_line": 378,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/battlefield_verbs.rs",
+            "line": 17,
+            "text": "//! - `RequestBattlefieldPositions()`     \u2014 refresh signal. Fires"
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_verbs.rs",
+            "line": 129,
+            "text": "/// `RequestBattlefieldPositions()` \u2014 server refresh signal."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_verbs.rs",
+            "line": 146,
+            "text": "        \"RequestBattlefieldPositions\","
+          },
+          {
+            "path": "tests/battlefield_verbs.rs",
+            "line": 102,
+            "text": "// \u2500\u2500 RequestBattlefieldPositions \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+          },
+          {
+            "path": "tests/battlefield_verbs.rs",
+            "line": 107,
+            "text": "    env.exec(\"RequestBattlefieldPositions()\").unwrap();"
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/battlefield_verbs.rs",
+            "line": 17,
+            "text": "//! - `RequestBattlefieldPositions()`     \u2014 refresh signal. Fires"
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_verbs.rs",
+            "line": 129,
+            "text": "/// `RequestBattlefieldPositions()` \u2014 server refresh signal."
+          },
+          {
+            "path": "src/lua_api/globals/battlefield_verbs.rs",
+            "line": 146,
+            "text": "        \"RequestBattlefieldPositions\","
+          },
+          {
+            "path": "tests/battlefield_verbs.rs",
+            "line": 102,
+            "text": "// \u2500\u2500 RequestBattlefieldPositions \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500"
+          },
+          {
+            "path": "tests/battlefield_verbs.rs",
+            "line": 107,
+            "text": "    env.exec(\"RequestBattlefieldPositions()\").unwrap();"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-ResetGroupPreviewTalentPoints-379",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ResetGroupPreviewTalentPoints",
+      "annotation": "",
+      "wikitext_line": 379,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1323,
+            "text": "\tResetGroupPreviewTalentPoints(PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 1323,
+            "text": "\tResetGroupPreviewTalentPoints(PlayerTalentFrame.pet, PlayerTalentFrame.talentGroup);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-ResetPreviewTalentPoints-380",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ResetPreviewTalentPoints",
+      "annotation": "",
+      "wikitext_line": 380,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-SetActiveTalentGroup-381",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetActiveTalentGroup",
+      "annotation": "",
+      "wikitext_line": 381,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Cata.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          },
+          {
+            "path": "Blizzard_DeprecatedSpecialization/Deprecated_Specialization_Mists.lua",
+            "line": 10,
+            "text": "\tSetActiveTalentGroup = C_SpecializationInfo.SetActiveSpecGroup;"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-SetDungeonDifficulty-382",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetDungeonDifficulty",
+      "annotation": "",
+      "wikitext_line": 382,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-SetPreviewPrimaryTalentTree-383",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetPreviewPrimaryTalentTree",
+      "annotation": "",
+      "wikitext_line": 383,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 743,
+            "text": "\t\t\t\t\t\tSetPreviewPrimaryTalentTree(self:GetParent().talentTree, self:GetParent().talentGroup);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 743,
+            "text": "\t\t\t\t\t\tSetPreviewPrimaryTalentTree(self:GetParent().talentTree, self:GetParent().talentGroup);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-SetPrimaryTalentTree-384",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetPrimaryTalentTree",
+      "annotation": "",
+      "wikitext_line": 384,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 745,
+            "text": "\t\t\t\t\t\tSetPrimaryTalentTree(self:GetParent().talentTree);"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 745,
+            "text": "\t\t\t\t\t\tSetPrimaryTalentTree(self:GetParent().talentTree);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-SetRaidRosterSelection-385",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetRaidRosterSelection",
+      "annotation": "",
+      "wikitext_line": 385,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-SetTradeSkillSubClassFilter-386",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetTradeSkillSubClassFilter",
+      "annotation": "",
+      "wikitext_line": 386,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [
+          {
+            "path": "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs",
+            "line": 78,
+            "text": "        \"SetTradeSkillSubClassFilter\","
+          }
+        ],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/globals/missing_surface/professions_legacy_trade_skill.rs",
+            "line": 78,
+            "text": "        \"SetTradeSkillSubClassFilter\","
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-global-api-SilenceMember-387",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SilenceMember",
+      "annotation": "",
+      "wikitext_line": 387,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-TestCreatePill-388",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "TestCreatePill",
+      "annotation": "",
+      "wikitext_line": 388,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-UnSilenceMember-389",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnSilenceMember",
+      "annotation": "",
+      "wikitext_line": 389,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-UnitIsPartyLeader-390",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnitIsPartyLeader",
+      "annotation": "",
+      "wikitext_line": 390,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-global-api-ValidateTimer-391",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ValidateTimer",
+      "annotation": "",
+      "wikitext_line": 391,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-BonusActionBarGetBarInfo-429",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "BonusActionBarGetBarInfo",
+      "annotation": "",
+      "wikitext_line": 429,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-BonusActionButtonDown-430",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "BonusActionButtonDown",
+      "annotation": "",
+      "wikitext_line": 430,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-BonusActionButtonUp-431",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "BonusActionButtonUp",
+      "annotation": "",
+      "wikitext_line": 431,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-GetLFGModeType-432",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "GetLFGModeType",
+      "annotation": "",
+      "wikitext_line": 432,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_GroupFinder/Shared/LFGFrame.lua",
+            "line": 345,
+            "text": "\t\tlocal queueType = GetLFGModeType();"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_GroupFinder/Shared/LFGFrame.lua",
+            "line": 345,
+            "text": "\t\tlocal queueType = GetLFGModeType();"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-HideBonusActionBar-433",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "HideBonusActionBar",
+      "annotation": "",
+      "wikitext_line": 433,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-SetTalentButtonLocation-434",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "SetTalentButtonLocation",
+      "annotation": "",
+      "wikitext_line": 434,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 110,
+            "text": "\t\t\t\tSetTalentButtonLocation(button, talentInfo.tier, talentInfo.column, talentButtonSize, initialOffsetX, initialOffsetY, buttonSpacingX, buttonSpacingY);"
+          },
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 383,
+            "text": "function SetTalentButtonLocation(button, tier, column, talentButtonSize, initialOffsetX, initialOffsetY, buttonSpacingX, buttonSpacingY)"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 110,
+            "text": "\t\t\t\tSetTalentButtonLocation(button, talentInfo.tier, talentInfo.column, talentButtonSize, initialOffsetX, initialOffsetY, buttonSpacingX, buttonSpacingY);"
+          },
+          {
+            "path": "Blizzard_FrameXML/Cata/TalentFrameBase.lua",
+            "line": 383,
+            "text": "function SetTalentButtonLocation(button, tier, column, talentButtonSize, initialOffsetX, initialOffsetY, buttonSpacingX, buttonSpacingY)"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-SetupBonusActionBar-435",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "SetupBonusActionBar",
+      "annotation": "",
+      "wikitext_line": 435,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-ShowBonusActionBar-436",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "ShowBonusActionBar",
+      "annotation": "",
+      "wikitext_line": 436,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-TogglePetTalentFrame-437",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "TogglePetTalentFrame",
+      "annotation": "",
+      "wikitext_line": 437,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-isRaidFinderDungeonDisplayable-438",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "isRaidFinderDungeonDisplayable",
+      "annotation": "",
+      "wikitext_line": 438,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-framexml-updateContainerFrameAnchors-439",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "updateContainerFrameAnchors",
+      "annotation": "",
+      "wikitext_line": 439,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-events-PET_TALENT_UPDATE-545",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PET_TALENT_UPDATE",
+      "annotation": "",
+      "wikitext_line": 545,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 335,
+            "text": "\tself:RegisterEvent(\"PET_TALENT_UPDATE\");"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 419,
+            "text": "\t\tif ( event == \"PLAYER_TALENT_UPDATE\" or event == \"PET_TALENT_UPDATE\" ) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 33,
+            "text": "\t\t\t\tself:RegisterEvent(\"PET_TALENT_UPDATE\");"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 131,
+            "text": "\t\t\t\tself:RegisterEvent(\"PET_TALENT_UPDATE\");"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 335,
+            "text": "\tself:RegisterEvent(\"PET_TALENT_UPDATE\");"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 419,
+            "text": "\t\tif ( event == \"PLAYER_TALENT_UPDATE\" or event == \"PET_TALENT_UPDATE\" ) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 33,
+            "text": "\t\t\t\tself:RegisterEvent(\"PET_TALENT_UPDATE\");"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 131,
+            "text": "\t\t\t\tself:RegisterEvent(\"PET_TALENT_UPDATE\");"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-events-PREVIEW_PET_TALENT_POINTS_CHANGED-546",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "PREVIEW_PET_TALENT_POINTS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 546,
+      "hits": {
+        "cache_qualified": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 329,
+            "text": "\tself:RegisterEvent(\"PREVIEW_PET_TALENT_POINTS_CHANGED\");"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 424,
+            "text": "\t\telseif ( event == \"PREVIEW_PET_TALENT_POINTS_CHANGED\" ) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 129,
+            "text": "\t\t\t\tself:RegisterEvent(\"PREVIEW_PET_TALENT_POINTS_CHANGED\");"
+          }
+        ],
+        "cache_bare": [
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 329,
+            "text": "\tself:RegisterEvent(\"PREVIEW_PET_TALENT_POINTS_CHANGED\");"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+            "line": 424,
+            "text": "\t\telseif ( event == \"PREVIEW_PET_TALENT_POINTS_CHANGED\" ) then"
+          },
+          {
+            "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.xml",
+            "line": 129,
+            "text": "\t\t\t\tself:RegisterEvent(\"PREVIEW_PET_TALENT_POINTS_CHANGED\");"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-events-QUEST_QUERY_COMPLETE-547",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "QUEST_QUERY_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 547,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-events-WORLD_MAP_NAME_UPDATE-548",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "WORLD_MAP_NAME_UPDATE",
+      "annotation": "",
+      "wikitext_line": 548,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": []
+      }
+    },
+    {
+      "id": "diff-wt-widgets-Cooldown:GetDrawEdge-598",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Cooldown:GetDrawEdge",
+      "annotation": "",
+      "wikitext_line": 598,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [],
+        "callers_qualified": [],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/frame/methods/widgets/cooldown.rs",
+            "line": 753,
+            "text": "    (\"GetDrawEdge\", get_draw_edge),"
+          },
+          {
+            "path": "tests/cooldown_widget.rs",
+            "line": 364,
+            "text": "            if cd:GetDrawEdge() ~= false then"
+          },
+          {
+            "path": "tests/cooldown_widget.rs",
+            "line": 405,
+            "text": "            if cd:GetDrawEdge() ~= true then"
+          }
+        ]
+      }
+    },
+    {
+      "id": "diff-wt-widgets-Cooldown:SetDrawEdge-599",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Cooldown:SetDrawEdge",
+      "annotation": "",
+      "wikitext_line": 599,
+      "hits": {
+        "cache_qualified": [],
+        "cache_bare": [
+          {
+            "path": "Blizzard_CooldownViewer/CooldownViewer.lua",
+            "line": 1150,
+            "text": "\t\tcooldownFrame:SetDrawEdge(false);"
+          },
+          {
+            "path": "Blizzard_FrameXMLUtil/Cooldown.lua",
+            "line": 4,
+            "text": "\t\tself:SetDrawEdge(not not forceShowDrawEdge);"
+          }
+        ],
+        "callers_qualified": [],
+        "callers_bare": [
+          {
+            "path": "src/lua_api/env_init/shared_bootstrap.lua",
+            "line": 928,
+            "text": "      self:SetDrawEdge(forceShowDrawEdge)"
+          },
+          {
+            "path": "src/lua_api/frame/methods/widgets/cooldown.rs",
+            "line": 752,
+            "text": "    (\"SetDrawEdge\", set_draw_edge),"
+          },
+          {
+            "path": "tests/cooldown_widget.rs",
+            "line": 381,
+            "text": "            cd:SetDrawEdge(true)"
+          }
+        ]
+      }
+    }
+  ]
+}

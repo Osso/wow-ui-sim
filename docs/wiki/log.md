@@ -2,6 +2,10 @@
 
 [Portability investigation](investigations/patch-audit-validator-portability.md): seven rebase mappings reduced from 179,843,580 to 1,306,144 bytes using tree/blob pins, exact sparse inventory reconstruction and retained historical exceptions; four mappings without `pinned_inputs` unchanged. Subsequent-rebase labels resolve through master-ancestor snapshots, with missing bytes/patches hash-preserved. Gate at `e434bdf22` PASS: clean 52/52, later audit 53/53, no evidence file over 5 MB. All eight tool-test files pass (105 tests). Tampered recorded `src` tree rejected by both artifact seal and tree-content check; restored validator PASS. Reachable-only clone passes all 14 affected entrypoints with 166 absent historical-commit checks. Only changed artifact seals refreshed; original large mappings remain at `a82b8eb1c`. Index unchanged; existing log bytes preserved; no runtime/vendor edits, bytecode caches, push, merge or delegation.
 
+## [2026-10-08] investigation | Retail Patch 5.0.4 API audit
+
+[Audit](investigations/patch-5-0-4-api-audit.md): bounded 626-occurrence discovery and 704-ID accounting; one concrete pet-type read with RED/GREEN, no retirement. Exact gaps, full consumer scans, pinned successors and compressed retail results retained. Final acceptance remains open.
+
 ## [2026-10-08] integration | Patch 5.5.4 Mists Classic API audit
 
 [Audit](investigations/patch-5-5-4-api-audit.md): rebased onto bebcc5830; nine commit mappings and 188 historical artifacts preserved. All 9,740 observations on 55 retail pages equal master; both sweeps 56/56, Mists 2/2 and retail line controls 3/3 pass. Mists check has zero non-vendor warnings; format and 87 Python fixtures pass. All 56 registers/53 extracts reproduce with three exact inherited failures. Rerun negative rejects 1 → 0 rows; 38 pinned prior validators pass. SharedXML-only/empty-inventory coverage limits retained. Portable gate passes 40/40 clean and 41/41 later; both validators pass with all nine original commits absent, and both own-log tamper controls fail as required.

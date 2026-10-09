@@ -1,0 +1,6 @@
+{
+  "source_id": "diff-wt-global-api-C_PetBattles.GetPetType-62",
+  "gaps_before": 159,
+  "gaps_after": 160,
+  "expected_exit": 1
+}

@@ -1,0 +1,15 @@
+{
+  "inventory": 626,
+  "publication_mismatches": 159,
+  "prose_rows": 73,
+  "signatures": 5,
+  "total_ids": 704,
+  "statuses": {
+    "bounded-coverage": 467,
+    "audit-pending": 225,
+    "metadata-only": 12
+  },
+  "modeled": [
+    "C_PetBattles.GetPetType"
+  ]
+}
