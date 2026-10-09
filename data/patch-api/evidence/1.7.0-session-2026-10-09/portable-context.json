@@ -1,0 +1,10 @@
+{
+  "actual_revision": "702ddca361cd607bc758e5deb1248fa07e7a2ee6",
+  "cli_cwd": "/home/osso/.worktrees/wow-ui-sim-p170-page",
+  "copied_directory": "/tmp/p170-source-replay-wjkvl9di",
+  "no_git_target_addons_current_tools": true,
+  "archive_sha256": "955255a99902a3076c3eebe50798b4fa78f399251e80afbdc3c4e246400822c7",
+  "original_seals_sha256": "38129730211271ef3223ec1b3a76ec92ebdd0d9eb2c8a444a81c2acc07e9b153",
+  "original_seals": 46,
+  "limit": "Independent SOURCE development copy, not native/runtime or final acceptance"
+}

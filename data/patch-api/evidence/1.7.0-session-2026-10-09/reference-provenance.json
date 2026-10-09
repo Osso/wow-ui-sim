@@ -1,0 +1,17 @@
+{
+  "verified_at": "2026-10-09T19:12:48.283567+00:00",
+  "verification": "exact body/response/manifest-linked registry before derivation",
+  "hashes": {
+    "source.wikitext": "96679828d7b158a7117a5123bcd91a92be223cfa2c285d6ba84beba2606a48b2",
+    "source-response.json": "6708f8b8b010036268d546047646416fa45d9cf3347e392b90da47628a5c89db",
+    "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+    "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+  },
+  "reference_templates": [
+    "docs/wiki/investigations/patch-1-10-0-api-audit.md",
+    "data/patch-api/evidence/1.10.1-session-2026-10-09/audit.py"
+  ],
+  "queued_180_head": "d6af15d2dd415edd7ee9ae82597dfdcc6e4f6f70",
+  "queued_180_cwd": "/home/osso/.worktrees/wow-ui-sim-p180-page",
+  "successors_applied": []
+}

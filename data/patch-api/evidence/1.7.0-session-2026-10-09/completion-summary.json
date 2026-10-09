@@ -1,0 +1,55 @@
+{
+  "scope": "bounded frozen original Patch1.7.0 SOURCE development only",
+  "source_identity": {
+    "pageid": 456653,
+    "revid": 4390984,
+    "timestamp": "2020-04-05T21:06:01Z",
+    "body_bytes": 45,
+    "registry_pages": 101
+  },
+  "totals": {
+    "physical_lines": 1,
+    "nonblank_rows": 1,
+    "metadata_rows": 1,
+    "unproven_source_rows": 0,
+    "references": 1,
+    "unproven_contracts": 1,
+    "inventory": 0,
+    "signatures": 0,
+    "defaults": 0,
+    "prose": 0,
+    "headers": 0,
+    "templates": 0
+  },
+  "meaningful_subset": {
+    "model": 0,
+    "runtime": 0,
+    "native": 0
+  },
+  "proof_epochs": {
+    "own_red_revision": "4163299fac218bcd84057897cc4ffdc81a80e42a",
+    "own_red_tests": 6,
+    "portable_red_tests": 3,
+    "enhanced_red_limit": "Separate scaffold epoch after first RED; not backdated",
+    "source_green_revision": "0718bd85bce07590860af8433ccaea2b5032e1b1",
+    "source_green_tests": 6,
+    "copied_replay_revision": "702ddca361cd607bc758e5deb1248fa07e7a2ee6",
+    "copied_source_tests": 6,
+    "portable_tests": 3
+  },
+  "original_seals": 46,
+  "archive": {
+    "created_at": "2026-10-09T19:16:05.249477+00:00",
+    "creation_revision": "0718bd85bce07590860af8433ccaea2b5032e1b1",
+    "original_seals": 46,
+    "archive_members": 47,
+    "archive_bytes": 55573,
+    "archive_sha256": "955255a99902a3076c3eebe50798b4fa78f399251e80afbdc3c4e246400822c7",
+    "seals_sha256": "38129730211271ef3223ec1b3a76ec92ebdd0d9eb2c8a444a81c2acc07e9b153",
+    "max_member_bytes": 72712,
+    "limit": "Archive/input seals immutable; copied replay and later execution receipts are separately retained, never backfilled."
+  },
+  "successors_applied": [],
+  "queue": "1.8.0 separately unapplied behind1.9.0; main integrates them before1.7.0",
+  "main_owned": "primary-target research, ordered integration, independent/native/final acceptance and parent meaningful-behavior closure"
+}
