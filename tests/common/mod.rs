@@ -126,7 +126,7 @@ macro_rules! prefork_full_ui_case {
 #[macro_export]
 macro_rules! prefork_fixture_case {
     ($($case:tt)*) => {
-        $crate::prefork_full_ui_case! { $($case)* }
+        prefork_full_ui_case! { $($case)* }
     };
 }
 
