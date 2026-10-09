@@ -1,0 +1,494 @@
+Patch 3.0.2 API changes
+Source attribution: Based on Iriel's posts [http://forums.worldofwarcraft.com/thread.html?topicId=10043170854&sid=1 on the official forums
+
+== Significant Changes ==
+* The blizzard UI is being converted to use 'self' and the other local arguments in favor of 'this' and argN. The old style arguments are going to be obsoleted, so AddOn code needs to be updated too. This may mean there are changes in the signatures of Blizzard UI functions - update code that hooks or replaces the blizzard UI where necessary as well. !!!
+
+* The SecureStateHeader has been replaced by a new secure template which allows for a more natural specification of rules in lua rather than via complex state tables. Some initial documentation can be found at: !!!
+http://www.iriel.org/wow/docs/SecureHeadersGuide%20-%20pre1.pdf
+
+* Key bindings, macros, and many UI settings are now stored on the server and will be available wherever you play.
+
+* Button objects appear to no longer have their own internal Font objects, and have replaced the various methods to alter them with methods to reference existing Font objects to use for each state (Simple color changes can still be done without creating your own Font objects by using the |c color escape)
+
+* The old crafting API's have finally been retired and enchanting moved onto the more common tradeskill API
+
+== Settings and Preferences ==
+* The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault(), ShowNameplates(), HideNameplates(), ShowFriendNameplates(), HideFriendNameplates()
+* Saving the settings on the server can be disabled by setting the "synchronizeSettings" cvar to 0. You can then use the new UploadSettings() and DownloadSettings() functions to manage synchronization manually.
+* NEW value = GetCVarBool("cvar") - Returns the value of the cvar as 1 or nil instead of requiring you to compare the cvar value with "0" or "1"
+* NEW name, defaultValue, serverStoredAccountWide, serverStoredPerCharacter = GetCVarInfo("cvar") - Returns information about the named cvar
+* There is a new FOCUSCAST click modifier (with no default value) which will cause spells to be cast on your focus.
+
+== Macros ==
+* You can now maintain a backup copy of your macros and restore them at any time with the following functions: BackupMacros(), RestoreMacros(). These functions can not be called by AddOns while you are in combat.
+* The number of account-wide macros has been increased to 36.
+
+== Buff Information ==
+* The various GetPlayerBuff functions have been removed and integrated into the appropriate unit functions, adding a new UnitAura function and updating the others:
+
+The new parameters and return values are:
+name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitAura("unit", [index] or ["name", "rank"][, "filter"])
+
+UnitBuff() and UnitDebuff() are aliases for UnitAura() with built in helpful/harmful filters.
+
+CancelPlayerBuff([index] or ["name", "rank"][, "filter"]);
+
+GameTooltip:SetUnitAura("unit", [index] or ["name", "rank"][, "filter"]);
+GameTooltip:SetUnitBuff("unit", [index] or ["name", "rank"][, "filter"]);
+GameTooltip:SetUnitDebuff("unit", [index] or ["name", "rank"][, "filter"]);
+
+* The "filter" parameter can be any of "HELPFUL", "HARMFUL", "PLAYER", "RAID", "CANCELABLE", "NOT_CANCELABLE". You can also specify several filters separated by a space or | character to chain multiple filters together (e.g. "HELPFUL|RAID" == helpful buffs that you can cast on your raid). By default UnitAura has "HELPFUL" as an implicit filter - you cannot get back BOTH helpful and harmful at the same time. Neither "HELPFUL" or "HARMFUL" have meaning for UnitBuff/UnitDebuff, and will be ignored.
+* AddOns displaying remaining time should cache the expiry time and decrement their own counter, do not re-query the information every OnUpdate.
+* The untilCanceled return value is true if the buff doesn't have its own duration (e.g. stealth)
+
+== Companions ==
+* Mounts and non-combat pets have been changed to be spell rather than item based. There are a number of new API methods to query and use them (See post #57 from slouken for more details)
+
+* NEW count = GetNumCompanions(type) -- Gets the number of a specific type of companion (type is "CRITTER" or "MOUNT")
+* NEW creatureID, creatureName, spellID, icon, active = GetCompanionInfo(type, index) -- Gets information abotu a specific companiion
+* NEW PickupCompanion(type, index) -- Load a companion onto the cursor for placement into an action bar
+* NEW CallCompanion(type, index) -- Summon a specific companion
+
+Also, the PlayerModel frame has a new method
+
+* NEW PlayerModel:SetCreature(creatureID) -- Show the model for the specified creature
+
+Finally, there's a new event COMPANION_UPDATE which has a single argument, type - If this is nil then the UI should update the current companion, if it's non il then it'll be "CRITTER" or "MOUNT" and indicates that the active companion of that type has changed.
+
+== Aggro Awareness (aka Threat) ==
+* NEW state = UnitThreatSituation(unit[, mob]) -- Determine a unit's threat situation with respect to the given mob (or the mob which has the highest threat for the unit if omitted), the result is one of:
+nil = unit not on threat list
+0 = 0-99% raw threat (no indicator shown)
+1 = 100% or more raw threat (yellow indicator)
+2 = tanking, other has 100% or more raw threat (orange indicator -- you may lose primary target)
+3 = tanking, all others have less than 100% raw threat (red indicator)
+
+* NEW isTanking, state, scaledPercent, rawPercent, threatValue = UnitDetailedThreatSituation(unit, mob) -- Returns detailed information about the unit's state on a mob's threat list.
+isTanking -- true if the unit is the primary target of the mob (and by definition at 100% threat)
+state -- Unit's threat situaton, as above
+scaledPercent -- Distance-scaled threat percentage (0-100%)
+rawPercent -- Current percentage threat of the unit relative to mob's primary target
+threatValue -- Raw 'threat amount' for the unit, roughly approximate to amount of damage and healing done by the unit
+
+* NEW r, g, b = GetThreatStatusColor(state) -- Gets the color to use in the standard UI for a threat situation state
+
+There are also two new events, UNIT_THREAT_LIST_UPDATE is fired when a mob unit's threat list changes, the unit id of the mob is the first event argument. UNIT_THREAT_SITUATION_UPDATE fires when a unit's threat situation changes, the unit in question is the first event argument (Note this only fires for status value changes, not raw threat changes)
+
+== Unit Information ==
+* The unit functions (such as UnitExists) now work for unit names that begin with otherwise valid unit tokens (e.g. for a player named "Petlover")
+
+== Container Information ==
+* The GetInventoryItemsForSlot function now correctly finds and returns information for relics, and properly returns the flags for items in bank bags.
+
+== Widget API ==
+
+=== Textures ===
+* UPDATED - exists = Texture:SetTexture(path[, tiled]) -- Added a new tiled parameter, if this is true then the texture is tiled in each direction rather than the edge stretching to infinity.
+
+=== Sliders ===
+* NEW - Slider:Disable() -- Disables the slider
+* NEW - Slider:Enable() -- Enables the slider
+* NEW - isEnabled = Slider:IsEnabled() -- Returns the status of the slider (1 or nil)
+
+== Blizzard UI ==
+
+=== Interface Options ===
+* InterfaceOptionsFrame_OpenToPage has been renamed InterfaceOptionsFrame_OpenToCategory !!!
+* Panels have a new optional method panel.refresh, which is called by the options frame after the panel is updated with defaults, but before the panel is shown. Use this to sync the state of the panel with the options in case they've been changed outside of the options frame.
+
+== Other Observed Changes ==
+* Item strings have changed format to include character level
+
+== Actual API changes ==
+* NEW - AutoLootMailItem(index)
+* NEW - canCancel = CanCancelAuction(item)
+* NEW - canEdit = CanEditGuildEvent()
+* NEW - CanHearthAndRessurectFromArea ??
+* NEW - CollapseAllHeaders ??
+* NEW - CombatTextSetActiveUnit("unit")
+* NEW - ExpandAllHeaders ??
+* NEW - slot = GetKnownSlotFromHighestRankSlot(slot)
+* NEW - maxRatingBonus = GetMaxCombatRatingBonus(lowestRating)
+* NEW - season = GetPreviousArenaSeason()
+* NEW - talents = GetQuestLogRewardTalents()
+* NEW - talents = GetRewardTalents()
+* NEW - GetTradeSkillDescription ??
+* NEW - link = GetTradeSkillListLink()
+* NEW - ?? = GetUnitPitch("unit")
+* NEW - ?? = GetUnitSpeed("unit")
+* NEW - HearthAndRessurectFromArea ??
+* NEW - isDebug = IsDebugBuild()
+* NEW - isSupported = IsDesaturateSupported()
+* NEW - inTeam = IsInArenaTeam()
+* NEW - isRunning = IsPVPTimerRunning()
+* NEW - isLinked, skillPlayer = IsTradeSkillLinked() -- skillPlayer is thename of the player owning the skill if it's linked
+* NEW - PlayDance ??
+* NEW - QuestBagButtonIDToInvSlotID
+* NEW - flagsPVP = QuestFlagsPVP()
+* NEW - RestoreVideoEffectsDefaults()
+* NEW - RestoreVideoResolutionDefaults()
+* NEW - UnitSelectionColor ??
+* UPDATED - UnitHealth("unit") -- No longer masks value as 0-100 on enemy units
+* UPDATED - UnitHealthMax("unit") -- No longer masks value as 0-100 on enemy units
+* UPDATED - UnitMana("unit") -- No longer masks value as 0-100 on enemy units
+* UPDATED - UnitManaMax("unit") -- No longer masks value as 0-100 on enemy units
+
+* REMOVED - GetGuildRecruitmentMode
+* REMOVED - GetTradeSkillItemStatus
+* REMOVED - RestoreVideoDefaults
+* REMOVED - SetGuildRecruitmentMode
+
+=== Language and Debugging ===
+* NEW - forceinsecure()
+* NEW - print(...)
+* NEW - ... = scrub(...) - nil's non-simple input values
+* NEW - setprinthandler(func)
+* NEW - func = getprinthandler()
+* NEW - ... = tostringall(...)
+* NEW - tbl = table.wipe(tbl) - removes all entries from table
+* NEW - tbl = wipe(tbl) - alias for table.wipe
+
+=== Threat ===
+* NEW r, g, b = GetThreatStatusColor(state)
+* NEW - isEnabled = IsThreatWarningEnabled()
+* NEW - isTanking, state, scaledPercent, rawPercent, threatValue = UnitDetailedThreatSituation("unit", "mob")
+* NEW - state = UnitThreatSituation("unit" [, "mob"]))
+
+=== Achievements ===
+* NEW - canShow = CanShowAchievementUI()
+* NEW - ClearAchievementComparisonUnit()
+* NEW - category = GetAchievementCategory(id)
+* NEW - completed, month, day, year = GetAchievementComparisonInfo(id)
+* NEW - name, ??, ??, ??, ?? = GetAchievementComparisonUnitInfo()
+* NEW - string, type, complted, quantity, totalQuantity, name, flags, assetID, quantityString, criteriaID = GetAchievementCriteriaInfo(achievementId, index)
+* NEW - id, name, points, completed, month, day, year, description, flags, icon = GetAchievementInfo(id or category [,index])
+* NEW - id, name, points, completed, month, day, year, description, flags, icon = GetAchievementInfoFromCriteria(category)
+* NEW - ?? = GetAchievementLink(id)
+* NEW - count = GetAchievementNumCriteria(id)
+* NEW - count = GetAchievementNumRewards(id)
+* NEW - categoryName, parentId, flags = GetCategoryInfo(id) -- Get information on an achievement category
+* NEW - rootCat = GetCategoryList()
+* NEW - num, numCompleted = GetCategoryNumAchievements(category)
+* NEW - points = GetComparisonAchievementPoints()
+* NEW - completed = GetComparisonCategoryNumAchievements(id)
+* NEW - quantity = GetComparisonStatistic(id)
+* NEW - ?? = GetCriteriaComparisonInfo(id, criteriaIndex, compareIndex)
+* NEW - id1, id2, ... = GetLatestCompletedAchievements()
+* NEW - id1, id2, ... = GetLatestCompletedComparisonAchievements()
+* NEW - id1, id2, ... = GetLatestUpdatedComparisonStats()
+* NEW - id1, id2, ... = GetLatestUpdatedStats()
+* NEW - nextId, nextCompleted = GetNextAchievement(id)
+* NEW - ?? = GetNumComparisonCompletedAchievements()
+* NEW - total, completed = GetNumCompletedAchievements()
+* NEW - prevId = GetPreviousAchievement(id)
+* NEW - quantity = GetStatistic(id)
+* NEW - rootCat = GetStatisticsCategoryList()
+* NEW - points = GetTotalAchievementPoints()
+* NEW - id = GetTrackedAchievement()
+* NEW - SetTrackedAchievement(id)
+
+=== Vehicles ===
+* NEW - canExit = CanExitVehicle()
+* NEW - canSwitch = CanSwitchVehicleSeats()
+* NEW - x, y, name, isPosessed, type, orientation = GetBattlefieldVehicleInfo(index)
+* NEW - count = GetNumBattlefieldVehicles()
+* NEW - inUse = IsUsingVehicleControls()
+* NEW - isAdjustable = IsVehicleAimAngleAdjustable()
+* NEW - isAdjustable = IsVehicleAimPowerAdjustable()
+* NEW - isControlling = UnitControllingVehicle("unit")
+* NEW - hasUI = UnitHasVehicleUI("unit")
+* NEW - inVehicle = UnitInVehicle("unit")
+* NEW - inSeat = UnitInVehicleControlSeat("unit")
+* NEW - UnitSwitchToVehicleSeat("unit", seatId)
+* NEW - UnitTargetsVehicleInRaidUI
+* NEW - count = UnitVehicleSeatCount("unit")
+* NEW - controlType, occupantName = UnitVehicleSeatInfo("unit", seatId)
+* NEW - vehicleType = UnitVehicleSkin("unit")
+* NEW - VehicleAimDecrement(amount)
+* NEW - VehicleAimDownStart()
+* NEW - VehicleAimDownStop()
+* NEW - angle = VehicleAimGetAngle()
+* NEW - angle = VehicleAimGetNormAngle()
+* NEW - power = VehicleAimGetNormPower()
+* NEW - VehicleAimIncrement(amount)
+* NEW - VehicleAimRequestAngle(angle)
+* NEW - VehicleAimRequestNormAngle(angle)
+* NEW - VehicleAimSetNormPower(power)
+* NEW - VehicleAimUpStart()
+* NEW - VehicleAimUpStop()
+* NEW - VehicleCameraZoomIn(amount)
+* NEW - VehicleCameraZoomOut(amount)
+* NEW - VehicleExit()
+* NEW - VehicleNextSeat()
+* NEW - VehiclePrevSeat()
+
+=== Server-Side Settings ===
+* NEW - BackupMacros()
+* NEW - DownloadSettings()
+* NEW - RestoreMacros()
+* NEW - UploadSettings()
+
+=== Barber Shop ===
+* NEW - ApplyBarberShopStyle()
+* NEW - BarberShopReset()
+* NEW - CancelBarberShop()
+* NEW - name, ??, ??, isCurrent = GetBarberShopStyleInfo(index)
+* NEW - cost = GetBarberShopTotalCost()
+* NEW - type = GetFacialHairCustomization()
+* NEW - type = GetHairCustomization()
+* NEW - SetNextBarberShopStyle(id [,prev])
+
+=== Pets ===
+* NEW - points = GetPetTalentPoints()
+* NEW - canDismiss = PetCanBeDismissed()
+* NEW - isUsable = GetPetActionSlotUsable(slot)
+
+=== Pets ===
+* REMOVED - GetPetLoyalty
+* REMOVED - GetPetTrainingPoints
+
+=== Companions ===
+* NEW - CallCompanion(type, index) -- Summon a specific companion
+* NEW - DismissCompanion(type)
+* NEW - count = GetNumCompanions(type) -- Gets the number of a specific type of companion (type is "CRITTER" or "MOUNT")
+* NEW - creatureID, creatureName, spellID, icon, active = GetCompanionInfo(type, index) -- Gets information abotu a specific companiion
+* NEW - start, duration, enable = GetCompanionCooldown(type, index)
+* NEW - PickupCompanion(type, index) -- Load a companion onto the cursor for placement into an action bar
+
+=== Buffs and Auras ===
+* NEW - CancelUnitBuff("unit", index or "spell" [,"filter" or "rank"])
+* NEW - name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitAura("unit", [index] or ["name", "rank"][, "filter"])
+* MODIFIED - name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitBuff("unit", [index] or ["name", "rank"])
+* UPDATED - name, rank, icon, count, debuffType, duration, expirationTime, isMine, isStealable = UnitDebuff("unit", [index] or ["name", "rank"])
+
+* REMOVED - CancelPlayerBuff
+* REMOVED - GetPlayerBuff
+* REMOVED - GetPlayerBuffApplications
+* REMOVED - GetPlayerBuffDispellType
+* REMOVED - GetPlayerBuffName
+* REMOVED - GetPlayerBuffTexture
+* REMOVED - GetPlayerBuffTimeLeft
+
+=== Calendar ===
+* NEW - CalendarAddEvent()
+* NEW - canAdd = CalendarCanAddEvent()
+* NEW - canSend = CalendarCanSendInvite()
+* NEW - CalendarCloseEvent()
+* NEW - canComplain = CalendarContextEventCanComplain(monthOffset, day, evIndex)
+* NEW - canEdit = CalendarContextEventCanEdit(monthOffset, day, evIndex)
+* NEW - holdsEvent = CalendarContextEventClipboard()
+* NEW - CalendarContextEventComplain(monthOffset, day, evIndex)
+* NEW - CalendarContextEventCopy(monthOffset, day, evIndex)
+* NEW - guildWide = CalendarContextEventIsGuildWide(monthOffset, day, evIndex)
+* NEW - CalendarContextEventPaste(monthOffset, day)
+* NEW - CalendarContextEventRemove(monthOffset, day, evIndex)
+* NEW - CalendarContextInviteAvailable(monthoffset, day, evIndex) - Accepts an invite
+* NEW - CalendarContextInviteDecline(monthOffset, day, evIndex)
+* NEW - ?? = CalendarContextInviteIsPending(monthOffset, day, evIndex)
+* NEW - CalendarContextInviteModeratorStatus ??
+* NEW - CalendarContextInviteRemove(monthOffset, day, evIndex)
+* NEW - inviteStatus = CalendarContextInviteStatus(monthOffset, day, evIndex)
+* NEW - minLevel, maxLevel = CalendarDefaultGuildFilter()
+* NEW - CalendarEventAvailable() - Again this accepts the invite
+* NEW - canEdit = CalendarEventCanEdit()
+* NEW - CalendarEventClearAutoApprove()
+* NEW - CalendarEventClearLocked()
+* NEW - CalendarEventClearModerator(inviteIndex)
+* NEW - CalendarEventDecline()
+* NEW - level, className, classFilename, inviteStatus, modStatus, inviteIsMine = CalendarEventGetInvite(inviteIndex)
+* NEW - criterion, reverse = CalendarEventGetInviteSortCriterion()
+* NEW - count = CalendarEventGetNumInvites()
+* NEW - opt1, opt2, ... = CalendarEventGetRepeatOptions()
+* NEW - inviteIndex = CalendarEventGetSelectedInvite()
+* NEW - CalendarEventGetStatusOptions ??
+* NEW - title1, tex1, expLvl1, title2, tex2, expLvl2, ... = CalendarEventGetTextures(eventType)
+* NEW - name1, name2, ... = CalendarEventGetTypes()
+* NEW - hasPending = CalendarEventHasPendingInvite()
+* NEW - haveChanged = CalendarEventHaveSettingsChanged()
+* NEW - CalendarEventInvite("name")
+* NEW - guildWide = CalendarEventIsGuildWide()
+* NEW - CalendarEventIsModerator ??
+* NEW - CalendarEventRemoveInvite(inviteIndex)
+* NEW - CalendarEventSelectInvite(inviteIndex)
+* NEW - CalendarEventSetAutoApprove()
+* NEW - CalendarEventSetDate(month, day, year)
+* NEW - CalendarEventSetDescription("description")
+* NEW - CalendarEventSetLocked()
+* NEW - CalendarEventSetLockoutDate ??
+* NEW - CalendarEventSetLockoutTime ??
+* NEW - CalendarEventSetModerator(inviteIndex)
+* NEW - CalendarEventSetRepeatOption(id)
+* NEW - CalendarEventSetSize ??
+* NEW - CalendarEventSetStatus(inviteIndex, inviteStatus)
+* NEW - CalendarEventSetTextureID(texIndex)
+* NEW - CalendarEventSetTime(hour, minute)
+* NEW - CalendarEventSetTitle("title")
+* NEW - CalendarEventSetType(eventType)
+* NEW - CalendarEventSortInvites(criterion)
+ NEW - month, year = CalendarGetAbsMonth() ??
+* NEW - weekday, month, day, year = CalendarGetDate() - IMPORTANT - Only call this after PLAYER_ENTERING_WORLD
+* NEW - CalendarGetDayEvent(monthOffset, day, eventIndex)
+* NEW - monthOffset, day, index = CalendarGetEventIndex()
+* NEW - autoApprove, pendingInvite, inviteStatus = CalendarGetEventInfo()
+* NEW - eventIndex = CalendarGetFirstPendingInvite(monthOffset, day)
+* NEW - name, description, texture = CalendarGetHolidayInfo(monthOffsey, day, eventIndex)
+* NEW - maxWeekday, maxMonth, maxDay, maxYear = CalendarGetMaxCreateDate()
+* NEW - maxWeekday, maxMonth, maxDay, maxYear = CalendarGetMaxDate() ??
+* NEW - minWeekday, minMonth, minDay, minYear = CalendarGetMinDate()
+* NEW - minWeekday, minMonth, minDay, minYear = CalendarGetMinHistoryDate() ??
+* NEW - month, year = CalendarGetMonth(monthOffset)
+* NEW - CalendarGetMonthNames ??
+* NEW - count = CalendarGetNumDayEvents(monthOffset, day)
+* NEW - count = CalendarGetNumPendingInvites()
+* NEW - name, calendarType, raidID, hour, minute, difficulty = CalendarGetRaidInfo(monthOffset, day, eventIndex)
+* NEW - CalendarGetWeekdayNames ??
+* NEW - isPending = CalendarIsActionPending()
+* NEW - CalendarNewArenaTeamEvent(teamIndex) - Index is from GetArenaTeam(teamIndex)
+* NEW - CalendarNewEvent()
+* NEW - CalendarNewGuildEvent(minLevel, maxLevel, rank)
+* NEW - CalendarNewGuildWideEvent()
+* NEW - CalendarOpenEvent(monthOffset, day, eventIndex)
+* NEW - CalendarRemoveEvent()
+* NEW - CalendarSetAbsMonth(month, year)
+* NEW - CalendarSetMonth(monthOffset)
+* NEW - CalendarUpdateEvent()
+
+==== Constants ====
+* inviteStatus is one of: 1 - invited, 2 - accepted, 3 - declined, 4 - confirmed, 5 - out, 6 - standby -- There are currently no global constants for these
+* criterion is one of "party", "name", "class", "status"
+
+=== Currency ===
+* NEW - ExpandCurrencyList(index, state)
+* NEW - name, count, extraType, icon = GetBackpackCurrencyInfo(id)
+* NEW - text = GetCoinTextureString(amount, fontHeight)
+* NEW - count = GetCurrencyListSize()
+* NEW - count, extraType, icon = GetCurrencyListInfo(index)
+* NEW - count = GetNumWatchedTokens()
+* NEW - SetCurrencyBackpack(id, state)
+* NEW - SetCurrencyUnused(id, state)
+
+=== Glyphs ===
+* NEW - enabled, type, spell, icon = GetGlyphSocketInfo(id)
+* NEW - count = GetNumGlyphSockets()
+* NEW - matches = GlyphMatchesSocket(id)
+* NEW - PlaceGlyphInSocket(id)
+* NEW - RemoveGlyphFromSocket(id)
+* NEW - canTarget = SpellCanTargetGlyph()
+
+=== Runes and Power ===
+* NEW - base?, combat? = GetPowerRegen()
+* NEW - start, duration, isReady = GetRuneCooldown(index)
+* NEW - count = GetRuneCount()
+* NEW - type = GetRuneType(index)
+* NEW - power = UnitPower("unit", [,type])) -- type is one of SPELL_POWER_MANA etc..
+* NEW - maxPower = UnitPowerMax("unit" [,type])
+
+=== Mapping ===
+* NEW - ClickLandmark(id)
+* NEW - level = GetCurrentMapDungeonLevel()
+* NEW - name, size, x, y = GetMapDebugObjectInfo(id)
+* NEW - count = GetNumDungeonMapLevels()
+* NEW - count = GetNumMapDebugObjects()
+* NEW - SetDungeonMapLevel(level)
+* NEW - TeleportToDebugObject(id)
+* NEW - ZoomOut()
+
+* REMOVED - GetWorldLocMapPosition
+
+=== Cinematics ===
+* NEW - GameMovieFinished()
+* NEW - ?? = GetMovieResolution()
+* NEW - subtitles = GetMovieSubtitles()
+* NEW - SetMovieSubtitles(subtitles)
+
+=== Obsolete Crafting Interface ===
+* REMOVED - CloseCraft
+* REMOVED - CollapseCraftSkillLine
+* REMOVED - CraftIsEnchanting
+* REMOVED - CraftIsPetTraining
+* REMOVED - CraftOnlyShowMakeable
+* REMOVED - DoCraft
+* REMOVED - ExpandCraftSkillLine
+* REMOVED - GetNumCrafts
+* REMOVED - GetCraftButtonToken
+* REMOVED - GetCraftCooldown
+* REMOVED - GetCraftDescription
+* REMOVED - GetCraftDisplaySkillLine
+* REMOVED - GetCraftFilter
+* REMOVED - GetCraftIcon
+* REMOVED - GetCraftInfo
+* REMOVED - GetCraftItemLink
+* REMOVED - GetCraftItemNameFilter
+* REMOVED - GetCraftName
+* REMOVED - GetCraftNumMade
+* REMOVED - GetCraftNumReagents
+* REMOVED - GetCraftReagentInfo
+* REMOVED - GetCraftReagentItemLink
+* REMOVED - GetCraftRecipeLink
+* REMOVED - GetCraftSelectionIndex
+* REMOVED - GetCraftSkillLine
+* REMOVED - GetCraftSlots
+* REMOVED - GetCraftSpellFocus
+* REMOVED - SelectCraft
+* REMOVED - SetCraftFilter
+* REMOVED - SetCraftItemNameFilter
+
+=== Configuration Variables ===
+* NEW - max = GetCVarAbsoluteMax("cvar")
+* NEW - min = GetCVarAbsoluteMin("min")
+* NEW - value = GetCVarBool("cvar") - Returns the value of the cvar as 1 or nil instead of requiring you to compare the cvar value with "0" or "1"
+* NEW - name, defaultValue, serverStoredAccountWide, serverStoredPerCharacter = GetCVarInfo("cvar")
+* NEW - max = GetCVarMax("cvar")
+* NEW - min = GetCVarMin("cvar")
+
+* REMOVED - GetAutoLootDefault
+* REMOVED - GetWorldDetail
+* REMOVED - HideFriendNameplates
+* REMOVED - HideNameplates
+* REMOVED - SetAutoLootDefault
+* REMOVED - ShowFriendNameplates
+* REMOVED - ShowNameplates
+* REMOVED - SetWorldDetail
+
+=== Factions ===
+* UPDATED - name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, hasRep, isWatched, isChild = GetFactionInfo(factionIndex) - The new hasRep return breaks existing code that uses the isWatched return value, isChild is also new. !!!
+
+=== Texture ===
+* NEW - Texture:SetRotation(angle [,cx, cy]) - This is simply a shorthand for the appropriate 8 argument SetTexCoord rotation (in C++ so it's fast)
+
+=== GameTooltip ===
+* NEW - width = GameTooltip:GetMinimumWidth()
+* NEW - GameTooltip:SetBackpackToken(id)
+* NEW - GameTooltip:SetCurrencyToken(index)
+* NEW - GameTooltip:SetGlyph(id)
+* NEW - GameTooltip:SetUnitAura("unit", [index] or ["name", "rank"][, "filter"]);
+* UPDATED - GameTooltip:SetUnitBuff("unit", [index] or ["name", "rank"][, "filter"]);
+* UPDATED - GameTooltip:SetUnitDebuff("unit", [index] or ["name", "rank"][, "filter"]);
+* REMOVED - GameTooltip:SetCraftItem(...)
+* REMOVED - GameTooltip:SetCraftSpell(...)
+* REMOVED - GameTooltip:SetPlayerBuff(...)
+
+* NEW HANDLER - OnTooltipSetAchievement
+
+=== Slider ===
+* NEW - Slider:Disable()
+* NEW - Slider:Enable()
+* NEW - enabled = Slider:IsEnabled()
+
+=== Button ===
+* NEW - font = Button:GetNormalFontObject()
+* NEW - Button:SetNormalFontObject(font)
+* REMOVED - Button:GetDisabledTextColor()
+* REMOVED - Button:GetFont()
+* REMOVED - Button:GetHighlightTextColor()
+* REMOVED - Button:GetTextColor()
+* REMOVED - Button:GetTextFontObject() (replaced by GetNormalFontObject)
+* REMOVED - Button:SetTextColor(...)
+* REMOVED - Button:SetTextFontObject(...) (replaced by SetNormalFontObject)
+
+=== Model ===
+* NEW - Model:SetGlow(...)
+
+=== PlayerModel ===
+* NEW - PlayerModel:SetCreature(creatureID)

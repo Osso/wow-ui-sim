@@ -1,0 +1,68 @@
+test_frozen_inventory_and_default_bytes (__main__.SourceTests.test_frozen_inventory_and_default_bytes) ... FAIL
+test_labeled_signatures_handlers_and_bare_unknowns (__main__.SourceTests.test_labeled_signatures_handlers_and_bare_unknowns) ... FAIL
+test_summary_occurrences_do_not_expand_domains (__main__.SourceTests.test_summary_occurrences_do_not_expand_domains) ... FAIL
+test_unrecognized_labeled_row_fails_explicitly (__main__.SourceTests.test_unrecognized_labeled_row_fails_explicitly) ... FAIL
+
+======================================================================
+FAIL: test_frozen_inventory_and_default_bytes (__main__.SourceTests.test_frozen_inventory_and_default_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/tools/test_patch_3_0_2_source.py", line 70, in test_frozen_inventory_and_default_bytes
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : b'usage: gen_patch_wikitext_register.py [-h] [--inventory-only]\n                                      [--expand-shared-changes]\n                                      [--separate-inline-structures]\n                                      [--capture-span-defaults]\n                                      [--skip-plain-scripts-label]\n                                      [--simple-api-list]\n                                      [--legacy-column-headers]\n                                      [--diff-api-additions]\n                                      [--legacy-inventory-labels]\n                                      [--legacy-api-tables]\n                                      [--historical-api-headings]\n                                      [--cataclysm-change-bullets]\n                                      [--legacy-api-bullets]\n                                      [--legacy-api-renames] [--bfa-prepatch]\n                                      [--prose-api-links]\n                                      [--legacy-summary-tables]\n                                      [--top-level-api-bullets]\n                                      [--legacy-widget-summaries]\n                                      [--prose-namespace-migrations]\n                                      [--legacy-widget-cvar-bullets]\n                                      [--legion-prepatch]\n                                      [--indented-api-lists]\n                                      [--cataclysm-labeled-inventory]\n                                      [--colon-api-bullets]\n                                      [--warlords-prepatch]\n                                      [--warlords-diff WARLORDS_DIFF]\n                                      [--legacy-section-lists]\n                                      [--combat-restriction-bullets]\n                                      [--client-line {retail,mists-classic,classic-era}]\n                                      [--mists-automated-diff]\n                                      [--mists-prepatch] [--mists-summary]\n                                      [--mists-diff MISTS_DIFF]\n                                      [--mists-widget-handlers]\n                                      [--mists-bare-widget-handlers]\n                                      [--mists-code-removals]\n                                      [--wrath-retail-summary]\n                                      patch path revid out\ngen_patch_wikitext_register.py: error: unrecognized arguments: --wrath-launch-inventory\n'
+
+======================================================================
+FAIL: test_labeled_signatures_handlers_and_bare_unknowns (__main__.SourceTests.test_labeled_signatures_handlers_and_bare_unknowns)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/tools/test_patch_3_0_2_source.py", line 22, in test_labeled_signatures_handlers_and_bare_unknowns
+            rows = self.parser('''== Actual API changes ==
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    * NEW - ?? = GetUnitPitch("unit")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    * NEW - UnitSelectionColor ??
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ''')
+    ^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/tools/test_patch_3_0_2_source.py", line 18, in parser
+    self.assertIsNotNone(parser, 'literal launch parser missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : literal launch parser missing
+
+======================================================================
+FAIL: test_summary_occurrences_do_not_expand_domains (__main__.SourceTests.test_summary_occurrences_do_not_expand_domains)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/tools/test_patch_3_0_2_source.py", line 43, in test_summary_occurrences_do_not_expand_domains
+            rows = self.parser('''== Settings and Preferences ==
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    * The following functions have been replaced with server-stored cvars: SetAutoLootDefault(), GetAutoLootDefault()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    * The various GetPlayerBuff functions have been removed.
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ''')
+    ^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/tools/test_patch_3_0_2_source.py", line 18, in parser
+    self.assertIsNotNone(parser, 'literal launch parser missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : literal launch parser missing
+
+======================================================================
+FAIL: test_unrecognized_labeled_row_fails_explicitly (__main__.SourceTests.test_unrecognized_labeled_row_fails_explicitly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/tools/test_patch_3_0_2_source.py", line 83, in test_unrecognized_labeled_row_fails_explicitly
+    self.parser('* NEW - ??')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/tools/test_patch_3_0_2_source.py", line 18, in parser
+    self.assertIsNotNone(parser, 'literal launch parser missing')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : literal launch parser missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.070s
+
+FAILED (failures=4)

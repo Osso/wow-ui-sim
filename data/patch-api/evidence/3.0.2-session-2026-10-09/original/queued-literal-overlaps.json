@@ -1,0 +1,23 @@
+{
+  "3.0.3": [],
+  "3.0.8": [],
+  "3.1.0": [
+    "CalendarContextEventIsGuildWide",
+    "CalendarEventIsGuildWide",
+    "CalendarNewArenaTeamEvent",
+    "CalendarNewGuildWideEvent",
+    "CollapseAllHeaders",
+    "ExpandAllHeaders",
+    "GameTooltip:SetGlyph",
+    "GetGlyphSocketInfo",
+    "GetInventoryItemsForSlot",
+    "GetTrackedAchievement",
+    "SetTrackedAchievement",
+    "UnitAura",
+    "UnitBuff",
+    "UnitDebuff"
+  ],
+  "3.2.0": [
+    "CalendarGetDayEvent"
+  ]
+}

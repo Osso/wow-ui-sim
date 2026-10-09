@@ -1,0 +1,9 @@
+test_frozen_inventory_and_default_bytes (__main__.SourceTests.test_frozen_inventory_and_default_bytes) ... ok
+test_labeled_signatures_handlers_and_bare_unknowns (__main__.SourceTests.test_labeled_signatures_handlers_and_bare_unknowns) ... ok
+test_summary_occurrences_do_not_expand_domains (__main__.SourceTests.test_summary_occurrences_do_not_expand_domains) ... ok
+test_unrecognized_labeled_row_fails_explicitly (__main__.SourceTests.test_unrecognized_labeled_row_fails_explicitly) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.120s
+
+OK

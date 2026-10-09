@@ -1,6 +1,9 @@
 ## [2026-10-09] measurement | Separate Wrath 3.4.1 bare factory
 
 [Current measurement](investigations/patch-3-4-1-api-audit.md#separate-current-factory-measurement--2026-10-09): `p341-factory` from `f95eed96e`; fresh 333 literal occurrences, discovery RED at `467acfa6e` (239 classifier matches/94 gaps), 15 separately published default-string differences (eight numeric-format-only/seven numeric differences). Only two actual 3.4.2 successor removals; 3.4.3 zero identities, no foreign-history credit. Bare Wrath38001, not native30401/loaded UI; event and Command-catalog limitations explicit. Original 19 historical seals/ledger/counts unchanged, no models/shims/runtime/vendor/cache edits. Exact receipts in fresh proof ledger; targeted GREEN 6/6 exit 0 at `da31b9ed1`, all 333 observations equal RED discovery; direct preservation checks all 19 original seals. No test-input change afterward. Main owns integration/native final gates.
+## [2026-10-09] investigation | Retail 3.0.2 complete source accounting
+
+[Audit](investigations/patch-3-0-2-api-audit.md) retains frozen 482353/4638841 in isolated p302-source from 864b4f7e4. 431 rows/373 inventory/80 prose/367 signatures/41 headers, no narrowing; 389 substantive rows UNPROVEN. Source parser RED/GREEN 4/4, opt-in defaults unchanged. Separate original inputs/gaps/ledger/code/logs and empty closures; complete-accounting/tamper replay pending. Actual retail 3.3.x/4.0.1 and ordered queued 3.0.3/3.0.8/3.1.0/3.2.0 inputs retained without Classic or native credit. Main owns integration/native acceptance.
 
 ## [2026-10-09] proof status | Retail 3.3.5/3.3.3 and Wrath 3.4.2 follow-up
 

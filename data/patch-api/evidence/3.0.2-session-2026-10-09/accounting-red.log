@@ -1,0 +1,54 @@
+test_complete_accounting_and_separate_limits (__main__.AccountingTests.test_complete_accounting_and_separate_limits) ... FAIL
+test_every_literal_row_occurrence_signature_and_prose_required (__main__.AccountingTests.test_every_literal_row_occurrence_signature_and_prose_required) ... FAIL
+test_git_free_replay_and_serialized_tampers_restore_bytes (__main__.AccountingTests.test_git_free_replay_and_serialized_tampers_restore_bytes) ... FAIL
+test_positive_credit_and_foreign_successor_rejected (__main__.AccountingTests.test_positive_credit_and_foreign_successor_rejected) ... FAIL
+
+======================================================================
+FAIL: test_complete_accounting_and_separate_limits (__main__.AccountingTests.test_complete_accounting_and_separate_limits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 25, in test_complete_accounting_and_separate_limits
+    module = self.validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 18, in validator
+    self.assertTrue(path.exists(), 'historical accounting validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical accounting validator missing
+
+======================================================================
+FAIL: test_every_literal_row_occurrence_signature_and_prose_required (__main__.AccountingTests.test_every_literal_row_occurrence_signature_and_prose_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 37, in test_every_literal_row_occurrence_signature_and_prose_required
+    module = self.validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 18, in validator
+    self.assertTrue(path.exists(), 'historical accounting validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical accounting validator missing
+
+======================================================================
+FAIL: test_git_free_replay_and_serialized_tampers_restore_bytes (__main__.AccountingTests.test_git_free_replay_and_serialized_tampers_restore_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 59, in test_git_free_replay_and_serialized_tampers_restore_bytes
+    self.validator()
+    ~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 18, in validator
+    self.assertTrue(path.exists(), 'historical accounting validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical accounting validator missing
+
+======================================================================
+FAIL: test_positive_credit_and_foreign_successor_rejected (__main__.AccountingTests.test_positive_credit_and_foreign_successor_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 47, in test_positive_credit_and_foreign_successor_rejected
+    module = self.validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p302-source/data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py", line 18, in validator
+    self.assertTrue(path.exists(), 'historical accounting validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical accounting validator missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=4)

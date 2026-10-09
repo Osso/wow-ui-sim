@@ -1,0 +1,42 @@
+{
+  "3.3.0": [],
+  "3.3.3": [],
+  "3.3.5": [],
+  "4.0.1": [
+    {
+      "section": "global-api",
+      "symbol": "GetCVarAbsoluteMax",
+      "direction": "removed"
+    },
+    {
+      "section": "global-api",
+      "symbol": "GetCVarAbsoluteMin",
+      "direction": "removed"
+    },
+    {
+      "section": "global-api",
+      "symbol": "GetCVarMax",
+      "direction": "removed"
+    },
+    {
+      "section": "global-api",
+      "symbol": "GetCVarMin",
+      "direction": "removed"
+    },
+    {
+      "section": "global-api",
+      "symbol": "GetKnownSlotFromHighestRankSlot",
+      "direction": "removed"
+    },
+    {
+      "section": "global-api",
+      "symbol": "RestoreVideoEffectsDefaults",
+      "direction": "removed"
+    },
+    {
+      "section": "global-api",
+      "symbol": "RestoreVideoResolutionDefaults",
+      "direction": "removed"
+    }
+  ]
+}
