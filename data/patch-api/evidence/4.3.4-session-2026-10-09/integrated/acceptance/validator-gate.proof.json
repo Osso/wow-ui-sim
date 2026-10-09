@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "tools/check_patch_validators.py",
+    "25db3691d"
+  ],
+  "revision": "25db3691d8d36112acf8f5ef853b1321a126e042",
+  "exit": 0,
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 65
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 66
+    }
+  },
+  "report_sha256": "5c4950a187a6d127d517158daff34a298911be3b4dde49c6e1b561e4d8a9b702",
+  "proof_scope": "Historical validator inputs unchanged through current acceptance/docs-only additions; not runtime/native parity."
+}
