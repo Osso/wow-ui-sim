@@ -1,0 +1,97 @@
+F.F
+======================================================================
+FAIL: test_literal_definitions_and_default_byte_isolation (__main__.CVarDefinitionTests.test_literal_definitions_and_default_byte_isolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p303-source/tools/test_patch_3_0_3_source.py", line 31, in test_literal_definitions_and_default_byte_isolation
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : usage: gen_patch_wikitext_register.py [-h] [--inventory-only]
+                                      [--expand-shared-changes]
+                                      [--separate-inline-structures]
+                                      [--capture-span-defaults]
+                                      [--skip-plain-scripts-label]
+                                      [--simple-api-list]
+                                      [--legacy-column-headers]
+                                      [--diff-api-additions]
+                                      [--legacy-inventory-labels]
+                                      [--legacy-api-tables]
+                                      [--historical-api-headings]
+                                      [--cataclysm-change-bullets]
+                                      [--legacy-api-bullets]
+                                      [--legacy-api-renames] [--bfa-prepatch]
+                                      [--prose-api-links]
+                                      [--legacy-summary-tables]
+                                      [--top-level-api-bullets]
+                                      [--legacy-widget-summaries]
+                                      [--prose-namespace-migrations]
+                                      [--legacy-widget-cvar-bullets]
+                                      [--legion-prepatch]
+                                      [--indented-api-lists]
+                                      [--cataclysm-labeled-inventory]
+                                      [--colon-api-bullets]
+                                      [--warlords-prepatch]
+                                      [--warlords-diff WARLORDS_DIFF]
+                                      [--legacy-section-lists]
+                                      [--combat-restriction-bullets]
+                                      [--client-line {retail,mists-classic,classic-era}]
+                                      [--mists-automated-diff]
+                                      [--mists-prepatch] [--mists-summary]
+                                      [--mists-diff MISTS_DIFF]
+                                      [--mists-widget-handlers]
+                                      [--mists-bare-widget-handlers]
+                                      [--mists-code-removals]
+                                      patch path revid out
+gen_patch_wikitext_register.py: error: unrecognized arguments: --legacy-cvar-definitions
+
+
+======================================================================
+FAIL: test_section_boundary_and_malformed_definition_rejection (__main__.CVarDefinitionTests.test_section_boundary_and_malformed_definition_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p303-source/tools/test_patch_3_0_3_source.py", line 58, in test_section_boundary_and_malformed_definition_rejection
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : usage: gen_patch_wikitext_register.py [-h] [--inventory-only]
+                                      [--expand-shared-changes]
+                                      [--separate-inline-structures]
+                                      [--capture-span-defaults]
+                                      [--skip-plain-scripts-label]
+                                      [--simple-api-list]
+                                      [--legacy-column-headers]
+                                      [--diff-api-additions]
+                                      [--legacy-inventory-labels]
+                                      [--legacy-api-tables]
+                                      [--historical-api-headings]
+                                      [--cataclysm-change-bullets]
+                                      [--legacy-api-bullets]
+                                      [--legacy-api-renames] [--bfa-prepatch]
+                                      [--prose-api-links]
+                                      [--legacy-summary-tables]
+                                      [--top-level-api-bullets]
+                                      [--legacy-widget-summaries]
+                                      [--prose-namespace-migrations]
+                                      [--legacy-widget-cvar-bullets]
+                                      [--legion-prepatch]
+                                      [--indented-api-lists]
+                                      [--cataclysm-labeled-inventory]
+                                      [--colon-api-bullets]
+                                      [--warlords-prepatch]
+                                      [--warlords-diff WARLORDS_DIFF]
+                                      [--legacy-section-lists]
+                                      [--combat-restriction-bullets]
+                                      [--client-line {retail,mists-classic,classic-era}]
+                                      [--mists-automated-diff]
+                                      [--mists-prepatch] [--mists-summary]
+                                      [--mists-diff MISTS_DIFF]
+                                      [--mists-widget-handlers]
+                                      [--mists-bare-widget-handlers]
+                                      [--mists-code-removals]
+                                      patch path revid out
+gen_patch_wikitext_register.py: error: unrecognized arguments: --legacy-cvar-definitions
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.409s
+
+FAILED (failures=2)

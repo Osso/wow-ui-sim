@@ -25,6 +25,19 @@
       "exit": 0,
       "artifact": "source-green.log",
       "invalidated_by": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_3_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-source",
+      "revision": "f7582f153a8d84d23f0732925ff277b7611e2c5f",
+      "scope": "Two historical replay/accounting fixtures fail exactly because own validator is absent.",
+      "exit": 1,
+      "artifact": "validator-red.log",
+      "invalidated_by": null
     }
   ]
 }

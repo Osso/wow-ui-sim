@@ -1,0 +1,28 @@
+FF
+======================================================================
+FAIL: test_every_original_row_gap_and_identity_is_required (__main__.HistoricalReplayTests.test_every_original_row_gap_and_identity_is_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p303-source/tools/test_patch_3_0_3_validator.py", line 93, in test_every_original_row_gap_and_identity_is_required
+    path = self.require_validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p303-source/tools/test_patch_3_0_3_validator.py", line 21, in require_validator
+    self.assertTrue(path.exists(), 'own sealed historical validator is not implemented')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : own sealed historical validator is not implemented
+
+======================================================================
+FAIL: test_fresh_copied_process_and_serialized_tamper_restoration (__main__.HistoricalReplayTests.test_fresh_copied_process_and_serialized_tamper_restoration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p303-source/tools/test_patch_3_0_3_validator.py", line 25, in test_fresh_copied_process_and_serialized_tamper_restoration
+    self.require_validator()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p303-source/tools/test_patch_3_0_3_validator.py", line 21, in require_validator
+    self.assertTrue(path.exists(), 'own sealed historical validator is not implemented')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : own sealed historical validator is not implemented
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (failures=2)
