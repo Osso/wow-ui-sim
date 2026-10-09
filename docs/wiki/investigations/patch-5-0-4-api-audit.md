@@ -1,6 +1,6 @@
 # Retail Patch 5.0.4 API audit
 
-Pinned main revision 3706382 and separate diff 3923766; parent revision 6423642 gives TOC 50001. This is retail Mists prepatch, not Classic 5.5.x. Parsed-source work through c40622385 is preserved; no reparsing implementation restart.
+Audit verified 2026-10-09. Pinned main revision 3706382 and separate diff 3923766; parent revision 6423642 gives TOC 50001. This is retail Mists prepatch, not Classic 5.5.x. Parsed-source work through c40622385 is preserved; no reparsing implementation restart.
 
 ## Coverage boundary
 
@@ -18,7 +18,9 @@ Qualified and bare whole-word current-retail scans exclude Documentation; all sr
 
 Real 5.1.0 register bytes come from integrated master 85a259d90, retained with their blob digest inside this audit. Remaining real successors run through the latest committed retail 12.1.0 register; no Classic 5.5.x enters this chain. Future coordinator integration replaces the local 5.1.0 pin reference with its canonical merged path.
 
-At edf957802, own prefork 2/2 and all retail sweep/factory cases 63/63 pass: 10,779 observations on 62 pages. Other-page outputs are losslessly compressed, not truncated inventories. Affected pet-battle integration 36/36 passes. Python fixtures 101/101 pass. All 67 registers reproduce; 64 extracts reproduce, retaining the exact inherited 12.0.5/12.0.7/12.1.0 failures. Initial probes without older recorded flags remain failed evidence, not parser defects. Mists check passed; final warning analysis, Classic controls, remaining scoped acceptance and portability gate are recorded separately as they finish. No whole-suite/native-gameplay completion claim.
+At edf957802, own prefork 2/2 and all retail sweep/factory cases 63/63 pass: 10,779 observations on 62 pages. Other-page outputs are losslessly compressed, not truncated inventories. Affected pet-battle integration 36/36 passes. Python fixtures 101/101 pass. All 67 registers reproduce; 64 main extracts and the separate 5.4.0 diff extract reproduce, retaining the exact inherited 12.0.5/12.0.7/12.1.0 failures. Initial probes without older recorded flags remain failed evidence, not parser defects. Mists controls 6/6, Mists pet-type read 1/1, own bare integration 1/1, affected prefork UI 7/7, retail line controls 3/3 and namespace library 24/24 pass. Default `cargo check --tests`, `cargo fmt --check` and Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` pass; zero non-vendor warnings. Installed Arch cargo/rustc is 1.99.0. `wow-sim --no-addons --no-saved-vars lua-errors` returns `[]`, exit 0; the initially attempted unsupported wow-cli invocation remains failed evidence. Exact negative control rejects 159 → 160 mismatches. No whole-suite/native-gameplay completion claim.
+
+Portable gate at `2ffcc12e089d7b3da2dc4d681be6a834d16647de`: **57/57 clean, 58/58 synthetic later audit**, zero failures. All 56 prior validators remain byte-identical to their pinned blobs. Source and owned-log tampering are rejected at exact diagnostics; original bytes restored. [Command ledger](../../../data/patch-api/evidence/5.0.4-session-2026-10-08/command-ledger.json) records exact argv, code/input revisions, environments, exits and hashes; [gate report](../../../data/patch-api/evidence/5.0.4-session-2026-10-08/validator-gate.json) records both phases. Evidence uses compact tree/blob pins and lossless compressed other-page outputs; total owned evidence remains below 5 MB. Final receipt/wiki/spec-only commit does not invalidate runtime/tool proof. Coordinator owns rebase, integration, migration and CI; no push, merge, delegation, vendor edit or canonical/sibling worktree edit.
 
 ## Sources
 

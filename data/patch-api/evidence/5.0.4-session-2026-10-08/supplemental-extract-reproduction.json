@@ -1,0 +1,15 @@
+{
+  "source_tree": "a5fb3fb51eb10cf191875cb4d7cb507714352cc0",
+  "extractor_blob": "6fcc1724827c7588b91d23e3c815324d86a33b97",
+  "source": "5.4.0-api-changes-diff.wikitext",
+  "output": "5.4.0-api-changes-diff.txt",
+  "flags": [
+    "--mists-automated-diff",
+    "--mists-source-markup"
+  ],
+  "method": "Execute pinned extract_text with recorded flags; compare complete bytes against pinned output.",
+  "source_sha256": "e3344340310c68a596c35337673ec0e1ae0a40d7defabf230c7225afa2e8caa1",
+  "output_sha256": "d01c7b4c11d9c1d1c7b9f8fab6e9a1ebf435ae91f7f8f44a8a8eb7affa39ee2f",
+  "identical": true,
+  "exit": 0
+}

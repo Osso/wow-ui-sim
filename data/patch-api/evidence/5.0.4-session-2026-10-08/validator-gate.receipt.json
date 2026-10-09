@@ -1,0 +1,24 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "2ffcc12e089d7b3da2dc4d681be6a834d16647de"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p504-page",
+  "revision": "2ffcc12e089d7b3da2dc4d681be6a834d16647de",
+  "exit": 0,
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 57
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 58
+    }
+  },
+  "report_sha256": "f4d7d09e2d90dd8db1d9897f2f2a33f8dce5aeffd5eb49e4288b643e407fcb8b",
+  "invalidated": false,
+  "scope": "Sealed runtime/tool/source proof; following receipt/docs-only changes add no new acceptance dependency."
+}

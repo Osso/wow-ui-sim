@@ -4,7 +4,9 @@
 
 ## [2026-10-08] investigation | Retail Patch 5.0.4 API audit
 
-[Audit](investigations/patch-5-0-4-api-audit.md): bounded 626-occurrence discovery and 704-ID accounting; one concrete pet-type read with RED/GREEN, no retirement. Exact gaps, full consumer scans, pinned successors and compressed retail results retained. Final acceptance remains open.
+## [2026-10-09] investigation | Retail Patch 5.0.4 API audit
+
+[Audit](investigations/patch-5-0-4-api-audit.md): bounded 626-occurrence discovery and 704-ID accounting; one concrete pet-type read with RED/GREEN, no retirement. Exact gaps, full consumer scans, pinned successors and compressed retail results retained. Bounded acceptance complete: retail sweeps 63/63, own prefork/bare 2/1, affected integration/prefork 36/7, namespace lib 24, Mists controls/state read 6/1, Python 101, format/default+Mists checks and startup `[]` pass. Negative 159 → 160; source/log tampering rejected and restored. Portable gate at 2ffcc12e0 passes 57/57 clean and 58/58 later audit, zero failures. Coordinator owns integration/migration/CI; no push or merge.
 
 ## [2026-10-08] integration | Patch 5.5.4 Mists Classic API audit
 

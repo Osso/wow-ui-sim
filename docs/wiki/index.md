@@ -4,7 +4,9 @@
 
 ## [2026-10-08] investigation | Retail Patch 5.0.4 API audit
 
-[Audit](investigations/patch-5-0-4-api-audit.md): 626 main/diff occurrences, 73 extract rows and five separate signatures; 704 IDs. One concrete per-side pet-type state read, 159 sweep mismatches, 61 prose and five signature limits. No retirements; four later readditions and all current consumers preserved. Real pinned 5.1.0 successor excludes Classic. Retail sweep/factory 63/63, own prefork 2/2, affected integration 36/36, Python 101/101; 67 registers and 64 extracts reproduce with three inherited failures. Remaining acceptance and portability proof pending.
+## [2026-10-09] investigation | Retail Patch 5.0.4 API audit
+
+[Audit](investigations/patch-5-0-4-api-audit.md): 626 main/diff occurrences, 73 extract rows and five separate signatures; 704 IDs. One concrete per-side pet-type state read, 159 sweep mismatches, 61 prose and five signature limits. No retirements; four later readditions and all current consumers preserved. Real pinned 5.1.0 successor excludes Classic. Retail sweep/factory 63/63, own prefork 2/2, affected integration 36/36, Python 101/101; 67 registers and 64 extracts reproduce with three inherited failures. Mists controls 6/6 and state read 1/1, affected prefork 7/7, bare integration 1/1, library 24/24, retail controls 3/3, format/check and startup `[]` pass; zero non-vendor Mists warnings. Negative 159 → 160; source/log tampering rejected and restored. Portable gate at 2ffcc12e0 passes 57/57 clean and 58/58 later audit. No push/merge/delegation; coordinator integration remains separate.
 
 ## [2026-10-08] investigation | Patch 5.5.0 Mists Classic launch API audit
 

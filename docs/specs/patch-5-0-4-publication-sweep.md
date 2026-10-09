@@ -5,8 +5,8 @@
 - [x] Probe every one of the 626 pinned main/diff occurrences against current retail.
 - [x] Apply real retail successors from 5.1.0 onward; exclude Classic 5.5.x.
 - [x] Classify each occurrence, main prose statement, and retained signature without equating publication with behavior.
-- [ ] Preserve current consumers, later readditions, and Classic behavior.
-- [ ] Retain portable, revision-pinned evidence and exact negative control.
+- [x] Preserve current consumers, later readditions, and Classic behavior.
+- [x] Retain portable, revision-pinned evidence and exact negative control.
 
 ## Current boundary
 
