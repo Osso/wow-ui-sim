@@ -1,0 +1,1 @@
+{"prior_validators": 38, "rebase_commits": 9, "reproduction": {"extracts": 53, "registers": 56}, "retail": {"differences": 0, "observations": 9740, "pages": 55}, "status": "PASS"}

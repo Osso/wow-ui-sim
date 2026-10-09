@@ -24,7 +24,7 @@
 
 ## [2026-10-08] investigation | Patch 5.4.1 API audit
 
-[Audit](investigations/patch-5-4-1-api-audit.md): pinned 2013 retail build 17538/TOC 50400; 15 inventory and 10 extract IDs, two publication gaps and two pending prose contracts. No runtime edits or new retirements; bounded default realm CVar absence. 56 publication/factory cases, 86 Python fixtures, format and non-vendor warning-clean Mists pass; 55 registers/52 extracts reproduce with three inherited failures. Sealed gate 37/37 clean, 38/38 later-audit; own-log tampering rejected.
+[Audit](investigations/patch-5-4-1-api-audit.md): integrated receipt refresh against 279a38f3d in progress; merged 5.4.2/5.4.7/5.4.8 register ordering, 61 registers/58 extracts reproduced. Historical proof: pinned 2013 retail build 17538/TOC 50400; 15 inventory and 10 extract IDs, two publication gaps and two pending prose contracts. No runtime edits or new retirements; bounded default realm CVar absence. 56 publication/factory cases, 86 Python fixtures, format and non-vendor warning-clean Mists pass; 55 registers/52 extracts reproduce with three inherited failures. Sealed gate 37/37 clean, 38/38 later-audit; own-log tampering rejected.
 
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 

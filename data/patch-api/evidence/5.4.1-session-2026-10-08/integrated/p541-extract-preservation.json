@@ -1,0 +1,1821 @@
+[
+  {
+    "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "ef7d29d844e4770cc46f473bea5b22e1162aa8cc67218d3670b1d95923e4d437",
+      "error": null
+    },
+    "after": {
+      "sha256": "ef7d29d844e4770cc46f473bea5b22e1162aa8cc67218d3670b1d95923e4d437",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+      "error": null
+    },
+    "after": {
+      "sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.0.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "c15e7678ed782253d1b41168b142df2be57913655052bb4eb2e97e3ce0c97896",
+      "error": null
+    },
+    "after": {
+      "sha256": "c15e7678ed782253d1b41168b142df2be57913655052bb4eb2e97e3ce0c97896",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.0.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+      "error": null
+    },
+    "after": {
+      "sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "error": null
+    },
+    "after": {
+      "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "error": null
+    },
+    "after": {
+      "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "error": null
+    },
+    "after": {
+      "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "error": null
+    },
+    "after": {
+      "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "7d516a15d9c3d330e99876522d6cbeffc52e173b103f46933e3e18e89856c603",
+      "error": null
+    },
+    "after": {
+      "sha256": "7d516a15d9c3d330e99876522d6cbeffc52e173b103f46933e3e18e89856c603",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+      "error": null
+    },
+    "after": {
+      "sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.1.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "error": null
+    },
+    "after": {
+      "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.1.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "error": null
+    },
+    "after": {
+      "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "6186b1d6351a1590ecc03f97314d8d7e7ad02c8477cb697f118a00f9b7f6f03d",
+      "error": null
+    },
+    "after": {
+      "sha256": "6186b1d6351a1590ecc03f97314d8d7e7ad02c8477cb697f118a00f9b7f6f03d",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+      "error": null
+    },
+    "after": {
+      "sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+      "error": null
+    },
+    "after": {
+      "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "f2178a9f38d50fd3f015ddcb708856296f3bfd5ffabe439dbd9fb5a5d2481af8",
+      "error": null
+    },
+    "after": {
+      "sha256": "f2178a9f38d50fd3f015ddcb708856296f3bfd5ffabe439dbd9fb5a5d2481af8",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "7433f362f3dbc687daa886831bd4e6b8b45e6b8c9c231452519033d677f79aa7",
+      "error": null
+    },
+    "after": {
+      "sha256": "7433f362f3dbc687daa886831bd4e6b8b45e6b8c9c231452519033d677f79aa7",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+      "error": null
+    },
+    "after": {
+      "sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.6-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "error": null
+    },
+    "after": {
+      "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.6-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "error": null
+    },
+    "after": {
+      "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+      "error": null
+    },
+    "after": {
+      "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "1ec2dca4c47ec3b59563de0e7ae08cf39a8720ca2ec1f9281079b99e8167b7a9",
+      "error": null
+    },
+    "after": {
+      "sha256": "1ec2dca4c47ec3b59563de0e7ae08cf39a8720ca2ec1f9281079b99e8167b7a9",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+      "error": null
+    },
+    "after": {
+      "sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "6ff8e9d7c53c0642db12bf5df22eb1ebaa3c81d9c4449e4fc4a420a8cd85c88e",
+      "error": null
+    },
+    "after": {
+      "sha256": "6ff8e9d7c53c0642db12bf5df22eb1ebaa3c81d9c4449e4fc4a420a8cd85c88e",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+      "error": null
+    },
+    "after": {
+      "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "93a54a28a468cf969e2ef96fab140e60c777b6286de700e712ffdc72a98b0aea",
+      "error": null
+    },
+    "after": {
+      "sha256": "93a54a28a468cf969e2ef96fab140e60c777b6286de700e712ffdc72a98b0aea",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "error": null
+    },
+    "after": {
+      "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "error": null
+    },
+    "after": {
+      "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "error": null
+    },
+    "after": {
+      "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.0.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "error": null
+    },
+    "after": {
+      "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "error": null
+    },
+    "after": {
+      "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "error": null
+    },
+    "after": {
+      "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.1.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "error": null
+    },
+    "after": {
+      "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.1.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "error": null
+    },
+    "after": {
+      "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "error": null
+    },
+    "after": {
+      "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "error": null
+    },
+    "after": {
+      "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "error": null
+    },
+    "after": {
+      "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "error": null
+    },
+    "after": {
+      "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.2.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "error": null
+    },
+    "after": {
+      "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.2.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "error": null
+    },
+    "after": {
+      "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "error": null
+    },
+    "after": {
+      "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "error": null
+    },
+    "after": {
+      "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "error": null
+    },
+    "after": {
+      "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "error": null
+    },
+    "after": {
+      "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.1-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "error": null
+    },
+    "after": {
+      "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.1-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "error": null
+    },
+    "after": {
+      "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a",
+      "error": null
+    },
+    "after": {
+      "sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a",
+      "error": null
+    },
+    "after": {
+      "sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855",
+      "error": null
+    },
+    "after": {
+      "sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855",
+      "error": null
+    },
+    "after": {
+      "sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.1.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/12.1.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "bd91e23ed7369d20283902db9311658c4e4c5f2bb96dbe28fa367adee361e910",
+      "error": null
+    },
+    "after": {
+      "sha256": "bd91e23ed7369d20283902db9311658c4e4c5f2bb96dbe28fa367adee361e910",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.2-api-changes.wikitext",
+    "flags": [
+      "--mists-automated-diff"
+    ],
+    "before": {
+      "sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980",
+      "error": null
+    },
+    "after": {
+      "sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "bd91e23ed7369d20283902db9311658c4e4c5f2bb96dbe28fa367adee361e910",
+      "error": null
+    },
+    "after": {
+      "sha256": "bd91e23ed7369d20283902db9311658c4e4c5f2bb96dbe28fa367adee361e910",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "704e63555dc4da96b0be176329b884842465e2e2f44767f6de1c894e32622fa0",
+      "error": null
+    },
+    "after": {
+      "sha256": "704e63555dc4da96b0be176329b884842465e2e2f44767f6de1c894e32622fa0",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.7-api-changes.wikitext",
+    "flags": [
+      "--legacy-api-tables"
+    ],
+    "before": {
+      "sha256": "b622423ac5aa436320fceb5f980588903360079f4be497f65ce13612b838e37b",
+      "error": null
+    },
+    "after": {
+      "sha256": "b622423ac5aa436320fceb5f980588903360079f4be497f65ce13612b838e37b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "704e63555dc4da96b0be176329b884842465e2e2f44767f6de1c894e32622fa0",
+      "error": null
+    },
+    "after": {
+      "sha256": "704e63555dc4da96b0be176329b884842465e2e2f44767f6de1c894e32622fa0",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.8-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+      "error": null
+    },
+    "after": {
+      "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.4.8-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+      "error": null
+    },
+    "after": {
+      "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+      "error": null
+    },
+    "after": {
+      "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.2-api-changes.wikitext",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "before": {
+      "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+      "error": null
+    },
+    "after": {
+      "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+      "error": null
+    },
+    "after": {
+      "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.3-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "676cd776ac4d981b277382dfc8083de1b427d57274f6481adc457e9bfa74f618",
+      "error": null
+    },
+    "after": {
+      "sha256": "676cd776ac4d981b277382dfc8083de1b427d57274f6481adc457e9bfa74f618",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.3-api-changes.wikitext",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "before": {
+      "sha256": "4e17219957f0a7c416bb68958c42d474b88f5f3ee625060dc92b6c167c3f7b56",
+      "error": null
+    },
+    "after": {
+      "sha256": "4e17219957f0a7c416bb68958c42d474b88f5f3ee625060dc92b6c167c3f7b56",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.3-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "676cd776ac4d981b277382dfc8083de1b427d57274f6481adc457e9bfa74f618",
+      "error": null
+    },
+    "after": {
+      "sha256": "676cd776ac4d981b277382dfc8083de1b427d57274f6481adc457e9bfa74f618",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.4-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "5d9d422291e3a8ee43d7eda3ce7ab3880e22f9e2f32b24478f2541810debf2c1",
+      "error": null
+    },
+    "after": {
+      "sha256": "5d9d422291e3a8ee43d7eda3ce7ab3880e22f9e2f32b24478f2541810debf2c1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.4-api-changes.wikitext",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "before": {
+      "sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b",
+      "error": null
+    },
+    "after": {
+      "sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/5.5.4-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "5d9d422291e3a8ee43d7eda3ce7ab3880e22f9e2f32b24478f2541810debf2c1",
+      "error": null
+    },
+    "after": {
+      "sha256": "5d9d422291e3a8ee43d7eda3ce7ab3880e22f9e2f32b24478f2541810debf2c1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.0.1-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+      "error": null
+    },
+    "after": {
+      "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.0.1-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+      "error": null
+    },
+    "after": {
+      "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.0.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.0.2/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.0.2/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.0.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.0.2/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.0.2/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.0.2-api-changes.wikitext",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "before": {
+      "sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34",
+      "error": null
+    },
+    "after": {
+      "sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.1.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.1.0/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.1.0/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.1.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.1.0/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.1.0/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.1.0-api-changes.wikitext",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "before": {
+      "sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084",
+      "error": null
+    },
+    "after": {
+      "sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.0/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.0/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.0/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.0/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.0-api-changes.wikitext",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "before": {
+      "sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154",
+      "error": null
+    },
+    "after": {
+      "sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+      "error": null
+    },
+    "after": {
+      "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+      "error": null
+    },
+    "after": {
+      "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.4/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.4/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.4/API changes/diff}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{:Patch 6.2.4/API changes/diff}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples",
+      "--retain-patch-diff-reference"
+    ],
+    "before": {
+      "sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85",
+      "error": null
+    },
+    "after": {
+      "sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.0.1-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+      "error": null
+    },
+    "after": {
+      "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.0.1-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+      "error": null
+    },
+    "after": {
+      "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.0.3-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "27f1b21c9a65948288494d9dc5ad47ec3749e5e85076e57489c370351c1fc1e5",
+      "error": null
+    },
+    "after": {
+      "sha256": "27f1b21c9a65948288494d9dc5ad47ec3749e5e85076e57489c370351c1fc1e5",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.0.3-api-changes.wikitext",
+    "flags": [
+      "--legion-prepatch"
+    ],
+    "before": {
+      "sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
+      "error": null
+    },
+    "after": {
+      "sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.0.3-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "27f1b21c9a65948288494d9dc5ad47ec3749e5e85076e57489c370351c1fc1e5",
+      "error": null
+    },
+    "after": {
+      "sha256": "27f1b21c9a65948288494d9dc5ad47ec3749e5e85076e57489c370351c1fc1e5",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.1.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+      "error": null
+    },
+    "after": {
+      "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.1.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+      "error": null
+    },
+    "after": {
+      "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.2.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+      "error": null
+    },
+    "after": {
+      "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.2.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+      "error": null
+    },
+    "after": {
+      "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.2.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+      "error": null
+    },
+    "after": {
+      "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.2.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+      "error": null
+    },
+    "after": {
+      "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.3.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+      "error": null
+    },
+    "after": {
+      "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.3.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+      "error": null
+    },
+    "after": {
+      "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: *[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: *[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: *[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: *[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+    "flags": [
+      "--retain-reference-notes"
+    ],
+    "before": {
+      "sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
+      "error": null
+    },
+    "after": {
+      "sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "36d855a8fffcda66b41f088d5d81914933a5841ec2f41ee584517c7d22534e69",
+      "error": null
+    },
+    "after": {
+      "sha256": "36d855a8fffcda66b41f088d5d81914933a5841ec2f41ee584517c7d22534e69",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+    "flags": [
+      "--bfa-prepatch"
+    ],
+    "before": {
+      "sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
+      "error": null
+    },
+    "after": {
+      "sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "36d855a8fffcda66b41f088d5d81914933a5841ec2f41ee584517c7d22534e69",
+      "error": null
+    },
+    "after": {
+      "sha256": "36d855a8fffcda66b41f088d5d81914933a5841ec2f41ee584517c7d22534e69",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.1.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{reflist}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{reflist}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.1.0-api-changes.wikitext",
+    "flags": [
+      "--legacy-api-bullets",
+      "--legacy-cvar-tables",
+      "--retain-reference-notes"
+    ],
+    "before": {
+      "sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
+      "error": null
+    },
+    "after": {
+      "sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.1.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: {{reflist}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: {{reflist}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "0feae5f888e364f639bcd3dbad58b1dbe75f04553030c2d681901112f1faa48d",
+      "error": null
+    },
+    "after": {
+      "sha256": "0feae5f888e364f639bcd3dbad58b1dbe75f04553030c2d681901112f1faa48d",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+    "flags": [
+      "--legacy-api-bullets"
+    ],
+    "before": {
+      "sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+      "error": null
+    },
+    "after": {
+      "sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "0feae5f888e364f639bcd3dbad58b1dbe75f04553030c2d681901112f1faa48d",
+      "error": null
+    },
+    "after": {
+      "sha256": "0feae5f888e364f639bcd3dbad58b1dbe75f04553030c2d681901112f1faa48d",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.2.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.2.0-api-changes.wikitext",
+    "flags": [
+      "--legacy-api-tables"
+    ],
+    "before": {
+      "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+      "error": null
+    },
+    "after": {
+      "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.2.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: :: \"CHANNEL\" is protected, \"SAY\", \"YELL\" are protected while outside of instances/raids. <ref>{{ref web|url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=''Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It\u2019s ALSO disabled from SAY/YELL out in world. It\u2019s permitted in raid/party/guild chat, and SAY/YELL within instances.''}}</ref>"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: :: \"CHANNEL\" is protected, \"SAY\", \"YELL\" are protected while outside of instances/raids. <ref>{{ref web|url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=''Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It\u2019s ALSO disabled from SAY/YELL out in world. It\u2019s permitted in raid/party/guild chat, and SAY/YELL within instances.''}}</ref>"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: :: \"CHANNEL\" is protected, \"SAY\", \"YELL\" are protected while outside of instances/raids. <ref>{{ref web|url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=''Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It\u2019s ALSO disabled from SAY/YELL out in world. It\u2019s permitted in raid/party/guild chat, and SAY/YELL within instances.''}}</ref>"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: :: \"CHANNEL\" is protected, \"SAY\", \"YELL\" are protected while outside of instances/raids. <ref>{{ref web|url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=''Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It\u2019s ALSO disabled from SAY/YELL out in world. It\u2019s permitted in raid/party/guild chat, and SAY/YELL within instances.''}}</ref>"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "before": {
+      "sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+      "error": null
+    },
+    "after": {
+      "sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: * The [[Auction House]] was revamped <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=[[Kaivax]]|date=2019-10-07|title=Feedback \u2013 Auction House Revamp}}</ref>"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: * The [[Auction House]] was revamped <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=[[Kaivax]]|date=2019-10-07|title=Feedback \u2013 Auction House Revamp}}</ref>"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: * The [[Auction House]] was revamped <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=[[Kaivax]]|date=2019-10-07|title=Feedback \u2013 Auction House Revamp}}</ref>"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: * The [[Auction House]] was revamped <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=[[Kaivax]]|date=2019-10-07|title=Feedback \u2013 Auction House Revamp}}</ref>"
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples",
+      "--normalize-inventory-headings",
+      "--retain-reference-notes"
+    ],
+    "before": {
+      "sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+      "error": null
+    },
+    "after": {
+      "sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "error": null
+    },
+    "after": {
+      "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "error": null
+    },
+    "after": {
+      "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "84434d37d36271b4599d9c95b26a49dcfc265538cd45b62990209d29e35186aa",
+      "error": null
+    },
+    "after": {
+      "sha256": "84434d37d36271b4599d9c95b26a49dcfc265538cd45b62990209d29e35186aa",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+    "flags": [
+      "--normalize-inventory-headings",
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+      "error": null
+    },
+    "after": {
+      "sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "d5ca7bdb18c51d551b0ae15f271efac9a7855f01740fae62f163b8467a24c975",
+      "error": null
+    },
+    "after": {
+      "sha256": "d5ca7bdb18c51d551b0ae15f271efac9a7855f01740fae62f163b8467a24c975",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "error": null
+    },
+    "after": {
+      "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "error": null
+    },
+    "after": {
+      "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "error": null
+    },
+    "after": {
+      "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "error": null
+    },
+    "after": {
+      "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "error": null
+    },
+    "after": {
+      "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "error": null
+    },
+    "after": {
+      "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.1.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "error": null
+    },
+    "after": {
+      "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.1.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "error": null
+    },
+    "after": {
+      "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "error": null
+    },
+    "after": {
+      "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "error": null
+    },
+    "after": {
+      "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "880f6526d7cd9651e65fc7865f90c88f9ac149633dab1975ad06a9ff31c002ec",
+      "error": null
+    },
+    "after": {
+      "sha256": "880f6526d7cd9651e65fc7865f90c88f9ac149633dab1975ad06a9ff31c002ec",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+      "error": null
+    },
+    "after": {
+      "sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+    "flags": [],
+    "before": {
+      "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "error": null
+    },
+    "after": {
+      "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "error": null
+    }
+  },
+  {
+    "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "error": null
+    },
+    "after": {
+      "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "error": null
+    }
+  }
+]

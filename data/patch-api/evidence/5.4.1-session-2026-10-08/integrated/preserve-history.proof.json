@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/preserve_history.py"
+  ],
+  "revision": "5767b8089714760a8292d58794f2602e07864e15",
+  "scope": "preserve-history",
+  "cwd": ".",
+  "target": "dedicated p541-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "preserve-history.txt",
+  "log_sha256": "2ab78fed50bdeb7af3aa497f18544434e14adfc935aeb5ef04fe8e70fc6fd790",
+  "seconds": 5.028990756996791,
+  "invalidated": false
+}
