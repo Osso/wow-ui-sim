@@ -1,0 +1,359 @@
+{
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+  "original_revision": "61fd58823",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "env": {},
+      "exit_code": 0,
+      "stdout": "4e3eee3b85fc6a459ca141b17f784b3a442069d8\n",
+      "stderr": "",
+      "revision": "4e3eee3b85fc6a459ca141b17f784b3a442069d8",
+      "stdout_sha256": "f39e7c4f2abb46846e1340d4561952d427021e322aa92a2cc9ea164f8f75d486",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "env": {},
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "revision": "4e3eee3b85fc6a459ca141b17f784b3a442069d8",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "4137b59948f6b7b9cd996286f8ea211e2993b3cd",
+        "HEAD"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "env": {},
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "revision": "4e3eee3b85fc6a459ca141b17f784b3a442069d8",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--exit-code",
+        "61fd58823",
+        "HEAD",
+        "--",
+        "data/patch-api/evidence/3.4.1-session-2026-10-09",
+        "data/patch-api/sources/3.4.1-api-changes.wikitext",
+        "data/patch-api/sources/3.4.1-api-changes.txt",
+        "data/patch-api/sources/3.4.1-page-coverage.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "env": {},
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "revision": "4e3eee3b85fc6a459ca141b17f784b3a442069d8",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "python3",
+        "data/patch-api/evidence/3.4.1-session-2026-10-09/validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit_code": 0,
+      "stdout": "{\"cvar_defaults\": 62, \"directions\": {\"added\": 244, \"removed\": 89}, \"explicit_signatures\": 0, \"header_counts\": [{\"direction\": \"added\", \"header_count\": 146, \"parsed_count\": 146, \"section\": \"global-api\"}, {\"direction\": \"removed\", \"header_count\": 65, \"parsed_count\": 65, \"section\": \"global-api\"}, {\"direction\": \"added\", \"header_count\": 35, \"parsed_count\": 35, \"section\": \"events\"}, {\"direction\": \"removed\", \"header_count\": 9, \"parsed_count\": 9, \"section\": \"events\"}, {\"direction\": \"added\", \"header_count\": 63, \"parsed_count\": 63, \"section\": \"cvars\"}, {\"direction\": \"removed\", \"header_count\": 15, \"parsed_count\": 15, \"section\": \"cvars\"}], \"inventory_occurrences\": 333, \"kinds\": {\"command\": 1, \"cvars\": 77, \"events\": 44, \"global-api\": 211}, \"native_observations\": 0, \"prose_limits\": 2, \"removal_occurrences\": 89, \"runtime_observations\": 0, \"sealed_inputs\": 19, \"signature_limits\": 211, \"source_rows\": 376, \"statuses\": {\"UNPROVEN\": 335, \"metadata-only\": 41}}\n",
+      "stderr": "",
+      "revision": "4e3eee3b85fc6a459ca141b17f784b3a442069d8",
+      "stdout_sha256": "c6cea324a2bb099ec0de55ce6fbe129b640f14053a91ea399afa70566cf83c47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "env": {},
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "revision": "4e3eee3b85fc6a459ca141b17f784b3a442069d8",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "hashes": {
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/PLAN.md": {
+      "sealed": "02a772cc6fadc87528b132194738b3bbc921fbf899c50e4f9084a8d862e79c32",
+      "HEAD": "02a772cc6fadc87528b132194738b3bbc921fbf899c50e4f9084a8d862e79c32",
+      "original": "02a772cc6fadc87528b132194738b3bbc921fbf899c50e4f9084a8d862e79c32",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/extractor.log": {
+      "sealed": "b7c7f6ea2d19445e7cb0235e056f1034596e1cec5710de2e3997a1b2d9a9f517",
+      "HEAD": "b7c7f6ea2d19445e7cb0235e056f1034596e1cec5710de2e3997a1b2d9a9f517",
+      "original": "b7c7f6ea2d19445e7cb0235e056f1034596e1cec5710de2e3997a1b2d9a9f517",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/green.log": {
+      "sealed": "fa9d18f56cd1783fc9493e878c6fe821df3cf6ca27ad9f953b7cb4e4114de474",
+      "HEAD": "fa9d18f56cd1783fc9493e878c6fe821df3cf6ca27ad9f953b7cb4e4114de474",
+      "original": "fa9d18f56cd1783fc9493e878c6fe821df3cf6ca27ad9f953b7cb4e4114de474",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/handoff.md": {
+      "sealed": "a3a50d9cab31c2545244cf7cd548e2138baf70ea8d6910c36e9b1c37773fabf2",
+      "HEAD": "a3a50d9cab31c2545244cf7cd548e2138baf70ea8d6910c36e9b1c37773fabf2",
+      "original": "a3a50d9cab31c2545244cf7cd548e2138baf70ea8d6910c36e9b1c37773fabf2",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/historical-extract_patch_non_inventory.py": {
+      "sealed": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+      "HEAD": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+      "original": "46326d8730780eaf9c4be92ed7a075769910afa7864e9e48ce84b456628a97b7",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/historical-gen_patch_wikitext_register.py": {
+      "sealed": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+      "HEAD": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+      "original": "64e060d4e0784c8cbf42bbd73dc05ca90fa23a88741ce4bca6d36894da21ffd1",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/portable-controls.log": {
+      "sealed": "316bd1430517915306fe8b6484aa2df384c9c74d096a69dbf2c994b94ed15ed1",
+      "HEAD": "316bd1430517915306fe8b6484aa2df384c9c74d096a69dbf2c994b94ed15ed1",
+      "original": "316bd1430517915306fe8b6484aa2df384c9c74d096a69dbf2c994b94ed15ed1",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/profile-observation.json": {
+      "sealed": "f45aebbcec3c849800a49e7064a029afea234443c727eaa731208043f0ef9768",
+      "HEAD": "f45aebbcec3c849800a49e7064a029afea234443c727eaa731208043f0ef9768",
+      "original": "f45aebbcec3c849800a49e7064a029afea234443c727eaa731208043f0ef9768",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/red.log": {
+      "sealed": "179e2d257ebb52a7f64b25ff280a232ba01c86ec64204e04c0317353d5a228e0",
+      "HEAD": "179e2d257ebb52a7f64b25ff280a232ba01c86ec64204e04c0317353d5a228e0",
+      "original": "179e2d257ebb52a7f64b25ff280a232ba01c86ec64204e04c0317353d5a228e0",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py": {
+      "sealed": "025db6f88bf353a3a3d15edb62e0df76a44b5ff3ca12de1ca324ee4308273bbb",
+      "HEAD": "025db6f88bf353a3a3d15edb62e0df76a44b5ff3ca12de1ca324ee4308273bbb",
+      "original": "025db6f88bf353a3a3d15edb62e0df76a44b5ff3ca12de1ca324ee4308273bbb",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/source-pin.json": {
+      "sealed": "4ae14e3288b409f2feba02c0b20c48ba8b3faac2dbcbd6b7329e5547478cf995",
+      "HEAD": "4ae14e3288b409f2feba02c0b20c48ba8b3faac2dbcbd6b7329e5547478cf995",
+      "original": "4ae14e3288b409f2feba02c0b20c48ba8b3faac2dbcbd6b7329e5547478cf995",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/source-proof.json": {
+      "sealed": "556892fb2dd81245461c36c7f2c9716a06d94907c6d9ecdb6e3146c58ed62492",
+      "HEAD": "556892fb2dd81245461c36c7f2c9716a06d94907c6d9ecdb6e3146c58ed62492",
+      "original": "556892fb2dd81245461c36c7f2c9716a06d94907c6d9ecdb6e3146c58ed62492",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/source-response.json": {
+      "sealed": "8fd09b4b807c4191b62843d4e2dbfc18a5313e15796a6e284e24016694e99afe",
+      "HEAD": "8fd09b4b807c4191b62843d4e2dbfc18a5313e15796a6e284e24016694e99afe",
+      "original": "8fd09b4b807c4191b62843d4e2dbfc18a5313e15796a6e284e24016694e99afe",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py": {
+      "sealed": "413b436f849aee13b8c81528244d1e2aeab4459f4b451fc00b29196789669a43",
+      "HEAD": "413b436f849aee13b8c81528244d1e2aeab4459f4b451fc00b29196789669a43",
+      "original": "413b436f849aee13b8c81528244d1e2aeab4459f4b451fc00b29196789669a43",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/validate.py": {
+      "sealed": "62bfbef5cb2f157fdd88a9905eccbfc75a2e53bab9409aa1fcd5850afa95cea3",
+      "HEAD": "62bfbef5cb2f157fdd88a9905eccbfc75a2e53bab9409aa1fcd5850afa95cea3",
+      "original": "62bfbef5cb2f157fdd88a9905eccbfc75a2e53bab9409aa1fcd5850afa95cea3",
+      "original_read_exit": 0
+    },
+    "data/patch-api/evidence/3.4.1-session-2026-10-09/validator.log": {
+      "sealed": "4d206abd5ff2e1c494bcfa536db964ed32730f93295b0942e37efdcd68bd9264",
+      "HEAD": "4d206abd5ff2e1c494bcfa536db964ed32730f93295b0942e37efdcd68bd9264",
+      "original": "4d206abd5ff2e1c494bcfa536db964ed32730f93295b0942e37efdcd68bd9264",
+      "original_read_exit": 0
+    },
+    "data/patch-api/sources/3.4.1-api-changes.txt": {
+      "sealed": "9ff94a5562b6a17dd9e55de6c038b06612abe6a72fdffe722472be89b664cd0e",
+      "HEAD": "9ff94a5562b6a17dd9e55de6c038b06612abe6a72fdffe722472be89b664cd0e",
+      "original": "9ff94a5562b6a17dd9e55de6c038b06612abe6a72fdffe722472be89b664cd0e",
+      "original_read_exit": 0
+    },
+    "data/patch-api/sources/3.4.1-api-changes.wikitext": {
+      "sealed": "b336b152bea05e3609de06ac3971a98e7d2584129e4e3b74a5c333c6fc060ed1",
+      "HEAD": "b336b152bea05e3609de06ac3971a98e7d2584129e4e3b74a5c333c6fc060ed1",
+      "original": "b336b152bea05e3609de06ac3971a98e7d2584129e4e3b74a5c333c6fc060ed1",
+      "original_read_exit": 0
+    },
+    "data/patch-api/sources/3.4.1-page-coverage.json": {
+      "sealed": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
+      "HEAD": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
+      "original": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
+      "original_read_exit": 0
+    }
+  },
+  "revision": "4e3eee3b85fc6a459ca141b17f784b3a442069d8",
+  "retained_green_log": "test_every_inventory_prose_signature_and_source_row_required (__main__.SourceAccounting.test_every_inventory_prose_signature_and_source_row_required) ... ok\ntest_invented_behavior_or_signature_credit_rejected (__main__.SourceAccounting.test_invented_behavior_or_signature_credit_rejected) ... ok\ntest_literal_counts_and_command_in_cvar_header (__main__.SourceAccounting.test_literal_counts_and_command_in_cvar_header) ... ok\ntest_literal_cvar_metadata_and_command_retained (__main__.SourceAccounting.test_literal_cvar_metadata_and_command_retained) ... ok\ntest_literal_identity_and_hash_tampering_rejected (__main__.SourceAccounting.test_literal_identity_and_hash_tampering_rejected) ... ok\ntest_profile_support_is_not_runtime_or_native_credit (__main__.SourceAccounting.test_profile_support_is_not_runtime_or_native_credit) ... ok\ntest_wrong_profile_or_foreign_supersession_rejected (__main__.SourceAccounting.test_wrong_profile_or_foreign_supersession_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 3.271s\n\nOK\n",
+  "retained_source_proof": {
+    "schema": "bounded-source-proof/v1",
+    "patch": "3.4.1",
+    "execution_revision": "e7eb38c362be230b00af4096ac8092b9dd147200 with own uncommitted implementation",
+    "content_scope": "Exact owned source, validator, tests, historical tools and profile bytes sealed by seals.json; subsequent receipt/doc additions do not invalidate this content proof.",
+    "summary": {
+      "cvar_defaults": 62,
+      "directions": {
+        "added": 244,
+        "removed": 89
+      },
+      "explicit_signatures": 0,
+      "header_counts": [
+        {
+          "direction": "added",
+          "header_count": 146,
+          "parsed_count": 146,
+          "section": "global-api"
+        },
+        {
+          "direction": "removed",
+          "header_count": 65,
+          "parsed_count": 65,
+          "section": "global-api"
+        },
+        {
+          "direction": "added",
+          "header_count": 35,
+          "parsed_count": 35,
+          "section": "events"
+        },
+        {
+          "direction": "removed",
+          "header_count": 9,
+          "parsed_count": 9,
+          "section": "events"
+        },
+        {
+          "direction": "added",
+          "header_count": 63,
+          "parsed_count": 63,
+          "section": "cvars"
+        },
+        {
+          "direction": "removed",
+          "header_count": 15,
+          "parsed_count": 15,
+          "section": "cvars"
+        }
+      ],
+      "inventory_occurrences": 333,
+      "kinds": {
+        "command": 1,
+        "cvars": 77,
+        "events": 44,
+        "global-api": 211
+      },
+      "native_observations": 0,
+      "prose_limits": 2,
+      "removal_occurrences": 89,
+      "runtime_observations": 0,
+      "signature_limits": 211,
+      "source_rows": 376,
+      "statuses": {
+        "UNPROVEN": 335,
+        "metadata-only": 41
+      }
+    },
+    "proof_ledger": [
+      {
+        "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py SourceAccounting.test_literal_counts_and_command_in_cvar_header",
+        "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+        "phase": "RED",
+        "exit": 1,
+        "log": "red.log",
+        "result": "One missing-count assertion failure against temporary empty validator; replaced by implementation.",
+        "invalidated_by": "validator implementation supersedes expected RED"
+      },
+      {
+        "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py",
+        "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+        "phase": "GREEN",
+        "exit": 0,
+        "log": "green.log",
+        "result": "7/7 targeted serialized source-accounting tests pass.",
+        "invalidated_by": null
+      },
+      {
+        "command": "python3 tools/extract_patch_non_inventory.py --patch 3.4.1 --text-only --canonical-patch-navigation --check",
+        "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+        "phase": "recorded source extraction",
+        "exit": 0,
+        "log": "extractor.log",
+        "result": "Six extract rows; raw widget prose retained separately, not erased.",
+        "invalidated_by": null
+      },
+      {
+        "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/validate.py",
+        "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+        "phase": "historical source replay",
+        "exit": 0,
+        "log": "validator.log",
+        "result": "Derived 333 occurrences, 376 source rows, two prose and 211 signature limits.",
+        "invalidated_by": null
+      },
+      {
+        "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py",
+        "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+        "phase": "own serialized tamper and relocated archive fixtures",
+        "revision": "e6ed237fa5a2972643be17103131e5ca2d3369a2",
+        "exit": 0,
+        "log": "portable-controls.log",
+        "results": {
+          "source_tamper_exit": 1,
+          "log_tamper_exit": 1,
+          "relocated_archive_exit": 0,
+          "git_present": false,
+          "archive_sha256": "2aa54c026c0694b8517f055e312bf34fcbe035d63eba1eb850c92f587755b338"
+        },
+        "scope": "Sealed historical member hashes in portable-controls.log; source and GREEN-log mutations rejected at exact seals, original bytes/hash restored; archived validator has no Git dependency.",
+        "invalidated_by": null
+      }
+    ],
+    "formatting": "Python manually formatted; ruff/black unavailable. No Rust changes or cargo formatter.",
+    "excluded_gates": "No publication/check/build/readability/smoke/startup/final gate or native/runtime replay.",
+    "tested_content_commit": "5cf137f8154da400d860e4dd9549d47a136486d3",
+    "portable_control_execution_commit": "e6ed237fa5a2972643be17103131e5ca2d3369a2",
+    "later_changes": "Receipt/docs/seal-entry additions only; exact tested source, validator, tests, historical tools, profile and portable-control bytes unchanged."
+  },
+  "applicability": {
+    "retained_cases": 7,
+    "all_sealed_hashes_equal": true,
+    "scope": "historical serialized source accounting only, no live src or cached UI dependencies",
+    "excluded": "factory/runtime/native closure; Cargo and broad/portable fixtures/suites"
+  }
+}
