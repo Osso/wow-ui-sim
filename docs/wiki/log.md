@@ -935,3 +935,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] investigation | Frozen Era Patch 1.14.3
 
 [Audit](investigations/patch-1-14-3-api-audit.md): page480026/revision4615755, source11403/build43639 distinct from configured11507.412 literal inventory occurrences,463 nonblank rows,188 unspecified signatures,14 headers/14 prose limits/27 unexpanded links. Qualified TBC2.5.4 sync comparison is not foreign supersession. SOURCE/portable RED retained; bounded GREEN/current measurement pending. Main owns integration/native/final gates.
+
+## [2026-10-09] investigation | Patch 1.14.3 bounded evidence retained
+
+[Audit](investigations/patch-1-14-3-api-audit.md): SOURCE8/portable3 GREEN,54 original seals unchanged; current factory286 matches/126 mismatches and exact126-ID regression GREEN1 at a6a10d654. No model/native credit or production changes. Shared-classifier import adds18 dead-code warnings; seven simulator/six vendor warnings retained unsuppressed. Main owns final gates.

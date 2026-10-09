@@ -32,7 +32,7 @@ SOURCE RED8 assertion failures against retained empty scaffold, commitc1b8f094b.
 
 `patch-tests/patch_1_14_3_factory.rs` uses existing shared classifier on all412 own inventory rows, current Era11507, no later registers, no CASC or Blizzard loading. It records compatibility GetBuildInfo separately, current value/default and classifier raw/lookup details; nonsense namespace/member rejects generic fallback credit, nonsense event records Classic name nondiscrimination. It invokes no named source API beyond publication/default/factory probes. Current observations never mutate original SOURCE credit.
 
-Initial factory GREEN2/2 at3b0989667 (compile103s/test0.27s). Exact mismatch fixture RED at1f82e93a5 against empty list; reviewed126-ID fixture GREEN pending. Main authorized ordinary offline/locked Cargo bookkeeping: optional CoW failure is not a blocker. Existing package home, unchanged cargo1.99.0, owned target; no dependency/network updates, Blizzard/CASC/vendor edits or target copying.
+Initial factory GREEN2/2 at3b0989667 (compile103s/test0.27s). Exact mismatch fixture RED at1f82e93a5 against empty list; reviewed126-ID fixture GREEN1/1 ata6a10d654; unchanged generic-fallback negative control retains original GREEN1/1. All412 observations identical across initial/RED/GREEN runs. Main authorized ordinary offline/locked Cargo bookkeeping: optional CoW failure is not a blocker. Existing package home, unchanged cargo1.99.0, owned target; no dependency/network updates, Blizzard/CASC/vendor edits or target copying.
 
 | Current bare-factory feature | Direction match/mismatch | Limit |
 |---|---|---|
@@ -53,6 +53,7 @@ Added defaults:12 exact strings;CMAA2Quality source2/current3;ShakeStrengthCamer
 - [Identity before derivation](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/identity-before-derivation.json).
 - [SOURCE fixtures](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/test_source.py), [portable fixtures](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/test_portable.py).
 - [Immutable original proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/proof-ledger.json), [portable proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/portable-proof.json), [isolation failure](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/cargo-isolation-probe.json).
+- [Current final proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/current-final-proof.json), [current observation](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/factory-green-observations.json) and [separate receipt seals](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/receipt-seals.json).
 - [Handoff](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/HANDOFF.md) — exact execution constraints and remaining main-owned gates.
 
 ## See Also

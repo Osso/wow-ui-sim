@@ -21,7 +21,7 @@ Account exact legacy page480026/revision4615755/timestamp2023-07-10T10:27:33Z wi
 
 ## Tests asserting this spec
 
-Own `test_source.py`: RED8 retained; SOURCE GREEN8/8 at1ce4359e9,1,135 omission controls. Own `test_portable.py`: RED3 retained; GREEN3/3 at7c2a251e8, copied SOURCE8/default-byte replay and both serialized tamper reject/exact restore controls.54 original seals unchanged. Factory GREEN2/2 at3b0989667;126-ID strict mismatch fixture RED at1f82e93a5 against empty list, reviewed fixture GREEN pending. Main explicitly authorized ordinary offline/locked Cargo bookkeeping; optional CoW failure is not a blocker. No Blizzard/CASC/vendor cache access.18 imported shared-test-helper dead-code warnings and seven inherited simulator/six vendor-manifest warnings retained, not suppressed.
+Own `test_source.py`: RED8 retained; SOURCE GREEN8/8 at1ce4359e9,1,135 omission controls. Own `test_portable.py`: RED3 retained; GREEN3/3 at7c2a251e8, copied SOURCE8/default-byte replay and both serialized tamper reject/exact restore controls.54 original seals unchanged. Factory GREEN2/2 at3b0989667;126-ID strict mismatch fixture RED at1f82e93a5 against empty list, reviewed fixture GREEN1/1 ata6a10d654, unchanged generic-fallback negative control retains GREEN1/1 at3b0989667. All412 observations match across initial/RED/GREEN receipts. Main explicitly authorized ordinary offline/locked Cargo bookkeeping; optional CoW failure is not a blocker. No Blizzard/CASC/vendor cache access.18 imported shared-test-helper dead-code warnings and seven inherited simulator/six vendor-manifest warnings retained, not suppressed.
 
 ## Known gaps (current cycle)
 
