@@ -827,3 +827,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## 2026-10-09 — Patch 1.15.9 SOURCE audit
 
 - Added [independent audit](investigations/patch-1-15-9-api-audit.md) and [spec](../specs/patch-1-15-9-source-accounting.md); own literal SOURCE RED/GREEN8/8, no runtime/native/model credit or TBC receipt mutation. Historical controls next.
+
+## 2026-10-09 — Patch 1.15.9 compact historical controls
+
+- [Audit](investigations/patch-1-15-9-api-audit.md): source commit07c93b3b5, original history308aeda25; validator/copy8/8/default bytes pass. Serialized ledger/log reject and restore exactly; 18 original seals unchanged, five later receipt seals, 20-member101361-byte archive. No runtime/native/integration/final gates.

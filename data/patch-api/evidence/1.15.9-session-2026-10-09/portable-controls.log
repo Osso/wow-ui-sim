@@ -1,0 +1,65 @@
+TAMPER ledger.json
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 103, in main
+    count = check_seals()
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 95, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: ledger.json
+
+TAMPER green.log
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 103, in main
+    count = check_seals()
+  File "/home/osso/.worktrees/wow-ui-sim-p1159-source/data/patch-api/evidence/1.15.9-session-2026-10-09/audit.py", line 95, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: green.log
+
+FRESH audit.py
+{
+  "historical_seals": 18,
+  "totals": {
+    "nonblank_rows": 37,
+    "contracts": 14,
+    "explicit_api_reference_occurrences": 4,
+    "distinct_api_names": 2,
+    "cvar_argument_occurrences": 3,
+    "chat_command_occurrences": 3,
+    "event_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "enumerated_inventory_entries": 0,
+    "numerical_inventory_headers": 0,
+    "explicit_signature_declarations": 0,
+    "partial_call_examples": 3,
+    "partial_return_removal_notes": 1,
+    "prose_contracts": 8,
+    "unexpanded_linked_contracts": 2,
+    "runtime_observations": 0,
+    "model_observations": 0,
+    "native_observations": 0
+  }
+}
+
+FRESH test_source_accounting.py
+test_configured_profiles_are_not_native_measurements (__main__.SourceAccounting.test_configured_profiles_are_not_native_measurements) ... ok
+test_every_literal_row_occurrence_retained (__main__.SourceAccounting.test_every_literal_row_occurrence_retained) ... ok
+test_full_literal_rows_and_contract_counts (__main__.SourceAccounting.test_full_literal_rows_and_contract_counts) ... ok
+test_partial_calls_are_tbc_prose_not_era_defaults (__main__.SourceAccounting.test_partial_calls_are_tbc_prose_not_era_defaults) ... ok
+test_removal_does_not_guess_return_position (__main__.SourceAccounting.test_removal_does_not_guess_return_position) ... ok
+test_response_revision_content_and_raw_hash_controls (__main__.SourceAccounting.test_response_revision_content_and_raw_hash_controls) ... ok
+test_scope_not_number_or_shared_code_equivalence (__main__.SourceAccounting.test_scope_not_number_or_shared_code_equivalence) ... ok
+test_serialized_contract_omission_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_serialized_contract_omission_credit_and_foreign_history_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.133s
+
+OK
+
+FRESH default-generator: exact bytes match; flags []

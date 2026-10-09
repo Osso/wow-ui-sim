@@ -1,0 +1,7 @@
+{
+  "seals.json": "bc79b129b07ce32bd01b5f3e1676441ba8f041f903d0b5c5483e72a6bb021e69",
+  "historical-validation.log": "a01519bca97bb45006ea6c777284b5ab7d2265c81229001f55c4bbf3b908de51",
+  "portable-controls.log": "ba5cae7f97ae2a35226f3fc9f46bb91e81c5007bd9cb52dac68afee3e3720c46",
+  "portable-proof.json": "7a6a5edfbb4552843db8aaaabbe61e21a7ee711dc2726f0089bda05661322501",
+  "replay-archive.tar.gz": "ebd2437a59df2ad9f210c1055d7657e5470d82ac3803b079b2da56f3dee32b52"
+}
