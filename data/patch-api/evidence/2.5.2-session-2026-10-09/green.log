@@ -1,0 +1,12 @@
+test_configuration_is_not_native_or_unsupported_api_diagnosis (__main__.SourceAccounting.test_configuration_is_not_native_or_unsupported_api_diagnosis) ... ok
+test_every_api_and_numerical_header_required (__main__.SourceAccounting.test_every_api_and_numerical_header_required) ... ok
+test_every_nonblank_row_is_required_and_literal (__main__.SourceAccounting.test_every_nonblank_row_is_required_and_literal) ... ok
+test_frozen_identity_and_text (__main__.SourceAccounting.test_frozen_identity_and_text) ... ok
+test_full_inventory_and_raw_rows (__main__.SourceAccounting.test_full_inventory_and_raw_rows) ... ok
+test_no_foreign_successor_or_wrong_profile_credit (__main__.SourceAccounting.test_no_foreign_successor_or_wrong_profile_credit) ... ok
+test_precise_unproven_contracts_cannot_be_omitted_or_invented (__main__.SourceAccounting.test_precise_unproven_contracts_cannot_be_omitted_or_invented) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 10.848s
+
+OK

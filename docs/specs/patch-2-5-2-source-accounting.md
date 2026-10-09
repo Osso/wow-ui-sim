@@ -4,10 +4,10 @@ Bounded historical Classic/TBC source contracts from frozen page 69347/revision 
 
 ## What it must do
 
-- [ ] Validate frozen response/content/manifest/registry identity through 1.0.0 without mutable cache or network dependence.
-- [ ] Preserve every nonblank raw row, API occurrence, numerical header and summary; reconcile literal counts, retain absent explicit signatures/transclusions and precise UNPROVEN argument/return/state/security/native contracts.
-- [ ] Keep Classic/TBC TOC 20502 distinct from configured profiles/interfaces, especially Anniversary 11507; no missing-profile blanket unsupported-API diagnosis or fabricated native/runtime/model credit.
-- [ ] Retain only frozen same-line 2.5.3/2.5.4/2.5.5/2.5.6 pending references; prohibit retail/Cata/Wrath/Era supersession.
+- [x] Validate frozen response/content/manifest/registry identity through 1.0.0 without mutable cache or network dependence.
+- [x] Preserve every nonblank raw row, API occurrence, numerical header and summary; reconcile literal counts, retain absent explicit signatures/transclusions and precise UNPROVEN argument/return/state/security/native contracts.
+- [x] Keep Classic/TBC TOC 20502 distinct from configured profiles/interfaces, especially Anniversary 11507; no missing-profile blanket unsupported-API diagnosis or fabricated native/runtime/model credit.
+- [x] Retain only frozen same-line 2.5.3/2.5.4/2.5.5/2.5.6 pending references; prohibit retail/Cata/Wrath/Era supersession.
 - [ ] Reject serialized ledger/log tampering, restore exact bytes/hashes, replay original sealed snapshot in a fresh process/root without Git, target or current mutable source/tools/configuration.
 
 ## How it works

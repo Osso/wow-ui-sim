@@ -34,7 +34,7 @@ Anniversary is not TBC 205xx merely because of its name. No matching inspected c
 
 ## Historical proof ledger
 
-Targeted RED at `3fbb148fa`: initial required inventory assertion fails against an empty SOURCE derivation (`None != 145`); exact stub, log and revision/argv/cwd retained. Implementation and targeted GREEN pending; no acceptance claim until own receipts exist. No broad/check/lint/profile/startup/full-suite/final gate. Commands use explicit owned cwd and Pyrun argv; no Bash/cwd switch/delegation/model CLI/ops/push/merge/deploy.
+Targeted RED at `3fbb148fa`: initial required inventory assertion fails against an empty SOURCE derivation (`None != 145`); exact stub, log and revision/argv/cwd retained. At implementation `9d42dda13`, own SOURCE fixtures **GREEN 7/7** (10.848 seconds), historical validator exit **0**, **54** sealed inputs. Exact argv/cwd/revision/logs retained in [source proof](../../../data/patch-api/evidence/2.5.2-session-2026-10-09/source-proof.json); summary derives all counts above. Serialized tamper/restore and fresh copied replay pending. Tested source/tool/configuration/ledger/fixture bytes remain unchanged; receipts and seal additions do not grant broader proof. No broad/check/lint/profile/startup/full-suite/final gate. Commands use explicit owned cwd and Pyrun argv; no Bash/cwd switch/delegation/model CLI/ops/push/merge/deploy.
 
 Main owns integration, matching native measurement and final gates. This audit closes only its literal SOURCE accounting/replay slice, not full registry accounting or simulator compatibility.
 

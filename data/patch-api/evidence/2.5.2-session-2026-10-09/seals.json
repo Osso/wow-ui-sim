@@ -52,5 +52,8 @@
   "data/patch-api/evidence/2.5.2-session-2026-10-09/validate.py": "30f9e63cbdd3fad18222e3b255d9e116933c95f20335f21a13519266a1644e2d",
   "data/patch-api/sources/2.5.2-api-changes.txt": "ed3651a6ff97e5d08f62d90364d373ef501afed6646b5ef4d9b7d85c94c70eb3",
   "data/patch-api/sources/2.5.2-api-changes.wikitext": "b18b862196308f547c02842d4d70e40464e84a92f329f2c92c58049d036bf5b8",
-  "data/patch-api/sources/2.5.2-page-coverage.json": "4418d71ac88a1898d77edae842a4a7975ebeff830d7565efd613213d89c0cc90"
+  "data/patch-api/sources/2.5.2-page-coverage.json": "4418d71ac88a1898d77edae842a4a7975ebeff830d7565efd613213d89c0cc90",
+  "data/patch-api/evidence/2.5.2-session-2026-10-09/green.log": "53e077fd4616354852dcb30eb41e469477422188d241c096ff095e00afaa8d16",
+  "data/patch-api/evidence/2.5.2-session-2026-10-09/validator.log": "df20250e4cdd4472a90860a1c4471cfed9cfef33ef96917f7de80cb2ca82d9d7",
+  "data/patch-api/evidence/2.5.2-session-2026-10-09/source-proof.json": "ce8706b5080bec1d4d036df5406a226602bac32993fdcc4d4a9d0d62038c763b"
 }
