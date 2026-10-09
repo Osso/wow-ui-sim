@@ -9,8 +9,8 @@ Account exact frozen page102588/revision1010974, timestamp2022-03-02T05:21:47Z. 
 - [x] Retain exact `FontStringSetTextScale` spelling, four explicit lexical defaults and hidden event-trace option disabled default. Invent no aliases, signatures, numerical defaults or models.
 - [x] Distinguish configured Era/Anniversary11507 from source11401; queue1.14.2/3, retain actual canonical1.14.4 and1.15.0–9 inputs without applying them. No foreign-history supersession.
 - [x] Reject omissions and fabricated credit; review meaningful existing-state candidates separately from literal/source credit.
-- [ ] Seal immutable original evidence; replay copied inputs without Git/target/current tools and reject/restore serialized ledger/log tampering.
-- [ ] Exercise grounded existing FontString getter state independently; no runtime implementation changes.
+- [x] Seal160 immutable original evidence files; copied161-member replay without Git/target/current tools rejects/restores serialized ledger/log tampering.
+- [x] Exercise grounded existing FontString getter state independently; no runtime implementation changes.
 
 ## Implementation inventory
 
@@ -18,11 +18,11 @@ Account exact frozen page102588/revision1010974, timestamp2022-03-02T05:21:47Z. 
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: SOURCE RED8/8 retained, targeted development GREEN8/8,353 omission controls. No native/runtime acceptance.
+Own `test_source_accounting.py`: SOURCE RED8/8 retained, targeted development GREEN8/8,353 omission controls. At `a6d38f864`, portable GREEN3/3 includes copied SOURCE8/default-register/default-extract byte replay and both serialized tamper/restorations. Standalone `patch-tests/patch_1_14_1_text_scale.rs` GREEN1/1 under offline headless Era at the same revision proves independent positive getter state updates1.5→2.25/second0.75; no native/default/signature inference.160 original seals immutable; later receipts separate. Seven existing simulator warnings/six vendor manifest deprecations retained. No final-gate acceptance.
 
 ## Known gaps
 
-- [ ] All59 inventory contracts remain UNPROVEN. Prose/template/CVar effects require native or loaded-source evidence; permissive events, generic namespaces and registry defaults are not models.
+- [ ] All59 full source/native inventory contracts remain UNPROVEN; getter has separate bounded current-model credit only. Prose/template/CVar effects require native or loaded-source evidence; permissive events, generic namespaces and registry defaults are not models.
 - [ ] Main owns successor integration, native, loaded-UI/security and final verification.
 
 ## Out of scope

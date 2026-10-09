@@ -22,7 +22,7 @@ All original literal wording remains in `source.wikitext` and `ledger.json`, inc
 
 ## Meaningful-model review
 
-Existing FontString getter reads `frame.text_scale`; setter writes per-frame visual state (`src/lua_api/frame/methods/text_attribute_event/text/style.rs:457–475`). Direct positive-value roundtrip is grounded as existing simulator behavior, not a native/default/signature inference. Standalone Era probe pending. Typo-shaped source setter cannot justify adding an alias.
+Existing FontString getter reads `frame.text_scale`; setter writes per-frame visual state (`src/lua_api/frame/methods/text_attribute_event/text/style.rs:457–475`). Direct positive-value roundtrip is grounded as existing simulator behavior, not a native/default/signature inference. Standalone offline Era probe GREEN1/1 at `a6d38f864`: first FontString1.5→2.25, second remains0.75. Proves isolated existing getter state, not native/default/signature semantics. Actual style/test/Cargo inputs retained separately in current receipts. Typo-shaped source setter cannot justify adding an alias.
 
 C_Seasons: namespace purpose and member names omit IDs/values/activation transitions. No season model found in retained exact-name scan; fake defaults or no-op activation not justified. Tooltip claims require actual11401 XML; current11507 profile configuration does not prove inheritance. Hidden event-trace setting belongs to Blizzard tool UI, not generic frame event registration; setting identity/tool implementation unretained.
 
@@ -34,7 +34,7 @@ Era/Anniversary currently configured11507; source11401 not native parity. Same-E
 
 ## Targeted evidence
 
-Own SOURCE RED8/8; development GREEN8/8 with353 omission controls and fabricated numeric/alias/foreign-credit rejection. Historical register defaults captured unchanged. Extractor CLI requires repo paths rather than positional raw input; failed invocation retained, then own import adapter used unchanged `extract_text` defaults. No shared-tool changes. Portable controls pending; no broad/final gates.
+Own SOURCE RED8/8; development GREEN8/8 with353 omission controls and fabricated numeric/alias/foreign-credit rejection. Historical register defaults captured unchanged. Extractor CLI requires repo paths rather than positional raw input; failed invocation retained, then own import adapter used unchanged `extract_text` defaults. No shared-tool changes. Portable RED3 retained; GREEN3/3 at `a6d38f864` includes fresh copied SOURCE8/default-register/default-extract byte replay, PATH empty, no Git/target/current tools, both ledger/log disk tampers rejected and exact originals restored.160 original seals unchanged,161-member402872-byte archive; later receipts separately sealed. Ignored log files explicitly force-tracked, so direct replay survives ordinary checkout as well as archived copy. Offline Era target GREEN1/1 at the same revision, no dependency network/cache copying/toolchain changes. Six existing library warnings/one existing binary warning and six vendor manifest deprecations retained; no suppression or warning-free claim. No broad/final gates.
 
 ## Sources
 

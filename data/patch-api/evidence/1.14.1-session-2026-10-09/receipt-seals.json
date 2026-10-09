@@ -1,0 +1,12 @@
+{
+  "HANDOFF.md": "0192d04f610e4e682e6f320b954373c05761f8714b114bd9d0b5bf3912d3ea72",
+  "REPLAY.md": "ce53d233b3093cfe99c679191771f53ce2403784b149e00a3b44070989376e3a",
+  "archive-pin.json": "c02466197b5ac442f4f22af61b27944c34cd85cf2776d1f8c855726488918fe5",
+  "current-inputs/Cargo.toml": "34d1d017cfba4ae22d064199f4c914dfda610579cdd923a1207f160211a8ccdc",
+  "current-inputs/patch-tests/patch_1_14_1_text_scale.rs": "53f6abfe0f6f9e4ebc01640e99ef0065ad126bfd04fef610157125b57e10dee6",
+  "current-inputs/src/lua_api/frame/methods/text_attribute_event/text/style.rs": "8ec7957f8153edbe5392b9901cba86f733ab43e5c2e26352e1edf388be930978",
+  "current-proof.json": "3bb9571fad065ea53a6e2695cc11e053a004aa4b078f7cf206b43d141e17c369",
+  "portable-controls.json": "be1ebf642d604f7766e1aee1429a7613549719bf3d9446973436a758ce22e5ed",
+  "portable-controls.log": "a756b70f02c54f2015a6c3f9bc1ba32f6b681d1b184d3e242a3c3e70a2ce0bdc",
+  "text-scale.log": "c34da8d374bd8088cece8bd69d599f1e6ff74a05d90cd05d4865e1cf75ab447c"
+}

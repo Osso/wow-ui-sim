@@ -1,0 +1,85 @@
+test_boundaries (__main__.SourceAccounting.test_boundaries) ... FAIL
+test_every_omission (__main__.SourceAccounting.test_every_omission) ... FAIL
+test_exact_inventory_counts_and_typo (__main__.SourceAccounting.test_exact_inventory_counts_and_typo) ... FAIL
+test_fabrications (__main__.SourceAccounting.test_fabrications) ... FAIL
+test_headers_caption_navigation (__main__.SourceAccounting.test_headers_caption_navigation) ... FAIL
+test_identity (__main__.SourceAccounting.test_identity) ... FAIL
+test_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... FAIL
+test_prose_defaults_and_templates (__main__.SourceAccounting.test_prose_defaults_and_templates) ... FAIL
+
+======================================================================
+FAIL: test_boundaries (__main__.SourceAccounting.test_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+======================================================================
+FAIL: test_every_omission (__main__.SourceAccounting.test_every_omission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+======================================================================
+FAIL: test_exact_inventory_counts_and_typo (__main__.SourceAccounting.test_exact_inventory_counts_and_typo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+======================================================================
+FAIL: test_fabrications (__main__.SourceAccounting.test_fabrications)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+======================================================================
+FAIL: test_headers_caption_navigation (__main__.SourceAccounting.test_headers_caption_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+======================================================================
+FAIL: test_identity (__main__.SourceAccounting.test_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+======================================================================
+FAIL: test_lossless_rows (__main__.SourceAccounting.test_lossless_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+======================================================================
+FAIL: test_prose_defaults_and_templates (__main__.SourceAccounting.test_prose_defaults_and_templates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_source_accounting.py", line 12, in setUp
+    self.assertIn('source_rows', audit.build(), 'literal accounting absent')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source_rows' not found in {} : literal accounting absent
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+FAILED (failures=8)

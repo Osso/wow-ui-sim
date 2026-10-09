@@ -947,3 +947,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] ingest | Frozen Era1.14.1
 
 [Literal audit](investigations/patch-1-14-1-api-audit.md) retains59 inventory contracts and full source; meaningful model review records exact remaining boundaries. SOURCE RED/GREEN8; portable/direct-state work remains separate.
+
+## [2026-10-09] evidence | Era1.14.1 portable and current getter proof
+
+[Audit](investigations/patch-1-14-1-api-audit.md): at `a6d38f864`, portable GREEN3/3 includes copied SOURCE8/default-byte register+extract replay and both serialized tamper/restorations;160 original seals unchanged. Offline headlessEra standalone getter-state GREEN1/1, no runtime edits/native/signature/default credit. Actual tested code and later receipts separate; main owns integration/native/final gates.
