@@ -1,0 +1,32 @@
+EEE
+======================================================================
+ERROR: test_code_removals_preserve_identity_direction_owner_and_line (__main__.Patch51Tests.test_code_removals_preserve_identity_direction_owner_and_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_5_1_register.py", line 15, in test_code_removals_preserve_identity_direction_owner_and_line
+    generator.normalize_mists_code_removals(raw))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'normalize_mists_code_removals'
+
+======================================================================
+ERROR: test_removed_animation_handlers_keep_owners (__main__.Patch51Tests.test_removed_animation_handlers_keep_owners)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_5_1_register.py", line 29, in test_removed_animation_handlers_keep_owners
+    rows, counts = generator.parse_mists_widget_handlers(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_widget_handlers'
+
+======================================================================
+ERROR: test_summary_retains_restricted_environment_and_cooldown_annotations (__main__.Patch51Tests.test_summary_retains_restricted_environment_and_cooldown_annotations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_5_1_register.py", line 38, in test_summary_retains_restricted_environment_and_cooldown_annotations
+    rows = generator.parse_mists_summary(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_summary'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (errors=3)
