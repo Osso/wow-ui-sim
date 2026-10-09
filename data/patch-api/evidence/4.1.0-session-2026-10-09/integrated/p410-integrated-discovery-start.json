@@ -1,0 +1,16 @@
+{
+  "revision": "d2010924b18e76c507fe6bfdcde9677f41f0a6ad",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "patch_4_1_0_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p410-source",
+  "env": {
+    "P410_SWEEP_OUT": "/tmp/p410-integrated-discovery-results.json"
+  }
+}

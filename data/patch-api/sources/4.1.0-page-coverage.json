@@ -536,9 +536,9 @@
     },
     {
       "source_id": "wt-global-api-IsIPv6Available-73",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No client transport IPv6-availability probe; host socket support is not the client contract.",
+      "status": "bounded-coverage",
+      "capabilities": ["current-retail-publication-or-absence"],
+      "note": "Actual retail 4.3.0 removal supersedes this addition; current raw/lookup absence matches. No client transport IPv6 model or native behavior credit; Classic unchanged.",
       "wikitext_line": 73
     },
     {
