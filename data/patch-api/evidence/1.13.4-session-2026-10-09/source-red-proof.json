@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791563809.4259923,
+  "end_epoch": 1791563809.4595563,
+  "exit_code": 1,
+  "revision": "ce0c5c59a",
+  "scope": "missing SOURCE accounting development RED"
+}

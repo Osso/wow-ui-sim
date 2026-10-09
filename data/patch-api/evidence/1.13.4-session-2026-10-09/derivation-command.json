@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/audit.py",
+    "capture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791563926.404072,
+  "end_epoch": 1791563926.5126357,
+  "exit_code": 0,
+  "revision": "ce0c5c59a",
+  "working_tree": "new SOURCE implementation; not a committed GREEN"
+}

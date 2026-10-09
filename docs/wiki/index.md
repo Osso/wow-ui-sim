@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.13.4 frozen Era audit
+
+[Audit](investigations/patch-1-13-4-api-audit.md): frozen333398/3216451,2146 bytes,57 raw/23 inventory/23 unspecified signatures/30 UNPROVEN contracts. Exact SOURCE RED8 retained; current Era totem-slot lifecycle GREEN1/1 at ce0c5c59a, no native historical signature/default credit. Portable/source GREEN pending. Same-Era successors assessed separately; frozen queue immutable. Main integrates1.13.4 before1.13.3.
+
 ## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE audit
 
 [Audit](investigations/patch-1-14-0-api-audit.md): frozen71995/710568;776 literal rows/723 inventory,560 unspecified signature records,163 unknown CVar defaults,8 matching count headers,720 unexpanded templates/10 links. Foreign2.5.2 baseline claim separate from unapplied same-Era1.14.1..1.15.9. Own SOURCE RED10/GREEN10 at66a5448b0:2983 omissions; portable RED3/GREEN3 at4e3739d4f: copied SOURCE10, byte replay, serialized ledger/log rejection/restoration.92 original +5 separate receipt seals;93-member215960byte archive. Zero runtime/model/native credit; shared tools unchanged; main owns integration/gates.

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-era",
+    "--target-dir",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/target",
+    "--test",
+    "patch_1_13_4_totems",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791563716.405308,
+  "end_epoch": 1791563717.3497257,
+  "revision": "ce0c5c59a432cc497e58eb882419af5b92dea0cc",
+  "exit_code": 0,
+  "scope": "existing current Era host slot lifecycle only; no native historical contract"
+}
