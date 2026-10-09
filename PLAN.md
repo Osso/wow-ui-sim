@@ -1,10 +1,10 @@
 # Patch 3.0.3 factory goal
 
-- [ ] Measure exact three supported retail bare-factory CVars; finish with reviewed concrete observations or retained exact compile blocker, targeted development proof and commits. No runtime/model/native/full-UI acceptance.
+- [x] Measure exact three supported retail bare-factory CVars: one match/two gaps, exact reviewed values/defaults, targeted development proof and commits. No runtime/model/native/full-UI acceptance.
 - [x] Commit standalone discovery test with empty gaps, own inventory and fabricated unknown boundary (`2f8f3596d`).
 - [x] Own offline no-default-features/client-retail targeted discovery RED: one match/two gaps; unknown control passes. Revision/cwd/env/argv/full streams/hashes archived.
-- [ ] Review observations, commit exact regression/default assertions and run targeted GREEN if compile succeeds.
-- [ ] Record separate measurement ledger and docs; preserve original 16 seals/eight source IDs. Main owns integration/native gates.
+- [x] Review observations, commit exact regression/default assertions (`7ac3902cf`); targeted GREEN 3/3 exit 0, observations unchanged.
+- [x] Record separate measurement ledger/docs/full streams/hashes; preserve original 16 seals/eight source IDs. Main owns integration/native gates.
 
 # Goal
 

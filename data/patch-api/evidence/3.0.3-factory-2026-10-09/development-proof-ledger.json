@@ -44,7 +44,76 @@
       },
       "interpretation": "Expected empty-gap discovery RED: 1/2 tests passed; sweep found exactly two gaps; unknown control passed. No compile blocker.",
       "observations_sha256": "419fb83d6b99e361c1e86b0cb589d156a3c64ec731ff38e1496a6d280519290d"
+    },
+    {
+      "id": "factory-reviewed-green",
+      "revision": "7ac3902cfdb8a80a88a999bbe1bb8a914010fd26",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-factory",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "patch_3_0_3_factory",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "environment_overrides": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p303-factory/target/p303-factory",
+        "CARGO_NET_OFFLINE": "true",
+        "WOW_SIM_P303_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p303-factory/data/patch-api/evidence/3.0.3-factory-2026-10-09/green-observations.json"
+      },
+      "inherited_environment": {
+        "HOME": "/home/osso",
+        "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+      },
+      "input_sha256": {
+        "Cargo.toml": "5e15ffbb85cb42f5362ad538211e7805dd624fbcc99919f86d116f69a58036ae",
+        "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+        ".cargo/config.toml": "77d5c6fce277bdfc1a97ed3425170f552e5db6143d64e45abf1f6b522b973ead",
+        "tests/patch_3_0_3_factory.rs": "42da097667ee02f51b4e32ceea9a990c4cfb61dba5f0b9b02757d72571e11491",
+        "tests/common/publication_sweep.rs": "0c3588a32cddbeb91c0a3ffbfbc21ba42259704f8236ae08ea5b50301f9c524d",
+        "data/patch-api/evidence/3.0.3-factory-2026-10-09/inventory.json": "3257d2c52611bd8e8fbf869a8001edb36291a9af1a453f772c9e0c74738203ca",
+        "data/patch-api/evidence/3.0.3-factory-2026-10-09/known-gaps.json": "7e4f9e5356a5106a8f4e4071a5b3a0b2fae6b32da2d9ab2980702b1a0f06e634",
+        "data/patch-api/evidence/3.0.3-factory-2026-10-09/reviewed-values.json": "5e0368a2d88b14c9721f2e60bf74bc69e0e4e56ca66f353301374ccd288d3cf4"
+      },
+      "started_utc": "2026-10-09T13:19:22.185847+00:00",
+      "scope": "Own three bare retail tests; exact reviewed gaps, exact values/defaults and fabricated unknown control",
+      "exit_code": 0,
+      "finished_utc": "2026-10-09T13:19:35.943864+00:00",
+      "streams": {
+        "green.stdout.log": {
+          "sha256": "bc7e6a740f7d155d1ae731a15c731e4dd935aac48742f540880d34d972685658",
+          "bytes": 273
+        },
+        "green.stderr.log": {
+          "sha256": "17463118baa2b36ade30e80791d8a19939d1e6ec70953aed8d0f5dac0b425346",
+          "bytes": 7030
+        }
+      },
+      "observations_sha256": "419fb83d6b99e361c1e86b0cb589d156a3c64ec731ff38e1496a6d280519290d"
     }
   ],
-  "proof_validity": "Discovery remains applicable to runtime/classifier scope; reviewed test/known gaps change requires targeted GREEN."
+  "proof_validity": "GREEN applies to committed test/classifier/runtime inputs at 7ac3902cfdb8a80a88a999bbe1bb8a914010fd26; later documentation/evidence-only changes do not invalidate scope. No final/native/full-UI acceptance.",
+  "observations_unchanged_from_discovery": true,
+  "formatting": {
+    "argv": [
+      "rustfmt",
+      "--edition",
+      "2024",
+      "--config",
+      "skip_children=true",
+      "tests/patch_3_0_3_factory.rs"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-factory",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "phase": "Before both discovery and reviewed commits; no formatting/source changes after GREEN"
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "revision_under_test": "7ac3902cfdb8a80a88a999bbe1bb8a914010fd26",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-factory",
+  "original_16_seals_equal": true,
+  "original_manifest_equal": true,
+  "original_eight_ids_and_source_ledger_bytes_equal": true,
+  "green_observations_byte_equal_discovery": true,
+  "test_inputs_sha256_still_equal": true,
+  "proof": "Direct byte/hash comparison only; no replay/broad/final gate"
+}

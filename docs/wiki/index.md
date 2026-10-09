@@ -2910,7 +2910,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 [Audit](investigations/patch-3-2-0-api-audit.md#original-receipt-replay): accounting fixtures 3/3 at 106630826, fresh-process clean replay without Git/target/tools or PATH executables. Current future-closure files ignored; serialized source/own-log/ledger/gap tampering rejected at exact seals, bytes restored and clean replay repeated. Original 145-ID/30-match/13-gap history and archive remain frozen. No new models, runtime mutation or independent/final acceptance claim; main owns ordered successor integration.
 ## [2026-10-09] measurement | Retail 3.0.3 bare factory
 
-[Separate factory measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): exact three source names; retail-only bare factory discovery observes one match/two gaps. Only `synchronizeBindings` has value/default `"1"`; others nil/nil. Unknown control passes; reviewed GREEN pending. No native/synchronization/source-default inference; original 16 seals/eight source IDs unchanged.
+[Separate factory measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): exact three source names; retail-only bare factory discovery observes one match/two gaps. Only `synchronizeBindings` has value/default `"1"`; others nil/nil. Unknown control passes; reviewed GREEN 3/3 exit 0 at `7ac3902cf`, observations unchanged from discovery. No native/synchronization/source-default inference; original 16 seals/eight source IDs unchanged.
 
 ## [2026-10-09] investigation | Historical retail Patch 3.0.3 source accounting
 

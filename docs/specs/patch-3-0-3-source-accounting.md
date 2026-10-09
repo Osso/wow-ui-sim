@@ -28,7 +28,7 @@ Bounded audit of frozen page 560990/revision 5407654 (2010-03-28T14:26:47Z), fro
 
 - [x] Add standalone `tests/patch_3_0_3_factory.rs`, retail-only target, exact own three-name inventory and fabricated unknown-CVar boundary using the shared classifier. No spelling correction or aliases.
 - [x] Discover with empty known gaps: RED at `2f8f3596d` observes one match/two gaps; fabricated unknown nil/nil control passes. [Fresh measurement ledger](../../data/patch-api/evidence/3.0.3-factory-2026-10-09/measurement-ledger.json) preserves exact results.
-- [ ] Targeted reviewed GREEN pending after exact-result assertions are committed; only offline `--no-default-features --features client-retail`, no loaded UI/cache or native acceptance.
+- [x] Targeted reviewed GREEN at `7ac3902cf`: 3/3 exit 0; all three sweep observations byte-identical to discovery. Only offline `--no-default-features --features client-retail`, no loaded UI/cache or native acceptance. [Exact revision/cwd/env/argv/full streams/hashes](../../data/patch-api/evidence/3.0.3-factory-2026-10-09/development-proof-ledger.json).
 
 | Exact source name | Bare retail published | Observed value / default | Source default |
 |---|---|---|---|
