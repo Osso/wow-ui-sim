@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-09",
+  "scope": "Exactly three audit markdown files; no raw logs, source excerpts, tests, environment or session data copied.",
+  "files": [
+    {
+      "file": "report.md",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/lua-startup-warning-audit/report.md",
+      "bytes": 6744,
+      "source_sha256": "73c9ab9bb4c1cdd2254ff0c3956cf11f237bfd083cc03e2611b3b6247a774ea8",
+      "retained_sha256": "73c9ab9bb4c1cdd2254ff0c3956cf11f237bfd083cc03e2611b3b6247a774ea8",
+      "byte_identical": true
+    },
+    {
+      "file": "selected-messages.md",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/lua-startup-warning-audit/selected-messages.md",
+      "bytes": 6774,
+      "source_sha256": "55a67ed2cdfcfd336c03bbd54993cdc3c8d9ebf91573676afa591d3f2c999239",
+      "retained_sha256": "55a67ed2cdfcfd336c03bbd54993cdc3c8d9ebf91573676afa591d3f2c999239",
+      "byte_identical": true
+    },
+    {
+      "file": "evidence-hashes.md",
+      "source": "/home/osso/.local/state/wow-ui-sim/verification/lua-startup-warning-audit/evidence-hashes.md",
+      "bytes": 920,
+      "source_sha256": "340f5a096c6fd34d5d5eb85efd8f9bd6de0abd24ac761db17462e33fa5f783d2",
+      "retained_sha256": "340f5a096c6fd34d5d5eb85efd8f9bd6de0abd24ac761db17462e33fa5f783d2",
+      "byte_identical": true
+    }
+  ],
+  "privacy": {
+    "method": "Full UTF-8 manual content review plus complete-file regex scan; no truncation or size cutoff.",
+    "patterns": {
+      "private_key": "-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----",
+      "credential_assignment": "(?i)\\b(?:password|passwd|secret|api[_-]?key|access[_-]?token|authorization)\\s*[:=]\\s*[\\\"\\x27]?[^\\s\\\"\\x27]{8,}",
+      "common_token": "\\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[A-Z0-9]{16}|sk-[A-Za-z0-9]{20,})\\b",
+      "email": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b"
+    },
+    "match_counts": {
+      "report.md": {
+        "private_key": 0,
+        "credential_assignment": 0,
+        "common_token": 0,
+        "email": 0
+      },
+      "selected-messages.md": {
+        "private_key": 0,
+        "credential_assignment": 0,
+        "common_token": 0,
+        "email": 0
+      },
+      "evidence-hashes.md": {
+        "private_key": 0,
+        "credential_assignment": 0,
+        "common_token": 0,
+        "email": 0
+      }
+    },
+    "retained_public_sensitive_fields": [
+      "Local absolute paths and username osso",
+      "Test identities, generated script hashes, frame names and diagnostic locations",
+      "Source log timestamps, revision identifiers, SHA-256 hashes and sizes"
+    ],
+    "assessment": "No credentials, account/player identifiers, private communications, network endpoints or email addresses observed in these three files. Local paths/username intentionally retained for provenance.",
+    "limits": "Bounded content/pattern review, not exhaustive certification or blanket publication approval; arbitrary, encoded or contextual secrets cannot be excluded. Referenced raw logs not inspected or copied; their hashes are source-report claims, not newly recomputed."
+  },
+  "evidence_bounds": "Fresh Mists targeted-test epoch 20261009T221327Z remains separate from saved full-suite revision 96e88494a6844833b79a574d37a2115dc03b44eb; no current standalone startup, complete LoadResult warning summary, causal attribution, runtime repair or parent acceptance."
+}
