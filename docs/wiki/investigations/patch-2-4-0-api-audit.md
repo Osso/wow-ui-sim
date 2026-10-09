@@ -34,6 +34,10 @@ Original manifest seals 432 files; separate zero-closure manifest seals three. R
 
 No broad/check/lint/readability/profile/startup/full-suite/final gates, Rust tests, vendor/cache/Wowless edits, push, merge, deployment or delegation. No profile-only Rust test file was created, so no missing aggregate-module cfg guard. Source audit completion is not main/native acceptance.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Spec](../../specs/patch-2-4-0-source-audit.md)

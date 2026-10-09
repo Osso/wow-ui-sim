@@ -1,0 +1,66 @@
+commit 0b31440904988badd674a11fa39d8ad029690ae8
+Merge: 2d83b9b80 cb9eae649
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 09:24:29 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 09:24:29 2026 -0500
+
+    Merge branch 'p242-source'
+    
+    # Conflicts:
+    #       docs/wiki/index.md
+    #       docs/wiki/log.md
+    #       tools/gen_patch_wikitext_register.py
+
+ Cargo.toml                                         |    5 +
+ .../2.4.2-session-2026-10-09/accounting-green.log  |    5 +
+ .../2.4.2-session-2026-10-09/accounting-red.log    |   27 +
+ .../2.4.2-session-2026-10-09/closures/README.md    |    1 +
+ .../2.4.2-session-2026-10-09/command-ledger.json   |  149 ++
+ .../factory-green-results.json                     |  200 ++
+ .../2.4.2-session-2026-10-09/factory-green.log     |   86 +
+ .../factory-red-results.json                       |  200 ++
+ .../2.4.2-session-2026-10-09/factory-red.log       |  397 ++++
+ .../evidence/2.4.2-session-2026-10-09/handoff.md   |   43 +
+ .../historical-blobs.json.gz                       |  Bin 0 -> 4287031 bytes
+ .../historical-known-gaps.json                     |   11 +
+ .../historical-manifest.json                       | 2501 ++++++++++++++++++++
+ .../historical-page-coverage.json                  |  436 ++++
+ .../initial-negative-register.json                 |  101 +
+ .../initial-negative-results.json                  |  200 ++
+ .../2.4.2-session-2026-10-09/initial-negative.log  |   85 +
+ .../negative-register.json                         |  101 +
+ .../2.4.2-session-2026-10-09/negative-results.json |  200 ++
+ .../evidence/2.4.2-session-2026-10-09/negative.log |   85 +
+ .../2.4.2-session-2026-10-09/overlap-review.json   |   83 +
+ .../portable-proof/initial-replay-green.log        |    5 +
+ .../portable-proof/replay-fixture.py               |   60 +
+ .../portable-proof/replay-green.log                |    6 +
+ .../portable-proof/seals.json                      |   21 +
+ .../portable-proof/summary.json                    |  570 +++++
+ .../2.4.2-session-2026-10-09/queued-overlaps.json  |   34 +
+ .../2.4.2-session-2026-10-09/replay-red.log        |   15 +
+ .../2.4.2-session-2026-10-09/source-green.log      |    5 +
+ .../2.4.2-session-2026-10-09/source-manifest.json  |  919 +++++++
+ .../2.4.2-session-2026-10-09/source-pin.json       |   18 +
+ .../2.4.2-session-2026-10-09/source-red.log        |   61 +
+ .../2.4.2-session-2026-10-09/source-response.json  |    1 +
+ .../evidence/2.4.2-session-2026-10-09/validate.py  |  225 ++
+ .../sources/2.4.2-api-changes.provenance.json      |   28 +
+ data/patch-api/sources/2.4.2-api-changes.txt       |   31 +
+ data/patch-api/sources/2.4.2-api-changes.wikitext  |   31 +
+ data/patch-api/sources/2.4.2-page-coverage.json    |  436 ++++
+ .../patch-api/sources/2.4.2-wikitext-register.json |  101 +
+ docs/specs/patch-2-4-2-publication-sweep.md        |   37 +
+ docs/wiki/index.md                                 |    3 +
+ docs/wiki/investigations/patch-2-4-2-api-audit.md  |  103 +
+ docs/wiki/log.md                                   |    3 +
+ tests/data/patch_2_4_2_factory_known_gaps.json     |   11 +
+ tests/patch_2_4_2_factory.rs                       |   50 +
+ tools/extract_patch_non_inventory.py               |   17 +-
+ tools/gen_patch_wikitext_register.py               |   22 +
+ tools/patch_2_4_2_accounting.py                    |   68 +
+ tools/test_patch_2_4_2_accounting.py               |   48 +
+ tools/test_patch_2_4_2_replay.py                   |   60 +
+ tools/test_patch_2_4_2_source.py                   |   56 +
+ 51 files changed, 7959 insertions(+), 2 deletions(-)

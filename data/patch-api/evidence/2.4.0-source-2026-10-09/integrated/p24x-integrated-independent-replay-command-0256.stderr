@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/tmp/p24x-integrated-independent-replay/tools/base-gen_patch_wikitext_register.py", line 1148, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/p24x-integrated-independent-replay/tools/base-gen_patch_wikitext_register.py", line 1034, in main
+    section_entries, section_counts = parse_section(
+                                      ~~~~~~~~~~~~~^
+        entry_section, buckets.get(section, []),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        legacy_column_headers=args.legacy_column_headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        legacy_inventory_labels=args.legacy_inventory_labels)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/p24x-integrated-independent-replay/tools/base-gen_patch_wikitext_register.py", line 118, in parse_section
+    entry = make_entry(section, mode, line_no, text)
+  File "/tmp/p24x-integrated-independent-replay/tools/base-gen_patch_wikitext_register.py", line 56, in make_entry
+    symbol, params = parse_symbol(text)
+                     ~~~~~~~~~~~~^^^^^^
+  File "/tmp/p24x-integrated-independent-replay/tools/base-gen_patch_wikitext_register.py", line 49, in parse_symbol
+    raise ValueError(f"no symbol reference in: {text!r}")
+ValueError: no symbol reference in: ': PrepVoidStorageForTransmogrify'

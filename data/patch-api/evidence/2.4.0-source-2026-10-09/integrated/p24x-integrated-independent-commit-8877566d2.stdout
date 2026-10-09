@@ -1,0 +1,52 @@
+commit 8877566d26df0d89b8923b04d51c6c1954e9796f
+Merge: c2481c4c5 3bf728dc2
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 09:26:53 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 09:26:53 2026 -0500
+
+    Merge branch 'p210-source'
+    
+    # Conflicts:
+    #       docs/wiki/index.md
+    #       docs/wiki/log.md
+    #       tools/gen_patch_wikitext_register.py
+
+ .../2.1.0-session-2026-10-09/accounting-green.log  |    5 +
+ .../2.1.0-session-2026-10-09/command-ledger.json   |   65 +
+ .../2.1.0-session-2026-10-09/current-receipts.json |   19 +
+ .../default-2.1.0-register.json                    |   11 +
+ .../default-3.4.0-register.json                    | 2728 +++++++++++
+ .../development-proof-ledger.json                  |  126 +
+ .../evidence/2.1.0-session-2026-10-09/extract.txt  |  176 +
+ .../historical-bundle.json.gz                      |  Bin 0 -> 350913 bytes
+ .../historical-inputs.json                         |  261 +
+ .../historical-known-gaps.json                     | 1722 +++++++
+ .../historical-page-coverage.json                  | 5125 ++++++++++++++++++++
+ .../2.1.0-session-2026-10-09/provenance.json       |   22 +
+ .../2.1.0-session-2026-10-09/register.json         |  933 ++++
+ .../2.1.0-session-2026-10-09/source-counts.json    |   33 +
+ .../2.1.0-session-2026-10-09/source-green.log      |    5 +
+ .../2.1.0-session-2026-10-09/source-pin.json       |   14 +
+ .../source-red-corrected.log                       |   66 +
+ .../2.1.0-session-2026-10-09/source-red.log        |   81 +
+ .../2.1.0-session-2026-10-09/source-response.json  |    1 +
+ .../2.1.0-session-2026-10-09/source.wikitext       |  176 +
+ .../successor-boundary.json                        |  333 ++
+ .../evidence/2.1.0-session-2026-10-09/validate.py  |  200 +
+ .../2.1.0-session-2026-10-09/validator-green.log   |    6 +
+ .../2.1.0-session-2026-10-09/validator-red.log     |   14 +
+ .../sources/2.1.0-api-changes.provenance.json      |   22 +
+ data/patch-api/sources/2.1.0-api-changes.txt       |  176 +
+ data/patch-api/sources/2.1.0-api-changes.wikitext  |  176 +
+ data/patch-api/sources/2.1.0-page-coverage.json    | 5125 ++++++++++++++++++++
+ .../patch-api/sources/2.1.0-wikitext-register.json |  933 ++++
+ docs/specs/patch-2-1-0-source-accounting.md        |   34 +
+ docs/wiki/index.md                                 |    5 +
+ docs/wiki/investigations/patch-2-1-0-api-audit.md  |   55 +
+ docs/wiki/log.md                                   |    8 +
+ tools/build_patch_2_1_0_accounting.py              |  148 +
+ tools/gen_patch_wikitext_register.py               |   61 +
+ tools/test_patch_2_1_0_source.py                   |  117 +
+ tools/test_patch_2_1_0_validator.py                |   87 +
+ 37 files changed, 19069 insertions(+)

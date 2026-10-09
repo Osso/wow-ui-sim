@@ -66,6 +66,10 @@ Ledger tamper changes linked contract native equivalence; log tamper fabricates 
 
 [Actual same-TBC successor comparison](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/integrated/successor-comparison.json) retains three section/symbol row pairs with 2.5.2, two with 2.5.3 and three with 2.5.4. Integrated 2.5.5/2.5.6 have zero explicit API identities. These source directions earn no runtime retirement, modeled behavior or native compatibility credit. Original 29 seals and seven separate receipt seals remain unchanged; SOURCE replay gate pending. Source TOC 20501 remains distinct from configured Anniversary 11507.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Frozen original wikitext](../../../data/patch-api/source-cache/legacy-2026-10-09/2.5.1-wikitext.txt).

@@ -1,0 +1,506 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling proc-macro2 v1.0.105
+   Compiling unicode-ident v1.0.22
+   Compiling quote v1.0.43
+   Compiling libc v0.2.180
+   Compiling cfg-if v1.0.4
+   Compiling stable_deref_trait v1.2.1
+   Compiling memchr v2.7.6
+   Compiling smallvec v1.15.1
+   Compiling writeable v0.6.3
+   Compiling crossbeam-utils v0.8.21
+   Compiling autocfg v1.5.0
+   Compiling version_check v0.9.5
+   Compiling litemap v0.8.2
+   Compiling rayon-core v1.13.0
+   Compiling libm v0.2.15
+   Compiling shlex v1.3.0
+   Compiling either v1.15.0
+   Compiling pin-project-lite v0.2.16
+   Compiling simd-adler32 v0.3.8
+   Compiling once_cell v1.21.3
+   Compiling find-msvc-tools v0.1.7
+   Compiling log v0.4.29
+   Compiling bytes v1.11.0
+   Compiling num-traits v0.2.19
+   Compiling cc v1.2.52
+   Compiling bitflags v2.10.0
+   Compiling icu_properties_data v2.1.2
+   Compiling itoa v1.0.17
+   Compiling crossbeam-epoch v0.9.18
+   Compiling crc32fast v1.5.0
+   Compiling futures-core v0.3.31
+   Compiling adler2 v2.0.1
+   Compiling syn v2.0.114
+   Compiling crossbeam-deque v0.8.6
+   Compiling miniz_oxide v0.8.9
+   Compiling icu_normalizer_data v2.1.1
+   Compiling core_maths v0.1.1
+   Compiling socket2 v0.6.1
+   Compiling mio v1.1.1
+   Compiling futures-sink v0.3.31
+   Compiling serde_core v1.0.228
+   Compiling zerocopy v0.8.33
+   Compiling utf8_iter v1.0.4
+   Compiling flate2 v1.1.9
+   Compiling num-integer v0.1.46
+   Compiling rayon v1.11.0
+   Compiling tokio v1.49.0
+   Compiling http v1.4.0
+   Compiling ring v0.17.14
+   Compiling typenum v1.19.0
+   Compiling utf16_iter v1.0.5
+   Compiling percent-encoding v2.3.2
+   Compiling zeroize v1.8.2
+   Compiling anyhow v1.0.100
+   Compiling weezl v0.1.12
+   Compiling write16 v1.0.0
+   Compiling http-body v1.0.1
+   Compiling rustls-pki-types v1.14.1
+   Compiling num-bigint v0.4.6
+   Compiling getrandom v0.2.16
+   Compiling tracing-core v0.1.36
+   Compiling generic-array v0.14.7
+   Compiling futures-task v0.3.31
+   Compiling httparse v1.10.1
+   Compiling rustix v1.1.3
+   Compiling untrusted v0.9.0
+   Compiling thiserror v2.0.17
+   Compiling arrayvec v0.7.6
+   Compiling slab v0.4.11
+   Compiling futures-io v0.3.31
+   Compiling icu_locale_data v2.1.2
+   Compiling pin-utils v0.1.0
+   Compiling num-rational v0.4.2
+   Compiling futures-util v0.3.31
+   Compiling fdeflate v0.3.7
+   Compiling as-slice v0.2.1
+   Compiling rustls v0.23.40
+   Compiling synstructure v0.13.2
+   Compiling built v0.8.0
+   Compiling color_quant v1.1.0
+   Compiling linux-raw-sys v0.11.0
+   Compiling serde v1.0.228
+   Compiling try-lock v0.2.5
+   Compiling av-scenechange v0.14.1
+   Compiling paste v1.0.15
+   Compiling tower-service v0.3.3
+   Compiling winnow v0.7.14
+   Compiling want v0.3.1
+   Compiling rav1e v0.8.1
+   Compiling toml_datetime v0.7.5+spec-1.1.0
+   Compiling serde_spanned v1.1.1
+   Compiling aligned v0.4.3
+   Compiling form_urlencoded v1.2.2
+   Compiling futures-channel v0.3.31
+   Compiling nom v8.0.0
+   Compiling core2 v0.4.0
+   Compiling aho-corasick v1.1.4
+   Compiling zune-inflate v0.2.54
+   Compiling slotmap v1.1.1
+   Compiling siphasher v1.0.2
+   Compiling zerofrom-derive v0.1.6
+   Compiling yoke-derive v0.8.1
+   Compiling displaydoc v0.2.5
+   Compiling zerovec-derive v0.11.2
+   Compiling bytemuck_derive v1.10.2
+   Compiling equator-macro v0.4.2
+   Compiling zerocopy-derive v0.8.33
+   Compiling thiserror-impl v2.0.17
+   Compiling zerofrom v0.1.7
+   Compiling equator v0.4.2
+   Compiling yoke v0.8.1
+   Compiling tracing-attributes v0.1.31
+   Compiling zerovec v0.11.5
+   Compiling zerotrie v0.2.3
+   Compiling aligned-vec v0.6.4
+   Compiling bytemuck v1.24.0
+   Compiling v_frame v0.3.9
+   Compiling font-types v0.10.1
+   Compiling toml_parser v1.0.6+spec-1.1.0
+   Compiling read-fonts v0.35.0
+   Compiling rustls-webpki v0.103.13
+   Compiling tinystr v0.8.2
+   Compiling potential_utf v0.1.4
+   Compiling tracing v0.1.44
+   Compiling icu_locale_core v2.1.1
+   Compiling icu_collections v2.1.1
+   Compiling serde_derive v1.0.228
+   Compiling arg_enum_proc_macro v0.3.4
+   Compiling profiling-procmacros v1.0.17
+   Compiling atomic-waker v1.1.2
+   Compiling quick-error v2.0.1
+   Compiling utf8parse v0.2.2
+   Compiling rand_core v0.6.4
+   Compiling bit_field v0.10.3
+   Compiling y4m v0.8.0
+   Compiling regex-syntax v0.8.8
+   Compiling icu_provider v2.1.1
+   Compiling half v2.7.1
+   Compiling icu_properties v2.1.2
+   Compiling icu_normalizer v2.1.1
+   Compiling lebe v0.5.3
+   Compiling pastey v0.1.1
+   Compiling idna_adapter v1.2.1
+   Compiling ryu v1.0.23
+   Compiling subtle v2.6.1
+   Compiling phf_shared v0.11.3
+   Compiling regex-automata v0.4.13
+   Compiling idna v1.1.0
+   Compiling exr v1.74.0
+   Compiling icu_locale v2.1.1
+   Compiling rand v0.8.5
+   Compiling anstyle-parse v0.2.7
+   Compiling hyper v1.9.0
+   Compiling profiling v1.0.17
+   Compiling av1-grain v0.2.5
+   Compiling toml v0.9.11+spec-1.1.0
+   Compiling qoi v0.4.1
+   Compiling num-derive v0.4.2
+   Compiling fax_derive v0.2.0
+   Compiling bitstream-io v4.9.0
+   Compiling maybe-rayon v0.1.1
+   Compiling jpeg-decoder v0.3.2
+   Compiling simd_helpers v0.1.0
+   Compiling sync_wrapper v1.0.2
+   Compiling itertools v0.14.0
+   Compiling noop_proc_macro v0.3.0
+   Compiling zmij v1.0.14
+   Compiling icu_casemap_data v2.1.1
+   Compiling zune-core v0.4.12
+   Compiling icu_collator_data v2.1.1
+   Compiling icu_segmenter_data v2.1.1
+   Compiling thiserror v1.0.69
+   Compiling icu_plurals_data v2.1.1
+   Compiling scopeguard v1.2.0
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling imgref v1.12.0
+   Compiling ipnet v2.12.0
+   Compiling tower-layer v0.3.3
+   Compiling roxmltree v0.20.0
+   Compiling tinyvec_macros v0.1.1
+   Compiling base64 v0.22.1
+   Compiling colorchoice v1.0.4
+   Compiling new_debug_unreachable v1.0.6
+   Compiling anstyle v1.0.13
+   Compiling bitflags v1.3.2
+   Compiling anstyle-query v1.1.5
+   Compiling anstream v0.6.21
+   Compiling png v0.17.16
+   Compiling fontconfig-parser v0.5.8
+   Compiling hyper-util v0.1.20
+   Compiling tinyvec v1.10.0
+   Compiling tower v0.5.3
+   Compiling loop9 v0.1.5
+   Compiling lock_api v0.4.14
+   Compiling zune-jpeg v0.4.21
+   Compiling tiff v0.9.1
+   Compiling tokio-rustls v0.26.4
+   Compiling fax v0.2.6
+   Compiling skrifa v0.37.0
+   Compiling winresource v0.1.30
+   Compiling phf_generator v0.11.3
+   Compiling url v2.5.8
+   Compiling thiserror-impl v1.0.69
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling gif v0.13.3
+   Compiling avif-serialize v0.8.6
+   Compiling webpki-roots v1.0.7
+   Compiling pxfm v0.1.27
+   Compiling ttf-parser v0.25.1
+   Compiling memmap2 v0.9.9
+   Compiling vcpkg v0.2.15
+   Compiling zune-core v0.5.0
+   Compiling pkg-config v0.3.32
+   Compiling rgb v0.8.52
+   Compiling strsim v0.11.1
+   Compiling serde_json v1.0.149
+   Compiling zeno v0.3.3
+   Compiling lazy_static v1.5.0
+   Compiling byteorder-lite v0.1.0
+   Compiling minimal-lexical v0.2.1
+   Compiling option-ext v0.2.0
+   Compiling heck v0.5.0
+   Compiling yazi v0.2.1
+   Compiling byteorder v1.5.0
+   Compiling clap_lex v0.7.7
+   Compiling image v0.24.9
+   Compiling fontdb v0.23.0
+   Compiling swash v0.2.6
+   Compiling moxcms v0.7.11
+   Compiling clap_builder v4.5.56
+   Compiling clap_derive v4.5.55
+   Compiling nom v7.1.3
+   Compiling dirs-sys v0.4.1
+   Compiling image-webp v0.2.4
+   Compiling sharded-slab v0.1.7
+   Compiling wow-ui-sim v0.1.0 (/home/osso/Projects/wow/wow-ui-sim)
+   Compiling ravif v0.12.0
+   Compiling zune-jpeg v0.5.8
+   Compiling tower-http v0.6.10
+   Compiling hyper-rustls v0.27.9
+   Compiling digest v0.10.7
+   Compiling phf_macros v0.11.3
+   Compiling tiff v0.10.3
+   Compiling spin v0.9.8
+   Compiling matchers v0.2.0
+   Compiling harfrust v0.3.2
+   Compiling serde_urlencoded v0.7.1
+   Compiling fixed_decimal v0.7.0
+   Compiling xattr v1.6.1
+   Compiling gif v0.14.1
+   Compiling png v0.18.0
+   Compiling texpresso v2.0.2
+   Compiling tracing-log v0.2.0
+   Compiling http-body-util v0.1.3
+   Compiling filetime v0.2.28
+   Compiling thread_local v1.1.9
+   Compiling self_cell v1.2.2
+   Compiling unicode-bidi v0.3.18
+   Compiling rangemap v1.7.1
+   Compiling unicode-segmentation v1.12.0
+   Compiling unicode-linebreak v0.1.5
+   Compiling cpufeatures v0.2.17
+   Compiling sys-locale v0.3.2
+   Compiling nu-ansi-term v0.50.3
+   Compiling same-file v1.0.6
+   Compiling smol_str v0.2.2
+   Compiling rustc-hash v1.1.0
+   Compiling linebender_resource_handle v0.1.1
+   Compiling unicode-script v0.5.8
+   Compiling tracing-subscriber v0.3.22
+   Compiling walkdir v2.5.0
+   Compiling cosmic-text v0.15.0
+   Compiling sha2 v0.10.9
+   Compiling tar v0.4.45
+   Compiling reqwest v0.12.28
+   Compiling image v0.25.9
+   Compiling image-blp v1.2.0
+   Compiling icu_plurals v2.1.1
+   Compiling icu_segmenter v2.1.1
+   Compiling icu_collator v2.1.1
+   Compiling phf_codegen v0.11.3
+   Compiling icu_casemap v2.1.1
+   Compiling phf v0.11.3
+   Compiling clap v4.5.56
+   Compiling dirs v5.0.1
+   Compiling regex v1.12.2
+   Compiling quick-xml v0.37.5
+   Compiling rilua v0.1.21 (https://github.com/Osso/rilua.git?rev=842e4d3ff8592af45a5a93058eddf93419d29012#842e4d3f)
+   Compiling httpdate v1.0.3
+   Compiling unicode-blocks v0.1.10
+   Compiling rustc-hash v2.1.2
+   Compiling glob v0.3.3
+   Compiling getrandom v0.3.4
+   Compiling fastrand v2.3.0
+   Compiling console v0.15.11
+   Compiling similar v2.7.0
+   Compiling tempfile v3.24.0
+   Compiling insta v1.46.0
+   Compiling pollster v0.4.0
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 5 warnings
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `read_deprecated_aliases` is never used
+   --> tests/common/publication_sweep.rs:445:15
+    |
+445 | pub(crate) fn read_deprecated_aliases(env: &WowLuaEnv) -> BTreeMap<String, (String, String)> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `addon_is_loaded` is never used
+   --> tests/common/publication_sweep.rs:474:4
+    |
+474 | fn addon_is_loaded(env: &WowLuaEnv, name: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `read_sorted_dir` is never used
+   --> tests/common/publication_sweep.rs:479:4
+    |
+479 | fn read_sorted_dir(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `deprecation_files` is never used
+   --> tests/common/publication_sweep.rs:488:4
+    |
+488 | fn deprecation_files(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `parse_deprecated_alias` is never used
+   --> tests/common/publication_sweep.rs:505:4
+    |
+505 | fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, String))> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_publication_sweep` is never used
+   --> tests/common/publication_sweep.rs:530:15
+    |
+530 | pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (test "patch_3_0_3_factory") generated 6 warnings
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 13s
+     Running tests/patch_3_0_2_factory.rs (target/debug/deps/patch_3_0_2_factory-75e0b4e7bd1c61d7)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.03ms
+[  0.002s] [Startup] rilua VM created in 87.87µs
+[  0.002s] [Startup] builtin frames initialized in 59.46µs
+[  0.002s] [Startup] template registry cleared in 4.48µs
+[  0.002s] [Startup] intrinsic templates registered in 4.75µs
+[  0.002s] [Startup] initial app_data lua handle installed in 701.00ns
+[  0.096s] [Startup] init_lua_state complete in 93.32ms
+[  0.096s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.096s] [Startup] initial screen globals installed in 55.61µs
+[  0.096s] [Startup] WowLuaEnv::new complete
+FrameXML/handler/shared-method control: ("nil", "nil", false, "GameTooltip", "function")
+[  0.099s] [Startup] WowLuaEnv::new begin
+[  0.100s] [Startup] SimState::default complete in 1.10ms
+[  0.100s] [Startup] rilua VM created in 59.25µs
+[  0.100s] [Startup] builtin frames initialized in 19.21µs
+[  0.100s] [Startup] template registry cleared in 3.48µs
+[  0.100s] [Startup] intrinsic templates registered in 5.27µs
+[  0.100s] [Startup] initial app_data lua handle installed in 81.00ns
+[  0.151s] [Startup] init_lua_state complete in 50.97ms
+[  0.151s] [Startup] final app_data lua handle installed in 80.00ns
+[  0.151s] [Startup] initial screen globals installed in 50.29µs
+[  0.151s] [Startup] WowLuaEnv::new complete
+click modifier control: ("NONE", "NONE")
+[  0.154s] [Startup] WowLuaEnv::new begin
+[  0.155s] [Startup] SimState::default complete in 1.05ms
+[  0.155s] [Startup] rilua VM created in 56.35µs
+[  0.155s] [Startup] builtin frames initialized in 18.76µs
+[  0.155s] [Startup] template registry cleared in 2.46µs
+[  0.155s] [Startup] intrinsic templates registered in 4.63µs
+[  0.155s] [Startup] initial app_data lua handle installed in 80.00ns
+[  0.207s] [Startup] init_lua_state complete in 52.21ms
+[  0.207s] [Startup] final app_data lua handle installed in 211.00ns
+[  0.207s] [Startup] initial screen globals installed in 51.92µs
+[  0.207s] [Startup] WowLuaEnv::new complete
+console catalog control: (true, false, 14)
+[  0.217s] [Startup] WowLuaEnv::new begin
+[  0.218s] [Startup] SimState::default complete in 1.13ms
+[  0.218s] [Startup] rilua VM created in 59.58µs
+[  0.218s] [Startup] builtin frames initialized in 22.75µs
+[  0.218s] [Startup] template registry cleared in 3.70µs
+[  0.218s] [Startup] intrinsic templates registered in 4.85µs
+[  0.218s] [Startup] initial app_data lua handle installed in 170.00ns
+[  0.268s] [Startup] init_lua_state complete in 50.21ms
+[  0.268s] [Startup] final app_data lua handle installed in 270.00ns
+[  0.269s] [Startup] initial screen globals installed in 51.85µs
+[  0.269s] [Startup] WowLuaEnv::new complete
+
+thread 'factory_rejects_classic_before_reading_cache' (3261799) panicked at tests/common/publication_sweep.rs:546:5:
+register client line does not match active profile
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.272s] [Startup] WowLuaEnv::new begin
+[  0.273s] [Startup] SimState::default complete in 1.08ms
+[  0.273s] [Startup] rilua VM created in 56.95µs
+[  0.273s] [Startup] builtin frames initialized in 18.44µs
+[  0.273s] [Startup] template registry cleared in 2.00µs
+[  0.273s] [Startup] intrinsic templates registered in 4.38µs
+[  0.273s] [Startup] initial app_data lua handle installed in 80.00ns
+[  0.323s] [Startup] init_lua_state complete in 49.46ms
+[  0.323s] [Startup] final app_data lua handle installed in 150.00ns
+[  0.323s] [Startup] initial screen globals installed in 49.24µs
+[  0.323s] [Startup] WowLuaEnv::new complete
+current-retail interface: 120100
+[  0.434s] [Startup] WowLuaEnv::new begin
+[  0.436s] [Startup] SimState::default complete in 1.17ms
+[  0.436s] [Startup] rilua VM created in 62.36µs
+[  0.436s] [Startup] builtin frames initialized in 23.37µs
+[  0.436s] [Startup] template registry cleared in 2.70µs
+[  0.436s] [Startup] intrinsic templates registered in 4.30µs
+[  0.436s] [Startup] initial app_data lua handle installed in 160.00ns
+[  0.485s] [Startup] init_lua_state complete in 49.61ms
+[  0.485s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.485s] [Startup] initial screen globals installed in 48.72µs
+[  0.485s] [Startup] WowLuaEnv::new complete
+retail event catalog control: (false, true, true, true, true)
+     Running tests/patch_3_0_3_factory.rs (target/debug/deps/patch_3_0_3_factory-ad7d39ee43e3acc9)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.60ms
+[  0.002s] [Startup] rilua VM created in 88.59µs
+[  0.002s] [Startup] builtin frames initialized in 61.51µs
+[  0.002s] [Startup] template registry cleared in 5.03µs
+[  0.002s] [Startup] intrinsic templates registered in 4.97µs
+[  0.002s] [Startup] initial app_data lua handle installed in 431.00ns
+[  0.093s] [Startup] init_lua_state complete in 90.95ms
+[  0.093s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.093s] [Startup] initial screen globals installed in 52.54µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+exact three factory values/defaults: [{"default":null,"detail":"value/default queried","id":"wt-cvars-syncronizeConfig-4","kind":"cvar","published":false,"symbol":"syncronizeConfig","value":null},{"default":"1","detail":"value/default queried","id":"wt-cvars-synchronizeBindings-5","kind":"cvar","published":true,"symbol":"synchronizeBindings","value":"1"},{"default":null,"detail":"value/default queried","id":"wt-cvars-synchronizeMacros-6","kind":"cvar","published":false,"symbol":"synchronizeMacros","value":null}]
+[  0.097s] [Startup] WowLuaEnv::new begin
+[  0.098s] [Startup] SimState::default complete in 1.10ms
+[  0.098s] [Startup] rilua VM created in 61.21µs
+[  0.098s] [Startup] builtin frames initialized in 21.56µs
+[  0.098s] [Startup] template registry cleared in 2.88µs
+[  0.098s] [Startup] intrinsic templates registered in 4.42µs
+[  0.098s] [Startup] initial app_data lua handle installed in 150.00ns
+[  0.149s] [Startup] init_lua_state complete in 50.33ms
+[  0.149s] [Startup] final app_data lua handle installed in 140.00ns
+[  0.149s] [Startup] initial screen globals installed in 49.13µs
+[  0.149s] [Startup] WowLuaEnv::new complete
+fabricated unknown CVar: ("cvar", "value/default queried", false, None, None)
+[  0.152s] [Startup] WowLuaEnv::new begin
+[  0.153s] [Startup] SimState::default complete in 1.03ms
+[  0.153s] [Startup] rilua VM created in 57.42µs
+[  0.153s] [Startup] builtin frames initialized in 17.51µs
+[  0.153s] [Startup] template registry cleared in 2.44µs
+[  0.153s] [Startup] intrinsic templates registered in 4.30µs
+[  0.153s] [Startup] initial app_data lua handle installed in 90.00ns
+[  0.202s] [Startup] init_lua_state complete in 49.27ms
+[  0.202s] [Startup] final app_data lua handle installed in 80.00ns
+[  0.202s] [Startup] initial screen globals installed in 48.98µs
+[  0.202s] [Startup] WowLuaEnv::new complete

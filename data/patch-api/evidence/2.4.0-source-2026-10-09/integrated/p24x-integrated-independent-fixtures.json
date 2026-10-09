@@ -1,0 +1,104 @@
+[
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/tools/test_patch_2_4_source.py",
+      "-v"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "8877566d26df0d89b8923b04d51c6c1954e9796f",
+    "start": "2026-10-09T14:27:02.892770+00:00",
+    "elapsed_seconds": 0.13806053099688143,
+    "exit_code": 0,
+    "stdout_path": "/tmp/p24x-integrated-independent-test_patch_2_4_source.stdout",
+    "stderr_path": "/tmp/p24x-integrated-independent-test_patch_2_4_source.stderr",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "8a32fde6883a01507ba86f281bac073ab2d1fede37deb4ee58b59f52466bb003"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/tools/test_patch_2_4_replay.py",
+      "-v"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "8877566d26df0d89b8923b04d51c6c1954e9796f",
+    "start": "2026-10-09T14:27:03.030967+00:00",
+    "elapsed_seconds": 1.4110704699996859,
+    "exit_code": 0,
+    "stdout_path": "/tmp/p24x-integrated-independent-test_patch_2_4_replay.stdout",
+    "stderr_path": "/tmp/p24x-integrated-independent-test_patch_2_4_replay.stderr",
+    "stdout_sha256": "973237de951098b926e99408548bbc1af9af095baaa4f63dac29c5550d1852b0",
+    "stderr_sha256": "051e63c41c7a3d45bbd9006adde9be469484a63f8c82bba962d476c2063309be"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/tools/test_patch_2_4_2_source.py",
+      "-v"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "8877566d26df0d89b8923b04d51c6c1954e9796f",
+    "start": "2026-10-09T14:27:04.442344+00:00",
+    "elapsed_seconds": 0.12835274399549235,
+    "exit_code": 0,
+    "stdout_path": "/tmp/p24x-integrated-independent-test_patch_2_4_2_source.stdout",
+    "stderr_path": "/tmp/p24x-integrated-independent-test_patch_2_4_2_source.stderr",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "1059a8a801db751f8fd2297dd3262fc835c315b8a7632bbf44619e595836b595"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/tools/test_patch_2_4_2_accounting.py",
+      "-v"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "8877566d26df0d89b8923b04d51c6c1954e9796f",
+    "start": "2026-10-09T14:27:04.570909+00:00",
+    "elapsed_seconds": 0.03730780599289574,
+    "exit_code": 0,
+    "stdout_path": "/tmp/p24x-integrated-independent-test_patch_2_4_2_accounting.stdout",
+    "stderr_path": "/tmp/p24x-integrated-independent-test_patch_2_4_2_accounting.stderr",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "979893ffb6a0818c326264a6287fab04d8e52af78b4f8edcfb9dd321ba90114f"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/tools/test_patch_2_4_2_replay.py",
+      "-v"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "8877566d26df0d89b8923b04d51c6c1954e9796f",
+    "start": "2026-10-09T14:27:04.608393+00:00",
+    "elapsed_seconds": 39.37022997000895,
+    "exit_code": 0,
+    "stdout_path": "/tmp/p24x-integrated-independent-test_patch_2_4_2_replay.stdout",
+    "stderr_path": "/tmp/p24x-integrated-independent-test_patch_2_4_2_replay.stderr",
+    "stdout_sha256": "7982937efe958936c918c3b2df569986cb509fb6722f84a1a32447005cf0b1b3",
+    "stderr_sha256": "b651e50b12de656ffc3c1dbc0fed080be50647986e35df8131bc2edfaae46b9d"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/tools/test_patch_3_0_2_source.py",
+      "-v"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "8877566d26df0d89b8923b04d51c6c1954e9796f",
+    "start": "2026-10-09T14:27:43.978908+00:00",
+    "elapsed_seconds": 0.14209322701208293,
+    "exit_code": 0,
+    "stdout_path": "/tmp/p24x-integrated-independent-test_patch_3_0_2_source.stdout",
+    "stderr_path": "/tmp/p24x-integrated-independent-test_patch_3_0_2_source.stderr",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "aca91067409492f5ac861a85abd676d5668ad0ac6414efa014d793e3a0374d1d"
+  }
+]

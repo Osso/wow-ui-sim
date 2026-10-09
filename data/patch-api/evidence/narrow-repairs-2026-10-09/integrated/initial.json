@@ -1,0 +1,12 @@
+{
+  "canonical": {
+    "revision": "0b5c69d6fdac137e57f4cb9a9f16114773234e34",
+    "status": "?? .code-index.db\n?? data/patch-api/evidence/narrow-repairs-2026-10-09/\n",
+    "plan_sha256": "78dff23e6976a7b3e43f92e45e3a571413a7708e80132315ec24420f2e004599"
+  },
+  "source": {
+    "revision": "811a0491b8a1ba21e2ebb27f364f03a563c5300c",
+    "status": " M PLAN.md\n",
+    "plan_sha256": "0e157b07dbd8d745cefdf23ca1d5d0f68de5bd52fff89ba4ec970bd433fc246f"
+  }
+}

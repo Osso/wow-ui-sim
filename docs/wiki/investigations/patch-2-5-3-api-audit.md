@@ -44,6 +44,10 @@ Only same TBC Classic history 2.5.4/2.5.5/2.5.6 is referenced, all `pending-main
 
 [Actual same-line comparison](../../../data/patch-api/evidence/2.5.3-session-2026-10-09/integrated/successor-comparison.json) finds zero section/symbol overlap between all 49 own occurrences and integrated 2.5.4's 412 occurrences. Integrated 2.5.5/2.5.6 supply no explicit API identities. No member/model/native closure; original 39 seals and separate receipt/archive seals unchanged. Independent SOURCE replay pending. Source TOC 20503 remains distinct from configured Anniversary 11507; no foreign-line surrogate probe.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Ledger](../../../data/patch-api/sources/2.5.3-page-coverage.json) — every literal row and precise UNPROVEN contracts.

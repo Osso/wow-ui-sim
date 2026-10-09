@@ -1,0 +1,31 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index db981a74f..b65c78381 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -256,6 +256,11 @@ required-features = ["client-mists"]
+ name = "classic_guild_roster_selection"
+ path = "tests/classic_guild_roster_selection.rs"
+ 
++[[test]]
++name = "patch_3_0_3_factory"
++path = "tests/patch_3_0_3_factory.rs"
++required-features = ["client-retail"]
++
+ [[test]]
+ name = "patch_3_4_1_factory"
+ path = "tests/patch_3_4_1_factory.rs"
+diff --git a/tests/common/publication_sweep.rs b/tests/common/publication_sweep.rs
+index e1ccb32cf..1d0f11f7b 100644
+--- a/tests/common/publication_sweep.rs
++++ b/tests/common/publication_sweep.rs
+@@ -515,8 +515,8 @@ pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
+     run_sweep(env, spec, || read_deprecated_aliases(env));
+ }
+ 
+-/// Bare Wrath factory measurement: no cached publisher/deprecation files are consulted.
+-#[cfg(feature = "client-wrath")]
++/// Bare factory measurement: no cached publisher/deprecation files are consulted.
++#[cfg(any(feature = "client-wrath", feature = "client-retail"))]
+ pub(crate) fn run_factory_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
+     run_sweep(env, spec, BTreeMap::new);
+ }

@@ -1,0 +1,7 @@
+test_complete_extract_preserves_literal_texture_and_events (__main__.SourceTests.test_complete_extract_preserves_literal_texture_and_events) ... ok
+test_literal_occurrences_are_opt_in (__main__.SourceTests.test_literal_occurrences_are_opt_in) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.107s
+
+OK

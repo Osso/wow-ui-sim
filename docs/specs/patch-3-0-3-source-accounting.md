@@ -26,7 +26,7 @@ Bounded audit of frozen page 560990/revision 5407654 (2010-03-28T14:26:47Z), fro
 
 ## Current bounded proof — 2026-10-09
 
-[Audit status and retained report](../wiki/investigations/patch-3-0-3-api-audit.md#main-successor-integration--2026-10-09) are the SSOT: source 3/3, history 2/2 and 16 seals pass at `1ba5b6673`; synchronization semantics remain UNPROVEN. Separate factory measurement (one match/two gaps) is being integrated; retained development receipts are not fresh integrated proof or native acceptance.
+[Audit status and retained report](../wiki/investigations/patch-3-0-3-api-audit.md#main-successor-integration--2026-10-09) are the SSOT: source 3/3, history 2/2 and 16 seals pass at `1ba5b6673`; synchronization semantics remain UNPROVEN. Factory integration `4470912f5` has [bounded independent mixed-checkout proof](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md): 3/3 tests, three CVars/one match/two gaps. Relevant-input hash equality is not immutable-commit execution or native acceptance.
 
 ## Separate supported retail factory measurement
 

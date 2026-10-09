@@ -1,0 +1,27 @@
+{
+  "src/c_api/mod.rs": {
+    "canonical_commit_sha256": "86275f74f86f677b2b463cc0465034a3809d2dfca669d7520791a2145bf62311",
+    "source_worktree_sha256": "86275f74f86f677b2b463cc0465034a3809d2dfca669d7520791a2145bf62311",
+    "equal": true
+  },
+  "src/c_api/registration.rs": {
+    "canonical_commit_sha256": "a8d9d5e107889ee8fdfa643eae08b1eee824e4e61d604853b1d9520236064ba4",
+    "source_worktree_sha256": "a8d9d5e107889ee8fdfa643eae08b1eee824e4e61d604853b1d9520236064ba4",
+    "equal": true
+  },
+  "src/c_api/addon_messages.rs": {
+    "canonical_commit_sha256": "d77d85112df930a855b54a0438ee2f47dff8c55572f8e63f2e6dc2862d7db345",
+    "source_worktree_sha256": "d77d85112df930a855b54a0438ee2f47dff8c55572f8e63f2e6dc2862d7db345",
+    "equal": true
+  },
+  "src/c_api/c_combat_log.rs": {
+    "canonical_commit_sha256": "584f1230d9c70526a4b874227bdc482f9a7fd3ab2e6aed143b38fea99451baed",
+    "source_worktree_sha256": "584f1230d9c70526a4b874227bdc482f9a7fd3ab2e6aed143b38fea99451baed",
+    "equal": true
+  },
+  "src/lua_api/state/sim_state.rs": {
+    "canonical_commit_sha256": "37d8fb2d609e2bd159fe994370d9f733b8fe4c45f99315332cd93a9c1f1d3a39",
+    "source_worktree_sha256": "37d8fb2d609e2bd159fe994370d9f733b8fe4c45f99315332cd93a9c1f1d3a39",
+    "equal": true
+  }
+}

@@ -1,0 +1,13 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 3cc4e5ced..6e4942344 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -293,3 +293,8 @@ quote = "1"
+ 
+ [patch.crates-io]
+ iced_wgpu = { path = "iced-wgpu-patched" }
++
++[[test]]
++name = "patch_2_4_2_factory"
++path = "tests/patch_2_4_2_factory.rs"
++required-features = ["client-retail"]

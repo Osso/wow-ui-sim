@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/tmp/p24x-integrated-independent-replay/tools/extract_patch_non_inventory.py",
+    "--patch",
+    "3.0.2",
+    "--text-only",
+    "--wrath-summary-markup"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "dd710c6fc469a53e3b77b97aa6340993ae83e46e",
+  "start": "2026-10-09T14:31:44.869671+00:00",
+  "elapsed_seconds": 0.03497645500465296,
+  "exit": 0,
+  "stdout_path": "/tmp/p24x-integrated-independent-replay-302-cli-correction.stdout",
+  "stderr_path": "/tmp/p24x-integrated-independent-replay-302-cli-correction.stderr",
+  "stdout_sha256": "485aae04b76e8cfec11050e19496bb02a83dce803336f469e5ed134fa36b099e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "expected_sha256": "5e814a5740e836a848f63859a95bb0ea00d32820c6172756f1dbaa4e673cd86a",
+  "actual_sha256": "5e814a5740e836a848f63859a95bb0ea00d32820c6172756f1dbaa4e673cd86a",
+  "matches_recorded": true,
+  "reason": "Archived function runner incorrectly passed CLI-only --text-only keyword; scoped exact CLI invocation, no whole replay repeated."
+}

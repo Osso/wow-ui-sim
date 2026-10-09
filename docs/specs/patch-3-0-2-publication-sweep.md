@@ -27,7 +27,7 @@ Frozen page 482353/revision 4638841 (`2020-02-23T21:55:29Z`) is historical retai
 
 ## Current bounded proof — 2026-10-09
 
-[Audit status and retained report](../wiki/investigations/patch-3-0-2-api-audit.md#main-successor-integration--2026-10-09) are the SSOT: source/accounting/history and preserved 3.2 conflict fixture pass at `323fc333e`, 36+1+2 seals unchanged. All 373 inventory occurrences/all behavior remain UNPROVEN; own factory work pending. No latest-HEAD replay or native/final acceptance.
+[Audit status and retained report](../wiki/investigations/patch-3-0-2-api-audit.md#main-successor-integration--2026-10-09) are the SSOT: source/accounting/history and preserved 3.2 conflict fixture pass at `323fc333e`, 36+1+2 seals unchanged. Historical publication/all behavior remain UNPROVEN; [integrated bounded factory proof](../wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md) separately records 7/7 tests and 373/185/188 rows/matches/gaps in a mixed checkout, not immutable-commit proof. No latest-HEAD replay or native/final acceptance.
 
 ## Known gaps (current cycle)
 - [ ] All 373 inventory, 80 prose/qualification and 367 signature contracts remain UNPROVEN behaviorally; runtime publication and native absence were not measured.

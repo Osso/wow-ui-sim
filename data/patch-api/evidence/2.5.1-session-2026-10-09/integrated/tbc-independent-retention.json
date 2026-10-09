@@ -1,0 +1,50 @@
+[
+  {
+    "source": "/tmp/p251-256-independent-report.md",
+    "retained": "p251-256-independent-report.md",
+    "bytes": 7871,
+    "sha256": "f794b7a3b5032edf12edfe19e7a3a07c7bc8574ed1778c47a057a9c3bb043f31"
+  },
+  {
+    "source": "/tmp/p251-256-independent-raw-receipts.json",
+    "retained": "p251-256-independent-raw-receipts.json",
+    "bytes": 529563,
+    "sha256": "f51f3745fbdb9a6be34866d0daaca0ef051377d723dfc052f4c4680ef46b1dbe"
+  },
+  {
+    "source": "/tmp/p256-independent-raw-receipts.json",
+    "retained": "p256-independent-raw-receipts.json",
+    "bytes": 46973,
+    "sha256": "8074f2ba7a8085deb0fa8265d4954d8ea027f4c820c7a325cca5193d04ac7fbc"
+  },
+  {
+    "source": "/tmp/p255-independent-raw-receipts.json",
+    "retained": "p255-independent-raw-receipts.json",
+    "bytes": 53623,
+    "sha256": "80b517e9b979378e2ba013b4594744915d7d2cd6d317305c22e522ba049d55d3"
+  },
+  {
+    "source": "/tmp/p254-independent-raw-receipts.json",
+    "retained": "p254-independent-raw-receipts.json",
+    "bytes": 46191,
+    "sha256": "dbc3cd6b4be45941c0f11abaf77f91391ad975aa29be6db73b5c8c11ab556389"
+  },
+  {
+    "source": "/tmp/p253-independent-raw-receipts.json",
+    "retained": "p253-independent-raw-receipts.json",
+    "bytes": 47085,
+    "sha256": "fe249c13c374b080aac9fbec48c2935b5be0f62f7c473e194d6d40ed68712513"
+  },
+  {
+    "source": "/tmp/p252-independent-raw-receipts.json",
+    "retained": "p252-independent-raw-receipts.json",
+    "bytes": 70757,
+    "sha256": "694f00aec7389218b4a72c5b8a7f0116016e7f97bfc777d62789e9a618f44445"
+  },
+  {
+    "source": "/tmp/p251-independent-raw-receipts.json",
+    "retained": "p251-independent-raw-receipts.json",
+    "bytes": 58785,
+    "sha256": "0642b793424b3c0ffac19e95fdd3665ecd5caaeafde79e386c7f52ad3b144b31"
+  }
+]

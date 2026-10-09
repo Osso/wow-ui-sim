@@ -43,6 +43,10 @@ No backing-state/runtime probe performed. Existing modern simulator state cannot
 
 Copied fresh processes use isolated Python with unusable Git/tool PATH and empty PYTHONPATH; copied roots lack Git, target, src and mutable current tools/sources. Temporary tool trees contain only archived inputs. Original/current fixtures are distinct scopes, not a claim that the whole current test module ran in one command. Largest sealed ledger is below 560 KB; every retained file below 5 MB. No formatter installed; Python manually formatted before commits. PLAN.md checkboxes updated locally but excluded by explicit plan-md skill policy (`NEVER track PLAN.md`). No check/lint/readability/coverage/broad/profile/startup/final gates, network, delegation/model CLIs, canonical/vendor/cache/Wowless writes, push/merge/rebase/deploy.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Spec](../../specs/patch-2-0-1-source-accounting.md).

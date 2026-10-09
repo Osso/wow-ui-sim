@@ -1,0 +1,122 @@
+[
+  {
+    "source": "/tmp/forever-bodies-independent/canonical-equivalence.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/canonical-equivalence.json",
+    "bytes": 953,
+    "sha256": "057c5f851a255a9b2e6023e2119a2af64b2643a681f7fd1a2221864568e8e54c"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/final-hashes.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/final-hashes.json",
+    "bytes": 454759,
+    "sha256": "9a187ba209ff48b20569b7ac51fe91423ed542003dbbc7a28ec47393c7cabf9d"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/final-status.txt",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/final-status.txt",
+    "bytes": 11,
+    "sha256": "224b417efb4211cc7c88eca49b1623d4b604d9528d7539fac1f438557690ee12"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/fmt-result.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/fmt-result.json",
+    "bytes": 1656,
+    "sha256": "69c08d8172e381ec4c261a121a3b63cea220a203a3aa8957222f1859e297d6f6"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/fmt-start.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/fmt-start.json",
+    "bytes": 1561,
+    "sha256": "29a4e6b9806a8e4e24b6c5af57518bfdc3588eb6f0ca43a5e2efefef37ea2150"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/fmt.stderr",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/fmt.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/fmt.stdout",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/fmt.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/followup.diff",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/followup.diff",
+    "bytes": 3710,
+    "sha256": "d2d37888e90ef9d0929ac1b1ba0e2bf4416157ac434eb6581f7f92c88762845d"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/generated-harness-evidence.txt",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/generated-harness-evidence.txt",
+    "bytes": 1163,
+    "sha256": "25271096bda81030f7e02513162591d2beafa5081cb81cfc0ac2b548380c6cba"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/initial-hashes.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/initial-hashes.json",
+    "bytes": 454759,
+    "sha256": "9a187ba209ff48b20569b7ac51fe91423ed542003dbbc7a28ec47393c7cabf9d"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/initial-status.txt",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/initial-status.txt",
+    "bytes": 11,
+    "sha256": "224b417efb4211cc7c88eca49b1623d4b604d9528d7539fac1f438557690ee12"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/prior-retail-receipt-sha256.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/prior-retail-receipt-sha256.json",
+    "bytes": 149,
+    "sha256": "c5ad9d30e6e7cd9e458c885328cb1671ebb7b7a996f7e69b6324733bd0917139"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/prior-scope-comparison.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/prior-scope-comparison.json",
+    "bytes": 574,
+    "sha256": "12f042886c4d27695b21555e9d956e6c06b6a59ba2ebdc79bff1794ea73dcf93"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/receipt-helper.py",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/receipt-helper.py",
+    "bytes": 1084,
+    "sha256": "d43fb752c3840bb4619e477f2bec53b59e54ec91aa32313155506b0031868c76"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/receipt-sha256.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/receipt-sha256.json",
+    "bytes": 2374,
+    "sha256": "82101ff53941af077831cfac2e1a80f0f8fcb2f6cbdec91bf225bcd739bed6a9"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/source-model-result.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/source-model-result.json",
+    "bytes": 7177,
+    "sha256": "3db1b21ea684d9873f3deef18aab44f73642e9caf79f9b4a5454e047aef10767"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/source-model-start.json",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/source-model-start.json",
+    "bytes": 1728,
+    "sha256": "843918d26c1c7f978447af67a1d712316eaaa9b9c2b5dca7bd5328de0bf3fcd7"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/source-model.stderr",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/source-model.stderr",
+    "bytes": 5019,
+    "sha256": "b0eb120153f4789ae9f473c68bffad22098930c676dac0c370513bcf54863dff"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent/source-model.stdout",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/source-model.stdout",
+    "bytes": 187,
+    "sha256": "ff8ad3950820775d1b62ce5bb7e8dac9046e2da1a95c988bcc08280f828eab1e"
+  },
+  {
+    "source": "/tmp/forever-bodies-independent-report.md",
+    "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-bodies/forever-bodies-independent-report.md",
+    "bytes": 6188,
+    "sha256": "272f22642d4d974a0e1b1bfb2ea275cca694b73f6893da1ed393d8469aa503cf"
+  }
+]

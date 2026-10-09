@@ -1,0 +1,9 @@
+test_full_accounting_and_omission_controls (__main__.LiteralSourceTests.test_full_accounting_and_omission_controls) ... ok
+test_literal_inventory_and_default_bytes (__main__.LiteralSourceTests.test_literal_inventory_and_default_bytes) ... ok
+test_recorded_template_outputs (__main__.LiteralSourceTests.test_recorded_template_outputs) ... ok
+test_wrath_template_default_isolation (__main__.LiteralSourceTests.test_wrath_template_default_isolation) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.373s
+
+OK

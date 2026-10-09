@@ -47,6 +47,10 @@ Owned validator derives accounting and verifies exact serialized register/ledger
 
 Proof is SOURCE serialization only: no runtime/publication/native/model replay, broad/check/lint/type/readability/coverage/startup/final gate, delegation or operations. `PLAN.md` checkboxes are session state, left uncommitted under PLAN policy.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Raw wikitext](../../../data/patch-api/sources/2.3.0-api-changes.wikitext), [rendered mirror](../../../data/patch-api/sources/2.3.0-api-changes.txt), [occurrence register](../../../data/patch-api/sources/2.3.0-wikitext-register.json).

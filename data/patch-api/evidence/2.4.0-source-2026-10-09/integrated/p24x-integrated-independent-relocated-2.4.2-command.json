@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+    "-B",
+    "/tmp/p24x-integrated-independent-relocated-2.4.2/validate.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env": {
+    "PATH": "/nonexistent",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "revision": "dd710c6fc469a53e3b77b97aa6340993ae83e46e",
+  "start": "2026-10-09T14:29:56.543892+00:00",
+  "elapsed_seconds": 12.383648910006741,
+  "exit_code": 0,
+  "stdout_sha256": "7982937efe958936c918c3b2df569986cb509fb6722f84a1a32447005cf0b1b3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

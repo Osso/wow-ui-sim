@@ -40,6 +40,10 @@ Directions: 13 added, 13 changed, 6 replaced, 4 context occurrences. Raw86 total
 
 [Command ledger](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/command-ledger.json) records commands, exact proof revisions/scopes and invalidation boundaries; [portable receipt](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/portable-proof.json) records seals/counts/restoration. No rerun of already applicable SOURCE proof; no broad/final gates. Main owns native/integration/final acceptance. Zero model credit and no new runtime proposal.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Frozen source/ledger/evidence](../../../data/patch-api/evidence/2.2.0-session-2026-10-09/) — offline inputs and owned receipts.

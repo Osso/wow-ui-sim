@@ -1,0 +1,27 @@
+[
+  {
+    "scope": "242-original",
+    "count": 23,
+    "failures": []
+  },
+  {
+    "scope": "242-portable",
+    "count": 5,
+    "failures": []
+  },
+  {
+    "scope": "240-original-seals.json",
+    "count": 432,
+    "failures": []
+  },
+  {
+    "scope": "240-closure-seals.json",
+    "count": 3,
+    "failures": []
+  },
+  {
+    "scope": "240-development-seals.json",
+    "count": 3,
+    "failures": []
+  }
+]

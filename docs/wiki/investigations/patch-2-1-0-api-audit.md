@@ -44,6 +44,10 @@ Fresh copied isolated Python process runs without Git/Cargo PATH, repository `to
 
 Raw SHA-256 `4731263a025f95ff2c7cdb3f734817d7eefa0e4d16b88231c809f2b11a9bed98` (15,431 bytes); response SHA-256 `a22acbf5a295e4414d512c3487506101dc6d991a8950159f88fb78f3e8a45c82`. Neither frozen timestamp nor these integrity hashes imply external authentication. Main owns publication/native/integration. Worktree retains only local PLAN.md changes outside commits under explicit plan-md no-tracking policy; no canonical/runtime/vendor/cache/Wowless writes, rebase/push/merge/deploy/delegation/model CLI.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Exact source](../../../data/patch-api/sources/2.1.0-api-changes.wikitext), [register](../../../data/patch-api/sources/2.1.0-wikitext-register.json), [ledger](../../../data/patch-api/sources/2.1.0-page-coverage.json).

@@ -1,0 +1,1 @@
+{"actual_retail_registers": 73, "inventory_rows": 50, "meaningful_closures": 0, "native_parity": false, "patch": "2.4.0", "pending_contract_ids": 169, "proof_boundary": "fresh archived source accounting; parser regression receipts retained, not rerun", "queued_placeholders": 5, "registry_pages": 101, "seals": 435, "signature_rows": 46, "source_rows": 99}

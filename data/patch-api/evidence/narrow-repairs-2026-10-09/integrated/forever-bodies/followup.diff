@@ -1,0 +1,93 @@
+commit 2218c0f4114b50bb33ab507917983892b30dbf4a
+Author:     Alessio Deiana <adeiana@gmail.com>
+AuthorDate: Fri Oct 9 09:27:54 2026 -0500
+Commit:     Alessio Deiana <adeiana@gmail.com>
+CommitDate: Fri Oct 9 09:27:54 2026 -0500
+
+    Keep Retail-only message and combat-log bodies profile-gated
+
+diff --git a/src/c_api/addon_messages.rs b/src/c_api/addon_messages.rs
+index b1f8c9d11..e511e7027 100644
+--- a/src/c_api/addon_messages.rs
++++ b/src/c_api/addon_messages.rs
+@@ -9,6 +9,7 @@ use crate::lua_api::state::MessageLogEntry;
+ use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
+ #[cfg(feature = "client-wowforever")]
+ use rilua::table_security::is_secret_value;
++#[cfg(feature = "retail-12-0-0")]
+ use rilua::table_security::unwrap_secret;
+ use rilua::vm::state::LuaState;
+ use rilua::{LuaResult, Val};
+@@ -26,10 +27,12 @@ const TARGET_REQUIRED: u32 = 6;
+ const GENERAL_ERROR: u32 = 9;
+ #[cfg(feature = "client-wowforever")]
+ const NOT_IN_GUILD: u32 = 10;
++#[cfg(feature = "retail-12-0-0")]
+ const TARGET_OFFLINE: u32 = 12;
+ const PREFIX_BYTE_LIMIT: usize = 16;
+ #[cfg(feature = "client-wowforever")]
+ const CHAT_BYTE_LIMIT: usize = 255;
++#[cfg(feature = "retail-12-0-0")]
+ const BNET_BYTE_LIMIT: usize = 4078;
+ #[cfg(feature = "client-wowforever")]
+ const RAID_ROSTER_MINIMUM: usize = 6;
+@@ -46,6 +49,7 @@ pub(super) fn register_chat(state: &mut LuaState) -> LuaResult<()> {
+     )
+ }
+ 
++#[cfg(feature = "retail-12-0-0")]
+ pub(super) fn register_bnet_chat(
+     state: &mut LuaState,
+     namespace: rilua::vm::gc::arena::GcRef<rilua::vm::table::Table>,
+@@ -54,6 +58,7 @@ pub(super) fn register_bnet_chat(
+     table_set_rust_fn_static(state, namespace, "SetCustomMessage", set_custom_message)
+ }
+ 
++#[cfg(feature = "retail-12-0-0")]
+ fn send_whisper(state: &mut LuaState) -> LuaResult<u32> {
+     let account = unwrap_secret(state, stack_val(state, 1))?;
+     let Val::Num(account) = account else {
+@@ -87,6 +92,7 @@ fn send_whisper(state: &mut LuaState) -> LuaResult<u32> {
+     Ok(1)
+ }
+ 
++#[cfg(feature = "retail-12-0-0")]
+ fn chat_is_locked(sim: &SimState) -> bool {
+     #[cfg(feature = "retail-12-0-5")]
+     {
+@@ -99,6 +105,7 @@ fn chat_is_locked(sim: &SimState) -> bool {
+     }
+ }
+ 
++#[cfg(feature = "retail-12-0-0")]
+ fn set_custom_message(state: &mut LuaState) -> LuaResult<u32> {
+     let text = read_string(state, unwrap_secret(state, stack_val(state, 1))?, 1)?;
+     // INFERRED: bounded local broadcast, not a remote Battle.net acknowledgement.
+@@ -110,6 +117,7 @@ fn set_custom_message(state: &mut LuaState) -> LuaResult<u32> {
+     Ok(1)
+ }
+ 
++#[cfg(feature = "retail-12-0-0")]
+ pub(super) fn send_game_data(state: &mut LuaState) -> LuaResult<u32> {
+     // The VM authenticates secret access without clearing caller taint.
+     let account = unwrap_secret(state, stack_val(state, 1))?;
+@@ -226,6 +234,7 @@ fn validate_chat(sim: &SimState, prefix: &str, message: &str, channel: &str, tar
+     }
+ }
+ 
++#[cfg(feature = "retail-12-0-0")]
+ fn validate_bnet(sim: &SimState, account: f64, prefix: &str, data: &str) -> u32 {
+     let result = validate_payload(prefix, data, BNET_BYTE_LIMIT);
+     if result != SUCCESS {
+diff --git a/src/c_api/c_combat_log.rs b/src/c_api/c_combat_log.rs
+index c7a9a2d93..8df1a5a95 100644
+--- a/src/c_api/c_combat_log.rs
++++ b/src/c_api/c_combat_log.rs
+@@ -8,6 +8,7 @@ use crate::lua_api::methods::{create_table, table_set};
+ use rilua::vm::state::LuaState;
+ use rilua::{LuaResult, Val};
+ 
++#[cfg(feature = "retail-12-0-0")]
+ pub(crate) fn register_restriction(state: &mut LuaState) -> LuaResult<()> {
+     let ns = super::ensure_namespace(state, "C_CombatLog")?;
+     crate::lua_bridge::table_set_rust_fn_static(state, ns, "IsCombatLogRestricted", |s| {

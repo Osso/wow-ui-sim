@@ -40,6 +40,10 @@ Fresh archive: **20 members**, 101,361 bytes, SHA256 `ebd2437a59df2ad9f210c1055d
 
 Replay retained `replay-archive.tar.gz` into a fresh directory and run its own `audit.py` and `test_source_accounting.py` with `python3 -B`. Use the sealed historical tool, raw source, revision 6780591 and flags `[]` for default-register reproduction. Never regenerate the one-time receipts or original seal map. These are bounded SOURCE/historical controls, not native or final integration acceptance.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Spec](../../specs/patch-1-15-9-source-accounting.md).

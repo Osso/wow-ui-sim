@@ -1,0 +1,140 @@
+[
+  {
+    "source": "/tmp/forever-cfg-independent-report.md",
+    "retained": "forever-cfg-independent-report.md",
+    "bytes": 8258,
+    "sha256": "887dd2cc51e4e83cc5e43ebb8258370b8cfdd0842e1c7c006ae774372f666c64"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/receipt-sha256.json",
+    "retained": "receipt-sha256.json",
+    "bytes": 1952,
+    "sha256": "dd2ebe6d7061ac8c455dc86f50ae4439960c4f57ef09407a9def4d2219c13de1"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/final.json",
+    "retained": "final.json",
+    "bytes": 2752,
+    "sha256": "4c1a0662fe3dcd072255ca23af4a7267fdaa30fdf1f2af9aa47f7db65d1ec6f0"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/canonical-equivalence.json",
+    "retained": "canonical-equivalence.json",
+    "bytes": 1265,
+    "sha256": "2c8d3e26a2cb94d85cfe7bbe3c359ff00dca2270b4fced4967021817eaf2f2f7"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/proof-scope-sha256.json",
+    "retained": "proof-scope-sha256.json",
+    "bytes": 462583,
+    "sha256": "95b8f68be686c36d18161aecff0f591384e6dccd431780bae096330d7c125a6e"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-behavior.stderr",
+    "retained": "retail-behavior.stderr",
+    "bytes": 3304,
+    "sha256": "9dc6a19d1c72dedd077acbf4ed93971e6d62d1a65be69c968254627fbfbfc378"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-behavior.stdout",
+    "retained": "retail-behavior.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-behavior-result.json",
+    "retained": "retail-behavior-result.json",
+    "bytes": 5240,
+    "sha256": "dc0ac7a40808a096cf7759d035386c0a3415ece2bfed850be320018e30dc7d78"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-behavior-start.json",
+    "retained": "retail-behavior-start.json",
+    "bytes": 1762,
+    "sha256": "e203fff5077d96669c80bf9fdd14ef495886d8c2b53b14903e0e981026c0882e"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-check.stderr",
+    "retained": "retail-check.stderr",
+    "bytes": 10249,
+    "sha256": "cf579325f1bf988b69cdba4b1878cf02a258711214d16aff890b9ed18a7c3e9d"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-check.stdout",
+    "retained": "retail-check.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-check-result.json",
+    "retained": "retail-check-result.json",
+    "bytes": 12294,
+    "sha256": "3d61e14e747f99bf7f48b0ea3c886cc242cb92cb11536a4bda8f72729daecc5b"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/fmt.stderr",
+    "retained": "fmt.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/fmt.stdout",
+    "retained": "fmt.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/fmt-result.json",
+    "retained": "fmt-result.json",
+    "bytes": 1644,
+    "sha256": "69d2c03901ab2dba105efc271e5525a0df2cbdac64620e498f6af47dc5226e31"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/retail-check-start.json",
+    "retained": "retail-check-start.json",
+    "bytes": 1646,
+    "sha256": "7ac916cead7a4704215c0fac27cd72fd6128fb613a0de4d64e41f164b61a8fc3"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/fmt-start.json",
+    "retained": "fmt-start.json",
+    "bytes": 1545,
+    "sha256": "4069996b0b36cb47dd82ba7169a26c34b08eb16fa76212cbfc620d1ac8b8988b"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/source-model.stderr",
+    "retained": "source-model.stderr",
+    "bytes": 2310,
+    "sha256": "fed98b9782213ab0c983f909ff448fd8caf8785167c7058b13048c2bcc535de2"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/source-model.stdout",
+    "retained": "source-model.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/source-model-result.json",
+    "retained": "source-model-result.json",
+    "bytes": 4149,
+    "sha256": "afd678636ecc46010ed80503d7face213f8dfe902f3ff8b3254643e59f52e3e7"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/source-model-start.json",
+    "retained": "source-model-start.json",
+    "bytes": 1712,
+    "sha256": "a9cc0d975bca826e5f735409a625e0253b0b4f1cb04d8afd30b56123c225d250"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/runner.py",
+    "retained": "runner.py",
+    "bytes": 977,
+    "sha256": "6e828650b044158414697a7b9df21ef0f2a2932356b063d415ea409057a8e175"
+  },
+  {
+    "source": "/tmp/forever-cfg-independent/initial.json",
+    "retained": "initial.json",
+    "bytes": 457,
+    "sha256": "697a6b8ded2d17d4d805a9be72ef6c6539e9dc5e7e2bf51f722875b51d4aae8d"
+  }
+]

@@ -91,6 +91,10 @@ Exact discovery revision and commands/environment scope are retained in [command
 
 No broad/check/lint/readability/profile/startup/full-suite/final gates, model CLI/delegation, push, merge, deploy or operational work. Later documentation/receipt additions do not invalidate earlier code-scope proof. Main owns integration and any changed publication/native acceptance.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Frozen raw page](../../../data/patch-api/sources/2.4.2-api-changes.wikitext) and [rendered extract](../../../data/patch-api/sources/2.4.2-api-changes.txt).

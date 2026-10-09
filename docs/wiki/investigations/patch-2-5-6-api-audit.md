@@ -61,6 +61,10 @@ Outer map now records **33** sealed inputs; archive retains its original **30**-
 
 Integrated source slice at `93bcc6afe`; no shared parser or runtime changes. Original archived source, configured observations and 33 outer seals remain historical inputs, not current native measurements. Independent SOURCE replay gate pending. Unexpanded Era transclusion remains UNPROVEN; zero API/model/native credit. No surrogate Anniversary 11507 probe for source TOC 20506.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Raw](../../../data/patch-api/sources/2.5.6-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/2.5.6-api-changes.txt), [ledger](../../../data/patch-api/sources/2.5.6-page-coverage.json).

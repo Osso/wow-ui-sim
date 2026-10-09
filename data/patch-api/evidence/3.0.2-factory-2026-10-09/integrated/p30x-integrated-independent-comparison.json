@@ -1,0 +1,29 @@
+{
+  "3.0.2": {
+    "observations": 373,
+    "matches": 185,
+    "gaps": 188,
+    "exact_retained_equal": true,
+    "changed_ids": [],
+    "seals.json": {
+      "count": 112,
+      "mismatch": []
+    }
+  },
+  "3.0.3": {
+    "observations": 3,
+    "matches": 1,
+    "gaps": 2,
+    "exact_retained_equal": true,
+    "changed_ids": [],
+    "artifact-hashes.json": {
+      "count": 16,
+      "mismatch": []
+    }
+  },
+  "protected": {
+    "count": 197,
+    "changed": []
+  },
+  "readability": "Manual changed-Rust review: no violations in merge hunks or p302 tests; p303 exact value test accumulates Vec via loop+push at tests/patch_3_0_3_factory.rs:34-41 (STATE guideline). Test output/equality uses concrete full values."
+}

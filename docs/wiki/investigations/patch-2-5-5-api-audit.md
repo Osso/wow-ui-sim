@@ -62,6 +62,10 @@ No Rust/runtime/profile/shared tool/vendor/cache/Wowless edit, native probe, del
 
 Actual same-line 2.5.6 source is now integrated at `93bcc6afe`. It supplies no explicit API identities, so no member supersession or native/model closure follows. Source TOCs 20505/20506 remain distinct from configured Anniversary 11507. Original history and seals stay unchanged; independent SOURCE replay gate pending. Four linked/native/state contracts remain UNPROVEN; no foreign-line or empty-inventory parity credit.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Raw](../../../data/patch-api/sources/2.5.5-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/2.5.5-api-changes.txt), [ledger](../../../data/patch-api/sources/2.5.5-page-coverage.json).

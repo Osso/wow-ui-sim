@@ -37,6 +37,10 @@ Fresh archive **24 members**, **98,432 bytes**, SHA256 `53e386b8e40c862419533bb5
 
 [Replay instructions](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/REPLAY.md) use copied historical tools and source only. Exact commands, member hashes, restoration hashes and logs retained. Later portable receipts are separately sealed; no original proof rewritten. Zero native/final acceptance claim.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Spec](../../specs/patch-1-15-8-source-accounting.md).

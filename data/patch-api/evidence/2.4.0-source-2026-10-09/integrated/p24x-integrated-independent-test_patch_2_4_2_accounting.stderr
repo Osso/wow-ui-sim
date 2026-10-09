@@ -1,0 +1,7 @@
+test_every_nonblank_line_and_separate_contract_is_retained (__main__.AccountingTests.test_every_nonblank_line_and_separate_contract_is_retained) ... ok
+test_missing_inventory_observation_or_raw_line_rejects (__main__.AccountingTests.test_missing_inventory_observation_or_raw_line_rejects) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.010s
+
+OK

@@ -1,0 +1,22 @@
+{
+  "src/c_api/addon_messages.rs": {
+    "equal": true,
+    "canonical_sha256": "17a2ae9ddf00d4028f4652c611bc75dcda74699aa8900d787b33a9fb142d12d8",
+    "local_sha256": "17a2ae9ddf00d4028f4652c611bc75dcda74699aa8900d787b33a9fb142d12d8"
+  },
+  "src/c_api/c_combat_log.rs": {
+    "equal": true,
+    "canonical_sha256": "6bbbd7d1b9d97730d2f5c5ed894a9f89a083d44387ad0e34c77f256e53138ccc",
+    "local_sha256": "6bbbd7d1b9d97730d2f5c5ed894a9f89a083d44387ad0e34c77f256e53138ccc"
+  },
+  "src/c_api/registration.rs": {
+    "equal": true,
+    "canonical_sha256": "a8d9d5e107889ee8fdfa643eae08b1eee824e4e61d604853b1d9520236064ba4",
+    "local_sha256": "a8d9d5e107889ee8fdfa643eae08b1eee824e4e61d604853b1d9520236064ba4"
+  },
+  "src/lua_api/state/sim_state.rs": {
+    "equal": true,
+    "canonical_sha256": "37d8fb2d609e2bd159fe994370d9f733b8fe4c45f99315332cd93a9c1f1d3a39",
+    "local_sha256": "37d8fb2d609e2bd159fe994370d9f733b8fe4c45f99315332cd93a9c1f1d3a39"
+  }
+}

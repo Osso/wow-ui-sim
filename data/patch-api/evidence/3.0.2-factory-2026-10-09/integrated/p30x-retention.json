@@ -1,0 +1,92 @@
+[
+  {
+    "source": "/tmp/p30x-integrated-independent-report.md",
+    "retained": "p30x-integrated-independent-report.md",
+    "bytes": 2792,
+    "sha256": "2c798dda1c892d0ebb7fea75aea92e844e7c72fda176272896df80be417470a6"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-epoch-scope.json",
+    "retained": "p30x-integrated-independent-epoch-scope.json",
+    "bytes": 499,
+    "sha256": "24279f93d88cdfce791c77873f67dbaaf84b2c43eac8e994a584a3df6fe22959"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-preservation.json",
+    "retained": "p30x-integrated-independent-preservation.json",
+    "bytes": 909,
+    "sha256": "03fef26a6001c205bbb9c2d19281c7b1ea17ae5ff99c3fc422ddb5d0a22f53e1"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-comparison.json",
+    "retained": "p30x-integrated-independent-comparison.json",
+    "bytes": 720,
+    "sha256": "bc31ded860ded6b3838325bee259e6a5d8f7d0853ab77fd000d6cc8fa8100062"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-fmt.stderr",
+    "retained": "p30x-integrated-independent-fmt.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-fmt.stdout",
+    "retained": "p30x-integrated-independent-fmt.stdout",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-epoch-diff.txt",
+    "retained": "p30x-integrated-independent-epoch-diff.txt",
+    "bytes": 322,
+    "sha256": "ec356d3c2eb977f2bb4fe9c506df0e64dd3c11a3e458f9d3182de70d1faf655a"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-4470912f5-diff.txt",
+    "retained": "p30x-integrated-independent-4470912f5-diff.txt",
+    "bytes": 1211,
+    "sha256": "068eb8c8f9b76d0d08fb55caa6357d1232a6e7c70d0ae10619d0a5db3293d13d"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-16b9658da-diff.txt",
+    "retained": "p30x-integrated-independent-16b9658da-diff.txt",
+    "bytes": 2687,
+    "sha256": "f4e5e9666a6d2799269e9ad8d198a4297a1e689173b3c9fcaa85e46f28c25bd6"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-stderr.log",
+    "retained": "p30x-integrated-independent-stderr.log",
+    "bytes": 20789,
+    "sha256": "f79c42473e23c0fc051668809cc8636fe2110f6d2f95c7658637837a12daf0d2"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-stdout.log",
+    "retained": "p30x-integrated-independent-stdout.log",
+    "bytes": 861,
+    "sha256": "d413b863f32c89fed95eeaff3b41d93a14ed173ee85d4782542442bce3a7f950"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-p303-observations.json",
+    "retained": "p30x-integrated-independent-p303-observations.json",
+    "bytes": 1282,
+    "sha256": "419fb83d6b99e361c1e86b0cb589d156a3c64ec731ff38e1496a6d280519290d"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-p302-observations.json",
+    "retained": "p30x-integrated-independent-p302-observations.json",
+    "bytes": 168792,
+    "sha256": "fba1e29951db3d1bbfec84c75ce730e8944e2960df779960e731a7717a75e3c1"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-command.json",
+    "retained": "p30x-integrated-independent-command.json",
+    "bytes": 4815,
+    "sha256": "c190f5d22a10e2c08f2254388e2fd1e41367474288613af3aa4b623383c3d9f9"
+  },
+  {
+    "source": "/tmp/p30x-integrated-independent-protected-before.json",
+    "retained": "p30x-integrated-independent-protected-before.json",
+    "bytes": 31439,
+    "sha256": "068541331341ed71f65627ca2f2ee78887c1aa17f7708708e02a57f050715f72"
+  }
+]

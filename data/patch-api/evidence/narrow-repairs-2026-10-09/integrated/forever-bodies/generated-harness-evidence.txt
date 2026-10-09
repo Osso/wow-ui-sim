@@ -1,0 +1,20 @@
+/home/osso/.worktrees/wow-ui-sim-p1601-source/target/debug/build/wow-ui-sim-69e4a74040cc9672/out/integration_tests.rs
+pub mod common;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/addon_messages.rs"]
+mod addon_messages;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/blizzard_game_menu_loads.rs"]
+mod blizzard_game_menu_loads;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/c_namespace_noop_replacements.rs"]
+mod c_namespace_noop_replacements;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/game_menu.rs"]
+mod game_menu;
+/home/osso/.worktrees/wow-ui-sim-p1601-source/target/debug/build/wow-ui-sim-a00e4aad7849b057/out/integration_tests.rs
+pub mod common;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/addon_messages.rs"]
+mod addon_messages;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/blizzard_game_menu_loads.rs"]
+mod blizzard_game_menu_loads;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/c_namespace_noop_replacements.rs"]
+mod c_namespace_noop_replacements;
+#[path = "/home/osso/.worktrees/wow-ui-sim-p1601-source/tests/game_menu.rs"]
+mod game_menu;

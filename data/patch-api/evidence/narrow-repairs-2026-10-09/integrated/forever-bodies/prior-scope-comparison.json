@@ -1,0 +1,16 @@
+{
+  "differences": {
+    "PLAN.md": {
+      "prior": null,
+      "current": "0e157b07dbd8d745cefdf23ca1d5d0f68de5bd52fff89ba4ec970bd433fc246f"
+    },
+    "src/c_api/addon_messages.rs": {
+      "prior": "d77d85112df930a855b54a0438ee2f47dff8c55572f8e63f2e6dc2862d7db345",
+      "current": "17a2ae9ddf00d4028f4652c611bc75dcda74699aa8900d787b33a9fb142d12d8"
+    },
+    "src/c_api/c_combat_log.rs": {
+      "prior": "584f1230d9c70526a4b874227bdc482f9a7fd3ab2e6aed143b38fea99451baed",
+      "current": "6bbbd7d1b9d97730d2f5c5ed894a9f89a083d44387ad0e34c77f256e53138ccc"
+    }
+  }
+}

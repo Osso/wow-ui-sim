@@ -1,0 +1,26 @@
+{
+  "p302-original-seals.json": {
+    "count": 36,
+    "mismatch": []
+  },
+  "p302-original-closure-seals.json": {
+    "count": 1,
+    "mismatch": []
+  },
+  "p302-original-receipt-seals.json": {
+    "count": 2,
+    "mismatch": []
+  },
+  "p303-original": {
+    "root": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/3.0.3-session-2026-10-09",
+    "count": 16,
+    "mismatch": []
+  },
+  "scope-hashes": {
+    "Cargo.toml": "25e07832d099171c09d315050251bb4045f476d9466d2bdfe921b104c90d72b2",
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "tests/common/publication_sweep.rs": "de75b250433163ea114d025db0d4b53f8a6b86d573e4a71746c925833726ba8e",
+    "tests/patch_3_0_2_factory.rs": "78e614b10a370ed6d21c5ae8ac6465a14adabfd2166ae9299f39d5d0b992b0dd",
+    "tests/patch_3_0_3_factory.rs": "42da097667ee02f51b4e32ceea9a990c4cfb61dba5f0b9b02757d72571e11491"
+  }
+}

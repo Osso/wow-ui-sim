@@ -1,0 +1,43 @@
+{
+  "revision": "2d83b9b8088e110e6e170473ed59650d1821612e",
+  "status_before": "M  Cargo.toml\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/accounting-green.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/accounting-red.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/closures/README.md\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/command-ledger.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/factory-green-results.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/factory-green.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/factory-red-results.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/factory-red.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/handoff.md\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/historical-blobs.json.gz\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/historical-known-gaps.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/historical-manifest.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/historical-page-coverage.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/initial-negative-register.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/initial-negative-results.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/initial-negative.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/negative-register.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/negative-results.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/negative.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/overlap-review.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/portable-proof/initial-replay-green.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/portable-proof/replay-fixture.py\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/portable-proof/replay-green.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/portable-proof/seals.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/portable-proof/summary.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/queued-overlaps.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/replay-red.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/source-green.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/source-manifest.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/source-pin.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/source-red.log\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/source-response.json\nA  data/patch-api/evidence/2.4.2-session-2026-10-09/validate.py\nA  data/patch-api/sources/2.4.2-api-changes.provenance.json\nA  data/patch-api/sources/2.4.2-api-changes.txt\nA  data/patch-api/sources/2.4.2-api-changes.wikitext\nA  data/patch-api/sources/2.4.2-page-coverage.json\nA  data/patch-api/sources/2.4.2-wikitext-register.json\nA  docs/specs/patch-2-4-2-publication-sweep.md\nUU docs/wiki/index.md\nA  docs/wiki/investigations/patch-2-4-2-api-audit.md\nUU docs/wiki/log.md\nA  tests/data/patch_2_4_2_factory_known_gaps.json\nA  tests/patch_2_4_2_factory.rs\nM  tools/extract_patch_non_inventory.py\nUU tools/gen_patch_wikitext_register.py\nA  tools/patch_2_4_2_accounting.py\nA  tools/test_patch_2_4_2_accounting.py\nA  tools/test_patch_2_4_2_replay.py\nA  tools/test_patch_2_4_2_source.py\n?? .code-index.db\n",
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-retail",
+    "--test",
+    "patch_3_0_2_factory",
+    "--test",
+    "patch_3_0_3_factory",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "environment_overrides": {
+    "CARGO_NET_OFFLINE": "true",
+    "WOW_SIM_P302_FACTORY_OUT": "/tmp/p30x-integrated-independent-p302-observations.json",
+    "WOW_SIM_P303_FACTORY_OUT": "/tmp/p30x-integrated-independent-p303-observations.json"
+  },
+  "inherited_relevant_env": {
+    "HOME": "/home/osso",
+    "CARGO_BUILD_JOBS": "12",
+    "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+  },
+  "started_utc": "2026-10-09T14:24:28.152037+00:00",
+  "protected_file_count": 197,
+  "scope": "bare Retail factory only; no native/loadedUI/synchronization/model credit",
+  "cargo_version": "cargo 1.99.0 (5f94df478 2026-08-27) (Arch Linux rust 1:1.99.0-1)\n",
+  "rustc_version": "rustc 1.99.0 (b940084d7 2026-09-28) (Arch Linux rust 1:1.99.0-1)\n",
+  "exit_code": 0,
+  "finished_utc": "2026-10-09T14:26:42.917793+00:00",
+  "streams": {
+    "stdout": "d413b863f32c89fed95eeaff3b41d93a14ed173ee85d4782542442bce3a7f950",
+    "stderr": "f79c42473e23c0fc051668809cc8636fe2110f6d2f95c7658637837a12daf0d2"
+  },
+  "revision_after": "c2481c4c50d04489b081f35fafccc929ba0b9b73"
+}

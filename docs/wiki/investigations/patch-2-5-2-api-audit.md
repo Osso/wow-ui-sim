@@ -42,6 +42,10 @@ Main owns integration, matching native measurement and final gates. This audit c
 
 [Actual same-TBC comparison](../../../data/patch-api/evidence/2.5.2-session-2026-10-09/integrated/successor-comparison.json): 2.5.3 removes `AcknowledgeAADCAlert`, `SHOW_AADC_ALERT` and `seenAADCAlert`; 2.5.4 removes `RAIDVolumeFog`. Integrated 2.5.5/2.5.6 have zero explicit API identities. These are source directions only, not runtime retirements or native/model closures. Original 57 historical inputs and 61 outer seals stay unchanged. Independent SOURCE replay pending; no surrogate Anniversary 11507 credit for source TOC 20502.
 
+## Integrated evidence retention — 2026-10-09
+
+[Integrated proof and revision boundaries](integrated-source-and-factory-proof-2026-10-09.md) retain independent evidence separately from original source seals. Integration is not new runtime/native proof; historical log entries remain unchanged.
+
 ## Sources
 
 - [Raw](../../../data/patch-api/sources/2.5.2-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/2.5.2-api-changes.txt), [ledger](../../../data/patch-api/sources/2.5.2-page-coverage.json).

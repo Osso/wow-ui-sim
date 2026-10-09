@@ -1,0 +1,8 @@
+test_fresh_copy_without_git_target_or_current_sources (__main__.ReplayTests.test_fresh_copy_without_git_target_or_current_sources) ... ok
+test_omitted_literal_line_cannot_become_closure (__main__.ReplayTests.test_omitted_literal_line_cannot_become_closure) ... ok
+test_serialized_tamper_rejects_then_restores (__main__.ReplayTests.test_serialized_tamper_rejects_then_restores) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.378s
+
+OK

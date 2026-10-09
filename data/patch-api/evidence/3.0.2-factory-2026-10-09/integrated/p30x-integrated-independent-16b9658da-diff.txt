@@ -1,0 +1,58 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index b65c78381..3cc4e5ced 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -261,6 +261,11 @@ name = "patch_3_0_3_factory"
+ path = "tests/patch_3_0_3_factory.rs"
+ required-features = ["client-retail"]
+ 
++[[test]]
++name = "patch_3_0_2_factory"
++path = "tests/patch_3_0_2_factory.rs"
++required-features = ["client-retail"]
++
+ [[test]]
+ name = "patch_3_4_1_factory"
+ path = "tests/patch_3_4_1_factory.rs"
+diff --git a/tests/common/publication_sweep.rs b/tests/common/publication_sweep.rs
+index 1d0f11f7b..afaea3d44 100644
+--- a/tests/common/publication_sweep.rs
++++ b/tests/common/publication_sweep.rs
+@@ -273,11 +273,21 @@ local function classify()
+         -- Older handler links include an owner; unqualified movie handlers retain their owner.
+         local owner, script = string.match(symbol, '^([^:]+):([^:]+)$')
+         if not owner then owner, script = string.match(symbol, '^(%S+)%s+(%S+)$') end
+-        owner, script = owner or 'MovieFrame', script or symbol
++        -- Literal OnTooltip handlers belong to GameTooltip, not MovieFrame.
++        owner = owner or (string.match(symbol, '^OnTooltip') and 'GameTooltip' or 'MovieFrame')
++        script = script or symbol
+         local object = create_object(owner)
+         local supported = object:HasScript(script)
+         return result('widget-script', owner .. ' HasScript=' .. tostring(supported), supported ~= removed)
+     end
++    if entryKind == 'click-modifier' then
++        local value = GetModifiedClick(symbol)
++        local unknown = GetModifiedClick('PUBLICATION_SWEEP_UNKNOWN_CLICK_MODIFIER')
++        -- The temporary input defaults return NONE for unknown actions too.
++        -- No catalog discriminates existence; this is not a console command.
++        return result('unprobeable', 'click-modifier value=' .. tostring(value)
++            .. '; unknown=' .. tostring(unknown) .. '; no discriminating catalog', false)
++    end
+     if entryKind == 'command' then return probe_command() end
+     if section == 'events' then return probe_event() end
+     if section == 'cvars' then return probe_cvar() end
+@@ -364,7 +374,13 @@ fn parse_register(source: &str, row_count: Option<usize>) -> Register {
+     for entry in &register.entries {
+         assert!(matches!(
+             entry.section.as_str(),
+-            "global-api" | "framexml" | "scriptobjects" | "widgets" | "events" | "cvars"
++            "global-api"
++                | "framexml"
++                | "scriptobjects"
++                | "widgets"
++                | "events"
++                | "cvars"
++                | "commands"
+         ));
+         assert!(matches!(
+             entry.direction.as_str(),
