@@ -312,5 +312,37 @@
     "shared_revision": "5e4e82ef66b239da8ae23a8dbb6b276213e50c71",
     "shared_tools_tree": "285b9d56ae59bd8fde89d9392d880db3f928cad0",
     "own_extension": "--mists-bare-widget-handlers, after --mists-widget-handlers"
-  }
+  },
+  "external_pins": [
+    {
+      "recorded_revision": "c237c344eb1e2fb008be02cdd8c44e72f51c40c4",
+      "rebased_revision": "8721fdb653d74279bfd48f44d4bb60069cf26519",
+      "subject": "Record passing 5.3.0 portability and tamper gates",
+      "recorded_patch_id": "b6472bfc2b956a94f1093425f6ad30eafbcd5200",
+      "rebased_patch_id": "b6472bfc2b956a94f1093425f6ad30eafbcd5200",
+      "rebased_tree": "73d4d26d08e1577b17248cc05466ab16d1d47055",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "648654171fd36bb909451968567877e1f1b02c89",
+          "rebased_tree": "f5d9a623cf46bf8555ca93e4c3b6d7bbd8725959"
+        },
+        "tools": {
+          "recorded_tree": "12ee0978b6e8280f097d2eef167f345de2797c9e",
+          "rebased_tree": "285b9d56ae59bd8fde89d9392d880db3f928cad0"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "679dd54c154503cbabe031f03d1fc134cbd533c7",
+          "rebased_tree": "8dc0911db6b69a3c0111ac6eee4a3e3e589f2f04"
+        },
+        "docs/wiki": {
+          "recorded_tree": "6437ff9dab040ea2619fbe20891535107adcda46",
+          "rebased_tree": "bcf28f05e998abd108014f0ba74ef3f66042c17f"
+        }
+      }
+    }
+  ]
 }

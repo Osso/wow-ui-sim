@@ -2768,4 +2768,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-08] investigation | Retail Patch 5.2.0 API audit
 
-[Audit](investigations/patch-5-2-0-api-audit.md): retail TOC 50200; 163 inventory/191 total IDs, 57 publication gaps and 16 pending prose contracts. Three existing backing behaviors verified, no runtime edits or retirements. Publication 58/58, Python 89/89, 59 registers/56 extracts; inherited failures retained. Portable gate passes 44/44 clean and 45/45 later; own tamper rejected. Queued 5.3.0–5.4.2 placeholders retained.
+[Audit](investigations/patch-5-2-0-api-audit.md): integrated against 5e4e82ef6 with real 5.3.0–5.4.2 successors. Two exact later removals resolve gaps 57 → 55; no new gaps/runtime/vendor edits or retirements. 163 inventory/191 total IDs, 16 pending prose contracts. 66 registers/63 extracts reproduce; three inherited failures retained. Historical receipts preserved; compact rebase mapping and pinned integrated acceptance in progress.

@@ -47,7 +47,7 @@ def main():
     for path, minimum in [('docs/wiki/index.md', 2771), ('docs/wiki/log.md', 544)]:
         assert len(blob(context['wiki_revision'], path).decode().splitlines()) >= minimum
     mapping = read('rebase-mapping.json')
-    for row in mapping['commits']:
+    for row in mapping['commits'] + mapping['external_pins']:
         rebased = row['rebased_revision']
         assert git('rev-parse', rebased + '^{tree}').decode().strip() == row['rebased_tree']
         patch = git('show', '--format=', '--binary', rebased)
