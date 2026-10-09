@@ -50,6 +50,8 @@ def direction_at(line, offset):
     prefix = line[:offset]
     if re.search(r'Formerly\s+\S*$', prefix):
         return 'former-name'
+    if re.search(r'Replaces\s+[\w/]*$', prefix):
+        return 'replaced-name'
     label = re.match(r'\s*\*+\s*(NEW|UPDATED|RENAMED)\b', line)
     return {'NEW': 'added', 'UPDATED': 'changed', 'RENAMED': 'renamed'}.get(
         label[1] if label else '', 'mentioned')
@@ -58,8 +60,8 @@ def direction_at(line, offset):
 def find_occurrences(line, number, heading, qualifier):
     found, occupied = [], []
 
-    def append(match, kind, signature=None, signature_status='unspecified', symbol=None):
-        start, end = match.span(1) if match.re is CALL else match.span()
+    def append(match, kind, signature=None, signature_status='unspecified', symbol=None, span=None):
+        start, end = span or (match.span(1) if match.re is CALL else match.span())
         if any(start >= left and end <= right for left, right in occupied):
             return
         occupied.append((start, end))
@@ -81,7 +83,7 @@ def find_occurrences(line, number, heading, qualifier):
         if symbol == 'function':
             handler = re.match(r'\*\*\s*(\w+)\s*:', line)
             if handler:
-                append(match, 'widget-script-signature', signature, state, handler[1])
+                append(match, 'widget-script-signature', signature, state, handler[1], handler.span(1))
             else:
                 append(match, 'language-example', signature, state)
         else:
@@ -108,6 +110,7 @@ def find_occurrences(line, number, heading, qualifier):
     for match in CONTEXT.finditer(line):
         name = match[0]
         kind = ('widget-template' if name.endswith('Template') else
+                'global-api-reference' if direction_at(line, match.start()) == 'replaced-name' else
                 'api-family' if name == 'TargetNearest*' else 'context-identifier')
         append(match, kind)
     for match in re.finditer(r"''string''\.(?:trim|split|join)", line):
