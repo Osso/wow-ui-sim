@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p504-page/data/patch-api/evidence/5.0.4-session-2026-10-08/integrated/run_checks.py"
+  ],
+  "revision": "b71219471ffe7643b2453cf02238a83edf89ed14",
+  "scope": "checks",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 1,
+  "log": "checks.txt",
+  "log_sha256": "d12e7555f5fa250725befa4a00ad989ebe6bd10ac6616d19460be666826ef018",
+  "seconds": 618.4784603280132,
+  "invalidated": false
+}

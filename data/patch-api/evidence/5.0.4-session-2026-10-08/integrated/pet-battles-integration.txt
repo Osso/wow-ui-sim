@@ -1,0 +1,51 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p504-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 35.51s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p504-page/debug/deps/integration-1db16289b0998b2a)
+
+running 36 tests
+test c_pet_battles_probes::custom_seeded_pet_reflects_in_get_pet_info ... ok
+test c_pet_battles_probes::get_ability_info_by_id_unknown_returns_nil ... ok
+test c_pet_battles_probes::get_active_pet_reflects_mutation ... ok
+test c_pet_battles_probes::get_active_pet_returns_default_one_for_both_sides ... ok
+test c_pet_battles_probes::get_battle_state_default_zero ... ok
+test c_pet_battles_probes::get_all_effective_ability_ids_returns_array ... ok
+test c_pet_battles_probes::get_num_pets_defaults_one_per_side ... ok
+test c_pet_battles_probes::get_breed_quality_returns_numeric_seeded_and_missing_values ... ok
+test c_pet_battles_probes::get_pet_ability_info_returns_name_and_charges ... ok
+test c_pet_battles_probes::get_pet_ability_list_first_id_correct ... ok
+test c_pet_battles_probes::get_pet_ability_list_returns_ability_count ... ok
+test c_pet_battles_probes::get_pet_info_by_pet_id_returns_nil ... ok
+test c_pet_battles_probes::get_pet_info_out_of_range_returns_nil ... ok
+test c_pet_battles_probes::get_pet_info_enemy_returns_rabbit ... ok
+test c_pet_battles_probes::get_pet_species_id_matches_journal_model_scenes_for_default_battle_pets ... ok
+test c_pet_battles_probes::get_pet_info_returns_seeded_player_pet_name ... ok
+test c_pet_battles_probes::get_pet_stats_returns_seeded_values ... ok
+test c_pet_battles_probes::get_pet_stats_mutation_reflects ... ok
+test c_pet_battles_probes::get_round_timing_info_defaults ... ok
+test c_pet_battles_probes::get_round_timing_info_reflects_mutation ... ok
+test c_pet_battles_probes::get_xp_returns_zero_by_default ... ok
+test c_pet_battles_probes::get_turn_result_default_zero ... ok
+test c_pet_battles_probes::is_player_npc_returns_false ... ok
+test c_pet_battles_probes::start_pvp_matchmaking_sets_flag ... ok
+test c_pet_battles_probes::static_fallbacks_return_safe_default_shapes ... ok
+test pet_battles::pet_battles_actions_and_queue_state_are_mutable ... ok
+test pet_battles_counts::action_key_does_not_route_to_pet_battle_when_not_active ... ok
+test pet_battles::pet_battles_seeded_pet_state_and_abilities_are_exposed ... ok
+test pet_battles_counts::admin_set_pet_battle_counts_missing_args_default_to_zero ... ok
+test pet_battles_counts::admin_set_pet_battle_counts_drives_both_owners ... ok
+test pet_battles_counts::default_pet_battle_state_is_not_active ... ok
+test pet_battles_counts::admin_set_pet_battle_state_drives_getter ... ok
+test pet_battles_counts::defaults_all_zero ... ok
+test pet_battles_counts::get_active_pet_stub_still_resolves ... ok
+test pet_battles_counts::get_num_pets_for_unknown_owner_is_zero ... ok
+test pet_battles_counts::negative_counts_clamp_to_zero ... ok
+
+test result: ok. 36 passed; 0 failed; 0 ignored; 0 measured; 10651 filtered out; finished in 1.93s
+

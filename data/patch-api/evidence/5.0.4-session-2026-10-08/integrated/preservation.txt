@@ -1,0 +1,1 @@
+PASS: preservation and supplemental; completed register/extract results retained

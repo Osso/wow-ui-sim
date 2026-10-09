@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import sys; sys.path.insert(0,'data/patch-api/evidence/5.0.4-session-2026-10-08/integrated'); from run_checks import outputs; from run_proof import run_proof,EVIDENCE; outputs(EVIDENCE); a=run_proof('all-sweeps',['cargo','test','--test','prefork_full_ui','--','publication_sweep']); b=run_proof('own-prefork',['cargo','test','--test','prefork_full_ui','--','patch_5_0_4']); sys.exit(bool(a or b))"
+  ],
+  "revision": "e66253e561ab1c42b8653bda31a94ad292faa824",
+  "scope": "resolved-sweeps",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "resolved-sweeps.txt",
+  "log_sha256": "ad31d1891faeacc737a04ea7e809c83ffbe320debb99fee88259e301eb52c11d",
+  "seconds": 140.33311333399615,
+  "invalidated": false
+}

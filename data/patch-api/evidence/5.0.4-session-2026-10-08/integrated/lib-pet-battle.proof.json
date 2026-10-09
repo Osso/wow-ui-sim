@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--lib",
+    "pet_battle",
+    "--",
+    "--test-threads=2"
+  ],
+  "revision": "c74350439ac8b95b5f1d0f5cc7c2c5718390b3b1",
+  "scope": "lib-pet-battle",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "lib-pet-battle.txt",
+  "log_sha256": "f5f7f879fcee36fb87d75b54970e6629421735fa10145957f9700168ea43e44d",
+  "seconds": 0.41583210600947496,
+  "invalidated": false
+}

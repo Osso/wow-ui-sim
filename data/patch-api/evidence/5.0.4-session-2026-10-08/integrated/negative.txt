@@ -1,0 +1,163 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.26s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p504-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.83ms
+[  0.002s] [Startup] rilua VM created in 104.15µs
+[  0.002s] [Startup] builtin frames initialized in 83.07µs
+[  0.002s] [Startup] template registry cleared in 7.36µs
+[  0.002s] [Startup] intrinsic templates registered in 6.74µs
+[  0.002s] [Startup] initial app_data lua handle installed in 390.00ns
+[  0.166s] [Startup] init_lua_state complete in 163.44ms
+[  0.166s] [Startup] final app_data lua handle installed in 391.00ns
+[  0.166s] [Startup] initial screen globals installed in 134.06µs
+[  0.166s] [Startup] WowLuaEnv::new complete
+[  2.822s] [Startup] apply_post_load_workarounds: begin
+[  2.823s] [Workarounds] starting patch_edit_mode_manager
+[  2.823s] [Workarounds] finished patch_edit_mode_manager in 281.94µs
+[  2.823s] [Workarounds] starting init_edit_mode_layout
+[  2.823s] [EditMode] starting setup_layout_info
+[  2.826s] [EditMode] finished setup_layout_info in 3.01ms
+[  2.826s] [EditMode] starting apply_system_anchors
+[  2.954s] [EditMode] finished apply_system_anchors in 128.22ms
+[  2.954s] [EditMode] starting finalize_action_bar_positions
+[  2.956s] [EditMode] finished finalize_action_bar_positions in 1.93ms
+[  2.956s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.956s] [EditMode] finished invoke_anchor_changed_hooks in 389.32µs
+[  2.956s] [EditMode] starting fix_action_bar_nan_size
+[  2.956s] [EditMode] finished fix_action_bar_nan_size in 41.16µs
+[  2.956s] [EditMode] starting fix_action_bar_scale
+[  2.956s] [EditMode] finished fix_action_bar_scale in 4.22µs
+[  2.956s] [Workarounds] finished init_edit_mode_layout in 133.65ms
+[  2.956s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.957s] [Workarounds] finished patch_ui_parent_panel_toggles in 214.32µs
+[  2.957s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.957s] [Workarounds] finished patch_uiparent_onupdate_worklists in 90.72µs
+[  2.957s] [Workarounds] starting init_chat_type_colors
+[  2.957s] [Workarounds] finished init_chat_type_colors in 110.66µs
+[  2.957s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.957s] [Workarounds] finished patch_chat_voice_button_surface in 118.88µs
+[  2.957s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.957s] [Workarounds] finished patch_item_socketing_tooltips in 55.75µs
+[  2.957s] [Workarounds] starting patch_character_select_selected_name
+[  2.957s] [Workarounds] finished patch_character_select_selected_name in 28.76µs
+[  2.957s] [Workarounds] starting patch_character_create_defaults
+[  2.957s] [Workarounds] finished patch_character_create_defaults in 210.66µs
+[  2.957s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.963s] [Workarounds] finished patch_character_frame_title_refresh in 5.48ms
+[  2.963s] [Workarounds] starting patch_vignette_pin_template
+[  2.963s] [Workarounds] finished patch_vignette_pin_template in 91.06µs
+[  2.963s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.963s] [Workarounds] finished patch_fog_of_war_pin_mixin in 263.24µs
+[  2.963s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.968s] [Workarounds] finished patch_map_exploration_pin_mixin in 5.06ms
+[  2.968s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.968s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 65.05µs
+[  2.968s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.969s] [Workarounds] finished ensure_adventure_map_frame_surface in 426.37µs
+[  2.969s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.969s] [Workarounds] finished patch_action_bar_button_event_fanout in 91.41µs
+[  2.969s] [Workarounds] starting patch_paging_controls_page_text
+[  2.969s] [Workarounds] finished patch_paging_controls_page_text in 34.06µs
+[  2.969s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.969s] [Workarounds] finished patch_talent_edge_frame_level_sync in 26.34µs
+[  2.969s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.969s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 55.14µs
+[  2.969s] [Workarounds] starting patch_game_time_defaults
+[  2.969s] [Workarounds] finished patch_game_time_defaults in 6.51µs
+[  2.969s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.969s] [Workarounds] finished patch_tooltip_nineslice_surface in 49.50µs
+[  2.969s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.969s] [Workarounds] finished patch_container_frame_token_tracker in 37.60µs
+[  2.969s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.969s] [Workarounds] finished patch_achievement_display_set_achievements in 7.18µs
+[  2.969s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.969s] [Workarounds] finished patch_housing_dashboard_preload in 147.56µs
+[  2.969s] [Workarounds] starting patch_lfg_lock_list
+[  2.969s] [Workarounds] finished patch_lfg_lock_list in 31.66µs
+[  2.969s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.969s] [Workarounds] finished patch_auction_house_browse_results_event in 57.24µs
+[  2.969s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.969s] [Workarounds] finished patch_auction_house_search_context_aliases in 26.12µs
+[  2.969s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.969s] [Workarounds] finished patch_auth_challenge_frame_parent in 61.08µs
+[  2.969s] [Workarounds] starting patch_settings_surface_defaults
+[  2.970s] [Workarounds] finished patch_settings_surface_defaults in 303.44µs
+[  2.970s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.970s] [Workarounds] finished patch_settings_canvas_layout_visibility in 103.34µs
+[  2.970s] [Startup] apply_post_load_workarounds: workarounds complete
+[  3.035s] [Startup] apply_post_load_workarounds: globals restored
+[  3.035s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  3.035s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  3.178s] [Startup] begin login sequence
+[  3.178s] [Startup] Firing ADDON_LOADED
+[  3.179s] [Startup] Firing VARIABLES_LOADED
+[  3.300s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  3.385s] [Startup] Firing UI_SCALE_CHANGED
+[  3.389s] [Startup] Firing PLAYER_LOGIN
+[  3.389s] [Startup] end login sequence in 210.42ms
+[  3.389s] [Startup] begin world enter sequence
+[  3.389s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  3.389s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  3.389s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  3.723s] [EditMode] starting setup_layout_info
+[  3.727s] [EditMode] finished setup_layout_info in 4.17ms
+[  3.727s] [EditMode] starting apply_system_anchors
+[  3.926s] [EditMode] finished apply_system_anchors in 198.15ms
+[  3.926s] [EditMode] starting finalize_action_bar_positions
+[  3.928s] [EditMode] finished finalize_action_bar_positions in 2.36ms
+[  3.928s] [EditMode] starting invoke_anchor_changed_hooks
+[  3.933s] [EditMode] finished invoke_anchor_changed_hooks in 5.51ms
+[  3.933s] [EditMode] starting fix_action_bar_nan_size
+[  3.934s] [EditMode] finished fix_action_bar_nan_size in 73.93µs
+[  3.934s] [EditMode] starting fix_action_bar_scale
+[  3.934s] [EditMode] finished fix_action_bar_scale in 4.41µs
+[  3.934s] [EditMode] starting reapply_player_frame_anchor
+[  3.935s] [EditMode] finished reapply_player_frame_anchor in 1.36ms
+[  3.943s] [Startup] end world enter sequence in 554.42ms
+[  3.943s] [Startup] begin post-login events
+[  3.944s] [Startup] Firing UNIT_AURA
+[  3.945s] [Startup] Firing PET_UI_UPDATE
+[  3.946s] [Startup] Firing BAG_UPDATE_DELAYED
+[  3.948s] [Startup] Firing QUEST_LOG_UPDATE
+[  3.949s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  4.044s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  4.044s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  4.045s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  4.057s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  4.057s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  4.057s] [Startup] Firing UPDATE_BINDINGS
+[  4.060s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  4.062s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  4.063s] [Startup] end post-login events in 119.95ms
+[  4.063s] [Startup] begin close startup special windows
+[  4.064s] [Startup] end close startup special windows in 268.05µs
+[  4.064s] [Startup] begin FIRST_FRAME_RENDERED
+[  4.064s] [Startup] Firing FIRST_FRAME_RENDERED
+[  4.064s] [Startup] end FIRST_FRAME_RENDERED in 170.87µs
+[  4.064s] [Startup] begin unblock hidden splash alerts
+[  4.064s] [Startup] end unblock hidden splash alerts in 13.40µs
+[  4.064s] [Startup] begin post-event workarounds
+[  4.064s] [Startup] end post-event workarounds in 1.14µs
+running 1 tests
+test patch_5_0_4_publication_sweep::patch_5_0_4_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["diff-wt-global-api-C_PetBattles.GetPetType-62"]; resolved/stale gaps: []
+  left: {"diff-wt-framexml-BreakUpLargeNumbers-406", "diff-wt-framexml-ShouldShowConsolidatedBuffFrame-418", "diff-wt-framexml-TogglePetJournal-422", "diff-wt-global-api-AcknowledgeAutoAcceptQuest-11", "diff-wt-global-api-BNCheckBattleTagInviteToGuildMember-13", "diff-wt-global-api-BNCheckBattleTagInviteToUnit-14", "diff-wt-global-api-BNTokenFindName-16", "diff-wt-global-api-C_PetBattles.CanActivePetSwapOut-33", "diff-wt-global-api-C_PetBattles.CancelPVPDuel-35", "diff-wt-global-api-C_PetBattles.DeclineQueuedPVPMatch-37", "diff-wt-global-api-C_PetBattles.GetAbilityEffectInfo-39", "diff-wt-global-api-C_PetBattles.GetAbilityProcTurnIndex-42", "diff-wt-global-api-C_PetBattles.GetAbilityStateModification-43", "diff-wt-global-api-C_PetBattles.GetDisplayID-52", "diff-wt-global-api-C_PetBattles.GetPetType-62", "diff-wt-global-api-C_PetBattles.GetPlayerTrapAbility-63", "diff-wt-global-api-C_PetBattles.GetStateValue-67", "diff-wt-global-api-C_PetBattles.GetTurnTimeInfo-68", "diff-wt-global-api-C_PetBattles.IsWaitingOnOpponent-74", "diff-wt-global-api-C_PetBattles.StopPVPMatchmaking-82", "diff-wt-global-api-C_PetJournal.AddAllPetSourcesFilter-85", "diff-wt-global-api-C_PetJournal.AddAllPetTypesFilter-86", "diff-wt-global-api-C_PetJournal.ClearAllPetSourcesFilter-88", "diff-wt-global-api-C_PetJournal.ClearAllPetTypesFilter-89", "diff-wt-global-api-C_PetJournal.ClearSearchFilter-90", "diff-wt-global-api-C_PetJournal.IsFlagFiltered-104", "diff-wt-global-api-C_PetJournal.IsJournalReadOnly-105", "diff-wt-global-api-C_PetJournal.IsPetSourceFiltered-107", "diff-wt-global-api-C_PetJournal.IsPetTypeFiltered-108", "diff-wt-global-api-C_PetJournal.PetCanBeReleased-109", "diff-wt-global-api-C_PetJournal.PetIsCapturable-110", "diff-wt-global-api-C_PetJournal.SetFlagFilter-123", "diff-wt-global-api-C_PetJournal.SetPetLoadOutInfo-124", "diff-wt-global-api-C_PetJournal.SetPetSourceFilter-125", "diff-wt-global-api-C_Scenario.IsChallengeMode-133", "diff-wt-global-api-CanAbandonQuest-135", "diff-wt-global-api-CanCancelScene-136", "diff-wt-global-api-CanUseSoulstone-137", "diff-wt-global-api-CancelMasterLootRoll-138", "diff-wt-global-api-CancelScene-139", "diff-wt-global-api-ClearBlacklistMap-140", "diff-wt-global-api-ClearMissingLootDisplay-142", "diff-wt-global-api-DoMasterLootRoll-145", "diff-wt-global-api-GetAreaMapInfo-154", "diff-wt-global-api-GetAreaMaps-155", "diff-wt-global-api-GetBlacklistMap-158", "diff-wt-global-api-GetChallengeBestTime-163", "diff-wt-global-api-GetChallengeBestTimeInfo-161", "diff-wt-global-api-GetChallengeBestTimeNum-162", "diff-wt-global-api-GetChallengeMapMoney-164", "diff-wt-global-api-GetChallengeMapRewardInfo-165", "diff-wt-global-api-GetChallengeMode-173", "diff-wt-global-api-GetChallengeModeCompletionInfo-166", "diff-wt-global-api-GetChallengeModeCompletionReward-167", "diff-wt-global-api-GetChallengeModeLeaderInfo-168", "diff-wt-global-api-GetChallengeModeMapInfo-169", "diff-wt-global-api-GetChallengeModeMapPlayerStats-170", "diff-wt-global-api-GetChallengeModeMapTable-171", "diff-wt-global-api-GetChallengeModeMapTimes-172", "diff-wt-global-api-GetClassInfoByID-174", "diff-wt-global-api-GetContinentMapInfo-176", "diff-wt-global-api-GetContinentMaps-177", "diff-wt-global-api-GetDungeonMapInfo-181", "diff-wt-global-api-GetDungeonMaps-182", "diff-wt-global-api-GetGlyphLinkByID-186", "diff-wt-global-api-GetInspectTalent-189", "diff-wt-global-api-GetLootSourceInfo-197", "diff-wt-global-api-GetMaxTalentTier-199", "diff-wt-global-api-GetNumChallengeMapRewards-205", "diff-wt-global-api-GetNumChallengeModeLeaders-206", "diff-wt-global-api-GetNumPartyMembers-342", "diff-wt-global-api-GetNumRaidMembers-343", "diff-wt-global-api-GetNumScenarios-211", "diff-wt-global-api-GetNumTalentTabs-346", "diff-wt-global-api-GetNumUnspentTalents-216", "diff-wt-global-api-GetQuestLogQuestType-221", "diff-wt-global-api-GetQuestPOIWorldEffectInfo-222", "diff-wt-global-api-GetRaidBuffInfo-223", "diff-wt-global-api-GetRaidBu)
+---- patch_5_0_4_publication_sweep::patch_5_0_4_publication_sweep stderr ----
+
+thread 'main' (3858384) panicked at /home/osso/.worktrees/wow-ui-sim-p504-page/tests/common/publication_sweep.rs:544:5:
+assertion `left == right` failed: new gaps: ["diff-wt-global-api-C_PetBattles.GetPetType-62"]; resolved/stale gaps: []
+  left: {"diff-wt-framexml-BreakUpLargeNumbers-406", "diff-wt-framexml-ShouldShowConsolidatedBuffFrame-418", "diff-wt-framexml-TogglePetJournal-422", "diff-wt-global-api-AcknowledgeAutoAcceptQuest-11", "diff-wt-global-api-BNCheckBattleTagInviteToGuildMember-13", "diff-wt-global-api-BNCheckBattleTagInviteToUnit-14", "diff-wt-global-api-BNTokenFindName-16", "diff-wt-global-api-C_PetBattles.CanActivePetSwapOut-33", "diff-wt-global-api-C_PetBattles.CancelPVPDuel-35", "diff-wt-global-api-C_PetBattles.DeclineQueuedPVPMatch-37", "diff-wt-global-api-C_PetBattles.GetAbilityEffectInfo-39", "diff-wt-global-api-C_PetBattles.GetAbilityProcTurnIndex-42", "diff-wt-global-api-C_PetBattles.GetAbilityStateModification-43", "diff-wt-global-api-C_PetBattles.GetDisplayID-52", "diff-wt-global-api-C_PetBattles.GetPetType-62", "diff-wt-global-api-C_PetBattles.GetPlayerTrapAbility-63", "diff-wt-global-api-C_PetBattles.GetStateValue-67", "diff-wt-global-api-C_PetBattles.GetTurnTimeInfo-68", "diff-wt-global-api-C_PetBattles.IsWaitingOnOpponent-74", "diff-wt-global-api-C_PetBattles.StopPVPMatchmaking-82", "diff-wt-global-api-C_PetJournal.AddAllPetSourcesFilter-85", "diff-wt-global-api-C_PetJournal.AddAllPetTypesFilter-86", "diff-wt-global-api-C_PetJournal.ClearAllPetSourcesFilter-88", "diff-wt-global-api-C_PetJournal.ClearAllPetTypesFilter-89", "diff-wt-global-api-C_PetJournal.ClearSearchFilter-90", "diff-wt-global-api-C_PetJournal.IsFlagFiltered-104", "diff-wt-global-api-C_PetJournal.IsJournalReadOnly-105", "diff-wt-global-api-C_PetJournal.IsPetSourceFiltered-107", "diff-wt-global-api-C_PetJournal.IsPetTypeFiltered-108", "diff-wt-global-api-C_PetJournal.PetCanBeReleased-109", "diff-wt-global-api-C_PetJournal.PetIsCapturable-110", "diff-wt-global-api-C_PetJournal.SetFlagFilter-123", "diff-wt-global-api-C_PetJournal.SetPetLoadOutInfo-124", "diff-wt-global-api-C_PetJournal.SetPetSourceFilter-125", "diff-wt-global-api-C_Scenario.IsChallengeMode-133", "diff-wt-global-api-CanAbandonQuest-135", "diff-wt-global-api-CanCancelScene-136", "diff-wt-global-api-CanUseSoulstone-137", "diff-wt-global-api-CancelMasterLootRoll-138", "diff-wt-global-api-CancelScene-139", "diff-wt-global-api-ClearBlacklistMap-140", "diff-wt-global-api-ClearMissingLootDisplay-142", "diff-wt-global-api-DoMasterLootRoll-145", "diff-wt-global-api-GetAreaMapInfo-154", "diff-wt-global-api-GetAreaMaps-155", "diff-wt-global-api-GetBlacklistMap-158", "diff-wt-global-api-GetChallengeBestTime-163", "diff-wt-global-api-GetChallengeBestTimeInfo-161", "diff-wt-global-api-GetChallengeBestTimeNum-162", "diff-wt-global-api-GetChallengeMapMoney-164", "diff-wt-global-api-GetChallengeMapRewardInfo-165", "diff-wt-global-api-GetChallengeMode-173", "diff-wt-global-api-GetChallengeModeCompletionInfo-166", "diff-wt-global-api-GetChallengeModeCompletionReward-167", "diff-wt-global-api-GetChallengeModeLeaderInfo-168", "diff-wt-global-api-GetChallengeModeMapInfo-169", "diff-wt-global-api-GetChallengeModeMapPlayerStats-170", "diff-wt-global-api-GetChallengeModeMapTable-171", "diff-wt-global-api-GetChallengeModeMapTimes-172", "diff-wt-global-api-GetClassInfoByID-174", "diff-wt-global-api-GetContinentMapInfo-176", "diff-wt-global-api-GetContinentMaps-177", "diff-wt-global-api-GetDungeonMapInfo-181", "diff-wt-global-api-GetDungeonMaps-182", "diff-wt-global-api-GetGlyphLinkByID-186", "diff-wt-global-api-GetInspectTalent-189", "diff-wt-global-api-GetLootSourceInfo-197", "diff-wt-global-api-GetMaxTalentTier-199", "diff-wt-global-api-GetNumChallengeMapRewards-205", "diff-wt-global-api-GetNumChallengeModeLeaders-206", "diff-wt-global-api-GetNumPartyMembers-342", "diff-wt-global-api-GetNumRaidMembers-343", "diff-wt-global-api-GetNumScenarios-211", "diff-wt-global-api-GetNumTalentTabs-346", "diff-wt-global-api-GetNumUnspentTalents-216", "diff-wt-global-api-GetQuestLogQuestType-221", "diff-wt-global-api-GetQuestPOIWorldEffectInfo-222", "diff-wt-global-api-GetRaidBuffInfo-223", "diff-wt-global-api-GetRaidBuffTrayAuraInfo-224", "diff-wt-global-api-GetRewardHonor-356", "diff-wt-global-api-GetSpecializationSpells-234", "diff-wt-global-api-GetSpecsForSpell-236", "diff-wt-global-api-GetSpellLevelLearned-238", "diff-wt-global-api-GetTalentClearInfo-239", "diff-wt-global-api-GetTalentRowSelectionInfo-240", "diff-wt-global-api-GetTradeSkillCategoryFilter-242", "diff-wt-global-api-GetTradeSkillSubCategories-243", "diff-wt-global-api-GetWorldEffectTextureCoords-246", "diff-wt-global-api-GetWorldLocFromMapPos-249", "diff-wt-global-api-GetWorldMapTransformInfo-250", "diff-wt-global-api-GetWorldMapTransforms-251", "diff-wt-global-api-IsBlizzCon-258", "diff-wt-global-api-IsEuropeanNumbers-260", "diff-wt-global-api-IsInScenarioGroup-264", "diff-wt-global-api-IsLoggingOut-266", "diff-wt-global-api-IsMasterLooter-267", "diff-wt-global-api-IsPetActive-268", "diff-wt-global-api-IsPlayerNeutral-270", "diff-wt-global-api-IsRangedWeapon-273", "diff-wt-global-api-IsSpellClassOrSpec-274", "diff-wt-global-api-LearnTalents-276", "diff-wt-global-api-NeutralPlayerSelectFaction-278", "diff-wt-global-api-PetHasSpellbook-279", "diff-wt-global-api-RemoveTalent-283", "diff-wt-global-api-RequestBattlefieldPositions-378", "diff-wt-global-api-RequestChallengeModeLeaders-284", "diff-wt-global-api-RequestChallengeModeMapInfo-285", "diff-wt-global-api-RequestChallengeModeRewards-286", "diff-wt-global-api-ResetChallengeMode-287", "diff-wt-global-api-ResetSetMerchantFilter-288", "diff-wt-global-api-SetActiveSpecGroup-289", "diff-wt-global-api-SetBlacklistMap-290", "diff-wt-global-api-SetDungeonDifficultyID-291", "diff-wt-global-api-SetPendingReportPetTarget-294", "diff-wt-global-api-SetSpecialization-295", "diff-wt-global-api-SetTradeSkillCategoryFilter-296", "diff-wt-global-api-UnitCanPetBattle-301", "diff-wt-global-api-UnitInVehicleHidesPetFrame-303", "diff-wt-widgets-ArchaeologyDigSiteFrame:DrawAll-560", "diff-wt-widgets-Model:GetCameraDistance-567", "diff-wt-widgets-Model:GetCameraFacing-568", "diff-wt-widgets-Model:GetCameraPosition-569", "diff-wt-widgets-Model:GetCameraTarget-570", "diff-wt-widgets-Model:GetWorldScale-571", "diff-wt-widgets-Model:HasCustomCamera-572", "diff-wt-widgets-Model:SetCameraDistance-573", "diff-wt-widgets-Model:SetCameraFacing-574", "diff-wt-widgets-Model:SetCameraPosition-575", "diff-wt-widgets-Model:SetCameraTarget-576", "diff-wt-widgets-Model:SetCustomCamera-577", "diff-wt-widgets-QuestPOIFrame:DrawAll-581", "diff-wt-widgets-ScenarioPOIFrame:DrawAll-582", "diff-wt-widgets-ScenarioPOIFrame:EnableMerging-585", "diff-wt-widgets-ScenarioPOIFrame:EnableSmoothing-586", "diff-wt-widgets-ScenarioPOIFrame:SetMergeThreshold-592", "diff-wt-widgets-ScenarioPOIFrame:SetNumSplinePoints-593", "wt-events-COMBAT_LOG_EVENT-30", "wt-events-COMBAT_LOG_EVENT-78", "wt-events-RAID_ROSTER_UPDATE-18", "wt-events-SPELL_CAST_SUCCESS-30", "wt-framexml-QueueStatusMinimapButton-69", "wt-framexml-StanceBarFrame-70", "wt-framexml-UIPanelButtonTemplate-68", "wt-global-api-BNGetFriendInfo-32", "wt-global-api-GetMaxTalentTier-52", "wt-global-api-GetNumPartyMembers-16", "wt-global-api-GetNumRaidMembers-17", "wt-global-api-GetNumTalentTabs-10", "wt-global-api-GetNumUnspentTalents-9", "wt-global-api-GetTalentClearInfo-55", "wt-global-api-GetTalentRowSelectionInfo-53", "wt-global-api-LE_PARTY_CATEGORY_HOME-20", "wt-global-api-LE_PARTY_CATEGORY_INSTANCE-21", "wt-global-api-LearnTalents-54", "wt-global-api-RemoveTalent-56", "wt-global-api-SetActiveSpecGroup-6", "wt-global-api-SetDungeonDifficultyID-28", "wt-global-api-UnitIsRaidOfficer-15"}
+ right: {"diff-wt-framexml-BreakUpLargeNumbers-406", "diff-wt-framexml-ShouldShowConsolidatedBuffFrame-418", "diff-wt-framexml-TogglePetJournal-422", "diff-wt-global-api-AcknowledgeAutoAcceptQuest-11", "diff-wt-global-api-BNCheckBattleTagInviteToGuildMember-13", "diff-wt-global-api-BNCheckBattleTagInviteToUnit-14", "diff-wt-global-api-BNTokenFindName-16", "diff-wt-global-api-C_PetBattles.CanActivePetSwapOut-33", "diff-wt-global-api-C_PetBattles.CancelPVPDuel-35", "diff-wt-global-api-C_PetBattles.DeclineQueuedPVPMatch-37", "diff-wt-global-api-C_PetBattles.GetAbilityEffectInfo-39", "diff-wt-global-api-C_PetBattles.GetAbilityProcTurnIndex-42", "diff-wt-global-api-C_PetBattles.GetAbilityStateModification-43", "diff-wt-global-api-C_PetBattles.GetDisplayID-52", "diff-wt-global-api-C_PetBattles.GetPlayerTrapAbility-63", "diff-wt-global-api-C_PetBattles.GetStateValue-67", "diff-wt-global-api-C_PetBattles.GetTurnTimeInfo-68", "diff-wt-global-api-C_PetBattles.IsWaitingOnOpponent-74", "diff-wt-global-api-C_PetBattles.StopPVPMatchmaking-82", "diff-wt-global-api-C_PetJournal.AddAllPetSourcesFilter-85", "diff-wt-global-api-C_PetJournal.AddAllPetTypesFilter-86", "diff-wt-global-api-C_PetJournal.ClearAllPetSourcesFilter-88", "diff-wt-global-api-C_PetJournal.ClearAllPetTypesFilter-89", "diff-wt-global-api-C_PetJournal.ClearSearchFilter-90", "diff-wt-global-api-C_PetJournal.IsFlagFiltered-104", "diff-wt-global-api-C_PetJournal.IsJournalReadOnly-105", "diff-wt-global-api-C_PetJournal.IsPetSourceFiltered-107", "diff-wt-global-api-C_PetJournal.IsPetTypeFiltered-108", "diff-wt-global-api-C_PetJournal.PetCanBeReleased-109", "diff-wt-global-api-C_PetJournal.PetIsCapturable-110", "diff-wt-global-api-C_PetJournal.SetFlagFilter-123", "diff-wt-global-api-C_PetJournal.SetPetLoadOutInfo-124", "diff-wt-global-api-C_PetJournal.SetPetSourceFilter-125", "diff-wt-global-api-C_Scenario.IsChallengeMode-133", "diff-wt-global-api-CanAbandonQuest-135", "diff-wt-global-api-CanCancelScene-136", "diff-wt-global-api-CanUseSoulstone-137", "diff-wt-global-api-CancelMasterLootRoll-138", "diff-wt-global-api-CancelScene-139", "diff-wt-global-api-ClearBlacklistMap-140", "diff-wt-global-api-ClearMissingLootDisplay-142", "diff-wt-global-api-DoMasterLootRoll-145", "diff-wt-global-api-GetAreaMapInfo-154", "diff-wt-global-api-GetAreaMaps-155", "diff-wt-global-api-GetBlacklistMap-158", "diff-wt-global-api-GetChallengeBestTime-163", "diff-wt-global-api-GetChallengeBestTimeInfo-161", "diff-wt-global-api-GetChallengeBestTimeNum-162", "diff-wt-global-api-GetChallengeMapMoney-164", "diff-wt-global-api-GetChallengeMapRewardInfo-165", "diff-wt-global-api-GetChallengeMode-173", "diff-wt-global-api-GetChallengeModeCompletionInfo-166", "diff-wt-global-api-GetChallengeModeCompletionReward-167", "diff-wt-global-api-GetChallengeModeLeaderInfo-168", "diff-wt-global-api-GetChallengeModeMapInfo-169", "diff-wt-global-api-GetChallengeModeMapPlayerStats-170", "diff-wt-global-api-GetChallengeModeMapTable-171", "diff-wt-global-api-GetChallengeModeMapTimes-172", "diff-wt-global-api-GetClassInfoByID-174", "diff-wt-global-api-GetContinentMapInfo-176", "diff-wt-global-api-GetContinentMaps-177", "diff-wt-global-api-GetDungeonMapInfo-181", "diff-wt-global-api-GetDungeonMaps-182", "diff-wt-global-api-GetGlyphLinkByID-186", "diff-wt-global-api-GetInspectTalent-189", "diff-wt-global-api-GetLootSourceInfo-197", "diff-wt-global-api-GetMaxTalentTier-199", "diff-wt-global-api-GetNumChallengeMapRewards-205", "diff-wt-global-api-GetNumChallengeModeLeaders-206", "diff-wt-global-api-GetNumPartyMembers-342", "diff-wt-global-api-GetNumRaidMembers-343", "diff-wt-global-api-GetNumScenarios-211", "diff-wt-global-api-GetNumTalentTabs-346", "diff-wt-global-api-GetNumUnspentTalents-216", "diff-wt-global-api-GetQuestLogQuestType-221", "diff-wt-global-api-GetQuestPOIWorldEffectInfo-222", "diff-wt-global-api-GetRaidBuffInfo-223", "diff-wt-global-api-GetRaidBuffTrayAuraInfo-224", "diff-wt-global-api-GetRewardHonor-356", "diff-wt-global-api-GetSpecializationSpells-234", "diff-wt-global-api-GetSpecsForSpell-236", "diff-wt-global-api-GetSpellLevelLearned-238", "diff-wt-global-api-GetTalentClearInfo-239", "diff-wt-global-api-GetTalentRowSelectionInfo-240", "diff-wt-global-api-GetTradeSkillCategoryFilter-242", "diff-wt-global-api-GetTradeSkillSubCategories-243", "diff-wt-global-api-GetWorldEffectTextureCoords-246", "diff-wt-global-api-GetWorldLocFromMapPos-249", "diff-wt-global-api-GetWorldMapTransformInfo-250", "diff-wt-global-api-GetWorldMapTransforms-251", "diff-wt-global-api-IsBlizzCon-258", "diff-wt-global-api-IsEuropeanNumbers-260", "diff-wt-global-api-IsInScenarioGroup-264", "diff-wt-global-api-IsLoggingOut-266", "diff-wt-global-api-IsMasterLooter-267", "diff-wt-global-api-IsPetActive-268", "diff-wt-global-api-IsPlayerNeutral-270", "diff-wt-global-api-IsRangedWeapon-273", "diff-wt-global-api-IsSpellClassOrSpec-274", "diff-wt-global-api-LearnTalents-276", "diff-wt-global-api-NeutralPlayerSelectFaction-278", "diff-wt-global-api-PetHasSpellbook-279", "diff-wt-global-api-RemoveTalent-283", "diff-wt-global-api-RequestBattlefieldPositions-378", "diff-wt-global-api-RequestChallengeModeLeaders-284", "diff-wt-global-api-RequestChallengeModeMapInfo-285", "diff-wt-global-api-RequestChallengeModeRewards-286", "diff-wt-global-api-ResetChallengeMode-287", "diff-wt-global-api-ResetSetMerchantFilter-288", "diff-wt-global-api-SetActiveSpecGroup-289", "diff-wt-global-api-SetBlacklistMap-290", "diff-wt-global-api-SetDungeonDifficultyID-291", "diff-wt-global-api-SetPendingReportPetTarget-294", "diff-wt-global-api-SetSpecialization-295", "diff-wt-global-api-SetTradeSkillCategoryFilter-296", "diff-wt-global-api-UnitCanPetBattle-301", "diff-wt-global-api-UnitInVehicleHidesPetFrame-303", "diff-wt-widgets-ArchaeologyDigSiteFrame:DrawAll-560", "diff-wt-widgets-Model:GetCameraDistance-567", "diff-wt-widgets-Model:GetCameraFacing-568", "diff-wt-widgets-Model:GetCameraPosition-569", "diff-wt-widgets-Model:GetCameraTarget-570", "diff-wt-widgets-Model:GetWorldScale-571", "diff-wt-widgets-Model:HasCustomCamera-572", "diff-wt-widgets-Model:SetCameraDistance-573", "diff-wt-widgets-Model:SetCameraFacing-574", "diff-wt-widgets-Model:SetCameraPosition-575", "diff-wt-widgets-Model:SetCameraTarget-576", "diff-wt-widgets-Model:SetCustomCamera-577", "diff-wt-widgets-QuestPOIFrame:DrawAll-581", "diff-wt-widgets-ScenarioPOIFrame:DrawAll-582", "diff-wt-widgets-ScenarioPOIFrame:EnableMerging-585", "diff-wt-widgets-ScenarioPOIFrame:EnableSmoothing-586", "diff-wt-widgets-ScenarioPOIFrame:SetMergeThreshold-592", "diff-wt-widgets-ScenarioPOIFrame:SetNumSplinePoints-593", "wt-events-COMBAT_LOG_EVENT-30", "wt-events-COMBAT_LOG_EVENT-78", "wt-events-RAID_ROSTER_UPDATE-18", "wt-events-SPELL_CAST_SUCCESS-30", "wt-framexml-QueueStatusMinimapButton-69", "wt-framexml-StanceBarFrame-70", "wt-framexml-UIPanelButtonTemplate-68", "wt-global-api-BNGetFriendInfo-32", "wt-global-api-GetMaxTalentTier-52", "wt-global-api-GetNumPartyMembers-16", "wt-global-api-GetNumRaidMembers-17", "wt-global-api-GetNumTalentTabs-10", "wt-global-api-GetNumUnspentTalents-9", "wt-global-api-GetTalentClearInfo-55", "wt-global-api-GetTalentRowSelectionInfo-53", "wt-global-api-LE_PARTY_CATEGORY_HOME-20", "wt-global-api-LE_PARTY_CATEGORY_INSTANCE-21", "wt-global-api-LearnTalents-54", "wt-global-api-RemoveTalent-56", "wt-global-api-SetActiveSpecGroup-6", "wt-global-api-SetDungeonDifficultyID-28", "wt-global-api-UnitIsRaidOfficer-15"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.cache/wow-ui-sim-targets/p504-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 patch_5_0_4_publication_sweep` (exit status: 1)

@@ -1,0 +1,2 @@
+{"status": "PASS", "inventory": 626, "accounted_ids": 704, "publication_mismatches": 159, "retirements": 0}
+{"status": "PASS", "original_commits_denied": 14, "prior_validator_blobs": 56}
