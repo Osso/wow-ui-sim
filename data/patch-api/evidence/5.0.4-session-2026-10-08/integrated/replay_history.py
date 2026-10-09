@@ -32,6 +32,8 @@ def main():
     denied = set(json.loads((HERE / 'rebase-mapping.json').read_text())['original_commits'])
 
     def pinned_read(path):
+        if path == HISTORY / 'validate.py':
+            return original_read(HERE / 'historical-validator.py.txt')
         if path in prior:
             return native_check_output(['git', 'show', prior[path]], cwd=ROOT)
         return original_read(path)
@@ -55,7 +57,7 @@ def main():
     finally:
         Path.read_bytes = original_read
         sys.modules['subprocess'] = original_subprocess
-    print(json.dumps({'status': 'PASS', 'original_commits_denied': len(denied), 'prior_validator_blobs': len(prior)}))
+    print(json.dumps({'status': 'PASS', 'original_commits_denied': len(denied), 'prior_validator_blobs': len(pins['prior_validators'])}))
 
 
 if __name__ == '__main__':
