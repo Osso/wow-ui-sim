@@ -141,6 +141,11 @@ def main():
     after = {row['source_id']: row for row in ledger['source_rows']}
     assert set(before) == set(after) and {key for key in after if after[key] != before[key]} == set(replacements)
     assert all(after[key]['status'] == 'bounded-coverage' and after[key]['capabilities'] == ['current-retail-absence'] for key in replacements)
+    accounting = read('accounting-summary.json')
+    assert accounting['inventory'] == len(positive) == 163
+    assert accounting['publication_gaps'] == 55 and accounting['total_ids'] == len(after) == 191
+    assert accounting['statuses'] == {status: sum(row['status'] == status for row in after.values())
+                                      for status in ('audit-pending', 'bounded-coverage', 'metadata-only')}
     negative = read('negative-results.json')
     assert set(negative) == set(positive)
     control = context['negative_id']
@@ -156,6 +161,9 @@ def main():
         assert match and int(match[1]) > 0, ('empty acceptance', name)
     for name in ('mists-all-sweeps', 'master-mists-all-sweeps'):
         assert 'test patch_5_5_4_publication_sweep::patch_5_5_4_client_line_excludes_retail_and_era ... ok' in (HERE / (name + '.txt')).read_text()
+    fixtures = {Path(path).stem for path in names(revision, 'tools')
+                if re.fullmatch(r'tools/test_.*\.py', path)}
+    assert fixtures == {name for name in context['proofs'] if name.startswith('test_')}
     for name in context['proofs']:
         receipt = read(name + '.proof.json')
         assert receipt['command'] and not receipt['invalidated']

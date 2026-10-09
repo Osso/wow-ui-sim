@@ -1,0 +1,13 @@
+{
+  "inventory": 163,
+  "publication_gaps": 55,
+  "total_ids": 191,
+  "statuses": {
+    "audit-pending": 71,
+    "bounded-coverage": 108,
+    "metadata-only": 12
+  },
+  "replacements": 2,
+  "historical_accounting": "../accounting-summary.json",
+  "limit": "current absence only; no historical producer parity or runtime retirements"
+}
