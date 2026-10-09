@@ -58,11 +58,12 @@ def summary():
 
 
 def main():
-    descriptor = os.pidfd_open(int(sys.argv[1]))
-    try:
-        select.select([descriptor], [], [])
-    finally:
-        os.close(descriptor)
+    if not (HERE / 'checks.proof.json').is_file():
+        descriptor = os.pidfd_open(int(sys.argv[1]))
+        try:
+            select.select([descriptor], [], [])
+        finally:
+            os.close(descriptor)
     assert read('checks.proof.json')['exit'] == 0
     assert read('prior-validators.proof.json')['exit'] == 0
     positive = read('patch_5_4_1_publication_sweep-results.json')
@@ -87,7 +88,15 @@ def main():
                        + str(other_observations) + ' observations on 60 other pages equal master, including separate Classic 5.5.2/5.5.3/5.5.4 sweeps. Both own prefork cases pass; integration selector has zero cases and makes no behavior claim. Python fixtures '
                        + str(python_tests) + '/' + str(python_tests)
                        + ', format and Mists check pass with zero non-vendor warnings. Negative control changes gaps 2 → 3 and fails exactly as required. No supersession replacement, new gap or runtime change. Final portability gate remains pending.')
-    replace(AUDIT, 'Fresh sweep, negative, cross-page, warning and portability results pending.', runtime_summary)
+    contents = AUDIT.read_text()
+    marker = 'Fresh sweep, negative, cross-page, warning and portability results pending.'
+    if marker in contents:
+        contents = contents.replace(marker, runtime_summary)
+    else:
+        start = contents.index('Fresh retail publication sweeps pass on branch and pinned master;')
+        end = contents.index('Final portability gate remains pending.', start) + len('Final portability gate remains pending.')
+        contents = contents[:start] + runtime_summary + contents[end:]
+    AUDIT.write_text(contents)
     commit('Seal 5.4.1 sweep receipts and unchanged retail and Classic comparisons')
     subprocess.run([sys.executable, '-B', str(HERE / 'seal_receipts.py'), 'seal'], cwd=ROOT, check=True)
     validator = HERE / 'validate.py'

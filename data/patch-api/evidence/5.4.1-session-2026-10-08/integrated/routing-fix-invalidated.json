@@ -1,0 +1,88 @@
+{
+  "invalidated_revision": "93e2d30ce",
+  "cause": "First out_env in 5.5.4 source was MISTS_LINE_CONTROL_OUT, not P554_SWEEP_OUT; synthetic control replaced the page artifact. Both phases used the same wrong route, so equality was insufficient.",
+  "correction": "Select exactly one P<number>_SWEEP_OUT per page; route MISTS_LINE_CONTROL_OUT to a separate retained control file. Keep exact register-ID/known-gap invariants.",
+  "invalidated_as_acceptance": [
+    "mists-all-sweeps",
+    "master-mists-all-sweeps",
+    "Classic 5.5.4 gap/comparison and total-observation accounting"
+  ],
+  "rerun_scope": "Only branch and pinned-master Classic publication_sweep commands; all retail, own, negative, Python, format, Mists cargo check, historical and source reproduction proofs remain valid.",
+  "archives": [
+    {
+      "original_path": "mists-all-sweeps.txt",
+      "archive": "before-routing-fix-mists-all-sweeps.txt",
+      "sha256": "43f32c07cabb0bb805eeb38ffd28feb0308bdff837f26bb24f619fea922cb503"
+    },
+    {
+      "original_path": "mists-all-sweeps.proof.json",
+      "archive": "before-routing-fix-mists-all-sweeps.proof.json",
+      "sha256": "6fe7cc51e0a34ff269d04a331394ad7064441db576f7fc5ee99f0d88061d3774"
+    },
+    {
+      "original_path": "master-mists-all-sweeps.txt",
+      "archive": "before-routing-fix-master-mists-all-sweeps.txt",
+      "sha256": "cced51c5f5d45ee8c2767a3de2522d5c08b108f1d3f7ee2d9febf70cbc3c1d9c"
+    },
+    {
+      "original_path": "master-mists-all-sweeps.proof.json",
+      "archive": "before-routing-fix-master-mists-all-sweeps.proof.json",
+      "sha256": "4b5cb7254ba9e6b93bfffa3fabd6bf7e89a4c2aece5eb5e28884468a47d08e87"
+    },
+    {
+      "original_path": "integrated-validator.txt",
+      "archive": "before-routing-fix-integrated-validator.txt",
+      "sha256": "36454d55b635d05990e8cd8efe3aba0ce55f6a71a0ceed56878062603de420a9"
+    },
+    {
+      "original_path": "integrated-validator.proof.json",
+      "archive": "before-routing-fix-integrated-validator.proof.json",
+      "sha256": "6f449ff5616810f45374dfaa36c98889eca34c100faca3650b9cef14413276bb"
+    },
+    {
+      "original_path": "finalization.txt",
+      "archive": "before-routing-fix-finalization.txt",
+      "sha256": "6a9c45179a2d997a0d6782f16c305bc74654777396dadc795f1196f6e85dba23"
+    },
+    {
+      "original_path": "finalization.proof.json",
+      "archive": "before-routing-fix-finalization.proof.json",
+      "sha256": "ba50f494ea338aba1437bf812a8f741da487c1d805a2f539affab20ce2ac6dab"
+    },
+    {
+      "original_path": "finalization.launcher.txt",
+      "archive": "before-routing-fix-finalization.launcher.txt",
+      "sha256": "7f7baae02cfb08d5f627df6d808d682e0bb07a661eb31527f57019cb4ca15564"
+    },
+    {
+      "original_path": "patch_5_5_4_publication_sweep-results.json",
+      "archive": "before-routing-fix-patch_5_5_4_publication_sweep-results.json",
+      "sha256": "03ccfa9f2dddaebdf33f29f3962548cc629ac8a417bb5a124d7813679ed0eb41"
+    },
+    {
+      "original_path": "master/patch_5_5_4_publication_sweep-results.json",
+      "archive": "before-routing-fix-master-patch_5_5_4_publication_sweep-results.json",
+      "sha256": "03ccfa9f2dddaebdf33f29f3962548cc629ac8a417bb5a124d7813679ed0eb41"
+    },
+    {
+      "original_path": "context.json",
+      "archive": "before-routing-fix-context.json",
+      "sha256": "574895df35588554e60be5a475601bdc95a64780b77551bdff2b11937e709631"
+    },
+    {
+      "original_path": "gap-comparison.json",
+      "archive": "before-routing-fix-gap-comparison.json",
+      "sha256": "182a487ffd5f65972e6375e3082d9877e2df54be3ac13e18115632914856e4b4"
+    },
+    {
+      "original_path": "receipts.json",
+      "archive": "before-routing-fix-receipts.json",
+      "sha256": "6409f7a37c19239275f5074e73aecb6312398a0b57391cea92d83ea7ef779d48"
+    },
+    {
+      "original_path": "command-results.json",
+      "archive": "before-routing-fix-command-results.json",
+      "sha256": "f949819a460c9bc5f6eb480b9c49eccd21a63939b7c14c22204a112ad99c6d53"
+    }
+  ]
+}

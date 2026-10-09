@@ -12,7 +12,7 @@ MASTER = '279a38f3d560e00e954d7dfb96e81f6be3668dd1'
 REQUIRED = ['own-sweep', 'all-sweeps', 'prefork-patch_5_4_1', 'integration-patch_5_4_1',
             'negative', 'reproduction', 'prior-validators', 'checks', 'master-all-sweeps',
             'format', 'mists-check', 'test_check_patch_validators', 'test_extract_patch_non_inventory',
-            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register', 'mists-all-sweeps', 'master-mists-all-sweeps', 'historical-replay', 'history-without-original-objects', 'preserve-history']
+            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register', 'mists-all-sweeps', 'master-mists-all-sweeps', 'historical-replay', 'history-without-original-objects', 'preserve-history', 'mists-routing-correction']
 
 
 def read(name):
@@ -45,6 +45,7 @@ def summarize():
                   'Separate Mists integration publication sweeps cover the 5.5.2/5.5.3/5.5.4 empty inventories and SharedXML startup only, not full UI or API behavior.',
                   'Negative control must fail with exactly one added gap (2 → 3). Three inherited extract failures are unchanged.',
                   'No runtime, vendor or retirement changes; generator is byte-identical to master; extractor adds only opt-in lowercase-reflist. No startup comparison or full integration-suite claim.',
+                  'Initial Classic outputs collided with the synthetic client-line control because output discovery selected its first out_env. Only the two Classic commands were rerun after selecting the unique P<number>_SWEEP_OUT; control output now has its own file. Original invalid receipts/results and context are archived, with attribution in routing-fix-invalidated.json. Original checks driver exit remains an execution receipt, not proof of the invalid Classic artifact association.',
                   'Later evidence/wiki/validator-only commits do not invalidate the pinned Rust, shared-tool or source scopes.'])
     (HERE / 'command-ledger.md').write_text('\n'.join(lines) + '\n')
     pages = []

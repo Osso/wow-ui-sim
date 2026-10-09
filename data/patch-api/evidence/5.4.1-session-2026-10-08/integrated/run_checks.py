@@ -18,8 +18,10 @@ def outputs(revision, directory):
     for name in paths:
         if re.fullmatch(r'tests/patch_.*_publication_sweep.rs', name):
             source = subprocess.check_output(['git', 'show', revision + ':' + name], cwd=ROOT, text=True)
-            variable = re.search(r'out_env:\s*"([^"]+)"', source)[1]
-            os.environ[variable] = str(directory / (Path(name).stem + '-results.json'))
+            variables = re.findall(r'out_env:\s*"(P\d+_SWEEP_OUT)"', source)
+            assert len(variables) == 1, (name, variables)
+            os.environ[variables[0]] = str(directory / (Path(name).stem + '-results.json'))
+    os.environ['MISTS_LINE_CONTROL_OUT'] = str(directory / 'mists-line-control-results.json')
 
 
 def main():

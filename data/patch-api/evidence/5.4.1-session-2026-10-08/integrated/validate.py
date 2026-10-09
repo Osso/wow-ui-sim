@@ -151,6 +151,16 @@ def verify_sweeps(context):
         if row['patch'] != '5.4.1':
             assert row['unchanged_vs_master'] and results == read('master/' + stem + '-results.json')
             assert blob(revision, known) == blob(context['master_revision'], known)
+    control = read('mists-line-control-results.json')
+    assert control == read('master/mists-line-control-results.json')
+    assert set(control) == {'own'} and not control['own']['ok']
+    assert control['own']['expected']['symbol'] == 'GetTime'
+    assert control['own']['expected']['publication'] == 'absent'
+    assert control['own']['expected']['superseded_by'] == 'later'
+    assert control['own']['observed']['kind'] == 'global'
+    assert control['own']['observed']['detail'] == 'raw=function; lookup=function'
+    for label in ('mists-all-sweeps', 'master-mists-all-sweeps'):
+        assert 'test patch_5_5_4_publication_sweep::patch_5_5_4_client_line_excludes_retail_and_era ... ok' in (HERE / (label + '.txt')).read_text()
     positive = read('patch_5_4_1_publication_sweep-results.json')
     historical = json.loads((HISTORY / 'patch_5_4_1_publication_sweep-results.json').read_text())
     negative = read('negative-results.json')
