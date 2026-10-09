@@ -103,6 +103,12 @@ def check_accounting(context):
     assert len(by_id) == len(ledger) == 704
     for key, value in own.items():
         assert by_id[key]['status'] == ('bounded-coverage' if value['ok'] else 'audit-pending')
+    gap_review = read('gap-review.json')
+    assert {row['source_id'] for row in gap_review['publication_mismatches']} == gaps
+    assert len(gap_review['prose_pending']) == 61 and len(gap_review['signatures_pending']) == 5
+    summary = read('accounting-summary.json')
+    assert summary['publication_mismatches'] == len(gaps) and summary['inventory'] == len(own)
+    assert summary['statuses'] == {status: sum(row['status'] == status for row in ledger) for status in summary['statuses']}
     negative = read('negative-results.json')
     control = context['negative_id']
     assert set(negative) == set(own) and own[control]['ok'] and not negative[control]['ok']
