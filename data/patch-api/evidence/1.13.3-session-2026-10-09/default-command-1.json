@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/historical-tools/extract_patch_non_inventory.py",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/source.wikitext"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+  "epoch": "base3de874658; frozen inputs; no runtime change",
+  "exit_code": 2,
+  "stdout": "",
+  "stderr": "usage: extract_patch_non_inventory.py [-h] [--check] [--self-test]\n                                      [--patch PATCH] [--preserve-examples]\n                                      [--normalize-inventory-headings]\n                                      [--retain-reference-notes]\n                                      [--legacy-api-tables]\n                                      [--legacy-api-bullets] [--text-only]\n                                      [--legacy-cvar-tables] [--bfa-prepatch]\n                                      [--legion-prepatch]\n                                      [--retain-patch-diff-reference]\n                                      [--canonical-patch-navigation]\n                                      [--mists-automated-diff]\n                                      [--lowercase-reflist]\n                                      [--cataclysm-labeled-inventory]\n                                      [--mists-source-markup]\n                                      [--wrath-summary-markup]\n                                      [--numbered-reflist]\n                                      [--retail-tbc-markup]\n                                      [--retail-240-summary]\nextract_patch_non_inventory.py: error: unrecognized arguments: /home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/source.wikitext\n"
+}

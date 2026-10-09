@@ -1,0 +1,62 @@
+[
+  {
+    "contract": "NPC UnitHealth and UnitHealthMax values, not percentages",
+    "status": "UNPROVEN",
+    "paths": [
+      "src/lua_api/globals/utility_system_spell/spell_api.rs"
+    ],
+    "assessment": "Existing lookup_unit_vitals reads target health/health_max. Nonretail directenv state transition test is grounded by prose, planned separately; no source signature/default inference or native credit."
+  },
+  {
+    "contract": "Keyring feature, HasKey, KeyRingButtonIDToInvSlotID",
+    "status": "UNPROVEN",
+    "paths": [
+      "src/era/compat_bootstrap.lua",
+      "src/lua_api/globals/real/container_legacy.rs"
+    ],
+    "assessment": "Era HasKey returns false. Real bag_items membership is gated Forever only, not Era. Keyring addition supplies no slot mapping, capacity, identity query arguments/returns or HasKey contract. Do not copy foreign model/aliases/defaults or promote name availability."
+  },
+  {
+    "contract": "SendChatMessage hardware-event restriction",
+    "status": "UNPROVEN",
+    "paths": [
+      "src/lua_api/globals/message_verbs.rs"
+    ],
+    "assessment": "Current send_chat_message appends outbound state/chat text without a hardware-event check. Source gives no failure result/security shape or authorized event lifetime. Existing behavior is not parity; no invented guard model."
+  },
+  {
+    "contract": "SendAddonMessage CHANNEL removal; SAY/YELL addition",
+    "status": "UNPROVEN",
+    "paths": [
+      "src/lua_api/globals/message_verbs.rs",
+      "src/c_api/addon_messages.rs"
+    ],
+    "assessment": "Legacy send_addon_message logs arbitrary channel string and enqueues CHAT_MSG_ADDON; accepts CHANNEL. C_ChatInfo path is separate. Source supplies no result/failure shape, routing or delivery semantics; leave transition UNPROVEN rather than fabricate historical signature or rejection."
+  },
+  {
+    "contract": "Summon namespace and removed summon/totem/kiosk identities",
+    "status": "UNPROVEN",
+    "paths": [
+      "state-scan.json"
+    ],
+    "assessment": "Complete owned src scan retains all literal term hits/misses. No historical summon lifecycle, timers, source identity, totem targeting/dismissal or removal contract test grounded by this page. Publication/names/default factory would not establish meaningful behavior. No retirements/aliases."
+  },
+  {
+    "contract": "Combat-rating and voice-channel join queries",
+    "status": "UNPROVEN",
+    "paths": [
+      "src/lua_api/globals/real/combat_stats.rs",
+      "state-scan.json"
+    ],
+    "assessment": "Combat-rating queries read current player rating/pct state. Page specifies identity only: no index set, formula, return/default or voice join lifecycle. No foreign/current formula credit for historical API identity."
+  },
+  {
+    "contract": "CORPSE_POSITION_UPDATE and four CVars",
+    "status": "UNPROVEN",
+    "paths": [
+      "src/cvars.rs",
+      "state-scan.json"
+    ],
+    "assessment": "Current KioskCanSessionExpire default 1 is not a page default. Permissive Classic event registration does not prove event production/payload/order. Remaining CVar effects and all four historical defaults unspecified. No generated default/publication credit."
+  }
+]

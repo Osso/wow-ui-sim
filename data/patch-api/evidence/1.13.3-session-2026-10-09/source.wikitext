@@ -1,0 +1,62 @@
+{{apichanges|1.13.3|prev=1.13.2|next=1.13.4}}
+
+==Diffs==
+1.13.2 (32421) to 1.13.3 (32790)
+* FrameXML: https://github.com/Gethe/wow-ui-source/commit/163ac1f68d1026f4faad2eb27a54838f080bc21a
+* API resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/0615bdcecbed09484fc035f2727cf54131e41a9c
+
+==Changes==
+* The [[Getting_the_current_interface_number|TOC version]] is <code>11303</code>
+* Added the [[Keyring]] feature.
+* Restricted {{api|SendChatMessage}}() to require hardware events.
+* Removed the "CHANNEL" chat type from {{api|SendAddonMessage}}() and added "SAY" and "YELL" types. <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>
+* {{api|UnitHealth}}() and {{api|UnitHealthMax}}() return health values for NPCs again instead of percentages (hotfixed). <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596|author=Kaivax|date=2020-02-18|title=WoW Classic UI API Change for UnitHealth}}</ref>
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ Global API 1.13.2 (32421) &rarr; 1.13.3 (32790)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 12 new functions
+! style="width: 50%; padding-right: 1em;"| 10 removed functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_SummonInfo.CancelSummon}}
+: {{api|C_SummonInfo.ConfirmSummon}}
+: {{api|C_SummonInfo.GetSummonConfirmAreaName}}
+: {{api|C_SummonInfo.GetSummonConfirmSummoner}}
+: {{api|C_SummonInfo.GetSummonConfirmTimeLeft}}
+: {{api|C_SummonInfo.GetSummonReason}}
+: {{api|C_SummonInfo.IsSummonSkippingStartExperience}}
+: {{api|C_VoiceChat.IsChannelJoinPending}}
+: {{api|GetCombatRating}}
+: {{api|GetCombatRatingBonus}}
+: {{api|HasKey}}
+: {{api|KeyRingButtonIDToInvSlotID}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|CancelSummon}}
+: {{api|ConfirmSummon}}
+: {{api|GetSummonConfirmAreaName}}
+: {{api|GetSummonConfirmSummoner}}
+: {{api|GetSummonConfirmTimeLeft}}
+: {{api|GetTotemCannotDismiss}}
+: {{api|GetTotemInfo}}
+: {{api|GetTotemTimeLeft}}
+: {{api|IsKioskModeEnabled}}
+: {{api|TargetTotem}}
+</div>
+|}
+
+==Events==
+===Added===
+: {{api|t=e|CORPSE_POSITION_UPDATE}}
+
+==CVars==
+===Added===
+: {{api|t=c|KioskCanSessionExpire}}
+: {{api|t=c|KioskCharacterTemplateSet}}
+: {{api|t=c|KioskLobbyKickSeconds}}
+: {{api|t=c|showKeyring}}
+
+==References==
+{{Reflist}}

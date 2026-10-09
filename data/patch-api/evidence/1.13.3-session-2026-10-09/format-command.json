@@ -1,0 +1,13 @@
+{
+  "command": [
+    "rustfmt",
+    "--edition",
+    "2024",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/patch-tests/patch_1_13_3_npc_health.rs"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "python_formatter": "AST unparse of own audit/test/derive only; historical tools unchanged"
+}

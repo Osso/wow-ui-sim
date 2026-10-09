@@ -182,11 +182,6 @@ harness = false
 required-features = ["client-retail"]
 
 [[test]]
-name = "patch_1_13_3_npc_health"
-path = "patch-tests/patch_1_13_3_npc_health.rs"
-required-features = ["client-era"]
-
-[[test]]
 name = "patch_1_13_6_factory"
 path = "patch-tests/patch_1_13_6_factory.rs"
 required-features = ["client-era"]
@@ -328,11 +323,6 @@ quote = "1"
 
 [patch.crates-io]
 iced_wgpu = { path = "iced-wgpu-patched" }
-
-[[test]]
-name = "patch_1_13_4_totems"
-path = "patch-tests/patch_1_13_4_totems.rs"
-required-features = ["client-era"]
 
 [[test]]
 name = "patch_1_14_1_text_scale"

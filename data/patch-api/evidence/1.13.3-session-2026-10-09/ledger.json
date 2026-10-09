@@ -1,0 +1,2887 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.13.3",
+  "base_revision": "3de87465828db7cc7f6f900d4b63e24f1b399825",
+  "audit_history": "classic-era",
+  "source": {
+    "title": "Patch 1.13.3/API changes",
+    "version": "1.13.3",
+    "pageid": 455918,
+    "revid": 6472111,
+    "timestamp": "2025-09-13T22:49:36Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6472111&format=json",
+    "retrieved": "2026-10-09T08:51:36.400448+00:00",
+    "response_sha256": "cfb09f0cb2d6daf49671b3aa4f1e400eaff90a7ba012dc55ec41191a5660f107",
+    "wikitext_sha256": "5aac9c7ecacf17d3d3f2961045252ac27b91884a4a2abde60f817ee2f099e85b",
+    "wikitext_bytes": 2568,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.3-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.3-wikitext.txt"
+  },
+  "source_client_literal": "Classic and WoW Classic",
+  "client_literal_scope": "citation titles; not a configured native identity or linked-content expansion",
+  "source_toc": 11303,
+  "navigation": {
+    "patch": "1.13.3",
+    "prev": "1.13.2",
+    "next": "1.13.4"
+  },
+  "source_rows": [
+    {
+      "id": "source-001",
+      "line": 1,
+      "literal": "{{apichanges|1.13.3|prev=1.13.2|next=1.13.4}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-003",
+      "line": 3,
+      "literal": "==Diffs==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-004",
+      "line": 4,
+      "literal": "1.13.2 (32421) to 1.13.3 (32790)",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-005",
+      "line": 5,
+      "literal": "* FrameXML: https://github.com/Gethe/wow-ui-source/commit/163ac1f68d1026f4faad2eb27a54838f080bc21a",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-006",
+      "line": 6,
+      "literal": "* API resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/0615bdcecbed09484fc035f2727cf54131e41a9c",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-008",
+      "line": 8,
+      "literal": "==Changes==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-009",
+      "line": 9,
+      "literal": "* The [[Getting_the_current_interface_number|TOC version]] is <code>11303</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-010",
+      "line": 10,
+      "literal": "* Added the [[Keyring]] feature.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-011",
+      "line": 11,
+      "literal": "* Restricted {{api|SendChatMessage}}() to require hardware events.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-012",
+      "line": 12,
+      "literal": "* Removed the \"CHANNEL\" chat type from {{api|SendAddonMessage}}() and added \"SAY\" and \"YELL\" types. <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-013",
+      "line": 13,
+      "literal": "* {{api|UnitHealth}}() and {{api|UnitHealthMax}}() return health values for NPCs again instead of percentages (hotfixed). <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596|author=Kaivax|date=2020-02-18|title=WoW Classic UI API Change for UnitHealth}}</ref>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-015",
+      "line": 15,
+      "literal": "==Global API==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-016",
+      "line": 16,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-017",
+      "line": 17,
+      "literal": "|+ Global API 1.13.2 (32421) &rarr; 1.13.3 (32790)",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-018",
+      "line": 18,
+      "literal": "|- class=\"mw-customtoggle-global-c\" style=\"cursor: pointer\" ",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-019",
+      "line": 19,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 12 new functions",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-020",
+      "line": 20,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 10 removed functions",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-021",
+      "line": 21,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-022",
+      "line": 22,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-023",
+      "line": 23,
+      "literal": ": {{api|C_SummonInfo.CancelSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-024",
+      "line": 24,
+      "literal": ": {{api|C_SummonInfo.ConfirmSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-025",
+      "line": 25,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmAreaName}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-026",
+      "line": 26,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmSummoner}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-027",
+      "line": 27,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-028",
+      "line": 28,
+      "literal": ": {{api|C_SummonInfo.GetSummonReason}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-029",
+      "line": 29,
+      "literal": ": {{api|C_SummonInfo.IsSummonSkippingStartExperience}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-030",
+      "line": 30,
+      "literal": ": {{api|C_VoiceChat.IsChannelJoinPending}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-031",
+      "line": 31,
+      "literal": ": {{api|GetCombatRating}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-032",
+      "line": 32,
+      "literal": ": {{api|GetCombatRatingBonus}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-033",
+      "line": 33,
+      "literal": ": {{api|HasKey}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-034",
+      "line": 34,
+      "literal": ": {{api|KeyRingButtonIDToInvSlotID}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-035",
+      "line": 35,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-036",
+      "line": 36,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-037",
+      "line": 37,
+      "literal": ": {{api|CancelSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-038",
+      "line": 38,
+      "literal": ": {{api|ConfirmSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-039",
+      "line": 39,
+      "literal": ": {{api|GetSummonConfirmAreaName}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-040",
+      "line": 40,
+      "literal": ": {{api|GetSummonConfirmSummoner}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-041",
+      "line": 41,
+      "literal": ": {{api|GetSummonConfirmTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-042",
+      "line": 42,
+      "literal": ": {{api|GetTotemCannotDismiss}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-043",
+      "line": 43,
+      "literal": ": {{api|GetTotemInfo}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-044",
+      "line": 44,
+      "literal": ": {{api|GetTotemTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-045",
+      "line": 45,
+      "literal": ": {{api|IsKioskModeEnabled}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-046",
+      "line": 46,
+      "literal": ": {{api|TargetTotem}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-047",
+      "line": 47,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-048",
+      "line": 48,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-050",
+      "line": 50,
+      "literal": "==Events==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-051",
+      "line": 51,
+      "literal": "===Added===",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-052",
+      "line": 52,
+      "literal": ": {{api|t=e|CORPSE_POSITION_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-054",
+      "line": 54,
+      "literal": "==CVars==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-055",
+      "line": 55,
+      "literal": "===Added===",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-056",
+      "line": 56,
+      "literal": ": {{api|t=c|KioskCanSessionExpire}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-057",
+      "line": 57,
+      "literal": ": {{api|t=c|KioskCharacterTemplateSet}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-058",
+      "line": 58,
+      "literal": ": {{api|t=c|KioskLobbyKickSeconds}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-059",
+      "line": 59,
+      "literal": ": {{api|t=c|showKeyring}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-061",
+      "line": 61,
+      "literal": "==References==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-062",
+      "line": 62,
+      "literal": "{{Reflist}}",
+      "status": "metadata-only",
+      "capabilities": []
+    }
+  ],
+  "extracted_rows": [],
+  "default_extract": {
+    "result": "existing-failure",
+    "text": null,
+    "error_type": "ValueError",
+    "error": "unhandled template: * Removed the \"CHANNEL\" chat type from {{api|SendAddonMessage}}() and added \"SAY\" and \"YELL\" types. <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>",
+    "flags": []
+  },
+  "inventory": [
+    {
+      "id": "wt-global-api-C_SummonInfo.CancelSummon-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.CancelSummon",
+      "annotation": "",
+      "wikitext_line": 23,
+      "line": 23,
+      "literal": ": {{api|C_SummonInfo.CancelSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.ConfirmSummon-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 24,
+      "line": 24,
+      "literal": ": {{api|C_SummonInfo.ConfirmSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 25,
+      "line": 25,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmAreaName}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 26,
+      "line": 26,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmSummoner}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmTimeLeft-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 27,
+      "line": 27,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonReason-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonReason",
+      "annotation": "",
+      "wikitext_line": 28,
+      "line": 28,
+      "literal": ": {{api|C_SummonInfo.GetSummonReason}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.IsSummonSkippingStartExperience-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.IsSummonSkippingStartExperience",
+      "annotation": "",
+      "wikitext_line": 29,
+      "line": 29,
+      "literal": ": {{api|C_SummonInfo.IsSummonSkippingStartExperience}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsChannelJoinPending-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsChannelJoinPending",
+      "annotation": "",
+      "wikitext_line": 30,
+      "line": 30,
+      "literal": ": {{api|C_VoiceChat.IsChannelJoinPending}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetCombatRating-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRating",
+      "annotation": "",
+      "wikitext_line": 31,
+      "line": 31,
+      "literal": ": {{api|GetCombatRating}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetCombatRatingBonus-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRatingBonus",
+      "annotation": "",
+      "wikitext_line": 32,
+      "line": 32,
+      "literal": ": {{api|GetCombatRatingBonus}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-HasKey-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasKey",
+      "annotation": "",
+      "wikitext_line": 33,
+      "line": 33,
+      "literal": ": {{api|HasKey}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-KeyRingButtonIDToInvSlotID-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "KeyRingButtonIDToInvSlotID",
+      "annotation": "",
+      "wikitext_line": 34,
+      "line": 34,
+      "literal": ": {{api|KeyRingButtonIDToInvSlotID}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-CancelSummon-37",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelSummon",
+      "annotation": "",
+      "wikitext_line": 37,
+      "line": 37,
+      "literal": ": {{api|CancelSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-ConfirmSummon-38",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 38,
+      "line": 38,
+      "literal": ": {{api|ConfirmSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmAreaName-39",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 39,
+      "line": 39,
+      "literal": ": {{api|GetSummonConfirmAreaName}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmSummoner-40",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 40,
+      "line": 40,
+      "literal": ": {{api|GetSummonConfirmSummoner}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmTimeLeft-41",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 41,
+      "line": 41,
+      "literal": ": {{api|GetSummonConfirmTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetTotemCannotDismiss-42",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemCannotDismiss",
+      "annotation": "",
+      "wikitext_line": 42,
+      "line": 42,
+      "literal": ": {{api|GetTotemCannotDismiss}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetTotemInfo-43",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemInfo",
+      "annotation": "",
+      "wikitext_line": 43,
+      "line": 43,
+      "literal": ": {{api|GetTotemInfo}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-GetTotemTimeLeft-44",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemTimeLeft",
+      "annotation": "",
+      "wikitext_line": 44,
+      "line": 44,
+      "literal": ": {{api|GetTotemTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-IsKioskModeEnabled-45",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsKioskModeEnabled",
+      "annotation": "",
+      "wikitext_line": 45,
+      "line": 45,
+      "literal": ": {{api|IsKioskModeEnabled}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-TargetTotem-46",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "TargetTotem",
+      "annotation": "",
+      "wikitext_line": 46,
+      "line": 46,
+      "literal": ": {{api|TargetTotem}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-events-CORPSE_POSITION_UPDATE-52",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CORPSE_POSITION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 52,
+      "line": 52,
+      "literal": ": {{api|t=e|CORPSE_POSITION_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-KioskCanSessionExpire-56",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskCanSessionExpire",
+      "annotation": "",
+      "wikitext_line": 56,
+      "line": 56,
+      "literal": ": {{api|t=c|KioskCanSessionExpire}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-KioskCharacterTemplateSet-57",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskCharacterTemplateSet",
+      "annotation": "",
+      "wikitext_line": 57,
+      "line": 57,
+      "literal": ": {{api|t=c|KioskCharacterTemplateSet}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-KioskLobbyKickSeconds-58",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskLobbyKickSeconds",
+      "annotation": "",
+      "wikitext_line": 58,
+      "line": 58,
+      "literal": ": {{api|t=c|KioskLobbyKickSeconds}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-showKeyring-59",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "showKeyring",
+      "annotation": "",
+      "wikitext_line": 59,
+      "line": 59,
+      "literal": ": {{api|t=c|showKeyring}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    }
+  ],
+  "default_inventory": [
+    {
+      "id": "wt-global-api-C_SummonInfo.CancelSummon-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.CancelSummon",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.ConfirmSummon-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmTimeLeft-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonReason-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonReason",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.IsSummonSkippingStartExperience-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.IsSummonSkippingStartExperience",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsChannelJoinPending-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsChannelJoinPending",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-GetCombatRating-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRating",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-GetCombatRatingBonus-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRatingBonus",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-HasKey-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasKey",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-KeyRingButtonIDToInvSlotID-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "KeyRingButtonIDToInvSlotID",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-CancelSummon-37",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelSummon",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-ConfirmSummon-38",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmAreaName-39",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmSummoner-40",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmTimeLeft-41",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-GetTotemCannotDismiss-42",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemCannotDismiss",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-GetTotemInfo-43",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemInfo",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-GetTotemTimeLeft-44",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemTimeLeft",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-IsKioskModeEnabled-45",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsKioskModeEnabled",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-TargetTotem-46",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "TargetTotem",
+      "annotation": "",
+      "wikitext_line": 46
+    }
+  ],
+  "default_omissions": [
+    {
+      "id": "wt-events-CORPSE_POSITION_UPDATE-52",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CORPSE_POSITION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 52,
+      "line": 52,
+      "literal": ": {{api|t=e|CORPSE_POSITION_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-KioskCanSessionExpire-56",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskCanSessionExpire",
+      "annotation": "",
+      "wikitext_line": 56,
+      "line": 56,
+      "literal": ": {{api|t=c|KioskCanSessionExpire}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-KioskCharacterTemplateSet-57",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskCharacterTemplateSet",
+      "annotation": "",
+      "wikitext_line": 57,
+      "line": 57,
+      "literal": ": {{api|t=c|KioskCharacterTemplateSet}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-KioskLobbyKickSeconds-58",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskLobbyKickSeconds",
+      "annotation": "",
+      "wikitext_line": 58,
+      "line": 58,
+      "literal": ": {{api|t=c|KioskLobbyKickSeconds}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-cvars-showKeyring-59",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "showKeyring",
+      "annotation": "",
+      "wikitext_line": 59,
+      "line": 59,
+      "literal": ": {{api|t=c|showKeyring}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    }
+  ],
+  "signatures": [
+    {
+      "line": 23,
+      "symbol": "C_SummonInfo.CancelSummon",
+      "literal": ": {{api|C_SummonInfo.CancelSummon}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 24,
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "literal": ": {{api|C_SummonInfo.ConfirmSummon}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 25,
+      "symbol": "C_SummonInfo.GetSummonConfirmAreaName",
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmAreaName}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 26,
+      "symbol": "C_SummonInfo.GetSummonConfirmSummoner",
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmSummoner}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 27,
+      "symbol": "C_SummonInfo.GetSummonConfirmTimeLeft",
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmTimeLeft}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 28,
+      "symbol": "C_SummonInfo.GetSummonReason",
+      "literal": ": {{api|C_SummonInfo.GetSummonReason}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 29,
+      "symbol": "C_SummonInfo.IsSummonSkippingStartExperience",
+      "literal": ": {{api|C_SummonInfo.IsSummonSkippingStartExperience}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 30,
+      "symbol": "C_VoiceChat.IsChannelJoinPending",
+      "literal": ": {{api|C_VoiceChat.IsChannelJoinPending}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 31,
+      "symbol": "GetCombatRating",
+      "literal": ": {{api|GetCombatRating}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 32,
+      "symbol": "GetCombatRatingBonus",
+      "literal": ": {{api|GetCombatRatingBonus}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 33,
+      "symbol": "HasKey",
+      "literal": ": {{api|HasKey}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 34,
+      "symbol": "KeyRingButtonIDToInvSlotID",
+      "literal": ": {{api|KeyRingButtonIDToInvSlotID}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 37,
+      "symbol": "CancelSummon",
+      "literal": ": {{api|CancelSummon}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 38,
+      "symbol": "ConfirmSummon",
+      "literal": ": {{api|ConfirmSummon}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 39,
+      "symbol": "GetSummonConfirmAreaName",
+      "literal": ": {{api|GetSummonConfirmAreaName}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 40,
+      "symbol": "GetSummonConfirmSummoner",
+      "literal": ": {{api|GetSummonConfirmSummoner}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 41,
+      "symbol": "GetSummonConfirmTimeLeft",
+      "literal": ": {{api|GetSummonConfirmTimeLeft}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 42,
+      "symbol": "GetTotemCannotDismiss",
+      "literal": ": {{api|GetTotemCannotDismiss}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 43,
+      "symbol": "GetTotemInfo",
+      "literal": ": {{api|GetTotemInfo}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 44,
+      "symbol": "GetTotemTimeLeft",
+      "literal": ": {{api|GetTotemTimeLeft}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 45,
+      "symbol": "IsKioskModeEnabled",
+      "literal": ": {{api|IsKioskModeEnabled}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 46,
+      "symbol": "TargetTotem",
+      "literal": ": {{api|TargetTotem}}",
+      "section": "global-api",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 52,
+      "symbol": "CORPSE_POSITION_UPDATE",
+      "literal": ": {{api|t=e|CORPSE_POSITION_UPDATE}}",
+      "section": "events",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 56,
+      "symbol": "KioskCanSessionExpire",
+      "literal": ": {{api|t=c|KioskCanSessionExpire}}",
+      "section": "cvars",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 57,
+      "symbol": "KioskCharacterTemplateSet",
+      "literal": ": {{api|t=c|KioskCharacterTemplateSet}}",
+      "section": "cvars",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 58,
+      "symbol": "KioskLobbyKickSeconds",
+      "literal": ": {{api|t=c|KioskLobbyKickSeconds}}",
+      "section": "cvars",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 59,
+      "symbol": "showKeyring",
+      "literal": ": {{api|t=c|showKeyring}}",
+      "section": "cvars",
+      "kind": "inventory-unspecified",
+      "fragment": null,
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Identity only; no inferred arguments, returns, event payload, CVar default, alias, security or invocation contract."
+    },
+    {
+      "line": 11,
+      "symbol": "SendChatMessage",
+      "literal": "{{api|SendChatMessage}}()",
+      "fragment": "()",
+      "kind": "prose-empty-parentheses",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Empty parentheses are citation/invocation notation, not a declared zero-argument signature."
+    },
+    {
+      "line": 12,
+      "symbol": "SendAddonMessage",
+      "literal": "{{api|SendAddonMessage}}()",
+      "fragment": "()",
+      "kind": "prose-empty-parentheses",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Empty parentheses are citation/invocation notation, not a declared zero-argument signature."
+    },
+    {
+      "line": 13,
+      "symbol": "UnitHealth",
+      "literal": "{{api|UnitHealth}}()",
+      "fragment": "()",
+      "kind": "prose-empty-parentheses",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Empty parentheses are citation/invocation notation, not a declared zero-argument signature."
+    },
+    {
+      "line": 13,
+      "symbol": "UnitHealthMax",
+      "literal": "{{api|UnitHealthMax}}()",
+      "fragment": "()",
+      "kind": "prose-empty-parentheses",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "status": "UNPROVEN",
+      "limit": "Empty parentheses are citation/invocation notation, not a declared zero-argument signature."
+    }
+  ],
+  "defaults": [],
+  "headers": [
+    {
+      "line": 3,
+      "literal": "==Diffs==",
+      "level": 2,
+      "label": "Diffs"
+    },
+    {
+      "line": 8,
+      "literal": "==Changes==",
+      "level": 2,
+      "label": "Changes"
+    },
+    {
+      "line": 15,
+      "literal": "==Global API==",
+      "level": 2,
+      "label": "Global API"
+    },
+    {
+      "line": 50,
+      "literal": "==Events==",
+      "level": 2,
+      "label": "Events"
+    },
+    {
+      "line": 51,
+      "literal": "===Added===",
+      "level": 3,
+      "label": "Added"
+    },
+    {
+      "line": 54,
+      "literal": "==CVars==",
+      "level": 2,
+      "label": "CVars"
+    },
+    {
+      "line": 55,
+      "literal": "===Added===",
+      "level": 3,
+      "label": "Added"
+    },
+    {
+      "line": 61,
+      "literal": "==References==",
+      "level": 2,
+      "label": "References"
+    }
+  ],
+  "inventory_headers": [
+    {
+      "line": 19,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 12 new functions",
+      "section": "global-api",
+      "direction": "added",
+      "count": 12,
+      "observed": 12,
+      "conflict": false
+    },
+    {
+      "line": 20,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 10 removed functions",
+      "section": "global-api",
+      "direction": "removed",
+      "count": 10,
+      "observed": 10,
+      "conflict": false
+    }
+  ],
+  "captions": [
+    {
+      "line": 4,
+      "literal": "1.13.2 (32421) to 1.13.3 (32790)",
+      "before_patch": "1.13.2",
+      "before_build": 32421,
+      "after_patch": "1.13.3",
+      "after_build": 32790
+    },
+    {
+      "line": 17,
+      "literal": "|+ Global API 1.13.2 (32421) &rarr; 1.13.3 (32790)",
+      "before_patch": "1.13.2",
+      "before_build": 32421,
+      "after_patch": "1.13.3",
+      "after_build": 32790
+    }
+  ],
+  "prose": [
+    {
+      "line": 10,
+      "literal": "* Added the [[Keyring]] feature.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "claim": "Added Keyring feature",
+      "capacity": null,
+      "slot_mapping": null,
+      "limit": "No capacity, default, item eligibility, lifecycle or query signature specified."
+    },
+    {
+      "line": 11,
+      "literal": "* Restricted {{api|SendChatMessage}}() to require hardware events.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "subject": "SendChatMessage",
+      "requirement": "hardware events",
+      "failure_result": null,
+      "event_lifetime": null,
+      "limit": "Hardware-event restriction stated; no failure shape, event lifetime, bypass, signature or defaults inferred from empty parentheses."
+    },
+    {
+      "line": 12,
+      "literal": "* Removed the \"CHANNEL\" chat type from {{api|SendAddonMessage}}() and added \"SAY\" and \"YELL\" types. <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "subject": "SendAddonMessage",
+      "removed_chat_types": [
+        "CHANNEL"
+      ],
+      "added_chat_types": [
+        "SAY",
+        "YELL"
+      ],
+      "failure_result": null,
+      "routing": null,
+      "limit": "Exact type transition; no failure return, routing, delivery, optionality, defaults or full signature. Citation unexpanded."
+    },
+    {
+      "line": 13,
+      "literal": "* {{api|UnitHealth}}() and {{api|UnitHealthMax}}() return health values for NPCs again instead of percentages (hotfixed). <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596|author=Kaivax|date=2020-02-18|title=WoW Classic UI API Change for UnitHealth}}</ref>",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "subjects": [
+        "UnitHealth",
+        "UnitHealthMax"
+      ],
+      "scope": "NPCs; hotfixed; values again instead of percentages",
+      "default": null,
+      "limit": "Values-not-percentages statement only; no token/argument/default, unknown-unit, secrecy or full native parity contract. Citation unexpanded."
+    }
+  ],
+  "links": [
+    {
+      "line": 5,
+      "literal": "https://github.com/Gethe/wow-ui-source/commit/163ac1f68d1026f4faad2eb27a54838f080bc21a",
+      "target": "https://github.com/Gethe/wow-ui-source/commit/163ac1f68d1026f4faad2eb27a54838f080bc21a",
+      "label": null,
+      "kind": "external",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit."
+    },
+    {
+      "line": 6,
+      "literal": "https://github.com/Ketho/BlizzardInterfaceResources/commit/0615bdcecbed09484fc035f2727cf54131e41a9c",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/commit/0615bdcecbed09484fc035f2727cf54131e41a9c",
+      "label": null,
+      "kind": "external",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit."
+    },
+    {
+      "line": 9,
+      "literal": "[[Getting_the_current_interface_number|TOC version]]",
+      "target": "Getting_the_current_interface_number",
+      "label": "TOC version",
+      "kind": "wiki",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit."
+    },
+    {
+      "line": 10,
+      "literal": "[[Keyring]]",
+      "target": "Keyring",
+      "label": null,
+      "kind": "wiki",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit."
+    },
+    {
+      "line": 12,
+      "literal": "https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change",
+      "target": "https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change",
+      "label": null,
+      "kind": "external",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit."
+    },
+    {
+      "line": 12,
+      "literal": "[[Kaivax]]",
+      "target": "Kaivax",
+      "label": null,
+      "kind": "wiki",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit."
+    },
+    {
+      "line": 13,
+      "literal": "https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596",
+      "target": "https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596",
+      "label": null,
+      "kind": "external",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit."
+    }
+  ],
+  "templates": [
+    {
+      "line": 1,
+      "literal": "{{apichanges|1.13.3|prev=1.13.2|next=1.13.4}}",
+      "name": "apichanges",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 11,
+      "literal": "{{api|SendChatMessage}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 12,
+      "literal": "{{api|SendAddonMessage}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 12,
+      "literal": "{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}",
+      "name": "ref web",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 13,
+      "literal": "{{api|UnitHealth}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 13,
+      "literal": "{{api|UnitHealthMax}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 13,
+      "literal": "{{ref web|url=https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596|author=Kaivax|date=2020-02-18|title=WoW Classic UI API Change for UnitHealth}}",
+      "name": "ref web",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 23,
+      "literal": "{{api|C_SummonInfo.CancelSummon}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 24,
+      "literal": "{{api|C_SummonInfo.ConfirmSummon}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 25,
+      "literal": "{{api|C_SummonInfo.GetSummonConfirmAreaName}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 26,
+      "literal": "{{api|C_SummonInfo.GetSummonConfirmSummoner}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 27,
+      "literal": "{{api|C_SummonInfo.GetSummonConfirmTimeLeft}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 28,
+      "literal": "{{api|C_SummonInfo.GetSummonReason}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 29,
+      "literal": "{{api|C_SummonInfo.IsSummonSkippingStartExperience}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 30,
+      "literal": "{{api|C_VoiceChat.IsChannelJoinPending}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 31,
+      "literal": "{{api|GetCombatRating}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 32,
+      "literal": "{{api|GetCombatRatingBonus}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 33,
+      "literal": "{{api|HasKey}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 34,
+      "literal": "{{api|KeyRingButtonIDToInvSlotID}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 37,
+      "literal": "{{api|CancelSummon}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 38,
+      "literal": "{{api|ConfirmSummon}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 39,
+      "literal": "{{api|GetSummonConfirmAreaName}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 40,
+      "literal": "{{api|GetSummonConfirmSummoner}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 41,
+      "literal": "{{api|GetSummonConfirmTimeLeft}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 42,
+      "literal": "{{api|GetTotemCannotDismiss}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 43,
+      "literal": "{{api|GetTotemInfo}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 44,
+      "literal": "{{api|GetTotemTimeLeft}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 45,
+      "literal": "{{api|IsKioskModeEnabled}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 46,
+      "literal": "{{api|TargetTotem}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 52,
+      "literal": "{{api|t=e|CORPSE_POSITION_UPDATE}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 56,
+      "literal": "{{api|t=c|KioskCanSessionExpire}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 57,
+      "literal": "{{api|t=c|KioskCharacterTemplateSet}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 58,
+      "literal": "{{api|t=c|KioskLobbyKickSeconds}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 59,
+      "literal": "{{api|t=c|showKeyring}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    },
+    {
+      "line": 62,
+      "literal": "{{Reflist}}",
+      "name": "Reflist",
+      "expanded": false,
+      "limit": "Literal template occurrence only; no transclusion credit."
+    }
+  ],
+  "references": [
+    {
+      "line": 12,
+      "literal": "<ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>",
+      "expanded": false,
+      "limit": "Exact citation author/date/title/url retained; target content unexpanded."
+    },
+    {
+      "line": 13,
+      "literal": "<ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596|author=Kaivax|date=2020-02-18|title=WoW Classic UI API Change for UnitHealth}}</ref>",
+      "expanded": false,
+      "limit": "Exact citation author/date/title/url retained; target content unexpanded."
+    }
+  ],
+  "contracts": [
+    {
+      "id": "wt-global-api-C_SummonInfo.CancelSummon-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.CancelSummon",
+      "annotation": "",
+      "wikitext_line": 23,
+      "line": 23,
+      "literal": ": {{api|C_SummonInfo.CancelSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.ConfirmSummon-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 24,
+      "line": 24,
+      "literal": ": {{api|C_SummonInfo.ConfirmSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 25,
+      "line": 25,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmAreaName}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 26,
+      "line": 26,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmSummoner}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonConfirmTimeLeft-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 27,
+      "line": 27,
+      "literal": ": {{api|C_SummonInfo.GetSummonConfirmTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.GetSummonReason-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.GetSummonReason",
+      "annotation": "",
+      "wikitext_line": 28,
+      "line": 28,
+      "literal": ": {{api|C_SummonInfo.GetSummonReason}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.IsSummonSkippingStartExperience-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.IsSummonSkippingStartExperience",
+      "annotation": "",
+      "wikitext_line": 29,
+      "line": 29,
+      "literal": ": {{api|C_SummonInfo.IsSummonSkippingStartExperience}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsChannelJoinPending-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsChannelJoinPending",
+      "annotation": "",
+      "wikitext_line": 30,
+      "line": 30,
+      "literal": ": {{api|C_VoiceChat.IsChannelJoinPending}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetCombatRating-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRating",
+      "annotation": "",
+      "wikitext_line": 31,
+      "line": 31,
+      "literal": ": {{api|GetCombatRating}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetCombatRatingBonus-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCombatRatingBonus",
+      "annotation": "",
+      "wikitext_line": 32,
+      "line": 32,
+      "literal": ": {{api|GetCombatRatingBonus}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-HasKey-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasKey",
+      "annotation": "",
+      "wikitext_line": 33,
+      "line": 33,
+      "literal": ": {{api|HasKey}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-KeyRingButtonIDToInvSlotID-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "KeyRingButtonIDToInvSlotID",
+      "annotation": "",
+      "wikitext_line": 34,
+      "line": 34,
+      "literal": ": {{api|KeyRingButtonIDToInvSlotID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-CancelSummon-37",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelSummon",
+      "annotation": "",
+      "wikitext_line": 37,
+      "line": 37,
+      "literal": ": {{api|CancelSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-ConfirmSummon-38",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 38,
+      "line": 38,
+      "literal": ": {{api|ConfirmSummon}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmAreaName-39",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmAreaName",
+      "annotation": "",
+      "wikitext_line": 39,
+      "line": 39,
+      "literal": ": {{api|GetSummonConfirmAreaName}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmSummoner-40",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmSummoner",
+      "annotation": "",
+      "wikitext_line": 40,
+      "line": 40,
+      "literal": ": {{api|GetSummonConfirmSummoner}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetSummonConfirmTimeLeft-41",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSummonConfirmTimeLeft",
+      "annotation": "",
+      "wikitext_line": 41,
+      "line": 41,
+      "literal": ": {{api|GetSummonConfirmTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetTotemCannotDismiss-42",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemCannotDismiss",
+      "annotation": "",
+      "wikitext_line": 42,
+      "line": 42,
+      "literal": ": {{api|GetTotemCannotDismiss}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetTotemInfo-43",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemInfo",
+      "annotation": "",
+      "wikitext_line": 43,
+      "line": 43,
+      "literal": ": {{api|GetTotemInfo}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-GetTotemTimeLeft-44",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetTotemTimeLeft",
+      "annotation": "",
+      "wikitext_line": 44,
+      "line": 44,
+      "literal": ": {{api|GetTotemTimeLeft}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-IsKioskModeEnabled-45",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsKioskModeEnabled",
+      "annotation": "",
+      "wikitext_line": 45,
+      "line": 45,
+      "literal": ": {{api|IsKioskModeEnabled}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-global-api-TargetTotem-46",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "TargetTotem",
+      "annotation": "",
+      "wikitext_line": 46,
+      "line": 46,
+      "literal": ": {{api|TargetTotem}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-events-CORPSE_POSITION_UPDATE-52",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CORPSE_POSITION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 52,
+      "line": 52,
+      "literal": ": {{api|t=e|CORPSE_POSITION_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-cvars-KioskCanSessionExpire-56",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskCanSessionExpire",
+      "annotation": "",
+      "wikitext_line": 56,
+      "line": 56,
+      "literal": ": {{api|t=c|KioskCanSessionExpire}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-cvars-KioskCharacterTemplateSet-57",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskCharacterTemplateSet",
+      "annotation": "",
+      "wikitext_line": 57,
+      "line": 57,
+      "literal": ": {{api|t=c|KioskCharacterTemplateSet}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-cvars-KioskLobbyKickSeconds-58",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "KioskLobbyKickSeconds",
+      "annotation": "",
+      "wikitext_line": 58,
+      "line": 58,
+      "literal": ": {{api|t=c|KioskLobbyKickSeconds}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "id": "wt-cvars-showKeyring-59",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "showKeyring",
+      "annotation": "",
+      "wikitext_line": 59,
+      "line": 59,
+      "literal": ": {{api|t=c|showKeyring}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "inventory-identity"
+    },
+    {
+      "line": 10,
+      "literal": "* Added the [[Keyring]] feature.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "claim": "Added Keyring feature",
+      "capacity": null,
+      "slot_mapping": null,
+      "limit": "No capacity, default, item eligibility, lifecycle or query signature specified.",
+      "kind": "prose-limit"
+    },
+    {
+      "line": 11,
+      "literal": "* Restricted {{api|SendChatMessage}}() to require hardware events.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "subject": "SendChatMessage",
+      "requirement": "hardware events",
+      "failure_result": null,
+      "event_lifetime": null,
+      "limit": "Hardware-event restriction stated; no failure shape, event lifetime, bypass, signature or defaults inferred from empty parentheses.",
+      "kind": "prose-limit"
+    },
+    {
+      "line": 12,
+      "literal": "* Removed the \"CHANNEL\" chat type from {{api|SendAddonMessage}}() and added \"SAY\" and \"YELL\" types. <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "subject": "SendAddonMessage",
+      "removed_chat_types": [
+        "CHANNEL"
+      ],
+      "added_chat_types": [
+        "SAY",
+        "YELL"
+      ],
+      "failure_result": null,
+      "routing": null,
+      "limit": "Exact type transition; no failure return, routing, delivery, optionality, defaults or full signature. Citation unexpanded.",
+      "kind": "prose-limit"
+    },
+    {
+      "line": 13,
+      "literal": "* {{api|UnitHealth}}() and {{api|UnitHealthMax}}() return health values for NPCs again instead of percentages (hotfixed). <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596|author=Kaivax|date=2020-02-18|title=WoW Classic UI API Change for UnitHealth}}</ref>",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "subjects": [
+        "UnitHealth",
+        "UnitHealthMax"
+      ],
+      "scope": "NPCs; hotfixed; values again instead of percentages",
+      "default": null,
+      "limit": "Values-not-percentages statement only; no token/argument/default, unknown-unit, secrecy or full native parity contract. Citation unexpanded.",
+      "kind": "prose-limit"
+    },
+    {
+      "line": 5,
+      "literal": "https://github.com/Gethe/wow-ui-source/commit/163ac1f68d1026f4faad2eb27a54838f080bc21a",
+      "target": "https://github.com/Gethe/wow-ui-source/commit/163ac1f68d1026f4faad2eb27a54838f080bc21a",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 6,
+      "literal": "https://github.com/Ketho/BlizzardInterfaceResources/commit/0615bdcecbed09484fc035f2727cf54131e41a9c",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/commit/0615bdcecbed09484fc035f2727cf54131e41a9c",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 9,
+      "literal": "[[Getting_the_current_interface_number|TOC version]]",
+      "target": "Getting_the_current_interface_number",
+      "label": "TOC version",
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 10,
+      "literal": "[[Keyring]]",
+      "target": "Keyring",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 12,
+      "literal": "https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change",
+      "target": "https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 12,
+      "literal": "[[Kaivax]]",
+      "target": "Kaivax",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 13,
+      "literal": "https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596",
+      "target": "https://us.forums.blizzard.com/en/wow/t/wow-classic-ui-api-change-for-unithealth/446596",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Literal target only; no linked contents, signatures, defaults or behavior credit.",
+      "status": "UNPROVEN"
+    }
+  ],
+  "examples": [],
+  "configured_profiles": [
+    {
+      "feature": "client-era",
+      "configured_interface": 11507,
+      "feature_dependencies": [],
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_correspondence": "UNPROVEN"
+    },
+    {
+      "feature": "client-anniversary",
+      "configured_interface": 11507,
+      "feature_dependencies": [],
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_correspondence": "UNPROVEN"
+    }
+  ],
+  "successors": [
+    {
+      "patch": "1.13.5",
+      "pin": {
+        "title": "Patch 1.13.5/API changes",
+        "version": "1.13.5",
+        "pageid": 398847,
+        "revid": 3835002,
+        "timestamp": "2021-05-06T13:20:38Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3835002&format=json",
+        "retrieved": "2026-10-09T08:51:36.400324+00:00",
+        "response_sha256": "eaa85552784310bd4cf62fab378f6863123fe1843c7826537495499f18d9f831",
+        "wikitext_sha256": "f8a5356cff1fc8c2188b68aa77ab60969c102ea64767a4f4721fd07532f85ac2",
+        "wikitext_bytes": 1690,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.5-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.13.6",
+      "pin": {
+        "title": "Patch 1.13.6/API changes",
+        "version": "1.13.6",
+        "pageid": 461367,
+        "revid": 4435603,
+        "timestamp": "2021-05-06T13:20:50Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4435603&format=json",
+        "retrieved": "2026-10-09T08:51:36.400174+00:00",
+        "response_sha256": "46e81af7accc100716c0fd72c06060ec94cc9a3b4e1eae3b27778d72595c5e9d",
+        "wikitext_sha256": "21a9bf3248ca5db0bee46c5fec4d0332744a6e089a52e17b38dde8dbebc4e4c9",
+        "wikitext_bytes": 827,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.6-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.13.7",
+      "pin": {
+        "title": "Patch 1.13.7/API changes",
+        "version": "1.13.7",
+        "pageid": 46829,
+        "revid": 458410,
+        "timestamp": "2021-09-04T08:55:38Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=458410&format=json",
+        "retrieved": "2026-10-09T08:51:36.399298+00:00",
+        "response_sha256": "b0d750e17ee76815e6c4917f9d98f81780ef3b5bb26466acbcc9e1a8899099c4",
+        "wikitext_sha256": "b9f8be9d2db166e6b85ec868fc077bc5591071d55c05bb5f11267eb5ba11e996",
+        "wikitext_bytes": 1179,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.7-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.0",
+      "pin": {
+        "title": "Patch 1.14.0/API changes",
+        "version": "1.14.0",
+        "pageid": 71995,
+        "revid": 710568,
+        "timestamp": "2022-02-06T21:21:48Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=710568&format=json",
+        "retrieved": "2026-10-09T08:51:36.399212+00:00",
+        "response_sha256": "9e282d2407123b5850b9c7fc62c35158246d5a93109a4eafb2f9fe7133200289",
+        "wikitext_sha256": "ead23026a86829caa312eb3b9cfcb57c5bfc85099a125fce84820c94e76490ac",
+        "wikitext_bytes": 30381,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.0-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.1",
+      "pin": {
+        "title": "Patch 1.14.1/API changes",
+        "version": "1.14.1",
+        "pageid": 102588,
+        "revid": 1010974,
+        "timestamp": "2022-03-02T05:21:47Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1010974&format=json",
+        "retrieved": "2026-10-09T08:51:36.399083+00:00",
+        "response_sha256": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+        "wikitext_sha256": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+        "wikitext_bytes": 6207,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.2",
+      "pin": {
+        "title": "Patch 1.14.2/API changes",
+        "version": "1.14.2",
+        "pageid": 236101,
+        "revid": 2290155,
+        "timestamp": "2022-06-05T00:14:08Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2290155&format=json",
+        "retrieved": "2026-10-09T08:51:36.399009+00:00",
+        "response_sha256": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+        "wikitext_sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+        "wikitext_bytes": 2460,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.3",
+      "pin": {
+        "title": "Patch 1.14.3/API changes",
+        "version": "1.14.3",
+        "pageid": 480026,
+        "revid": 4615755,
+        "timestamp": "2023-07-10T10:27:33Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4615755&format=json",
+        "retrieved": "2026-10-09T08:51:36.398924+00:00",
+        "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+        "wikitext_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+        "wikitext_bytes": 23291,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.4",
+      "pin": {
+        "title": "Patch 1.14.4/API changes",
+        "version": "1.14.4",
+        "pageid": 267043,
+        "revid": 2581777,
+        "timestamp": "2023-07-19T19:32:56Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+        "retrieved": "2026-10-09T08:51:36.398825+00:00",
+        "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+        "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+        "wikitext_bytes": 775,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.0",
+      "pin": {
+        "title": "Patch 1.15.0/API changes",
+        "version": "1.15.0",
+        "pageid": 564510,
+        "revid": 5950848,
+        "timestamp": "2024-01-30T19:36:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+        "retrieved": "2026-10-09T08:51:36.398773+00:00",
+        "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+        "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+        "wikitext_bytes": 915,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.1",
+      "pin": {
+        "title": "Patch 1.15.1/API changes",
+        "version": "1.15.1",
+        "pageid": 577687,
+        "revid": 5998991,
+        "timestamp": "2024-04-03T08:43:49Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+        "retrieved": "2026-10-09T08:51:36.398724+00:00",
+        "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+        "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+        "wikitext_bytes": 835,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.2",
+      "pin": {
+        "title": "Patch 1.15.2/API changes",
+        "version": "1.15.2",
+        "pageid": 583919,
+        "revid": 6061806,
+        "timestamp": "2024-06-12T18:59:26Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+        "retrieved": "2026-10-09T08:51:36.398676+00:00",
+        "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+        "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+        "wikitext_bytes": 391,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.3",
+      "pin": {
+        "title": "Patch 1.15.3/API changes",
+        "version": "1.15.3",
+        "pageid": 593663,
+        "revid": 6114194,
+        "timestamp": "2024-08-30T01:06:01Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+        "retrieved": "2026-10-09T08:51:36.398616+00:00",
+        "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+        "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+        "wikitext_bytes": 452,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.4",
+      "pin": {
+        "title": "Patch 1.15.4/API changes",
+        "version": "1.15.4",
+        "pageid": 600355,
+        "revid": 6172581,
+        "timestamp": "2024-11-13T21:59:45Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+        "retrieved": "2026-10-09T08:51:36.398568+00:00",
+        "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+        "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+        "wikitext_bytes": 439,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.5",
+      "pin": {
+        "title": "Patch 1.15.5/API changes",
+        "version": "1.15.5",
+        "pageid": 610284,
+        "revid": 6235411,
+        "timestamp": "2025-02-09T17:32:34Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+        "retrieved": "2026-10-09T08:51:36.398521+00:00",
+        "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+        "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.6",
+      "pin": {
+        "title": "Patch 1.15.6/API changes",
+        "version": "1.15.6",
+        "pageid": 619994,
+        "revid": 6281951,
+        "timestamp": "2025-04-04T10:14:39Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+        "retrieved": "2026-10-09T08:51:36.398475+00:00",
+        "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+        "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.7",
+      "pin": {
+        "title": "Patch 1.15.7/API changes",
+        "version": "1.15.7",
+        "pageid": 626071,
+        "revid": 6778069,
+        "timestamp": "2026-07-22T05:34:20Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+        "retrieved": "2026-10-09T08:51:36.398418+00:00",
+        "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+        "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.8",
+      "pin": {
+        "title": "Patch 1.15.8/API changes",
+        "version": "1.15.8",
+        "pageid": 686952,
+        "revid": 6778071,
+        "timestamp": "2026-07-22T05:34:51Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+        "retrieved": "2026-10-09T08:51:36.398359+00:00",
+        "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+        "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+        "wikitext_bytes": 279,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.9",
+      "pin": {
+        "title": "Patch 1.15.9/API changes",
+        "version": "1.15.9",
+        "pageid": 685352,
+        "revid": 6780591,
+        "timestamp": "2026-07-24T15:29:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+        "retrieved": "2026-10-09T08:51:36.398273+00:00",
+        "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+        "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+        "wikitext_bytes": 4085,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    }
+  ],
+  "queued_successor": {
+    "patch": "1.13.4",
+    "pin": {
+      "title": "Patch 1.13.4/API changes",
+      "version": "1.13.4",
+      "pageid": 333398,
+      "revid": 3216451,
+      "timestamp": "2021-05-06T13:21:20Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3216451&format=json",
+      "retrieved": "2026-10-09T08:51:36.400398+00:00",
+      "response_sha256": "a49c62f6c4663ab12a8eac66083676c1284ab5f5ac870023e542b892924ffc55",
+      "wikitext_sha256": "a8cbcc1f62bb90e33a40334dece4f943b3f44648c34d50fbbb0a55160b8e00f5",
+      "wikitext_bytes": 2146,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.4-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.4-wikitext.txt"
+    },
+    "state": "concurrently-active-not-integrated",
+    "register": null,
+    "applied": false,
+    "native_proof": false,
+    "integration_order": [
+      "1.13.4",
+      "1.13.3"
+    ]
+  },
+  "later_registers": [],
+  "model_review": [
+    {
+      "contract": "NPC UnitHealth and UnitHealthMax values, not percentages",
+      "status": "UNPROVEN",
+      "paths": [
+        "src/lua_api/globals/utility_system_spell/spell_api.rs"
+      ],
+      "assessment": "Existing lookup_unit_vitals reads target health/health_max. Nonretail directenv state transition test is grounded by prose, planned separately; no source signature/default inference or native credit."
+    },
+    {
+      "contract": "Keyring feature, HasKey, KeyRingButtonIDToInvSlotID",
+      "status": "UNPROVEN",
+      "paths": [
+        "src/era/compat_bootstrap.lua",
+        "src/lua_api/globals/real/container_legacy.rs"
+      ],
+      "assessment": "Era HasKey returns false. Real bag_items membership is gated Forever only, not Era. Keyring addition supplies no slot mapping, capacity, identity query arguments/returns or HasKey contract. Do not copy foreign model/aliases/defaults or promote name availability."
+    },
+    {
+      "contract": "SendChatMessage hardware-event restriction",
+      "status": "UNPROVEN",
+      "paths": [
+        "src/lua_api/globals/message_verbs.rs"
+      ],
+      "assessment": "Current send_chat_message appends outbound state/chat text without a hardware-event check. Source gives no failure result/security shape or authorized event lifetime. Existing behavior is not parity; no invented guard model."
+    },
+    {
+      "contract": "SendAddonMessage CHANNEL removal; SAY/YELL addition",
+      "status": "UNPROVEN",
+      "paths": [
+        "src/lua_api/globals/message_verbs.rs",
+        "src/c_api/addon_messages.rs"
+      ],
+      "assessment": "Legacy send_addon_message logs arbitrary channel string and enqueues CHAT_MSG_ADDON; accepts CHANNEL. C_ChatInfo path is separate. Source supplies no result/failure shape, routing or delivery semantics; leave transition UNPROVEN rather than fabricate historical signature or rejection."
+    },
+    {
+      "contract": "Summon namespace and removed summon/totem/kiosk identities",
+      "status": "UNPROVEN",
+      "paths": [
+        "state-scan.json"
+      ],
+      "assessment": "Complete owned src scan retains all literal term hits/misses. No historical summon lifecycle, timers, source identity, totem targeting/dismissal or removal contract test grounded by this page. Publication/names/default factory would not establish meaningful behavior. No retirements/aliases."
+    },
+    {
+      "contract": "Combat-rating and voice-channel join queries",
+      "status": "UNPROVEN",
+      "paths": [
+        "src/lua_api/globals/real/combat_stats.rs",
+        "state-scan.json"
+      ],
+      "assessment": "Combat-rating queries read current player rating/pct state. Page specifies identity only: no index set, formula, return/default or voice join lifecycle. No foreign/current formula credit for historical API identity."
+    },
+    {
+      "contract": "CORPSE_POSITION_UPDATE and four CVars",
+      "status": "UNPROVEN",
+      "paths": [
+        "src/cvars.rs",
+        "state-scan.json"
+      ],
+      "assessment": "Current KioskCanSessionExpire default 1 is not a page default. Permissive Classic event registration does not prove event production/payload/order. Remaining CVar effects and all four historical defaults unspecified. No generated default/publication credit."
+    }
+  ],
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "derivation": {
+    "generator_flags": [],
+    "extractor_flags": [],
+    "literal_inventory": "Own opt-in SOURCE accounting; all colon-api occurrences; default tools unchanged.",
+    "generator_default_limit": "22 globals only; drops event/four CVars and both numeric headers. Preserve literal boundaries and default bytes separately."
+  },
+  "totals": {
+    "physical_lines": 62,
+    "source_rows": 56,
+    "extracted_rows": 0,
+    "inventory": 27,
+    "default_inventory": 22,
+    "default_omissions": 5,
+    "signatures": 31,
+    "headers": 8,
+    "inventory_headers": 2,
+    "captions": 2,
+    "prose": 4,
+    "links": 7,
+    "templates": 35,
+    "references": 2,
+    "contracts": 38,
+    "configured_profiles": 2,
+    "successors": 18,
+    "model_review": 7,
+    "source_statuses": {
+      "metadata-only": 23,
+      "UNPROVEN": 33
+    },
+    "inventory_by_section": {
+      "global-api": 22,
+      "events": 1,
+      "cvars": 4
+    },
+    "inventory_by_direction": {
+      "added": 17,
+      "removed": 10
+    },
+    "contract_statuses": {
+      "UNPROVEN": 38
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 266
+  }
+}

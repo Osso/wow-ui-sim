@@ -1,0 +1,14 @@
+{
+  "current-model.log": "1d9cf4cedb0b667c31f797fab0bc0bce22f67ec1b2fe748df6a598e9e3ff3072",
+  "current-model-proof.json": "06765063d0ce4f5c757d3470edceaf0ffc42bc281630d04f1dc7958a5a4c677a",
+  "current-model-observations.json": "f2cc354b2dc298f79cf5f9871cd10897a0e5613c460b92296d1da751c65e0832",
+  "originals.tar.gz": "ff815ecd36b38dfcdb67a1524c3d37d88214f2c55bd5aaf2bc14d6be07e3c22e",
+  "seals.json": "8325cb7578f6007d1533fa06360001be6a0b2667ce3100925814e5e7c623ed9e",
+  "current-proof-ledger.json": "b9dc181bb93576bf738ac02b4355a37996c26ec89187f0e81f9c39df27e8a73c",
+  "portable-proof.json": "f668a57ad339bee4461dbb10199087f52051e8fbfda8363bce556c1e35f0269b",
+  "portable-command.json": "bf41950da9bfab1b13b9b73298547c9a3009046ea579c1005295440d9a2ce0e2",
+  "portable-green.log": "a9ea3eb10cedb0a45078938b8f46182114052c9e45b0a1ccf7c86c4bdc44c7a3",
+  "historical-validator-proof.json": "0a38833d59fa3d4f435e4836926dbf56e90373e39904feba4a14880c1c0ab750",
+  "REPLAY.md": "3fd6f7181504867ced6f45b0f89b90b2a1136b6a825d82cfca18082fd6872b8a",
+  "HANDOFF.md": "ec2a6571155d958aa63fabc2df89a2a6c2b3e76403a725d9e52b29804b61b2a0"
+}

@@ -1,0 +1,51 @@
+{
+  "configured_interface": 11507,
+  "historical_signature_credit": false,
+  "native_credit": false,
+  "observations": [
+    {
+      "observed": [
+        7501,
+        16003
+      ],
+      "percentage_control": 46.87246141348497,
+      "seed": {
+        "health": 7501,
+        "health_max": 16003,
+        "is_player": false
+      }
+    },
+    {
+      "observed": [
+        93,
+        24005
+      ],
+      "percentage_control": 0.3874192876484066,
+      "seed": {
+        "health": 93,
+        "health_max": 24005,
+        "is_player": false
+      }
+    },
+    {
+      "observed": [
+        18007,
+        24005
+      ],
+      "percentage_control": 75.01353884607373,
+      "seed": {
+        "health": 18007,
+        "health_max": 24005,
+        "is_player": false
+      }
+    }
+  ],
+  "raw_types": [
+    "function",
+    "function"
+  ],
+  "runtime_changes": 0,
+  "scope": "current bare Era NPC numeric values across three snapshot mutations",
+  "source_interface": 11303,
+  "source_ledger_mutated": false
+}

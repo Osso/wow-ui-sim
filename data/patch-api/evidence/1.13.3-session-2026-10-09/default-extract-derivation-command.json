@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1133-page/data/patch-api/evidence/1.13.3-session-2026-10-09/derive_default_extract.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1133-page",
+  "exit_code": 0,
+  "stdout": "{\n  \"result\": \"existing-failure\",\n  \"text\": null,\n  \"error_type\": \"ValueError\",\n  \"error\": \"unhandled template: * Removed the \\\"CHANNEL\\\" chat type from {{api|SendAddonMessage}}() and added \\\"SAY\\\" and \\\"YELL\\\" types. <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/classic-patch-1-13-3-lua-api-change|author=[[Kaivax]]|date=2019-12-09|title=Classic Patch 1.13.3 Lua API Change}}</ref>\",\n  \"flags\": []\n}\n",
+  "stderr": "",
+  "epoch": "base3de874658"
+}

@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-1-13-4-api-audit.md): frozen333398/3216451,2146 bytes,57 raw/23 inventory/23 unspecified signatures/30 UNPROVEN contracts. Exact SOURCE RED8 retained; current Era totem-slot lifecycle GREEN1/1 at ce0c5c59a, no native historical signature/default credit. SOURCE GREEN8/8 at c9c0262e3; successor3/3 at acddd6ef6, portable3/3 at bec06a7a2.112 original seals unchanged; copied no-Git/target/current-tools default-byte replay and both serialized tamper restorations pass.18 actual same-Era ledgers separately applied, one1.14.0 commentator removal overlap; all30 historical contracts UNPROVEN. Frozen queue immutable. Main integrates1.13.4 before1.13.3.
 
+## [2026-10-09] investigation | Patch 1.13.3 literal SOURCE audit
+
+[Audit](investigations/patch-1-13-3-api-audit.md): frozen455918/6472111; 27 literal inventory versus22 historical default entries; 56raw rows/31signature limits/38UNPROVEN contracts;266 omission controls. SOURCE RED9/GREEN9 at63501af73; existing current Era NPC absolute-health1/1 atbd091cd6d, not historical/native/signature parity. Portable RED3/GREEN3 and own84-seal validator atde4a7912d: copied SOURCE9/default bytes/error, serialized ledger/log rejection/exact restoration.84original +12 separate receipt seals;85-member181311byte archive. Same-Era1.13.4 queued separately; main integrates it first. No runtime fix or parent/final acceptance.
+
 ## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE audit
 
 [Audit](investigations/patch-1-14-0-api-audit.md): frozen71995/710568;776 literal rows/723 inventory,560 unspecified signature records,163 unknown CVar defaults,8 matching count headers,720 unexpanded templates/10 links. Foreign2.5.2 baseline claim separate from unapplied same-Era1.14.1..1.15.9. Own SOURCE RED10/GREEN10 at66a5448b0:2983 omissions; portable RED3/GREEN3 at4e3739d4f: copied SOURCE10, byte replay, serialized ledger/log rejection/restoration.92 original +5 separate receipt seals;93-member215960byte archive. Zero runtime/model/native credit; shared tools unchanged; main owns integration/gates.

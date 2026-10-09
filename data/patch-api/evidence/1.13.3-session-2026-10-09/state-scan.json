@@ -1,0 +1,837 @@
+{
+  "scope": "complete own src rs/lua scan; current code only",
+  "base_revision": "3de87465828db7cc7f6f900d4b63e24f1b399825",
+  "terms": [
+    "C_SummonInfo",
+    "CancelSummon",
+    "ConfirmSummon",
+    "GetSummonConfirm",
+    "GetSummonReason",
+    "IsSummonSkippingStartExperience",
+    "IsChannelJoinPending",
+    "HasKey",
+    "KeyRingButtonIDToInvSlotID",
+    "GetCombatRating",
+    "GetTotemCannotDismiss",
+    "GetTotemInfo",
+    "GetTotemTimeLeft",
+    "IsKioskModeEnabled",
+    "TargetTotem",
+    "CORPSE_POSITION_UPDATE",
+    "KioskCanSessionExpire",
+    "KioskCharacterTemplateSet",
+    "KioskLobbyKickSeconds",
+    "showKeyring",
+    "SendChatMessage",
+    "SendAddonMessage",
+    "hardware_event",
+    "hardware event",
+    "UnitHealth",
+    "UnitHealthMax",
+    "keyring"
+  ],
+  "files": [
+    {
+      "path": "src/c_api/addon_messages.rs",
+      "sha256": "17a2ae9ddf00d4028f4652c611bc75dcda74699aa8900d787b33a9fb142d12d8",
+      "matches": [
+        {
+          "line": 17,
+          "literal": "// Enum.SendAddonMessageResult values from pinned ChatConstantsDocumentation.",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 43,
+          "literal": "    table_set_rust_fn_static(state, table, \"SendAddonMessage\", send_addon_message)?;",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 47,
+          "literal": "        \"SendAddonMessageLogged\",",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/c_api/c_summon_info.rs",
+      "sha256": "f40bed04dd74e9702bb461693d8cb85ca2d0f71b85019d4de2eb673ae32576c6",
+      "matches": [
+        {
+          "line": 1,
+          "literal": "//! `C_SummonInfo` and `C_IncomingSummon` probe surface backed by",
+          "terms": [
+            "C_SummonInfo"
+          ]
+        },
+        {
+          "line": 17,
+          "literal": "    let summon_info = ensure_namespace(state, \"C_SummonInfo\")?;",
+          "terms": [
+            "C_SummonInfo"
+          ]
+        },
+        {
+          "line": 21,
+          "literal": "        \"GetSummonReason\",",
+          "terms": [
+            "GetSummonReason"
+          ]
+        },
+        {
+          "line": 27,
+          "literal": "        \"GetSummonConfirmTimeLeft\",",
+          "terms": [
+            "GetSummonConfirm"
+          ]
+        },
+        {
+          "line": 33,
+          "literal": "        \"IsSummonSkippingStartExperience\",",
+          "terms": [
+            "IsSummonSkippingStartExperience"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/c_api/secrets_queries.rs",
+      "sha256": "13645e9916577aa714bc24bd42a579a20aed1474291332e62d3da60c51d5bcd8",
+      "matches": [
+        {
+          "line": 65,
+          "literal": "        \"ShouldUnitHealthMaxBeSecret\",",
+          "terms": [
+            "UnitHealth",
+            "UnitHealthMax"
+          ]
+        },
+        {
+          "line": 207,
+          "literal": "    // INFERRED simulator default: UnitHealthMax has no health-max secrecy model.",
+          "terms": [
+            "UnitHealth",
+            "UnitHealthMax"
+          ]
+        },
+        {
+          "line": 257,
+          "literal": "    // Empty GetTotemInfo is the only current totem surface. Active totem slots,",
+          "terms": [
+            "GetTotemInfo"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/cvars.rs",
+      "sha256": "4a9c33eb99b1aafd4fbc22e8cb3929d2e98608c3bfa2c3c99ec1ea6df8abc89c",
+      "matches": [
+        {
+          "line": 444,
+          "literal": "    (\"KioskCanSessionExpire\", \"1\"),",
+          "terms": [
+            "KioskCanSessionExpire"
+          ]
+        },
+        {
+          "line": 445,
+          "literal": "    (\"KioskCharacterTemplateSet\", \"0\"),",
+          "terms": [
+            "KioskCharacterTemplateSet"
+          ]
+        },
+        {
+          "line": 446,
+          "literal": "    (\"KioskLobbyKickSeconds\", \"30\"),",
+          "terms": [
+            "KioskLobbyKickSeconds"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/era/compat_bootstrap.lua",
+      "sha256": "e66b3aaeda84fd83a5d2c91778514b50e8d5def4d04633ffdbac895233e34243",
+      "matches": [
+        {
+          "line": 101,
+          "literal": "-- ─── Keyring / pet UI (vanilla-only features) ──────────────────────────────",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 103,
+          "literal": "if rawget(_G, \"HasKey\") == nil then",
+          "terms": [
+            "HasKey"
+          ]
+        },
+        {
+          "line": 104,
+          "literal": "  function HasKey() return false end",
+          "terms": [
+            "HasKey"
+          ]
+        },
+        {
+          "line": 107,
+          "literal": "if rawget(_G, \"IsKeyRingEnabled\") == nil then",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 108,
+          "literal": "  function IsKeyRingEnabled() return false end",
+          "terms": [
+            "keyring"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/loader/tests/wow_api_globals/patch_12_0_0_send_addon_message_result_enums.rs",
+      "sha256": "d06289bbc78b4fc028eb2912670a4f12a3ebc48899bff714fcced37e6f69e9ef",
+      "matches": [
+        {
+          "line": 1,
+          "literal": "//! Focused retail 12.0.0 SendAddonMessageResult enum values.",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 28,
+          "literal": "                local result_type = Enum.SendAddonMessageResult",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 30,
+          "literal": "                    return \"SendAddonMessageResult: expected table\"",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 53,
+          "literal": "                local meta = Enum.SendAddonMessageResultMeta",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 55,
+          "literal": "                    return \"SendAddonMessageResultMeta: expected table\"",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 72,
+          "literal": "        \"retail 12.0.0 SendAddonMessageResult enum mismatch: {result}\"",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/cast_completion.rs",
+      "sha256": "07a5b404176a2e6c543ed958323f6b72f8f52ce5c956531b27dafc4805b73310",
+      "matches": [
+        {
+          "line": 57,
+          "literal": "        Some(crate::lua_api::game_data::SpellEffectResult::UnitHealthChanged(unit_id)) => {",
+          "terms": [
+            "UnitHealth"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/chat_init.rs",
+      "sha256": "a0b1cd2b81c2887b62f0cc5b018b4e85946659773aa4c807c662bf75be7cad02",
+      "matches": [
+        {
+          "line": 125,
+          "literal": "            SendChatMessage = __wow_send_chat_message",
+          "terms": [
+            "SendChatMessage"
+          ]
+        },
+        {
+          "line": 127,
+          "literal": "                C_ChatInfo.SendChatMessage = __wow_send_chat_message",
+          "terms": [
+            "SendChatMessage"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/game_data.rs",
+      "sha256": "55872dd1c1b907a4cee448b89dda8de35f0445f59d2ee54f8d4c230c473a7bc0",
+      "matches": [
+        {
+          "line": 151,
+          "literal": "    UnitHealthChanged(String),",
+          "terms": [
+            "UnitHealth"
+          ]
+        },
+        {
+          "line": 231,
+          "literal": "            apply_damage_to_target(state, amount).map(SpellEffectResult::UnitHealthChanged)",
+          "terms": [
+            "UnitHealth"
+          ]
+        },
+        {
+          "line": 234,
+          "literal": "            apply_heal_to_target(state, amount).map(SpellEffectResult::UnitHealthChanged)",
+          "terms": [
+            "UnitHealth"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/combat_verbs.rs",
+      "sha256": "ee327eb5201d2c3c29034b54d1de00c9aa13ad6b4cd9775396d5b0a3e727f4d0",
+      "matches": [
+        {
+          "line": 268,
+          "literal": "        Some(SpellEffectResult::UnitHealthChanged(unit_id)) => {",
+          "terms": [
+            "UnitHealth"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/enum_data/missing_enums.lua",
+      "sha256": "60a333e293bcc26af280e487e3b546231330e3cd9feb51c77aecb258dab3f3a6",
+      "matches": [
+        {
+          "line": 12467,
+          "literal": "if not Enum.SendAddonMessageResult then",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 12468,
+          "literal": "  Enum.SendAddonMessageResult = {",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 12485,
+          "literal": "if not Enum.SendAddonMessageResultMeta then",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 12486,
+          "literal": "  Enum.SendAddonMessageResultMeta = {",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 13125,
+          "literal": "    Keyring = 6,",
+          "terms": [
+            "keyring"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/enum_data/widget.rs",
+      "sha256": "48a79be51eb7c6543ccfe224843c969ed64e05654c742e6fbd95089aacb30b09",
+      "matches": [
+        {
+          "line": 737,
+          "literal": "        (\"Keyring\", -1),",
+          "terms": [
+            "keyring"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/message_verbs.rs",
+      "sha256": "9f27338d03476c26eb27e05d54b40816f80f3e88084d404ba127f34ad48576d0",
+      "matches": [
+        {
+          "line": 1,
+          "literal": "//! Auction / message verbs: `CancelAuction`, `SendAddonMessage`,",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 2,
+          "literal": "//! `SendChatMessage`.",
+          "terms": [
+            "SendChatMessage"
+          ]
+        },
+        {
+          "line": 8,
+          "literal": "//! - `SendAddonMessage(prefix, message, channel, target)` — append to",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 10,
+          "literal": "//! - `SendChatMessage(message, chatType, language, target)` — append to",
+          "terms": [
+            "SendChatMessage"
+          ]
+        },
+        {
+          "line": 112,
+          "literal": "/// `SendAddonMessage(prefix, message, channel, target)` — log + fire",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 137,
+          "literal": "/// `SendChatMessage(message, chatType, language, target)` — log only.",
+          "terms": [
+            "SendChatMessage"
+          ]
+        },
+        {
+          "line": 159,
+          "literal": "    LuaApiMut::register_function(lua, \"SendAddonMessage\", send_addon_message)?;",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 160,
+          "literal": "    LuaApiMut::register_function(lua, \"SendChatMessage\", send_chat_message)?;",
+          "terms": [
+            "SendChatMessage"
+          ]
+        },
+        {
+          "line": 173,
+          "literal": "            table_set_rust_fn_static(state, chat_info_ref, \"SendChatMessage\", send_chat_message)?;",
+          "terms": [
+            "SendChatMessage"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/real/combat_stats.rs",
+      "sha256": "3556e6158614a3026ab84fbd4aa9e2e7b101010239c7ac5ba541f5bc527592a6",
+      "matches": [
+        {
+          "line": 370,
+          "literal": "    (\"GetCombatRating\", get_combat_rating),",
+          "terms": [
+            "GetCombatRating"
+          ]
+        },
+        {
+          "line": 371,
+          "literal": "    (\"GetCombatRatingBonus\", get_combat_rating_bonus),",
+          "terms": [
+            "GetCombatRating"
+          ]
+        },
+        {
+          "line": 373,
+          "literal": "        \"GetCombatRatingBonusForCombatRatingValue\",",
+          "terms": [
+            "GetCombatRating"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/real/container_legacy.rs",
+      "sha256": "f0d47f854003730c6f698cd387a55ced35b41a75b846dbc3b18380a7c7eb36e1",
+      "matches": [
+        {
+          "line": 30,
+          "literal": "    table_set_rust_fn_static(state, state.global, \"HasKey\", has_key)?;",
+          "terms": [
+            "HasKey"
+          ]
+        },
+        {
+          "line": 36,
+          "literal": "    // Forever BagIndex.Keyring is -1. Membership, not item-name guessing,",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 37,
+          "literal": "    // defines a key in the simulator's modeled keyring inventory.",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 38,
+          "literal": "    const KEYRING_CONTAINER: i32 = -1;",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 43,
+          "literal": "            bag == KEYRING_CONTAINER && slot > 0 && item.item_id != 0 && item.stack_count > 0",
+          "terms": [
+            "keyring"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/real/simulate_mouse.rs",
+      "sha256": "ca00ee8753ae717394e64850d1e8d726f9829ece406ca20ebe5c74e27ce6b282",
+      "matches": [
+        {
+          "line": 4,
+          "literal": "//! - Insecure callers must consume a gamepad limited-input hardware event. The",
+          "terms": [
+            "hardware event"
+          ]
+        },
+        {
+          "line": 5,
+          "literal": "//!   simulator has no gamepad hardware event source, so insecure calls are refused.",
+          "terms": [
+            "hardware event"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/real/totems.rs",
+      "sha256": "d418eedabbaa0431dce0b67b3caac375041b9e8375c2fd6aef14e912a738f8b7",
+      "matches": [
+        {
+          "line": 17,
+          "literal": "    LuaApiMut::register_function(lua, \"GetTotemInfo\", get_totem_info)?;",
+          "terms": [
+            "GetTotemInfo"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/stubs/global_stubs.rs",
+      "sha256": "e58910706b30395dc8a85107b1d29d16b7aa7e1e3132bb79dd967983abcd546f",
+      "matches": [
+        {
+          "line": 223,
+          "literal": "    \"GetSummonConfirmSummoner\",",
+          "terms": [
+            "ConfirmSummon",
+            "GetSummonConfirm"
+          ]
+        },
+        {
+          "line": 224,
+          "literal": "    \"GetSummonConfirmTimeLeft\",",
+          "terms": [
+            "GetSummonConfirm"
+          ]
+        },
+        {
+          "line": 233,
+          "literal": "    // UnitRangedDamage / UnitReaction / UnitHealthMax / UnitPowerMax /",
+          "terms": [
+            "UnitHealth",
+            "UnitHealthMax"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "sha256": "726ccac8b3135c28ea202748553f3d8b093a67efac60c40ae08e4b59cf42eb07",
+      "matches": [
+        {
+          "line": 91,
+          "literal": "    // C_SummonInfo GetSummonReason / GetSummonConfirmTimeLeft /",
+          "terms": [
+            "C_SummonInfo",
+            "GetSummonConfirm",
+            "GetSummonReason"
+          ]
+        },
+        {
+          "line": 92,
+          "literal": "    // IsSummonSkippingStartExperience are SimState-backed in",
+          "terms": [
+            "IsSummonSkippingStartExperience"
+          ]
+        },
+        {
+          "line": 196,
+          "literal": "    // C_SummonInfo IsSummonSkippingStartExperience is SimState-backed in",
+          "terms": [
+            "C_SummonInfo",
+            "IsSummonSkippingStartExperience"
+          ]
+        },
+        {
+          "line": 218,
+          "literal": "    // C_SummonInfo GetSummonConfirmTimeLeft is SimState-backed in",
+          "terms": [
+            "C_SummonInfo",
+            "GetSummonConfirm"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/utility_system_spell/spell_api.rs",
+      "sha256": "278d6ba9820355cc186fd113b680eb5a0a7a4ffbb80720c1dfadbc9a5869101c",
+      "matches": [
+        {
+          "line": 1,
+          "literal": "//! Spell-related globals: UnitHealth, UnitPower, UnitCastingInfo, CastSpellBy*.",
+          "terms": [
+            "UnitHealth"
+          ]
+        },
+        {
+          "line": 553,
+          "literal": "    LuaApiMut::register_function(lua, \"UnitHealth\", unit_health)?;",
+          "terms": [
+            "UnitHealth"
+          ]
+        },
+        {
+          "line": 554,
+          "literal": "    LuaApiMut::register_function(lua, \"UnitHealthMax\", unit_health_max)?;",
+          "terms": [
+            "UnitHealth",
+            "UnitHealthMax"
+          ]
+        },
+        {
+          "line": 556,
+          "literal": "    LuaApiMut::register_function(lua, \"UnitHealthMissing\", unit_health_missing)?;",
+          "terms": [
+            "UnitHealth"
+          ]
+        },
+        {
+          "line": 557,
+          "literal": "    LuaApiMut::register_function(lua, \"UnitHealthPercent\", unit_health_percent)?;",
+          "terms": [
+            "UnitHealth"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/hot_literals.rs",
+      "sha256": "ad54b327d02ffdd0fbb22ef052c58d10f57080ac08782b499b415858e58258da",
+      "matches": [
+        {
+          "line": 190,
+          "literal": "    b\"C_SummonInfo\",",
+          "terms": [
+            "C_SummonInfo"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/sim_substates/mod.rs",
+      "sha256": "b1ecbbd1189315634138496e84f13f1f6f57d8a2ad9831f3d812a195580e7905",
+      "matches": [
+        {
+          "line": 291,
+          "literal": "/// `kind` is `\"chat\"` for `SendChatMessage` or `\"addon\"` for",
+          "terms": [
+            "SendChatMessage"
+          ]
+        },
+        {
+          "line": 292,
+          "literal": "/// `SendAddonMessage`.",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/state_types/social.rs",
+      "sha256": "fc13062c76ccb05a6164f862639ed638652ffef21802e0b2e633b64770bd7443",
+      "matches": [
+        {
+          "line": 145,
+          "literal": "/// Pending summon-request state. Drives `C_SummonInfo.*` and",
+          "terms": [
+            "C_SummonInfo"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+      "sha256": "d3934ee9bace2ca693d3d677cc4b3ca34cc5c255d21996d9b69f57d5f03a2474",
+      "matches": [
+        {
+          "line": 71,
+          "literal": "if rawget(C_Commentator, \"SendAddonMessage\") == nil then",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 72,
+          "literal": "    function C_Commentator.SendAddonMessage(_prefix, _message, _channel)",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 73,
+          "literal": "        return Enum and Enum.SendAddonMessageResult and Enum.SendAddonMessageResult.Success or 0",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 82,
+          "literal": "-- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled.",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 84,
+          "literal": "        and rawget(C_Commentator, \"SendAddonMessageLogged\") == nil then",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 85,
+          "literal": "    function C_Commentator.SendAddonMessageLogged(_prefix, _message, _chatType, _target)",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 86,
+          "literal": "        return C_Commentator.SendAddonMessage(_prefix, _message, _chatType)",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 301,
+          "literal": "                if C_Commentator.SendAddonMessage(\"A\", \"B\", \"WHISPER\") ~= Enum.SendAddonMessageResult.Success then return \"send\" end",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        },
+        {
+          "line": 385,
+          "literal": "                if type(C_Commentator.SendAddonMessage) ~= \"function\" then return \"missing_default\" end",
+          "terms": [
+            "SendAddonMessage"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/lua_api/workarounds/temporary/secure_types_defaults.rs",
+      "sha256": "fd6689ebf79d65e73ec7eae6f5ae5c6caedf1b80249a7cd9ffed2d4578c5746c",
+      "matches": [
+        {
+          "line": 50,
+          "literal": "  function SecureMap:HasKey(key)",
+          "terms": [
+            "HasKey"
+          ]
+        },
+        {
+          "line": 108,
+          "literal": "    return self:HasKey(key)",
+          "terms": [
+            "HasKey"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "src/mists/compat_bootstrap.lua",
+      "sha256": "efda9f00251c455f45425bf3399388041e56e46b785ed7fde473879c87e6065a",
+      "matches": [
+        {
+          "line": 286,
+          "literal": "if rawget(_G, \"HasKey\") == nil then",
+          "terms": [
+            "HasKey"
+          ]
+        },
+        {
+          "line": 287,
+          "literal": "  function HasKey() return false end",
+          "terms": [
+            "HasKey"
+          ]
+        },
+        {
+          "line": 305,
+          "literal": "if rawget(_G, \"IsKeyRingEnabled\") == nil then",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 306,
+          "literal": "  function IsKeyRingEnabled() return false end",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 521,
+          "literal": "-- constants like KEYRING_CONTAINER and NUM_BAG_SLOTS get defined, cascading",
+          "terms": [
+            "keyring"
+          ]
+        },
+        {
+          "line": 522,
+          "literal": "-- into EquipmentManager.lua's \"for KEYRING_CONTAINER, NUM_BAG_SLOTS\" loop.",
+          "terms": [
+            "keyring"
+          ]
+        }
+      ]
+    }
+  ]
+}
