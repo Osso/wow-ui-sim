@@ -17,10 +17,10 @@ fn patch_5_2_0_publication_sweep(env: &WowLuaEnv) {
         register_env: "P520_SWEEP_REGISTER",
         out_env: "P520_SWEEP_OUT",
         later_registers: &[
-            // Queued retail 5.3.0: p530-page.
-            // Queued retail 5.4.0: p540-page.
-            // Queued retail 5.4.1: p541-page.
-            // Queued retail 5.4.2: p542-page.
+            include_str!("../data/patch-api/sources/5.3.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/5.4.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/5.4.1-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/5.4.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.4.7-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.4.8-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.0.1-wikitext-register.json"),
