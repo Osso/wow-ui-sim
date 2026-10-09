@@ -37,6 +37,10 @@ Before any copy, response JSON identity, returned literal wikitext, bytes and ma
 
 Own development RED fails the missing 333-occurrence result against a temporary empty validator; GREEN **7/7** passes. Recorded-flag extraction and own source replay exit 0. Exact command/log/content scope retained in [proof ledger](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/source-proof.json). Python manually formatted (ruff/black unavailable); no Rust edits/formatter. Parent owns integration and broad/final gates. No publication sweep/check/build/readability/startup/smoke/final gate, delegation, push/merge, provider/model/retry change or other-worktree write.
 
+## Portable negative-control fixture
+
+[Own controls](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py) mutate the serialized ledger and sealed GREEN log separately, require exact seal rejection, restore/hash-check original bytes, then export only sealed inputs into a relocated archive with no `.git`. The archived validator executes with the owned worktree cwd; paths resolve solely from its relocated file. This is source/log replay, never runtime/native replay. Control receipts are pending fixture execution.
+
 ## Sources
 
 - [Raw source](../../../data/patch-api/sources/3.4.1-api-changes.wikitext), [reproducible limited extract](../../../data/patch-api/sources/3.4.1-api-changes.txt), [pin/response/evidence](../../../data/patch-api/evidence/3.4.1-session-2026-10-09/).

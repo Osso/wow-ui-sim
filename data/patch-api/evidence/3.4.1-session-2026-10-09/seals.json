@@ -14,5 +14,6 @@
   "data/patch-api/evidence/3.4.1-session-2026-10-09/validator.log": "4d206abd5ff2e1c494bcfa536db964ed32730f93295b0942e37efdcd68bd9264",
   "data/patch-api/sources/3.4.1-api-changes.txt": "9ff94a5562b6a17dd9e55de6c038b06612abe6a72fdffe722472be89b664cd0e",
   "data/patch-api/sources/3.4.1-api-changes.wikitext": "b336b152bea05e3609de06ac3971a98e7d2584129e4e3b74a5c333c6fc060ed1",
-  "data/patch-api/sources/3.4.1-page-coverage.json": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db"
+  "data/patch-api/sources/3.4.1-page-coverage.json": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
+  "data/patch-api/evidence/3.4.1-session-2026-10-09/replay_controls.py": "025db6f88bf353a3a3d15edb62e0df76a44b5ff3ca12de1ca324ee4308273bbb"
 }
