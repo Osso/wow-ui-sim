@@ -6,7 +6,7 @@
     "path": "data/patch-api/sources/4.2.0-api-changes.txt",
     "sha256": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577"
   },
-  "proof_policy": "Publication/absence only. Source has no behavior prose or signatures. Pending 4.3.0/4.3.4 successors require coordinator reconciliation; Classic excluded. Native parity not claimed.",
+  "proof_policy": "Publication/absence only. Source has no behavior prose or signatures. Actual retail 4.3.0/4.3.4 successors reconciled; Classic excluded. Native parity not claimed.",
   "source_rows": [
     {
       "source_id": "wt-global-api-BNGetFriendIndex-10",
@@ -236,10 +236,9 @@
     },
     {
       "source_id": "wt-global-api-EJ_SetDifficultyByMask-39",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Missing historical difficulty-mask mutation and documented mask contract; existing difficulty ID state is insufficient proof of bit-mask semantics. Observed: raw=nil; lookup=nil. Pending 4.3.0/4.3.4 may alter publication expectations.",
-      "gap_group": "encounter-journal"
+      "capabilities": ["publication-absence"],
+      "status": "bounded-coverage",
+      "note": "Actual retail 4.3.0 removal wt-global-api-EJ_SetDifficultyByMask-88 supersedes historical addition; current raw/lookup nil satisfies absence. Historical difficulty-mask behavior remains unproven; no model implementation or Classic retirement."
     },
     {
       "source_id": "wt-global-api-EJ_SetDifficulty-40",

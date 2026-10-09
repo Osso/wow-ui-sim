@@ -5,7 +5,6 @@
   "wt-global-api-EJ_GetLootInfoByIndex-24",
   "wt-global-api-EJ_GetMapEncounter-26",
   "wt-global-api-EJ_GetSectionInfo-30",
-  "wt-global-api-EJ_SetDifficultyByMask-39",
   "wt-global-api-ExpandWarGameHeader-42",
   "wt-global-api-GetCurrentRefresh-45",
   "wt-global-api-GetMaxNumCUFProfiles-46",

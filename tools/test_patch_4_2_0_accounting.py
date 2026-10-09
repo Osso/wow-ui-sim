@@ -96,10 +96,10 @@ class Patch420Accounting(unittest.TestCase):
         negative_gaps = {key for key, result in negative.items() if not result["ok"]}
         self.assertEqual(negative_gaps, baseline_gaps | {"negative-p420-missing-global"})
 
-    def test_accounting_matches_development_observations(self):
+    def test_accounting_matches_integrated_observations(self):
         register = load(SOURCES / "4.2.0-wikitext-register.json")
         coverage = load(SOURCES / "4.2.0-page-coverage.json")
-        results = load(EVIDENCE / "development-results.json")
+        results = load(EVIDENCE / "integrated/current-results.json")
         gaps = load(ROOT / "tests/data/patch_4_2_0_sweep_known_gaps.json")
         ids = {row["id"] for row in register["entries"]}
         self.assertEqual(set(results), ids)
