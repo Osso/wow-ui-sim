@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.7.0 frozen redirect SOURCE audit
+
+[Audit](investigations/patch-1-7-0-api-audit.md): exact frozen456653/4390984 body/response/manifest-linked registry101 before derivation; literal redirect only. Own SOURCE RED6/portable RED3 and own-base default captures retained. No meaningful model/native subset; pending1.8.0 separate behind1.9.0, target research/main acceptance excluded.
+
 ## [2026-10-09] investigation | Mists wrapper proof capture incident
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) links selected static preservation receipts and lost check-result evidence. No Mists type/runtime gate closed; no old process remained before one terminal capture retry. Process-list streams excluded from publication.
