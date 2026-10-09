@@ -1,0 +1,20 @@
+{
+  "name": "1.14.4-audit",
+  "argv": [
+    "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+    "-B",
+    "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/audit.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "environment_base": "environment-before.json",
+  "started": "2026-10-09T16:32:45.904140+00:00",
+  "ended": "2026-10-09T16:32:45.925817+00:00",
+  "seconds": 0.021685098996385932,
+  "exit_code": 0,
+  "stdout": "{\n  \"historical_seals\": 67,\n  \"totals\": {\n    \"physical_lines\": 10,\n    \"nonblank_rows\": 8,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 4,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 8,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+  "stderr": ""
+}

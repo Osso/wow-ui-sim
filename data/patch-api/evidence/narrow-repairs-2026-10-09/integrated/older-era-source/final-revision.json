@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "git",
+    "rev-parse",
+    "HEAD"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "env_overrides": {},
+  "exit_code": 0,
+  "stdout": "bf8598e1da52895b707db0bf7bd9fb350c448628\n",
+  "stderr": ""
+}

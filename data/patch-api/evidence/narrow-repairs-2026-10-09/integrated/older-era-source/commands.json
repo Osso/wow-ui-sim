@@ -1,0 +1,299 @@
+[
+  {
+    "name": "1.13.7-audit",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.7-session-2026-10-09/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.470914+00:00",
+    "ended": "2026-10-09T16:32:45.514054+00:00",
+    "seconds": 0.0431407309952192,
+    "exit_code": 0,
+    "stdout": "{\n  \"seals\": 55,\n  \"totals\": {\n    \"physical_lines\": 28,\n    \"nonblank_rows\": 25,\n    \"extracted_rows\": 5,\n    \"metadata_rows\": 19,\n    \"unproven_rows\": 6,\n    \"inventory\": 5,\n    \"callables\": 1,\n    \"cvars\": 4,\n    \"headers\": 3,\n    \"inventory_headers\": 2,\n    \"numeric_headers\": 0,\n    \"contracts\": 7,\n    \"signature_declarations\": 0,\n    \"unspecified_signatures\": 1,\n    \"links\": 2,\n    \"templates\": 6,\n    \"examples\": 0,\n    \"prose\": 0,\n    \"defaults\": 0\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.7-source",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.7-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.471075+00:00",
+    "ended": "2026-10-09T16:32:46.501891+00:00",
+    "seconds": 1.0308235350094037,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_configured_profiles_and_same_history_boundaries (__main__.SourceAccounting.test_configured_profiles_and_same_history_boundaries) ... ok\ntest_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok\ntest_exact_source_identity (__main__.SourceAccounting.test_exact_source_identity) ... ok\ntest_headers_navigation_and_unexpanded_links (__main__.SourceAccounting.test_headers_navigation_and_unexpanded_links) ... ok\ntest_inventory_signatures_and_no_defaults (__main__.SourceAccounting.test_inventory_signatures_and_no_defaults) ... ok\ntest_literal_limits_and_zero_credit (__main__.SourceAccounting.test_literal_limits_and_zero_credit) ... ok\ntest_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract) ... ok\ntest_response_and_body_tamper (__main__.SourceAccounting.test_response_and_body_tamper) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.994s\n\nOK\n"
+  },
+  {
+    "name": "1.13.7-portable",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.7-session-2026-10-09/test_portable.py",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.7-session-2026-10-09/originals.tar.gz",
+      "--scratch",
+      "/tmp/older-era-source-independent/1.13.7-scratch",
+      "--receipts",
+      "/tmp/older-era-source-independent/1.13.7-receipts.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.471485+00:00",
+    "ended": "2026-10-09T16:32:46.771349+00:00",
+    "seconds": 1.299867608002387,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok\ntest_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok\ntest_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 1.265s\n\nOK\n"
+  },
+  {
+    "name": "1.13.6-audit",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.471906+00:00",
+    "ended": "2026-10-09T16:32:45.492666+00:00",
+    "seconds": 0.0207704219938023,
+    "exit_code": 0,
+    "stdout": "{\n  \"seals\": 88,\n  \"totals\": {\n    \"physical_lines\": 18,\n    \"nonblank_rows\": 16,\n    \"metadata_rows\": 11,\n    \"unproven_rows\": 5,\n    \"inventory\": 3,\n    \"callables\": 0,\n    \"cvars\": 3,\n    \"headers\": 2,\n    \"inventory_headers\": 1,\n    \"contracts\": 7,\n    \"signature_declarations\": 0,\n    \"links\": 3,\n    \"templates\": 4,\n    \"examples\": 0,\n    \"prose_defaults\": 0,\n    \"prose\": 1\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.6-source",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.472107+00:00",
+    "ended": "2026-10-09T16:32:45.645090+00:00",
+    "seconds": 0.17298854399996344,
+    "exit_code": 0,
+    "stdout": "omission controls: 55\n",
+    "stderr": "test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok\ntest_exact_response_identity_and_content (__main__.SourceAccounting.test_exact_response_identity_and_content) ... ok\ntest_headers_and_navigation (__main__.SourceAccounting.test_headers_and_navigation) ... ok\ntest_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... ok\ntest_profiles_and_separate_successors (__main__.SourceAccounting.test_profiles_and_separate_successors) ... ok\ntest_prose_links_and_templates (__main__.SourceAccounting.test_prose_links_and_templates) ... ok\ntest_three_cvars_no_invented_defaults (__main__.SourceAccounting.test_three_cvars_no_invented_defaults) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.137s\n\nOK\n"
+  },
+  {
+    "name": "1.13.6-portable",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/test_portable.py",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/replay-archive.tar.gz",
+      "--scratch",
+      "/tmp/older-era-source-independent/1.13.6-scratch",
+      "--receipts",
+      "/tmp/older-era-source-independent/1.13.6-receipts.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.492914+00:00",
+    "ended": "2026-10-09T16:32:45.903900+00:00",
+    "seconds": 0.4109954510058742,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok\ntest_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok\ntest_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.375s\n\nOK\n"
+  },
+  {
+    "name": "1.13.5-audit",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.514363+00:00",
+    "ended": "2026-10-09T16:32:45.559543+00:00",
+    "seconds": 0.0451809950027382,
+    "exit_code": 0,
+    "stdout": "{\n  \"seals\": 70,\n  \"totals\": {\n    \"physical_lines\": 36,\n    \"source_rows\": 31,\n    \"extracted_rows\": 0,\n    \"inventory\": 5,\n    \"signatures\": 5,\n    \"headers\": 5,\n    \"inventory_headers\": 2,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 7,\n    \"templates\": 7,\n    \"references\": 2,\n    \"contracts\": 14,\n    \"configured_profiles\": 2,\n    \"successors\": 16,\n    \"model_review\": 4,\n    \"source_statuses\": {\n      \"metadata-only\": 22,\n      \"UNPROVEN\": 9\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 3,\n      \"events\": 2\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 14\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 103\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.5-source",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.559696+00:00",
+    "ended": "2026-10-09T16:32:46.911768+00:00",
+    "seconds": 1.3520770760078449,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok\ntest_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok\ntest_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok\ntest_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok\ntest_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok\ntest_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok\ntest_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok\ntest_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.315s\n\nOK\n"
+  },
+  {
+    "name": "1.13.5-portable",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/test_portable.py",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/originals.tar.gz",
+      "--scratch",
+      "/tmp/older-era-source-independent/1.13.5-scratch",
+      "--receipts",
+      "/tmp/older-era-source-independent/1.13.5-receipts.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.645253+00:00",
+    "ended": "2026-10-09T16:32:47.288638+00:00",
+    "seconds": 1.6433948129997589,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok\ntest_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok\ntest_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 1.608s\n\nOK\n"
+  },
+  {
+    "name": "1.14.4-audit",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/audit.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.904140+00:00",
+    "ended": "2026-10-09T16:32:45.925817+00:00",
+    "seconds": 0.021685098996385932,
+    "exit_code": 0,
+    "stdout": "{\n  \"historical_seals\": 67,\n  \"totals\": {\n    \"physical_lines\": 10,\n    \"nonblank_rows\": 8,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 4,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 3,\n    \"unexpanded_linked_contracts\": 8,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+    "stderr": ""
+  },
+  {
+    "name": "1.14.4-source",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:45.926053+00:00",
+    "ended": "2026-10-09T16:32:46.099388+00:00",
+    "seconds": 0.17334806600410957,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... ok\ntest_complete_wrath_inclusion_claim_not_erased (__main__.SourceAccounting.test_complete_wrath_inclusion_claim_not_erased) ... ok\ntest_configuration_and_successors_not_native_credit (__main__.SourceAccounting.test_configuration_and_successors_not_native_credit) ... ok\ntest_diff_heads_not_collapsed (__main__.SourceAccounting.test_diff_heads_not_collapsed) ... ok\ntest_dragonflight_subset_separate_and_unexpanded (__main__.SourceAccounting.test_dragonflight_subset_separate_and_unexpanded) ... ok\ntest_guidance_prose_retained (__main__.SourceAccounting.test_guidance_prose_retained) ... ok\ntest_header_navigation_toc_and_context (__main__.SourceAccounting.test_header_navigation_toc_and_context) ... ok\ntest_inventory_signature_and_prose_totals (__main__.SourceAccounting.test_inventory_signature_and_prose_totals) ... ok\ntest_omissions_fabricated_members_history_and_credit_rejected (__main__.SourceAccounting.test_omissions_fabricated_members_history_and_credit_rejected) ... ok\ntest_source_identity_and_returned_bytes (__main__.SourceAccounting.test_source_identity_and_returned_bytes) ... ok\ntest_wiki_and_external_links_accounted_individually (__main__.SourceAccounting.test_wiki_and_external_links_accounted_individually) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.137s\n\nOK\n"
+  },
+  {
+    "name": "1.14.4-portable",
+    "argv": [
+      "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+      "-B",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/test_portable.py",
+      "--archive",
+      "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/replay-archive.tar.gz",
+      "--scratch",
+      "/tmp/older-era-source-independent/1.14.4-scratch",
+      "--receipts",
+      "/tmp/older-era-source-independent/1.14.4-receipts.json"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:46.099646+00:00",
+    "ended": "2026-10-09T16:32:46.487566+00:00",
+    "seconds": 0.38793283799896017,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok\ntest_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok\ntest_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.351s\n\nOK\n"
+  },
+  {
+    "name": "factory",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--no-default-features",
+      "--features",
+      "client-era",
+      "--test",
+      "patch_1_13_6_factory",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+    "env_overrides": {
+      "TMPDIR": "/tmp/older-era-source-independent/tmp",
+      "WOW_SIM_P1136_FACTORY_OUT": "/tmp/older-era-source-independent/factory-observations.json",
+      "WOW_SIM_NO_ADDONS": "1",
+      "WOW_SIM_NO_SAVED_VARS": "1",
+      "WOW_SIM_CASC": "0"
+    },
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:32:46.487837+00:00",
+    "ended": "2026-10-09T16:33:00.136663+00:00",
+    "seconds": 13.648842235998018,
+    "exit_code": 0,
+    "stdout": "\nrunning 2 tests\ntest exact_current_era_publication_gaps ... ok\ntest unknown_cvar_is_not_fabricated_by_getters ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s\n\n",
+    "stderr": "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n   Compiling wow-ui-sim v0.1.0 (/home/osso/Projects/wow/wow-ui-sim)\nwarning: constant `PROVENANCE_SCHEMA` is never used\n  --> src/blizzard_ui_sync.rs:28:7\n   |\n28 | const PROVENANCE_SCHEMA: &str = \"1\";\n   |       ^^^^^^^^^^^^^^^^^\n   |\n   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\nwarning: associated function `new` is never used\n   --> src/blizzard_ui_sync.rs:180:8\n    |\n179 | impl CacheProvenance {\n    | -------------------- associated function in this implementation\n180 |     fn new(\n    |        ^^^\n\nwarning: function `remove_missing_marker` is never used\n   --> src/blizzard_ui_sync.rs:663:4\n    |\n663 | fn remove_missing_marker(path: &Path) {\n    |    ^^^^^^^^^^^^^^^^^^^^^\n\nwarning: function `ensure_known_asset_cached` is never used\n  --> src/casc_asset_fallback.rs:93:15\n   |\n93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {\n   |               ^^^^^^^^^^^^^^^^^^^^^^^^^\n\nwarning: field `encoding_key_hex` is never read\n  --> src/render/font.rs:44:5\n   |\n41 | struct WowFontFile {\n   |        ----------- field in this struct\n...\n44 |     encoding_key_hex: Option<&'static str>,\n   |     ^^^^^^^^^^^^^^^^\n\nwarning: methods `cooldown_elapsed_since_start` and `cooldown_remaining_seconds` are never used\n   --> src/widget/frame.rs:601:19\n    |\n600 | impl Frame {\n    | ---------- methods in this implementation\n601 |     pub(crate) fn cooldown_elapsed_since_start(&self, elapsed_secs: f64) -> f64 {\n    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n...\n610 |     pub(crate) fn cooldown_remaining_seconds(&self, elapsed_secs: f64) -> Option<f64> {\n    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nwarning: `wow-ui-sim` (lib) generated 6 warnings\nwarning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`\n  --> src/bin/wow_sim/main.rs:20:5\n   |\n20 | use wow_ui_sim::saved_variables::SavedVariablesManager;\n   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n   |\n   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: `wow-ui-sim` (bin \"wow-sim\") generated 1 warning (run `cargo fix --bin \"wow-sim\" -p wow-ui-sim` to apply 1 suggestion)\n    Finished `test` profile [optimized + debuginfo] target(s) in 13.45s\n     Running patch-tests/patch_1_13_6_factory.rs (target/debug/deps/patch_1_13_6_factory-7eb4fdc0cb6eb171)\n[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.002s] [Startup] SimState::default complete in 1.55ms\n[  0.002s] [Startup] rilua VM created in 84.03\u00b5s\n[  0.002s] [Startup] builtin frames initialized in 55.83\u00b5s\n[  0.002s] [Startup] template registry cleared in 5.69\u00b5s\n[  0.002s] [Startup] intrinsic templates registered in 6.59\u00b5s\n[  0.002s] [Startup] initial app_data lua handle installed in 842.00ns\n[  0.092s] [Startup] init_lua_state complete in 90.15ms\n[  0.092s] [Startup] final app_data lua handle installed in 290.00ns\n[  0.092s] [Startup] initial screen globals installed in 47.79\u00b5s\n[  0.092s] [Startup] WowLuaEnv::new complete\nP1136_FACTORY {\"configured_interface\":11507,\"later_registers\":[],\"observed_compatibility_identity\":[\"12.0.7\",\"68256\",\"120007\"],\"raw_getter_types\":[\"function\",\"function\"],\"rows\":[{\"default\":null,\"detail\":\"value/default queried\",\"direction\":\"added\",\"id\":\"wt-cvars-nameplateCommentatorMaxDistance-14\",\"kind\":\"cvar\",\"model_credit\":false,\"native_credit\":false,\"page_default\":null,\"published\":false,\"section\":\"cvars\",\"symbol\":\"nameplateCommentatorMaxDistance\",\"value\":null},{\"default\":\"1\",\"detail\":\"value/default queried\",\"direction\":\"added\",\"id\":\"wt-cvars-specular-15\",\"kind\":\"cvar\",\"model_credit\":false,\"native_credit\":false,\"page_default\":null,\"published\":true,\"section\":\"cvars\",\"symbol\":\"specular\",\"value\":\"1\"},{\"default\":\"1\",\"detail\":\"value/default queried\",\"direction\":\"added\",\"id\":\"wt-cvars-textureErrorColors-16\",\"kind\":\"cvar\",\"model_credit\":false,\"native_credit\":false,\"page_default\":null,\"published\":true,\"section\":\"cvars\",\"symbol\":\"textureErrorColors\",\"value\":\"1\"}],\"scope\":\"current bare Era getters only; no SOURCE ledger mutation\",\"source_interface\":11306}\n[  0.096s] [Startup] WowLuaEnv::new begin\n[  0.097s] [Startup] SimState::default complete in 1.08ms\n[  0.097s] [Startup] rilua VM created in 59.99\u00b5s\n[  0.097s] [Startup] builtin frames initialized in 22.61\u00b5s\n[  0.097s] [Startup] template registry cleared in 3.00\u00b5s\n[  0.097s] [Startup] intrinsic templates registered in 4.87\u00b5s\n[  0.097s] [Startup] initial app_data lua handle installed in 100.00ns\n[  0.147s] [Startup] init_lua_state complete in 49.45ms\n[  0.147s] [Startup] final app_data lua handle installed in 160.00ns\n[  0.147s] [Startup] initial screen globals installed in 43.15\u00b5s\n[  0.147s] [Startup] WowLuaEnv::new complete\n"
+  }
+]

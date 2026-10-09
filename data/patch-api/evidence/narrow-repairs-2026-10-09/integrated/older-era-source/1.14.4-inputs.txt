@@ -1,0 +1,1126 @@
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/REPLAY.md
+# Frozen 1.14.4 SOURCE replay
+
+Original `seals.json` pins the exact original input/adapter/ledger/log bytes. Never rewrite originals or append later receipts to that map. Archive/current portable receipts are separately sealed in `receipt-seals.json`. Original commands/revisions in `proof-ledger.json`; copied commands/output in later `portable-controls.json`.
+
+Extract `replay-archive.tar.gz` into a disposable directory. Copied inputs contain no Git/target/current tools/runtime/vendor/cache. Use absolute Python3.12+ and `-B`, empty PATH; run absolute copied `audit.py` and `test_source_accounting.py`. Generate a new register with copied `historical-tools/gen_patch_wikitext_register.py 1.14.4 <copied-source.wikitext> 2581777 <new-output>`; compare exact bytes with copied `default-register.json`. Historical extractor retained but unexecuted; no all-flags/shared-tool proof.
+
+Harness command (explicit cwd `/home/osso/.worktrees/wow-ui-sim-p1144-page`):
+
+```text
+python3 -B /home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_portable.py --archive /home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/replay-archive.tar.gz --scratch /home/osso/.worktrees/wow-ui-sim-p1144-page/target/p1144-source-replay --receipts <new-absolute-receipt-path>
+```
+
+Three fresh disposable copies: validator/SOURCE11/default byte replay; serialized ledger omission rejection/restoration; fabricated GREEN log rejection/restoration. Exact original seals checked before and after. Scratch belongs to own target; harness refuses receipt overwrite. Subprocesses use absolute Python/empty PATH/explicit own-worktree cwd; copied adapters resolve files beside their script, not from cwd. Standalone copied replay can use any cwd with absolute paths.
+
+SOURCE development only: no runtime/model/native/security/loaded-UI/linked-expansion/foreign-supersession/integration/final-gate credit. Main owns actual ordered Era successors and acceptance.
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/audit.py
+"""Bounded literal 1.14.4 SOURCE accounting, never runtime/native proof."""
+import hashlib
+import json
+from pathlib import Path
+import re
+import sys
+import tomllib
+EVIDENCE = Path(__file__).resolve().parent
+BASE = '0b64e636c16c59e90e3406e7ff557e94cd7732a8'
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+def read_json(name):
+    return json.loads((EVIDENCE / name).read_bytes())
+
+def validate_source(*, response=None, raw=None):
+    response = (EVIDENCE / 'source-response.json').read_bytes() if response is None else response
+    raw = (EVIDENCE / 'source.wikitext').read_bytes() if raw is None else raw
+    pin = read_json('source-pin.json')
+    page = json.loads(response)['query']['pages']['267043']
+    revision, = page['revisions']
+    for key, value in [('pageid', 267043), ('title', 'Patch 1.14.4/API changes')]:
+        assert page[key] == pin[key] == value, key
+    for key, value in [('revid', 2581777), ('timestamp', '2023-07-19T19:32:56Z')]:
+        assert revision[key] == pin[key] == value, key
+    assert revision['slots']['main']['*'].encode() == raw, 'returned content'
+    assert digest(raw) == pin['wikitext_sha256'] == '0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42', 'raw hash'
+    assert digest(response) == pin['response_sha256'] == '6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a', 'response hash'
+    assert len(raw) == pin['wikitext_bytes'] == 775, 'raw bytes'
+    manifest = read_json('frozen-manifest.json')
+    assert pin == next((p for p in manifest['pages'] if p['version'] == '1.14.4')), 'manifest pin'
+    registry_bytes = (EVIDENCE / 'frozen-registry.json').read_bytes()
+    assert digest(registry_bytes) == manifest['registry_sha256'], 'registry hash'
+    registry = json.loads(registry_bytes)['pages']
+    assert len(registry) == 101 and registry[-1]['version'] == '1.0.0', 'registry boundary'
+    registered = next((p for p in registry if p['version'] == '1.14.4'))
+    assert all((pin[k] == v for k, v in registered.items())), 'registry identity'
+    return (raw.decode(), pin)
+
+def configured_profiles():
+    config = EVIDENCE / 'configured-inputs'
+    rust = (config / 'src/client_profile.rs').read_text()
+    features = tomllib.loads((config / 'Cargo.toml').read_text())['features']
+    variants, interface = re.search('(ClientProfile::Era \\| ClientProfile::Anniversary) => (\\d+)', rust).groups()
+    cache_arms = rust.split('pub fn cache_subdir', 1)[1].split('pub const fn interface_version', 1)[0]
+    profiles = []
+    for variant in re.findall('ClientProfile::(\\w+)', variants):
+        subdir = re.search(f'ClientProfile::{variant} => "(\\w+)"', cache_arms)[1]
+        feature = f'client-{subdir}'
+        assert feature in features, 'configured feature'
+        manifest = (config / f'data/blizzard-ui-files/{subdir}.txt').read_bytes()
+        profiles.append({'variant': variant, 'feature': feature, 'feature_dependencies': features[feature], 'cache_subdir': subdir, 'configured_interface': int(interface), 'manifest_sha256': digest(manifest), 'manifest_entries': len(manifest.splitlines()), 'native_correspondence': 'UNPROVEN'})
+    return profiles
+
+def queued_successors():
+    manifest = read_json('frozen-manifest.json')
+    successors = []
+    for version in [f'1.15.{n}' for n in range(10)]:
+        directory = f'queued-successors/{version}'
+        pin = read_json(f'{directory}/source-pin.json')
+        assert pin == next((p for p in manifest['pages'] if p['version'] == version)), 'queued source pin'
+        raw = (EVIDENCE / directory / 'source.wikitext').read_bytes()
+        response = (EVIDENCE / directory / 'source-response.json').read_bytes()
+        assert digest(raw) == pin['wikitext_sha256'], 'queued source hash'
+        assert digest(response) == pin['response_sha256'], 'queued response hash'
+        page = json.loads(response)['query']['pages'][str(pin['pageid'])]
+        revision, = page['revisions']
+        assert page['title'] == pin['title'] and page['pageid'] == pin['pageid'], 'queued page identity'
+        assert revision['revid'] == pin['revid'] and revision['timestamp'] == pin['timestamp'], 'queued revision'
+        assert revision['slots']['main']['*'].encode() == raw, 'queued literal source'
+        status = read_json(f'{directory}/status.json')
+        assert status['patch'] == version and status['applied'] is False, 'queued only'
+        expected = 'in-flight-pending-main-integration' if version == '1.15.0' else 'queued-pending-main-integration' if version in ['1.15.1', '1.15.2'] else 'integrated-canonical-input-not-applied'
+        assert status['state'] == expected and status['history'] == 'same-Era-context-only', 'queued status'
+        assert status['native_proof'] is False and status['main_gates'] == 'unperformed-for-this-page', 'no successor credit'
+        successors.append(dict(status, source=pin))
+    return successors
+
+def pending_contract(identity, line, kind, literal, limit, **fields):
+    return dict(id=identity, line=line, kind=kind, literal=literal, status='UNPROVEN', arguments=None, returns=None, event_payloads=None, state_transitions=None, security_rules=None, native_equivalence=None, limit=limit, **fields)
+
+def account_prose(lines):
+    scopes = ['all-API-changes-inclusion-claim', 'unspecified-subset-range', 'linked-article-guidance']
+    limits = ['Exact all-API inclusion claim retained. Linked Wrath contracts not expanded; no local API identities, signatures or state/security proof.', 'Dragonflight subset unspecified; endpoint links do not identify members or intermediate pages. No foreign supersession.', 'Instruction to consult linked articles, not a local behavior/signature contract.']
+    prose = []
+    for line, scope, limit in zip(range(4, 7), scopes, limits):
+        literal = lines[line - 1]
+        patches = re.findall('\\[\\[Patch ([0-9.]+)/API changes\\|', literal)
+        prose.append(dict(line=line, literal=literal, scope=scope, linked_patches=patches, identified_members=[], status='UNPROVEN', limit=limit))
+    return prose
+
+def account_contracts(lines, prose):
+    contracts = [pending_contract(f"prose-{p['line']:03d}", p['line'], 'summary-prose', p['literal'], p['limit']) for p in prose]
+    for line in [4, 5]:
+        literal = lines[line - 1]
+        for index, (target, label) in enumerate(re.findall('\\[\\[([^|]+)\\|([^]]+)\\]\\]', literal), 1):
+            contracts.append(pending_contract(f'wiki-link-{line:03d}-{index}', line, 'unexpanded-wiki-link', literal, 'Exact reference occurrence only; no linked contract expansion or foreign-history supersession.', target=target, label=label))
+    for index, (target, label) in enumerate(re.findall('\\[(https://\\S+) ([^]]+)\\]', lines[9]), 1):
+        base, head = target.rsplit('/compare/', 1)[1].split('..')
+        contracts.append(pending_contract(f'linked-diff-010-{index}', 10, 'unexpanded-linked-diff', lines[9], 'Unexpanded diff; signatures/defaults/state/security unspecified. Literal PTR head is not a version or native proof.', target=target, label=label, compare_base=base, compare_head=head))
+    return contracts
+
+def build():
+    raw, pin = validate_source()
+    lines = raw.splitlines()
+    navigation = re.fullmatch('\\{\\{apichanges\\|([^|]+)\\|prev=([^|]+)\\|next=([^|]+)\\}\\}', lines[0])
+    assert navigation, 'literal navigation'
+    patch, prev, following = navigation.groups()
+    toc = re.fullmatch('\\* TOC: <code>(\\d+)</code>', lines[8])
+    assert toc, 'literal TOC'
+    prose = account_prose(lines)
+    contracts = account_contracts(lines, prose)
+    rows = [dict(id=f'source-{n:03d}', line=n, literal=literal, status='UNPROVEN' if n in [4, 5, 6, 10] else 'metadata-only', capabilities=[]) for n, literal in enumerate(lines, 1) if literal.strip()]
+    headers = [dict(line=n, literal=literal, label=heading[1], numerical_count=None, status='metadata-only') for n, literal in enumerate(lines, 1) if (heading := re.fullmatch('==([^=]+)==', literal))]
+    return dict(schema='patch-source-accounting/v1', patch=patch, source=pin, source_toc=int(toc[1]), client_line='UNPROVEN-unexpanded-apichanges', literal_contexts=['Wrath Classic', 'Dragonflight'], literal_navigation=dict(patch=patch, prev=prev, next=following), client_limit='Era task context/configuration separate from linked Wrath/Dragonflight contexts and historical native identity.', base_revision=BASE, later_registers=[], queued_successors=queued_successors(), measurements=dict(runtime=0, model=0, native=0), source_rows=rows, contracts=contracts, headers=headers, summary_prose=prose, transclusions=[dict(line=1, literal=lines[0], expansion='UNPROVEN', role='navigation-metadata-only')], api_occurrences=[], signatures=[], configured_profiles=configured_profiles(), preservation='Exact raw bytes/all occurrences; all-Wrath inclusion distinct from Dragonflight subset. No links expanded, foreign supersession, defaults, aliases or shims.', totals=dict(physical_lines=len(lines), nonblank_rows=len(rows), metadata_rows=sum((r['status'] == 'metadata-only' for r in rows)), unproven_rows=sum((r['status'] == 'UNPROVEN' for r in rows)), contracts=len(contracts), headers=len(headers), numerical_inventory_headers=0, api_occurrences=0, event_occurrences=0, cvar_occurrences=0, widget_method_occurrences=0, command_occurrences=0, signature_declarations=0, prose_contracts=len(prose), unexpanded_linked_contracts=sum((c['kind'] != 'summary-prose' for c in contracts)), unexpanded_transclusions=1))
+
+def validate_ledger(ledger):
+    assert ledger == build(), 'serialized literal ledger'
+    return ledger['totals']
+
+def check_seals():
+    seals = read_json('seals.json')
+    for name, expected in seals.items():
+        assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+    return len(seals)
+
+def main():
+    if len(sys.argv) == 2 and sys.argv[1] == 'capture':
+        assert not (EVIDENCE / 'ledger.json').exists(), 'refuse ledger overwrite'
+        (EVIDENCE / 'ledger.json').write_text(json.dumps(build(), indent=2) + '\n')
+    else:
+        count = check_seals()
+        totals = validate_ledger(read_json('ledger.json'))
+        print(json.dumps(dict(historical_seals=count, totals=totals), indent=2))
+if __name__ == '__main__':
+    main()
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/ledger.json
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.14.4",
+  "source": {
+    "title": "Patch 1.14.4/API changes",
+    "version": "1.14.4",
+    "pageid": 267043,
+    "revid": 2581777,
+    "timestamp": "2023-07-19T19:32:56Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+    "retrieved": "2026-10-09T08:51:36.398825+00:00",
+    "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+    "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+    "wikitext_bytes": 775,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+  },
+  "source_toc": 11404,
+  "client_line": "UNPROVEN-unexpanded-apichanges",
+  "literal_contexts": [
+    "Wrath Classic",
+    "Dragonflight"
+  ],
+  "literal_navigation": {
+    "patch": "1.14.4",
+    "prev": "1.14.3",
+    "next": "1.15.0"
+  },
+  "client_limit": "Era task context/configuration separate from linked Wrath/Dragonflight contexts and historical native identity.",
+  "base_revision": "0b64e636c16c59e90e3406e7ff557e94cd7732a8",
+  "later_registers": [],
+  "queued_successors": [
+    {
+      "patch": "1.15.0",
+      "state": "in-flight-pending-main-integration",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.0/API changes",
+        "version": "1.15.0",
+        "pageid": 564510,
+        "revid": 5950848,
+        "timestamp": "2024-01-30T19:36:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+        "retrieved": "2026-10-09T08:51:36.398773+00:00",
+        "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+        "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+        "wikitext_bytes": 915,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.1",
+      "state": "queued-pending-main-integration",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.1/API changes",
+        "version": "1.15.1",
+        "pageid": 577687,
+        "revid": 5998991,
+        "timestamp": "2024-04-03T08:43:49Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+        "retrieved": "2026-10-09T08:51:36.398724+00:00",
+        "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+        "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+        "wikitext_bytes": 835,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.2",
+      "state": "queued-pending-main-integration",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.2/API changes",
+        "version": "1.15.2",
+        "pageid": 583919,
+        "revid": 6061806,
+        "timestamp": "2024-06-12T18:59:26Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+        "retrieved": "2026-10-09T08:51:36.398676+00:00",
+        "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+        "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+        "wikitext_bytes": 391,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.3",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.3/API changes",
+        "version": "1.15.3",
+        "pageid": 593663,
+        "revid": 6114194,
+        "timestamp": "2024-08-30T01:06:01Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+        "retrieved": "2026-10-09T08:51:36.398616+00:00",
+        "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+        "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+        "wikitext_bytes": 452,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.4",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.4/API changes",
+        "version": "1.15.4",
+        "pageid": 600355,
+        "revid": 6172581,
+        "timestamp": "2024-11-13T21:59:45Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+        "retrieved": "2026-10-09T08:51:36.398568+00:00",
+        "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+        "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+        "wikitext_bytes": 439,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.5",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.5/API changes",
+        "version": "1.15.5",
+        "pageid": 610284,
+        "revid": 6235411,
+        "timestamp": "2025-02-09T17:32:34Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+        "retrieved": "2026-10-09T08:51:36.398521+00:00",
+        "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+        "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.6",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.6/API changes",
+        "version": "1.15.6",
+        "pageid": 619994,
+        "revid": 6281951,
+        "timestamp": "2025-04-04T10:14:39Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+        "retrieved": "2026-10-09T08:51:36.398475+00:00",
+        "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+        "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.7",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.7/API changes",
+        "version": "1.15.7",
+        "pageid": 626071,
+        "revid": 6778069,
+        "timestamp": "2026-07-22T05:34:20Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+        "retrieved": "2026-10-09T08:51:36.398418+00:00",
+        "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+        "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.8",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.8/API changes",
+        "version": "1.15.8",
+        "pageid": 686952,
+        "revid": 6778071,
+        "timestamp": "2026-07-22T05:34:51Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+        "retrieved": "2026-10-09T08:51:36.398359+00:00",
+        "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+        "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+        "wikitext_bytes": 279,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.9",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.9/API changes",
+        "version": "1.15.9",
+        "pageid": 685352,
+        "revid": 6780591,
+        "timestamp": "2026-07-24T15:29:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+        "retrieved": "2026-10-09T08:51:36.398273+00:00",
+        "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+        "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+        "wikitext_bytes": 4085,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+      }
+    }
+  ],
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "source_rows": [
+    {
+      "id": "source-001",
+      "line": 1,
+      "literal": "{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-003",
+      "line": 3,
+      "literal": "==Summary==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-004",
+      "line": 4,
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-005",
+      "line": 5,
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-006",
+      "line": 6,
+      "literal": "** Refer to the linked articles for guidance on any impactful changes.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-008",
+      "line": 8,
+      "literal": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-009",
+      "line": 9,
+      "literal": "* TOC: <code>11404</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-010",
+      "line": 10,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    }
+  ],
+  "contracts": [
+    {
+      "id": "prose-004",
+      "line": 4,
+      "kind": "summary-prose",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact all-API inclusion claim retained. Linked Wrath contracts not expanded; no local API identities, signatures or state/security proof."
+    },
+    {
+      "id": "prose-005",
+      "line": 5,
+      "kind": "summary-prose",
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Dragonflight subset unspecified; endpoint links do not identify members or intermediate pages. No foreign supersession."
+    },
+    {
+      "id": "prose-006",
+      "line": 6,
+      "kind": "summary-prose",
+      "literal": "** Refer to the linked articles for guidance on any impactful changes.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Instruction to consult linked articles, not a local behavior/signature contract."
+    },
+    {
+      "id": "wiki-link-004-1",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "World of Warcraft: Wrath of the Lich King Classic",
+      "label": "Wrath Classic"
+    },
+    {
+      "id": "wiki-link-004-2",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 3.4.0/API changes",
+      "label": "Patch 3.4.0"
+    },
+    {
+      "id": "wiki-link-004-3",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 3.4.1/API changes",
+      "label": "Patch 3.4.1"
+    },
+    {
+      "id": "wiki-link-004-4",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 3.4.2/API changes",
+      "label": "Patch 3.4.2"
+    },
+    {
+      "id": "wiki-link-005-1",
+      "line": 5,
+      "kind": "unexpanded-wiki-link",
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 10.0.0/API changes",
+      "label": "Patch 10.0.0"
+    },
+    {
+      "id": "wiki-link-005-2",
+      "line": 5,
+      "kind": "unexpanded-wiki-link",
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 10.1.5/API changes",
+      "label": "Patch 10.1.5"
+    },
+    {
+      "id": "linked-diff-010-1",
+      "line": 10,
+      "kind": "unexpanded-linked-diff",
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Unexpanded diff; signatures/defaults/state/security unspecified. Literal PTR head is not a version or native proof.",
+      "target": "https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr",
+      "label": "wow-ui-source",
+      "compare_base": "1.14.3",
+      "compare_head": "classic_era_ptr"
+    },
+    {
+      "id": "linked-diff-010-2",
+      "line": 10,
+      "kind": "unexpanded-linked-diff",
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Unexpanded diff; signatures/defaults/state/security unspecified. Literal PTR head is not a version or native proof.",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4",
+      "label": "BlizzardInterfaceResources",
+      "compare_base": "1.14.3",
+      "compare_head": "1.14.4"
+    }
+  ],
+  "headers": [
+    {
+      "line": 3,
+      "literal": "==Summary==",
+      "label": "Summary",
+      "numerical_count": null,
+      "status": "metadata-only"
+    },
+    {
+      "line": 8,
+      "literal": "==Resources==",
+      "label": "Resources",
+      "numerical_count": null,
+      "status": "metadata-only"
+    }
+  ],
+  "summary_prose": [
+    {
+      "line": 4,
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "scope": "all-API-changes-inclusion-claim",
+      "linked_patches": [
+        "3.4.0",
+        "3.4.1",
+        "3.4.2"
+      ],
+      "identified_members": [],
+      "status": "UNPROVEN",
+      "limit": "Exact all-API inclusion claim retained. Linked Wrath contracts not expanded; no local API identities, signatures or state/security proof."
+    },
+    {
+      "line": 5,
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "scope": "unspecified-subset-range",
+      "linked_patches": [
+        "10.0.0",
+        "10.1.5"
+      ],
+      "identified_members": [],
+      "status": "UNPROVEN",
+      "limit": "Dragonflight subset unspecified; endpoint links do not identify members or intermediate pages. No foreign supersession."
+    },
+    {
+      "line": 6,
+      "literal": "** Refer to the linked articles for guidance on any impactful changes.",
+      "scope": "linked-article-guidance",
+      "linked_patches": [],
+      "identified_members": [],
+      "status": "UNPROVEN",
+      "limit": "Instruction to consult linked articles, not a local behavior/signature contract."
+    }
+  ],
+  "transclusions": [
+    {
+      "line": 1,
+      "literal": "{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}",
+      "expansion": "UNPROVEN",
+      "role": "navigation-metadata-only"
+    }
+  ],
+  "api_occurrences": [],
+  "signatures": [],
+  "configured_profiles": [
+    {
+      "variant": "Era",
+      "feature": "client-era",
+      "feature_dependencies": [],
+      "cache_subdir": "era",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "manifest_entries": 3981,
+      "native_correspondence": "UNPROVEN"
+    },
+    {
+      "variant": "Anniversary",
+      "feature": "client-anniversary",
+      "feature_dependencies": [],
+      "cache_subdir": "anniversary",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "manifest_entries": 3981,
+      "native_correspondence": "UNPROVEN"
+    }
+  ],
+  "preservation": "Exact raw bytes/all occurrences; all-Wrath inclusion distinct from Dragonflight subset. No links expanded, foreign supersession, defaults, aliases or shims.",
+  "totals": {
+    "physical_lines": 10,
+    "nonblank_rows": 8,
+    "metadata_rows": 4,
+    "unproven_rows": 4,
+    "contracts": 11,
+    "headers": 2,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 3,
+    "unexpanded_linked_contracts": 8,
+    "unexpanded_transclusions": 1
+  }
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/proof-ledger.json
+{
+  "scope": "1.14.4 SOURCE only",
+  "runs": [
+    {
+      "phase": "SOURCE-RED",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1144-page",
+      "revision": "0b64e636c16c59e90e3406e7ff557e94cd7732a8 + own fixtures/scaffold",
+      "exit_code": 1,
+      "log": "red.log",
+      "invalidated_by": "implementation/archive; retained negative control"
+    },
+    {
+      "phase": "portable-RED",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/replay-archive.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/target/p1144-source-replay",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/portable-red-controls.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1144-page",
+      "revision": "0b64e636c16c59e90e3406e7ff557e94cd7732a8 + own fixtures/scaffold",
+      "exit_code": 1,
+      "log": "portable-red.log",
+      "invalidated_by": "implementation/archive; retained negative control"
+    },
+    {
+      "phase": "SOURCE-GREEN",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1144-page",
+      "revision": "183437dc5549b707b96ee02523a287761ed4512b",
+      "exit_code": 0,
+      "log": "green.log",
+      "invalidated_by": null
+    },
+    {
+      "phase": "literal-capture",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/audit.py",
+        "capture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1144-page",
+      "revision": "183437dc5549b707b96ee02523a287761ed4512b",
+      "exit_code": 0,
+      "log": "capture.log",
+      "invalidated_by": null
+    },
+    {
+      "phase": "historical-default-generator",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.14.4",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/source.wikitext",
+        "2581777",
+        "/home/osso/.worktrees/wow-ui-sim-p1144-page/data/patch-api/evidence/1.14.4-session-2026-10-09/default-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1144-page",
+      "revision": "183437dc5549b707b96ee02523a287761ed4512b",
+      "exit_code": 0,
+      "log": "default-generator.log",
+      "invalidated_by": null
+    }
+  ]
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/receipt-seals.json
+{
+  "replay-archive.tar.gz": "3a94751922acbed0d852abb1df68a8edb334d09d51264a95f02075829fbf22f8",
+  "portable-controls.json": "d4686907d8b9a55e842f9fdadd340f809119fbaf0b53fd01b734942a539624ec",
+  "portable-controls.log": "f446470c0ae038bb131c42e2b1b29b8cf9ff83c9ee08481f0035d43a1ea86676",
+  "portable-proof.json": "96991ea0311b2e4e323ad0720c5f428c8c7c2721e7ff74b097662513a8668087"
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/seals.json
+{
+  "REPLAY.md": "f7ff63fcde789f1537bc6b73b4d46f21b7ea9751ca7a969a29a04c9f0c71e284",
+  "audit.py": "6047bd169e8a210be8a9501bc4c189d0b9ef4a6f6e85c943f14fe58bf1f909b7",
+  "capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "configured-inputs/Cargo.toml": "c0eda4b7303a9472f2059eea940d5b9b10a2bd4c47009078b3b1cd8b100277b1",
+  "configured-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+  "configured-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+  "configured-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+  "default-generator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "default-register.json": "5158510d2c5bfbe338612e110e171e40283b089379296c903c1c44bcbf0b93e8",
+  "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+  "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+  "green.log": "a768e5c1de74d7d62a754e2c0313b72f1dcc518d0236ec8ec2f6858a36d94493",
+  "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532",
+  "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+  "ledger.json": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226",
+  "pin-proof.json": "a1467cdb644285d41be3b1676c7090e71413a63ef3db784692021d0281c95e59",
+  "portable-red-controls.json": "5c03ddae0de167055904da0941233fb40d5e8ebb9c362dc4c55c3c8adbb2c5ed",
+  "portable-red.log": "2695bc3319f6b29929a7f6734779a8a6d75fafa48415e4b97278dd3c21cb16ae",
+  "proof-ledger.json": "aa7720a153cbc8838d40c8a52cccb53eef98d8111cdac04d857296043e7a34f1",
+  "queued-successors/1.15.0/source-pin.json": "fceebfc883dfe88af06314295597e5885b50867b970a4df130f5885aa6553316",
+  "queued-successors/1.15.0/source-response.json": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+  "queued-successors/1.15.0/source.wikitext": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+  "queued-successors/1.15.0/status.json": "1caa6bd13eb1bf694dad81664444421b726c40c56a3e4c5c7964b980c27c23d1",
+  "queued-successors/1.15.1/source-pin.json": "f513df91a6e71424da25d87b0ff35d9f801a8b65d848908a7c748c2b1ee314be",
+  "queued-successors/1.15.1/source-response.json": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+  "queued-successors/1.15.1/source.wikitext": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+  "queued-successors/1.15.1/status.json": "0b70e42267a21e3b626b3f6208e65fa93cca5353dfe2c2c34bf8f71f9abcfc82",
+  "queued-successors/1.15.2/source-pin.json": "27f82f3457760074fcfd7ecfd36074dd3cdfa7756fb21b62bba1401fbb545c14",
+  "queued-successors/1.15.2/source-response.json": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+  "queued-successors/1.15.2/source.wikitext": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+  "queued-successors/1.15.2/status.json": "fb2703524196c7a0b57fe38e2a1e07ca21157a2ec87d7a6dd7092524333e15c1",
+  "queued-successors/1.15.3/source-pin.json": "d333eb3d5bf7a0820b7717593abdca468b778d1558645fa8110247a2fbb295f4",
+  "queued-successors/1.15.3/source-response.json": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+  "queued-successors/1.15.3/source.wikitext": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+  "queued-successors/1.15.3/status.json": "697da1d14d3af93e76a18ef3b3a16988af3ae1caa22ef44af06308fced113459",
+  "queued-successors/1.15.4/source-pin.json": "f54517609cd214ff8ad10c5b0748b6f16dc36c92430cf3a0f2b52d0b579aa6b5",
+  "queued-successors/1.15.4/source-response.json": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+  "queued-successors/1.15.4/source.wikitext": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+  "queued-successors/1.15.4/status.json": "da64d3ec106e80a54466b16c8d803c04e84b6748c2211c8188a4d6e3c418da86",
+  "queued-successors/1.15.5/source-pin.json": "c25dd5cfa4c500b0d09b40546ee8fa320db418f88e2e5a679e92927d11b5f340",
+  "queued-successors/1.15.5/source-response.json": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+  "queued-successors/1.15.5/source.wikitext": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+  "queued-successors/1.15.5/status.json": "768c2a789ae66b8ed562a1dd7d4fc554b651076eb4f5488c7f877f6894bbb5fe",
+  "queued-successors/1.15.6/source-pin.json": "808dfec0a0228d7471e8384ac1199f52bdaca81ce79e078248f8b83abf9fa4a0",
+  "queued-successors/1.15.6/source-response.json": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+  "queued-successors/1.15.6/source.wikitext": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+  "queued-successors/1.15.6/status.json": "351027b7dd2fa0cc4e66c84e6ae9f4150423db0d551e9ea3021af58a6db0b569",
+  "queued-successors/1.15.7/source-pin.json": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1",
+  "queued-successors/1.15.7/source-response.json": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+  "queued-successors/1.15.7/source.wikitext": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+  "queued-successors/1.15.7/status.json": "677460b313ec2d979c9a3b8e02388f962483c7238054fa2a5588eecc89ce1c65",
+  "queued-successors/1.15.8/source-pin.json": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6",
+  "queued-successors/1.15.8/source-response.json": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+  "queued-successors/1.15.8/source.wikitext": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+  "queued-successors/1.15.8/status.json": "9bf039f855784ee719eb27f5ca3aade258c24a27ee343a13d2ebf5f30b331495",
+  "queued-successors/1.15.9/source-pin.json": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95",
+  "queued-successors/1.15.9/source-response.json": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+  "queued-successors/1.15.9/source.wikitext": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+  "queued-successors/1.15.9/status.json": "a09eed7aa73bf678f70af2be66a6dddaac04f7583b0c5efa8f8a41f846db24cd",
+  "red-scaffold.py": "76903150585cb1f3c8c5af8da3884b5eb606379861fbb4fe96f7f2c61ec08072",
+  "red.log": "78db94ea85de1d92f0cfb4519345dba9386af8e8233ed8ba8a1d7ba39bba4cb8",
+  "source-attribution.md": "21471c9ab8ab35762b3916fcccf5a65db445d69be35d7be12ed7f8756fc39c46",
+  "source-pin.json": "27bf3c33fd6b252633c6d30d0f44a9946a9b2868b445427dac2aa72e55e023ac",
+  "source-response.json": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+  "source.wikitext": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+  "test_portable.py": "b3ef58ac9d92348bded2746b92794d7b16b6b4f98be2ff56f5741ce0fa1a577d",
+  "test_source_accounting.py": "63d820f1459becd67531ee9012eefc704ab05e73ba878af20823d4d86d2b8a71"
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/test_portable.py
+"""Copied historical replay and serialized seal controls; SOURCE only."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tarfile
+import tempfile
+import unittest
+EVIDENCE = Path(__file__).resolve().parent
+CWD = '/home/osso/.worktrees/wow-ui-sim-p1144-page'
+RECEIPTS = []
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+class PortableSource(unittest.TestCase):
+
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory(dir=OPTIONS.scratch)
+        self.addCleanup(self.directory.cleanup)
+        self.copied = Path(self.directory.name)
+        self.assertTrue(OPTIONS.archive.is_file(), 'own replay archive absent')
+        with tarfile.open(OPTIONS.archive, 'r:gz') as archive:
+            members = archive.getnames()
+            self.assertTrue(all((not Path(m).is_absolute() and '..' not in Path(m).parts for m in members)))
+            archive.extractall(self.copied, filter='data')
+        self.assertFalse((self.copied / '.git').exists())
+        self.assertFalse((self.copied / 'target').exists())
+        self.assertFalse((self.copied / 'tools').exists())
+        self.seals = json.loads((self.copied / 'seals.json').read_bytes())
+        self.check_originals()
+
+    def check_originals(self):
+        for name, expected in self.seals.items():
+            self.assertEqual(digest((self.copied / name).read_bytes()), expected, name)
+
+    def execute(self, *args):
+        command = [sys.executable, '-B', *map(str, args)]
+        result = subprocess.run(command, cwd=CWD, env=dict(os.environ, PATH='', PYTHONDONTWRITEBYTECODE='1'), capture_output=True, text=True, timeout=30)
+        RECEIPTS.append({'test': self.id(), 'command': command, 'cwd': CWD, 'path': 'empty; Git/current commands unavailable', 'exit_code': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+        return result
+
+    def test_copied_source_and_default_register(self):
+        result = self.execute(self.copied / 'audit.py')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        fixtures = self.execute(self.copied / 'test_source_accounting.py')
+        self.assertEqual(fixtures.returncode, 0, fixtures.stderr)
+        self.assertIn('Ran 11 tests', fixtures.stderr)
+        output = self.copied / 'reproduced-register.json'
+        generated = self.execute(self.copied / 'historical-tools/gen_patch_wikitext_register.py', '1.14.4', self.copied / 'source.wikitext', '2581777', output)
+        self.assertEqual(generated.returncode, 0, generated.stderr)
+        self.assertEqual(output.read_bytes(), (self.copied / 'default-register.json').read_bytes())
+        self.check_originals()
+
+    def reject_and_restore(self, name, changed):
+        path = self.copied / name
+        original = path.read_bytes()
+        path.write_bytes(changed)
+        try:
+            result = self.execute(self.copied / 'audit.py')
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(f'seal: {name}', result.stderr)
+        finally:
+            path.write_bytes(original)
+        self.assertEqual(path.read_bytes(), original)
+        self.check_originals()
+        restored = self.execute(self.copied / 'audit.py')
+        self.assertEqual(restored.returncode, 0, restored.stderr)
+        RECEIPTS.append({'restored': name, 'sha256': digest(path.read_bytes()), 'all_original_seals': len(self.seals)})
+
+    def test_serialized_ledger_omission_rejected_and_restored(self):
+        ledger = json.loads((self.copied / 'ledger.json').read_bytes())
+        ledger['contracts'].pop()
+        self.reject_and_restore('ledger.json', (json.dumps(ledger, indent=2) + '\n').encode())
+
+    def test_serialized_log_fabrication_rejected_and_restored(self):
+        self.reject_and_restore('green.log', b'Invented runtime/native parity: PASS\n')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--archive', type=Path, required=True)
+    parser.add_argument('--scratch', type=Path, required=True)
+    parser.add_argument('--receipts', type=Path, required=True)
+    OPTIONS = parser.parse_args()
+    OPTIONS.scratch.mkdir(parents=True, exist_ok=True)
+    assert not OPTIONS.receipts.exists(), 'refuse receipt overwrite'
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(PortableSource)
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    OPTIONS.receipts.write_text(json.dumps({'scope': 'copied historical SOURCE; no runtime/model/native credit', 'runs': RECEIPTS, 'tests_run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors)}, indent=2) + '\n')
+    sys.exit(0 if result.wasSuccessful() else 1)
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.14.4-session-2026-10-09/test_source_accounting.py
+"""Frozen 1.14.4 literal SOURCE tests, not modeled/native compatibility."""
+import copy
+import json
+from pathlib import Path
+import unittest
+import audit
+EVIDENCE = Path(__file__).resolve().parent
+
+class SourceAccounting(unittest.TestCase):
+
+    def test_all_literal_rows(self):
+        rows = audit.build().get('source_rows', [])
+        self.assertEqual([(r['line'], r['literal']) for r in rows], [(n, s) for n, s in enumerate((EVIDENCE / 'source.wikitext').read_text().splitlines(), 1) if s.strip()])
+        self.assertTrue(all((r['capabilities'] == [] for r in rows)))
+
+    def test_inventory_signature_and_prose_totals(self):
+        self.assertEqual(audit.build().get('totals'), dict(physical_lines=10, nonblank_rows=8, metadata_rows=4, unproven_rows=4, contracts=11, headers=2, numerical_inventory_headers=0, api_occurrences=0, event_occurrences=0, cvar_occurrences=0, widget_method_occurrences=0, command_occurrences=0, signature_declarations=0, prose_contracts=3, unexpanded_linked_contracts=8, unexpanded_transclusions=1))
+
+    def test_complete_wrath_inclusion_claim_not_erased(self):
+        claims = audit.build().get('summary_prose', [])
+        self.assertTrue(claims, 'inclusion claim absent')
+        claim = claims[0]
+        self.assertEqual(claim['scope'], 'all-API-changes-inclusion-claim')
+        self.assertEqual(claim['linked_patches'], ['3.4.0', '3.4.1', '3.4.2'])
+        self.assertEqual(claim['literal'], (EVIDENCE / 'source.wikitext').read_text().splitlines()[3])
+        self.assertEqual(claim['status'], 'UNPROVEN')
+        self.assertEqual(claim['identified_members'], [])
+
+    def test_dragonflight_subset_separate_and_unexpanded(self):
+        claims = audit.build().get('summary_prose', [])
+        self.assertGreaterEqual(len(claims), 2)
+        self.assertEqual(claims[1]['scope'], 'unspecified-subset-range')
+        self.assertEqual(claims[1]['linked_patches'], ['10.0.0', '10.1.5'])
+        self.assertEqual(claims[1]['identified_members'], [])
+        self.assertEqual(claims[1]['literal'], (EVIDENCE / 'source.wikitext').read_text().splitlines()[4])
+
+    def test_guidance_prose_retained(self):
+        claims = audit.build().get('summary_prose', [])
+        self.assertEqual(len(claims), 3)
+        self.assertEqual(claims[2]['scope'], 'linked-article-guidance')
+        self.assertEqual(claims[2]['literal'], '** Refer to the linked articles for guidance on any impactful changes.')
+
+    def test_wiki_and_external_links_accounted_individually(self):
+        links = [c for c in audit.build().get('contracts', []) if c['kind'].startswith('unexpanded-')]
+        self.assertEqual([(c['line'], c['label'], c['target']) for c in links], [(4, 'Wrath Classic', 'World of Warcraft: Wrath of the Lich King Classic'), (4, 'Patch 3.4.0', 'Patch 3.4.0/API changes'), (4, 'Patch 3.4.1', 'Patch 3.4.1/API changes'), (4, 'Patch 3.4.2', 'Patch 3.4.2/API changes'), (5, 'Patch 10.0.0', 'Patch 10.0.0/API changes'), (5, 'Patch 10.1.5', 'Patch 10.1.5/API changes'), (10, 'wow-ui-source', 'https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr'), (10, 'BlizzardInterfaceResources', 'https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4')])
+        self.assertTrue(all((c['status'] == 'UNPROVEN' and c['arguments'] is None and (c['returns'] is None) for c in links)))
+
+    def test_diff_heads_not_collapsed(self):
+        links = [c for c in audit.build().get('contracts', []) if c['kind'] == 'unexpanded-linked-diff']
+        self.assertEqual([(c['compare_base'], c['compare_head']) for c in links], [('1.14.3', 'classic_era_ptr'), ('1.14.3', '1.14.4')])
+
+    def test_header_navigation_toc_and_context(self):
+        ledger = audit.build()
+        self.assertEqual(ledger.get('source_toc'), 11404)
+        self.assertEqual(ledger.get('literal_navigation'), dict(patch='1.14.4', prev='1.14.3', next='1.15.0'))
+        self.assertEqual(ledger.get('literal_contexts'), ['Wrath Classic', 'Dragonflight'])
+        self.assertEqual(ledger.get('client_line'), 'UNPROVEN-unexpanded-apichanges')
+        self.assertEqual([(h['line'], h['label'], h['numerical_count']) for h in ledger.get('headers', [])], [(3, 'Summary', None), (8, 'Resources', None)])
+        self.assertEqual(ledger.get('transclusions'), [dict(line=1, literal='{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}', expansion='UNPROVEN', role='navigation-metadata-only')])
+        self.assertEqual(ledger.get('api_occurrences'), [])
+        self.assertEqual(ledger.get('signatures'), [])
+
+    def test_configuration_and_successors_not_native_credit(self):
+        ledger = audit.build()
+        self.assertEqual([(p['feature'], p['configured_interface']) for p in ledger.get('configured_profiles', [])], [('client-era', 11507), ('client-anniversary', 11507)])
+        self.assertEqual(ledger.get('measurements'), dict(runtime=0, model=0, native=0))
+        self.assertEqual(ledger.get('later_registers'), [])
+        self.assertEqual([(s['patch'], s['state']) for s in ledger.get('queued_successors', [])], [('1.15.0', 'in-flight-pending-main-integration')] + [(f'1.15.{n}', 'queued-pending-main-integration' if n in [1, 2] else 'integrated-canonical-input-not-applied') for n in range(1, 10)])
+        self.assertTrue(all((not s['applied'] and (not s['native_proof']) for s in ledger['queued_successors'])))
+
+    def test_omissions_fabricated_members_history_and_credit_rejected(self):
+        expected = audit.build()
+        self.assertIn('contracts', expected)
+        for field in ['source_rows', 'contracts', 'headers', 'summary_prose', 'transclusions', 'queued_successors']:
+            for index in range(len(expected[field])):
+                changed = copy.deepcopy(expected)
+                changed[field].pop(index)
+                with self.assertRaises(AssertionError):
+                    audit.validate_ledger(changed)
+        for patch in ['3.4.0', '3.4.1', '3.4.2', '10.0.0', '10.1.5', '2.5.6', '1.60.1']:
+            changed = copy.deepcopy(expected)
+            changed['later_registers'] = [patch]
+            with self.assertRaises(AssertionError):
+                audit.validate_ledger(changed)
+        for index in range(len(expected['contracts'])):
+            changed = copy.deepcopy(expected)
+            changed['contracts'][index]['status'] = 'bounded-coverage'
+            with self.assertRaises(AssertionError):
+                audit.validate_ledger(changed)
+        for field, value in [('scope', 'unspecified-subset'), ('identified_members', ['C_Fabricated.GetValue'])]:
+            changed = copy.deepcopy(expected)
+            changed['summary_prose'][0][field] = value
+            with self.assertRaises(AssertionError):
+                audit.validate_ledger(changed)
+        changed = copy.deepcopy(expected)
+        changed['contracts'][-2]['compare_head'] = '1.14.4'
+        with self.assertRaises(AssertionError):
+            audit.validate_ledger(changed)
+        for credit in ['runtime', 'model', 'native']:
+            changed = copy.deepcopy(expected)
+            changed['measurements'][credit] = 1
+            with self.assertRaises(AssertionError):
+                audit.validate_ledger(changed)
+
+    def test_source_identity_and_returned_bytes(self):
+        self.assertIn('source', audit.build())
+        response = json.loads((EVIDENCE / 'source-response.json').read_bytes())
+        response['query']['pages']['267043']['revisions'][0]['revid'] += 1
+        with self.assertRaisesRegex(AssertionError, 'revid'):
+            audit.validate_source(response=json.dumps(response).encode())
+        with self.assertRaisesRegex(AssertionError, 'returned content'):
+            audit.validate_source(raw=(EVIDENCE / 'source.wikitext').read_bytes() + b'\n')
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

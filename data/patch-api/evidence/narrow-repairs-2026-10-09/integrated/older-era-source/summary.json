@@ -1,0 +1,179 @@
+{
+  "1.13.7": {
+    "seals": {
+      "seals.json": {
+        "count": 55,
+        "mismatches": []
+      },
+      "receipt-seals.json": {
+        "count": 5,
+        "mismatches": []
+      }
+    },
+    "totals": {
+      "physical_lines": 28,
+      "nonblank_rows": 25,
+      "extracted_rows": 5,
+      "metadata_rows": 19,
+      "unproven_rows": 6,
+      "inventory": 5,
+      "callables": 1,
+      "cvars": 4,
+      "headers": 3,
+      "inventory_headers": 2,
+      "numeric_headers": 0,
+      "contracts": 7,
+      "signature_declarations": 0,
+      "unspecified_signatures": 1,
+      "links": 2,
+      "templates": 6,
+      "examples": 0,
+      "prose": 0,
+      "defaults": 0
+    },
+    "portable_tests": 3,
+    "portable_failures": 0,
+    "portable_errors": 0,
+    "frozen_later_registers": [],
+    "frozen_measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    }
+  },
+  "1.13.6": {
+    "seals": {
+      "seals.json": {
+        "count": 88,
+        "mismatches": []
+      },
+      "receipt-seals.json": {
+        "count": 26,
+        "mismatches": [],
+        "schema": "scope/files"
+      }
+    },
+    "totals": {
+      "physical_lines": 18,
+      "nonblank_rows": 16,
+      "metadata_rows": 11,
+      "unproven_rows": 5,
+      "inventory": 3,
+      "callables": 0,
+      "cvars": 3,
+      "headers": 2,
+      "inventory_headers": 1,
+      "contracts": 7,
+      "signature_declarations": 0,
+      "links": 3,
+      "templates": 4,
+      "examples": 0,
+      "prose_defaults": 0,
+      "prose": 1
+    },
+    "portable_tests": 3,
+    "portable_failures": 0,
+    "portable_errors": 0,
+    "frozen_later_registers": [],
+    "frozen_measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    }
+  },
+  "1.13.5": {
+    "seals": {
+      "seals.json": {
+        "count": 70,
+        "mismatches": []
+      },
+      "receipt-seals.json": {
+        "count": 7,
+        "mismatches": []
+      }
+    },
+    "totals": {
+      "physical_lines": 36,
+      "source_rows": 31,
+      "extracted_rows": 0,
+      "inventory": 5,
+      "signatures": 5,
+      "headers": 5,
+      "inventory_headers": 2,
+      "captions": 1,
+      "prose": 2,
+      "links": 7,
+      "templates": 7,
+      "references": 2,
+      "contracts": 14,
+      "configured_profiles": 2,
+      "successors": 16,
+      "model_review": 4,
+      "source_statuses": {
+        "metadata-only": 22,
+        "UNPROVEN": 9
+      },
+      "inventory_by_section": {
+        "global-api": 3,
+        "events": 2
+      },
+      "contract_statuses": {
+        "UNPROVEN": 14
+      },
+      "count_conflicts": 0,
+      "declared_signatures": 0,
+      "defaults": 0,
+      "examples": 0,
+      "registry_pages": 101,
+      "omission_controls": 103
+    },
+    "portable_tests": 3,
+    "portable_failures": 0,
+    "portable_errors": 0,
+    "frozen_later_registers": [],
+    "frozen_measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    }
+  },
+  "1.14.4": {
+    "seals": {
+      "seals.json": {
+        "count": 67,
+        "mismatches": []
+      },
+      "receipt-seals.json": {
+        "count": 4,
+        "mismatches": []
+      }
+    },
+    "totals": {
+      "physical_lines": 10,
+      "nonblank_rows": 8,
+      "metadata_rows": 4,
+      "unproven_rows": 4,
+      "contracts": 11,
+      "headers": 2,
+      "numerical_inventory_headers": 0,
+      "api_occurrences": 0,
+      "event_occurrences": 0,
+      "cvar_occurrences": 0,
+      "widget_method_occurrences": 0,
+      "command_occurrences": 0,
+      "signature_declarations": 0,
+      "prose_contracts": 3,
+      "unexpanded_linked_contracts": 8,
+      "unexpanded_transclusions": 1
+    },
+    "portable_tests": 3,
+    "portable_failures": 0,
+    "portable_errors": 0,
+    "frozen_later_registers": [],
+    "frozen_measurements": {
+      "runtime": 0,
+      "model": 0,
+      "native": 0
+    }
+  }
+}

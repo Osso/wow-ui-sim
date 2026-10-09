@@ -1,0 +1,86 @@
+{
+  "1.13.7": {
+    "archive_members": 56,
+    "archive_bytes": 139940,
+    "archive_sha256": "0372221c9594882daba20dc5963f00ef153dccf66f96ed120c09f131b4ae54e4",
+    "original_bytes": 892654,
+    "archive_mismatches": [],
+    "code_scan": {
+      "audit.py": {
+        "lines": 157,
+        "marker_matches": []
+      },
+      "test_source_accounting.py": {
+        "lines": 78,
+        "marker_matches": []
+      },
+      "test_portable.py": {
+        "lines": 92,
+        "marker_matches": []
+      }
+    }
+  },
+  "1.13.6": {
+    "archive_members": 89,
+    "archive_bytes": 138222,
+    "archive_sha256": "39dcdfe8e94e08c7635047840e868ee2e9c1f0eff5c4b22fe92f52fdfb49efc1",
+    "original_bytes": 857016,
+    "archive_mismatches": [],
+    "code_scan": {
+      "audit.py": {
+        "lines": 125,
+        "marker_matches": []
+      },
+      "test_source_accounting.py": {
+        "lines": 70,
+        "marker_matches": []
+      },
+      "test_portable.py": {
+        "lines": 94,
+        "marker_matches": []
+      }
+    }
+  },
+  "1.13.5": {
+    "archive_members": 71,
+    "archive_bytes": 157330,
+    "archive_sha256": "bc2db9b0e805c82c851c17cf658339d1f2af1ee8372f63ff789933bfca9cbfed",
+    "original_bytes": 975379,
+    "archive_mismatches": [],
+    "code_scan": {
+      "audit.py": {
+        "lines": 177,
+        "marker_matches": []
+      },
+      "test_source_accounting.py": {
+        "lines": 100,
+        "marker_matches": []
+      },
+      "test_portable.py": {
+        "lines": 98,
+        "marker_matches": []
+      }
+    }
+  },
+  "1.14.4": {
+    "archive_members": 68,
+    "archive_bytes": 114575,
+    "archive_sha256": "3a94751922acbed0d852abb1df68a8edb334d09d51264a95f02075829fbf22f8",
+    "original_bytes": 732649,
+    "archive_mismatches": [],
+    "code_scan": {
+      "audit.py": {
+        "lines": 137,
+        "marker_matches": []
+      },
+      "test_source_accounting.py": {
+        "lines": 114,
+        "marker_matches": []
+      },
+      "test_portable.py": {
+        "lines": 92,
+        "marker_matches": []
+      }
+    }
+  }
+}

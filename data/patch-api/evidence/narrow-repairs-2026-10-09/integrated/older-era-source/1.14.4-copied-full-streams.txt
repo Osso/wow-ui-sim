@@ -1,0 +1,135 @@
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.14.4-scratch/tmpe615w8te/audit.py"] ===
+{
+  "historical_seals": 67,
+  "totals": {
+    "physical_lines": 10,
+    "nonblank_rows": 8,
+    "metadata_rows": 4,
+    "unproven_rows": 4,
+    "contracts": 11,
+    "headers": 2,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 3,
+    "unexpanded_linked_contracts": 8,
+    "unexpanded_transclusions": 1
+  }
+}
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.14.4-scratch/tmpe615w8te/test_source_accounting.py"] ===
+
+STDERR
+test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... ok
+test_complete_wrath_inclusion_claim_not_erased (__main__.SourceAccounting.test_complete_wrath_inclusion_claim_not_erased) ... ok
+test_configuration_and_successors_not_native_credit (__main__.SourceAccounting.test_configuration_and_successors_not_native_credit) ... ok
+test_diff_heads_not_collapsed (__main__.SourceAccounting.test_diff_heads_not_collapsed) ... ok
+test_dragonflight_subset_separate_and_unexpanded (__main__.SourceAccounting.test_dragonflight_subset_separate_and_unexpanded) ... ok
+test_guidance_prose_retained (__main__.SourceAccounting.test_guidance_prose_retained) ... ok
+test_header_navigation_toc_and_context (__main__.SourceAccounting.test_header_navigation_toc_and_context) ... ok
+test_inventory_signature_and_prose_totals (__main__.SourceAccounting.test_inventory_signature_and_prose_totals) ... ok
+test_omissions_fabricated_members_history_and_credit_rejected (__main__.SourceAccounting.test_omissions_fabricated_members_history_and_credit_rejected) ... ok
+test_source_identity_and_returned_bytes (__main__.SourceAccounting.test_source_identity_and_returned_bytes) ... ok
+test_wiki_and_external_links_accounted_individually (__main__.SourceAccounting.test_wiki_and_external_links_accounted_individually) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.138s
+
+OK
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.14.4-scratch/tmpe615w8te/historical-tools/gen_patch_wikitext_register.py", "1.14.4", "/tmp/older-era-source-independent/1.14.4-scratch/tmpe615w8te/source.wikitext", "2581777", "/tmp/older-era-source-independent/1.14.4-scratch/tmpe615w8te/reproduced-register.json"] ===
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.14.4-scratch/tmpkpfngh04/audit.py"] ===
+
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-era-source-independent/1.14.4-scratch/tmpkpfngh04/audit.py", line 137, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-era-source-independent/1.14.4-scratch/tmpkpfngh04/audit.py", line 133, in main
+    count = check_seals()
+  File "/tmp/older-era-source-independent/1.14.4-scratch/tmpkpfngh04/audit.py", line 125, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: ledger.json
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.14.4-scratch/tmpkpfngh04/audit.py"] ===
+{
+  "historical_seals": 67,
+  "totals": {
+    "physical_lines": 10,
+    "nonblank_rows": 8,
+    "metadata_rows": 4,
+    "unproven_rows": 4,
+    "contracts": 11,
+    "headers": 2,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 3,
+    "unexpanded_linked_contracts": 8,
+    "unexpanded_transclusions": 1
+  }
+}
+
+STDERR
+
+=== {"restored": "ledger.json", "sha256": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226", "all_original_seals": 67} ===
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.14.4-scratch/tmp2afij1fb/audit.py"] ===
+
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-era-source-independent/1.14.4-scratch/tmp2afij1fb/audit.py", line 137, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/older-era-source-independent/1.14.4-scratch/tmp2afij1fb/audit.py", line 133, in main
+    count = check_seals()
+  File "/tmp/older-era-source-independent/1.14.4-scratch/tmp2afij1fb/audit.py", line 125, in check_seals
+    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: green.log
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.14.4-scratch/tmp2afij1fb/audit.py"] ===
+{
+  "historical_seals": 67,
+  "totals": {
+    "physical_lines": 10,
+    "nonblank_rows": 8,
+    "metadata_rows": 4,
+    "unproven_rows": 4,
+    "contracts": 11,
+    "headers": 2,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 3,
+    "unexpanded_linked_contracts": 8,
+    "unexpanded_transclusions": 1
+  }
+}
+
+STDERR
+
+=== {"restored": "green.log", "sha256": "a768e5c1de74d7d62a754e2c0313b72f1dcc518d0236ec8ec2f6858a36d94493", "all_original_seals": 67} ===
+
+STDERR

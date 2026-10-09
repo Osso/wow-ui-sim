@@ -1,0 +1,188 @@
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/audit.py"] ===
+{
+  "seals": 70,
+  "totals": {
+    "physical_lines": 36,
+    "source_rows": 31,
+    "extracted_rows": 0,
+    "inventory": 5,
+    "signatures": 5,
+    "headers": 5,
+    "inventory_headers": 2,
+    "captions": 1,
+    "prose": 2,
+    "links": 7,
+    "templates": 7,
+    "references": 2,
+    "contracts": 14,
+    "configured_profiles": 2,
+    "successors": 16,
+    "model_review": 4,
+    "source_statuses": {
+      "metadata-only": 22,
+      "UNPROVEN": 9
+    },
+    "inventory_by_section": {
+      "global-api": 3,
+      "events": 2
+    },
+    "contract_statuses": {
+      "UNPROVEN": 14
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 103
+  }
+}
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/test_source_accounting.py"] ===
+
+STDERR
+test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok
+test_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok
+test_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok
+test_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok
+test_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok
+test_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok
+test_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok
+test_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.293s
+
+OK
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/historical-tools/gen_patch_wikitext_register.py", "1.13.5", "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/source.wikitext", "3835002", "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/reproduced-register.json"] ===
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/audit.py", "default-extract"] ===
+
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/audit.py", line 167, in <module>
+    print(load_tool('extract_patch_non_inventory.py').extract_text(raw), end='')
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/tmp/older-era-source-independent/1.13.5-scratch/tmp2ajx5j34/historical-tools/extract_patch_non_inventory.py", line 279, in extract_text
+    raise ValueError(f"unhandled template: {line}")
+ValueError: unhandled template: * Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name="patch notes">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmpmsc14dlk/audit.py"] ===
+
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-era-source-independent/1.13.5-scratch/tmpmsc14dlk/audit.py", line 175, in <module>
+    seals = check_seals()
+  File "/tmp/older-era-source-independent/1.13.5-scratch/tmpmsc14dlk/audit.py", line 155, in check_seals
+    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: ledger.json
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmpmsc14dlk/audit.py"] ===
+{
+  "seals": 70,
+  "totals": {
+    "physical_lines": 36,
+    "source_rows": 31,
+    "extracted_rows": 0,
+    "inventory": 5,
+    "signatures": 5,
+    "headers": 5,
+    "inventory_headers": 2,
+    "captions": 1,
+    "prose": 2,
+    "links": 7,
+    "templates": 7,
+    "references": 2,
+    "contracts": 14,
+    "configured_profiles": 2,
+    "successors": 16,
+    "model_review": 4,
+    "source_statuses": {
+      "metadata-only": 22,
+      "UNPROVEN": 9
+    },
+    "inventory_by_section": {
+      "global-api": 3,
+      "events": 2
+    },
+    "contract_statuses": {
+      "UNPROVEN": 14
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 103
+  }
+}
+
+STDERR
+
+=== {"restored": "ledger.json", "sha256": "71b81eccec657487047ffbe5cad2cfec079f7c19c657da47f9fc94862f373667", "all_original_seals": 70} ===
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmp1gq2oqop/audit.py"] ===
+
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-era-source-independent/1.13.5-scratch/tmp1gq2oqop/audit.py", line 175, in <module>
+    seals = check_seals()
+  File "/tmp/older-era-source-independent/1.13.5-scratch/tmp1gq2oqop/audit.py", line 155, in check_seals
+    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: green.log
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.5-scratch/tmp1gq2oqop/audit.py"] ===
+{
+  "seals": 70,
+  "totals": {
+    "physical_lines": 36,
+    "source_rows": 31,
+    "extracted_rows": 0,
+    "inventory": 5,
+    "signatures": 5,
+    "headers": 5,
+    "inventory_headers": 2,
+    "captions": 1,
+    "prose": 2,
+    "links": 7,
+    "templates": 7,
+    "references": 2,
+    "contracts": 14,
+    "configured_profiles": 2,
+    "successors": 16,
+    "model_review": 4,
+    "source_statuses": {
+      "metadata-only": 22,
+      "UNPROVEN": 9
+    },
+    "inventory_by_section": {
+      "global-api": 3,
+      "events": 2
+    },
+    "contract_statuses": {
+      "UNPROVEN": 14
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 103
+  }
+}
+
+STDERR
+
+=== {"restored": "green.log", "sha256": "20deeed57b66052019361638897a30b9e1c787215575b5ce922f83f7881e7ab2", "all_original_seals": 70} ===
+
+STDERR

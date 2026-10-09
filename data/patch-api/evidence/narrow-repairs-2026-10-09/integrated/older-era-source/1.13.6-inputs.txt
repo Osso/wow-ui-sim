@@ -1,0 +1,1186 @@
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/REPLAY.md
+# Original frozen SOURCE replay
+
+`seals.json` pins88 original inputs; `replay-archive.tar.gz` contains89 members,138222bytes, independently pinned by `archive-pin.json`. Original sealed files/map/archive never change. `receipt-seals.json` pins later receipts/current snapshots and original seal-map/archive hashes separately. Current getters do not alter SOURCE measurements.
+
+Use fresh receipt paths; portable replay refuses overwrite. Every command must use explicit owned cwd and absolute paths:
+
+```python
+cli.command('python3','-B',
+ '/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_portable.py',
+ '--archive','/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/replay-archive.tar.gz',
+ '--scratch','/home/osso/.worktrees/wow-ui-sim-p1136-page/build/new-p1136-replay',
+ '--receipts','/home/osso/.worktrees/wow-ui-sim-p1136-page/build/new-p1136-receipts.json') \
+ .cwd('/home/osso/.worktrees/wow-ui-sim-p1136-page').run()
+```
+
+Fresh archive copy contains no Git, target or current tools. Child processes keep explicit owned cwd with empty PATH. Copied SOURCE7 validates exact frozen inputs; unchanged historical generator and default extractor reproduce saved bytes. Serialized ledger omission and fabricated log fail original seals; tests restore exact bytes, recheck every original seal and rerun copied validator. Linked/transcluded pages remain unexpanded. This is bounded SOURCE testing, not model/native/integration/final acceptance.
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/audit.py
+"""Frozen Era 1.13.6 occurrence accounting; SOURCE only, offline."""
+import hashlib
+import json
+from pathlib import Path
+import re
+import sys
+import tomllib
+E = Path(__file__).resolve().parent
+BASE = '5b12dac256abc0ffaf541df2bc445e8381612d2d'
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def read_json(name):
+    return json.loads((E/name).read_bytes())
+
+
+def validate_source(response=None, raw=None):
+    response = (E/'source-response.json').read_bytes() if response is None else response
+    raw = (E/'source.wikitext').read_bytes() if raw is None else raw
+    pin = read_json('source-pin.json')
+    page = json.loads(response)['query']['pages']['461367']
+    revision, = page['revisions']
+    assert (page['pageid'],page['title'],revision['revid'],revision['timestamp']) == (461367,'Patch 1.13.6/API changes',4435603,'2021-05-06T13:20:50Z'), 'identity'
+    assert revision['slots']['main']['*'].encode() == raw, 'returned content'
+    assert digest(raw) == pin['wikitext_sha256'] == '21a9bf3248ca5db0bee46c5fec4d0332744a6e089a52e17b38dde8dbebc4e4c9', 'raw hash'
+    assert digest(response) == pin['response_sha256'] == '46e81af7accc100716c0fd72c06060ec94cc9a3b4e1eae3b27778d72595c5e9d', 'response hash'
+    assert len(raw) == pin['wikitext_bytes'] == 827, 'raw bytes'
+    manifest = read_json('frozen-manifest.json')
+    assert pin == next(p for p in manifest['pages'] if p['version']=='1.13.6'), 'manifest pin'
+    registry = (E/'frozen-registry.json').read_bytes()
+    assert digest(registry) == manifest['registry_sha256'], 'registry hash'
+    pages = json.loads(registry)['pages']
+    assert len(pages)==101 and pages[-1]['version']=='1.0.0', 'registry boundary'
+    registered = next(p for p in pages if p['version']=='1.13.6')
+    assert all(pin[k]==v for k,v in registered.items()), 'registry identity'
+    return raw.decode(), pin
+
+
+def profiles():
+    directory = E/'state-inputs'
+    rust = (directory/'src/client_profile.rs').read_text()
+    interface = int(re.search(r'ClientProfile::Era \| ClientProfile::Anniversary => (\d+)',rust)[1])
+    features = tomllib.loads((directory/'Cargo.toml').read_text())['features']
+    return [dict(feature=f'client-{name}',configured_interface=interface,feature_dependencies=features[f'client-{name}'],manifest_sha256=digest((directory/f'data/blizzard-ui-files/{name}.txt').read_bytes()),native_correspondence='UNPROVEN') for name in ['era','anniversary']]
+
+
+def successors():
+    results=[]
+    manifest=read_json('frozen-manifest.json')
+    versions=['1.13.7']+[f'1.14.{n}' for n in range(5)]+[f'1.15.{n}' for n in range(10)]
+    for version in versions:
+        directory=E/'successors'/version
+        pin=json.loads((directory/'pin.json').read_bytes())
+        assert pin==next(p for p in manifest['pages'] if p['version']==version), 'successor pin'
+        raw=(directory/'source.wikitext').read_bytes()
+        response=(directory/'response.json').read_bytes()
+        assert digest(raw)==pin['wikitext_sha256'] and digest(response)==pin['response_sha256'], 'successor hashes'
+        page=json.loads(response)['query']['pages'][str(pin['pageid'])]
+        revision,=page['revisions']
+        assert page['pageid']==pin['pageid'] and page['title']==pin['title'] and revision['revid']==pin['revid'] and revision['timestamp']==pin['timestamp'], 'successor identity'
+        assert revision['slots']['main']['*'].encode()==raw, 'successor content'
+        status=json.loads((directory/'status.json').read_bytes())
+        expected='in-flight' if version=='1.13.7' else 'queued' if version in ['1.14.0','1.14.1'] else 'integrated-not-applied'
+        assert status==dict(patch=version,state=expected,applied=False,native_proof=False), 'successor boundary'
+        results.append(dict(status,source=pin))
+    return results
+
+
+def contract(kind,record,limit):
+    return dict(record,kind=kind,status='UNPROVEN',arguments=None,returns=None,state_transitions=None,security_rules=None,native_equivalence=None,limit=limit)
+
+
+def build():
+    raw,pin=validate_source()
+    rows=[];headers=[];counts=[];inventory=[];links=[];templates=[]
+    for n,literal in enumerate(raw.splitlines(),1):
+        if not literal.strip(): continue
+        substantive=literal.startswith(': {{api|') or literal.startswith('* Diffs:') or literal.startswith('Patch 1.13.6 ')
+        rows.append(dict(id=f'source-{n:03d}',line=n,literal=literal,status='UNPROVEN' if substantive else 'metadata-only',capabilities=[]))
+        heading=re.fullmatch(r'==\s*([^=]+?)\s*==',literal)
+        if heading: headers.append(dict(line=n,literal=literal,label=heading[1]))
+        count=re.search(r'\|\s*(\d+) new cvars$',literal)
+        if count: counts.append(dict(line=n,literal=literal,count=int(count[1]),direction='added',section='cvars'))
+        api=re.fullmatch(r': \{\{api\|t=c\|([^}]+)\}\}',literal)
+        if api: inventory.append(dict(id=f'wt-cvars-{api[1]}-{n}',line=n,literal=literal,symbol=api[1],section='cvars',direction='added',page_default=None,status='UNPROVEN'))
+        for target,label in re.findall(r'\[(https://\S+) ([^]]+)\]',literal):
+            links.append(dict(line=n,literal=literal,target=target,label=label,expanded=False))
+        for target,label in re.findall(r'\[\[([^|]+)\|([^]]+)\]\]',literal):
+            links.append(dict(line=n,literal=literal,target=target,label=label,expanded=False))
+        for match in re.finditer(r'\{\{[^{}]+\}\}',literal):
+            templates.append(dict(line=n,literal=match[0],expanded=False,role='navigation-only' if n==1 else 'inventory-reference'))
+    for count in counts:
+        count['observed']=len(inventory)
+        count['matches']=count['count']==count['observed']
+    nav=re.fullmatch(r'\{\{apichanges\|([^|]+)\|prev=([^|]+)\|next=([^|]+)\}\}',raw.splitlines()[0])
+    assert nav, 'navigation'
+    summary=next(l for l in raw.splitlines() if l.startswith('Patch 1.13.6 '))
+    prose=[dict(line=4,literal=summary,description='Naxxramas content-patch attribution; no client callable/effect contract')]
+    contracts=[contract('cvar-publication-only',i,'Name/addition only. No source default, type, allowed range, mutation/effect, persistence or security contract.') for i in inventory]
+    contracts += [contract('unexpanded-link',l,'Exact literal link boundary only; no linked content imported.') for l in links]
+    contracts += [contract('content-patch-summary',p,'Literal Classic Naxxramas attribution only; not API behavior or native equivalence.') for p in prose]
+    return dict(schema='patch-source-accounting/v1',patch='1.13.6',base_revision=BASE,source=pin,source_toc=int(re.search(r'\* TOC: <code>(\d+)</code>',raw)[1]),summary=summary,navigation=dict(zip(['patch','prev','next'],nav.groups())),source_rows=rows,inventory=inventory,signatures=[],examples=[],prose_defaults=[],prose=prose,headers=headers,inventory_headers=counts,links=links,templates=templates,contracts=contracts,configured_profiles=profiles(),successors=successors(),later_registers=[],measurements=dict(runtime=0,model=0,native=0),totals=dict(physical_lines=len(raw.splitlines()),nonblank_rows=len(rows),metadata_rows=sum(r['status']=='metadata-only' for r in rows),unproven_rows=sum(r['status']=='UNPROVEN' for r in rows),inventory=len(inventory),callables=0,cvars=len(inventory),headers=len(headers),inventory_headers=len(counts),contracts=len(contracts),signature_declarations=0,links=len(links),templates=len(templates),examples=0,prose_defaults=0,prose=len(prose)))
+
+
+def validate_ledger(ledger):
+    assert ledger==build(), 'serialized literal ledger'
+    return ledger['totals']
+
+
+def check_seals():
+    seals=read_json('seals.json')
+    for name,expected in seals.items():
+        assert digest((E/name).read_bytes())==expected, f'seal: {name}'
+    return len(seals)
+
+
+if __name__=='__main__':
+    if sys.argv[1:]==['capture']:
+        assert not (E/'ledger.json').exists(), 'refuse ledger overwrite'
+        (E/'ledger.json').write_text(json.dumps(build(),indent=2)+'\n')
+    else:
+        print(json.dumps(dict(seals=check_seals(),totals=validate_ledger(read_json('ledger.json'))),indent=2))
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/ledger.json
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.13.6",
+  "base_revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+  "source": {
+    "title": "Patch 1.13.6/API changes",
+    "version": "1.13.6",
+    "pageid": 461367,
+    "revid": 4435603,
+    "timestamp": "2021-05-06T13:20:50Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4435603&format=json",
+    "retrieved": "2026-10-09T08:51:36.400174+00:00",
+    "response_sha256": "46e81af7accc100716c0fd72c06060ec94cc9a3b4e1eae3b27778d72595c5e9d",
+    "wikitext_sha256": "21a9bf3248ca5db0bee46c5fec4d0332744a6e089a52e17b38dde8dbebc4e4c9",
+    "wikitext_bytes": 827,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.6-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.6-wikitext.txt"
+  },
+  "source_toc": 11306,
+  "summary": "Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.",
+  "navigation": {
+    "patch": "1.13.6",
+    "prev": "1.13.5",
+    "next": "1.13.7"
+  },
+  "source_rows": [
+    {
+      "id": "source-001",
+      "line": 1,
+      "literal": "{{apichanges|1.13.6|prev=1.13.5|next=1.13.7}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-003",
+      "line": 3,
+      "literal": "== Summary ==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-004",
+      "line": 4,
+      "literal": "Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-005",
+      "line": 5,
+      "literal": "* TOC: <code>11306</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-006",
+      "line": 6,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-008",
+      "line": 8,
+      "literal": "== CVars ==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-009",
+      "line": 9,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 400px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-010",
+      "line": 10,
+      "literal": "|- class=\"mw-customtoggle-cvars\" style=\"cursor: pointer\" ",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-011",
+      "line": 11,
+      "literal": "! style=\"width: 100%; padding-right: 1em;\"| 3 new cvars",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-012",
+      "line": 12,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-cvars\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-013",
+      "line": 13,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-014",
+      "line": 14,
+      "literal": ": {{api|t=c|nameplateCommentatorMaxDistance}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-015",
+      "line": 15,
+      "literal": ": {{api|t=c|specular}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-016",
+      "line": 16,
+      "literal": ": {{api|t=c|textureErrorColors}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-017",
+      "line": 17,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-018",
+      "line": 18,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    }
+  ],
+  "inventory": [
+    {
+      "id": "wt-cvars-nameplateCommentatorMaxDistance-14",
+      "line": 14,
+      "literal": ": {{api|t=c|nameplateCommentatorMaxDistance}}",
+      "symbol": "nameplateCommentatorMaxDistance",
+      "section": "cvars",
+      "direction": "added",
+      "page_default": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "wt-cvars-specular-15",
+      "line": 15,
+      "literal": ": {{api|t=c|specular}}",
+      "symbol": "specular",
+      "section": "cvars",
+      "direction": "added",
+      "page_default": null,
+      "status": "UNPROVEN"
+    },
+    {
+      "id": "wt-cvars-textureErrorColors-16",
+      "line": 16,
+      "literal": ": {{api|t=c|textureErrorColors}}",
+      "symbol": "textureErrorColors",
+      "section": "cvars",
+      "direction": "added",
+      "page_default": null,
+      "status": "UNPROVEN"
+    }
+  ],
+  "signatures": [],
+  "examples": [],
+  "prose_defaults": [],
+  "prose": [
+    {
+      "line": 4,
+      "literal": "Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.",
+      "description": "Naxxramas content-patch attribution; no client callable/effect contract"
+    }
+  ],
+  "headers": [
+    {
+      "line": 3,
+      "literal": "== Summary ==",
+      "label": "Summary"
+    },
+    {
+      "line": 8,
+      "literal": "== CVars ==",
+      "label": "CVars"
+    }
+  ],
+  "inventory_headers": [
+    {
+      "line": 11,
+      "literal": "! style=\"width: 100%; padding-right: 1em;\"| 3 new cvars",
+      "count": 3,
+      "direction": "added",
+      "section": "cvars",
+      "observed": 3,
+      "matches": true
+    }
+  ],
+  "links": [
+    {
+      "line": 4,
+      "literal": "Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.",
+      "target": "Naxxramas (Classic)",
+      "label": "Naxxramas",
+      "expanded": false
+    },
+    {
+      "line": 6,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d BlizzardInterfaceResources]",
+      "target": "https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3",
+      "label": "wow-ui-source",
+      "expanded": false
+    },
+    {
+      "line": 6,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d BlizzardInterfaceResources]",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d",
+      "label": "BlizzardInterfaceResources",
+      "expanded": false
+    }
+  ],
+  "templates": [
+    {
+      "line": 1,
+      "literal": "{{apichanges|1.13.6|prev=1.13.5|next=1.13.7}}",
+      "expanded": false,
+      "role": "navigation-only"
+    },
+    {
+      "line": 14,
+      "literal": "{{api|t=c|nameplateCommentatorMaxDistance}}",
+      "expanded": false,
+      "role": "inventory-reference"
+    },
+    {
+      "line": 15,
+      "literal": "{{api|t=c|specular}}",
+      "expanded": false,
+      "role": "inventory-reference"
+    },
+    {
+      "line": 16,
+      "literal": "{{api|t=c|textureErrorColors}}",
+      "expanded": false,
+      "role": "inventory-reference"
+    }
+  ],
+  "contracts": [
+    {
+      "id": "wt-cvars-nameplateCommentatorMaxDistance-14",
+      "line": 14,
+      "literal": ": {{api|t=c|nameplateCommentatorMaxDistance}}",
+      "symbol": "nameplateCommentatorMaxDistance",
+      "section": "cvars",
+      "direction": "added",
+      "page_default": null,
+      "status": "UNPROVEN",
+      "kind": "cvar-publication-only",
+      "arguments": null,
+      "returns": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Name/addition only. No source default, type, allowed range, mutation/effect, persistence or security contract."
+    },
+    {
+      "id": "wt-cvars-specular-15",
+      "line": 15,
+      "literal": ": {{api|t=c|specular}}",
+      "symbol": "specular",
+      "section": "cvars",
+      "direction": "added",
+      "page_default": null,
+      "status": "UNPROVEN",
+      "kind": "cvar-publication-only",
+      "arguments": null,
+      "returns": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Name/addition only. No source default, type, allowed range, mutation/effect, persistence or security contract."
+    },
+    {
+      "id": "wt-cvars-textureErrorColors-16",
+      "line": 16,
+      "literal": ": {{api|t=c|textureErrorColors}}",
+      "symbol": "textureErrorColors",
+      "section": "cvars",
+      "direction": "added",
+      "page_default": null,
+      "status": "UNPROVEN",
+      "kind": "cvar-publication-only",
+      "arguments": null,
+      "returns": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Name/addition only. No source default, type, allowed range, mutation/effect, persistence or security contract."
+    },
+    {
+      "line": 4,
+      "literal": "Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.",
+      "target": "Naxxramas (Classic)",
+      "label": "Naxxramas",
+      "expanded": false,
+      "kind": "unexpanded-link",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact literal link boundary only; no linked content imported."
+    },
+    {
+      "line": 6,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d BlizzardInterfaceResources]",
+      "target": "https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3",
+      "label": "wow-ui-source",
+      "expanded": false,
+      "kind": "unexpanded-link",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact literal link boundary only; no linked content imported."
+    },
+    {
+      "line": 6,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d BlizzardInterfaceResources]",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d",
+      "label": "BlizzardInterfaceResources",
+      "expanded": false,
+      "kind": "unexpanded-link",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact literal link boundary only; no linked content imported."
+    },
+    {
+      "line": 4,
+      "literal": "Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.",
+      "description": "Naxxramas content-patch attribution; no client callable/effect contract",
+      "kind": "content-patch-summary",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Literal Classic Naxxramas attribution only; not API behavior or native equivalence."
+    }
+  ],
+  "configured_profiles": [
+    {
+      "feature": "client-era",
+      "configured_interface": 11507,
+      "feature_dependencies": [],
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_correspondence": "UNPROVEN"
+    },
+    {
+      "feature": "client-anniversary",
+      "configured_interface": 11507,
+      "feature_dependencies": [],
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_correspondence": "UNPROVEN"
+    }
+  ],
+  "successors": [
+    {
+      "patch": "1.13.7",
+      "state": "in-flight",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.13.7/API changes",
+        "version": "1.13.7",
+        "pageid": 46829,
+        "revid": 458410,
+        "timestamp": "2021-09-04T08:55:38Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=458410&format=json",
+        "retrieved": "2026-10-09T08:51:36.399298+00:00",
+        "response_sha256": "b0d750e17ee76815e6c4917f9d98f81780ef3b5bb26466acbcc9e1a8899099c4",
+        "wikitext_sha256": "b9f8be9d2db166e6b85ec868fc077bc5591071d55c05bb5f11267eb5ba11e996",
+        "wikitext_bytes": 1179,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.7-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.14.0",
+      "state": "queued",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.14.0/API changes",
+        "version": "1.14.0",
+        "pageid": 71995,
+        "revid": 710568,
+        "timestamp": "2022-02-06T21:21:48Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=710568&format=json",
+        "retrieved": "2026-10-09T08:51:36.399212+00:00",
+        "response_sha256": "9e282d2407123b5850b9c7fc62c35158246d5a93109a4eafb2f9fe7133200289",
+        "wikitext_sha256": "ead23026a86829caa312eb3b9cfcb57c5bfc85099a125fce84820c94e76490ac",
+        "wikitext_bytes": 30381,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.0-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.14.1",
+      "state": "queued",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.14.1/API changes",
+        "version": "1.14.1",
+        "pageid": 102588,
+        "revid": 1010974,
+        "timestamp": "2022-03-02T05:21:47Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1010974&format=json",
+        "retrieved": "2026-10-09T08:51:36.399083+00:00",
+        "response_sha256": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+        "wikitext_sha256": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+        "wikitext_bytes": 6207,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.14.2",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.14.2/API changes",
+        "version": "1.14.2",
+        "pageid": 236101,
+        "revid": 2290155,
+        "timestamp": "2022-06-05T00:14:08Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2290155&format=json",
+        "retrieved": "2026-10-09T08:51:36.399009+00:00",
+        "response_sha256": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+        "wikitext_sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+        "wikitext_bytes": 2460,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.14.3",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.14.3/API changes",
+        "version": "1.14.3",
+        "pageid": 480026,
+        "revid": 4615755,
+        "timestamp": "2023-07-10T10:27:33Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4615755&format=json",
+        "retrieved": "2026-10-09T08:51:36.398924+00:00",
+        "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+        "wikitext_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+        "wikitext_bytes": 23291,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.14.4",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.14.4/API changes",
+        "version": "1.14.4",
+        "pageid": 267043,
+        "revid": 2581777,
+        "timestamp": "2023-07-19T19:32:56Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+        "retrieved": "2026-10-09T08:51:36.398825+00:00",
+        "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+        "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+        "wikitext_bytes": 775,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.0",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.0/API changes",
+        "version": "1.15.0",
+        "pageid": 564510,
+        "revid": 5950848,
+        "timestamp": "2024-01-30T19:36:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+        "retrieved": "2026-10-09T08:51:36.398773+00:00",
+        "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+        "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+        "wikitext_bytes": 915,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.1",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.1/API changes",
+        "version": "1.15.1",
+        "pageid": 577687,
+        "revid": 5998991,
+        "timestamp": "2024-04-03T08:43:49Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+        "retrieved": "2026-10-09T08:51:36.398724+00:00",
+        "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+        "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+        "wikitext_bytes": 835,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.2",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.2/API changes",
+        "version": "1.15.2",
+        "pageid": 583919,
+        "revid": 6061806,
+        "timestamp": "2024-06-12T18:59:26Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+        "retrieved": "2026-10-09T08:51:36.398676+00:00",
+        "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+        "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+        "wikitext_bytes": 391,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.3",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.3/API changes",
+        "version": "1.15.3",
+        "pageid": 593663,
+        "revid": 6114194,
+        "timestamp": "2024-08-30T01:06:01Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+        "retrieved": "2026-10-09T08:51:36.398616+00:00",
+        "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+        "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+        "wikitext_bytes": 452,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.4",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.4/API changes",
+        "version": "1.15.4",
+        "pageid": 600355,
+        "revid": 6172581,
+        "timestamp": "2024-11-13T21:59:45Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+        "retrieved": "2026-10-09T08:51:36.398568+00:00",
+        "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+        "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+        "wikitext_bytes": 439,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.5",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.5/API changes",
+        "version": "1.15.5",
+        "pageid": 610284,
+        "revid": 6235411,
+        "timestamp": "2025-02-09T17:32:34Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+        "retrieved": "2026-10-09T08:51:36.398521+00:00",
+        "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+        "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.6",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.6/API changes",
+        "version": "1.15.6",
+        "pageid": 619994,
+        "revid": 6281951,
+        "timestamp": "2025-04-04T10:14:39Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+        "retrieved": "2026-10-09T08:51:36.398475+00:00",
+        "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+        "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.7",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.7/API changes",
+        "version": "1.15.7",
+        "pageid": 626071,
+        "revid": 6778069,
+        "timestamp": "2026-07-22T05:34:20Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+        "retrieved": "2026-10-09T08:51:36.398418+00:00",
+        "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+        "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.8",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.8/API changes",
+        "version": "1.15.8",
+        "pageid": 686952,
+        "revid": 6778071,
+        "timestamp": "2026-07-22T05:34:51Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+        "retrieved": "2026-10-09T08:51:36.398359+00:00",
+        "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+        "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+        "wikitext_bytes": 279,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.9",
+      "state": "integrated-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "source": {
+        "title": "Patch 1.15.9/API changes",
+        "version": "1.15.9",
+        "pageid": 685352,
+        "revid": 6780591,
+        "timestamp": "2026-07-24T15:29:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+        "retrieved": "2026-10-09T08:51:36.398273+00:00",
+        "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+        "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+        "wikitext_bytes": 4085,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+      }
+    }
+  ],
+  "later_registers": [],
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "totals": {
+    "physical_lines": 18,
+    "nonblank_rows": 16,
+    "metadata_rows": 11,
+    "unproven_rows": 5,
+    "inventory": 3,
+    "callables": 0,
+    "cvars": 3,
+    "headers": 2,
+    "inventory_headers": 1,
+    "contracts": 7,
+    "signature_declarations": 0,
+    "links": 3,
+    "templates": 4,
+    "examples": 0,
+    "prose_defaults": 0,
+    "prose": 1
+  }
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/proof-ledger.json
+{
+  "scope": "own SOURCE only; zero runtime/model/native proof",
+  "base": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+  "red_revision": "fe64d92ca",
+  "green_revision": "d69734cebe8d3edad5b64cc10b9a60285c1a3eaf",
+  "source_tests": 7,
+  "result": "GREEN",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1136-page",
+  "later_changes_invalidate": "audit or source-test changes invalidate SOURCE result",
+  "omission_controls": 55,
+  "invalidated_prior": "3161bc991: additional prose omission control; production audit unchanged"
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/receipt-seals.json
+{
+  "scope": "later inputs/receipts only; original88 SOURCE seals immutable",
+  "files": {
+    "HANDOFF.md": "224536fa01c11963edfee6396f96695454126a9b49d874df3770a58c8ce9e0b5",
+    "REPLAY.md": "a3b6f2cdcb23c43ec4e4e05a4fc96d3b6e4f05535ff032693fc9d995f3568ab2",
+    "archive-pin.json": "ba74524c3f2d545fd4c916633173f3033b9bebd3a6504e3762adcb49d762d58c",
+    "current-era-green-observations.json": "949e0ac2fb461367c21f0ea67aed8a65a37a3cd1f8714e82fb4e06af6b5af8b1",
+    "current-era-green.log": "e2911f70101c937d17e0a989397da055559ad2e94c92f985d3a065022009c790",
+    "current-era-red-observations.json": "949e0ac2fb461367c21f0ea67aed8a65a37a3cd1f8714e82fb4e06af6b5af8b1",
+    "current-era-red.log": "409dc89dca5a5ce1ba85ad164021a92da55257b5dfa207b53487932191a6cacc",
+    "current-green-proof.json": "367d1e3de6269c5eeacc2341422142bfe6044a79f1c7e475c254d40d5a708fd7",
+    "current-inputs/Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "current-inputs/Cargo.toml": "c11ae33e335e33e3733292625c55c37d70b3caa9bcb19252684536d99a62d3ba",
+    "current-inputs/patch-tests/patch_1_13_6_factory.rs": "2c6d223d025cc97f264616d485a5b5813ff5d3ddeadcb999c581de9702e7f695",
+    "current-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+    "current-inputs/src/cvars.rs": "4a9c33eb99b1aafd4fbc22e8cb3929d2e98608c3bfa2c3c99ec1ea6df8abc89c",
+    "current-inputs/src/cvars.yaml": "598bed1386eaa5f5a4a97aaff1ed5dee974663a016791e12a6d480cda42c4636",
+    "current-inputs/src/lua_api/globals/set_cvar_verb.rs": "e3f5df9076269e557e11ea63ecce0ab03174937df5c0e10b8b13b13f169f08a0",
+    "current-inputs/src/lua_api/workarounds/temporary/client_info_defaults.rs": "47e6bf8a208954086fd6ff595dfbf3a24564b12ccba7535bf4c619b7b4c113d7",
+    "current-inputs/tests/common/publication_probe.rs": "462b4dc464e9facf09b21f230101aabb43dc03f901971deb1d1a798b3d0a2969",
+    "current-known-gaps.json": "cc13920121e5647ca712a40ad9e9e6e279adb3cec962594a7a4b059221e7107c",
+    "current-red-proof.json": "d23592d83e99302a0e5607601a05f6dcbf9f6c531cca97ecf9961301240236fa",
+    "current-reviewed-observations.json": "769b35e52926dea492a44278b7df8d753f91ec0d31a99a9618075a900456cbdd",
+    "current-source-scan.json": "0b3f4f56798bf2715f5855e000ded527a361a289abb3b3fb0ad9ea7e6e8e7ab1",
+    "portable-controls.json": "c8fc43316230db6c7c432ccb55fd430242ccff6c9c2bffba28dd4bf03bb54520",
+    "portable-green.log": "cbf94a191ab83a304ad9e9af08702a111b8147510590b6abd604d8eee97919ec",
+    "portable-proof.json": "93cbd1d14d540f655f393d9a96d9db993f321cf0ba224a791e3acfb7b90a1981",
+    "replay-archive.tar.gz": "39dcdfe8e94e08c7635047840e868ee2e9c1f0eff5c4b22fe92f52fdfb49efc1",
+    "seals.json": "4de0fc3e4a2c0fa4e1fb7cd0c99f97f9723e6cf2589d390660e9b0f55bf33419"
+  }
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/seals.json
+{
+  "audit.py": "d0f248a49d89977e374c4f33021c65e62f820088b7d8df8f8efb1d6d6e741d63",
+  "default-extract.txt": "a12d068def55d113e7e4b6f4579ceee62d224a6288ce82bab494ad180aaf49c5",
+  "default-generator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "default-register.json": "30635707b14ce49938b38d4c9f2827f24a4053e99069f8e07be87e0dbf38a98c",
+  "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+  "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+  "green.log": "54c1b10592202d331ea7f9dcd8d27dcbe53c7307cd211c2e6f9365d7e6309abc",
+  "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532",
+  "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+  "ledger.json": "72d923000ed6ff4418b13554b52dc3f654ed141a38cbd2acb78335e4125e762c",
+  "portable-red-controls.json": "5c03ddae0de167055904da0941233fb40d5e8ebb9c362dc4c55c3c8adbb2c5ed",
+  "portable-red.log": "46ce5cec9c382adf05df1bc3c53c5eb45f8e9b79486b31b4868849cf6230af01",
+  "proof-ledger.json": "e5c56a794baaa9ccec5c7497b96e84f56b17bea4ba91f615655f32acb302ba01",
+  "red.log": "730434b3ab74e3da8e56a209a6e5eba92bcdbece97a03b07cd0d7644719c7e9d",
+  "replay_defaults.py": "93a6f1d647520887b242aa2af892d6dfbf2f39c29b4280e17b5cc118b6b0a93b",
+  "source-pin.json": "54f35785370d47a09e5ae1b5cc0fbd408315dd3f9cf55daf560b2a8ad361dd77",
+  "source-response.json": "46e81af7accc100716c0fd72c06060ec94cc9a3b4e1eae3b27778d72595c5e9d",
+  "source.wikitext": "21a9bf3248ca5db0bee46c5fec4d0332744a6e089a52e17b38dde8dbebc4e4c9",
+  "state-inputs/Cargo.toml": "155ccda31fd0b951fc3f6e5b84fa88e35410e4b062cc40281230f35481ffd24d",
+  "state-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+  "state-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+  "state-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+  "successors/1.13.7/pin.json": "86fc95bc81466e34b588ec514ebfea0228c55954301138327d73014b53fa7c4f",
+  "successors/1.13.7/response.json": "b0d750e17ee76815e6c4917f9d98f81780ef3b5bb26466acbcc9e1a8899099c4",
+  "successors/1.13.7/source.wikitext": "b9f8be9d2db166e6b85ec868fc077bc5591071d55c05bb5f11267eb5ba11e996",
+  "successors/1.13.7/status.json": "643480768786a52e26df136c7d109bb7bd6b7a8a3cd6277a500ce31757c5d5f2",
+  "successors/1.14.0/pin.json": "9772daeaa3dcd1479b2caf25d6be0af6fc5e986d48aeacece0a614a7cbf213ed",
+  "successors/1.14.0/response.json": "9e282d2407123b5850b9c7fc62c35158246d5a93109a4eafb2f9fe7133200289",
+  "successors/1.14.0/source.wikitext": "ead23026a86829caa312eb3b9cfcb57c5bfc85099a125fce84820c94e76490ac",
+  "successors/1.14.0/status.json": "10ddce820299452d76a9566a63ea415211e737c5c222d4e83a110ff945e26c67",
+  "successors/1.14.1/pin.json": "20a3002d9f474c2c9b2d47671ee47af2f06632b51994597f5d50a9aeb52fd27e",
+  "successors/1.14.1/response.json": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+  "successors/1.14.1/source.wikitext": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+  "successors/1.14.1/status.json": "6ac27ca8aa474d97bd59a4b28e773e3eeb3c238174eb9a09a6b10f3fdc34cb30",
+  "successors/1.14.2/pin.json": "4d58d2964a8385e7481a61e23be82733e9d73c54d475eb34efdf2c809641d74b",
+  "successors/1.14.2/response.json": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+  "successors/1.14.2/source.wikitext": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+  "successors/1.14.2/status.json": "b2f81e90c7d38dceefc698520d5c92fd02b6b8f9630878c02d5959b47272a2c8",
+  "successors/1.14.3/pin.json": "d26b2a51dbedec406a4329c5d6adf4613971192fbde2b17c2f186a59107913e2",
+  "successors/1.14.3/response.json": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+  "successors/1.14.3/source.wikitext": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+  "successors/1.14.3/status.json": "79a2290be1009aee9d5383d4de519b3ac545a71a8c058ce68cffcbb93ba1679d",
+  "successors/1.14.4/pin.json": "27bf3c33fd6b252633c6d30d0f44a9946a9b2868b445427dac2aa72e55e023ac",
+  "successors/1.14.4/response.json": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+  "successors/1.14.4/source.wikitext": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+  "successors/1.14.4/status.json": "cf926d50734e2ecd8ce3e1253787095d93945758cc7a4d2e9f1d8fe5c893b5aa",
+  "successors/1.15.0/pin.json": "fceebfc883dfe88af06314295597e5885b50867b970a4df130f5885aa6553316",
+  "successors/1.15.0/response.json": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+  "successors/1.15.0/source.wikitext": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+  "successors/1.15.0/status.json": "a3447dfc2a1aef0eaa95b3287badb3c90cd86d5d7e03f458751d0a99abd22152",
+  "successors/1.15.1/pin.json": "f513df91a6e71424da25d87b0ff35d9f801a8b65d848908a7c748c2b1ee314be",
+  "successors/1.15.1/response.json": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+  "successors/1.15.1/source.wikitext": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+  "successors/1.15.1/status.json": "4e75c4431a427068772b2312920c45a03f7614c558657ea7bd5c595d7f7ffd48",
+  "successors/1.15.2/pin.json": "27f82f3457760074fcfd7ecfd36074dd3cdfa7756fb21b62bba1401fbb545c14",
+  "successors/1.15.2/response.json": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+  "successors/1.15.2/source.wikitext": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+  "successors/1.15.2/status.json": "c1623e42891c782882d8d8a73f7eef84cf78fa8e862c06e91336c170f22b00b0",
+  "successors/1.15.3/pin.json": "d333eb3d5bf7a0820b7717593abdca468b778d1558645fa8110247a2fbb295f4",
+  "successors/1.15.3/response.json": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+  "successors/1.15.3/source.wikitext": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+  "successors/1.15.3/status.json": "99ceb2efeb331971abb42d75510fc407b5a49cb76f68ded11a901ea7a8c39f78",
+  "successors/1.15.4/pin.json": "f54517609cd214ff8ad10c5b0748b6f16dc36c92430cf3a0f2b52d0b579aa6b5",
+  "successors/1.15.4/response.json": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+  "successors/1.15.4/source.wikitext": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+  "successors/1.15.4/status.json": "86718b339a4b03884f5db79eb2f3779f4e308f2c6b0bfcebe65d0e23a9b2d140",
+  "successors/1.15.5/pin.json": "c25dd5cfa4c500b0d09b40546ee8fa320db418f88e2e5a679e92927d11b5f340",
+  "successors/1.15.5/response.json": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+  "successors/1.15.5/source.wikitext": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+  "successors/1.15.5/status.json": "a3adcb6629695051d7c4fab5560b24c30d38c943b5a71c1cd98827e738b579d8",
+  "successors/1.15.6/pin.json": "808dfec0a0228d7471e8384ac1199f52bdaca81ce79e078248f8b83abf9fa4a0",
+  "successors/1.15.6/response.json": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+  "successors/1.15.6/source.wikitext": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+  "successors/1.15.6/status.json": "73b35734a7ab42ccccfaf78d87913b48e87292792bd6a21215b1d5e639aa99dd",
+  "successors/1.15.7/pin.json": "b817eb44905c01f5d9b70b243fbffd0426b8f1cdb76ede26bc908f34293134c1",
+  "successors/1.15.7/response.json": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+  "successors/1.15.7/source.wikitext": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+  "successors/1.15.7/status.json": "d7f86f6b02ab4780b07eba166bf0c0f765c5aca276f1c4729e460a9921445ffb",
+  "successors/1.15.8/pin.json": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6",
+  "successors/1.15.8/response.json": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+  "successors/1.15.8/source.wikitext": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+  "successors/1.15.8/status.json": "4e0e429ac447b7180af3381c0607373bde7a96687fd23c5c9a754a13713d089f",
+  "successors/1.15.9/pin.json": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95",
+  "successors/1.15.9/response.json": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+  "successors/1.15.9/source.wikitext": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+  "successors/1.15.9/status.json": "f80ed9f0fc4a4547de1fea8acfd503d4188a4870c7861fcc32f89ccfcc7c6579",
+  "test_portable.py": "882f362ce2c632a03d248b622e9712f75c76e6dcbbd31250e09805e2312c0a2e",
+  "test_source_accounting.py": "6df9f3749e214775a973da1ff85d5b0bf0f340f97557d167b1482db4f45431db"
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/test_portable.py
+"""Copied historical replay and serialized seal controls; SOURCE only."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tarfile
+import tempfile
+import unittest
+EVIDENCE = Path(__file__).resolve().parent
+CWD = '/home/osso/.worktrees/wow-ui-sim-p1136-page'
+RECEIPTS = []
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+class PortableSource(unittest.TestCase):
+
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory(dir=OPTIONS.scratch)
+        self.addCleanup(self.directory.cleanup)
+        self.copied = Path(self.directory.name)
+        self.assertTrue(OPTIONS.archive.is_file(), 'own replay archive absent')
+        with tarfile.open(OPTIONS.archive, 'r:gz') as archive:
+            members = archive.getnames()
+            self.assertTrue(all((not Path(m).is_absolute() and '..' not in Path(m).parts for m in members)))
+            archive.extractall(self.copied, filter='data')
+        self.assertFalse((self.copied / '.git').exists())
+        self.assertFalse((self.copied / 'target').exists())
+        self.assertFalse((self.copied / 'tools').exists())
+        self.seals = json.loads((self.copied / 'seals.json').read_bytes())
+        self.check_originals()
+
+    def check_originals(self):
+        for name, expected in self.seals.items():
+            self.assertEqual(digest((self.copied / name).read_bytes()), expected, name)
+
+    def execute(self, *args):
+        command = [sys.executable, '-B', *map(str, args)]
+        result = subprocess.run(command, cwd=CWD, env=dict(os.environ, PATH='', PYTHONDONTWRITEBYTECODE='1'), capture_output=True, text=True, timeout=30)
+        RECEIPTS.append({'test': self.id(), 'command': command, 'cwd': CWD, 'path': 'empty; Git/current commands unavailable', 'exit_code': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+        return result
+
+    def test_copied_source_and_default_register(self):
+        result = self.execute(self.copied / 'audit.py')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        fixtures = self.execute(self.copied / 'test_source_accounting.py')
+        self.assertEqual(fixtures.returncode, 0, fixtures.stderr)
+        self.assertIn('Ran 7 tests', fixtures.stderr)
+        output = self.copied / 'reproduced-register.json'
+        generated = self.execute(self.copied / 'historical-tools/gen_patch_wikitext_register.py', '1.13.6', self.copied / 'source.wikitext', '4435603', output)
+        self.assertEqual(generated.returncode, 0, generated.stderr)
+        self.assertEqual(output.read_bytes(), (self.copied / 'default-register.json').read_bytes())
+        extracted = self.execute(self.copied / 'replay_defaults.py')
+        self.assertEqual(extracted.returncode, 0, extracted.stderr)
+        self.check_originals()
+
+    def reject_and_restore(self, name, changed):
+        path = self.copied / name
+        original = path.read_bytes()
+        path.write_bytes(changed)
+        try:
+            result = self.execute(self.copied / 'audit.py')
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(f'seal: {name}', result.stderr)
+        finally:
+            path.write_bytes(original)
+        self.assertEqual(path.read_bytes(), original)
+        self.check_originals()
+        restored = self.execute(self.copied / 'audit.py')
+        self.assertEqual(restored.returncode, 0, restored.stderr)
+        RECEIPTS.append({'restored': name, 'sha256': digest(path.read_bytes()), 'all_original_seals': len(self.seals)})
+
+    def test_serialized_ledger_omission_rejected_and_restored(self):
+        ledger = json.loads((self.copied / 'ledger.json').read_bytes())
+        ledger['contracts'].pop()
+        self.reject_and_restore('ledger.json', (json.dumps(ledger, indent=2) + '\n').encode())
+
+    def test_serialized_log_fabrication_rejected_and_restored(self):
+        self.reject_and_restore('green.log', b'Invented runtime/native parity: PASS\n')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--archive', type=Path, required=True)
+    parser.add_argument('--scratch', type=Path, required=True)
+    parser.add_argument('--receipts', type=Path, required=True)
+    OPTIONS = parser.parse_args()
+    OPTIONS.scratch.mkdir(parents=True, exist_ok=True)
+    assert not OPTIONS.receipts.exists(), 'refuse receipt overwrite'
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(PortableSource)
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    OPTIONS.receipts.write_text(json.dumps({'scope': 'copied historical SOURCE; no runtime/model/native credit', 'runs': RECEIPTS, 'tests_run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors)}, indent=2) + '\n')
+    sys.exit(0 if result.wasSuccessful() else 1)
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py
+"""Own frozen Era 1.13.6 SOURCE fixtures; no runtime/native credit."""
+import copy
+import json
+from pathlib import Path
+import unittest
+import audit
+E = Path(__file__).resolve().parent
+
+class SourceAccounting(unittest.TestCase):
+    def test_lossless_rows(self):
+        expected = [(n, s) for n, s in enumerate((E/'source.wikitext').read_text().splitlines(), 1) if s.strip()]
+        self.assertEqual([(r['line'], r['literal']) for r in audit.build().get('source_rows', [])], expected)
+
+    def test_three_cvars_no_invented_defaults(self):
+        ledger = audit.build()
+        self.assertEqual([i['symbol'] for i in ledger.get('inventory', [])], ['nameplateCommentatorMaxDistance','specular','textureErrorColors'])
+        self.assertTrue(all(i['direction']=='added' and i['section']=='cvars' and i['page_default'] is None for i in ledger['inventory']))
+        self.assertEqual(ledger.get('signatures'), [])
+        self.assertEqual(ledger.get('examples'), [])
+        self.assertEqual(ledger.get('prose_defaults'), [])
+
+    def test_headers_and_navigation(self):
+        ledger = audit.build()
+        self.assertEqual([h['label'] for h in ledger.get('headers', [])], ['Summary','CVars'])
+        self.assertEqual([(h['count'],h['observed'],h['matches']) for h in ledger.get('inventory_headers', [])], [(3,3,True)])
+        self.assertEqual(ledger.get('source_toc'),11306)
+        self.assertEqual(ledger.get('navigation'),dict(patch='1.13.6',prev='1.13.5',next='1.13.7'))
+
+    def test_prose_links_and_templates(self):
+        ledger = audit.build()
+        self.assertEqual(len(ledger.get('links', [])),3)
+        self.assertTrue(all(not i['expanded'] for i in ledger['links']))
+        self.assertEqual(len(ledger.get('templates', [])),4)
+        self.assertEqual(ledger.get('summary'),'Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.')
+        self.assertEqual(len(ledger.get('contracts', [])),7)
+        self.assertTrue(all(i['status']=='UNPROVEN' for i in ledger['contracts']))
+        self.assertEqual(ledger.get('measurements'),dict(runtime=0,model=0,native=0))
+
+    def test_profiles_and_separate_successors(self):
+        ledger = audit.build()
+        self.assertEqual([(p['feature'],p['configured_interface']) for p in ledger.get('configured_profiles',[])],[('client-era',11507),('client-anniversary',11507)])
+        expected=[('1.13.7','in-flight'),('1.14.0','queued'),('1.14.1','queued')]+[(f'1.14.{n}','integrated-not-applied') for n in range(2,5)]+[(f'1.15.{n}','integrated-not-applied') for n in range(10)]
+        self.assertEqual([(p['patch'],p['state']) for p in ledger.get('successors',[])],expected)
+        self.assertTrue(all(not p['applied'] and not p['native_proof'] for p in ledger['successors']))
+        self.assertEqual(ledger.get('later_registers'),[])
+
+    def test_every_omission_and_fabrication_rejected(self):
+        original=audit.build()
+        self.assertIn('contracts',original)
+        controls=0
+        for field in ['source_rows','inventory','headers','inventory_headers','links','templates','prose','contracts','configured_profiles','successors']:
+            for index in range(len(original[field])):
+                changed=copy.deepcopy(original);changed[field].pop(index)
+                with self.assertRaises(AssertionError): audit.validate_ledger(changed)
+                controls+=1
+        print('omission controls:',controls)
+        for field,value in [('measurements',dict(runtime=1,model=1,native=1)),('source_toc',11507),('examples',['invented']),('signatures',['invented']),('prose_defaults',['1']),('later_registers',['retail'])]:
+            changed=copy.deepcopy(original);changed[field]=value
+            with self.assertRaises(AssertionError): audit.validate_ledger(changed)
+        changed=copy.deepcopy(original);changed['inventory'][0]['page_default']='60'
+        with self.assertRaises(AssertionError): audit.validate_ledger(changed)
+
+    def test_exact_response_identity_and_content(self):
+        self.assertIn('source',audit.build())
+        response=json.loads((E/'source-response.json').read_bytes())
+        response['query']['pages']['461367']['revisions'][0]['revid']+=1
+        with self.assertRaises(AssertionError): audit.validate_source(json.dumps(response).encode(),(E/'source.wikitext').read_bytes())
+        with self.assertRaises(AssertionError): audit.validate_source((E/'source-response.json').read_bytes(),(E/'source.wikitext').read_bytes()+b'\n')
+
+if __name__=='__main__': unittest.main(verbosity=2)

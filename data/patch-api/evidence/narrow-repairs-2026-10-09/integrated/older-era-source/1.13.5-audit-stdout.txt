@@ -1,0 +1,38 @@
+{
+  "seals": 70,
+  "totals": {
+    "physical_lines": 36,
+    "source_rows": 31,
+    "extracted_rows": 0,
+    "inventory": 5,
+    "signatures": 5,
+    "headers": 5,
+    "inventory_headers": 2,
+    "captions": 1,
+    "prose": 2,
+    "links": 7,
+    "templates": 7,
+    "references": 2,
+    "contracts": 14,
+    "configured_profiles": 2,
+    "successors": 16,
+    "model_review": 4,
+    "source_statuses": {
+      "metadata-only": 22,
+      "UNPROVEN": 9
+    },
+    "inventory_by_section": {
+      "global-api": 3,
+      "events": 2
+    },
+    "contract_statuses": {
+      "UNPROVEN": 14
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 103
+  }
+}

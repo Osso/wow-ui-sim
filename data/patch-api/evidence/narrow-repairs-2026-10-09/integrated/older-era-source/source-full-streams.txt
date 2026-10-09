@@ -1,0 +1,251 @@
+
+### 1.13.7-audit
+STDOUT
+{
+  "seals": 55,
+  "totals": {
+    "physical_lines": 28,
+    "nonblank_rows": 25,
+    "extracted_rows": 5,
+    "metadata_rows": 19,
+    "unproven_rows": 6,
+    "inventory": 5,
+    "callables": 1,
+    "cvars": 4,
+    "headers": 3,
+    "inventory_headers": 2,
+    "numeric_headers": 0,
+    "contracts": 7,
+    "signature_declarations": 0,
+    "unspecified_signatures": 1,
+    "links": 2,
+    "templates": 6,
+    "examples": 0,
+    "prose": 0,
+    "defaults": 0
+  }
+}
+
+STDERR
+
+### 1.13.7-source
+STDOUT
+
+STDERR
+test_configured_profiles_and_same_history_boundaries (__main__.SourceAccounting.test_configured_profiles_and_same_history_boundaries) ... ok
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok
+test_exact_source_identity (__main__.SourceAccounting.test_exact_source_identity) ... ok
+test_headers_navigation_and_unexpanded_links (__main__.SourceAccounting.test_headers_navigation_and_unexpanded_links) ... ok
+test_inventory_signatures_and_no_defaults (__main__.SourceAccounting.test_inventory_signatures_and_no_defaults) ... ok
+test_literal_limits_and_zero_credit (__main__.SourceAccounting.test_literal_limits_and_zero_credit) ... ok
+test_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract) ... ok
+test_response_and_body_tamper (__main__.SourceAccounting.test_response_and_body_tamper) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.994s
+
+OK
+
+### 1.13.7-portable
+STDOUT
+
+STDERR
+test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok
+test_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok
+test_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.265s
+
+OK
+
+### 1.13.6-audit
+STDOUT
+{
+  "seals": 88,
+  "totals": {
+    "physical_lines": 18,
+    "nonblank_rows": 16,
+    "metadata_rows": 11,
+    "unproven_rows": 5,
+    "inventory": 3,
+    "callables": 0,
+    "cvars": 3,
+    "headers": 2,
+    "inventory_headers": 1,
+    "contracts": 7,
+    "signature_declarations": 0,
+    "links": 3,
+    "templates": 4,
+    "examples": 0,
+    "prose_defaults": 0,
+    "prose": 1
+  }
+}
+
+STDERR
+
+### 1.13.6-source
+STDOUT
+omission controls: 55
+
+STDERR
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok
+test_exact_response_identity_and_content (__main__.SourceAccounting.test_exact_response_identity_and_content) ... ok
+test_headers_and_navigation (__main__.SourceAccounting.test_headers_and_navigation) ... ok
+test_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... ok
+test_profiles_and_separate_successors (__main__.SourceAccounting.test_profiles_and_separate_successors) ... ok
+test_prose_links_and_templates (__main__.SourceAccounting.test_prose_links_and_templates) ... ok
+test_three_cvars_no_invented_defaults (__main__.SourceAccounting.test_three_cvars_no_invented_defaults) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.137s
+
+OK
+
+### 1.13.6-portable
+STDOUT
+
+STDERR
+test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok
+test_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok
+test_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.375s
+
+OK
+
+### 1.13.5-audit
+STDOUT
+{
+  "seals": 70,
+  "totals": {
+    "physical_lines": 36,
+    "source_rows": 31,
+    "extracted_rows": 0,
+    "inventory": 5,
+    "signatures": 5,
+    "headers": 5,
+    "inventory_headers": 2,
+    "captions": 1,
+    "prose": 2,
+    "links": 7,
+    "templates": 7,
+    "references": 2,
+    "contracts": 14,
+    "configured_profiles": 2,
+    "successors": 16,
+    "model_review": 4,
+    "source_statuses": {
+      "metadata-only": 22,
+      "UNPROVEN": 9
+    },
+    "inventory_by_section": {
+      "global-api": 3,
+      "events": 2
+    },
+    "contract_statuses": {
+      "UNPROVEN": 14
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 103
+  }
+}
+
+STDERR
+
+### 1.13.5-source
+STDOUT
+
+STDERR
+test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok
+test_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok
+test_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok
+test_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok
+test_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok
+test_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok
+test_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok
+test_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.315s
+
+OK
+
+### 1.13.5-portable
+STDOUT
+
+STDERR
+test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok
+test_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok
+test_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.608s
+
+OK
+
+### 1.14.4-audit
+STDOUT
+{
+  "historical_seals": 67,
+  "totals": {
+    "physical_lines": 10,
+    "nonblank_rows": 8,
+    "metadata_rows": 4,
+    "unproven_rows": 4,
+    "contracts": 11,
+    "headers": 2,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 3,
+    "unexpanded_linked_contracts": 8,
+    "unexpanded_transclusions": 1
+  }
+}
+
+STDERR
+
+### 1.14.4-source
+STDOUT
+
+STDERR
+test_all_literal_rows (__main__.SourceAccounting.test_all_literal_rows) ... ok
+test_complete_wrath_inclusion_claim_not_erased (__main__.SourceAccounting.test_complete_wrath_inclusion_claim_not_erased) ... ok
+test_configuration_and_successors_not_native_credit (__main__.SourceAccounting.test_configuration_and_successors_not_native_credit) ... ok
+test_diff_heads_not_collapsed (__main__.SourceAccounting.test_diff_heads_not_collapsed) ... ok
+test_dragonflight_subset_separate_and_unexpanded (__main__.SourceAccounting.test_dragonflight_subset_separate_and_unexpanded) ... ok
+test_guidance_prose_retained (__main__.SourceAccounting.test_guidance_prose_retained) ... ok
+test_header_navigation_toc_and_context (__main__.SourceAccounting.test_header_navigation_toc_and_context) ... ok
+test_inventory_signature_and_prose_totals (__main__.SourceAccounting.test_inventory_signature_and_prose_totals) ... ok
+test_omissions_fabricated_members_history_and_credit_rejected (__main__.SourceAccounting.test_omissions_fabricated_members_history_and_credit_rejected) ... ok
+test_source_identity_and_returned_bytes (__main__.SourceAccounting.test_source_identity_and_returned_bytes) ... ok
+test_wiki_and_external_links_accounted_individually (__main__.SourceAccounting.test_wiki_and_external_links_accounted_individually) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.137s
+
+OK
+
+### 1.14.4-portable
+STDOUT
+
+STDERR
+test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... ok
+test_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... ok
+test_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.351s
+
+OK

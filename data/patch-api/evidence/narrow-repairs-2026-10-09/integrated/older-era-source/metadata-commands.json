@@ -1,0 +1,290 @@
+[
+  {
+    "name": "head-after",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.702886+00:00",
+    "ended": "2026-10-09T16:34:04.704061+00:00",
+    "seconds": 0.0011812029988504946,
+    "exit_code": 0,
+    "stdout": "bf8598e1da52895b707db0bf7bd9fb350c448628\n",
+    "stderr": ""
+  },
+  {
+    "name": "revision-delta",
+    "argv": [
+      "git",
+      "diff",
+      "--name-status",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825",
+      "bf8598e1da52895b707db0bf7bd9fb350c448628"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.704068+00:00",
+    "ended": "2026-10-09T16:34:04.706403+00:00",
+    "seconds": 0.002344991997233592,
+    "exit_code": 0,
+    "stdout": "A\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0-portable.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0-portable.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0-portable.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/annotated-receipts.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-00.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-00.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-01.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-01.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-02.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-02.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-03.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-03.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-04.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-04.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-05.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-05.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-06.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-06.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-08.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-08.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-09.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/child-09.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/portable-receipts.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/replay-archive.tar.gz\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.0/test_portable.py\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1-portable.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1-portable.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1-portable.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/annotated-receipts.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-00.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-00.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-01.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-01.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-02.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-02.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-03.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-03.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-04.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-04.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-05.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-05.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-07.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-07.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-08.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/child-08.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/portable-receipts.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/replay-archive.tar.gz\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/1.14.1/test_portable.py\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/actual-successors.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/after-evidence-hashes.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/artifact-hashes.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/before-evidence-hashes.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-all-names.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-all-names.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-all-names.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-cargo-diff.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-cargo-diff.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-cargo-diff.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-commit.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-commit.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-commit.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-names.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-names.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-names.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/concurrent-scope-note.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/final-revision.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/final-revision.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/final-revision.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/final-status.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/final-status.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/final-status.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/initial.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/main-retention.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/merge-integration.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/merge-integration.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/merge-integration.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/preservation.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/record.py\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/replay-effective-environment.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/report.md\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/requested-cargo.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/requested-cargo.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/requested-cargo.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/runtime-inherited-env.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/runtime-scope-before.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/scope-diff.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/scope-diff.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/scope-diff.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/scope-names.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/scope-names.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/scope-names.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/seal-counts-and-frozen-successors.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/successor-literal-comparison.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/text-scale.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/text-scale.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1141-1140/text-scale.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/compiled-artifact.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/equivalence.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/format.receipt.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/format.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/format.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/initial-git.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/main-retention.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/prior-library-scope-diff.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/prior-library-scope-diff.stdout\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/report.md\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/retention-sha256.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/reused-retail-proof.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/runtime-test.receipt.json\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/runtime-test.stderr\nA\tdata/patch-api/evidence/narrow-repairs-2026-10-09/integrated/forever-runtime/runtime-test.stdout\nM\tdocs/wiki/investigations/forever-cfg-failure-and-function-gates.md\nM\tdocs/wiki/investigations/integrated-source-and-factory-proof-2026-10-09.md\nM\tdocs/wiki/log.md\n",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.7-source-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "d85eb075f",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.707107+00:00",
+    "ended": "2026-10-09T16:34:04.708609+00:00",
+    "seconds": 0.0015111590037122369,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.7-merge-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "045e396b0",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.708667+00:00",
+    "ended": "2026-10-09T16:34:04.709677+00:00",
+    "seconds": 0.0010139749938389286,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.7-source-artifact-diff",
+    "argv": [
+      "git",
+      "diff",
+      "d85eb075f",
+      "bf8598e1da52895b707db0bf7bd9fb350c448628",
+      "--",
+      "data/patch-api/evidence/1.13.7-session-2026-10-09"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.709702+00:00",
+    "ended": "2026-10-09T16:34:04.710597+00:00",
+    "seconds": 0.0009001289872685447,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.6-source-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "0529935a5",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.710664+00:00",
+    "ended": "2026-10-09T16:34:04.711775+00:00",
+    "seconds": 0.001113373989937827,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.6-merge-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "f12f39c37",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.711797+00:00",
+    "ended": "2026-10-09T16:34:04.712501+00:00",
+    "seconds": 0.0007066719990689307,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.6-source-artifact-diff",
+    "argv": [
+      "git",
+      "diff",
+      "0529935a5",
+      "bf8598e1da52895b707db0bf7bd9fb350c448628",
+      "--",
+      "data/patch-api/evidence/1.13.6-session-2026-10-09"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.712520+00:00",
+    "ended": "2026-10-09T16:34:04.713224+00:00",
+    "seconds": 0.0007064009987516329,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.5-source-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "748bd72af",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.713264+00:00",
+    "ended": "2026-10-09T16:34:04.714235+00:00",
+    "seconds": 0.0009758320084074512,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.5-merge-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "e119ffa32",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.714263+00:00",
+    "ended": "2026-10-09T16:34:04.715260+00:00",
+    "seconds": 0.0009996679873438552,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.13.5-source-artifact-diff",
+    "argv": [
+      "git",
+      "diff",
+      "748bd72af",
+      "bf8598e1da52895b707db0bf7bd9fb350c448628",
+      "--",
+      "data/patch-api/evidence/1.13.5-session-2026-10-09"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.715280+00:00",
+    "ended": "2026-10-09T16:34:04.716062+00:00",
+    "seconds": 0.0007848300010664389,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.14.4-source-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "655384946",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.716105+00:00",
+    "ended": "2026-10-09T16:34:04.716904+00:00",
+    "seconds": 0.0008009000011952594,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.14.4-merge-ancestor",
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "02bf79c41",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.716920+00:00",
+    "ended": "2026-10-09T16:34:04.717586+00:00",
+    "seconds": 0.0006675180047750473,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "1.14.4-source-artifact-diff",
+    "argv": [
+      "git",
+      "diff",
+      "655384946",
+      "bf8598e1da52895b707db0bf7bd9fb350c448628",
+      "--",
+      "data/patch-api/evidence/1.14.4-session-2026-10-09"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.717602+00:00",
+    "ended": "2026-10-09T16:34:04.718596+00:00",
+    "seconds": 0.0009953089902410284,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "helper-delta",
+    "argv": [
+      "git",
+      "diff",
+      "3de87465828db7cc7f6f900d4b63e24f1b399825",
+      "bf8598e1da52895b707db0bf7bd9fb350c448628",
+      "--",
+      "tests/common/publication_probe.rs"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "environment_base": "environment-before.json",
+    "started": "2026-10-09T16:34:04.718628+00:00",
+    "ended": "2026-10-09T16:34:04.719357+00:00",
+    "seconds": 0.0007301570003619418,
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

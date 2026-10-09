@@ -1,0 +1,24 @@
+{
+  "seals": 55,
+  "totals": {
+    "physical_lines": 28,
+    "nonblank_rows": 25,
+    "extracted_rows": 5,
+    "metadata_rows": 19,
+    "unproven_rows": 6,
+    "inventory": 5,
+    "callables": 1,
+    "cvars": 4,
+    "headers": 3,
+    "inventory_headers": 2,
+    "numeric_headers": 0,
+    "contracts": 7,
+    "signature_declarations": 0,
+    "unspecified_signatures": 1,
+    "links": 2,
+    "templates": 6,
+    "examples": 0,
+    "prose": 0,
+    "defaults": 0
+  }
+}

@@ -1,0 +1,1867 @@
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/REPLAY.md
+# Patch 1.13.5 portable historical SOURCE replay
+
+`originals.tar.gz` copies every original file plus `seals.json`. Extract to a fresh directory without Git, target or current tools. Use absolute Python3.11+ with empty PATH and PYTHONDONTWRITEBYTECODE=1; every command cwd `/home/osso/.worktrees/wow-ui-sim-p1135-page` (cwd is command context, never an input lookup).
+
+Run copied `audit.py` and `test_source_accounting.py`. Run copied `historical-tools/gen_patch_wikitext_register.py 1.13.5 <copied>/source.wikitext 3835002 <copied>/reproduced-register.json`; compare exact bytes with copied default-register.json. Run copied `audit.py default-extract`: expect the retained ValueError string, empty stdout and no extracted output. Shared-tool defaults flags[]; no fallback or template expansion.
+
+`test_portable.py --archive <archive> --scratch <fresh-own-build-directory> --receipts <new-json>` executes that fresh-process replay with empty PATH. It also mutates copied ledger.json and green.log separately, requires serialized seal rejection, restores exact bytes in finally, checks all original seals and reruns copied validator after each restoration.
+
+Original seals/proof log are immutable. Portable/current GREEN receipts and their receipt-seals.json are later evidence, not historical backfill. SOURCE only; no native/model/runtime/integration/final acceptance.
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py
+"""Frozen Patch 1.13.5 literal accounting; SOURCE only, no native/model credit."""
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import re
+import sys
+import tomllib
+from collections import Counter
+E = Path(__file__).resolve().parent
+BASE = '045e396b0c6f717c2d962b97cdf46b736a3328ce'
+OCCURRENCE_FIELDS = ('source_rows', 'extracted_rows', 'inventory', 'signatures', 'headers', 'inventory_headers', 'captions', 'prose', 'links', 'templates', 'references', 'contracts', 'configured_profiles', 'successors', 'model_review')
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+def read_json(name):
+    return json.loads((E / name).read_bytes())
+
+def load_tool(name):
+    spec = importlib.util.spec_from_file_location(name.removesuffix('.py'), E / 'historical-tools' / name)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+def validate_source(response=None, raw=None):
+    response = (E / 'source-response.json').read_bytes() if response is None else response
+    raw = (E / 'source.wikitext').read_bytes() if raw is None else raw
+    pin = read_json('source-pin.json')
+    page = json.loads(response)['query']['pages']['398847']
+    revision, = page['revisions']
+    assert (page['pageid'], page['title'], revision['revid'], revision['timestamp']) == (398847, 'Patch 1.13.5/API changes', 3835002, '2021-05-06T13:20:38Z'), 'identity'
+    assert revision['slots']['main']['*'].encode() == raw, 'returned content'
+    assert digest(raw) == pin['wikitext_sha256'] == 'f8a5356cff1fc8c2188b68aa77ab60969c102ea64767a4f4721fd07532f85ac2', 'raw hash'
+    assert digest(response) == pin['response_sha256'] == 'eaa85552784310bd4cf62fab378f6863123fe1843c7826537495499f18d9f831', 'response hash'
+    assert len(raw) == pin['wikitext_bytes'] == 1690, 'raw bytes'
+    manifest = read_json('frozen-manifest.json')
+    assert pin == next((p for p in manifest['pages'] if p['version'] == '1.13.5')), 'manifest pin'
+    assert digest((E / 'frozen-registry.json').read_bytes()) == manifest['registry_sha256'], 'registry hash'
+    pages = read_json('frozen-registry.json')['pages']
+    registered = next((p for p in pages if p['version'] == '1.13.5'))
+    assert all((pin[k] == v for k, v in registered.items())), 'registry membership'
+    assert all((pin[k] == v for k, v in dict(pageid=page['pageid'], title=page['title'], revid=revision['revid'], timestamp=revision['timestamp']).items())), 'pin identity'
+    return (raw.decode(), pin)
+
+def default_register(raw, pin):
+    generator = load_tool('gen_patch_wikitext_register.py')
+    buckets = generator.split_sections(raw)
+    entries, headers = ([], [])
+    for section in generator.SECTIONS.values():
+        rows, counts = generator.parse_section(section, buckets.get(section, []))
+        entries.extend(rows)
+        headers.extend(counts)
+    return dict(schema='patch-api-wikitext-register/v1', patch='1.13.5', source=dict(path='source.wikitext', revid=pin['revid'], sha256=pin['wikitext_sha256']), header_counts=headers, entries=entries)
+
+def profiles():
+    directory = E / 'state-inputs'
+    rust = (directory / 'src/client_profile.rs').read_text()
+    interface = int(re.search('ClientProfile::Era \\| ClientProfile::Anniversary => (\\d+)', rust)[1])
+    features = tomllib.loads((directory / 'Cargo.toml').read_text())['features']
+    return [dict(feature=f'client-{name}', configured_interface=interface, feature_dependencies=features[f'client-{name}'], manifest_sha256=digest((directory / f'data/blizzard-ui-files/{name}.txt').read_bytes()), native_correspondence='UNPROVEN') for name in ('era', 'anniversary')]
+
+def successors():
+    status = read_json('successors/status.json')
+    versions = ['1.13.7', '1.14.0', '1.14.1', '1.14.2', '1.14.3', '1.14.4'] + [f'1.15.{n}' for n in range(10)]
+    assert [s['patch'] for s in status] == versions, 'successor order'
+    manifest = read_json('frozen-manifest.json')
+    for item in status:
+        version = item['patch']
+        pin = next((p for p in manifest['pages'] if p['version'] == version))
+        assert item['pin'] == pin, 'successor pin'
+        assert item['state'] == 'canonical-input-not-applied' and (not item['applied']) and (not item['native_proof']), 'successor credit boundary'
+        directory = E / 'successors' / version
+        raw = (directory / 'source.wikitext').read_bytes()
+        response = (directory / 'response.json').read_bytes()
+        assert digest(raw) == pin['wikitext_sha256'] and digest(response) == pin['response_sha256'], 'successor hashes'
+        page = json.loads(response)['query']['pages'][str(pin['pageid'])]
+        revision, = page['revisions']
+        assert (page['pageid'], page['title'], revision['revid'], revision['timestamp']) == (pin['pageid'], pin['title'], pin['revid'], pin['timestamp']), 'successor identity'
+        assert revision['slots']['main']['*'].encode() == raw, 'successor content'
+    return status
+
+def reference_limits(line, literal):
+    links = []
+    for match in re.finditer('\\[\\[([^\\]|]+)(?:\\|([^\\]]+))?\\]\\]|https://[^\\s|}<]+', literal):
+        target = match[1] if match[1] is not None else match[0]
+        links.append(dict(line=line, literal=match[0], target=target, label=match[2], kind='wiki' if match[1] is not None else 'external', expanded=False, limit='Target contents unretained; no linked signatures, defaults, API members or behavior credit.'))
+    templates = [dict(line=line, literal=m[0], name=m[1].split('|')[0], expanded=False, limit='Literal template text only; no transclusion or target-body credit.') for m in re.finditer('\\{\\{([^{}]+)\\}\\}', literal)]
+    references = [dict(line=line, literal=m[0], name='patch notes', definition=m[0].endswith('</ref>'), expanded=False, limit='Named reference preserved, including author/title/date/url; body of target not expanded.') for m in re.finditer('<ref\\b[^>]+(?:/>|>.*?</ref>)', literal)]
+    return (links, templates, references)
+
+def prose_limit(line, literal):
+    common = dict(line=line, literal=literal, status='UNPROVEN', arguments=None, returns=None, security=None, native_equivalence=None)
+    if line == 10:
+        return dict(common, claims=['Threat API reinstated', 'combat log range increased in dungeons and raids', 'stated purpose: reduce need for addon comms'], distance_before=None, distance_after=None, payload=None, state_transition=None, limit='No signatures/returns/calculation or numerical log ranges. Dungeon/raid context and stated purpose retained; patch-note citation unexpanded.')
+    return dict(common, additional_slots=int(re.search('\\* (\\d+) additional backpack slots', literal)[1]), condition='Blizzard Authenticator secured accounts', baseline_capacity=None, final_capacity=None, entitlement_transition=None, limit='Delta 4 only, not a default or final slot count. No entitlement activation, persistence or getter contract. Authenticator reward reference unexpanded.')
+
+def default_extract(raw):
+    try:
+        text = load_tool('extract_patch_non_inventory.py').extract_text(raw)
+    except ValueError as error:
+        return dict(result='existing-failure', text=None, error_type='ValueError', error=str(error), flags=[])
+    return dict(result='success', text=text, error_type=None, error=None, flags=[])
+
+def build():
+    raw, pin = validate_source()
+    register = default_register(raw, pin)
+    extracted = default_extract(raw)
+    byline = {i['wikitext_line']: i for i in register['entries']}
+    rows, headers, counts, inventory, links, templates, references, prose, captions = ([], [], [], [], [], [], [], [], [])
+    context = None
+    for n, literal in enumerate(raw.splitlines(), 1):
+        if not literal.strip():
+            continue
+        heading = re.fullmatch('==\\s*([^=]+?)\\s*==', literal)
+        if heading:
+            context = heading[1]
+            headers.append(dict(line=n, literal=literal, label=context))
+        count = re.search('\\| (\\d+) new (functions|events)$', literal)
+        if count:
+            section = {'Global API': 'global-api', 'Events': 'events'}[context]
+            observed = sum((i['section'] == section and i['direction'] == 'added' for i in register['entries']))
+            counts.append(dict(line=n, literal=literal, section=section, direction='added', count=int(count[1]), observed=observed, conflict=int(count[1]) != observed))
+        if n == 4:
+            match = re.fullmatch('(\\S+) \\((\\d+)\\) to (\\S+) \\((\\d+)\\)', literal)
+            captions.append(dict(line=n, literal=literal, before_patch=match[1], before_build=int(match[2]), after_patch=match[3], after_build=int(match[4])))
+        entry = byline.get(n)
+        if entry:
+            inventory.append(dict(entry, line=n, literal=literal, status='UNPROVEN', capabilities=[]))
+        if n in (10, 11):
+            prose.append(prose_limit(n, literal))
+        new_links, new_templates, new_refs = reference_limits(n, literal)
+        links.extend(new_links)
+        templates.extend(new_templates)
+        references.extend(new_refs)
+        substantive = entry is not None or n in (5, 6, 10, 11)
+        rows.append(dict(id=f'source-{n:03d}', line=n, literal=literal, status='UNPROVEN' if substantive else 'metadata-only', capabilities=[]))
+    nav = re.fullmatch('\\{\\{apichanges\\|([^|]+)\\|prev=([^|]+)\\|next=([^|]+)\\}\\}', raw.splitlines()[0])
+    assert nav, 'navigation'
+    signatures = [dict(line=i['line'], symbol=i['symbol'], section=i['section'], arguments=None, returns=None, declaration=None, payload=None, status='UNPROVEN', limit='Literal identity only; no inferred signature, token list, event payload, optionality, default, alias or security contract.') for i in inventory]
+    contracts = [dict(i, kind='identity-unspecified', limit='Reinstated identity/event only; no invocation or behavior declaration.') for i in inventory] + [dict(p, kind='prose-limit') for p in prose] + [dict(l, kind='unexpanded-link', status='UNPROVEN') for l in links]
+    assert extracted['result'] == 'existing-failure', 'historical default failure changed'
+    extracted_rows = []
+    ledger = dict(schema='patch-source-accounting/v1', patch='1.13.5', base_revision=BASE, audit_history='classic-era', source=pin, source_client_literal='WoW Classic', client_literal_scope='reference title, not expanded linked contents or configured native identity', source_toc=int(re.search('<code>(\\d+)</code>', raw)[1]), navigation=dict(zip(('patch', 'prev', 'next'), nav.groups())), source_rows=rows, extracted_rows=extracted_rows, default_extract=extracted, inventory=inventory, signatures=signatures, defaults=[], headers=headers, inventory_headers=counts, captions=captions, prose=prose, links=links, templates=templates, references=references, contracts=contracts, examples=[], configured_profiles=profiles(), successors=successors(), queued_successor=read_json('queued-successor.json'), later_registers=[], model_review=read_json('model-review.json'), measurements=dict(runtime=0, model=0, native=0), derivation=dict(generator_flags=[], extractor_flags=[], generator_default_header_limit='Default generator omits numeric toggle headings; page-local ledger retains and compares both counts. Shared tools unchanged.'))
+    ledger['totals'] = dict(physical_lines=len(raw.splitlines()), **{field: len(ledger[field]) for field in OCCURRENCE_FIELDS}, source_statuses=dict(Counter((r['status'] for r in rows))), inventory_by_section=dict(Counter((i['section'] for i in inventory))), contract_statuses=dict(Counter((c['status'] for c in contracts))), count_conflicts=sum((h['conflict'] for h in counts)), declared_signatures=sum((s['declaration'] is not None for s in signatures)), defaults=len(ledger['defaults']), examples=len(ledger['examples']), registry_pages=len(read_json('frozen-registry.json')['pages']), omission_controls=sum((len(ledger[field]) for field in OCCURRENCE_FIELDS)))
+    return ledger
+
+def validate_ledger(ledger):
+    assert ledger == build(), 'serialized literal ledger'
+    return ledger['totals']
+
+def check_seals():
+    seals = read_json('seals.json')
+    for name, expected in seals.items():
+        assert digest((E / name).read_bytes()) == expected, f'seal: {name}'
+    return len(seals)
+
+def check_defaults():
+    raw, pin = validate_source()
+    expected = json.dumps(default_register(raw, pin), indent=2, ensure_ascii=False) + '\n'
+    assert (E / 'default-register.json').read_bytes() == expected.encode(), 'default generator bytes'
+    assert not (E / 'default-extract.txt').exists(), 'default failed; no extracted output'
+    assert read_json('default-extract-error.json') == default_extract(raw), 'default extractor failure equality'
+if __name__ == '__main__':
+    if sys.argv[1:] == ['default-extract']:
+        raw, pin = validate_source()
+        print(load_tool('extract_patch_non_inventory.py').extract_text(raw), end='')
+    elif sys.argv[1:] == ['capture']:
+        assert not (E / 'ledger.json').exists(), 'refuse ledger overwrite'
+        raw, pin = validate_source()
+        (E / 'default-extract-error.json').write_text(json.dumps(default_extract(raw), indent=2, ensure_ascii=False) + '\n')
+        (E / 'ledger.json').write_text(json.dumps(build(), indent=2, ensure_ascii=False) + '\n')
+        check_defaults()
+    else:
+        seals = check_seals()
+        check_defaults()
+        print(json.dumps(dict(seals=seals, totals=validate_ledger(read_json('ledger.json'))), indent=2))
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/current-proof-ledger.json
+{
+  "scope": "later own copied SOURCE receipts only; no native/model/runtime acceptance",
+  "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+  "source_unchanged": true,
+  "original_sealmap_sha256": "872ffcab1e3a5464378607c4e50ca810c2940319e38d6fff927a9c32e859a71b",
+  "counts_from_retained_files": {
+    "source_tests": 8,
+    "portable_tests": 3,
+    "portable_failures": 0,
+    "portable_errors": 0,
+    "copied_process_runs": 8,
+    "disk_restorations": 2,
+    "original_seals": 70,
+    "original_bytes": 975379,
+    "archive_members": 71,
+    "archive_bytes": 157330,
+    "omission_controls": 103
+  },
+  "portable_command": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_portable.py",
+      "--archive",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/originals.tar.gz",
+      "--scratch",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable-green",
+      "--receipts",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/portable-proof.json"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+    "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+    "exit_code": 0,
+    "log": "portable-green.log",
+    "scope": "copied historical SOURCE; no runtime/model/native/final acceptance"
+  },
+  "historical_validator": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+    "revision": "b6efab100cd90b2435cb304193235c0aaa5380c0",
+    "exit_code": 0,
+    "stdout": "{\n  \"seals\": 70,\n  \"totals\": {\n    \"physical_lines\": 36,\n    \"source_rows\": 31,\n    \"extracted_rows\": 0,\n    \"inventory\": 5,\n    \"signatures\": 5,\n    \"headers\": 5,\n    \"inventory_headers\": 2,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 7,\n    \"templates\": 7,\n    \"references\": 2,\n    \"contracts\": 14,\n    \"configured_profiles\": 2,\n    \"successors\": 16,\n    \"model_review\": 4,\n    \"source_statuses\": {\n      \"metadata-only\": 22,\n      \"UNPROVEN\": 9\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 3,\n      \"events\": 2\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 14\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 103\n  }\n}\n",
+    "stderr": "",
+    "scope": "historical sealed SOURCE/default reproduction"
+  },
+  "receipt_sources": [
+    "portable-proof.json",
+    "portable-command.json",
+    "portable-green.log",
+    "historical-validator-proof.json"
+  ],
+  "exact_restorations": [
+    {
+      "restored": "ledger.json",
+      "sha256": "71b81eccec657487047ffbe5cad2cfec079f7c19c657da47f9fc94862f373667",
+      "all_original_seals": 70
+    },
+    {
+      "restored": "green.log",
+      "sha256": "20deeed57b66052019361638897a30b9e1c787215575b5ce922f83f7881e7ab2",
+      "all_original_seals": 70
+    }
+  ],
+  "source_default_generator": "byte-exact in fresh copied process",
+  "source_default_extractor": "same retained ValueError; stdout empty, no fallback rendering",
+  "warnings": "No Python unittest warnings emitted. Expected existing extractor error retained. Cargo/native/model not run; no Rust warning-free claim.",
+  "later_changes_invalidate": false
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/ledger.json
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.13.5",
+  "base_revision": "045e396b0c6f717c2d962b97cdf46b736a3328ce",
+  "audit_history": "classic-era",
+  "source": {
+    "title": "Patch 1.13.5/API changes",
+    "version": "1.13.5",
+    "pageid": 398847,
+    "revid": 3835002,
+    "timestamp": "2021-05-06T13:20:38Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3835002&format=json",
+    "retrieved": "2026-10-09T08:51:36.400324+00:00",
+    "response_sha256": "eaa85552784310bd4cf62fab378f6863123fe1843c7826537495499f18d9f831",
+    "wikitext_sha256": "f8a5356cff1fc8c2188b68aa77ab60969c102ea64767a4f4721fd07532f85ac2",
+    "wikitext_bytes": 1690,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.5-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.5-wikitext.txt"
+  },
+  "source_client_literal": "WoW Classic",
+  "client_literal_scope": "reference title, not expanded linked contents or configured native identity",
+  "source_toc": 11305,
+  "navigation": {
+    "patch": "1.13.5",
+    "prev": "1.13.4",
+    "next": "1.13.6"
+  },
+  "source_rows": [
+    {
+      "id": "source-001",
+      "line": 1,
+      "literal": "{{apichanges|1.13.5|prev=1.13.4|next=1.13.6}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-003",
+      "line": 3,
+      "literal": "== Diffs ==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-004",
+      "line": 4,
+      "literal": "1.13.4 (34600) to 1.13.5 (34713)",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-005",
+      "line": 5,
+      "literal": "* FrameXML: https://github.com/Gethe/wow-ui-source/commit/5cf55088150934fdba9ad399574941a3460ca382",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-006",
+      "line": 6,
+      "literal": "* API resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/12b063e9a05d9d3ec72931c9279194c79b44c84e",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-008",
+      "line": 8,
+      "literal": "== Changes ==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-009",
+      "line": 9,
+      "literal": "* [[Getting_the_current_interface_number|TOC version]]: <code>11305</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-010",
+      "line": 10,
+      "literal": "* Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-011",
+      "line": 11,
+      "literal": "* 4 additional backpack slots were added for [[Blizzard_Authenticator#Rewards|Blizzard Authenticator]] secured accounts <ref name=\"patch notes\" />",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-013",
+      "line": 13,
+      "literal": "== Global API ==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-014",
+      "line": 14,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 400px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-015",
+      "line": 15,
+      "literal": "|- class=\"mw-customtoggle-global-c\" style=\"cursor: pointer\" ",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-016",
+      "line": 16,
+      "literal": "! style=\"width: 100%; padding-right: 1em;\"| 3 new functions",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-017",
+      "line": 17,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-018",
+      "line": 18,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-019",
+      "line": 19,
+      "literal": ": {{api|UnitDetailedThreatSituation}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-020",
+      "line": 20,
+      "literal": ": {{api|UnitThreatPercentageOfLead}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-021",
+      "line": 21,
+      "literal": ": {{api|UnitThreatSituation}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-022",
+      "line": 22,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-023",
+      "line": 23,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-025",
+      "line": 25,
+      "literal": "== Events ==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-026",
+      "line": 26,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 400px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-027",
+      "line": 27,
+      "literal": "|- class=\"mw-customtoggle-events\" style=\"cursor: pointer\" ",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-028",
+      "line": 28,
+      "literal": "! style=\"width: 100%; padding-right: 1em;\"| 2 new events",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-029",
+      "line": 29,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-030",
+      "line": 30,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-031",
+      "line": 31,
+      "literal": ": {{api|t=e|UNIT_THREAT_LIST_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-032",
+      "line": 32,
+      "literal": ": {{api|t=e|UNIT_THREAT_SITUATION_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-033",
+      "line": 33,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-034",
+      "line": 34,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-036",
+      "line": 36,
+      "literal": "== References ==",
+      "status": "metadata-only",
+      "capabilities": []
+    }
+  ],
+  "extracted_rows": [],
+  "default_extract": {
+    "result": "existing-failure",
+    "text": null,
+    "error_type": "ValueError",
+    "error": "unhandled template: * Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>",
+    "flags": []
+  },
+  "inventory": [
+    {
+      "id": "wt-global-api-UnitDetailedThreatSituation-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitDetailedThreatSituation",
+      "annotation": "",
+      "wikitext_line": 19,
+      "line": 19,
+      "literal": ": {{api|UnitDetailedThreatSituation}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-UnitThreatPercentageOfLead-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatPercentageOfLead",
+      "annotation": "",
+      "wikitext_line": 20,
+      "line": 20,
+      "literal": ": {{api|UnitThreatPercentageOfLead}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-global-api-UnitThreatSituation-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatSituation",
+      "annotation": "",
+      "wikitext_line": 21,
+      "line": 21,
+      "literal": ": {{api|UnitThreatSituation}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_LIST_UPDATE-31",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 31,
+      "line": 31,
+      "literal": ": {{api|t=e|UNIT_THREAT_LIST_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_SITUATION_UPDATE-32",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_SITUATION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 32,
+      "line": 32,
+      "literal": ": {{api|t=e|UNIT_THREAT_SITUATION_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    }
+  ],
+  "signatures": [
+    {
+      "line": 19,
+      "symbol": "UnitDetailedThreatSituation",
+      "section": "global-api",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity only; no inferred signature, token list, event payload, optionality, default, alias or security contract."
+    },
+    {
+      "line": 20,
+      "symbol": "UnitThreatPercentageOfLead",
+      "section": "global-api",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity only; no inferred signature, token list, event payload, optionality, default, alias or security contract."
+    },
+    {
+      "line": 21,
+      "symbol": "UnitThreatSituation",
+      "section": "global-api",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity only; no inferred signature, token list, event payload, optionality, default, alias or security contract."
+    },
+    {
+      "line": 31,
+      "symbol": "UNIT_THREAT_LIST_UPDATE",
+      "section": "events",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity only; no inferred signature, token list, event payload, optionality, default, alias or security contract."
+    },
+    {
+      "line": 32,
+      "symbol": "UNIT_THREAT_SITUATION_UPDATE",
+      "section": "events",
+      "arguments": null,
+      "returns": null,
+      "declaration": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity only; no inferred signature, token list, event payload, optionality, default, alias or security contract."
+    }
+  ],
+  "defaults": [],
+  "headers": [
+    {
+      "line": 3,
+      "literal": "== Diffs ==",
+      "label": "Diffs"
+    },
+    {
+      "line": 8,
+      "literal": "== Changes ==",
+      "label": "Changes"
+    },
+    {
+      "line": 13,
+      "literal": "== Global API ==",
+      "label": "Global API"
+    },
+    {
+      "line": 25,
+      "literal": "== Events ==",
+      "label": "Events"
+    },
+    {
+      "line": 36,
+      "literal": "== References ==",
+      "label": "References"
+    }
+  ],
+  "inventory_headers": [
+    {
+      "line": 16,
+      "literal": "! style=\"width: 100%; padding-right: 1em;\"| 3 new functions",
+      "section": "global-api",
+      "direction": "added",
+      "count": 3,
+      "observed": 3,
+      "conflict": false
+    },
+    {
+      "line": 28,
+      "literal": "! style=\"width: 100%; padding-right: 1em;\"| 2 new events",
+      "section": "events",
+      "direction": "added",
+      "count": 2,
+      "observed": 2,
+      "conflict": false
+    }
+  ],
+  "captions": [
+    {
+      "line": 4,
+      "literal": "1.13.4 (34600) to 1.13.5 (34713)",
+      "before_patch": "1.13.4",
+      "before_build": 34600,
+      "after_patch": "1.13.5",
+      "after_build": 34713
+    }
+  ],
+  "prose": [
+    {
+      "line": 10,
+      "literal": "* Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "claims": [
+        "Threat API reinstated",
+        "combat log range increased in dungeons and raids",
+        "stated purpose: reduce need for addon comms"
+      ],
+      "distance_before": null,
+      "distance_after": null,
+      "payload": null,
+      "state_transition": null,
+      "limit": "No signatures/returns/calculation or numerical log ranges. Dungeon/raid context and stated purpose retained; patch-note citation unexpanded."
+    },
+    {
+      "line": 11,
+      "literal": "* 4 additional backpack slots were added for [[Blizzard_Authenticator#Rewards|Blizzard Authenticator]] secured accounts <ref name=\"patch notes\" />",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "additional_slots": 4,
+      "condition": "Blizzard Authenticator secured accounts",
+      "baseline_capacity": null,
+      "final_capacity": null,
+      "entitlement_transition": null,
+      "limit": "Delta 4 only, not a default or final slot count. No entitlement activation, persistence or getter contract. Authenticator reward reference unexpanded."
+    }
+  ],
+  "links": [
+    {
+      "line": 5,
+      "literal": "https://github.com/Gethe/wow-ui-source/commit/5cf55088150934fdba9ad399574941a3460ca382",
+      "target": "https://github.com/Gethe/wow-ui-source/commit/5cf55088150934fdba9ad399574941a3460ca382",
+      "label": null,
+      "kind": "external",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit."
+    },
+    {
+      "line": 6,
+      "literal": "https://github.com/Ketho/BlizzardInterfaceResources/commit/12b063e9a05d9d3ec72931c9279194c79b44c84e",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/commit/12b063e9a05d9d3ec72931c9279194c79b44c84e",
+      "label": null,
+      "kind": "external",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit."
+    },
+    {
+      "line": 9,
+      "literal": "[[Getting_the_current_interface_number|TOC version]]",
+      "target": "Getting_the_current_interface_number",
+      "label": "TOC version",
+      "kind": "wiki",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit."
+    },
+    {
+      "line": 10,
+      "literal": "[[Threat]]",
+      "target": "Threat",
+      "label": null,
+      "kind": "wiki",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit."
+    },
+    {
+      "line": 10,
+      "literal": "https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585",
+      "target": "https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585",
+      "label": null,
+      "kind": "external",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit."
+    },
+    {
+      "line": 10,
+      "literal": "[[Kaivax]]",
+      "target": "Kaivax",
+      "label": null,
+      "kind": "wiki",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit."
+    },
+    {
+      "line": 11,
+      "literal": "[[Blizzard_Authenticator#Rewards|Blizzard Authenticator]]",
+      "target": "Blizzard_Authenticator#Rewards",
+      "label": "Blizzard Authenticator",
+      "kind": "wiki",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit."
+    }
+  ],
+  "templates": [
+    {
+      "line": 1,
+      "literal": "{{apichanges|1.13.5|prev=1.13.4|next=1.13.6}}",
+      "name": "apichanges",
+      "expanded": false,
+      "limit": "Literal template text only; no transclusion or target-body credit."
+    },
+    {
+      "line": 10,
+      "literal": "{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}",
+      "name": "ref web",
+      "expanded": false,
+      "limit": "Literal template text only; no transclusion or target-body credit."
+    },
+    {
+      "line": 19,
+      "literal": "{{api|UnitDetailedThreatSituation}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template text only; no transclusion or target-body credit."
+    },
+    {
+      "line": 20,
+      "literal": "{{api|UnitThreatPercentageOfLead}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template text only; no transclusion or target-body credit."
+    },
+    {
+      "line": 21,
+      "literal": "{{api|UnitThreatSituation}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template text only; no transclusion or target-body credit."
+    },
+    {
+      "line": 31,
+      "literal": "{{api|t=e|UNIT_THREAT_LIST_UPDATE}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template text only; no transclusion or target-body credit."
+    },
+    {
+      "line": 32,
+      "literal": "{{api|t=e|UNIT_THREAT_SITUATION_UPDATE}}",
+      "name": "api",
+      "expanded": false,
+      "limit": "Literal template text only; no transclusion or target-body credit."
+    }
+  ],
+  "references": [
+    {
+      "line": 10,
+      "literal": "<ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>",
+      "name": "patch notes",
+      "definition": true,
+      "expanded": false,
+      "limit": "Named reference preserved, including author/title/date/url; body of target not expanded."
+    },
+    {
+      "line": 11,
+      "literal": "<ref name=\"patch notes\" />",
+      "name": "patch notes",
+      "definition": false,
+      "expanded": false,
+      "limit": "Named reference preserved, including author/title/date/url; body of target not expanded."
+    }
+  ],
+  "contracts": [
+    {
+      "id": "wt-global-api-UnitDetailedThreatSituation-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitDetailedThreatSituation",
+      "annotation": "",
+      "wikitext_line": 19,
+      "line": 19,
+      "literal": ": {{api|UnitDetailedThreatSituation}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "identity-unspecified",
+      "limit": "Reinstated identity/event only; no invocation or behavior declaration."
+    },
+    {
+      "id": "wt-global-api-UnitThreatPercentageOfLead-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatPercentageOfLead",
+      "annotation": "",
+      "wikitext_line": 20,
+      "line": 20,
+      "literal": ": {{api|UnitThreatPercentageOfLead}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "identity-unspecified",
+      "limit": "Reinstated identity/event only; no invocation or behavior declaration."
+    },
+    {
+      "id": "wt-global-api-UnitThreatSituation-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatSituation",
+      "annotation": "",
+      "wikitext_line": 21,
+      "line": 21,
+      "literal": ": {{api|UnitThreatSituation}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "identity-unspecified",
+      "limit": "Reinstated identity/event only; no invocation or behavior declaration."
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_LIST_UPDATE-31",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 31,
+      "line": 31,
+      "literal": ": {{api|t=e|UNIT_THREAT_LIST_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "identity-unspecified",
+      "limit": "Reinstated identity/event only; no invocation or behavior declaration."
+    },
+    {
+      "id": "wt-events-UNIT_THREAT_SITUATION_UPDATE-32",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_THREAT_SITUATION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 32,
+      "line": 32,
+      "literal": ": {{api|t=e|UNIT_THREAT_SITUATION_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "kind": "identity-unspecified",
+      "limit": "Reinstated identity/event only; no invocation or behavior declaration."
+    },
+    {
+      "line": 10,
+      "literal": "* Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "claims": [
+        "Threat API reinstated",
+        "combat log range increased in dungeons and raids",
+        "stated purpose: reduce need for addon comms"
+      ],
+      "distance_before": null,
+      "distance_after": null,
+      "payload": null,
+      "state_transition": null,
+      "limit": "No signatures/returns/calculation or numerical log ranges. Dungeon/raid context and stated purpose retained; patch-note citation unexpanded.",
+      "kind": "prose-limit"
+    },
+    {
+      "line": 11,
+      "literal": "* 4 additional backpack slots were added for [[Blizzard_Authenticator#Rewards|Blizzard Authenticator]] secured accounts <ref name=\"patch notes\" />",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "security": null,
+      "native_equivalence": null,
+      "additional_slots": 4,
+      "condition": "Blizzard Authenticator secured accounts",
+      "baseline_capacity": null,
+      "final_capacity": null,
+      "entitlement_transition": null,
+      "limit": "Delta 4 only, not a default or final slot count. No entitlement activation, persistence or getter contract. Authenticator reward reference unexpanded.",
+      "kind": "prose-limit"
+    },
+    {
+      "line": 5,
+      "literal": "https://github.com/Gethe/wow-ui-source/commit/5cf55088150934fdba9ad399574941a3460ca382",
+      "target": "https://github.com/Gethe/wow-ui-source/commit/5cf55088150934fdba9ad399574941a3460ca382",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 6,
+      "literal": "https://github.com/Ketho/BlizzardInterfaceResources/commit/12b063e9a05d9d3ec72931c9279194c79b44c84e",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/commit/12b063e9a05d9d3ec72931c9279194c79b44c84e",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 9,
+      "literal": "[[Getting_the_current_interface_number|TOC version]]",
+      "target": "Getting_the_current_interface_number",
+      "label": "TOC version",
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 10,
+      "literal": "[[Threat]]",
+      "target": "Threat",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 10,
+      "literal": "https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585",
+      "target": "https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 10,
+      "literal": "[[Kaivax]]",
+      "target": "Kaivax",
+      "label": null,
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit.",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 11,
+      "literal": "[[Blizzard_Authenticator#Rewards|Blizzard Authenticator]]",
+      "target": "Blizzard_Authenticator#Rewards",
+      "label": "Blizzard Authenticator",
+      "kind": "unexpanded-link",
+      "expanded": false,
+      "limit": "Target contents unretained; no linked signatures, defaults, API members or behavior credit.",
+      "status": "UNPROVEN"
+    }
+  ],
+  "examples": [],
+  "configured_profiles": [
+    {
+      "feature": "client-era",
+      "configured_interface": 11507,
+      "feature_dependencies": [],
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_correspondence": "UNPROVEN"
+    },
+    {
+      "feature": "client-anniversary",
+      "configured_interface": 11507,
+      "feature_dependencies": [],
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_correspondence": "UNPROVEN"
+    }
+  ],
+  "successors": [
+    {
+      "patch": "1.13.7",
+      "pin": {
+        "title": "Patch 1.13.7/API changes",
+        "version": "1.13.7",
+        "pageid": 46829,
+        "revid": 458410,
+        "timestamp": "2021-09-04T08:55:38Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=458410&format=json",
+        "retrieved": "2026-10-09T08:51:36.399298+00:00",
+        "response_sha256": "b0d750e17ee76815e6c4917f9d98f81780ef3b5bb26466acbcc9e1a8899099c4",
+        "wikitext_sha256": "b9f8be9d2db166e6b85ec868fc077bc5591071d55c05bb5f11267eb5ba11e996",
+        "wikitext_bytes": 1179,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.13.7-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.0",
+      "pin": {
+        "title": "Patch 1.14.0/API changes",
+        "version": "1.14.0",
+        "pageid": 71995,
+        "revid": 710568,
+        "timestamp": "2022-02-06T21:21:48Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=710568&format=json",
+        "retrieved": "2026-10-09T08:51:36.399212+00:00",
+        "response_sha256": "9e282d2407123b5850b9c7fc62c35158246d5a93109a4eafb2f9fe7133200289",
+        "wikitext_sha256": "ead23026a86829caa312eb3b9cfcb57c5bfc85099a125fce84820c94e76490ac",
+        "wikitext_bytes": 30381,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.0-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.1",
+      "pin": {
+        "title": "Patch 1.14.1/API changes",
+        "version": "1.14.1",
+        "pageid": 102588,
+        "revid": 1010974,
+        "timestamp": "2022-03-02T05:21:47Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1010974&format=json",
+        "retrieved": "2026-10-09T08:51:36.399083+00:00",
+        "response_sha256": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+        "wikitext_sha256": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+        "wikitext_bytes": 6207,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.2",
+      "pin": {
+        "title": "Patch 1.14.2/API changes",
+        "version": "1.14.2",
+        "pageid": 236101,
+        "revid": 2290155,
+        "timestamp": "2022-06-05T00:14:08Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2290155&format=json",
+        "retrieved": "2026-10-09T08:51:36.399009+00:00",
+        "response_sha256": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+        "wikitext_sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+        "wikitext_bytes": 2460,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.3",
+      "pin": {
+        "title": "Patch 1.14.3/API changes",
+        "version": "1.14.3",
+        "pageid": 480026,
+        "revid": 4615755,
+        "timestamp": "2023-07-10T10:27:33Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4615755&format=json",
+        "retrieved": "2026-10-09T08:51:36.398924+00:00",
+        "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+        "wikitext_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+        "wikitext_bytes": 23291,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.14.4",
+      "pin": {
+        "title": "Patch 1.14.4/API changes",
+        "version": "1.14.4",
+        "pageid": 267043,
+        "revid": 2581777,
+        "timestamp": "2023-07-19T19:32:56Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+        "retrieved": "2026-10-09T08:51:36.398825+00:00",
+        "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+        "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+        "wikitext_bytes": 775,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.0",
+      "pin": {
+        "title": "Patch 1.15.0/API changes",
+        "version": "1.15.0",
+        "pageid": 564510,
+        "revid": 5950848,
+        "timestamp": "2024-01-30T19:36:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+        "retrieved": "2026-10-09T08:51:36.398773+00:00",
+        "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+        "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+        "wikitext_bytes": 915,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.1",
+      "pin": {
+        "title": "Patch 1.15.1/API changes",
+        "version": "1.15.1",
+        "pageid": 577687,
+        "revid": 5998991,
+        "timestamp": "2024-04-03T08:43:49Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+        "retrieved": "2026-10-09T08:51:36.398724+00:00",
+        "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+        "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+        "wikitext_bytes": 835,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.2",
+      "pin": {
+        "title": "Patch 1.15.2/API changes",
+        "version": "1.15.2",
+        "pageid": 583919,
+        "revid": 6061806,
+        "timestamp": "2024-06-12T18:59:26Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+        "retrieved": "2026-10-09T08:51:36.398676+00:00",
+        "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+        "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+        "wikitext_bytes": 391,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.3",
+      "pin": {
+        "title": "Patch 1.15.3/API changes",
+        "version": "1.15.3",
+        "pageid": 593663,
+        "revid": 6114194,
+        "timestamp": "2024-08-30T01:06:01Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+        "retrieved": "2026-10-09T08:51:36.398616+00:00",
+        "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+        "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+        "wikitext_bytes": 452,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.4",
+      "pin": {
+        "title": "Patch 1.15.4/API changes",
+        "version": "1.15.4",
+        "pageid": 600355,
+        "revid": 6172581,
+        "timestamp": "2024-11-13T21:59:45Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+        "retrieved": "2026-10-09T08:51:36.398568+00:00",
+        "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+        "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+        "wikitext_bytes": 439,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.5",
+      "pin": {
+        "title": "Patch 1.15.5/API changes",
+        "version": "1.15.5",
+        "pageid": 610284,
+        "revid": 6235411,
+        "timestamp": "2025-02-09T17:32:34Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+        "retrieved": "2026-10-09T08:51:36.398521+00:00",
+        "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+        "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.6",
+      "pin": {
+        "title": "Patch 1.15.6/API changes",
+        "version": "1.15.6",
+        "pageid": 619994,
+        "revid": 6281951,
+        "timestamp": "2025-04-04T10:14:39Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+        "retrieved": "2026-10-09T08:51:36.398475+00:00",
+        "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+        "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.7",
+      "pin": {
+        "title": "Patch 1.15.7/API changes",
+        "version": "1.15.7",
+        "pageid": 626071,
+        "revid": 6778069,
+        "timestamp": "2026-07-22T05:34:20Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+        "retrieved": "2026-10-09T08:51:36.398418+00:00",
+        "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+        "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.8",
+      "pin": {
+        "title": "Patch 1.15.8/API changes",
+        "version": "1.15.8",
+        "pageid": 686952,
+        "revid": 6778071,
+        "timestamp": "2026-07-22T05:34:51Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+        "retrieved": "2026-10-09T08:51:36.398359+00:00",
+        "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+        "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+        "wikitext_bytes": 279,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    },
+    {
+      "patch": "1.15.9",
+      "pin": {
+        "title": "Patch 1.15.9/API changes",
+        "version": "1.15.9",
+        "pageid": 685352,
+        "revid": 6780591,
+        "timestamp": "2026-07-24T15:29:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+        "retrieved": "2026-10-09T08:51:36.398273+00:00",
+        "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+        "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+        "wikitext_bytes": 4085,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+      },
+      "state": "canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false
+    }
+  ],
+  "queued_successor": {
+    "patch": "1.13.6",
+    "state": "concurrently-active-not-integrated",
+    "register": null,
+    "applied": false,
+    "native_proof": false,
+    "ordering": "main integrates 1.13.6 before 1.13.5",
+    "possible_supersessions": "Unknown until actual 1.13.6 register is integrated; no borrowed credit."
+  },
+  "later_registers": [],
+  "model_review": [
+    {
+      "scope": "three threat globals",
+      "source_lines": [
+        10,
+        19,
+        20,
+        21
+      ],
+      "observed": "UnitThreatSituation returns nil without threat state. Detailed/lead helpers are explicit temporary false/zero defaults.",
+      "inputs": [
+        "state-inputs/src/lua_api/globals/unit_misc.rs",
+        "state-inputs/src/lua_api/workarounds/temporary/unit_threat_defaults.rs"
+      ],
+      "status": "UNPROVEN",
+      "reason": "Frozen names and reinstatement claim omit signatures, return values, threat calculations, token behavior and security. No real threat table; existing-name factory cannot establish native/model behavior."
+    },
+    {
+      "scope": "two threat events",
+      "source_lines": [
+        31,
+        32
+      ],
+      "observed": "Event identities listed in valid_events_c; Classic registration accepts nonempty event names.",
+      "inputs": [
+        "state-inputs/src/event/valid_events_c.rs",
+        "state-inputs/src/wrath/mod.rs"
+      ],
+      "status": "UNPROVEN",
+      "reason": "No payload, ordering, threat mutation or lifecycle declaration. Generic registration/dispatch is not threat producer behavior."
+    },
+    {
+      "scope": "combat log range",
+      "source_lines": [
+        10
+      ],
+      "observed": "Owned src scan has no combat-log-range declaration or range-gated dungeon/raid delivery model.",
+      "inputs": [
+        "state-scan.json"
+      ],
+      "status": "UNPROVEN",
+      "reason": "Literal increased range gives neither numeric limits nor delivery transition. Cannot invent distance/filtering rules or expand patch-note link."
+    },
+    {
+      "scope": "four additional backpack slots for secured accounts",
+      "source_lines": [
+        11
+      ],
+      "observed": "C_Container.GetContainerNumSlots reads SimState.bag_num_slots from bag_info; missing bag defaults to 0 slots. No authenticator matches in complete src rs/lua scan.",
+      "inputs": [
+        "state-inputs/src/c_api/bag_info.rs",
+        "state-inputs/src/c_api/item_spell/c_container.rs",
+        "state-scan.json"
+      ],
+      "status": "UNPROVEN",
+      "reason": "Existing generic capacity does not model account authenticator entitlement. Page states delta 4, not baseline/final capacity, getter signature, activation/persistence/security transition."
+    }
+  ],
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "derivation": {
+    "generator_flags": [],
+    "extractor_flags": [],
+    "generator_default_header_limit": "Default generator omits numeric toggle headings; page-local ledger retains and compares both counts. Shared tools unchanged."
+  },
+  "totals": {
+    "physical_lines": 36,
+    "source_rows": 31,
+    "extracted_rows": 0,
+    "inventory": 5,
+    "signatures": 5,
+    "headers": 5,
+    "inventory_headers": 2,
+    "captions": 1,
+    "prose": 2,
+    "links": 7,
+    "templates": 7,
+    "references": 2,
+    "contracts": 14,
+    "configured_profiles": 2,
+    "successors": 16,
+    "model_review": 4,
+    "source_statuses": {
+      "metadata-only": 22,
+      "UNPROVEN": 9
+    },
+    "inventory_by_section": {
+      "global-api": 3,
+      "events": 2
+    },
+    "contract_statuses": {
+      "UNPROVEN": 14
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 103
+  }
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/proof-ledger.json
+{
+  "scope": "own historical SOURCE development; zero runtime/model/native credit",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+  "base_revision": "045e396b0c6f717c2d962b97cdf46b736a3328ce",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "revision": "c33717e545af58b91efc82ee9e96a8224f1d3fc6",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... FAIL\ntest_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... FAIL\ntest_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... FAIL\ntest_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... FAIL\ntest_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... FAIL\ntest_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... FAIL\ntest_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... FAIL\ntest_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... FAIL\n\n======================================================================\nFAIL: test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 56, in test_current_model_and_successor_credit_boundaries\n    self.assertEqual(ledger.get('measurements'), dict(runtime=0, model=0, native=0))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None != {'runtime': 0, 'model': 0, 'native': 0}\n\n======================================================================\nFAIL: test_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 87, in test_frozen_content_identity_tamper_rejected\n    self.assertIn('source', audit.build())\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'source' not found in {}\n\n======================================================================\nFAIL: test_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 14, in test_frozen_identity_and_response\n    self.assertEqual((source.get('pageid'), source.get('revid'), source.get('timestamp')), (398847, 3835002, '2021-05-06T13:20:38Z'))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Tuples differ: (None, None, None) != (398847, 3835002, '2021-05-06T13:20:38Z')\n\nFirst differing element 0:\nNone\n398847\n\n- (None, None, None)\n+ (398847, 3835002, '2021-05-06T13:20:38Z')\n\n======================================================================\nFAIL: test_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 35, in test_headings_count_headers_caption_navigation\n    self.assertEqual([h['label'] for h in ledger.get('headers', [])], ['Diffs', 'Changes', 'Global API', 'Events', 'References'])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['Diffs', 'Changes', 'Global API', 'Events', 'References']\n\nSecond list contains 5 additional elements.\nFirst extra element 0:\n'Diffs'\n\n- []\n+ ['Diffs', 'Changes', 'Global API', 'Events', 'References']\n\n======================================================================\nFAIL: test_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 28, in test_inventory_and_unknown_signatures\n    self.assertEqual([i['symbol'] for i in ledger.get('inventory', [])], SYMBOLS)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != ['UnitDetailedThreatSituation', 'UnitThrea[96 chars]ATE']\n\nSecond list contains 5 additional elements.\nFirst extra element 0:\n'UnitDetailedThreatSituation'\n\n- []\n+ ['UnitDetailedThreatSituation',\n+  'UnitThreatPercentageOfLead',\n+  'UnitThreatSituation',\n+  'UNIT_THREAT_LIST_UPDATE',\n+  'UNIT_THREAT_SITUATION_UPDATE']\n\n======================================================================\nFAIL: test_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 21, in test_lossless_rows_and_default_extract\n    self.assertEqual([(r['line'], r['literal']) for r in ledger.get('source_rows', [])], expected)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != [(1, '{{apichanges|1.13.5|prev=1.13.4|next[1911 chars]==')]\n\nSecond list contains 31 additional elements.\nFirst extra element 0:\n(1, '{{apichanges|1.13.5|prev=1.13.4|next=1.13.6}}')\n\nDiff is 2132 characters long. Set self.maxDiff to None to see it.\n\n======================================================================\nFAIL: test_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 68, in test_occurrence_omissions_and_invented_credit_rejected\n    self.assertIn('contracts', original)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'contracts' not found in {}\n\n======================================================================\nFAIL: test_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py\", line 43, in test_prose_reference_templates_and_unexpanded_limits\n    self.assertEqual([p['line'] for p in ledger.get('prose', [])], [10, 11])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [] != [10, 11]\n\nSecond list contains 2 additional elements.\nFirst extra element 0:\n10\n\n- []\n+ [10, 11]\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nFAILED (failures=8)\n",
+      "scope": "SOURCE RED; missing ledger implementation; 8 assertion failures",
+      "tests_run": 8,
+      "failures": 8,
+      "errors": 0,
+      "count_source": "retained unittest log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "revision": "b1a35a77352a3140ed548d507570637610af3cd5",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok\ntest_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok\ntest_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok\ntest_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok\ntest_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok\ntest_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok\ntest_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok\ntest_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.174s\n\nOK\n",
+      "log": "green.log",
+      "scope": "targeted SOURCE development",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "count_source": "retained unittest log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py",
+        "default-extract"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "revision": "b1a35a77352a3140ed548d507570637610af3cd5",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/audit.py\", line 167, in <module>\n    print(load_tool('extract_patch_non_inventory.py').extract_text(raw), end='')\n          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/historical-tools/extract_patch_non_inventory.py\", line 279, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: * Reinstated [[Threat]] API and increased the combat log range in dungeons and raids - to reduce the need for addon comms <ref name=\"patch notes\">{{ref web|url=https://us.forums.blizzard.com/en/wow/t/ptr-patch-notes-wow-classic-version-1135/553585|author=[[Kaivax]]|date=2020-06-12|title=PTR Patch Notes - WoW Classic Version 1.13.5}}</ref>\n",
+      "log": "default-extract-failure.log",
+      "scope": "historical default extractor failure reproduction; unchanged tool flags[]",
+      "tests_run": null
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/originals.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/build/p1135-portable",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1135-page/data/patch-api/evidence/1.13.5-session-2026-10-09/portable-red-proof.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1135-page",
+      "revision": "b1a35a77352a3140ed548d507570637610af3cd5",
+      "exit_code": 1,
+      "log": "portable-red.log",
+      "tests_run": 3,
+      "failures": 3,
+      "errors": 0,
+      "count_source": "portable-red-proof.json"
+    }
+  ],
+  "later_changes_invalidate": false
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/receipt-seals.json
+{
+  "portable-proof.json": "7dbf2313a19a31102d9aecf6c2dfac8fd8dd8a32d08c504530f47673614621a7",
+  "portable-command.json": "fda8d12e56f0b1db9cd204b8731eb2fb9f31fc76a1f0647392cc8b39897e5cc1",
+  "portable-green.log": "a984dab91839f12e5638bebd2fcef3369fcf4a65e5a097073fe21f05ced2e179",
+  "historical-validator-proof.json": "4253f28e6cf795de1ea553d26f6b320026f4e8bdc9f10cc9783f2639dbcd1cce",
+  "current-proof-ledger.json": "e9c1f4ed2641f2a6858583701b1a8156b3c2892b57ee21f353ffd3250a47f3a9",
+  "originals.tar.gz": "bc2db9b0e805c82c851c17cf658339d1f2af1ee8372f63ff789933bfca9cbfed",
+  "seals.json": "872ffcab1e3a5464378607c4e50ca810c2940319e38d6fff927a9c32e859a71b"
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/seals.json
+{
+  "REPLAY.md": "c4573f5f5349159b38b06409265028b714bfe1d560221c3bef164597ec9c6c58",
+  "audit.py": "e02a7e567197c8b3596c70e302376e46e92cfaa261ffa9d6dd94642d99464693",
+  "default-extract-error.json": "b8a10b6fbd5d10710aff17f4659b0fafcabf1f070d04f74033a56910305cf415",
+  "default-extract-failure.log": "7d9750628451f7999be958d84373c745d2901d62660340bf5a204a29ac4fbde7",
+  "default-register.json": "dc6f42176780b14f7a7632950c145abea702011ab3f0d53a02c32d999887d051",
+  "derivation-command.json": "a57514f5557d6906d3645d24f5946606012eef03eafd9b58d2973b73bffd0c54",
+  "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+  "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+  "green.log": "20deeed57b66052019361638897a30b9e1c787215575b5ce922f83f7881e7ab2",
+  "historical-spec.md": "36641fc7e44ede2d75b0a9de88459fc8b3c95ed736842dc14871d67b251ed08c",
+  "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532",
+  "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+  "ledger.json": "71b81eccec657487047ffbe5cad2cfec079f7c19c657da47f9fc94862f373667",
+  "model-review.json": "a13089edf79d4326f89cdfea828c53b6b79b434d79576d497242b7c17ba0072e",
+  "portable-red-proof.json": "5c03ddae0de167055904da0941233fb40d5e8ebb9c362dc4c55c3c8adbb2c5ed",
+  "portable-red.log": "d89c6403cb677e5bc0058741b8b564e94b6729111b59d47aaf8f8b75eb08791a",
+  "proof-ledger.json": "54d9ad6cf63aa6c368005c29a2feb874747d16f18b72fad595918e311bec4e0f",
+  "queued-successor.json": "a752ea4c3c0a96de948d87dfb1d3a89a95a89c781f4c883853f8967ed80dfa89",
+  "red-proof.json": "10711d470fcb028e5bdc0747d259e4a9310590b4776171997f711d350d96fd04",
+  "red.log": "fbf475a9e9877999e044252580878e1b8729a62ef12b36aa3d2d2cc34393b3e8",
+  "source-green-proof.json": "44b8acb6043421c87406b75892f2fad4e0d9f1cea1be40350c34cef7ed5fb8aa",
+  "source-pin.json": "c36e3ec8745aa7231d85ad4b5c9b4c3cd6a944415390d9646f2302df8b6ec336",
+  "source-response.json": "eaa85552784310bd4cf62fab378f6863123fe1843c7826537495499f18d9f831",
+  "source.wikitext": "f8a5356cff1fc8c2188b68aa77ab60969c102ea64767a4f4721fd07532f85ac2",
+  "state-inputs/Cargo.toml": "2b1ab32e568d31aea229fe8601107470e29c82bc2766e5cf37f2e62904774307",
+  "state-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+  "state-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+  "state-inputs/src/c_api/bag_info.rs": "75a134c72eac200a193ab4ab18e405173995e0a22019f4d40acc674318562451",
+  "state-inputs/src/c_api/item_spell/c_container.rs": "c2d1988f06b0c36a123f9742efb51b6b74283f481e9705300eeafd985bcefbb8",
+  "state-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+  "state-inputs/src/event/valid_events_c.rs": "d9371adb78a2ccd3decc2bb5cbb775ce668e9f412bd0db0f6a7ebe2011a5fe5c",
+  "state-inputs/src/lua_api/globals/unit_misc.rs": "1477e79cdc665910c4656c5ad8c7e265309a2d56d1e645b35c535256d7d8134a",
+  "state-inputs/src/lua_api/workarounds/temporary/unit_threat_defaults.rs": "f4c63b142f23c759183e0ee39d79b2b1b63556b49128c0a531438b628b66c51c",
+  "state-inputs/src/wrath/mod.rs": "471e38dc78801c5a81f9224e3a2b3897ebb6eae2e9c5bd92ae246daf7989397b",
+  "state-scan.json": "351d98e1aad6d198e30d80659fdccaee54479078b5244e1764ccc7f75f2a1913",
+  "successors/1.13.7/response.json": "b0d750e17ee76815e6c4917f9d98f81780ef3b5bb26466acbcc9e1a8899099c4",
+  "successors/1.13.7/source.wikitext": "b9f8be9d2db166e6b85ec868fc077bc5591071d55c05bb5f11267eb5ba11e996",
+  "successors/1.14.0/response.json": "9e282d2407123b5850b9c7fc62c35158246d5a93109a4eafb2f9fe7133200289",
+  "successors/1.14.0/source.wikitext": "ead23026a86829caa312eb3b9cfcb57c5bfc85099a125fce84820c94e76490ac",
+  "successors/1.14.1/response.json": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+  "successors/1.14.1/source.wikitext": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+  "successors/1.14.2/response.json": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+  "successors/1.14.2/source.wikitext": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+  "successors/1.14.3/response.json": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+  "successors/1.14.3/source.wikitext": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+  "successors/1.14.4/response.json": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+  "successors/1.14.4/source.wikitext": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+  "successors/1.15.0/response.json": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+  "successors/1.15.0/source.wikitext": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+  "successors/1.15.1/response.json": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+  "successors/1.15.1/source.wikitext": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+  "successors/1.15.2/response.json": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+  "successors/1.15.2/source.wikitext": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+  "successors/1.15.3/response.json": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+  "successors/1.15.3/source.wikitext": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+  "successors/1.15.4/response.json": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+  "successors/1.15.4/source.wikitext": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+  "successors/1.15.5/response.json": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+  "successors/1.15.5/source.wikitext": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+  "successors/1.15.6/response.json": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+  "successors/1.15.6/source.wikitext": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+  "successors/1.15.7/response.json": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+  "successors/1.15.7/source.wikitext": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+  "successors/1.15.8/response.json": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+  "successors/1.15.8/source.wikitext": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+  "successors/1.15.9/response.json": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+  "successors/1.15.9/source.wikitext": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+  "successors/status.json": "0f0eefaacdf58bda6d1e2e2ccef792ed661f1d4594befdad2323b5d011674091",
+  "test_portable.py": "36cbd6ab277f3d310df5abb4e0449cc8707c72ecc3bbfcba736d739f23e6b8ec",
+  "test_source_accounting.py": "3d1dfe5c1bdb8c52dec417813e394f1955b5ea2601253ad07e1e3ed55c4483b0"
+}
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/test_portable.py
+"""Copied historical replay and serialized seal controls; SOURCE only."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tarfile
+import tempfile
+import unittest
+EVIDENCE = Path(__file__).resolve().parent
+CWD = '/home/osso/.worktrees/wow-ui-sim-p1135-page'
+RECEIPTS = []
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+class PortableSource(unittest.TestCase):
+
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory(dir=OPTIONS.scratch)
+        self.addCleanup(self.directory.cleanup)
+        self.copied = Path(self.directory.name)
+        self.assertTrue(OPTIONS.archive.is_file(), 'own replay archive absent')
+        with tarfile.open(OPTIONS.archive, 'r:gz') as archive:
+            members = archive.getnames()
+            self.assertTrue(all((not Path(m).is_absolute() and '..' not in Path(m).parts for m in members)))
+            archive.extractall(self.copied, filter='data')
+        self.assertFalse((self.copied / '.git').exists())
+        self.assertFalse((self.copied / 'target').exists())
+        self.assertFalse((self.copied / 'tools').exists())
+        self.seals = json.loads((self.copied / 'seals.json').read_bytes())
+        self.check_originals()
+
+    def check_originals(self):
+        for name, expected in self.seals.items():
+            self.assertEqual(digest((self.copied / name).read_bytes()), expected, name)
+
+    def execute(self, *args):
+        command = [sys.executable, '-B', *map(str, args)]
+        result = subprocess.run(command, cwd=CWD, env=dict(os.environ, PATH='', PYTHONDONTWRITEBYTECODE='1'), capture_output=True, text=True, timeout=30)
+        RECEIPTS.append({'test': self.id(), 'command': command, 'cwd': CWD, 'path': 'empty; Git/current commands unavailable', 'exit_code': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr})
+        return result
+
+    def test_copied_source_and_default_register(self):
+        result = self.execute(self.copied / 'audit.py')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        fixtures = self.execute(self.copied / 'test_source_accounting.py')
+        self.assertEqual(fixtures.returncode, 0, fixtures.stderr)
+        self.assertIn('Ran 8 tests', fixtures.stderr)
+        output = self.copied / 'reproduced-register.json'
+        generated = self.execute(self.copied / 'historical-tools/gen_patch_wikitext_register.py', '1.13.5', self.copied / 'source.wikitext', '3835002', output)
+        self.assertEqual(generated.returncode, 0, generated.stderr)
+        self.assertEqual(output.read_bytes(), (self.copied / 'default-register.json').read_bytes())
+        failed_extract = self.execute(self.copied / 'audit.py', 'default-extract')
+        self.assertNotEqual(failed_extract.returncode, 0)
+        expected_error = json.loads((self.copied / 'default-extract-error.json').read_bytes())
+        self.assertIn('ValueError: ' + expected_error['error'], failed_extract.stderr)
+        self.assertEqual(failed_extract.stdout, '')
+        self.assertFalse((self.copied / 'default-extract.txt').exists())
+        self.check_originals()
+
+    def reject_and_restore(self, name, changed):
+        path = self.copied / name
+        original = path.read_bytes()
+        path.write_bytes(changed)
+        try:
+            result = self.execute(self.copied / 'audit.py')
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(f'seal: {name}', result.stderr)
+        finally:
+            path.write_bytes(original)
+        self.assertEqual(path.read_bytes(), original)
+        self.check_originals()
+        restored = self.execute(self.copied / 'audit.py')
+        self.assertEqual(restored.returncode, 0, restored.stderr)
+        RECEIPTS.append({'restored': name, 'sha256': digest(path.read_bytes()), 'all_original_seals': len(self.seals)})
+
+    def test_serialized_ledger_omission_rejected_and_restored(self):
+        ledger = json.loads((self.copied / 'ledger.json').read_bytes())
+        ledger['contracts'].pop()
+        self.reject_and_restore('ledger.json', (json.dumps(ledger, indent=2) + '\n').encode())
+
+    def test_serialized_log_fabrication_rejected_and_restored(self):
+        self.reject_and_restore('green.log', b'Invented runtime/native parity: PASS\n')
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--archive', type=Path, required=True)
+    parser.add_argument('--scratch', type=Path, required=True)
+    parser.add_argument('--receipts', type=Path, required=True)
+    OPTIONS = parser.parse_args()
+    OPTIONS.scratch.mkdir(parents=True, exist_ok=True)
+    assert not OPTIONS.receipts.exists(), 'refuse receipt overwrite'
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(PortableSource)
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    OPTIONS.receipts.write_text(json.dumps({'scope': 'copied historical SOURCE; no runtime/model/native credit', 'runs': RECEIPTS, 'tests_run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors)}, indent=2) + '\n')
+    sys.exit(0 if result.wasSuccessful() else 1)
+
+### /home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py
+"""Own frozen Patch 1.13.5 SOURCE contracts; no runtime/native acceptance."""
+import copy
+import json
+from pathlib import Path
+import unittest
+import audit
+E = Path(__file__).resolve().parent
+SYMBOLS = ['UnitDetailedThreatSituation', 'UnitThreatPercentageOfLead', 'UnitThreatSituation', 'UNIT_THREAT_LIST_UPDATE', 'UNIT_THREAT_SITUATION_UPDATE']
+
+class SourceAccounting(unittest.TestCase):
+
+    def test_frozen_identity_and_response(self):
+        source = audit.build().get('source', {})
+        self.assertEqual((source.get('pageid'), source.get('revid'), source.get('timestamp')), (398847, 3835002, '2021-05-06T13:20:38Z'))
+        self.assertEqual(source.get('wikitext_bytes'), 1690)
+        self.assertEqual(source.get('wikitext_sha256'), 'f8a5356cff1fc8c2188b68aa77ab60969c102ea64767a4f4721fd07532f85ac2')
+
+    def test_lossless_rows_and_default_extract(self):
+        ledger = audit.build()
+        expected = [(n, s) for n, s in enumerate((E / 'source.wikitext').read_text().splitlines(), 1) if s.strip()]
+        self.assertEqual([(r['line'], r['literal']) for r in ledger.get('source_rows', [])], expected)
+        self.assertEqual(len(expected), 31)
+        self.assertEqual(ledger.get('extracted_rows'), [])
+        failure = ledger.get('default_extract', {})
+        self.assertEqual(failure.get('result'), 'existing-failure')
+        self.assertIsNone(failure.get('text'))
+        self.assertEqual(failure.get('error_type'), 'ValueError')
+        self.assertIn('unhandled template: * Reinstated [[Threat]] API', failure.get('error', ''))
+        self.assertFalse((E / 'default-extract.txt').exists())
+
+    def test_inventory_and_unknown_signatures(self):
+        ledger = audit.build()
+        self.assertEqual([i['symbol'] for i in ledger.get('inventory', [])], SYMBOLS)
+        self.assertEqual([(i['section'], i['direction']) for i in ledger['inventory']], [('global-api', 'added')] * 3 + [('events', 'added')] * 2)
+        self.assertEqual([(i['line'], i['symbol'], i['arguments'], i['returns'], i['declaration']) for i in ledger.get('signatures', [])], [(n, s, None, None, None) for n, s in zip([19, 20, 21, 31, 32], SYMBOLS)])
+        self.assertEqual(ledger.get('defaults'), [])
+
+    def test_headings_count_headers_caption_navigation(self):
+        ledger = audit.build()
+        self.assertEqual([h['label'] for h in ledger.get('headers', [])], ['Diffs', 'Changes', 'Global API', 'Events', 'References'])
+        self.assertEqual([(h['section'], h['count'], h['observed']) for h in ledger.get('inventory_headers', [])], [('global-api', 3, 3), ('events', 2, 2)])
+        self.assertEqual(ledger.get('navigation'), dict(patch='1.13.5', prev='1.13.4', next='1.13.6'))
+        self.assertEqual(ledger.get('source_toc'), 11305)
+        self.assertEqual(ledger.get('captions'), [dict(line=4, literal='1.13.4 (34600) to 1.13.5 (34713)', before_patch='1.13.4', before_build=34600, after_patch='1.13.5', after_build=34713)])
+
+    def test_prose_reference_templates_and_unexpanded_limits(self):
+        ledger = audit.build()
+        self.assertEqual([p['line'] for p in ledger.get('prose', [])], [10, 11])
+        self.assertEqual(ledger.get('prose', [{}])[1].get('additional_slots') if len(ledger.get('prose', [])) > 1 else None, 4)
+        self.assertEqual(len(ledger.get('links', [])), 7)
+        self.assertEqual(len(ledger.get('templates', [])), 7)
+        self.assertEqual(len(ledger.get('references', [])), 2)
+        self.assertTrue(all((not x['expanded'] for field in ('links', 'templates', 'references') for x in ledger[field])))
+        self.assertEqual(ledger.get('source_client_literal'), 'WoW Classic')
+        self.assertEqual(ledger.get('client_literal_scope'), 'reference title, not expanded linked contents or configured native identity')
+        self.assertEqual(len(ledger.get('contracts', [])), 14)
+        self.assertTrue(all((c['status'] == 'UNPROVEN' for c in ledger['contracts'])))
+
+    def test_current_model_and_successor_credit_boundaries(self):
+        ledger = audit.build()
+        self.assertEqual(ledger.get('measurements'), dict(runtime=0, model=0, native=0))
+        self.assertEqual(len(ledger.get('model_review', [])), 4)
+        self.assertTrue(all((x['status'] == 'UNPROVEN' for x in ledger['model_review'])))
+        self.assertEqual([(p['feature'], p['configured_interface']) for p in ledger.get('configured_profiles', [])], [('client-era', 11507), ('client-anniversary', 11507)])
+        queued = ledger.get('queued_successor', {})
+        self.assertEqual((queued.get('patch'), queued.get('state'), queued.get('register')), ('1.13.6', 'concurrently-active-not-integrated', None))
+        self.assertEqual(ledger.get('later_registers'), [])
+        self.assertEqual([s['patch'] for s in ledger.get('successors', [])], ['1.13.7', '1.14.0', '1.14.1', '1.14.2', '1.14.3', '1.14.4'] + [f'1.15.{n}' for n in range(10)])
+        self.assertTrue(all((not s['applied'] and (not s['native_proof']) for s in ledger['successors'])))
+
+    def test_occurrence_omissions_and_invented_credit_rejected(self):
+        original = audit.build()
+        self.assertIn('contracts', original)
+        for field in audit.OCCURRENCE_FIELDS:
+            for index in range(len(original[field])):
+                changed = copy.deepcopy(original)
+                changed[field].pop(index)
+                with self.assertRaises(AssertionError, msg=f'{field}/{index}'):
+                    audit.validate_ledger(changed)
+        for field, value in [('measurements', dict(runtime=1, model=1, native=1)), ('source_toc', 11507), ('defaults', ['16']), ('later_registers', ['2.5.2']), ('source_client_literal', 'Retail'), ('queued_successor', dict(patch='1.13.6', applied=True))]:
+            changed = copy.deepcopy(original)
+            changed[field] = value
+            with self.assertRaises(AssertionError):
+                audit.validate_ledger(changed)
+        for field, key, value in [('signatures', 'arguments', ['unit']), ('prose', 'final_capacity', 20), ('templates', 'expanded', True), ('inventory', 'symbol', 'UnitThreatLeadSituation')]:
+            changed = copy.deepcopy(original)
+            changed[field][0][key] = value
+            with self.assertRaises(AssertionError):
+                audit.validate_ledger(changed)
+
+    def test_frozen_content_identity_tamper_rejected(self):
+        self.assertIn('source', audit.build())
+        response = json.loads((E / 'source-response.json').read_bytes())
+        response['query']['pages']['398847']['revisions'][0]['revid'] += 1
+        with self.assertRaises(AssertionError):
+            audit.validate_source(json.dumps(response).encode(), (E / 'source.wikitext').read_bytes())
+        with self.assertRaises(AssertionError):
+            audit.validate_source((E / 'source-response.json').read_bytes(), (E / 'source.wikitext').read_bytes() + b'\n')
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

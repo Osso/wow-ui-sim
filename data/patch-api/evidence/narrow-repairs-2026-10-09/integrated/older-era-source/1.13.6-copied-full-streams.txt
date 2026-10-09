@@ -1,0 +1,133 @@
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmprx6nadet/audit.py"] ===
+{
+  "seals": 88,
+  "totals": {
+    "physical_lines": 18,
+    "nonblank_rows": 16,
+    "metadata_rows": 11,
+    "unproven_rows": 5,
+    "inventory": 3,
+    "callables": 0,
+    "cvars": 3,
+    "headers": 2,
+    "inventory_headers": 1,
+    "contracts": 7,
+    "signature_declarations": 0,
+    "links": 3,
+    "templates": 4,
+    "examples": 0,
+    "prose_defaults": 0,
+    "prose": 1
+  }
+}
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmprx6nadet/test_source_accounting.py"] ===
+omission controls: 55
+
+STDERR
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok
+test_exact_response_identity_and_content (__main__.SourceAccounting.test_exact_response_identity_and_content) ... ok
+test_headers_and_navigation (__main__.SourceAccounting.test_headers_and_navigation) ... ok
+test_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... ok
+test_profiles_and_separate_successors (__main__.SourceAccounting.test_profiles_and_separate_successors) ... ok
+test_prose_links_and_templates (__main__.SourceAccounting.test_prose_links_and_templates) ... ok
+test_three_cvars_no_invented_defaults (__main__.SourceAccounting.test_three_cvars_no_invented_defaults) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.139s
+
+OK
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmprx6nadet/historical-tools/gen_patch_wikitext_register.py", "1.13.6", "/tmp/older-era-source-independent/1.13.6-scratch/tmprx6nadet/source.wikitext", "4435603", "/tmp/older-era-source-independent/1.13.6-scratch/tmprx6nadet/reproduced-register.json"] ===
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmprx6nadet/replay_defaults.py"] ===
+default extract byte-identical; no opt-in flags, no linked expansion
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmp73puaput/audit.py"] ===
+
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-era-source-independent/1.13.6-scratch/tmp73puaput/audit.py", line 125, in <module>
+    print(json.dumps(dict(seals=check_seals(),totals=validate_ledger(read_json('ledger.json'))),indent=2))
+                                ~~~~~~~~~~~^^
+  File "/tmp/older-era-source-independent/1.13.6-scratch/tmp73puaput/audit.py", line 116, in check_seals
+    assert digest((E/name).read_bytes())==expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: ledger.json
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmp73puaput/audit.py"] ===
+{
+  "seals": 88,
+  "totals": {
+    "physical_lines": 18,
+    "nonblank_rows": 16,
+    "metadata_rows": 11,
+    "unproven_rows": 5,
+    "inventory": 3,
+    "callables": 0,
+    "cvars": 3,
+    "headers": 2,
+    "inventory_headers": 1,
+    "contracts": 7,
+    "signature_declarations": 0,
+    "links": 3,
+    "templates": 4,
+    "examples": 0,
+    "prose_defaults": 0,
+    "prose": 1
+  }
+}
+
+STDERR
+
+=== {"restored": "ledger.json", "sha256": "72d923000ed6ff4418b13554b52dc3f654ed141a38cbd2acb78335e4125e762c", "all_original_seals": 88} ===
+
+STDERR
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmp8wac22hu/audit.py"] ===
+
+STDERR
+Traceback (most recent call last):
+  File "/tmp/older-era-source-independent/1.13.6-scratch/tmp8wac22hu/audit.py", line 125, in <module>
+    print(json.dumps(dict(seals=check_seals(),totals=validate_ledger(read_json('ledger.json'))),indent=2))
+                                ~~~~~~~~~~~^^
+  File "/tmp/older-era-source-independent/1.13.6-scratch/tmp8wac22hu/audit.py", line 116, in check_seals
+    assert digest((E/name).read_bytes())==expected, f'seal: {name}'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: seal: green.log
+
+=== ["/home/osso/.local/share/uv/tools/pyrun/bin/python", "-B", "/tmp/older-era-source-independent/1.13.6-scratch/tmp8wac22hu/audit.py"] ===
+{
+  "seals": 88,
+  "totals": {
+    "physical_lines": 18,
+    "nonblank_rows": 16,
+    "metadata_rows": 11,
+    "unproven_rows": 5,
+    "inventory": 3,
+    "callables": 0,
+    "cvars": 3,
+    "headers": 2,
+    "inventory_headers": 1,
+    "contracts": 7,
+    "signature_declarations": 0,
+    "links": 3,
+    "templates": 4,
+    "examples": 0,
+    "prose_defaults": 0,
+    "prose": 1
+  }
+}
+
+STDERR
+
+=== {"restored": "green.log", "sha256": "54c1b10592202d331ea7f9dcd8d27dcbe53c7307cd211c2e6f9365d7e6309abc", "all_original_seals": 88} ===
+
+STDERR

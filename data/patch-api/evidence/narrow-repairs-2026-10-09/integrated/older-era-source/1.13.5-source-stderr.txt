@@ -1,0 +1,13 @@
+test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok
+test_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok
+test_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok
+test_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok
+test_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok
+test_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok
+test_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok
+test_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.315s
+
+OK

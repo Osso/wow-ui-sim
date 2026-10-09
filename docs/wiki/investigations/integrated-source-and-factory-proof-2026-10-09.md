@@ -60,9 +60,13 @@ The [1.15.1/0 report](../../../data/patch-api/evidence/1.15.1-session-2026-10-09
 
 Real WowLuaEnv, existing `IsPublicBuild=true`, raw SeasonOfDiscovery numeric2 and initially absent Placeholder; direct unchanged pinned official Lua yields both raw names numeric2/equal. No mocks, flag injection or pre-test enum write. Native numeric correspondence, pre-vendor timing, full Blizzard UI loading, C_Seasons state and non-public branch remain UNPROVEN. 1.15.0 receives no alias/runtime credit.
 
-## Era1.14.4: integrated source, retained development proof only
+## Era1.14.4 and 1.13.7/6/5: retained independent SOURCE epoch
 
-[1.14.4 audit](patch-1-14-4-api-audit.md#copied-historical-proof) retains SOURCE11/11 at `183437dc5`, portable3/3 at `fb6e6ba53`, 67 original + four separate receipt seals. Integration is not a fresh independent replay: no such later report is included in the selected retention. All eleven linked/prose contracts remain UNPROVEN; no native/model/runtime or foreign-history supersession credit.
+[Exact independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/older-era-source/report.md) requested `3de874658`; actual commands and final HEAD were `bf8598e1da52895b707db0bf7bd9fb350c448628`. The intervening delta was docs/proof retention only. Recorded 335 scope hashes match before/after/final, not every runtime dependency. SOURCE canonical **34/34** and copied **34/34**, portable **12/12** pass: 1.13.7 **8/8**, 1.13.6 **7/7**, 1.13.5 **8/8**, 1.14.4 **11/11**, each portable3/3. **280 original +42 separate receipt seals** unchanged; eight serialized tamper rejections and eight exact restorations. Original audit/development epochs remain unchanged; this later independent epoch supersedes prior integration-pending status only.
+
+Bare Era factory **2/2** at this epoch publishes `specular` and `textureErrorColors` as string1/default1; `nameplateCommentatorMaxDistance` and unknown control remain nil/nil. Historical 1.14.0 literal source removes `textureErrorColors`, while current factory still publishes it: no successor-application or native parity credit. All57 retained successor raw bodies match actual canonical sources, not semantic supersession. Source accounting earns zero native/model/runtime credit; factory observations earn no modeled rendering/nameplate, historical-default, loaded-UI, security or parent acceptance. Thirteen warning diagnostics remain unsuppressed.
+
+[Separate byte-retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/older-era-source/byte-retention-manifest.json) binds **70 original files /765,499 bytes**, all source/retained hashes equal, including immutable report, command/environment ledgers, scopes, preservation, successor comparisons, receipts and full streams. Environment key names inspected before copying; no actual secret fields identified, ordinary environment bytes unchanged. Disposable scratch trees/TMPDIR excluded; no fresh execution, broad suite or parent completion.
 
 ## Era narrow-helper integration: bounded PASS
 

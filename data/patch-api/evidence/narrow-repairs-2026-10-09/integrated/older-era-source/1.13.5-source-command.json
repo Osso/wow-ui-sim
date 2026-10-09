@@ -1,0 +1,20 @@
+{
+  "name": "1.13.5-source",
+  "argv": [
+    "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+    "-B",
+    "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.5-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "environment_base": "environment-before.json",
+  "started": "2026-10-09T16:32:45.559696+00:00",
+  "ended": "2026-10-09T16:32:46.911768+00:00",
+  "seconds": 1.3520770760078449,
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_current_model_and_successor_credit_boundaries (__main__.SourceAccounting.test_current_model_and_successor_credit_boundaries) ... ok\ntest_frozen_content_identity_tamper_rejected (__main__.SourceAccounting.test_frozen_content_identity_tamper_rejected) ... ok\ntest_frozen_identity_and_response (__main__.SourceAccounting.test_frozen_identity_and_response) ... ok\ntest_headings_count_headers_caption_navigation (__main__.SourceAccounting.test_headings_count_headers_caption_navigation) ... ok\ntest_inventory_and_unknown_signatures (__main__.SourceAccounting.test_inventory_and_unknown_signatures) ... ok\ntest_lossless_rows_and_default_extract (__main__.SourceAccounting.test_lossless_rows_and_default_extract) ... ok\ntest_occurrence_omissions_and_invented_credit_rejected (__main__.SourceAccounting.test_occurrence_omissions_and_invented_credit_rejected) ... ok\ntest_prose_reference_templates_and_unexpanded_limits (__main__.SourceAccounting.test_prose_reference_templates_and_unexpanded_limits) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.315s\n\nOK\n"
+}

@@ -1,0 +1,7 @@
+
+running 2 tests
+test exact_current_era_publication_gaps ... ok
+test unknown_cvar_is_not_fabricated_by_getters ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+

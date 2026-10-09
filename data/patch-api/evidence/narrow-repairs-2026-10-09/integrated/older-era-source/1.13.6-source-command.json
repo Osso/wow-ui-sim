@@ -1,0 +1,20 @@
+{
+  "name": "1.13.6-source",
+  "argv": [
+    "/home/osso/.local/share/uv/tools/pyrun/bin/python",
+    "-B",
+    "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "bf8598e1da52895b707db0bf7bd9fb350c448628",
+  "env_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "environment_base": "environment-before.json",
+  "started": "2026-10-09T16:32:45.472107+00:00",
+  "ended": "2026-10-09T16:32:45.645090+00:00",
+  "seconds": 0.17298854399996344,
+  "exit_code": 0,
+  "stdout": "omission controls: 55\n",
+  "stderr": "test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok\ntest_exact_response_identity_and_content (__main__.SourceAccounting.test_exact_response_identity_and_content) ... ok\ntest_headers_and_navigation (__main__.SourceAccounting.test_headers_and_navigation) ... ok\ntest_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... ok\ntest_profiles_and_separate_successors (__main__.SourceAccounting.test_profiles_and_separate_successors) ... ok\ntest_prose_links_and_templates (__main__.SourceAccounting.test_prose_links_and_templates) ... ok\ntest_three_cvars_no_invented_defaults (__main__.SourceAccounting.test_three_cvars_no_invented_defaults) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.137s\n\nOK\n"
+}
