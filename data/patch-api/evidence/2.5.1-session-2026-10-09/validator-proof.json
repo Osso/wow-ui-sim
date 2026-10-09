@@ -1,0 +1,12 @@
+{
+  "revision": "eb48b0fc67f32c5b4fcd19ce8cdcea2893ffadfc",
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p251-source",
+  "exit": 0,
+  "log": "validator.log",
+  "scope": "original source/tool/config/ledger/log seals and historical source reproduction; no native/runtime observation"
+}
