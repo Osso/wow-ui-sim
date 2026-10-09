@@ -4,7 +4,7 @@ Account for the pinned historical retail page without inventing missing signatur
 
 ## What it must do
 
-- [ ] Retail `BNGetFriendIndex(accountID)` reads the existing ordered Battle.net friend list and tracks reorder/removal; unknown IDs return nil (inferred, native parity unproven).
+- [x] Retail `BNGetFriendIndex(accountID)` reads the existing ordered Battle.net friend list and tracks reorder/removal; unknown IDs return nil (inferred, native parity unproven).
 
 - [ ] Reproduce all 65 inventory IDs and both source counts using recorded existing flags.
 - [ ] Account for the sole navigation metadata row and zero prose/signatures.

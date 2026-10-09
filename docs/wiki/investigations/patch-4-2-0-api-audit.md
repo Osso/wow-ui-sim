@@ -8,11 +8,11 @@ Pinned historical retail inventory, page 315583/revision 3045158 (2021-08-22T03:
 
 ## Publication scope
 
-Own prefork case probes every occurrence using current retail runtime and actual 5.0.1–12.1.0 retail successors. Two explicit pending placeholders: 4.3.0 and 4.3.4. Classic histories excluded. Exact observed gaps and possible pending supersessions will be recorded after targeted development testing. No runtime changes or retirements yet.
+Own prefork case probes every occurrence using current retail runtime and actual 5.0.1–12.1.0 retail successors. Two explicit pending placeholders: 4.3.0 and 4.3.4. Classic histories excluded. Exact observed gaps and possible pending supersessions will be recorded after targeted development testing. One bounded retail friend-index model change; no retirements.
 
 ## Bounded model fix
 
-`BNGetFriendIndex(accountID)` now reads the current position in `SimState.bnet_friends`, consistent with `C_BattleNet.GetFriendAccountInfo(index)` rather than stale `friend_index` fields. Retail-only; Classic and PTR registration unchanged. Cached `Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:2545` passes a Battle.net account ID. Two local model tests failed on missing global before implementation. Unknown-ID nil is inferred; this page provides no signatures and no native parity is claimed. No shims/fallbacks added. Development GREEN pending.
+`BNGetFriendIndex(accountID)` now reads the current position in `SimState.bnet_friends`, consistent with `C_BattleNet.GetFriendAccountInfo(index)` rather than stale `friend_index` fields. Retail-only; Classic and PTR registration unchanged. Cached `Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:2545` passes a Battle.net account ID. Two local model tests failed on missing global before implementation. Unknown-ID nil is inferred; this page provides no signatures and no native parity is claimed. No shims/fallbacks added. Targeted integration GREEN passes 2/2 at `6b89034a3`. Initial publication RED observed 32 mismatches; the local model closes one, leaving 31 expected for the next own-sweep run.
 
 ## Sources
 

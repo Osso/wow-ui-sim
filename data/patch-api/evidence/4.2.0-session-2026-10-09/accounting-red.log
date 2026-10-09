@@ -1,0 +1,51 @@
+
+test_accounting_matches_development_observations (test_patch_4_2_0_accounting.Patch420Accounting.test_accounting_matches_development_observations) ... FAIL
+test_extracted_boundary_has_only_navigation_not_prose_or_signatures (test_patch_4_2_0_accounting.Patch420Accounting.test_extracted_boundary_has_only_navigation_not_prose_or_signatures) ... ok
+test_response_and_pin_match_literal_source (test_patch_4_2_0_accounting.Patch420Accounting.test_response_and_pin_match_literal_source) ... ok
+test_saved_register_reproduces_every_literal_inventory_reference (test_patch_4_2_0_accounting.Patch420Accounting.test_saved_register_reproduces_every_literal_inventory_reference) ... ok
+
+======================================================================
+FAIL: test_accounting_matches_development_observations (test_patch_4_2_0_accounting.Patch420Accounting.test_accounting_matches_development_observations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/tools/test_patch_4_2_0_accounting.py", line 78, in test_accounting_matches_development_observations
+    self.assertEqual(set(gaps), {key for key, result in results.items() if not result["ok"]})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'wt-global-api-DeleteRaidProfile-15'
+'wt-global-api-GetPVPRewards-51'
+'wt-global-api-GetWarGameTypeInfo-58'
+'wt-global-api-SaveRaidProfileCopy-66'
+'wt-global-api-GetRaidProfileSavedPosition-55'
+'wt-global-api-SetRefresh-69'
+'wt-global-api-SetSelectedWarGameType-70'
+'wt-global-api-RestoreRaidProfileFromCopy-65'
+'wt-global-api-GetNumRaidProfiles-48'
+'wt-global-api-EJ_GetMapEncounter-26'
+'wt-global-api-CreateNewRaidProfile-14'
+'wt-global-api-SetRaidProfileOption-67'
+'wt-global-api-LoadURLIndex-60'
+'wt-global-api-ExpandWarGameHeader-42'
+'wt-global-api-GetRaidProfileOption-54'
+'wt-global-api-EJ_SetDifficultyByMask-39'
+'wt-global-api-RaidProfileHasUnsavedChanges-63'
+'wt-global-api-GetSelectedWarGameType-57'
+'wt-global-api-GetOSLocale-50'
+'wt-global-api-GetMaxNumCUFProfiles-46'
+'wt-global-api-GetRaidProfileName-53'
+'wt-global-api-GetCurrentRefresh-45'
+'wt-global-api-BNGetFriendIndex-10'
+'wt-global-api-HasTravelPass-59'
+'wt-global-api-EJ_GetLootInfoByIndex-24'
+'wt-global-api-UpdateWarGamesList-72'
+'wt-global-api-GetRaidProfileFlattenedOptions-52'
+'wt-global-api-EJ_GetSectionInfo-30'
+'wt-global-api-GetNumWarGameTypes-49'
+'wt-global-api-SetRaidProfileSavedPosition-68'
+'wt-global-api-RaidProfileExists-62'
+'wt-global-api-CollapseWarGameHeader-12'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+FAILED (failures=1)
