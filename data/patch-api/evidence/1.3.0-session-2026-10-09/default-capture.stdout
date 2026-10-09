@@ -1,0 +1,17 @@
+{
+  "extract_bytes": 932,
+  "errors": [
+    {
+      "function": "parse_symbol",
+      "argument": "not a reference",
+      "type": "ValueError",
+      "message": "no symbol reference in: 'not a reference'"
+    },
+    {
+      "function": "extract_text",
+      "argument": null,
+      "type": "AttributeError",
+      "message": "'NoneType' object has no attribute 'splitlines'"
+    }
+  ]
+}

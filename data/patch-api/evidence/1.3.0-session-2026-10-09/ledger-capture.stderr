@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/audit.py", line 308, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/audit.py", line 290, in main
+    destination.write_text(json.dumps(build(), indent=2) + "\n")
+                                      ~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/audit.py", line 177, in build
+    groups = collect_boundaries(raw.decode())
+  File "/home/osso/.worktrees/wow-ui-sim-p130-page/data/patch-api/evidence/1.3.0-session-2026-10-09/audit.py", line 131, in collect_boundaries
+    append_literal(groups["inventory"], "api", line, declaration,
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   change=section, category=category,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   template_kind=template_kind,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   rename_role="new" if section == "Changed" else None)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: append_literal() got multiple values for argument 'category'
