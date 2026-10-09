@@ -1,0 +1,10 @@
+{
+  "pageid": 580953,
+  "title": "Patch 4.4.0/API changes",
+  "revid": 6163701,
+  "timestamp": "2024-10-29T16:26:26Z",
+  "retrieved": "2026-10-08",
+  "wikitext_sha256": "f8598e92092793a0621ea26d5620fd910c178dcb1fccd0b0aa313b83a6b56d5e",
+  "method": "MediaWiki revisions API",
+  "scope": "source-only pin; Cataclysm Classic runtime unsupported, no coverage claim"
+}
