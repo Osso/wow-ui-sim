@@ -1,0 +1,1 @@
+{"patch": "6.0.1", "classification": "redirect-only", "registers": 51, "extracts": 48, "sweep_cases": 52, "prior_validators": 29, "result": "PASS"}

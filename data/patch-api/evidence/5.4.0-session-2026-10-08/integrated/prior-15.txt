@@ -1,0 +1,1 @@
+{"accounting": {"extract_rows": 4, "inventory_rows": 0, "metadata_rows": 4, "modeled_gaps": 0, "problematic_gaps": 0, "publication_gaps": 0, "retirements": 0}, "reproduction": {"extracts_passed": 49, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"], "registers": 52}, "retail": {"observations": 9051, "pages": 51}, "status": "PASS"}

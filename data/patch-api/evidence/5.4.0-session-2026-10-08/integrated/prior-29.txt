@@ -1,0 +1,1 @@
+{"extract": 21, "extract_modes": 96, "extracts_reproduced": 42, "gaps": 0, "inventory": 10, "ledger": 31, "negative_control": [0, 1], "observations": 8879, "preserved_inputs": 229, "prior_validators": 21, "publication_sweeps": 45, "registers": 45, "status": "pass", "statuses": {"audit-pending": 5, "bounded-coverage": 18, "metadata-only": 8}}

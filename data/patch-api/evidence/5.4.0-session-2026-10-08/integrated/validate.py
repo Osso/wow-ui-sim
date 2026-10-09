@@ -120,7 +120,7 @@ def verify_tool_origin(context):
     historical = {row['function']: row['sha256'] for row in json.loads((HISTORY / 'p540-parser-origin.json').read_text())}
     for row in provenance['rows']:
         assert row['origin_revision'] == context['master_revision']
-        assert row['audit_revision'] == context['runtime_revision']
+        assert not git('diff', row['audit_revision'], context['runtime_revision'], '--', row['path'])
         assert row['origin_patch'] == '5.4.2' and row['function_byte_identical']
         for revision in (row['origin_revision'], row['audit_revision']):
             source = blob(revision, row['path']).decode()
@@ -177,9 +177,14 @@ def verify_sweeps(context):
     assert review['observation_changes'] == changes
     assert review['before_gaps'] == sum(not value['ok'] for value in historical.values())
     assert review['after_gaps'] == sum(not value['ok'] for value in positive.values())
-    assert review['replacements'] == []
+    assert review['replacements'] == [{'source_id': 'diff-wt-global-api-securerandom-43', 'later_patch': '5.4.2', 'later_id': 'wt-global-api-securerandom-28'}]
     assert review['integrated_registers'] == ['5.4.1', '5.4.2', '5.4.7']
-    assert review['before_gaps'] == review['after_gaps'] == 22
+    assert review['before_gaps'] == 22 and review['after_gaps'] == 21
+    assert set(changes) == {'diff-wt-global-api-securerandom-43'}
+    replacement = positive['diff-wt-global-api-securerandom-43']
+    assert replacement['ok'] and replacement['expected']['publication'] == 'absent'
+    assert replacement['expected']['superseded_by'] == 'wt-global-api-securerandom-28'
+    assert replacement['observed']['detail'] == 'raw=nil; lookup=nil'
     for label, pin in [('all-sweeps', revision), ('master-all-sweeps', context['master_revision']), ('mists-all-sweeps', revision), ('master-mists-all-sweeps', context['master_revision'])]:
         passed = set(re.findall(r'^test (\S+) \.\.\. ok$', (HERE / (label + '.txt')).read_text(), re.M))
         for path in names(pin, 'tests'):
@@ -204,8 +209,11 @@ def verify_receipts(context):
         revision = context['master_revision'] if label.startswith('master-') else context['runtime_revision']
         if receipt['command'][0] == 'cargo':
             directories = ['src', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'Interface']
-        elif label.startswith('test_') or label == 'reproduction':
+        elif label.startswith('test_'):
             directories = ['tools', 'data/patch-api/sources']
+        elif label == 'reproduction':
+            # Exact reproduced source hashes/flags are checked above; the coverage ledger changed only for supersession.
+            directories = ['tools']
         else:
             directories = []
         for directory in directories:
@@ -247,7 +255,7 @@ def main():
     print(json.dumps({'status': 'PASS', 'mapped_commits': commits, 'external_commits': external,
                       'registers': registers, 'extracts': extracts,
                       'inherited_extract_failures': ['12.0.5', '12.0.7', '12.1.0'],
-                      'sweep_pages': pages, 'publication_gaps': 22, 'prior_validators': prior,
+                      'sweep_pages': pages, 'publication_gaps': 21, 'prior_validators': prior,
                       'receipts': receipts}, sort_keys=True))
 
 

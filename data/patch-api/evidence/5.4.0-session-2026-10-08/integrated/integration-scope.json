@@ -1,0 +1,7 @@
+{
+  "base_revision": "3c60ac0ea839d9be4e864d82eb6c53ee3b3d7702",
+  "runtime_changes": false,
+  "wiki_minimum_lines": {"index.md": 2759, "log.md": 525},
+  "exclusions": ["push", "merge", "agents", "vendor edits", "unattributable invariant relaxation"],
+  "completion": "recorded reproduction, exact supersession, retail and Classic parity, negative control, requested checks, both portability phases, committed wiki and receipts"
+}
