@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/verify_targeted.py"
+  ],
+  "revision": "28b436c0ecf1fd08de3b935ec649c851125f24cd",
+  "scope": "targeted-driver",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "targeted-driver.txt",
+  "log_sha256": "eb5fbe0cf39d478b10d8317c849dc8acc7afc410f25903fda2cb0b7189415aa2",
+  "seconds": 880.3602531699944,
+  "invalidated": false
+}

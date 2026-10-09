@@ -1,0 +1,2936 @@
+{
+  "diff-wt-events-BATTLEPET_FORCE_NAME_DECLENSION-108": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "BATTLEPET_FORCE_NAME_DECLENSION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-117": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "COMMENTATOR_SKIRMISH_MODE_REQUEST"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMMENTATOR_SKIRMISH_MODE_REQUEST\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-118": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "COMMENTATOR_SKIRMISH_QUEUE_REQUEST"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMMENTATOR_SKIRMISH_QUEUE_REQUEST\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-LFG_BONUS_FACTION_ID_UPDATED-109": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-LFG_BONUS_FACTION_ID_UPDATED-832",
+      "symbol": "LFG_BONUS_FACTION_ID_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LFG_BONUS_FACTION_ID_UPDATED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-LOADING_SCREEN_DISABLED-110": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "LOADING_SCREEN_DISABLED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-LOADING_SCREEN_ENABLED-111": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "LOADING_SCREEN_ENABLED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-MAP_BAR_UPDATE-112": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-MAP_BAR_UPDATE-239",
+      "symbol": "MAP_BAR_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"MAP_BAR_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-MINIGAME_UPDATE-119": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "MINIGAME_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"MINIGAME_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-QUEST_CHOICE_UPDATE-113": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-QUEST_CHOICE_UPDATE-835",
+      "symbol": "QUEST_CHOICE_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"QUEST_CHOICE_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-START_MINIGAME-120": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "START_MINIGAME"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"START_MINIGAME\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-events-UNIT_ABSORB_AMOUNT_CHANGED-114": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "UNIT_ABSORB_AMOUNT_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-framexml-BattlegroundShineFadeIn-93": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "BattlegroundShineFadeIn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-framexml-BattlegroundShineFadeOut-94": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "BattlegroundShineFadeOut"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-framexml-ControlGetActiveCvarValue-88": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "ControlGetActiveCvarValue"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-framexml-GetApplicableMultisampleSetting-89": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "framexml",
+      "superseded_by": "diff-wt-framexml-GetApplicableMultisampleSetting-466",
+      "symbol": "GetApplicableMultisampleSetting"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-framexml-IsAlreadyInQueue-95": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "IsAlreadyInQueue"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-framexml-IsPvPFrameSelected-96": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "IsPvPFrameSelected"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-framexml-TogglePVPFrame-97": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "TogglePVPFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-framexml-TogglePVPUI-90": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "TogglePVPUI"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-C_MapBar.BarIsShown-10": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MapBar.BarIsShown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-C_MapBar.GetCurrentValue-11": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MapBar.GetCurrentValue"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-C_MapBar.GetMaxValue-12": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MapBar.GetMaxValue"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-C_MapBar.GetParticipationPercentage-13": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MapBar.GetParticipationPercentage"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-C_MapBar.GetPhaseIndex-14": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MapBar.GetPhaseIndex"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-C_MapBar.GetTag-15": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MapBar.GetTag"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-C_PetBattles.GetForfeitPenalty-16": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PetBattles.GetForfeitPenalty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-C_PetJournal.GetPetCooldownByGUID-17": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PetJournal.GetPetCooldownByGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-ClearChannelWatch-48": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ClearChannelWatch"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorAddPlayer-49": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorAddPlayer"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorGetPartyInfo-50": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorGetPartyInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorGetSkirmishMode-51": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorGetSkirmishMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorGetSkirmishQueueCount-52": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorGetSkirmishQueueCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-53": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorGetSkirmishQueuePlayerInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorRemovePlayer-54": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorRemovePlayer"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorRequestSkirmishMode-55": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorRequestSkirmishMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorRequestSkirmishQueueData-56": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorRequestSkirmishQueueData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorSetPlayerIndex-57": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorSetPlayerIndex"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorSetSkirmishMatchmakingMode-58": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorSetSkirmishMatchmakingMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorStartInstance-59": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorStartInstance"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CommentatorStartSkirmishMatch-60": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CommentatorStartSkirmishMatch"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CreateMiniWorldMapArrowFrame-61": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CreateMiniWorldMapArrowFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-CreateWorldMapArrowFrame-62": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CreateWorldMapArrowFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-DeclineChannelInvite-18": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "DeclineChannelInvite"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-DeclineInvite-63": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "DeclineInvite"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-DevTest1-19": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "diff-wt-global-api-DevTest1-393",
+      "symbol": "DevTest1"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetArenaTeamIndexBySize-20": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetArenaTeamIndexBySize"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-GetBlacklistMapName-21": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetBlacklistMapName"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-GetCurrentRaidDifficulty-64": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetCurrentRaidDifficulty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetDifficultyInfo-22": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetDifficultyInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetHolidayBGInfo-23": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetHolidayBGInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetInstanceDifficulty-65": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetInstanceDifficulty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetLFGBonusFactionID-24": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetLFGBonusFactionID-624",
+      "symbol": "GetLFGBonusFactionID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetMinigameState-66": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetMinigameState"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetMinigameType-67": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetMinigameType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetQuestChoiceInfo-25": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetQuestChoiceInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-GetQuestChoiceOptionInfo-26": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetQuestChoiceOptionInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-GetQuestChoiceRewardCurrency-27": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetQuestChoiceRewardCurrency-632",
+      "symbol": "GetQuestChoiceRewardCurrency"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetQuestChoiceRewardFaction-28": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetQuestChoiceRewardFaction-633",
+      "symbol": "GetQuestChoiceRewardFaction"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetQuestChoiceRewardInfo-29": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetQuestChoiceRewardInfo-634",
+      "symbol": "GetQuestChoiceRewardInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetQuestChoiceRewardItem-30": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetQuestChoiceRewardItem-635",
+      "symbol": "GetQuestChoiceRewardItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetRaidDifficulty-68": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetRaidDifficulty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetRaidDifficultyID-31": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetRaidDifficultyID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetRandomBGInfo-32": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetRandomBGInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-GetSchoolString-33": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetSchoolString-183",
+      "symbol": "GetSchoolString"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua; alias=C_Spell.GetSchoolString",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-GetSpellLossOfControlCooldown-34": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetSpellLossOfControlCooldown-448",
+      "symbol": "GetSpellLossOfControlCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-IsAllowedToUserTeleport-35": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsAllowedToUserTeleport"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-IsTradeSkillReady-36": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsTradeSkillReady"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-MakeMinigameMove-69": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "MakeMinigameMove"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-PlayDance-70": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PlayDance"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-PositionMiniWorldMapArrowFrame-71": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PositionMiniWorldMapArrowFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-PositionWorldMapArrowFrame-72": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PositionWorldMapArrowFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-PrepVoidStorageForTransmogrify-37": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PrepVoidStorageForTransmogrify"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-RequestRandomBattlegroundInstanceInfo-38": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "RequestRandomBattlegroundInstanceInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-SendQuestChoiceResponse-39": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-SendQuestChoiceResponse-681",
+      "symbol": "SendQuestChoiceResponse"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-SetChannelWatch-73": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetChannelWatch"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-SetLFGBonusFactionID-40": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-SetLFGBonusFactionID-685",
+      "symbol": "SetLFGBonusFactionID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-SetRaidDifficulty-74": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetRaidDifficulty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-SetRaidDifficultyID-41": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetRaidDifficultyID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-ShowMiniWorldMapArrowFrame-75": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ShowMiniWorldMapArrowFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-ShowWorldMapArrowFrame-76": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ShowWorldMapArrowFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-UnitGetTotalAbsorbs-42": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitGetTotalAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-UnitStagger-43": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitStagger"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-UpdateWorldMapArrow-44": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UpdateWorldMapArrow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-global-api-UpdateWorldMapArrowFrames-77": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UpdateWorldMapArrowFrames"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-global-api-UseVoidItemForTransmogrify-45": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UseVoidItemForTransmogrify"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Cooldown:GetCooldownDuration-131": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Cooldown:GetCooldownDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Cooldown; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-Cooldown:SetBlingDuration-132": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": "diff-wt-widgets-Cooldown:SetBlingDuration-672",
+      "symbol": "Cooldown:SetBlingDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Cooldown; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-Minimap:SetPlayerTextureHeight-170": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Minimap:SetPlayerTextureHeight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Minimap; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-Minimap:SetPlayerTextureWidth-171": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Minimap:SetPlayerTextureWidth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Minimap; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-Model OnAnimFinished-221": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model OnAnimFinished"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-Model OnUpdateModel-222": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model OnUpdateModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-Model:AdvanceTime-172": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:AdvanceTime"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:ClearFog-173": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:ClearFog"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:ClearModel-174": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:ClearModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetCameraDistance-175": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetCameraDistance"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetCameraFacing-176": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetCameraFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetCameraPosition-177": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetCameraPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetCameraTarget-178": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetCameraTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetFacing-179": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetFogColor-180": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetFogColor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetFogFar-181": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetFogFar"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetFogNear-182": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetFogNear"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetLight-183": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetLight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetModel-184": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetModelScale-185": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetModelScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetPosition-186": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:GetWorldScale-187": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetWorldScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:HasCustomCamera-188": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:HasCustomCamera"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:ReplaceIconTexture-189": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:ReplaceIconTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetCamera-190": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetCamera"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetCameraDistance-191": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetCameraDistance"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetCameraFacing-192": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetCameraFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetCameraPosition-193": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetCameraPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetCameraTarget-194": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetCameraTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetCustomCamera-195": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetCustomCamera"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetFacing-196": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetFogColor-197": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetFogColor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetFogFar-198": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetFogFar"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetFogNear-199": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetFogNear"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetGlow-200": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetGlow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetLight-201": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetLight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetModel-202": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetModelScale-203": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetModelScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetPosition-204": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetSequence-205": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetSequence"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-Model:SetSequenceTime-206": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:SetSequenceTime"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-PlayerModel OnAnimFinished-217": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel OnAnimFinished"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-PlayerModel OnUpdateModel-218": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel OnUpdateModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "ok": false
+  },
+  "diff-wt-widgets-PlayerModel:AdvanceTime-133": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:AdvanceTime"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:ClearFog-134": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:ClearFog"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:ClearModel-135": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:ClearModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetCameraDistance-136": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetCameraDistance"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetCameraFacing-137": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetCameraFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetCameraPosition-138": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetCameraPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetCameraTarget-139": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetCameraTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetFacing-140": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetFogColor-141": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetFogColor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetFogFar-142": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetFogFar"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetFogNear-143": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetFogNear"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetLight-144": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetLight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetModel-145": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetModelScale-146": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetModelScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetPosition-147": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:GetWorldScale-148": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:GetWorldScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:HasCustomCamera-149": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:HasCustomCamera"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:ReplaceIconTexture-150": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:ReplaceIconTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetCamera-151": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetCamera"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetCameraDistance-152": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetCameraDistance"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetCameraFacing-153": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetCameraFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetCameraPosition-154": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetCameraPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetCameraTarget-155": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetCameraTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetCustomCamera-156": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetCustomCamera"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetFacing-157": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetFacing"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetFogColor-158": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetFogColor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetFogFar-159": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetFogFar"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetFogNear-160": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetFogNear"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetGlow-161": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetGlow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetLight-162": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetLight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetModel-163": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetModelScale-164": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetModelScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetPosition-165": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetPosition"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetSequence-166": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetSequence"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "diff-wt-widgets-PlayerModel:SetSequenceTime-167": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "PlayerModel:SetSequenceTime"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  }
+}

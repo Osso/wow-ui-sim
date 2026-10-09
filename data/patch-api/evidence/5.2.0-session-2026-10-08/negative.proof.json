@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/osso/.cache/wow-ui-sim-targets/p520-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "patch_5_2_0_publication_sweep"
+  ],
+  "revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+  "scope": "negative",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {
+    "P520_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/negative-register.json",
+    "P520_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/negative-results.json"
+  },
+  "exit": 1,
+  "log": "negative.txt",
+  "log_sha256": "ca62f6e0d38db583f07421d5e74292674b7256b277485d49f00359a45fdd4a11",
+  "seconds": 12.272264920997259,
+  "invalidated": false
+}

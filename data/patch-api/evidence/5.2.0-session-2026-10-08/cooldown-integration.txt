@@ -1,0 +1,27 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.93s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p520-page/debug/deps/integration-1db16289b0998b2a)
+
+running 13 tests
+test cooldown_widget::cooldown_duration_method_errors_propagate ... ok
+test cooldown_widget::cooldown_threshold_storage_preserves_fractional_units_and_independence ... ok
+test cooldown_widget::cooldown_widget_methods_persist_runtime_state ... ok
+test cooldown_widget::cooldown_consumes_real_duration_proxy_and_updates ... ok
+test cooldown_widget::cooldown_set_duration_preserves_start_and_defaults_rate ... ok
+test cooldown_widget::cooldown_clear_resets_timing_and_rate ... ok
+test cooldown_widget::cooldown_set_tex_coord_range_persists_vector_bounds ... ok
+test cooldown_widget::cooldown_zero_duration_respects_clear_if_zero ... ok
+test cooldown_widget::cooldown_widgets_accept_on_cooldown_done_scripts ... ok
+test cooldown_widget::cooldown_nonzero_duration_updates_regardless_of_clear_flag ... ok
+test cooldown_widget::cooldown_set_cooldown_stores_timing_and_defaults_rate ... ok
+test cooldown_widget::cooldown_set_unix_stores_literal_start_without_epoch_conversion ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_selected_objects_drive_cooldown_widgets_after_state_changes ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 10669 filtered out; finished in 1.16s
+

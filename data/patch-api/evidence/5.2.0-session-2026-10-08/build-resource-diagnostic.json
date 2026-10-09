@@ -1,0 +1,21 @@
+{
+  "time": "2026-10-08T19:32:59.461955",
+  "processes": [
+    {
+      "pid": 2783073,
+      "command": "/usr/bin/python3 /home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/run_proof.py targeted-driver python3 -B /home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/verify_targeted.py ",
+      "state": "S",
+      "cpu_seconds": 0.02,
+      "elapsed_seconds": 509.8000000000029,
+      "rss_kb": "20316 kB"
+    },
+    {
+      "pid": 2899680,
+      "command": "rustc --crate-name wow_ui_sim --edition=2024 src/lib.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --emit=dep-info,link -C opt-level=1 -C embed-bitcode=no -C debuginfo=line-tables-only -C debug-assertions=on --test --cfg feature=\"aura-containers\" --cfg feature=\"aura-instance-enumeration\" --cfg feature=\"aura-xml-widgets\" --cfg feature=\"base-spell-relationships\" --cfg feature=\"casc\" --cfg feature=\"client-retail\" --cfg feature=\"default\" --cfg feature=\"forbidden-as",
+      "state": "S",
+      "cpu_seconds": 210.47,
+      "elapsed_seconds": 243.1800000000003,
+      "rss_kb": "5602576 kB"
+    }
+  ]
+}

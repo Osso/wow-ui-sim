@@ -1,0 +1,50 @@
+[
+  {
+    "document": "docs/specs/patch-5-2-0-publication-sweep.md",
+    "target": "../../data/patch-api/sources/5.2.0-api-changes.wikitext"
+  },
+  {
+    "document": "docs/specs/patch-5-2-0-publication-sweep.md",
+    "target": "../../data/patch-api/sources/5.2.0-api-changes-diff.wikitext"
+  },
+  {
+    "document": "docs/specs/patch-5-2-0-publication-sweep.md",
+    "target": "../wiki/investigations/patch-5-2-0-api-audit.md"
+  },
+  {
+    "document": "docs/specs/patch-5-2-0-publication-sweep.md",
+    "target": "../wiki/investigations/patch-5-2-0-api-audit.md"
+  },
+  {
+    "document": "docs/specs/patch-5-2-0-publication-sweep.md",
+    "target": "../wiki/investigations/patch-audit-validator-portability.md"
+  },
+  {
+    "document": "docs/wiki/investigations/patch-5-2-0-api-audit.md",
+    "target": "../../../data/patch-api/evidence/5.2.0-session-2026-10-08/accounting-summary.json"
+  },
+  {
+    "document": "docs/wiki/investigations/patch-5-2-0-api-audit.md",
+    "target": "../../../data/patch-api/evidence/5.2.0-session-2026-10-08/gap-review.json"
+  },
+  {
+    "document": "docs/wiki/investigations/patch-5-2-0-api-audit.md",
+    "target": "../../../data/patch-api/evidence/5.2.0-session-2026-10-08/retirement-decisions.json"
+  },
+  {
+    "document": "docs/wiki/investigations/patch-5-2-0-api-audit.md",
+    "target": "../../../data/patch-api/sources/5.2.0-api-changes.provenance.json"
+  },
+  {
+    "document": "docs/wiki/investigations/patch-5-2-0-api-audit.md",
+    "target": "../../../data/patch-api/evidence/5.2.0-session-2026-10-08/context.json"
+  },
+  {
+    "document": "docs/wiki/investigations/patch-5-2-0-api-audit.md",
+    "target": "../../specs/patch-5-2-0-publication-sweep.md"
+  },
+  {
+    "document": "docs/wiki/investigations/patch-5-2-0-api-audit.md",
+    "target": "../../../tests/patch_5_2_0_publication_sweep.rs"
+  }
+]

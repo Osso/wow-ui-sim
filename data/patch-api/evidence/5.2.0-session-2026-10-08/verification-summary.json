@@ -1,0 +1,114 @@
+{
+  "all-sweeps": {
+    "exit": 0,
+    "revision": "28b436c0ecf1fd08de3b935ec649c851125f24cd",
+    "test_counts": [
+      {
+        "passed": 58,
+        "failed": 0
+      }
+    ],
+    "python_tests": null
+  },
+  "own-prefork": {
+    "exit": 0,
+    "revision": "28b436c0ecf1fd08de3b935ec649c851125f24cd",
+    "test_counts": [
+      {
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "python_tests": null
+  },
+  "raid-integration": {
+    "exit": 0,
+    "revision": "28b436c0ecf1fd08de3b935ec649c851125f24cd",
+    "test_counts": [
+      {
+        "passed": 1,
+        "failed": 0
+      }
+    ],
+    "python_tests": null
+  },
+  "cooldown-integration": {
+    "exit": 0,
+    "revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+    "test_counts": [
+      {
+        "passed": 13,
+        "failed": 0
+      }
+    ],
+    "python_tests": null
+  },
+  "school-integration": {
+    "exit": 0,
+    "revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+    "test_counts": [
+      {
+        "passed": 1,
+        "failed": 0
+      }
+    ],
+    "python_tests": null
+  },
+  "school-alias-prefork": {
+    "exit": 0,
+    "revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+    "test_counts": [
+      {
+        "passed": 1,
+        "failed": 0
+      }
+    ],
+    "python_tests": null
+  },
+  "register-lib": {
+    "exit": 0,
+    "revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+    "test_counts": [
+      {
+        "passed": 3,
+        "failed": 0
+      }
+    ],
+    "python_tests": null
+  },
+  "format": {
+    "exit": 0,
+    "revision": "b9a25bcaae2b44098ba9486c59b73d462fd051ca",
+    "test_counts": [],
+    "python_tests": null
+  },
+  "mists": {
+    "exit": 0,
+    "revision": "b9a25bcaae2b44098ba9486c59b73d462fd051ca",
+    "non_vendor_warnings": 0,
+    "vendor_warning_lines": 7
+  },
+  "python-fixtures": {
+    "exit": 0,
+    "revision": "af5e6586348c19441e56af0267f9714770143942",
+    "test_counts": [],
+    "python_tests": 89
+  },
+  "reproduction": {
+    "exit": 0,
+    "revision": "af5e6586348c19441e56af0267f9714770143942",
+    "test_counts": [],
+    "python_tests": null
+  },
+  "negative": {
+    "exit": 1,
+    "revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+    "test_counts": [
+      {
+        "passed": 0,
+        "failed": 1
+      }
+    ],
+    "python_tests": null
+  }
+}

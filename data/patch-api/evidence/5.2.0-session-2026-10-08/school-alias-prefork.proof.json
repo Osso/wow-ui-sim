@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/home/osso/.cache/wow-ui-sim-targets/p520-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "blizzard_deprecated_spell_script_direct_aliases_are_identity_equal_to_c_spell"
+  ],
+  "revision": "2acaecc21f356c7f4a7d71bd63268ba1e224c571",
+  "scope": "school-alias-prefork",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "school-alias-prefork.txt",
+  "log_sha256": "20f42310c26154b4bd96ea0e9bf2935303e40bb995613eb7b99dc0a4bcc6ed99",
+  "seconds": 28.35791832700488,
+  "invalidated": false
+}

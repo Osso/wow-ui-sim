@@ -1,0 +1,14 @@
+{
+  "revision": "b9a25bcaae2b44098ba9486c59b73d462fd051ca",
+  "runtime_or_vendor_changes": false,
+  "python_syntax": "PASS",
+  "observed_gaps": 57,
+  "negative_gaps": 58,
+  "changed_files": 212,
+  "retirement_records": 78,
+  "notes": [
+    "No pushes, merges, agents or other existing worktree changes.",
+    "All saved whole-word scans use /usr/bin/grep and are untruncated.",
+    "Targeted runtime, Python, reproduction and profile checks complete; portability runs against the sealed commit."
+  ]
+}
