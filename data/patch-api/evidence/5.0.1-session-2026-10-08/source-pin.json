@@ -1,0 +1,11 @@
+{
+  "pageid": 554410,
+  "title": "Patch 5.0.1/API changes",
+  "revid": 5344081,
+  "timestamp": "2012-08-06T00:56:48Z",
+  "retrieved": "2026-10-08",
+  "method": "MediaWiki revisions API; literal redirect retained",
+  "wikitext_sha256": "a4fd086dfb7893dbd912a283c37c9242a4386af82e8e2e330a97c4f137f7484b",
+  "redirect_target": "Patch 5.0.4/API changes",
+  "scope": "source-only; destination audit remains separate; sweep/validator evidence pending"
+}
