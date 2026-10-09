@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 3.4.2 Wrath Classic source audit
+
+[Audit](investigations/patch-3-4-2-api-audit.md): revision 3422177 / TOC 30402; 155 inventory occurrences, two prose limits, 51 metadata/context rows. All eight headers match; 109 added/46 removed. Separate Wrath source inventory preserves CVar metadata; no runtime publication/native credit or retirements. Actual unmerged 3.4.3 successor names no members; integration queued after it. Supported Wrath 38001 and 42 documentation-only cache files are not parity proof. Targeted source-fixture proof pending; coordinator owns runtime harness/final gates.
+
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 
 [Audit](investigations/patch-4-3-4-api-audit.md): pinned revision 3743181; 11 inventory rows and one navigation context, no prose/signature contracts. Existing default parsers; literal 5.0.1 and separate 5.0.4 successors exclude Classic. Own discovery RED: seven missing globals, three superseded removals, one current absence; 12 ledger IDs. Reviewed GREEN 1/1, negative 7 → 8, own default register/extract replay byte-identical. Compact 64-successor pins and historical seven-gap receipts retained. Current retail client-clock model has bounded behavioral GREEN 2/2; six publication gaps remain. No retirements or native parity; coordinator owns pending broader gates.

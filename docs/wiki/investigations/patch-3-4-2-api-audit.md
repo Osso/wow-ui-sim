@@ -1,0 +1,52 @@
+# Patch 3.4.2 Wrath Classic API audit
+
+Bounded frozen-source audit against `f0baf34d43ea6d6eb1ef0aef2a85efae9f7d55f5`, observed 2026-10-09. Warcraft Wiki page **355030**, revision **3422177**, timestamp **2023-08-29T19:24:02Z**, TOC **30402** identifies Wrath Classic. No network retrieval or linked page reconstruction.
+
+## Literal coverage matrix
+
+The [source inventory](../../../data/patch-api/sources/3.4.2-source-inventory.json) preserves original spelling/owner, direction and source line for every occurrence. The [ledger](../../../data/patch-api/sources/3.4.2-page-coverage.json) accounts for all **208 nonblank lines**: **155 inventory**, **2 substantive prose**, **51 metadata/table-context**. All 157 substantive rows remain **UNPROVEN for runtime**, not diagnosed missing APIs. No runtime compatibility gap count is manufactured from source accounting.
+
+| Section | Added | Removed | Proof |
+|---|---:|---:|---|
+| Global API | 63 | 31 | Literal identities/directions; current publication/absence unmeasured |
+| Widgets | 16 | 2 | Literal owners/members; signatures/transitions unspecified |
+| Events | 4 | 4 | Literal names; payload/emission/order unspecified |
+| CVars | 26 | 9 | Literal defaults and available metadata retained; current registration/defaults/effects unmeasured |
+
+Eight page headers match parsed counts; **109 additions, 46 removals**. No FrameXML inventory, commands, explicit call signatures, return structures or enum changes on this revision. Linked APIs/diffs are not expanded. The apparently unusual `EditBox:OnUiMapChanged` and `EditBox:GetFogOfWarBackground*` ownership is retained literally, not repaired from another page.
+
+The two prose statements are “many API changes” from retail 10.1.0 (unspecified subset, not all) and Settings panel adoption (no named API/interaction contract). Both remain UNPROVEN. TOC, links, build caption `3.4.1 (47612) → 3.4.2 (50375) Jul 7 2023`, headings and table markup are source context, not measured runtime facts. CVar `desc`, `default`, `scope`, `cat` fields remain exact, including omissions/spelling; removed-CVar defaults describe source metadata, not a currently available default.
+
+## Implementation and unsupported proof boundaries
+
+Named globals/widgets specify identities only, not arguments, results, errors, security or state transitions. Added events supply no trigger/payload contract; accepting their names would not prove emission. Removed entries authorize no current Classic retirement without current absence/same-line successor evidence. No guessed models, shims, fallback paths or runtime removals were introduced.
+
+CVar metadata does establish literal source defaults and descriptions. It does **not** measure current Wrath defaults, account/character persistence, graphics/VRS effects, logging/jobs, WowLabs social state, guild death announcements, nameplate scaling or target selection. Adding generic storage/defaults merely to pass publication would not model these effects. Those registration/default checks and subsystem behavior remain explicitly queued; this bounded task is own source-fixtures only, not a failed runtime implementation. No “all behavior unspecified” claim is made for CVar metadata.
+
+[ClientProfile](../../../src/client_profile.rs) already supports `client-wrath`, `Wrath`, cache `wrath`, configured interface **38001**. That differs from source **30402**; profile existence is not historical version/native parity. [Observation](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/profile-observation.json) records **42 local files**, exclusively API documentation directories, including a zero-byte `.missing` marker. No SharedXML/full publisher cache or native client probe. Static profile/manifest snapshots are retained; no cache sync/modification, build, runtime load or replay attempted.
+
+Shared [publication classifier](../../../tests/common/publication_sweep.rs) accepts Retail/MistsClassic/ClassicEra, not WrathClassic; [generator CLI](../../../tools/gen_patch_wikitext_register.py) has the same client-line limitation. Existing pure section parsing correctly captures this inventory, so owned historical copies replay it into a separate `patch-source-inventory/v1`. No default-retail register or falsely passing retail sweep is created. Coordinator owns adding Wrath publication classification and a publisher-loaded measurement if required.
+
+## Actual successor and integration order
+
+Actual **3.4.3 Wrath Classic** source is retained and identity/hash checked in own reference evidence: page 152751/revision 5983024, TOC 30403. Its audit at `48ab8e1c3` is completed but unmerged, and enumerates no explicit API members. Consequently no named 3.4.2 supersession can be derived from it. `later_registers` stays empty; a separate historical successor record queues integration **after 3.4.3**. Retail 10.1.0/10.1.7 references and Cata 4.4.0 navigation are not Wrath member-level proof. Successor empty inventory creates no positive runtime/publication credit.
+
+## Historical source proof
+
+Identity, exact returned content and both manifest hashes were validated before owned copies. Wikitext **12,105 bytes**, SHA-256 `284871b95a3150e0dd0383ae4070ad1c067c1eee874e83d5bb44ebbf12118f0e`; response **12,697 bytes**, SHA-256 `2b81231fe3cea60671d8c61715cbef6c152f06ee2a3fb127eacb578aa9e6fd1a`. [Pin](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/source-pin.json) preserves the exact manifest row. Plaintext uses existing `--text-only --canonical-patch-navigation` flags. Inventory parsing requires no opt-in changes.
+
+[Validator](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py) derives counts, statuses and source rows from own serialized files and historical parser/extractor copies, not fixed global receipts, live caches or current shared tools. It validates literal identity, complete inventory reproduction, every nonblank line, all CVar fields, proof limits, profile and actual successor. Seals protect owned historical inputs/logs; trust anchor is tracked Git, not the mutable seal file itself. Historical snapshots remain observations at capture time, not assertions about replay-time host state.
+
+[Tests](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/test_source_accounting.py) reject serialized missing/changed rows, directions, defaults, headers, invented proof, wrong clients/successors and native/runtime credit. Targeted RED first failed missing derived accounting against a temporary empty validator. GREEN/replay/tamper results remain pending at this initial commit; exact scope/revision/command/log is retained in [proof ledger](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/source-proof.json).
+
+No shared tools/runtime/vendor changes, push, merge, delegation, cwd switch or provider/model/retry changes. Main owns broader gates and integration. Source-accounting tests are not simulator/native compatibility tests.
+
+## Sources
+
+- [Frozen wikitext](../../../data/patch-api/sources/3.4.2-api-changes.wikitext), [plaintext](../../../data/patch-api/sources/3.4.2-api-changes.txt), [source inventory](../../../data/patch-api/sources/3.4.2-source-inventory.json), [ledger](../../../data/patch-api/sources/3.4.2-page-coverage.json).
+- [Spec](../../specs/patch-3-4-2-source-accounting.md), [owned evidence](../../../data/patch-api/evidence/3.4.2-session-2026-10-09/).
+
+## See Also
+
+- [[patch-3-4-3-api-audit]] — actual Wrath successor, queued unmerged integration; not member-level supersession.
+- [[client-profiles]] — profile/cache selection distinct from historical native parity.

@@ -1,0 +1,28 @@
+{
+  "scope": "3.4.2 owned serialized source/profile/successor fixtures only; no runtime/native gates",
+  "base_revision": "f0baf34d43ea6d6eb1ef0aef2a85efae9f7d55f5",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/test_source_accounting.py",
+        "SourceAccounting.test_exact_inventory_and_prose_counts"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p342-source",
+      "revision": "f0baf34d43ea6d6eb1ef0aef2a85efae9f7d55f5 plus owned development RED fixtures and temporary empty validator",
+      "exit_code": 1,
+      "result": "expected assertion failure: missing derived source accounting",
+      "log": "red.log",
+      "invalidated_by_later_changes": true
+    }
+  ],
+  "excluded": [
+    "all-publication",
+    "build",
+    "check",
+    "smoke",
+    "readability",
+    "final gates",
+    "runtime/native measurements"
+  ]
+}

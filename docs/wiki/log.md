@@ -10,6 +10,10 @@
 
 [Audit](investigations/patch-4-2-0-api-audit.md#integrated-successors): actual 4.3.0/4.3.4 registers resolve only `EJ_SetDifficultyByMask` via later removal. Current 35 matches/30 gaps; historical 34/31 observations and 32-gap negative unchanged. Accounting fixtures 6/6; integrated runtime/portability acceptance pending. No new behavior or native parity credit.
 
+## [2026-10-09] ingest | Patch 3.4.2 Wrath Classic source inventory
+
+[Audit](investigations/patch-3-4-2-api-audit.md): frozen identity/hashes validated before copy; 155 explicit inventory/208 nonblank rows, two substantive summaries and all CVar fields retained. Shared tooling lacks Wrath publication classification, so no retail stand-in or runtime claim. Actual 3.4.3 successor retained reference-only; integration queued after it. Targeted derived-accounting RED fails as expected; GREEN pending. No runtime/vendor/shared-tool changes.
+
 ## [2026-10-09] maintenance | Patch 4.3.4 modeled client clock
 
 [Audit](investigations/patch-4-3-4-api-audit.md#coordinator-client-clock-model): retail-only `GetSessionTime` uses existing client-state elapsed clock; primary API 254254/revision 6809914 supplies numeric seconds/client-open origin, not locale gating or integer granularity. Behavioral RED nil-call, GREEN 2/2 at `160f8209c`; binding/tests unchanged at `575a93e30`. Current six-gap fixture distinguished from sealed historical seven-gap evidence. No native uptime equivalence or global acceptance claim; broader publication/Mists/check/build gates remain coordinator-owned and pending. Docs-only update.

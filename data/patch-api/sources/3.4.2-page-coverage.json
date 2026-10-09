@@ -1,0 +1,2111 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "3.4.2",
+  "client_line": "wrath-classic",
+  "profile": "wrath",
+  "scope": "source-and-profile-accounting",
+  "source": {
+    "title": "Patch 3.4.2/API changes",
+    "version": "3.4.2",
+    "pageid": 355030,
+    "revid": 3422177,
+    "timestamp": "2023-08-29T19:24:02Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3422177&format=json",
+    "retrieved": "2026-10-09T08:51:36.389355+00:00",
+    "response_sha256": "2b81231fe3cea60671d8c61715cbef6c152f06ee2a3fb127eacb578aa9e6fd1a",
+    "wikitext_sha256": "284871b95a3150e0dd0383ae4070ad1c067c1eee874e83d5bb44ebbf12118f0e",
+    "wikitext_bytes": 12105,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.2-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.2-wikitext.txt"
+  },
+  "inventory_path": "data/patch-api/sources/3.4.2-source-inventory.json",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/3.4.2-api-changes.txt",
+    "sha256": "cf9747e921e1b70bb9d4ed44dd8246cfa265fe700fd0f4ca33a6598cbcb1a7b3",
+    "extractor_flags": [
+      "--text-only",
+      "--canonical-patch-navigation"
+    ]
+  },
+  "later_registers": [],
+  "successor": {
+    "patch": "3.4.3",
+    "state": "audited-unmerged",
+    "commit": "48ab8e1c3",
+    "integration": "queued-after-3.4.3",
+    "enumerated_api_occurrences": 0,
+    "member_supersessions": []
+  },
+  "source_rows": [
+    {
+      "source_id": "source-line-001",
+      "wikitext_line": 1,
+      "source_text": "{{apichanges|3.4.2|prev=3.4.1|next=3.4.3}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-003",
+      "wikitext_line": 3,
+      "source_text": "==Summary==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-004",
+      "wikitext_line": 4,
+      "source_text": "* The client has pulled in many API changes from [[Patch 10.1.0/API changes|Patch 10.1.0]].",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Unspecified subset of retail 10.1.0 changes; linked page unexpanded, not a Wrath successor or complete member/signature contract."
+    },
+    {
+      "source_id": "source-line-005",
+      "wikitext_line": 5,
+      "source_text": "* The new Settings panel introduced in Dragonflight is now also used in Classic.",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Settings panel adoption claim has no named API, input/output or interaction contract; current publisher/cache and native panel behavior unmeasured."
+    },
+    {
+      "source_id": "source-line-007",
+      "wikitext_line": 7,
+      "source_text": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-008",
+      "wikitext_line": 8,
+      "source_text": "* TOC: <code>30402</code>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-009",
+      "wikitext_line": 9,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/3.4.1..classic_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/3.4.1..3.4.2 BlizzardInterfaceResources]",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-010",
+      "wikitext_line": 10,
+      "source_text": "* Official patch notes: [https://eu.forums.blizzard.com/en/wow/t/wrath-classic-patch-notes-version-342/454361#user-interface-11 Wrath Classic Patch Notes Version 3.4.2]",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-012",
+      "wikitext_line": 12,
+      "source_text": "==Global API==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-013",
+      "wikitext_line": 13,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-014",
+      "wikitext_line": 14,
+      "source_text": "|+ 3.4.1 (47612) &rarr; 3.4.2 (50375) Jul  7 2023",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-015",
+      "wikitext_line": 15,
+      "source_text": "|- class=\"mw-customtoggle-global-c\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-016",
+      "wikitext_line": 16,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(63)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-017",
+      "wikitext_line": 17,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(31)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-018",
+      "wikitext_line": 18,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-019",
+      "wikitext_line": 19,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-20",
+      "wikitext_line": 20,
+      "source_text": ": {{api|t=a|C_AccountInfo.GetIDFromBattleNetAccountGUID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-20",
+      "note": "C_AccountInfo.GetIDFromBattleNetAccountGUID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountServices.IsAccountLockedPostSave-21",
+      "wikitext_line": 21,
+      "source_text": ": {{api|t=a|C_AccountServices.IsAccountLockedPostSave}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_AccountServices.IsAccountLockedPostSave-21",
+      "note": "C_AccountServices.IsAccountLockedPostSave: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountServices.IsAccountSaveEnabled-22",
+      "wikitext_line": 22,
+      "source_text": ": {{api|t=a|C_AccountServices.IsAccountSaveEnabled}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_AccountServices.IsAccountSaveEnabled-22",
+      "note": "C_AccountServices.IsAccountSaveEnabled: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountServices.IsAccountSaveInProgress-23",
+      "wikitext_line": 23,
+      "source_text": ": {{api|t=a|C_AccountServices.IsAccountSaveInProgress}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_AccountServices.IsAccountSaveInProgress-23",
+      "note": "C_AccountServices.IsAccountSaveInProgress: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountServices.SaveAccountData-24",
+      "wikitext_line": 24,
+      "source_text": ": {{api|t=a|C_AccountServices.SaveAccountData}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_AccountServices.SaveAccountData-24",
+      "note": "C_AccountServices.SaveAccountData: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnMetadata-25",
+      "wikitext_line": 25,
+      "source_text": ": {{api|t=a|C_AddOns.GetAddOnMetadata}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_AddOns.GetAddOnMetadata-25",
+      "note": "C_AddOns.GetAddOnMetadata: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.AcknowledgeCallout-26",
+      "wikitext_line": 26,
+      "source_text": ": {{api|t=a|C_ArrowCalloutManager.AcknowledgeCallout}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ArrowCalloutManager.AcknowledgeCallout-26",
+      "note": "C_ArrowCalloutManager.AcknowledgeCallout: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.HideCallout-27",
+      "wikitext_line": 27,
+      "source_text": ": {{api|t=a|C_ArrowCalloutManager.HideCallout}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ArrowCalloutManager.HideCallout-27",
+      "note": "C_ArrowCalloutManager.HideCallout: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-28",
+      "wikitext_line": 28,
+      "source_text": ": {{api|t=a|C_ArrowCalloutManager.HideWorldLootObjectCallout}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-28",
+      "note": "C_ArrowCalloutManager.HideWorldLootObjectCallout: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-29",
+      "wikitext_line": 29,
+      "source_text": ": {{api|t=a|C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-29",
+      "note": "C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-30",
+      "wikitext_line": 30,
+      "source_text": ": {{api|t=a|C_ArrowCalloutManager.SwapWorldLootObjectCallout}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-30",
+      "note": "C_ArrowCalloutManager.SwapWorldLootObjectCallout: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteItem.IsUnlimitedLevelingUnlocked-31",
+      "wikitext_line": 31,
+      "source_text": ": {{api|t=a|C_AzeriteItem.IsUnlimitedLevelingUnlocked}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_AzeriteItem.IsUnlimitedLevelingUnlocked-31",
+      "note": "C_AzeriteItem.IsUnlimitedLevelingUnlocked: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_CameraDefaults.GetCameraFOVDefaults-32",
+      "wikitext_line": 32,
+      "source_text": ": {{api|t=a|C_CameraDefaults.GetCameraFOVDefaults}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_CameraDefaults.GetCameraFOVDefaults-32",
+      "note": "C_CameraDefaults.GetCameraFOVDefaults: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.AssignPCTDistribution-33",
+      "wikitext_line": 33,
+      "source_text": ": {{api|t=a|C_CharacterServices.AssignPCTDistribution}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_CharacterServices.AssignPCTDistribution-33",
+      "note": "C_CharacterServices.AssignPCTDistribution: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.AssignRaceOrFactionChangeDistribution-34",
+      "wikitext_line": 34,
+      "source_text": ": {{api|t=a|C_CharacterServices.AssignRaceOrFactionChangeDistribution}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_CharacterServices.AssignRaceOrFactionChangeDistribution-34",
+      "note": "C_CharacterServices.AssignRaceOrFactionChangeDistribution: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetChatLineSenderGUID-35",
+      "wikitext_line": 35,
+      "source_text": ": {{api|t=a|C_ChatInfo.GetChatLineSenderGUID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ChatInfo.GetChatLineSenderGUID-35",
+      "note": "C_ChatInfo.GetChatLineSenderGUID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetChatLineSenderName-36",
+      "wikitext_line": 36,
+      "source_text": ": {{api|t=a|C_ChatInfo.GetChatLineSenderName}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ChatInfo.GetChatLineSenderName-36",
+      "note": "C_ChatInfo.GetChatLineSenderName: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetChatLineText-37",
+      "wikitext_line": 37,
+      "source_text": ": {{api|t=a|C_ChatInfo.GetChatLineText}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ChatInfo.GetChatLineText-37",
+      "note": "C_ChatInfo.GetChatLineText: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.IsChatLineCensored-38",
+      "wikitext_line": 38,
+      "source_text": ": {{api|t=a|C_ChatInfo.IsChatLineCensored}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ChatInfo.IsChatLineCensored-38",
+      "note": "C_ChatInfo.IsChatLineCensored: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.UncensorChatLine-39",
+      "wikitext_line": 39,
+      "source_text": ": {{api|t=a|C_ChatInfo.UncensorChatLine}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ChatInfo.UncensorChatLine-39",
+      "note": "C_ChatInfo.UncensorChatLine: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByID-40",
+      "wikitext_line": 40,
+      "source_text": ": {{api|t=a|C_ConsoleScriptCollection.GetCollectionDataByID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByID-40",
+      "note": "C_ConsoleScriptCollection.GetCollectionDataByID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByTag-41",
+      "wikitext_line": 41,
+      "source_text": ": {{api|t=a|C_ConsoleScriptCollection.GetCollectionDataByTag}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByTag-41",
+      "note": "C_ConsoleScriptCollection.GetCollectionDataByTag: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ConsoleScriptCollection.GetElements-42",
+      "wikitext_line": 42,
+      "source_text": ": {{api|t=a|C_ConsoleScriptCollection.GetElements}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ConsoleScriptCollection.GetElements-42",
+      "note": "C_ConsoleScriptCollection.GetElements: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ConsoleScriptCollection.GetScriptData-43",
+      "wikitext_line": 43,
+      "source_text": ": {{api|t=a|C_ConsoleScriptCollection.GetScriptData}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_ConsoleScriptCollection.GetScriptData-43",
+      "note": "C_ConsoleScriptCollection.GetScriptData: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Debug.ViewInDebugWindow-44",
+      "wikitext_line": 44,
+      "source_text": ": {{api|t=a|C_Debug.ViewInDebugWindow}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Debug.ViewInDebugWindow-44",
+      "note": "C_Debug.ViewInDebugWindow: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_GenericWidgetDisplay.Acknowledge-45",
+      "wikitext_line": 45,
+      "source_text": ": {{api|t=a|C_GenericWidgetDisplay.Acknowledge}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_GenericWidgetDisplay.Acknowledge-45",
+      "note": "C_GenericWidgetDisplay.Acknowledge: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_GenericWidgetDisplay.Close-46",
+      "wikitext_line": 46,
+      "source_text": ": {{api|t=a|C_GenericWidgetDisplay.Close}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_GenericWidgetDisplay.Close-46",
+      "note": "C_GenericWidgetDisplay.Close: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_GossipInfo.SelectOptionByIndex-47",
+      "wikitext_line": 47,
+      "source_text": ": {{api|t=a|C_GossipInfo.SelectOptionByIndex}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_GossipInfo.SelectOptionByIndex-47",
+      "note": "C_GossipInfo.SelectOptionByIndex: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.MemberExistsByName-48",
+      "wikitext_line": 48,
+      "source_text": ": {{api|t=a|C_GuildInfo.MemberExistsByName}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_GuildInfo.MemberExistsByName-48",
+      "note": "C_GuildInfo.MemberExistsByName: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.CanUseItem-49",
+      "wikitext_line": 49,
+      "source_text": ": {{api|t=a|C_PlayerInfo.CanUseItem}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_PlayerInfo.CanUseItem-49",
+      "note": "C_PlayerInfo.CanUseItem: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetDisplayID-50",
+      "wikitext_line": 50,
+      "source_text": ": {{api|t=a|C_PlayerInfo.GetDisplayID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_PlayerInfo.GetDisplayID-50",
+      "note": "C_PlayerInfo.GetDisplayID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-51",
+      "wikitext_line": 51,
+      "source_text": ": {{api|t=a|C_PlayerInfo.GetPlayerCharacterData}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-51",
+      "note": "C_PlayerInfo.GetPlayerCharacterData: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-52",
+      "wikitext_line": 52,
+      "source_text": ": {{api|t=a|C_QuestInfoSystem.GetQuestRewardSpellInfo}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-52",
+      "note": "C_QuestInfoSystem.GetQuestRewardSpellInfo: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-53",
+      "wikitext_line": 53,
+      "source_text": ": {{api|t=a|C_QuestInfoSystem.GetQuestRewardSpells}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-53",
+      "note": "C_QuestInfoSystem.GetQuestRewardSpells: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestShouldToastCompletion-54",
+      "wikitext_line": 54,
+      "source_text": ": {{api|t=a|C_QuestInfoSystem.GetQuestShouldToastCompletion}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_QuestInfoSystem.GetQuestShouldToastCompletion-54",
+      "note": "C_QuestInfoSystem.GetQuestShouldToastCompletion: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.HasQuestRewardSpells-55",
+      "wikitext_line": 55,
+      "source_text": ": {{api|t=a|C_QuestInfoSystem.HasQuestRewardSpells}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_QuestInfoSystem.HasQuestRewardSpells-55",
+      "note": "C_QuestInfoSystem.HasQuestRewardSpells: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_SpectatingUI.IsSpectating-56",
+      "wikitext_line": 56,
+      "source_text": ": {{api|t=a|C_SpectatingUI.IsSpectating}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_SpectatingUI.IsSpectating-56",
+      "note": "C_SpectatingUI.IsSpectating: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-57",
+      "wikitext_line": 57,
+      "source_text": ": {{api|t=a|C_SpellBook.GetSpellLinkFromSpellID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-57",
+      "note": "C_SpellBook.GetSpellLinkFromSpellID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.ClearTitleIconTexture-58",
+      "wikitext_line": 58,
+      "source_text": ": {{api|t=a|C_Texture.ClearTitleIconTexture}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Texture.ClearTitleIconTexture-58",
+      "note": "C_Texture.ClearTitleIconTexture: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.GetTitleIconTexture-59",
+      "wikitext_line": 59,
+      "source_text": ": {{api|t=a|C_Texture.GetTitleIconTexture}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Texture.GetTitleIconTexture-59",
+      "note": "C_Texture.GetTitleIconTexture: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.IsTitleIconTextureReady-60",
+      "wikitext_line": 60,
+      "source_text": ": {{api|t=a|C_Texture.IsTitleIconTextureReady}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Texture.IsTitleIconTextureReady-60",
+      "note": "C_Texture.IsTitleIconTextureReady: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.SetTitleIconTexture-61",
+      "wikitext_line": 61,
+      "source_text": ": {{api|t=a|C_Texture.SetTitleIconTexture}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Texture.SetTitleIconTexture-61",
+      "note": "C_Texture.SetTitleIconTexture: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.GenerateInspectImportString-62",
+      "wikitext_line": 62,
+      "source_text": ": {{api|t=a|C_Traits.GenerateInspectImportString}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Traits.GenerateInspectImportString-62",
+      "note": "C_Traits.GenerateInspectImportString: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.GetTraitSystemFlags-63",
+      "wikitext_line": 63,
+      "source_text": ": {{api|t=a|C_Traits.GetTraitSystemFlags}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Traits.GetTraitSystemFlags-63",
+      "note": "C_Traits.GetTraitSystemFlags: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.IsReadyForCommit-64",
+      "wikitext_line": 64,
+      "source_text": ": {{api|t=a|C_Traits.IsReadyForCommit}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Traits.IsReadyForCommit-64",
+      "note": "C_Traits.IsReadyForCommit: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.ResetTreeByCurrency-65",
+      "wikitext_line": 65,
+      "source_text": ": {{api|t=a|C_Traits.ResetTreeByCurrency}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Traits.ResetTreeByCurrency-65",
+      "note": "C_Traits.ResetTreeByCurrency: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetButtonMetatable-66",
+      "wikitext_line": 66,
+      "source_text": ": {{api|t=a|GetButtonMetatable}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetButtonMetatable-66",
+      "note": "GetButtonMetatable: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentGraphicsAPI-67",
+      "wikitext_line": 67,
+      "source_text": ": {{api|t=a|GetCurrentGraphicsAPI}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetCurrentGraphicsAPI-67",
+      "note": "GetCurrentGraphicsAPI: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetEditBoxMetatable-68",
+      "wikitext_line": 68,
+      "source_text": ": {{api|t=a|GetEditBoxMetatable}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetEditBoxMetatable-68",
+      "note": "GetEditBoxMetatable: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetEquivalentDynamicDifficultyID-69",
+      "wikitext_line": 69,
+      "source_text": ": {{api|t=a|GetEquivalentDynamicDifficultyID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetEquivalentDynamicDifficultyID-69",
+      "note": "GetEquivalentDynamicDifficultyID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetFontStringMetatable-70",
+      "wikitext_line": 70,
+      "source_text": ": {{api|t=a|GetFontStringMetatable}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetFontStringMetatable-70",
+      "note": "GetFontStringMetatable: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetFrameMetatable-71",
+      "wikitext_line": 71,
+      "source_text": ": {{api|t=a|GetFrameMetatable}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetFrameMetatable-71",
+      "note": "GetFrameMetatable: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetGraphicsCVarValueForQualityLevel-72",
+      "wikitext_line": 72,
+      "source_text": ": {{api|t=a|GetGraphicsCVarValueForQualityLevel}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetGraphicsCVarValueForQualityLevel-72",
+      "note": "GetGraphicsCVarValueForQualityLevel: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogSelectedID-73",
+      "wikitext_line": 73,
+      "source_text": ": {{api|t=a|GetQuestLogSelectedID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetQuestLogSelectedID-73",
+      "note": "GetQuestLogSelectedID: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-GetSoundEntryCount-74",
+      "wikitext_line": 74,
+      "source_text": ": {{api|t=a|GetSoundEntryCount}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetSoundEntryCount-74",
+      "note": "GetSoundEntryCount: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-IsGraphicsCVarValueSupported-75",
+      "wikitext_line": 75,
+      "source_text": ": {{api|t=a|IsGraphicsCVarValueSupported}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-IsGraphicsCVarValueSupported-75",
+      "note": "IsGraphicsCVarValueSupported: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-IsGraphicsSettingValueSupported-76",
+      "wikitext_line": 76,
+      "source_text": ": {{api|t=a|IsGraphicsSettingValueSupported}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-IsGraphicsSettingValueSupported-76",
+      "note": "IsGraphicsSettingValueSupported: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-IsUsingGamepad-77",
+      "wikitext_line": 77,
+      "source_text": ": {{api|t=a|IsUsingGamepad}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-IsUsingGamepad-77",
+      "note": "IsUsingGamepad: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-IsUsingMouse-78",
+      "wikitext_line": 78,
+      "source_text": ": {{api|t=a|IsUsingMouse}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-IsUsingMouse-78",
+      "note": "IsUsingMouse: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-pcallwithenv-79",
+      "wikitext_line": 79,
+      "source_text": ": {{api|t=a|pcallwithenv}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-pcallwithenv-79",
+      "note": "pcallwithenv: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-QuestFlagsPVP-80",
+      "wikitext_line": 80,
+      "source_text": ": {{api|t=a|QuestFlagsPVP}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-QuestFlagsPVP-80",
+      "note": "QuestFlagsPVP: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-StripHyperlinks-81",
+      "wikitext_line": 81,
+      "source_text": ": {{api|t=a|StripHyperlinks}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-StripHyperlinks-81",
+      "note": "StripHyperlinks: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-global-api-SupportsClipCursor-82",
+      "wikitext_line": 82,
+      "source_text": ": {{api|t=a|SupportsClipCursor}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-SupportsClipCursor-82",
+      "note": "SupportsClipCursor: named global-api addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "source-line-083",
+      "wikitext_line": 83,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-084",
+      "wikitext_line": 84,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-global-api-BNSendSoR-85",
+      "wikitext_line": 85,
+      "source_text": ": {{api|t=a|BNSendSoR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-BNSendSoR-85",
+      "note": "BNSendSoR: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.AssignPFCDistribution-86",
+      "wikitext_line": 86,
+      "source_text": ": {{api|t=a|C_CharacterServices.AssignPFCDistribution}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_CharacterServices.AssignPFCDistribution-86",
+      "note": "C_CharacterServices.AssignPFCDistribution: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetLastItem-87",
+      "wikitext_line": 87,
+      "source_text": ": {{api|t=a|C_Social.GetLastItem}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.GetLastItem-87",
+      "note": "C_Social.GetLastItem: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetLastScreenshot-88",
+      "wikitext_line": 88,
+      "source_text": ": {{api|t=a|C_Social.GetLastScreenshot}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.GetLastScreenshot-88",
+      "note": "C_Social.GetLastScreenshot: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetNumCharactersPerMedia-89",
+      "wikitext_line": 89,
+      "source_text": ": {{api|t=a|C_Social.GetNumCharactersPerMedia}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.GetNumCharactersPerMedia-89",
+      "note": "C_Social.GetNumCharactersPerMedia: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetScreenshotByIndex-90",
+      "wikitext_line": 90,
+      "source_text": ": {{api|t=a|C_Social.GetScreenshotByIndex}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.GetScreenshotByIndex-90",
+      "note": "C_Social.GetScreenshotByIndex: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetTweetLength-91",
+      "wikitext_line": 91,
+      "source_text": ": {{api|t=a|C_Social.GetTweetLength}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.GetTweetLength-91",
+      "note": "C_Social.GetTweetLength: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.IsSocialEnabled-92",
+      "wikitext_line": 92,
+      "source_text": ": {{api|t=a|C_Social.IsSocialEnabled}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.IsSocialEnabled-92",
+      "note": "C_Social.IsSocialEnabled: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.RegisterSocialBrowser-93",
+      "wikitext_line": 93,
+      "source_text": ": {{api|t=a|C_Social.RegisterSocialBrowser}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.RegisterSocialBrowser-93",
+      "note": "C_Social.RegisterSocialBrowser: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.SetTextureToScreenshot-94",
+      "wikitext_line": 94,
+      "source_text": ": {{api|t=a|C_Social.SetTextureToScreenshot}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.SetTextureToScreenshot-94",
+      "note": "C_Social.SetTextureToScreenshot: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterCheckStatus-95",
+      "wikitext_line": 95,
+      "source_text": ": {{api|t=a|C_Social.TwitterCheckStatus}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.TwitterCheckStatus-95",
+      "note": "C_Social.TwitterCheckStatus: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterConnect-96",
+      "wikitext_line": 96,
+      "source_text": ": {{api|t=a|C_Social.TwitterConnect}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.TwitterConnect-96",
+      "note": "C_Social.TwitterConnect: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterDisconnect-97",
+      "wikitext_line": 97,
+      "source_text": ": {{api|t=a|C_Social.TwitterDisconnect}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.TwitterDisconnect-97",
+      "note": "C_Social.TwitterDisconnect: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterGetMSTillCanPost-98",
+      "wikitext_line": 98,
+      "source_text": ": {{api|t=a|C_Social.TwitterGetMSTillCanPost}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.TwitterGetMSTillCanPost-98",
+      "note": "C_Social.TwitterGetMSTillCanPost: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterPostAchievement-99",
+      "wikitext_line": 99,
+      "source_text": ": {{api|t=a|C_Social.TwitterPostAchievement}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.TwitterPostAchievement-99",
+      "note": "C_Social.TwitterPostAchievement: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterPostMessage-100",
+      "wikitext_line": 100,
+      "source_text": ": {{api|t=a|C_Social.TwitterPostMessage}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.TwitterPostMessage-100",
+      "note": "C_Social.TwitterPostMessage: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterPostScreenshot-101",
+      "wikitext_line": 101,
+      "source_text": ": {{api|t=a|C_Social.TwitterPostScreenshot}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-C_Social.TwitterPostScreenshot-101",
+      "note": "C_Social.TwitterPostScreenshot: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-CanSendSoRByText-102",
+      "wikitext_line": 102,
+      "source_text": ": {{api|t=a|CanSendSoRByText}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-CanSendSoRByText-102",
+      "note": "CanSendSoRByText: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetAddOnMetadata-103",
+      "wikitext_line": 103,
+      "source_text": ": {{api|t=a|GetAddOnMetadata}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetAddOnMetadata-103",
+      "note": "GetAddOnMetadata: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetMouseClickFocus-104",
+      "wikitext_line": 104,
+      "source_text": ": {{api|t=a|GetMouseClickFocus}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetMouseClickFocus-104",
+      "note": "GetMouseClickFocus: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetMouseMotionFocus-105",
+      "wikitext_line": 105,
+      "source_text": ": {{api|t=a|GetMouseMotionFocus}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetMouseMotionFocus-105",
+      "note": "GetMouseMotionFocus: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetNumFrames-106",
+      "wikitext_line": 106,
+      "source_text": ": {{api|t=a|GetNumFrames}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetNumFrames-106",
+      "note": "GetNumFrames: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetNumQuestLogRewardSpells-107",
+      "wikitext_line": 107,
+      "source_text": ": {{api|t=a|GetNumQuestLogRewardSpells}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetNumQuestLogRewardSpells-107",
+      "note": "GetNumQuestLogRewardSpells: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetNumRewardSpells-108",
+      "wikitext_line": 108,
+      "source_text": ": {{api|t=a|GetNumRewardSpells}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetNumRewardSpells-108",
+      "note": "GetNumRewardSpells: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetNumSoRRemaining-109",
+      "wikitext_line": 109,
+      "source_text": ": {{api|t=a|GetNumSoRRemaining}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetNumSoRRemaining-109",
+      "note": "GetNumSoRRemaining: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardSpell-110",
+      "wikitext_line": 110,
+      "source_text": ": {{api|t=a|GetQuestLogRewardSpell}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetQuestLogRewardSpell-110",
+      "note": "GetQuestLogRewardSpell: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogSpellLink-111",
+      "wikitext_line": 111,
+      "source_text": ": {{api|t=a|GetQuestLogSpellLink}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetQuestLogSpellLink-111",
+      "note": "GetQuestLogSpellLink: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestSpellLink-112",
+      "wikitext_line": 112,
+      "source_text": ": {{api|t=a|GetQuestSpellLink}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetQuestSpellLink-112",
+      "note": "GetQuestSpellLink: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GetRewardSpell-113",
+      "wikitext_line": 113,
+      "source_text": ": {{api|t=a|GetRewardSpell}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GetRewardSpell-113",
+      "note": "GetRewardSpell: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-GuildRosterSendSoR-114",
+      "wikitext_line": 114,
+      "source_text": ": {{api|t=a|GuildRosterSendSoR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-GuildRosterSendSoR-114",
+      "note": "GuildRosterSendSoR: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-global-api-SendSoRByText-115",
+      "wikitext_line": 115,
+      "source_text": ": {{api|t=a|SendSoRByText}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-global-api-SendSoRByText-115",
+      "note": "SendSoRByText: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "source-line-116",
+      "wikitext_line": 116,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-117",
+      "wikitext_line": 117,
+      "source_text": "|}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-119",
+      "wikitext_line": 119,
+      "source_text": "==Widgets==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-120",
+      "wikitext_line": 120,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-121",
+      "wikitext_line": 121,
+      "source_text": "|- class=\"mw-customtoggle-widgets\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-122",
+      "wikitext_line": 122,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(16)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-123",
+      "wikitext_line": 123,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(2)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-124",
+      "wikitext_line": 124,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widgets\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-125",
+      "wikitext_line": 125,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-widgets-Region:EnableMouseMotion-126",
+      "wikitext_line": 126,
+      "source_text": ": {{api|t=w|Region:EnableMouseMotion}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-Region:EnableMouseMotion-126",
+      "note": "Region:EnableMouseMotion: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-Region:IsMouseMotionFocus-127",
+      "wikitext_line": 127,
+      "source_text": ": {{api|t=w|Region:IsMouseMotionFocus}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-Region:IsMouseMotionFocus-127",
+      "note": "Region:IsMouseMotionFocus: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-AnimationGroup:GetElapsed-128",
+      "wikitext_line": 128,
+      "source_text": ": {{api|t=w|AnimationGroup:GetElapsed}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-AnimationGroup:GetElapsed-128",
+      "note": "AnimationGroup:GetElapsed: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:OnUiMapChanged-129",
+      "wikitext_line": 129,
+      "source_text": ": {{api|t=w|EditBox:OnUiMapChanged}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-EditBox:OnUiMapChanged-129",
+      "note": "EditBox:OnUiMapChanged: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:GetFogOfWarBackgroundAtlas-130",
+      "wikitext_line": 130,
+      "source_text": ": {{api|t=w|EditBox:GetFogOfWarBackgroundAtlas}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-EditBox:GetFogOfWarBackgroundAtlas-130",
+      "note": "EditBox:GetFogOfWarBackgroundAtlas: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:GetFogOfWarBackgroundTexture-131",
+      "wikitext_line": 131,
+      "source_text": ": {{api|t=w|EditBox:GetFogOfWarBackgroundTexture}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-EditBox:GetFogOfWarBackgroundTexture-131",
+      "note": "EditBox:GetFogOfWarBackgroundTexture: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:GetFogOfWarMaskAtlas-132",
+      "wikitext_line": 132,
+      "source_text": ": {{api|t=w|FogOfWarFrame:GetFogOfWarMaskAtlas}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:GetFogOfWarMaskAtlas-132",
+      "note": "FogOfWarFrame:GetFogOfWarMaskAtlas: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:GetFogOfWarMaskTexture-133",
+      "wikitext_line": 133,
+      "source_text": ": {{api|t=w|FogOfWarFrame:GetFogOfWarMaskTexture}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:GetFogOfWarMaskTexture-133",
+      "note": "FogOfWarFrame:GetFogOfWarMaskTexture: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:GetMaskScalar-134",
+      "wikitext_line": 134,
+      "source_text": ": {{api|t=w|FogOfWarFrame:GetMaskScalar}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:GetMaskScalar-134",
+      "note": "FogOfWarFrame:GetMaskScalar: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:GetUiMapID-135",
+      "wikitext_line": 135,
+      "source_text": ": {{api|t=w|FogOfWarFrame:GetUiMapID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:GetUiMapID-135",
+      "note": "FogOfWarFrame:GetUiMapID: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundAtlas-136",
+      "wikitext_line": 136,
+      "source_text": ": {{api|t=w|FogOfWarFrame:SetFogOfWarBackgroundAtlas}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundAtlas-136",
+      "note": "FogOfWarFrame:SetFogOfWarBackgroundAtlas: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundTexture-137",
+      "wikitext_line": 137,
+      "source_text": ": {{api|t=w|FogOfWarFrame:SetFogOfWarBackgroundTexture}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundTexture-137",
+      "note": "FogOfWarFrame:SetFogOfWarBackgroundTexture: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:SetFogOfWarMaskAtlas-138",
+      "wikitext_line": 138,
+      "source_text": ": {{api|t=w|FogOfWarFrame:SetFogOfWarMaskAtlas}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:SetFogOfWarMaskAtlas-138",
+      "note": "FogOfWarFrame:SetFogOfWarMaskAtlas: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:SetFogOfWarMaskTexture-139",
+      "wikitext_line": 139,
+      "source_text": ": {{api|t=w|FogOfWarFrame:SetFogOfWarMaskTexture}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:SetFogOfWarMaskTexture-139",
+      "note": "FogOfWarFrame:SetFogOfWarMaskTexture: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:SetMaskScalar-140",
+      "wikitext_line": 140,
+      "source_text": ": {{api|t=w|FogOfWarFrame:SetMaskScalar}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:SetMaskScalar-140",
+      "note": "FogOfWarFrame:SetMaskScalar: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "wt-widgets-FogOfWarFrame:SetUiMapID-141",
+      "wikitext_line": 141,
+      "source_text": ": {{api|t=w|FogOfWarFrame:SetUiMapID}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-FogOfWarFrame:SetUiMapID-141",
+      "note": "FogOfWarFrame:SetUiMapID: named widgets addition, not a signature; arguments, return values, error/security rules and state transitions unspecified. Current Wrath publication and native behavior unmeasured; no guessed linked contract or shim."
+    },
+    {
+      "source_id": "source-line-142",
+      "wikitext_line": 142,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-143",
+      "wikitext_line": 143,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetQuestLogRewardSpell-144",
+      "wikitext_line": 144,
+      "source_text": ": {{api|t=w|GameTooltip:SetQuestLogRewardSpell}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-GameTooltip:SetQuestLogRewardSpell-144",
+      "note": "GameTooltip:SetQuestLogRewardSpell: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetQuestRewardSpell-145",
+      "wikitext_line": 145,
+      "source_text": ": {{api|t=w|GameTooltip:SetQuestRewardSpell}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-widgets-GameTooltip:SetQuestRewardSpell-145",
+      "note": "GameTooltip:SetQuestRewardSpell: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "source-line-146",
+      "wikitext_line": 146,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-147",
+      "wikitext_line": 147,
+      "source_text": "|}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-149",
+      "wikitext_line": 149,
+      "source_text": "==Events==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-150",
+      "wikitext_line": 150,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-151",
+      "wikitext_line": 151,
+      "source_text": "|- class=\"mw-customtoggle-events\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-152",
+      "wikitext_line": 152,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(4)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-153",
+      "wikitext_line": 153,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(4)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-154",
+      "wikitext_line": 154,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-155",
+      "wikitext_line": 155,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-events-PLAYER_CAN_GLIDE_CHANGED-156",
+      "wikitext_line": 156,
+      "source_text": ": {{api|t=e|PLAYER_CAN_GLIDE_CHANGED}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-PLAYER_CAN_GLIDE_CHANGED-156",
+      "note": "PLAYER_CAN_GLIDE_CHANGED: event identity only; payload, trigger, ordering and security unspecified. Accepting an event name would not prove emission or native behavior."
+    },
+    {
+      "source_id": "wt-events-SHOW_PARTY_POSE_UI-157",
+      "wikitext_line": 157,
+      "source_text": ": {{api|t=e|SHOW_PARTY_POSE_UI}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-SHOW_PARTY_POSE_UI-157",
+      "note": "SHOW_PARTY_POSE_UI: event identity only; payload, trigger, ordering and security unspecified. Accepting an event name would not prove emission or native behavior."
+    },
+    {
+      "source_id": "wt-events-UNIT_SPELLCAST_INTERRUPTIBLE-158",
+      "wikitext_line": 158,
+      "source_text": ": {{api|t=e|UNIT_SPELLCAST_INTERRUPTIBLE}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-UNIT_SPELLCAST_INTERRUPTIBLE-158",
+      "note": "UNIT_SPELLCAST_INTERRUPTIBLE: event identity only; payload, trigger, ordering and security unspecified. Accepting an event name would not prove emission or native behavior."
+    },
+    {
+      "source_id": "wt-events-UNIT_SPELLCAST_NOT_INTERRUPTIBLE-159",
+      "wikitext_line": 159,
+      "source_text": ": {{api|t=e|UNIT_SPELLCAST_NOT_INTERRUPTIBLE}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-UNIT_SPELLCAST_NOT_INTERRUPTIBLE-159",
+      "note": "UNIT_SPELLCAST_NOT_INTERRUPTIBLE: event identity only; payload, trigger, ordering and security unspecified. Accepting an event name would not prove emission or native behavior."
+    },
+    {
+      "source_id": "source-line-160",
+      "wikitext_line": 160,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-161",
+      "wikitext_line": 161,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-events-SOCIAL_ITEM_RECEIVED-162",
+      "wikitext_line": 162,
+      "source_text": ": {{api|t=e|SOCIAL_ITEM_RECEIVED}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-SOCIAL_ITEM_RECEIVED-162",
+      "note": "SOCIAL_ITEM_RECEIVED: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-events-TWITTER_LINK_RESULT-163",
+      "wikitext_line": 163,
+      "source_text": ": {{api|t=e|TWITTER_LINK_RESULT}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-TWITTER_LINK_RESULT-163",
+      "note": "TWITTER_LINK_RESULT: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-events-TWITTER_POST_RESULT-164",
+      "wikitext_line": 164,
+      "source_text": ": {{api|t=e|TWITTER_POST_RESULT}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-TWITTER_POST_RESULT-164",
+      "note": "TWITTER_POST_RESULT: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "wt-events-TWITTER_STATUS_UPDATE-165",
+      "wikitext_line": 165,
+      "source_text": ": {{api|t=e|TWITTER_STATUS_UPDATE}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-events-TWITTER_STATUS_UPDATE-165",
+      "note": "TWITTER_STATUS_UPDATE: literal Wrath removal only; current Wrath absence not measured. 3.4.3 names no member readdition; retail/Cata history cannot authorize a Classic retirement. No runtime removal made."
+    },
+    {
+      "source_id": "source-line-166",
+      "wikitext_line": 166,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-167",
+      "wikitext_line": 167,
+      "source_text": "|}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-169",
+      "wikitext_line": 169,
+      "source_text": "==CVars==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-170",
+      "wikitext_line": 170,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-171",
+      "wikitext_line": 171,
+      "source_text": "|- class=\"mw-customtoggle-cvars\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-172",
+      "wikitext_line": 172,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(26)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-173",
+      "wikitext_line": 173,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(9)</small>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-174",
+      "wikitext_line": 174,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-cvars\"",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-175",
+      "wikitext_line": 175,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-cvars-acknowledgedArrowCallouts-176",
+      "wikitext_line": 176,
+      "source_text": ": {{apitooltip|type=cvar|name=acknowledgedArrowCallouts|default=0|scope=Character|cat=4|desc=Bit field of Looking for guild player settings}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-acknowledgedArrowCallouts-176",
+      "source_contract": {
+        "type": "cvar",
+        "name": "acknowledgedArrowCallouts",
+        "default": "0",
+        "scope": "Character",
+        "cat": "4",
+        "desc": "Bit field of Looking for guild player settings"
+      },
+      "note": "acknowledgedArrowCallouts: literal added CVar, default 0, scope Character, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-dnMTUpdate-177",
+      "wikitext_line": 177,
+      "source_text": ": {{apitooltip|type=cvar|name=dnMTUpdate|default=1|cat=1|desc=Update Daynight in parralel.}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-dnMTUpdate-177",
+      "source_contract": {
+        "type": "cvar",
+        "name": "dnMTUpdate",
+        "default": "1",
+        "cat": "1",
+        "desc": "Update Daynight in parralel."
+      },
+      "note": "dnMTUpdate: literal added CVar, default 1, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-EnableAirlockLogging-178",
+      "wikitext_line": 178,
+      "source_text": ": {{apitooltip|type=cvar|name=EnableAirlockLogging|default=0|cat=4|desc=If 1, enables airlock logging, which will print out the various steps as they happen so that timing can be done.}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-EnableAirlockLogging-178",
+      "source_contract": {
+        "type": "cvar",
+        "name": "EnableAirlockLogging",
+        "default": "0",
+        "cat": "4",
+        "desc": "If 1, enables airlock logging, which will print out the various steps as they happen so that timing can be done."
+      },
+      "note": "EnableAirlockLogging: literal added CVar, default 0, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-excludedCensorSources-179",
+      "wikitext_line": 179,
+      "source_text": ": {{apitooltip|type=cvar|name=excludedCensorSources|default=1|scope=Account|cat=4|desc=Inappropriate message source exemptions. 0 = Exempt nobody, 1 = Exempt Friends, 3 = Exempt Friends and Guildmates, 255 = Exempt All}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-excludedCensorSources-179",
+      "source_contract": {
+        "type": "cvar",
+        "name": "excludedCensorSources",
+        "default": "1",
+        "scope": "Account",
+        "cat": "4",
+        "desc": "Inappropriate message source exemptions. 0 = Exempt nobody, 1 = Exempt Friends, 3 = Exempt Friends and Guildmates, 255 = Exempt All"
+      },
+      "note": "excludedCensorSources: literal added CVar, default 1, scope Account, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-friendInvitesCollapsed_WowLabs-180",
+      "wikitext_line": 180,
+      "source_text": ": {{apitooltip|type=cvar|name=friendInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-friendInvitesCollapsed_WowLabs-180",
+      "source_contract": {
+        "type": "cvar",
+        "name": "friendInvitesCollapsed_WowLabs",
+        "default": "0",
+        "cat": "4",
+        "desc": "The info for pending invites has been shown"
+      },
+      "note": "friendInvitesCollapsed_WowLabs: literal added CVar, default 0, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-frontendMatchingModes_WowLabs-181",
+      "wikitext_line": 181,
+      "source_text": ": {{apitooltip|type=cvar|name=frontendMatchingModes_WowLabs|default=1|cat=4|desc=0=All,1=DuoOnly,2=TrioOnly,3=DuoAndTrio}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-frontendMatchingModes_WowLabs-181",
+      "source_contract": {
+        "type": "cvar",
+        "name": "frontendMatchingModes_WowLabs",
+        "default": "1",
+        "cat": "4",
+        "desc": "0=All,1=DuoOnly,2=TrioOnly,3=DuoAndTrio"
+      },
+      "note": "frontendMatchingModes_WowLabs: literal added CVar, default 1, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-guildAnnounceMemberDeaths-182",
+      "wikitext_line": 182,
+      "source_text": ": {{apitooltip|type=cvar|name=guildAnnounceMemberDeaths|default=1|scope=Character|cat=4|desc=Announce deaths of guild members}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-guildAnnounceMemberDeaths-182",
+      "source_contract": {
+        "type": "cvar",
+        "name": "guildAnnounceMemberDeaths",
+        "default": "1",
+        "scope": "Character",
+        "cat": "4",
+        "desc": "Announce deaths of guild members"
+      },
+      "note": "guildAnnounceMemberDeaths: literal added CVar, default 1, scope Character, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-GxFrameEndMode-183",
+      "wikitext_line": 183,
+      "source_text": ": {{apitooltip|type=cvar|name=GxFrameEndMode|default=0|cat=1|desc=Allow GxFrameEnd to overlap next frame (0=Disabled, 1=Safe, 2=Experimental)}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-GxFrameEndMode-183",
+      "source_contract": {
+        "type": "cvar",
+        "name": "GxFrameEndMode",
+        "default": "0",
+        "cat": "1",
+        "desc": "Allow GxFrameEnd to overlap next frame (0=Disabled, 1=Safe, 2=Experimental)"
+      },
+      "note": "GxFrameEndMode: literal added CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-locateViewerMaxJobs-184",
+      "wikitext_line": 184,
+      "source_text": ": {{apitooltip|type=cvar|name=locateViewerMaxJobs|default=32|cat=1|desc=Maximum job threads for LocateViewer}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-locateViewerMaxJobs-184",
+      "source_contract": {
+        "type": "cvar",
+        "name": "locateViewerMaxJobs",
+        "default": "32",
+        "cat": "1",
+        "desc": "Maximum job threads for LocateViewer"
+      },
+      "note": "locateViewerMaxJobs: literal added CVar, default 32, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-NamePlateClassificationScale-185",
+      "wikitext_line": 185,
+      "source_text": ": {{apitooltip|type=cvar|name=NamePlateClassificationScale|default=1.0|scope=Character|cat=4|desc=Applied to the classification icon for nameplates.}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-NamePlateClassificationScale-185",
+      "source_contract": {
+        "type": "cvar",
+        "name": "NamePlateClassificationScale",
+        "default": "1.0",
+        "scope": "Character",
+        "cat": "4",
+        "desc": "Applied to the classification icon for nameplates."
+      },
+      "note": "NamePlateClassificationScale: literal added CVar, default 1.0, scope Character, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-partyInvitesCollapsed_WowLabs-186",
+      "wikitext_line": 186,
+      "source_text": ": {{apitooltip|type=cvar|name=partyInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-partyInvitesCollapsed_WowLabs-186",
+      "source_contract": {
+        "type": "cvar",
+        "name": "partyInvitesCollapsed_WowLabs",
+        "default": "0",
+        "cat": "4",
+        "desc": "The info for pending invites has been shown"
+      },
+      "note": "partyInvitesCollapsed_WowLabs: literal added CVar, default 0, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-pendingInviteInfoShown_WowLabs-187",
+      "wikitext_line": 187,
+      "source_text": ": {{apitooltip|type=cvar|name=pendingInviteInfoShown_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-pendingInviteInfoShown_WowLabs-187",
+      "source_contract": {
+        "type": "cvar",
+        "name": "pendingInviteInfoShown_WowLabs",
+        "default": "0",
+        "cat": "4",
+        "desc": "The info for pending invites has been shown"
+      },
+      "note": "pendingInviteInfoShown_WowLabs: literal added CVar, default 0, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-RAIDshadowBlendCascades-188",
+      "wikitext_line": 188,
+      "source_text": ": {{apitooltip|type=cvar|name=RAIDshadowBlendCascades|default=0|cat=1|desc=Blend between shadow cascades (0/1)}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-RAIDshadowBlendCascades-188",
+      "source_contract": {
+        "type": "cvar",
+        "name": "RAIDshadowBlendCascades",
+        "default": "0",
+        "cat": "1",
+        "desc": "Blend between shadow cascades (0/1)"
+      },
+      "note": "RAIDshadowBlendCascades: literal added CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-shadowBlendCascades-189",
+      "wikitext_line": 189,
+      "source_text": ": {{apitooltip|type=cvar|name=shadowBlendCascades|default=0|cat=1|desc=Blend between shadow cascades (0/1)}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-shadowBlendCascades-189",
+      "source_contract": {
+        "type": "cvar",
+        "name": "shadowBlendCascades",
+        "default": "0",
+        "cat": "1",
+        "desc": "Blend between shadow cascades (0/1)"
+      },
+      "note": "shadowBlendCascades: literal added CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-softTargettingInteractKeySound-190",
+      "wikitext_line": 190,
+      "source_text": ": {{apitooltip|type=cvar|name=softTargettingInteractKeySound|default=0|scope=Account|cat=4|desc=Setting for soft targeting that enables sound cues}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-softTargettingInteractKeySound-190",
+      "source_contract": {
+        "type": "cvar",
+        "name": "softTargettingInteractKeySound",
+        "default": "0",
+        "scope": "Account",
+        "cat": "4",
+        "desc": "Setting for soft targeting that enables sound cues"
+      },
+      "note": "softTargettingInteractKeySound: literal added CVar, default 0, scope Account, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-TargetAutoLock-191",
+      "wikitext_line": 191,
+      "source_text": ": {{apitooltip|type=cvar|name=TargetAutoLock|default=1|scope=Character|cat=4|desc=Lock targets auto-set by the game}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-TargetAutoLock-191",
+      "source_contract": {
+        "type": "cvar",
+        "name": "TargetAutoLock",
+        "default": "1",
+        "scope": "Character",
+        "cat": "4",
+        "desc": "Lock targets auto-set by the game"
+      },
+      "note": "TargetAutoLock: literal added CVar, default 1, scope Character, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValarEnvLuma-192",
+      "wikitext_line": 192,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValarEnvLuma|default=0.05|cat=1|desc=Env. Luma for VALAR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValarEnvLuma-192",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValarEnvLuma",
+        "default": "0.05",
+        "cat": "1",
+        "desc": "Env. Luma for VALAR"
+      },
+      "note": "vrsValarEnvLuma: literal added CVar, default 0.05, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValarK-193",
+      "wikitext_line": 193,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValarK|default=2.13|cat=1|desc=Quarter Rate Sensitivity (K) for VALAR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValarK-193",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValarK",
+        "default": "2.13",
+        "cat": "1",
+        "desc": "Quarter Rate Sensitivity (K) for VALAR"
+      },
+      "note": "vrsValarK: literal added CVar, default 2.13, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValarSensitivityThreshold-194",
+      "wikitext_line": 194,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValarSensitivityThreshold|default=0.31|cat=1|desc=Sensitivity Threshold for VALAR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValarSensitivityThreshold-194",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValarSensitivityThreshold",
+        "default": "0.31",
+        "cat": "1",
+        "desc": "Sensitivity Threshold for VALAR"
+      },
+      "note": "vrsValarSensitivityThreshold: literal added CVar, default 0.31, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValarUseAsyncCompute-195",
+      "wikitext_line": 195,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValarUseAsyncCompute|default=0|cat=1|desc=Use async compute for VALAR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValarUseAsyncCompute-195",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValarUseAsyncCompute",
+        "default": "0",
+        "cat": "1",
+        "desc": "Use async compute for VALAR"
+      },
+      "note": "vrsValarUseAsyncCompute: literal added CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValarUseMotionVectors-196",
+      "wikitext_line": 196,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValarUseMotionVectors|default=0|cat=1|desc=Use motion vectors for VALAR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValarUseMotionVectors-196",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValarUseMotionVectors",
+        "default": "0",
+        "cat": "1",
+        "desc": "Use motion vectors for VALAR"
+      },
+      "note": "vrsValarUseMotionVectors: literal added CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValarUseWeberFechner-197",
+      "wikitext_line": 197,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValarUseWeberFechner|default=0|cat=1|desc=Use Weber-Fechner Algo for VALAR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValarUseWeberFechner-197",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValarUseWeberFechner",
+        "default": "0",
+        "cat": "1",
+        "desc": "Use Weber-Fechner Algo for VALAR"
+      },
+      "note": "vrsValarUseWeberFechner: literal added CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValarWeberFechnerConstant-198",
+      "wikitext_line": 198,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValarWeberFechnerConstant|default=1.0|cat=1|desc=Weber-Fechner Constant for VALAR}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValarWeberFechnerConstant-198",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValarWeberFechnerConstant",
+        "default": "1.0",
+        "cat": "1",
+        "desc": "Weber-Fechner Constant for VALAR"
+      },
+      "note": "vrsValarWeberFechnerConstant: literal added CVar, default 1.0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-vrsValar-199",
+      "wikitext_line": 199,
+      "source_text": ": {{apitooltip|type=cvar|name=vrsValar|default=0|cat=1|desc=Generate a shading rate mask based on velocity and luminance. Requires VRS Tier 2.}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-vrsValar-199",
+      "source_contract": {
+        "type": "cvar",
+        "name": "vrsValar",
+        "default": "0",
+        "cat": "1",
+        "desc": "Generate a shading rate mask based on velocity and luminance. Requires VRS Tier 2."
+      },
+      "note": "vrsValar: literal added CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-WalkableSurfacesValidationLog-200",
+      "wikitext_line": 200,
+      "source_text": ": {{apitooltip|type=cvar|name=WalkableSurfacesValidationLog|default=0}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-WalkableSurfacesValidationLog-200",
+      "source_contract": {
+        "type": "cvar",
+        "name": "WalkableSurfacesValidationLog",
+        "default": "0"
+      },
+      "note": "WalkableSurfacesValidationLog: literal added CVar, default 0, scope unspecified, category unspecified; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-worldIntersectMaxJobs-201",
+      "wikitext_line": 201,
+      "source_text": ": {{apitooltip|type=cvar|name=worldIntersectMaxJobs|default=32|cat=1|desc=Maximum job threads for culling}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-worldIntersectMaxJobs-201",
+      "source_contract": {
+        "type": "cvar",
+        "name": "worldIntersectMaxJobs",
+        "default": "32",
+        "cat": "1",
+        "desc": "Maximum job threads for culling"
+      },
+      "note": "worldIntersectMaxJobs: literal added CVar, default 32, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "source-line-202",
+      "wikitext_line": 202,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-203",
+      "wikitext_line": 203,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "wt-cvars-DynamicVRSSensitivityThreshold-204",
+      "wikitext_line": 204,
+      "source_text": ": {{apitooltip|type=cvar|name=DynamicVRSSensitivityThreshold|default=0|cat=1|desc=Enable dynamic sensitivity threshold based on target FPS for VRS}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-DynamicVRSSensitivityThreshold-204",
+      "source_contract": {
+        "type": "cvar",
+        "name": "DynamicVRSSensitivityThreshold",
+        "default": "0",
+        "cat": "1",
+        "desc": "Enable dynamic sensitivity threshold based on target FPS for VRS"
+      },
+      "note": "DynamicVRSSensitivityThreshold: literal removed CVar, default 0, scope unspecified, category 1; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-enableTwitter-205",
+      "wikitext_line": 205,
+      "source_text": ": {{apitooltip|type=cvar|name=enableTwitter|default=0|scope=Account|cat=4|desc=Whether Twitter integration is enabled}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-enableTwitter-205",
+      "source_contract": {
+        "type": "cvar",
+        "name": "enableTwitter",
+        "default": "0",
+        "scope": "Account",
+        "cat": "4",
+        "desc": "Whether Twitter integration is enabled"
+      },
+      "note": "enableTwitter: literal removed CVar, default 0, scope Account, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-seenTBCInfoPane-206",
+      "wikitext_line": 206,
+      "source_text": ": {{apitooltip|type=cvar|name=seenTBCInfoPane|default=0|cat=4|desc=Whether or not the user has seen the TBC Info Pane at least once.}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-seenTBCInfoPane-206",
+      "source_contract": {
+        "type": "cvar",
+        "name": "seenTBCInfoPane",
+        "default": "0",
+        "cat": "4",
+        "desc": "Whether or not the user has seen the TBC Info Pane at least once."
+      },
+      "note": "seenTBCInfoPane: literal removed CVar, default 0, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-showUnactivatedCharacters-207",
+      "wikitext_line": 207,
+      "source_text": ": {{apitooltip|type=cvar|name=showUnactivatedCharacters|default=1|cat=4|desc=Show unactivated characters on Character Select.}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-showUnactivatedCharacters-207",
+      "source_contract": {
+        "type": "cvar",
+        "name": "showUnactivatedCharacters",
+        "default": "1",
+        "cat": "4",
+        "desc": "Show unactivated characters on Character Select."
+      },
+      "note": "showUnactivatedCharacters: literal removed CVar, default 1, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-TargetPriorityValueBank-208",
+      "wikitext_line": 208,
+      "source_text": ": {{apitooltip|type=cvar|name=TargetPriorityValueBank|default=1|cat=4|desc=Selects the active targeting values bank for calculating target priority order}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-TargetPriorityValueBank-208",
+      "source_contract": {
+        "type": "cvar",
+        "name": "TargetPriorityValueBank",
+        "default": "1",
+        "cat": "4",
+        "desc": "Selects the active targeting values bank for calculating target priority order"
+      },
+      "note": "TargetPriorityValueBank: literal removed CVar, default 1, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-twitterCharactersPerMedia-209",
+      "wikitext_line": 209,
+      "source_text": ": {{apitooltip|type=cvar|name=twitterCharactersPerMedia|default=23|cat=4|desc=Number of characters needed when attaching media to a Twitter post}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-twitterCharactersPerMedia-209",
+      "source_contract": {
+        "type": "cvar",
+        "name": "twitterCharactersPerMedia",
+        "default": "23",
+        "cat": "4",
+        "desc": "Number of characters needed when attaching media to a Twitter post"
+      },
+      "note": "twitterCharactersPerMedia: literal removed CVar, default 23, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-twitterGetConfigTime-210",
+      "wikitext_line": 210,
+      "source_text": ": {{apitooltip|type=cvar|name=twitterGetConfigTime|default=0|cat=4|desc=Last time that we got Twitter configuration data successfully}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-twitterGetConfigTime-210",
+      "source_contract": {
+        "type": "cvar",
+        "name": "twitterGetConfigTime",
+        "default": "0",
+        "cat": "4",
+        "desc": "Last time that we got Twitter configuration data successfully"
+      },
+      "note": "twitterGetConfigTime: literal removed CVar, default 0, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-twitterShortUrlLengthHttps-211",
+      "wikitext_line": 211,
+      "source_text": ": {{apitooltip|type=cvar|name=twitterShortUrlLengthHttps|default=23|cat=4|desc=Number of characters that https URLS get shortened to}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-twitterShortUrlLengthHttps-211",
+      "source_contract": {
+        "type": "cvar",
+        "name": "twitterShortUrlLengthHttps",
+        "default": "23",
+        "cat": "4",
+        "desc": "Number of characters that https URLS get shortened to"
+      },
+      "note": "twitterShortUrlLengthHttps: literal removed CVar, default 23, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "wt-cvars-twitterShortUrlLength-212",
+      "wikitext_line": 212,
+      "source_text": ": {{apitooltip|type=cvar|name=twitterShortUrlLength|default=22|cat=4|desc=Number of characters that non-https URLS get shortened to}}",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_id": "wt-cvars-twitterShortUrlLength-212",
+      "source_contract": {
+        "type": "cvar",
+        "name": "twitterShortUrlLength",
+        "default": "22",
+        "cat": "4",
+        "desc": "Number of characters that non-https URLS get shortened to"
+      },
+      "note": "twitterShortUrlLength: literal removed CVar, default 22, scope unspecified, category 4; source metadata retained. Current Wrath registration/default/persistence and described subsystem effects unmeasured; no native parity or shared defaults changed."
+    },
+    {
+      "source_id": "source-line-213",
+      "wikitext_line": 213,
+      "source_text": "</div>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    },
+    {
+      "source_id": "source-line-214",
+      "wikitext_line": 214,
+      "source_text": "|}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal navigation, resource/build context, heading or table markup; source-only, no runtime capability credit."
+    }
+  ],
+  "proof_policy": "Every explicit inventory/prose occurrence UNPROVEN for runtime publication/behavior; metadata is source-only. No Wrath classifier, runtime replay or native parity credit."
+}
