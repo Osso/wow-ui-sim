@@ -1,0 +1,11 @@
+{
+  "listed_cases": 5,
+  "changed_case_occurrences": 1,
+  "names": [
+    "on_update_modes::on_update_modes_obey_ancestor_visibility_and_one_shots: test",
+    "on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases: test",
+    "on_update_modes::on_update_modes_publish_numeric_contract_and_default: test",
+    "on_update_modes::on_update_modes_reset_before_handlers_and_preserve_rearming: test",
+    "on_update_modes::on_update_modes_xml_names_select_numeric_modes: test"
+  ]
+}

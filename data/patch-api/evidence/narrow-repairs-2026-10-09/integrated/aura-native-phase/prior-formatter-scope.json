@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--name-only",
+    "941140fd6fa52133966a8f28a022f49d3538df50",
+    "dcc101d85aece04cf66804c2059b3a7d3da0bfbd",
+    "--",
+    "src",
+    "tests",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    ".cargo"
+  ],
+  "exit_code": 0,
+  "changed_paths": [
+    "tests/on_update_modes.rs"
+  ]
+}

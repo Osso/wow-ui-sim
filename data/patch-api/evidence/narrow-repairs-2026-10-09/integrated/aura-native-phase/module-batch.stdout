@@ -1,0 +1,10 @@
+
+running 5 tests
+test on_update_modes::on_update_modes_reset_before_handlers_and_preserve_rearming ... ok
+test on_update_modes::on_update_modes_obey_ancestor_visibility_and_one_shots ... ok
+test on_update_modes::on_update_modes_publish_numeric_contract_and_default ... ok
+test on_update_modes::on_update_modes_xml_names_select_numeric_modes ... ok
+test on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 10693 filtered out; finished in 0.27s
+

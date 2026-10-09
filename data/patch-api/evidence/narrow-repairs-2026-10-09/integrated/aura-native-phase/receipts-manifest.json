@@ -1,0 +1,78 @@
+{
+  "artifact-after.json": {
+    "bytes": 103,
+    "sha256": "eab87e2292c0cb79089d3c06a2a85f67e07ada7263d6381302b29359ab50e1bd"
+  },
+  "artifact.json": {
+    "bytes": 1507,
+    "sha256": "b902371e2efb680ec1c71c2270d8b4d5def2f222ed8f5c06249b22deda06c455"
+  },
+  "case-counts.json": {
+    "bytes": 495,
+    "sha256": "8c0b805d1c571f2a16975a0e28167c150d9033f7b9f49afa816a3363a904091a"
+  },
+  "compile.json": {
+    "bytes": 2148337,
+    "sha256": "d5c98cffe7694770ca495908336b91834267af2701894f823d8cfd59b6019c42"
+  },
+  "compile.stderr": {
+    "bytes": 1348,
+    "sha256": "defc3bed30dd71d42ca429138648fd6ecd5aebe74c29160a38c1921ba0d4c238"
+  },
+  "compile.stdout": {
+    "bytes": 572411,
+    "sha256": "79f79e4a81434a222c3b73685b77417d5dddbee327a925deb4339791d1d28d44"
+  },
+  "format.json": {
+    "bytes": 2145039,
+    "sha256": "2cb3f7b21bc74ad56ffe9cad6f13ea2a6b0d8844fa44443115cbe8300699c239"
+  },
+  "format.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "format.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "module-batch.json": {
+    "bytes": 2148291,
+    "sha256": "0a3ba0ee08f165e029456f800aa5de45c4fa60103edab1b74ea2d8795a90f43a"
+  },
+  "module-batch.stderr": {
+    "bytes": 3194,
+    "sha256": "9f66cab4562032cb14a9d6b4804a569fe11487f1ebbb3c790f72023ad9b52c07"
+  },
+  "module-batch.stdout": {
+    "bytes": 534,
+    "sha256": "51368bbb43d8b2dfe79bab771bd20090ecbfe663336981dabdb3c72148654978"
+  },
+  "module-list.json": {
+    "bytes": 2148259,
+    "sha256": "380fb1fda005000d4ee64734367ef601ef7354bf477323d89eea36b234a05bec"
+  },
+  "module-list.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "module-list.stdout": {
+    "bytes": 410,
+    "sha256": "a4077aa3965eee6d768c9a22d10da135ca3e3d70614faca9c6dc3738765733bc"
+  },
+  "prior-formatter-scope.json": {
+    "bytes": 331,
+    "sha256": "65c93c706b53499a4a093ead5c422b9b77ccddf84e1a0f798f3eb17f82291bd8"
+  },
+  "prior-formatter-scope.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "prior-formatter-scope.stdout": {
+    "bytes": 25,
+    "sha256": "3f348b5095699fb93def6a17da7152d0450cfb00a237d8df4e0929b35f807574"
+  },
+  "report.md": {
+    "bytes": 7846,
+    "sha256": "84a580bf26c22ec44851221c9cecaba46eaf38d458e21adfe19a7e9416031332"
+  }
+}

@@ -1,3 +1,7 @@
+## [2026-10-09] ingest | ManagedAura native-phase bounded proof retained
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#managedaura--editmode--reproduced-failures-repairs-pending) records actual dcc101d85 fmt0/compile0/on_update_modes5/5, six manifest deprecations, preserved historical RED and initialized-template scheduling boundary. Twenty proof files/9,180,597 bytes retained byte-identically; bounded credential-pattern scan no matches, not exhaustive. Separate exact-SHA successful CI receipt credits enabled CI, not runtime. No visual aura/native/profile/full-suite/parent acceptance; no proof reruns, source/spec changes or operations.
+
 ## [2026-10-09] investigation | Patch 1.4.0 frozen literal SOURCE accounting
 
 [Audit](investigations/patch-1-4-0-api-audit.md): frozen316397/3052898,2670bytes;34 literal rows/27 inventory/25 signatures/25 prose/6 headers/3 links/2 navigation/28 templates/32UNPROVEN contracts. Not a redirect; optional-unit/default/native limits explicit. Own SOURCE RED7/portableRED3 and default-byte/error captures retained; SOURCE GREEN7/7 at5c4bde798 with197 omission/count controls. Static single-argument AcceptBattlefieldPort candidate reported; no runtime/model/native credit. Original44-seal archive/copy SOURCE7/portable3 atedbe7d9a1 retained; separate category-reset correction RED3/GREEN3 at8bfc74ee9 with55 controls and sealed replay extension. Queued1.5.0 separately unapplied, main owns integration/independent acceptance.
