@@ -568,3 +568,8 @@ Rebased onto 7c3bbbfd3, retaining both parser behaviors and wiki histories. Real
 5.1.0 same-worktree master comparisons pass: all 66 other pages/10,153 observations equal pinned master; retail 63 branch/62 master, Mists 6/6 each. Affected journal/namespace integration and library cases match; master pet 21, branch 22 adds only the own absence case. Command ledger and sealed integrated validator derive all counts from files. Final clean/later and two owned-log tamper gates pending.
 
 5.1.0 final integrated gate at 79d15621c07df93096a7ad11e4ff1da16ab9a910: PASS 58/58 clean, 59/59 synthetic later audit, zero failures. Historical and integrated owned-log tampering rejected at exact seals and byte-exact restoration verified. All 311 historical artifacts retained (original validator archived verbatim); compact eleven-own/four-external mapping is 24,005 bytes, largest session file 1,215,071 bytes. All requested proofs committed; no push, merge or delegation.
+
+## 2026-10-08 — Cataclysm Classic 4.4.2 source accounting
+
+[Audit](investigations/patch-4-4-2-api-audit.md): page 619773/revision 6303388, literal TOC 40402. Exact ledger: five metadata rows and one substantive modern-auction-house/`C_AuctionHouse` contract UNPROVEN because Cata runtime profile is unsupported. Returned content equals pinned source bytes; external diffs remain unexpanded. No publication register, retail/Mists stand-in, runtime/profile/classifier changes, native proof, delegation, push or merge. Source-proof acceptance pending; runtime contract remains open independently.
+

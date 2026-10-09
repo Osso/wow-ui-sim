@@ -1,0 +1,94 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "4.4.2",
+  "client_line": "cataclysm-classic",
+  "profile": null,
+  "scope": "source-only",
+  "source_commit": "4c6c87e8ffe9c201ad0b62c56571aa376e151671",
+  "source": {
+    "pageid": 619773,
+    "title": "Patch 4.4.2/API changes",
+    "revid": 6303388,
+    "timestamp": "2025-04-25T00:45:23Z",
+    "retrieved": "2026-10-08",
+    "wikitext_path": "data/patch-api/sources/4.4.2-api-changes.wikitext",
+    "wikitext_sha256": "484b49adb4301ad901914389cf37f9849c21d62eea20797d0ad2fefbaa2b8669",
+    "wikitext_bytes": 390,
+    "response_path": "data/patch-api/evidence/4.4.2-session-2026-10-08/source-response.json",
+    "response_sha256": "c0604a21b721a67b5fde2d429b72e7f10f5e272758718c1343c94c9bb5839eb4",
+    "response_bytes": 674,
+    "toc": 40402
+  },
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/4.4.2-api-changes.txt",
+    "sha256": "b93f153298af6230550f920084fee802bead9357929541505fa5538e2dcd7442",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "extractor_flags": ["--text-only", "--canonical-patch-navigation"]
+  },
+  "inventory": {
+    "enumerated_api_occurrences": 0,
+    "header_counts": [],
+    "register_created": false,
+    "removals": 0
+  },
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "wikitext_line": 1,
+      "text_line": 1,
+      "source_text": "{{apichanges|4.4.2|prev=4.4.1|next=5.5.0}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Navigation only; next=5.5.0 is a source reference, not same-line runtime supersession proof."
+    },
+    {
+      "source_id": "source-context-003",
+      "wikitext_line": 3,
+      "text_line": 3,
+      "source_text": "==Summary==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "wikitext_line": 4,
+      "text_line": 4,
+      "source_text": "* The modern auction house and its associated C_AuctionHouse APIs has been enabled for Cataclysm Classic.",
+      "status": "UNPROVEN",
+      "contract": "Modern auction house and associated C_AuctionHouse APIs enabled in Cataclysm Classic",
+      "named_namespace": "C_AuctionHouse",
+      "capabilities": [],
+      "reason": "Unsupported Cataclysm Classic runtime profile. No Cata publication, UI load, member, signature, output, event, security or behavioral proof; no native probe. The page names a namespace, not individual API members."
+    },
+    {
+      "source_id": "source-context-006",
+      "wikitext_line": 6,
+      "text_line": 6,
+      "source_text": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "wikitext_line": 7,
+      "text_line": 7,
+      "source_text": "* TOC: <code>40402</code>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal source TOC 40402; not an existing simulator profile or measured native build."
+    },
+    {
+      "source_id": "source-context-008",
+      "wikitext_line": 8,
+      "text_line": 8,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/4.4.1..4.4.2 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/4.4.1..4.4.2 BlizzardInterfaceResources]",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Two external diff references, unexpanded; no member inventory or runtime proof inferred."
+    }
+  ],
+  "proof_policy": "Exact pinned source accounting only. Five metadata rows and one named namespace contract UNPROVEN. Source-response revision and hashes establish source identity, not runtime API compatibility. No register, sweep, positive runtime/native credit, modeled gap count or supersession chain. No retail/Mists stand-in.",
+  "coordinator_note": "Register generator and shared ClientLine classifier do not support cataclysm-classic; unlabeled registers default to retail. Future Cata runtime accounting requires explicit new client-line classification and a supported profile, outside this source-only task. Neither tool is changed."
+}

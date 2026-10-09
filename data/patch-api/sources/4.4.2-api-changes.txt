@@ -1,0 +1,8 @@
+Patch 4.4.2 API changes
+
+== Summary ==
+* The modern auction house and its associated C_AuctionHouse APIs has been enabled for Cataclysm Classic.
+
+== Resources ==
+* TOC: 40402
+* Diffs: wow-ui-source, BlizzardInterfaceResources

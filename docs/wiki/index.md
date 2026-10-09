@@ -2469,6 +2469,10 @@ The six retail 12.0.0 `Enum.EncounterTimelineEventSource.*` and `Enum.EncounterT
 
 # Wiki Index
 
+## [2026-10-08] source audit | Cataclysm Classic 4.4.2
+
+[Audit](investigations/patch-4-4-2-api-audit.md): pinned page 619773/revision 6303388, literal TOC 40402; six source rows (five metadata, one `C_AuctionHouse` contract UNPROVEN). Unsupported Cata profile, no runtime/native credit or retail/Mists stand-in. External diffs unexpanded; no register or classifier changes. Source-byte and serialized-ledger proof only.
+
 ## [2026-09-27] audit | Record pending inline XML ScrollFrame arguments
 
 `0c913d2ed` binds inline-body locals before the body: `offset` for horizontal/vertical scroll, `xrange`/`yrange` for range changes, and `delta` for wheel callbacks. Varargs and same-named globals remain intact; `method=`/`function=` bindings are unchanged. Tests-only `6b63be464` is RED in three silent wrong-value cases: handlers read globals `901`–`904` and FauxScrollFrame is wrong at offset `37`; recorded Lua errors are empty and five prior binding controls pass. Cached FauxScrollFrame uses `offset`/`delta`; Mists CharacterCreate uses `yrange`. Independent verification is pending; no physical-input, native, or vendor/UI claim. See [[xml-template-system]], [[widget-system]], [[lua-api]], and [Inline XML scroll arguments](../specs/xml-scroll-arguments.md).
