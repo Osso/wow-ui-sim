@@ -1,0 +1,24 @@
+{
+  "kind": "direct retention metadata, not independent acceptance",
+  "observed_revision": "d209973b3d20c2b894e27384e57b33d704ee3a75",
+  "observed_at": "2026-10-09T19:34:01.016332+00:00",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p150-page",
+  "original_sealed_files": 31,
+  "original_files_match": true,
+  "original_seals_sha256": "63ff91b8064989a422d5aa62c195cb895ea4b98b6ef9a1e80d173a0ee88581db",
+  "archive_sha256": "a83268b3517583f477cc023ae7614449d448606e4c8feb9102806ec59c8525bf",
+  "archive_bytes": 53739,
+  "archive_members": 32,
+  "later_receipts_not_in_original_map": true,
+  "environment_key_pattern_policy": [
+    "SECRET",
+    "TOKEN",
+    "PASSWORD",
+    "CREDENTIAL",
+    "PRIVATE",
+    "API_KEY"
+  ],
+  "sensitive_key_name_matches": [],
+  "environment_values_inspected": false,
+  "limits": "No final gate; main owns integration, independent acceptance, native/historical target research."
+}

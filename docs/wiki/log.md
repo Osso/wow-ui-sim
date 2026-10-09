@@ -1122,3 +1122,7 @@ Fresh immutable copied validator/SOURCE5/portable3 ata3e47eb41; exact default by
 ## [2026-10-09] ingest | Patch 1.5.0 SOURCE accounting
 
 Own frozen identity verified before derivation; SOURCE RED6/portable RED3 retained. [Audit](investigations/patch-1-5-0-api-audit.md) bounds empty local inventory and unapplied frozen contexts; no runtime/native/parent credit. SOURCE GREEN6/6 at231bc7d2e; portable GREEN pending.
+
+## [2026-10-09] copied SOURCE proof | Patch 1.5.0
+
+Own SOURCE6/6 at231bc7d2e; immutable31-seal/32-member53,739-byte archive ata4f4d59ba. Actual copied SOURCE6/portable3 and validator exit0 atd209973b3; default bytes/errors and both serialized ledger/log reject/exact restoration. Seven later receipts separately sealed. [Audit](investigations/patch-1-5-0-api-audit.md); no native/model/runtime/parent closure, main owns acceptance.

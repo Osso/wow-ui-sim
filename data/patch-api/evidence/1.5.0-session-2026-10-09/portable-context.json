@@ -1,0 +1,13 @@
+{
+  "actual_execution_revision": "d209973b3d20c2b894e27384e57b33d704ee3a75",
+  "archive_commit": "a4f4d59ba",
+  "archive_sha256": "a83268b3517583f477cc023ae7614449d448606e4c8feb9102806ec59c8525bf",
+  "archive_bytes": 53739,
+  "members": 32,
+  "original_seals_sha256": "63ff91b8064989a422d5aa62c195cb895ea4b98b6ef9a1e80d173a0ee88581db",
+  "original_seals": 31,
+  "copied_directory": "/home/osso/.worktrees/wow-ui-sim-p150-page/data/patch-api/evidence/1.5.0-session-2026-10-09/replay-150-cw5e5l8w",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p150-page",
+  "isolation": "fresh archive extraction; isolated Python, no Git/target/current tools/addons in copied root; PATH disabled",
+  "receipt_epoch": "later separate; not backfilled"
+}

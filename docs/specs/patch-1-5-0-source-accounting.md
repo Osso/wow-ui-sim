@@ -8,7 +8,7 @@ Bounded page372076/revision3587158/timestamp2020-04-13T00:49:38Z from retained l
 - [x] Account all literal rows/prose/headers/counts/links/templates/signatures/defaults; reject omission/count/invention/expansion and false proof credit.
 - [x] Keep redirect unexpanded and contract UNPROVEN; zero local declarations cannot close parent behavior goal.
 - [x] Preserve original Retail/Era/Forever distinctions and original frozen queued1.6.0/1.7.0 contexts as unapplied; newer integrated1.6.0 at base is methodology only.
-- [ ] Retain own SOURCE RED/GREEN and default bytes/errors; copied archive portable3 must reject serialized ledger/log tampering and restore exact bytes/hash/map without resealing.
+- [x] Retain own SOURCE RED/GREEN and default bytes/errors; copied archive portable3 must reject serialized ledger/log tampering and restore exact bytes/hash/map without resealing.
 - [ ] Main independently accepts receipts and retention. Original seals/archive immutable; later actual revision/cwd/argv/times/full streams/scoped hashes separate.
 
 ## How it works
