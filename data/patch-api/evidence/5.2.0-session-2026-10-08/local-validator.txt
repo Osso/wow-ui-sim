@@ -1,0 +1,1 @@
+{"status": "PASS", "inventory": 163, "publication_gaps": 57, "accounted_ids": 191, "retirement_scans": 78, "registers": 59, "retirements": 0}
