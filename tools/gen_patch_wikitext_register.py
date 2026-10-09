@@ -290,6 +290,58 @@ def parse_cataclysm_change_bullets(text):
     return entries
 
 
+def launch_entry(number, line, symbol, direction, *, kind=None):
+    section = ('widgets' if ':' in symbol or kind == 'widget-script' else
+               'events' if kind == 'event' else 'cvars' if kind == 'cvar' else
+               'commands' if kind == 'click-modifier' else
+               'framexml' if symbol.startswith('InterfaceOptionsFrame_') else 'global-api')
+    entry = dict(make_entry(section, direction, number, '{{api|' + symbol + '}}'),
+                 annotation=line)
+    if kind:
+        entry['kind'] = kind
+    return entry
+
+
+def parse_wrath_launch_inventory(text):
+    """Retain 3.0.2 labeled rows and literal summary references, not linked domains."""
+    entries = []
+    for number, line in enumerate(text.splitlines(), 1):
+        normalized = re.sub(r'\{\{api\|([^{}|]+)\}\}', r'\1', line)
+        marker = re.match(r'\s*\*?\s*(NEW|UPDATED|MODIFIED|REMOVED)( HANDLER)?\s*-?\s*(.*)',
+                          normalized)
+        if marker:
+            direction = {'NEW': 'added', 'REMOVED': 'removed'}.get(marker[1], 'changed')
+            body = marker[3].split(' -- ', 1)[0]
+            if '=' in body:
+                body = body.split('=', 1)[1].strip()
+            symbol = re.match(r'([A-Za-z_]\w*(?::[A-Za-z_]\w*)?(?:\.[A-Za-z_]\w*)?)', body)
+            if not symbol:
+                raise ValueError(f'launch inventory lacks literal identity at {number}: {line}')
+            entries.append(launch_entry(number, line, symbol[1], direction,
+                                        kind='widget-script' if marker[2] else None))
+            continue
+        direction = ('removed' if 'functions have been replaced' in line else 'changed')
+        for call in re.finditer(r'\b([A-Za-z_]\w*(?::[A-Za-z_]\w*)?)\(', normalized):
+            entries.append(launch_entry(number, line, call[1], direction))
+        if 'new event' in line:
+            for symbol in re.findall(r'\b[A-Z]+(?:_[A-Z]+)+\b', line):
+                entries.append(launch_entry(number, line, symbol, 'added', kind='event'))
+        for symbol in re.findall(r'"([A-Za-z_]\w*)" cvar', line):
+            entries.append(launch_entry(number, line, symbol, 'changed', kind='cvar'))
+        if 'new FOCUSCAST click modifier' in line:
+            entries.append(launch_entry(number, line, 'FOCUSCAST', 'added', kind='click-modifier'))
+        rename = re.search(r'(InterfaceOptionsFrame_\w+) has been renamed (InterfaceOptionsFrame_\w+)', line)
+        if rename:
+            entries.extend(launch_entry(number, line, symbol, action) for symbol, action in
+                           zip(rename.groups(), ('removed', 'added')))
+        # Bare references without call syntax remain literal changed occurrences.
+        for symbol in ('GetInventoryItemsForSlot', 'UnitExists'):
+            if symbol in line and not any(r['symbol'] == symbol and r['wikitext_line'] == number
+                                          for r in entries):
+                entries.append(launch_entry(number, line, symbol, 'changed'))
+    return entries
+
+
 def parse_wrath_retail_summary(text):
     """Retain literal bare-call, method and event identities in 2009 summaries."""
     entries = []
@@ -1151,6 +1203,8 @@ def main():
                         help='Normalize 2012 code-wrapped removals in the pinned diff; opt-in')
     parser.add_argument('--wrath-retail-summary', action='store_true',
                         help='Retain 2009 bare-call/method/event summary identities; opt-in')
+    parser.add_argument('--wrath-launch-inventory', action='store_true',
+                        help='Retain literal 3.0.2 labeled and summary inventory; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -1183,6 +1237,8 @@ def main():
         entries.extend(parse_wrath_retail_summary(raw.decode('utf-8')))
     if args.wrath_retail_change_bullets:
         entries.extend(parse_wrath_retail_change_bullets(raw.decode('utf-8')))
+    if args.wrath_launch_inventory:
+        entries.extend(parse_wrath_launch_inventory(raw.decode('utf-8')))
     if args.legacy_api_bullets:
         entries.extend(parse_legacy_api_bullets(raw.decode('utf-8')))
     if args.legacy_api_renames:
