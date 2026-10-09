@@ -1,0 +1,15 @@
+{
+  "phase": "RED",
+  "revision": "acf7fbfe9b07dc342b8078cb1c54b702151a23d6",
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p255-source/data/patch-api/evidence/2.5.5-session-2026-10-09/test_source_accounting.py",
+    "SourceAccounting.test_exact_source_accounting_derives_counts"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p255-source",
+  "exit": 1,
+  "stub_sha256": "0ee5d521c0e440d3887e1329b1a12d3999b31610709efa239df20383e8482a50",
+  "test_sha256": "025244f7fe599590324b7c56083807bac44b42af53b9bf4c80d9ef158eb68712",
+  "scope": "required derived SOURCE accounting missing in empty validator; not runtime/native proof"
+}

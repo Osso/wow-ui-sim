@@ -7,6 +7,9 @@
 ## [2026-10-09] investigation | Patch 2.5.6 Classic/TBC SOURCE accounting
 
 [Audit](investigations/patch-2-5-6-api-audit.md): frozen page 685353/revision 6778086, literal TOC 20506. Six nonblank rows, five metadata and one UNPROVEN unexpanded Era blue-post transclusion; zero explicit API/signature/header/local-summary contracts. Actual configured code/manifests recorded separately (Anniversary 11507, not assumed TBC); no unsupported-client diagnosis or runtime/model/native measurements. Source-only historical tools/inputs and targeted RED retained; SOURCE GREEN 9/9 and historical validator exit 0 at c77aab464 with 27 input seals. Ledger/log seal tampering rejects/restores and fresh Git/target/current-tool-free archive replay passes at 4db382e41 (30 historical inputs; 33 outer seals). Precise linked-content contracts remain UNPROVEN. Main owns integration/native/final gates.
+## [2026-10-09] investigation | Patch 2.5.5 Classic/TBC SOURCE audit
+
+[Audit](investigations/patch-2-5-5-api-audit.md): frozen page 686953/revision 6838475, literal Burning Crusade Classic Anniversary pre-patch and TOC 20505. Five nonblank rows/four metadata/one UNPROVEN summary; four linked/native/state contracts. Zero explicit APIs/signatures/headers/removals/transclusions or model/native/runtime credit. Configured Anniversary 11507 recorded separately; 2.5.6 frozen same-line reference pending main integration, no foreign supersession. Own sealed source accounting and historical replay; no broad/final gates.
 
 ## [2026-10-09] investigation | Patch 3.4.2 Wrath Classic source audit
 

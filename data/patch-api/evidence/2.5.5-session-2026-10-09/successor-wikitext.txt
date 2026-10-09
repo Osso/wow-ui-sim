@@ -1,0 +1,8 @@
+{{apichanges|prev=2.5.5|2.5.6}}
+
+==Resources==
+* TOC: <code>20506</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/2.5.5..2.5.6 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/2.5.5...2.5.6 BlizzardInterfaceResources]
+
+==Blue posts==
+{{:Patch_1.15.9/API_changes}}

@@ -1,0 +1,7 @@
+Patch 2.5.5 API changes
+
+This is the pre-patch for Burning Crusade Classic Anniversary Edition.
+
+== Resources ==
+* TOC: 20505
+* Diffs: wow-ui-source, BlizzardInterfaceResources

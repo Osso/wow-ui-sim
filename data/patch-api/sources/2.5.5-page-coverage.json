@@ -1,0 +1,156 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "2.5.5",
+  "client_line": "tbc-classic",
+  "profile": null,
+  "scope": "source-and-configured-profile-accounting",
+  "source": {
+    "title": "Patch 2.5.5/API changes",
+    "version": "2.5.5",
+    "pageid": 686953,
+    "revid": 6838475,
+    "timestamp": "2026-08-20T15:48:09Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6838475&format=json",
+    "retrieved": "2026-10-09T08:51:36.393581+00:00",
+    "response_sha256": "131f2318b95b29a9140f76c4fde87d9c3ed0564df7fbd5486cae8035075059bc",
+    "wikitext_sha256": "1ded7ad90515d5437907eccd15d367592d10ef876414fa6801b8dd53d15177e2",
+    "wikitext_bytes": 399,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.5-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.5-wikitext.txt"
+  },
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/2.5.5-api-changes.txt",
+    "sha256": "fcf6e0757c99e474c1cc072144f3a6674bd532b534704fb85d8ff999ecb3b41d",
+    "extractor_flags": [
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "local_transform": null
+  },
+  "inventory": {
+    "enumerated_api_occurrences": 0,
+    "header_counts": [],
+    "register_created": false,
+    "removals": 0,
+    "explicit_signatures": 0,
+    "local_summary_contracts": 1,
+    "transclusions": 0
+  },
+  "later_registers": [],
+  "pending_successors": [
+    {
+      "patch": "2.5.6",
+      "client_line": "tbc-classic",
+      "source_toc": 20506,
+      "pin": "successor-pin.json",
+      "status": "reference-only; main integration pending",
+      "supersession_credit": false
+    }
+  ],
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Literal navigation prev=2.5.4; metadata, no supersession/native credit.",
+      "wikitext_line": 1,
+      "text_line": 1,
+      "source_text": "{{apichanges|2.5.5|prev=2.5.4}}"
+    },
+    {
+      "source_id": "prose-undated-003",
+      "capabilities": [],
+      "status": "UNPROVEN",
+      "note": "UNPROVEN linked pre-patch assertion: named Burning Crusade Classic Anniversary Edition is literal identity, not measured client state/API parity; no member/signature/event/state/security behavior specified.",
+      "wikitext_line": 3,
+      "text_line": 3,
+      "source_text": "This is the pre-patch for [[World of Warcraft: Burning Crusade Classic Anniversary Edition|Burning Crusade Classic Anniversary Edition]]."
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Resources heading only.",
+      "wikitext_line": 5,
+      "text_line": 5,
+      "source_text": "==Resources=="
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Literal TOC 20505 is source expectation, not configured Anniversary 11507 or native observation.",
+      "wikitext_line": 6,
+      "text_line": 6,
+      "source_text": "* TOC: <code>20505</code>"
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Both 2.5.4..2.5.5 external diffs unexpanded; no inferred member/signature/state contracts.",
+      "wikitext_line": 7,
+      "text_line": 7,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/2.5.4..2.5.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/2.5.4..2.5.5 BlizzardInterfaceResources]"
+    }
+  ],
+  "contracts": [
+    {
+      "member_identities": null,
+      "arguments": null,
+      "returns": null,
+      "event_triggers": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "source_id": "prose-undated-003",
+      "status": "UNPROVEN",
+      "kind": "linked-prepatch-state-assertion",
+      "target": "World of Warcraft: Burning Crusade Classic Anniversary Edition"
+    },
+    {
+      "member_identities": null,
+      "arguments": null,
+      "returns": null,
+      "event_triggers": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "source_id": "source-context-006",
+      "status": "UNPROVEN",
+      "kind": "unmeasured-native-interface-expectation",
+      "target": "20505"
+    },
+    {
+      "member_identities": null,
+      "arguments": null,
+      "returns": null,
+      "event_triggers": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "source_id": "source-context-007",
+      "status": "UNPROVEN",
+      "kind": "unexpanded-external-diff",
+      "target": "https://github.com/Gethe/wow-ui-source/compare/2.5.4..2.5.5"
+    },
+    {
+      "member_identities": null,
+      "arguments": null,
+      "returns": null,
+      "event_triggers": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "source_id": "source-context-007",
+      "status": "UNPROVEN",
+      "kind": "unexpanded-external-diff",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/compare/2.5.4..2.5.5"
+    }
+  ],
+  "proof_policy": "Source accounting only; no positive empty-inventory parity, unsupported-client diagnosis or native/model/runtime closure."
+}

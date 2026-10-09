@@ -11,6 +11,9 @@ Updated only named audit/spec status paragraphs and index; immutable historical 
 ## [2026-10-09] investigation | Patch 2.5.6 Classic/TBC SOURCE accounting
 
 [Own audit](investigations/patch-2-5-6-api-audit.md): page 685353/revision 6778086 identity/hashes validated before copying; six rows/five metadata/one UNPROVEN transclusion. TOC 20506 separate from configured interfaces/manifests; Anniversary observed 11507, no unsupported-runtime inference or foreign supersession. Stock extractor rejects transclusion; own literal unexpanded marker adapter and historical snapshots preserve boundary without shared/runtime edits. Targeted RED retained; implementation committed before verification. SOURCE GREEN 9/9 and historical validator exit 0 at c77aab464 with 27 exact input seals; at 4db382e41, both serialized disk tamper seals reject and originals restore; fresh archive SOURCE replay exit 0 (30 historical inputs, 33 outer seals). Exact receipts/archive member mapping retained in own audit; no positive runtime/model/native closure. No broad/final/native gates; coordinator ownership retained.
+## [2026-10-09] investigation | Patch 2.5.5 Classic/TBC SOURCE audit
+
+Created [bounded audit](investigations/patch-2-5-5-api-audit.md) and own spec/ledger/evidence from validated frozen input. Literal client identity/TOC separated from actual configured interfaces; 2.5.6 retained pending integration with no supersession credit. No runtime/profile/shared-tool/cache/vendor/Wowless changes or broad/native/final gates. Source proof status recorded in linked audit.
 
 ## [2026-10-09] proof status | Retail 3.3.5/3.3.3 and Wrath 3.4.2 follow-up
 
