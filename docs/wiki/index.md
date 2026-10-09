@@ -12,7 +12,7 @@
 
 ## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
 
-[Audit](investigations/patch-5-3-0-api-audit.md): pinned revision 4065122 plus transcluded diff 3188422; retail TOC 50300 (2013), 44 inventory occurrences including Browser handlers. Whole-word retirement scans and fixed queued-register checks retained. Targeted acceptance passes: 58 publication cases, 89 fixtures, bare/cached role backing, PvP unit, Mists/format; 15 publication and six prose gaps retained. Portable gate 44/44 clean and 45/45 later; own tamper rejected. No runtime changes.
+[Audit](investigations/patch-5-3-0-api-audit.md): retail TOC 50300 (2013), 44 inventory occurrences including Browser handlers. Integrated against master a82b8eb1c with real 5.4.x successors; 15 publication and six prose gaps unchanged. All 64 other retail/Classic sweeps equal master; 65 registers/62 main extracts and supplemental diff reproduce, inherited failures unchanged. Retail 61/61, Mists 6/6, own prefork/integration 2/2 each, fixtures 96/96, format/Mists check pass. Compact tree-pin mapping; historical evidence preserved. No runtime changes.
 
 ## [2026-10-08] investigation | Patch 5.5.3 Mists Classic API audit
 

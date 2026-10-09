@@ -533,4 +533,4 @@ Retail page and transcluded diff pinned; all 159 IDs accounted. [Audit](investig
 
 ## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
 
-Pinned retail 2013 page and diff; 44 source occurrences, opt-in parser reuse, bounded existing PvP role backing tests and consumer-free prior absence scans. [Audit](investigations/patch-5-3-0-api-audit.md). Targeted acceptance passes; 15 publication and six prose gaps retained. Portable gate 44/44 clean and 45/45 later; own tamper rejected. Audit steps complete; historical contracts remain pending.
+[Audit](investigations/patch-5-3-0-api-audit.md) integrated against a82b8eb1c: real 5.4.x successors leave all 44 observations and 15 gaps unchanged; every other retail/Classic sweep equals master. Compact patch-ID/directory-tree rebase mapping and committed-input receipts preserve historical records. All requested source, targeted, fixture, format and warning-clean non-vendor Mists checks pass; historical contracts remain pending. No runtime changes or compaction-branch imports.
