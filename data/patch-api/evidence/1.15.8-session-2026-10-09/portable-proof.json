@@ -1,0 +1,139 @@
+{
+  "scope": "historical SOURCE only; no native/integration/final gate",
+  "revision": "b0247703921da4057446dac16e52fae555d67b9c",
+  "original_seal_map_sha256": "67df0a1ec34d3cad5b8457d3f08ca95f3f677e35eda351490b6a8d6461e6f0a4",
+  "original_inputs": 23,
+  "runs": [
+    {
+      "phase": "original-historical-validator",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1158-source/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1158-source",
+      "exit_code": 0,
+      "proof_scope": "frozen historical inputs only"
+    },
+    {
+      "phase": "serialized-tamper-ledger.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1158-source/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1158-source",
+      "exit_code": 1,
+      "proof_scope": "frozen historical inputs only"
+    },
+    {
+      "phase": "serialized-tamper-green.log",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1158-source/data/patch-api/evidence/1.15.8-session-2026-10-09/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1158-source",
+      "exit_code": 1,
+      "proof_scope": "frozen historical inputs only"
+    },
+    {
+      "phase": "copied-historical-validator",
+      "argv": [
+        "python3",
+        "-B",
+        "/tmp/p1158-source-replay-lb_guh0u/audit.py"
+      ],
+      "cwd": "/tmp/p1158-source-replay-lb_guh0u",
+      "exit_code": 0,
+      "proof_scope": "frozen historical inputs only"
+    },
+    {
+      "phase": "copied-SOURCE-fixtures",
+      "argv": [
+        "python3",
+        "-B",
+        "/tmp/p1158-source-replay-lb_guh0u/test_source_accounting.py"
+      ],
+      "cwd": "/tmp/p1158-source-replay-lb_guh0u",
+      "exit_code": 0,
+      "proof_scope": "frozen historical inputs only"
+    },
+    {
+      "phase": "copied-default-generator",
+      "argv": [
+        "python3",
+        "-B",
+        "/tmp/p1158-source-replay-lb_guh0u/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.8",
+        "/tmp/p1158-source-replay-lb_guh0u/source.wikitext",
+        "6778071",
+        "/tmp/p1158-source-replay-lb_guh0u/replayed-register.json"
+      ],
+      "cwd": "/tmp/p1158-source-replay-lb_guh0u",
+      "exit_code": 0,
+      "proof_scope": "frozen historical inputs only"
+    }
+  ],
+  "tamper_controls": [
+    {
+      "path": "ledger.json",
+      "original_sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+      "tampered_sha256": "ee9682298530f267de5c422defb2f5e4f00e6e32f9938836cf7d5486757ccd7b",
+      "restored_sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+      "reject_boundary": "seal: ledger.json",
+      "restored_exact_bytes": true
+    },
+    {
+      "path": "green.log",
+      "original_sha256": "8f3295a9219340307773d484360ae36552067261574d92fa1e68650d78f8752a",
+      "tampered_sha256": "bea4308abcef0a0b3c8216c230899d1a15f78f93d93bb1398134aec470833679",
+      "restored_sha256": "8f3295a9219340307773d484360ae36552067261574d92fa1e68650d78f8752a",
+      "reject_boundary": "seal: green.log",
+      "restored_exact_bytes": true
+    }
+  ],
+  "archive": {
+    "path": "replay-archive.tar.gz",
+    "sha256": "53e386b8e40c862419533bb54d0de964340872461e5e96153a04a671451e2fed",
+    "bytes": 98432,
+    "members": {
+      "audit.py": "364cc2e2812507992de088b92f95a650556f4870bb123661a47b7389b92efbbf",
+      "configured-inputs/Cargo.toml": "2533154ff605dde03d1e87fb0e77dd803420b7b90b57381cdee539be34742920",
+      "configured-inputs/data/blizzard-ui-files/anniversary.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "configured-inputs/data/blizzard-ui-files/era.txt": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "configured-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+      "default-generator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "default-register.json": "21eda1c8eb6901e742a2b85648edce2d9b98430c026cde66dfb54caac8098763",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "green.log": "8f3295a9219340307773d484360ae36552067261574d92fa1e68650d78f8752a",
+      "historical-tools/extract_patch_non_inventory.py": "a8db3187a691118b7e1a66db8e0e9262bfdb3d2de1fb4775abfb10f9026c9d11",
+      "historical-tools/gen_patch_wikitext_register.py": "bdcf987489d2491a349817b429d579980680e1259063985e7a424568dc165fda",
+      "ledger.json": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+      "proof-ledger.json": "3be3655f43abd814c159e17597bee7ef7ec133df9254306818d8beceedf15da5",
+      "queued-successor/source-pin.json": "c473a7de39f61bd5a9508ba39196736b99d366575b78a4656c7d6ae1d3686b95",
+      "queued-successor/source.wikitext": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+      "queued-successor/status.json": "d8fae22dc9515c311d71d0fe390726b62e810a6885fdedd7fd34f51ac6a62771",
+      "red-scaffold.py": "413fa202968fc3145d3201d0205355a2ea19ffb0730b76e8127c4504b009588a",
+      "red.log": "f398b6e37e7e3335938d70e217757c0249f8a124a245eb8dc98aa485c371e5a6",
+      "seals.json": "67df0a1ec34d3cad5b8457d3f08ca95f3f677e35eda351490b6a8d6461e6f0a4",
+      "source-pin.json": "00ad5c834c48c2aea3356b5c5f48da874ebab14dc1fa0c58c61a6b4388cdbdb6",
+      "source-response.json": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+      "source.wikitext": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+      "test_source_accounting.py": "48d3a4c8fdd594a02f98c760fa6da8b4f2a371d2e2a09d5b3b368ed32b8e7a81"
+    },
+    "member_count": 24,
+    "copied_root": "/tmp/p1158-source-replay-lb_guh0u",
+    "absent": [
+      ".git",
+      "target",
+      "current tools",
+      "runtime",
+      "cache"
+    ],
+    "default_generator_flags": [],
+    "default_register_byte_equal": true
+  },
+  "originals_unchanged_after_controls": true
+}

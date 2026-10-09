@@ -30,7 +30,12 @@ Own eight fixtures: RED eight expected assertion failures against empty accounti
 
 ## Historical proof
 
-Original `seals.json` pins **23 inputs**, 660,202 bytes total; largest file 219,034 bytes, all under 5 MB. RED/GREEN logs and proof ledger included. Frozen default generator flags `[]` yields retained empty register; no all-flags expansion. Copied replay and disk tamper controls pending; later receipt seals remain separate. No native/final acceptance claim.
+Original `seals.json` pins **23 inputs**, 660,202 bytes total; largest file 219,034 bytes, all under 5 MB. RED/GREEN logs and proof ledger included. Frozen default generator flags `[]` yields retained empty register; no all-flags expansion. Original seal map SHA256 `67df0a1ec34d3cad5b8457d3f08ca95f3f677e35eda351490b6a8d6461e6f0a4` remains unchanged after controls. Five later artifacts/map have independent `receipt-seals.json`; these do not extend or rewrite original seals. 
+[Portable proof](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/portable-proof.json) at `b02477039`: historical validator exit0, both serialized `ledger.json` contract omission and `green.log` fabricated success rejected at exact seals (exit1); original bytes/hashes restored. All 23 originals/map unchanged afterward.
+
+Fresh archive **24 members**, **98,432 bytes**, SHA256 `53e386b8e40c862419533bb54d0de964340872461e5e96153a04a671451e2fed`; copied fresh-process validator exit0 and SOURCE8/8. No Git/target/current tools/runtime/cache inputs in archive. Frozen default generator flags `[]` reproduces retained JSON byte-for-byte; stock empty inventory is not parity. Frozen extractor retained unchanged, not executed or expanded. No all-flags regression or final gates performed.
+
+[Replay instructions](../../../data/patch-api/evidence/1.15.8-session-2026-10-09/REPLAY.md) use copied historical tools and source only. Exact commands, member hashes, restoration hashes and logs retained. Later portable receipts are separately sealed; no original proof rewritten. Zero native/final acceptance claim.
 
 ## Sources
 
