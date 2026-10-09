@@ -1,0 +1,44 @@
+{
+  "scope": "immutable historical SOURCE, no runtime/model/native evidence",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1137-page",
+  "base_revision": "5b12dac256abc0ffaf541df2bc445e8381612d2d",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/test_source_accounting.py"
+      ],
+      "revision": "51f1f9cc2",
+      "result": "RED8 assertion failures: ledger not implemented",
+      "log": "red.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/test_source_accounting.py"
+      ],
+      "revision": "0b39afb17",
+      "result": "GREEN8/8",
+      "log": "green.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/originals.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/build/p1137-portable",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1137-page/data/patch-api/evidence/1.13.7-session-2026-10-09/portable-red-proof.json"
+      ],
+      "revision": "0b39afb17",
+      "result": "RED3 assertion failures: own archive absent",
+      "log": "portable-red.log"
+    }
+  ],
+  "later_changes_invalidate": false
+}
