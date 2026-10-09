@@ -10,7 +10,7 @@ pub mod action_count_info;
 #[cfg(feature = "retail-12-0-5")]
 pub use action_count_info::ActionUseCountInfo;
 pub mod action_macros;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod addon_messages;
 #[cfg(feature = "retail-12-0-5")]
 pub mod aura_duration;
@@ -66,7 +66,7 @@ pub(crate) mod c_click_bindings_spell;
 pub mod c_club;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_combat_audio_alert;
-#[cfg(feature = "retail-12-0-0")]
+#[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 mod c_combat_log;
 #[cfg(feature = "retail-12-0-0")]
 mod c_combat_text;
