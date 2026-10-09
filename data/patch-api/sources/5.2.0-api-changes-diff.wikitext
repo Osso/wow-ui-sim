@@ -1,0 +1,224 @@
+<noinclude>{{Transclude}}</noinclude>
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.1.0.16309 &rarr; 5.2.0.16650)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 36 new functions
+! style="width: 50%; padding-right: 1em"| 30 removed functions
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_MapBar.BarIsShown}}
+: {{api|C_MapBar.GetCurrentValue}}
+: {{api|C_MapBar.GetMaxValue}}
+: {{api|C_MapBar.GetParticipationPercentage}}
+: {{api|C_MapBar.GetPhaseIndex}}
+: {{api|C_MapBar.GetTag}}
+: {{api|C_PetBattles.GetForfeitPenalty}}
+: {{api|C_PetJournal.GetPetCooldownByGUID}}
+: {{api|DeclineChannelInvite}}
+: {{api|DevTest1}}
+: {{api|GetArenaTeamIndexBySize}}
+: {{api|GetBlacklistMapName}}
+: {{api|GetDifficultyInfo}}
+: {{api|GetHolidayBGInfo}}
+: {{api|GetLFGBonusFactionID}}
+: {{api|GetQuestChoiceInfo}}
+: {{api|GetQuestChoiceOptionInfo}}
+: {{api|GetQuestChoiceRewardCurrency}}
+: {{api|GetQuestChoiceRewardFaction}}
+: {{api|GetQuestChoiceRewardInfo}}
+: {{api|GetQuestChoiceRewardItem}}
+: {{api|GetRaidDifficultyID}}
+: {{api|GetRandomBGInfo}}
+: {{api|GetSchoolString}}
+: {{api|GetSpellLossOfControlCooldown}}
+: {{api|IsAllowedToUserTeleport}}
+: {{api|IsTradeSkillReady}}
+: {{api|PrepVoidStorageForTransmogrify}}
+: {{api|RequestRandomBattlegroundInstanceInfo}}
+: {{api|SendQuestChoiceResponse}}
+: {{api|SetLFGBonusFactionID}}
+: {{api|SetRaidDifficultyID}}
+: {{api|UnitGetTotalAbsorbs}}
+: {{api|UnitStagger}}
+: {{api|UpdateWorldMapArrow}}
+: {{api|UseVoidItemForTransmogrify}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: ClearChannelWatch
+: CommentatorAddPlayer
+: CommentatorGetPartyInfo
+: CommentatorGetSkirmishMode
+: CommentatorGetSkirmishQueueCount
+: CommentatorGetSkirmishQueuePlayerInfo
+: CommentatorRemovePlayer
+: CommentatorRequestSkirmishMode
+: CommentatorRequestSkirmishQueueData
+: CommentatorSetPlayerIndex
+: CommentatorSetSkirmishMatchmakingMode
+: CommentatorStartInstance
+: CommentatorStartSkirmishMatch
+: CreateMiniWorldMapArrowFrame
+: CreateWorldMapArrowFrame
+: DeclineInvite
+: GetCurrentRaidDifficulty
+: GetInstanceDifficulty
+: GetMinigameState
+: GetMinigameType
+: GetRaidDifficulty
+: MakeMinigameMove
+: PlayDance
+: PositionMiniWorldMapArrowFrame
+: PositionWorldMapArrowFrame
+: SetChannelWatch
+: SetRaidDifficulty
+: ShowMiniWorldMapArrowFrame
+: ShowWorldMapArrowFrame
+: UpdateWorldMapArrowFrames
+</div>
+|}
+=== FrameXML ===
+{| class="wikitable" style="min-width: 600px"
+|+ FrameXML (5.1.0.16309 &rarr; 5.2.0.16650)
+|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 3 new functions
+! style="width: 50%; padding-right: 1em"| 5 removed functions
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-fxml"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|ControlGetActiveCvarValue}}
+: {{api|GetApplicableMultisampleSetting}}
+: {{api|TogglePVPUI}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: BattlegroundShineFadeIn
+: BattlegroundShineFadeOut
+: IsAlreadyInQueue
+: IsPvPFrameSelected
+: TogglePVPFrame
+</div>
+|}
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.1.0.16309 &rarr; 5.2.0.16650)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 7 new events
+! style="width: 50%; padding-right: 1em"| 4 removed events
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|BATTLEPET_FORCE_NAME_DECLENSION}}
+: {{api|t=e|LFG_BONUS_FACTION_ID_UPDATED}}
+: {{api|t=e|LOADING_SCREEN_DISABLED}}
+: {{api|t=e|LOADING_SCREEN_ENABLED}}
+: {{api|t=e|MAP_BAR_UPDATE}}
+: {{api|t=e|QUEST_CHOICE_UPDATE}}
+: {{api|t=e|UNIT_ABSORB_AMOUNT_CHANGED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: COMMENTATOR_SKIRMISH_MODE_REQUEST
+: COMMENTATOR_SKIRMISH_QUEUE_REQUEST
+: MINIGAME_UPDATE
+: START_MINIGAME
+</div>
+|}
+=== Widget API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API (5.1.0.16309 &rarr; 5.2.0.16650)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 37 new methods
+! style="width: 50%; padding-right: 1em"| 37 removed methods
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Cooldown:GetCooldownDuration}}
+: {{api|t=w|Cooldown:SetBlingDuration}}
+: {{api|t=w|PlayerModel:AdvanceTime}}
+: {{api|t=w|PlayerModel:ClearFog}}
+: {{api|t=w|PlayerModel:ClearModel}}
+: {{api|t=w|PlayerModel:GetCameraDistance}}
+: {{api|t=w|PlayerModel:GetCameraFacing}}
+: {{api|t=w|PlayerModel:GetCameraPosition}}
+: {{api|t=w|PlayerModel:GetCameraTarget}}
+: {{api|t=w|PlayerModel:GetFacing}}
+: {{api|t=w|PlayerModel:GetFogColor}}
+: {{api|t=w|PlayerModel:GetFogFar}}
+: {{api|t=w|PlayerModel:GetFogNear}}
+: {{api|t=w|PlayerModel:GetLight}}
+: {{api|t=w|PlayerModel:GetModel}}
+: {{api|t=w|PlayerModel:GetModelScale}}
+: {{api|t=w|PlayerModel:GetPosition}}
+: {{api|t=w|PlayerModel:GetWorldScale}}
+: {{api|t=w|PlayerModel:HasCustomCamera}}
+: {{api|t=w|PlayerModel:ReplaceIconTexture}}
+: {{api|t=w|PlayerModel:SetCamera}}
+: {{api|t=w|PlayerModel:SetCameraDistance}}
+: {{api|t=w|PlayerModel:SetCameraFacing}}
+: {{api|t=w|PlayerModel:SetCameraPosition}}
+: {{api|t=w|PlayerModel:SetCameraTarget}}
+: {{api|t=w|PlayerModel:SetCustomCamera}}
+: {{api|t=w|PlayerModel:SetFacing}}
+: {{api|t=w|PlayerModel:SetFogColor}}
+: {{api|t=w|PlayerModel:SetFogFar}}
+: {{api|t=w|PlayerModel:SetFogNear}}
+: {{api|t=w|PlayerModel:SetGlow}}
+: {{api|t=w|PlayerModel:SetLight}}
+: {{api|t=w|PlayerModel:SetModel}}
+: {{api|t=w|PlayerModel:SetModelScale}}
+: {{api|t=w|PlayerModel:SetPosition}}
+: {{api|t=w|PlayerModel:SetSequence}}
+: {{api|t=w|PlayerModel:SetSequenceTime}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: Minimap:SetPlayerTextureHeight
+: Minimap:SetPlayerTextureWidth
+: Model:AdvanceTime
+: Model:ClearFog
+: Model:ClearModel
+: Model:GetCameraDistance
+: Model:GetCameraFacing
+: Model:GetCameraPosition
+: Model:GetCameraTarget
+: Model:GetFacing
+: Model:GetFogColor
+: Model:GetFogFar
+: Model:GetFogNear
+: Model:GetLight
+: Model:GetModel
+: Model:GetModelScale
+: Model:GetPosition
+: Model:GetWorldScale
+: Model:HasCustomCamera
+: Model:ReplaceIconTexture
+: Model:SetCamera
+: Model:SetCameraDistance
+: Model:SetCameraFacing
+: Model:SetCameraPosition
+: Model:SetCameraTarget
+: Model:SetCustomCamera
+: Model:SetFacing
+: Model:SetFogColor
+: Model:SetFogFar
+: Model:SetFogNear
+: Model:SetGlow
+: Model:SetLight
+: Model:SetModel
+: Model:SetModelScale
+: Model:SetPosition
+: Model:SetSequence
+: Model:SetSequenceTime
+</div>
+|}
+=== Widget Handlers ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget Handlers (5.1.0.16309 &rarr; 5.2.0.16650)
+|- class="mw-customtoggle-widget-handlers" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 2 new handlers
+! style="width: 50%; padding-right: 1em"| 2 removed handlers
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widget-handlers"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=wh|PlayerModel OnAnimFinished}}
+: {{api|t=wh|PlayerModel OnUpdateModel}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: Model OnAnimFinished
+: Model OnUpdateModel
+</div>
+|}

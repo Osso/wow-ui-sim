@@ -1,0 +1,7 @@
+{
+  "base_revision": "896086537a2b3c1ead5886d5ae3e430d56e7ef20",
+  "parser_origin": "c237c344eb1e2fb008be02cdd8c44e72f51c40c4",
+  "copied_hunks": "git diff 896086537 p530-page -- tools/gen_patch_wikitext_register.py; applied byte-identically",
+  "additional_behavior": "--mists-bare-widget-handlers normalizes bare owner/On-handler removals before the copied handler parser",
+  "constraints": "No Classic 5.5.x supersession; queued retail pages not integrated yet."
+}

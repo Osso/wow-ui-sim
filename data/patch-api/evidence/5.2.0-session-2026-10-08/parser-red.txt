@@ -1,0 +1,23 @@
+EE
+======================================================================
+ERROR: test_bare_handler_owner_and_direction (__main__.Mists520RegisterTest.test_bare_handler_owner_and_direction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p520-page/tools/test_patch_mists_520_register.py", line 26, in test_bare_handler_owner_and_direction
+    rows, counts = GEN.parse_mists_bare_widget_handlers(raw)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'generator' has no attribute 'parse_mists_bare_widget_handlers'. Did you mean: 'parse_mists_widget_handlers'?
+
+======================================================================
+ERROR: test_pinned_transclusion_counts (__main__.Mists520RegisterTest.test_pinned_transclusion_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p520-page/tools/test_patch_mists_520_register.py", line 36, in test_pinned_transclusion_counts
+    handlers, handler_counts = GEN.parse_mists_bare_widget_handlers(raw)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'generator' has no attribute 'parse_mists_bare_widget_handlers'. Did you mean: 'parse_mists_widget_handlers'?
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (errors=2)

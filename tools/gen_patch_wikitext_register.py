@@ -704,6 +704,13 @@ def parse_mists_widget_handlers(text):
     return entries, counts
 
 
+def parse_mists_bare_widget_handlers(text):
+    """Normalize bare owner/handler removals without changing source line numbers."""
+    normalized = re.sub(r'^: ([A-Za-z_][A-Za-z0-9_]* On[A-Za-z0-9_]+)$',
+                        r': {{api|t=wh|\1}}', text, flags=re.M)
+    return parse_mists_widget_handlers(normalized)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -767,6 +774,8 @@ def main():
     parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
     parser.add_argument('--mists-widget-handlers', action='store_true',
                         help='Retain captioned Mists widget handler ownership; opt-in')
+    parser.add_argument('--mists-bare-widget-handlers', action='store_true',
+                        help='Retain bare Mists owner/handler removals; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -840,6 +849,14 @@ def main():
     if args.mists_widget_handlers:
         handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
         handler_entries, handler_counts = parse_mists_widget_handlers(handler_raw)
+        if args.mists_diff:
+            for entry in handler_entries:
+                entry['id'] = 'diff-' + entry['id']
+        entries.extend(handler_entries)
+        counts.extend(handler_counts)
+    if args.mists_bare_widget_handlers:
+        handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
+        handler_entries, handler_counts = parse_mists_bare_widget_handlers(handler_raw)
         if args.mists_diff:
             for entry in handler_entries:
                 entry['id'] = 'diff-' + entry['id']
