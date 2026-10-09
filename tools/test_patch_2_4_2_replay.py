@@ -28,6 +28,7 @@ class ReplayTests(unittest.TestCase):
             initial = self.run_copy(directory)
             self.assertEqual(initial.returncode, 0, initial.stderr)
             summary = json.loads(initial.stdout)
+            print(json.dumps(summary, sort_keys=True))
             self.assertEqual(summary['ledger_rows'], 53)
             self.assertEqual(summary['publication_gaps'], 9)
             self.assertEqual(summary['native_acceptance'], 'unmeasured')

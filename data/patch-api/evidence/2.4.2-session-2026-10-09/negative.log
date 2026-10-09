@@ -1,0 +1,85 @@
+
+running 1 test
+test patch_2_4_2_factory_publication ... FAILED
+
+failures:
+
+failures:
+    patch_2_4_2_factory_publication
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.10s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 5 warnings
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.09s
+     Running tests/patch_2_4_2_factory.rs (target/debug/deps/patch_2_4_2_factory-176285af6b77d32a)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.95ms
+[  0.002s] [Startup] rilua VM created in 82.74µs
+[  0.002s] [Startup] builtin frames initialized in 56.50µs
+[  0.002s] [Startup] template registry cleared in 3.85µs
+[  0.002s] [Startup] intrinsic templates registered in 4.30µs
+[  0.002s] [Startup] initial app_data lua handle installed in 842.00ns
+[  0.089s] [Startup] init_lua_state complete in 86.74ms
+[  0.089s] [Startup] final app_data lua handle installed in 150.00ns
+[  0.089s] [Startup] initial screen globals installed in 48.87µs
+[  0.089s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_2_4_2_factory_publication' (2820549) panicked at tests/common/publication_sweep.rs:560:5:
+assertion `left == right` failed: new gaps: ["p242-negative-control"]; resolved/stale gaps: []
+  left: {"p242-negative-control", "wt-global-api-AcceptLevelGrant-5", "wt-global-api-CombatLogSetCurrentEntry-21", "wt-global-api-CombatLog_Object_IsA-6", "wt-global-api-DeclineLevelGrant-7", "wt-global-api-GetCoinText-8", "wt-global-api-GetQuestLogSpellLink-9", "wt-global-api-GetQuestSpellLink-10", "wt-global-api-GuildRosterSetOfficerNote-19", "wt-global-api-strreplace-11"}
+ right: {"wt-global-api-AcceptLevelGrant-5", "wt-global-api-CombatLogSetCurrentEntry-21", "wt-global-api-CombatLog_Object_IsA-6", "wt-global-api-DeclineLevelGrant-7", "wt-global-api-GetCoinText-8", "wt-global-api-GetQuestLogSpellLink-9", "wt-global-api-GetQuestSpellLink-10", "wt-global-api-GuildRosterSetOfficerNote-19", "wt-global-api-strreplace-11"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test patch_2_4_2_factory`

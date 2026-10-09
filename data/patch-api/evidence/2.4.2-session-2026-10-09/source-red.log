@@ -1,0 +1,61 @@
+EF
+======================================================================
+ERROR: test_extract_keeps_plural_placeholder_reference_and_limits (__main__.SourceTests.test_extract_keeps_plural_placeholder_reference_and_limits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p242-source/tools/test_patch_2_4_2_source.py", line 43, in test_extract_keeps_plural_placeholder_reference_and_limits
+    text = extract_text(RAW.read_text(), retail_tbc_markup=True, lowercase_reflist=True)
+TypeError: extract_text() got an unexpected keyword argument 'retail_tbc_markup'
+
+======================================================================
+FAIL: test_literal_inventory_is_opt_in (__main__.SourceTests.test_literal_inventory_is_opt_in)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p242-source/tools/test_patch_2_4_2_source.py", line 25, in test_literal_inventory_is_opt_in
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : usage: gen_patch_wikitext_register.py [-h] [--inventory-only]
+                                      [--expand-shared-changes]
+                                      [--separate-inline-structures]
+                                      [--capture-span-defaults]
+                                      [--skip-plain-scripts-label]
+                                      [--simple-api-list]
+                                      [--legacy-column-headers]
+                                      [--diff-api-additions]
+                                      [--legacy-inventory-labels]
+                                      [--legacy-api-tables]
+                                      [--historical-api-headings]
+                                      [--cataclysm-change-bullets]
+                                      [--wrath-retail-change-bullets]
+                                      [--legacy-api-bullets]
+                                      [--legacy-api-renames] [--bfa-prepatch]
+                                      [--prose-api-links]
+                                      [--legacy-summary-tables]
+                                      [--top-level-api-bullets]
+                                      [--legacy-widget-summaries]
+                                      [--prose-namespace-migrations]
+                                      [--legacy-widget-cvar-bullets]
+                                      [--legion-prepatch]
+                                      [--indented-api-lists]
+                                      [--cataclysm-labeled-inventory]
+                                      [--colon-api-bullets]
+                                      [--warlords-prepatch]
+                                      [--warlords-diff WARLORDS_DIFF]
+                                      [--legacy-section-lists]
+                                      [--combat-restriction-bullets]
+                                      [--client-line {retail,mists-classic,classic-era}]
+                                      [--mists-automated-diff]
+                                      [--mists-prepatch] [--mists-summary]
+                                      [--mists-diff MISTS_DIFF]
+                                      [--mists-widget-handlers]
+                                      [--mists-bare-widget-handlers]
+                                      [--mists-code-removals]
+                                      [--wrath-retail-summary]
+                                      patch path revid out
+gen_patch_wikitext_register.py: error: unrecognized arguments: --retail-tbc-summary
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.062s
+
+FAILED (failures=1, errors=1)
