@@ -278,3 +278,8 @@ quote = "1"
 
 [patch.crates-io]
 iced_wgpu = { path = "iced-wgpu-patched" }
+
+[[test]]
+name = "patch_2_4_2_factory"
+path = "tests/patch_2_4_2_factory.rs"
+required-features = ["client-retail"]
