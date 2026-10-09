@@ -1,0 +1,112 @@
+"""Replay every original validator invariant using preserved bytes and mapped Git pins."""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+import types
+
+sys.dont_write_bytecode = True
+ROOT = Path(__file__).resolve().parents[5]
+HERE = Path(__file__).resolve().parent
+HISTORY = HERE.parent
+
+
+def read(path):
+    return json.loads(path.read_text())
+
+
+def digest(value):
+    return hashlib.sha256(value).hexdigest()
+
+
+def git(*args, input=None):
+    return subprocess.check_output(['git', *args], cwd=ROOT, input=input)
+
+
+def main():
+    mapping = read(HERE / 'rebase-mapping.json')
+    scopes = {row['recorded_revision']: row for row in mapping['pinned_inputs']}
+    revisions = {row['recorded_revision']: row['rebased_revision']
+                 for row in mapping['commits'] + mapping['external_commits']}
+
+    def canonical(revision):
+        matches = [pin for pin in revisions if pin.startswith(revision)]
+        assert len(matches) <= 1, revision
+        return matches[0] if matches else revision
+
+    def historical_blob(revision, path):
+        pin = canonical(revision)
+        if pin not in revisions:
+            return git('show', pin + ':' + path)
+        row = scopes[pin]['inputs'][path]
+        if 'historical_file' in row:
+            content = (HERE / row['historical_file']).read_bytes()
+        else:
+            content = git('show', revisions[pin] + ':' + path)
+        assert digest(content) == row['sha256'], (pin, path)
+        assert git('hash-object', '--stdin', input=content).decode().strip() == row['recorded_blob']
+        return content
+
+    def historical_names(revision, directory):
+        pin = canonical(revision)
+        if pin in revisions:
+            return scopes[pin]['inventories'][directory]
+        return git('ls-tree', '-r', '--name-only', pin, directory).decode().splitlines()
+
+    def historical_git(*args):
+        if args[0] == 'show' and len(args) == 2 and ':' in args[1]:
+            return historical_blob(*args[1].split(':', 1))
+        if args[:3] == ('ls-tree', '-r', '--name-only'):
+            return ('\n'.join(historical_names(args[3], args[4])) + '\n').encode()
+        if args[0] == 'rev-parse' and args[-1].endswith('^{commit}'):
+            revision = args[-1].removesuffix('^{commit}')
+            pin = canonical(revision)
+            return git('rev-parse', '--verify', revisions.get(pin, pin) + '^{commit}')
+        return git(*args)
+
+    source = (HERE / 'historical-validator.py.txt').read_text()
+    namespace = {'__name__': 'historical_547_validator', '__file__': str(HISTORY / 'validate.py')}
+    helper = types.ModuleType('patch_audit_validation')
+    revision = read(HISTORY / 'context.json')['source_revision']
+    exec(compile(historical_blob(revision, 'tools/patch_audit_validation.py'), 'pinned_helpers', 'exec'), helper.__dict__)
+    sys.modules['patch_audit_validation'] = helper
+    exec(compile(source, 'historical-validator.py.txt', 'exec'), namespace)
+    native_git = historical_git
+    def mapped_git(*args):
+        if args[:2] == ('diff', '--name-only'):
+            left, right = args[2:4]
+            includes = [name for name in args[5:] if not name.startswith(':!')]
+            excludes = [name[2:] for name in args[5:] if name.startswith(':!')]
+            def selected(path):
+                return any(path == directory or path.startswith(directory + '/') for directory in includes) and not any(path == directory or path.startswith(directory + '/') for directory in excludes)
+            def entries(revision):
+                pin = canonical(revision)
+                if pin in scopes:
+                    return {path: oid for path, oid in scopes[pin]['tree_blobs'].items() if selected(path)}
+                return {line.split('\t', 1)[1]: line.split('\t', 1)[0].split()[2]
+                        for line in git('ls-tree', '-r', pin).decode().splitlines() if selected(line.split('\t', 1)[1])}
+            before, after = entries(left), entries(right)
+            changed = sorted(path for path in set(before) | set(after) if before.get(path) != after.get(path))
+            return ('\n'.join(changed) + ('\n' if changed else '')).encode()
+        return native_git(*args)
+    namespace.update(HERE=HISTORY, git=mapped_git, blob=historical_blob)
+    def historical_paths(root, pin, directory, suffix):
+        paths = [root / name for name in historical_names(pin, directory) if name.endswith(suffix)]
+        assert paths and all(path.is_file() for path in paths)
+        return paths
+    namespace['historical_registers'] = lambda root, pin: historical_paths(root, pin, 'data/patch-api/sources', '-wikitext-register.json')
+    namespace['historical_sweep_tests'] = lambda root, pin: historical_paths(root, pin, 'tests', '_publication_sweep.rs')
+    def preserved_seal():
+        seals = read(HISTORY / 'seal.json')
+        for name, expected in seals.items():
+            path = HERE / 'historical-validator.py.txt' if name == 'validate.py' else HISTORY / name
+            assert path.is_file() and digest(path.read_bytes()) == expected, 'own evidence drift: ' + name
+            git('ls-files', '--error-unmatch', path.relative_to(ROOT).as_posix())
+        assert 'validate.py' in seals and 'context.json' in seals
+    namespace['check_seal'] = preserved_seal
+    namespace['main']()
+
+
+if __name__ == '__main__':
+    main()
