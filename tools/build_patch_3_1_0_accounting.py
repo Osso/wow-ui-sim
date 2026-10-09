@@ -43,8 +43,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--current-radians', action='store_true',
                         help='Use separate current observations and bounded configured-radians proof; original archive unchanged')
+    parser.add_argument('--observations', type=Path, help='Explicit owned discovery result path, relative to repo root')
     args = parser.parse_args()
-    observations = EVIDENCE / ('current/publication-green-results.json' if args.current_radians else 'own-sweep-green-results.json')
+    observations = (ROOT / args.observations if args.observations else
+                    EVIDENCE / ('current/publication-green-results.json' if args.current_radians else 'own-sweep-green-results.json'))
     if args.current_radians:
         receipt = json.loads((EVIDENCE / 'current/model-green-receipt.json').read_bytes())
         assert receipt['exit_code'] == 0, 'configured-radians state proof missing'
