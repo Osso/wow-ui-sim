@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.7.0 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-7-0-api-audit.md): exact frozen456653/4390984 body/response/manifest-linked registry101 before derivation; literal redirect only. Own SOURCE RED6/portable RED3 and own-base default captures retained. No meaningful model/native subset; pending1.8.0 separate behind1.9.0, target research/main acceptance excluded.
+[Audit](investigations/patch-1-7-0-api-audit.md): exact frozen456653/4390984 body/response/manifest-linked registry101 before derivation; literal redirect only. Own SOURCE RED6/portable RED3 and SOURCE GREEN6/6 at0718bd85b retained; copied validator/SOURCE6/portable3 at702ddca36 pass default-byte/error replay and both serialized tamper rejection/exact restorations.46 original seals/47-member55,573-byte archive unchanged; later actual receipts separate. No meaningful model/native subset; pending1.8.0 separate behind1.9.0, target research/main acceptance excluded.
 
 ## [2026-10-09] investigation | Mists wrapper proof capture incident
 

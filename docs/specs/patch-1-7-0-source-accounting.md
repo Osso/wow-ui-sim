@@ -7,8 +7,8 @@ Bounded original-page accounting of frozen page456653/revision4390984/timestamp2
 - [x] Validate exact body/response/manifest-linked101-page registry before derivation; account for every literal row/link and absent inventory/signatures/defaults/prose/headers/count claims/templates.
 - [x] Reject populated-boundary omissions, count changes, invented declarations/proof/expansion and source/identity mutations.
 - [x] Preserve precise UNPROVEN redirect contract, zero meaningful model/runtime/native subset, and separately unapplied1.8.0 behind1.9.0; do not combine Retail/Era/Forever histories.
-- [ ] Replay own-base default bytes/errors and own SOURCE tests in a fresh copied archive without Git/target/current tools/network.
-- [ ] Reject serialized ledger/log tampering and restore exact bytes/hashes/original map without resealing; separate immutable original inputs/archive from later actual revision/cwd/argv/time/full-stream/hash receipts.
+- [x] Replay own-base default bytes/errors and own SOURCE tests in a fresh copied archive without Git/target/current tools/network.
+- [x] Reject serialized ledger/log tampering and restore exact bytes/hashes/original map without resealing; separate immutable original inputs/archive from later actual revision/cwd/argv/time/full-stream/hash receipts.
 
 ## How it works
 
