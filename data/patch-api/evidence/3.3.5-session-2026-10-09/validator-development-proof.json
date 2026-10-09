@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "tools/test_patch_3_3_5_validator.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p335-source",
+  "revision": "6c5c8fcf9dcaa80a57b329efcedab90ba1460629",
+  "scope": "own portability fixture GREEN; relocated script root outside repository, no Git/target, future mutable closure independence; source/log/historical-ledger/historical-gap/bundle tamper rejected and restored",
+  "exit": 0,
+  "artifact": "validator-green.log",
+  "log_sha256": "ad363af91fe842f14b5b3d5746c2e280a9a80cf285afbbe22bee472934dbda1e",
+  "historical_manifest_sha256": "ae545b4396125f7d634a49812978e319ffa4cb4bc959387b940b43eca125533c",
+  "validator_sha256": "2f317f15cb68526022405480f6f23cf3e93348a35d69f13662097ffd6ec2dcef",
+  "fixture_sha256": "cf02375da532153e45c37d68c0130dfaa0103217e082158db9a6fce3b4949cb3",
+  "original_ledger_unchanged": true
+}

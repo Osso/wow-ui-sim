@@ -8,7 +8,7 @@ Audit pinned page 25049/revision 247986 (2010-07-10T15:47:20Z). [Audit](../wiki/
 - [x] Opt-in parser retains sectioned colon lists, changed prose identity and explicit signature/return fragments at original lines; original outputs remain byte-identical.
 - [x] Account every inventory, retained prose/heading and explicit signature independently; publication never proves behavior.
 - [x] Own retail sweep uses actual 4.1.0+ retail registers; 4.0.1 remains an integration placeholder. Wrath Classic 3.4.x cannot supersede historical retail.
-- [ ] Portable historical replay derives totals from immutable archived ledger/gaps/receipts, independent of Git, target or future current closures; source/log/ledger tampering rejected.
+- [x] Portable historical replay derives totals from immutable archived ledger/gaps/receipts, independent of Git, target or future current closures; source/log/ledger tampering rejected.
 
 ## Implementation and tests
 
@@ -21,7 +21,7 @@ Audit pinned page 25049/revision 247986 (2010-07-10T15:47:20Z). [Audit](../wiki/
 
 ## Recorded development boundary
 
-Own publication GREEN 1/1 (80 matches / 44 known gaps), parser 1/1, existing temporary chat state 1/1; negative rejects 44 → 45 gaps. Full ledger has 324 IDs and no new modeled closures. Portable validator GREEN remains a separate targeted development receipt; main owns current coordinator/final proof.
+Own publication GREEN 1/1 (80 matches / 44 known gaps), parser 1/1, existing temporary chat state 1/1; negative rejects 44 → 45 gaps. Full ledger has 324 IDs and no new modeled closures. Portable validator GREEN 1/1 at 6c5c8fcf9 covers clean relocation, synthetic future closures and all five tamper/restoration controls. Receipt is separate from frozen original command ledger; main owns current coordinator/final proof.
 
 ## Limits
 
