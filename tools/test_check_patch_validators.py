@@ -10,7 +10,8 @@ GATE = Path(__file__).with_name('check_patch_validators.py')
 
 
 class CheckPatchValidatorsTests(unittest.TestCase):
-    def run_gate(self, validator, ignored=False, revision='HEAD', evidence_size=None):
+    def run_gate(self, validator, ignored=False, revision='HEAD', evidence_size=None,
+                 additional_files=()):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             def git(*args):
@@ -24,6 +25,7 @@ class CheckPatchValidatorsTests(unittest.TestCase):
                 'data/patch-api/evidence/1.0.0-session/validate.py': validator,
                 '.gitignore': 'scratch.txt\n',
             }
+            files.update(additional_files)
             for name, content in files.items():
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
@@ -84,6 +86,32 @@ assert subprocess.check_output(['git', 'show', revision + ':src/c_api/mod.rs'], 
         result, report = self.run_gate('pass\n', evidence_size=5_000_000)
         self.assertEqual(result.returncode, 0)
         self.assertEqual(report['oversized_evidence'], {'clean': [], 'later_audit': []})
+
+    def test_template_inputs_are_not_executed_but_nested_current_proofs_run(self):
+        missing_seal_reader = "from pathlib import Path\nPath(__file__).with_name('seals.json').read_text()\n"
+        additional_files = {
+            'data/patch-api/evidence/1.0.0-session/template-inputs/older/validate.py': missing_seal_reader,
+            'data/patch-api/evidence/1.0.0-session/current/validate.py': "print('PASS: current proof')\n",
+        }
+        result, report = self.run_gate("print('PASS: owned proof')\n",
+                                       additional_files=additional_files)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report['summary'], {'clean': {'passed': 2, 'failed': 0},
+                                             'later_audit': {'passed': 3, 'failed': 0}})
+        self.assertEqual(sorted(row['stdout'].strip() for row in report['phases']['clean']),
+                         ['PASS: current proof', 'PASS: owned proof'])
+
+    def test_missing_seal_in_real_current_proof_is_not_hidden(self):
+        missing_seal_reader = "from pathlib import Path\nPath(__file__).with_name('seals.json').read_text()\n"
+        additional_files = {
+            'data/patch-api/evidence/1.0.0-session/current/validate.py': missing_seal_reader,
+            'data/patch-api/evidence/1.0.0-session/template-inputs/older/validate.py': missing_seal_reader,
+        }
+        result, report = self.run_gate("print('PASS: owned proof')\n",
+                                       additional_files=additional_files)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(report['summary'], {'clean': {'passed': 1, 'failed': 1},
+                                             'later_audit': {'passed': 2, 'failed': 1}})
 
     def test_invalid_revision_reports_error_and_leaves_no_worktree(self):
         result, report = self.run_gate('pass\n', revision='not-a-revision')
