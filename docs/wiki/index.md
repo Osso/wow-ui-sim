@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
+
+[Audit](investigations/patch-1-9-0-api-audit.md): frozen278324/2690597,45bytes; one literal redirect/link/UNPROVEN contract; zero local API/signature/default/prose/header/template/model/runtime/native. Own RED5+identityRED1/portableRED3 retained; GREEN pending. Newer1.10.0 separately queued unapplied; main owns target research/integration/meaningful closure.
+
 ## [2026-10-09] investigation | Patch 1.13.2 frozen Era audit
 
 [Audit](investigations/patch-1-13-2-api-audit.md): frozen115161/6471351,171914bytes;2758inventory/2838raw rows/2764signature limits/23prose/5011UNPROVEN contracts. SOURCE8/8 ata3cc2a2269, bare Era generic CVar storage1/1 at15d12138f(6transitions, no effect/default/native credit), portable3/3 atc5436865b(copied SOURCE8/default bytes/error and both serialized restorations,89original seals), separate successors3/3 at752cd507e(20actual same-Era ledgers,581identity overlaps/580source occurrences,0semantic closures), receipt-validator3/3 atf73ba78a5.13existing manifest/library/binary warning diagnostics retained. Main integrates1.13.2 before separate originalRetail1.12.0; histories remain distinct.

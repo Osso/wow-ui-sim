@@ -1,0 +1,8 @@
+{
+  "template": "canonical frozen1.10.1",
+  "source_commit": "c6fec74a1",
+  "merged_base": "3d1a4140734c9fbc82cd3ec6dfaf0536767a9edd",
+  "queued_1100_cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+  "queued_1100_applied": false,
+  "receipt_limit": "No sibling logs, results, or seals imported."
+}
