@@ -10,6 +10,7 @@ Runs serialize on a lock. Each run uses a dedicated checkout and target dir so a
 working copies are never touched. Results: RESULTS/<sha>.json plus <sha>.log; master runs
 also update RESULTS/master-latest.json, which later runs compare against to list NEW failures.
 """
+
 import fcntl
 import json
 import os
@@ -24,14 +25,18 @@ REPO = ROOT / "wow-ui-sim"
 CHECKOUT = ROOT / "full-suite-checkout"
 RESULTS = ROOT / "full-suite-results"
 LOCK = RESULTS / ".lock"
+BUILD_LOCK = Path("/home/osso/.worktrees/build-lock.sh")
 JOBS = os.environ.get("FULL_SUITE_JOBS", "16")
-FAILED = re.compile(r"^\s*(?:FAIL|SIGSEGV|SIGABRT|TIMEOUT) \[.*?\] (?:\(\s*\d+/\d+\) )?\S+ (\S+)", re.M)
+FAILED = re.compile(
+    r"^\s*(?:FAIL|SIGSEGV|SIGABRT|TIMEOUT) \[.*?\] (?:\(\s*\d+/\d+\) )?\S+ (\S+)", re.M
+)
 PREFORK_FAILED = re.compile(r"^test (\S+) \.\.\. FAILED", re.M)
 
 
 def git(*args, cwd=REPO):
-    return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True,
-                          text=True).stdout.strip()
+    return subprocess.run(
+        ["git", *args], cwd=cwd, check=True, capture_output=True, text=True
+    ).stdout.strip()
 
 
 def resolve(ref):
@@ -41,18 +46,26 @@ def resolve(ref):
 
 def prepare_checkout(sha):
     if not (CHECKOUT / ".git").exists():
-        subprocess.run(["git", "clone", "-q", "--shared", str(REPO), str(CHECKOUT)], check=True)
+        subprocess.run(
+            ["git", "clone", "-q", "--shared", str(REPO), str(CHECKOUT)], check=True
+        )
     git("fetch", "-q", str(REPO), sha, cwd=CHECKOUT)
     git("checkout", "-q", "--force", sha, cwd=CHECKOUT)
     git("clean", "-q", "-fdx", "-e", "target", cwd=CHECKOUT)
 
 
 def run_step(name, cmd, log, env):
+    if not BUILD_LOCK.is_file():
+        raise FileNotFoundError(f"Required shared build wrapper missing: {BUILD_LOCK}")
+    cmd = [str(BUILD_LOCK), *cmd, "--offline", "--locked"]
     start = time.monotonic()
     proc = subprocess.run(cmd, cwd=CHECKOUT, env=env, capture_output=True, text=True)
     output = proc.stdout + proc.stderr
     log.write(f"===== {name}: {' '.join(cmd)} (exit {proc.returncode})\n{output}\n")
-    return {"exit": proc.returncode, "seconds": round(time.monotonic() - start, 1)}, output
+    return {
+        "exit": proc.returncode,
+        "seconds": round(time.monotonic() - start, 1),
+    }, output
 
 
 def summarize(output, pattern):
@@ -65,16 +78,48 @@ def run(ref):
         fcntl.flock(lock, fcntl.LOCK_EX)
         sha = resolve(ref)
         prepare_checkout(sha)
-        env = dict(os.environ, CARGO_BUILD_JOBS=JOBS, CARGO_TERM_COLOR="never")
-        result = {"ref": ref, "sha": sha, "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
-                  "steps": {}, "failures": {}}
+        env = dict(os.environ, CARGO_BUILD_JOBS="4", CARGO_TERM_COLOR="never")
+        result = {
+            "ref": ref,
+            "sha": sha,
+            "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "steps": {},
+            "failures": {},
+        }
         with open(RESULTS / f"{sha}.log", "w") as log:
             steps = [
-                ("integration", ["cargo", "nextest", "run", "--test", "integration",
-                                 "--no-fail-fast", "--test-threads", JOBS], FAILED),
-                ("prefork", ["cargo", "test", "--test", "prefork_full_ui"], PREFORK_FAILED),
-                ("lib", ["cargo", "nextest", "run", "--lib", "--no-fail-fast",
-                         "--test-threads", JOBS], FAILED),
+                (
+                    "integration",
+                    [
+                        "cargo",
+                        "nextest",
+                        "run",
+                        "--test",
+                        "integration",
+                        "--no-fail-fast",
+                        "--test-threads",
+                        JOBS,
+                    ],
+                    FAILED,
+                ),
+                (
+                    "prefork",
+                    ["cargo", "test", "--test", "prefork_full_ui"],
+                    PREFORK_FAILED,
+                ),
+                (
+                    "lib",
+                    [
+                        "cargo",
+                        "nextest",
+                        "run",
+                        "--lib",
+                        "--no-fail-fast",
+                        "--test-threads",
+                        JOBS,
+                    ],
+                    FAILED,
+                ),
             ]
             for name, cmd, pattern in steps:
                 result["steps"][name], output = run_step(name, cmd, log, env)
@@ -83,8 +128,14 @@ def run(ref):
         result["new_failures"] = new_failures(result)
         (RESULTS / f"{sha}.json").write_text(json.dumps(result, indent=2) + "\n")
         if ref in ("origin/master", "master"):
-            (RESULTS / "master-latest.json").write_text(json.dumps(result, indent=2) + "\n")
-        print(json.dumps({k: result[k] for k in ("sha", "steps", "new_failures")}, indent=2))
+            (RESULTS / "master-latest.json").write_text(
+                json.dumps(result, indent=2) + "\n"
+            )
+        print(
+            json.dumps(
+                {k: result[k] for k in ("sha", "steps", "new_failures")}, indent=2
+            )
+        )
 
 
 def new_failures(result):
@@ -92,15 +143,31 @@ def new_failures(result):
     if not base_path.exists():
         return None
     base = json.loads(base_path.read_text())
-    return {name: sorted(set(fails) - set(base["failures"].get(name, [])))
-            for name, fails in result["failures"].items()}
+    return {
+        name: sorted(set(fails) - set(base["failures"].get(name, [])))
+        for name, fails in result["failures"].items()
+    }
 
 
 def submit(ref):
     unit = f"full-suite-{int(time.time())}"
-    subprocess.run(["systemd-run", "--user", f"--unit={unit}", "--collect",
-                    "-p", "MemoryHigh=28G", "-p", "MemoryMax=34G",
-                    sys.executable, os.path.abspath(__file__), "run", ref], check=True)
+    subprocess.run(
+        [
+            "systemd-run",
+            "--user",
+            f"--unit={unit}",
+            "--collect",
+            "-p",
+            "MemoryHigh=28G",
+            "-p",
+            "MemoryMax=34G",
+            sys.executable,
+            os.path.abspath(__file__),
+            "run",
+            ref,
+        ],
+        check=True,
+    )
     print(unit)
 
 

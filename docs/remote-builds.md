@@ -44,6 +44,28 @@ Normal desktop GUI failed before its first frame: `target/native-desktop-gui-lon
 
 The actual local `wow-cli` helper built and printed `--help` in 0.35 seconds: bounded local CLI proof, not GUI acceptance or a local server pass. Local capability remains supported; actual local runtime acceptance is deferred, not required now for the current gate. User rejected local server build attempts; actual local server proof is deferred and its no-local-compile guard remains. Corrected source gate passed: two repaired fixtures, zero Ruff diagnostics across 14 files, and pycompile for nine changed files. The prior 94 passing fixtures retain revision-scoped credit; this is not a fresh 96-test run. Evidence: engine `target/native-migration-corrected-verify.md`. Historical focused-test/check reports are not a fresh current-tree gate. Normal desktop GUI remains unresolved; source-gate success would not complete the whole workflow.
 
+## Asynchronous full suite
+
+`python3 tools/full_suite.py submit [REF]` schedules the detached worker;
+`python3 tools/full_suite.py status [REF]` reads stored results. The worker keeps
+its existing suite lock and dedicated checkout/results under `~/Projects/wow/`.
+Each actual Cargo step runs through the required installed
+`/home/osso/.worktrees/build-lock.sh`, sharing the builder lock with sibling
+builds for the entire child lifetime, including unsuccessful exits. Locking the
+submit launcher alone does not coordinate detached workloads. A missing wrapper
+fails explicitly; there is no unlocked execution path.
+
+Cargo steps use `--offline --locked` and `CARGO_BUILD_JOBS=4`; dependencies must
+already be cached and the lockfile current. `FULL_SUITE_JOBS` controls nextest
+test workers only (default 16), independently of compilation jobs. Nonzero Cargo
+exits and parsed test failures remain in the stored JSON and log, and later
+steps still run. Submission/status behavior is unchanged.
+
+Bounded worker regression tests (temporary executable fixtures and a real flock,
+no actual builds or systemd): `python3 -m unittest tools.test_full_suite -v`.
+Changes to the tracked runner do not update `/home/osso/bin/full-suite`;
+installation is a separate deployment step.
+
 ## Related
 
 - [Build-host contract](specs/build-host.md)
