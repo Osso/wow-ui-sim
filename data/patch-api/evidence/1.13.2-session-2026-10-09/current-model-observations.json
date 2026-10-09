@@ -1,0 +1,78 @@
+{
+  "configured_interface": 11507,
+  "cvar_effect_credit": false,
+  "historical_signature_credit": false,
+  "native_credit": false,
+  "observations": [
+    {
+      "input": "0",
+      "name": "alwaysShowTargetNameplate",
+      "observed": [
+        true,
+        "0",
+        false
+      ],
+      "rust_store": "0"
+    },
+    {
+      "input": "1",
+      "name": "alwaysShowTargetNameplate",
+      "observed": [
+        true,
+        "1",
+        true
+      ],
+      "rust_store": "1"
+    },
+    {
+      "input": "0",
+      "name": "alwaysShowTargetNameplate",
+      "observed": [
+        true,
+        "0",
+        false
+      ],
+      "rust_store": "0"
+    },
+    {
+      "input": "1",
+      "name": "instantQuestText",
+      "observed": [
+        true,
+        "1",
+        true
+      ],
+      "rust_store": "1"
+    },
+    {
+      "input": "0",
+      "name": "instantQuestText",
+      "observed": [
+        true,
+        "0",
+        false
+      ],
+      "rust_store": "0"
+    },
+    {
+      "input": "1",
+      "name": "instantQuestText",
+      "observed": [
+        true,
+        "1",
+        true
+      ],
+      "rust_store": "1"
+    }
+  ],
+  "raw_types": [
+    "function",
+    "function",
+    "function"
+  ],
+  "runtime_changes": 0,
+  "scope": "existing bare Era generic CVar storage across six explicit transitions",
+  "source_default_credit": false,
+  "source_interface": 11302,
+  "source_ledger_mutated": false
+}

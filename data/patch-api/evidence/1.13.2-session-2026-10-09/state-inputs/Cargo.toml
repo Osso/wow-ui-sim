@@ -184,10 +184,6 @@ required-features = ["client-retail"]
 [[test]]
 name = "patch_1_13_3_npc_health"
 path = "patch-tests/patch_1_13_3_npc_health.rs"
-
-[[test]]
-name = "patch_1_13_2_cvar_state"
-path = "patch-tests/patch_1_13_2_cvar_state.rs"
 required-features = ["client-era"]
 
 [[test]]

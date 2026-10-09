@@ -1,0 +1,2853 @@
+{{apichanges|1.13.2|next=1.13.3}}
+Classic 1.13.2 is based on [[World_of_Warcraft_API#8.x_API|Patch 8.1.0]] and reintroduced Vanilla API. The BlizzCon 2018 [https://worldofwarcraft.com/en-us/news/22551243/bring-home-the-blizzcon-wow-classic-demo-with-the-virtual-ticket playable demo] (1.13.0) was based on 7.3.5 API.
+
+See also:
+* Reddit: [https://www.reddit.com/r/classicwow/comments/bnn2jp/diff_of_current_classic_vs_live_part_2_framexml/ Diff of current Classic vs Live. - Part 2. FrameXML]
+* BlizzardInterfaceResources: [https://github.com/Ketho/BlizzardInterfaceResources/commit/dfe14662c6aeef9a968daf1609b8b8327e610622 1.13.2 (30406)]
+* How to: [[Porting addons to Classic]]
+
+==[[FrameXML]] diffs==
+: Live 7.3.5 (26972) to [https://github.com/Gethe/wow-ui-source/commit/14a0a0f8d375beeff8e87d5968f66f3b68ffef35 Classic 1.13 (28211)], [https://github.com/Gethe/wow-ui-source/commit/2d7f423760a3ff3a17defcee958a590cf499a05b 1.13.2 (30406)], (undocumented: [https://github.com/Gethe/wow-ui-source/commit/b8c01bc00d96dcbea6c8e7971a2432d278d41c08 30550], [https://github.com/Gethe/wow-ui-source/commit/60ad65ce76e320f24d9106b8c165fc8c0593b0cc 30682], [https://github.com/Gethe/wow-ui-source/commit/c0a8c6db57d178c50758151021968efe1601f345 30786], [https://github.com/Gethe/wow-ui-source/commit/73f4026aeefc10bca0bffa32a7faed9888d86709 31043], [https://github.com/Gethe/wow-ui-source/commit/fa1c48a6afcfc3e6826d8ea849d3e947a43b6dc4 31209], [https://github.com/Gethe/wow-ui-source/commit/8ef82f4df74201fcdde4ad748bfa50046a864ac3 31402], [https://github.com/Gethe/wow-ui-source/commit/e277bfeab30695403c446f1a2611cc3eb9bb509f 31446], [https://github.com/Gethe/wow-ui-source/commit/79b5609144c188bc7a643a11e54ec3613e436edb 31650])
+
+==Changes==
+* The [[Getting_the_current_interface_number|TOC version]] is <code>11302</code>
+* The ''focus'' [[UnitId]] was removed.
+* Quest and Spell [[UI_escape_sequences#Hyperlinks|hyperlinks]] can't be linked to chat channels and show up as plain text. Even when pasting them manually the server won't allow them to be posted.
+* The [[COMBAT_LOG_EVENT|Combat Log]] is restricted to events within 50 yards of the player. (Build 32600, Nov 20 2019) <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/in-game-combat-log-range-decreased/370390|author=Kaivax|date=2019-11-22|title=In-Game Combat Log Range Decreased}}</ref>
+
+===API===
+* Re-added the Crafting UI which is used for [[Enchanting]] and [[:Beast Training]].
+* Any deprecated API was removed along with the [https://github.com/Gethe/wow-ui-source/tree/live/AddOns/Blizzard_Deprecated Blizzard_Deprecated] addon, most notably the old aliases to [[World_of_Warcraft_API#Friends|C_FriendList]] functions.
+* {{api|C_FriendList.SendWho}}() requires a hardware event as a measure against gold spam channel invites and other unintended uses for automatically querying player names.
+
+===Cast Bars===
+* {{api|UnitCastingInfo}}() was downgraded to {{api|CastingInfo}}() which is essentially <code>UnitCastingInfo("player")</code>
+* Idem for {{api|UnitChannelInfo}}() and {{api|ChannelInfo}}()
+
+===CVars===
+* CVar {{api|t=e|nameplateMaxDistance}} is effectively locked to 20 yards after the unlimited distance with scientific notation bug.
+* CVar {{api|t=c|chatClassColorOverride}} defaults to 1 (never color by class name) instead of 0 (always color by class name).
+* The default UI scale on classic is 0.9 up from 0.64 in retail, see CVar {{api|t=c|minimumAutomaticUiScale}}.
+
+===Spells===
+* The Combat Log no longer has access to Spell IDs, they are always returned as 0, since they were only added to the combat log in patch 2.4
+* [[UNIT_SPELLCAST_SUCCEEDED|UNIT_SPELLCAST_*]] events only fire for the player.
+
+==Global API==
+See also: [[World of Warcraft API#Classic Specific Functions]]
+
+{| class="wikitable" style="min-width: 600px"
+|+ Global API 8.1.5 (29981) &rarr; 1.13.2 (30406)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 121 new functions
+! style="width: 50%; padding-right: 1em;"| 2008 removed functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: [[API AttemptToSaveBindings|AttemptToSaveBindings]]
+: [[API BuyStableSlot|BuyStableSlot]]
+: [[API C_ChatInfo.ReportServerLag|C_ChatInfo.ReportServerLag]]
+: [[API C_Club.SetCommunityID|C_Club.SetCommunityID]]
+: [[API C_Map.GetBountySetIDForMap|C_Map.GetBountySetIDForMap]]
+: [[API CancelSummon|CancelSummon]]
+: [[API CancelTrackingBuff|CancelTrackingBuff]]
+: [[API CastingInfo|CastingInfo]]
+: [[API ChannelInfo|ChannelInfo]]
+: [[API ClickStablePet|ClickStablePet]]
+: [[API CloseCraft|CloseCraft]]
+: [[API CloseTradeSkill|CloseTradeSkill]]
+: [[API CollapseCraftSkillLine|CollapseCraftSkillLine]]
+: [[API CollapseSkillHeader|CollapseSkillHeader]]
+: [[API CollapseTradeSkillSubClass|CollapseTradeSkillSubClass]]
+: [[API CollapseTrainerSkillLine|CollapseTrainerSkillLine]]
+: [[API ConfirmPetUnlearn|ConfirmPetUnlearn]]
+: [[API ConfirmSummon|ConfirmSummon]]
+: [[API DoCraft|DoCraft]]
+: [[API DoTradeSkill|DoTradeSkill]]
+: [[API ExpandCraftSkillLine|ExpandCraftSkillLine]]
+: [[API ExpandSkillHeader|ExpandSkillHeader]]
+: [[API ExpandTradeSkillSubClass|ExpandTradeSkillSubClass]]
+: [[API ExpandTrainerSkillLine|ExpandTrainerSkillLine]]
+: [[API GetAtlasInfo|GetAtlasInfo]]
+: [[API GetBattlefieldInstanceInfo|GetBattlefieldInstanceInfo]]
+: [[API GetCVar|GetCVar]]
+: [[API GetCVarBitfield|GetCVarBitfield]]
+: [[API GetCVarBool|GetCVarBool]]
+: [[API GetCVarDefault|GetCVarDefault]]
+: [[API GetCraftButtonToken|GetCraftButtonToken]]
+: [[API GetCraftDescription|GetCraftDescription]]
+: [[API GetCraftDisplaySkillLine|GetCraftDisplaySkillLine]]
+: [[API GetCraftIcon|GetCraftIcon]]
+: [[API GetCraftInfo|GetCraftInfo]]
+: [[API GetCraftItemLink|GetCraftItemLink]]
+: [[API GetCraftName|GetCraftName]]
+: [[API GetCraftNumReagents|GetCraftNumReagents]]
+: [[API GetCraftReagentInfo|GetCraftReagentInfo]]
+: [[API GetCraftReagentItemLink|GetCraftReagentItemLink]]
+: [[API GetCraftSelectionIndex|GetCraftSelectionIndex]]
+: [[API GetCraftSkillLine|GetCraftSkillLine]]
+: [[API GetCraftSpellFocus|GetCraftSpellFocus]]
+: [[API GetFirstTradeSkill|GetFirstTradeSkill]]
+: [[API GetInspectPVPRankProgress|GetInspectPVPRankProgress]]
+: [[API GetInviteReferralInfo|GetInviteReferralInfo]]
+: [[API GetNextStableSlotCost|GetNextStableSlotCost]]
+: [[API GetNumBattlefields|GetNumBattlefields]]
+: [[API GetNumCrafts|GetNumCrafts]]
+: [[API GetNumPrimaryProfessions|GetNumPrimaryProfessions]]
+: [[API GetNumSkillLines|GetNumSkillLines]]
+: [[API GetNumStablePets|GetNumStablePets]]
+: [[API GetNumStableSlots|GetNumStableSlots]]
+: [[API GetNumTalentTabs|GetNumTalentTabs]]
+: [[API GetNumTalents|GetNumTalents]]
+: [[API GetNumTradeSkills|GetNumTradeSkills]]
+: [[API GetPVPLastWeekStats|GetPVPLastWeekStats]]
+: [[API GetPVPRankInfo|GetPVPRankInfo]]
+: [[API GetPVPRankProgress|GetPVPRankProgress]]
+: [[API GetPVPThisWeekStats|GetPVPThisWeekStats]]
+: [[API GetPetHappiness|GetPetHappiness]]
+: [[API GetPetLoyalty|GetPetLoyalty]]
+: [[API GetPetTrainingPoints|GetPetTrainingPoints]]
+: [[API GetSelectedBattlefield|GetSelectedBattlefield]]
+: [[API GetSelectedSkill|GetSelectedSkill]]
+: [[API GetSelectedStablePet|GetSelectedStablePet]]
+: [[API GetSkillLineInfo|GetSkillLineInfo]]
+: [[API GetSummonConfirmAreaName|GetSummonConfirmAreaName]]
+: [[API GetSummonConfirmSummoner|GetSummonConfirmSummoner]]
+: [[API GetSummonConfirmTimeLeft|GetSummonConfirmTimeLeft]]
+: [[API GetTalentPrereqs|GetTalentPrereqs]]
+: [[API GetTalentTabInfo|GetTalentTabInfo]]
+: [[API GetTrackingTexture|GetTrackingTexture]]
+: [[API GetTradeSkillCooldown|GetTradeSkillCooldown]]
+: [[API GetTradeSkillIcon|GetTradeSkillIcon]]
+: [[API GetTradeSkillInfo|GetTradeSkillInfo]]
+: [[API GetTradeSkillInvSlotFilter|GetTradeSkillInvSlotFilter]]
+: [[API GetTradeSkillInvSlots|GetTradeSkillInvSlots]]
+: [[API GetTradeSkillItemLink|GetTradeSkillItemLink]]
+: [[API GetTradeSkillItemStats|GetTradeSkillItemStats]]
+: [[API GetTradeSkillLine|GetTradeSkillLine]]
+: [[API GetTradeSkillNumMade|GetTradeSkillNumMade]]
+: [[API GetTradeSkillNumReagents|GetTradeSkillNumReagents]]
+: [[API GetTradeSkillReagentInfo|GetTradeSkillReagentInfo]]
+: [[API GetTradeSkillReagentItemLink|GetTradeSkillReagentItemLink]]
+: [[API GetTradeSkillSelectionIndex|GetTradeSkillSelectionIndex]]
+: [[API GetTradeSkillSubClassFilter|GetTradeSkillSubClassFilter]]
+: [[API GetTradeSkillSubClasses|GetTradeSkillSubClasses]]
+: [[API GetTradeSkillTools|GetTradeSkillTools]]
+: [[API GetTradeskillRepeatCount|GetTradeskillRepeatCount]]
+: [[API HasInspectHonorData|HasInspectHonorData]]
+: [[API InActiveBattlefield|InActiveBattlefield]]
+: [[API IsPlayerAttacking|IsPlayerAttacking]]
+: [[API IsTrainerServiceLearnSpell|IsTrainerServiceLearnSpell]]
+: [[API RegisterCVar|RegisterCVar]]
+: [[API RequestInspectHonorData|RequestInspectHonorData]]
+: [[API ResetTestCvars|ResetTestCvars]]
+: [[API SelectCraft|SelectCraft]]
+: [[API SelectTCradeSkill|SelectTradeSkill]]
+: [[API SetCVar|SetCVar]]
+: [[API SetCVarBitfield|SetCVarBitfield]]
+: [[API SetPendingReportPetTarget|SetPendingReportPetTarget]]
+: [[API SetPendingReportTarget|SetPendingReportTarget]]
+: [[API SetSelectedBattlefield|SetSelectedBattlefield]]
+: [[API SetSelectedSkill|SetSelectedSkill]]
+: [[API SetTradeSkillInvSlotFilter|SetTradeSkillInvSlotFilter]]
+: [[API SetTradeSkillSubClassFilter|SetTradeSkillSubClassFilter]]
+: [[API ShowCloak|ShowCloak]]
+: [[API ShowHelm|ShowHelm]]
+: [[API ShowingCloak|ShowingCloak]]
+: [[API ShowingHelm|ShowingHelm]]
+: [[API StablePet|StablePet]]
+: [[API SwapChatChannelByLocalID|SwapChatChannelByLocalID]]
+: [[API UnitAttackBothHands|UnitAttackBothHands]]
+: [[API UnitCharacterPoints|UnitCharacterPoints]]
+: [[API UnitDefense|UnitDefense]]
+: [[API UnitIsCivilian|UnitIsCivilian]]
+: [[API UnitPVPRank|UnitPVPRank]]
+: [[API UnitRangedAttack|UnitRangedAttack]]
+: [[API UnitResistance|UnitResistance]]
+: [[API UnstablePet|UnstablePet]]
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: [[API AcceptProposal|AcceptProposal]]
+: [[API AcceptSockets|AcceptSockets]]
+: [[API AcknowledgeAutoAcceptQuest|AcknowledgeAutoAcceptQuest]]
+: [[API AddAutoQuestPopUp|AddAutoQuestPopUp]]
+: [[API AddTrackedAchievement|AddTrackedAchievement]]
+: [[API AddWorldQuestWatch|AddWorldQuestWatch]]
+: [[API ApplyBarberShopStyle|ApplyBarberShopStyle]]
+: [[API ArchaeologyGetIconInfo|ArchaeologyGetIconInfo]]
+: [[API ArchaeologyMapUpdateAll|ArchaeologyMapUpdateAll]]
+: [[API ArcheologyGetVisibleBlobID|ArcheologyGetVisibleBlobID]]
+: [[API AreAccountAchievementsHidden|AreAccountAchievementsHidden]]
+: [[API AreTalentsLocked|AreTalentsLocked]]
+: [[API AttachGlyphToSpell|AttachGlyphToSpell]]
+: [[API AutoStoreGuildBankItem|AutoStoreGuildBankItem]]
+: [[API BarberShopReset|BarberShopReset]]
+: [[API BattlefieldMgrEntryInviteResponse|BattlefieldMgrEntryInviteResponse]]
+: [[API BattlefieldMgrExitRequest|BattlefieldMgrExitRequest]]
+: [[API BattlefieldMgrQueueInviteResponse|BattlefieldMgrQueueInviteResponse]]
+: [[API BattlefieldMgrQueueRequest|BattlefieldMgrQueueRequest]]
+: [[API BuyGuildBankTab|BuyGuildBankTab]]
+: [[API BuyReagentBank|BuyReagentBank]]
+: [[API C_AccountInfo.GetIDFromBattleNetAccountGUID|C_AccountInfo.GetIDFromBattleNetAccountGUID]]
+: [[API C_AchievementInfo.GetRewardItemID|C_AchievementInfo.GetRewardItemID]]
+: [[API C_AchievementInfo.GetSupercedingAchievements|C_AchievementInfo.GetSupercedingAchievements]]
+: [[API C_AchievementInfo.SetPortraitTexture|C_AchievementInfo.SetPortraitTexture]]
+: [[API C_ActionBar.FindFlyoutActionButtons|C_ActionBar.FindFlyoutActionButtons]]
+: [[API C_ActionBar.HasFlyoutActionButtons|C_ActionBar.HasFlyoutActionButtons]]
+: [[API C_ActionBar.ShouldOverrideBarShowHealthBar|C_ActionBar.ShouldOverrideBarShowHealthBar]]
+: [[API C_ActionBar.ShouldOverrideBarShowManaBar|C_ActionBar.ShouldOverrideBarShowManaBar]]
+: [[API C_AdventureJournal.ActivateEntry|C_AdventureJournal.ActivateEntry]]
+: [[API C_AdventureJournal.CanBeShown|C_AdventureJournal.CanBeShown]]
+: [[API C_AdventureJournal.GetNumAvailableSuggestions|C_AdventureJournal.GetNumAvailableSuggestions]]
+: [[API C_AdventureJournal.GetPrimaryOffset|C_AdventureJournal.GetPrimaryOffset]]
+: [[API C_AdventureJournal.GetReward|C_AdventureJournal.GetReward]]
+: [[API C_AdventureJournal.GetSuggestions|C_AdventureJournal.GetSuggestions]]
+: [[API C_AdventureJournal.SetPrimaryOffset|C_AdventureJournal.SetPrimaryOffset]]
+: [[API C_AdventureJournal.UpdateSuggestions|C_AdventureJournal.UpdateSuggestions]]
+: [[API C_AdventureMap.Close|C_AdventureMap.Close]]
+: [[API C_AdventureMap.GetMapID|C_AdventureMap.GetMapID]]
+: [[API C_AdventureMap.GetMapInsetDetailTileInfo|C_AdventureMap.GetMapInsetDetailTileInfo]]
+: [[API C_AdventureMap.GetMapInsetInfo|C_AdventureMap.GetMapInsetInfo]]
+: [[API C_AdventureMap.GetNumMapInsets|C_AdventureMap.GetNumMapInsets]]
+: [[API C_AdventureMap.GetNumQuestOffers|C_AdventureMap.GetNumQuestOffers]]
+: [[API C_AdventureMap.GetNumZoneChoices|C_AdventureMap.GetNumZoneChoices]]
+: [[API C_AdventureMap.GetQuestInfo|C_AdventureMap.GetQuestInfo]]
+: [[API C_AdventureMap.GetQuestOfferInfo|C_AdventureMap.GetQuestOfferInfo]]
+: [[API C_AdventureMap.GetZoneChoiceInfo|C_AdventureMap.GetZoneChoiceInfo]]
+: [[API C_AdventureMap.StartQuest|C_AdventureMap.StartQuest]]
+: [[API C_AlliedRaces.ClearAlliedRaceDetailsGiver|C_AlliedRaces.ClearAlliedRaceDetailsGiver]]
+: [[API C_AlliedRaces.GetAllRacialAbilitiesFromID|C_AlliedRaces.GetAllRacialAbilitiesFromID]]
+: [[API C_AlliedRaces.GetRaceInfoByID|C_AlliedRaces.GetRaceInfoByID]]
+: [[API C_AreaPoiInfo.GetAreaPOISecondsLeft|C_AreaPoiInfo.GetAreaPOISecondsLeft]]
+: [[API C_ArtifactUI.AddPower|C_ArtifactUI.AddPower]]
+: [[API C_ArtifactUI.ApplyCursorRelicToSlot|C_ArtifactUI.ApplyCursorRelicToSlot]]
+: [[API C_ArtifactUI.CanApplyArtifactRelic|C_ArtifactUI.CanApplyArtifactRelic]]
+: [[API C_ArtifactUI.CanApplyCursorRelicToSlot|C_ArtifactUI.CanApplyCursorRelicToSlot]]
+: [[API C_ArtifactUI.CanApplyRelicItemIDToEquippedArtifactSlot|C_ArtifactUI.CanApplyRelicItemIDToEquippedArtifactSlot]]
+: [[API C_ArtifactUI.CanApplyRelicItemIDToSlot|C_ArtifactUI.CanApplyRelicItemIDToSlot]]
+: [[API C_ArtifactUI.CheckRespecNPC|C_ArtifactUI.CheckRespecNPC]]
+: [[API C_ArtifactUI.Clear|C_ArtifactUI.Clear]]
+: [[API C_ArtifactUI.ClearForgeCamera|C_ArtifactUI.ClearForgeCamera]]
+: [[API C_ArtifactUI.ConfirmRespec|C_ArtifactUI.ConfirmRespec]]
+: [[API C_ArtifactUI.DoesEquippedArtifactHaveAnyRelicsSlotted|C_ArtifactUI.DoesEquippedArtifactHaveAnyRelicsSlotted]]
+: [[API C_ArtifactUI.GetAppearanceInfo|C_ArtifactUI.GetAppearanceInfo]]
+: [[API C_ArtifactUI.GetAppearanceInfoByID|C_ArtifactUI.GetAppearanceInfoByID]]
+: [[API C_ArtifactUI.GetAppearanceSetInfo|C_ArtifactUI.GetAppearanceSetInfo]]
+: [[API C_ArtifactUI.GetArtifactArtInfo|C_ArtifactUI.GetArtifactArtInfo]]
+: [[API C_ArtifactUI.GetArtifactInfo|C_ArtifactUI.GetArtifactInfo]]
+: [[API C_ArtifactUI.GetArtifactItemID|C_ArtifactUI.GetArtifactItemID]]
+: [[API C_ArtifactUI.GetArtifactTier|C_ArtifactUI.GetArtifactTier]]
+: [[API C_ArtifactUI.GetArtifactXPRewardTargetInfo|C_ArtifactUI.GetArtifactXPRewardTargetInfo]]
+: [[API C_ArtifactUI.GetCostForPointAtRank|C_ArtifactUI.GetCostForPointAtRank]]
+: [[API C_ArtifactUI.GetEquippedArtifactArtInfo|C_ArtifactUI.GetEquippedArtifactArtInfo]]
+: [[API C_ArtifactUI.GetEquippedArtifactInfo|C_ArtifactUI.GetEquippedArtifactInfo]]
+: [[API C_ArtifactUI.GetEquippedArtifactItemID|C_ArtifactUI.GetEquippedArtifactItemID]]
+: [[API C_ArtifactUI.GetEquippedArtifactNumRelicSlots|C_ArtifactUI.GetEquippedArtifactNumRelicSlots]]
+: [[API C_ArtifactUI.GetEquippedArtifactRelicInfo|C_ArtifactUI.GetEquippedArtifactRelicInfo]]
+: [[API C_ArtifactUI.GetEquippedRelicLockedReason|C_ArtifactUI.GetEquippedRelicLockedReason]]
+: [[API C_ArtifactUI.GetForgeRotation|C_ArtifactUI.GetForgeRotation]]
+: [[API C_ArtifactUI.GetItemLevelIncreaseProvidedByRelic|C_ArtifactUI.GetItemLevelIncreaseProvidedByRelic]]
+: [[API C_ArtifactUI.GetMetaPowerInfo|C_ArtifactUI.GetMetaPowerInfo]]
+: [[API C_ArtifactUI.GetNumAppearanceSets|C_ArtifactUI.GetNumAppearanceSets]]
+: [[API C_ArtifactUI.GetNumObtainedArtifacts|C_ArtifactUI.GetNumObtainedArtifacts]]
+: [[API C_ArtifactUI.GetNumRelicSlots|C_ArtifactUI.GetNumRelicSlots]]
+: [[API C_ArtifactUI.GetPointsRemaining|C_ArtifactUI.GetPointsRemaining]]
+: [[API C_ArtifactUI.GetPowerHyperlink|C_ArtifactUI.GetPowerHyperlink]]
+: [[API C_ArtifactUI.GetPowerInfo|C_ArtifactUI.GetPowerInfo]]
+: [[API C_ArtifactUI.GetPowerLinks|C_ArtifactUI.GetPowerLinks]]
+: [[API C_ArtifactUI.GetPowers|C_ArtifactUI.GetPowers]]
+: [[API C_ArtifactUI.GetPowersAffectedByRelic|C_ArtifactUI.GetPowersAffectedByRelic]]
+: [[API C_ArtifactUI.GetPowersAffectedByRelicItemLink|C_ArtifactUI.GetPowersAffectedByRelicItemLink]]
+: [[API C_ArtifactUI.GetPreviewAppearance|C_ArtifactUI.GetPreviewAppearance]]
+: [[API C_ArtifactUI.GetRelicInfo|C_ArtifactUI.GetRelicInfo]]
+: [[API C_ArtifactUI.GetRelicInfoByItemID|C_ArtifactUI.GetRelicInfoByItemID]]
+: [[API C_ArtifactUI.GetRelicLockedReason|C_ArtifactUI.GetRelicLockedReason]]
+: [[API C_ArtifactUI.GetRelicSlotType|C_ArtifactUI.GetRelicSlotType]]
+: [[API C_ArtifactUI.GetRespecArtifactArtInfo|C_ArtifactUI.GetRespecArtifactArtInfo]]
+: [[API C_ArtifactUI.GetRespecArtifactInfo|C_ArtifactUI.GetRespecArtifactInfo]]
+: [[API C_ArtifactUI.GetRespecCost|C_ArtifactUI.GetRespecCost]]
+: [[API C_ArtifactUI.GetTotalPowerCost|C_ArtifactUI.GetTotalPowerCost]]
+: [[API C_ArtifactUI.GetTotalPurchasedRanks|C_ArtifactUI.GetTotalPurchasedRanks]]
+: [[API C_ArtifactUI.IsArtifactDisabled|C_ArtifactUI.IsArtifactDisabled]]
+: [[API C_ArtifactUI.IsAtForge|C_ArtifactUI.IsAtForge]]
+: [[API C_ArtifactUI.IsEquippedArtifactDisabled|C_ArtifactUI.IsEquippedArtifactDisabled]]
+: [[API C_ArtifactUI.IsEquippedArtifactMaxed|C_ArtifactUI.IsEquippedArtifactMaxed]]
+: [[API C_ArtifactUI.IsMaxedByRulesOrEffect|C_ArtifactUI.IsMaxedByRulesOrEffect]]
+: [[API C_ArtifactUI.IsPowerKnown|C_ArtifactUI.IsPowerKnown]]
+: [[API C_ArtifactUI.IsViewedArtifactEquipped|C_ArtifactUI.IsViewedArtifactEquipped]]
+: [[API C_ArtifactUI.SetAppearance|C_ArtifactUI.SetAppearance]]
+: [[API C_ArtifactUI.SetForgeCamera|C_ArtifactUI.SetForgeCamera]]
+: [[API C_ArtifactUI.SetForgeRotation|C_ArtifactUI.SetForgeRotation]]
+: [[API C_ArtifactUI.SetPreviewAppearance|C_ArtifactUI.SetPreviewAppearance]]
+: [[API C_ArtifactUI.ShouldSuppressForgeRotation|C_ArtifactUI.ShouldSuppressForgeRotation]]
+: [[API C_AzeriteEmpoweredItem.CanSelectPower|C_AzeriteEmpoweredItem.CanSelectPower]]
+: [[API C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec|C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec]]
+: [[API C_AzeriteEmpoweredItem.ConfirmAzeriteEmpoweredItemRespec|C_AzeriteEmpoweredItem.ConfirmAzeriteEmpoweredItemRespec]]
+: [[API C_AzeriteEmpoweredItem.GetAllTierInfo|C_AzeriteEmpoweredItem.GetAllTierInfo]]
+: [[API C_AzeriteEmpoweredItem.GetAllTierInfoByItemID|C_AzeriteEmpoweredItem.GetAllTierInfoByItemID]]
+: [[API C_AzeriteEmpoweredItem.GetAzeriteEmpoweredItemRespecCost|C_AzeriteEmpoweredItem.GetAzeriteEmpoweredItemRespecCost]]
+: [[API C_AzeriteEmpoweredItem.GetPowerInfo|C_AzeriteEmpoweredItem.GetPowerInfo]]
+: [[API C_AzeriteEmpoweredItem.GetPowerText|C_AzeriteEmpoweredItem.GetPowerText]]
+: [[API C_AzeriteEmpoweredItem.GetSpecsForPower|C_AzeriteEmpoweredItem.GetSpecsForPower]]
+: [[API C_AzeriteEmpoweredItem.HasAnyUnselectedPowers|C_AzeriteEmpoweredItem.HasAnyUnselectedPowers]]
+: [[API C_AzeriteEmpoweredItem.HasBeenViewed|C_AzeriteEmpoweredItem.HasBeenViewed]]
+: [[API C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem]]
+: [[API C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID|C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID]]
+: [[API C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable|C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable]]
+: [[API C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped|C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped]]
+: [[API C_AzeriteEmpoweredItem.IsPowerAvailableForSpec|C_AzeriteEmpoweredItem.IsPowerAvailableForSpec]]
+: [[API C_AzeriteEmpoweredItem.IsPowerSelected|C_AzeriteEmpoweredItem.IsPowerSelected]]
+: [[API C_AzeriteEmpoweredItem.SelectPower|C_AzeriteEmpoweredItem.SelectPower]]
+: [[API C_AzeriteEmpoweredItem.SetHasBeenViewed|C_AzeriteEmpoweredItem.SetHasBeenViewed]]
+: [[API C_AzeriteItem.FindActiveAzeriteItem|C_AzeriteItem.FindActiveAzeriteItem]]
+: [[API C_AzeriteItem.GetAzeriteItemXPInfo|C_AzeriteItem.GetAzeriteItemXPInfo]]
+: [[API C_AzeriteItem.GetPowerLevel|C_AzeriteItem.GetPowerLevel]]
+: [[API C_AzeriteItem.HasActiveAzeriteItem|C_AzeriteItem.HasActiveAzeriteItem]]
+: [[API C_AzeriteItem.IsAzeriteItem|C_AzeriteItem.IsAzeriteItem]]
+: [[API C_AzeriteItem.IsAzeriteItemByID|C_AzeriteItem.IsAzeriteItemByID]]
+: [[API C_BlackMarket.Close|C_BlackMarket.Close]]
+: [[API C_BlackMarket.GetHotItem|C_BlackMarket.GetHotItem]]
+: [[API C_BlackMarket.GetItemInfoByID|C_BlackMarket.GetItemInfoByID]]
+: [[API C_BlackMarket.GetItemInfoByIndex|C_BlackMarket.GetItemInfoByIndex]]
+: [[API C_BlackMarket.GetNumItems|C_BlackMarket.GetNumItems]]
+: [[API C_BlackMarket.IsViewOnly|C_BlackMarket.IsViewOnly]]
+: [[API C_BlackMarket.ItemPlaceBid|C_BlackMarket.ItemPlaceBid]]
+: [[API C_BlackMarket.RequestItems|C_BlackMarket.RequestItems]]
+: [[API C_CVar.GetCVar|C_CVar.GetCVar]]
+: [[API C_CVar.GetCVarBitfield|C_CVar.GetCVarBitfield]]
+: [[API C_CVar.GetCVarBool|C_CVar.GetCVarBool]]
+: [[API C_CVar.GetCVarDefault|C_CVar.GetCVarDefault]]
+: [[API C_CVar.RegisterCVar|C_CVar.RegisterCVar]]
+: [[API C_CVar.ResetTestCVars|C_CVar.ResetTestCVars]]
+: [[API C_CVar.SetCVar|C_CVar.SetCVar]]
+: [[API C_CVar.SetCVarBitfield|C_CVar.SetCVarBitfield]]
+: [[API C_Calendar.AddEvent|C_Calendar.AddEvent]]
+: [[API C_Calendar.AreNamesReady|C_Calendar.AreNamesReady]]
+: [[API C_Calendar.CanAddEvent|C_Calendar.CanAddEvent]]
+: [[API C_Calendar.CanSendInvite|C_Calendar.CanSendInvite]]
+: [[API C_Calendar.CloseEvent|C_Calendar.CloseEvent]]
+: [[API C_Calendar.ContextMenuEventCanComplain|C_Calendar.ContextMenuEventCanComplain]]
+: [[API C_Calendar.ContextMenuEventCanEdit|C_Calendar.ContextMenuEventCanEdit]]
+: [[API C_Calendar.ContextMenuEventCanRemove|C_Calendar.ContextMenuEventCanRemove]]
+: [[API C_Calendar.ContextMenuEventClipboard|C_Calendar.ContextMenuEventClipboard]]
+: [[API C_Calendar.ContextMenuEventComplain|C_Calendar.ContextMenuEventComplain]]
+: [[API C_Calendar.ContextMenuEventCopy|C_Calendar.ContextMenuEventCopy]]
+: [[API C_Calendar.ContextMenuEventGetCalendarType|C_Calendar.ContextMenuEventGetCalendarType]]
+: [[API C_Calendar.ContextMenuEventPaste|C_Calendar.ContextMenuEventPaste]]
+: [[API C_Calendar.ContextMenuEventRemove|C_Calendar.ContextMenuEventRemove]]
+: [[API C_Calendar.ContextMenuEventSignUp|C_Calendar.ContextMenuEventSignUp]]
+: [[API C_Calendar.ContextMenuGetEventIndex|C_Calendar.ContextMenuGetEventIndex]]
+: [[API C_Calendar.ContextMenuInviteAvailable|C_Calendar.ContextMenuInviteAvailable]]
+: [[API C_Calendar.ContextMenuInviteDecline|C_Calendar.ContextMenuInviteDecline]]
+: [[API C_Calendar.ContextMenuInviteRemove|C_Calendar.ContextMenuInviteRemove]]
+: [[API C_Calendar.ContextMenuInviteTentative|C_Calendar.ContextMenuInviteTentative]]
+: [[API C_Calendar.ContextMenuSelectEvent|C_Calendar.ContextMenuSelectEvent]]
+: [[API C_Calendar.CreateCommunitySignUpEvent|C_Calendar.CreateCommunitySignUpEvent]]
+: [[API C_Calendar.CreateGuildAnnouncementEvent|C_Calendar.CreateGuildAnnouncementEvent]]
+: [[API C_Calendar.CreateGuildSignUpEvent|C_Calendar.CreateGuildSignUpEvent]]
+: [[API C_Calendar.CreatePlayerEvent|C_Calendar.CreatePlayerEvent]]
+: [[API C_Calendar.EventAvailable|C_Calendar.EventAvailable]]
+: [[API C_Calendar.EventCanEdit|C_Calendar.EventCanEdit]]
+: [[API C_Calendar.EventClearAutoApprove|C_Calendar.EventClearAutoApprove]]
+: [[API C_Calendar.EventClearLocked|C_Calendar.EventClearLocked]]
+: [[API C_Calendar.EventClearModerator|C_Calendar.EventClearModerator]]
+: [[API C_Calendar.EventDecline|C_Calendar.EventDecline]]
+: [[API C_Calendar.EventGetCalendarType|C_Calendar.EventGetCalendarType]]
+: [[API C_Calendar.EventGetClubId|C_Calendar.EventGetClubId]]
+: [[API C_Calendar.EventGetInvite|C_Calendar.EventGetInvite]]
+: [[API C_Calendar.EventGetInviteResponseTime|C_Calendar.EventGetInviteResponseTime]]
+: [[API C_Calendar.EventGetInviteSortCriterion|C_Calendar.EventGetInviteSortCriterion]]
+: [[API C_Calendar.EventGetSelectedInvite|C_Calendar.EventGetSelectedInvite]]
+: [[API C_Calendar.EventGetStatusOptions|C_Calendar.EventGetStatusOptions]]
+: [[API C_Calendar.EventGetTextures|C_Calendar.EventGetTextures]]
+: [[API C_Calendar.EventGetTypes|C_Calendar.EventGetTypes]]
+: [[API C_Calendar.EventGetTypesDisplayOrdered|C_Calendar.EventGetTypesDisplayOrdered]]
+: [[API C_Calendar.EventHasPendingInvite|C_Calendar.EventHasPendingInvite]]
+: [[API C_Calendar.EventHaveSettingsChanged|C_Calendar.EventHaveSettingsChanged]]
+: [[API C_Calendar.EventInvite|C_Calendar.EventInvite]]
+: [[API C_Calendar.EventRemoveInvite|C_Calendar.EventRemoveInvite]]
+: [[API C_Calendar.EventSelectInvite|C_Calendar.EventSelectInvite]]
+: [[API C_Calendar.EventSetAutoApprove|C_Calendar.EventSetAutoApprove]]
+: [[API C_Calendar.EventSetClubId|C_Calendar.EventSetClubId]]
+: [[API C_Calendar.EventSetDate|C_Calendar.EventSetDate]]
+: [[API C_Calendar.EventSetDescription|C_Calendar.EventSetDescription]]
+: [[API C_Calendar.EventSetInviteStatus|C_Calendar.EventSetInviteStatus]]
+: [[API C_Calendar.EventSetLocked|C_Calendar.EventSetLocked]]
+: [[API C_Calendar.EventSetModerator|C_Calendar.EventSetModerator]]
+: [[API C_Calendar.EventSetTextureID|C_Calendar.EventSetTextureID]]
+: [[API C_Calendar.EventSetTime|C_Calendar.EventSetTime]]
+: [[API C_Calendar.EventSetTitle|C_Calendar.EventSetTitle]]
+: [[API C_Calendar.EventSetType|C_Calendar.EventSetType]]
+: [[API C_Calendar.EventSignUp|C_Calendar.EventSignUp]]
+: [[API C_Calendar.EventSortInvites|C_Calendar.EventSortInvites]]
+: [[API C_Calendar.EventTentative|C_Calendar.EventTentative]]
+: [[API C_Calendar.GetClubCalendarEvents|C_Calendar.GetClubCalendarEvents]]
+: [[API C_Calendar.GetDayEvent|C_Calendar.GetDayEvent]]
+: [[API C_Calendar.GetDefaultGuildFilter|C_Calendar.GetDefaultGuildFilter]]
+: [[API C_Calendar.GetEventIndex|C_Calendar.GetEventIndex]]
+: [[API C_Calendar.GetEventIndexInfo|C_Calendar.GetEventIndexInfo]]
+: [[API C_Calendar.GetEventInfo|C_Calendar.GetEventInfo]]
+: [[API C_Calendar.GetFirstPendingInvite|C_Calendar.GetFirstPendingInvite]]
+: [[API C_Calendar.GetGuildEventInfo|C_Calendar.GetGuildEventInfo]]
+: [[API C_Calendar.GetGuildEventSelectionInfo|C_Calendar.GetGuildEventSelectionInfo]]
+: [[API C_Calendar.GetHolidayInfo|C_Calendar.GetHolidayInfo]]
+: [[API C_Calendar.GetMaxCreateDate|C_Calendar.GetMaxCreateDate]]
+: [[API C_Calendar.GetMinDate|C_Calendar.GetMinDate]]
+: [[API C_Calendar.GetMonthInfo|C_Calendar.GetMonthInfo]]
+: [[API C_Calendar.GetNextClubId|C_Calendar.GetNextClubId]]
+: [[API C_Calendar.GetNumDayEvents|C_Calendar.GetNumDayEvents]]
+: [[API C_Calendar.GetNumGuildEvents|C_Calendar.GetNumGuildEvents]]
+: [[API C_Calendar.GetNumInvites|C_Calendar.GetNumInvites]]
+: [[API C_Calendar.GetNumPendingInvites|C_Calendar.GetNumPendingInvites]]
+: [[API C_Calendar.GetRaidInfo|C_Calendar.GetRaidInfo]]
+: [[API C_Calendar.IsActionPending|C_Calendar.IsActionPending]]
+: [[API C_Calendar.MassInviteCommunity|C_Calendar.MassInviteCommunity]]
+: [[API C_Calendar.MassInviteGuild|C_Calendar.MassInviteGuild]]
+: [[API C_Calendar.OpenCalendar|C_Calendar.OpenCalendar]]
+: [[API C_Calendar.OpenEvent|C_Calendar.OpenEvent]]
+: [[API C_Calendar.RemoveEvent|C_Calendar.RemoveEvent]]
+: [[API C_Calendar.SetAbsMonth|C_Calendar.SetAbsMonth]]
+: [[API C_Calendar.SetMonth|C_Calendar.SetMonth]]
+: [[API C_Calendar.SetNextClubId|C_Calendar.SetNextClubId]]
+: [[API C_Calendar.UpdateEvent|C_Calendar.UpdateEvent]]
+: [[API C_CampaignInfo.GetCampaignChapterInfo|C_CampaignInfo.GetCampaignChapterInfo]]
+: [[API C_CampaignInfo.GetCampaignInfo|C_CampaignInfo.GetCampaignInfo]]
+: [[API C_CampaignInfo.GetCurrentCampaignChapterID|C_CampaignInfo.GetCurrentCampaignChapterID]]
+: [[API C_CampaignInfo.GetCurrentCampaignID|C_CampaignInfo.GetCurrentCampaignID]]
+: [[API C_CampaignInfo.IsCampaignQuest|C_CampaignInfo.IsCampaignQuest]]
+: [[API C_ChallengeMode.ClearKeystone|C_ChallengeMode.ClearKeystone]]
+: [[API C_ChallengeMode.CloseKeystoneFrame|C_ChallengeMode.CloseKeystoneFrame]]
+: [[API C_ChallengeMode.GetActiveChallengeMapID|C_ChallengeMode.GetActiveChallengeMapID]]
+: [[API C_ChallengeMode.GetActiveKeystoneInfo|C_ChallengeMode.GetActiveKeystoneInfo]]
+: [[API C_ChallengeMode.GetAffixInfo|C_ChallengeMode.GetAffixInfo]]
+: [[API C_ChallengeMode.GetCompletionInfo|C_ChallengeMode.GetCompletionInfo]]
+: [[API C_ChallengeMode.GetDeathCount|C_ChallengeMode.GetDeathCount]]
+: [[API C_ChallengeMode.GetGuildLeaders|C_ChallengeMode.GetGuildLeaders]]
+: [[API C_ChallengeMode.GetMapTable|C_ChallengeMode.GetMapTable]]
+: [[API C_ChallengeMode.GetMapUIInfo|C_ChallengeMode.GetMapUIInfo]]
+: [[API C_ChallengeMode.GetPowerLevelDamageHealthMod|C_ChallengeMode.GetPowerLevelDamageHealthMod]]
+: [[API C_ChallengeMode.GetSlottedKeystoneInfo|C_ChallengeMode.GetSlottedKeystoneInfo]]
+: [[API C_ChallengeMode.HasSlottedKeystone|C_ChallengeMode.HasSlottedKeystone]]
+: [[API C_ChallengeMode.IsChallengeModeActive|C_ChallengeMode.IsChallengeModeActive]]
+: [[API C_ChallengeMode.RemoveKeystone|C_ChallengeMode.RemoveKeystone]]
+: [[API C_ChallengeMode.RequestLeaders|C_ChallengeMode.RequestLeaders]]
+: [[API C_ChallengeMode.Reset|C_ChallengeMode.Reset]]
+: [[API C_ChallengeMode.SetKeystoneTooltip|C_ChallengeMode.SetKeystoneTooltip]]
+: [[API C_ChallengeMode.SlotKeystone|C_ChallengeMode.SlotKeystone]]
+: [[API C_ChallengeMode.StartChallengeMode|C_ChallengeMode.StartChallengeMode]]
+: [[API C_ChatInfo.ReplaceIconAndGroupExpressions|C_ChatInfo.ReplaceIconAndGroupExpressions]]
+: [[API C_ChatInfo.ResetDefaultZoneChannels|C_ChatInfo.ResetDefaultZoneChannels]]
+: [[API C_ChatInfo.SwapChatChannelsByChannelIndex|C_ChatInfo.SwapChatChannelsByChannelIndex]]
+: [[API C_ClassColor.GetClassColor|C_ClassColor.GetClassColor]]
+: [[API C_ClassTrial.GetClassTrialLogoutTimeSeconds|C_ClassTrial.GetClassTrialLogoutTimeSeconds]]
+: [[API C_ClassTrial.IsClassTrialCharacter|C_ClassTrial.IsClassTrialCharacter]]
+: [[API C_Club.GetClubLimits|C_Club.GetClubLimits]]
+: [[API C_Club.GetGuildClubId|C_Club.GetGuildClubId]]
+: [[API C_Club.GetLastTicketResponse|C_Club.GetLastTicketResponse]]
+: [[API C_Club.SendCharacterInvitation|C_Club.SendCharacterInvitation]]
+: [[API C_ContributionCollector.Close|C_ContributionCollector.Close]]
+: [[API C_ContributionCollector.Contribute|C_ContributionCollector.Contribute]]
+: [[API C_ContributionCollector.GetActive|C_ContributionCollector.GetActive]]
+: [[API C_ContributionCollector.GetAtlases|C_ContributionCollector.GetAtlases]]
+: [[API C_ContributionCollector.GetBuffs|C_ContributionCollector.GetBuffs]]
+: [[API C_ContributionCollector.GetContributionAppearance|C_ContributionCollector.GetContributionAppearance]]
+: [[API C_ContributionCollector.GetContributionCollectorsForMap|C_ContributionCollector.GetContributionCollectorsForMap]]
+: [[API C_ContributionCollector.GetContributionResult|C_ContributionCollector.GetContributionResult]]
+: [[API C_ContributionCollector.GetDescription|C_ContributionCollector.GetDescription]]
+: [[API C_ContributionCollector.GetManagedContributionsForCreatureID|C_ContributionCollector.GetManagedContributionsForCreatureID]]
+: [[API C_ContributionCollector.GetName|C_ContributionCollector.GetName]]
+: [[API C_ContributionCollector.GetOrderIndex|C_ContributionCollector.GetOrderIndex]]
+: [[API C_ContributionCollector.GetRequiredContributionCurrency|C_ContributionCollector.GetRequiredContributionCurrency]]
+: [[API C_ContributionCollector.GetRequiredContributionItem|C_ContributionCollector.GetRequiredContributionItem]]
+: [[API C_ContributionCollector.GetRewardQuestID|C_ContributionCollector.GetRewardQuestID]]
+: [[API C_ContributionCollector.GetState|C_ContributionCollector.GetState]]
+: [[API C_ContributionCollector.HasPendingContribution|C_ContributionCollector.HasPendingContribution]]
+: [[API C_ContributionCollector.IsAwaitingRewardQuestData|C_ContributionCollector.IsAwaitingRewardQuestData]]
+: [[API C_CurrencyInfo.DoesWarModeBonusApply|C_CurrencyInfo.DoesWarModeBonusApply]]
+: [[API C_CurrencyInfo.GetAzeriteCurrencyID|C_CurrencyInfo.GetAzeriteCurrencyID]]
+: [[API C_CurrencyInfo.GetBasicCurrencyInfo|C_CurrencyInfo.GetBasicCurrencyInfo]]
+: [[API C_CurrencyInfo.GetCurrencyContainerInfo|C_CurrencyInfo.GetCurrencyContainerInfo]]
+: [[API C_CurrencyInfo.GetCurrencyIDFromLink|C_CurrencyInfo.GetCurrencyIDFromLink]]
+: [[API C_CurrencyInfo.GetFactionGrantedByCurrency|C_CurrencyInfo.GetFactionGrantedByCurrency]]
+: [[API C_CurrencyInfo.GetWarResourcesCurrencyID|C_CurrencyInfo.GetWarResourcesCurrencyID]]
+: [[API C_CurrencyInfo.IsCurrencyContainer|C_CurrencyInfo.IsCurrencyContainer]]
+: [[API C_DateAndTime.AdjustTimeByDays|C_DateAndTime.AdjustTimeByDays]]
+: [[API C_DateAndTime.AdjustTimeByMinutes|C_DateAndTime.AdjustTimeByMinutes]]
+: [[API C_DateAndTime.CompareCalendarTime|C_DateAndTime.CompareCalendarTime]]
+: [[API C_DateAndTime.GetCalendarTimeFromEpoch|C_DateAndTime.GetCalendarTimeFromEpoch]]
+: [[API C_DateAndTime.GetCurrentCalendarTime|C_DateAndTime.GetCurrentCalendarTime]]
+: [[API C_DateAndTime.GetServerTimeLocal|C_DateAndTime.GetServerTimeLocal]]
+: [[API C_Debug.DashboardIsEnabled|C_Debug.DashboardIsEnabled]]
+: [[API C_EncounterJournal.GetDungeonEntrancesForMap|C_EncounterJournal.GetDungeonEntrancesForMap]]
+: [[API C_EncounterJournal.GetEncountersOnMap|C_EncounterJournal.GetEncountersOnMap]]
+: [[API C_EncounterJournal.GetSectionIconFlags|C_EncounterJournal.GetSectionIconFlags]]
+: [[API C_EncounterJournal.GetSectionInfo|C_EncounterJournal.GetSectionInfo]]
+: [[API C_EncounterJournal.InstanceHasLoot|C_EncounterJournal.InstanceHasLoot]]
+: [[API C_EncounterJournal.IsEncounterComplete|C_EncounterJournal.IsEncounterComplete]]
+: [[API C_EquipmentSet.AssignSpecToEquipmentSet|C_EquipmentSet.AssignSpecToEquipmentSet]]
+: [[API C_EquipmentSet.CanUseEquipmentSets|C_EquipmentSet.CanUseEquipmentSets]]
+: [[API C_EquipmentSet.ClearIgnoredSlotsForSave|C_EquipmentSet.ClearIgnoredSlotsForSave]]
+: [[API C_EquipmentSet.CreateEquipmentSet|C_EquipmentSet.CreateEquipmentSet]]
+: [[API C_EquipmentSet.DeleteEquipmentSet|C_EquipmentSet.DeleteEquipmentSet]]
+: [[API C_EquipmentSet.EquipmentSetContainsLockedItems|C_EquipmentSet.EquipmentSetContainsLockedItems]]
+: [[API C_EquipmentSet.GetEquipmentSetAssignedSpec|C_EquipmentSet.GetEquipmentSetAssignedSpec]]
+: [[API C_EquipmentSet.GetEquipmentSetForSpec|C_EquipmentSet.GetEquipmentSetForSpec]]
+: [[API C_EquipmentSet.GetEquipmentSetID|C_EquipmentSet.GetEquipmentSetID]]
+: [[API C_EquipmentSet.GetEquipmentSetIDs|C_EquipmentSet.GetEquipmentSetIDs]]
+: [[API C_EquipmentSet.GetEquipmentSetInfo|C_EquipmentSet.GetEquipmentSetInfo]]
+: [[API C_EquipmentSet.GetIgnoredSlots|C_EquipmentSet.GetIgnoredSlots]]
+: [[API C_EquipmentSet.GetItemIDs|C_EquipmentSet.GetItemIDs]]
+: [[API C_EquipmentSet.GetItemLocations|C_EquipmentSet.GetItemLocations]]
+: [[API C_EquipmentSet.GetNumEquipmentSets|C_EquipmentSet.GetNumEquipmentSets]]
+: [[API C_EquipmentSet.IgnoreSlotForSave|C_EquipmentSet.IgnoreSlotForSave]]
+: [[API C_EquipmentSet.IsSlotIgnoredForSave|C_EquipmentSet.IsSlotIgnoredForSave]]
+: [[API C_EquipmentSet.ModifyEquipmentSet|C_EquipmentSet.ModifyEquipmentSet]]
+: [[API C_EquipmentSet.PickupEquipmentSet|C_EquipmentSet.PickupEquipmentSet]]
+: [[API C_EquipmentSet.SaveEquipmentSet|C_EquipmentSet.SaveEquipmentSet]]
+: [[API C_EquipmentSet.UnassignEquipmentSetSpec|C_EquipmentSet.UnassignEquipmentSetSpec]]
+: [[API C_EquipmentSet.UnignoreSlotForSave|C_EquipmentSet.UnignoreSlotForSave]]
+: [[API C_EquipmentSet.UseEquipmentSet|C_EquipmentSet.UseEquipmentSet]]
+: [[API C_FogOfWar.GetFogOfWarForMap|C_FogOfWar.GetFogOfWarForMap]]
+: [[API C_FogOfWar.GetFogOfWarInfo|C_FogOfWar.GetFogOfWarInfo]]
+: [[API C_Garrison.AddFollowerToMission|C_Garrison.AddFollowerToMission]]
+: [[API C_Garrison.AllowMissionStartAboveSoftCap|C_Garrison.AllowMissionStartAboveSoftCap]]
+: [[API C_Garrison.AreMissionFollowerRequirementsMet|C_Garrison.AreMissionFollowerRequirementsMet]]
+: [[API C_Garrison.AssignFollowerToBuilding|C_Garrison.AssignFollowerToBuilding]]
+: [[API C_Garrison.CanGenerateRecruits|C_Garrison.CanGenerateRecruits]]
+: [[API C_Garrison.CanOpenMissionChest|C_Garrison.CanOpenMissionChest]]
+: [[API C_Garrison.CanSetRecruitmentPreference|C_Garrison.CanSetRecruitmentPreference]]
+: [[API C_Garrison.CanSpellTargetFollowerIDWithAddAbility|C_Garrison.CanSpellTargetFollowerIDWithAddAbility]]
+: [[API C_Garrison.CanUpgradeGarrison|C_Garrison.CanUpgradeGarrison]]
+: [[API C_Garrison.CancelConstruction|C_Garrison.CancelConstruction]]
+: [[API C_Garrison.CastItemSpellOnFollowerAbility|C_Garrison.CastItemSpellOnFollowerAbility]]
+: [[API C_Garrison.CastSpellOnFollower|C_Garrison.CastSpellOnFollower]]
+: [[API C_Garrison.CastSpellOnFollowerAbility|C_Garrison.CastSpellOnFollowerAbility]]
+: [[API C_Garrison.CastSpellOnMission|C_Garrison.CastSpellOnMission]]
+: [[API C_Garrison.ClearCompleteTalent|C_Garrison.ClearCompleteTalent]]
+: [[API C_Garrison.CloseArchitect|C_Garrison.CloseArchitect]]
+: [[API C_Garrison.CloseGarrisonTradeskillNPC|C_Garrison.CloseGarrisonTradeskillNPC]]
+: [[API C_Garrison.CloseMissionNPC|C_Garrison.CloseMissionNPC]]
+: [[API C_Garrison.CloseRecruitmentNPC|C_Garrison.CloseRecruitmentNPC]]
+: [[API C_Garrison.CloseTalentNPC|C_Garrison.CloseTalentNPC]]
+: [[API C_Garrison.CloseTradeskillCrafter|C_Garrison.CloseTradeskillCrafter]]
+: [[API C_Garrison.GenerateRecruits|C_Garrison.GenerateRecruits]]
+: [[API C_Garrison.GetAllBonusAbilityEffects|C_Garrison.GetAllBonusAbilityEffects]]
+: [[API C_Garrison.GetAllEncounterThreats|C_Garrison.GetAllEncounterThreats]]
+: [[API C_Garrison.GetAvailableMissions|C_Garrison.GetAvailableMissions]]
+: [[API C_Garrison.GetAvailableRecruits|C_Garrison.GetAvailableRecruits]]
+: [[API C_Garrison.GetBasicMissionInfo|C_Garrison.GetBasicMissionInfo]]
+: [[API C_Garrison.GetBuffedFollowersForMission|C_Garrison.GetBuffedFollowersForMission]]
+: [[API C_Garrison.GetBuildingInfo|C_Garrison.GetBuildingInfo]]
+: [[API C_Garrison.GetBuildingLockInfo|C_Garrison.GetBuildingLockInfo]]
+: [[API C_Garrison.GetBuildingSizes|C_Garrison.GetBuildingSizes]]
+: [[API C_Garrison.GetBuildingSpecInfo|C_Garrison.GetBuildingSpecInfo]]
+: [[API C_Garrison.GetBuildingTimeRemaining|C_Garrison.GetBuildingTimeRemaining]]
+: [[API C_Garrison.GetBuildingTooltip|C_Garrison.GetBuildingTooltip]]
+: [[API C_Garrison.GetBuildingUpgradeInfo|C_Garrison.GetBuildingUpgradeInfo]]
+: [[API C_Garrison.GetBuildings|C_Garrison.GetBuildings]]
+: [[API C_Garrison.GetBuildingsForPlot|C_Garrison.GetBuildingsForPlot]]
+: [[API C_Garrison.GetBuildingsForSize|C_Garrison.GetBuildingsForSize]]
+: [[API C_Garrison.GetClassSpecCategoryInfo|C_Garrison.GetClassSpecCategoryInfo]]
+: [[API C_Garrison.GetCombatAllyMission|C_Garrison.GetCombatAllyMission]]
+: [[API C_Garrison.GetCompleteMissions|C_Garrison.GetCompleteMissions]]
+: [[API C_Garrison.GetCompleteTalent|C_Garrison.GetCompleteTalent]]
+: [[API C_Garrison.GetCurrencyTypes|C_Garrison.GetCurrencyTypes]]
+: [[API C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID|C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID]]
+: [[API C_Garrison.GetCurrentGarrTalentTreeID|C_Garrison.GetCurrentGarrTalentTreeID]]
+: [[API C_Garrison.GetFollowerAbilities|C_Garrison.GetFollowerAbilities]]
+: [[API C_Garrison.GetFollowerAbilityAtIndex|C_Garrison.GetFollowerAbilityAtIndex]]
+: [[API C_Garrison.GetFollowerAbilityAtIndexByID|C_Garrison.GetFollowerAbilityAtIndexByID]]
+: [[API C_Garrison.GetFollowerAbilityCounterMechanicInfo|C_Garrison.GetFollowerAbilityCounterMechanicInfo]]
+: [[API C_Garrison.GetFollowerAbilityCountersForMechanicTypes|C_Garrison.GetFollowerAbilityCountersForMechanicTypes]]
+: [[API C_Garrison.GetFollowerAbilityDescription|C_Garrison.GetFollowerAbilityDescription]]
+: [[API C_Garrison.GetFollowerAbilityIcon|C_Garrison.GetFollowerAbilityIcon]]
+: [[API C_Garrison.GetFollowerAbilityInfo|C_Garrison.GetFollowerAbilityInfo]]
+: [[API C_Garrison.GetFollowerAbilityIsTrait|C_Garrison.GetFollowerAbilityIsTrait]]
+: [[API C_Garrison.GetFollowerAbilityLink|C_Garrison.GetFollowerAbilityLink]]
+: [[API C_Garrison.GetFollowerAbilityName|C_Garrison.GetFollowerAbilityName]]
+: [[API C_Garrison.GetFollowerActivationCost|C_Garrison.GetFollowerActivationCost]]
+: [[API C_Garrison.GetFollowerBiasForMission|C_Garrison.GetFollowerBiasForMission]]
+: [[API C_Garrison.GetFollowerClassSpec|C_Garrison.GetFollowerClassSpec]]
+: [[API C_Garrison.GetFollowerClassSpecAtlas|C_Garrison.GetFollowerClassSpecAtlas]]
+: [[API C_Garrison.GetFollowerClassSpecByID|C_Garrison.GetFollowerClassSpecByID]]
+: [[API C_Garrison.GetFollowerClassSpecName|C_Garrison.GetFollowerClassSpecName]]
+: [[API C_Garrison.GetFollowerDisplayID|C_Garrison.GetFollowerDisplayID]]
+: [[API C_Garrison.GetFollowerInfo|C_Garrison.GetFollowerInfo]]
+: [[API C_Garrison.GetFollowerInfoForBuilding|C_Garrison.GetFollowerInfoForBuilding]]
+: [[API C_Garrison.GetFollowerIsTroop|C_Garrison.GetFollowerIsTroop]]
+: [[API C_Garrison.GetFollowerItemLevelAverage|C_Garrison.GetFollowerItemLevelAverage]]
+: [[API C_Garrison.GetFollowerItems|C_Garrison.GetFollowerItems]]
+: [[API C_Garrison.GetFollowerLevel|C_Garrison.GetFollowerLevel]]
+: [[API C_Garrison.GetFollowerLevelXP|C_Garrison.GetFollowerLevelXP]]
+: [[API C_Garrison.GetFollowerLink|C_Garrison.GetFollowerLink]]
+: [[API C_Garrison.GetFollowerLinkByID|C_Garrison.GetFollowerLinkByID]]
+: [[API C_Garrison.GetFollowerMissionCompleteInfo|C_Garrison.GetFollowerMissionCompleteInfo]]
+: [[API C_Garrison.GetFollowerMissionTimeLeft|C_Garrison.GetFollowerMissionTimeLeft]]
+: [[API C_Garrison.GetFollowerMissionTimeLeftSeconds|C_Garrison.GetFollowerMissionTimeLeftSeconds]]
+: [[API C_Garrison.GetFollowerModelItems|C_Garrison.GetFollowerModelItems]]
+: [[API C_Garrison.GetFollowerName|C_Garrison.GetFollowerName]]
+: [[API C_Garrison.GetFollowerNameByID|C_Garrison.GetFollowerNameByID]]
+: [[API C_Garrison.GetFollowerPortraitIconID|C_Garrison.GetFollowerPortraitIconID]]
+: [[API C_Garrison.GetFollowerPortraitIconIDByID|C_Garrison.GetFollowerPortraitIconIDByID]]
+: [[API C_Garrison.GetFollowerQuality|C_Garrison.GetFollowerQuality]]
+: [[API C_Garrison.GetFollowerQualityTable|C_Garrison.GetFollowerQualityTable]]
+: [[API C_Garrison.GetFollowerRecentlyGainedAbilityIDs|C_Garrison.GetFollowerRecentlyGainedAbilityIDs]]
+: [[API C_Garrison.GetFollowerRecentlyGainedTraitIDs|C_Garrison.GetFollowerRecentlyGainedTraitIDs]]
+: [[API C_Garrison.GetFollowerShipments|C_Garrison.GetFollowerShipments]]
+: [[API C_Garrison.GetFollowerSoftCap|C_Garrison.GetFollowerSoftCap]]
+: [[API C_Garrison.GetFollowerSourceTextByID|C_Garrison.GetFollowerSourceTextByID]]
+: [[API C_Garrison.GetFollowerSpecializationAtIndex|C_Garrison.GetFollowerSpecializationAtIndex]]
+: [[API C_Garrison.GetFollowerStatus|C_Garrison.GetFollowerStatus]]
+: [[API C_Garrison.GetFollowerTraitAtIndex|C_Garrison.GetFollowerTraitAtIndex]]
+: [[API C_Garrison.GetFollowerTraitAtIndexByID|C_Garrison.GetFollowerTraitAtIndexByID]]
+: [[API C_Garrison.GetFollowerTypeByID|C_Garrison.GetFollowerTypeByID]]
+: [[API C_Garrison.GetFollowerTypeByMissionID|C_Garrison.GetFollowerTypeByMissionID]]
+: [[API C_Garrison.GetFollowerUnderBiasReason|C_Garrison.GetFollowerUnderBiasReason]]
+: [[API C_Garrison.GetFollowerXP|C_Garrison.GetFollowerXP]]
+: [[API C_Garrison.GetFollowerXPTable|C_Garrison.GetFollowerXPTable]]
+: [[API C_Garrison.GetFollowerZoneSupportAbilities|C_Garrison.GetFollowerZoneSupportAbilities]]
+: [[API C_Garrison.GetFollowers|C_Garrison.GetFollowers]]
+: [[API C_Garrison.GetFollowersSpellsForMission|C_Garrison.GetFollowersSpellsForMission]]
+: [[API C_Garrison.GetFollowersTraitsForMission|C_Garrison.GetFollowersTraitsForMission]]
+: [[API C_Garrison.GetGarrisonInfo|C_Garrison.GetGarrisonInfo]]
+: [[API C_Garrison.GetGarrisonPlotsInstancesForMap|C_Garrison.GetGarrisonPlotsInstancesForMap]]
+: [[API C_Garrison.GetGarrisonUpgradeCost|C_Garrison.GetGarrisonUpgradeCost]]
+: [[API C_Garrison.GetInProgressMissions|C_Garrison.GetInProgressMissions]]
+: [[API C_Garrison.GetLandingPageGarrisonType|C_Garrison.GetLandingPageGarrisonType]]
+: [[API C_Garrison.GetLandingPageItems|C_Garrison.GetLandingPageItems]]
+: [[API C_Garrison.GetLandingPageShipmentCount|C_Garrison.GetLandingPageShipmentCount]]
+: [[API C_Garrison.GetLandingPageShipmentInfo|C_Garrison.GetLandingPageShipmentInfo]]
+: [[API C_Garrison.GetLandingPageShipmentInfoByContainerID|C_Garrison.GetLandingPageShipmentInfoByContainerID]]
+: [[API C_Garrison.GetLooseShipments|C_Garrison.GetLooseShipments]]
+: [[API C_Garrison.GetMissionBonusAbilityEffects|C_Garrison.GetMissionBonusAbilityEffects]]
+: [[API C_Garrison.GetMissionCompleteEncounters|C_Garrison.GetMissionCompleteEncounters]]
+: [[API C_Garrison.GetMissionCost|C_Garrison.GetMissionCost]]
+: [[API C_Garrison.GetMissionDisplayIDs|C_Garrison.GetMissionDisplayIDs]]
+: [[API C_Garrison.GetMissionInfo|C_Garrison.GetMissionInfo]]
+: [[API C_Garrison.GetMissionLink|C_Garrison.GetMissionLink]]
+: [[API C_Garrison.GetMissionMaxFollowers|C_Garrison.GetMissionMaxFollowers]]
+: [[API C_Garrison.GetMissionName|C_Garrison.GetMissionName]]
+: [[API C_Garrison.GetMissionRewardInfo|C_Garrison.GetMissionRewardInfo]]
+: [[API C_Garrison.GetMissionSuccessChance|C_Garrison.GetMissionSuccessChance]]
+: [[API C_Garrison.GetMissionTexture|C_Garrison.GetMissionTexture]]
+: [[API C_Garrison.GetMissionTimes|C_Garrison.GetMissionTimes]]
+: [[API C_Garrison.GetMissionUncounteredMechanics|C_Garrison.GetMissionUncounteredMechanics]]
+: [[API C_Garrison.GetNumActiveFollowers|C_Garrison.GetNumActiveFollowers]]
+: [[API C_Garrison.GetNumFollowerActivationsRemaining|C_Garrison.GetNumFollowerActivationsRemaining]]
+: [[API C_Garrison.GetNumFollowerDailyActivations|C_Garrison.GetNumFollowerDailyActivations]]
+: [[API C_Garrison.GetNumFollowers|C_Garrison.GetNumFollowers]]
+: [[API C_Garrison.GetNumFollowersForMechanic|C_Garrison.GetNumFollowersForMechanic]]
+: [[API C_Garrison.GetNumFollowersOnMission|C_Garrison.GetNumFollowersOnMission]]
+: [[API C_Garrison.GetNumPendingShipments|C_Garrison.GetNumPendingShipments]]
+: [[API C_Garrison.GetNumShipmentCurrencies|C_Garrison.GetNumShipmentCurrencies]]
+: [[API C_Garrison.GetNumShipmentReagents|C_Garrison.GetNumShipmentReagents]]
+: [[API C_Garrison.GetOwnedBuildingInfo|C_Garrison.GetOwnedBuildingInfo]]
+: [[API C_Garrison.GetOwnedBuildingInfoAbbrev|C_Garrison.GetOwnedBuildingInfoAbbrev]]
+: [[API C_Garrison.GetPartyBuffs|C_Garrison.GetPartyBuffs]]
+: [[API C_Garrison.GetPartyMentorLevels|C_Garrison.GetPartyMentorLevels]]
+: [[API C_Garrison.GetPartyMissionInfo|C_Garrison.GetPartyMissionInfo]]
+: [[API C_Garrison.GetPendingShipmentInfo|C_Garrison.GetPendingShipmentInfo]]
+: [[API C_Garrison.GetPlots|C_Garrison.GetPlots]]
+: [[API C_Garrison.GetPlotsForBuilding|C_Garrison.GetPlotsForBuilding]]
+: [[API C_Garrison.GetPossibleFollowersForBuilding|C_Garrison.GetPossibleFollowersForBuilding]]
+: [[API C_Garrison.GetRecruitAbilities|C_Garrison.GetRecruitAbilities]]
+: [[API C_Garrison.GetRecruiterAbilityCategories|C_Garrison.GetRecruiterAbilityCategories]]
+: [[API C_Garrison.GetRecruiterAbilityList|C_Garrison.GetRecruiterAbilityList]]
+: [[API C_Garrison.GetRecruitmentPreferences|C_Garrison.GetRecruitmentPreferences]]
+: [[API C_Garrison.GetShipDeathAnimInfo|C_Garrison.GetShipDeathAnimInfo]]
+: [[API C_Garrison.GetShipmentContainerInfo|C_Garrison.GetShipmentContainerInfo]]
+: [[API C_Garrison.GetShipmentItemInfo|C_Garrison.GetShipmentItemInfo]]
+: [[API C_Garrison.GetShipmentReagentCurrencyInfo|C_Garrison.GetShipmentReagentCurrencyInfo]]
+: [[API C_Garrison.GetShipmentReagentInfo|C_Garrison.GetShipmentReagentInfo]]
+: [[API C_Garrison.GetShipmentReagentItemLink|C_Garrison.GetShipmentReagentItemLink]]
+: [[API C_Garrison.GetSpecChangeCost|C_Garrison.GetSpecChangeCost]]
+: [[API C_Garrison.GetTabForPlot|C_Garrison.GetTabForPlot]]
+: [[API C_Garrison.GetTalent|C_Garrison.GetTalent]]
+: [[API C_Garrison.GetTalentTreeIDsByClassID|C_Garrison.GetTalentTreeIDsByClassID]]
+: [[API C_Garrison.GetTalentTreeInfoForID|C_Garrison.GetTalentTreeInfoForID]]
+: [[API C_Garrison.HasGarrison|C_Garrison.HasGarrison]]
+: [[API C_Garrison.HasShipyard|C_Garrison.HasShipyard]]
+: [[API C_Garrison.IsAboveFollowerSoftCap|C_Garrison.IsAboveFollowerSoftCap]]
+: [[API C_Garrison.IsAtGarrisonMissionNPC|C_Garrison.IsAtGarrisonMissionNPC]]
+: [[API C_Garrison.IsEnvironmentCountered|C_Garrison.IsEnvironmentCountered]]
+: [[API C_Garrison.IsFollowerCollected|C_Garrison.IsFollowerCollected]]
+: [[API C_Garrison.IsInvasionAvailable|C_Garrison.IsInvasionAvailable]]
+: [[API C_Garrison.IsMechanicFullyCountered|C_Garrison.IsMechanicFullyCountered]]
+: [[API C_Garrison.IsOnGarrisonMap|C_Garrison.IsOnGarrisonMap]]
+: [[API C_Garrison.IsOnShipmentQuestForNPC|C_Garrison.IsOnShipmentQuestForNPC]]
+: [[API C_Garrison.IsOnShipyardMap|C_Garrison.IsOnShipyardMap]]
+: [[API C_Garrison.IsPlayerInGarrison|C_Garrison.IsPlayerInGarrison]]
+: [[API C_Garrison.IsUsingPartyGarrison|C_Garrison.IsUsingPartyGarrison]]
+: [[API C_Garrison.IsVisitGarrisonAvailable|C_Garrison.IsVisitGarrisonAvailable]]
+: [[API C_Garrison.MarkMissionComplete|C_Garrison.MarkMissionComplete]]
+: [[API C_Garrison.MissionBonusRoll|C_Garrison.MissionBonusRoll]]
+: [[API C_Garrison.PlaceBuilding|C_Garrison.PlaceBuilding]]
+: [[API C_Garrison.RecruitFollower|C_Garrison.RecruitFollower]]
+: [[API C_Garrison.RemoveFollower|C_Garrison.RemoveFollower]]
+: [[API C_Garrison.RemoveFollowerFromBuilding|C_Garrison.RemoveFollowerFromBuilding]]
+: [[API C_Garrison.RemoveFollowerFromMission|C_Garrison.RemoveFollowerFromMission]]
+: [[API C_Garrison.RenameFollower|C_Garrison.RenameFollower]]
+: [[API C_Garrison.RequestClassSpecCategoryInfo|C_Garrison.RequestClassSpecCategoryInfo]]
+: [[API C_Garrison.RequestGarrisonUpgradeable|C_Garrison.RequestGarrisonUpgradeable]]
+: [[API C_Garrison.RequestLandingPageShipmentInfo|C_Garrison.RequestLandingPageShipmentInfo]]
+: [[API C_Garrison.RequestShipmentCreation|C_Garrison.RequestShipmentCreation]]
+: [[API C_Garrison.RequestShipmentInfo|C_Garrison.RequestShipmentInfo]]
+: [[API C_Garrison.ResearchTalent|C_Garrison.ResearchTalent]]
+: [[API C_Garrison.SearchForFollower|C_Garrison.SearchForFollower]]
+: [[API C_Garrison.SetBuildingActive|C_Garrison.SetBuildingActive]]
+: [[API C_Garrison.SetBuildingSpecialization|C_Garrison.SetBuildingSpecialization]]
+: [[API C_Garrison.SetFollowerFavorite|C_Garrison.SetFollowerFavorite]]
+: [[API C_Garrison.SetFollowerInactive|C_Garrison.SetFollowerInactive]]
+: [[API C_Garrison.SetRecruitmentPreferences|C_Garrison.SetRecruitmentPreferences]]
+: [[API C_Garrison.SetUsingPartyGarrison|C_Garrison.SetUsingPartyGarrison]]
+: [[API C_Garrison.ShouldShowMapTab|C_Garrison.ShouldShowMapTab]]
+: [[API C_Garrison.ShowFollowerNameInErrorMessage|C_Garrison.ShowFollowerNameInErrorMessage]]
+: [[API C_Garrison.StartMission|C_Garrison.StartMission]]
+: [[API C_Garrison.SwapBuildings|C_Garrison.SwapBuildings]]
+: [[API C_Garrison.TargetSpellHasFollowerItemLevelUpgrade|C_Garrison.TargetSpellHasFollowerItemLevelUpgrade]]
+: [[API C_Garrison.TargetSpellHasFollowerReroll|C_Garrison.TargetSpellHasFollowerReroll]]
+: [[API C_Garrison.TargetSpellHasFollowerTemporaryAbility|C_Garrison.TargetSpellHasFollowerTemporaryAbility]]
+: [[API C_Garrison.UpgradeBuilding|C_Garrison.UpgradeBuilding]]
+: [[API C_Garrison.UpgradeGarrison|C_Garrison.UpgradeGarrison]]
+: [[API C_GuildInfo.QueryGuildMemberRecipes|C_GuildInfo.QueryGuildMemberRecipes]]
+: [[API C_Heirloom.CanHeirloomUpgradeFromPending|C_Heirloom.CanHeirloomUpgradeFromPending]]
+: [[API C_Heirloom.CreateHeirloom|C_Heirloom.CreateHeirloom]]
+: [[API C_Heirloom.GetClassAndSpecFilters|C_Heirloom.GetClassAndSpecFilters]]
+: [[API C_Heirloom.GetCollectedHeirloomFilter|C_Heirloom.GetCollectedHeirloomFilter]]
+: [[API C_Heirloom.GetHeirloomInfo|C_Heirloom.GetHeirloomInfo]]
+: [[API C_Heirloom.GetHeirloomItemIDFromDisplayedIndex|C_Heirloom.GetHeirloomItemIDFromDisplayedIndex]]
+: [[API C_Heirloom.GetHeirloomItemIDs|C_Heirloom.GetHeirloomItemIDs]]
+: [[API C_Heirloom.GetHeirloomLink|C_Heirloom.GetHeirloomLink]]
+: [[API C_Heirloom.GetHeirloomMaxUpgradeLevel|C_Heirloom.GetHeirloomMaxUpgradeLevel]]
+: [[API C_Heirloom.GetHeirloomSourceFilter|C_Heirloom.GetHeirloomSourceFilter]]
+: [[API C_Heirloom.GetNumDisplayedHeirlooms|C_Heirloom.GetNumDisplayedHeirlooms]]
+: [[API C_Heirloom.GetNumHeirlooms|C_Heirloom.GetNumHeirlooms]]
+: [[API C_Heirloom.GetNumKnownHeirlooms|C_Heirloom.GetNumKnownHeirlooms]]
+: [[API C_Heirloom.GetUncollectedHeirloomFilter|C_Heirloom.GetUncollectedHeirloomFilter]]
+: [[API C_Heirloom.IsHeirloomSourceValid|C_Heirloom.IsHeirloomSourceValid]]
+: [[API C_Heirloom.IsItemHeirloom|C_Heirloom.IsItemHeirloom]]
+: [[API C_Heirloom.IsPendingHeirloomUpgrade|C_Heirloom.IsPendingHeirloomUpgrade]]
+: [[API C_Heirloom.PlayerHasHeirloom|C_Heirloom.PlayerHasHeirloom]]
+: [[API C_Heirloom.SetClassAndSpecFilters|C_Heirloom.SetClassAndSpecFilters]]
+: [[API C_Heirloom.SetCollectedHeirloomFilter|C_Heirloom.SetCollectedHeirloomFilter]]
+: [[API C_Heirloom.SetHeirloomSourceFilter|C_Heirloom.SetHeirloomSourceFilter]]
+: [[API C_Heirloom.SetSearch|C_Heirloom.SetSearch]]
+: [[API C_Heirloom.SetUncollectedHeirloomFilter|C_Heirloom.SetUncollectedHeirloomFilter]]
+: [[API C_Heirloom.ShouldShowHeirloomHelp|C_Heirloom.ShouldShowHeirloomHelp]]
+: [[API C_Heirloom.UpgradeHeirloom|C_Heirloom.UpgradeHeirloom]]
+: [[API C_IncomingSummon.HasIncomingSummon|C_IncomingSummon.HasIncomingSummon]]
+: [[API C_IncomingSummon.IncomingSummonStatus|C_IncomingSummon.IncomingSummonStatus]]
+: [[API C_InvasionInfo.AreInvasionsAvailable|C_InvasionInfo.AreInvasionsAvailable]]
+: [[API C_InvasionInfo.GetInvasionForUiMapID|C_InvasionInfo.GetInvasionForUiMapID]]
+: [[API C_InvasionInfo.GetInvasionInfo|C_InvasionInfo.GetInvasionInfo]]
+: [[API C_InvasionInfo.GetInvasionTimeLeft|C_InvasionInfo.GetInvasionTimeLeft]]
+: [[API C_IslandsQueue.CloseIslandsQueueScreen|C_IslandsQueue.CloseIslandsQueueScreen]]
+: [[API C_IslandsQueue.GetIslandDifficultyInfo|C_IslandsQueue.GetIslandDifficultyInfo]]
+: [[API C_IslandsQueue.GetIslandsMaxGroupSize|C_IslandsQueue.GetIslandsMaxGroupSize]]
+: [[API C_IslandsQueue.GetIslandsWeeklyQuestID|C_IslandsQueue.GetIslandsWeeklyQuestID]]
+: [[API C_IslandsQueue.QueueForIsland|C_IslandsQueue.QueueForIsland]]
+: [[API C_IslandsQueue.RequestPreloadRewardData|C_IslandsQueue.RequestPreloadRewardData]]
+: [[API C_Item.CanScrapItem|C_Item.CanScrapItem]]
+: [[API C_Item.CanViewItemPowers|C_Item.CanViewItemPowers]]
+: [[API C_ItemSocketInfo.CompleteSocketing|C_ItemSocketInfo.CompleteSocketing]]
+: [[API C_LFGInfo.GetAllEntriesForCategory|C_LFGInfo.GetAllEntriesForCategory]]
+: [[API C_LFGInfo.HideNameFromUI|C_LFGInfo.HideNameFromUI]]
+: [[API C_LFGList.AcceptInvite|C_LFGList.AcceptInvite]]
+: [[API C_LFGList.ApplyToGroup|C_LFGList.ApplyToGroup]]
+: [[API C_LFGList.CanActiveEntryUseAutoAccept|C_LFGList.CanActiveEntryUseAutoAccept]]
+: [[API C_LFGList.CanCreateQuestGroup|C_LFGList.CanCreateQuestGroup]]
+: [[API C_LFGList.CancelApplication|C_LFGList.CancelApplication]]
+: [[API C_LFGList.ClearApplicationTextFields|C_LFGList.ClearApplicationTextFields]]
+: [[API C_LFGList.ClearCreationTextFields|C_LFGList.ClearCreationTextFields]]
+: [[API C_LFGList.ClearSearchResults|C_LFGList.ClearSearchResults]]
+: [[API C_LFGList.ClearSearchTextFields|C_LFGList.ClearSearchTextFields]]
+: [[API C_LFGList.CopyActiveEntryInfoToCreationFields|C_LFGList.CopyActiveEntryInfoToCreationFields]]
+: [[API C_LFGList.CreateListing|C_LFGList.CreateListing]]
+: [[API C_LFGList.DeclineApplicant|C_LFGList.DeclineApplicant]]
+: [[API C_LFGList.DeclineInvite|C_LFGList.DeclineInvite]]
+: [[API C_LFGList.GetActiveEntryInfo|C_LFGList.GetActiveEntryInfo]]
+: [[API C_LFGList.GetActivityGroupInfo|C_LFGList.GetActivityGroupInfo]]
+: [[API C_LFGList.GetActivityIDForQuestID|C_LFGList.GetActivityIDForQuestID]]
+: [[API C_LFGList.GetActivityInfo|C_LFGList.GetActivityInfo]]
+: [[API C_LFGList.GetActivityInfoExpensive|C_LFGList.GetActivityInfoExpensive]]
+: [[API C_LFGList.GetApplicantInfo|C_LFGList.GetApplicantInfo]]
+: [[API C_LFGList.GetApplicantMemberInfo|C_LFGList.GetApplicantMemberInfo]]
+: [[API C_LFGList.GetApplicantMemberStats|C_LFGList.GetApplicantMemberStats]]
+: [[API C_LFGList.GetApplicants|C_LFGList.GetApplicants]]
+: [[API C_LFGList.GetApplicationInfo|C_LFGList.GetApplicationInfo]]
+: [[API C_LFGList.GetApplications|C_LFGList.GetApplications]]
+: [[API C_LFGList.GetAvailableActivities|C_LFGList.GetAvailableActivities]]
+: [[API C_LFGList.GetAvailableActivityGroups|C_LFGList.GetAvailableActivityGroups]]
+: [[API C_LFGList.GetAvailableCategories|C_LFGList.GetAvailableCategories]]
+: [[API C_LFGList.GetAvailableLanguageSearchFilter|C_LFGList.GetAvailableLanguageSearchFilter]]
+: [[API C_LFGList.GetAvailableRoles|C_LFGList.GetAvailableRoles]]
+: [[API C_LFGList.GetCategoryInfo|C_LFGList.GetCategoryInfo]]
+: [[API C_LFGList.GetDefaultLanguageSearchFilter|C_LFGList.GetDefaultLanguageSearchFilter]]
+: [[API C_LFGList.GetLanguageSearchFilter|C_LFGList.GetLanguageSearchFilter]]
+: [[API C_LFGList.GetNumApplicants|C_LFGList.GetNumApplicants]]
+: [[API C_LFGList.GetNumApplications|C_LFGList.GetNumApplications]]
+: [[API C_LFGList.GetNumInvitedApplicantMembers|C_LFGList.GetNumInvitedApplicantMembers]]
+: [[API C_LFGList.GetNumPendingApplicantMembers|C_LFGList.GetNumPendingApplicantMembers]]
+: [[API C_LFGList.GetRoleCheckInfo|C_LFGList.GetRoleCheckInfo]]
+: [[API C_LFGList.GetSearchResultEncounterInfo|C_LFGList.GetSearchResultEncounterInfo]]
+: [[API C_LFGList.GetSearchResultFriends|C_LFGList.GetSearchResultFriends]]
+: [[API C_LFGList.GetSearchResultInfo|C_LFGList.GetSearchResultInfo]]
+: [[API C_LFGList.GetSearchResultMemberCounts|C_LFGList.GetSearchResultMemberCounts]]
+: [[API C_LFGList.GetSearchResultMemberInfo|C_LFGList.GetSearchResultMemberInfo]]
+: [[API C_LFGList.GetSearchResults|C_LFGList.GetSearchResults]]
+: [[API C_LFGList.HasActiveEntryInfo|C_LFGList.HasActiveEntryInfo]]
+: [[API C_LFGList.HasActivityList|C_LFGList.HasActivityList]]
+: [[API C_LFGList.HasSearchResultInfo|C_LFGList.HasSearchResultInfo]]
+: [[API C_LFGList.InviteApplicant|C_LFGList.InviteApplicant]]
+: [[API C_LFGList.IsCurrentlyApplying|C_LFGList.IsCurrentlyApplying]]
+: [[API C_LFGList.RefreshApplicants|C_LFGList.RefreshApplicants]]
+: [[API C_LFGList.RemoveApplicant|C_LFGList.RemoveApplicant]]
+: [[API C_LFGList.RemoveListing|C_LFGList.RemoveListing]]
+: [[API C_LFGList.ReportApplicant|C_LFGList.ReportApplicant]]
+: [[API C_LFGList.ReportSearchResult|C_LFGList.ReportSearchResult]]
+: [[API C_LFGList.RequestAvailableActivities|C_LFGList.RequestAvailableActivities]]
+: [[API C_LFGList.SaveLanguageSearchFilter|C_LFGList.SaveLanguageSearchFilter]]
+: [[API C_LFGList.Search|C_LFGList.Search]]
+: [[API C_LFGList.SetApplicantMemberRole|C_LFGList.SetApplicantMemberRole]]
+: [[API C_LFGList.SetSearchToActivity|C_LFGList.SetSearchToActivity]]
+: [[API C_LFGList.SetSearchToQuestID|C_LFGList.SetSearchToQuestID]]
+: [[API C_LFGList.UpdateListing|C_LFGList.UpdateListing]]
+: [[API C_Loot.IsLegacyLootModeEnabled|C_Loot.IsLegacyLootModeEnabled]]
+: [[API C_LootJournal.GetClassAndSpecFilters|C_LootJournal.GetClassAndSpecFilters]]
+: [[API C_LootJournal.GetFilteredItemSets|C_LootJournal.GetFilteredItemSets]]
+: [[API C_LootJournal.GetItemSetItems|C_LootJournal.GetItemSetItems]]
+: [[API C_LootJournal.SetClassAndSpecFilters|C_LootJournal.SetClassAndSpecFilters]]
+: [[API C_Map.GetBountySetMaps|C_Map.GetBountySetMaps]]
+: [[API C_MerchantFrame.IsMerchantItemRefundable|C_MerchantFrame.IsMerchantItemRefundable]]
+: [[API C_MountJournal.ClearFanfare|C_MountJournal.ClearFanfare]]
+: [[API C_MountJournal.ClearRecentFanfares|C_MountJournal.ClearRecentFanfares]]
+: [[API C_MountJournal.Dismiss|C_MountJournal.Dismiss]]
+: [[API C_MountJournal.GetCollectedFilterSetting|C_MountJournal.GetCollectedFilterSetting]]
+: [[API C_MountJournal.GetDisplayedMountAllCreatureDisplayInfo|C_MountJournal.GetDisplayedMountAllCreatureDisplayInfo]]
+: [[API C_MountJournal.GetDisplayedMountInfo|C_MountJournal.GetDisplayedMountInfo]]
+: [[API C_MountJournal.GetDisplayedMountInfoExtra|C_MountJournal.GetDisplayedMountInfoExtra]]
+: [[API C_MountJournal.GetIsFavorite|C_MountJournal.GetIsFavorite]]
+: [[API C_MountJournal.GetMountAllCreatureDisplayInfoByID|C_MountJournal.GetMountAllCreatureDisplayInfoByID]]
+: [[API C_MountJournal.GetMountFromItem|C_MountJournal.GetMountFromItem]]
+: [[API C_MountJournal.GetMountFromSpell|C_MountJournal.GetMountFromSpell]]
+: [[API C_MountJournal.GetMountIDs|C_MountJournal.GetMountIDs]]
+: [[API C_MountJournal.GetMountInfoByID|C_MountJournal.GetMountInfoByID]]
+: [[API C_MountJournal.GetMountInfoExtraByID|C_MountJournal.GetMountInfoExtraByID]]
+: [[API C_MountJournal.GetMountUsabilityByID|C_MountJournal.GetMountUsabilityByID]]
+: [[API C_MountJournal.GetNumDisplayedMounts|C_MountJournal.GetNumDisplayedMounts]]
+: [[API C_MountJournal.GetNumMounts|C_MountJournal.GetNumMounts]]
+: [[API C_MountJournal.GetNumMountsNeedingFanfare|C_MountJournal.GetNumMountsNeedingFanfare]]
+: [[API C_MountJournal.IsSourceChecked|C_MountJournal.IsSourceChecked]]
+: [[API C_MountJournal.IsValidSourceFilter|C_MountJournal.IsValidSourceFilter]]
+: [[API C_MountJournal.NeedsFanfare|C_MountJournal.NeedsFanfare]]
+: [[API C_MountJournal.Pickup|C_MountJournal.Pickup]]
+: [[API C_MountJournal.SetAllSourceFilters|C_MountJournal.SetAllSourceFilters]]
+: [[API C_MountJournal.SetCollectedFilterSetting|C_MountJournal.SetCollectedFilterSetting]]
+: [[API C_MountJournal.SetIsFavorite|C_MountJournal.SetIsFavorite]]
+: [[API C_MountJournal.SetSearch|C_MountJournal.SetSearch]]
+: [[API C_MountJournal.SetSourceFilter|C_MountJournal.SetSourceFilter]]
+: [[API C_MountJournal.SummonByID|C_MountJournal.SummonByID]]
+: [[API C_MythicPlus.GetCurrentAffixes|C_MythicPlus.GetCurrentAffixes]]
+: [[API C_MythicPlus.GetCurrentSeason|C_MythicPlus.GetCurrentSeason]]
+: [[API C_MythicPlus.GetLastWeeklyBestInformation|C_MythicPlus.GetLastWeeklyBestInformation]]
+: [[API C_MythicPlus.GetOwnedKeystoneChallengeMapID|C_MythicPlus.GetOwnedKeystoneChallengeMapID]]
+: [[API C_MythicPlus.GetOwnedKeystoneLevel|C_MythicPlus.GetOwnedKeystoneLevel]]
+: [[API C_MythicPlus.GetRewardLevelForDifficultyLevel|C_MythicPlus.GetRewardLevelForDifficultyLevel]]
+: [[API C_MythicPlus.GetRewardLevelFromKeystoneLevel|C_MythicPlus.GetRewardLevelFromKeystoneLevel]]
+: [[API C_MythicPlus.GetSeasonBestForMap|C_MythicPlus.GetSeasonBestForMap]]
+: [[API C_MythicPlus.GetWeeklyBestForMap|C_MythicPlus.GetWeeklyBestForMap]]
+: [[API C_MythicPlus.GetWeeklyChestRewardLevel|C_MythicPlus.GetWeeklyChestRewardLevel]]
+: [[API C_MythicPlus.IsMythicPlusActive|C_MythicPlus.IsMythicPlusActive]]
+: [[API C_MythicPlus.IsWeeklyRewardAvailable|C_MythicPlus.IsWeeklyRewardAvailable]]
+: [[API C_MythicPlus.RequestCurrentAffixes|C_MythicPlus.RequestCurrentAffixes]]
+: [[API C_MythicPlus.RequestMapInfo|C_MythicPlus.RequestMapInfo]]
+: [[API C_MythicPlus.RequestRewards|C_MythicPlus.RequestRewards]]
+: [[API C_PaperDollInfo.GetInspectAzeriteItemEmpoweredChoices|C_PaperDollInfo.GetInspectAzeriteItemEmpoweredChoices]]
+: [[API C_PaperDollInfo.GetStaggerPercentage|C_PaperDollInfo.GetStaggerPercentage]]
+: [[API C_PartyInfo.GetInviteReferralInfo|C_PartyInfo.GetInviteReferralInfo]]
+: [[API C_PartyPose.GetPartyPoseInfoByMapID|C_PartyPose.GetPartyPoseInfoByMapID]]
+: [[API C_PetBattles.AcceptPVPDuel|C_PetBattles.AcceptPVPDuel]]
+: [[API C_PetBattles.AcceptQueuedPVPMatch|C_PetBattles.AcceptQueuedPVPMatch]]
+: [[API C_PetBattles.CanAcceptQueuedPVPMatch|C_PetBattles.CanAcceptQueuedPVPMatch]]
+: [[API C_PetBattles.CanActivePetSwapOut|C_PetBattles.CanActivePetSwapOut]]
+: [[API C_PetBattles.CanPetSwapIn|C_PetBattles.CanPetSwapIn]]
+: [[API C_PetBattles.CancelPVPDuel|C_PetBattles.CancelPVPDuel]]
+: [[API C_PetBattles.ChangePet|C_PetBattles.ChangePet]]
+: [[API C_PetBattles.DeclineQueuedPVPMatch|C_PetBattles.DeclineQueuedPVPMatch]]
+: [[API C_PetBattles.ForfeitGame|C_PetBattles.ForfeitGame]]
+: [[API C_PetBattles.GetAbilityEffectInfo|C_PetBattles.GetAbilityEffectInfo]]
+: [[API C_PetBattles.GetAbilityInfo|C_PetBattles.GetAbilityInfo]]
+: [[API C_PetBattles.GetAbilityInfoByID|C_PetBattles.GetAbilityInfoByID]]
+: [[API C_PetBattles.GetAbilityProcTurnIndex|C_PetBattles.GetAbilityProcTurnIndex]]
+: [[API C_PetBattles.GetAbilityState|C_PetBattles.GetAbilityState]]
+: [[API C_PetBattles.GetAbilityStateModification|C_PetBattles.GetAbilityStateModification]]
+: [[API C_PetBattles.GetActivePet|C_PetBattles.GetActivePet]]
+: [[API C_PetBattles.GetAllEffectNames|C_PetBattles.GetAllEffectNames]]
+: [[API C_PetBattles.GetAllStates|C_PetBattles.GetAllStates]]
+: [[API C_PetBattles.GetAttackModifier|C_PetBattles.GetAttackModifier]]
+: [[API C_PetBattles.GetAuraInfo|C_PetBattles.GetAuraInfo]]
+: [[API C_PetBattles.GetBattleState|C_PetBattles.GetBattleState]]
+: [[API C_PetBattles.GetBreedQuality|C_PetBattles.GetBreedQuality]]
+: [[API C_PetBattles.GetDisplayID|C_PetBattles.GetDisplayID]]
+: [[API C_PetBattles.GetForfeitPenalty|C_PetBattles.GetForfeitPenalty]]
+: [[API C_PetBattles.GetHealth|C_PetBattles.GetHealth]]
+: [[API C_PetBattles.GetIcon|C_PetBattles.GetIcon]]
+: [[API C_PetBattles.GetLevel|C_PetBattles.GetLevel]]
+: [[API C_PetBattles.GetMaxHealth|C_PetBattles.GetMaxHealth]]
+: [[API C_PetBattles.GetName|C_PetBattles.GetName]]
+: [[API C_PetBattles.GetNumAuras|C_PetBattles.GetNumAuras]]
+: [[API C_PetBattles.GetNumPets|C_PetBattles.GetNumPets]]
+: [[API C_PetBattles.GetPVPMatchmakingInfo|C_PetBattles.GetPVPMatchmakingInfo]]
+: [[API C_PetBattles.GetPetSpeciesID|C_PetBattles.GetPetSpeciesID]]
+: [[API C_PetBattles.GetPetType|C_PetBattles.GetPetType]]
+: [[API C_PetBattles.GetPlayerTrapAbility|C_PetBattles.GetPlayerTrapAbility]]
+: [[API C_PetBattles.GetPower|C_PetBattles.GetPower]]
+: [[API C_PetBattles.GetSelectedAction|C_PetBattles.GetSelectedAction]]
+: [[API C_PetBattles.GetSpeed|C_PetBattles.GetSpeed]]
+: [[API C_PetBattles.GetStateValue|C_PetBattles.GetStateValue]]
+: [[API C_PetBattles.GetTurnTimeInfo|C_PetBattles.GetTurnTimeInfo]]
+: [[API C_PetBattles.GetXP|C_PetBattles.GetXP]]
+: [[API C_PetBattles.IsInBattle|C_PetBattles.IsInBattle]]
+: [[API C_PetBattles.IsPlayerNPC|C_PetBattles.IsPlayerNPC]]
+: [[API C_PetBattles.IsSkipAvailable|C_PetBattles.IsSkipAvailable]]
+: [[API C_PetBattles.IsTrapAvailable|C_PetBattles.IsTrapAvailable]]
+: [[API C_PetBattles.IsWaitingOnOpponent|C_PetBattles.IsWaitingOnOpponent]]
+: [[API C_PetBattles.IsWildBattle|C_PetBattles.IsWildBattle]]
+: [[API C_PetBattles.SetPendingReportBattlePetTarget|C_PetBattles.SetPendingReportBattlePetTarget]]
+: [[API C_PetBattles.SetPendingReportTargetFromUnit|C_PetBattles.SetPendingReportTargetFromUnit]]
+: [[API C_PetBattles.ShouldShowPetSelect|C_PetBattles.ShouldShowPetSelect]]
+: [[API C_PetBattles.SkipTurn|C_PetBattles.SkipTurn]]
+: [[API C_PetBattles.StartPVPDuel|C_PetBattles.StartPVPDuel]]
+: [[API C_PetBattles.StartPVPMatchmaking|C_PetBattles.StartPVPMatchmaking]]
+: [[API C_PetBattles.StopPVPMatchmaking|C_PetBattles.StopPVPMatchmaking]]
+: [[API C_PetBattles.UseAbility|C_PetBattles.UseAbility]]
+: [[API C_PetBattles.UseTrap|C_PetBattles.UseTrap]]
+: [[API C_PetInfo.GetPetTamersForMap|C_PetInfo.GetPetTamersForMap]]
+: [[API C_PetJournal.CagePetByID|C_PetJournal.CagePetByID]]
+: [[API C_PetJournal.ClearFanfare|C_PetJournal.ClearFanfare]]
+: [[API C_PetJournal.ClearRecentFanfares|C_PetJournal.ClearRecentFanfares]]
+: [[API C_PetJournal.ClearSearchFilter|C_PetJournal.ClearSearchFilter]]
+: [[API C_PetJournal.FindPetIDByName|C_PetJournal.FindPetIDByName]]
+: [[API C_PetJournal.GetBattlePetLink|C_PetJournal.GetBattlePetLink]]
+: [[API C_PetJournal.GetDisplayIDByIndex|C_PetJournal.GetDisplayIDByIndex]]
+: [[API C_PetJournal.GetDisplayProbabilityByIndex|C_PetJournal.GetDisplayProbabilityByIndex]]
+: [[API C_PetJournal.GetNumCollectedInfo|C_PetJournal.GetNumCollectedInfo]]
+: [[API C_PetJournal.GetNumDisplays|C_PetJournal.GetNumDisplays]]
+: [[API C_PetJournal.GetNumMaxPets|C_PetJournal.GetNumMaxPets]]
+: [[API C_PetJournal.GetNumPetSources|C_PetJournal.GetNumPetSources]]
+: [[API C_PetJournal.GetNumPetTypes|C_PetJournal.GetNumPetTypes]]
+: [[API C_PetJournal.GetNumPets|C_PetJournal.GetNumPets]]
+: [[API C_PetJournal.GetNumPetsNeedingFanfare|C_PetJournal.GetNumPetsNeedingFanfare]]
+: [[API C_PetJournal.GetOwnedBattlePetString|C_PetJournal.GetOwnedBattlePetString]]
+: [[API C_PetJournal.GetPetAbilityInfo|C_PetJournal.GetPetAbilityInfo]]
+: [[API C_PetJournal.GetPetAbilityList|C_PetJournal.GetPetAbilityList]]
+: [[API C_PetJournal.GetPetCooldownByGUID|C_PetJournal.GetPetCooldownByGUID]]
+: [[API C_PetJournal.GetPetInfoByIndex|C_PetJournal.GetPetInfoByIndex]]
+: [[API C_PetJournal.GetPetInfoByItemID|C_PetJournal.GetPetInfoByItemID]]
+: [[API C_PetJournal.GetPetInfoByPetID|C_PetJournal.GetPetInfoByPetID]]
+: [[API C_PetJournal.GetPetInfoBySpeciesID|C_PetJournal.GetPetInfoBySpeciesID]]
+: [[API C_PetJournal.GetPetLoadOutInfo|C_PetJournal.GetPetLoadOutInfo]]
+: [[API C_PetJournal.GetPetModelSceneInfoBySpeciesID|C_PetJournal.GetPetModelSceneInfoBySpeciesID]]
+: [[API C_PetJournal.GetPetSortParameter|C_PetJournal.GetPetSortParameter]]
+: [[API C_PetJournal.GetPetStats|C_PetJournal.GetPetStats]]
+: [[API C_PetJournal.GetPetTeamAverageLevel|C_PetJournal.GetPetTeamAverageLevel]]
+: [[API C_PetJournal.GetSummonBattlePetCooldown|C_PetJournal.GetSummonBattlePetCooldown]]
+: [[API C_PetJournal.GetSummonRandomFavoritePetGUID|C_PetJournal.GetSummonRandomFavoritePetGUID]]
+: [[API C_PetJournal.GetSummonedPetGUID|C_PetJournal.GetSummonedPetGUID]]
+: [[API C_PetJournal.IsFilterChecked|C_PetJournal.IsFilterChecked]]
+: [[API C_PetJournal.IsFindBattleEnabled|C_PetJournal.IsFindBattleEnabled]]
+: [[API C_PetJournal.IsJournalReadOnly|C_PetJournal.IsJournalReadOnly]]
+: [[API C_PetJournal.IsJournalUnlocked|C_PetJournal.IsJournalUnlocked]]
+: [[API C_PetJournal.IsPetSourceChecked|C_PetJournal.IsPetSourceChecked]]
+: [[API C_PetJournal.IsPetTypeChecked|C_PetJournal.IsPetTypeChecked]]
+: [[API C_PetJournal.PetCanBeReleased|C_PetJournal.PetCanBeReleased]]
+: [[API C_PetJournal.PetIsCapturable|C_PetJournal.PetIsCapturable]]
+: [[API C_PetJournal.PetIsFavorite|C_PetJournal.PetIsFavorite]]
+: [[API C_PetJournal.PetIsHurt|C_PetJournal.PetIsHurt]]
+: [[API C_PetJournal.PetIsLockedForConvert|C_PetJournal.PetIsLockedForConvert]]
+: [[API C_PetJournal.PetIsRevoked|C_PetJournal.PetIsRevoked]]
+: [[API C_PetJournal.PetIsSlotted|C_PetJournal.PetIsSlotted]]
+: [[API C_PetJournal.PetIsSummonable|C_PetJournal.PetIsSummonable]]
+: [[API C_PetJournal.PetIsTradable|C_PetJournal.PetIsTradable]]
+: [[API C_PetJournal.PetIsUsable|C_PetJournal.PetIsUsable]]
+: [[API C_PetJournal.PetNeedsFanfare|C_PetJournal.PetNeedsFanfare]]
+: [[API C_PetJournal.PetUsesRandomDisplay|C_PetJournal.PetUsesRandomDisplay]]
+: [[API C_PetJournal.PickupPet|C_PetJournal.PickupPet]]
+: [[API C_PetJournal.PickupSummonRandomPet|C_PetJournal.PickupSummonRandomPet]]
+: [[API C_PetJournal.ReleasePetByID|C_PetJournal.ReleasePetByID]]
+: [[API C_PetJournal.SetAbility|C_PetJournal.SetAbility]]
+: [[API C_PetJournal.SetAllPetSourcesChecked|C_PetJournal.SetAllPetSourcesChecked]]
+: [[API C_PetJournal.SetAllPetTypesChecked|C_PetJournal.SetAllPetTypesChecked]]
+: [[API C_PetJournal.SetCustomName|C_PetJournal.SetCustomName]]
+: [[API C_PetJournal.SetFavorite|C_PetJournal.SetFavorite]]
+: [[API C_PetJournal.SetFilterChecked|C_PetJournal.SetFilterChecked]]
+: [[API C_PetJournal.SetPetLoadOutInfo|C_PetJournal.SetPetLoadOutInfo]]
+: [[API C_PetJournal.SetPetSortParameter|C_PetJournal.SetPetSortParameter]]
+: [[API C_PetJournal.SetPetSourceChecked|C_PetJournal.SetPetSourceChecked]]
+: [[API C_PetJournal.SetPetTypeFilter|C_PetJournal.SetPetTypeFilter]]
+: [[API C_PetJournal.SetSearchFilter|C_PetJournal.SetSearchFilter]]
+: [[API C_PetJournal.SummonPetByGUID|C_PetJournal.SummonPetByGUID]]
+: [[API C_PetJournal.SummonRandomPet|C_PetJournal.SummonRandomPet]]
+: [[API C_PlayerInfo.GUIDIsPlayer|C_PlayerInfo.GUIDIsPlayer]]
+: [[API C_PlayerInfo.UnitIsSameServer|C_PlayerInfo.UnitIsSameServer]]
+: [[API C_PvP.CanToggleWarMode|C_PvP.CanToggleWarMode]]
+: [[API C_PvP.CanToggleWarModeInArea|C_PvP.CanToggleWarModeInArea]]
+: [[API C_PvP.GetActiveBrawlInfo|C_PvP.GetActiveBrawlInfo]]
+: [[API C_PvP.GetArenaCrowdControlInfo|C_PvP.GetArenaCrowdControlInfo]]
+: [[API C_PvP.GetArenaRewards|C_PvP.GetArenaRewards]]
+: [[API C_PvP.GetArenaSkirmishRewards|C_PvP.GetArenaSkirmishRewards]]
+: [[API C_PvP.GetAvailableBrawlInfo|C_PvP.GetAvailableBrawlInfo]]
+: [[API C_PvP.GetBrawlRewards|C_PvP.GetBrawlRewards]]
+: [[API C_PvP.GetGlobalPvpScalingInfoForSpecID|C_PvP.GetGlobalPvpScalingInfoForSpecID]]
+: [[API C_PvP.GetHonorRewardInfo|C_PvP.GetHonorRewardInfo]]
+: [[API C_PvP.GetNextHonorLevelForReward|C_PvP.GetNextHonorLevelForReward]]
+: [[API C_PvP.GetOutdoorPvPWaitTime|C_PvP.GetOutdoorPvPWaitTime]]
+: [[API C_PvP.GetPvpTierInfo|C_PvP.GetPvpTierInfo]]
+: [[API C_PvP.GetRandomBGInfo|C_PvP.GetRandomBGInfo]]
+: [[API C_PvP.GetRandomBGRewards|C_PvP.GetRandomBGRewards]]
+: [[API C_PvP.GetRandomEpicBGInfo|C_PvP.GetRandomEpicBGInfo]]
+: [[API C_PvP.GetRandomEpicBGRewards|C_PvP.GetRandomEpicBGRewards]]
+: [[API C_PvP.GetRatedBGRewards|C_PvP.GetRatedBGRewards]]
+: [[API C_PvP.GetRewardItemLevelsByTierEnum|C_PvP.GetRewardItemLevelsByTierEnum]]
+: [[API C_PvP.GetSeasonBestInfo|C_PvP.GetSeasonBestInfo]]
+: [[API C_PvP.GetSkirmishInfo|C_PvP.GetSkirmishInfo]]
+: [[API C_PvP.GetWarModeRewardBonus|C_PvP.GetWarModeRewardBonus]]
+: [[API C_PvP.GetWarModeRewardBonusDefault|C_PvP.GetWarModeRewardBonusDefault]]
+: [[API C_PvP.GetWeeklyChestInfo|C_PvP.GetWeeklyChestInfo]]
+: [[API C_PvP.HasArenaSkirmishWinToday|C_PvP.HasArenaSkirmishWinToday]]
+: [[API C_PvP.IsActiveBattlefield|C_PvP.IsActiveBattlefield]]
+: [[API C_PvP.IsBattlegroundEnlistmentBonusActive|C_PvP.IsBattlegroundEnlistmentBonusActive]]
+: [[API C_PvP.IsInBrawl|C_PvP.IsInBrawl]]
+: [[API C_PvP.IsWarModeActive|C_PvP.IsWarModeActive]]
+: [[API C_PvP.IsWarModeDesired|C_PvP.IsWarModeDesired]]
+: [[API C_PvP.IsWarModeFeatureEnabled|C_PvP.IsWarModeFeatureEnabled]]
+: [[API C_PvP.JoinBrawl|C_PvP.JoinBrawl]]
+: [[API C_PvP.RequestCrowdControlSpell|C_PvP.RequestCrowdControlSpell]]
+: [[API C_PvP.SetWarModeDesired|C_PvP.SetWarModeDesired]]
+: [[API C_PvP.ToggleWarMode|C_PvP.ToggleWarMode]]
+: [[API C_QuestChoice.GetQuestChoiceInfo|C_QuestChoice.GetQuestChoiceInfo]]
+: [[API C_QuestChoice.GetQuestChoiceOptionInfo|C_QuestChoice.GetQuestChoiceOptionInfo]]
+: [[API C_QuestLine.GetAvailableQuestLines|C_QuestLine.GetAvailableQuestLines]]
+: [[API C_QuestLine.GetQuestLineInfo|C_QuestLine.GetQuestLineInfo]]
+: [[API C_QuestLine.GetQuestLineQuests|C_QuestLine.GetQuestLineQuests]]
+: [[API C_QuestLine.RequestQuestLinesForMap|C_QuestLine.RequestQuestLinesForMap]]
+: [[API C_QuestLog.GetMapForQuestPOIs|C_QuestLog.GetMapForQuestPOIs]]
+: [[API C_QuestLog.GetNumQuestObjectives|C_QuestLog.GetNumQuestObjectives]]
+: [[API C_QuestLog.GetQuestsOnMap|C_QuestLog.GetQuestsOnMap]]
+: [[API C_QuestLog.GetZoneStoryInfo|C_QuestLog.GetZoneStoryInfo]]
+: [[API C_QuestLog.IsLegendaryQuest|C_QuestLog.IsLegendaryQuest]]
+: [[API C_QuestLog.QuestHasWarModeBonus|C_QuestLog.QuestHasWarModeBonus]]
+: [[API C_QuestLog.SetMapForQuestPOIs|C_QuestLog.SetMapForQuestPOIs]]
+: [[API C_ReportSystem.CanReportPlayer|C_ReportSystem.CanReportPlayer]]
+: [[API C_ReportSystem.InitiateReportPlayer|C_ReportSystem.InitiateReportPlayer]]
+: [[API C_ReportSystem.ReportServerLag|C_ReportSystem.ReportServerLag]]
+: [[API C_ReportSystem.SendReportPlayer|C_ReportSystem.SendReportPlayer]]
+: [[API C_ReportSystem.SetPendingReportPetTarget|C_ReportSystem.SetPendingReportPetTarget]]
+: [[API C_ReportSystem.SetPendingReportTarget|C_ReportSystem.SetPendingReportTarget]]
+: [[API C_ReportSystem.SetPendingReportTargetByGuid|C_ReportSystem.SetPendingReportTargetByGuid]]
+: [[API C_Reputation.GetFactionParagonInfo|C_Reputation.GetFactionParagonInfo]]
+: [[API C_Reputation.IsFactionParagon|C_Reputation.IsFactionParagon]]
+: [[API C_Reputation.RequestFactionParagonPreloadRewardData|C_Reputation.RequestFactionParagonPreloadRewardData]]
+: [[API C_ResearchInfo.GetDigSitesForMap|C_ResearchInfo.GetDigSitesForMap]]
+: [[API C_Scenario.GetBonusStepRewardQuestID|C_Scenario.GetBonusStepRewardQuestID]]
+: [[API C_Scenario.GetBonusSteps|C_Scenario.GetBonusSteps]]
+: [[API C_Scenario.GetCriteriaInfo|C_Scenario.GetCriteriaInfo]]
+: [[API C_Scenario.GetCriteriaInfoByStep|C_Scenario.GetCriteriaInfoByStep]]
+: [[API C_Scenario.GetInfo|C_Scenario.GetInfo]]
+: [[API C_Scenario.GetProvingGroundsInfo|C_Scenario.GetProvingGroundsInfo]]
+: [[API C_Scenario.GetScenarioIconInfo|C_Scenario.GetScenarioIconInfo]]
+: [[API C_Scenario.GetStepInfo|C_Scenario.GetStepInfo]]
+: [[API C_Scenario.GetSupersededObjectives|C_Scenario.GetSupersededObjectives]]
+: [[API C_Scenario.IsInScenario|C_Scenario.IsInScenario]]
+: [[API C_Scenario.ShouldShowCriteria|C_Scenario.ShouldShowCriteria]]
+: [[API C_Scenario.TreatScenarioAsDungeon|C_Scenario.TreatScenarioAsDungeon]]
+: [[API C_ScrappingMachineUI.CloseScrappingMachine|C_ScrappingMachineUI.CloseScrappingMachine]]
+: [[API C_ScrappingMachineUI.DropPendingScrapItemFromCursor|C_ScrappingMachineUI.DropPendingScrapItemFromCursor]]
+: [[API C_ScrappingMachineUI.GetCurrentPendingScrapItemLocationByIndex|C_ScrappingMachineUI.GetCurrentPendingScrapItemLocationByIndex]]
+: [[API C_ScrappingMachineUI.GetScrapSpellID|C_ScrappingMachineUI.GetScrapSpellID]]
+: [[API C_ScrappingMachineUI.GetScrappingMachineName|C_ScrappingMachineUI.GetScrappingMachineName]]
+: [[API C_ScrappingMachineUI.HasScrappableItems|C_ScrappingMachineUI.HasScrappableItems]]
+: [[API C_ScrappingMachineUI.RemoveAllScrapItems|C_ScrappingMachineUI.RemoveAllScrapItems]]
+: [[API C_ScrappingMachineUI.RemoveCurrentScrappingItem|C_ScrappingMachineUI.RemoveCurrentScrappingItem]]
+: [[API C_ScrappingMachineUI.RemoveItemToScrap|C_ScrappingMachineUI.RemoveItemToScrap]]
+: [[API C_ScrappingMachineUI.ScrapItems|C_ScrappingMachineUI.ScrapItems]]
+: [[API C_ScrappingMachineUI.SetScrappingMachine|C_ScrappingMachineUI.SetScrappingMachine]]
+: [[API C_ScrappingMachineUI.ValidateScrappingList|C_ScrappingMachineUI.ValidateScrappingList]]
+: [[API C_Social.GetLastAchievement|C_Social.GetLastAchievement]]
+: [[API C_Social.GetLastScreenshotIndex|C_Social.GetLastScreenshotIndex]]
+: [[API C_Social.GetMaxTweetLength|C_Social.GetMaxTweetLength]]
+: [[API C_Social.GetScreenshotInfoByIndex|C_Social.GetScreenshotInfoByIndex]]
+: [[API C_Social.TwitterPostItem|C_Social.TwitterPostItem]]
+: [[API C_SocialQueue.GetAllGroups|C_SocialQueue.GetAllGroups]]
+: [[API C_SocialQueue.GetConfig|C_SocialQueue.GetConfig]]
+: [[API C_SocialQueue.GetGroupForPlayer|C_SocialQueue.GetGroupForPlayer]]
+: [[API C_SocialQueue.GetGroupInfo|C_SocialQueue.GetGroupInfo]]
+: [[API C_SocialQueue.GetGroupMembers|C_SocialQueue.GetGroupMembers]]
+: [[API C_SocialQueue.GetGroupQueues|C_SocialQueue.GetGroupQueues]]
+: [[API C_SocialQueue.RequestToJoin|C_SocialQueue.RequestToJoin]]
+: [[API C_SocialQueue.SignalToastDisplayed|C_SocialQueue.SignalToastDisplayed]]
+: [[API C_SpecializationInfo.GetAllSelectedPvpTalentIDs|C_SpecializationInfo.GetAllSelectedPvpTalentIDs]]
+: [[API C_SpecializationInfo.GetInspectSelectedPvpTalent|C_SpecializationInfo.GetInspectSelectedPvpTalent]]
+: [[API C_SpecializationInfo.GetPvpTalentAlertStatus|C_SpecializationInfo.GetPvpTalentAlertStatus]]
+: [[API C_SpecializationInfo.GetPvpTalentSlotInfo|C_SpecializationInfo.GetPvpTalentSlotInfo]]
+: [[API C_SpecializationInfo.GetPvpTalentSlotUnlockLevel|C_SpecializationInfo.GetPvpTalentSlotUnlockLevel]]
+: [[API C_SpecializationInfo.GetPvpTalentUnlockLevel|C_SpecializationInfo.GetPvpTalentUnlockLevel]]
+: [[API C_SpecializationInfo.GetSpellsDisplay|C_SpecializationInfo.GetSpellsDisplay]]
+: [[API C_SpecializationInfo.IsInitialized|C_SpecializationInfo.IsInitialized]]
+: [[API C_SpecializationInfo.IsPvpTalentLocked|C_SpecializationInfo.IsPvpTalentLocked]]
+: [[API C_SpecializationInfo.SetPvpTalentLocked|C_SpecializationInfo.SetPvpTalentLocked]]
+: [[API C_SummonInfo.CancelSummon|C_SummonInfo.CancelSummon]]
+: [[API C_SummonInfo.ConfirmSummon|C_SummonInfo.ConfirmSummon]]
+: [[API C_SummonInfo.GetSummonConfirmAreaName|C_SummonInfo.GetSummonConfirmAreaName]]
+: [[API C_SummonInfo.GetSummonConfirmSummoner|C_SummonInfo.GetSummonConfirmSummoner]]
+: [[API C_SummonInfo.GetSummonConfirmTimeLeft|C_SummonInfo.GetSummonConfirmTimeLeft]]
+: [[API C_SummonInfo.GetSummonReason|C_SummonInfo.GetSummonReason]]
+: [[API C_SummonInfo.IsSummonSkippingStartExperience|C_SummonInfo.IsSummonSkippingStartExperience]]
+: [[API C_TalkingHead.GetConversationsDeferred|C_TalkingHead.GetConversationsDeferred]]
+: [[API C_TalkingHead.GetCurrentLineAnimationInfo|C_TalkingHead.GetCurrentLineAnimationInfo]]
+: [[API C_TalkingHead.GetCurrentLineInfo|C_TalkingHead.GetCurrentLineInfo]]
+: [[API C_TalkingHead.IgnoreCurrentTalkingHead|C_TalkingHead.IgnoreCurrentTalkingHead]]
+: [[API C_TalkingHead.IsCurrentTalkingHeadIgnored|C_TalkingHead.IsCurrentTalkingHeadIgnored]]
+: [[API C_TalkingHead.SetConversationsDeferred|C_TalkingHead.SetConversationsDeferred]]
+: [[API C_TaskQuest.DoesMapShowTaskQuestObjectives|C_TaskQuest.DoesMapShowTaskQuestObjectives]]
+: [[API C_TaskQuest.GetDistanceSqToQuest|C_TaskQuest.GetDistanceSqToQuest]]
+: [[API C_TaskQuest.GetQuestInfoByQuestID|C_TaskQuest.GetQuestInfoByQuestID]]
+: [[API C_TaskQuest.GetQuestLocation|C_TaskQuest.GetQuestLocation]]
+: [[API C_TaskQuest.GetQuestProgressBarInfo|C_TaskQuest.GetQuestProgressBarInfo]]
+: [[API C_TaskQuest.GetQuestTimeLeftMinutes|C_TaskQuest.GetQuestTimeLeftMinutes]]
+: [[API C_TaskQuest.GetQuestTimeLeftSeconds|C_TaskQuest.GetQuestTimeLeftSeconds]]
+: [[API C_TaskQuest.GetQuestZoneID|C_TaskQuest.GetQuestZoneID]]
+: [[API C_TaskQuest.GetQuestsForPlayerByMapID|C_TaskQuest.GetQuestsForPlayerByMapID]]
+: [[API C_TaskQuest.IsActive|C_TaskQuest.IsActive]]
+: [[API C_TaskQuest.RequestPreloadRewardData|C_TaskQuest.RequestPreloadRewardData]]
+: [[API C_TaxiMap.ShouldMapShowTaxiNodes|C_TaxiMap.ShouldMapShowTaxiNodes]]
+: [[API C_Texture.GetAtlasInfo|C_Texture.GetAtlasInfo]]
+: [[API C_ToyBox.ForceToyRefilter|C_ToyBox.ForceToyRefilter]]
+: [[API C_ToyBox.GetCollectedShown|C_ToyBox.GetCollectedShown]]
+: [[API C_ToyBox.GetIsFavorite|C_ToyBox.GetIsFavorite]]
+: [[API C_ToyBox.GetNumFilteredToys|C_ToyBox.GetNumFilteredToys]]
+: [[API C_ToyBox.GetNumLearnedDisplayedToys|C_ToyBox.GetNumLearnedDisplayedToys]]
+: [[API C_ToyBox.GetNumTotalDisplayedToys|C_ToyBox.GetNumTotalDisplayedToys]]
+: [[API C_ToyBox.GetNumToys|C_ToyBox.GetNumToys]]
+: [[API C_ToyBox.GetToyFromIndex|C_ToyBox.GetToyFromIndex]]
+: [[API C_ToyBox.GetToyInfo|C_ToyBox.GetToyInfo]]
+: [[API C_ToyBox.GetToyLink|C_ToyBox.GetToyLink]]
+: [[API C_ToyBox.GetUncollectedShown|C_ToyBox.GetUncollectedShown]]
+: [[API C_ToyBox.GetUnusableShown|C_ToyBox.GetUnusableShown]]
+: [[API C_ToyBox.HasFavorites|C_ToyBox.HasFavorites]]
+: [[API C_ToyBox.IsExpansionTypeFilterChecked|C_ToyBox.IsExpansionTypeFilterChecked]]
+: [[API C_ToyBox.IsSourceTypeFilterChecked|C_ToyBox.IsSourceTypeFilterChecked]]
+: [[API C_ToyBox.IsToyUsable|C_ToyBox.IsToyUsable]]
+: [[API C_ToyBox.PickupToyBoxItem|C_ToyBox.PickupToyBoxItem]]
+: [[API C_ToyBox.SetAllExpansionTypeFilters|C_ToyBox.SetAllExpansionTypeFilters]]
+: [[API C_ToyBox.SetAllSourceTypeFilters|C_ToyBox.SetAllSourceTypeFilters]]
+: [[API C_ToyBox.SetCollectedShown|C_ToyBox.SetCollectedShown]]
+: [[API C_ToyBox.SetExpansionTypeFilter|C_ToyBox.SetExpansionTypeFilter]]
+: [[API C_ToyBox.SetFilterString|C_ToyBox.SetFilterString]]
+: [[API C_ToyBox.SetIsFavorite|C_ToyBox.SetIsFavorite]]
+: [[API C_ToyBox.SetSourceTypeFilter|C_ToyBox.SetSourceTypeFilter]]
+: [[API C_ToyBox.SetUncollectedShown|C_ToyBox.SetUncollectedShown]]
+: [[API C_ToyBox.SetUnusableShown|C_ToyBox.SetUnusableShown]]
+: [[API C_ToyBoxInfo.ClearFanfare|C_ToyBoxInfo.ClearFanfare]]
+: [[API C_ToyBoxInfo.NeedsFanfare|C_ToyBoxInfo.NeedsFanfare]]
+: [[API C_TradeSkillUI.AnyRecipeCategoriesFiltered|C_TradeSkillUI.AnyRecipeCategoriesFiltered]]
+: [[API C_TradeSkillUI.AreAnyInventorySlotsFiltered|C_TradeSkillUI.AreAnyInventorySlotsFiltered]]
+: [[API C_TradeSkillUI.CanObliterateCursorItem|C_TradeSkillUI.CanObliterateCursorItem]]
+: [[API C_TradeSkillUI.CanTradeSkillListLink|C_TradeSkillUI.CanTradeSkillListLink]]
+: [[API C_TradeSkillUI.ClearInventorySlotFilter|C_TradeSkillUI.ClearInventorySlotFilter]]
+: [[API C_TradeSkillUI.ClearPendingObliterateItem|C_TradeSkillUI.ClearPendingObliterateItem]]
+: [[API C_TradeSkillUI.ClearRecipeCategoryFilter|C_TradeSkillUI.ClearRecipeCategoryFilter]]
+: [[API C_TradeSkillUI.ClearRecipeSourceTypeFilter|C_TradeSkillUI.ClearRecipeSourceTypeFilter]]
+: [[API C_TradeSkillUI.CloseObliterumForge|C_TradeSkillUI.CloseObliterumForge]]
+: [[API C_TradeSkillUI.CloseTradeSkill|C_TradeSkillUI.CloseTradeSkill]]
+: [[API C_TradeSkillUI.CraftRecipe|C_TradeSkillUI.CraftRecipe]]
+: [[API C_TradeSkillUI.DropPendingObliterateItemFromCursor|C_TradeSkillUI.DropPendingObliterateItemFromCursor]]
+: [[API C_TradeSkillUI.GetAllFilterableInventorySlots|C_TradeSkillUI.GetAllFilterableInventorySlots]]
+: [[API C_TradeSkillUI.GetAllProfessionTradeSkillLines|C_TradeSkillUI.GetAllProfessionTradeSkillLines]]
+: [[API C_TradeSkillUI.GetAllRecipeIDs|C_TradeSkillUI.GetAllRecipeIDs]]
+: [[API C_TradeSkillUI.GetCategories|C_TradeSkillUI.GetCategories]]
+: [[API C_TradeSkillUI.GetCategoryInfo|C_TradeSkillUI.GetCategoryInfo]]
+: [[API C_TradeSkillUI.GetFilterableInventorySlots|C_TradeSkillUI.GetFilterableInventorySlots]]
+: [[API C_TradeSkillUI.GetFilteredRecipeIDs|C_TradeSkillUI.GetFilteredRecipeIDs]]
+: [[API C_TradeSkillUI.GetObliterateSpellID|C_TradeSkillUI.GetObliterateSpellID]]
+: [[API C_TradeSkillUI.GetOnlyShowLearnedRecipes|C_TradeSkillUI.GetOnlyShowLearnedRecipes]]
+: [[API C_TradeSkillUI.GetOnlyShowMakeableRecipes|C_TradeSkillUI.GetOnlyShowMakeableRecipes]]
+: [[API C_TradeSkillUI.GetOnlyShowSkillUpRecipes|C_TradeSkillUI.GetOnlyShowSkillUpRecipes]]
+: [[API C_TradeSkillUI.GetOnlyShowUnlearnedRecipes|C_TradeSkillUI.GetOnlyShowUnlearnedRecipes]]
+: [[API C_TradeSkillUI.GetPendingObliterateItemID|C_TradeSkillUI.GetPendingObliterateItemID]]
+: [[API C_TradeSkillUI.GetPendingObliterateItemLink|C_TradeSkillUI.GetPendingObliterateItemLink]]
+: [[API C_TradeSkillUI.GetRecipeCooldown|C_TradeSkillUI.GetRecipeCooldown]]
+: [[API C_TradeSkillUI.GetRecipeDescription|C_TradeSkillUI.GetRecipeDescription]]
+: [[API C_TradeSkillUI.GetRecipeInfo|C_TradeSkillUI.GetRecipeInfo]]
+: [[API C_TradeSkillUI.GetRecipeItemLevelFilter|C_TradeSkillUI.GetRecipeItemLevelFilter]]
+: [[API C_TradeSkillUI.GetRecipeItemLink|C_TradeSkillUI.GetRecipeItemLink]]
+: [[API C_TradeSkillUI.GetRecipeItemNameFilter|C_TradeSkillUI.GetRecipeItemNameFilter]]
+: [[API C_TradeSkillUI.GetRecipeLink|C_TradeSkillUI.GetRecipeLink]]
+: [[API C_TradeSkillUI.GetRecipeNumItemsProduced|C_TradeSkillUI.GetRecipeNumItemsProduced]]
+: [[API C_TradeSkillUI.GetRecipeNumReagents|C_TradeSkillUI.GetRecipeNumReagents]]
+: [[API C_TradeSkillUI.GetRecipeReagentInfo|C_TradeSkillUI.GetRecipeReagentInfo]]
+: [[API C_TradeSkillUI.GetRecipeReagentItemLink|C_TradeSkillUI.GetRecipeReagentItemLink]]
+: [[API C_TradeSkillUI.GetRecipeRepeatCount|C_TradeSkillUI.GetRecipeRepeatCount]]
+: [[API C_TradeSkillUI.GetRecipeSourceText|C_TradeSkillUI.GetRecipeSourceText]]
+: [[API C_TradeSkillUI.GetRecipeTools|C_TradeSkillUI.GetRecipeTools]]
+: [[API C_TradeSkillUI.GetSubCategories|C_TradeSkillUI.GetSubCategories]]
+: [[API C_TradeSkillUI.GetTradeSkillDisplayName|C_TradeSkillUI.GetTradeSkillDisplayName]]
+: [[API C_TradeSkillUI.GetTradeSkillLine|C_TradeSkillUI.GetTradeSkillLine]]
+: [[API C_TradeSkillUI.GetTradeSkillLineForRecipe|C_TradeSkillUI.GetTradeSkillLineForRecipe]]
+: [[API C_TradeSkillUI.GetTradeSkillLineInfoByID|C_TradeSkillUI.GetTradeSkillLineInfoByID]]
+: [[API C_TradeSkillUI.GetTradeSkillListLink|C_TradeSkillUI.GetTradeSkillListLink]]
+: [[API C_TradeSkillUI.GetTradeSkillTexture|C_TradeSkillUI.GetTradeSkillTexture]]
+: [[API C_TradeSkillUI.IsAnyRecipeFromSource|C_TradeSkillUI.IsAnyRecipeFromSource]]
+: [[API C_TradeSkillUI.IsDataSourceChanging|C_TradeSkillUI.IsDataSourceChanging]]
+: [[API C_TradeSkillUI.IsEmptySkillLineCategory|C_TradeSkillUI.IsEmptySkillLineCategory]]
+: [[API C_TradeSkillUI.IsInventorySlotFiltered|C_TradeSkillUI.IsInventorySlotFiltered]]
+: [[API C_TradeSkillUI.IsNPCCrafting|C_TradeSkillUI.IsNPCCrafting]]
+: [[API C_TradeSkillUI.IsRecipeCategoryFiltered|C_TradeSkillUI.IsRecipeCategoryFiltered]]
+: [[API C_TradeSkillUI.IsRecipeFavorite|C_TradeSkillUI.IsRecipeFavorite]]
+: [[API C_TradeSkillUI.IsRecipeRepeating|C_TradeSkillUI.IsRecipeRepeating]]
+: [[API C_TradeSkillUI.IsRecipeSearchInProgress|C_TradeSkillUI.IsRecipeSearchInProgress]]
+: [[API C_TradeSkillUI.IsRecipeSourceTypeFiltered|C_TradeSkillUI.IsRecipeSourceTypeFiltered]]
+: [[API C_TradeSkillUI.IsTradeSkillGuild|C_TradeSkillUI.IsTradeSkillGuild]]
+: [[API C_TradeSkillUI.IsTradeSkillGuildMember|C_TradeSkillUI.IsTradeSkillGuildMember]]
+: [[API C_TradeSkillUI.IsTradeSkillLinked|C_TradeSkillUI.IsTradeSkillLinked]]
+: [[API C_TradeSkillUI.IsTradeSkillReady|C_TradeSkillUI.IsTradeSkillReady]]
+: [[API C_TradeSkillUI.ObliterateItem|C_TradeSkillUI.ObliterateItem]]
+: [[API C_TradeSkillUI.OpenTradeSkill|C_TradeSkillUI.OpenTradeSkill]]
+: [[API C_TradeSkillUI.SetInventorySlotFilter|C_TradeSkillUI.SetInventorySlotFilter]]
+: [[API C_TradeSkillUI.SetOnlyShowLearnedRecipes|C_TradeSkillUI.SetOnlyShowLearnedRecipes]]
+: [[API C_TradeSkillUI.SetOnlyShowMakeableRecipes|C_TradeSkillUI.SetOnlyShowMakeableRecipes]]
+: [[API C_TradeSkillUI.SetOnlyShowSkillUpRecipes|C_TradeSkillUI.SetOnlyShowSkillUpRecipes]]
+: [[API C_TradeSkillUI.SetOnlyShowUnlearnedRecipes|C_TradeSkillUI.SetOnlyShowUnlearnedRecipes]]
+: [[API C_TradeSkillUI.SetRecipeCategoryFilter|C_TradeSkillUI.SetRecipeCategoryFilter]]
+: [[API C_TradeSkillUI.SetRecipeFavorite|C_TradeSkillUI.SetRecipeFavorite]]
+: [[API C_TradeSkillUI.SetRecipeItemLevelFilter|C_TradeSkillUI.SetRecipeItemLevelFilter]]
+: [[API C_TradeSkillUI.SetRecipeItemNameFilter|C_TradeSkillUI.SetRecipeItemNameFilter]]
+: [[API C_TradeSkillUI.SetRecipeRepeatCount|C_TradeSkillUI.SetRecipeRepeatCount]]
+: [[API C_TradeSkillUI.SetRecipeSourceTypeFilter|C_TradeSkillUI.SetRecipeSourceTypeFilter]]
+: [[API C_TradeSkillUI.StopRecipeRepeat|C_TradeSkillUI.StopRecipeRepeat]]
+: [[API C_Transmog.ApplyAllPending|C_Transmog.ApplyAllPending]]
+: [[API C_Transmog.CanTransmogItemWithItem|C_Transmog.CanTransmogItemWithItem]]
+: [[API C_Transmog.ClearPending|C_Transmog.ClearPending]]
+: [[API C_Transmog.Close|C_Transmog.Close]]
+: [[API C_Transmog.GetApplyWarnings|C_Transmog.GetApplyWarnings]]
+: [[API C_Transmog.GetCost|C_Transmog.GetCost]]
+: [[API C_Transmog.GetCreatureDisplayIDForSource|C_Transmog.GetCreatureDisplayIDForSource]]
+: [[API C_Transmog.GetItemInfo|C_Transmog.GetItemInfo]]
+: [[API C_Transmog.GetSlotForInventoryType|C_Transmog.GetSlotForInventoryType]]
+: [[API C_Transmog.GetSlotInfo|C_Transmog.GetSlotInfo]]
+: [[API C_Transmog.GetSlotUseError|C_Transmog.GetSlotUseError]]
+: [[API C_Transmog.GetSlotVisualInfo|C_Transmog.GetSlotVisualInfo]]
+: [[API C_Transmog.LoadOutfit|C_Transmog.LoadOutfit]]
+: [[API C_Transmog.LoadSources|C_Transmog.LoadSources]]
+: [[API C_Transmog.SetPending|C_Transmog.SetPending]]
+: [[API C_Transmog.ValidateAllPending|C_Transmog.ValidateAllPending]]
+: [[API C_TransmogCollection.CanSetFavoriteInCategory|C_TransmogCollection.CanSetFavoriteInCategory]]
+: [[API C_TransmogCollection.ClearNewAppearance|C_TransmogCollection.ClearNewAppearance]]
+: [[API C_TransmogCollection.ClearSearch|C_TransmogCollection.ClearSearch]]
+: [[API C_TransmogCollection.DeleteOutfit|C_TransmogCollection.DeleteOutfit]]
+: [[API C_TransmogCollection.EndSearch|C_TransmogCollection.EndSearch]]
+: [[API C_TransmogCollection.GetAllAppearanceSources|C_TransmogCollection.GetAllAppearanceSources]]
+: [[API C_TransmogCollection.GetAppearanceCameraID|C_TransmogCollection.GetAppearanceCameraID]]
+: [[API C_TransmogCollection.GetAppearanceCameraIDBySource|C_TransmogCollection.GetAppearanceCameraIDBySource]]
+: [[API C_TransmogCollection.GetAppearanceInfoBySource|C_TransmogCollection.GetAppearanceInfoBySource]]
+: [[API C_TransmogCollection.GetAppearanceSourceDrops|C_TransmogCollection.GetAppearanceSourceDrops]]
+: [[API C_TransmogCollection.GetAppearanceSourceInfo|C_TransmogCollection.GetAppearanceSourceInfo]]
+: [[API C_TransmogCollection.GetAppearanceSourceInfoForTransmog|C_TransmogCollection.GetAppearanceSourceInfoForTransmog]]
+: [[API C_TransmogCollection.GetAppearanceSources|C_TransmogCollection.GetAppearanceSources]]
+: [[API C_TransmogCollection.GetCategoryAppearances|C_TransmogCollection.GetCategoryAppearances]]
+: [[API C_TransmogCollection.GetCategoryCollectedCount|C_TransmogCollection.GetCategoryCollectedCount]]
+: [[API C_TransmogCollection.GetCategoryInfo|C_TransmogCollection.GetCategoryInfo]]
+: [[API C_TransmogCollection.GetCategoryTotal|C_TransmogCollection.GetCategoryTotal]]
+: [[API C_TransmogCollection.GetCollectedShown|C_TransmogCollection.GetCollectedShown]]
+: [[API C_TransmogCollection.GetIllusionFallbackWeaponSource|C_TransmogCollection.GetIllusionFallbackWeaponSource]]
+: [[API C_TransmogCollection.GetIllusionSourceInfo|C_TransmogCollection.GetIllusionSourceInfo]]
+: [[API C_TransmogCollection.GetIllusions|C_TransmogCollection.GetIllusions]]
+: [[API C_TransmogCollection.GetInspectSources|C_TransmogCollection.GetInspectSources]]
+: [[API C_TransmogCollection.GetIsAppearanceFavorite|C_TransmogCollection.GetIsAppearanceFavorite]]
+: [[API C_TransmogCollection.GetItemInfo|C_TransmogCollection.GetItemInfo]]
+: [[API C_TransmogCollection.GetLatestAppearance|C_TransmogCollection.GetLatestAppearance]]
+: [[API C_TransmogCollection.GetNumMaxOutfits|C_TransmogCollection.GetNumMaxOutfits]]
+: [[API C_TransmogCollection.GetNumTransmogSources|C_TransmogCollection.GetNumTransmogSources]]
+: [[API C_TransmogCollection.GetOutfitName|C_TransmogCollection.GetOutfitName]]
+: [[API C_TransmogCollection.GetOutfitSources|C_TransmogCollection.GetOutfitSources]]
+: [[API C_TransmogCollection.GetOutfits|C_TransmogCollection.GetOutfits]]
+: [[API C_TransmogCollection.GetShowMissingSourceInItemTooltips|C_TransmogCollection.GetShowMissingSourceInItemTooltips]]
+: [[API C_TransmogCollection.GetSourceIcon|C_TransmogCollection.GetSourceIcon]]
+: [[API C_TransmogCollection.GetSourceInfo|C_TransmogCollection.GetSourceInfo]]
+: [[API C_TransmogCollection.GetSourceRequiredHoliday|C_TransmogCollection.GetSourceRequiredHoliday]]
+: [[API C_TransmogCollection.GetUncollectedShown|C_TransmogCollection.GetUncollectedShown]]
+: [[API C_TransmogCollection.HasFavorites|C_TransmogCollection.HasFavorites]]
+: [[API C_TransmogCollection.IsCategoryValidForItem|C_TransmogCollection.IsCategoryValidForItem]]
+: [[API C_TransmogCollection.IsNewAppearance|C_TransmogCollection.IsNewAppearance]]
+: [[API C_TransmogCollection.IsSearchDBLoading|C_TransmogCollection.IsSearchDBLoading]]
+: [[API C_TransmogCollection.IsSearchInProgress|C_TransmogCollection.IsSearchInProgress]]
+: [[API C_TransmogCollection.IsSourceTypeFilterChecked|C_TransmogCollection.IsSourceTypeFilterChecked]]
+: [[API C_TransmogCollection.ModifyOutfit|C_TransmogCollection.ModifyOutfit]]
+: [[API C_TransmogCollection.PlayerCanCollectSource|C_TransmogCollection.PlayerCanCollectSource]]
+: [[API C_TransmogCollection.PlayerHasTransmog|C_TransmogCollection.PlayerHasTransmog]]
+: [[API C_TransmogCollection.PlayerHasTransmogItemModifiedAppearance|C_TransmogCollection.PlayerHasTransmogItemModifiedAppearance]]
+: [[API C_TransmogCollection.PlayerKnowsSource|C_TransmogCollection.PlayerKnowsSource]]
+: [[API C_TransmogCollection.SaveOutfit|C_TransmogCollection.SaveOutfit]]
+: [[API C_TransmogCollection.SearchProgress|C_TransmogCollection.SearchProgress]]
+: [[API C_TransmogCollection.SearchSize|C_TransmogCollection.SearchSize]]
+: [[API C_TransmogCollection.SetAllSourceTypeFilters|C_TransmogCollection.SetAllSourceTypeFilters]]
+: [[API C_TransmogCollection.SetCollectedShown|C_TransmogCollection.SetCollectedShown]]
+: [[API C_TransmogCollection.SetIsAppearanceFavorite|C_TransmogCollection.SetIsAppearanceFavorite]]
+: [[API C_TransmogCollection.SetSearch|C_TransmogCollection.SetSearch]]
+: [[API C_TransmogCollection.SetSearchAndFilterCategory|C_TransmogCollection.SetSearchAndFilterCategory]]
+: [[API C_TransmogCollection.SetShowMissingSourceInItemTooltips|C_TransmogCollection.SetShowMissingSourceInItemTooltips]]
+: [[API C_TransmogCollection.SetSourceTypeFilter|C_TransmogCollection.SetSourceTypeFilter]]
+: [[API C_TransmogCollection.SetUncollectedShown|C_TransmogCollection.SetUncollectedShown]]
+: [[API C_TransmogCollection.UpdateUsableAppearances|C_TransmogCollection.UpdateUsableAppearances]]
+: [[API C_TransmogSets.ClearLatestSource|C_TransmogSets.ClearLatestSource]]
+: [[API C_TransmogSets.ClearNewSource|C_TransmogSets.ClearNewSource]]
+: [[API C_TransmogSets.ClearSetNewSourcesForSlot|C_TransmogSets.ClearSetNewSourcesForSlot]]
+: [[API C_TransmogSets.GetAllSets|C_TransmogSets.GetAllSets]]
+: [[API C_TransmogSets.GetAllSourceIDs|C_TransmogSets.GetAllSourceIDs]]
+: [[API C_TransmogSets.GetBaseSetID|C_TransmogSets.GetBaseSetID]]
+: [[API C_TransmogSets.GetBaseSets|C_TransmogSets.GetBaseSets]]
+: [[API C_TransmogSets.GetBaseSetsCounts|C_TransmogSets.GetBaseSetsCounts]]
+: [[API C_TransmogSets.GetBaseSetsFilter|C_TransmogSets.GetBaseSetsFilter]]
+: [[API C_TransmogSets.GetCameraIDs|C_TransmogSets.GetCameraIDs]]
+: [[API C_TransmogSets.GetIsFavorite|C_TransmogSets.GetIsFavorite]]
+: [[API C_TransmogSets.GetLatestSource|C_TransmogSets.GetLatestSource]]
+: [[API C_TransmogSets.GetSetInfo|C_TransmogSets.GetSetInfo]]
+: [[API C_TransmogSets.GetSetNewSources|C_TransmogSets.GetSetNewSources]]
+: [[API C_TransmogSets.GetSetSources|C_TransmogSets.GetSetSources]]
+: [[API C_TransmogSets.GetSetsContainingSourceID|C_TransmogSets.GetSetsContainingSourceID]]
+: [[API C_TransmogSets.GetSourceIDsForSlot|C_TransmogSets.GetSourceIDsForSlot]]
+: [[API C_TransmogSets.GetSourcesForSlot|C_TransmogSets.GetSourcesForSlot]]
+: [[API C_TransmogSets.GetUsableSets|C_TransmogSets.GetUsableSets]]
+: [[API C_TransmogSets.GetVariantSets|C_TransmogSets.GetVariantSets]]
+: [[API C_TransmogSets.HasUsableSets|C_TransmogSets.HasUsableSets]]
+: [[API C_TransmogSets.IsBaseSetCollected|C_TransmogSets.IsBaseSetCollected]]
+: [[API C_TransmogSets.IsNewSource|C_TransmogSets.IsNewSource]]
+: [[API C_TransmogSets.IsSetCollected|C_TransmogSets.IsSetCollected]]
+: [[API C_TransmogSets.IsSetUsable|C_TransmogSets.IsSetUsable]]
+: [[API C_TransmogSets.SetBaseSetsFilter|C_TransmogSets.SetBaseSetsFilter]]
+: [[API C_TransmogSets.SetHasNewSources|C_TransmogSets.SetHasNewSources]]
+: [[API C_TransmogSets.SetHasNewSourcesForSlot|C_TransmogSets.SetHasNewSourcesForSlot]]
+: [[API C_TransmogSets.SetIsFavorite|C_TransmogSets.SetIsFavorite]]
+: [[API C_Trophy.MonumentChangeAppearanceToTrophyID|C_Trophy.MonumentChangeAppearanceToTrophyID]]
+: [[API C_Trophy.MonumentCloseMonumentUI|C_Trophy.MonumentCloseMonumentUI]]
+: [[API C_Trophy.MonumentGetCount|C_Trophy.MonumentGetCount]]
+: [[API C_Trophy.MonumentGetSelectedTrophyID|C_Trophy.MonumentGetSelectedTrophyID]]
+: [[API C_Trophy.MonumentGetTrophyInfoByIndex|C_Trophy.MonumentGetTrophyInfoByIndex]]
+: [[API C_Trophy.MonumentLoadList|C_Trophy.MonumentLoadList]]
+: [[API C_Trophy.MonumentLoadSelectedTrophyID|C_Trophy.MonumentLoadSelectedTrophyID]]
+: [[API C_Trophy.MonumentRevertAppearanceToSaved|C_Trophy.MonumentRevertAppearanceToSaved]]
+: [[API C_Trophy.MonumentSaveSelection|C_Trophy.MonumentSaveSelection]]
+: [[API C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo|C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo]]
+: [[API C_UIWidgetManager.GetSpellDisplayVisualizationInfo|C_UIWidgetManager.GetSpellDisplayVisualizationInfo]]
+: [[API C_VignetteInfo.FindBestUniqueVignette|C_VignetteInfo.FindBestUniqueVignette]]
+: [[API C_VignetteInfo.GetVignetteInfo|C_VignetteInfo.GetVignetteInfo]]
+: [[API C_VignetteInfo.GetVignettePosition|C_VignetteInfo.GetVignettePosition]]
+: [[API C_VignetteInfo.GetVignettes|C_VignetteInfo.GetVignettes]]
+: [[API CallCompanion|CallCompanion]]
+: [[API CanAlterSkin|CanAlterSkin]]
+: [[API CanChangePlayerDifficulty|CanChangePlayerDifficulty]]
+: [[API CanEditGuildBankTabInfo|CanEditGuildBankTabInfo]]
+: [[API CanEditGuildEvent|CanEditGuildEvent]]
+: [[API CanEditGuildTabInfo|CanEditGuildTabInfo]]
+: [[API CanEjectPassengerFromSeat|CanEjectPassengerFromSeat]]
+: [[API CanExitVehicle|CanExitVehicle]]
+: [[API CanGuildBankRepair|CanGuildBankRepair]]
+: [[API CanInitiateWarGame|CanInitiateWarGame]]
+: [[API CanItemBeSocketedToArtifact|CanItemBeSocketedToArtifact]]
+: [[API CanMapChangeDifficulty|CanMapChangeDifficulty]]
+: [[API CanPartyLFGBackfill|CanPartyLFGBackfill]]
+: [[API CanScanResearchSite|CanScanResearchSite]]
+: [[API CanShowAchievementUI|CanShowAchievementUI]]
+: [[API CanSolveArtifact|CanSolveArtifact]]
+: [[API CanSurrenderArena|CanSurrenderArena]]
+: [[API CanSwitchVehicleSeat|CanSwitchVehicleSeat]]
+: [[API CanSwitchVehicleSeats|CanSwitchVehicleSeats]]
+: [[API CanTrackBattlePets|CanTrackBattlePets]]
+: [[API CanUseVoidStorage|CanUseVoidStorage]]
+: [[API CanViewGuildRecipes|CanViewGuildRecipes]]
+: [[API CanWithdrawGuildBankMoney|CanWithdrawGuildBankMoney]]
+: [[API CancelBarberShop|CancelBarberShop]]
+: [[API CancelGuildMembershipRequest|CancelGuildMembershipRequest]]
+: [[API ClearAchievementComparisonUnit|ClearAchievementComparisonUnit]]
+: [[API ClearAchievementSearchString|ClearAchievementSearchString]]
+: [[API ClearAllLFGDungeons|ClearAllLFGDungeons]]
+: [[API ClearAllTracking|ClearAllTracking]]
+: [[API ClearAutoAcceptQuestSound|ClearAutoAcceptQuestSound]]
+: [[API ClearFailedPVPTalentIDs|ClearFailedPVPTalentIDs]]
+: [[API ClearFailedTalentIDs|ClearFailedTalentIDs]]
+: [[API ClearFocus|ClearFocus]]
+: [[API ClearItemUpgrade|ClearItemUpgrade]]
+: [[API ClearRaidMarker|ClearRaidMarker]]
+: [[API ClearVoidTransferDepositSlot|ClearVoidTransferDepositSlot]]
+: [[API ClickSocketButton|ClickSocketButton]]
+: [[API ClickVoidStorageSlot|ClickVoidStorageSlot]]
+: [[API ClickVoidTransferDepositSlot|ClickVoidTransferDepositSlot]]
+: [[API ClickVoidTransferWithdrawalSlot|ClickVoidTransferWithdrawalSlot]]
+: [[API ClickWorldMapActionButton|ClickWorldMapActionButton]]
+: [[API CloseGuildBankFrame|CloseGuildBankFrame]]
+: [[API CloseItemUpgrade|CloseItemUpgrade]]
+: [[API CloseQuestChoice|CloseQuestChoice]]
+: [[API CloseResearch|CloseResearch]]
+: [[API CloseSocketInfo|CloseSocketInfo]]
+: [[API CloseVoidStorageFrame|CloseVoidStorageFrame]]
+: [[API CollapseGuildTradeSkillHeader|CollapseGuildTradeSkillHeader]]
+: [[API CollapseWarGameHeader|CollapseWarGameHeader]]
+: [[API CompleteLFGReadyCheck|CompleteLFGReadyCheck]]
+: [[API CompleteLFGRoleCheck|CompleteLFGRoleCheck]]
+: [[API DeclineGuildApplicant|DeclineGuildApplicant]]
+: [[API DepositGuildBankMoney|DepositGuildBankMoney]]
+: [[API DepositReagentBank|DepositReagentBank]]
+: [[API DismissCompanion|DismissCompanion]]
+: [[API DoesItemContainSpec|DoesItemContainSpec]]
+: [[API DumpMovementCapture|DumpMovementCapture]]
+: [[API DungeonAppearsInRandomLFD|DungeonAppearsInRandomLFD]]
+: [[API EJ_ClearSearch|EJ_ClearSearch]]
+: [[API EJ_EndSearch|EJ_EndSearch]]
+: [[API EJ_GetContentTuningID|EJ_GetContentTuningID]]
+: [[API EJ_GetCreatureInfo|EJ_GetCreatureInfo]]
+: [[API EJ_GetCurrentTier|EJ_GetCurrentTier]]
+: [[API EJ_GetDifficulty|EJ_GetDifficulty]]
+: [[API EJ_GetEncounterInfo|EJ_GetEncounterInfo]]
+: [[API EJ_GetEncounterInfoByIndex|EJ_GetEncounterInfoByIndex]]
+: [[API EJ_GetInstanceByIndex|EJ_GetInstanceByIndex]]
+: [[API EJ_GetInstanceForMap|EJ_GetInstanceForMap]]
+: [[API EJ_GetInstanceInfo|EJ_GetInstanceInfo]]
+: [[API EJ_GetInvTypeSortOrder|EJ_GetInvTypeSortOrder]]
+: [[API EJ_GetLootFilter|EJ_GetLootFilter]]
+: [[API EJ_GetLootInfo|EJ_GetLootInfo]]
+: [[API EJ_GetLootInfoByIndex|EJ_GetLootInfoByIndex]]
+: [[API EJ_GetMapEncounter|EJ_GetMapEncounter]]
+: [[API EJ_GetNumEncountersForLootByIndex|EJ_GetNumEncountersForLootByIndex]]
+: [[API EJ_GetNumLoot|EJ_GetNumLoot]]
+: [[API EJ_GetNumSearchResults|EJ_GetNumSearchResults]]
+: [[API EJ_GetNumTiers|EJ_GetNumTiers]]
+: [[API EJ_GetSearchProgress|EJ_GetSearchProgress]]
+: [[API EJ_GetSearchResult|EJ_GetSearchResult]]
+: [[API EJ_GetSearchSize|EJ_GetSearchSize]]
+: [[API EJ_GetSectionPath|EJ_GetSectionPath]]
+: [[API EJ_GetSlotFilter|EJ_GetSlotFilter]]
+: [[API EJ_GetTierInfo|EJ_GetTierInfo]]
+: [[API EJ_HandleLinkPath|EJ_HandleLinkPath]]
+: [[API EJ_InstanceIsRaid|EJ_InstanceIsRaid]]
+: [[API EJ_IsLootListOutOfDate|EJ_IsLootListOutOfDate]]
+: [[API EJ_IsSearchFinished|EJ_IsSearchFinished]]
+: [[API EJ_IsValidInstanceDifficulty|EJ_IsValidInstanceDifficulty]]
+: [[API EJ_ResetLootFilter|EJ_ResetLootFilter]]
+: [[API EJ_ResetSlotFilter|EJ_ResetSlotFilter]]
+: [[API EJ_SelectEncounter|EJ_SelectEncounter]]
+: [[API EJ_SelectInstance|EJ_SelectInstance]]
+: [[API EJ_SelectTier|EJ_SelectTier]]
+: [[API EJ_SetDifficulty|EJ_SetDifficulty]]
+: [[API EJ_SetLootFilter|EJ_SetLootFilter]]
+: [[API EJ_SetSearch|EJ_SetSearch]]
+: [[API EJ_SetSlotFilter|EJ_SetSlotFilter]]
+: [[API EjectPassengerFromSeat|EjectPassengerFromSeat]]
+: [[API ExecuteVoidTransfer|ExecuteVoidTransfer]]
+: [[API ExpandCurrencyList|ExpandCurrencyList]]
+: [[API ExpandGuildTradeSkillHeader|ExpandGuildTradeSkillHeader]]
+: [[API ExpandWarGameHeader|ExpandWarGameHeader]]
+: [[API FindFlyoutSlotBySpellID|FindFlyoutSlotBySpellID]]
+: [[API FlyoutHasSpell|FlyoutHasSpell]]
+: [[API FocusUnit|FocusUnit]]
+: [[API GetAchievementCategory|GetAchievementCategory]]
+: [[API GetAchievementComparisonInfo|GetAchievementComparisonInfo]]
+: [[API GetAchievementCriteriaInfo|GetAchievementCriteriaInfo]]
+: [[API GetAchievementCriteriaInfoByID|GetAchievementCriteriaInfoByID]]
+: [[API GetAchievementGuildRep|GetAchievementGuildRep]]
+: [[API GetAchievementInfo|GetAchievementInfo]]
+: [[API GetAchievementLink|GetAchievementLink]]
+: [[API GetAchievementNumCriteria|GetAchievementNumCriteria]]
+: [[API GetAchievementNumRewards|GetAchievementNumRewards]]
+: [[API GetAchievementReward|GetAchievementReward]]
+: [[API GetAchievementSearchProgress|GetAchievementSearchProgress]]
+: [[API GetAchievementSearchSize|GetAchievementSearchSize]]
+: [[API GetActiveArtifactByRace|GetActiveArtifactByRace]]
+: [[API GetActiveSpecGroup|GetActiveSpecGroup]]
+: [[API GetAlternatePowerInfoByID|GetAlternatePowerInfoByID]]
+: [[API GetArchaeologyInfo|GetArchaeologyInfo]]
+: [[API GetArchaeologyRaceInfo|GetArchaeologyRaceInfo]]
+: [[API GetArchaeologyRaceInfoByID|GetArchaeologyRaceInfoByID]]
+: [[API GetArenaOpponentSpec|GetArenaOpponentSpec]]
+: [[API GetArtifactInfoByRace|GetArtifactInfoByRace]]
+: [[API GetArtifactProgress|GetArtifactProgress]]
+: [[API GetAutoQuestPopUp|GetAutoQuestPopUp]]
+: [[API GetAvailableQuestInfo|GetAvailableQuestInfo]]
+: [[API GetAverageItemLevel|GetAverageItemLevel]]
+: [[API GetAvoidance|GetAvoidance]]
+: [[API GetBackpackAutosortDisabled|GetBackpackAutosortDisabled]]
+: [[API GetBackpackCurrencyInfo|GetBackpackCurrencyInfo]]
+: [[API GetBankAutosortDisabled|GetBankAutosortDisabled]]
+: [[API GetBarberShopStyleInfo|GetBarberShopStyleInfo]]
+: [[API GetBarberShopTotalCost|GetBarberShopTotalCost]]
+: [[API GetBattlefieldArenaFaction|GetBattlefieldArenaFaction]]
+: [[API GetBattlefieldVehicleInfo|GetBattlefieldVehicleInfo]]
+: [[API GetBestFlexRaidChoice|GetBestFlexRaidChoice]]
+: [[API GetBestRFChoice|GetBestRFChoice]]
+: [[API GetCategoryAchievementPoints|GetCategoryAchievementPoints]]
+: [[API GetCategoryInfo|GetCategoryInfo]]
+: [[API GetCategoryList|GetCategoryList]]
+: [[API GetCategoryNumAchievements|GetCategoryNumAchievements]]
+: [[API GetClassInfo|GetClassInfo]]
+: [[API GetCombatRating|GetCombatRating]]
+: [[API GetCombatRatingBonus|GetCombatRatingBonus]]
+: [[API GetCombatRatingBonusForCombatRatingValue|GetCombatRatingBonusForCombatRatingValue]]
+: [[API GetCompanionInfo|GetCompanionInfo]]
+: [[API GetComparisonAchievementPoints|GetComparisonAchievementPoints]]
+: [[API GetComparisonCategoryNumAchievements|GetComparisonCategoryNumAchievements]]
+: [[API GetComparisonStatistic|GetComparisonStatistic]]
+: [[API GetContainerItemEquipmentSetInfo|GetContainerItemEquipmentSetInfo]]
+: [[API GetContainerItemPurchaseCurrency|GetContainerItemPurchaseCurrency]]
+: [[API GetContainerItemQuestInfo|GetContainerItemQuestInfo]]
+: [[API GetCritChanceProvidesParryEffect|GetCritChanceProvidesParryEffect]]
+: [[API GetCurrencyInfo|GetCurrencyInfo]]
+: [[API GetCurrencyLink|GetCurrencyLink]]
+: [[API GetCurrencyListInfo|GetCurrencyListInfo]]
+: [[API GetCurrencyListLink|GetCurrencyListLink]]
+: [[API GetCurrencyListSize|GetCurrencyListSize]]
+: [[API GetCurrentArenaSeason|GetCurrentArenaSeason]]
+: [[API GetCurrentGlyphNameForSpell|GetCurrentGlyphNameForSpell]]
+: [[API GetCurrentGuildBankTab|GetCurrentGuildBankTab]]
+: [[API GetCurrentLevelFeatures|GetCurrentLevelFeatures]]
+: [[API GetCurrentLevelSpells|GetCurrentLevelSpells]]
+: [[API GetCurrentTitle|GetCurrentTitle]]
+: [[API GetCustomizationDetails|GetCustomizationDetails]]
+: [[API GetDailyQuestsCompleted|GetDailyQuestsCompleted]]
+: [[API GetDifficultyInfo|GetDifficultyInfo]]
+: [[API GetDistanceSqToQuest|GetDistanceSqToQuest]]
+: [[API GetDungeonDifficultyID|GetDungeonDifficultyID]]
+: [[API GetDungeonForRandomSlot|GetDungeonForRandomSlot]]
+: [[API GetEquipmentNameFromSpell|GetEquipmentNameFromSpell]]
+: [[API GetExistingSocketInfo|GetExistingSocketInfo]]
+: [[API GetExistingSocketLink|GetExistingSocketLink]]
+: [[API GetExpertise|GetExpertise]]
+: [[API GetExtraBarIndex|GetExtraBarIndex]]
+: [[API GetFailedPVPTalentIDs|GetFailedPVPTalentIDs]]
+: [[API GetFailedTalentIDs|GetFailedTalentIDs]]
+: [[API GetFilteredAchievementID|GetFilteredAchievementID]]
+: [[API GetFlexRaidDungeonInfo|GetFlexRaidDungeonInfo]]
+: [[API GetFlyoutID|GetFlyoutID]]
+: [[API GetFlyoutInfo|GetFlyoutInfo]]
+: [[API GetFlyoutSlotInfo|GetFlyoutSlotInfo]]
+: [[API GetFollowerTypeIDFromSpell|GetFollowerTypeIDFromSpell]]
+: [[API GetFriendshipReputation|GetFriendshipReputation]]
+: [[API GetFriendshipReputationRanks|GetFriendshipReputationRanks]]
+: [[API GetGuildAchievementMemberInfo|GetGuildAchievementMemberInfo]]
+: [[API GetGuildAchievementMembers|GetGuildAchievementMembers]]
+: [[API GetGuildAchievementNumMembers|GetGuildAchievementNumMembers]]
+: [[API GetGuildApplicantInfo|GetGuildApplicantInfo]]
+: [[API GetGuildApplicantSelection|GetGuildApplicantSelection]]
+: [[API GetGuildBankBonusDepositMoney|GetGuildBankBonusDepositMoney]]
+: [[API GetGuildBankItemInfo|GetGuildBankItemInfo]]
+: [[API GetGuildBankItemLink|GetGuildBankItemLink]]
+: [[API GetGuildBankMoney|GetGuildBankMoney]]
+: [[API GetGuildBankMoneyTransaction|GetGuildBankMoneyTransaction]]
+: [[API GetGuildBankTabCost|GetGuildBankTabCost]]
+: [[API GetGuildBankTabInfo|GetGuildBankTabInfo]]
+: [[API GetGuildBankTabPermissions|GetGuildBankTabPermissions]]
+: [[API GetGuildBankText|GetGuildBankText]]
+: [[API GetGuildBankTransaction|GetGuildBankTransaction]]
+: [[API GetGuildBankWithdrawGoldLimit|GetGuildBankWithdrawGoldLimit]]
+: [[API GetGuildBankWithdrawMoney|GetGuildBankWithdrawMoney]]
+: [[API GetGuildCategoryList|GetGuildCategoryList]]
+: [[API GetGuildChallengeInfo|GetGuildChallengeInfo]]
+: [[API GetGuildEventInfo|GetGuildEventInfo]]
+: [[API GetGuildExpirationTime|GetGuildExpirationTime]]
+: [[API GetGuildFactionInfo|GetGuildFactionInfo]]
+: [[API GetGuildMemberRecipes|GetGuildMemberRecipes]]
+: [[API GetGuildMembershipRequestInfo|GetGuildMembershipRequestInfo]]
+: [[API GetGuildMembershipRequestSettings|GetGuildMembershipRequestSettings]]
+: [[API GetGuildNewsFilters|GetGuildNewsFilters]]
+: [[API GetGuildNewsInfo|GetGuildNewsInfo]]
+: [[API GetGuildNewsMemberName|GetGuildNewsMemberName]]
+: [[API GetGuildNewsSort|GetGuildNewsSort]]
+: [[API GetGuildPerkInfo|GetGuildPerkInfo]]
+: [[API GetGuildRecipeInfoPostQuery|GetGuildRecipeInfoPostQuery]]
+: [[API GetGuildRecipeMember|GetGuildRecipeMember]]
+: [[API GetGuildRecruitmentComment|GetGuildRecruitmentComment]]
+: [[API GetGuildRecruitmentSettings|GetGuildRecruitmentSettings]]
+: [[API GetGuildRewardInfo|GetGuildRewardInfo]]
+: [[API GetGuildRosterLargestAchievementPoints|GetGuildRosterLargestAchievementPoints]]
+: [[API GetGuildTradeSkillInfo|GetGuildTradeSkillInfo]]
+: [[API GetInspectArenaData|GetInspectArenaData]]
+: [[API GetInspectGuildInfo|GetInspectGuildInfo]]
+: [[API GetInspectRatedBGData|GetInspectRatedBGData]]
+: [[API GetInspectSpecialization|GetInspectSpecialization]]
+: [[API GetInspectTalent|GetInspectTalent]]
+: [[API GetInstanceLockTimeRemaining|GetInstanceLockTimeRemaining]]
+: [[API GetInstanceLockTimeRemainingEncounter|GetInstanceLockTimeRemainingEncounter]]
+: [[API GetItemChildInfo|GetItemChildInfo]]
+: [[API GetItemGem|GetItemGem]]
+: [[API GetItemLevelColor|GetItemLevelColor]]
+: [[API GetItemLevelIncrement|GetItemLevelIncrement]]
+: [[API GetItemSpecInfo|GetItemSpecInfo]]
+: [[API GetItemUpdateLevel|GetItemUpdateLevel]]
+: [[API GetItemUpgradeEffect|GetItemUpgradeEffect]]
+: [[API GetItemUpgradeItemInfo|GetItemUpgradeItemInfo]]
+: [[API GetItemUpgradeStats|GetItemUpgradeStats]]
+: [[API GetJournalInfoForSpellConfirmation|GetJournalInfoForSpellConfirmation]]
+: [[API GetLFDChoiceCollapseState|GetLFDChoiceCollapseState]]
+: [[API GetLFDChoiceEnabledState|GetLFDChoiceEnabledState]]
+: [[API GetLFDChoiceLockedState|GetLFDChoiceLockedState]]
+: [[API GetLFDChoiceOrder|GetLFDChoiceOrder]]
+: [[API GetLFDLockInfo|GetLFDLockInfo]]
+: [[API GetLFDLockPlayerCount|GetLFDLockPlayerCount]]
+: [[API GetLFDRoleLockInfo|GetLFDRoleLockInfo]]
+: [[API GetLFDRoleRestrictions|GetLFDRoleRestrictions]]
+: [[API GetLFGBonusFactionID|GetLFGBonusFactionID]]
+: [[API GetLFGBootProposal|GetLFGBootProposal]]
+: [[API GetLFGCategoryForID|GetLFGCategoryForID]]
+: [[API GetLFGCompletionReward|GetLFGCompletionReward]]
+: [[API GetLFGCompletionRewardItem|GetLFGCompletionRewardItem]]
+: [[API GetLFGCompletionRewardItemLink|GetLFGCompletionRewardItemLink]]
+: [[API GetLFGDeserterExpiration|GetLFGDeserterExpiration]]
+: [[API GetLFGDungeonEncounterInfo|GetLFGDungeonEncounterInfo]]
+: [[API GetLFGDungeonInfo|GetLFGDungeonInfo]]
+: [[API GetLFGDungeonNumEncounters|GetLFGDungeonNumEncounters]]
+: [[API GetLFGDungeonRewardCapBarInfo|GetLFGDungeonRewardCapBarInfo]]
+: [[API GetLFGDungeonRewardCapInfo|GetLFGDungeonRewardCapInfo]]
+: [[API GetLFGDungeonRewardInfo|GetLFGDungeonRewardInfo]]
+: [[API GetLFGDungeonRewardLink|GetLFGDungeonRewardLink]]
+: [[API GetLFGDungeonRewards|GetLFGDungeonRewards]]
+: [[API GetLFGDungeonShortageRewardInfo|GetLFGDungeonShortageRewardInfo]]
+: [[API GetLFGDungeonShortageRewardLink|GetLFGDungeonShortageRewardLink]]
+: [[API GetLFGInfoServer|GetLFGInfoServer]]
+: [[API GetLFGInviteRoleAvailability|GetLFGInviteRoleAvailability]]
+: [[API GetLFGInviteRoleRestrictions|GetLFGInviteRoleRestrictions]]
+: [[API GetLFGProposal|GetLFGProposal]]
+: [[API GetLFGProposalEncounter|GetLFGProposalEncounter]]
+: [[API GetLFGProposalMember|GetLFGProposalMember]]
+: [[API GetLFGQueueStats|GetLFGQueueStats]]
+: [[API GetLFGQueuedList|GetLFGQueuedList]]
+: [[API GetLFGRandomCooldownExpiration|GetLFGRandomCooldownExpiration]]
+: [[API GetLFGRandomDungeonInfo|GetLFGRandomDungeonInfo]]
+: [[API GetLFGReadyCheckUpdate|GetLFGReadyCheckUpdate]]
+: [[API GetLFGReadyCheckUpdateBattlegroundInfo|GetLFGReadyCheckUpdateBattlegroundInfo]]
+: [[API GetLFGRoleShortageRewards|GetLFGRoleShortageRewards]]
+: [[API GetLFGRoleUpdate|GetLFGRoleUpdate]]
+: [[API GetLFGRoleUpdateBattlegroundInfo|GetLFGRoleUpdateBattlegroundInfo]]
+: [[API GetLFGRoleUpdateMember|GetLFGRoleUpdateMember]]
+: [[API GetLFGRoleUpdateSlot|GetLFGRoleUpdateSlot]]
+: [[API GetLFGRoles|GetLFGRoles]]
+: [[API GetLFGSuspendedPlayers|GetLFGSuspendedPlayers]]
+: [[API GetLFGTypes|GetLFGTypes]]
+: [[API GetLFRChoiceOrder|GetLFRChoiceOrder]]
+: [[API GetLatestCompletedAchievements|GetLatestCompletedAchievements]]
+: [[API GetLatestCompletedComparisonAchievements|GetLatestCompletedComparisonAchievements]]
+: [[API GetLatestUpdatedComparisonStats|GetLatestUpdatedComparisonStats]]
+: [[API GetLatestUpdatedStats|GetLatestUpdatedStats]]
+: [[API GetLegacyRaidDifficultyID|GetLegacyRaidDifficultyID]]
+: [[API GetLevelUpInstances|GetLevelUpInstances]]
+: [[API GetLifesteal|GetLifesteal]]
+: [[API GetLookingForGuildComment|GetLookingForGuildComment]]
+: [[API GetLookingForGuildSettings|GetLookingForGuildSettings]]
+: [[API GetLootSpecialization|GetLootSpecialization]]
+: [[API GetMastery|GetMastery]]
+: [[API GetMasteryEffect|GetMasteryEffect]]
+: [[API GetMaxArenaCurrency|GetMaxArenaCurrency]]
+: [[API GetMaxCombatRatingBonus|GetMaxCombatRatingBonus]]
+: [[API GetMaxRewardCurrencies|GetMaxRewardCurrencies]]
+: [[API GetMaxTalentTier|GetMaxTalentTier]]
+: [[API GetMerchantCurrencies|GetMerchantCurrencies]]
+: [[API GetMerchantFilter|GetMerchantFilter]]
+: [[API GetModResilienceDamageReduction|GetModResilienceDamageReduction]]
+: [[API GetMultiCastTotemSpells|GetMultiCastTotemSpells]]
+: [[API GetNewSocketInfo|GetNewSocketInfo]]
+: [[API GetNewSocketLink|GetNewSocketLink]]
+: [[API GetNextAchievement|GetNextAchievement]]
+: [[API GetNumArchaeologyRaces|GetNumArchaeologyRaces]]
+: [[API GetNumArenaOpponentSpecs|GetNumArenaOpponentSpecs]]
+: [[API GetNumArenaOpponents|GetNumArenaOpponents]]
+: [[API GetNumArtifactsByRace|GetNumArtifactsByRace]]
+: [[API GetNumAutoQuestPopUps|GetNumAutoQuestPopUps]]
+: [[API GetNumBattlefieldVehicles|GetNumBattlefieldVehicles]]
+: [[API GetNumBattlegroundTypes|GetNumBattlegroundTypes]]
+: [[API GetNumClasses|GetNumClasses]]
+: [[API GetNumCompanions|GetNumCompanions]]
+: [[API GetNumComparisonCompletedAchievements|GetNumComparisonCompletedAchievements]]
+: [[API GetNumCompletedAchievements|GetNumCompletedAchievements]]
+: [[API GetNumDungeonForRandomSlot|GetNumDungeonForRandomSlot]]
+: [[API GetNumFilteredAchievements|GetNumFilteredAchievements]]
+: [[API GetNumFlexRaidDungeons|GetNumFlexRaidDungeons]]
+: [[API GetNumFlyouts|GetNumFlyouts]]
+: [[API GetNumGuildApplicants|GetNumGuildApplicants]]
+: [[API GetNumGuildBankMoneyTransactions|GetNumGuildBankMoneyTransactions]]
+: [[API GetNumGuildBankTabs|GetNumGuildBankTabs]]
+: [[API GetNumGuildBankTransactions|GetNumGuildBankTransactions]]
+: [[API GetNumGuildChallenges|GetNumGuildChallenges]]
+: [[API GetNumGuildEvents|GetNumGuildEvents]]
+: [[API GetNumGuildMembershipRequests|GetNumGuildMembershipRequests]]
+: [[API GetNumGuildNews|GetNumGuildNews]]
+: [[API GetNumGuildPerks|GetNumGuildPerks]]
+: [[API GetNumGuildRewards|GetNumGuildRewards]]
+: [[API GetNumGuildTradeSkill|GetNumGuildTradeSkill]]
+: [[API GetNumItemUpgradeEffects|GetNumItemUpgradeEffects]]
+: [[API GetNumQuestCurrencies|GetNumQuestCurrencies]]
+: [[API GetNumQuestLogRewardCurrencies|GetNumQuestLogRewardCurrencies]]
+: [[API GetNumQuestLogRewardFactions|GetNumQuestLogRewardFactions]]
+: [[API GetNumQuestLogTasks|GetNumQuestLogTasks]]
+: [[API GetNumQuestPOIWorldEffects|GetNumQuestPOIWorldEffects]]
+: [[API GetNumRFDungeons|GetNumRFDungeons]]
+: [[API GetNumRandomDungeons|GetNumRandomDungeons]]
+: [[API GetNumRandomScenarios|GetNumRandomScenarios]]
+: [[API GetNumRecruitingGuilds|GetNumRecruitingGuilds]]
+: [[API GetNumRewardCurrencies|GetNumRewardCurrencies]]
+: [[API GetNumSavedWorldBosses|GetNumSavedWorldBosses]]
+: [[API GetNumScenarios|GetNumScenarios]]
+: [[API GetNumSockets|GetNumSockets]]
+: [[API GetNumSpecGroups|GetNumSpecGroups]]
+: [[API GetNumSpecializations|GetNumSpecializations]]
+: [[API GetNumSpecializationsForClassID|GetNumSpecializationsForClassID]]
+: [[API GetNumTitles|GetNumTitles]]
+: [[API GetNumTrackedAchievements|GetNumTrackedAchievements]]
+: [[API GetNumTrackingTypes|GetNumTrackingTypes]]
+: [[API GetNumTreasurePickerItems|GetNumTreasurePickerItems]]
+: [[API GetNumUnspentPvpTalents|GetNumUnspentPvpTalents]]
+: [[API GetNumUnspentTalents|GetNumUnspentTalents]]
+: [[API GetNumVoidTransferDeposit|GetNumVoidTransferDeposit]]
+: [[API GetNumVoidTransferWithdrawal|GetNumVoidTransferWithdrawal]]
+: [[API GetNumWarGameTypes|GetNumWarGameTypes]]
+: [[API GetNumWorldPVPAreas|GetNumWorldPVPAreas]]
+: [[API GetNumWorldQuestWatches|GetNumWorldQuestWatches]]
+: [[API GetOverrideAPBySpellPower|GetOverrideAPBySpellPower]]
+: [[API GetOverrideBarIndex|GetOverrideBarIndex]]
+: [[API GetOverrideBarSkin|GetOverrideBarSkin]]
+: [[API GetOverrideSpellPowerByAP|GetOverrideSpellPowerByAP]]
+: [[API GetPVPGearStatRules|GetPVPGearStatRules]]
+: [[API GetPVPRoles|GetPVPRoles]]
+: [[API GetPartyLFGBackfillInfo|GetPartyLFGBackfillInfo]]
+: [[API GetPartyLFGID|GetPartyLFGID]]
+: [[API GetPendingGlyphName|GetPendingGlyphName]]
+: [[API GetPersonalRatedInfo|GetPersonalRatedInfo]]
+: [[API GetPetTalentTree|GetPetTalentTree]]
+: [[API GetPlayerTradeCurrency|GetPlayerTradeCurrency]]
+: [[API GetPreviousAchievement|GetPreviousAchievement]]
+: [[API GetPreviousArenaSeason|GetPreviousArenaSeason]]
+: [[API GetPrimarySpecialization|GetPrimarySpecialization]]
+: [[API GetProfessions|GetProfessions]]
+: [[API GetPvpPowerDamage|GetPvpPowerDamage]]
+: [[API GetPvpPowerHealing|GetPvpPowerHealing]]
+: [[API GetPvpTalentInfoByID|GetPvpTalentInfoByID]]
+: [[API GetPvpTalentInfoBySpecialization|GetPvpTalentInfoBySpecialization]]
+: [[API GetPvpTalentLink|GetPvpTalentLink]]
+: [[API GetQuestBountyInfoForMapID|GetQuestBountyInfoForMapID]]
+: [[API GetQuestChoiceRewardCurrency|GetQuestChoiceRewardCurrency]]
+: [[API GetQuestChoiceRewardFaction|GetQuestChoiceRewardFaction]]
+: [[API GetQuestChoiceRewardInfo|GetQuestChoiceRewardInfo]]
+: [[API GetQuestChoiceRewardItem|GetQuestChoiceRewardItem]]
+: [[API GetQuestCurrencyID|GetQuestCurrencyID]]
+: [[API GetQuestCurrencyInfo|GetQuestCurrencyInfo]]
+: [[API GetQuestExpansion|GetQuestExpansion]]
+: [[API GetQuestLink|GetQuestLink]]
+: [[API GetQuestLogCompletionText|GetQuestLogCompletionText]]
+: [[API GetQuestLogCriteriaSpell|GetQuestLogCriteriaSpell]]
+: [[API GetQuestLogGroupNum|GetQuestLogGroupNum]]
+: [[API GetQuestLogIsAutoComplete|GetQuestLogIsAutoComplete]]
+: [[API GetQuestLogPortraitGiver|GetQuestLogPortraitGiver]]
+: [[API GetQuestLogPortraitTurnIn|GetQuestLogPortraitTurnIn]]
+: [[API GetQuestLogRewardArtifactXP|GetQuestLogRewardArtifactXP]]
+: [[API GetQuestLogRewardCurrencyInfo|GetQuestLogRewardCurrencyInfo]]
+: [[API GetQuestLogRewardFactionInfo|GetQuestLogRewardFactionInfo]]
+: [[API GetQuestLogRewardHonor|GetQuestLogRewardHonor]]
+: [[API GetQuestLogRewardSkillPoints|GetQuestLogRewardSkillPoints]]
+: [[API GetQuestLogRewardTitle|GetQuestLogRewardTitle]]
+: [[API GetQuestLogRewardXP|GetQuestLogRewardXP]]
+: [[API GetQuestLogSpecialItemCooldown|GetQuestLogSpecialItemCooldown]]
+: [[API GetQuestLogSpecialItemInfo|GetQuestLogSpecialItemInfo]]
+: [[API GetQuestLogTaskInfo|GetQuestLogTaskInfo]]
+: [[API GetQuestObjectiveInfo|GetQuestObjectiveInfo]]
+: [[API GetQuestPOIBlobCount|GetQuestPOIBlobCount]]
+: [[API GetQuestPOILeaderBoard|GetQuestPOILeaderBoard]]
+: [[API GetQuestPOIs|GetQuestPOIs]]
+: [[API GetQuestProgressBarPercent|GetQuestProgressBarPercent]]
+: [[API GetQuestResetTime|GetQuestResetTime]]
+: [[API GetQuestSortIndex|GetQuestSortIndex]]
+: [[API GetQuestUiMapID|GetQuestUiMapID]]
+: [[API GetRFDungeonInfo|GetRFDungeonInfo]]
+: [[API GetRaidDifficultyID|GetRaidDifficultyID]]
+: [[API GetRandomDungeonBestChoice|GetRandomDungeonBestChoice]]
+: [[API GetRandomScenarioBestChoice|GetRandomScenarioBestChoice]]
+: [[API GetRandomScenarioInfo|GetRandomScenarioInfo]]
+: [[API GetRatedBattleGroundInfo|GetRatedBattleGroundInfo]]
+: [[API GetReagentBankCost|GetReagentBankCost]]
+: [[API GetRecruitingGuildInfo|GetRecruitingGuildInfo]]
+: [[API GetRecruitingGuildSelection|GetRecruitingGuildSelection]]
+: [[API GetRecruitingGuildSettings|GetRecruitingGuildSettings]]
+: [[API GetRecruitingGuildTabardInfo|GetRecruitingGuildTabardInfo]]
+: [[API GetRewardArtifactXP|GetRewardArtifactXP]]
+: [[API GetRewardHonor|GetRewardHonor]]
+: [[API GetRewardNumSkillUps|GetRewardNumSkillUps]]
+: [[API GetRewardPackArtifactPower|GetRewardPackArtifactPower]]
+: [[API GetRewardPackCurrencies|GetRewardPackCurrencies]]
+: [[API GetRewardPackItems|GetRewardPackItems]]
+: [[API GetRewardPackMoney|GetRewardPackMoney]]
+: [[API GetRewardPackTitle|GetRewardPackTitle]]
+: [[API GetRewardPackTitleName|GetRewardPackTitleName]]
+: [[API GetRewardSkillLineID|GetRewardSkillLineID]]
+: [[API GetRewardSkillPoints|GetRewardSkillPoints]]
+: [[API GetRewardTitle|GetRewardTitle]]
+: [[API GetRuneCooldown|GetRuneCooldown]]
+: [[API GetRuneCount|GetRuneCount]]
+: [[API GetSavedWorldBossInfo|GetSavedWorldBossInfo]]
+: [[API GetScalingQuestGreenRange|GetScalingQuestGreenRange]]
+: [[API GetScenariosChoiceOrder|GetScenariosChoiceOrder]]
+: [[API GetSelectedArtifactInfo|GetSelectedArtifactInfo]]
+: [[API GetSelectedWarGameType|GetSelectedWarGameType]]
+: [[API GetSetBonusesForSpecializationByItemID|GetSetBonusesForSpecializationByItemID]]
+: [[API GetSocketItemBoundTradeable|GetSocketItemBoundTradeable]]
+: [[API GetSocketItemInfo|GetSocketItemInfo]]
+: [[API GetSocketItemRefundable|GetSocketItemRefundable]]
+: [[API GetSocketTypes|GetSocketTypes]]
+: [[API GetSortBagsRightToLeft|GetSortBagsRightToLeft]]
+: [[API GetSpecChangeCost|GetSpecChangeCost]]
+: [[API GetSpecialization|GetSpecialization]]
+: [[API GetSpecializationInfo|GetSpecializationInfo]]
+: [[API GetSpecializationInfoByID|GetSpecializationInfoByID]]
+: [[API GetSpecializationInfoForClassID|GetSpecializationInfoForClassID]]
+: [[API GetSpecializationInfoForSpecID|GetSpecializationInfoForSpecID]]
+: [[API GetSpecializationMasterySpells|GetSpecializationMasterySpells]]
+: [[API GetSpecializationNameForSpecID|GetSpecializationNameForSpecID]]
+: [[API GetSpecializationRole|GetSpecializationRole]]
+: [[API GetSpecializationRoleByID|GetSpecializationRoleByID]]
+: [[API GetSpecializationSpells|GetSpecializationSpells]]
+: [[API GetSpecsForSpell|GetSpecsForSpell]]
+: [[API GetSpeed|GetSpeed]]
+: [[API GetSpellAvailableLevel|GetSpellAvailableLevel]]
+: [[API GetSpellLevelLearned|GetSpellLevelLearned]]
+: [[API GetSpellsForCharacterUpgradeTier|GetSpellsForCharacterUpgradeTier]]
+: [[API GetStatistic|GetStatistic]]
+: [[API GetStatisticsCategoryList|GetStatisticsCategoryList]]
+: [[API GetSturdiness|GetSturdiness]]
+: [[API GetSuggestedGroupNum|GetSuggestedGroupNum]]
+: [[API GetTalentInfoByID|GetTalentInfoByID]]
+: [[API GetTalentInfoBySpecialization|GetTalentInfoBySpecialization]]
+: [[API GetTalentLink|GetTalentLink]]
+: [[API GetTalentTierInfo|GetTalentTierInfo]]
+: [[API GetTargetTradeCurrency|GetTargetTradeCurrency]]
+: [[API GetTaskInfo|GetTaskInfo]]
+: [[API GetTaskPOIs|GetTaskPOIs]]
+: [[API GetTasksTable|GetTasksTable]]
+: [[API GetThreatStatusColor|GetThreatStatusColor]]
+: [[API GetTitleName|GetTitleName]]
+: [[API GetTotalAchievementPoints|GetTotalAchievementPoints]]
+: [[API GetTrackedAchievements|GetTrackedAchievements]]
+: [[API GetTrackingInfo|GetTrackingInfo]]
+: [[API GetTreasurePickerItemInfo|GetTreasurePickerItemInfo]]
+: [[API GetVehicleBarIndex|GetVehicleBarIndex]]
+: [[API GetVehicleUIIndicator|GetVehicleUIIndicator]]
+: [[API GetVehicleUIIndicatorSeat|GetVehicleUIIndicatorSeat]]
+: [[API GetVersatilityBonus|GetVersatilityBonus]]
+: [[API GetVoidItemHyperlinkString|GetVoidItemHyperlinkString]]
+: [[API GetVoidItemInfo|GetVoidItemInfo]]
+: [[API GetVoidStorageSlotPageIndex|GetVoidStorageSlotPageIndex]]
+: [[API GetVoidTransferCost|GetVoidTransferCost]]
+: [[API GetVoidTransferDepositInfo|GetVoidTransferDepositInfo]]
+: [[API GetVoidTransferWithdrawalInfo|GetVoidTransferWithdrawalInfo]]
+: [[API GetVoidUnlockCost|GetVoidUnlockCost]]
+: [[API GetWarGameQueueStatus|GetWarGameQueueStatus]]
+: [[API GetWarGameTypeInfo|GetWarGameTypeInfo]]
+: [[API GetWorldElapsedTime|GetWorldElapsedTime]]
+: [[API GetWorldElapsedTimers|GetWorldElapsedTimers]]
+: [[API GetWorldMapActionButtonSpellInfo|GetWorldMapActionButtonSpellInfo]]
+: [[API GetWorldPVPAreaInfo|GetWorldPVPAreaInfo]]
+: [[API GetWorldPVPQueueStatus|GetWorldPVPQueueStatus]]
+: [[API GetWorldQuestWatchInfo|GetWorldQuestWatchInfo]]
+: [[API GetZoneAbilitySpellInfo|GetZoneAbilitySpellInfo]]
+: [[API GuildNewsSetSticky|GuildNewsSetSticky]]
+: [[API GuildNewsSort|GuildNewsSort]]
+: [[API HasAPEffectsSpellPower|HasAPEffectsSpellPower]]
+: [[API HasAlternateForm|HasAlternateForm]]
+: [[API HasArtifactEquipped|HasArtifactEquipped]]
+: [[API HasAttachedGlyph|HasAttachedGlyph]]
+: [[API HasBoundGemProposed|HasBoundGemProposed]]
+: [[API HasCompletedAnyAchievement|HasCompletedAnyAchievement]]
+: [[API HasExtraActionBar|HasExtraActionBar]]
+: [[API HasLFGRestrictions|HasLFGRestrictions]]
+: [[API HasOverrideActionBar|HasOverrideActionBar]]
+: [[API HasPendingGlyphCast|HasPendingGlyphCast]]
+: [[API HasSPEffectsAttackPower|HasSPEffectsAttackPower]]
+: [[API HasVehicleActionBar|HasVehicleActionBar]]
+: [[API InGuildParty|InGuildParty]]
+: [[API InitiateRolePoll|InitiateRolePoll]]
+: [[API IsAchievementEligible|IsAchievementEligible]]
+: [[API IsActiveBattlefieldArena|IsActiveBattlefieldArena]]
+: [[API IsActiveQuestLegendary|IsActiveQuestLegendary]]
+: [[API IsAllowedToUserTeleport|IsAllowedToUserTeleport]]
+: [[API IsArenaSkirmish|IsArenaSkirmish]]
+: [[API IsArenaTeamCaptain|IsArenaTeamCaptain]]
+: [[API IsArtifactCompletionHistoryAvailable|IsArtifactCompletionHistoryAvailable]]
+: [[API IsArtifactPowerItem|IsArtifactPowerItem]]
+: [[API IsArtifactRelicItem|IsArtifactRelicItem]]
+: [[API IsAtStableMaster|IsAtStableMaster]]
+: [[API IsBarberShopStyleValid|IsBarberShopStyleValid]]
+: [[API IsBreadcrumbQuest|IsBreadcrumbQuest]]
+: [[API IsCastingGlyph|IsCastingGlyph]]
+: [[API IsCharacterNewlyBoosted|IsCharacterNewlyBoosted]]
+: [[API IsContainerItemAnUpgrade|IsContainerItemAnUpgrade]]
+: [[API IsDemonHunterAvailable|IsDemonHunterAvailable]]
+: [[API IsFlyableArea|IsFlyableArea]]
+: [[API IsFlying|IsFlying]]
+: [[API IsInActiveWorldPVP|IsInActiveWorldPVP]]
+: [[API IsInArenaTeam|IsInArenaTeam]]
+: [[API IsInLFGDungeon|IsInLFGDungeon]]
+: [[API IsInScenarioGroup|IsInScenarioGroup]]
+: [[API IsInsane|IsInsane]]
+: [[API IsInventoryItemAnUpgrade|IsInventoryItemAnUpgrade]]
+: [[API IsLFGComplete|IsLFGComplete]]
+: [[API IsLFGDungeonJoinable|IsLFGDungeonJoinable]]
+: [[API IsLegacyDifficulty|IsLegacyDifficulty]]
+: [[API IsPartyLFG|IsPartyLFG]]
+: [[API IsPartyWorldPVP|IsPartyWorldPVP]]
+: [[API IsPendingGlyphRemoval|IsPendingGlyphRemoval]]
+: [[API IsPlayerNeutral|IsPlayerNeutral]]
+: [[API IsPossessBarVisible|IsPossessBarVisible]]
+: [[API IsPvpTalentSpell|IsPvpTalentSpell]]
+: [[API IsQuestBounty|IsQuestBounty]]
+: [[API IsQuestCriteriaForBounty|IsQuestCriteriaForBounty]]
+: [[API IsQuestIDValidSpellTarget|IsQuestIDValidSpellTarget]]
+: [[API IsQuestInvasion|IsQuestInvasion]]
+: [[API IsQuestLogSpecialItemInRange|IsQuestLogSpecialItemInRange]]
+: [[API IsQuestSequenced|IsQuestSequenced]]
+: [[API IsQuestTask|IsQuestTask]]
+: [[API IsRaidMarkerActive|IsRaidMarkerActive]]
+: [[API IsRatedBattleground|IsRatedBattleground]]
+: [[API IsRatedMap|IsRatedMap]]
+: [[API IsReagentBankUnlocked|IsReagentBankUnlocked]]
+: [[API IsServerControlledBackfill|IsServerControlledBackfill]]
+: [[API IsSpellClassOrSpec|IsSpellClassOrSpec]]
+: [[API IsSpellOverlayed|IsSpellOverlayed]]
+: [[API IsSpellValidForPendingGlyph|IsSpellValidForPendingGlyph]]
+: [[API IsSplashFramePrimaryFeatureUnlocked|IsSplashFramePrimaryFeatureUnlocked]]
+: [[API IsStoryQuest|IsStoryQuest]]
+: [[API IsTalentSpell|IsTalentSpell]]
+: [[API IsThreatWarningEnabled|IsThreatWarningEnabled]]
+: [[API IsTitleKnown|IsTitleKnown]]
+: [[API IsTrackedAchievement|IsTrackedAchievement]]
+: [[API IsTrackingBattlePets|IsTrackingBattlePets]]
+: [[API IsTrackingHiddenQuests|IsTrackingHiddenQuests]]
+: [[API IsUsingVehicleControls|IsUsingVehicleControls]]
+: [[API IsVehicleAimAngleAdjustable|IsVehicleAimAngleAdjustable]]
+: [[API IsVehicleAimPowerAdjustable|IsVehicleAimPowerAdjustable]]
+: [[API IsVoidStorageReady|IsVoidStorageReady]]
+: [[API IsWargame|IsWargame]]
+: [[API IsWorldQuestHardWatched|IsWorldQuestHardWatched]]
+: [[API IsWorldQuestWatched|IsWorldQuestWatched]]
+: [[API IsXPUserDisabled|IsXPUserDisabled]]
+: [[API ItemAddedToArtifact|ItemAddedToArtifact]]
+: [[API ItemCanTargetGarrisonFollowerAbility|ItemCanTargetGarrisonFollowerAbility]]
+: [[API JoinArena|JoinArena]]
+: [[API JoinLFG|JoinLFG]]
+: [[API JoinRatedBattlefield|JoinRatedBattlefield]]
+: [[API JoinSingleLFG|JoinSingleLFG]]
+: [[API JoinSkirmish|JoinSkirmish]]
+: [[API LFGTeleport|LFGTeleport]]
+: [[API LearnPvpTalent|LearnPvpTalent]]
+: [[API LearnPvpTalents|LearnPvpTalents]]
+: [[API LearnTalents|LearnTalents]]
+: [[API LeaveLFG|LeaveLFG]]
+: [[API LeaveSingleLFG|LeaveSingleLFG]]
+: [[API NeutralPlayerSelectFaction|NeutralPlayerSelectFaction]]
+: [[API PartyLFGStartBackfill|PartyLFGStartBackfill]]
+: [[API PetAssistMode|PetAssistMode]]
+: [[API PickupCompanion|PickupCompanion]]
+: [[API PickupCurrency|PickupCurrency]]
+: [[API PickupGuildBankItem|PickupGuildBankItem]]
+: [[API PickupGuildBankMoney|PickupGuildBankMoney]]
+: [[API PickupPvpTalent|PickupPvpTalent]]
+: [[API PickupTalent|PickupTalent]]
+: [[API PlaceRaidMarker|PlaceRaidMarker]]
+: [[API PlayAutoAcceptQuestSound|PlayAutoAcceptQuestSound]]
+: [[API PlayerHasToy|PlayerHasToy]]
+: [[API PlayerVehicleHasComboPoints|PlayerVehicleHasComboPoints]]
+: [[API PortGraveyard|PortGraveyard]]
+: [[API ProcessQuestLogRewardFactions|ProcessQuestLogRewardFactions]]
+: [[API QueryGuildBankLog|QueryGuildBankLog]]
+: [[API QueryGuildBankTab|QueryGuildBankTab]]
+: [[API QueryGuildBankText|QueryGuildBankText]]
+: [[API QueryGuildEventLog|QueryGuildEventLog]]
+: [[API QueryGuildMembersForRecipe|QueryGuildMembersForRecipe]]
+: [[API QueryGuildNews|QueryGuildNews]]
+: [[API QueryGuildRecipes|QueryGuildRecipes]]
+: [[API QueryWorldCountdownTimer|QueryWorldCountdownTimer]]
+: [[API QuestFlagsPVP|QuestFlagsPVP]]
+: [[API QuestGetAutoAccept|QuestGetAutoAccept]]
+: [[API QuestGetAutoLaunched|QuestGetAutoLaunched]]
+: [[API QuestHasPOIInfo|QuestHasPOIInfo]]
+: [[API QuestIsDaily|QuestIsDaily]]
+: [[API QuestIsFromAdventureMap|QuestIsFromAdventureMap]]
+: [[API QuestIsFromAreaTrigger|QuestIsFromAreaTrigger]]
+: [[API QuestIsWeekly|QuestIsWeekly]]
+: [[API QuestLogRewardHasTreasurePicker|QuestLogRewardHasTreasurePicker]]
+: [[API QuestLogShouldShowPortrait|QuestLogShouldShowPortrait]]
+: [[API QuestMapUpdateAllQuests|QuestMapUpdateAllQuests]]
+: [[API QuestPOIGetIconInfo|QuestPOIGetIconInfo]]
+: [[API QuestPOIGetQuestIDByIndex|QuestPOIGetQuestIDByIndex]]
+: [[API QuestPOIGetQuestIDByVisibleIndex|QuestPOIGetQuestIDByVisibleIndex]]
+: [[API QuestPOIGetSecondaryLocations|QuestPOIGetSecondaryLocations]]
+: [[API QuestPOIUpdateIcons|QuestPOIUpdateIcons]]
+: [[API ReagentBankButtonIDToInvSlotID|ReagentBankButtonIDToInvSlotID]]
+: [[API RefreshLFGList|RefreshLFGList]]
+: [[API RejectProposal|RejectProposal]]
+: [[API RemoveAutoQuestPopUp|RemoveAutoQuestPopUp]]
+: [[API RemoveItemFromArtifact|RemoveItemFromArtifact]]
+: [[API RemovePvpTalent|RemovePvpTalent]]
+: [[API RemoveTalent|RemoveTalent]]
+: [[API RemoveTrackedAchievement|RemoveTrackedAchievement]]
+: [[API RemoveWorldQuestWatch|RemoveWorldQuestWatch]]
+: [[API RequestArtifactCompletionHistory|RequestArtifactCompletionHistory]]
+: [[API RequestGuildApplicantsList|RequestGuildApplicantsList]]
+: [[API RequestGuildChallengeInfo|RequestGuildChallengeInfo]]
+: [[API RequestGuildMembership|RequestGuildMembership]]
+: [[API RequestGuildMembershipList|RequestGuildMembershipList]]
+: [[API RequestGuildPartyState|RequestGuildPartyState]]
+: [[API RequestGuildRecruitmentSettings|RequestGuildRecruitmentSettings]]
+: [[API RequestGuildRewards|RequestGuildRewards]]
+: [[API RequestLFDPartyLockInfo|RequestLFDPartyLockInfo]]
+: [[API RequestLFDPlayerLockInfo|RequestLFDPlayerLockInfo]]
+: [[API RequestPVPOptionsEnabled|RequestPVPOptionsEnabled]]
+: [[API RequestPVPRewards|RequestPVPRewards]]
+: [[API RequestRandomBattlegroundInstanceInfo|RequestRandomBattlegroundInstanceInfo]]
+: [[API RequestRatedInfo|RequestRatedInfo]]
+: [[API RequestRecruitingGuildsList|RequestRecruitingGuildsList]]
+: [[API RequeueSkirmish|RequeueSkirmish]]
+: [[API ResetSetMerchantFilter|ResetSetMerchantFilter]]
+: [[API RespondInstanceLock|RespondInstanceLock]]
+: [[API SaveBindings|Save Bindings]]
+: [[API SearchLFGGetEncounterResults|SearchLFGGetEncounterResults]]
+: [[API SearchLFGGetJoinedID|SearchLFGGetJoinedID]]
+: [[API SearchLFGGetNumResults|SearchLFGGetNumResults]]
+: [[API SearchLFGGetPartyResults|SearchLFGGetPartyResults]]
+: [[API SearchLFGGetResults|SearchLFGGetResults]]
+: [[API SearchLFGJoin|SearchLFGJoin]]
+: [[API SearchLFGLeave|SearchLFGLeave]]
+: [[API SearchLFGSort|SearchLFGSort]]
+: [[API SendQuestChoiceResponse|SendQuestChoiceResponse]]
+: [[API SetAchievementComparisonUnit|SetAchievementComparisonUnit]]
+: [[API SetAchievementSearchString|SetAchievementSearchString]]
+: [[API SetBackpackAutosortDisabled|SetBackpackAutosortDisabled]]
+: [[API SetBankAutosortDisabled|SetBankAutosortDisabled]]
+: [[API SetBarSlotFromIntro|SetBarSlotFromIntro]]
+: [[API SetBarberShopAlternateFormFrame|SetBarberShopAlternateFormFrame]]
+: [[API SetCurrencyBackpack|SetCurrencyBackpack]]
+: [[API SetCurrencyUnused|SetCurrencyUnused]]
+: [[API SetCurrentGuildBankTab|SetCurrentGuildBankTab]]
+: [[API SetCurrentTitle|SetCurrentTitle]]
+: [[API SetDungeonDifficultyID|SetDungeonDifficultyID]]
+: [[API SetFocusedAchievement|SetFocusedAchievement]]
+: [[API SetGuildApplicantSelection|SetGuildApplicantSelection]]
+: [[API SetGuildBankTabInfo|SetGuildBankTabInfo]]
+: [[API SetGuildBankTabItemWithdraw|SetGuildBankTabItemWithdraw]]
+: [[API SetGuildBankTabPermissions|SetGuildBankTabPermissions]]
+: [[API SetGuildBankText|SetGuildBankText]]
+: [[API SetGuildBankWithdrawGoldLimit|SetGuildBankWithdrawGoldLimit]]
+: [[API SetGuildNewsFilter|SetGuildNewsFilter]]
+: [[API SetGuildRecruitmentComment|SetGuildRecruitmentComment]]
+: [[API SetGuildRecruitmentSettings|SetGuildRecruitmentSettings]]
+: [[API SetGuildTradeSkillCategoryFilter|SetGuildTradeSkillCategoryFilter]]
+: [[API SetGuildTradeSkillItemNameFilter|SetGuildTradeSkillItemNameFilter]]
+: [[API SetItemUpgradeFromCursorItem|SetItemUpgradeFromCursorItem]]
+: [[API SetLFGBonusFactionID|SetLFGBonusFactionID]]
+: [[API SetLFGBootVote|SetLFGBootVote]]
+: [[API SetLFGComment|SetLFGComment]]
+: [[API SetLFGDungeon|SetLFGDungeon]]
+: [[API SetLFGDungeonEnabled|SetLFGDungeonEnabled]]
+: [[API SetLFGHeaderCollapsed|SetLFGHeaderCollapsed]]
+: [[API SetLFGRoles|SetLFGRoles]]
+: [[API SetLegacyRaidDifficultyID|SetLegacyRaidDifficultyID]]
+: [[API SetLookingForGuildComment|SetLookingForGuildComment]]
+: [[API SetLookingForGuildSettings|SetLookingForGuildSettings]]
+: [[API SetLootSpecialization|SetLootSpecialization]]
+: [[API SetMerchantFilter|SetMerchantFilter]]
+: [[API SetMultiCastSpell|SetMultiCastSpell]]
+: [[API SetNextBarberShopStyle|SetNextBarberShopStyle]]
+: [[API SetPOIIconOverlapDistance|SetPOIIconOverlapDistance]]
+: [[API SetPOIIconOverlapPushDistance|SetPOIIconOverlapPushDistance]]
+: [[API SetPVPRoles|SetPVPRoles]]
+: [[API SetPetSlot|SetPetSlot]]
+: [[API SetRaidDifficultyID|SetRaidDifficultyID]]
+: [[API SetRecruitingGuildSelection|SetRecruitingGuildSelection]]
+: [[API SetSavedInstanceExtend|SetSavedInstanceExtend]]
+: [[API SetSelectedArtifact|SetSelectedArtifact]]
+: [[API SetSelectedWarGameType|SetSelectedWarGameType]]
+: [[API SetSortBagsRightToLeft|SetSortBagsRightToLeft]]
+: [[API SetSpecialization|SetSpecialization]]
+: [[API SetTracking|SetTracking]]
+: [[API SetTradeCurrency|SetTradeCurrency]]
+: [[API ShowAccountAchievements|ShowAccountAchievements]]
+: [[API SocketContainerItem|SocketContainerItem]]
+: [[API SocketInventoryItem|SocketInventoryItem]]
+: [[API SocketItemToArtifact|SocketItemToArtifact]]
+: [[API SolveArtifact|SolveArtifact]]
+: [[API SortBGList|SortBGList]]
+: [[API SortBags|SortBags]]
+: [[API SortBankBags|SortBankBags]]
+: [[API SortGuildTradeSkill|SortGuildTradeSkill]]
+: [[API SortReagentBankBags|SortReagentBankBags]]
+: [[API SpellCanTargetGarrisonFollower|SpellCanTargetGarrisonFollower]]
+: [[API SpellCanTargetGarrisonFollowerAbility|SpellCanTargetGarrisonFollowerAbility]]
+: [[API SpellCanTargetGarrisonMission|SpellCanTargetGarrisonMission]]
+: [[API SpellCanTargetQuest|SpellCanTargetQuest]]
+: [[API SplashFrameCanBeShown|SplashFrameCanBeShown]]
+: [[API SplitGuildBankItem|SplitGuildBankItem]]
+: [[API StartSpectatorWarGame|StartSpectatorWarGame]]
+: [[API StartWarGame|StartWarGame]]
+: [[API StartWarGameByName|StartWarGameByName]]
+: [[API SummonRandomCritter|SummonRandomCritter]]
+: [[API SurrenderArena|SurrenderArena]]
+: [[API SwitchAchievementSearchTab|SwitchAchievementSearchTab]]
+: [[API UnitAlliedRaceInfo|UnitAlliedRaceInfo]]
+: [[API UnitAlternatePowerCounterInfo|UnitAlternatePowerCounterInfo]]
+: [[API UnitAlternatePowerInfo|UnitAlternatePowerInfo]]
+: [[API UnitAlternatePowerTextureInfo|UnitAlternatePowerTextureInfo]]
+: [[API UnitBattlePetLevel|UnitBattlePetLevel]]
+: [[API UnitBattlePetSpeciesID|UnitBattlePetSpeciesID]]
+: [[API UnitBattlePetType|UnitBattlePetType]]
+: [[API UnitCanPetBattle|UnitCanPetBattle]]
+: [[API UnitCastingInfo|UnitCastingInfo]]
+: [[API UnitChannelInfo|UnitChannelInfo]]
+: [[API UnitControllingVehicle|UnitControllingVehicle]]
+: [[API UnitDetailedThreatSituation|UnitDetailedThreatSituation]]
+: [[API UnitEffectiveLevel|UnitEffectiveLevel]]
+: [[API UnitGetAvailableRoles|UnitGetAvailableRoles]]
+: [[API UnitGetIncomingHeals|UnitGetIncomingHeals]]
+: [[API UnitGetTotalAbsorbs|UnitGetTotalAbsorbs]]
+: [[API UnitGetTotalHealAbsorbs|UnitGetTotalHealAbsorbs]]
+: [[API UnitGroupRolesAssigned|UnitGroupRolesAssigned]]
+: [[API UnitHasLFGDeserter|UnitHasLFGDeserter]]
+: [[API UnitHasLFGRandomCooldown|UnitHasLFGRandomCooldown]]
+: [[API UnitHasVehiclePlayerFrameUI|UnitHasVehiclePlayerFrameUI]]
+: [[API UnitHasVehicleUI|UnitHasVehicleUI]]
+: [[API UnitHonor|UnitHonor]]
+: [[API UnitHonorLevel|UnitHonorLevel]]
+: [[API UnitHonorMax|UnitHonorMax]]
+: [[API UnitInVehicle|UnitInVehicle]]
+: [[API UnitInVehicleControlSeat|UnitInVehicleControlSeat]]
+: [[API UnitInVehicleHidesPetFrame|UnitInVehicleHidesPetFrame]]
+: [[API UnitIsBattlePet|UnitIsBattlePet]]
+: [[API UnitIsBattlePetCompanion|UnitIsBattlePetCompanion]]
+: [[API UnitIsMercenary|UnitIsMercenary]]
+: [[API UnitIsOtherPlayersBattlePet|UnitIsOtherPlayersBattlePet]]
+: [[API UnitIsQuestBoss|UnitIsQuestBoss]]
+: [[API UnitIsWarModeActive|UnitIsWarModeActive]]
+: [[API UnitIsWarModeDesired|UnitIsWarModeDesired]]
+: [[API UnitIsWarModePhased|UnitIsWarModePhased]]
+: [[API UnitIsWildBattlePet|UnitIsWildBattlePet]]
+: [[API UnitNumPowerBarTimers|UnitNumPowerBarTimers]]
+: [[API UnitPowerBarTimerInfo|UnitPowerBarTimerInfo]]
+: [[API UnitPvpClassification|UnitPvpClassification]]
+: [[API UnitSelectionType|UnitSelectionType]]
+: [[API UnitSpellHaste|UnitSpellHaste]]
+: [[API UnitStagger|UnitStagger]]
+: [[API UnitSwitchToVehicleSeat|UnitSwitchToVehicleSeat]]
+: [[API UnitTargetsVehicleInRaidUI|UnitTargetsVehicleInRaidUI]]
+: [[API UnitThreatPercentageOfLead|UnitThreatPercentageOfLead]]
+: [[API UnitThreatSituation|UnitThreatSituation]]
+: [[API UnitTreatAsPlayerForDisplay|UnitTreatAsPlayerForDisplay]]
+: [[API UnitUsingVehicle|UnitUsingVehicle]]
+: [[API UnitVehicleSeatCount|UnitVehicleSeatCount]]
+: [[API UnitVehicleSeatInfo|UnitVehicleSeatInfo]]
+: [[API UnitVehicleSkin|UnitVehicleSkin]]
+: [[API UnitWidgetSet|UnitWidgetSet]]
+: [[API UnlearnSpecialization|UnlearnSpecialization]]
+: [[API UnlockVoidStorage|UnlockVoidStorage]]
+: [[API UpdateWarGamesList|UpdateWarGamesList]]
+: [[API UpgradeItem|UpgradeItem]]
+: [[API UseQuestLogSpecialItem|UseQuestLogSpecialItem]]
+: [[API UseToy|UseToy]]
+: [[API UseToyByName|UseToyByName]]
+: [[API UseWorldMapActionButtonSpellOnQuest|UseWorldMapActionButtonSpellOnQuest]]
+: [[API VehicleAimDecrement|VehicleAimDecrement]]
+: [[API VehicleAimDownStart|VehicleAimDownStart]]
+: [[API VehicleAimDownStop|VehicleAimDownStop]]
+: [[API VehicleAimGetAngle|VehicleAimGetAngle]]
+: [[API VehicleAimGetNormAngle|VehicleAimGetNormAngle]]
+: [[API VehicleAimGetNormPower|VehicleAimGetNormPower]]
+: [[API VehicleAimIncrement|VehicleAimIncrement]]
+: [[API VehicleAimRequestAngle|VehicleAimRequestAngle]]
+: [[API VehicleAimRequestNormAngle|VehicleAimRequestNormAngle]]
+: [[API VehicleAimSetNormPower|VehicleAimSetNormPower]]
+: [[API VehicleAimUpStart|VehicleAimUpStart]]
+: [[API VehicleAimUpStop|VehicleAimUpStop]]
+: [[API VehicleCameraZoomIn|VehicleCameraZoomIn]]
+: [[API VehicleCameraZoomOut|VehicleCameraZoomOut]]
+: [[API VehicleExit|VehicleExit]]
+: [[API VehicleNextSeat|VehicleNextSeat]]
+: [[API VehiclePrevSeat|VehiclePrevSeat]]
+: [[API ViewGuildRecipes|ViewGuildRecipes]]
+: [[API WarGameRespond|WarGameRespond]]
+: [[API WithdrawGuildBankMoney|WithdrawGuildBankMoney]]
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API 8.1.5 (29981) &rarr; 1.13.2 (30406)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 4 new methods
+! style="width: 50%; padding-right: 1em;"| 62 removed methods, 6 widgets
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: [[API GameTooltip SetCraftItem|GameTooltip:SetCraftItem]]
+: [[API GameTooltip SetCraftSpell|GameTooltip:SetCraftSpell]]
+: [[API GameTooltip SetTrackingSpell|GameTooltip:SetTrackingSpell]]
+: [[API GameTooltip SetTradeSkillItem|GameTooltip:SetTradeSkillItem]]
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: [[UIOBJECT ArchaeologyDigSiteFrame|ArchaeologyDigSiteFrame]]
+: [[UIOBJECT FogOfWarFrame|FogOfWarFrame]]
+: [[UIOBJECT ItemButton|ItemButton]]
+: [[UIOBJECT MovieFrame|MovieFrame]]
+: [[UIOBJECT QuestPOIFrame|QuestPOIFrame]]
+: [[UIOBJECT ScenarioPOIFrame|ScenarioPOIFrame]]
+: [[API DressupModel GetSlotTransmogSources|GameTooltip:GetSlotTransmogSources]]
+: [[API DressupModel GetUseTransmogSkin|GameTooltip:GetUseTransmogSkin]]
+: [[API DressupModel SetUseTransmogSkin|GameTooltip:SetUseTransmogSkin]]
+: [[API GameTooltip SetAchievementByID|GameTooltip:SetAchievementByID]]
+: [[API GameTooltip SetArtifactItem|GameTooltip:SetArtifactItem]]
+: [[API GameTooltip SetArtifactPowerByID|GameTooltip:SetArtifactPowerByID]]
+: [[API GameTooltip SetBackpackToken|GameTooltip:SetBackpackToken]]
+: [[API GameTooltip SetCompanionPet|GameTooltip:SetCompanionPet]]
+: [[API GameTooltip SetCurrencyByID|GameTooltip:SetCurrencyByID]]
+: [[API GameTooltip SetCurrencyToken|GameTooltip:SetCurrencyToken]]
+: [[API GameTooltip SetCurrencyTokenByID|GameTooltip:SetCurrencyTokenByID]]
+: [[API GameTooltip SetEquipmentSet|GameTooltip:SetEquipmentSet]]
+: [[API GameTooltip SetExistingSocketGem|GameTooltip:SetExistingSocketGem]]
+: [[API GameTooltip SetGuildBankItem|GameTooltip:SetGuildBankItem]]
+: [[API GameTooltip SetHeirloomByItemID|GameTooltip:SetHeirloomByItemID]]
+: [[API GameTooltip SetLFGDungeonReward|GameTooltip:SetLFGDungeonReward]]
+: [[API GameTooltip SetLFGDungeonShortageReward|GameTooltip:SetLFGDungeonShortageReward]]
+: [[API GameTooltip SetLootCurrency|GameTooltip:SetLootCurrency]]
+: [[API GameTooltip SetMountBySpellID|GameTooltip:SetMountBySpellID]]
+: [[API GameTooltip SetOwnedItemByID|GameTooltip:SetOwnedItemByID]]
+: [[API GameTooltip SetPvpBrawl|GameTooltip:SetPvpBrawl]]
+: [[API GameTooltip SetPvpTalent|GameTooltip:SetPvpTalent]]
+: [[API GameTooltip SetQuestCurrency|GameTooltip:SetQuestCurrency]]
+: [[API GameTooltip SetQuestLogCurrency|GameTooltip:SetQuestLogCurrency]]
+: [[API GameTooltip SetQuestLogSpecialItem|GameTooltip:SetQuestLogSpecialItem]]
+: [[API GameTooltip SetRecipeRankInfo|GameTooltip:SetRecipeRankInfo]]
+: [[API GameTooltip SetRecipeReagentItem|GameTooltip:SetRecipeReagentItem]]
+: [[API GameTooltip SetRecipeResultItem|GameTooltip:SetRecipeResultItem]]
+: [[API GameTooltip SetSocketGem|GameTooltip:SetSocketGem]]
+: [[API GameTooltip SetSocketedItem|GameTooltip:SetSocketedItem]]
+: [[API GameTooltip SetSocketedRelic|GameTooltip:SetSocketedRelic]]
+: [[API GameTooltip SetTotem|GameTooltip:SetTotem]]
+: [[API GameTooltip SetToyByItemID|GameTooltip:SetToyByItemID]]
+: [[API GameTooltip SetTransmogrifyItem|GameTooltip:SetTransmogrifyItem]]
+: [[API GameTooltip SetUpgradeItem|GameTooltip:SetUpgradeItem]]
+: [[API GameTooltip SetVoidDepositItem|GameTooltip:SetVoidDepositItem]]
+: [[API GameTooltip SetVoidItem|GameTooltip:SetVoidItem]]
+: [[API GameTooltip SetVoidWithdrawalItem|GameTooltip:SetVoidWithdrawalItem]]
+: [[API Minimap SetArchBlobInsideAlpha|Minimap:SetArchBlobInsideAlpha]]
+: [[API Minimap SetArchBlobInsideTexture|Minimap:SetArchBlobInsideTexture]]
+: [[API Minimap SetArchBlobOutsideAlpha|Minimap:SetArchBlobOutsideAlpha]]
+: [[API Minimap SetArchBlobOutsideTexture|Minimap:SetArchBlobOutsideTexture]]
+: [[API Minimap SetArchBlobRingAlpha|Minimap:SetArchBlobRingAlpha]]
+: [[API Minimap SetArchBlobRingScalar|Minimap:SetArchBlobRingScalar]]
+: [[API Minimap SetArchBlobRingTexture|Minimap:SetArchBlobRingTexture]]
+: [[API Minimap SetQuestBlobInsideAlpha|Minimap:SetQuestBlobInsideAlpha]]
+: [[API Minimap SetQuestBlobInsideTexture|Minimap:SetQuestBlobInsideTexture]]
+: [[API Minimap SetQuestBlobOutsideAlpha|Minimap:SetQuestBlobOutsideAlpha]]
+: [[API Minimap SetQuestBlobOutsideSelectedTexture|Minimap:SetQuestBlobOutsideSelectedTexture]]
+: [[API Minimap SetQuestBlobOutsideTexture|Minimap:SetQuestBlobOutsideTexture]]
+: [[API Minimap SetQuestBlobRingAlpha|Minimap:SetQuestBlobRingAlpha]]
+: [[API Minimap SetQuestBlobRingScalar|Minimap:SetQuestBlobRingScalar]]
+: [[API Minimap SetQuestBlobRingTexture|Minimap:SetQuestBlobRingTexture]]
+: [[API Minimap SetTaskBlobInsideAlpha|Minimap:SetTaskBlobInsideAlpha]]
+: [[API Minimap SetTaskBlobInsideTexture|Minimap:SetTaskBlobInsideTexture]]
+: [[API Minimap SetTaskBlobOutsideAlpha|Minimap:SetTaskBlobOutsideAlpha]]
+: [[API Minimap SetTaskBlobOutsideSelectedTexture|Minimap:SetTaskBlobOutsideSelectedTexture]]
+: [[API Minimap SetTaskBlobOutsideTexture|Minimap:SetTaskBlobOutsideTexture]]
+: [[API Minimap SetTaskBlobRingAlpha|Minimap:SetTaskBlobRingAlpha]]
+: [[API Minimap SetTaskBlobRingScalar|Minimap:SetTaskBlobRingScalar]]
+: [[API Minimap SetTaskBlobRingTexture|Minimap:SetTaskBlobRingTexture]]
+: [[API Region GetScaledRect|Region:GetScaledRect]]
+</div>
+|}
+
+==Events==
+See also: [[Events/Classic]]
+
+{| class="wikitable" style="min-width: 600px"
+|+ Events 8.1.5 (29981) &rarr; 1.13.2 (30406)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 8 new events
+! style="width: 50%; padding-right: 1em;"| 449 removed events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CONFIRM_PET_UNLEARN}}
+: {{api|t=e|CRAFT_CLOSE}}
+: {{api|t=e|CRAFT_SHOW}}
+: {{api|t=e|CRAFT_UPDATE}}
+: {{api|t=e|PLAYER_TARGET_SET_ATTACKING}}
+: {{api|t=e|TRADE_SKILL_UPDATE}}
+: {{api|t=e|UNIT_HAPPINESS}}
+: {{api|t=e|UNIT_PET_TRAINING_POINTS}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: {{api|t=e|ACHIEVEMENT_EARNED}}
+: {{api|t=e|ACHIEVEMENT_PLAYER_NAME}}
+: {{api|t=e|ACHIEVEMENT_SEARCH_UPDATED}}
+: {{api|t=e|ACTIVATE_GLYPH}}
+: {{api|t=e|ACTIVE_TALENT_GROUP_CHANGED}}
+: {{api|t=e|ADVENTURE_MAP_CLOSE}}
+: {{api|t=e|ADVENTURE_MAP_OPEN}}
+: {{api|t=e|ADVENTURE_MAP_QUEST_UPDATE}}
+: {{api|t=e|ADVENTURE_MAP_UPDATE_INSETS}}
+: {{api|t=e|ADVENTURE_MAP_UPDATE_POIS}}
+: {{api|t=e|AJ_DUNGEON_ACTION}}
+: {{api|t=e|AJ_OPEN}}
+: {{api|t=e|AJ_PVE_LFG_ACTION}}
+: {{api|t=e|AJ_PVP_ACTION}}
+: {{api|t=e|AJ_PVP_LFG_ACTION}}
+: {{api|t=e|AJ_PVP_RBG_ACTION}}
+: {{api|t=e|AJ_PVP_SKIRMISH_ACTION}}
+: {{api|t=e|AJ_QUEST_LOG_OPEN}}
+: {{api|t=e|AJ_RAID_ACTION}}
+: {{api|t=e|AJ_REFRESH_DISPLAY}}
+: {{api|t=e|AJ_REWARD_DATA_RECEIVED}}
+: {{api|t=e|ALLIED_RACE_CLOSE}}
+: {{api|t=e|ALLIED_RACE_OPEN}}
+: {{api|t=e|ARCHAEOLOGY_CLOSED}}
+: {{api|t=e|ARCHAEOLOGY_FIND_COMPLETE}}
+: {{api|t=e|ARCHAEOLOGY_SURVEY_CAST}}
+: {{api|t=e|ARCHAEOLOGY_TOGGLE}}
+: {{api|t=e|ARENA_COOLDOWNS_UPDATE}}
+: {{api|t=e|ARENA_CROWD_CONTROL_SPELL_UPDATE}}
+: {{api|t=e|ARENA_OPPONENT_UPDATE}}
+: {{api|t=e|ARENA_PREP_OPPONENT_SPECIALIZATIONS}}
+: {{api|t=e|ARENA_SEASON_WORLD_STATE}}
+: {{api|t=e|ARTIFACT_CLOSE}}
+: {{api|t=e|ARTIFACT_DIGSITE_COMPLETE}}
+: {{api|t=e|ARTIFACT_ENDGAME_REFUND}}
+: {{api|t=e|ARTIFACT_RELIC_FORGE_CLOSE}}
+: {{api|t=e|ARTIFACT_RELIC_FORGE_PREVIEW_RELIC_CHANGED}}
+: {{api|t=e|ARTIFACT_RELIC_FORGE_UPDATE}}
+: {{api|t=e|ARTIFACT_RELIC_INFO_RECEIVED}}
+: {{api|t=e|ARTIFACT_RESPEC_PROMPT}}
+: {{api|t=e|ARTIFACT_TIER_CHANGED}}
+: {{api|t=e|ARTIFACT_UPDATE}}
+: {{api|t=e|ARTIFACT_XP_UPDATE}}
+: {{api|t=e|AVOIDANCE_UPDATE}}
+: {{api|t=e|AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED}}
+: {{api|t=e|AZERITE_EMPOWERED_ITEM_LOOTED}}
+: {{api|t=e|AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED}}
+: {{api|t=e|AZERITE_ITEM_EXPERIENCE_CHANGED}}
+: {{api|t=e|AZERITE_ITEM_POWER_LEVEL_CHANGED}}
+: {{api|t=e|BARBER_SHOP_APPEARANCE_APPLIED}}
+: {{api|t=e|BARBER_SHOP_CLOSE}}
+: {{api|t=e|BARBER_SHOP_COST_UPDATE}}
+: {{api|t=e|BARBER_SHOP_OPEN}}
+: {{api|t=e|BARBER_SHOP_SUCCESS}}
+: {{api|t=e|BATTLEPET_FORCE_NAME_DECLENSION}}
+: {{api|t=e|BLACK_MARKET_BID_RESULT}}
+: {{api|t=e|BLACK_MARKET_CLOSE}}
+: {{api|t=e|BLACK_MARKET_ITEM_UPDATE}}
+: {{api|t=e|BLACK_MARKET_OPEN}}
+: {{api|t=e|BLACK_MARKET_OUTBID}}
+: {{api|t=e|BLACK_MARKET_UNAVAILABLE}}
+: {{api|t=e|BLACK_MARKET_WON}}
+: {{api|t=e|BONUS_ROLL_ACTIVATE}}
+: {{api|t=e|BONUS_ROLL_DEACTIVATE}}
+: {{api|t=e|BONUS_ROLL_FAILED}}
+: {{api|t=e|BONUS_ROLL_RESULT}}
+: {{api|t=e|BONUS_ROLL_STARTED}}
+: {{api|t=e|CALENDAR_ACTION_PENDING}}
+: {{api|t=e|CALENDAR_CLOSE_EVENT}}
+: {{api|t=e|CALENDAR_EVENT_ALARM}}
+: {{api|t=e|CALENDAR_NEW_EVENT}}
+: {{api|t=e|CALENDAR_OPEN_EVENT}}
+: {{api|t=e|CALENDAR_UPDATE_ERROR}}
+: {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_COUNT}}
+: {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME}}
+: {{api|t=e|CALENDAR_UPDATE_EVENT}}
+: {{api|t=e|CALENDAR_UPDATE_EVENT_LIST}}
+: {{api|t=e|CALENDAR_UPDATE_GUILD_EVENTS}}
+: {{api|t=e|CALENDAR_UPDATE_INVITE_LIST}}
+: {{api|t=e|CALENDAR_UPDATE_PENDING_INVITES}}
+: {{api|t=e|CANCEL_GLYPH_CAST}}
+: {{api|t=e|CHALLENGE_MODE_COMPLETED}}
+: {{api|t=e|CHALLENGE_MODE_DEATH_COUNT_UPDATED}}
+: {{api|t=e|CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN}}
+: {{api|t=e|CHALLENGE_MODE_KEYSTONE_SLOTTED}}
+: {{api|t=e|CHALLENGE_MODE_LEADERS_UPDATE}}
+: {{api|t=e|CHALLENGE_MODE_MAPS_UPDATE}}
+: {{api|t=e|CHALLENGE_MODE_MEMBER_INFO_UPDATED}}
+: {{api|t=e|CHALLENGE_MODE_RESET}}
+: {{api|t=e|CHALLENGE_MODE_START}}
+: {{api|t=e|CHARACTER_UPGRADE_SPELL_TIER_SET}}
+: {{api|t=e|CLASS_TRIAL_TIMER_START}}
+: {{api|t=e|CLASS_TRIAL_UPGRADE_COMPLETE}}
+: {{api|t=e|COMPANION_LEARNED}}
+: {{api|t=e|COMPANION_UNLEARNED}}
+: {{api|t=e|COMPANION_UPDATE}}
+: {{api|t=e|CONFIRM_DISENCHANT_ROLL}}
+: {{api|t=e|CONTRIBUTION_CHANGED}}
+: {{api|t=e|CONTRIBUTION_COLLECTOR_CLOSE}}
+: {{api|t=e|CONTRIBUTION_COLLECTOR_OPEN}}
+: {{api|t=e|CONTRIBUTION_COLLECTOR_PENDING}}
+: {{api|t=e|CONTRIBUTION_COLLECTOR_UPDATE}}
+: {{api|t=e|CONTRIBUTION_COLLECTOR_UPDATE_SINGLE}}
+: {{api|t=e|CRITERIA_COMPLETE}}
+: {{api|t=e|CRITERIA_EARNED}}
+: {{api|t=e|CRITERIA_UPDATE}}
+: {{api|t=e|CURRENCY_DISPLAY_UPDATE}}
+: {{api|t=e|EJ_DIFFICULTY_UPDATE}}
+: {{api|t=e|EJ_LOOT_DATA_RECIEVED}}
+: {{api|t=e|ENCOUNTER_LOOT_RECEIVED}}
+: {{api|t=e|EQUIPMENT_SETS_CHANGED}}
+: {{api|t=e|EQUIPMENT_SWAP_FINISHED}}
+: {{api|t=e|EQUIPMENT_SWAP_PENDING}}
+: {{api|t=e|FOG_OF_WAR_UPDATED}}
+: {{api|t=e|GARRISON_ARCHITECT_CLOSED}}
+: {{api|t=e|GARRISON_ARCHITECT_OPENED}}
+: {{api|t=e|GARRISON_BUILDING_ACTIVATABLE}}
+: {{api|t=e|GARRISON_BUILDING_ACTIVATED}}
+: {{api|t=e|GARRISON_BUILDING_ERROR}}
+: {{api|t=e|GARRISON_BUILDING_LIST_UPDATE}}
+: {{api|t=e|GARRISON_BUILDING_PLACED}}
+: {{api|t=e|GARRISON_BUILDING_REMOVED}}
+: {{api|t=e|GARRISON_BUILDING_UPDATE}}
+: {{api|t=e|GARRISON_FOLLOWER_ADDED}}
+: {{api|t=e|GARRISON_FOLLOWER_CATEGORIES_UPDATED}}
+: {{api|t=e|GARRISON_FOLLOWER_DURABILITY_CHANGED}}
+: {{api|t=e|GARRISON_FOLLOWER_LIST_UPDATE}}
+: {{api|t=e|GARRISON_FOLLOWER_REMOVED}}
+: {{api|t=e|GARRISON_FOLLOWER_UPGRADED}}
+: {{api|t=e|GARRISON_FOLLOWER_XP_CHANGED}}
+: {{api|t=e|GARRISON_HIDE_LANDING_PAGE}}
+: {{api|t=e|GARRISON_INVASION_AVAILABLE}}
+: {{api|t=e|GARRISON_INVASION_UNAVAILABLE}}
+: {{api|t=e|GARRISON_LANDINGPAGE_SHIPMENTS}}
+: {{api|t=e|GARRISON_MISSION_AREA_BONUS_ADDED}}
+: {{api|t=e|GARRISON_MISSION_BONUS_ROLL_COMPLETE}}
+: {{api|t=e|GARRISON_MISSION_BONUS_ROLL_LOOT}}
+: {{api|t=e|GARRISON_MISSION_COMPLETE_RESPONSE}}
+: {{api|t=e|GARRISON_MISSION_FINISHED}}
+: {{api|t=e|GARRISON_MISSION_LIST_UPDATE}}
+: {{api|t=e|GARRISON_MISSION_NPC_CLOSED}}
+: {{api|t=e|GARRISON_MISSION_NPC_OPENED}}
+: {{api|t=e|GARRISON_MISSION_REWARD_INFO}}
+: {{api|t=e|GARRISON_MISSION_STARTED}}
+: {{api|t=e|GARRISON_MONUMENT_CLOSE_UI}}
+: {{api|t=e|GARRISON_MONUMENT_LIST_LOADED}}
+: {{api|t=e|GARRISON_MONUMENT_REPLACED}}
+: {{api|t=e|GARRISON_MONUMENT_SELECTED_TROPHY_ID_LOADED}}
+: {{api|t=e|GARRISON_MONUMENT_SHOW_UI}}
+: {{api|t=e|GARRISON_RANDOM_MISSION_ADDED}}
+: {{api|t=e|GARRISON_RECALL_PORTAL_LAST_USED_TIME}}
+: {{api|t=e|GARRISON_RECALL_PORTAL_USED}}
+: {{api|t=e|GARRISON_RECRUITMENT_FOLLOWERS_GENERATED}}
+: {{api|t=e|GARRISON_RECRUITMENT_NPC_CLOSED}}
+: {{api|t=e|GARRISON_RECRUITMENT_NPC_OPENED}}
+: {{api|t=e|GARRISON_RECRUITMENT_READY}}
+: {{api|t=e|GARRISON_RECRUIT_FOLLOWER_RESULT}}
+: {{api|t=e|GARRISON_SHIPMENT_RECEIVED}}
+: {{api|t=e|GARRISON_SHIPYARD_NPC_CLOSED}}
+: {{api|t=e|GARRISON_SHIPYARD_NPC_OPENED}}
+: {{api|t=e|GARRISON_SHOW_LANDING_PAGE}}
+: {{api|t=e|GARRISON_TALENT_COMPLETE}}
+: {{api|t=e|GARRISON_TALENT_NPC_CLOSED}}
+: {{api|t=e|GARRISON_TALENT_NPC_OPENED}}
+: {{api|t=e|GARRISON_TALENT_UPDATE}}
+: {{api|t=e|GARRISON_TRADESKILL_NPC_CLOSED}}
+: {{api|t=e|GARRISON_UPDATE}}
+: {{api|t=e|GARRISON_UPGRADEABLE_RESULT}}
+: {{api|t=e|GARRISON_USE_PARTY_GARRISON_CHANGED}}
+: {{api|t=e|GUILDBANKBAGSLOTS_CHANGED}}
+: {{api|t=e|GUILDBANKFRAME_CLOSED}}
+: {{api|t=e|GUILDBANKFRAME_OPENED}}
+: {{api|t=e|GUILDBANKLOG_UPDATE}}
+: {{api|t=e|GUILDBANK_ITEM_LOCK_CHANGED}}
+: {{api|t=e|GUILDBANK_TEXT_CHANGED}}
+: {{api|t=e|GUILDBANK_UPDATE_MONEY}}
+: {{api|t=e|GUILDBANK_UPDATE_TABS}}
+: {{api|t=e|GUILDBANK_UPDATE_TEXT}}
+: {{api|t=e|GUILDBANK_UPDATE_WITHDRAWMONEY}}
+: {{api|t=e|GUILD_CHALLENGE_COMPLETED}}
+: {{api|t=e|GUILD_CHALLENGE_UPDATED}}
+: {{api|t=e|GUILD_EVENT_LOG_UPDATE}}
+: {{api|t=e|GUILD_NEWS_UPDATE}}
+: {{api|t=e|GUILD_RECIPE_KNOWN_BY_MEMBERS}}
+: {{api|t=e|GUILD_REWARDS_LIST}}
+: {{api|t=e|GUILD_TRADESKILL_UPDATE}}
+: {{api|t=e|HEIRLOOMS_UPDATED}}
+: {{api|t=e|HEIRLOOM_UPGRADE_TARGETING_CHANGED}}
+: {{api|t=e|HONOR_LEVEL_UPDATE}}
+: {{api|t=e|HONOR_XP_UPDATE}}
+: {{api|t=e|INCOMING_SUMMON_CHANGED}}
+: {{api|t=e|INSPECT_ACHIEVEMENT_READY}}
+: {{api|t=e|INSTANCE_LOCK_START}}
+: {{api|t=e|INSTANCE_LOCK_STOP}}
+: {{api|t=e|INSTANCE_LOCK_WARNING}}
+: {{api|t=e|ISLANDS_QUEUE_CLOSE}}
+: {{api|t=e|ISLANDS_QUEUE_OPEN}}
+: {{api|t=e|ISLAND_AZERITE_GAIN}}
+: {{api|t=e|ISLAND_COMPLETED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_CLOSED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_OPENED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_SET_ITEM}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_UPDATE}}
+: {{api|t=e|KNOWN_TITLES_UPDATE}}
+: {{api|t=e|LFG_BONUS_FACTION_ID_UPDATED}}
+: {{api|t=e|LFG_BOOT_PROPOSAL_UPDATE}}
+: {{api|t=e|LFG_COMPLETION_REWARD}}
+: {{api|t=e|LFG_INVALID_ERROR_MESSAGE}}
+: {{api|t=e|LFG_LIST_ACTIVE_ENTRY_UPDATE}}
+: {{api|t=e|LFG_LIST_APPLICANT_LIST_UPDATED}}
+: {{api|t=e|LFG_LIST_APPLICANT_UPDATED}}
+: {{api|t=e|LFG_LIST_APPLICATION_STATUS_UPDATED}}
+: {{api|t=e|LFG_LIST_AVAILABILITY_UPDATE}}
+: {{api|t=e|LFG_LIST_ENTRY_CREATION_FAILED}}
+: {{api|t=e|LFG_LIST_ENTRY_EXPIRED_TIMEOUT}}
+: {{api|t=e|LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS}}
+: {{api|t=e|LFG_LIST_JOINED_GROUP}}
+: {{api|t=e|LFG_LIST_SEARCH_FAILED}}
+: {{api|t=e|LFG_LIST_SEARCH_RESULTS_RECEIVED}}
+: {{api|t=e|LFG_LIST_SEARCH_RESULT_UPDATED}}
+: {{api|t=e|LFG_LOCK_INFO_RECEIVED}}
+: {{api|t=e|LFG_OFFER_CONTINUE}}
+: {{api|t=e|LFG_OPEN_FROM_GOSSIP}}
+: {{api|t=e|LFG_PROPOSAL_DONE}}
+: {{api|t=e|LFG_PROPOSAL_FAILED}}
+: {{api|t=e|LFG_PROPOSAL_SHOW}}
+: {{api|t=e|LFG_PROPOSAL_SUCCEEDED}}
+: {{api|t=e|LFG_PROPOSAL_UPDATE}}
+: {{api|t=e|LFG_QUEUE_STATUS_UPDATE}}
+: {{api|t=e|LFG_READY_CHECK_DECLINED}}
+: {{api|t=e|LFG_READY_CHECK_HIDE}}
+: {{api|t=e|LFG_READY_CHECK_PLAYER_IS_READY}}
+: {{api|t=e|LFG_READY_CHECK_SHOW}}
+: {{api|t=e|LFG_READY_CHECK_UPDATE}}
+: {{api|t=e|LFG_ROLE_CHECK_DECLINED}}
+: {{api|t=e|LFG_ROLE_CHECK_HIDE}}
+: {{api|t=e|LFG_ROLE_CHECK_ROLE_CHOSEN}}
+: {{api|t=e|LFG_ROLE_CHECK_SHOW}}
+: {{api|t=e|LFG_ROLE_CHECK_UPDATE}}
+: {{api|t=e|LFG_ROLE_UPDATE}}
+: {{api|t=e|LFG_UPDATE}}
+: {{api|t=e|LFG_UPDATE_RANDOM_INFO}}
+: {{api|t=e|LF_GUILD_BROWSE_UPDATED}}
+: {{api|t=e|LF_GUILD_MEMBERSHIP_LIST_CHANGED}}
+: {{api|t=e|LF_GUILD_MEMBERSHIP_LIST_UPDATED}}
+: {{api|t=e|LF_GUILD_POST_UPDATED}}
+: {{api|t=e|LF_GUILD_RECRUITS_UPDATED}}
+: {{api|t=e|LF_GUILD_RECRUIT_LIST_CHANGED}}
+: {{api|t=e|LIFESTEAL_UPDATE}}
+: {{api|t=e|LOOT_JOURNAL_LIST_UPDATE}}
+: {{api|t=e|MASTERY_UPDATE}}
+: {{api|t=e|MOUNT_JOURNAL_SEARCH_UPDATED}}
+: {{api|t=e|MOUNT_JOURNAL_USABILITY_CHANGED}}
+: {{api|t=e|MYTHIC_PLUS_CURRENT_AFFIX_UPDATE}}
+: {{api|t=e|MYTHIC_PLUS_NEW_SEASON_RECORD}}
+: {{api|t=e|MYTHIC_PLUS_NEW_WEEKLY_RECORD}}
+: {{api|t=e|NEUTRAL_FACTION_SELECT_RESULT}}
+: {{api|t=e|NEW_MOUNT_ADDED}}
+: {{api|t=e|NEW_PET_ADDED}}
+: {{api|t=e|NEW_TOY_ADDED}}
+: {{api|t=e|NPE_TUTORIAL_UPDATE}}
+: {{api|t=e|OBLITERUM_FORGE_CLOSE}}
+: {{api|t=e|OBLITERUM_FORGE_PENDING_ITEM_CHANGED}}
+: {{api|t=e|OBLITERUM_FORGE_SHOW}}
+: {{api|t=e|PARTY_LFG_RESTRICTED}}
+: {{api|t=e|PET_BATTLE_ABILITY_CHANGED}}
+: {{api|t=e|PET_BATTLE_ACTION_SELECTED}}
+: {{api|t=e|PET_BATTLE_AURA_APPLIED}}
+: {{api|t=e|PET_BATTLE_AURA_CANCELED}}
+: {{api|t=e|PET_BATTLE_AURA_CHANGED}}
+: {{api|t=e|PET_BATTLE_CAPTURED}}
+: {{api|t=e|PET_BATTLE_CLOSE}}
+: {{api|t=e|PET_BATTLE_FINAL_ROUND}}
+: {{api|t=e|PET_BATTLE_HEALTH_CHANGED}}
+: {{api|t=e|PET_BATTLE_LEVEL_CHANGED}}
+: {{api|t=e|PET_BATTLE_LOOT_RECEIVED}}
+: {{api|t=e|PET_BATTLE_MAX_HEALTH_CHANGED}}
+: {{api|t=e|PET_BATTLE_OPENING_DONE}}
+: {{api|t=e|PET_BATTLE_OPENING_START}}
+: {{api|t=e|PET_BATTLE_OVER}}
+: {{api|t=e|PET_BATTLE_PET_CHANGED}}
+: {{api|t=e|PET_BATTLE_PET_ROUND_PLAYBACK_COMPLETE}}
+: {{api|t=e|PET_BATTLE_PET_ROUND_RESULTS}}
+: {{api|t=e|PET_BATTLE_PET_TYPE_CHANGED}}
+: {{api|t=e|PET_BATTLE_PVP_DUEL_REQUESTED}}
+: {{api|t=e|PET_BATTLE_PVP_DUEL_REQUEST_CANCEL}}
+: {{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_ACCEPTED}}
+: {{api|t=e|PET_BATTLE_QUEUE_PROPOSAL_DECLINED}}
+: {{api|t=e|PET_BATTLE_QUEUE_PROPOSE_MATCH}}
+: {{api|t=e|PET_BATTLE_QUEUE_STATUS}}
+: {{api|t=e|PET_BATTLE_XP_CHANGED}}
+: {{api|t=e|PET_JOURNAL_AUTO_SLOTTED_PET}}
+: {{api|t=e|PET_JOURNAL_CAGE_FAILED}}
+: {{api|t=e|PET_JOURNAL_LIST_UPDATE}}
+: {{api|t=e|PET_JOURNAL_NEW_BATTLE_SLOT}}
+: {{api|t=e|PET_JOURNAL_PETS_HEALED}}
+: {{api|t=e|PET_JOURNAL_PET_DELETED}}
+: {{api|t=e|PET_JOURNAL_PET_RESTORED}}
+: {{api|t=e|PET_JOURNAL_PET_REVOKED}}
+: {{api|t=e|PET_JOURNAL_TRAP_LEVEL_SET}}
+: {{api|t=e|PET_SPECIALIZATION_CHANGED}}
+: {{api|t=e|PLAYERREAGENTBANKSLOTS_CHANGED}}
+: {{api|t=e|PLAYER_DIFFICULTY_CHANGED}}
+: {{api|t=e|PLAYER_FOCUS_CHANGED}}
+: {{api|t=e|PLAYER_GAINS_VEHICLE_DATA}}
+: {{api|t=e|PLAYER_LEARN_PVP_TALENT_FAILED}}
+: {{api|t=e|PLAYER_LEARN_TALENT_FAILED}}
+: {{api|t=e|PLAYER_LOOT_SPEC_UPDATED}}
+: {{api|t=e|PLAYER_LOSES_VEHICLE_DATA}}
+: {{api|t=e|PLAYER_PVP_TALENT_UPDATE}}
+: {{api|t=e|PLAYER_SPECIALIZATION_CHANGED}}
+: {{api|t=e|PLAYER_TALENT_UPDATE}}
+: {{api|t=e|PLAYER_TRADE_CURRENCY}}
+: {{api|t=e|PROVING_GROUNDS_SCORE_UPDATE}}
+: {{api|t=e|PVPQUEUE_ANYWHERE_SHOW}}
+: {{api|t=e|PVPQUEUE_ANYWHERE_UPDATE_AVAILABLE}}
+: {{api|t=e|PVP_BRAWL_INFO_UPDATED}}
+: {{api|t=e|PVP_POWER_UPDATE}}
+: {{api|t=e|PVP_RATED_STATS_UPDATE}}
+: {{api|t=e|PVP_REWARDS_UPDATE}}
+: {{api|t=e|PVP_ROLE_UPDATE}}
+: {{api|t=e|PVP_TYPES_ENABLED}}
+: {{api|t=e|PVP_VEHICLE_INFO_UPDATED}}
+: {{api|t=e|QUESTLINE_UPDATE}}
+: {{api|t=e|QUEST_CHOICE_CLOSE}}
+: {{api|t=e|QUEST_CHOICE_UPDATE}}
+: {{api|t=e|QUEST_CURRENCY_LOOT_RECEIVED}}
+: {{api|t=e|QUEST_LOG_CRITERIA_UPDATE}}
+: {{api|t=e|QUEST_LOOT_RECEIVED}}
+: {{api|t=e|QUEST_POI_UPDATE}}
+: {{api|t=e|RAISED_AS_GHOUL}}
+: {{api|t=e|REAGENTBANK_PURCHASED}}
+: {{api|t=e|REAGENTBANK_UPDATE}}
+: {{api|t=e|RECEIVED_ACHIEVEMENT_LIST}}
+: {{api|t=e|RECEIVED_ACHIEVEMENT_MEMBER_LIST}}
+: {{api|t=e|REPORT_PLAYER_RESULT}}
+: {{api|t=e|RESEARCH_ARTIFACT_COMPLETE}}
+: {{api|t=e|RESEARCH_ARTIFACT_DIG_SITE_UPDATED}}
+: {{api|t=e|RESEARCH_ARTIFACT_HISTORY_READY}}
+: {{api|t=e|RESEARCH_ARTIFACT_UPDATE}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_OPENED}}
+: {{api|t=e|ROLE_POLL_BEGIN}}
+: {{api|t=e|RUNE_POWER_UPDATE}}
+: {{api|t=e|SCENARIO_BONUS_OBJECTIVE_COMPLETE}}
+: {{api|t=e|SCENARIO_BONUS_VISIBILITY_UPDATE}}
+: {{api|t=e|SCENARIO_COMPLETED}}
+: {{api|t=e|SCENARIO_CRITERIA_SHOW_STATE_UPDATE}}
+: {{api|t=e|SCENARIO_CRITERIA_UPDATE}}
+: {{api|t=e|SCENARIO_POI_UPDATE}}
+: {{api|t=e|SCENARIO_SPELL_UPDATE}}
+: {{api|t=e|SCENARIO_UPDATE}}
+: {{api|t=e|SCRAPPING_MACHINE_CLOSE}}
+: {{api|t=e|SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED}}
+: {{api|t=e|SCRAPPING_MACHINE_PENDING_ITEM_CHANGED}}
+: {{api|t=e|SCRAPPING_MACHINE_SCRAPPING_FINISHED}}
+: {{api|t=e|SCRAPPING_MACHINE_SHOW}}
+: {{api|t=e|SHIPMENT_CRAFTER_CLOSED}}
+: {{api|t=e|SHIPMENT_CRAFTER_INFO}}
+: {{api|t=e|SHIPMENT_CRAFTER_OPENED}}
+: {{api|t=e|SHIPMENT_CRAFTER_REAGENT_UPDATE}}
+: {{api|t=e|SHIPMENT_UPDATE}}
+: {{api|t=e|SHOW_FACTION_SELECT_UI}}
+: {{api|t=e|SHOW_LOOT_TOAST}}
+: {{api|t=e|SHOW_LOOT_TOAST_LEGENDARY_LOOTED}}
+: {{api|t=e|SHOW_LOOT_TOAST_UPGRADE}}
+: {{api|t=e|SHOW_PVP_FACTION_LOOT_TOAST}}
+: {{api|t=e|SHOW_RATED_PVP_REWARD_TOAST}}
+: {{api|t=e|SOCIAL_QUEUE_CONFIG_UPDATED}}
+: {{api|t=e|SOCIAL_QUEUE_UPDATE}}
+: {{api|t=e|SOCKET_INFO_ACCEPT}}
+: {{api|t=e|SOCKET_INFO_BIND_CONFIRM}}
+: {{api|t=e|SOCKET_INFO_CLOSE}}
+: {{api|t=e|SOCKET_INFO_FAILURE}}
+: {{api|t=e|SOCKET_INFO_SUCCESS}}
+: {{api|t=e|SOCKET_INFO_UPDATE}}
+: {{api|t=e|SPEC_INVOLUNTARILY_CHANGED}}
+: {{api|t=e|SPEED_UPDATE}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_HIDE}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_GLOW_SHOW}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_HIDE}}
+: {{api|t=e|SPELL_ACTIVATION_OVERLAY_SHOW}}
+: {{api|t=e|SPELL_FLYOUT_UPDATE}}
+: {{api|t=e|SPELL_PUSHED_TO_ACTIONBAR}}
+: {{api|t=e|STURDINESS_UPDATE}}
+: {{api|t=e|TALENTS_INVOLUNTARILY_RESET}}
+: {{api|t=e|TALKINGHEAD_CLOSE}}
+: {{api|t=e|TALKINGHEAD_REQUESTED}}
+: {{api|t=e|TOYS_UPDATED}}
+: {{api|t=e|TRACKED_ACHIEVEMENT_LIST_CHANGED}}
+: {{api|t=e|TRACKED_ACHIEVEMENT_UPDATE}}
+: {{api|t=e|TRADE_CURRENCY_CHANGED}}
+: {{api|t=e|TRADE_POTENTIAL_REMOVE_TRANSMOG}}
+: {{api|t=e|TRANSMOGRIFY_CLOSE}}
+: {{api|t=e|TRANSMOGRIFY_ITEM_UPDATE}}
+: {{api|t=e|TRANSMOGRIFY_OPEN}}
+: {{api|t=e|TRANSMOGRIFY_SUCCESS}}
+: {{api|t=e|TRANSMOGRIFY_UPDATE}}
+: {{api|t=e|TRANSMOG_COLLECTION_CAMERA_UPDATE}}
+: {{api|t=e|TRANSMOG_COLLECTION_ITEM_UPDATE}}
+: {{api|t=e|TRANSMOG_COLLECTION_SOURCE_ADDED}}
+: {{api|t=e|TRANSMOG_COLLECTION_SOURCE_REMOVED}}
+: {{api|t=e|TRANSMOG_COLLECTION_UPDATED}}
+: {{api|t=e|TRANSMOG_OUTFITS_CHANGED}}
+: {{api|t=e|TRANSMOG_SEARCH_UPDATED}}
+: {{api|t=e|TRANSMOG_SETS_UPDATE_FAVORITE}}
+: {{api|t=e|TRANSMOG_SOURCE_COLLECTABILITY_UPDATE}}
+: {{api|t=e|TUTORIAL_HIGHLIGHT_SPELL}}
+: {{api|t=e|TUTORIAL_UNHIGHLIGHT_SPELL}}
+: {{api|t=e|UNIT_ABSORB_AMOUNT_CHANGED}}
+: {{api|t=e|UNIT_ENTERED_VEHICLE}}
+: {{api|t=e|UNIT_ENTERING_VEHICLE}}
+: {{api|t=e|UNIT_EXITED_VEHICLE}}
+: {{api|t=e|UNIT_EXITING_VEHICLE}}
+: {{api|t=e|UNIT_HEAL_ABSORB_AMOUNT_CHANGED}}
+: {{api|t=e|UNIT_HEAL_PREDICTION}}
+: {{api|t=e|UNIT_SPELLCAST_INTERRUPTIBLE}}
+: {{api|t=e|UNIT_SPELLCAST_NOT_INTERRUPTIBLE}}
+: {{api|t=e|UNIT_THREAT_LIST_UPDATE}}
+: {{api|t=e|UNIT_THREAT_SITUATION_UPDATE}}
+: {{api|t=e|UPDATE_EXTRA_ACTIONBAR}}
+: {{api|t=e|UPDATE_LFG_LIST}}
+: {{api|t=e|UPDATE_MULTI_CAST_ACTIONBAR}}
+: {{api|t=e|UPDATE_OVERRIDE_ACTIONBAR}}
+: {{api|t=e|UPDATE_POSSESS_BAR}}
+: {{api|t=e|UPDATE_SUMMONPETS_ACTION}}
+: {{api|t=e|UPDATE_VEHICLE_ACTIONBAR}}
+: {{api|t=e|USE_GLYPH}}
+: {{api|t=e|VEHICLE_ANGLE_SHOW}}
+: {{api|t=e|VEHICLE_ANGLE_UPDATE}}
+: {{api|t=e|VEHICLE_PASSENGERS_CHANGED}}
+: {{api|t=e|VEHICLE_POWER_SHOW}}
+: {{api|t=e|VEHICLE_UPDATE}}
+: {{api|t=e|VIGNETTES_UPDATED}}
+: {{api|t=e|VIGNETTE_MINIMAP_UPDATED}}
+: {{api|t=e|VOID_DEPOSIT_WARNING}}
+: {{api|t=e|VOID_STORAGE_CLOSE}}
+: {{api|t=e|VOID_STORAGE_CONTENTS_UPDATE}}
+: {{api|t=e|VOID_STORAGE_DEPOSIT_UPDATE}}
+: {{api|t=e|VOID_STORAGE_OPEN}}
+: {{api|t=e|VOID_STORAGE_UPDATE}}
+: {{api|t=e|VOID_TRANSFER_DONE}}
+: {{api|t=e|VOID_TRANSFER_SUCCESS}}
+: {{api|t=e|VOTE_KICK_REASON_NEEDED}}
+: {{api|t=e|WARFRONT_COMPLETED}}
+: {{api|t=e|WARGAME_REQUESTED}}
+: {{api|t=e|WAR_MODE_STATUS_UPDATE}}
+: {{api|t=e|WEAR_EQUIPMENT_SET}}
+: {{api|t=e|WORLD_QUEST_COMPLETED_BY_SPELL}}
+</div>
+|}
+
+==CVars==
+See also: [[Console variables/Complete list/Classic]]
+
+{| class="wikitable" style="min-width: 600px"
+|+ CVars 8.1.5 (29981) &rarr; 1.13.2 (30406)
+|- class="mw-customtoggle-cvars" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 30 new CVars
+! style="width: 50%; padding-right: 1em;"| 70 removed CVars
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=c|alwaysShowBlizzardGroupsTab}}
+: {{api|t=c|alwaysShowTargetNameplate}}
+: {{api|t=c|clampTargetNameplateToScreen}}
+: {{api|t=c|enableRefHistory}}
+: {{api|t=c|floatingCombatTextAuraFade}}
+: {{api|t=c|groundEffectAnimation}}
+: {{api|t=c|gxFixLag}}
+: {{api|t=c|gxTripleBuffer}}
+: {{api|t=c|hideOutdoorWorldState}}
+: {{api|t=c|instantQuestText}}
+: {{api|t=c|minimumAutomaticUiScale}}
+: {{api|t=c|nameplateNotSelectedAlpha}}
+: {{api|t=c|nameplateRemovalAnimation}}
+: {{api|t=c|RAIDgroundEffectAnimation}}
+: {{api|t=c|RAIDSSAOBlur}}
+: {{api|t=c|showLoadingScreenTips}}
+: {{api|t=c|showLootSpam}}
+: {{api|t=c|showNewbieTips}}
+: {{api|t=c|spellClutterDefaultTargetScalar}}
+: {{api|t=c|spellClutterHostileScalar}}
+: {{api|t=c|spellClutterMinSpellCount}}
+: {{api|t=c|spellClutterMinWeaponTrailCount}}
+: {{api|t=c|spellClutterPartySizeScalar}}
+: {{api|t=c|spellClutterPlayerScalarMultiplier}}
+: {{api|t=c|spellClutterRangeConstant}}
+: {{api|t=c|spellClutterRangeConstantRaid}}
+: {{api|t=c|SSAOBlur}}
+: {{api|t=c|SSAODistance}}
+: {{api|t=c|terrainHoles}}
+: {{api|t=c|twitterCharactersPerMedia}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: {{api|t=c|advJournalLastOpened}}
+: {{api|t=c|autoAcceptQuickJoinRequests}}
+: {{api|t=c|autoDismount}}
+: {{api|t=c|autoDismountFlying}}
+: {{api|t=c|autoStand}}
+: {{api|t=c|autoUnshift}}
+: {{api|t=c|BehaviorTree}}
+: {{api|t=c|BrowserNavigateLog}}
+: {{api|t=c|displaySpellActivationOverlays}}
+: {{api|t=c|floatingCombatTextCombatHealing}}
+: {{api|t=c|floatingCombatTextCombatHealingAbsorbSelf}}
+: {{api|t=c|floatingCombatTextCombatHealingAbsorbTarget}}
+: {{api|t=c|graphicsOutlineMode}}
+: {{api|t=c|graphicsViewDistance}}
+: {{api|t=c|GxAllowSoftwareRenderer}}
+: {{api|t=c|GxLogFullGPUInfo}}
+: {{api|t=c|gxMTAlphaM2}}
+: {{api|t=c|gxMTBeginDraw}}
+: {{api|t=c|gxMTDisable}}
+: {{api|t=c|gxMTOpaque}}
+: {{api|t=c|gxMTPrepass}}
+: {{api|t=c|gxMTShadow}}
+: {{api|t=c|hdPlayerModels}}
+: {{api|t=c|HealHandler}}
+: {{api|t=c|hideAdventureJournalAlerts}}
+: {{api|t=c|lossOfControl}}
+: {{api|t=c|lossOfControlDisarm}}
+: {{api|t=c|lossOfControlFull}}
+: {{api|t=c|lossOfControlInterrupt}}
+: {{api|t=c|lossOfControlRoot}}
+: {{api|t=c|lossOfControlSilence}}
+: {{api|t=c|miniWorldMap}}
+: {{api|t=c|nameplateResourceOnTarget}}
+: {{api|t=c|nameplateShowSelf}}
+: {{api|t=c|newMythicPlusSeason}}
+: {{api|t=c|newPvpSeason}}
+: {{api|t=c|Outline}}
+: {{api|t=c|OutlineEngineMode}}
+: {{api|t=c|Pathing}}
+: {{api|t=c|physicsLevel}}
+: {{api|t=c|PraiseTheSun}}
+: {{api|t=c|questPOI}}
+: {{api|t=c|raidFramesDisplayAggroHighlight}}
+: {{api|t=c|raidGraphicsOutlineMode}}
+: {{api|t=c|raidGraphicsViewDistance}}
+: {{api|t=c|RAIDOutlineEngineMode}}
+: {{api|t=c|seenAlliedRaceUnlocks}}
+: {{api|t=c|ShowNamePlateLoseAggroFlash}}
+: {{api|t=c|showNPETutorials}}
+: {{api|t=c|showQuestTrackingTooltips}}
+: {{api|t=c|ShowQuestUnitCircles}}
+: {{api|t=c|Sound_EnableDSPEffects}}
+: {{api|t=c|Sound_EnablePetBattleMusic}}
+: {{api|t=c|SpawnRegion}}
+: {{api|t=c|spellActivationOverlayOpacity}}
+: {{api|t=c|SpellOverrides}}
+: {{api|t=c|SpellTargeting}}
+: {{api|t=c|splashScreenSeason}}
+: {{api|t=c|threatPlaySounds}}
+: {{api|t=c|threatShowNumeric}}
+: {{api|t=c|threatWarning}}
+: {{api|t=c|threatWorldText}}
+: {{api|t=c|UnitNameFriendlySpecialNPCName}}
+: {{api|t=c|UnitNameHostleNPC}}
+: {{api|t=c|UnitNameInteractiveNPC}}
+: {{api|t=c|videoOptionsVersionDefault}}
+: {{api|t=c|worldEntityLinkMode}}
+: {{api|t=c|worldPreloadNonCriticalTimeout}}
+: {{api|t=c|worldQuestFilterReputation}}
+: {{api|t=c|worldViewCullMaxJobs}}
+</div>
+|}
+
+==References==
+{{Reflist}}

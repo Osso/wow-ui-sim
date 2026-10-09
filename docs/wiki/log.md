@@ -1038,3 +1038,15 @@ Ingested [audit](investigations/patch-1-13-4-api-audit.md): literal SOURCE bound
 ## 2026-10-09 — Patch1.13.4 bounded development proof
 
 [Audit](investigations/patch-1-13-4-api-audit.md): SOURCE8/8, Era existing totem lifecycle1/1, separate same-Era successor3/3, portable3/3;112 immutable originals and two exact serialized restorations.18 actual successor ledgers, only1.14.0 commentator removal overlaps; no new runtime or historical/native closure. Main integrates1.13.4 before1.13.3.
+
+## 2026-10-09 — Patch1.13.2 frozen SOURCE implementation
+
+Owned p1132-page/base9252c6cc9; exact frozen115161/6471351, literal2758 inventory,2838raw rows; source RED8 retained. No runtime/model/native claims. [Audit](investigations/patch-1-13-2-api-audit.md); portable replay/current subset pending.
+
+## 2026-10-09 — Patch1.13.2 original seals and separate precedence
+
+SOURCE8/8 ata3cc2a2269, existing bare Era storage1/1 at15d12138f, portable3/3 atc5436865b with89original seals. Actual20same-Era ledger comparison derived581identity overlaps/580source occurrences; no historical/native closures. Targeted successor RED3 retained; GREEN pending. [Audit](investigations/patch-1-13-2-api-audit.md).
+
+## 2026-10-09 — Patch1.13.2 bounded page handoff
+
+SOURCE8/8, current Era generic-storage1/1, portable3/3, actual-successor3/3 and receipt-validator3/3 preserved at their exact epochs. Original89seals/archive unchanged; separate receipt map extended administratively. All5011historical contracts remain UNPROVEN;20same-Era actual inputs yield581identity overlaps, zero semantic/native closures.13existing manifest/library/binary diagnostic warnings retained. No runtime edits or final gates. [Audit](investigations/patch-1-13-2-api-audit.md).

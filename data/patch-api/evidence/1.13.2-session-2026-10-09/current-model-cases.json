@@ -1,0 +1,32 @@
+[
+  {
+    "name": "alwaysShowTargetNameplate",
+    "input": "0",
+    "boolean": false
+  },
+  {
+    "name": "alwaysShowTargetNameplate",
+    "input": "1",
+    "boolean": true
+  },
+  {
+    "name": "alwaysShowTargetNameplate",
+    "input": "0",
+    "boolean": false
+  },
+  {
+    "name": "instantQuestText",
+    "input": "1",
+    "boolean": true
+  },
+  {
+    "name": "instantQuestText",
+    "input": "0",
+    "boolean": false
+  },
+  {
+    "name": "instantQuestText",
+    "input": "1",
+    "boolean": true
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "result": "existing-failure",
+  "text": null,
+  "error_type": "ValueError",
+  "error": "unhandled template: * The [[COMBAT_LOG_EVENT|Combat Log]] is restricted to events within 50 yards of the player. (Build 32600, Nov 20 2019) <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/in-game-combat-log-range-decreased/370390|author=Kaivax|date=2019-11-22|title=In-Game Combat Log Range Decreased}}</ref>",
+  "flags": []
+}

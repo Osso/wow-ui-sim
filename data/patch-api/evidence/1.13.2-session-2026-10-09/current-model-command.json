@@ -1,0 +1,26 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--target-dir",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/target",
+    "--no-default-features",
+    "--features",
+    "client-era",
+    "--test",
+    "patch_1_13_2_cvar_state",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "15d12138f56ac2db90499303a80d9b702ccf4e5b",
+  "scope": "existing current bare Era generic CVar storage only",
+  "env": {
+    "TMPDIR": "/home/osso/.worktrees/wow-ui-sim-p1132-page/target/p1132-scratch",
+    "WOW_SIM_P1132_CVAR_OUT": "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/current-model-observations.json"
+  },
+  "result": "1/1 pass from complete retained log; terminal combined_to_file returned before erroneous spawn call; no rerun",
+  "warnings": "6 existing non-GUI library warnings plus1 wow-sim unused-import warning; no suppression or out-of-scope fixes"
+}

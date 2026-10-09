@@ -1,0 +1,73 @@
+{
+  "scope": "original implementation proof epochs; no final acceptance",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "9252c6cc93c087518f25e64987e095ed76312a51",
+      "scope": "8 SOURCE fixtures against RED scaffold; no runtime/native proof",
+      "exit_code": 1
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "a3cc2a2269cb1032dce988ba7abc73b2e2122507",
+      "exit_code": 0,
+      "scope": "8 literal SOURCE fixtures; all occurrence omissions; no runtime/native/foreign credit"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--target-dir",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/target",
+        "--no-default-features",
+        "--features",
+        "client-era",
+        "--test",
+        "patch_1_13_2_cvar_state",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "15d12138f56ac2db90499303a80d9b702ccf4e5b",
+      "scope": "existing current bare Era generic CVar storage only",
+      "env": {
+        "TMPDIR": "/home/osso/.worktrees/wow-ui-sim-p1132-page/target/p1132-scratch",
+        "WOW_SIM_P1132_CVAR_OUT": "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/current-model-observations.json"
+      },
+      "result": "1/1 pass from complete retained log; terminal combined_to_file returned before erroneous spawn call; no rerun",
+      "warnings": "6 existing non-GUI library warnings plus1 wow-sim unused-import warning; no suppression or out-of-scope fixes"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/originals.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/target/p1132-portable-red",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/portable-red-receipts.json",
+        "--cwd",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "15d12138f56ac2db90499303a80d9b702ccf4e5b",
+      "exit_code": 1,
+      "scope": "3 portable fixture REDs: own original archive absent, no runtime/native credit"
+    }
+  ],
+  "validity": "SOURCE code unchanged since a3cc2a2269; target model test unchanged since15d12138f; receipt-only additions do not invalidate scope. RED fixture corrected observed SelectTCradeSkill line143 to144 before GREEN; missing-feature RED unchanged. No broad commands repeated."
+}

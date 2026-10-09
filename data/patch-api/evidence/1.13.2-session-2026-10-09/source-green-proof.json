@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "a3cc2a2269cb1032dce988ba7abc73b2e2122507",
+  "exit_code": 0,
+  "scope": "8 literal SOURCE fixtures; all occurrence omissions; no runtime/native/foreign credit"
+}

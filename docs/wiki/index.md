@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.13.2 frozen Era audit
+
+[Audit](investigations/patch-1-13-2-api-audit.md): frozen115161/6471351,171914bytes;2758inventory/2838raw rows/2764signature limits/23prose/5011UNPROVEN contracts. SOURCE8/8 ata3cc2a2269, bare Era generic CVar storage1/1 at15d12138f(6transitions, no effect/default/native credit), portable3/3 atc5436865b(copied SOURCE8/default bytes/error and both serialized restorations,89original seals), separate successors3/3 at752cd507e(20actual same-Era ledgers,581identity overlaps/580source occurrences,0semantic closures), receipt-validator3/3 atf73ba78a5.13existing manifest/library/binary warning diagnostics retained. Main integrates1.13.2 before separate originalRetail1.12.0; histories remain distinct.
+
 ## [2026-10-09] investigation | Patch 1.13.4 frozen Era audit
 
 [Audit](investigations/patch-1-13-4-api-audit.md): frozen333398/3216451,2146 bytes,57 raw/23 inventory/23 unspecified signatures/30 UNPROVEN contracts. Exact SOURCE RED8 retained; current Era totem-slot lifecycle GREEN1/1 at ce0c5c59a, no native historical signature/default credit. SOURCE GREEN8/8 at c9c0262e3; successor3/3 at acddd6ef6, portable3/3 at bec06a7a2.112 original seals unchanged; copied no-Git/target/current-tools default-byte replay and both serialized tamper restorations pass.18 actual same-Era ledgers separately applied, one1.14.0 commentator removal overlap; all30 historical contracts UNPROVEN. Frozen queue immutable. Main integrates1.13.4 before1.13.3.

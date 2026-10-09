@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_successors.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "c5436865bae50882280fa36ca3e1b1569303a558",
+  "exit_code": 1,
+  "scope": "three separate actual successor SOURCE receipt assertions fail absent implementation; original89 seals preserved"
+}

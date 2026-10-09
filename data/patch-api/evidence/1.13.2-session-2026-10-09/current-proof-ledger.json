@@ -1,0 +1,108 @@
+{
+  "scope": "bounded page completion records, not main/native/final acceptance",
+  "base_revision": "9252c6cc93c087518f25e64987e095ed76312a51",
+  "original_map_sha256": "ee2ab62599ff80b7955f950d17d4125ff3faea92e602d456c2b29fb720e3e227",
+  "original_archive_sha256": "277e53096d01a1b6018369d4d14ecd493892156f76ddc4b51c6b1217b7b4b48b",
+  "validator_epoch_receipt_map_sha256": "c706d1b2e58a22d96407840c61c9ee6f9b4c09f0502ec6f485be51c02f31cd19",
+  "original_seals": 89,
+  "green_epochs": {
+    "source-green-proof.json": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "a3cc2a2269cb1032dce988ba7abc73b2e2122507",
+      "exit_code": 0,
+      "scope": "8 literal SOURCE fixtures; all occurrence omissions; no runtime/native/foreign credit"
+    },
+    "portable-green-proof.json": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/originals.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/target/p1132-portable-green",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/portable-receipts.json",
+        "--cwd",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "c5436865bae50882280fa36ca3e1b1569303a558",
+      "exit_code": 0,
+      "scope": "fresh copied historical SOURCE8/default bytes/exception; both serialized disk tampers reject then exact restoration; no runtime/native credit"
+    },
+    "successor-green-proof.json": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_successors.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "752cd507e867512a7fef3436b37d232080f2500e",
+      "exit_code": 0,
+      "scope": "three actual same-Era precedence fixtures, every occurrence omission and foreign credit rejection; original89seals unchanged; no native/model closure"
+    },
+    "validator-green-proof.json": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+      "revision": "f73ba78a5c0148e9b106c8a30293df76bb8d0642",
+      "exit_code": 0,
+      "scope": "three targeted receipt-validator development fixtures; counts derived; all original89/separate receipt seals and storage negative controls; no main/final gate"
+    }
+  },
+  "current_model_epoch": {
+    "command": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "--target-dir",
+      "/home/osso/.worktrees/wow-ui-sim-p1132-page/target",
+      "--no-default-features",
+      "--features",
+      "client-era",
+      "--test",
+      "patch_1_13_2_cvar_state",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+    "revision": "15d12138f56ac2db90499303a80d9b702ccf4e5b",
+    "scope": "existing current bare Era generic CVar storage only",
+    "env": {
+      "TMPDIR": "/home/osso/.worktrees/wow-ui-sim-p1132-page/target/p1132-scratch",
+      "WOW_SIM_P1132_CVAR_OUT": "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/current-model-observations.json"
+    },
+    "result": "1/1 pass from complete retained log; terminal combined_to_file returned before erroneous spawn call; no rerun",
+    "warnings": "6 existing non-GUI library warnings plus1 wow-sim unused-import warning; no suppression or out-of-scope fixes"
+  },
+  "proof_artifact_hashes": {
+    "audit.py": "385194ae25c1dc69c3b6ef11efebc71b154382d13a4ee275898a4b4ae1aa9728",
+    "test_source_accounting.py": "23d2bf83d4d70266e0c252a6336fccf2e37b832ffe7f37893d961095ef163e66",
+    "test_portable.py": "43ae9245aef7477e2d78da55d199474606858d61d994273b2e6e2fa70c2d374f",
+    "apply_successors.py": "14ad8b2682c3d6ef894140976d06923e6ec4d5d96f61176b92d3eba7cf368ce6",
+    "test_successors.py": "f40f4d96bd72a2d359fe159c87bcd086210a832754cb8639d380006ac7f9374a",
+    "validator.py": "53e711ce5d698ae747c03229b0347924acb54c98b11b9b1e2a19f4bd5445a79f",
+    "test_validator.py": "0fb128d27dfdb4dafd993fd0f0768744ce220459b156de08f7baf4bd680ef1e9",
+    "current-model-observations.json": "6ab1075287579e2d74b98a3a8ec8c724a6d73e54161e107c135b10726b21fff4",
+    "state-inputs/patch-tests/patch_1_13_2_cvar_state.rs": "263b8a63fa5b23c30381ebfe15012c02791e9fdfcde4624a1576ed7d6517312b"
+  },
+  "validity": "SOURCE/model/replay/successor/validator code and inputs unchanged since their recorded GREEN revisions; final docs and administrative receipt seals do not invalidate those exact scopes. No broad/final gates or redundant cargo invocation.",
+  "warning_observations": {
+    "source": "complete original current-model.log",
+    "manifest_diagnostics": 6,
+    "library_diagnostics": 6,
+    "binary_diagnostics": 1,
+    "total_diagnostics": 13,
+    "limit": "Existing optional iced manifest deprecations are separate from seven non-GUI compiler diagnostics; no iced aggregate compiled, no warning suppression."
+  }
+}

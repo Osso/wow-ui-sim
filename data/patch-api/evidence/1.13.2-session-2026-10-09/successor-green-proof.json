@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_successors.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "752cd507e867512a7fef3436b37d232080f2500e",
+  "exit_code": 0,
+  "scope": "three actual same-Era precedence fixtures, every occurrence omission and foreign credit rejection; original89seals unchanged; no native/model closure"
+}
