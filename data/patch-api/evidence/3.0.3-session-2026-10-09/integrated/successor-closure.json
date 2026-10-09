@@ -1,0 +1,29 @@
+{
+  "scope": "literal actual retail successor identity comparison; no runtime/native/model credit",
+  "rows": [
+    {
+      "patch": "3.0.8",
+      "path": "data/patch-api/sources/3.0.8-wikitext-register.json",
+      "sha256": "b6e630ea3023a11c7dcd856a8037f417efcc5b1a18f49575a37b8dd4b82c8b4b",
+      "overlap": []
+    },
+    {
+      "patch": "3.1.0",
+      "path": "data/patch-api/sources/3.1.0-wikitext-register.json",
+      "sha256": "5d7489ea5c5aee9e66b3e34b3d99e479a14e3d2b16802c0dd047f81c7b40143e",
+      "overlap": []
+    },
+    {
+      "patch": "3.2.0",
+      "path": "data/patch-api/sources/3.2.0-wikitext-register.json",
+      "sha256": "69aa203697a58b43c936098568b7c44d051e9be045156c5b266ce2789552b21b",
+      "overlap": []
+    },
+    {
+      "patch": "3.3.0",
+      "path": "data/patch-api/sources/3.3.0-wikitext-register.json",
+      "sha256": "e6c6f0097c2a85229e2eb9c3569f41ec548de8818fd3ada059d2c2a48eed13ef",
+      "overlap": []
+    }
+  ]
+}

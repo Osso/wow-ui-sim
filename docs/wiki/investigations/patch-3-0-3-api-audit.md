@@ -26,6 +26,10 @@ Frozen page 560990/revision 5407654, timestamp 2010-03-28T14:26:47Z; exact 431-b
 
 The post-implementation GREEN receipt remains separate from the original sealed command ledger, avoiding recursive self-sealing. Documentation-only follow-up does not invalidate either test scope. Python changes were manually formatted before commits; no Python formatter is installed. No Rust/profile test added or needed for this source-only slice. No broad/check/lint/readability/profile/startup/full-suite/final gates. Main owns integration and native acceptance; all six publication/semantic records remain UNPROVEN.
 
+## Main successor integration — 2026-10-09
+
+Rebased source slice retains both 3.0.8 labeled-summary and 3.0.3 CVar-definition opt-in parsers. [Actual successor comparison](../../../data/patch-api/evidence/3.0.3-session-2026-10-09/integrated/successor-closure.json) pins 3.0.8/3.1.0/3.2.0/3.3.0 registers and finds zero exact symbol overlap. Original 16 seals and six UNPROVEN records remain unchanged. Independent merged-tool/source replay and supported publication measurement are pending; no native synchronization/model credit.
+
 ## Sources
 
 - [Exact page](../../../data/patch-api/sources/3.0.3-api-changes.wikitext).
