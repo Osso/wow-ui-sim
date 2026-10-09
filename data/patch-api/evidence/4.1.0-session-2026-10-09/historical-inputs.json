@@ -1,0 +1,585 @@
+{
+  "schema": "p410-historical-inputs/v1",
+  "scope": "Own historical proof only; archived selected trees do not re-execute runtime tests or establish current-head acceptance. No original commit objects required.",
+  "archive_sha256": "e33f1aa535d42549d34be6c50fbf54c747dab06ea16af882386b8e9e145e6df5",
+  "scopes": [
+    {
+      "revision": "84564092e9759677ae0ca7243fe377913404e72a",
+      "selected_tree": "2ca8d8fcec732f0610f5b60a95e17b052b51f84a",
+      "entries": {
+        "tools/gen_patch_wikitext_register.py": [
+          "100644",
+          "blob",
+          "72ae9b2e687f3cd0466362d88964d2027b9cd6fa"
+        ],
+        "tools/test_patch_4_1_register.py": [
+          "100644",
+          "blob",
+          "7e53ade0dc2caabf73b2eb2f200ebf869dc3bd32"
+        ]
+      }
+    },
+    {
+      "revision": "0622d93f42707db00ac5c41d79b946a369b45146",
+      "selected_tree": "b45e2cdfd2d5bd80ed60240839fb73adfdaf55a4",
+      "entries": {
+        "src/lua_api/globals/real/pet_stats.rs": [
+          "100644",
+          "blob",
+          "067ae20d9d423cef3566750362cef55fc757b0be"
+        ],
+        "tests/data/patch_4_1_0_sweep_known_gaps.json": [
+          "100644",
+          "blob",
+          "fe51488c7066f6687ef680d6bfaa4f7768ef205c"
+        ],
+        "tests/patch_4_1_0_publication_sweep.rs": [
+          "100644",
+          "blob",
+          "91cc849c4cc8a58fd1a6146be56169b077ac9676"
+        ],
+        "tests/pet_stats.rs": [
+          "100644",
+          "blob",
+          "b12e82bf779a254b93ec0e6692b3aaf6619adb27"
+        ]
+      }
+    },
+    {
+      "revision": "4f806105badd5453d5f0d5f561bf54b11c2e1380",
+      "selected_tree": "7bd63c3fb771316c50d2c9019e03ca5d69021d84",
+      "entries": {
+        ".cargo/config.toml": [
+          "100644",
+          "blob",
+          "acb5439d58e1148d4093072c89c6a2b1b96eac33"
+        ],
+        "Cargo.lock": [
+          "100644",
+          "blob",
+          "715e005a0b34809d12002530ae2ed689fcd070c7"
+        ],
+        "Cargo.toml": [
+          "100644",
+          "blob",
+          "ad3ade576a4d4f822a8a56b9aeee919a4b3e468d"
+        ],
+        "data/patch-api/sources/10.0.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "69a4650c1dbbac1fca1d260590565da856082afc"
+        ],
+        "data/patch-api/sources/10.0.2-wikitext-register.json": [
+          "100644",
+          "blob",
+          "44edd156a980d06e03c5946ad8a67c44f099d78a"
+        ],
+        "data/patch-api/sources/10.0.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "2c37c1608afd64673711fdb206d8fb1c453ddc23"
+        ],
+        "data/patch-api/sources/10.0.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "9c1e25db11a1d9b2a74fffbf16e3f94d9d33ab2d"
+        ],
+        "data/patch-api/sources/10.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "f418d2ad9739f7e01480796130309c13c934f978"
+        ],
+        "data/patch-api/sources/10.1.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "3574d7906aa2bb2ecbb1fcdd0608f1c83f09bb5e"
+        ],
+        "data/patch-api/sources/10.1.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "086ea72e95a48ee97ecceb3a0122be6d6dcde681"
+        ],
+        "data/patch-api/sources/10.2.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "50fd94740c792308aaddf39d2efd867588d469c5"
+        ],
+        "data/patch-api/sources/10.2.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "14bcf836bc3d2fb8c2ce640534eaa4bdd8656e6d"
+        ],
+        "data/patch-api/sources/10.2.6-wikitext-register.json": [
+          "100644",
+          "blob",
+          "4dfed2c82a3944e0083c041e443024c850e2e9fb"
+        ],
+        "data/patch-api/sources/10.2.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "da67b3322ac5e6de04f414323fbb31ba1f58702c"
+        ],
+        "data/patch-api/sources/11.0.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "c15f23978f4f6dc11055dab95530c47da07a4e9e"
+        ],
+        "data/patch-api/sources/11.0.2-wikitext-register.json": [
+          "100644",
+          "blob",
+          "48d91a41048d764fae0b79dd113d842197cfa116"
+        ],
+        "data/patch-api/sources/11.0.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "a27e5245f491e317b99615a4c1eadbee53d727f7"
+        ],
+        "data/patch-api/sources/11.0.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "49f7e8283c3c778a7d94ce7ee7debfda6eff09df"
+        ],
+        "data/patch-api/sources/11.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "e4ad6f9dc10291d210c20cd2eba21365b35bdaa4"
+        ],
+        "data/patch-api/sources/11.1.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "336755a7f9604e2feda51dcac91d7f6883eb280d"
+        ],
+        "data/patch-api/sources/11.1.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "b71093a6098f66e253933ea5d0350a57b9e3b8cb"
+        ],
+        "data/patch-api/sources/11.2.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "4a9a57ee278508c4c55ba6e20690f7dcb68b3f15"
+        ],
+        "data/patch-api/sources/11.2.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "3ad77eae00fd1e17b41c9cfb897f0983a3a94a9b"
+        ],
+        "data/patch-api/sources/11.2.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "9de8f78f4d93cff4b244412914103b3aaa17e0dd"
+        ],
+        "data/patch-api/sources/12.0.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "0fc0570ca8d885da07517adde6255a9f8d7a2a39"
+        ],
+        "data/patch-api/sources/12.0.1-wikitext-register.json": [
+          "100644",
+          "blob",
+          "c75b2accfa50df7a0eb4798706b1f7749907afad"
+        ],
+        "data/patch-api/sources/12.0.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "3b6cffec0c3af3674f539d818febefa35e4f8fe4"
+        ],
+        "data/patch-api/sources/12.0.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "2f76c4a41be222c96a96fc91e9e9842ef067b49d"
+        ],
+        "data/patch-api/sources/12.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "c19f00cc9379a96720c5d9a1ad47028ba1943ad3"
+        ],
+        "data/patch-api/sources/5.0.1-wikitext-register.json": [
+          "100644",
+          "blob",
+          "1f6998e867563d1921892c52e210d0d6a5de9a90"
+        ],
+        "data/patch-api/sources/5.0.4-wikitext-register.json": [
+          "100644",
+          "blob",
+          "84aa2709d18e12a41993f46e46721f80a6c3b642"
+        ],
+        "data/patch-api/sources/5.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "ae0a6b5af5f4b2113b33cf791404bba6558b9d2e"
+        ],
+        "data/patch-api/sources/5.2.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "8c5408fdb7c4eb60b6498365c5a8d364cf6e2f48"
+        ],
+        "data/patch-api/sources/5.3.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "4fe464e80e8be11d052ce52cc3508b2a7fb8642a"
+        ],
+        "data/patch-api/sources/5.4.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "1c3ad9e2ff2f902132d010b65581483f0d0ffee4"
+        ],
+        "data/patch-api/sources/5.4.1-wikitext-register.json": [
+          "100644",
+          "blob",
+          "fb3169047e346befbcbe6ef5a2b5d5a6189889f0"
+        ],
+        "data/patch-api/sources/5.4.2-wikitext-register.json": [
+          "100644",
+          "blob",
+          "6b199c35f6bdc38c0945fbb006ee683beff5ea14"
+        ],
+        "data/patch-api/sources/5.4.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "b1434a74f893f33f606f475595d1d0a236eeb363"
+        ],
+        "data/patch-api/sources/5.4.8-wikitext-register.json": [
+          "100644",
+          "blob",
+          "ed7a9915077bf6e5c5d3e66e41d14f992d8084ed"
+        ],
+        "data/patch-api/sources/6.0.1-wikitext-register.json": [
+          "100644",
+          "blob",
+          "4912ccbd2fbb643cb855a4622c8ca7f407ebd4ee"
+        ],
+        "data/patch-api/sources/6.0.2-wikitext-register.json": [
+          "100644",
+          "blob",
+          "5d0407944f94e55fa05eab2d74f0080bd8182460"
+        ],
+        "data/patch-api/sources/6.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "48c5cda81ae67442cfb0dccd63a67399ea0a5e6b"
+        ],
+        "data/patch-api/sources/6.2.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "c3aa565f5400060de477ec5a2621ce2b4c29d33d"
+        ],
+        "data/patch-api/sources/6.2.2-wikitext-register.json": [
+          "100644",
+          "blob",
+          "ca54c1bf01ee9e655cd06095d290129fabdec057"
+        ],
+        "data/patch-api/sources/6.2.4-wikitext-register.json": [
+          "100644",
+          "blob",
+          "c6c6f84be87e029d3b662c8ffcfeb9062ecf1afb"
+        ],
+        "data/patch-api/sources/7.0.1-wikitext-register.json": [
+          "100644",
+          "blob",
+          "5a5917c51088bd9d7a9eb2d698b93b4677d8020b"
+        ],
+        "data/patch-api/sources/7.0.3-wikitext-register.json": [
+          "100644",
+          "blob",
+          "eac08c5332bf344a451ff407687a414c8153c9f1"
+        ],
+        "data/patch-api/sources/7.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "547124abb9615d167d706e80e28053dbaa47aa03"
+        ],
+        "data/patch-api/sources/7.2.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "77dadb6ec47c433c4ea79686876a9715fc872c1f"
+        ],
+        "data/patch-api/sources/7.2.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "fe9d8de4adaabf9845f84186c7b2428e689adc1c"
+        ],
+        "data/patch-api/sources/7.3.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "213d7b4865dd8f5921b6b799f09235a781b991aa"
+        ],
+        "data/patch-api/sources/7.3.2-wikitext-register.json": [
+          "100644",
+          "blob",
+          "d8e2dbda1af317ec69baf0176ee370aa43715d43"
+        ],
+        "data/patch-api/sources/8.0.1-wikitext-register.json": [
+          "100644",
+          "blob",
+          "42f9781b177de5dfe3cc353102386ba93d8c2ebd"
+        ],
+        "data/patch-api/sources/8.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "069d1b3827fa6c82d73ebfc8b42b5fc852aa3d99"
+        ],
+        "data/patch-api/sources/8.1.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "c9ded99eeda2b03e7e49621e1ea49a42710bc45c"
+        ],
+        "data/patch-api/sources/8.2.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "144192531015d8fc8d488a145b5bc76b72f19bca"
+        ],
+        "data/patch-api/sources/8.2.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "f3a4ccc64d37d204d0d1204ca45553bc84512a6c"
+        ],
+        "data/patch-api/sources/8.3.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "cd198c23c6dba7c5ce9a93ca8d058af70672877c"
+        ],
+        "data/patch-api/sources/8.3.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "a8c05db5715a0861f7c8a0b4fab9de766774cef5"
+        ],
+        "data/patch-api/sources/9.0.1-wikitext-register.json": [
+          "100644",
+          "blob",
+          "2a247086362ea23f0daa295a983ce1d975f5b0c9"
+        ],
+        "data/patch-api/sources/9.0.2-wikitext-register.json": [
+          "100644",
+          "blob",
+          "964f583535f342a0ccd0c34866507213e1eb656e"
+        ],
+        "data/patch-api/sources/9.0.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "af58507dfab1646344bd5ab5832a5cf55449e6b5"
+        ],
+        "data/patch-api/sources/9.1.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "3313d3073af15a1dadfef86d9e3a0608b4164268"
+        ],
+        "data/patch-api/sources/9.1.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "6fbafff5298ae884fca5dbf4074477b51d163d37"
+        ],
+        "data/patch-api/sources/9.2.0-wikitext-register.json": [
+          "100644",
+          "blob",
+          "cf3021228f7354286ae8882c0825888331f779f6"
+        ],
+        "data/patch-api/sources/9.2.5-wikitext-register.json": [
+          "100644",
+          "blob",
+          "66b38248f4fc30f027eeb38aaf71e24502b2fc39"
+        ],
+        "data/patch-api/sources/9.2.7-wikitext-register.json": [
+          "100644",
+          "blob",
+          "8c62bd02b21eec395881830c301e2001e7d81850"
+        ],
+        "src/lua_api/globals/real/pet_stats.rs": [
+          "100644",
+          "blob",
+          "b198f8abb254dc1a76fc7f33d310f8862bf90908"
+        ],
+        "tests/common/publication_sweep.rs": [
+          "100644",
+          "blob",
+          "bb8c1fd0dc35a23ee7dc416cb7c60086ac18dd63"
+        ],
+        "tests/data/patch_4_1_0_sweep_known_gaps.json": [
+          "100644",
+          "blob",
+          "61946f1511a2153428b26b3f97e5d395931f0b75"
+        ],
+        "tests/patch_4_1_0_publication_sweep.rs": [
+          "100644",
+          "blob",
+          "91cc849c4cc8a58fd1a6146be56169b077ac9676"
+        ],
+        "tests/pet_stats.rs": [
+          "100644",
+          "blob",
+          "f211afd1a2c14b3787520a5d6ebaf2b278e78f3e"
+        ],
+        "tools/extract_patch_non_inventory.py": [
+          "100644",
+          "blob",
+          "6fcc1724827c7588b91d23e3c815324d86a33b97"
+        ],
+        "tools/gen_patch_wikitext_register.py": [
+          "100644",
+          "blob",
+          "72ae9b2e687f3cd0466362d88964d2027b9cd6fa"
+        ]
+      }
+    }
+  ],
+  "later_registers": [
+    "data/patch-api/sources/5.0.1-wikitext-register.json",
+    "data/patch-api/sources/5.0.4-wikitext-register.json",
+    "data/patch-api/sources/5.1.0-wikitext-register.json",
+    "data/patch-api/sources/5.2.0-wikitext-register.json",
+    "data/patch-api/sources/5.3.0-wikitext-register.json",
+    "data/patch-api/sources/5.4.0-wikitext-register.json",
+    "data/patch-api/sources/5.4.1-wikitext-register.json",
+    "data/patch-api/sources/5.4.2-wikitext-register.json",
+    "data/patch-api/sources/5.4.7-wikitext-register.json",
+    "data/patch-api/sources/5.4.8-wikitext-register.json",
+    "data/patch-api/sources/6.0.1-wikitext-register.json",
+    "data/patch-api/sources/6.0.2-wikitext-register.json",
+    "data/patch-api/sources/6.1.0-wikitext-register.json",
+    "data/patch-api/sources/6.2.0-wikitext-register.json",
+    "data/patch-api/sources/6.2.2-wikitext-register.json",
+    "data/patch-api/sources/6.2.4-wikitext-register.json",
+    "data/patch-api/sources/7.0.1-wikitext-register.json",
+    "data/patch-api/sources/7.0.3-wikitext-register.json",
+    "data/patch-api/sources/7.1.0-wikitext-register.json",
+    "data/patch-api/sources/7.2.0-wikitext-register.json",
+    "data/patch-api/sources/7.2.5-wikitext-register.json",
+    "data/patch-api/sources/7.3.0-wikitext-register.json",
+    "data/patch-api/sources/7.3.2-wikitext-register.json",
+    "data/patch-api/sources/8.0.1-wikitext-register.json",
+    "data/patch-api/sources/8.1.0-wikitext-register.json",
+    "data/patch-api/sources/8.1.5-wikitext-register.json",
+    "data/patch-api/sources/8.2.0-wikitext-register.json",
+    "data/patch-api/sources/8.2.5-wikitext-register.json",
+    "data/patch-api/sources/8.3.0-wikitext-register.json",
+    "data/patch-api/sources/8.3.7-wikitext-register.json",
+    "data/patch-api/sources/9.0.1-wikitext-register.json",
+    "data/patch-api/sources/9.0.2-wikitext-register.json",
+    "data/patch-api/sources/9.0.5-wikitext-register.json",
+    "data/patch-api/sources/9.1.0-wikitext-register.json",
+    "data/patch-api/sources/9.1.5-wikitext-register.json",
+    "data/patch-api/sources/9.2.0-wikitext-register.json",
+    "data/patch-api/sources/9.2.5-wikitext-register.json",
+    "data/patch-api/sources/9.2.7-wikitext-register.json",
+    "data/patch-api/sources/10.0.0-wikitext-register.json",
+    "data/patch-api/sources/10.0.2-wikitext-register.json",
+    "data/patch-api/sources/10.0.5-wikitext-register.json",
+    "data/patch-api/sources/10.0.7-wikitext-register.json",
+    "data/patch-api/sources/10.1.0-wikitext-register.json",
+    "data/patch-api/sources/10.1.5-wikitext-register.json",
+    "data/patch-api/sources/10.1.7-wikitext-register.json",
+    "data/patch-api/sources/10.2.0-wikitext-register.json",
+    "data/patch-api/sources/10.2.5-wikitext-register.json",
+    "data/patch-api/sources/10.2.6-wikitext-register.json",
+    "data/patch-api/sources/10.2.7-wikitext-register.json",
+    "data/patch-api/sources/11.0.0-wikitext-register.json",
+    "data/patch-api/sources/11.0.2-wikitext-register.json",
+    "data/patch-api/sources/11.0.5-wikitext-register.json",
+    "data/patch-api/sources/11.0.7-wikitext-register.json",
+    "data/patch-api/sources/11.1.0-wikitext-register.json",
+    "data/patch-api/sources/11.1.5-wikitext-register.json",
+    "data/patch-api/sources/11.1.7-wikitext-register.json",
+    "data/patch-api/sources/11.2.0-wikitext-register.json",
+    "data/patch-api/sources/11.2.5-wikitext-register.json",
+    "data/patch-api/sources/11.2.7-wikitext-register.json",
+    "data/patch-api/sources/12.0.0-wikitext-register.json",
+    "data/patch-api/sources/12.0.1-wikitext-register.json",
+    "data/patch-api/sources/12.0.5-wikitext-register.json",
+    "data/patch-api/sources/12.0.7-wikitext-register.json",
+    "data/patch-api/sources/12.1.0-wikitext-register.json"
+  ],
+  "sealed_files": {
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/pet-happiness-green.log": {
+      "sha256": "9367735fbea61fa67f3b3e9f6cdcf0546ca59b3e5dcfcb7df9523023dc8ced8e",
+      "bytes": 2184
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/pet-happiness-mists-supported.log": {
+      "sha256": "9e108c9734dc7dd40aa8adce849dbb5ff9c4a9feaa768208367e1aaf74032f4d",
+      "bytes": 2875
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/pet-happiness-red.log": {
+      "sha256": "2a69b9c9c327162a9318816b1d03753739b5f218c7fc3009a2149062cd4419e7",
+      "bytes": 2574
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/own-sweep-green.log": {
+      "sha256": "3f1088f940be37374a9c8c61d672c271ec3b24ae45aaa577a17ba5d8f9944e03",
+      "bytes": 10282
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/command-ledger.json": {
+      "sha256": "1dd6fb98be6a239e1ddc45dfdeaff0d4a9a53eb40037eb5f7ed28c06e263e463",
+      "bytes": 4328
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/retirement-scans.json": {
+      "sha256": "da5de4145f212f52fc2be0f84568649d193b29ac505373dcf67e32f02a1c1b75",
+      "bytes": 5328
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/own-sweep-default-red.log": {
+      "sha256": "ad2a0ca08289f77048060d6c63af686af1c9618edf9e113bce9a5c30e0e1842e",
+      "bytes": 29913
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/negative-results.json": {
+      "sha256": "15b43e05b0e4c1fa2aa75ba835dd2fba970b94e564b7859eeaccba0a121a0500",
+      "bytes": 38748
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/negative.log": {
+      "sha256": "a06750e382a9161223043658ae2e4876a4798c8d28bc37541852e19403a68080",
+      "bytes": 14816
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/source-response.json": {
+      "sha256": "ecb44363e648fbbf80744c8a1df120a8107f822e83fae31dd13ad2ba4604aae6",
+      "bytes": 4093
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/pet-happiness-mists.log": {
+      "sha256": "97f875649359c9d0f565f7fdfd40b49638babeffc9e0551742eb0967ae0f1509",
+      "bytes": 3796
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/source-pin.json": {
+      "sha256": "1802c7c99a9397ba5f9a551986059cfb58a7a97d3388c415543a189fa9eb20c1",
+      "bytes": 551
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/own-sweep-red-results.json": {
+      "sha256": "168c00115f493abd9852b26c7bdd6d8127b689c306371f280376002dec80bcb3",
+      "bytes": 38750
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/parser-green.txt": {
+      "sha256": "9d4abbe3dbf2e4019effd8cc78bd0287a26ce581608d07a436047765e8442cdb",
+      "bytes": 98
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/own-sweep-red.log": {
+      "sha256": "2e7dac05b0db633a152aa7e41b029bd48208e913bc0bee70261f3ba69a73e866",
+      "bytes": 27199
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/negative-register.json": {
+      "sha256": "00c297cabda375a6301ab0b5cec1d039d1a00ac96e615a3ff5d71174ee7636a0",
+      "bytes": 22020
+    },
+    "data/patch-api/evidence/4.1.0-session-2026-10-09/own-sweep-green-results.json": {
+      "sha256": "73c4076f02f1d7e8c9c5a0f84dafd42d68da3e0f85077dcbc128a56823cc137f",
+      "bytes": 38739
+    },
+    "data/patch-api/sources/4.1.0-wikitext-register.json": {
+      "sha256": "86b5f4bd40ece2633fc9720690a85fcfee52c8d6b750643238aa3d5a4d667eaf",
+      "bytes": 22015
+    },
+    "data/patch-api/sources/4.1.0-api-changes.wikitext": {
+      "sha256": "8d21143deb4422f937bcec0ed3469e02c64115b48ceec5cb9239e2cd0752df1c",
+      "bytes": 3728
+    },
+    "data/patch-api/sources/4.1.0-page-coverage.json": {
+      "sha256": "6eae7b0d598c5dfee6f1edb63d1aa8b19e19050e4470875595cf97dab7ac97fb",
+      "bytes": 64676
+    },
+    "data/patch-api/sources/4.1.0-api-changes.provenance.json": {
+      "sha256": "22074e44a5b627c48cd45926c0fd5f37ab940d6ca5abef51d1b8ba68ac221b2b",
+      "bytes": 681
+    },
+    "data/patch-api/sources/4.1.0-api-changes.txt": {
+      "sha256": "756288f8a23a1b6f45db9f54398f05a4daaf20a6838485ca650fc05f30ed332d",
+      "bytes": 3076
+    },
+    "tests/data/patch_4_1_0_sweep_known_gaps.json": {
+      "sha256": "0638b3f7f231d00daaf099d534ecc1a242f9a5b602a5adedd47317556cb428aa",
+      "bytes": 1417
+    }
+  }
+}

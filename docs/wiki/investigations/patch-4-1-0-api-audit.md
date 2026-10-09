@@ -38,3 +38,7 @@ Existing flags produce an empty register for the page's `API changes` / `Event c
 ## Integration boundary
 
 Three ordered comments reserve 4.2.0, 4.3.0, 4.3.4 before the actual 5.0.1+ retail successor chain. Main reports 4.3.4 runtime acceptance committed October 9, 2026; integration replaces the comment using its real register. No queued-page supersession credit, rebase, Classic successor, or future GetSessionTime closure is incorporated here. Historical observations must remain preserved if main changes later expectations.
+
+## Own historical receipt preservation
+
+Dedicated [validator](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/validate.py) derives publication, extraction, signature, gap/status and command-summary counts from sealed inputs. [Compact pins](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/historical-inputs.json) archive 78 deduplicated blobs in three selected Git trees, including the exact 64 real later-retail registers at development time. Gzip archive is 333,799 bytes; 23 source/evidence inputs are SHA-sealed, each under 5 MB. Original commit objects are not needed for receipt replay. The selected trees are not a complete native runtime replay and never prove current-head acceptance. No shared validator or prior audit receipt is modified. Own RED fixture requires missing validator implementation; clean/source-tamper/log-tamper GREEN fixture pending.
