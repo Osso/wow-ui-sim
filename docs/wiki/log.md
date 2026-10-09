@@ -1142,3 +1142,7 @@ Own SOURCE6/6 at231bc7d2e; immutable31-seal/32-member53,739-byte archive ata4f4d
 ## 2026-10-09: Patch 1.3.0 frozen literal SOURCE accounting
 
 Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch-1-3-0-source-accounting.md). Verified350208/3376287 frozen source/registry101; own RED8/portable RED3 retained; SOURCE GREEN8/8 atbe25624b1, copied SOURCE8/portable3 at3ea5b20ba;46 original seals/47-member62573byte archive immutable, separate later receipts. SOURCE only; no runtime/native acceptance.
+
+## [2026-10-09] investigation | Patch 1.0.0 frozen literal SOURCE audit
+
+[Audit](investigations/patch-1-0-0-api-audit.md): frozen67688/5580410,37407bytes;854 name-only inventory/854 unspecified signatures,859raw rows/859UNPROVEN contracts,856unexpanded links,2headers/0counts,2prose,1template. Registry101 endpoint is not parent closure. Own SOURCE RED8/portable RED3 retained; SOURCE GREEN8/8 at039cfa29d (4287 omissions); fresh copied SOURCE8/portable3 atf616d6481, default bytes/errors and both serialized ledger/log rejection/exact restoration.42original seals/43-member155329-byte archive unchanged;14later receipt artifacts separately sealed. No model/runtime/native credit; queued1.1.0/1.3.0/1.4.0/1.5.0 separate/unapplied; main owns target research/integration/full acceptance.

@@ -1,0 +1,95 @@
+test_all_literal_rows_and_names_remain_occurrences (__main__.FrozenSource.test_all_literal_rows_and_names_remain_occurrences) ... FAIL
+test_every_occurrence_and_count_is_required (__main__.FrozenSource.test_every_occurrence_and_count_is_required) ... FAIL
+test_exact_identity_and_manifest_linked_registry_endpoint (__main__.FrozenSource.test_exact_identity_and_manifest_linked_registry_endpoint) ... FAIL
+test_historical_default_bytes_and_errors_replay (__main__.FrozenSource.test_historical_default_bytes_and_errors_replay) ... FAIL
+test_invented_aliases_defaults_credit_and_mutations_rejected (__main__.FrozenSource.test_invented_aliases_defaults_credit_and_mutations_rejected) ... FAIL
+test_prose_headers_links_templates_are_unexpanded (__main__.FrozenSource.test_prose_headers_links_templates_are_unexpanded) ... FAIL
+test_queued_and_foreign_histories_never_apply (__main__.FrozenSource.test_queued_and_foreign_histories_never_apply) ... FAIL
+test_unspecified_signatures_defaults_and_contracts (__main__.FrozenSource.test_unspecified_signatures_defaults_and_contracts) ... FAIL
+
+======================================================================
+FAIL: test_all_literal_rows_and_names_remain_occurrences (__main__.FrozenSource.test_all_literal_rows_and_names_remain_occurrences)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 32, in test_all_literal_rows_and_names_remain_occurrences
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 7, in build
+    raise AssertionError("1.0.0 literal accounting absent")
+AssertionError: 1.0.0 literal accounting absent
+
+======================================================================
+FAIL: test_every_occurrence_and_count_is_required (__main__.FrozenSource.test_every_occurrence_and_count_is_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 78, in test_every_occurrence_and_count_is_required
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 7, in build
+    raise AssertionError("1.0.0 literal accounting absent")
+AssertionError: 1.0.0 literal accounting absent
+
+======================================================================
+FAIL: test_exact_identity_and_manifest_linked_registry_endpoint (__main__.FrozenSource.test_exact_identity_and_manifest_linked_registry_endpoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 17, in test_exact_identity_and_manifest_linked_registry_endpoint
+    raw, pin, registry = audit.validate_source()
+                         ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 4, in validate_source
+    raise AssertionError("1.0.0 source identity accounting absent")
+AssertionError: 1.0.0 source identity accounting absent
+
+======================================================================
+FAIL: test_historical_default_bytes_and_errors_replay (__main__.FrozenSource.test_historical_default_bytes_and_errors_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 137, in test_historical_default_bytes_and_errors_replay
+    audit.replay_defaults()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 10, in replay_defaults
+    raise AssertionError("1.0.0 default replay absent")
+AssertionError: 1.0.0 default replay absent
+
+======================================================================
+FAIL: test_invented_aliases_defaults_credit_and_mutations_rejected (__main__.FrozenSource.test_invented_aliases_defaults_credit_and_mutations_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 97, in test_invented_aliases_defaults_credit_and_mutations_rejected
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 7, in build
+    raise AssertionError("1.0.0 literal accounting absent")
+AssertionError: 1.0.0 literal accounting absent
+
+======================================================================
+FAIL: test_prose_headers_links_templates_are_unexpanded (__main__.FrozenSource.test_prose_headers_links_templates_are_unexpanded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 66, in test_prose_headers_links_templates_are_unexpanded
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 7, in build
+    raise AssertionError("1.0.0 literal accounting absent")
+AssertionError: 1.0.0 literal accounting absent
+
+======================================================================
+FAIL: test_queued_and_foreign_histories_never_apply (__main__.FrozenSource.test_queued_and_foreign_histories_never_apply)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 126, in test_queued_and_foreign_histories_never_apply
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 7, in build
+    raise AssertionError("1.0.0 literal accounting absent")
+AssertionError: 1.0.0 literal accounting absent
+
+======================================================================
+FAIL: test_unspecified_signatures_defaults_and_contracts (__main__.FrozenSource.test_unspecified_signatures_defaults_and_contracts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/test_source_accounting.py", line 53, in test_unspecified_signatures_defaults_and_contracts
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p100-page/data/patch-api/evidence/1.0.0-session-2026-10-09/audit.py", line 7, in build
+    raise AssertionError("1.0.0 literal accounting absent")
+AssertionError: 1.0.0 literal accounting absent
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+FAILED (failures=8)
