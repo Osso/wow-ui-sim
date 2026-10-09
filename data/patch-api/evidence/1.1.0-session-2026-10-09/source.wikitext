@@ -1,0 +1,17 @@
+{{apichanges|1.1.0|prev=1.0.0|next=1.2.0}}
+
+Source: https://warcraft.wiki.gg/index.php?title=Global_functions&oldid=4997032
+
+==Global API==
+===Added===
+: [[API CheckTalentMasterDist|CheckTalentMasterDist]]
+: [[API ConfirmSummon|ConfirmSummon]]
+: [[API ConfirmTalentWipe|ConfirmTalentWipe]]
+: [[API GetAuctionItemLink|GetAuctionItemLink]]
+: [[API GetCVarDefault|GetCVarDefault]]
+: [[API GetResSicknessDuration|GetResSicknessDuration]]
+: [[API GetSummonConfirmAreaName|GetSummonConfirmAreaName]]
+: [[API GetSummonConfirmSummoner|GetSummonConfirmSummoner]]
+: [[API GetSummonConfirmTimeLeft|GetSummonConfirmTimeLeft]]
+: [[API TutorialsEnabled|TutorialsEnabled]]
+: [[API UnitRangedAttack|UnitRangedAttack]]

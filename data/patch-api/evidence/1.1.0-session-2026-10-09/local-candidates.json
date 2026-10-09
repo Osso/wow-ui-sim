@@ -1,0 +1,439 @@
+{
+  "CheckTalentMasterDist": [],
+  "ConfirmSummon": [],
+  "ConfirmTalentWipe": [],
+  "GetAuctionItemLink": [
+    {
+      "file": "src/lua_api/globals/auction_verbs.rs",
+      "line": 622,
+      "literal": "    LuaApiMut::register_function(lua, \"GetAuctionItemLink\", get_auction_item_link)?;"
+    }
+  ],
+  "GetCVarDefault": [
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_adv_fly_cvar_values.rs",
+      "line": 22,
+      "literal": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_changed_startup_values.rs",
+      "line": 34,
+      "literal": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs",
+      "line": 40,
+      "literal": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 12,
+      "literal": "                if GetCVarDefault(\"ForceAllowAero\") ~= nil then"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 13,
+      "literal": "                    return \"default=\" .. tostring(GetCVarDefault(\"ForceAllowAero\"))"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 171,
+      "literal": "                    local default = GetCVarDefault(name)"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs",
+      "line": 173,
+      "literal": "                        return name .. \":GetCVarDefault=\" .. tostring(default)"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_mount_journal_nameplate_cvar_values.rs",
+      "line": 21,
+      "literal": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_pet_journal_overlay_tracker_cvar_values.rs",
+      "line": 24,
+      "literal": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "file": "src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs",
+      "line": 477,
+      "literal": "                    local default_value = GetCVarDefault(name)"
+    },
+    {
+      "file": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 36,
+      "literal": "    (\"GetCVarDefault\", get_cvar_default),"
+    },
+    {
+      "file": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 208,
+      "literal": "/// `GetCVarDefault(name)` \u2014 read the YAML/factory default for `name`,"
+    },
+    {
+      "file": "src/lua_api/globals/set_cvar_verb.rs",
+      "line": 346,
+      "literal": "    LuaApiMut::register_function(lua, \"GetCVarDefault\", get_cvar_default)?;"
+    },
+    {
+      "file": "tests/p1200_mixed.rs",
+      "line": 71,
+      "literal": "                assert(C_CVar.GetCVar(name) == nil and C_CVar.GetCVarDefault(name) == nil, name)"
+    },
+    {
+      "file": "tests/p1200_mixed.rs",
+      "line": 73,
+      "literal": "                assert(C_CVar.GetCVarDefault(name) == '0')"
+    },
+    {
+      "file": "tests/p1200_mixed.rs",
+      "line": 76,
+      "literal": "                assert(C_CVar.GetCVarDefault(name) == '0')"
+    },
+    {
+      "file": "tests/p1200_mixed.rs",
+      "line": 80,
+      "literal": "        assert(C_CVar.GetCVarDefault('nameplateShowFriendlyNPCs') == '0')"
+    },
+    {
+      "file": "tests/wowforever_gamepad_constants.rs",
+      "line": 70,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == default, name .. \" default\")"
+    },
+    {
+      "file": "tests/wowforever_gamepad_constants.rs",
+      "line": 97,
+      "literal": "            assert(GetCVarDefault(name) == default)"
+    },
+    {
+      "file": "tests/wowforever_gamepad_constants.rs",
+      "line": 115,
+      "literal": "            assert(GetCVar(name) == \"2\" and GetCVarDefault(name) == default)"
+    },
+    {
+      "file": "tests/wowforever_gamepad_constants.rs",
+      "line": 173,
+      "literal": "        assert(GetCVarDefault(bar.overrideCVar) == \"4\")"
+    },
+    {
+      "file": "tests/wowforever_gamepad_constants.rs",
+      "line": 182,
+      "literal": "    let published: bool = env.eval(\"return GetCVarDefault('GamepadPossessBarOverride') ~= nil and GetCVarDefault('GamepadStanceBarOverride') ~= nil\").unwrap();"
+    },
+    {
+      "file": "tests/patch_11_1_7_publication_fixes.rs",
+      "line": 40,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == nil)"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 12,
+      "literal": "            assert(GetCVarDefault('nameplateShowEnemies') == '1')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 16,
+      "literal": "            assert(SetCVar('nameplateShowEnemies', GetCVarDefault('nameplateShowEnemies')) == true)"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 26,
+      "literal": "                checkNil(GetCVarDefault(name))"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 27,
+      "literal": "                checkNil(C_CVar.GetCVarDefault(name))"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 141,
+      "literal": "                   GetCVarDefault(\"__codex_register_default\")"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 166,
+      "literal": "                    assert(GetCVarDefault(name) == entry[3], name .. ' default')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 167,
+      "literal": "                    assert(C_CVar.GetCVarDefault(name) == entry[3], name .. ' namespace default')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 188,
+      "literal": "                assert(GetCVarDefault(name) == '0')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 191,
+      "literal": "                assert(GetCVarDefault(name) == '0')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 223,
+      "literal": "            return GetCVar(\"__codex_register_zero_default\"), GetCVarDefault(\"__codex_register_zero_default\"), GetCVarBool(\"__codex_register_zero_default\")"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 243,
+      "literal": "            assert(GetCVarDefault(name) == '')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 244,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == '')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 250,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == '', 'override must not replace default')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 265,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == '0')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 267,
+      "literal": "            assert(GetCVarDefault(name) == '0', 'empty registration cannot replace existing default')"
+    },
+    {
+      "file": "tests/set_cvar_global.rs",
+      "line": 323,
+      "literal": "            return GetCVar(\"__codex_register_preserve_override\"), GetCVarDefault(\"__codex_register_preserve_override\")"
+    },
+    {
+      "file": "tests/patch_11_0_5_publication_fixes.rs",
+      "line": 34,
+      "literal": "            assert(GetCVarDefault(name) == '1', name)"
+    },
+    {
+      "file": "tests/patch_11_0_5_publication_fixes.rs",
+      "line": 35,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == '1', name)"
+    },
+    {
+      "file": "tests/patch_11_0_5_publication_fixes.rs",
+      "line": 39,
+      "literal": "            assert(GetCVarDefault(name) == '1')"
+    },
+    {
+      "file": "tests/patch_11_0_5_publication_fixes.rs",
+      "line": 40,
+      "literal": "            assert(SetCVar(name, GetCVarDefault(name)))"
+    },
+    {
+      "file": "tests/patch_12_1_0_surface_closures.rs",
+      "line": 27,
+      "literal": "                if C_CVar.GetCVar(name) ~= nil or C_CVar.GetCVarDefault(name) ~= nil then"
+    },
+    {
+      "file": "tests/patch_12_1_0_surface_closures.rs",
+      "line": 44,
+      "literal": "                local before = C_CVar.GetCVar(name) .. \"/\" .. C_CVar.GetCVarDefault(name)"
+    },
+    {
+      "file": "tests/patch_12_0_1_retirement.rs",
+      "line": 24,
+      "literal": "            assert(GetCVarDefault(string.upper(name)) == nil, name)"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 25,
+      "literal": "            checkOne(default, GetCVarDefault(name))"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 26,
+      "literal": "            checkOne(default, C_CVar.GetCVarDefault(name))"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 42,
+      "literal": "            assert(SetCVar(name, GetCVarDefault(name)) == true)"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 45,
+      "literal": "            assert(C_CVar.SetCVar(name, C_CVar.GetCVarDefault(name)) == true)"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 108,
+      "literal": "                assert(SetCVar(name, GetCVarDefault(name)) == true)"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 152,
+      "literal": "                assert(C_CVar.SetCVar(name, C_CVar.GetCVarDefault(name)) == true)"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 164,
+      "literal": "                assert(SetCVar(name, GetCVarDefault(name)) == true)"
+    },
+    {
+      "file": "tests/patch_12_0_7_cvars.rs",
+      "line": 186,
+      "literal": "                assert(SetCVar(name, GetCVarDefault(name)) == true)"
+    },
+    {
+      "file": "tests/p1207_gap_closures.rs",
+      "line": 90,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == default, name)"
+    },
+    {
+      "file": "tests/patch_11_2_0_publication_fixes.rs",
+      "line": 85,
+      "literal": "            assert(C_CVar.GetCVarDefault(name) == '0', name)"
+    },
+    {
+      "file": "tests/patch_11_2_0_publication_fixes.rs",
+      "line": 86,
+      "literal": "            assert(C_CVar.GetCVarDefault(string.upper(name)) == '0', name)"
+    },
+    {
+      "file": "tests/test_cvar_display_settings.rs",
+      "line": 48,
+      "literal": "    env.exec(r#\"SetCVar(\"Brightness\", GetCVarDefault(\"Brightness\"))\"#)"
+    },
+    {
+      "file": "tests/test_cvar_display_settings.rs",
+      "line": 64,
+      "literal": "    env.exec(r#\"SetCVar(\"Contrast\", GetCVarDefault(\"Contrast\"))\"#)"
+    },
+    {
+      "file": "tests/test_cvar_display_settings.rs",
+      "line": 86,
+      "literal": "            return GetCVarDefault(\"Brightness\")"
+    },
+    {
+      "file": "tests/test_cvar_display_settings.rs",
+      "line": 91,
+      "literal": "    env.exec(r#\"SetCVar(\"Brightness\", GetCVarDefault(\"Brightness\"))\"#)"
+    },
+    {
+      "file": "tests/test_cvar_display_settings.rs",
+      "line": 107,
+      "literal": "    env.exec(r#\"SetCVar(\"Brightness\", GetCVarDefault(\"Brightness\"))\"#)"
+    },
+    {
+      "file": "tests/c_system_api.rs",
+      "line": 99,
+      "literal": "                    assert(C_CVar.GetCVarDefault(record.command) == nil)"
+    },
+    {
+      "file": "tests/patch_11_0_5_cached_surfaces.rs",
+      "line": 32,
+      "literal": "            assert(GetCVarDefault(name) == '1')"
+    },
+    {
+      "file": "tests/patch_11_0_5_cached_surfaces.rs",
+      "line": 35,
+      "literal": "            assert(GetCVarDefault(name) == '1')"
+    },
+    {
+      "file": "tests/common/publication_probe.rs",
+      "line": 203,
+      "literal": "    local default = C_CVar.GetCVarDefault(symbol)"
+    },
+    {
+      "file": "tests/startup_warnings/late.rs",
+      "line": 231,
+      "literal": "            .eval(r#\"return GetCVar(\"PraiseTheSun\"), GetCVarDefault(\"PraiseTheSun\")\"#)"
+    }
+  ],
+  "GetResSicknessDuration": [],
+  "GetSummonConfirmAreaName": [],
+  "GetSummonConfirmSummoner": [
+    {
+      "file": "src/lua_api/globals/stubs/global_stubs.rs",
+      "line": 223,
+      "literal": "    \"GetSummonConfirmSummoner\","
+    }
+  ],
+  "GetSummonConfirmTimeLeft": [
+    {
+      "file": "src/c_api/c_summon_info.rs",
+      "line": 27,
+      "literal": "        \"GetSummonConfirmTimeLeft\","
+    },
+    {
+      "file": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "line": 91,
+      "literal": "    // C_SummonInfo GetSummonReason / GetSummonConfirmTimeLeft /"
+    },
+    {
+      "file": "src/lua_api/globals/stubs/namespace_stubs.rs",
+      "line": 218,
+      "literal": "    // C_SummonInfo GetSummonConfirmTimeLeft is SimState-backed in"
+    },
+    {
+      "file": "src/lua_api/globals/stubs/global_stubs.rs",
+      "line": 224,
+      "literal": "    \"GetSummonConfirmTimeLeft\","
+    },
+    {
+      "file": "tests/c_summon_info_probes.rs",
+      "line": 29,
+      "literal": "        .eval(\"return C_SummonInfo.GetSummonConfirmTimeLeft()\")"
+    },
+    {
+      "file": "tests/c_summon_info_probes.rs",
+      "line": 89,
+      "literal": "        .eval(\"return C_SummonInfo.GetSummonConfirmTimeLeft()\")"
+    },
+    {
+      "file": "tests/lua_api_boundary.rs",
+      "line": 108,
+      "literal": "                   C_SummonInfo.GetSummonConfirmTimeLeft(),"
+    }
+  ],
+  "TutorialsEnabled": [
+    {
+      "file": "tests/blizzard_tutorials_loads.rs",
+      "line": 136,
+      "literal": "         GameTutorials:Initialize before TutorialManager.TutorialsEnabled \\"
+    },
+    {
+      "file": "tests/blizzard_tutorials_loads.rs",
+      "line": 310,
+      "literal": "             TutorialManager.TutorialsEnabled/Disabled/Init callbacks. \\"
+    },
+    {
+      "file": "tests/blizzard_tutorials_loads.rs",
+      "line": 429,
+      "literal": "         TutorialManager.TutorialsEnabled, \\"
+    },
+    {
+      "file": "tests/blizzard_new_player_experience_loads.rs",
+      "line": 315,
+      "literal": "             TutorialsEnabled / TutorialsDisabled bus), Dispatcher:RegisterEvent at line 30 \\"
+    }
+  ],
+  "UnitRangedAttack": [
+    {
+      "file": "src/lua_api/globals/unit_stats.rs",
+      "line": 392,
+      "literal": "/// `UnitRangedAttack(unit)` \u2014 `(baseSkill, modifier)`."
+    },
+    {
+      "file": "src/lua_api/globals/unit_stats.rs",
+      "line": 635,
+      "literal": "    (\"UnitRangedAttack\", unit_ranged_attack),"
+    },
+    {
+      "file": "src/lua_api/globals/stubs/global_stubs.rs",
+      "line": 242,
+      "literal": "    \"UnitRangedAttack\","
+    },
+    {
+      "file": "tests/unit_stats.rs",
+      "line": 117,
+      "literal": "            local rangedBase, rangedMod = UnitRangedAttack(\"player\")"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+test_every_occurrence_count_and_identity_required (__main__.FrozenSource.test_every_occurrence_count_and_identity_required) ... FAIL
+test_historical_default_bytes_and_errors (__main__.FrozenSource.test_historical_default_bytes_and_errors) ... FAIL
+test_identity_and_frozen_source_mutations (__main__.FrozenSource.test_identity_and_frozen_source_mutations) ... FAIL
+test_invented_defaults_signatures_proof_and_expansion_rejected (__main__.FrozenSource.test_invented_defaults_signatures_proof_and_expansion_rejected) ... FAIL
+test_literal_rows_links_headers_navigation (__main__.FrozenSource.test_literal_rows_links_headers_navigation) ... FAIL
+test_precise_unspecified_contracts (__main__.FrozenSource.test_precise_unspecified_contracts) ... FAIL
+test_queued_history_separate_without_invented_120 (__main__.FrozenSource.test_queued_history_separate_without_invented_120) ... FAIL
+
+======================================================================
+FAIL: test_every_occurrence_count_and_identity_required (__main__.FrozenSource.test_every_occurrence_count_and_identity_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py", line 69, in test_every_occurrence_count_and_identity_required
+    ledger=audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py", line 3, in absent
+    assert False, "1.1.0 source accounting absent"
+           ^^^^^
+AssertionError: 1.1.0 source accounting absent
+
+======================================================================
+FAIL: test_historical_default_bytes_and_errors (__main__.FrozenSource.test_historical_default_bytes_and_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py", line 110, in test_historical_default_bytes_and_errors
+    audit.replay_defaults()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py", line 3, in absent
+    assert False, "1.1.0 source accounting absent"
+           ^^^^^
+AssertionError: 1.1.0 source accounting absent
+
+======================================================================
+FAIL: test_identity_and_frozen_source_mutations (__main__.FrozenSource.test_identity_and_frozen_source_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py", line 52, in test_identity_and_frozen_source_mutations
+    raw,pin,registry = audit.validate_source()
+                       ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py", line 3, in absent
+    assert False, "1.1.0 source accounting absent"
+           ^^^^^
+AssertionError: 1.1.0 source accounting absent
+
+======================================================================
+FAIL: test_invented_defaults_signatures_proof_and_expansion_rejected (__main__.FrozenSource.test_invented_defaults_signatures_proof_and_expansion_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py", line 87, in test_invented_defaults_signatures_proof_and_expansion_rejected
+    ledger=audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py", line 3, in absent
+    assert False, "1.1.0 source accounting absent"
+           ^^^^^
+AssertionError: 1.1.0 source accounting absent
+
+======================================================================
+FAIL: test_literal_rows_links_headers_navigation (__main__.FrozenSource.test_literal_rows_links_headers_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py", line 23, in test_literal_rows_links_headers_navigation
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py", line 3, in absent
+    assert False, "1.1.0 source accounting absent"
+           ^^^^^
+AssertionError: 1.1.0 source accounting absent
+
+======================================================================
+FAIL: test_precise_unspecified_contracts (__main__.FrozenSource.test_precise_unspecified_contracts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py", line 38, in test_precise_unspecified_contracts
+    ledger = audit.build()
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py", line 3, in absent
+    assert False, "1.1.0 source accounting absent"
+           ^^^^^
+AssertionError: 1.1.0 source accounting absent
+
+======================================================================
+FAIL: test_queued_history_separate_without_invented_120 (__main__.FrozenSource.test_queued_history_separate_without_invented_120)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py", line 101, in test_queued_history_separate_without_invented_120
+    ledger=audit.build(); history=ledger["history"]
+  File "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py", line 3, in absent
+    assert False, "1.1.0 source accounting absent"
+           ^^^^^
+AssertionError: 1.1.0 source accounting absent
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=7)

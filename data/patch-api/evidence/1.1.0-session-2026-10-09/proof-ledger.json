@@ -1,0 +1,272 @@
+[
+  {
+    "label": "red",
+    "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "started": "2026-10-09T19:35:47.274964+00:00",
+    "ended": "2026-10-09T19:35:47.311990+00:00",
+    "exit_code": 1,
+    "expected_exit": 1,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "a3022ee55c291b18d4b626a93e331499cf99ff502d27da59c1fce96873660a05",
+      "test_source_accounting.py": "d087a44564738fcf94c0dfe8417ef8a72f902762a3abb998a21f6b7c1f991091",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "red.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "red.stderr": "b383b727c9d62e68f77e20302ad7319f6aacc24684c91265550516856d13d902",
+      "red.log": "b383b727c9d62e68f77e20302ad7319f6aacc24684c91265550516856d13d902"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "portable-red",
+    "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_portable.py"
+    ],
+    "started": "2026-10-09T19:35:47.314851+00:00",
+    "ended": "2026-10-09T19:35:47.350636+00:00",
+    "exit_code": 1,
+    "expected_exit": 1,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "a3022ee55c291b18d4b626a93e331499cf99ff502d27da59c1fce96873660a05",
+      "test_source_accounting.py": "d087a44564738fcf94c0dfe8417ef8a72f902762a3abb998a21f6b7c1f991091",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "portable-red.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "portable-red.stderr": "0679f6a9043b2204a673fe4c404a216dc201749fc506a78c35a0b9aae1236423",
+      "portable-red.log": "0679f6a9043b2204a673fe4c404a216dc201749fc506a78c35a0b9aae1236423"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "default-generator",
+    "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+      "1.1.0",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/source.wikitext",
+      "5913060",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/default-register.json"
+    ],
+    "started": "2026-10-09T19:35:54.830378+00:00",
+    "ended": "2026-10-09T19:35:54.866608+00:00",
+    "exit_code": 0,
+    "expected_exit": 0,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "a3022ee55c291b18d4b626a93e331499cf99ff502d27da59c1fce96873660a05",
+      "test_source_accounting.py": "d087a44564738fcf94c0dfe8417ef8a72f902762a3abb998a21f6b7c1f991091",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "default-generator.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "default-generator.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "default-generator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "default-extractor",
+    "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/historical-tools/extract_patch_non_inventory.py",
+      "--help"
+    ],
+    "started": "2026-10-09T19:35:54.869313+00:00",
+    "ended": "2026-10-09T19:35:54.901448+00:00",
+    "exit_code": 0,
+    "expected_exit": 0,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "a3022ee55c291b18d4b626a93e331499cf99ff502d27da59c1fce96873660a05",
+      "test_source_accounting.py": "d087a44564738fcf94c0dfe8417ef8a72f902762a3abb998a21f6b7c1f991091",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "default-extractor.stdout": "a2006f4448fb65b0297a0557507a89541b2653e1bae179579c733ef5b925ea0e",
+      "default-extractor.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "default-extractor.log": "a2006f4448fb65b0297a0557507a89541b2653e1bae179579c733ef5b925ea0e"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "default-capture",
+    "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/capture_defaults.py"
+    ],
+    "started": "2026-10-09T19:38:02.217350+00:00",
+    "ended": "2026-10-09T19:38:02.251595+00:00",
+    "exit_code": 0,
+    "expected_exit": 0,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "f9fe81d305155a32953cb0d4535823fe477a1f99b30022e2dd7f388cf972efec",
+      "test_source_accounting.py": "d087a44564738fcf94c0dfe8417ef8a72f902762a3abb998a21f6b7c1f991091",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "default-capture.stdout": "bbad30e2bb1d398b248e9b98195e76c1a49624abc6e226f9232fb517bbba66fc",
+      "default-capture.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "default-capture.log": "bbad30e2bb1d398b248e9b98195e76c1a49624abc6e226f9232fb517bbba66fc"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "capture",
+    "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/audit.py",
+      "capture"
+    ],
+    "started": "2026-10-09T19:38:02.254880+00:00",
+    "ended": "2026-10-09T19:38:02.278877+00:00",
+    "exit_code": 0,
+    "expected_exit": 0,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "f9fe81d305155a32953cb0d4535823fe477a1f99b30022e2dd7f388cf972efec",
+      "test_source_accounting.py": "d087a44564738fcf94c0dfe8417ef8a72f902762a3abb998a21f6b7c1f991091",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "capture.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "capture.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "green",
+    "revision": "f5b1991fe90d6e3350cfbc2605d7269c156fc22f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "started": "2026-10-09T19:39:28.530511+00:00",
+    "ended": "2026-10-09T19:39:28.623691+00:00",
+    "exit_code": 1,
+    "expected_exit": 0,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "936bdb22f20096f9cdea17f72b3566f17137a84e52c0c5289348c26d0928da6f",
+      "test_source_accounting.py": "57f8dd1ba0a6d3efb67e3f305fa96988f1fc93b3640c08bd9f530d8dc903b3bd",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "green.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "green.stderr": "26b12372db918e01ebfea36f2a3331e395f1799019fa9c0782aa09c286fa5f11",
+      "green.log": "26b12372db918e01ebfea36f2a3331e395f1799019fa9c0782aa09c286fa5f11"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "source-green",
+    "revision": "515c84bd615db8ef659323667aabafcad8cfbe6f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "started": "2026-10-09T19:39:50.482140+00:00",
+    "ended": "2026-10-09T19:39:50.567308+00:00",
+    "exit_code": 0,
+    "expected_exit": 0,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "936bdb22f20096f9cdea17f72b3566f17137a84e52c0c5289348c26d0928da6f",
+      "test_source_accounting.py": "d90dac337ee34ea158ee7ff2af2521876b2e2a2b6000ba7263c57cdce6cadd5c",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "source-green.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source-green.stderr": "59258149cc726d3d18a5ffe1b280fe12716836563a4676efe61a1eb6cbf81ae5",
+      "source-green.log": "59258149cc726d3d18a5ffe1b280fe12716836563a4676efe61a1eb6cbf81ae5"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "scope": "read-only own-base current candidates; not runtime/native acceptance",
+  "revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+  "hash_scope": {
+    "src/cvars.rs": "4a9c33eb99b1aafd4fbc22e8cb3929d2e98608c3bfa2c3c99ec1ea6df8abc89c",
+    "src/lua_api/globals/set_cvar_verb.rs": "e3f5df9076269e557e11ea63ecce0ab03174937df5c0e10b8b13b13f169f08a0",
+    "src/lua_api/globals/unit_stats.rs": "e7583c0ef766d0778431d70c255c6b1dad2c6180c3978bfeceab5c10393acc5c",
+    "tests/set_cvar_global.rs": "4e7c5ae39662a9cad467eac222ddc89bb7fea567f446790e7f373261f6a63874",
+    "tests/unit_stats.rs": "ab547330bd5421fa299d9bf0095f9a3bb3ac5c486d11dca79d268c0c87bd4363"
+  },
+  "GetCVarDefault": {
+    "candidate": true,
+    "backing": "CVarStorage default/registered-default/override stores",
+    "observable_existing_test": "register_cvar_numeric_default_preserves_existing_override_and_first_default",
+    "observations": [
+      "SetCVar(name,1.25); RegisterCVar(name,0): current1.25/default0",
+      "RegisterCVar(name,6): current1.25/default0"
+    ],
+    "executed_here": false,
+    "historical_contract": "UNPROVEN; source names only"
+  },
+  "UnitRangedAttack": {
+    "candidate": false,
+    "reason": "Derived max(level*5,0) and fixed modifier0; no independent ranged-skill/modifier state; positive/numeric Mists test insufficient.",
+    "executed_here": false
+  },
+  "runtime_changes": 0
+}
