@@ -65,7 +65,8 @@ if __name__ == '__main__':
             for item in value:
                 collect(item)
     for path in HISTORY.glob('*.json'):
-        if 'validator-gate' not in path.name:
+        # Gate-summary later_revision is a synthetic control, not a historical input pin.
+        if 'validator-gate' not in path.name and path.name != 'gate-summary.json':
             collect(json.loads(path.read_text()))
     external = []
     mapped = {row['recorded_revision']: row['rebased_revision'] for row in rows}
