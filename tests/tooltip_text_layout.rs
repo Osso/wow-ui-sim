@@ -175,10 +175,32 @@ fn test_tooltip_layout_is_clamped_to_viewport_edges() {
         .and_then(|frame| frame.layout_rect)
         .unwrap();
 
-    assert!(rect.x >= 0.0, "Tooltip should stay on-screen horizontally");
-    assert!(rect.y >= 0.0, "Tooltip should stay on-screen vertically");
-    assert!(rect.x + rect.width <= state.screen_width + 0.1);
-    assert!(rect.y + rect.height <= state.screen_height + 0.1);
+    assert!(
+        rect.x >= 0.0,
+        "Tooltip left edge is outside viewport: rect={rect:?}, screen={}x{}",
+        state.screen_width,
+        state.screen_height
+    );
+    assert!(
+        rect.y >= 0.0,
+        "Tooltip top edge is outside viewport: rect={rect:?}, screen={}x{}",
+        state.screen_width,
+        state.screen_height
+    );
+    assert!(
+        rect.x + rect.width <= state.screen_width + 0.1,
+        "Tooltip right edge is outside viewport: rect={rect:?}, screen={}x{}, right={}",
+        state.screen_width,
+        state.screen_height,
+        rect.x + rect.width
+    );
+    assert!(
+        rect.y + rect.height <= state.screen_height + 0.1,
+        "Tooltip bottom edge is outside viewport: rect={rect:?}, screen={}x{}, bottom={}",
+        state.screen_width,
+        state.screen_height,
+        rect.y + rect.height
+    );
 }
 
 #[test]
