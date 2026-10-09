@@ -1,0 +1,45 @@
+{
+  "exit": 0,
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "argv": [
+    "python3",
+    "-B",
+    "tools/test_patch_3_1_0_source.py"
+  ],
+  "env_overrides": {},
+  "scope_start": {
+    "timestamp": "2026-10-09T13:04:31.192205+00:00",
+    "head": {
+      "exit": 0,
+      "stdout": "6a84c2b09e38d37e4822bb0b27c414d9219b6efb\n",
+      "stderr": ""
+    },
+    "status": {
+      "exit": 0,
+      "stdout": "?? .code-index.db\n?? tools/__pycache__/\n",
+      "stderr": ""
+    },
+    "tracked_input_diff_exit": 0,
+    "tracked_input_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_input_diff_stderr": ""
+  },
+  "scope_end": {
+    "timestamp": "2026-10-09T13:04:31.892099+00:00",
+    "head": {
+      "exit": 0,
+      "stdout": "6a84c2b09e38d37e4822bb0b27c414d9219b6efb\n",
+      "stderr": ""
+    },
+    "status": {
+      "exit": 0,
+      "stdout": "?? .code-index.db\n?? tools/__pycache__/\n",
+      "stderr": ""
+    },
+    "tracked_input_diff_exit": 0,
+    "tracked_input_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_input_diff_stderr": ""
+  },
+  "scope_unchanged": true,
+  "stdout": "",
+  "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.580s\n\nOK\n"
+}

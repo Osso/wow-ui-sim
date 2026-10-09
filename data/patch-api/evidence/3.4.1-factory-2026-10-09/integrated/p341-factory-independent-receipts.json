@@ -1,0 +1,176 @@
+{
+  "revision": "7bc19c2b06380a7ce7cfe53a52acb4422354cb21",
+  "checks": {
+    "historical_seals": "19/19 and seal-file hash match",
+    "counts": {
+      "('cvars', 'cvar', True)": 71,
+      "('cvars', 'command', False)": 1,
+      "('cvars', 'cvar', False)": 6,
+      "('events', 'event', True)": 35,
+      "('events', 'event', False)": 9,
+      "('global-api', 'global', True)": 56,
+      "('global-api', 'member', False)": 54,
+      "('global-api', 'member', True)": 77,
+      "('global-api', 'global', False)": 24
+    },
+    "defaults": {
+      "published_differences": 15,
+      "format_only": 8,
+      "numeric": 7
+    },
+    "observations": "333/333 exact, RED=GREEN; ledger/source occurrence equality",
+    "no_production_changes": "20 files: Cargo/tests/docs/evidence only"
+  },
+  "input_hashes": {
+    "Cargo.toml": {
+      "expected": "2533154ff605dde03d1e87fb0e77dd803420b7b90b57381cdee539be34742920",
+      "actual": "2533154ff605dde03d1e87fb0e77dd803420b7b90b57381cdee539be34742920",
+      "match": true
+    },
+    "Cargo.lock": {
+      "expected": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "actual": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+      "match": true
+    },
+    "tests/patch_3_4_1_factory.rs": {
+      "expected": "29fa8d421c10362ec0377b953a1c0251fb9f405cea5a4798dac8cd8525f0d807",
+      "actual": "29fa8d421c10362ec0377b953a1c0251fb9f405cea5a4798dac8cd8525f0d807",
+      "match": true
+    },
+    "tests/common/publication_sweep.rs": {
+      "expected": "26babc6f764fb17d008b040c7141bbc790b9c3b998f04bad07f0ff06b7ac1701",
+      "actual": "26babc6f764fb17d008b040c7141bbc790b9c3b998f04bad07f0ff06b7ac1701",
+      "match": true
+    },
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/inventory.json": {
+      "expected": "0bc0e7f34daf60e62b3eb6c00bb805c932d9a31d02c32dde6cfdf488b4056e85",
+      "actual": "0bc0e7f34daf60e62b3eb6c00bb805c932d9a31d02c32dde6cfdf488b4056e85",
+      "match": true
+    },
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/known-gaps.json": {
+      "expected": "79cf4c92e11100451f509d7f16aa458400a93e16d6267344753e8ce0396392e8",
+      "actual": "79cf4c92e11100451f509d7f16aa458400a93e16d6267344753e8ce0396392e8",
+      "match": true
+    },
+    "data/patch-api/sources/3.4.1-page-coverage.json": {
+      "expected": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
+      "actual": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
+      "match": true
+    },
+    "data/patch-api/sources/3.4.2-source-inventory.json": {
+      "expected": "ab08608d6ab0384c2f8e9cd5ae9631fc38df356b9fbb10e8b98a7fa61a50c92d",
+      "actual": "ab08608d6ab0384c2f8e9cd5ae9631fc38df356b9fbb10e8b98a7fa61a50c92d",
+      "match": true
+    },
+    "src/client_profile.rs": {
+      "expected": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+      "actual": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+      "match": true
+    },
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/published-default-differences.json": {
+      "expected": "e34c4355279ea0e260cca7b945e925a311609fb91c628ad45db6fe47f3ad1876",
+      "actual": "e34c4355279ea0e260cca7b945e925a311609fb91c628ad45db6fe47f3ad1876",
+      "match": true
+    },
+    "data/patch-api/sources/3.4.3-page-coverage.json": {
+      "expected": "af45e812c7c7897ab1792c26f01db84c150f9ebeb244ed0af9e8becea92deeba",
+      "actual": "af45e812c7c7897ab1792c26f01db84c150f9ebeb244ed0af9e8becea92deeba",
+      "match": true
+    }
+  },
+  "streams": {
+    "discovery-red.stdout.log": {
+      "sha256": "1636acf40779686e3a4a0cc8f655b252598d78d60ed97a997fc5f56dac2ab035",
+      "lines": 11,
+      "captured_exit": 101
+    },
+    "discovery-red.stderr.log": {
+      "sha256": "16012e058182570f63eb6666640219790f4d186488e0e905b896d91fad536b5c",
+      "lines": 441,
+      "captured_exit": 101
+    },
+    "green.stdout.log": {
+      "sha256": "5c5dbfeba2e1342f7259c3dcbe3bb53d610ba68ba6d3ad90e6a990d624bafb4b",
+      "lines": 11,
+      "captured_exit": 0
+    },
+    "green.stderr.log": {
+      "sha256": "80724b511d5602885d3dc5e7638d9dc4269bc6151c20c7e7870e335492d860a4",
+      "lines": 148,
+      "captured_exit": 0
+    }
+  },
+  "changed_files": [
+    "Cargo.toml",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/HANDOFF.md",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/discovery-observations.json",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/discovery-red.stderr.log",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/discovery-red.stdout.log",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/green-observations.json",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/green.stderr.log",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/green.stdout.log",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/inventory.json",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/known-gaps.json",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/measurement-ledger.json",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/preservation.stderr.log",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/preservation.stdout.log",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/proof-ledger.json",
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/published-default-differences.json",
+    "docs/specs/patch-3-4-1-factory-measurement.md",
+    "docs/wiki/index.md",
+    "docs/wiki/investigations/patch-3-4-1-api-audit.md",
+    "docs/wiki/log.md",
+    "tests/patch_3_4_1_factory.rs"
+  ],
+  "exist": {
+    "Cargo.toml": 10651,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/HANDOFF.md": 2958,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/discovery-observations.json": 151897,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/discovery-red.stderr.log": 26328,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/discovery-red.stdout.log": 244,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/green-observations.json": 151897,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/green.stderr.log": 8894,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/green.stdout.log": 511,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/inventory.json": 118990,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/known-gaps.json": 4825,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/measurement-ledger.json": 330332,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/preservation.stderr.log": 0,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/preservation.stdout.log": 0,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/proof-ledger.json": 11800,
+    "data/patch-api/evidence/3.4.1-factory-2026-10-09/published-default-differences.json": 1761,
+    "docs/specs/patch-3-4-1-factory-measurement.md": 2529,
+    "docs/wiki/index.md": 601737,
+    "docs/wiki/investigations/patch-3-4-1-api-audit.md": 11870,
+    "docs/wiki/log.md": 104855,
+    "tests/patch_3_4_1_factory.rs": 5623
+  },
+  "anti_patterns": {
+    "TODO": 0,
+    "FIXME": 0,
+    "HACK": 0,
+    "XXX": 0
+  },
+  "gating": {
+    "name": "patch_3_4_1_factory",
+    "path": "tests/patch_3_4_1_factory.rs",
+    "required-features": [
+      "client-wrath"
+    ]
+  },
+  "revision_deltas_da31b9ed1": [
+    "src/lua_api/globals/real/mod.rs",
+    "src/lua_api/globals/real/player_facing.rs",
+    "src/lua_api/globals/register.rs",
+    "src/lua_api/state_types/character_world.rs"
+  ],
+  "revision_deltas_0893f7d91": [
+    "Cargo.toml",
+    "tests/patch_3_4_1_factory.rs"
+  ],
+  "proof_applicability": {
+    "retained_green": "6/6 exit 0 at da31b9ed1; all 11 recorded source/input hashes match integrated snapshot",
+    "integration_boundary": "No new execution. da31b9ed1-to-integrated src delta is separate 3.1.0 player-facing work: registration remains retail/wowforever-only; PlayerState facing field becomes unconditional. Exact whole runtime tree is NOT identical. Retained factory classifier/controls inputs unchanged; receipt proves original bounded run, not fresh integration compile or runtime acceptance. Main retains integration CI/native gates.",
+    "formatter": "cargo fmt --check exit 0 at integrated revision; empty stdout/stderr"
+  },
+  "readability": "Manual audit all 158 Rust lines; six test cases, nesting <=3, no suppression, no >200-line tests or 5+-primitive parameters. No reportable checklist violation."
+}

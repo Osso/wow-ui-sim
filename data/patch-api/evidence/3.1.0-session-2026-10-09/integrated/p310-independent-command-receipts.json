@@ -1,0 +1,155 @@
+[
+  {
+    "name": "fmt",
+    "receipt": "/tmp/p310-independent-fmt-result.json",
+    "log": "/tmp/p310-independent-fmt.log",
+    "argv": [
+      "/usr/bin/cargo",
+      "fmt",
+      "--check"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p310-source",
+    "env_overrides": {},
+    "start_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "end_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "start": "2026-10-09T13:00:49.990776+00:00",
+    "end": "2026-10-09T13:01:00.727292+00:00",
+    "scope_unchanged": true,
+    "exit": 0
+  },
+  {
+    "name": "source",
+    "receipt": "/tmp/p310-independent-source-result.json",
+    "log": "/tmp/p310-independent-source.log",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_3_1_0_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p310-source",
+    "env_overrides": {},
+    "start_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "end_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "start": "2026-10-09T13:01:00.781296+00:00",
+    "end": "2026-10-09T13:01:01.064078+00:00",
+    "scope_unchanged": true,
+    "exit": 0
+  },
+  {
+    "name": "validator",
+    "receipt": "/tmp/p310-independent-validator-result.json",
+    "log": "/tmp/p310-independent-validator.log",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_3_1_0_validator.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p310-source",
+    "env_overrides": {},
+    "start_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "end_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "start": "2026-10-09T13:01:01.117024+00:00",
+    "end": "2026-10-09T13:01:01.615999+00:00",
+    "scope_unchanged": true,
+    "exit": 0
+  },
+  {
+    "name": "historical",
+    "receipt": "/tmp/p310-independent-historical-result.json",
+    "log": "/tmp/p310-independent-historical.log",
+    "argv": [
+      "python3",
+      "-B",
+      "data/patch-api/evidence/3.1.0-session-2026-10-09/validate.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p310-source",
+    "env_overrides": {},
+    "start_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "end_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "start": "2026-10-09T13:01:01.674350+00:00",
+    "end": "2026-10-09T13:01:01.778385+00:00",
+    "scope_unchanged": true,
+    "exit": 0
+  },
+  {
+    "name": "retail",
+    "receipt": "/tmp/p310-independent-retail-result.json",
+    "log": "/tmp/p310-independent-retail.log",
+    "argv": [
+      "/usr/bin/cargo",
+      "test",
+      "--offline",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_3_1_0",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p310-source",
+    "env_overrides": {
+      "P310_SWEEP_OUT": "/tmp/p310-integrated-results.json"
+    },
+    "start_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "end_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "start": "2026-10-09T13:00:36.089950+00:00",
+    "end": "2026-10-09T13:02:04.577300+00:00",
+    "scope_unchanged": true,
+    "exit": 0
+  },
+  {
+    "name": "default-check",
+    "receipt": "/tmp/p310-independent-default-check-result.json",
+    "log": "/tmp/p310-independent-default-check.log",
+    "argv": [
+      "/usr/bin/cargo",
+      "check",
+      "--offline"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p310-source",
+    "env_overrides": {},
+    "start_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "end_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "start": "2026-10-09T13:01:08.848311+00:00",
+    "end": "2026-10-09T13:02:52.675680+00:00",
+    "scope_unchanged": true,
+    "exit": 0
+  },
+  {
+    "name": "mists-check",
+    "receipt": "/tmp/p310-independent-mists-check-result.json",
+    "log": "/tmp/p310-independent-mists-check.log",
+    "argv": [
+      "/usr/bin/cargo",
+      "check",
+      "--offline",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p310-source",
+    "env_overrides": {},
+    "start_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "end_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+    "start": "2026-10-09T13:01:16.810681+00:00",
+    "end": "2026-10-09T13:03:43.839902+00:00",
+    "scope_unchanged": true,
+    "exit": 0
+  },
+  {
+    "name": "integrated-source",
+    "receipt": "/tmp/p310-independent-integrated-source-result.json",
+    "log": "/tmp/p310-independent-integrated-source.log",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_3_1_0_source.py"
+    ],
+    "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+    "env_overrides": {},
+    "start_revision": "6a84c2b09e38d37e4822bb0b27c414d9219b6efb",
+    "end_revision": "6a84c2b09e38d37e4822bb0b27c414d9219b6efb",
+    "scope_unchanged": true,
+    "exit": 0
+  }
+]

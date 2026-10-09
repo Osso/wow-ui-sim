@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "revision": "7bc19c2b06380a7ce7cfe53a52acb4422354cb21",
+  "exit_code": 0,
+  "stdout": "/tmp/p341-factory-fmt.stdout.log",
+  "stderr": "/tmp/p341-factory-fmt.stderr.log"
+}
