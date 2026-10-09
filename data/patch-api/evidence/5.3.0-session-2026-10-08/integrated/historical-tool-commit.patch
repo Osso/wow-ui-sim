@@ -1,0 +1,2056 @@
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-diff-fetch.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-diff-fetch.json
+new file mode 100644
+index 000000000..14104a06e
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-diff-fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"pages":{"330804":{"pageid":330804,"ns":0,"title":"Patch 5.3.0/API changes/diff","revisions":[{"revid":3188422,"parentid":3188417,"timestamp":"2017-04-07T07:59:40Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"<noinclude>{{Transclude|}}</noinclude>\n== Automated diff ==\n\n=== Global API ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Global API (5.2.0.16650 &rarr; 5.3.0.16965)\n|- class=\"mw-customtoggle-global-c\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 14 new functions\n! style=\"width: 50%; padding-right: 1em\"| 1 removed functions\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|AcknowledgeSurvey}}\n: {{api|C_PetBattles.CanAcceptQueuedPVPMatch}}\n: {{api|C_Scenario.GetBonusCriteriaInfo}}\n: {{api|C_Scenario.GetBonusStepInfo}}\n: {{api|CanTrackBattlePets}}\n: {{api|GetBattlegroundPoints}}\n: {{api|GetItemUpgradeEffect}}\n: {{api|GetLFGRoleUpdateBattlegroundInfo}}\n: {{api|GetLootSpecialization}}\n: {{api|GetNumItemUpgradeEffects}}\n: {{api|GetPVPRoles}}\n: {{api|GetWebTicket}}\n: {{api|SetLootSpecialization}}\n: {{api|SetPVPRoles}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: PrepVoidStorageForTransmogrify\n</div>\n|}\n=== FrameXML ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ FrameXML (5.2.0.16650 &rarr; 5.3.0.16965)\n|- class=\"mw-customtoggle-global-fxml\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 3 new functions\n! style=\"width: 50%; padding-right: 1em\"| 0 removed functions\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-fxml\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|HideKnowledgeBase}}\n: {{api|PrintLootSpecialization}}\n: {{api|ShowKnowledgeBase}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n\n</div>\n|}\n=== Events ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Events (5.2.0.16650 &rarr; 5.3.0.16965)\n|- class=\"mw-customtoggle-events\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 8 new events\n! style=\"width: 50%; padding-right: 1em\"| 1 removed events\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=e|BATTLEGROUND_POINTS_UPDATE}}\n: {{api|t=e|BONUS_ROLL_ACTIVATE}}\n: {{api|t=e|BONUS_ROLL_DEACTIVATE}}\n: {{api|t=e|PLAYER_LOOT_SPEC_UPDATED}}\n: {{api|t=e|PVP_ROLE_UPDATE}}\n: {{api|t=e|SIMPLE_BROWSER_WEB_ERROR}}\n: {{api|t=e|SIMPLE_BROWSER_WEB_PROXY_FAILED}}\n: {{api|t=e|UPDATE_WEB_TICKET}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: UNIT_DYNAMIC_FLAGS\n</div>\n|}\n=== Widget API ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Widget API (5.2.0.16650 &rarr; 5.3.0.16965)\n|- class=\"mw-customtoggle-widgets\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 14 new methods\n! style=\"width: 50%; padding-right: 1em\"| 0 removed methods\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widgets\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=w|Browser:ClearCache}}\n: {{api|t=w|Browser:ClearFocus}}\n: {{api|t=w|Browser:CopyExternalLink}}\n: {{api|t=w|Browser:DeleteCookies}}\n: {{api|t=w|Browser:HasConnection}}\n: {{api|t=w|Browser:NavigateBack}}\n: {{api|t=w|Browser:NavigateForward}}\n: {{api|t=w|Browser:NavigateHome}}\n: {{api|t=w|Browser:NavigateReload}}\n: {{api|t=w|Browser:NavigateStop}}\n: {{api|t=w|Browser:OpenExternalLink}}\n: {{api|t=w|Browser:OpenTicket}}\n: {{api|t=w|Browser:SetFocus}}\n: {{api|t=w|Browser:SetZoom}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n\n</div>\n|}\n=== Widget Handlers ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Widget Handlers (5.2.0.16650 &rarr; 5.3.0.16965)\n|- class=\"mw-customtoggle-widget-handlers\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em\"| 3 new handlers\n! style=\"width: 50%; padding-right: 1em\"| 0 removed handlers\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widget-handlers\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=wh|Browser OnEditFocusGained}}\n: {{api|t=wh|Browser OnEditFocusLost}}\n: {{api|t=wh|Browser OnEscapePressed}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n\n</div>\n|}"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-diff.wikitext b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-diff.wikitext
+new file mode 100644
+index 000000000..b0872cab8
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-diff.wikitext
+@@ -0,0 +1,110 @@
++<noinclude>{{Transclude|}}</noinclude>
++== Automated diff ==
++
++=== Global API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Global API (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-global-c" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 14 new functions
++! style="width: 50%; padding-right: 1em"| 1 removed functions
++|- class="mw-collapsible" id="mw-customcollapsible-global-c"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|AcknowledgeSurvey}}
++: {{api|C_PetBattles.CanAcceptQueuedPVPMatch}}
++: {{api|C_Scenario.GetBonusCriteriaInfo}}
++: {{api|C_Scenario.GetBonusStepInfo}}
++: {{api|CanTrackBattlePets}}
++: {{api|GetBattlegroundPoints}}
++: {{api|GetItemUpgradeEffect}}
++: {{api|GetLFGRoleUpdateBattlegroundInfo}}
++: {{api|GetLootSpecialization}}
++: {{api|GetNumItemUpgradeEffects}}
++: {{api|GetPVPRoles}}
++: {{api|GetWebTicket}}
++: {{api|SetLootSpecialization}}
++: {{api|SetPVPRoles}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: PrepVoidStorageForTransmogrify
++</div>
++|}
++=== FrameXML ===
++{| class="wikitable" style="min-width: 600px"
++|+ FrameXML (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 3 new functions
++! style="width: 50%; padding-right: 1em"| 0 removed functions
++|- class="mw-collapsible" id="mw-customcollapsible-global-fxml"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|HideKnowledgeBase}}
++: {{api|PrintLootSpecialization}}
++: {{api|ShowKnowledgeBase}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++
++</div>
++|}
++=== Events ===
++{| class="wikitable" style="min-width: 600px"
++|+ Events (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-events" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 8 new events
++! style="width: 50%; padding-right: 1em"| 1 removed events
++|- class="mw-collapsible" id="mw-customcollapsible-events"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=e|BATTLEGROUND_POINTS_UPDATE}}
++: {{api|t=e|BONUS_ROLL_ACTIVATE}}
++: {{api|t=e|BONUS_ROLL_DEACTIVATE}}
++: {{api|t=e|PLAYER_LOOT_SPEC_UPDATED}}
++: {{api|t=e|PVP_ROLE_UPDATE}}
++: {{api|t=e|SIMPLE_BROWSER_WEB_ERROR}}
++: {{api|t=e|SIMPLE_BROWSER_WEB_PROXY_FAILED}}
++: {{api|t=e|UPDATE_WEB_TICKET}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: UNIT_DYNAMIC_FLAGS
++</div>
++|}
++=== Widget API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget API (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-widgets" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 14 new methods
++! style="width: 50%; padding-right: 1em"| 0 removed methods
++|- class="mw-collapsible" id="mw-customcollapsible-widgets"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=w|Browser:ClearCache}}
++: {{api|t=w|Browser:ClearFocus}}
++: {{api|t=w|Browser:CopyExternalLink}}
++: {{api|t=w|Browser:DeleteCookies}}
++: {{api|t=w|Browser:HasConnection}}
++: {{api|t=w|Browser:NavigateBack}}
++: {{api|t=w|Browser:NavigateForward}}
++: {{api|t=w|Browser:NavigateHome}}
++: {{api|t=w|Browser:NavigateReload}}
++: {{api|t=w|Browser:NavigateStop}}
++: {{api|t=w|Browser:OpenExternalLink}}
++: {{api|t=w|Browser:OpenTicket}}
++: {{api|t=w|Browser:SetFocus}}
++: {{api|t=w|Browser:SetZoom}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++
++</div>
++|}
++=== Widget Handlers ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget Handlers (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-widget-handlers" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 3 new handlers
++! style="width: 50%; padding-right: 1em"| 0 removed handlers
++|- class="mw-collapsible" id="mw-customcollapsible-widget-handlers"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=wh|Browser OnEditFocusGained}}
++: {{api|t=wh|Browser OnEditFocusLost}}
++: {{api|t=wh|Browser OnEscapePressed}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++
++</div>
++|}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-discovery.launcher.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-discovery.launcher.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-discovery.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-discovery.txt
+new file mode 100644
+index 000000000..681c2d07b
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-discovery.txt
+@@ -0,0 +1,118 @@
++warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
++warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
++warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
++warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
++warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
++warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
++warning: `iced_wgpu` (manifest) generated 6 warnings
++   Compiling quote v1.0.43
++   Compiling proc-macro2 v1.0.105
++   Compiling unicode-ident v1.0.22
++   Compiling cfg-if v1.0.4
++   Compiling libc v0.2.180
++   Compiling log v0.4.29
++   Compiling bitflags v2.10.0
++   Compiling smallvec v1.15.1
++   Compiling libm v0.2.15
++   Compiling once_cell v1.21.3
++   Compiling autocfg v1.5.0
++   Compiling scopeguard v1.2.0
++   Compiling pin-project-lite v0.2.16
++   Compiling lock_api v0.4.14
++   Compiling shlex v1.3.0
++   Compiling find-msvc-tools v0.1.7
++   Compiling pkg-config v0.3.32
++   Compiling memchr v2.7.6
++   Compiling crossbeam-utils v0.8.21
++   Compiling slab v0.4.11
++   Compiling arrayvec v0.7.6
++   Compiling futures-core v0.3.31
++   Compiling parking_lot_core v0.9.12
++   Compiling thiserror v2.0.17
++   Compiling version_check v0.9.5
++   Compiling num-traits v0.2.19
++   Compiling rustix v1.1.3
++   Compiling linux-raw-sys v0.11.0
++   Compiling stable_deref_trait v1.2.1
++   Compiling libloading v0.8.9
++   Compiling bytes v1.11.0
++   Compiling zerocopy v0.8.33
++   Compiling futures-io v0.3.31
++   Compiling syn v2.0.114
++   Compiling simd-adler32 v0.3.8
++   Compiling adler2 v2.0.1
++   Compiling jobserver v0.1.34
++   Compiling errno v0.3.14
++   Compiling mio v1.1.1
++   Compiling socket2 v0.6.1
++   Compiling cc v1.2.52
++   Compiling parking_lot v0.12.5
++   Compiling signal-hook-registry v1.4.8
++   Compiling crc32fast v1.5.0
++   Compiling futures-sink v0.3.31
++   Compiling miniz_oxide v0.8.9
++   Compiling tracing-core v0.1.36
++   Compiling serde v1.0.228
++   Compiling futures-channel v0.3.31
++   Compiling flate2 v1.1.9
++   Compiling dlib v0.5.2
++   Compiling wayland-sys v0.31.8
++   Compiling futures-task v0.3.31
++   Compiling pin-utils v0.1.0
++   Compiling serde_core v1.0.228
++   Compiling crossbeam-epoch v0.9.18
++   Compiling anyhow v1.0.100
++   Compiling rayon-core v1.13.0
++   Compiling downcast-rs v1.2.1
++   Compiling scoped-tls v1.0.1
++   Compiling crossbeam-deque v0.8.6
++   Compiling num-integer v0.1.46
++   Compiling wayland-client v0.31.12
++   Compiling quick-xml v0.38.4
++   Compiling wayland-backend v0.3.12
++   Compiling memmap2 v0.9.9
++   Compiling spin v0.9.8
++   Compiling either v1.15.0
++   Compiling cfg_aliases v0.2.1
++   Compiling core_maths v0.1.1
++   Compiling foldhash v0.2.0
++   Compiling lazy_static v1.5.0
++   Compiling equivalent v1.0.2
++   Compiling rayon v1.11.0
++   Compiling itoa v1.0.17
++   Compiling zeroize v1.8.2
++   Compiling typenum v1.19.0
++   Compiling hashbrown v0.16.1
++   Compiling writeable v0.6.3
++   Compiling generic-array v0.14.7
++   Compiling getrandom v0.2.16
++   Compiling wayland-scanner v0.31.8
++   Compiling synstructure v0.13.2
++   Compiling indexmap v2.13.0
++   Compiling num_cpus v1.17.0
++   Compiling winnow v0.7.14
++   Compiling const-oid v0.9.6
++   Compiling vcpkg v0.2.15
++   Compiling polling v3.11.0
++   Compiling num-bigint v0.4.6
++   Compiling raw-window-handle v0.6.2
++   Compiling fastrand v2.3.0
++   Compiling weezl v0.1.12
++   Compiling litemap v0.8.2
++   Compiling toml_datetime v0.7.5+spec-1.1.0
++   Compiling euclid v0.22.13
++   Compiling smol_str v0.2.2
++   Compiling bytemuck_derive v1.10.2
++   Compiling thiserror-impl v2.0.17
++   Compiling zerocopy-derive v0.8.33
++   Compiling tokio-macros v2.6.0
++   Compiling tracing-attributes v0.1.31
++   Compiling serde_derive v1.0.228
++   Compiling futures-macro v0.3.31
++   Compiling zerofrom-derive v0.1.6
++   Compiling tokio v1.49.0
++   Compiling futures-util v0.3.31
++   Compiling bytemuck v1.24.0
++   Compiling yoke-derive v0.8.1
++   Compiling zerovec-derive v0.11.2
++   Compiling tracing v0.1.44
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-fetch.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-fetch.json
+new file mode 100644
+index 000000000..04c7ff464
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"pages":{"423274":{"pageid":423274,"ns":0,"title":"Patch 5.3.0/API changes","revisions":[{"revid":4065122,"parentid":4065116,"timestamp":"2021-07-13T19:26:28Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"{{apichanges|5.3.0|prev=5.2.0|next=5.4.0}}\n\n== New Features ==\n* You can now control for which specialization you will receive loot from LFR/Quests.\n* The number of pet stable pages has increased from 2 to 5 (Increasing the number of slots from 20 to 50).\n* Knowledge base and GM tickets now use an embedded web browser to interact with Blizzard's Support website.\n** The embedded browser functionality is encapsulated by the <code>Browser</code> widget type.\n\n== Misc Changes ==\n* [[TradeSkillLink|tradeSkillLink]] encoding changed significantly. The first four fields were re-arranged, and specialization data was added for Cooking.\n\n== Bugs ==\n* If {{api|InterfaceOptionsFrame_OpenToCategory}}(panel) is called before the addon panels list is updated after adding a new panel, the interface options frame will open to another panel. You can work around this behavior by calling the function twice.\n\n{{:Patch 5.3.0/API changes/diff}}"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-parent-fetch.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-parent-fetch.json
+new file mode 100644
+index 000000000..7838245d2
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-parent-fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"pages":{"38992":{"pageid":38992,"ns":0,"title":"Patch 5.3.0","revisions":[{"revid":6611399,"parentid":6553504,"timestamp":"2026-01-23T11:06:36Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"{{Redirect|Escalation|the questline|Mists of Pandaria campaign#Escalation}}\n{{Patchbox\n|Patchname = Escalation\n|Image = [[Image:Chapter26.png|256px]]\n|Caption = \n|Release = May 21, 2013\n|Latest = June 28, 2013\n|Version = 16977\n|Latestv = 17128\n|toc = 50300\n|api = 1\n|Highlights = \n|Related = \n* [https://worldofwarcraft.blizzard.com/en-us/news/9679398 Patch Notes]\n* [https://worldofwarcraft.blizzard.com/en-us/news/9241762 Item Upgrades in 5.3]\n* [https://worldofwarcraft.blizzard.com/en-us/news/9331806 PvP Gear in Patch 5.3]\n|Prev = 5.2.0\n|Current = 5.3.0\n|Next = 5.4.0\n}}{{tocright}}\n[[File:Escalation key art.jpg|thumb|Escalation key art]]\n\n'''Patch 5.3.0: Escalation''' is the second non-raid patch of ''[[World of Warcraft: Mists of Pandaria]]'' and focuses on the escalating tensions between [[Garrosh]] and [[Vol'jin|Vol'jin's]] [[Darkspear Rebellion]]. The patch includes a new world event in the [[Barrens]], the addition of Heroic Scenarios, a brand new [[Arena]] and [[Battleground]], new foes to fight in the [[Brawler's Guild]]  and much more.\n\n==General==\n*'''New Battleground&#58; [[Deepwind Gorge]]'''\n**In the new Battleground situated in the [[Valley of the Four Winds]], the [[Alliance]] and [[Horde]] continue their war for Pandaria's precious resources. While the two factions battle for control over mines, they must also protect their own resources from being stolen and turned against them!\n*'''New Arena&#58; [[Tiger's Peak|The Tiger's Peak]]'''\n**Gladiator hopefuls have a new location to test their mettle amidst the [[Kun-Lai Summit|Kun-Lai]] mountain tops, in the training grounds of the powerful [[Shado-Pan]]. Players must make use of the looming tiger statues and fenced platforms to gain an advantage that will bring victory and glory!\n*'''New Scenario&#58; [[Battle on the High Seas]]'''\n**Help your faction fend off enemy forces in the midst of a battle for naval supremacy on the High Seas.\n*'''New Scenario<nowiki>:</nowiki> [[Blood in the Snow]]'''\n**An agent of [[Zandalar tribe|Zandalar]] has infiltrated [[Dun Morogh]] and rallied the [[Frostmane tribe|Frostmane trolls]]. At [[Varian Wrynn|Varian's]] request, [[Moira Thaurissan|Moira]] will lead her personal guard against them once the king's champions have stopped the magical storm protecting [[Shimmer Ridge]].\n*'''New Scenario&#58; [[Dark Heart of Pandaria]]'''\n**[[Bilgewater Cartel|Goblin]] engineers have been excavating in the [[Vale of Eternal Blossoms]] to find a mysterious artifact, but all they've found is trouble; you have been personally called upon by [[Garrosh Hellscream|the Warchief]] to aid them in their hour of need.\n*'''New Scenario&#58; [[Secrets of Ragefire]]'''\n**Infiltrate the Emberdeep Caverns and assist the [[Gob Squad]] in investigating a recent disappearance in [[Durotar]].\n*'''Heroic Scenarios'''\n**A heroic difficulty for Scenarios have been added and are designed to provide challenging content for small groups of well-seasoned adventurers. Completing a Heroic Scenario awards [[Valor Points]], and a chance to obtain high level Epic quality items.\n**Heroic scenarios require a pre-made group to join.\n**Heroic scenarios offer bonus objectives that will reward additional valor if completed.\n***An option to run a random heroic scenario has been added as a drop-down in the scenario tab in Dungeon Finder.\n**Players can complete a normal or heroic scenario for bonus valor each day, but not both.\n**Six heroic scenarios will be available in patch 5.3. Four are new and two are upgrades of existing normal scenarios.\n***[[Battle on the High Seas]]\n***[[Blood in the Snow]]\n***[[Dark Heart of Pandaria]]\n***[[Secrets of Ragefire|The Secrets of Ragefire]]\n***[[Crypt of Forgotten Kings]]\n***[[A Brewing Storm]]\n*'''Quest Campaign&#58; Escalation'''\n**The [[Darkspear tribe|Darkspear Trolls]] are in [[Darkspear Rebellion|open rebellion]] against the Warchief! Aid your faction in preparing to rout [[Garrosh Hellscream]] from [[Orgrimmar]]\n***Alliance heroes will scout Orgrimmar's outskirts and engage in [[SI:7]] espionage to weaken Garrosh's power structure.\n***Horde heroes will help [[Vol'jin|Vol'jin's]] insurgency survive a [[Kor'kron]] assault and advance towards the Horde capital.\n**Visit [[Lorewalker Cho]] at the [[Seat of Knowledge]] in the [[Vale of Eternal Blossoms]] to [[The King and the Council|begin questing]].\n*'''Battlefield&#58; Barrens'''\n**Put the stranglehold on Orgrimmar by undermining the Kor'kron supply chain in [[Northern Barrens]].\n***Collect resources by killing Kor'kron loyalists and their supporters.\n***Get a group together to kill [[Kor'kron Commander|Kor'kron leaders]] for bonus resources.\n***Escort your [[Barrens Caravan|faction's]] [[Pack Kodo (Battlefield: Barrens)|caravans]] across the zone for even more additional resources.\n**The [[Darkspear Rebellion]] will reward your efforts to undermine the Warchief by helping you upgrade Latent Kor'kron Armor into usable gear.\n**Participate in the Escalation Quest Campaign to learn how to engage in the Barrens conflict.\n*'''The Legendary Quest Continues'''\n**Journey with [[Wrathion]] to the four corners of [[Pandaria]] to speak with the [[August Celestial]]s.\n**Champions will have had to complete [http://us.battle.net/wow/en/blog/8636639/ Wrathion's earlier tasks] (including \"[[Heart of the Thunder King (quest)]]\") to continue.\n*'''[[Brawler's Guild]] Updates'''\n**Test your might against two new tiers of bosses in the [[Brawl'gar Arena]] in [[Orgrimmar]] or [[Bizmo's Brawlpub]] in [[Stormwind]].\n**New VIP areas are now accessible for brawlers at or above rank 8.\n**[[Bizmo]] has raised the floor in his arena to hide the bodies. Or... maybe to improve the sight lines. We'll never know for sure.\n**Special \"[[Challenge Card]]s\" can now drop from mobs or reward satchels, allowing you to unlock unique bonus bosses.\n**Brawlers that manage to prove their mettle and reach Rank 9 will receive an additional invitation to the Brawler's Guild that can be traded or given to a friend.\n*Experience needed to increase from level 85 to level 90 has been reduced by 33%.\n\n==Classes==\n*Healing abilities and spells which automatically pick targets now follow consistent rules for targeting logic. Targets with lower % health will be preferred, and players are weighted more heavily than pets.\n*[[Avoidance (passive)]] passive on all pets and guardians has been changed. It now reduces [[Area of Effect|area-of-effect]] damage from creatures and NPCs by 95% (up from 90%), and from players by 50% (up from 0%). Warlock pets already had the new version of Avoidance since Patch 5.0 and will not notice any differences.\n*The following summoned pets/totems will now chain cast their spells with no delay between casts, allowing them to cast their spells more frequently in the same amount of time.\n**Death Knight: [[Summon Gargoyle]]\n**Druid: [[Force of Nature]] (Balance, Restoration), [[Mirror Image (Symbiosis)]] (Symbiosis)\n**Mage: [[Mirror Image]], [[Summon Water Elemental]]\n**Shaman: [[Searing Totem]]\n**Warlock: [[Summon Doomguard]], [[Summon Terrorguard]], [[Wild Imps]]\n\n===Death Knight===\nGeneral\n*[[Blood Plague (Wrath Classic)]] no longer benefits from the damage increase granted by [[Tricks of the Trade]].\n*[[Frost Fever (Wrath Classic)]] no longer benefits from the damage increase granted by [[Tricks of the Trade]].\n*[[Necrotic Strike]]'s healing absorption effect has been increased to 225% from attack power, up from 200%.\nTalents\n*[[Gorefiend's Grasp]] can now affect a maximum of 4 player targets. The number of non-player targets that can be affected remains unlimited.\nUnholy\n*[[Sudden Doom]] now requires the Death Knight to be in [[Unholy Presence]] to activate the effect that causes [[Death Coil]] to cost no [[Runic Power]].\n*[[Unholy Might]] now increases the Death Knight's Strength by 10%, down from 15%.\n\n===Druid===\nGeneral\n*[[Mark of the Wild]] had its mana cost reduced to 5%, down from 10%.\n*[[Symbiosis]]: [[Intimidating Roar]] had its cooldown increased to 90 seconds, up from 60 seconds.\n*[[Tranquility]] now targets 12 raid members (up from 5) each time it heals when used in a 25-player instance. This change also applies to players using the Symbiosis version of [[Tranquility (Symbiosis)]].\nTalents\n*[[Force of Nature]] is no longer on [[global cooldown]] and summons a single [[Treant]]. The Treant no longer has a control bar, immediately uses its special abilities on the Druid's current target, and accumulates 1 charge every 20 seconds up to a maximum of 3 charges.\n**Restoration version of the Treant now casts [[Swiftmend]] on the Druid's target when summoned. This version of Swiftmend does not require or consume a heal-over-time effect on the target.\nGlyphs\n*[[Glyph of Solar Beam]] have been removed and replaced with Glyph of Omens.\n*New Glyph: [[Glyph of Omens]]: While the Druid is not in a Solar or Lunar [[Eclipse]], the following abilities will generate 10 Solar or Lunar Energy: [[Entangling Roots]], [[Cyclone]], [[Faerie Fire]], [[Faerie Swarm]], [[Mass Entanglement]], [[Typhoon]], [[Disorienting Roar]], [[Ursol's Vortex]], and [[Mighty Bash]].\nBalance\n*[[Solar Beam]] is now more responsive when players enter and leave the beam's area-of-effect.\nFeral\n*[[Savage Roar]] now increases physical damage done by 40%, up from 30%.\nGuardian\n*[[Mastery: Nature's Guardian]] is now 33% stronger (2% per point instead of 1.5%).\nRestoration\n*[[Ironbark]] now has a cooldown of 60 seconds, down from 2 minutes.\n*[[Swiftmend]]'s area-of-effect component now heals injured allies within 10 yards, up from 8 yards.\n*[[Wild Mushroom: Bloom]]: Healing from this spell has been increased by 100%, which includes all bonus healing from [[Rejuvenation]] overhealing. In addition, the radius has been increased to 10 yards (up from 8).\nItem Sets\n*Restoration PvP 4-piece set bonus now reduces the cooldown of [[Ironbark]] by 30 seconds (down from 90 seconds).\n\n===Hunter===\nGeneral\n*Hunters now have 50 pet [[stable master|stable]] slots, up from 20.\n*Cooldown on crowd control abilities for several Hunter pet families have changed.\n**Basilisk pet family's [[Petrifying Gaze]] cooldown is now 2 minutes (up from 1 minute).\n**Bat pet family's [[Sonic Blast (pet ability)]] cooldown is now 2 minutes (up from 1 minute).\n**Crane pet family's [[Lullaby]] cooldown is now 2 minutes (up from 1 minute).\n**Porcupine pet family's [[Paralyzing Quill]] cooldown is now 2 minutes (up from 1 minute).\n**Shale Spider pet family's [[Web Wrap (pet ability)]] cooldown is now 90 seconds (up from 45 seconds).\n**Worm pet family's [[Burrow Attack]] Attack has had its cooldown reduced to 14 seconds (down from 20 seconds).\n*[[Aspect of the Hawk]] now increases ranged attack power by 25%, up from 15%.\n*[[Revive Pet]] now has a cast time of 4 seconds, down from 6 seconds.\nTalents\n*[[Aspect of the Iron Hawk]] now increases ranged attack power by 25%, up from 15%.\n*[[Binding Shot]] is no longer a talent and learned by Marksmanship Hunters at level 30.\n*[[Blink Strike]] has been renamed [[Blink Strikes]] and turned into a passive ability. The pet's Basic Attacks deal 50% increased damage, can now be used from 30 yards away, and will instantly cause the pet to teleport behind their target.\n*[[Intimidation]] is now a level-30 talent available to all Hunter specializations and no longer learned by Beast Mastery Hunters at level 20.\nBeast Mastery\n*[[Beast Cleave]] now deals 75% of the original damage, up from 50%.\n*[[Exotic Beasts]] no longer reduces the cooldown of pet special abilities by 30%.\nMarksmanship\n*[[Bombardment (Cataclysm Classic)]] now increases the damage of Multi-Shot by 60%, up from 30%.\nItem Sets\n*PvP 2-piece set bonus has been redesigned. Using Arcane Shot now causes the Hunter's PvP Power to increase by 800 for 6 seconds.\n\n===Mage===\nGeneral\n*[[Arcane Brilliance]] had its mana cost reduced to 1%, down from 4%.\n*[[Arcane Explosion]] now deals 40% more damage.\n*[[Blizzard]] now deals 40% more damage.\n*[[Dalaran Brilliance]] had its mana cost reduced to 1%, down from 4%.\n*[[Flamestrike]] now deals 100% more initial damage. Periodic damage remains unchanged.\n*[[Mirror Image]] creates copies that no longer cast Fire Blast, but their Frostbolts do 10% more damage.\n*[[Teleport]]: Vale of Eternal Blossoms and [[Portal (spell)]]: Vale of Eternal Blossoms now have new icons.\nTalents\n*[[Flameglow]] now absorbs damage from each attack made against the Mage equal to 15% of their spellpower (down from 20%).\n*[[Incanter's Ward]] now allows the Mage to gain up to a maximum of 15% increase to spell damage, down from 30%, but the effect now lasts 25 seconds, up from 15 seconds.\n*[[Living Bomb]]'s periodic damage has been increased by 121%. Its explosion damage has been reduced by 78%, but now scales with additional periodic ticks added by haste, and hits all nearby targets (up from 3).\n\n===Monk===\nGeneral\n*[[Legacy of the Emperor]] had its energy cost reduced to 1%, down from 6%.\n*[[Nimble Brew (MoP Classic)]] now also removes horrify effects, and reduces the duration of horrify effects and fear, and is available to all Monk specializations (formerly only available for Brewmaster and Windwalker Monks).\n*[[Spear Hand Strike]] now locks a spell school out for 4 seconds, down from 5 seconds.\nTalents\n*[[Ring of Peace]] had been redesigned. The ability forms an 8-yard sanctuary around a friendly target for 8 seconds, instantly disarming and silencing enemies within the area-of-effect for 3 seconds. Enemies that use abilities other than auto-attacks or cast spells on allies within the Ring of Peace will be disarmed and silenced for 3 seconds. Disarm and silence effects are subject to diminishing returns.\nBrewmaster\n*[[Gift of the Ox]] should now activate its effect more frequently for dual-wielding Monks.\nMistweaver\n*[[Revival]] now has a healing cap of 15 raid members (up from 6) when used in a 25-player instance.\nWindwalker\n*[[Legacy of the White Tiger]] had its mana cost reduced to 1%, down from 6%.\n*[[Rising Sun Kick]] now causes all targets within 8 yards to take an increased 20% damage from the Monk's abilities, up from 10%.\n*Fixed an issue that caused ticks from [[Fists of Fury]] to sometimes be skipped.\n\n===Paladin===\nGeneral\n*[[Blessing of Kings]] had its mana cost reduced to 5%, down from 22.3%.\n*[[Blessing of Might]] had its mana cost reduced to 5%, down from 22.3%.\n*[[Devotion Aura]] now clears all silence effects when used.\n*[[Divine Protection]] is now usable while stunned.\nGlyphs\n*[[Glyph of the Battle Healer]] now heals a nearby injured friendly target, excluding the Paladin, for 20% of damage dealt while [[Seal of Insight]] is active, down from 30%.\nHoly\n*[[Mastery: Illuminated Healing]] now places an absorb shield for 10% of the amount healed, down from 12%.\n*[[Daybreak (Cataclysm Classic)]] is now a stackable effect with a duration of 10 seconds, stacks up to 2 times, and causes the next [[Holy Shock]] to also heal other allies within 10 yards of the target for an amount equal to 75%/150% of the original healing done. Daybreak no longer incorrectly hits the primary target of the Holy Shock.\nProtection\n*[[Shield of the Righteous]] now reduces physical damage taken by 25%, down from 30%.\nRetribution\n*[[Sword of Light]] now increases damage with two-handed melee weapons by 30%, up from 15%.\nItem Sets\n*[[White Tiger Vestments|Tier-14 Holy Paladin]] 4-piece set bonus now reduces the cooldown of [[Holy Shock]] by 1 second, down from 2 seconds.\n\n===Priest===\nGeneral\n*[[Power Word: Fortitude]] had its mana cost reduced to 1%, down from 4.4%.\n*[[Mass Dispel]] no longer dispels magic effects that are normally undispellable. Cast time has been decreased to 0.5 seconds, down from 1.5 seconds for Discipline and Holy Priests.\n*[[Void Shift]] had its cooldown decreased to 5 minutes, down from 6 minutes for Discipline and Holy Priests. For Shadow Priests, cooldown has been increased to 10 minutes, up from 6 minutes, and the spell is no longer usable while in Arenas or Rated Battlegrounds.\nGlyphs\n*[[Glyph of Mass Dispel]] has been redesigned and no longer reduces cast time. The glyph now enables Mass Dispel to dispel magic effects that are normally undispellable.\n*[[Glyph of Smite]] no longer causes the additional 20% damage dealt by [[Smite]] to transfer into [[Atonement]].\n*Fixed an issue where [[Glyph of Mind Flay]]'s movement speed increase was not stacking correctly.\nDiscipline\n*[[Atonement]] now heals nearby friendly targets for 90% of the damage dealt, down from 100%.\n*[[Borrowed Time]] now reduces the cast or channel time of the next Priest spell by 15% after casting Power Word: Shield (was 15% spell haste).\n*[[Penance]] now deals 10% less damage, but healing done is increased by 10%.\nHoly\n*[[Divine Hymn]] now targets 12 raid members (up from 5) each time it heals when used in a 25-player instance.\nShadow\n*[[Vampiric Embrace]] now has a healing cap of 15 raid members (up from 6) when used in a 25-player instance.\n\n===Rogue===\nTalents\n*[[Cloak and Dagger]] now requires the Rogue to be in Stealth. Shadow Dance will not remove the Stealth requirement for Cloak and Dagger.\n*[[Shuriken Toss]] now deals 100% more damage in the initial ranged attack, damage is no longer doubled when used on targets farther than 10 yards away, and energy cost has been increased to 40 energy, up from 20.\nGlyphs\n*[[Glyph of Cheap Shot]] now increases the duration of [[Cheap Shot]] by 0.5 second, down from 1 second.\n*[[Glyph of Garrote]] now increases the duration of [[Garrote]]'s silence effect by 1 second, down from 1.5 seconds.\nCombat\n*[[Blade Flurry]]'s damage to secondary targets should no longer be affected by [[Resilience]] or [[PvP Power]] if the primary target was a player as both had already been factored in for the initial damage calculation.\n*[[Revealing Strike]] now lasts 24 seconds, up from 18 seconds.\nSubtlety\n*[[Find Weakness]] now bypasses 100% of armor against non-player targets, and bypasses 50% of armor when used against other players (was 70% armor bypass for all targets).\n\n===Shaman===\nGeneral\n*[[Lava Burst]] now has a 2 second cast time, up from 1.5 seconds, and deals 25% more damage.\n*[[Lightning Bolt]] can now be cast while moving.\nGlyphs\n*New Glyph: [[Glyph of Lightning Shield]] causes [[Lightning Shield]] to reduce the amount of damage taken by 10% for 6 seconds after Lightning Shield is triggered.\n*[[Glyph of Unleashed Lightning]] has been removed and replaced with Glyph of Lightning Shield.\nEnhancement\n*[[Feral Spirit]]'s summoned Spirit Wolves are now immune to root and snare effects.\n*[[Lava Lash]] now deals 300% weapons damage, up from 250%.\n*[[Mental Quickness]] now converts 65% of the Shaman's attack power to spell power, up from 55%.\n*[[Stormstrike]] now deals 450% weapon damage, up from 375%.\n\n===Warlock===\nGeneral\n*[[Dark Intent]] had its mana cost reduced to 1%, down from 4%.\n*[[Demonic Gateway]] cast time has been reduced to 3 seconds, down from 5 seconds, gains its first charge after 5 seconds (down from 13 seconds), and gains a new charge every 10 seconds (down from 15 seconds). The summoned gateway has 100% of the summoning Warlock's health, 100% of the Warlock's resilience, and can now be attacked and killed by enemy players.\n*[[Health Funnel]] now causes the [[Soulburn]] portion of the spell to increase healing generated from Health Funnel by 140% instead of instantly restoring 36% health.\nTalents\n*[[Blood Horror]] no longer activates from attacks made by pets.\nGlyphs\n*[[Glyph of Siphon Life]] has been redesigned. Glyph of Siphon Life now heals the Warlock for 0.5% of their maximum health when [[Corruption]] or [[Immolate]] deal periodic damage.\nAffliction\n*[[Haunt (warlock talent)]] now refunds a [[Soul Shard]] when it is dispelled.\nDestruction\n*[[Fire and Brimstone]] no longer requires a [[Burning Ember]] to cast. Instead, the spell causes [[Immolate]], [[Incinerate]], [[Conflagrate]], and Curse spells to consume a Burning Ember when cast, and the effect remains active as long as the Warlock has at least 1 Burning Ember remaining.\nItem Sets\n*Warlock PvP 2-piece set bonus no longer reduces cooldown on Unending Resolve and have been replaced by the former 4-piece set bonus where the Warlock's Twilight Ward absorbs damage from all magical schools.\n*Warlock PvP 4-piece set bonus now increases damage dealt by Agony, Corruption, Doom, Immolate, and Unstable Affliction by 10%.\n\n===Warrior===\nGeneral\n*[[Defensive Stance]] now decreases damage taken by 25%, up from 15%.\n*[[Shield Wall]]'s cooldown has been reduced to 3 minutes, down from 5 minutes.\nTalents\n*[[Enraged Regeneration]] no longer costs rage to use, instantly heals the Warrior for 5% of their total health, and healing an additional 5% over 5 seconds. Using the ability while Enraged doubles the healing effects to 10% of the Warrior's total health and an additional 10% over 5 seconds.\n*[[Second Wind]] no longer generates rage when the Warrior is struck by a Stun or Immobilize effect.\n**Arms and Fury Warriors receive [[Unbridled Wrath|a passive ability]] that enables them to generate rage when struck by a Stun or Immobilize effect at level 56.\n*[[Spell Reflection]] is no longer consumed by spells from player pets and guardians.\n*[[Vigilance]] now resets the cooldown on [[Taunt (warrior ability)]] in addition to its current effects.\nArms\n*[[Sweeping Strikes]]' damage to secondary targets should no longer be affected by [[Resilience]] or [[PvP Power]] if the primary target was a player as both had already been factored in for the initial damage calculation.\nProtection\n*[[Bastion of Defense]] now reduces the cooldown of Shield Wall by 1 minute, down from a 3-minute reduction. For Protection Warriors, this results in no net change to Shield Wall's cooldown.\n*[[Shield Slam]] now receives a 50% bonus to attack damage from attack power (down from 100%) for Warriors below level 85.\n*[[Unwavering Sentinel]] no longer increases the damage reduction of Defensive Stance by 10%.\n\n==Quests==\n*[[Shado-Pan]] and [[August Celestials (faction)|The August Celestials]] daily quests no longer have a faction prerequisite to be Revered with the [[Golden Lotus]].\n*[[A Test of Valor (quest)]]: Reduced the amount of Valor needed for this achievement to 3000 [[Valor Points]], down from 6000.\n*[[Flames of the Void]]: Fixed an issue where players were unable to mount the War Serpents.\n*[[The Strength of One's Foes]]: All bosses in [[Mogu'shan Vaults]], [[Heart of Fear]], and [[Terrace of the Endless Spring]] now have a chance to drop either a [[Sigil of Power]] or [[Sigil of Wisdom]].\n\n==Creatures==\n*Creatures that are outdoors in the world and are Level-90 and above now have a chance to drop [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]].\n*[[Pandarian champion|Rare spawns]] in Pandaria (except [[Zandalari Warscout]]s, and [[Zandalari Warbringer]]s) and [[Kor'kron Commander|bosses]] in [[Battlefield: Barrens]] will now always drop Lesser Charms of Good Fortune.\n*Rare spawns in Pandaria (except those on [[Isle of Thunder]]) now have a chance to drop a [[BoP|bind-on-pickup]] invitation to the [[Brawler's Guild]].\n*[[Oondasta]]\n**[[Shiny Pile of Refuse]] now has a chance to contain a [[Primal Egg]], and a number of [[Giant Dinosaur Bone|Dinosaur Bones]].\n**Spitfire Beam no longer increases in damage with each jump, deals a flat 200,000 damage(up from 150,000 damage), and jumps to 99 targets (up from 20 targets).\n*Zandalari NPCs on the Isle of Thunder should now drop Zandalari Journals needed for the [[Zandalari Library Card]] achievement more frequently. The sell value of Zandalari Journals to vendors have been decreased to adjust for the increased drop rates.\n\n==Pet Battles==\n===General===\n*Bonus damage has been added to many basic abilities, at the cost of slightly reduced accuracy.\n**Check out our blog: [http://us.battle.net/wow/en/blog/9425567/ Pet Battle Accuracy Changes in Patch 5.3] for additional information.\n*Pet Battle Duels are now available in all dungeons and raids. Enjoy!\n*Pet Battles in the wild and duels are now viewable by other players in the world.\n*Hit Chance is now displayed for all abilities.\n*Battle Pet Abilities no longer have a base chance to miss or be dodged by opposing pets of the same level.\n*Reduced the chance to miss when fighting higher-level opponents from 5% per level to 2% per level.\n*A series of new achievements and rewards have been added for max-level matchmaking PvP pet battles\n*Wins for max-level, matchmaking PvP pet battles can now be tracked in statistics.\n*Battle pets' recent ability loadouts will now be saved when pets are swapped in and out of battle slots.\n*Pandaren Spirit Pet Supplies now has a chance to drop a family specific rare Battle-Stone.\n*Species specific Flawless Battle-Stones are now [[Bind to Account|Bind to Battle.net account]].\n*[[Black Claw]] now deals 20% less damage.\n*[[Blistering Cold]] had now deals 100% more damage.\n*[[Corrosion (pet battle ability)]] now deals 5 damage-per-round, up from 2, and increases damage taken by 2, down from 5.\n*[[Counterspell (pet battle ability)]] now deals 10 damage in addition to the ability's previous effects.\n*[[Deep Freeze (pet battle ability)]] now has a 10% reduced chance to hit.\n*[[Fury of 1,000 Fists]] now has a 4-round cooldown, up from 3 rounds.\n*[[Haymaker]] now has a 3-round cooldown.\n*[[Headbutt]] now has a 4-round cooldown, up from 3 rounds.\n*[[Hunting Party (pet battle ability)]] now has an increased cooldown of 4 rounds, up from 3 rounds.\n*[[Impale]] now has a cooldown of 2 rounds, down from 5 rounds, deals 17% less damage, and no longer deals damage as a percentage of the target\u2019s health. The ability now deals a flat amount of bonus damage instead.\n*[[Interrupting Gaze]] now deals 50% more damage.\n*[[Interrupting Jolt]] now has a 4-round cooldown, down from 5 rounds.\n*[[Kick (pet battle ability)]] now deals 50% more damage.\n*[[Minefield]] now has a 5-round cooldown, and lasts for 9 rounds, down from 10 rounds.\n*[[Mudslide]] now has a 4-round cooldown, up from 3 rounds.\n*[[Predatory Strike]] no longer deal damage as a percentage of the target\u2019s health. The ability now deals a flat amount of bonus damage instead.\n*[[Quicksand]] now has a 4-round cooldown, up from 3 rounds.\n*[[Reckless Strike]] now has a 1-round cooldown.\n*[[Rupture (pet battle ability)]] now has a 4-round cooldown, up from 3 rounds.\n*[[Shock and Awe]] now has a 4-round cooldown, up from 3 rounds.\n*[[Soulrush]] now has a 4-round cooldown, up from 3 rounds.\n*Fixed an issue where pet abilities that had a chance to stun were not working correctly.\n\n===Battle Pets===\n*A number of new battle pets have been added to the [[Throne of Thunder]] and [[Isle of Thunder]]. Happy hunting!\n*Whispers from pet tamers in the north have spread word of an elusive new battle pet that can be found in the frozen tundras of [[Northrend]]. The [[Unborn Val'kyr]] awaits.\n*Battle Pet drops have been added to Burning Crusade raids. These new pets can be obtained from raid bosses in [[Karazhan]], [[Tempest Keep]] and [[Serpentshrine Cavern]]. Obtaining all of these new pets will reward players with a new battle pet, [[Tito]]!\n*[[Tiny Blue Carp]], [[Tiny Green Carp]], [[Tiny Red Carp]], and [[Tiny White Carp]] are now tradable, and can be caught more than once.\n*[[Electrified Razortooth]]: swapped positions of [[Blood in the Water]] and [[Paralyzing Shock]] abilities.\n*[[Ethereal Soul-Trader]] has been returned to his original, larger size.\n*[[Teldrassil Sproutling]], [[Withers]], and [[Ruby Sapling]]'s [[Shell Shield (pet battle ability)]] has been replaced with a new ability: [[Ironbark (pet battle ability)]].\n\n===Battle Pet Quests===\n*A new [[The Longest Day|achievement]] and [[Marked Flawless Battle-Stone|reward]] has been added for characters that complete every Pet Battle daily quest in a single day.\n*Protection for bad luck streaks have been added to Battle-Stones from pet supplies bags and wild battles. Each bag or battle that does not provide a stone has a progressively better chance to award a stone to the player.\n*Beasts of Fable daily quest has been broken into three separate chapters. Players can now choose to do any or all of the chapters each day. Rewards have been modified to include a new consumable that will boost battle pet XP for a limited time.\n*All Pet Battle daily quests on Pandaria, Beasts of Fable and Spirit Tamer quests will now award experience, [[Valor Points]], and [[Lesser Charm of Good Fortune]].\n*All Pet Battle quests will now award experience.\n*Increased the difficulty of elite pets on the Beasts of Fable quest.\n*A new weekly quest for max-level, matchmaking PvP pet battles has been added.\n\n==Raids, Dungeons, and Scenarios==\n===Loot Specialization===\n*Players can now choose to receive loot for specializations other than the one that's currently active. This feature can be accessed by right-clicking on the character portrait and selecting the option from the drop-down list. Loot specialization is available for [[bonus roll]]s, Raid Finder, and Pandarian quest rewards.\n**Please check out the blog: [https://worldofwarcraft.blizzard.com/en-us/news/9447311 Patch 5.3 Adds Off-Spec Loot and Rewards] for an in-depth explanation of how the Loot Specialization system will work.\n\n===Raids===\n*Bonus rolls, [[Treasures of the Thunder King]], [[Amber Encased Treasure Pouch]], [[Cache of Mogu Riches]], and [[Dividends of the Everlasting Spring]] now have a small chance to award a larger than usual amount of gold.\n*[[Bonus roll|Bonus Roll]]\n**Protection for bad luck streaks have been added to bonus rolls. Each bonus roll that does not provide loot has a progressively better chance to award loot to the player.\n**Reduced the number of [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]] needed for the [[Mogu Runes of Fate]] weekly quest to 50, down from 90.\n*[[Serpentshrine Cavern]]\n**For the [[Fathom-Lord Karathress]] encounter, Cataclysmic Bolt now deals 10% of the target's maximum health plus 5000 damage, down from 50% of target's maximum health, the stun effect can be removed by abilities that free the player from stuns, and the spell now targets any character class instead of only targeting character classes with mana.\n**[[Lady Vashj (tactics)|Lady Vashj]]\n***[[Coilfang Strider]]'s Panic ability now activates every 4 seconds, up from every 2 seconds.\n***Shock Blast's stun effect can now be removed by abilities that free the player from stuns.\n***[[Tainted Elemental]]s now despawn after 20 seconds, up from 15 seconds.\n*[[Eye (Tempest Keep)|Tempest Keep]]\n**For the [[High Astromancer Solarian]] encounter, Nether Scryer's Domination spell now has a 2 second cast time, up from instant cast, and can be silenced.\n**For the [[Void Reaver]] encounter, the radius for Arcane Orb has been reduced to 15 yards, down from 20 yards.\n*[[Terrace of Endless Spring]]\n**Players no longer need to have defeated [[Grand Empress Shek'zeer]] to enter the Terrace of Endless Spring in Normal difficulty.\n*[[Throne of Thunder]]\n**[[Valor Points]] are awarded for defeating the following lieutenants in Throne of Thunder.\n***[[Stormbringer Draz'kil]]: 20 Valor Points\n***[[Manchu]]: 10 Valor Points each\n***[[Weisheng]]: 10 Valor Points each\n***{[[Eternal Guardian (Throne of Thunder)|Eternal Guardian]]: 5 Valor Points each\n**[[Horridon]]\n***[[Amani'shi Beast Shaman]] no longer casts Chain Lightning while mounted on [[Amani Warbear]]s.\n**[[Primordius]]\n***The [[Genetically Unmodified Organism]] achievement has been redesigned. It now requires players to defeat Primordius while none of the players in the raid received a harmful mutation.\n\n===Dungeons===\n*Completing the Challenge mode daily quest now awards a [[Heroic Cache of Treasures]] with a chance to contain an epic item!\n*Minimum level requirement to enter and equip items found in the following dungeons via [[Dungeon Finder]] have been adjusted.\n**[[Gate of the Setting Sun]] is now available in Normal difficulty, and accessible to level 89 characters.\n**[[Grim Batol (instance)|Grim Batol]] is now accessible at level 84, down from level 85.\n**[[Lost City of the Tol'vir]] is now accessible at level 84, down from level 85.\n**[[Magisters' Terrace (Burning Crusade)|Magisters' Terrace]] is now accessible at level 68, down from level 70.\n**[[Mechanar|The Mechanar]] is now accessible at level 68, down from level 70.\n*[[Zul'Gurub (instance)|Zul'Gurub]]\n**[[Bloodlord Mandokir (tactics)|Bloodlord Mandokir]] will no longer use Decapitate against his current target.\n\n===Scenarios===\n*Lorewalker Cho now allows heroes to take part in either faction's Scenarios, so players can see what the other side has been up to.\n*[[Crypt of the Forgotten Kings]]\n**Fixed an issue where Uncontrolled Anger was improperly causing characters to drop out of stealth.\n\n==PvP==\n*A blog titled: [http://us.battle.net/wow/en/blog/9331806/ PvP Gear in Patch 5.3] has additional information and reasoning behind the PvP changes in 5.3.\n*All level-90 characters now have a base [[Resilience]] of 65%.\n*All characters below level 90 now have a base Resilience of 40%.\n*Battle Fatigue now reduces the amount of healing and absorbs by 45%, up from 30%.\n*[[PvP Power]] conversion ratio to obtain 1% damage at level 90 has been changed from 265 to 400.\n*PvP Power bonus to healing is now based on class and specialization.\n**Healing specializations receive a 100% bonus to healing from PvP Power.\n**Damage specializations for Druids, Monks, Paladins, Priests, and Shaman receive a 70% bonus to healing from PvP Power.\n**All other specializations and classes (including tanking) receive a 40% bonus to healing from PvP Power.\n\n===PvP Items===\n*[[Season 13]] Tyrannical gear had their item levels increased to ilevel 496, up from ilevel 493. Weapons and shields/off-hand items remain unchanged at ilevel 498.\n*Season 13 Tyrannical Elite gear had their item levels decreased to ilevel 496, down from ilevel 512.\n*Resilience has been removed from most PvP gear.\n**Resilience gems and enchants will continue to be available and remain unchanged.\n**4-piece PvP set bonus for all Season 12 and 13 armor sets that granted 1000 Resilience now grants 1000 PvP Power instead.\n*[[PvP Power]] will remain exclusively on PvP gear.\n*The amount of PvP Power and Resilience on gems and [[Mystic Cogwheel]] have been reduced by 50%.\n*Tyrannical weapons no longer have a conquest-earned prerequisite to purchase them.\n*[[Enchant Weapon - Glorious Tyranny]] weapon enchantment now grants 600 PvP Power instead of 400 PvP Power and 200 Resilience.\n*New weapon enchantment: [[Enchant Weapon - Bloody Dancing Steel]] is functionally equivalent to [[Enchant Weapon - Dancing Steel]], shares the same visual effect as Glorious Tyranny, costs a scroll of the base enchant, and requires a 2200 rating.\n*New weapon enchantment: [[Enchant Weapon - Spirit of Conquest]] is functionally equivalent to [[Enchant Weapon - Jade Spirit]], shares the same visual effect as Glorious Tyranny, costs a scroll of the base enchant, and requires a 2200 rating.\n*[[Tyrannical Gladiator's Tabard]] and [[Tyrannical Gladiator's Greatcloak]] are available as new prestige items at 2500 rating for 1000 Conquest Points.\n*[[Big Zokk Torquewrench]] has returned from their leave of absence.\n*Glorious Conquest Quartermasters ([[Acon Deathwielder]], [[Ethan Natice]]) have returned after refitting their wares.\n\n===Battlegrounds and Arenas===\n*Battlegrounds, Rated Battlegrounds, and Arenas now have an [[PvP item level cap|ilevel cap]]. All gear will be scaled down to ilevel 496.\n*To facilitate a more balanced team composition, players now need to select a role when queuing up for a Battleground or Rated Battleground. Role selection should have no effect on queue times. The matchmaking system attempts to balance the number of healers on each team based on the ratio of healers and non-healers queued.\n*Mid-season catch-up for [[Conquest Points]] has been added. Players will now see their cap on Conquest Points increased by 1000 per week since the start of Season 13 minus the amount of Conquest Points earned so far in this season.\n*Picking up the Alliance or Horde flag while in a Rated Battleground now increases damage taken by 50% for characters in a tanking specialization, and increases damage taken by 20% for characters in a non-tanking specialization.\n*[[Dalaran Arena]]: Masons of Dalaran have been hard at work installing steps in the two remaining corners of the arena.\n*[[Eye of the Storm]]: The starting platforms have been lowered.\n\n==Professions==\n*[[Herbalism|Herbalists]] of low skill can now pick herbs in Pandaria for a small amount of usable material. The yield an herbalist will be able to harvest from each node is determined by skill level.\n*[[Mining|Miners]] of low skill can now mine mineral deposits in Pandaria for a small amount of usable material. The yield a miner will be able to harvest from each node is determined by skill level.\n\n==Items==\n*The [http://us.battle.net/wow/en/blog/9241762/ Voidbinders are back] in capital cities and shrines.\n**PvE [[Item Upgrade]]s\n***Items upgradable by Valor now require 250 [[Valor Points|Valor]] to upgrade per 4 item levels, for a total of 500 Valor for 8 item levels per item. This is retroactive to all items that use Valor.\n***Items upgradable by Justice now require 750 [[Justice Points|Justice]] to upgrade per 8 item levels, for a total of 750 Justice for 8 item levels per item. This is retroactive to all items that use Justice.\n**PvP Item Upgrades\n***Malevolent Gladiator's Conquest ([[Season 12]]) items that have upgrades available are still upgradable at their original costs.\n***Dreadful Gladiator's Honor (Season 12) items that have upgrades available are still upgradable at their original costs.\n***No other PvP items are upgradable.\n*Players can now use items that are in the bank or [[Void Storage]] for [[transmogrification]].\n*Reduced the amount of [[Justice Points|Justice]], [[Honor Points|Honor]], and [[Darkmoon Prize Ticket|Darkmoon Faire tickets]] needed to upgrade [[heirloom]] items by 60%.\n*Players starting on Cataclysm content can purchase level-80 gear from [[Iris Moondreamer]] in [[Mount Hyjal|Hyjal]] and [[Erunak]] in [[Vashj'ir]] to more easily qualify for [[Blackrock Caverns]] and Abyssal Maw: [[Throne of Tides]].\n*:''The items available are the same [[Cataclysm starting sets]] that were previously used for [[Scroll of Resurrection]] level 80 boosts.''\n*Two new purchasable items using {{item|Elder Charm of Good Fortune|Elder Charms of Good Fortune}} have been added to the quartermasters on the [[Isle of Thunder]]. \n**An [[Empty Supply Crate]] that can be placed and jumped on in the [[Troves of the Thunder King]] Scenario.\n**Excess Elder Charms of Good Fortune can be used to purchase an [[Arcane Trove]]/[[Sunreaver Bounty]].\n*A [[Mount Parade|new achievement]] and reward has been added for obtaining 200 mounts.\n*[[Unclaimed Black Market Container]]s are now available on the [[Black Market Auction House]]. What's inside? It's a mystery! When opened, the container has a chance to contain any item that can be available on the BMAH.\n*[[Eye of the Black Prince]] can now be used to apply a prismatic socket on Reborn weapons.\n*Justice Heirloom vendors now have Heirloom shields in stock.\n*{{item|Kirin Tor Beacon|Kirin Tor}} and {{item|Sunreaver Beacon|Sunreaver Beacons}} are now usable from inside the Throne of Thunder.\n*[[Shado-Pan Assault]] belts now require {{rep|Friendly}} reputation to purchase, down from {{rep|Revered}}.\n*Shado-Pan Assault chest pieces now require {{rep|Honored}} reputation to purchase, down from Revered.\n*The following PvP trinkets now have a cooldown of 2 minutes, down from 5 minutes.\n**[[Bequeathed Insignia of the Alliance]]\n**[[Bequeathed Insignia of the Horde]]\n**[[Inherited Insignia of the Alliance]]\n**[[Inherited Insignia of the Horde]]\n**[[Inherited Mark of Tyranny]]\n**[[Insignia of the Alliance]]\n**[[Insignia of the Horde]]\n*The following trinkets have on-use effects reduced by 33%, but have a 100% increase to duration when used in a Battleground or Arena.\n**[[Fabled Feather of Ji-Kun]]\n**[[Renataki's Soul Charm]]\n**[[Steadfast Talisman of the Shado-Pan Assault]]\n**[[Wushoolay's Final Choice]]\n*The following trinkets have on-use effects reduced by 75%, but have a 400% increase to duration when used in a Battleground or Arena.\n**[[Delicate Vial of the Sanguinaire]]\n**[[Gaze of the Twins]]\n**[[Primordius' Talisman of Rage]]\n**[[Talisman of Bloodlust]]\n*All other trinkets above ilevel 502 have on-use effects reduced by 50%, but have a 100% increase to duration when used in a Battleground or Arena.\n*[[Courageous Primal Diamond]] had its clearcasting effect renamed to \"Lucidity\" to differentiate it from other spells with that name.\n\n==UI==\n*In-game support system is now a direct portal to the Battle.net Support site, allowing players to access the knowledge base and support contact system. \n*[[Dungeon Journal]] has been reorganized. The model view has moved into a sub-tab and replaced with a listing of bosses for the dungeon or raid.\n*A new option to display pet tamers on the world map has been added. This should help players looking to find unlocked Pet Battle daily quests.\n*When using name plates, castbars will now display for all creatures and players in the area.\n\n==Bug Fixes==\n*Fixed an issue in [[Brawl'gar Arena]] where players boarding [[Skybag|The Skybag]] may be unable to spectate brawls that were taking place.\n\n==Client patches==\n{|class=darktable\n!Build !! Date !! Notes\n|-\n| 17128 || 2013-06-28 || Unspecified\n|-\n| 17116 || 2013-06-26 || Unspecified\n|-\n| 17055 || 2013-06-11 || Unspecified\n|-\n| 16992 || 2013-05-23 || Fixed sound-related issue, and Divine Protection casting while stunned<ref>{{ref web|url=https://twitter.com/Rygarius/status/337738348435234816|title=Twitter|author={{Blizz}}[[Rygarius]]|accessdate=2013-05-24|quote=''The small client patch should fix sound related issues and Divine Protection casting while stunned.''}}</ref>\n|-\n| 16983 || 2013-05-22 || Unspecified\n|-\n| 16981 || 2013-05-21 || Fixed crash on Mac, stopped AVG triggering as Keylogger <ref>{{ref web|url=https://twitter.com/Rygarius/status/337055549227163648|title=Twitter|author={{Blizz}}[[Rygarius]]|accessdate=2013-05-22|quote=''Binary patch, fixed a crash on Macs w/certain chipsets and stopped triggering anti-virus tagging files as bad.''}}</ref>\n|-\n| 16977 || 2013-05-21 || Initial release\n|}\n\n==References==\n{{reflist}}\n\n{{Patches}}\n\n[[Category:World of Warcraft patches|5.3.0]]\n[[Category:Named patches|Escalation]]"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-parent.wikitext b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-parent.wikitext
+new file mode 100644
+index 000000000..4138a6e77
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-parent.wikitext
+@@ -0,0 +1,505 @@
++{{Redirect|Escalation|the questline|Mists of Pandaria campaign#Escalation}}
++{{Patchbox
++|Patchname = Escalation
++|Image = [[Image:Chapter26.png|256px]]
++|Caption = 
++|Release = May 21, 2013
++|Latest = June 28, 2013
++|Version = 16977
++|Latestv = 17128
++|toc = 50300
++|api = 1
++|Highlights = 
++|Related = 
++* [https://worldofwarcraft.blizzard.com/en-us/news/9679398 Patch Notes]
++* [https://worldofwarcraft.blizzard.com/en-us/news/9241762 Item Upgrades in 5.3]
++* [https://worldofwarcraft.blizzard.com/en-us/news/9331806 PvP Gear in Patch 5.3]
++|Prev = 5.2.0
++|Current = 5.3.0
++|Next = 5.4.0
++}}{{tocright}}
++[[File:Escalation key art.jpg|thumb|Escalation key art]]
++
++'''Patch 5.3.0: Escalation''' is the second non-raid patch of ''[[World of Warcraft: Mists of Pandaria]]'' and focuses on the escalating tensions between [[Garrosh]] and [[Vol'jin|Vol'jin's]] [[Darkspear Rebellion]]. The patch includes a new world event in the [[Barrens]], the addition of Heroic Scenarios, a brand new [[Arena]] and [[Battleground]], new foes to fight in the [[Brawler's Guild]]  and much more.
++
++==General==
++*'''New Battleground&#58; [[Deepwind Gorge]]'''
++**In the new Battleground situated in the [[Valley of the Four Winds]], the [[Alliance]] and [[Horde]] continue their war for Pandaria's precious resources. While the two factions battle for control over mines, they must also protect their own resources from being stolen and turned against them!
++*'''New Arena&#58; [[Tiger's Peak|The Tiger's Peak]]'''
++**Gladiator hopefuls have a new location to test their mettle amidst the [[Kun-Lai Summit|Kun-Lai]] mountain tops, in the training grounds of the powerful [[Shado-Pan]]. Players must make use of the looming tiger statues and fenced platforms to gain an advantage that will bring victory and glory!
++*'''New Scenario&#58; [[Battle on the High Seas]]'''
++**Help your faction fend off enemy forces in the midst of a battle for naval supremacy on the High Seas.
++*'''New Scenario<nowiki>:</nowiki> [[Blood in the Snow]]'''
++**An agent of [[Zandalar tribe|Zandalar]] has infiltrated [[Dun Morogh]] and rallied the [[Frostmane tribe|Frostmane trolls]]. At [[Varian Wrynn|Varian's]] request, [[Moira Thaurissan|Moira]] will lead her personal guard against them once the king's champions have stopped the magical storm protecting [[Shimmer Ridge]].
++*'''New Scenario&#58; [[Dark Heart of Pandaria]]'''
++**[[Bilgewater Cartel|Goblin]] engineers have been excavating in the [[Vale of Eternal Blossoms]] to find a mysterious artifact, but all they've found is trouble; you have been personally called upon by [[Garrosh Hellscream|the Warchief]] to aid them in their hour of need.
++*'''New Scenario&#58; [[Secrets of Ragefire]]'''
++**Infiltrate the Emberdeep Caverns and assist the [[Gob Squad]] in investigating a recent disappearance in [[Durotar]].
++*'''Heroic Scenarios'''
++**A heroic difficulty for Scenarios have been added and are designed to provide challenging content for small groups of well-seasoned adventurers. Completing a Heroic Scenario awards [[Valor Points]], and a chance to obtain high level Epic quality items.
++**Heroic scenarios require a pre-made group to join.
++**Heroic scenarios offer bonus objectives that will reward additional valor if completed.
++***An option to run a random heroic scenario has been added as a drop-down in the scenario tab in Dungeon Finder.
++**Players can complete a normal or heroic scenario for bonus valor each day, but not both.
++**Six heroic scenarios will be available in patch 5.3. Four are new and two are upgrades of existing normal scenarios.
++***[[Battle on the High Seas]]
++***[[Blood in the Snow]]
++***[[Dark Heart of Pandaria]]
++***[[Secrets of Ragefire|The Secrets of Ragefire]]
++***[[Crypt of Forgotten Kings]]
++***[[A Brewing Storm]]
++*'''Quest Campaign&#58; Escalation'''
++**The [[Darkspear tribe|Darkspear Trolls]] are in [[Darkspear Rebellion|open rebellion]] against the Warchief! Aid your faction in preparing to rout [[Garrosh Hellscream]] from [[Orgrimmar]]
++***Alliance heroes will scout Orgrimmar's outskirts and engage in [[SI:7]] espionage to weaken Garrosh's power structure.
++***Horde heroes will help [[Vol'jin|Vol'jin's]] insurgency survive a [[Kor'kron]] assault and advance towards the Horde capital.
++**Visit [[Lorewalker Cho]] at the [[Seat of Knowledge]] in the [[Vale of Eternal Blossoms]] to [[The King and the Council|begin questing]].
++*'''Battlefield&#58; Barrens'''
++**Put the stranglehold on Orgrimmar by undermining the Kor'kron supply chain in [[Northern Barrens]].
++***Collect resources by killing Kor'kron loyalists and their supporters.
++***Get a group together to kill [[Kor'kron Commander|Kor'kron leaders]] for bonus resources.
++***Escort your [[Barrens Caravan|faction's]] [[Pack Kodo (Battlefield: Barrens)|caravans]] across the zone for even more additional resources.
++**The [[Darkspear Rebellion]] will reward your efforts to undermine the Warchief by helping you upgrade Latent Kor'kron Armor into usable gear.
++**Participate in the Escalation Quest Campaign to learn how to engage in the Barrens conflict.
++*'''The Legendary Quest Continues'''
++**Journey with [[Wrathion]] to the four corners of [[Pandaria]] to speak with the [[August Celestial]]s.
++**Champions will have had to complete [http://us.battle.net/wow/en/blog/8636639/ Wrathion's earlier tasks] (including "[[Heart of the Thunder King (quest)]]") to continue.
++*'''[[Brawler's Guild]] Updates'''
++**Test your might against two new tiers of bosses in the [[Brawl'gar Arena]] in [[Orgrimmar]] or [[Bizmo's Brawlpub]] in [[Stormwind]].
++**New VIP areas are now accessible for brawlers at or above rank 8.
++**[[Bizmo]] has raised the floor in his arena to hide the bodies. Or... maybe to improve the sight lines. We'll never know for sure.
++**Special "[[Challenge Card]]s" can now drop from mobs or reward satchels, allowing you to unlock unique bonus bosses.
++**Brawlers that manage to prove their mettle and reach Rank 9 will receive an additional invitation to the Brawler's Guild that can be traded or given to a friend.
++*Experience needed to increase from level 85 to level 90 has been reduced by 33%.
++
++==Classes==
++*Healing abilities and spells which automatically pick targets now follow consistent rules for targeting logic. Targets with lower % health will be preferred, and players are weighted more heavily than pets.
++*[[Avoidance (passive)]] passive on all pets and guardians has been changed. It now reduces [[Area of Effect|area-of-effect]] damage from creatures and NPCs by 95% (up from 90%), and from players by 50% (up from 0%). Warlock pets already had the new version of Avoidance since Patch 5.0 and will not notice any differences.
++*The following summoned pets/totems will now chain cast their spells with no delay between casts, allowing them to cast their spells more frequently in the same amount of time.
++**Death Knight: [[Summon Gargoyle]]
++**Druid: [[Force of Nature]] (Balance, Restoration), [[Mirror Image (Symbiosis)]] (Symbiosis)
++**Mage: [[Mirror Image]], [[Summon Water Elemental]]
++**Shaman: [[Searing Totem]]
++**Warlock: [[Summon Doomguard]], [[Summon Terrorguard]], [[Wild Imps]]
++
++===Death Knight===
++General
++*[[Blood Plague (Wrath Classic)]] no longer benefits from the damage increase granted by [[Tricks of the Trade]].
++*[[Frost Fever (Wrath Classic)]] no longer benefits from the damage increase granted by [[Tricks of the Trade]].
++*[[Necrotic Strike]]'s healing absorption effect has been increased to 225% from attack power, up from 200%.
++Talents
++*[[Gorefiend's Grasp]] can now affect a maximum of 4 player targets. The number of non-player targets that can be affected remains unlimited.
++Unholy
++*[[Sudden Doom]] now requires the Death Knight to be in [[Unholy Presence]] to activate the effect that causes [[Death Coil]] to cost no [[Runic Power]].
++*[[Unholy Might]] now increases the Death Knight's Strength by 10%, down from 15%.
++
++===Druid===
++General
++*[[Mark of the Wild]] had its mana cost reduced to 5%, down from 10%.
++*[[Symbiosis]]: [[Intimidating Roar]] had its cooldown increased to 90 seconds, up from 60 seconds.
++*[[Tranquility]] now targets 12 raid members (up from 5) each time it heals when used in a 25-player instance. This change also applies to players using the Symbiosis version of [[Tranquility (Symbiosis)]].
++Talents
++*[[Force of Nature]] is no longer on [[global cooldown]] and summons a single [[Treant]]. The Treant no longer has a control bar, immediately uses its special abilities on the Druid's current target, and accumulates 1 charge every 20 seconds up to a maximum of 3 charges.
++**Restoration version of the Treant now casts [[Swiftmend]] on the Druid's target when summoned. This version of Swiftmend does not require or consume a heal-over-time effect on the target.
++Glyphs
++*[[Glyph of Solar Beam]] have been removed and replaced with Glyph of Omens.
++*New Glyph: [[Glyph of Omens]]: While the Druid is not in a Solar or Lunar [[Eclipse]], the following abilities will generate 10 Solar or Lunar Energy: [[Entangling Roots]], [[Cyclone]], [[Faerie Fire]], [[Faerie Swarm]], [[Mass Entanglement]], [[Typhoon]], [[Disorienting Roar]], [[Ursol's Vortex]], and [[Mighty Bash]].
++Balance
++*[[Solar Beam]] is now more responsive when players enter and leave the beam's area-of-effect.
++Feral
++*[[Savage Roar]] now increases physical damage done by 40%, up from 30%.
++Guardian
++*[[Mastery: Nature's Guardian]] is now 33% stronger (2% per point instead of 1.5%).
++Restoration
++*[[Ironbark]] now has a cooldown of 60 seconds, down from 2 minutes.
++*[[Swiftmend]]'s area-of-effect component now heals injured allies within 10 yards, up from 8 yards.
++*[[Wild Mushroom: Bloom]]: Healing from this spell has been increased by 100%, which includes all bonus healing from [[Rejuvenation]] overhealing. In addition, the radius has been increased to 10 yards (up from 8).
++Item Sets
++*Restoration PvP 4-piece set bonus now reduces the cooldown of [[Ironbark]] by 30 seconds (down from 90 seconds).
++
++===Hunter===
++General
++*Hunters now have 50 pet [[stable master|stable]] slots, up from 20.
++*Cooldown on crowd control abilities for several Hunter pet families have changed.
++**Basilisk pet family's [[Petrifying Gaze]] cooldown is now 2 minutes (up from 1 minute).
++**Bat pet family's [[Sonic Blast (pet ability)]] cooldown is now 2 minutes (up from 1 minute).
++**Crane pet family's [[Lullaby]] cooldown is now 2 minutes (up from 1 minute).
++**Porcupine pet family's [[Paralyzing Quill]] cooldown is now 2 minutes (up from 1 minute).
++**Shale Spider pet family's [[Web Wrap (pet ability)]] cooldown is now 90 seconds (up from 45 seconds).
++**Worm pet family's [[Burrow Attack]] Attack has had its cooldown reduced to 14 seconds (down from 20 seconds).
++*[[Aspect of the Hawk]] now increases ranged attack power by 25%, up from 15%.
++*[[Revive Pet]] now has a cast time of 4 seconds, down from 6 seconds.
++Talents
++*[[Aspect of the Iron Hawk]] now increases ranged attack power by 25%, up from 15%.
++*[[Binding Shot]] is no longer a talent and learned by Marksmanship Hunters at level 30.
++*[[Blink Strike]] has been renamed [[Blink Strikes]] and turned into a passive ability. The pet's Basic Attacks deal 50% increased damage, can now be used from 30 yards away, and will instantly cause the pet to teleport behind their target.
++*[[Intimidation]] is now a level-30 talent available to all Hunter specializations and no longer learned by Beast Mastery Hunters at level 20.
++Beast Mastery
++*[[Beast Cleave]] now deals 75% of the original damage, up from 50%.
++*[[Exotic Beasts]] no longer reduces the cooldown of pet special abilities by 30%.
++Marksmanship
++*[[Bombardment (Cataclysm Classic)]] now increases the damage of Multi-Shot by 60%, up from 30%.
++Item Sets
++*PvP 2-piece set bonus has been redesigned. Using Arcane Shot now causes the Hunter's PvP Power to increase by 800 for 6 seconds.
++
++===Mage===
++General
++*[[Arcane Brilliance]] had its mana cost reduced to 1%, down from 4%.
++*[[Arcane Explosion]] now deals 40% more damage.
++*[[Blizzard]] now deals 40% more damage.
++*[[Dalaran Brilliance]] had its mana cost reduced to 1%, down from 4%.
++*[[Flamestrike]] now deals 100% more initial damage. Periodic damage remains unchanged.
++*[[Mirror Image]] creates copies that no longer cast Fire Blast, but their Frostbolts do 10% more damage.
++*[[Teleport]]: Vale of Eternal Blossoms and [[Portal (spell)]]: Vale of Eternal Blossoms now have new icons.
++Talents
++*[[Flameglow]] now absorbs damage from each attack made against the Mage equal to 15% of their spellpower (down from 20%).
++*[[Incanter's Ward]] now allows the Mage to gain up to a maximum of 15% increase to spell damage, down from 30%, but the effect now lasts 25 seconds, up from 15 seconds.
++*[[Living Bomb]]'s periodic damage has been increased by 121%. Its explosion damage has been reduced by 78%, but now scales with additional periodic ticks added by haste, and hits all nearby targets (up from 3).
++
++===Monk===
++General
++*[[Legacy of the Emperor]] had its energy cost reduced to 1%, down from 6%.
++*[[Nimble Brew (MoP Classic)]] now also removes horrify effects, and reduces the duration of horrify effects and fear, and is available to all Monk specializations (formerly only available for Brewmaster and Windwalker Monks).
++*[[Spear Hand Strike]] now locks a spell school out for 4 seconds, down from 5 seconds.
++Talents
++*[[Ring of Peace]] had been redesigned. The ability forms an 8-yard sanctuary around a friendly target for 8 seconds, instantly disarming and silencing enemies within the area-of-effect for 3 seconds. Enemies that use abilities other than auto-attacks or cast spells on allies within the Ring of Peace will be disarmed and silenced for 3 seconds. Disarm and silence effects are subject to diminishing returns.
++Brewmaster
++*[[Gift of the Ox]] should now activate its effect more frequently for dual-wielding Monks.
++Mistweaver
++*[[Revival]] now has a healing cap of 15 raid members (up from 6) when used in a 25-player instance.
++Windwalker
++*[[Legacy of the White Tiger]] had its mana cost reduced to 1%, down from 6%.
++*[[Rising Sun Kick]] now causes all targets within 8 yards to take an increased 20% damage from the Monk's abilities, up from 10%.
++*Fixed an issue that caused ticks from [[Fists of Fury]] to sometimes be skipped.
++
++===Paladin===
++General
++*[[Blessing of Kings]] had its mana cost reduced to 5%, down from 22.3%.
++*[[Blessing of Might]] had its mana cost reduced to 5%, down from 22.3%.
++*[[Devotion Aura]] now clears all silence effects when used.
++*[[Divine Protection]] is now usable while stunned.
++Glyphs
++*[[Glyph of the Battle Healer]] now heals a nearby injured friendly target, excluding the Paladin, for 20% of damage dealt while [[Seal of Insight]] is active, down from 30%.
++Holy
++*[[Mastery: Illuminated Healing]] now places an absorb shield for 10% of the amount healed, down from 12%.
++*[[Daybreak (Cataclysm Classic)]] is now a stackable effect with a duration of 10 seconds, stacks up to 2 times, and causes the next [[Holy Shock]] to also heal other allies within 10 yards of the target for an amount equal to 75%/150% of the original healing done. Daybreak no longer incorrectly hits the primary target of the Holy Shock.
++Protection
++*[[Shield of the Righteous]] now reduces physical damage taken by 25%, down from 30%.
++Retribution
++*[[Sword of Light]] now increases damage with two-handed melee weapons by 30%, up from 15%.
++Item Sets
++*[[White Tiger Vestments|Tier-14 Holy Paladin]] 4-piece set bonus now reduces the cooldown of [[Holy Shock]] by 1 second, down from 2 seconds.
++
++===Priest===
++General
++*[[Power Word: Fortitude]] had its mana cost reduced to 1%, down from 4.4%.
++*[[Mass Dispel]] no longer dispels magic effects that are normally undispellable. Cast time has been decreased to 0.5 seconds, down from 1.5 seconds for Discipline and Holy Priests.
++*[[Void Shift]] had its cooldown decreased to 5 minutes, down from 6 minutes for Discipline and Holy Priests. For Shadow Priests, cooldown has been increased to 10 minutes, up from 6 minutes, and the spell is no longer usable while in Arenas or Rated Battlegrounds.
++Glyphs
++*[[Glyph of Mass Dispel]] has been redesigned and no longer reduces cast time. The glyph now enables Mass Dispel to dispel magic effects that are normally undispellable.
++*[[Glyph of Smite]] no longer causes the additional 20% damage dealt by [[Smite]] to transfer into [[Atonement]].
++*Fixed an issue where [[Glyph of Mind Flay]]'s movement speed increase was not stacking correctly.
++Discipline
++*[[Atonement]] now heals nearby friendly targets for 90% of the damage dealt, down from 100%.
++*[[Borrowed Time]] now reduces the cast or channel time of the next Priest spell by 15% after casting Power Word: Shield (was 15% spell haste).
++*[[Penance]] now deals 10% less damage, but healing done is increased by 10%.
++Holy
++*[[Divine Hymn]] now targets 12 raid members (up from 5) each time it heals when used in a 25-player instance.
++Shadow
++*[[Vampiric Embrace]] now has a healing cap of 15 raid members (up from 6) when used in a 25-player instance.
++
++===Rogue===
++Talents
++*[[Cloak and Dagger]] now requires the Rogue to be in Stealth. Shadow Dance will not remove the Stealth requirement for Cloak and Dagger.
++*[[Shuriken Toss]] now deals 100% more damage in the initial ranged attack, damage is no longer doubled when used on targets farther than 10 yards away, and energy cost has been increased to 40 energy, up from 20.
++Glyphs
++*[[Glyph of Cheap Shot]] now increases the duration of [[Cheap Shot]] by 0.5 second, down from 1 second.
++*[[Glyph of Garrote]] now increases the duration of [[Garrote]]'s silence effect by 1 second, down from 1.5 seconds.
++Combat
++*[[Blade Flurry]]'s damage to secondary targets should no longer be affected by [[Resilience]] or [[PvP Power]] if the primary target was a player as both had already been factored in for the initial damage calculation.
++*[[Revealing Strike]] now lasts 24 seconds, up from 18 seconds.
++Subtlety
++*[[Find Weakness]] now bypasses 100% of armor against non-player targets, and bypasses 50% of armor when used against other players (was 70% armor bypass for all targets).
++
++===Shaman===
++General
++*[[Lava Burst]] now has a 2 second cast time, up from 1.5 seconds, and deals 25% more damage.
++*[[Lightning Bolt]] can now be cast while moving.
++Glyphs
++*New Glyph: [[Glyph of Lightning Shield]] causes [[Lightning Shield]] to reduce the amount of damage taken by 10% for 6 seconds after Lightning Shield is triggered.
++*[[Glyph of Unleashed Lightning]] has been removed and replaced with Glyph of Lightning Shield.
++Enhancement
++*[[Feral Spirit]]'s summoned Spirit Wolves are now immune to root and snare effects.
++*[[Lava Lash]] now deals 300% weapons damage, up from 250%.
++*[[Mental Quickness]] now converts 65% of the Shaman's attack power to spell power, up from 55%.
++*[[Stormstrike]] now deals 450% weapon damage, up from 375%.
++
++===Warlock===
++General
++*[[Dark Intent]] had its mana cost reduced to 1%, down from 4%.
++*[[Demonic Gateway]] cast time has been reduced to 3 seconds, down from 5 seconds, gains its first charge after 5 seconds (down from 13 seconds), and gains a new charge every 10 seconds (down from 15 seconds). The summoned gateway has 100% of the summoning Warlock's health, 100% of the Warlock's resilience, and can now be attacked and killed by enemy players.
++*[[Health Funnel]] now causes the [[Soulburn]] portion of the spell to increase healing generated from Health Funnel by 140% instead of instantly restoring 36% health.
++Talents
++*[[Blood Horror]] no longer activates from attacks made by pets.
++Glyphs
++*[[Glyph of Siphon Life]] has been redesigned. Glyph of Siphon Life now heals the Warlock for 0.5% of their maximum health when [[Corruption]] or [[Immolate]] deal periodic damage.
++Affliction
++*[[Haunt (warlock talent)]] now refunds a [[Soul Shard]] when it is dispelled.
++Destruction
++*[[Fire and Brimstone]] no longer requires a [[Burning Ember]] to cast. Instead, the spell causes [[Immolate]], [[Incinerate]], [[Conflagrate]], and Curse spells to consume a Burning Ember when cast, and the effect remains active as long as the Warlock has at least 1 Burning Ember remaining.
++Item Sets
++*Warlock PvP 2-piece set bonus no longer reduces cooldown on Unending Resolve and have been replaced by the former 4-piece set bonus where the Warlock's Twilight Ward absorbs damage from all magical schools.
++*Warlock PvP 4-piece set bonus now increases damage dealt by Agony, Corruption, Doom, Immolate, and Unstable Affliction by 10%.
++
++===Warrior===
++General
++*[[Defensive Stance]] now decreases damage taken by 25%, up from 15%.
++*[[Shield Wall]]'s cooldown has been reduced to 3 minutes, down from 5 minutes.
++Talents
++*[[Enraged Regeneration]] no longer costs rage to use, instantly heals the Warrior for 5% of their total health, and healing an additional 5% over 5 seconds. Using the ability while Enraged doubles the healing effects to 10% of the Warrior's total health and an additional 10% over 5 seconds.
++*[[Second Wind]] no longer generates rage when the Warrior is struck by a Stun or Immobilize effect.
++**Arms and Fury Warriors receive [[Unbridled Wrath|a passive ability]] that enables them to generate rage when struck by a Stun or Immobilize effect at level 56.
++*[[Spell Reflection]] is no longer consumed by spells from player pets and guardians.
++*[[Vigilance]] now resets the cooldown on [[Taunt (warrior ability)]] in addition to its current effects.
++Arms
++*[[Sweeping Strikes]]' damage to secondary targets should no longer be affected by [[Resilience]] or [[PvP Power]] if the primary target was a player as both had already been factored in for the initial damage calculation.
++Protection
++*[[Bastion of Defense]] now reduces the cooldown of Shield Wall by 1 minute, down from a 3-minute reduction. For Protection Warriors, this results in no net change to Shield Wall's cooldown.
++*[[Shield Slam]] now receives a 50% bonus to attack damage from attack power (down from 100%) for Warriors below level 85.
++*[[Unwavering Sentinel]] no longer increases the damage reduction of Defensive Stance by 10%.
++
++==Quests==
++*[[Shado-Pan]] and [[August Celestials (faction)|The August Celestials]] daily quests no longer have a faction prerequisite to be Revered with the [[Golden Lotus]].
++*[[A Test of Valor (quest)]]: Reduced the amount of Valor needed for this achievement to 3000 [[Valor Points]], down from 6000.
++*[[Flames of the Void]]: Fixed an issue where players were unable to mount the War Serpents.
++*[[The Strength of One's Foes]]: All bosses in [[Mogu'shan Vaults]], [[Heart of Fear]], and [[Terrace of the Endless Spring]] now have a chance to drop either a [[Sigil of Power]] or [[Sigil of Wisdom]].
++
++==Creatures==
++*Creatures that are outdoors in the world and are Level-90 and above now have a chance to drop [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]].
++*[[Pandarian champion|Rare spawns]] in Pandaria (except [[Zandalari Warscout]]s, and [[Zandalari Warbringer]]s) and [[Kor'kron Commander|bosses]] in [[Battlefield: Barrens]] will now always drop Lesser Charms of Good Fortune.
++*Rare spawns in Pandaria (except those on [[Isle of Thunder]]) now have a chance to drop a [[BoP|bind-on-pickup]] invitation to the [[Brawler's Guild]].
++*[[Oondasta]]
++**[[Shiny Pile of Refuse]] now has a chance to contain a [[Primal Egg]], and a number of [[Giant Dinosaur Bone|Dinosaur Bones]].
++**Spitfire Beam no longer increases in damage with each jump, deals a flat 200,000 damage(up from 150,000 damage), and jumps to 99 targets (up from 20 targets).
++*Zandalari NPCs on the Isle of Thunder should now drop Zandalari Journals needed for the [[Zandalari Library Card]] achievement more frequently. The sell value of Zandalari Journals to vendors have been decreased to adjust for the increased drop rates.
++
++==Pet Battles==
++===General===
++*Bonus damage has been added to many basic abilities, at the cost of slightly reduced accuracy.
++**Check out our blog: [http://us.battle.net/wow/en/blog/9425567/ Pet Battle Accuracy Changes in Patch 5.3] for additional information.
++*Pet Battle Duels are now available in all dungeons and raids. Enjoy!
++*Pet Battles in the wild and duels are now viewable by other players in the world.
++*Hit Chance is now displayed for all abilities.
++*Battle Pet Abilities no longer have a base chance to miss or be dodged by opposing pets of the same level.
++*Reduced the chance to miss when fighting higher-level opponents from 5% per level to 2% per level.
++*A series of new achievements and rewards have been added for max-level matchmaking PvP pet battles
++*Wins for max-level, matchmaking PvP pet battles can now be tracked in statistics.
++*Battle pets' recent ability loadouts will now be saved when pets are swapped in and out of battle slots.
++*Pandaren Spirit Pet Supplies now has a chance to drop a family specific rare Battle-Stone.
++*Species specific Flawless Battle-Stones are now [[Bind to Account|Bind to Battle.net account]].
++*[[Black Claw]] now deals 20% less damage.
++*[[Blistering Cold]] had now deals 100% more damage.
++*[[Corrosion (pet battle ability)]] now deals 5 damage-per-round, up from 2, and increases damage taken by 2, down from 5.
++*[[Counterspell (pet battle ability)]] now deals 10 damage in addition to the ability's previous effects.
++*[[Deep Freeze (pet battle ability)]] now has a 10% reduced chance to hit.
++*[[Fury of 1,000 Fists]] now has a 4-round cooldown, up from 3 rounds.
++*[[Haymaker]] now has a 3-round cooldown.
++*[[Headbutt]] now has a 4-round cooldown, up from 3 rounds.
++*[[Hunting Party (pet battle ability)]] now has an increased cooldown of 4 rounds, up from 3 rounds.
++*[[Impale]] now has a cooldown of 2 rounds, down from 5 rounds, deals 17% less damage, and no longer deals damage as a percentage of the target’s health. The ability now deals a flat amount of bonus damage instead.
++*[[Interrupting Gaze]] now deals 50% more damage.
++*[[Interrupting Jolt]] now has a 4-round cooldown, down from 5 rounds.
++*[[Kick (pet battle ability)]] now deals 50% more damage.
++*[[Minefield]] now has a 5-round cooldown, and lasts for 9 rounds, down from 10 rounds.
++*[[Mudslide]] now has a 4-round cooldown, up from 3 rounds.
++*[[Predatory Strike]] no longer deal damage as a percentage of the target’s health. The ability now deals a flat amount of bonus damage instead.
++*[[Quicksand]] now has a 4-round cooldown, up from 3 rounds.
++*[[Reckless Strike]] now has a 1-round cooldown.
++*[[Rupture (pet battle ability)]] now has a 4-round cooldown, up from 3 rounds.
++*[[Shock and Awe]] now has a 4-round cooldown, up from 3 rounds.
++*[[Soulrush]] now has a 4-round cooldown, up from 3 rounds.
++*Fixed an issue where pet abilities that had a chance to stun were not working correctly.
++
++===Battle Pets===
++*A number of new battle pets have been added to the [[Throne of Thunder]] and [[Isle of Thunder]]. Happy hunting!
++*Whispers from pet tamers in the north have spread word of an elusive new battle pet that can be found in the frozen tundras of [[Northrend]]. The [[Unborn Val'kyr]] awaits.
++*Battle Pet drops have been added to Burning Crusade raids. These new pets can be obtained from raid bosses in [[Karazhan]], [[Tempest Keep]] and [[Serpentshrine Cavern]]. Obtaining all of these new pets will reward players with a new battle pet, [[Tito]]!
++*[[Tiny Blue Carp]], [[Tiny Green Carp]], [[Tiny Red Carp]], and [[Tiny White Carp]] are now tradable, and can be caught more than once.
++*[[Electrified Razortooth]]: swapped positions of [[Blood in the Water]] and [[Paralyzing Shock]] abilities.
++*[[Ethereal Soul-Trader]] has been returned to his original, larger size.
++*[[Teldrassil Sproutling]], [[Withers]], and [[Ruby Sapling]]'s [[Shell Shield (pet battle ability)]] has been replaced with a new ability: [[Ironbark (pet battle ability)]].
++
++===Battle Pet Quests===
++*A new [[The Longest Day|achievement]] and [[Marked Flawless Battle-Stone|reward]] has been added for characters that complete every Pet Battle daily quest in a single day.
++*Protection for bad luck streaks have been added to Battle-Stones from pet supplies bags and wild battles. Each bag or battle that does not provide a stone has a progressively better chance to award a stone to the player.
++*Beasts of Fable daily quest has been broken into three separate chapters. Players can now choose to do any or all of the chapters each day. Rewards have been modified to include a new consumable that will boost battle pet XP for a limited time.
++*All Pet Battle daily quests on Pandaria, Beasts of Fable and Spirit Tamer quests will now award experience, [[Valor Points]], and [[Lesser Charm of Good Fortune]].
++*All Pet Battle quests will now award experience.
++*Increased the difficulty of elite pets on the Beasts of Fable quest.
++*A new weekly quest for max-level, matchmaking PvP pet battles has been added.
++
++==Raids, Dungeons, and Scenarios==
++===Loot Specialization===
++*Players can now choose to receive loot for specializations other than the one that's currently active. This feature can be accessed by right-clicking on the character portrait and selecting the option from the drop-down list. Loot specialization is available for [[bonus roll]]s, Raid Finder, and Pandarian quest rewards.
++**Please check out the blog: [https://worldofwarcraft.blizzard.com/en-us/news/9447311 Patch 5.3 Adds Off-Spec Loot and Rewards] for an in-depth explanation of how the Loot Specialization system will work.
++
++===Raids===
++*Bonus rolls, [[Treasures of the Thunder King]], [[Amber Encased Treasure Pouch]], [[Cache of Mogu Riches]], and [[Dividends of the Everlasting Spring]] now have a small chance to award a larger than usual amount of gold.
++*[[Bonus roll|Bonus Roll]]
++**Protection for bad luck streaks have been added to bonus rolls. Each bonus roll that does not provide loot has a progressively better chance to award loot to the player.
++**Reduced the number of [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]] needed for the [[Mogu Runes of Fate]] weekly quest to 50, down from 90.
++*[[Serpentshrine Cavern]]
++**For the [[Fathom-Lord Karathress]] encounter, Cataclysmic Bolt now deals 10% of the target's maximum health plus 5000 damage, down from 50% of target's maximum health, the stun effect can be removed by abilities that free the player from stuns, and the spell now targets any character class instead of only targeting character classes with mana.
++**[[Lady Vashj (tactics)|Lady Vashj]]
++***[[Coilfang Strider]]'s Panic ability now activates every 4 seconds, up from every 2 seconds.
++***Shock Blast's stun effect can now be removed by abilities that free the player from stuns.
++***[[Tainted Elemental]]s now despawn after 20 seconds, up from 15 seconds.
++*[[Eye (Tempest Keep)|Tempest Keep]]
++**For the [[High Astromancer Solarian]] encounter, Nether Scryer's Domination spell now has a 2 second cast time, up from instant cast, and can be silenced.
++**For the [[Void Reaver]] encounter, the radius for Arcane Orb has been reduced to 15 yards, down from 20 yards.
++*[[Terrace of Endless Spring]]
++**Players no longer need to have defeated [[Grand Empress Shek'zeer]] to enter the Terrace of Endless Spring in Normal difficulty.
++*[[Throne of Thunder]]
++**[[Valor Points]] are awarded for defeating the following lieutenants in Throne of Thunder.
++***[[Stormbringer Draz'kil]]: 20 Valor Points
++***[[Manchu]]: 10 Valor Points each
++***[[Weisheng]]: 10 Valor Points each
++***{[[Eternal Guardian (Throne of Thunder)|Eternal Guardian]]: 5 Valor Points each
++**[[Horridon]]
++***[[Amani'shi Beast Shaman]] no longer casts Chain Lightning while mounted on [[Amani Warbear]]s.
++**[[Primordius]]
++***The [[Genetically Unmodified Organism]] achievement has been redesigned. It now requires players to defeat Primordius while none of the players in the raid received a harmful mutation.
++
++===Dungeons===
++*Completing the Challenge mode daily quest now awards a [[Heroic Cache of Treasures]] with a chance to contain an epic item!
++*Minimum level requirement to enter and equip items found in the following dungeons via [[Dungeon Finder]] have been adjusted.
++**[[Gate of the Setting Sun]] is now available in Normal difficulty, and accessible to level 89 characters.
++**[[Grim Batol (instance)|Grim Batol]] is now accessible at level 84, down from level 85.
++**[[Lost City of the Tol'vir]] is now accessible at level 84, down from level 85.
++**[[Magisters' Terrace (Burning Crusade)|Magisters' Terrace]] is now accessible at level 68, down from level 70.
++**[[Mechanar|The Mechanar]] is now accessible at level 68, down from level 70.
++*[[Zul'Gurub (instance)|Zul'Gurub]]
++**[[Bloodlord Mandokir (tactics)|Bloodlord Mandokir]] will no longer use Decapitate against his current target.
++
++===Scenarios===
++*Lorewalker Cho now allows heroes to take part in either faction's Scenarios, so players can see what the other side has been up to.
++*[[Crypt of the Forgotten Kings]]
++**Fixed an issue where Uncontrolled Anger was improperly causing characters to drop out of stealth.
++
++==PvP==
++*A blog titled: [http://us.battle.net/wow/en/blog/9331806/ PvP Gear in Patch 5.3] has additional information and reasoning behind the PvP changes in 5.3.
++*All level-90 characters now have a base [[Resilience]] of 65%.
++*All characters below level 90 now have a base Resilience of 40%.
++*Battle Fatigue now reduces the amount of healing and absorbs by 45%, up from 30%.
++*[[PvP Power]] conversion ratio to obtain 1% damage at level 90 has been changed from 265 to 400.
++*PvP Power bonus to healing is now based on class and specialization.
++**Healing specializations receive a 100% bonus to healing from PvP Power.
++**Damage specializations for Druids, Monks, Paladins, Priests, and Shaman receive a 70% bonus to healing from PvP Power.
++**All other specializations and classes (including tanking) receive a 40% bonus to healing from PvP Power.
++
++===PvP Items===
++*[[Season 13]] Tyrannical gear had their item levels increased to ilevel 496, up from ilevel 493. Weapons and shields/off-hand items remain unchanged at ilevel 498.
++*Season 13 Tyrannical Elite gear had their item levels decreased to ilevel 496, down from ilevel 512.
++*Resilience has been removed from most PvP gear.
++**Resilience gems and enchants will continue to be available and remain unchanged.
++**4-piece PvP set bonus for all Season 12 and 13 armor sets that granted 1000 Resilience now grants 1000 PvP Power instead.
++*[[PvP Power]] will remain exclusively on PvP gear.
++*The amount of PvP Power and Resilience on gems and [[Mystic Cogwheel]] have been reduced by 50%.
++*Tyrannical weapons no longer have a conquest-earned prerequisite to purchase them.
++*[[Enchant Weapon - Glorious Tyranny]] weapon enchantment now grants 600 PvP Power instead of 400 PvP Power and 200 Resilience.
++*New weapon enchantment: [[Enchant Weapon - Bloody Dancing Steel]] is functionally equivalent to [[Enchant Weapon - Dancing Steel]], shares the same visual effect as Glorious Tyranny, costs a scroll of the base enchant, and requires a 2200 rating.
++*New weapon enchantment: [[Enchant Weapon - Spirit of Conquest]] is functionally equivalent to [[Enchant Weapon - Jade Spirit]], shares the same visual effect as Glorious Tyranny, costs a scroll of the base enchant, and requires a 2200 rating.
++*[[Tyrannical Gladiator's Tabard]] and [[Tyrannical Gladiator's Greatcloak]] are available as new prestige items at 2500 rating for 1000 Conquest Points.
++*[[Big Zokk Torquewrench]] has returned from their leave of absence.
++*Glorious Conquest Quartermasters ([[Acon Deathwielder]], [[Ethan Natice]]) have returned after refitting their wares.
++
++===Battlegrounds and Arenas===
++*Battlegrounds, Rated Battlegrounds, and Arenas now have an [[PvP item level cap|ilevel cap]]. All gear will be scaled down to ilevel 496.
++*To facilitate a more balanced team composition, players now need to select a role when queuing up for a Battleground or Rated Battleground. Role selection should have no effect on queue times. The matchmaking system attempts to balance the number of healers on each team based on the ratio of healers and non-healers queued.
++*Mid-season catch-up for [[Conquest Points]] has been added. Players will now see their cap on Conquest Points increased by 1000 per week since the start of Season 13 minus the amount of Conquest Points earned so far in this season.
++*Picking up the Alliance or Horde flag while in a Rated Battleground now increases damage taken by 50% for characters in a tanking specialization, and increases damage taken by 20% for characters in a non-tanking specialization.
++*[[Dalaran Arena]]: Masons of Dalaran have been hard at work installing steps in the two remaining corners of the arena.
++*[[Eye of the Storm]]: The starting platforms have been lowered.
++
++==Professions==
++*[[Herbalism|Herbalists]] of low skill can now pick herbs in Pandaria for a small amount of usable material. The yield an herbalist will be able to harvest from each node is determined by skill level.
++*[[Mining|Miners]] of low skill can now mine mineral deposits in Pandaria for a small amount of usable material. The yield a miner will be able to harvest from each node is determined by skill level.
++
++==Items==
++*The [http://us.battle.net/wow/en/blog/9241762/ Voidbinders are back] in capital cities and shrines.
++**PvE [[Item Upgrade]]s
++***Items upgradable by Valor now require 250 [[Valor Points|Valor]] to upgrade per 4 item levels, for a total of 500 Valor for 8 item levels per item. This is retroactive to all items that use Valor.
++***Items upgradable by Justice now require 750 [[Justice Points|Justice]] to upgrade per 8 item levels, for a total of 750 Justice for 8 item levels per item. This is retroactive to all items that use Justice.
++**PvP Item Upgrades
++***Malevolent Gladiator's Conquest ([[Season 12]]) items that have upgrades available are still upgradable at their original costs.
++***Dreadful Gladiator's Honor (Season 12) items that have upgrades available are still upgradable at their original costs.
++***No other PvP items are upgradable.
++*Players can now use items that are in the bank or [[Void Storage]] for [[transmogrification]].
++*Reduced the amount of [[Justice Points|Justice]], [[Honor Points|Honor]], and [[Darkmoon Prize Ticket|Darkmoon Faire tickets]] needed to upgrade [[heirloom]] items by 60%.
++*Players starting on Cataclysm content can purchase level-80 gear from [[Iris Moondreamer]] in [[Mount Hyjal|Hyjal]] and [[Erunak]] in [[Vashj'ir]] to more easily qualify for [[Blackrock Caverns]] and Abyssal Maw: [[Throne of Tides]].
++*:''The items available are the same [[Cataclysm starting sets]] that were previously used for [[Scroll of Resurrection]] level 80 boosts.''
++*Two new purchasable items using {{item|Elder Charm of Good Fortune|Elder Charms of Good Fortune}} have been added to the quartermasters on the [[Isle of Thunder]]. 
++**An [[Empty Supply Crate]] that can be placed and jumped on in the [[Troves of the Thunder King]] Scenario.
++**Excess Elder Charms of Good Fortune can be used to purchase an [[Arcane Trove]]/[[Sunreaver Bounty]].
++*A [[Mount Parade|new achievement]] and reward has been added for obtaining 200 mounts.
++*[[Unclaimed Black Market Container]]s are now available on the [[Black Market Auction House]]. What's inside? It's a mystery! When opened, the container has a chance to contain any item that can be available on the BMAH.
++*[[Eye of the Black Prince]] can now be used to apply a prismatic socket on Reborn weapons.
++*Justice Heirloom vendors now have Heirloom shields in stock.
++*{{item|Kirin Tor Beacon|Kirin Tor}} and {{item|Sunreaver Beacon|Sunreaver Beacons}} are now usable from inside the Throne of Thunder.
++*[[Shado-Pan Assault]] belts now require {{rep|Friendly}} reputation to purchase, down from {{rep|Revered}}.
++*Shado-Pan Assault chest pieces now require {{rep|Honored}} reputation to purchase, down from Revered.
++*The following PvP trinkets now have a cooldown of 2 minutes, down from 5 minutes.
++**[[Bequeathed Insignia of the Alliance]]
++**[[Bequeathed Insignia of the Horde]]
++**[[Inherited Insignia of the Alliance]]
++**[[Inherited Insignia of the Horde]]
++**[[Inherited Mark of Tyranny]]
++**[[Insignia of the Alliance]]
++**[[Insignia of the Horde]]
++*The following trinkets have on-use effects reduced by 33%, but have a 100% increase to duration when used in a Battleground or Arena.
++**[[Fabled Feather of Ji-Kun]]
++**[[Renataki's Soul Charm]]
++**[[Steadfast Talisman of the Shado-Pan Assault]]
++**[[Wushoolay's Final Choice]]
++*The following trinkets have on-use effects reduced by 75%, but have a 400% increase to duration when used in a Battleground or Arena.
++**[[Delicate Vial of the Sanguinaire]]
++**[[Gaze of the Twins]]
++**[[Primordius' Talisman of Rage]]
++**[[Talisman of Bloodlust]]
++*All other trinkets above ilevel 502 have on-use effects reduced by 50%, but have a 100% increase to duration when used in a Battleground or Arena.
++*[[Courageous Primal Diamond]] had its clearcasting effect renamed to "Lucidity" to differentiate it from other spells with that name.
++
++==UI==
++*In-game support system is now a direct portal to the Battle.net Support site, allowing players to access the knowledge base and support contact system. 
++*[[Dungeon Journal]] has been reorganized. The model view has moved into a sub-tab and replaced with a listing of bosses for the dungeon or raid.
++*A new option to display pet tamers on the world map has been added. This should help players looking to find unlocked Pet Battle daily quests.
++*When using name plates, castbars will now display for all creatures and players in the area.
++
++==Bug Fixes==
++*Fixed an issue in [[Brawl'gar Arena]] where players boarding [[Skybag|The Skybag]] may be unable to spectate brawls that were taking place.
++
++==Client patches==
++{|class=darktable
++!Build !! Date !! Notes
++|-
++| 17128 || 2013-06-28 || Unspecified
++|-
++| 17116 || 2013-06-26 || Unspecified
++|-
++| 17055 || 2013-06-11 || Unspecified
++|-
++| 16992 || 2013-05-23 || Fixed sound-related issue, and Divine Protection casting while stunned<ref>{{ref web|url=https://twitter.com/Rygarius/status/337738348435234816|title=Twitter|author={{Blizz}}[[Rygarius]]|accessdate=2013-05-24|quote=''The small client patch should fix sound related issues and Divine Protection casting while stunned.''}}</ref>
++|-
++| 16983 || 2013-05-22 || Unspecified
++|-
++| 16981 || 2013-05-21 || Fixed crash on Mac, stopped AVG triggering as Keylogger <ref>{{ref web|url=https://twitter.com/Rygarius/status/337055549227163648|title=Twitter|author={{Blizz}}[[Rygarius]]|accessdate=2013-05-22|quote=''Binary patch, fixed a crash on Macs w/certain chipsets and stopped triggering anti-virus tagging files as bad.''}}</ref>
++|-
++| 16977 || 2013-05-21 || Initial release
++|}
++
++==References==
++{{reflist}}
++
++{{Patches}}
++
++[[Category:World of Warcraft patches|5.3.0]]
++[[Category:Named patches|Escalation]]
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-cache-bare.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-cache-bare.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-cache-qualified.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-cache-qualified.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-callers-bare.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-callers-bare.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-callers-qualified.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-PrepVoidStorageForTransmogrify-callers-qualified.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-cache-bare.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-cache-bare.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-cache-qualified.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-cache-qualified.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-callers-bare.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-callers-bare.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-callers-qualified.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-retirement-UNIT_DYNAMIC_FLAGS-callers-qualified.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-scan-receipts.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-scan-receipts.json
+new file mode 100644
+index 000000000..df7663153
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p530-scan-receipts.json
+@@ -0,0 +1,142 @@
++[
++  {
++    "symbol": "PrepVoidStorageForTransmogrify",
++    "scope": "cache",
++    "pattern": "PrepVoidStorageForTransmogrify",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--exclude=*Documentation*",
++      "--exclude-dir=*Documentation*",
++      "--",
++      "PrepVoidStorageForTransmogrify",
++      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-PrepVoidStorageForTransmogrify-cache-qualified.txt",
++    "matches": 0
++  },
++  {
++    "symbol": "PrepVoidStorageForTransmogrify",
++    "scope": "cache",
++    "pattern": "PrepVoidStorageForTransmogrify",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--exclude=*Documentation*",
++      "--exclude-dir=*Documentation*",
++      "--",
++      "PrepVoidStorageForTransmogrify",
++      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-PrepVoidStorageForTransmogrify-cache-bare.txt",
++    "matches": 0
++  },
++  {
++    "symbol": "PrepVoidStorageForTransmogrify",
++    "scope": "callers",
++    "pattern": "PrepVoidStorageForTransmogrify",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--",
++      "PrepVoidStorageForTransmogrify",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-PrepVoidStorageForTransmogrify-callers-qualified.txt",
++    "matches": 0
++  },
++  {
++    "symbol": "PrepVoidStorageForTransmogrify",
++    "scope": "callers",
++    "pattern": "PrepVoidStorageForTransmogrify",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--",
++      "PrepVoidStorageForTransmogrify",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-PrepVoidStorageForTransmogrify-callers-bare.txt",
++    "matches": 0
++  },
++  {
++    "symbol": "UNIT_DYNAMIC_FLAGS",
++    "scope": "cache",
++    "pattern": "UNIT_DYNAMIC_FLAGS",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--exclude=*Documentation*",
++      "--exclude-dir=*Documentation*",
++      "--",
++      "UNIT_DYNAMIC_FLAGS",
++      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-UNIT_DYNAMIC_FLAGS-cache-qualified.txt",
++    "matches": 0
++  },
++  {
++    "symbol": "UNIT_DYNAMIC_FLAGS",
++    "scope": "cache",
++    "pattern": "UNIT_DYNAMIC_FLAGS",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--exclude=*Documentation*",
++      "--exclude-dir=*Documentation*",
++      "--",
++      "UNIT_DYNAMIC_FLAGS",
++      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-UNIT_DYNAMIC_FLAGS-cache-bare.txt",
++    "matches": 0
++  },
++  {
++    "symbol": "UNIT_DYNAMIC_FLAGS",
++    "scope": "callers",
++    "pattern": "UNIT_DYNAMIC_FLAGS",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--",
++      "UNIT_DYNAMIC_FLAGS",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-UNIT_DYNAMIC_FLAGS-callers-qualified.txt",
++    "matches": 0
++  },
++  {
++    "symbol": "UNIT_DYNAMIC_FLAGS",
++    "scope": "callers",
++    "pattern": "UNIT_DYNAMIC_FLAGS",
++    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
++    "command": [
++      "/usr/bin/grep",
++      "-RInwF",
++      "--",
++      "UNIT_DYNAMIC_FLAGS",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
++      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
++    ],
++    "exit": 1,
++    "log": "p530-retirement-UNIT_DYNAMIC_FLAGS-callers-bare.txt",
++    "matches": 0
++  }
++]
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/p540-page-parser-diff.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/p540-page-parser-diff.txt
+new file mode 100644
+index 000000000..5912acac9
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/p540-page-parser-diff.txt
+@@ -0,0 +1,112 @@
++diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
++index 4901f7397..2442dda44 100644
++--- a/tools/gen_patch_wikitext_register.py
+++++ b/tools/gen_patch_wikitext_register.py
++@@ -29,11 +29,6 @@ FONT = re.compile(r"</?font[^>]*>")
++ COUNT = re.compile(r"<small>\((\d+)\)</small>")
++ 
++ 
++-def with_client_line(register, client_line):
++-    """Keep legacy bytes by default; explicitly label separate client histories."""
++-    return register if client_line is None else dict(register, client_line=client_line)
++-
++-
++ def parse_symbol(text):
++     """Return (symbol, params) for the inventory reference on one line."""
++     match = TEMPLATE.search(text)
++@@ -644,6 +639,49 @@ def parse_combat_restriction_bullets(text):
++     return entries
++ 
++ 
+++def parse_mists_automated_diff(text):
+++    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
+++    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
+++                'Events': 'events', 'Widget API': 'widgets'}
+++    entries, counts = [], []
+++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
+++        lines = table[1].splitlines()
+++        caption = next((line for line in lines if line.startswith('|+ ')), '')
+++        section = next((value for name, value in sections.items()
+++                        if caption.startswith('|+ ' + name + ' ')), None)
+++        if section is None:
+++            continue
+++        first_line = text[:table.start(1)].count('\n') + 1
+++        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
+++                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
+++                      else (first_line + offset, line)
+++                      for offset, line in enumerate(lines)]
+++        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
+++        entries.extend(rows)
+++        counts.extend(headers)
+++    return entries, counts
+++
+++
+++def parse_mists_summary(text):
+++    """Keep explicit 5.4.0 prose references without inferring historical removals."""
+++    entries = []
+++    section = None
+++    for number, line in enumerate(text.splitlines(), 1):
+++        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+++        if heading:
+++            section = heading[1]
+++        elif section in ('Breaking changes', 'Modified API', 'Bugs', 'New features'):
+++            for match in TEMPLATE.finditer(line):
+++                category = 'widgets' if '|t=w|' in match[0] else (
+++                    'events' if '|t=e|' in match[0] else 'global-api')
+++                direction = 'added' if section == 'New features' else 'changed'
+++                symbol = next(part for part in match[2].split('|') if '=' not in part)
+++                entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+++                entry['annotation'] = line
+++                entries.append(entry)
+++    return entries
+++
+++
++ def main():
++     parser = argparse.ArgumentParser(description=__doc__)
++     for name in ("patch", "path", "revid", "out"):
++@@ -698,13 +736,18 @@ def main():
++     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
++     parser.add_argument('--combat-restriction-bullets', action='store_true',
++                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
++-    parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
++-                        help='Label the client history for isolated supersession; opt-in')
+++    parser.add_argument('--mists-automated-diff', action='store_true',
+++                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
+++    parser.add_argument('--mists-summary', action='store_true',
+++                        help='Retain explicit 5.4.0 summary API occurrences; opt-in')
+++    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
++     args = parser.parse_args()
++     patch, path, revid, out = args.patch, args.path, args.revid, args.out
++     raw = Path(path).read_bytes()
++     buckets = split_sections(raw.decode("utf-8"),
++                              separate_inline_structures=args.separate_inline_structures)
+++    if args.mists_automated_diff:
+++        buckets = {}
++     entries, counts = [], []
++     for section in SECTIONS.values():
++         entry_section = "cvars" if section == "commands" else section
++@@ -758,6 +801,16 @@ def main():
++         counts.extend(diff_counts)
++     if args.combat_restriction_bullets:
++         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
+++    if args.mists_automated_diff:
+++        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
+++    if args.mists_summary:
+++        entries.extend(parse_mists_summary(raw.decode('utf-8')))
+++    if args.mists_diff:
+++        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
+++        for entry in diff_entries:
+++            entry['id'] = 'diff-' + entry['id']
+++        entries.extend(diff_entries)
+++        counts.extend(diff_counts)
++     if args.inventory_only:
++         for entry in entries:
++             for key in ("kind", "page_default", "test_inline"):
++@@ -770,7 +823,6 @@ def main():
++         "header_counts": counts,
++         "entries": entries,
++     }
++-    register = with_client_line(register, args.client_line)
++     with open(out, "w") as handle:
++         json.dump(register, handle, indent=2, ensure_ascii=False)
++         handle.write("\n")
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/parser-provenance.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/parser-provenance.json
+new file mode 100644
+index 000000000..0a9899a02
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/parser-provenance.json
+@@ -0,0 +1,14 @@
++{
++  "automated_diff": {
++    "branch": "p542-page",
++    "revision": "a016e9393943de703ae070d8ce33b5497113c3fc",
++    "function": "parse_mists_automated_diff",
++    "copy": "byte-identical function and dispatch"
++  },
++  "transclusion_dispatch": {
++    "branch": "p540-page",
++    "revision": "9698f09862b6cd91b4f87e840295a3fce304940a",
++    "copy": "byte-identical --mists-diff argparse and dispatch"
++  },
++  "new_behavior": "opt-in --mists-widget-handlers; separate parse_mists_widget_handlers function"
++}
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/parser-red.txt b/data/patch-api/evidence/5.3.0-session-2026-10-08/parser-red.txt
+new file mode 100644
+index 000000000..af33d8616
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/parser-red.txt
+@@ -0,0 +1,23 @@
++EE
++======================================================================
++ERROR: test_caption_tables_and_bare_removal (__main__.MistsTransclusionTests.test_caption_tables_and_bare_removal)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_mists_transclusion.py", line 20, in test_caption_tables_and_bare_removal
++    rows, counts = generator.parse_mists_automated_diff(raw)
++                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_automated_diff'
++
++======================================================================
++ERROR: test_widget_handler_ownership_and_kind (__main__.MistsTransclusionTests.test_widget_handler_ownership_and_kind)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_mists_transclusion.py", line 39, in test_widget_handler_ownership_and_kind
++    rows, counts = generator.parse_mists_widget_handlers(raw)
++                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_widget_handlers'
++
++----------------------------------------------------------------------
++Ran 2 tests in 0.001s
++
++FAILED (errors=2)
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/run_proof.py b/data/patch-api/evidence/5.3.0-session-2026-10-08/run_proof.py
+new file mode 100644
+index 000000000..279e665a3
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/run_proof.py
+@@ -0,0 +1,47 @@
++"""Retain a streamed command log and receipt; --start launches without waiting."""
++import hashlib
++import json
++import os
++from pathlib import Path
++import subprocess
++import sys
++import time
++
++ROOT = Path(__file__).resolve().parents[4]
++EVIDENCE = Path(__file__).resolve().parent
++TARGET = '/home/osso/.cache/wow-ui-sim-targets/p530-page'
++
++
++def run_proof(name, command):
++    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
++    started = time.monotonic()
++    log = EVIDENCE / f'{name}.txt'
++    environment = {key: value for key, value in os.environ.items()
++                   if key.startswith(('P530_', 'PATCH_', 'WOW_SIM_', 'PREFORK_'))
++                   or key.endswith('_SWEEP_OUT')}
++    with log.open('w') as output:
++        result = subprocess.run(command, cwd=ROOT,
++                                env=dict(os.environ, CARGO_TARGET_DIR=TARGET,
++                                         PYTHONDONTWRITEBYTECODE='1'),
++                                stdout=output, stderr=subprocess.STDOUT)
++    receipt = {'command': command, 'revision': revision, 'scope': name,
++               'cwd': '.', 'target': 'dedicated p530-page target (external to repository)',
++               'environment': environment, 'exit': result.returncode,
++               'log': log.name, 'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest(),
++               'seconds': time.monotonic() - started, 'invalidated': False}
++    (EVIDENCE / f'{name}.proof.json').write_text(json.dumps(receipt, indent=2) + '\n')
++    print(name, result.returncode)
++    return result.returncode
++
++
++if __name__ == '__main__':
++    arguments = sys.argv[1:]
++    if arguments[0] == '--start':
++        name, *command = arguments[1:]
++        with (EVIDENCE / f'{name}.launcher.txt').open('w') as output:
++            process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), name, *command],
++                                       cwd=ROOT, stdout=output, stderr=subprocess.STDOUT,
++                                       start_new_session=True)
++        print(json.dumps({'name': name, 'pid': process.pid, 'log': f'{name}.txt'}))
++    else:
++        sys.exit(run_proof(arguments[0], arguments[1:]))
+diff --git a/data/patch-api/evidence/5.3.0-session-2026-10-08/wiki-baseline.json b/data/patch-api/evidence/5.3.0-session-2026-10-08/wiki-baseline.json
+new file mode 100644
+index 000000000..0073f9a07
+--- /dev/null
++++ b/data/patch-api/evidence/5.3.0-session-2026-10-08/wiki-baseline.json
+@@ -0,0 +1,4 @@
++{
++  "docs/wiki/index.md": 2739,
++  "docs/wiki/log.md": 491
++}
+diff --git a/data/patch-api/sources/5.3.0-api-changes.diff.wikitext b/data/patch-api/sources/5.3.0-api-changes.diff.wikitext
+new file mode 100644
+index 000000000..b0872cab8
+--- /dev/null
++++ b/data/patch-api/sources/5.3.0-api-changes.diff.wikitext
+@@ -0,0 +1,110 @@
++<noinclude>{{Transclude|}}</noinclude>
++== Automated diff ==
++
++=== Global API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Global API (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-global-c" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 14 new functions
++! style="width: 50%; padding-right: 1em"| 1 removed functions
++|- class="mw-collapsible" id="mw-customcollapsible-global-c"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|AcknowledgeSurvey}}
++: {{api|C_PetBattles.CanAcceptQueuedPVPMatch}}
++: {{api|C_Scenario.GetBonusCriteriaInfo}}
++: {{api|C_Scenario.GetBonusStepInfo}}
++: {{api|CanTrackBattlePets}}
++: {{api|GetBattlegroundPoints}}
++: {{api|GetItemUpgradeEffect}}
++: {{api|GetLFGRoleUpdateBattlegroundInfo}}
++: {{api|GetLootSpecialization}}
++: {{api|GetNumItemUpgradeEffects}}
++: {{api|GetPVPRoles}}
++: {{api|GetWebTicket}}
++: {{api|SetLootSpecialization}}
++: {{api|SetPVPRoles}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: PrepVoidStorageForTransmogrify
++</div>
++|}
++=== FrameXML ===
++{| class="wikitable" style="min-width: 600px"
++|+ FrameXML (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 3 new functions
++! style="width: 50%; padding-right: 1em"| 0 removed functions
++|- class="mw-collapsible" id="mw-customcollapsible-global-fxml"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|HideKnowledgeBase}}
++: {{api|PrintLootSpecialization}}
++: {{api|ShowKnowledgeBase}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++
++</div>
++|}
++=== Events ===
++{| class="wikitable" style="min-width: 600px"
++|+ Events (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-events" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 8 new events
++! style="width: 50%; padding-right: 1em"| 1 removed events
++|- class="mw-collapsible" id="mw-customcollapsible-events"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=e|BATTLEGROUND_POINTS_UPDATE}}
++: {{api|t=e|BONUS_ROLL_ACTIVATE}}
++: {{api|t=e|BONUS_ROLL_DEACTIVATE}}
++: {{api|t=e|PLAYER_LOOT_SPEC_UPDATED}}
++: {{api|t=e|PVP_ROLE_UPDATE}}
++: {{api|t=e|SIMPLE_BROWSER_WEB_ERROR}}
++: {{api|t=e|SIMPLE_BROWSER_WEB_PROXY_FAILED}}
++: {{api|t=e|UPDATE_WEB_TICKET}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: UNIT_DYNAMIC_FLAGS
++</div>
++|}
++=== Widget API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget API (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-widgets" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 14 new methods
++! style="width: 50%; padding-right: 1em"| 0 removed methods
++|- class="mw-collapsible" id="mw-customcollapsible-widgets"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=w|Browser:ClearCache}}
++: {{api|t=w|Browser:ClearFocus}}
++: {{api|t=w|Browser:CopyExternalLink}}
++: {{api|t=w|Browser:DeleteCookies}}
++: {{api|t=w|Browser:HasConnection}}
++: {{api|t=w|Browser:NavigateBack}}
++: {{api|t=w|Browser:NavigateForward}}
++: {{api|t=w|Browser:NavigateHome}}
++: {{api|t=w|Browser:NavigateReload}}
++: {{api|t=w|Browser:NavigateStop}}
++: {{api|t=w|Browser:OpenExternalLink}}
++: {{api|t=w|Browser:OpenTicket}}
++: {{api|t=w|Browser:SetFocus}}
++: {{api|t=w|Browser:SetZoom}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++
++</div>
++|}
++=== Widget Handlers ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget Handlers (5.2.0.16650 &rarr; 5.3.0.16965)
++|- class="mw-customtoggle-widget-handlers" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em"| 3 new handlers
++! style="width: 50%; padding-right: 1em"| 0 removed handlers
++|- class="mw-collapsible" id="mw-customcollapsible-widget-handlers"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=wh|Browser OnEditFocusGained}}
++: {{api|t=wh|Browser OnEditFocusLost}}
++: {{api|t=wh|Browser OnEscapePressed}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++
++</div>
++|}
+\ No newline at end of file
+diff --git a/data/patch-api/sources/5.3.0-api-changes.provenance.json b/data/patch-api/sources/5.3.0-api-changes.provenance.json
+new file mode 100644
+index 000000000..cbec94543
+--- /dev/null
++++ b/data/patch-api/sources/5.3.0-api-changes.provenance.json
+@@ -0,0 +1,31 @@
++{
++  "patch": "5.3.0",
++  "pageid": 423274,
++  "revid": 4065122,
++  "client_line": "retail",
++  "source_url": "https://warcraft.wiki.gg/wiki/Patch_5.3.0/API_changes?oldid=4065122",
++  "generator_flags": [
++    "--mists-diff",
++    "data/patch-api/sources/5.3.0-api-changes.diff.wikitext",
++    "--mists-widget-handlers",
++    "--client-line",
++    "retail"
++  ],
++  "extractor_flags": [
++    "--retain-patch-diff-reference"
++  ],
++  "transcluded_diff": {
++    "pageid": 330804,
++    "revid": 3188422,
++    "path": "data/patch-api/sources/5.3.0-api-changes.diff.wikitext"
++  },
++  "parent": {
++    "pageid": 38992,
++    "revid": 6611399,
++    "toc": 50300,
++    "release": "2013-05-21",
++    "build": 16977,
++    "diff_build": 16965
++  },
++  "status": "content with pinned transcluded diff; not redirect or stub"
++}
+diff --git a/data/patch-api/sources/5.3.0-api-changes.txt b/data/patch-api/sources/5.3.0-api-changes.txt
+new file mode 100644
+index 000000000..091a43946
+--- /dev/null
++++ b/data/patch-api/sources/5.3.0-api-changes.txt
+@@ -0,0 +1,15 @@
++Patch 5.3.0 API changes
++
++== New Features ==
++* You can now control for which specialization you will receive loot from LFR/Quests.
++* The number of pet stable pages has increased from 2 to 5 (Increasing the number of slots from 20 to 50).
++* Knowledge base and GM tickets now use an embedded web browser to interact with Blizzard's Support website.
++** The embedded browser functionality is encapsulated by the Browser widget type.
++
++== Misc Changes ==
++* tradeSkillLink encoding changed significantly. The first four fields were re-arranged, and specialization data was added for Cooking.
++
++== Bugs ==
++* If InterfaceOptionsFrame_OpenToCategory(panel) is called before the addon panels list is updated after adding a new panel, the interface options frame will open to another panel. You can work around this behavior by calling the function twice.
++
++[Transcluded source: Patch 5.3.0/API changes/diff; not expanded]
+diff --git a/data/patch-api/sources/5.3.0-api-changes.wikitext b/data/patch-api/sources/5.3.0-api-changes.wikitext
+new file mode 100644
+index 000000000..bed8564c1
+--- /dev/null
++++ b/data/patch-api/sources/5.3.0-api-changes.wikitext
+@@ -0,0 +1,15 @@
++{{apichanges|5.3.0|prev=5.2.0|next=5.4.0}}
++
++== New Features ==
++* You can now control for which specialization you will receive loot from LFR/Quests.
++* The number of pet stable pages has increased from 2 to 5 (Increasing the number of slots from 20 to 50).
++* Knowledge base and GM tickets now use an embedded web browser to interact with Blizzard's Support website.
++** The embedded browser functionality is encapsulated by the <code>Browser</code> widget type.
++
++== Misc Changes ==
++* [[TradeSkillLink|tradeSkillLink]] encoding changed significantly. The first four fields were re-arranged, and specialization data was added for Cooking.
++
++== Bugs ==
++* If {{api|InterfaceOptionsFrame_OpenToCategory}}(panel) is called before the addon panels list is updated after adding a new panel, the interface options frame will open to another panel. You can work around this behavior by calling the function twice.
++
++{{:Patch 5.3.0/API changes/diff}}
+\ No newline at end of file
+diff --git a/data/patch-api/sources/5.3.0-wikitext-register.json b/data/patch-api/sources/5.3.0-wikitext-register.json
+new file mode 100644
+index 000000000..4fe464e80
+--- /dev/null
++++ b/data/patch-api/sources/5.3.0-wikitext-register.json
+@@ -0,0 +1,429 @@
++{
++  "schema": "patch-api-wikitext-register/v1",
++  "patch": "5.3.0",
++  "source": {
++    "path": "data/patch-api/sources/5.3.0-api-changes.wikitext",
++    "revid": 4065122,
++    "sha256": "62da2d403ebc3027b12e47145329e459a903ef5f5779f2079bf1d6339a6013fe"
++  },
++  "header_counts": [
++    {
++      "section": "global-api",
++      "direction": "added",
++      "header_count": 14,
++      "parsed_count": 14
++    },
++    {
++      "section": "global-api",
++      "direction": "removed",
++      "header_count": 1,
++      "parsed_count": 1
++    },
++    {
++      "section": "framexml",
++      "direction": "added",
++      "header_count": 3,
++      "parsed_count": 3
++    },
++    {
++      "section": "framexml",
++      "direction": "removed",
++      "header_count": 0,
++      "parsed_count": 0
++    },
++    {
++      "section": "events",
++      "direction": "added",
++      "header_count": 8,
++      "parsed_count": 8
++    },
++    {
++      "section": "events",
++      "direction": "removed",
++      "header_count": 1,
++      "parsed_count": 1
++    },
++    {
++      "section": "widgets",
++      "direction": "added",
++      "header_count": 14,
++      "parsed_count": 14
++    },
++    {
++      "section": "widgets",
++      "direction": "removed",
++      "header_count": 0,
++      "parsed_count": 0
++    },
++    {
++      "section": "widgets",
++      "direction": "added",
++      "header_count": 3,
++      "parsed_count": 3
++    },
++    {
++      "section": "widgets",
++      "direction": "removed",
++      "header_count": 0,
++      "parsed_count": 0
++    }
++  ],
++  "entries": [
++    {
++      "id": "diff-wt-global-api-AcknowledgeSurvey-12",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "AcknowledgeSurvey",
++      "annotation": "",
++      "wikitext_line": 12
++    },
++    {
++      "id": "diff-wt-global-api-C_PetBattles.CanAcceptQueuedPVPMatch-13",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_PetBattles.CanAcceptQueuedPVPMatch",
++      "annotation": "",
++      "wikitext_line": 13
++    },
++    {
++      "id": "diff-wt-global-api-C_Scenario.GetBonusCriteriaInfo-14",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_Scenario.GetBonusCriteriaInfo",
++      "annotation": "",
++      "wikitext_line": 14
++    },
++    {
++      "id": "diff-wt-global-api-C_Scenario.GetBonusStepInfo-15",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_Scenario.GetBonusStepInfo",
++      "annotation": "",
++      "wikitext_line": 15
++    },
++    {
++      "id": "diff-wt-global-api-CanTrackBattlePets-16",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "CanTrackBattlePets",
++      "annotation": "",
++      "wikitext_line": 16
++    },
++    {
++      "id": "diff-wt-global-api-GetBattlegroundPoints-17",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetBattlegroundPoints",
++      "annotation": "",
++      "wikitext_line": 17
++    },
++    {
++      "id": "diff-wt-global-api-GetItemUpgradeEffect-18",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetItemUpgradeEffect",
++      "annotation": "",
++      "wikitext_line": 18
++    },
++    {
++      "id": "diff-wt-global-api-GetLFGRoleUpdateBattlegroundInfo-19",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetLFGRoleUpdateBattlegroundInfo",
++      "annotation": "",
++      "wikitext_line": 19
++    },
++    {
++      "id": "diff-wt-global-api-GetLootSpecialization-20",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetLootSpecialization",
++      "annotation": "",
++      "wikitext_line": 20
++    },
++    {
++      "id": "diff-wt-global-api-GetNumItemUpgradeEffects-21",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetNumItemUpgradeEffects",
++      "annotation": "",
++      "wikitext_line": 21
++    },
++    {
++      "id": "diff-wt-global-api-GetPVPRoles-22",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetPVPRoles",
++      "annotation": "",
++      "wikitext_line": 22
++    },
++    {
++      "id": "diff-wt-global-api-GetWebTicket-23",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetWebTicket",
++      "annotation": "",
++      "wikitext_line": 23
++    },
++    {
++      "id": "diff-wt-global-api-SetLootSpecialization-24",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "SetLootSpecialization",
++      "annotation": "",
++      "wikitext_line": 24
++    },
++    {
++      "id": "diff-wt-global-api-SetPVPRoles-25",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "SetPVPRoles",
++      "annotation": "",
++      "wikitext_line": 25
++    },
++    {
++      "id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-28",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "PrepVoidStorageForTransmogrify",
++      "annotation": "",
++      "wikitext_line": 28
++    },
++    {
++      "id": "diff-wt-framexml-HideKnowledgeBase-39",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "HideKnowledgeBase",
++      "annotation": "",
++      "wikitext_line": 39
++    },
++    {
++      "id": "diff-wt-framexml-PrintLootSpecialization-40",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "PrintLootSpecialization",
++      "annotation": "",
++      "wikitext_line": 40
++    },
++    {
++      "id": "diff-wt-framexml-ShowKnowledgeBase-41",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "ShowKnowledgeBase",
++      "annotation": "",
++      "wikitext_line": 41
++    },
++    {
++      "id": "diff-wt-events-BATTLEGROUND_POINTS_UPDATE-55",
++      "section": "events",
++      "direction": "added",
++      "symbol": "BATTLEGROUND_POINTS_UPDATE",
++      "annotation": "",
++      "wikitext_line": 55
++    },
++    {
++      "id": "diff-wt-events-BONUS_ROLL_ACTIVATE-56",
++      "section": "events",
++      "direction": "added",
++      "symbol": "BONUS_ROLL_ACTIVATE",
++      "annotation": "",
++      "wikitext_line": 56
++    },
++    {
++      "id": "diff-wt-events-BONUS_ROLL_DEACTIVATE-57",
++      "section": "events",
++      "direction": "added",
++      "symbol": "BONUS_ROLL_DEACTIVATE",
++      "annotation": "",
++      "wikitext_line": 57
++    },
++    {
++      "id": "diff-wt-events-PLAYER_LOOT_SPEC_UPDATED-58",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PLAYER_LOOT_SPEC_UPDATED",
++      "annotation": "",
++      "wikitext_line": 58
++    },
++    {
++      "id": "diff-wt-events-PVP_ROLE_UPDATE-59",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PVP_ROLE_UPDATE",
++      "annotation": "",
++      "wikitext_line": 59
++    },
++    {
++      "id": "diff-wt-events-SIMPLE_BROWSER_WEB_ERROR-60",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SIMPLE_BROWSER_WEB_ERROR",
++      "annotation": "",
++      "wikitext_line": 60
++    },
++    {
++      "id": "diff-wt-events-SIMPLE_BROWSER_WEB_PROXY_FAILED-61",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SIMPLE_BROWSER_WEB_PROXY_FAILED",
++      "annotation": "",
++      "wikitext_line": 61
++    },
++    {
++      "id": "diff-wt-events-UPDATE_WEB_TICKET-62",
++      "section": "events",
++      "direction": "added",
++      "symbol": "UPDATE_WEB_TICKET",
++      "annotation": "",
++      "wikitext_line": 62
++    },
++    {
++      "id": "diff-wt-events-UNIT_DYNAMIC_FLAGS-65",
++      "section": "events",
++      "direction": "removed",
++      "symbol": "UNIT_DYNAMIC_FLAGS",
++      "annotation": "",
++      "wikitext_line": 65
++    },
++    {
++      "id": "diff-wt-widgets-Browser:ClearCache-76",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:ClearCache",
++      "annotation": "",
++      "wikitext_line": 76
++    },
++    {
++      "id": "diff-wt-widgets-Browser:ClearFocus-77",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:ClearFocus",
++      "annotation": "",
++      "wikitext_line": 77
++    },
++    {
++      "id": "diff-wt-widgets-Browser:CopyExternalLink-78",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:CopyExternalLink",
++      "annotation": "",
++      "wikitext_line": 78
++    },
++    {
++      "id": "diff-wt-widgets-Browser:DeleteCookies-79",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:DeleteCookies",
++      "annotation": "",
++      "wikitext_line": 79
++    },
++    {
++      "id": "diff-wt-widgets-Browser:HasConnection-80",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:HasConnection",
++      "annotation": "",
++      "wikitext_line": 80
++    },
++    {
++      "id": "diff-wt-widgets-Browser:NavigateBack-81",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:NavigateBack",
++      "annotation": "",
++      "wikitext_line": 81
++    },
++    {
++      "id": "diff-wt-widgets-Browser:NavigateForward-82",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:NavigateForward",
++      "annotation": "",
++      "wikitext_line": 82
++    },
++    {
++      "id": "diff-wt-widgets-Browser:NavigateHome-83",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:NavigateHome",
++      "annotation": "",
++      "wikitext_line": 83
++    },
++    {
++      "id": "diff-wt-widgets-Browser:NavigateReload-84",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:NavigateReload",
++      "annotation": "",
++      "wikitext_line": 84
++    },
++    {
++      "id": "diff-wt-widgets-Browser:NavigateStop-85",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:NavigateStop",
++      "annotation": "",
++      "wikitext_line": 85
++    },
++    {
++      "id": "diff-wt-widgets-Browser:OpenExternalLink-86",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:OpenExternalLink",
++      "annotation": "",
++      "wikitext_line": 86
++    },
++    {
++      "id": "diff-wt-widgets-Browser:OpenTicket-87",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:OpenTicket",
++      "annotation": "",
++      "wikitext_line": 87
++    },
++    {
++      "id": "diff-wt-widgets-Browser:SetFocus-88",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:SetFocus",
++      "annotation": "",
++      "wikitext_line": 88
++    },
++    {
++      "id": "diff-wt-widgets-Browser:SetZoom-89",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser:SetZoom",
++      "annotation": "",
++      "wikitext_line": 89
++    },
++    {
++      "id": "diff-wt-widgets-Browser OnEditFocusGained-103",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser OnEditFocusGained",
++      "annotation": "",
++      "wikitext_line": 103,
++      "kind": "widget-script"
++    },
++    {
++      "id": "diff-wt-widgets-Browser OnEditFocusLost-104",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser OnEditFocusLost",
++      "annotation": "",
++      "wikitext_line": 104,
++      "kind": "widget-script"
++    },
++    {
++      "id": "diff-wt-widgets-Browser OnEscapePressed-105",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Browser OnEscapePressed",
++      "annotation": "",
++      "wikitext_line": 105,
++      "kind": "widget-script"
++    }
++  ],
++  "client_line": "retail"
++}
+diff --git a/tests/data/patch_5_3_0_sweep_known_gaps.json b/tests/data/patch_5_3_0_sweep_known_gaps.json
+new file mode 100644
+index 000000000..fe51488c7
+--- /dev/null
++++ b/tests/data/patch_5_3_0_sweep_known_gaps.json
+@@ -0,0 +1 @@
++[]
+diff --git a/tests/patch_5_3_0_publication_sweep.rs b/tests/patch_5_3_0_publication_sweep.rs
+new file mode 100644
+index 000000000..be61bd93e
+--- /dev/null
++++ b/tests/patch_5_3_0_publication_sweep.rs
+@@ -0,0 +1,82 @@
++//! Publication/absence only: no signature, output, security, or behavior parity claim.
++#![cfg(feature = "client-retail")]
++
++#[path = "common/publication_sweep.rs"]
++mod sweep;
++
++use wow_ui_sim::lua_api::WowLuaEnv;
++
++prefork_full_ui_case! {
++fn patch_5_3_0_publication_sweep(env: &WowLuaEnv) {
++    let register = include_str!("../data/patch-api/sources/5.3.0-wikitext-register.json");
++    let rows: serde_json::Value = serde_json::from_str(register).expect("parse register");
++    sweep::run_publication_sweep(env, &sweep::SweepSpec {
++        register,
++        known_gaps: include_str!("data/patch_5_3_0_sweep_known_gaps.json"),
++        row_count: rows["entries"].as_array().expect("inventory rows").len(),
++        register_env: "P530_SWEEP_REGISTER",
++        out_env: "P530_SWEEP_OUT",
++        later_registers: &[
++            // 5.4.0 queued on p540-page.
++            // 5.4.1 queued on p541-page.
++            // 5.4.2 queued on p542-page.
++            include_str!("../data/patch-api/sources/5.4.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/5.4.8-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.2.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/6.2.4-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.0.3-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.3.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/7.3.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.3.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/8.3.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/9.2.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.0.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.1.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.6-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/10.2.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.2-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.0.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.1.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.1.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.1.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.2.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.2.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/11.2.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.0-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.1-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.5-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.0.7-wikitext-register.json"),
++            include_str!("../data/patch-api/sources/12.1.0-wikitext-register.json"),
++        ],
++    });
++}
++}
+diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
+index 4901f7397..405efadfb 100644
+--- a/tools/gen_patch_wikitext_register.py
++++ b/tools/gen_patch_wikitext_register.py
+@@ -644,6 +644,46 @@ def parse_combat_restriction_bullets(text):
+     return entries
+ 
+ 
++def parse_mists_automated_diff(text):
++    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
++    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
++                'Events': 'events', 'Widget API': 'widgets'}
++    entries, counts = [], []
++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
++        lines = table[1].splitlines()
++        caption = next((line for line in lines if line.startswith('|+ ')), '')
++        section = next((value for name, value in sections.items()
++                        if caption.startswith('|+ ' + name + ' ')), None)
++        if section is None:
++            continue
++        first_line = text[:table.start(1)].count('\n') + 1
++        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
++                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
++                      else (first_line + offset, line)
++                      for offset, line in enumerate(lines)]
++        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
++        entries.extend(rows)
++        counts.extend(headers)
++    return entries, counts
++
++
++def parse_mists_widget_handlers(text):
++    """Keep Browser handler owner/name pairs in the dedicated 2013 table."""
++    entries, counts = [], []
++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
++        lines = table[1].splitlines()
++        if not any(line.startswith('|+ Widget Handlers ') for line in lines):
++            continue
++        first_line = text[:table.start(1)].count('\n') + 1
++        rows, headers = parse_section(
++            'widgets', list(enumerate(lines, first_line)), legacy_column_headers=True)
++        for row in rows:
++            row['kind'] = 'widget-script'
++        entries.extend(rows)
++        counts.extend(headers)
++    return entries, counts
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     for name in ("patch", "path", "revid", "out"):
+@@ -700,11 +740,18 @@ def main():
+                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
+     parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
+                         help='Label the client history for isolated supersession; opt-in')
++    parser.add_argument('--mists-automated-diff', action='store_true',
++                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
++    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
++    parser.add_argument('--mists-widget-handlers', action='store_true',
++                        help='Retain captioned Mists widget handler ownership; opt-in')
+     args = parser.parse_args()
+     patch, path, revid, out = args.patch, args.path, args.revid, args.out
+     raw = Path(path).read_bytes()
+     buckets = split_sections(raw.decode("utf-8"),
+                              separate_inline_structures=args.separate_inline_structures)
++    if args.mists_automated_diff:
++        buckets = {}
+     entries, counts = [], []
+     for section in SECTIONS.values():
+         entry_section = "cvars" if section == "commands" else section
+@@ -758,6 +805,22 @@ def main():
+         counts.extend(diff_counts)
+     if args.combat_restriction_bullets:
+         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
++    if args.mists_automated_diff:
++        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
++    if args.mists_diff:
++        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
++        for entry in diff_entries:
++            entry['id'] = 'diff-' + entry['id']
++        entries.extend(diff_entries)
++        counts.extend(diff_counts)
++    if args.mists_widget_handlers:
++        handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
++        handler_entries, handler_counts = parse_mists_widget_handlers(handler_raw)
++        if args.mists_diff:
++            for entry in handler_entries:
++                entry['id'] = 'diff-' + entry['id']
++        entries.extend(handler_entries)
++        counts.extend(handler_counts)
+     if args.inventory_only:
+         for entry in entries:
+             for key in ("kind", "page_default", "test_inline"):
+diff --git a/tools/test_patch_mists_transclusion.py b/tools/test_patch_mists_transclusion.py
+new file mode 100644
+index 000000000..0b1b633e6
+--- /dev/null
++++ b/tools/test_patch_mists_transclusion.py
+@@ -0,0 +1,48 @@
++"""Behavioral fixtures for the pinned 2013 caption tables and Browser handlers."""
++import unittest
++import gen_patch_wikitext_register as generator
++
++
++class MistsTransclusionTests(unittest.TestCase):
++    def test_caption_tables_and_bare_removal(self):
++        raw = '''{| class="wikitable"
++|+ Global API (5.2.0.16650 &rarr; 5.3.0.16965)
++! style="width: 50%"| 1 new functions
++! style="width: 50%"| 1 removed functions
++| valign="top" | <div>
++: {{api|GetLootSpecialization}}
++</div>
++| valign="top" | <div>
++: PrepVoidStorageForTransmogrify
++</div>
++|}
++'''
++        rows, counts = generator.parse_mists_automated_diff(raw)
++        self.assertEqual([(r['symbol'], r['direction']) for r in rows], [
++            ('GetLootSpecialization', 'added'), ('PrepVoidStorageForTransmogrify', 'removed')])
++        self.assertEqual([(r['header_count'], r['parsed_count']) for r in counts], [(1, 1), (1, 1)])
++        self.assertEqual([r['wikitext_line'] for r in rows], [6, 9])
++
++    def test_widget_handler_ownership_and_kind(self):
++        raw = '''{| class="wikitable"
++|+ Widget Handlers (5.2.0.16650 &rarr; 5.3.0.16965)
++! style="width: 50%"| 2 new handlers
++! style="width: 50%"| 0 removed handlers
++| valign="top" | <div>
++: {{api|t=wh|Browser OnEditFocusGained}}
++: {{api|t=wh|Browser OnEscapePressed}}
++</div>
++| valign="top" | <div>
++</div>
++|}
++'''
++        rows, counts = generator.parse_mists_widget_handlers(raw)
++        self.assertEqual([r['symbol'] for r in rows], ['Browser OnEditFocusGained', 'Browser OnEscapePressed'])
++        self.assertTrue(all(r['kind'] == 'widget-script' and r['section'] == 'widgets' for r in rows))
++        self.assertEqual([r['wikitext_line'] for r in rows], [6, 7])
++        self.assertEqual([(r['header_count'], r['parsed_count']) for r in counts], [(2, 2), (0, 0)])
++        self.assertEqual(generator.parse_mists_widget_handlers('|+ Widget API (x)\n'), ([], []))
++
++
++if __name__ == '__main__':
++    unittest.main()
