@@ -569,6 +569,10 @@ Rebased onto 7c3bbbfd3, retaining both parser behaviors and wiki histories. Real
 
 5.1.0 final integrated gate at 79d15621c07df93096a7ad11e4ff1da16ab9a910: PASS 58/58 clean, 59/59 synthetic later audit, zero failures. Historical and integrated owned-log tampering rejected at exact seals and byte-exact restoration verified. All 311 historical artifacts retained (original validator archived verbatim); compact eleven-own/four-external mapping is 24,005 bytes, largest session file 1,215,071 bytes. All requested proofs committed; no push, merge or delegation.
 
+## 2026-10-08 — Cataclysm Classic 4.4.0 source accounting
+
+[Audit](investigations/patch-4-4-0-api-audit.md): pinned CLASSIC4.4.0 page 580953/revision 6163701/TOC 40400. All twelve nonblank occurrences accounted: six metadata and six UNPROVEN prose rows (seven contracts). Source response, plaintext, ledger, provenance and receipt sealed; nine source-proof tests pass with per-row omission/fabrication/tamper rejection. Existing comma/suffix parser observations do not prove native behavior. No Cata profile, runtime/Cargo, stand-in probes, external expansion or integration changes. Pending 4.4.1 newer-first integration coordinator-owned.
+
 ## 2026-10-08 — Cataclysm Classic 4.4.2 source accounting
 
 [Audit](investigations/patch-4-4-2-api-audit.md): page 619773/revision 6303388, literal TOC 40402. Exact ledger: five metadata rows and one substantive modern-auction-house/`C_AuctionHouse` contract UNPROVEN because Cata runtime profile is unsupported. Returned content equals pinned source bytes; external diffs remain unexpanded. No publication register, retail/Mists stand-in, runtime/profile/classifier changes, native proof, delegation, push or merge. Source-proof acceptance at `b5ee99e5b`: five tests and exact plaintext reproduction pass; [receipt](../../data/patch-api/evidence/4.4.2-session-2026-10-08/source-proof.json) records unchanged tested scope. Source accounting complete; runtime contract remains open independently.

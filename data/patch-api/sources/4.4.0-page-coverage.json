@@ -1,0 +1,162 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "4.4.0",
+  "client_line": "cataclysm-classic",
+  "profile": null,
+  "scope": "source-only",
+  "source_commit": "0c7a007e91e13c14b80209104dbb4c12533e10da",
+  "source": {
+    "pageid": 580953,
+    "title": "Patch 4.4.0/API changes",
+    "revid": 6163701,
+    "timestamp": "2024-10-29T16:26:26Z",
+    "retrieved": "2026-10-08",
+    "wikitext_sha256": "f8598e92092793a0621ea26d5620fd910c178dcb1fccd0b0aa313b83a6b56d5e",
+    "wikitext_path": "data/patch-api/sources/4.4.0-api-changes.wikitext",
+    "wikitext_bytes": 1348,
+    "response_path": "data/patch-api/evidence/4.4.0-session-2026-10-08/source-response.json",
+    "response_sha256": "3563e32d0abf16e7fa0e71d1d4b5cc4a8b62cba718ac91b5e73debdb32ee2497",
+    "response_bytes": 1646,
+    "toc": 40400
+  },
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/4.4.0-api-changes.txt",
+    "sha256": "e424ca462d923241d977198ad11f910afc9d7a85dcf172068f17bf4cba22de4d",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "extractor_flags": [
+      "--text-only",
+      "--canonical-patch-navigation"
+    ]
+  },
+  "inventory": {
+    "enumerated_api_occurrences": 0,
+    "prose_api_occurrences": 1,
+    "header_counts": [],
+    "register_created": false,
+    "removals": 0
+  },
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "wikitext_line": 1,
+      "text_line": 1,
+      "source_text": "{{apichanges|4.4.0|prev=3.4.3|next=4.4.1}}",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Navigation prev=3.4.3/next=4.4.1 only; pending 4.4.1 integrates newer-first under coordinator ownership, no supersession proof."
+    },
+    {
+      "source_id": "source-context-003",
+      "wikitext_line": 3,
+      "text_line": 3,
+      "source_text": "==Summary==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial Summary heading."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "wikitext_line": 4,
+      "text_line": 4,
+      "source_text": "* The client now supports a new <span class=\"apitype\">_Cata</span> suffix for loading [[TOC_format#Multiple_client_flavors|client-specific TOC files]].",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "contract": "Cata-specific TOC suffix",
+      "reason": "No Cataclysm Classic profile/cache or native client proof; _Cata TOC selection and precedence are unmeasured."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "wikitext_line": 5,
+      "text_line": 5,
+      "source_text": "* The client now supports comma-delimited Interface versions, allowing addons to declare a TOC file as being compatible with multiple versions or flavors of the game at once.",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "contract": "Comma-delimited Interface compatibility",
+      "reason": "Existing interface_versions parser splits commas, but no Cata profile/native proof establishes multi-version or cross-flavor addon acceptance, selection or rejection."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "wikitext_line": 6,
+      "text_line": 6,
+      "source_text": "* The {{api|t=a|C_ChatInfo.SendAddonMessage}} now more aggressively throttles all addon traffic on a per-prefix level, and returns an enum result code instead of a boolean when a message is unable to be queued for transmission. See the [[Patch 10.2.7/API changes#Addon messaging changes|Patch 10.2.7 addon messaging changes]] for more details.",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "contract": "Per-prefix addon throttling and enum queue-failure result",
+      "reason": "No Cata runtime/native queue probe; per-prefix traffic limits, prefix independence and enum-versus-boolean queue-failure returns are unmeasured. No threshold or enum members are listed; linked 10.2.7 details remain unexpanded.",
+      "named_api": "C_ChatInfo.SendAddonMessage",
+      "contracts": [
+        "per-prefix throttling of all addon traffic",
+        "enum result rather than boolean when unable to queue transmission"
+      ],
+      "external_reference": "Patch 10.2.7/API changes#Addon messaging changes; unexpanded"
+    },
+    {
+      "source_id": "source-context-008",
+      "wikitext_line": 8,
+      "text_line": 8,
+      "source_text": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial Resources heading."
+    },
+    {
+      "source_id": "source-context-009",
+      "wikitext_line": 9,
+      "text_line": 9,
+      "source_text": "* TOC: <code>40400</code>",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal TOC 40400 identifies this pinned Classic 4.4.0 page, not a loaded native profile."
+    },
+    {
+      "source_id": "source-context-010",
+      "wikitext_line": 10,
+      "text_line": 10,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/3.4.3..4.4.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/3.4.3..4.4.0 BlizzardInterfaceResources]",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Two external 3.4.3..4.4.0 diff references retained literally, unexpanded; no inferred API members."
+    },
+    {
+      "source_id": "source-context-012",
+      "wikitext_line": 12,
+      "text_line": 12,
+      "source_text": "==Breaking changes==",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial Breaking changes heading."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "wikitext_line": 14,
+      "text_line": 14,
+      "source_text": "* The behavior of the legacy <span class=\"apitype\">_Classic</span> TOC suffix has changed.",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "contract": "Legacy Classic suffix behavior changed",
+      "reason": "No Cata runtime/native old-versus-new TOC selection observation; the change announcement alone does not prove the transition."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "wikitext_line": 15,
+      "text_line": 15,
+      "source_text": "** TOC files with this suffix now load on all Classic client flavors. Previously, they would only load on [[World of Warcraft: Classic|Classic Era]].",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "contract": "Classic suffix now loads on all Classic flavors, formerly Era only",
+      "reason": "No Cata profile/native selection proof for the all-Classic contract or prior Era-only restriction. Existing supported-profile suffix lists do not establish all-flavor/native semantics."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "wikitext_line": 16,
+      "text_line": 16,
+      "source_text": "** AddOns which require a TOC file only load on Classic Era should instead use the <span class=\"apitype\">_Vanilla</span> suffix.",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "contract": "Vanilla successor for Era-only TOC files",
+      "reason": "No native Era/Cata exclusion or selection proof establishes Era-only _Vanilla semantics as successor to legacy _Classic; existing Era/Anniversary preference is implementation evidence only."
+    }
+  ],
+  "proof_policy": "Twelve literal nonblank rows: six metadata and six UNPROVEN prose rows (seven contracts: line 6 contains two). Source identity/accounting only, zero runtime/native credit. No register, gap count, external-link expansion, retail/Mists substitute or inferred enum members.",
+  "coordinator_note": "CLASSIC4.4.0 TOC40400 source identity only; no supported Cata runtime. Pending 4.4.1 integrates newer-first; no rebase/push here."
+}

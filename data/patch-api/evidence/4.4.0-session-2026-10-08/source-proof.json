@@ -1,0 +1,29 @@
+{
+  "schema": "patch-source-receipt/v1",
+  "patch": "4.4.0",
+  "source_commit": "0c7a007e91e13c14b80209104dbb4c12533e10da",
+  "identity": {
+    "pageid": 580953,
+    "revid": 6163701,
+    "toc": 40400
+  },
+  "row_counts": {
+    "total": 12,
+    "metadata-only": 6,
+    "UNPROVEN": 6,
+    "contracts_unproven": 7
+  },
+  "scope": "source-accounting; not test execution or native/runtime proof",
+  "owned_sha256": {
+    "data/patch-api/sources/4.4.0-api-changes.wikitext": "f8598e92092793a0621ea26d5620fd910c178dcb1fccd0b0aa313b83a6b56d5e",
+    "data/patch-api/sources/4.4.0-api-changes.txt": "e424ca462d923241d977198ad11f910afc9d7a85dcf172068f17bf4cba22de4d",
+    "data/patch-api/sources/4.4.0-page-coverage.json": "e05c38c1fc5bcab1193c11814cc261dbc757367a623c3f2f885dffe0610b0ef2",
+    "data/patch-api/evidence/4.4.0-session-2026-10-08/source-response.json": "3563e32d0abf16e7fa0e71d1d4b5cc4a8b62cba718ac91b5e73debdb32ee2497",
+    "data/patch-api/evidence/4.4.0-session-2026-10-08/source-pin.json": "ffc989d4f235c924f5dd2df92aa7bf5a4406507a29c4c84b1d6e2affeae3eddb"
+  },
+  "context_tree_pins": {
+    "src": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+    "tools": "d9207917bcd0f6de544e87829eed6d57ffdf1bfa",
+    "data/patch-api/evidence/4.4.2-session-2026-10-08": "f04f948d445a37a42d49bdb8c4df4c8342d44bd2"
+  }
+}
