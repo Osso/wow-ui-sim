@@ -1,0 +1,135 @@
+test_gap_fixture_tampering (__main__.HistoricalValidatorTests.test_gap_fixture_tampering) ... FAIL
+test_generator_tampering (__main__.HistoricalValidatorTests.test_generator_tampering) ... FAIL
+test_later_register_tampering (__main__.HistoricalValidatorTests.test_later_register_tampering) ... FAIL
+test_ledger_tampering (__main__.HistoricalValidatorTests.test_ledger_tampering) ... FAIL
+test_negative_result_tampering (__main__.HistoricalValidatorTests.test_negative_result_tampering) ... FAIL
+test_page_identity_tampering (__main__.HistoricalValidatorTests.test_page_identity_tampering) ... FAIL
+test_receipt_log_tampering (__main__.HistoricalValidatorTests.test_receipt_log_tampering) ... FAIL
+test_receipt_manifest_tampering (__main__.HistoricalValidatorTests.test_receipt_manifest_tampering) ... FAIL
+test_relocated_replay_without_git_or_current_inputs (__main__.HistoricalValidatorTests.test_relocated_replay_without_git_or_current_inputs) ... FAIL
+test_response_tampering (__main__.HistoricalValidatorTests.test_response_tampering) ... FAIL
+test_result_tampering (__main__.HistoricalValidatorTests.test_result_tampering) ... FAIL
+test_snapshot_manifest_tampering (__main__.HistoricalValidatorTests.test_snapshot_manifest_tampering) ... FAIL
+test_source_tampering (__main__.HistoricalValidatorTests.test_source_tampering) ... FAIL
+
+======================================================================
+FAIL: test_gap_fixture_tampering (__main__.HistoricalValidatorTests.test_gap_fixture_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_generator_tampering (__main__.HistoricalValidatorTests.test_generator_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_later_register_tampering (__main__.HistoricalValidatorTests.test_later_register_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_ledger_tampering (__main__.HistoricalValidatorTests.test_ledger_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_negative_result_tampering (__main__.HistoricalValidatorTests.test_negative_result_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_page_identity_tampering (__main__.HistoricalValidatorTests.test_page_identity_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_receipt_log_tampering (__main__.HistoricalValidatorTests.test_receipt_log_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_receipt_manifest_tampering (__main__.HistoricalValidatorTests.test_receipt_manifest_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_relocated_replay_without_git_or_current_inputs (__main__.HistoricalValidatorTests.test_relocated_replay_without_git_or_current_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_response_tampering (__main__.HistoricalValidatorTests.test_response_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_result_tampering (__main__.HistoricalValidatorTests.test_result_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_snapshot_manifest_tampering (__main__.HistoricalValidatorTests.test_snapshot_manifest_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+======================================================================
+FAIL: test_source_tampering (__main__.HistoricalValidatorTests.test_source_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p420-source/data/patch-api/evidence/4.2.0-session-2026-10-09/test_validate.py", line 19, in setUp
+    self.assertTrue((HERE / "validate.py").is_file(), "historical validator missing")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : historical validator missing
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.002s
+
+FAILED (failures=13)
