@@ -1,0 +1,75 @@
+{
+  "schema": "patch-factory-proof/v1",
+  "base_revision": "f95eed96e",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-factory",
+  "commands": [
+    {
+      "phase": "discovery RED",
+      "argv": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "client-wrath",
+        "--test",
+        "patch_3_4_1_factory",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "env_overrides": {
+        "WOW_SIM_P341_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p341-factory/data/patch-api/evidence/3.4.1-factory-2026-10-09/discovery-observations.json"
+      },
+      "inherited_environment": {
+        "SHELL": "/bin/bash",
+        "COLORTERM": "truecolor",
+        "TERM_PROGRAM_VERSION": "3.7c",
+        "TMUX": "/tmp/tmux-1000/default,2223,3",
+        "PWD": "/home/osso/Projects/wow/wow-ui-sim",
+        "LOGNAME": "osso",
+        "XDG_SESSION_TYPE": "tty",
+        "PI_CODING_AGENT_DIR": "/home/osso/.config/pi/agent",
+        "MOTD_SHOWN": "pam",
+        "HOME": "/home/osso",
+        "INVOCATION_ID": "c462267395924b7cb6ec4a3ab7e41223",
+        "SSH_CONNECTION": "192.168.2.168 47598 192.168.2.149 22",
+        "CARGO_BUILD_JOBS": "12",
+        "XDG_SESSION_CLASS": "user",
+        "TERM": "tmux-256color",
+        "BUILD_HOST_SCRIPTS": "/home/osso/Projects/world-of-osso/game-engine/scripts",
+        "USER": "osso",
+        "TMUX_PANE": "%3",
+        "SHLVL": "0",
+        "XDG_SESSION_ID": "59",
+        "LC_CTYPE": "C.UTF-8",
+        "XDG_RUNTIME_DIR": "/run/user/1000",
+        "SSH_CLIENT": "192.168.2.168 55412 22",
+        "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin",
+        "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+        "MAIL": "/var/spool/mail/osso",
+        "TERM_PROGRAM": "tmux",
+        "PI_CODING_AGENT": "true",
+        "NoDefaultCurrentDirectoryInExePath": "1",
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+        "CLAUDE_AGENT_SDK_VERSION": "0.3.293"
+      },
+      "revision": "467acfa6e48cf0945c96e29ce3bd30f1a65a4cf2",
+      "exit_code": 101,
+      "stdout": "discovery-red.stdout.log",
+      "stderr": "discovery-red.stderr.log",
+      "source_and_input_sha256": {
+        "Cargo.toml": "2533154ff605dde03d1e87fb0e77dd803420b7b90b57381cdee539be34742920",
+        "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+        "tests/patch_3_4_1_factory.rs": "f542ab7fff63e2a7f895a3ef59dcb05dd00ffb0c645239bdff6129c0a3b4d15d",
+        "tests/common/publication_sweep.rs": "26babc6f764fb17d008b040c7141bbc790b9c3b998f04bad07f0ff06b7ac1701",
+        "data/patch-api/evidence/3.4.1-factory-2026-10-09/inventory.json": "0bc0e7f34daf60e62b3eb6c00bb805c932d9a31d02c32dde6cfdf488b4056e85",
+        "data/patch-api/evidence/3.4.1-factory-2026-10-09/known-gaps.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "data/patch-api/sources/3.4.1-page-coverage.json": "ead1761b90fef662a124723560ef5d6abd7f0d3bb3b6e22b9bb0443874d238db",
+        "data/patch-api/sources/3.4.2-source-inventory.json": "ab08608d6ab0384c2f8e9cd5ae9631fc38df356b9fbb10e8b98a7fa61a50c92d",
+        "src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839"
+      },
+      "scope": "333 bare Wrath factory rows; empty known-gap fixture",
+      "later_changes_invalidate_proof": true
+    }
+  ]
+}

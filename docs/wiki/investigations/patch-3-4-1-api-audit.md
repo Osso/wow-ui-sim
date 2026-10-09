@@ -47,7 +47,25 @@ Integrated `4e3eee3b85`. Retained [independent report](../../../data/patch-api/e
 
 At coordinator snapshot `3992639881dfacf3ad5a23df4b54b2348b92070b`, integration is present, not queued. Historical capture revisions, seals and log statements remain unchanged. New global job `p34x-p33x-portable-gate` is running at `399263988`; no PASS yet. Latest CI is pending; inherited full-suite Garrison/prefork, integration and library failures remain unresolved. No full handoff or native completion claim.
 
-No factory measurements, loaded UI, runtime or native closure for this page. Fresh replay covers only serialized historical source accounting; retained tests were not rerun.
+The integrated historical replay above contains no factory measurements, loaded UI or native closure. Fresh historical replay covers only serialized source accounting; retained historical tests were not rerun. Separate current factory work follows.
+
+## Separate current factory measurement — 2026-10-09
+
+Scope: bare `WowLuaEnv::new`, only `client-wrath`, configured interface **38001**; no Game, Blizzard publisher/UI, cache access or native Classic **30401**. Base `f95eed96e`, branch `p341-factory`. [Measurement spec](../../specs/patch-3-4-1-factory-measurement.md); [fresh evidence](../../../data/patch-api/evidence/3.4.1-factory-2026-10-09/). Historical ledger/status/counts and all 19 original seals remain untouched. The new literal register derives 333 occurrences and retains source metadata; it does not convert historical UNPROVEN into parity.
+
+| Literal surface | Current classifier matches | Mismatches | Proof boundary |
+|---|---:|---:|---|
+| 211 globals | 133 | 78 | Raw and ordinary lookup retained; lookup functions do not prove native publication or behavior |
+| 44 events | 35 | 9 | Nonempty invented names accepted; availability/removal discrimination UNPROVEN |
+| 77 CVars | 71 | 6 | Value/default presence or absence only; persistence/effects UNPROVEN |
+| LogFps command | 0 | 1 | No Command-kind catalog record; CVar names do not qualify; execution UNPROVEN |
+| Total | 239 | 94 | Current simulator classifier only, no native parity credit |
+
+Only actual registered Wrath 3.4.2 later identities are used: `C_CharacterServices.AssignPFCDistribution` and `DynamicVRSSensitivityThreshold` change effective expectations to absent. The former still mismatches, latter matches. 3.4.3 has zero explicit identities and cannot supersede members. Retail/Cata/Mists and newly separate TBC 2.5 history are excluded.
+
+Of 61 effectively expected-present CVars: four unpublished, 42 exact default strings, **15 published string differences**, separate from publication failures. Eight differ only by numeric serialization (`SoftTargetEnemyRange`, `SoftTargetFriendRange`, `SoftTargetInteractRange`, `SoftTargetWorldtextFarDist`, `SoftTargetWorldtextNearDist`, `SoftTargetWorldtextNearScale`, `SoftTargetWorldtextSize`, `WorldTextMinSize`). Seven source→observed defaults: `CMAA2HalfFloat` 0→1, `interactQuestItems` 0→1, `SoftTargetEnemy` 0→1, `SoftTargetInteract` 0→1, `TargetAutoEnemy` 0→1, `TargetAutoFriend` 0→1, `validateFrameXML` 0→1. Four missing CVars also have default differences, but are publication gaps, not published-default gaps. Exact strings/values retained in `published-default-differences.json` and every observation. Neither numeric equality nor publication supplies subsystem behavior proof.
+
+Development discovery RED at `467acfa6e` exits 101 solely at the empty known-gap assertion after persisting all observations. [Fresh proof ledger](../../../data/patch-api/evidence/3.4.1-factory-2026-10-09/proof-ledger.json) owns full stdout/stderr, argv, environment, revision and input hashes. GREEN status is recorded after pinning exact gaps and bounded controls. Six inherited headless-library warnings and one binary unused import are out of scope; shared helper dead-code warnings from discovery are resolved by a profile-rejection control, not suppression. No broad/final checks, models, shims, vendor writes or operations. Main owns integration and native final gates; 211 signatures, event payloads/dispatch, CVar effects, command execution and both prose summaries stay UNPROVEN.
 
 ## Sources
 
