@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.15.5 literal SOURCE audit
+
+[Audit](investigations/patch-1-15-5-api-audit.md): frozen610284/6235411, TOC11505; four nonblank rows, one header, two UNPROVEN diff links and unexpanded navigation. No local API/signature/prose declarations or literal client name. SOURCE GREEN8/8 at3ea25422f; portable3/3 at38fa9fba4, fresh copied8/8/default byte replay and both serialized tamper rejections/exact restorations. Original38 seals unchanged; later receipts separate. Queued1.15.6/1.15.7 and integrated-canonical1.15.8/1.15.9 inputs not applied here. Zero runtime/model/native credit; main owns integration/native/final gates.
+
 ## [2026-10-09] investigation | Historical retail Patch 2.2.0 SOURCE audit
 
 [Audit](investigations/patch-2-2-0-api-audit.md): frozen page184149/revision6428980; 36 inventory, 33 signature limits, 67 raw/67 default-extract rows, 53 prose limits, 11 headings/no numeric counts, 12 modified-click examples. Manifest-linked registry101 ends at1.0.0. SOURCE-only; all substantive contracts UNPROVEN, zero model/native/runtime credit; Classic/queued supersession excluded. Own SOURCE GREEN5/5 at3045ccee9 (279 omission controls), historical/portable GREEN at4f7a2c797: 19 seals, copied no-Git/no-target replay, ledger/log rejection and exact restoration. Archive317490bytes/max109178bytes; 29 literal/4 unspecified signatures. Shared tools unchanged; main owns native/integration/final gates.

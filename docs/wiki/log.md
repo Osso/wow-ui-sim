@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.15.5 literal SOURCE audit
+
+[Audit](investigations/patch-1-15-5-api-audit.md): own frozen610284/6235411 accounting, SOURCE8/8 and portable3/3; original38 seals/logs immutable, copied replay/default byte match and ledger/log rejection/restoration receipts separate. Metadata/links produce zero API/model/native credit. Same-Era successor sources retained distinctly; main owns integration and final gates. No runtime/shared-tool/vendor edits, broad gates or operations.
+
 ## [2026-10-09] investigation | Patch 1.15.8 literal SOURCE audit
 
 [Audit](investigations/patch-1-15-8-api-audit.md): frozen 686952/6778071, literal TOC11508; four nonblank rows, one header, two UNPROVEN diff contracts and unexpanded navigation. No local API/event/CVar/widget/command/signature/prose declarations. Literal page lacks client name; configured Era/Anniversary11507 and queued sibling1.15.9 Classic context separated from native/integration credit. Own SOURCE RED retained; GREEN8/8 at `384699f11`, original23 seals (660,202 bytes); at `b02477039` both serialized tamper rejections/restorations and fresh no-Git/target historical replay pass (24 members, five separate receipt seals). Main owns successor/native/integration; zero runtime/model/native credit. No runtime/shared-tool changes or final gates.

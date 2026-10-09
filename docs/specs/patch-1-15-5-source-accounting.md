@@ -4,11 +4,11 @@ Account frozen Warcraft Wiki page 610284 / revision 6235411 / timestamp `2025-02
 
 ## What it must do
 
-- [ ] Validate exact response/raw identity and hashes against the frozen legacy manifest and 101-page registry ending 1.0.0.
-- [ ] Preserve four nonblank rows, Resources header, TOC11505 and navigation; infer no client name.
-- [ ] Account two unexpanded diff links; invent no APIs, signatures, prose contracts, defaults or aliases.
-- [ ] Separate configured Era/Anniversary11507 and same-Era successor inputs: queued1.15.6/1.15.7, canonical-integrated1.15.8/1.15.9 not applied here.
-- [ ] Reject omissions, fabricated coverage, foreign-history credit and tampering; keep original seals/logs immutable and later replay receipts separate.
+- [x] Validate exact response/raw identity and hashes against the frozen legacy manifest and 101-page registry ending 1.0.0.
+- [x] Preserve four nonblank rows, Resources header, TOC11505 and navigation; infer no client name.
+- [x] Account two unexpanded diff links; invent no APIs, signatures, prose contracts, defaults or aliases.
+- [x] Separate configured Era/Anniversary11507 and same-Era successor inputs: queued1.15.6/1.15.7, canonical-integrated1.15.8/1.15.9 not applied here.
+- [x] Reject omissions, fabricated coverage, foreign-history credit and tampering; keep original seals/logs immutable and later replay receipts separate.
 
 ## How it works
 
@@ -20,7 +20,7 @@ Account frozen Warcraft Wiki page 610284 / revision 6235411 / timestamp `2025-02
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: eight SOURCE fixtures; retained RED scaffold and eight assertion failures in `red.log`. Portable replay/tamper proof pending.
+Own `test_source_accounting.py`: retained RED eight assertion failures; SOURCE GREEN8/8 at `3ea25422f`. `test_portable.py`: GREEN3/3 at `38fa9fba4`, fresh copied SOURCE8/8, default byte replay, serialized ledger/log seal rejection and exact restoration. Original38 seals unchanged; later receipts separate. [Exact commands and results](../../data/patch-api/evidence/1.15.5-session-2026-10-09/portable-proof.json). No final gates.
 
 ## Known gaps (current cycle)
 
