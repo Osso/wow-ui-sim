@@ -3035,3 +3035,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] proof | Patch 1.14.2 portable SOURCE and current Era getters
 
 [Audit](investigations/patch-1-14-2-api-audit.md):72 original seals unchanged,73-member145111-byte archive;portable RED3/GREEN3 and copied SOURCE8/default-byte replay,serialized ledger/log rejection/restoration. Separate Era11507 getter1/1 at02df0b0e0:two exact `1` defaults/current values;telemetry and unknown nil/nil. Seven existing warnings;no LED/native/runtime repair. Main owns successors/integration/native/final gates.
+
+## [2026-10-09] investigation | Patch 1.13.7 SOURCE accounting
+
+[Audit](investigations/patch-1-13-7-api-audit.md): frozen46829/458410,25 raw/5 extracted rows,five inventory occurrences,one unspecified signature,four unnamed-default CVars. No inferred model/native credit or foreign supersession. Own SOURCE RED8 retained; GREEN/portable pending. Main owns integration/native/final gates.

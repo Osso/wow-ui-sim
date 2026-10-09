@@ -957,3 +957,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] proof | Patch 1.14.2 portable SOURCE and current Era getters
 
 [Audit](investigations/patch-1-14-2-api-audit.md):72 original seals unchanged,73-member145111-byte archive;portable RED3/GREEN3 and copied SOURCE8/default-byte replay,serialized ledger/log rejection/restoration. Separate Era11507 getter1/1 at02df0b0e0:two exact `1` defaults/current values;telemetry and unknown nil/nil. Seven existing warnings;no LED/native/runtime repair. Main owns successors/integration/native/final gates.
+
+## 2026-10-09 — Patch 1.13.7 frozen SOURCE accounting
+
+Added [literal audit](investigations/patch-1-13-7-api-audit.md) and [spec](../specs/patch-1-13-7-source-accounting.md). Raw25/extract5/inventory5,all behavior UNPROVEN; queued1.14.0/1 and integrated1.14.2–1.15.9 unapplied. SOURCE RED8 retained; targeted GREEN/portable pending.
