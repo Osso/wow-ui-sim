@@ -1,0 +1,13 @@
+Patch 1.14.1 API changes
+
+== Summary ==
+* Added C_Seasons to support Classic Era Season of Mastery.
+* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate, see this section for solutions.
+* The event trace tool now supports logging events while the frame is hidden. This option is disabled by default.
+
+== Resources ==
+* TOC: 11401
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Community patch notes: 1.14.1 Consolidated UI Changes
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+

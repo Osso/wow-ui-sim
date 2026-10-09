@@ -1,0 +1,54 @@
+{
+  "revision": "a6d38f864763f36b0a608bb4dcfa9012b59c821a",
+  "original_seals": 160,
+  "original_seal_map_sha256": "9918f7611435b9f3a5711e8b4259b333e25627e3f1fb65c16b1b024f9d0e5a78",
+  "originals_unchanged": true,
+  "portable": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/test_portable.py",
+      "--archive",
+      "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/replay-archive.tar.gz",
+      "--scratch",
+      "/tmp/p1141-portable",
+      "--receipts",
+      "/home/osso/.worktrees/wow-ui-sim-p1141-page/data/patch-api/evidence/1.14.1-session-2026-10-09/portable-controls.json"
+    ],
+    "exit_code": 0,
+    "tests": 3,
+    "copied_source_tests": 8,
+    "omission_controls": 353,
+    "default_register": "byte-identical",
+    "default_extract": "byte-identical",
+    "ledger_log_tamper": "both rejected and exact restored",
+    "no_git_target_current_tools": true
+  },
+  "current_model": {
+    "command": [
+      "cargo",
+      "test",
+      "--offline",
+      "--manifest-path",
+      "/home/osso/.worktrees/wow-ui-sim-p1141-page/Cargo.toml",
+      "--no-default-features",
+      "--features",
+      "client-era",
+      "--test",
+      "patch_1_14_1_text_scale",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1141-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p1141-page/target",
+    "exit_code": 0,
+    "tests": 1,
+    "scope": "existing per-FontString GetTextScale reads updated isolated positive state; first1.5->2.25, second0.75",
+    "source_identity": "FontString:GetTextScale; FontStringSetTextScale unchanged/unresolved",
+    "native_contract": false,
+    "source_numeric_defaults_or_signatures_inferred": false,
+    "runtime_implementation_edits": false,
+    "warnings": "6 existing library +1 existing binary warning; vendor manifest deprecations retained in full log"
+  },
+  "main_gates": "successor integration/native/loaded-UI/security/final unperformed"
+}

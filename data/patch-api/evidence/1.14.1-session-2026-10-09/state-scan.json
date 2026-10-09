@@ -1,0 +1,1747 @@
+[
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "line": 69,
+    "literal": "    (\"C_Club\", &[\"AddClubStreamToChatWindow\"]),"
+  },
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "line": 88,
+    "literal": "        \"C_ClubFinder\","
+  },
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "line": 98,
+    "literal": "        \"C_Commentator\","
+  },
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "line": 132,
+    "literal": "    (\"C_Commentator\", &[\"GetTeamHighlightColor\"]),"
+  },
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "line": 176,
+    "literal": "        \"C_Commentator\","
+  },
+  {
+    "path": "src/c_api/club_members.rs",
+    "line": 14,
+    "literal": "    let table = ensure_namespace(state, \"C_Club\")?;"
+  },
+  {
+    "path": "src/c_api/club_members.rs",
+    "line": 54,
+    "literal": "        .ok_or_else(|| runtime_error(\"C_Club: club/member ID must be a nonempty opaque string\"))"
+  },
+  {
+    "path": "src/c_api/club_members.rs",
+    "line": 317,
+    "literal": "            \"C_Club.CreateClub: expected BattleNet or Character club\","
+  },
+  {
+    "path": "src/c_api/club_inputs.rs",
+    "line": 34,
+    "literal": "        .ok_or_else(|| runtime_error(format!(\"C_Club member input: unknown club {club_id}\")))?;"
+  },
+  {
+    "path": "src/c_api/club_inputs.rs",
+    "line": 92,
+    "literal": "            runtime_error(format!(\"C_Club removal input: unknown club {club_id}\"))"
+  },
+  {
+    "path": "src/c_api/club_inputs.rs",
+    "line": 97,
+    "literal": "            \"C_Club removal input: transfer required owner before removal\","
+  },
+  {
+    "path": "src/c_api/club_inputs.rs",
+    "line": 114,
+    "literal": "            \"C_Club member input: nonempty opaque ID, role 1..4 and presence 0..5 required\","
+  },
+  {
+    "path": "src/c_api/club_inputs.rs",
+    "line": 127,
+    "literal": "            \"C_Club member input: duplicate self identity\","
+  },
+  {
+    "path": "src/c_api/club_inputs.rs",
+    "line": 143,
+    "literal": "            \"C_Club member input: required unique owner must be transferred atomically\","
+  },
+  {
+    "path": "src/c_api/c_club.rs",
+    "line": 26,
+    "literal": "    let table_ref = ensure_namespace(state, \"C_Club\")?;"
+  },
+  {
+    "path": "src/c_api/c_club.rs",
+    "line": 546,
+    "literal": "                \"C_Club message: missing author snapshot {member_id}\""
+  },
+  {
+    "path": "src/ptr/compat_bootstrap.lua",
+    "line": 188,
+    "literal": "C_SocialRestrictions = C_SocialRestrictions or {}"
+  },
+  {
+    "path": "src/ptr/compat_bootstrap.lua",
+    "line": 189,
+    "literal": "if rawget(C_SocialRestrictions, \"IsFriendsDisabled\") == nil then"
+  },
+  {
+    "path": "src/ptr/compat_bootstrap.lua",
+    "line": 190,
+    "literal": "  function C_SocialRestrictions.IsFriendsDisabled()"
+  },
+  {
+    "path": "src/lua_api/hot_literals.rs",
+    "line": 113,
+    "literal": "    b\"C_BehavioralMessaging\","
+  },
+  {
+    "path": "src/lua_api/hot_literals.rs",
+    "line": 123,
+    "literal": "    b\"C_Club\","
+  },
+  {
+    "path": "src/lua_api/hot_literals.rs",
+    "line": 124,
+    "literal": "    b\"C_ClubFinder\","
+  },
+  {
+    "path": "src/lua_api/hot_literals.rs",
+    "line": 125,
+    "literal": "    b\"C_Commentator\","
+  },
+  {
+    "path": "src/lua_api/hot_literals.rs",
+    "line": 183,
+    "literal": "    b\"C_Seasons\","
+  },
+  {
+    "path": "src/lua_api/workarounds_editmode.rs",
+    "line": 177,
+    "literal": "/// Blizzard code path. Per-frame errors are caught by secureexecuterange."
+  },
+  {
+    "path": "src/mists/compat_bootstrap.lua",
+    "line": 360,
+    "literal": "    if type(guildFinder.OnEvent) == \"function\" and C_ClubFinder and Enum and Enum.ClubFinderRequestType then"
+  },
+  {
+    "path": "src/loader/tests/wow_api_globals/startup_globals.rs",
+    "line": 882,
+    "literal": "            if C_SocialRestrictions.IsFriendsDisabled() ~= false then return \"friends-disabled\" end"
+  },
+  {
+    "path": "src/lua_api/state_types/character_world.rs",
+    "line": 587,
+    "literal": "    /// Guild chat messages sent at runtime via `C_Club.SendMessage`. Appended"
+  },
+  {
+    "path": "src/lua_api/state_types/character_world.rs",
+    "line": 588,
+    "literal": "    /// after the static seed messages exposed by `C_Club.GetMessagesBefore`."
+  },
+  {
+    "path": "src/lua_api/state_types/character_world.rs",
+    "line": 636,
+    "literal": "/// `C_Club.SendMessage`). The simulator assigns positions/epochs based on"
+  },
+  {
+    "path": "src/lua_api/state/sim_state.rs",
+    "line": 255,
+    "literal": "    /// Guild club member names sent a Battle.net friend request via `C_Club`."
+  },
+  {
+    "path": "src/lua_api/env_init/shared_bootstrap.lua",
+    "line": 134,
+    "literal": "local callPrivateProjectionFactory = securecallfunction"
+  },
+  {
+    "path": "src/lua_api/env_init/shared_bootstrap.lua",
+    "line": 258,
+    "literal": "          return securecallfunction(fn, delegateSelf, __wow_project_forbidden_arguments(...))"
+  },
+  {
+    "path": "src/lua_api/env_init/shared_bootstrap.lua",
+    "line": 809,
+    "literal": "local callSecureHookFactory = securecallfunction"
+  },
+  {
+    "path": "src/lua_api/globals/missing_surface/club_finder.rs",
+    "line": 1,
+    "literal": "//! Deterministic `C_ClubFinder` surface for Communities UI defaults."
+  },
+  {
+    "path": "src/lua_api/globals/missing_surface/club_finder.rs",
+    "line": 22,
+    "literal": "    let table_ref = ensure_namespace(state, \"C_ClubFinder\")?;"
+  },
+  {
+    "path": "src/lua_api/globals/stubs/namespace_stubs.rs",
+    "line": 42,
+    "literal": "    // C_Club GetClubMembers / GetSubscribedClubs / GetClubCapacity / IsEnabled"
+  },
+  {
+    "path": "src/lua_api/globals/stubs/namespace_stubs.rs",
+    "line": 167,
+    "literal": "    // C_Club IsEnabled is WorldState-backed in missing_surface/club_info.rs, not a stub."
+  },
+  {
+    "path": "src/lua_api/globals/stubs/namespace_stubs.rs",
+    "line": 210,
+    "literal": "    // C_Club GetClubCapacity is WorldState-backed in missing_surface/club_info.rs, not a stub."
+  },
+  {
+    "path": "src/lua_api/globals/stubs/namespace_stubs.rs",
+    "line": 242,
+    "literal": "    // C_Club GetClubMembers / GetStreams / GetSubscribedClubs are"
+  },
+  {
+    "path": "src/lua_api/globals/security/mod.rs",
+    "line": 10,
+    "literal": "//! `securecall`, `securecallfunction`, `forceinsecure`, `hooksecurefunc`,"
+  },
+  {
+    "path": "src/lua_api/globals/security/mod.rs",
+    "line": 11,
+    "literal": "//! `secureexecuterange`) are NOT registered here."
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/secure_types_defaults.rs",
+    "line": 27,
+    "literal": "  if type(securecallfunction) == \"function\" then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/secure_types_defaults.rs",
+    "line": 28,
+    "literal": "    return securecallfunction(fn, ...)"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/secure_types_defaults.rs",
+    "line": 86,
+    "literal": "    return secureexecuterange(self.tbl, func, ...)"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/club_notification_defaults.rs",
+    "line": 1,
+    "literal": "//! Temporary `C_Club` notification-settings defaults."
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/club_notification_defaults.rs",
+    "line": 8,
+    "literal": "C_Club = C_Club or __wow_namespace()"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/club_notification_defaults.rs",
+    "line": 10,
+    "literal": "if rawget(C_Club, \"GetClubStreamNotificationSettings\") == nil then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/club_notification_defaults.rs",
+    "line": 11,
+    "literal": "    function C_Club.GetClubStreamNotificationSettings()"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/club_notification_defaults.rs",
+    "line": 31,
+    "literal": "            .eval(\"return #C_Club.GetClubStreamNotificationSettings('guild-0')\")"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/club_notification_defaults.rs",
+    "line": 42,
+    "literal": "            function C_Club.GetClubStreamNotificationSettings()"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/club_notification_defaults.rs",
+    "line": 52,
+    "literal": "            .eval(\"return C_Club.GetClubStreamNotificationSettings('guild-0')[1]\")"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs",
+    "line": 8,
+    "literal": "C_BehavioralMessaging = C_BehavioralMessaging or __wow_namespace()"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs",
+    "line": 9,
+    "literal": "if rawget(C_BehavioralMessaging, \"SendNotificationReceipt\") == nil then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs",
+    "line": 10,
+    "literal": "    function C_BehavioralMessaging.SendNotificationReceipt(_notificationID, _receiptType)"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs",
+    "line": 31,
+    "literal": "                local result_count = select(\"#\", C_BehavioralMessaging.SendNotificationReceipt(1, \"shown\"))"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs",
+    "line": 45,
+    "literal": "            function C_BehavioralMessaging.SendNotificationReceipt()"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs",
+    "line": 55,
+    "literal": "            .eval(\"return C_BehavioralMessaging.SendNotificationReceipt()\")"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 54,
+    "literal": "C_SocialRestrictions = C_SocialRestrictions or __wow_namespace()"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 55,
+    "literal": "if rawget(C_SocialRestrictions, \"IsChatDisabled\") == nil then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 56,
+    "literal": "    function C_SocialRestrictions.IsChatDisabled() return false end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 59,
+    "literal": "    if rawget(C_SocialRestrictions, \"IsFriendsDisabled\") == nil then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 60,
+    "literal": "        function C_SocialRestrictions.IsFriendsDisabled() return false end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 67,
+    "literal": "C_Commentator = C_Commentator or __wow_namespace()"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 68,
+    "literal": "if rawget(C_Commentator, \"IsSpectating\") == nil then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 69,
+    "literal": "    function C_Commentator.IsSpectating() return false end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 71,
+    "literal": "if rawget(C_Commentator, \"SendAddonMessage\") == nil then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 72,
+    "literal": "    function C_Commentator.SendAddonMessage(_prefix, _message, _channel)"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 84,
+    "literal": "        and rawget(C_Commentator, \"SendAddonMessageLogged\") == nil then"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 85,
+    "literal": "    function C_Commentator.SendAddonMessageLogged(_prefix, _message, _chatType, _target)"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 86,
+    "literal": "        return C_Commentator.SendAddonMessage(_prefix, _message, _chatType)"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 299,
+    "literal": "                if C_SocialRestrictions.IsChatDisabled() ~= false then return \"social\" end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 300,
+    "literal": "                if C_Commentator.IsSpectating() ~= false then return \"spectating\" end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 301,
+    "literal": "                if C_Commentator.SendAddonMessage(\"A\", \"B\", \"WHISPER\") ~= Enum.SendAddonMessageResult.Success then return \"send\" end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 352,
+    "literal": "            C_SocialRestrictions.IsChatDisabled = function() return true end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 353,
+    "literal": "            C_Commentator.ExistingMember = 7"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 383,
+    "literal": "                if C_SocialRestrictions.IsChatDisabled() ~= true then return \"overwrote_namespace_member\" end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 384,
+    "literal": "                if C_Commentator.ExistingMember ~= 7 then return \"lost_member\" end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/inert_global_defaults.rs",
+    "line": 385,
+    "literal": "                if type(C_Commentator.SendAddonMessage) ~= \"function\" then return \"missing_default\" end"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/player_location_defaults.rs",
+    "line": 60,
+    "literal": "        return type(C_Club) == \"table\""
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/player_location_defaults.rs",
+    "line": 61,
+    "literal": "          and type(C_Club.CanResolvePlayerLocationFromClubMessageData) == \"function\""
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/player_location_defaults.rs",
+    "line": 62,
+    "literal": "          and C_Club.CanResolvePlayerLocationFromClubMessageData("
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/player_location_defaults.rs",
+    "line": 132,
+    "literal": "                C_Club.CanResolvePlayerLocationFromClubMessageData = function(clubID, streamID, epoch, position)"
+  },
+  {
+    "path": "src/lua_api/workarounds/temporary/debug_environment_defaults.rs",
+    "line": 17,
+    "literal": "  local callSecureDelegate = securecallfunction"
+  },
+  {
+    "path": "src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua",
+    "line": 25,
+    "literal": "            secureexecuterange("
+  },
+  {
+    "path": "src/lua_api/frame/methods/text_attribute_event/mod.rs",
+    "line": 306,
+    "literal": "    table_set_rust_fn_static(state, table, \"GetTextScale\", text::get_text_scale)?;"
+  },
+  {
+    "path": "src/lua_api/frame/methods/text_attribute_event/mod.rs",
+    "line": 307,
+    "literal": "    table_set_rust_fn_static(state, table, \"SetTextScale\", text::set_text_scale)?;"
+  },
+  {
+    "path": "tests/fontstring_smooth_scaling.rs",
+    "line": 99,
+    "literal": "        fs:SetTextScale(1.1)"
+  },
+  {
+    "path": "tests/forever_auto_roll.rs",
+    "line": 41,
+    "literal": "            namespace == \"C_Club\" && method == \"GetInvitationCandidates\""
+  },
+  {
+    "path": "tests/forever_auto_roll.rs",
+    "line": 203,
+    "literal": "        local club = rawget(rawget(_G, 'C_Club'), 'GetInvitationCandidates')"
+  },
+  {
+    "path": "tests/forever_auto_roll.rs",
+    "line": 246,
+    "literal": "            assert(rawget(C_Club, 'GetInvitationCandidates') == club)"
+  },
+  {
+    "path": "tests/blizzard_map_canvas_secure_util_loads.rs",
+    "line": 102,
+    "literal": "         `securecallfunction` to invoke tainted handler bodies without taint leakage, NOT \\"
+  },
+  {
+    "path": "tests/blizzard_map_canvas_secure_util_loads.rs",
+    "line": 109,
+    "literal": "         `securecallfunction` / `SafePack` / `SafeUnpack` runtime helpers, all available \\"
+  },
+  {
+    "path": "tests/blizzard_map_canvas_secure_util_loads.rs",
+    "line": 304,
+    "literal": "             linear-scans via securecallfunction-wrapped rawget for taint isolation, \\"
+  },
+  {
+    "path": "tests/blizzard_map_canvas_secure_util_loads.rs",
+    "line": 305,
+    "literal": "             InvokeHandlers iterates via the same securecallfunction wrap and short-circuits \\"
+  },
+  {
+    "path": "tests/blizzard_map_canvas_secure_util_loads.rs",
+    "line": 325,
+    "literal": "             globally would let addon code bypass the securecallfunction taint isolation \\"
+  },
+  {
+    "path": "tests/blizzard_map_canvas_secure_util_loads.rs",
+    "line": 350,
+    "literal": "         AddHandler tsorts the array after every insert via securecallfunction. This makes \\"
+  },
+  {
+    "path": "tests/blizzard_report_frame_glue_loads.rs",
+    "line": 408,
+    "literal": "         distinct from the Game variant which dispatches through C_ClubFinder.GetClubTypeFromFinderGUID\""
+  },
+  {
+    "path": "tests/patch_12_1_0_struct_shapes.rs",
+    "line": 366,
+    "literal": "        getter: r#\"return C_Club.GetMemberInfo(\"guild-0\", C_Club.GetClubMembers(\"guild-0\")[1])\"#,"
+  },
+  {
+    "path": "tests/blizzard_spectate_frame_loads.rs",
+    "line": 94,
+    "literal": "         (C_SpectatingUI / C_Commentator), no client-side persistence\""
+  },
+  {
+    "path": "tests/patch_9_1_5_classic_surfaces.rs",
+    "line": 9,
+    "literal": "    {'C_Commentator', 'SetBlacklistedAuras'},"
+  },
+  {
+    "path": "tests/patch_9_1_5_classic_surfaces.rs",
+    "line": 10,
+    "literal": "    {'C_Commentator', 'SetBlacklistedCooldowns'},"
+  },
+  {
+    "path": "tests/blizzard_combat_log_processor_loads.rs",
+    "line": 186,
+    "literal": "         which re-wraps each function in securecallfunction) should expose its three \\"
+  },
+  {
+    "path": "tests/blizzard_combat_log_processor_loads.rs",
+    "line": 210,
+    "literal": "         error \u2014 each is a securecallfunction wrapper around an EventRegistry:TriggerEvent call \\"
+  },
+  {
+    "path": "tests/guild_member_list_dropdown.rs",
+    "line": 87,
+    "literal": "            local clubs = C_Club.GetSubscribedClubs()"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 172,
+    "literal": "    let enabled: bool = env.eval(\"return C_Club.IsEnabled()\").unwrap();"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 173,
+    "literal": "    assert!(enabled, \"C_Club.IsEnabled should return true\");"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 182,
+    "literal": "        local clubs = C_Club.GetSubscribedClubs()"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 191,
+    "literal": "    assert_eq!(result, \"ok\", \"C_Club should return guild: {result}\");"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 272,
+    "literal": "            local memberInfo = C_Club.GetMemberInfo(\"guild-0\", C_Club.GetClubMembers(\"guild-0\")[2])"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 498,
+    "literal": "            frame.selectedClubInfo = C_Club.GetClubInfo(\"guild-0\")"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 503,
+    "literal": "            frame.selectedStreamForClub[\"guild-0\"] = C_Club.GetStreamInfo(\"guild-0\", 1)"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 528,
+    "literal": "            frame.selectedClubInfo = C_Club.GetClubInfo(\"guild-0\")"
+  },
+  {
+    "path": "tests/test_guild_panel.rs",
+    "line": 533,
+    "literal": "            frame.selectedStreamForClub[\"guild-0\"] = C_Club.GetStreamInfo(\"guild-0\", 1)"
+  },
+  {
+    "path": "tests/blizzard_behavioral_messaging_loads.rs",
+    "line": 72,
+    "literal": "            \"return type(C_BehavioralMessaging) == 'table' \\"
+  },
+  {
+    "path": "tests/blizzard_behavioral_messaging_loads.rs",
+    "line": 73,
+    "literal": "             and type(C_BehavioralMessaging.SendNotificationReceipt) == 'function'\","
+  },
+  {
+    "path": "tests/blizzard_behavioral_messaging_loads.rs",
+    "line": 78,
+    "literal": "        \"C_BehavioralMessaging.SendNotificationReceipt should be registered\""
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 3,
+    "literal": "    \"C_ClubFinder.ReportPosting\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 4,
+    "literal": "    \"C_ClubFinder.ReturnCommunityApplicantList\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 5,
+    "literal": "    \"C_ClubFinder.ReturnGuildApplicantList\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 6,
+    "literal": "    \"C_ClubFinder.ReturnPendingCommunityApplicantList\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 7,
+    "literal": "    \"C_ClubFinder.ReturnPendingGuildApplicantList\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 8,
+    "literal": "    \"C_Commentator.GetElapsedMs\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 9,
+    "literal": "    \"C_Commentator.GetTrackedDefensiveCooldowns\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 10,
+    "literal": "    \"C_Commentator.GetTrackedOffensiveCooldowns\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 11,
+    "literal": "    \"C_Commentator.IsTrackedDefensiveCooldown\","
+  },
+  {
+    "path": "tests/patch_8_2_5_publication_fixes.rs",
+    "line": 12,
+    "literal": "    \"C_Commentator.IsTrackedOffensiveCooldown\","
+  },
+  {
+    "path": "tests/patch_9_1_5_publication_fixes.rs",
+    "line": 6,
+    "literal": "    {'C_Commentator', 'SetBlacklistedAuras'},"
+  },
+  {
+    "path": "tests/patch_9_1_5_publication_fixes.rs",
+    "line": 7,
+    "literal": "    {'C_Commentator', 'SetBlacklistedCooldowns'},"
+  },
+  {
+    "path": "tests/blizzard_frame_xml_loads.rs",
+    "line": 61,
+    "literal": "         `secureexecuterange` paths within it (e.g. GhostFrame's secureMixin) opt into \\"
+  },
+  {
+    "path": "tests/blizzard_new_player_experience_guide_loads.rs",
+    "line": 91,
+    "literal": "         calls C_PlayerMentorship / C_GossipInfo / C_SocialRestrictions (built-in C_* \\"
+  },
+  {
+    "path": "tests/blizzard_game_tooltip_loads.rs",
+    "line": 349,
+    "literal": "         uses securecallfunction on GetPrimaryTooltipInfo to prevent prior-tooltip taint \\"
+  },
+  {
+    "path": "tests/commentator_api.rs",
+    "line": 13,
+    "literal": "            local explicit = C_Commentator.SendAddonMessage(\"COOLDOWNBROADCASTER\", \"1,2,3\", \"RAID\")"
+  },
+  {
+    "path": "tests/commentator_api.rs",
+    "line": 18,
+    "literal": "            local implicit = C_Commentator.SendAddonMessage(\"COOLDOWNBROADCASTER\", \"1,2,3\")"
+  },
+  {
+    "path": "tests/commentator_api.rs",
+    "line": 30,
+    "literal": "        \"C_Commentator.SendAddonMessage should return SendAddonMessageResult.Success\""
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 1,
+    "literal": "//! Tests for `C_Club` probes backed by `WorldState.guild_*` fields."
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 13,
+    "literal": "    let enabled: bool = env.eval(\"return C_Club.IsEnabled()\").unwrap();"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 23,
+    "literal": "            local clubs = C_Club.GetSubscribedClubs()"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 37,
+    "literal": "        .eval(\"return C_Club.GetSubscribedClubs()[1].clubId\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 48,
+    "literal": "            local club = C_Club.GetClubInfo(\"guild-0\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 65,
+    "literal": "    let count: i32 = env.eval(\"return #C_Club.GetSubscribedClubs()\").unwrap();"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 81,
+    "literal": "        .eval(\"return #C_Club.GetClubMembers('guild-0')\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 100,
+    "literal": "            local members = C_Club.GetClubMembers('guild-0')"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 102,
+    "literal": "            local m = C_Club.GetMemberInfo('guild-0', memberId)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 119,
+    "literal": "            local members = C_Club.GetClubMembers('guild-0')"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 120,
+    "literal": "            local first = C_Club.GetMemberInfo('guild-0', members[1])"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 121,
+    "literal": "            local second = C_Club.GetMemberInfo('guild-0', members[2])"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 140,
+    "literal": "            local member = C_Club.GetMemberInfoForSelf(\"guild-0\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 156,
+    "literal": "            local privileges = C_Club.GetClubPrivileges(\"guild-0\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 192,
+    "literal": "            local members = C_Club.GetClubMembers('guild-0')"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 193,
+    "literal": "            local first = C_Club.GetMemberInfo('guild-0', members[1])"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 194,
+    "literal": "            local second = C_Club.GetMemberInfo('guild-0', members[2])"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 212,
+    "literal": "            local clubId = C_Club.GetGuildClubId()"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 213,
+    "literal": "            C_Club.FocusMembers(clubId)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 214,
+    "literal": "            return clubId, C_Club.AreMembersReady(clubId)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 227,
+    "literal": "        .eval(\"return C_Club.GetClubCapacity('guild-0')\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 245,
+    "literal": "            local streams = C_Club.GetStreams('guild-0')"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 276,
+    "literal": "            local ranges = C_Club.GetMessageRanges('guild-0', 1)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 278,
+    "literal": "            local messages = C_Club.GetMessagesBefore('guild-0', 1, newest, 20)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 300,
+    "literal": "            local stream = C_Club.GetStreamInfo('guild-0', 1)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 301,
+    "literal": "            local ranges = C_Club.GetMessageRanges('guild-0', 1)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 303,
+    "literal": "            local message = C_Club.GetMessageInfo('guild-0', 1, oldest)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 304,
+    "literal": "            return stream.name, C_Club.IsSubscribedToStream('guild-0', 1),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 305,
+    "literal": "                message.content, C_Club.IsBeginningOfStream('guild-0', 1, oldest)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 322,
+    "literal": "            local settings = C_Club.GetClubStreamNotificationSettings('guild-0')"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 324,
+    "literal": "                C_Club.DoesAnyCommunityHaveUnreadMessages(),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 325,
+    "literal": "                type(C_Club.GetStreamViewMarker('guild-0', 1)),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 359,
+    "literal": "            C_Club.SendMessage(\"guild-0\", 1, \"Pulling in 30 seconds\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 361,
+    "literal": "            local ranges = C_Club.GetMessageRanges(\"guild-0\", 1)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 363,
+    "literal": "            local messages = C_Club.GetMessagesBefore(\"guild-0\", 1, newest, 20)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 365,
+    "literal": "            local lookup = C_Club.GetMessageInfo(\"guild-0\", 1, capturedMessageId)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 388,
+    "literal": "            C_Club.SendMessage(\"guild-0\", 1, \"\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 389,
+    "literal": "            local ranges = C_Club.GetMessageRanges(\"guild-0\", 1)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 390,
+    "literal": "            local messages = C_Club.GetMessagesBefore(\"guild-0\", 1, ranges[1].newestMessageId, 20)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 404,
+    "literal": "            C_Club.SendMessage(\"guild-0\", 99, \"Stream that does not exist\")"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 405,
+    "literal": "            local ranges = C_Club.GetMessageRanges(\"guild-0\", 1)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 406,
+    "literal": "            local messages = C_Club.GetMessagesBefore(\"guild-0\", 1, ranges[1].newestMessageId, 20)"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 448,
+    "literal": "            local recruitment = C_ClubFinder.GetClubRecruitmentSettings()"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 449,
+    "literal": "            local applicant = C_ClubFinder.GetPlayerApplicantSettings()"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 474,
+    "literal": "            local guilds = C_ClubFinder.ReturnMatchingGuildList()"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 475,
+    "literal": "            local pendingGuilds = C_ClubFinder.PlayerReturnPendingGuildsList()"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 476,
+    "literal": "            local communities = C_ClubFinder.ReturnMatchingCommunityList()"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 478,
+    "literal": "                C_ClubFinder.IsEnabled(),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 479,
+    "literal": "                #C_ClubFinder.PlayerGetClubInvitationList(),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 480,
+    "literal": "                #C_ClubFinder.ReturnClubApplicantList(\"guild-0\"),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 481,
+    "literal": "                #C_ClubFinder.ReturnPendingClubApplicantList(\"guild-0\"),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 482,
+    "literal": "                #C_ClubFinder.GetStatusOfPostingFromClubId(\"guild-0\"),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 483,
+    "literal": "                C_ClubFinder.GetTotalMatchingGuildListSize(),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 488,
+    "literal": "                C_ClubFinder.GetPlayerClubApplicationStatus(pendingGuilds[1].clubFinderGUID),"
+  },
+  {
+    "path": "tests/c_club_probes.rs",
+    "line": 489,
+    "literal": "                C_ClubFinder.GetTotalMatchingCommunityListSize(),"
+  },
+  {
+    "path": "tests/p1207_gap_closures.rs",
+    "line": 119,
+    "literal": "        .eval(\"return C_Club.GetMemberInfo('guild-0', C_Club.GetClubMembers('guild-0')[2]).name\")"
+  },
+  {
+    "path": "tests/p1207_gap_closures.rs",
+    "line": 123,
+    "literal": "        local ids = C_Club.GetClubMembers('guild-0')"
+  },
+  {
+    "path": "tests/p1207_gap_closures.rs",
+    "line": 124,
+    "literal": "        assert(select('#', C_Club.SendBattleTagFriendRequest('guild-0', ids[2])) == 0)"
+  },
+  {
+    "path": "tests/p1207_gap_closures.rs",
+    "line": 125,
+    "literal": "        C_Club.SendBattleTagFriendRequest('guild-0', ids[2])"
+  },
+  {
+    "path": "tests/p1207_gap_closures.rs",
+    "line": 126,
+    "literal": "        C_Club.SendBattleTagFriendRequest('guild-0', ids[1])"
+  },
+  {
+    "path": "tests/p1207_gap_closures.rs",
+    "line": 127,
+    "literal": "        C_Club.SendBattleTagFriendRequest('guild-0', 'missing-member')"
+  },
+  {
+    "path": "tests/p1207_gap_closures.rs",
+    "line": 128,
+    "literal": "        C_Club.SendBattleTagFriendRequest('other-club', ids[2])"
+  },
+  {
+    "path": "tests/patch_9_0_1_classic_surfaces.rs",
+    "line": 10,
+    "literal": "assert(type(C_Commentator.GetTeamHighlightColor) == \"function\", \"C_Commentator.GetTeamHighlightColor\")"
+  },
+  {
+    "path": "tests/patch_8_1_5_publication_fixes.rs",
+    "line": 6,
+    "literal": "    \"C_Club.AddClubStreamToChatWindow\","
+  },
+  {
+    "path": "tests/patch_12_0_5_sweep_globals.rs",
+    "line": 169,
+    "literal": "            local result = C_Commentator.SendAddonMessageLogged('Prefix', 'message', 'PARTY')"
+  },
+  {
+    "path": "tests/blizzard_report_frame_shared_loads.rs",
+    "line": 358,
+    "literal": "             deep-copy via securecallfunction) before invoking InitiateReportInternal. The \\"
+  },
+  {
+    "path": "tests/blizzard_report_frame_shared_loads.rs",
+    "line": 509,
+    "literal": "         in securecallfunction to walk the tainted attribute table without acquiring the \\"
+  },
+  {
+    "path": "tests/blizzard_unit_popup_loads.rs",
+    "line": 430,
+    "literal": "             C_ClubFinder.IsEnabled; the LootMethod hierarchy \\"
+  },
+  {
+    "path": "tests/xml_secure_delegates.rs",
+    "line": 22,
+    "literal": "            securecallfunction(callback)"
+  },
+  {
+    "path": "tests/rilua_rows.rs",
+    "line": 37,
+    "literal": "            securecallfunction(probe)"
+  },
+  {
+    "path": "tests/startup_targeted_regressions.rs",
+    "line": 277,
+    "literal": "                    type(C_Club.GetClubStreamNotificationSettings(\"guild-0\")) == \"table\","
+  },
+  {
+    "path": "tests/spacing_roundtrip.rs",
+    "line": 236,
+    "literal": "            fs:SetTextScale(1.5)"
+  },
+  {
+    "path": "tests/system_api_seeded.rs",
+    "line": 523,
+    "literal": "        C_Club.CanResolvePlayerLocationFromClubMessageData = function(clubID, streamID, epoch, position)"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 126,
+    "literal": "// securecall / securecallfunction"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 155,
+    "literal": "fn test_securecallfunction() {"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 158,
+    "literal": "        .eval(\"return securecallfunction(function(a, b) return a + b end, 3, 4)\")"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 164,
+    "literal": "fn test_securecallfunction_passes_table_self_to_unbound_method() {"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 174,
+    "literal": "            return securecallfunction(mixin.GetName, object)"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 182,
+    "literal": "// secureexecuterange"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 186,
+    "literal": "fn test_secureexecuterange() {"
+  },
+  {
+    "path": "tests/security_api.rs",
+    "line": 193,
+    "literal": "            secureexecuterange(t, function(key, value) SECURE_TOTAL = SECURE_TOTAL + value end)"
+  },
+  {
+    "path": "tests/patch_12_1_0_added_globals.rs",
+    "line": 220,
+    "literal": "        local ids = C_Club.GetClubMembers('guild-0')"
+  },
+  {
+    "path": "tests/patch_12_1_0_added_globals.rs",
+    "line": 221,
+    "literal": "        C_Club.SendTitleFriendRequest(\"guild-0\", ids[2])"
+  },
+  {
+    "path": "tests/patch_12_1_0_added_globals.rs",
+    "line": 222,
+    "literal": "        C_Club.SendTitleFriendRequest(\"guild-0\", ids[1])"
+  },
+  {
+    "path": "tests/patch_12_1_0_added_globals.rs",
+    "line": 223,
+    "literal": "        C_Club.SendTitleFriendRequest(\"guild-0\", 'missing-member')"
+  },
+  {
+    "path": "tests/patch_12_1_0_added_globals.rs",
+    "line": 224,
+    "literal": "        C_Club.SendTitleFriendRequest(\"other-club\", ids[2])"
+  },
+  {
+    "path": "tests/blizzard_map_lane.rs",
+    "line": 38,
+    "literal": "//!                                      securecallfunction-style helpers)"
+  },
+  {
+    "path": "tests/blizzard_map_lane.rs",
+    "line": 153,
+    "literal": "         normal eager addon. MapCanvas's mixin file calls `securecallfunction(rawget, ...)` \\"
+  },
+  {
+    "path": "tests/blizzard_map_lane.rs",
+    "line": 162,
+    "literal": "         registries with priority sorting and tainted-array enumeration via securecallfunction). \\"
+  },
+  {
+    "path": "tests/patch_9_0_1_publication_fixes.rs",
+    "line": 11,
+    "literal": "assert(rawget(C_Commentator, \"GetTeamHighlightColor\") == nil, \"C_Commentator.GetTeamHighlightColor raw\")"
+  },
+  {
+    "path": "tests/patch_9_0_1_publication_fixes.rs",
+    "line": 12,
+    "literal": "assert(C_Commentator.GetTeamHighlightColor == nil, \"C_Commentator.GetTeamHighlightColor lookup\")"
+  },
+  {
+    "path": "tests/patch_9_0_1_publication_fixes.rs",
+    "line": 13,
+    "literal": "assert(C_Commentator.GetTeamHighlightColor == nil, \"C_Commentator.GetTeamHighlightColor repeat\")"
+  },
+  {
+    "path": "tests/runtime_bootstrap_boundaries.rs",
+    "line": 155,
+    "literal": "        !bootstrap.contains(\"C_Club\"),"
+  },
+  {
+    "path": "tests/runtime_bootstrap_boundaries.rs",
+    "line": 156,
+    "literal": "        \"C_Club must be registered by its Rust guild/club surface and temporary notification shim, not runtime bootstrap\""
+  },
+  {
+    "path": "tests/blizzard_simple_checkout_loads.rs",
+    "line": 452,
+    "literal": "         securecallfunction(HouseEditorFrame_*) / \\"
+  },
+  {
+    "path": "tests/blizzard_ping_ui_loads.rs",
+    "line": 416,
+    "literal": "             `securecallfunction(GetScaledCursorPosition_Insecure)` (line 211) where \\"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 7,
+    "literal": "        ids = C_Club.GetClubMembers('guild-0')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 10,
+    "literal": "        assert(C_Club.GetMemberInfo('guild-0', ids[2]).memberId == ids[2])"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 11,
+    "literal": "        secondName = C_Club.GetMemberInfo('guild-0', ids[2]).name"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 12,
+    "literal": "        secondGuid = C_Club.GetMemberInfo('guild-0', ids[2]).guid"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 17,
+    "literal": "        local reordered = C_Club.GetClubMembers('guild-0')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 19,
+    "literal": "        assert(C_Club.GetMemberInfo('guild-0', ids[2]).name == secondName)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 20,
+    "literal": "        assert(C_Club.GetMemberInfo('guild-0', ids[2]).guid == secondGuid)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 21,
+    "literal": "        local ranges = C_Club.GetMessageRanges('guild-0', 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 22,
+    "literal": "        local message = C_Club.GetMessageInfo('guild-0', 1, ranges[1].oldestMessageId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 38,
+    "literal": "        assert(select('#', C_Club.CreateClub('Raid Team', 'Raid', 'Friday raids', 1, 0)) == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 40,
+    "literal": "        local info = C_Club.GetClubInfo(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 42,
+    "literal": "        local owner = C_Club.GetMemberInfoForSelf(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 44,
+    "literal": "        local privileges = C_Club.GetClubPrivileges(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 46,
+    "literal": "        C_Club.SetClubMemberNote(clubId, owner.memberId, 'Raid organizer')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 47,
+    "literal": "        assert(C_Club.GetMemberInfo(clubId, owner.memberId).memberNote == 'Raid organizer')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 56,
+    "literal": "        C_Club.CreateClub('Friday Raiders', 'Raid', 'Progression', 1, 42)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 57,
+    "literal": "        for _, club in ipairs(C_Club.GetSubscribedClubs()) do"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 82,
+    "literal": "                assert(C_Club.GetMemberInfo(club, member) == nil)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 84,
+    "literal": "                assert(role == 3 and C_Club.GetMemberInfo(club, member).role == role)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 86,
+    "literal": "                assert(C_Club.GetMemberInfo(club, member).memberNote == 'Healer alt')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 89,
+    "literal": "        local roles = C_Club.GetAssignableRoles(clubId, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 91,
+    "literal": "        assert(select('#', C_Club.AssignMemberRole(clubId, id, 3)) == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 93,
+    "literal": "        C_Club.AssignMemberRole(clubId, id, 3)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 95,
+    "literal": "        C_Club.SetClubMemberNote(clubId, id, 'Healer alt')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 97,
+    "literal": "        C_Club.SetClubMemberNote(clubId, id, 'Healer alt')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 99,
+    "literal": "        C_Club.KickMember(clubId, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 100,
+    "literal": "        assert(seen[3] == 'CLUB_MEMBER_REMOVED' and #C_Club.GetClubMembers(clubId) == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 101,
+    "literal": "        C_Club.KickMember(clubId, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 103,
+    "literal": "        assert(not pcall(C_Club.GetMemberInfo, clubId, 2))"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 124,
+    "literal": "        C_Club.SendInvitation(clubId, 'not-a-candidate')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 126,
+    "literal": "        C_Club.SendInvitation(clubId, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 127,
+    "literal": "        local pending = C_Club.GetInvitationsForClub(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 131,
+    "literal": "        assert(C_Club.GetMemberInfo(clubId, id) == nil and #C_Club.GetClubMembers(clubId) == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 132,
+    "literal": "        C_Club.SendInvitation(clubId, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 134,
+    "literal": "        C_Club.RequestInvitationsForClub(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 136,
+    "literal": "        C_Club.RevokeInvitation(clubId, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 137,
+    "literal": "        assert(changed == 3 and #C_Club.GetInvitationsForClub(clubId) == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 138,
+    "literal": "        C_Club.RevokeInvitation(clubId, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 151,
+    "literal": "        local self = C_Club.GetMemberInfoForSelf(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 157,
+    "literal": "            assert(C_Club.GetMemberInfo(clubId, 'member:Uther').role == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 158,
+    "literal": "            assert(C_Club.GetMemberInfoForSelf(clubId).role == 2)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 160,
+    "literal": "        assert(#C_Club.GetAssignableRoles(clubId, self.memberId) == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 161,
+    "literal": "        C_Club.AssignMemberRole(clubId, self.memberId, 4)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 162,
+    "literal": "        C_Club.KickMember(clubId, self.memberId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 163,
+    "literal": "        assert(C_Club.GetMemberInfoForSelf(clubId).role == 1 and count == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 164,
+    "literal": "        C_Club.AssignMemberRole(clubId, 'member:Uther', 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 166,
+    "literal": "        assert(#C_Club.GetAssignableRoles(clubId, 'member:Uther') == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 167,
+    "literal": "        C_Club.KickMember(clubId, 'member:Uther')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 168,
+    "literal": "        C_Club.AssignMemberRole(clubId, 'member:Uther', 4)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 169,
+    "literal": "        assert(C_Club.GetMemberInfo(clubId, 'member:Uther').role == 1 and count == 2)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 192,
+    "literal": "        local p = C_Club.GetClubPrivileges(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 194,
+    "literal": "        C_Club.AssignMemberRole(clubId, 'member:Uther', 4)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 195,
+    "literal": "        C_Club.KickMember(clubId, 'member:Uther')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 196,
+    "literal": "        C_Club.SetClubMemberNote(clubId, 'member:Uther', 'Denied')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 197,
+    "literal": "        C_Club.SendInvitation(clubId, 'candidate:Jaina')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 198,
+    "literal": "        C_Club.RevokeInvitation(clubId, 'candidate:Jaina')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 199,
+    "literal": "        assert(count == 0 and #C_Club.GetClubMembers(clubId) == 2)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 200,
+    "literal": "        assert(C_Club.GetMemberInfo(clubId, 'member:Uther').role == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 201,
+    "literal": "        assert(C_Club.GetMemberInfo(clubId, 'member:Uther').memberNote == '')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 202,
+    "literal": "        assert(#C_Club.GetInvitationsForClub(clubId) == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 203,
+    "literal": "        local self = C_Club.GetMemberInfoForSelf(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 204,
+    "literal": "        C_Club.SetClubMemberNote(clubId, self.memberId, 'Own note allowed')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 205,
+    "literal": "        assert(count == 1 and C_Club.GetMemberInfoForSelf(clubId).memberNote == 'Own note allowed')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 234,
+    "literal": "            C_Club.AssignMemberRole(clubId, 'member:Jaina', 3)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 235,
+    "literal": "            C_Club.KickMember(clubId, 'member:Jaina')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 236,
+    "literal": "            C_Club.SetClubMemberNote(clubId, 'member:Jaina', 'Denied')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 237,
+    "literal": "            C_Club.SendInvitation(clubId, 'candidate:Uther')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 238,
+    "literal": "            C_Club.RevokeInvitation(clubId, 'candidate:Uther')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 239,
+    "literal": "            C_Club.CreateClub('Denied', nil, '', 1, 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 241,
+    "literal": "        assert(C_Club.IsRestricted() == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 243,
+    "literal": "        assert(events == 0 and #C_Club.GetClubMembers(clubId) == 2)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 244,
+    "literal": "        assert(C_Club.GetMemberInfo(clubId, 'member:Jaina').role == 4)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 245,
+    "literal": "        assert(C_Club.GetMemberInfo(clubId, 'member:Jaina').memberNote == '')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 246,
+    "literal": "        assert(#C_Club.GetInvitationsForClub(clubId) == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 253,
+    "literal": "    env.exec(\"attemptMutations(); assert(events == 0 and not C_Club.AreMembersReady(clubId))\").unwrap();"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 277,
+    "literal": "            local info = C_Club.GetMemberInfo(club, id)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 299,
+    "literal": "        local info = C_Club.GetMemberInfo(clubId, received[3][2])"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 319,
+    "literal": "        C_Club.SendInvitation(clubId, 'server:Khadgar')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 320,
+    "literal": "        assert(#C_Club.GetInvitationsForClub(clubId) == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 325,
+    "literal": "            assert(member == 'server:Khadgar' and #C_Club.GetInvitationsForClub(club) == 0)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 326,
+    "literal": "            assert(C_Club.GetMemberInfo(club, member).name == 'Khadgar')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 331,
+    "literal": "    env.exec(\"assert(joined and #C_Club.GetClubMembers(clubId) == 2)\").unwrap();"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 348,
+    "literal": "    env.exec(\"assert(received == 0 and #C_Club.GetClubMembers(clubId) == 1)\").unwrap();"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 356,
+    "literal": "    let member_id: String = env.eval(\"return C_Club.GetClubMembers('guild-0')[2]\").unwrap();"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 365,
+    "literal": "                assert(C_Club.GetMemberInfo(club, id).presence == presence)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 366,
+    "literal": "            else assert(C_Club.GetMemberInfo(club, id) == nil) end"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 368,
+    "literal": "        local range = C_Club.GetMessageRanges('guild-0', 1)[1]"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 369,
+    "literal": "        historical = C_Club.GetMessagesBefore('guild-0', 1, range.newestMessageId, 20)[3]"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 380,
+    "literal": "        local message = C_Club.GetMessageInfo('guild-0', 1, historical.messageId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 382,
+    "literal": "        assert(#C_Club.GetClubMembers('guild-0') == 1)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 383,
+    "literal": "        C_Club.SendMessage('guild-0', 1, 'Still raiding')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 384,
+    "literal": "        local range = C_Club.GetMessageRanges('guild-0', 1)[1]"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 385,
+    "literal": "        local latest = C_Club.GetMessageInfo('guild-0', 1, range.newestMessageId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 386,
+    "literal": "        assert(latest.author.memberId == C_Club.GetMemberInfoForSelf('guild-0').memberId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 407,
+    "literal": "        local p = C_Club.GetClubPrivileges(clubId)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 409,
+    "literal": "        assert(#C_Club.GetInvitationsForClub(clubId) == 2)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 410,
+    "literal": "        C_Club.RevokeInvitation(clubId, 'candidate:Other')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 411,
+    "literal": "        assert(#C_Club.GetInvitationsForClub(clubId) == 2)"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 412,
+    "literal": "        C_Club.RevokeInvitation(clubId, 'candidate:Own')"
+  },
+  {
+    "path": "tests/club_membership.rs",
+    "line": 413,
+    "literal": "        local remaining = C_Club.GetInvitationsForClub(clubId)"
+  },
+  {
+    "path": "tests/xml_templates/registry.rs",
+    "line": 427,
+    "literal": "        assert(securecallfunction(readTrust), 'trusted OnLoad tainted its deferred callback')"
+  },
+  {
+    "path": "tests/xml_templates/registry.rs",
+    "line": 447,
+    "literal": "        assert(not securecallfunction(frame.readTrust), 'addon OnLoad callback became trusted')"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs",
+    "line": 65,
+    "literal": "    \"SetTextScale\","
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_text_size_manager.rs",
+    "line": 22,
+    "literal": "//! hasn't fired during a smoke load, so the eventual `SetTextScale` side"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_text_size_manager.rs",
+    "line": 82,
+    "literal": "             returns an empty list \u2014 downstream SetTextScale iterates this \\"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_text_size_manager.rs",
+    "line": 98,
+    "literal": "             this, slider changes never propagate to UpdateFonts/SetTextScale \\"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs",
+    "line": 217,
+    "literal": "             dispatch to all registered callbacks via secureexecuterange \\"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs",
+    "line": 222,
+    "literal": "             rilua's native secureexecuterange traversal), or (c) the callback was registered against a different \\"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs",
+    "line": 240,
+    "literal": "             rilua's native secureexecuterange traversal), or (c) the callback was registered against a \\"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_actionbar/surface_globals.rs",
+    "line": 227,
+    "literal": "///   Trampolines through `securecallfunction(SecureGetNewActionHighlightMark, ...)`"
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_actionbar/surface_globals.rs",
+    "line": 232,
+    "literal": "///   `securecallfunction` is the runtime defence."
+  },
+  {
+    "path": "tests/blizzard_ui/blizzard_actionbar/surface_globals.rs",
+    "line": 242,
+    "literal": "///   `ON_BAR_HIGHLIGHT_MARKS`; same `securecallfunction` taint"
+  },
+  {
+    "path": "tests/xml_templates/inline_flow/interaction_sequences.rs",
+    "line": 290,
+    "literal": "        C_Club = {}"
+  },
+  {
+    "path": "tests/xml_templates/inline_flow/interaction_sequences.rs",
+    "line": 293,
+    "literal": "        function C_Club.GetClubInfo(clubId)"
+  },
+  {
+    "path": "tests/xml_templates/inline_flow/interaction_sequences.rs",
+    "line": 313,
+    "literal": "                    local clubInfo = clubId and C_Club.GetClubInfo(clubId);"
+  },
+  {
+    "path": "tests/xml_templates/inline_flow/interaction_sequences.rs",
+    "line": 348,
+    "literal": "        C_Club = {}"
+  },
+  {
+    "path": "tests/xml_templates/inline_flow/interaction_sequences.rs",
+    "line": 353,
+    "literal": "        function C_Club.GetClubInfo(clubId)"
+  },
+  {
+    "path": "tests/xml_templates/inline_flow/interaction_sequences.rs",
+    "line": 377,
+    "literal": "                    local clubInfo = clubId and C_Club.GetClubInfo(clubId);"
+  }
+]

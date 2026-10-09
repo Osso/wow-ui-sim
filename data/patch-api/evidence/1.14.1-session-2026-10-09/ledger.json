@@ -1,0 +1,3369 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.14.1",
+  "source": {
+    "title": "Patch 1.14.1/API changes",
+    "version": "1.14.1",
+    "pageid": 102588,
+    "revid": 1010974,
+    "timestamp": "2022-03-02T05:21:47Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1010974&format=json",
+    "retrieved": "2026-10-09T08:51:36.399083+00:00",
+    "response_sha256": "aac93df0da292053fee1aee1534d2de00101cf01c46dcb51ab1be858a88c30f8",
+    "wikitext_sha256": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559",
+    "wikitext_bytes": 6207,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.1-wikitext.txt"
+  },
+  "source_toc": 11401,
+  "base_revision": "53bdb30cbd74ee496109f7be5e21ebf4c2ad5016",
+  "client_line": "literal-Classic-Era-not-native-proof",
+  "source_rows": [
+    {
+      "id": "source-001",
+      "line": 1,
+      "literal": "{{apichanges|1.14.1|prev=1.14.0|next=1.14.2}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-003",
+      "line": 3,
+      "literal": "==Summary==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-004",
+      "line": 4,
+      "literal": "* Added [[:Category:API namespaces/C_Seasons|C_Seasons]] to support Classic Era [[Season of Mastery]].",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-005",
+      "line": 5,
+      "literal": "* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate, see this [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes section] for solutions.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-006",
+      "line": 6,
+      "literal": "* The event trace tool now supports logging events while the frame is hidden. This option is disabled by default.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-008",
+      "line": 8,
+      "literal": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-009",
+      "line": 9,
+      "literal": "* TOC: <code>11401</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-010",
+      "line": 10,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/commit/b00df2a627cc7b57cdb45aec60ced39e59f4877f wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/3988081e4f766fb43f634449602f06ced2205e46 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-011",
+      "line": 11,
+      "literal": "* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes 1.14.1 Consolidated UI Changes]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-012",
+      "line": 12,
+      "literal": "<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-014",
+      "line": 14,
+      "literal": "==Global API==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-015",
+      "line": 15,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-016",
+      "line": 16,
+      "literal": "|+ 1.14.0 (39958) &rarr; 1.14.1 (41030) Nov 10 2021",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-017",
+      "line": 17,
+      "literal": "|- class=\"mw-customtoggle-global-c\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-018",
+      "line": 18,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(14)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-019",
+      "line": 19,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(3)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-020",
+      "line": 20,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-021",
+      "line": 21,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-022",
+      "line": 22,
+      "literal": ": {{api|t=a|C_BehavioralMessaging.SendNotificationReceipt}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-023",
+      "line": 23,
+      "literal": ": {{api|t=a|C_Club.FocusCommunityStreams}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-024",
+      "line": 24,
+      "literal": ": {{api|t=a|C_Club.UnfocusAllStreams}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-025",
+      "line": 25,
+      "literal": ": {{api|t=a|C_Commentator.SetBlocklistedAuras}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-026",
+      "line": 26,
+      "literal": ": {{api|t=a|C_Commentator.SetBlocklistedCooldowns}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-027",
+      "line": 27,
+      "literal": ": {{Wow-inline}} {{api|t=a|C_LFGList.IsLookingForGroupEnabled}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-028",
+      "line": 28,
+      "literal": ": {{Wow-inline}} {{api|t=a|C_Seasons.GetActiveSeason}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-029",
+      "line": 29,
+      "literal": ": {{Wow-inline}} {{api|t=a|C_Seasons.HasActiveSeason}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-030",
+      "line": 30,
+      "literal": ": {{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-031",
+      "line": 31,
+      "literal": ": {{api|t=a|C_SocialRestrictions.IsChatDisabled}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-032",
+      "line": 32,
+      "literal": ": {{api|t=a|C_SocialRestrictions.SetChatDisabled}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-033",
+      "line": 33,
+      "literal": ": {{Wow-inline}} {{api|t=a|GetFirstBagBankSlotIndex}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-034",
+      "line": 34,
+      "literal": ": {{api|t=a|securecallfunction}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-035",
+      "line": 35,
+      "literal": ": {{api|t=a|secureexecuterange}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-036",
+      "line": 36,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-037",
+      "line": 37,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-038",
+      "line": 38,
+      "literal": ": {{api|t=a|AcknowledgeAADCAlert}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-039",
+      "line": 39,
+      "literal": ": {{api|t=a|C_Commentator.SetBlacklistedAuras}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-040",
+      "line": 40,
+      "literal": ": {{api|t=a|C_Commentator.SetBlacklistedCooldowns}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-041",
+      "line": 41,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-042",
+      "line": 42,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-044",
+      "line": 44,
+      "literal": "==Widgets==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-045",
+      "line": 45,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-046",
+      "line": 46,
+      "literal": "|- class=\"mw-customtoggle-widgets\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-047",
+      "line": 47,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(2)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-048",
+      "line": 48,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-049",
+      "line": 49,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widgets\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-050",
+      "line": 50,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-051",
+      "line": 51,
+      "literal": ": {{api|t=w|FontString:GetTextScale}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-052",
+      "line": 52,
+      "literal": ": {{api|t=w|FontStringSetTextScale}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-053",
+      "line": 53,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-054",
+      "line": 54,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-055",
+      "line": 55,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-056",
+      "line": 56,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-058",
+      "line": 58,
+      "literal": "==Events==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-059",
+      "line": 59,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-060",
+      "line": 60,
+      "literal": "|- class=\"mw-customtoggle-events\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-061",
+      "line": 61,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(31)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-062",
+      "line": 62,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(1)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-063",
+      "line": 63,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-064",
+      "line": 64,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-065",
+      "line": 65,
+      "literal": ": {{api|t=e|AVATAR_LIST_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-066",
+      "line": 66,
+      "literal": ": {{api|t=e|CLUB_ADDED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-067",
+      "line": 67,
+      "literal": ": {{api|t=e|CLUB_ERROR}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-068",
+      "line": 68,
+      "literal": ": {{api|t=e|CLUB_INVITATION_ADDED_FOR_SELF}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-069",
+      "line": 69,
+      "literal": ": {{api|t=e|CLUB_INVITATION_REMOVED_FOR_SELF}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-070",
+      "line": 70,
+      "literal": ": {{api|t=e|CLUB_INVITATIONS_RECEIVED_FOR_CLUB}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-071",
+      "line": 71,
+      "literal": ": {{api|t=e|CLUB_MEMBER_ADDED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-072",
+      "line": 72,
+      "literal": ": {{api|t=e|CLUB_MEMBER_PRESENCE_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-073",
+      "line": 73,
+      "literal": ": {{api|t=e|CLUB_MEMBER_REMOVED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-074",
+      "line": 74,
+      "literal": ": {{api|t=e|CLUB_MEMBER_ROLE_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-075",
+      "line": 75,
+      "literal": ": {{api|t=e|CLUB_MEMBER_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-076",
+      "line": 76,
+      "literal": ": {{api|t=e|CLUB_MESSAGE_ADDED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-077",
+      "line": 77,
+      "literal": ": {{api|t=e|CLUB_MESSAGE_HISTORY_RECEIVED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-078",
+      "line": 78,
+      "literal": ": {{api|t=e|CLUB_MESSAGE_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-079",
+      "line": 79,
+      "literal": ": {{api|t=e|CLUB_REMOVED_MESSAGE}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-080",
+      "line": 80,
+      "literal": ": {{api|t=e|CLUB_REMOVED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-081",
+      "line": 81,
+      "literal": ": {{api|t=e|CLUB_SELF_MEMBER_ROLE_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-082",
+      "line": 82,
+      "literal": ": {{api|t=e|CLUB_STREAM_ADDED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-083",
+      "line": 83,
+      "literal": ": {{api|t=e|CLUB_STREAM_REMOVED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-084",
+      "line": 84,
+      "literal": ": {{api|t=e|CLUB_STREAM_SUBSCRIBED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-085",
+      "line": 85,
+      "literal": ": {{api|t=e|CLUB_STREAM_UNSUBSCRIBED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-086",
+      "line": 86,
+      "literal": ": {{api|t=e|CLUB_STREAM_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-087",
+      "line": 87,
+      "literal": ": {{api|t=e|CLUB_STREAMS_LOADED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-088",
+      "line": 88,
+      "literal": ": {{api|t=e|CLUB_TICKET_CREATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-089",
+      "line": 89,
+      "literal": ": {{api|t=e|CLUB_TICKET_RECEIVED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-090",
+      "line": 90,
+      "literal": ": {{api|t=e|CLUB_TICKETS_RECEIVED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-091",
+      "line": 91,
+      "literal": ": {{api|t=e|CLUB_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-092",
+      "line": 92,
+      "literal": ": {{api|t=e|INITIAL_CLUBS_LOADED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-093",
+      "line": 93,
+      "literal": ": {{api|t=e|NOTIFY_CHAT_SUPPRESSED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-094",
+      "line": 94,
+      "literal": ": {{api|t=e|STREAM_VIEW_MARKER_UPDATED}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-095",
+      "line": 95,
+      "literal": ": {{api|t=e|UNIT_HEAL_PREDICTION}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-096",
+      "line": 96,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-097",
+      "line": 97,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-098",
+      "line": 98,
+      "literal": ": {{api|t=e|SHOW_AADC_ALERT}}",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-099",
+      "line": 99,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-100",
+      "line": 100,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-102",
+      "line": 102,
+      "literal": "==CVars==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-103",
+      "line": 103,
+      "literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-104",
+      "line": 104,
+      "literal": "|- class=\"mw-customtoggle-cvars\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-105",
+      "line": 105,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(7)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-106",
+      "line": 106,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(1)</small>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-107",
+      "line": 107,
+      "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-cvars\"",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-108",
+      "line": 108,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-109",
+      "line": 109,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0.333333</span></code><br><small>Lowest render scale DynamicRenderScale can use</small></span>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-110",
+      "line": 110,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScale|DynamicRenderScale]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.</small></span>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-111",
+      "line": 111,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Disable use of texture heaps and force the fallback path</small></span>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-112",
+      "line": 112,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Seen the alert indicating chat has been disabled by default. (UK AADC)</small></span>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-113",
+      "line": 113,
+      "literal": ": [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-114",
+      "line": 114,
+      "literal": ": [[CVar GxFrameStats|GxFrameStats]]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-115",
+      "line": 115,
+      "literal": ": {{Wow-inline}} [[CVar seenSoMNotification|seenSoMNotification]]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-116",
+      "line": 116,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-117",
+      "line": 117,
+      "literal": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-118",
+      "line": 118,
+      "literal": ": [[CVar seenAADCAlert|seenAADCAlert]]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-119",
+      "line": 119,
+      "literal": "</div>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-120",
+      "line": 120,
+      "literal": "|}",
+      "status": "metadata-only",
+      "capabilities": []
+    }
+  ],
+  "inventory": [
+    {
+      "id": "inventory-022",
+      "line": 22,
+      "literal": ": {{api|t=a|C_BehavioralMessaging.SendNotificationReceipt}}",
+      "symbol": "C_BehavioralMessaging.SendNotificationReceipt",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-023",
+      "line": 23,
+      "literal": ": {{api|t=a|C_Club.FocusCommunityStreams}}",
+      "symbol": "C_Club.FocusCommunityStreams",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-024",
+      "line": 24,
+      "literal": ": {{api|t=a|C_Club.UnfocusAllStreams}}",
+      "symbol": "C_Club.UnfocusAllStreams",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-025",
+      "line": 25,
+      "literal": ": {{api|t=a|C_Commentator.SetBlocklistedAuras}}",
+      "symbol": "C_Commentator.SetBlocklistedAuras",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-026",
+      "line": 26,
+      "literal": ": {{api|t=a|C_Commentator.SetBlocklistedCooldowns}}",
+      "symbol": "C_Commentator.SetBlocklistedCooldowns",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-027",
+      "line": 27,
+      "literal": ": {{Wow-inline}} {{api|t=a|C_LFGList.IsLookingForGroupEnabled}}",
+      "symbol": "C_LFGList.IsLookingForGroupEnabled",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-028",
+      "line": 28,
+      "literal": ": {{Wow-inline}} {{api|t=a|C_Seasons.GetActiveSeason}}",
+      "symbol": "C_Seasons.GetActiveSeason",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-029",
+      "line": 29,
+      "literal": ": {{Wow-inline}} {{api|t=a|C_Seasons.HasActiveSeason}}",
+      "symbol": "C_Seasons.HasActiveSeason",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-030",
+      "line": 30,
+      "literal": ": {{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}",
+      "symbol": "C_SocialRestrictions.AcknowledgeRegionalChatDisabled",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-031",
+      "line": 31,
+      "literal": ": {{api|t=a|C_SocialRestrictions.IsChatDisabled}}",
+      "symbol": "C_SocialRestrictions.IsChatDisabled",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-032",
+      "line": 32,
+      "literal": ": {{api|t=a|C_SocialRestrictions.SetChatDisabled}}",
+      "symbol": "C_SocialRestrictions.SetChatDisabled",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-033",
+      "line": 33,
+      "literal": ": {{Wow-inline}} {{api|t=a|GetFirstBagBankSlotIndex}}",
+      "symbol": "GetFirstBagBankSlotIndex",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-034",
+      "line": 34,
+      "literal": ": {{api|t=a|securecallfunction}}",
+      "symbol": "securecallfunction",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-035",
+      "line": 35,
+      "literal": ": {{api|t=a|secureexecuterange}}",
+      "symbol": "secureexecuterange",
+      "section": "Global API",
+      "direction": "added",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-038",
+      "line": 38,
+      "literal": ": {{api|t=a|AcknowledgeAADCAlert}}",
+      "symbol": "AcknowledgeAADCAlert",
+      "section": "Global API",
+      "direction": "removed",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-039",
+      "line": 39,
+      "literal": ": {{api|t=a|C_Commentator.SetBlacklistedAuras}}",
+      "symbol": "C_Commentator.SetBlacklistedAuras",
+      "section": "Global API",
+      "direction": "removed",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-040",
+      "line": 40,
+      "literal": ": {{api|t=a|C_Commentator.SetBlacklistedCooldowns}}",
+      "symbol": "C_Commentator.SetBlacklistedCooldowns",
+      "section": "Global API",
+      "direction": "removed",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-051",
+      "line": 51,
+      "literal": ": {{api|t=w|FontString:GetTextScale}}",
+      "symbol": "FontString:GetTextScale",
+      "section": "Widgets",
+      "direction": "added",
+      "kind": "widget",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-052",
+      "line": 52,
+      "literal": ": {{api|t=w|FontStringSetTextScale}}",
+      "symbol": "FontStringSetTextScale",
+      "section": "Widgets",
+      "direction": "added",
+      "kind": "widget",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-065",
+      "line": 65,
+      "literal": ": {{api|t=e|AVATAR_LIST_UPDATED}}",
+      "symbol": "AVATAR_LIST_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-066",
+      "line": 66,
+      "literal": ": {{api|t=e|CLUB_ADDED}}",
+      "symbol": "CLUB_ADDED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-067",
+      "line": 67,
+      "literal": ": {{api|t=e|CLUB_ERROR}}",
+      "symbol": "CLUB_ERROR",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-068",
+      "line": 68,
+      "literal": ": {{api|t=e|CLUB_INVITATION_ADDED_FOR_SELF}}",
+      "symbol": "CLUB_INVITATION_ADDED_FOR_SELF",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-069",
+      "line": 69,
+      "literal": ": {{api|t=e|CLUB_INVITATION_REMOVED_FOR_SELF}}",
+      "symbol": "CLUB_INVITATION_REMOVED_FOR_SELF",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-070",
+      "line": 70,
+      "literal": ": {{api|t=e|CLUB_INVITATIONS_RECEIVED_FOR_CLUB}}",
+      "symbol": "CLUB_INVITATIONS_RECEIVED_FOR_CLUB",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-071",
+      "line": 71,
+      "literal": ": {{api|t=e|CLUB_MEMBER_ADDED}}",
+      "symbol": "CLUB_MEMBER_ADDED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-072",
+      "line": 72,
+      "literal": ": {{api|t=e|CLUB_MEMBER_PRESENCE_UPDATED}}",
+      "symbol": "CLUB_MEMBER_PRESENCE_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-073",
+      "line": 73,
+      "literal": ": {{api|t=e|CLUB_MEMBER_REMOVED}}",
+      "symbol": "CLUB_MEMBER_REMOVED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-074",
+      "line": 74,
+      "literal": ": {{api|t=e|CLUB_MEMBER_ROLE_UPDATED}}",
+      "symbol": "CLUB_MEMBER_ROLE_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-075",
+      "line": 75,
+      "literal": ": {{api|t=e|CLUB_MEMBER_UPDATED}}",
+      "symbol": "CLUB_MEMBER_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-076",
+      "line": 76,
+      "literal": ": {{api|t=e|CLUB_MESSAGE_ADDED}}",
+      "symbol": "CLUB_MESSAGE_ADDED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-077",
+      "line": 77,
+      "literal": ": {{api|t=e|CLUB_MESSAGE_HISTORY_RECEIVED}}",
+      "symbol": "CLUB_MESSAGE_HISTORY_RECEIVED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-078",
+      "line": 78,
+      "literal": ": {{api|t=e|CLUB_MESSAGE_UPDATED}}",
+      "symbol": "CLUB_MESSAGE_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-079",
+      "line": 79,
+      "literal": ": {{api|t=e|CLUB_REMOVED_MESSAGE}}",
+      "symbol": "CLUB_REMOVED_MESSAGE",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-080",
+      "line": 80,
+      "literal": ": {{api|t=e|CLUB_REMOVED}}",
+      "symbol": "CLUB_REMOVED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-081",
+      "line": 81,
+      "literal": ": {{api|t=e|CLUB_SELF_MEMBER_ROLE_UPDATED}}",
+      "symbol": "CLUB_SELF_MEMBER_ROLE_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-082",
+      "line": 82,
+      "literal": ": {{api|t=e|CLUB_STREAM_ADDED}}",
+      "symbol": "CLUB_STREAM_ADDED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-083",
+      "line": 83,
+      "literal": ": {{api|t=e|CLUB_STREAM_REMOVED}}",
+      "symbol": "CLUB_STREAM_REMOVED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-084",
+      "line": 84,
+      "literal": ": {{api|t=e|CLUB_STREAM_SUBSCRIBED}}",
+      "symbol": "CLUB_STREAM_SUBSCRIBED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-085",
+      "line": 85,
+      "literal": ": {{api|t=e|CLUB_STREAM_UNSUBSCRIBED}}",
+      "symbol": "CLUB_STREAM_UNSUBSCRIBED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-086",
+      "line": 86,
+      "literal": ": {{api|t=e|CLUB_STREAM_UPDATED}}",
+      "symbol": "CLUB_STREAM_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-087",
+      "line": 87,
+      "literal": ": {{api|t=e|CLUB_STREAMS_LOADED}}",
+      "symbol": "CLUB_STREAMS_LOADED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-088",
+      "line": 88,
+      "literal": ": {{api|t=e|CLUB_TICKET_CREATED}}",
+      "symbol": "CLUB_TICKET_CREATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-089",
+      "line": 89,
+      "literal": ": {{api|t=e|CLUB_TICKET_RECEIVED}}",
+      "symbol": "CLUB_TICKET_RECEIVED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-090",
+      "line": 90,
+      "literal": ": {{api|t=e|CLUB_TICKETS_RECEIVED}}",
+      "symbol": "CLUB_TICKETS_RECEIVED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-091",
+      "line": 91,
+      "literal": ": {{api|t=e|CLUB_UPDATED}}",
+      "symbol": "CLUB_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-092",
+      "line": 92,
+      "literal": ": {{api|t=e|INITIAL_CLUBS_LOADED}}",
+      "symbol": "INITIAL_CLUBS_LOADED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-093",
+      "line": 93,
+      "literal": ": {{api|t=e|NOTIFY_CHAT_SUPPRESSED}}",
+      "symbol": "NOTIFY_CHAT_SUPPRESSED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-094",
+      "line": 94,
+      "literal": ": {{api|t=e|STREAM_VIEW_MARKER_UPDATED}}",
+      "symbol": "STREAM_VIEW_MARKER_UPDATED",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-095",
+      "line": 95,
+      "literal": ": {{api|t=e|UNIT_HEAL_PREDICTION}}",
+      "symbol": "UNIT_HEAL_PREDICTION",
+      "section": "Events",
+      "direction": "added",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-098",
+      "line": 98,
+      "literal": ": {{api|t=e|SHOW_AADC_ALERT}}",
+      "symbol": "SHOW_AADC_ALERT",
+      "section": "Events",
+      "direction": "removed",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-109",
+      "line": 109,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0.333333</span></code><br><small>Lowest render scale DynamicRenderScale can use</small></span>",
+      "symbol": "DynamicRenderScaleMin",
+      "section": "CVars",
+      "direction": "added",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-110",
+      "line": 110,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScale|DynamicRenderScale]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.</small></span>",
+      "symbol": "DynamicRenderScale",
+      "section": "CVars",
+      "direction": "added",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-111",
+      "line": 111,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Disable use of texture heaps and force the fallback path</small></span>",
+      "symbol": "FrameBufferCacheForceNoHeaps",
+      "section": "CVars",
+      "direction": "added",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-112",
+      "line": 112,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Seen the alert indicating chat has been disabled by default. (UK AADC)</small></span>",
+      "symbol": "seenRegionalChatDisabled",
+      "section": "CVars",
+      "direction": "added",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-113",
+      "line": 113,
+      "literal": ": [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]",
+      "symbol": "FrameBufferCacheGpuFootprint",
+      "section": "CVars",
+      "direction": "added",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-114",
+      "line": 114,
+      "literal": ": [[CVar GxFrameStats|GxFrameStats]]",
+      "symbol": "GxFrameStats",
+      "section": "CVars",
+      "direction": "added",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-115",
+      "line": 115,
+      "literal": ": {{Wow-inline}} [[CVar seenSoMNotification|seenSoMNotification]]",
+      "symbol": "seenSoMNotification",
+      "section": "CVars",
+      "direction": "added",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    },
+    {
+      "id": "inventory-118",
+      "line": 118,
+      "literal": ": [[CVar seenAADCAlert|seenAADCAlert]]",
+      "symbol": "seenAADCAlert",
+      "section": "CVars",
+      "direction": "removed",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "status": "UNPROVEN",
+      "limit": "Literal identity/direction only; signature, native behavior and semantic retirement unspecified. Do not normalize source spelling."
+    }
+  ],
+  "signatures": [
+    {
+      "line": 22,
+      "symbol": "C_BehavioralMessaging.SendNotificationReceipt",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 23,
+      "symbol": "C_Club.FocusCommunityStreams",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 24,
+      "symbol": "C_Club.UnfocusAllStreams",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 25,
+      "symbol": "C_Commentator.SetBlocklistedAuras",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 26,
+      "symbol": "C_Commentator.SetBlocklistedCooldowns",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 27,
+      "symbol": "C_LFGList.IsLookingForGroupEnabled",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 28,
+      "symbol": "C_Seasons.GetActiveSeason",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 29,
+      "symbol": "C_Seasons.HasActiveSeason",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 30,
+      "symbol": "C_SocialRestrictions.AcknowledgeRegionalChatDisabled",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 31,
+      "symbol": "C_SocialRestrictions.IsChatDisabled",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 32,
+      "symbol": "C_SocialRestrictions.SetChatDisabled",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 33,
+      "symbol": "GetFirstBagBankSlotIndex",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 34,
+      "symbol": "securecallfunction",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 35,
+      "symbol": "secureexecuterange",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 38,
+      "symbol": "AcknowledgeAADCAlert",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 39,
+      "symbol": "C_Commentator.SetBlacklistedAuras",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 40,
+      "symbol": "C_Commentator.SetBlacklistedCooldowns",
+      "kind": "callable",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 51,
+      "symbol": "FontString:GetTextScale",
+      "kind": "widget",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 52,
+      "symbol": "FontStringSetTextScale",
+      "kind": "widget",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 65,
+      "symbol": "AVATAR_LIST_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 66,
+      "symbol": "CLUB_ADDED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 67,
+      "symbol": "CLUB_ERROR",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 68,
+      "symbol": "CLUB_INVITATION_ADDED_FOR_SELF",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 69,
+      "symbol": "CLUB_INVITATION_REMOVED_FOR_SELF",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 70,
+      "symbol": "CLUB_INVITATIONS_RECEIVED_FOR_CLUB",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 71,
+      "symbol": "CLUB_MEMBER_ADDED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 72,
+      "symbol": "CLUB_MEMBER_PRESENCE_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 73,
+      "symbol": "CLUB_MEMBER_REMOVED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 74,
+      "symbol": "CLUB_MEMBER_ROLE_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 75,
+      "symbol": "CLUB_MEMBER_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 76,
+      "symbol": "CLUB_MESSAGE_ADDED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 77,
+      "symbol": "CLUB_MESSAGE_HISTORY_RECEIVED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 78,
+      "symbol": "CLUB_MESSAGE_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 79,
+      "symbol": "CLUB_REMOVED_MESSAGE",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 80,
+      "symbol": "CLUB_REMOVED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 81,
+      "symbol": "CLUB_SELF_MEMBER_ROLE_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 82,
+      "symbol": "CLUB_STREAM_ADDED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 83,
+      "symbol": "CLUB_STREAM_REMOVED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 84,
+      "symbol": "CLUB_STREAM_SUBSCRIBED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 85,
+      "symbol": "CLUB_STREAM_UNSUBSCRIBED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 86,
+      "symbol": "CLUB_STREAM_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 87,
+      "symbol": "CLUB_STREAMS_LOADED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 88,
+      "symbol": "CLUB_TICKET_CREATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 89,
+      "symbol": "CLUB_TICKET_RECEIVED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 90,
+      "symbol": "CLUB_TICKETS_RECEIVED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 91,
+      "symbol": "CLUB_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 92,
+      "symbol": "INITIAL_CLUBS_LOADED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 93,
+      "symbol": "NOTIFY_CHAT_SUPPRESSED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 94,
+      "symbol": "STREAM_VIEW_MARKER_UPDATED",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 95,
+      "symbol": "UNIT_HEAL_PREDICTION",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 98,
+      "symbol": "SHOW_AADC_ALERT",
+      "kind": "event",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 109,
+      "symbol": "DynamicRenderScaleMin",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 110,
+      "symbol": "DynamicRenderScale",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 111,
+      "symbol": "FrameBufferCacheForceNoHeaps",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 112,
+      "symbol": "seenRegionalChatDisabled",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 113,
+      "symbol": "FrameBufferCacheGpuFootprint",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 114,
+      "symbol": "GxFrameStats",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 115,
+      "symbol": "seenSoMNotification",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 118,
+      "symbol": "seenAADCAlert",
+      "kind": "cvar",
+      "arguments": null,
+      "returns": null,
+      "payload": null,
+      "declared": false,
+      "status": "UNPROVEN"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "literal": "==Summary==",
+      "label": "Summary"
+    },
+    {
+      "line": 8,
+      "literal": "==Resources==",
+      "label": "Resources"
+    },
+    {
+      "line": 14,
+      "literal": "==Global API==",
+      "label": "Global API"
+    },
+    {
+      "line": 44,
+      "literal": "==Widgets==",
+      "label": "Widgets"
+    },
+    {
+      "line": 58,
+      "literal": "==Events==",
+      "label": "Events"
+    },
+    {
+      "line": 102,
+      "literal": "==CVars==",
+      "label": "CVars"
+    }
+  ],
+  "inventory_headers": [
+    {
+      "line": 18,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(14)</small>",
+      "section": "Global API",
+      "direction": "added",
+      "count": 14,
+      "observed_count": 14
+    },
+    {
+      "line": 19,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(3)</small>",
+      "section": "Global API",
+      "direction": "removed",
+      "count": 3,
+      "observed_count": 3
+    },
+    {
+      "line": 47,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(2)</small>",
+      "section": "Widgets",
+      "direction": "added",
+      "count": 2,
+      "observed_count": 2
+    },
+    {
+      "line": 48,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>",
+      "section": "Widgets",
+      "direction": "removed",
+      "count": 0,
+      "observed_count": 0
+    },
+    {
+      "line": 61,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(31)</small>",
+      "section": "Events",
+      "direction": "added",
+      "count": 31,
+      "observed_count": 31
+    },
+    {
+      "line": 62,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(1)</small>",
+      "section": "Events",
+      "direction": "removed",
+      "count": 1,
+      "observed_count": 1
+    },
+    {
+      "line": 105,
+      "literal": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(7)</small>",
+      "section": "CVars",
+      "direction": "added",
+      "count": 7,
+      "observed_count": 7
+    },
+    {
+      "line": 106,
+      "literal": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(1)</small>",
+      "section": "CVars",
+      "direction": "removed",
+      "count": 1,
+      "observed_count": 1
+    }
+  ],
+  "caption": {
+    "line": 16,
+    "literal": "|+ 1.14.0 (39958) &rarr; 1.14.1 (41030) Nov 10 2021"
+  },
+  "summary_prose": [
+    {
+      "line": 4,
+      "literal": "* Added [[:Category:API namespaces/C_Seasons|C_Seasons]] to support Classic Era [[Season of Mastery]].",
+      "status": "UNPROVEN",
+      "default": null,
+      "limit": "Literal claim only; linked bodies unexpanded; no native/model credit."
+    },
+    {
+      "line": 5,
+      "literal": "* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate, see this [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes section] for solutions.",
+      "status": "UNPROVEN",
+      "default": null,
+      "limit": "Literal claim only; linked bodies unexpanded; no native/model credit."
+    },
+    {
+      "line": 6,
+      "literal": "* The event trace tool now supports logging events while the frame is hidden. This option is disabled by default.",
+      "status": "UNPROVEN",
+      "default": "disabled",
+      "limit": "Literal claim only; linked bodies unexpanded; no native/model credit."
+    }
+  ],
+  "cvar_contracts": [
+    {
+      "line": 109,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0.333333</span></code><br><small>Lowest render scale DynamicRenderScale can use</small></span>",
+      "symbol": "DynamicRenderScaleMin",
+      "direction": "added",
+      "default": "0.333333",
+      "scope": null,
+      "description": "Lowest render scale DynamicRenderScale can use",
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    },
+    {
+      "line": 110,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScale|DynamicRenderScale]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.</small></span>",
+      "symbol": "DynamicRenderScale",
+      "direction": "added",
+      "default": "0",
+      "scope": null,
+      "description": "Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.",
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    },
+    {
+      "line": 111,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Disable use of texture heaps and force the fallback path</small></span>",
+      "symbol": "FrameBufferCacheForceNoHeaps",
+      "direction": "added",
+      "default": "0",
+      "scope": null,
+      "description": "Disable use of texture heaps and force the fallback path",
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    },
+    {
+      "line": 112,
+      "literal": ": <span class=\"tttemplatelink\">[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Seen the alert indicating chat has been disabled by default. (UK AADC)</small></span>",
+      "symbol": "seenRegionalChatDisabled",
+      "direction": "added",
+      "default": "0",
+      "scope": "Account",
+      "description": "Seen the alert indicating chat has been disabled by default. (UK AADC)",
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    },
+    {
+      "line": 113,
+      "literal": ": [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]",
+      "symbol": "FrameBufferCacheGpuFootprint",
+      "direction": "added",
+      "default": null,
+      "scope": null,
+      "description": null,
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    },
+    {
+      "line": 114,
+      "literal": ": [[CVar GxFrameStats|GxFrameStats]]",
+      "symbol": "GxFrameStats",
+      "direction": "added",
+      "default": null,
+      "scope": null,
+      "description": null,
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    },
+    {
+      "line": 115,
+      "literal": ": {{Wow-inline}} [[CVar seenSoMNotification|seenSoMNotification]]",
+      "symbol": "seenSoMNotification",
+      "direction": "added",
+      "default": null,
+      "scope": null,
+      "description": null,
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    },
+    {
+      "line": 118,
+      "literal": ": [[CVar seenAADCAlert|seenAADCAlert]]",
+      "symbol": "seenAADCAlert",
+      "direction": "removed",
+      "default": null,
+      "scope": null,
+      "description": null,
+      "status": "UNPROVEN",
+      "limit": "Exact lexical default/scope/prose; no invented defaults for bare links. Renderer/cache/chat/notification effects not established by registry publication."
+    }
+  ],
+  "template_claims": [
+    {
+      "line": 5,
+      "literal": "* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate, see this [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes section] for solutions.",
+      "symbol": "SharedTooltipTemplate",
+      "no_longer_inherits": "BackdropTemplate",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 5,
+      "literal": "* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate, see this [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes section] for solutions.",
+      "symbol": "GameTooltipTemplate",
+      "no_longer_inherits": "BackdropTemplate",
+      "status": "UNPROVEN"
+    }
+  ],
+  "navigation": {
+    "patch": "1.14.1",
+    "prev": "1.14.0",
+    "next": "1.14.2",
+    "expanded": false
+  },
+  "links": [
+    {
+      "line": 4,
+      "literal": "[[:Category:API namespaces/C_Seasons|C_Seasons]]",
+      "target": ":Category:API namespaces/C_Seasons",
+      "label": "C_Seasons",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 4,
+      "literal": "[[Season of Mastery]]",
+      "target": "Season of Mastery",
+      "label": "Season of Mastery",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 5,
+      "literal": "[https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes section]",
+      "target": "https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes",
+      "label": "section",
+      "kind": "external-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 10,
+      "literal": "[https://github.com/Gethe/wow-ui-source/commit/b00df2a627cc7b57cdb45aec60ced39e59f4877f wow-ui-source]",
+      "target": "https://github.com/Gethe/wow-ui-source/commit/b00df2a627cc7b57cdb45aec60ced39e59f4877f",
+      "label": "wow-ui-source",
+      "kind": "external-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 10,
+      "literal": "[https://github.com/Ketho/BlizzardInterfaceResources/commit/3988081e4f766fb43f634449602f06ced2205e46 BlizzardInterfaceResources]",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/commit/3988081e4f766fb43f634449602f06ced2205e46",
+      "label": "BlizzardInterfaceResources",
+      "kind": "external-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 11,
+      "literal": "[https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes 1.14.1 Consolidated UI Changes]",
+      "target": "https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes",
+      "label": "1.14.1 Consolidated UI Changes",
+      "kind": "external-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 109,
+      "literal": "[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]",
+      "target": "CVar DynamicRenderScaleMin",
+      "label": "DynamicRenderScaleMin",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 110,
+      "literal": "[[CVar DynamicRenderScale|DynamicRenderScale]]",
+      "target": "CVar DynamicRenderScale",
+      "label": "DynamicRenderScale",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 111,
+      "literal": "[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]",
+      "target": "CVar FrameBufferCacheForceNoHeaps",
+      "label": "FrameBufferCacheForceNoHeaps",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 112,
+      "literal": "[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]",
+      "target": "CVar seenRegionalChatDisabled",
+      "label": "seenRegionalChatDisabled",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 113,
+      "literal": "[[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]",
+      "target": "CVar FrameBufferCacheGpuFootprint",
+      "label": "FrameBufferCacheGpuFootprint",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 114,
+      "literal": "[[CVar GxFrameStats|GxFrameStats]]",
+      "target": "CVar GxFrameStats",
+      "label": "GxFrameStats",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 115,
+      "literal": "[[CVar seenSoMNotification|seenSoMNotification]]",
+      "target": "CVar seenSoMNotification",
+      "label": "seenSoMNotification",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 118,
+      "literal": "[[CVar seenAADCAlert|seenAADCAlert]]",
+      "target": "CVar seenAADCAlert",
+      "label": "seenAADCAlert",
+      "kind": "wiki-link",
+      "expanded": false,
+      "status": "UNPROVEN"
+    }
+  ],
+  "transclusions": [
+    {
+      "line": 1,
+      "literal": "{{apichanges|1.14.1|prev=1.14.0|next=1.14.2}}",
+      "expanded": false,
+      "role": "navigation",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 22,
+      "literal": "{{api|t=a|C_BehavioralMessaging.SendNotificationReceipt}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 23,
+      "literal": "{{api|t=a|C_Club.FocusCommunityStreams}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 24,
+      "literal": "{{api|t=a|C_Club.UnfocusAllStreams}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 25,
+      "literal": "{{api|t=a|C_Commentator.SetBlocklistedAuras}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 26,
+      "literal": "{{api|t=a|C_Commentator.SetBlocklistedCooldowns}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 27,
+      "literal": "{{Wow-inline}}",
+      "expanded": false,
+      "role": "inline-client-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 27,
+      "literal": "{{api|t=a|C_LFGList.IsLookingForGroupEnabled}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 28,
+      "literal": "{{Wow-inline}}",
+      "expanded": false,
+      "role": "inline-client-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 28,
+      "literal": "{{api|t=a|C_Seasons.GetActiveSeason}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 29,
+      "literal": "{{Wow-inline}}",
+      "expanded": false,
+      "role": "inline-client-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 29,
+      "literal": "{{api|t=a|C_Seasons.HasActiveSeason}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 30,
+      "literal": "{{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 31,
+      "literal": "{{api|t=a|C_SocialRestrictions.IsChatDisabled}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 32,
+      "literal": "{{api|t=a|C_SocialRestrictions.SetChatDisabled}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 33,
+      "literal": "{{Wow-inline}}",
+      "expanded": false,
+      "role": "inline-client-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 33,
+      "literal": "{{api|t=a|GetFirstBagBankSlotIndex}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 34,
+      "literal": "{{api|t=a|securecallfunction}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 35,
+      "literal": "{{api|t=a|secureexecuterange}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 38,
+      "literal": "{{api|t=a|AcknowledgeAADCAlert}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 39,
+      "literal": "{{api|t=a|C_Commentator.SetBlacklistedAuras}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 40,
+      "literal": "{{api|t=a|C_Commentator.SetBlacklistedCooldowns}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 51,
+      "literal": "{{api|t=w|FontString:GetTextScale}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 52,
+      "literal": "{{api|t=w|FontStringSetTextScale}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 65,
+      "literal": "{{api|t=e|AVATAR_LIST_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 66,
+      "literal": "{{api|t=e|CLUB_ADDED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 67,
+      "literal": "{{api|t=e|CLUB_ERROR}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 68,
+      "literal": "{{api|t=e|CLUB_INVITATION_ADDED_FOR_SELF}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 69,
+      "literal": "{{api|t=e|CLUB_INVITATION_REMOVED_FOR_SELF}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 70,
+      "literal": "{{api|t=e|CLUB_INVITATIONS_RECEIVED_FOR_CLUB}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 71,
+      "literal": "{{api|t=e|CLUB_MEMBER_ADDED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 72,
+      "literal": "{{api|t=e|CLUB_MEMBER_PRESENCE_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 73,
+      "literal": "{{api|t=e|CLUB_MEMBER_REMOVED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 74,
+      "literal": "{{api|t=e|CLUB_MEMBER_ROLE_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 75,
+      "literal": "{{api|t=e|CLUB_MEMBER_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 76,
+      "literal": "{{api|t=e|CLUB_MESSAGE_ADDED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 77,
+      "literal": "{{api|t=e|CLUB_MESSAGE_HISTORY_RECEIVED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 78,
+      "literal": "{{api|t=e|CLUB_MESSAGE_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 79,
+      "literal": "{{api|t=e|CLUB_REMOVED_MESSAGE}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 80,
+      "literal": "{{api|t=e|CLUB_REMOVED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 81,
+      "literal": "{{api|t=e|CLUB_SELF_MEMBER_ROLE_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 82,
+      "literal": "{{api|t=e|CLUB_STREAM_ADDED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 83,
+      "literal": "{{api|t=e|CLUB_STREAM_REMOVED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 84,
+      "literal": "{{api|t=e|CLUB_STREAM_SUBSCRIBED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 85,
+      "literal": "{{api|t=e|CLUB_STREAM_UNSUBSCRIBED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 86,
+      "literal": "{{api|t=e|CLUB_STREAM_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 87,
+      "literal": "{{api|t=e|CLUB_STREAMS_LOADED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 88,
+      "literal": "{{api|t=e|CLUB_TICKET_CREATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 89,
+      "literal": "{{api|t=e|CLUB_TICKET_RECEIVED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 90,
+      "literal": "{{api|t=e|CLUB_TICKETS_RECEIVED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 91,
+      "literal": "{{api|t=e|CLUB_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 92,
+      "literal": "{{api|t=e|INITIAL_CLUBS_LOADED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 93,
+      "literal": "{{api|t=e|NOTIFY_CHAT_SUPPRESSED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 94,
+      "literal": "{{api|t=e|STREAM_VIEW_MARKER_UPDATED}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 95,
+      "literal": "{{api|t=e|UNIT_HEAL_PREDICTION}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 98,
+      "literal": "{{api|t=e|SHOW_AADC_ALERT}}",
+      "expanded": false,
+      "role": "API-inventory-marker",
+      "status": "UNPROVEN"
+    },
+    {
+      "line": 115,
+      "literal": "{{Wow-inline}}",
+      "expanded": false,
+      "role": "inline-client-marker",
+      "status": "UNPROVEN"
+    }
+  ],
+  "configured_profiles": [
+    {
+      "feature": "client-era",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_proof": false
+    },
+    {
+      "feature": "client-anniversary",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "native_proof": false
+    }
+  ],
+  "successors": [
+    {
+      "patch": "1.14.2",
+      "state": "queued-pending-main-integration",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "source": {
+        "title": "Patch 1.14.2/API changes",
+        "version": "1.14.2",
+        "pageid": 236101,
+        "revid": 2290155,
+        "timestamp": "2022-06-05T00:14:08Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2290155&format=json",
+        "retrieved": "2026-10-09T08:51:36.399009+00:00",
+        "response_sha256": "bd0440a7195fbb690be5f33972a26d7de4f29f7d55454ce1c2b4b2ad93c6ad01",
+        "wikitext_sha256": "1b5752c3d35f2b39e52d7dc594e50d79fbe74104a9f8c2a2051599cb22ddaa37",
+        "wikitext_bytes": 2460,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.2-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.14.3",
+      "state": "queued-pending-main-integration",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "source": {
+        "title": "Patch 1.14.3/API changes",
+        "version": "1.14.3",
+        "pageid": 480026,
+        "revid": 4615755,
+        "timestamp": "2023-07-10T10:27:33Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4615755&format=json",
+        "retrieved": "2026-10-09T08:51:36.398924+00:00",
+        "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+        "wikitext_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+        "wikitext_bytes": 23291,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.3-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.14.4",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "2210ae14d03f0b695674578e64e25cc9b2e1904f2eb78a3ca0c50e940c849226",
+      "source": {
+        "title": "Patch 1.14.4/API changes",
+        "version": "1.14.4",
+        "pageid": 267043,
+        "revid": 2581777,
+        "timestamp": "2023-07-19T19:32:56Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+        "retrieved": "2026-10-09T08:51:36.398825+00:00",
+        "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+        "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+        "wikitext_bytes": 775,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.0",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "ac2d227ce84c5e1ec013808236037b28a2ce1070529159620f31c7668ff3c6eb",
+      "source": {
+        "title": "Patch 1.15.0/API changes",
+        "version": "1.15.0",
+        "pageid": 564510,
+        "revid": 5950848,
+        "timestamp": "2024-01-30T19:36:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+        "retrieved": "2026-10-09T08:51:36.398773+00:00",
+        "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+        "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+        "wikitext_bytes": 915,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.1",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "ad60adbab94fbb7e35d7d44c506d8e6d6f66b0398df3bda02cebe2f7a26c73e1",
+      "source": {
+        "title": "Patch 1.15.1/API changes",
+        "version": "1.15.1",
+        "pageid": 577687,
+        "revid": 5998991,
+        "timestamp": "2024-04-03T08:43:49Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+        "retrieved": "2026-10-09T08:51:36.398724+00:00",
+        "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+        "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+        "wikitext_bytes": 835,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.2",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "1c3c3b0cac3bdbd92aa38d9e9c583d5b7a76fdbe13ef2d9888789fc6906f3417",
+      "source": {
+        "title": "Patch 1.15.2/API changes",
+        "version": "1.15.2",
+        "pageid": 583919,
+        "revid": 6061806,
+        "timestamp": "2024-06-12T18:59:26Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+        "retrieved": "2026-10-09T08:51:36.398676+00:00",
+        "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+        "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+        "wikitext_bytes": 391,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.3",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "ff549fcaffd046e90e481d064f41e2b7636426a736746cbb0712e7927464fec0",
+      "source": {
+        "title": "Patch 1.15.3/API changes",
+        "version": "1.15.3",
+        "pageid": 593663,
+        "revid": 6114194,
+        "timestamp": "2024-08-30T01:06:01Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+        "retrieved": "2026-10-09T08:51:36.398616+00:00",
+        "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+        "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+        "wikitext_bytes": 452,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.4",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "f3aa9280a2c56d358756109b52cdc0a817dd0a94eedf904d8126a6b76df71b6d",
+      "source": {
+        "title": "Patch 1.15.4/API changes",
+        "version": "1.15.4",
+        "pageid": 600355,
+        "revid": 6172581,
+        "timestamp": "2024-11-13T21:59:45Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+        "retrieved": "2026-10-09T08:51:36.398568+00:00",
+        "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+        "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+        "wikitext_bytes": 439,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.5",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "41e335e655966d9352b6a28a97b453be64ad533010f5a4906fd7817c5966ff62",
+      "source": {
+        "title": "Patch 1.15.5/API changes",
+        "version": "1.15.5",
+        "pageid": 610284,
+        "revid": 6235411,
+        "timestamp": "2025-02-09T17:32:34Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+        "retrieved": "2026-10-09T08:51:36.398521+00:00",
+        "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+        "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.6",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "70cdfac19ed015b0433bb313451b8dd8254c4a7ab1c9e7574badf245546f5577",
+      "source": {
+        "title": "Patch 1.15.6/API changes",
+        "version": "1.15.6",
+        "pageid": 619994,
+        "revid": 6281951,
+        "timestamp": "2025-04-04T10:14:39Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+        "retrieved": "2026-10-09T08:51:36.398475+00:00",
+        "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+        "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.7",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+      "source": {
+        "title": "Patch 1.15.7/API changes",
+        "version": "1.15.7",
+        "pageid": 626071,
+        "revid": 6778069,
+        "timestamp": "2026-07-22T05:34:20Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+        "retrieved": "2026-10-09T08:51:36.398418+00:00",
+        "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+        "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.8",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "1fe95fa12edbf60c7f0a93bb570453d1159ce34dee9898c53fdfc12855b9023e",
+      "source": {
+        "title": "Patch 1.15.8/API changes",
+        "version": "1.15.8",
+        "pageid": 686952,
+        "revid": 6778071,
+        "timestamp": "2026-07-22T05:34:51Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+        "retrieved": "2026-10-09T08:51:36.398359+00:00",
+        "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+        "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+        "wikitext_bytes": 279,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.9",
+      "state": "actual-canonical-input-not-applied",
+      "applied": false,
+      "native_proof": false,
+      "history": "same-Era-only",
+      "canonical_ledger_sha256": "fe98aaabb773e2bf486747dd0aa2c01bcd25164f12a2319e5503f569c91f1138",
+      "source": {
+        "title": "Patch 1.15.9/API changes",
+        "version": "1.15.9",
+        "pageid": 685352,
+        "revid": 6780591,
+        "timestamp": "2026-07-24T15:29:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+        "retrieved": "2026-10-09T08:51:36.398273+00:00",
+        "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+        "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+        "wikitext_bytes": 4085,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+      }
+    }
+  ],
+  "later_registers": [],
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "model_review": [
+    {
+      "area": "C_Seasons",
+      "grounded": "Only namespace purpose and two member names.",
+      "reason": "Active season identity, activation transitions and values absent; no season model found in retained scan. Placeholder numeric/default implementation unjustified."
+    },
+    {
+      "area": "Tooltip inheritance",
+      "grounded": "Two exact no-longer-inherits claims.",
+      "reason": "Current profile cache configured at11507, not frozen11401. No retained1.14.1 XML template bodies; do not patch vendor or infer effective legacy inheritance from headless initializer."
+    },
+    {
+      "area": "Hidden event trace",
+      "grounded": "Logging while hidden supported; disabled by default.",
+      "reason": "Blizzard event-trace UI option, not core event dispatch. No frozen tool implementation/setting identifier retained; generic frame event registration would not exercise this option."
+    },
+    {
+      "area": "FontString:GetTextScale",
+      "grounded": "Existing registered getter reads per-frame text_scale; setter updates it.",
+      "reason": "Candidate direct existing-state roundtrip, not a source-declared numeric/default/signature contract. FontStringSetTextScale remains literal typo-shaped identity; do not alias to SetTextScale."
+    },
+    {
+      "area": "securecallfunction/secureexecuterange",
+      "grounded": "Existing rilua/bootstrap paths and tests retained.",
+      "reason": "Page names only, no taint/error/iteration/security signatures. Existing tests cannot confer native1.14.1/security parity; changing secure behavior from this source is unjustified."
+    },
+    {
+      "area": "Club/social/commentator/messaging APIs and events",
+      "grounded": "Names/add-remove directions retained.",
+      "reason": "Page omits arguments, returns, event payloads, delivery/order and state transitions. Existing clubs/chat placeholders and permissive Classic event registration are not community/network/UK AADC models. No cheap new model justified."
+    },
+    {
+      "area": "CVar render/cache/AADC/SoM contracts",
+      "grounded": "Four explicit lexical defaults, one Account scope, four descriptions; others unspecified.",
+      "reason": "Registry read/write alone cannot prove GPU dynamic scaling, heap/cache strategy, regional disable-alert history or season notification effects. Do not invent missing defaults or implement no-op systems."
+    },
+    {
+      "area": "GetFirstBagBankSlotIndex and removals",
+      "grounded": "Literal addition/removal identities.",
+      "reason": "No index number/slot boundary or removal behavior specified. Do not invent number, alias renamed commentator calls, or apply modern/foreign-history retirement. Main owns same-Era successor integration."
+    }
+  ],
+  "totals": {
+    "physical_lines": 120,
+    "nonblank_rows": 114,
+    "inventory": 59,
+    "headings": 6,
+    "inventory_headers": 8,
+    "prose": 3,
+    "cvars": 8,
+    "template_claims": 2,
+    "links": 14,
+    "transclusions": 57,
+    "unspecified_signatures": 59,
+    "substantive_rows": 64
+  }
+}

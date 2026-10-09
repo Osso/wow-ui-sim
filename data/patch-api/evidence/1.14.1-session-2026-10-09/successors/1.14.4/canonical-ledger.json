@@ -1,0 +1,596 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.14.4",
+  "source": {
+    "title": "Patch 1.14.4/API changes",
+    "version": "1.14.4",
+    "pageid": 267043,
+    "revid": 2581777,
+    "timestamp": "2023-07-19T19:32:56Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=2581777&format=json",
+    "retrieved": "2026-10-09T08:51:36.398825+00:00",
+    "response_sha256": "6eefae17e447cf100159628fca32d5488e1c284ed944f762ebec4d7b4b182b3a",
+    "wikitext_sha256": "0babba4a2f954588e015249b0f0b620ddbf42ba9acbdc928660e585826785c42",
+    "wikitext_bytes": 775,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.14.4-wikitext.txt"
+  },
+  "source_toc": 11404,
+  "client_line": "UNPROVEN-unexpanded-apichanges",
+  "literal_contexts": [
+    "Wrath Classic",
+    "Dragonflight"
+  ],
+  "literal_navigation": {
+    "patch": "1.14.4",
+    "prev": "1.14.3",
+    "next": "1.15.0"
+  },
+  "client_limit": "Era task context/configuration separate from linked Wrath/Dragonflight contexts and historical native identity.",
+  "base_revision": "0b64e636c16c59e90e3406e7ff557e94cd7732a8",
+  "later_registers": [],
+  "queued_successors": [
+    {
+      "patch": "1.15.0",
+      "state": "in-flight-pending-main-integration",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.0/API changes",
+        "version": "1.15.0",
+        "pageid": 564510,
+        "revid": 5950848,
+        "timestamp": "2024-01-30T19:36:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5950848&format=json",
+        "retrieved": "2026-10-09T08:51:36.398773+00:00",
+        "response_sha256": "d427176850fcac49c5c66e78a8cfef6863df28efa50b42bbfe92e1e8d2a49717",
+        "wikitext_sha256": "4c85cbb0f7815c441b276f2267054f1aabbb8571abb7db995448b689dd426b04",
+        "wikitext_bytes": 915,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.0-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.1",
+      "state": "queued-pending-main-integration",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.1/API changes",
+        "version": "1.15.1",
+        "pageid": 577687,
+        "revid": 5998991,
+        "timestamp": "2024-04-03T08:43:49Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=5998991&format=json",
+        "retrieved": "2026-10-09T08:51:36.398724+00:00",
+        "response_sha256": "39fe39c08d9c1ebc267ad30bf8a56a2fc0367264303f30ad67f1f9891e9d39d7",
+        "wikitext_sha256": "5749af9ee315150e2053b149b5127257cbadcf21eaa36c05f8729c9a47b37f67",
+        "wikitext_bytes": 835,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.1-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.2",
+      "state": "queued-pending-main-integration",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.2/API changes",
+        "version": "1.15.2",
+        "pageid": 583919,
+        "revid": 6061806,
+        "timestamp": "2024-06-12T18:59:26Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6061806&format=json",
+        "retrieved": "2026-10-09T08:51:36.398676+00:00",
+        "response_sha256": "4622b12618a471a00c12515e44455978c7bf86a47d3bdd9e827d89444b9215fd",
+        "wikitext_sha256": "d308f076bce88b286265b78561cd8bf7a8625534edb0e490c89e2f6674f6fb33",
+        "wikitext_bytes": 391,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.2-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.3",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.3/API changes",
+        "version": "1.15.3",
+        "pageid": 593663,
+        "revid": 6114194,
+        "timestamp": "2024-08-30T01:06:01Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6114194&format=json",
+        "retrieved": "2026-10-09T08:51:36.398616+00:00",
+        "response_sha256": "c78a990a6c9b02793f86d4b115226e5f9d43c75efe008f339ea70ce50b630171",
+        "wikitext_sha256": "fed341992b2d819aa85c2d2a0a8f6d1ec4d5219c692353ec4ba6b6d3e231669f",
+        "wikitext_bytes": 452,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.3-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.4",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.4/API changes",
+        "version": "1.15.4",
+        "pageid": 600355,
+        "revid": 6172581,
+        "timestamp": "2024-11-13T21:59:45Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6172581&format=json",
+        "retrieved": "2026-10-09T08:51:36.398568+00:00",
+        "response_sha256": "c121c04e2e440afde2b1285eb4f3501acbcd6d697f65756c7bb2cbca4c325633",
+        "wikitext_sha256": "e203cc5195e2f35ec5fba01194e21219684779800f06b1a9998a57327b2ae3ba",
+        "wikitext_bytes": 439,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.4-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.5",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.5/API changes",
+        "version": "1.15.5",
+        "pageid": 610284,
+        "revid": 6235411,
+        "timestamp": "2025-02-09T17:32:34Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6235411&format=json",
+        "retrieved": "2026-10-09T08:51:36.398521+00:00",
+        "response_sha256": "b333b49940f98a59086a413dbf77d642aa731e2e8d7bc86ab9e93e7580a2aa8e",
+        "wikitext_sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.5-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.6",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.6/API changes",
+        "version": "1.15.6",
+        "pageid": 619994,
+        "revid": 6281951,
+        "timestamp": "2025-04-04T10:14:39Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6281951&format=json",
+        "retrieved": "2026-10-09T08:51:36.398475+00:00",
+        "response_sha256": "7e6837d03c7e3f942624866c85339685870e35d05c89649e66d94060635690aa",
+        "wikitext_sha256": "c43468b42190bbb8410f666b6f71bfa67e8c9582ec4ef12df2c227aa8e6810d0",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.6-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.7",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.7/API changes",
+        "version": "1.15.7",
+        "pageid": 626071,
+        "revid": 6778069,
+        "timestamp": "2026-07-22T05:34:20Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778069&format=json",
+        "retrieved": "2026-10-09T08:51:36.398418+00:00",
+        "response_sha256": "82721cae532e70dd86d06f03cb5ab97cbb4c02a03c3154eacf3f83126a8e9f97",
+        "wikitext_sha256": "bcf706bb2f4bcf0b9859ba06c594e2995213581523de0cee6e524bd5653fd817",
+        "wikitext_bytes": 278,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.7-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.8",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.8/API changes",
+        "version": "1.15.8",
+        "pageid": 686952,
+        "revid": 6778071,
+        "timestamp": "2026-07-22T05:34:51Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+        "retrieved": "2026-10-09T08:51:36.398359+00:00",
+        "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+        "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+        "wikitext_bytes": 279,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+      }
+    },
+    {
+      "patch": "1.15.9",
+      "state": "integrated-canonical-input-not-applied",
+      "applied": false,
+      "history": "same-Era-context-only",
+      "native_proof": false,
+      "main_gates": "unperformed-for-this-page",
+      "source": {
+        "title": "Patch 1.15.9/API changes",
+        "version": "1.15.9",
+        "pageid": 685352,
+        "revid": 6780591,
+        "timestamp": "2026-07-24T15:29:35Z",
+        "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+        "retrieved": "2026-10-09T08:51:36.398273+00:00",
+        "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+        "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+        "wikitext_bytes": 4085,
+        "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+        "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+      }
+    }
+  ],
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "source_rows": [
+    {
+      "id": "source-001",
+      "line": 1,
+      "literal": "{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-003",
+      "line": 3,
+      "literal": "==Summary==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-004",
+      "line": 4,
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-005",
+      "line": 5,
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-006",
+      "line": 6,
+      "literal": "** Refer to the linked articles for guidance on any impactful changes.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "id": "source-008",
+      "line": 8,
+      "literal": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-009",
+      "line": 9,
+      "literal": "* TOC: <code>11404</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-010",
+      "line": 10,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    }
+  ],
+  "contracts": [
+    {
+      "id": "prose-004",
+      "line": 4,
+      "kind": "summary-prose",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact all-API inclusion claim retained. Linked Wrath contracts not expanded; no local API identities, signatures or state/security proof."
+    },
+    {
+      "id": "prose-005",
+      "line": 5,
+      "kind": "summary-prose",
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Dragonflight subset unspecified; endpoint links do not identify members or intermediate pages. No foreign supersession."
+    },
+    {
+      "id": "prose-006",
+      "line": 6,
+      "kind": "summary-prose",
+      "literal": "** Refer to the linked articles for guidance on any impactful changes.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Instruction to consult linked articles, not a local behavior/signature contract."
+    },
+    {
+      "id": "wiki-link-004-1",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "World of Warcraft: Wrath of the Lich King Classic",
+      "label": "Wrath Classic"
+    },
+    {
+      "id": "wiki-link-004-2",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 3.4.0/API changes",
+      "label": "Patch 3.4.0"
+    },
+    {
+      "id": "wiki-link-004-3",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 3.4.1/API changes",
+      "label": "Patch 3.4.1"
+    },
+    {
+      "id": "wiki-link-004-4",
+      "line": 4,
+      "kind": "unexpanded-wiki-link",
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 3.4.2/API changes",
+      "label": "Patch 3.4.2"
+    },
+    {
+      "id": "wiki-link-005-1",
+      "line": 5,
+      "kind": "unexpanded-wiki-link",
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 10.0.0/API changes",
+      "label": "Patch 10.0.0"
+    },
+    {
+      "id": "wiki-link-005-2",
+      "line": 5,
+      "kind": "unexpanded-wiki-link",
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Exact reference occurrence only; no linked contract expansion or foreign-history supersession.",
+      "target": "Patch 10.1.5/API changes",
+      "label": "Patch 10.1.5"
+    },
+    {
+      "id": "linked-diff-010-1",
+      "line": 10,
+      "kind": "unexpanded-linked-diff",
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Unexpanded diff; signatures/defaults/state/security unspecified. Literal PTR head is not a version or native proof.",
+      "target": "https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr",
+      "label": "wow-ui-source",
+      "compare_base": "1.14.3",
+      "compare_head": "classic_era_ptr"
+    },
+    {
+      "id": "linked-diff-010-2",
+      "line": 10,
+      "kind": "unexpanded-linked-diff",
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Unexpanded diff; signatures/defaults/state/security unspecified. Literal PTR head is not a version or native proof.",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4",
+      "label": "BlizzardInterfaceResources",
+      "compare_base": "1.14.3",
+      "compare_head": "1.14.4"
+    }
+  ],
+  "headers": [
+    {
+      "line": 3,
+      "literal": "==Summary==",
+      "label": "Summary",
+      "numerical_count": null,
+      "status": "metadata-only"
+    },
+    {
+      "line": 8,
+      "literal": "==Resources==",
+      "label": "Resources",
+      "numerical_count": null,
+      "status": "metadata-only"
+    }
+  ],
+  "summary_prose": [
+    {
+      "line": 4,
+      "literal": "* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].",
+      "scope": "all-API-changes-inclusion-claim",
+      "linked_patches": [
+        "3.4.0",
+        "3.4.1",
+        "3.4.2"
+      ],
+      "identified_members": [],
+      "status": "UNPROVEN",
+      "limit": "Exact all-API inclusion claim retained. Linked Wrath contracts not expanded; no local API identities, signatures or state/security proof."
+    },
+    {
+      "line": 5,
+      "literal": "** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.",
+      "scope": "unspecified-subset-range",
+      "linked_patches": [
+        "10.0.0",
+        "10.1.5"
+      ],
+      "identified_members": [],
+      "status": "UNPROVEN",
+      "limit": "Dragonflight subset unspecified; endpoint links do not identify members or intermediate pages. No foreign supersession."
+    },
+    {
+      "line": 6,
+      "literal": "** Refer to the linked articles for guidance on any impactful changes.",
+      "scope": "linked-article-guidance",
+      "linked_patches": [],
+      "identified_members": [],
+      "status": "UNPROVEN",
+      "limit": "Instruction to consult linked articles, not a local behavior/signature contract."
+    }
+  ],
+  "transclusions": [
+    {
+      "line": 1,
+      "literal": "{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}",
+      "expansion": "UNPROVEN",
+      "role": "navigation-metadata-only"
+    }
+  ],
+  "api_occurrences": [],
+  "signatures": [],
+  "configured_profiles": [
+    {
+      "variant": "Era",
+      "feature": "client-era",
+      "feature_dependencies": [],
+      "cache_subdir": "era",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "manifest_entries": 3981,
+      "native_correspondence": "UNPROVEN"
+    },
+    {
+      "variant": "Anniversary",
+      "feature": "client-anniversary",
+      "feature_dependencies": [],
+      "cache_subdir": "anniversary",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "manifest_entries": 3981,
+      "native_correspondence": "UNPROVEN"
+    }
+  ],
+  "preservation": "Exact raw bytes/all occurrences; all-Wrath inclusion distinct from Dragonflight subset. No links expanded, foreign supersession, defaults, aliases or shims.",
+  "totals": {
+    "physical_lines": 10,
+    "nonblank_rows": 8,
+    "metadata_rows": 4,
+    "unproven_rows": 4,
+    "contracts": 11,
+    "headers": 2,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 3,
+    "unexpanded_linked_contracts": 8,
+    "unexpanded_transclusions": 1
+  }
+}

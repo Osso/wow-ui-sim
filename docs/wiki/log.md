@@ -957,3 +957,12 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] proof | Patch 1.14.2 portable SOURCE and current Era getters
 
 [Audit](investigations/patch-1-14-2-api-audit.md):72 original seals unchanged,73-member145111-byte archive;portable RED3/GREEN3 and copied SOURCE8/default-byte replay,serialized ledger/log rejection/restoration. Separate Era11507 getter1/1 at02df0b0e0:two exact `1` defaults/current values;telemetry and unknown nil/nil. Seven existing warnings;no LED/native/runtime repair. Main owns successors/integration/native/final gates.
+
+
+## [2026-10-09] ingest | Frozen Era1.14.1
+
+[Literal audit](investigations/patch-1-14-1-api-audit.md) retains59 inventory contracts and full source; meaningful model review records exact remaining boundaries. SOURCE RED/GREEN8; portable/direct-state work remains separate.
+
+## [2026-10-09] evidence | Era1.14.1 portable and current getter proof
+
+[Audit](investigations/patch-1-14-1-api-audit.md): at `a6d38f864`, portable GREEN3/3 includes copied SOURCE8/default-byte register+extract replay and both serialized tamper/restorations;160 original seals unchanged. Offline headlessEra standalone getter-state GREEN1/1, no runtime edits/native/signature/default credit. Actual tested code and later receipts separate; main owns integration/native/final gates.

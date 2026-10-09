@@ -3035,3 +3035,11 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] proof | Patch 1.14.2 portable SOURCE and current Era getters
 
 [Audit](investigations/patch-1-14-2-api-audit.md):72 original seals unchanged,73-member145111-byte archive;portable RED3/GREEN3 and copied SOURCE8/default-byte replay,serialized ledger/log rejection/restoration. Separate Era11507 getter1/1 at02df0b0e0:two exact `1` defaults/current values;telemetry and unknown nil/nil. Seven existing warnings;no LED/native/runtime repair. Main owns successors/integration/native/final gates.
+
+## [2026-10-09] investigation | Frozen Era1.14.1 accounting
+
+[Audit](investigations/patch-1-14-1-api-audit.md): exact102588/1010974;114 nonblank/59 inventory,6 headings/8 numerical headers, literal typo/default/prose/link/template boundaries. SOURCE-only RED8/GREEN8,353 omission controls; portable and existing-state probe pending. No runtime/shared-tool changes, native or foreign-history credit.
+
+## [2026-10-09] evidence | Era1.14.1 portable and current getter proof
+
+[Audit](investigations/patch-1-14-1-api-audit.md): at `a6d38f864`, portable GREEN3/3 includes copied SOURCE8/default-byte register+extract replay and both serialized tamper/restorations;160 original seals unchanged. Offline headlessEra standalone getter-state GREEN1/1, no runtime edits/native/signature/default credit. Actual tested code and later receipts separate; main owns integration/native/final gates.
