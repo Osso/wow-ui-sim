@@ -6,7 +6,7 @@ Frozen page267043/revision2581777/timestamp `2023-07-19T19:32:56Z` verified agai
 
 | Scope | Accounting | Proof boundary |
 |---|---|---|
-| Raw page | 775 bytes, ten physical lines/eight nonblank rows | Identity verified; implementation pending |
+| Raw page | 775 bytes, ten physical lines/eight nonblank rows | Identity verified; adapter implemented, targeted GREEN pending |
 | Wrath inclusion | All API changes from3.4.0,3.4.1,3.4.2 | Exact inclusion claim, links unexpanded; no imported contracts |
 | Dragonflight subset |10.0.0 through10.1.5 | Unspecified subset, endpoints unexpanded; no fabricated membership |
 | Other prose/links | Linked article guidance, Wrath article, two diff links | SOURCE fixtures RED; no behavior credit |
@@ -27,3 +27,7 @@ Own SOURCE RED11/11 expected assertion failures against empty-accounting scaffol
 
 - [Client profiles](../systems/client-profiles.md) — configuration is not historical native proof.
 - [1.15.3](patch-1-15-3-api-audit.md), [1.15.4](patch-1-15-4-api-audit.md) — read-only structure templates, distinct evidence.
+
+## Literal adapter
+
+Own adapter accounts eight rows (four metadata/four UNPROVEN), eleven contracts (three prose/six wiki links/two diffs), two headers and one unexpanded navigation template. Gethe head `classic_era_ptr` differs from Ketho1.14.4 and remains literal. Omission/fabricated-member/foreign-history/credit controls implemented; no runtime edit. Original historical tools copied unchanged; default replay pending.

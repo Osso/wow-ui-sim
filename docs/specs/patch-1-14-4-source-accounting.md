@@ -16,7 +16,7 @@ Own evidence adapter and copied frozen/configured/historical inputs under `data/
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py` and `test_portable.py`; targeted only. SOURCE RED11 failures and portable RED3 failures retained; GREEN pending implementation.
+Own `test_source_accounting.py` and `test_portable.py`; targeted only. SOURCE RED11 failures and portable RED3 failures retained; adapter implemented, targeted GREEN pending.
 
 ## Known gaps
 
