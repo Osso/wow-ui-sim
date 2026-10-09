@@ -1069,4 +1069,4 @@ SOURCE8/8, current Era generic-storage1/1, portable3/3, actual-successor3/3 and 
 
 ## [2026-10-09] investigation | Patch 1.10.0 frozen redirect SOURCE audit
 
-[Audit](investigations/patch-1-10-0-api-audit.md): frozen385987/3714298,45 bytes; one metadata row/unexpanded historical link/UNPROVEN contract, zero local API/signature/default/prose/header/template declarations. Own SOURCE RED5 retained; original Retail/Era/Forever separate, frozen1.10.1 queue unapplied. No model/runtime/native subset; main owns integration/independent proof/final gates.
+[Audit](investigations/patch-1-10-0-api-audit.md): frozen385987/3714298,45 bytes; one metadata row/unexpanded link/UNPROVEN contract, zero local declarations or model/runtime/native subset. Own SOURCE RED5/GREEN5 at `ea3ae8a44`; portable RED3/GREEN3 plus copied SOURCE5 at `a60968689`, both serialized tamper rejections/exact restorations.25 original seals/26-member49,534-byte archive unchanged; seven separately sealed later artifacts. Frozen1.10.1 queue unchanged; later main integration `3d1a41407` is separate context. Retail/Era/Forever distinct; main owns independent proof/integration/final acceptance.

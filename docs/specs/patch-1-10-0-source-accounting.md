@@ -4,11 +4,11 @@ Bounded accounting of page 385987/revision 3714298/timestamp 2020-04-05T21:06:58
 
 ## What it must do
 
-- [ ] Validate exact response/body and manifest-linked registry identity before ledger derivation.
-- [ ] Account every literal row, link, header, template, prose, signature and default; reject occurrence omissions, count mutations and invented inventory/model/native credit.
-- [ ] Retain the redirect target unexpanded and its missing historical contracts UNPROVEN. No local declarations means zero meaningful modeled subset.
-- [ ] Keep original Retail, Classic Era and Forever histories distinct; queued 1.10.1 is separate and unapplied. Integrated 1.10.2 supplies methodology, not missing target content.
-- [ ] Preserve own SOURCE RED/GREEN and copied own-base tool default bytes/error behavior. Replay an immutable copied archive without Git, target, current tools, addons or network; reject serialized ledger/log tampering and restore exact bytes without resealing.
+- [x] Validate exact response/body and manifest-linked registry identity before ledger derivation.
+- [x] Account every literal row, link, header, template, prose, signature and default; reject occurrence omissions, count mutations and invented inventory/model/native credit.
+- [x] Retain the redirect target unexpanded and its missing historical contracts UNPROVEN. No local declarations means zero meaningful modeled subset.
+- [x] Keep original Retail, Classic Era and Forever histories distinct; frozen task-start 1.10.1 queue is separate and unapplied. Later integration context must not rewrite that queue. Integrated 1.10.2 supplies methodology, not missing target content.
+- [x] Preserve own SOURCE RED/GREEN and copied own-base tool default bytes/error behavior. Replay an immutable copied archive without Git, target, current tools, addons or network; reject serialized ledger/log tampering and restore exact bytes without resealing.
 - [ ] Keep immutable original seals/archive separate from later actual revision/cwd/argv/timestamps/full-stream/scoped-hash receipts. Retain environment keys only after credential-pattern inspection.
 
 ## How it works

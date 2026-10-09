@@ -1,0 +1,17 @@
+{
+  "execution_revision": "a60968689d023005fe858c1b852c485f34be6204",
+  "copied_path": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/1.10.0-session-2026-10-09/copied-replay-kjbfjhxh",
+  "original_map_sha256": "ca1dd001a840cd744346c9c0f39b22dfc1cc49023a4a6832a3b0e81941a5c9bc",
+  "archive_sha256": "06a4f7047bb1733be2b9e1cefc6bf56977d774e9be2c6973e4840ce13a8e5553",
+  "archive_bytes": 49534,
+  "members": 26,
+  "largest_member_bytes": 72712,
+  "excluded_inputs": [
+    "Git",
+    "target",
+    "current tools",
+    "addons",
+    "network"
+  ],
+  "cwd_note": "Every CLI cwd is owned worktree; isolated copied modules resolve only copied evidence. No process chdir/session switch used."
+}
