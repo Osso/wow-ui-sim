@@ -1,0 +1,2275 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "2.5.3",
+  "client_line": "tbc-classic",
+  "profile": null,
+  "scope": "source-and-configured-profile-accounting",
+  "source": {
+    "title": "Patch 2.5.3/API changes",
+    "version": "2.5.3",
+    "pageid": 53568,
+    "revid": 523812,
+    "timestamp": "2022-06-04T23:59:56Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=523812&format=json",
+    "retrieved": "2026-10-09T08:51:36.393767+00:00",
+    "response_sha256": "0feb1ca97798ce6b2169e97207cc44f7e4847165d28e95fa9fbd8dbb6d71283e",
+    "wikitext_sha256": "f922ba1f9ee5e22f6a6c5a70bf8b5fe614b76a2a993ff5ee68149250198a2ca1",
+    "wikitext_bytes": 8310,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.3-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.3-wikitext.txt"
+  },
+  "later_registers": [
+    "2.5.4",
+    "2.5.5",
+    "2.5.6"
+  ],
+  "successor_policy": {
+    "status": "pending-main-integration",
+    "client_line": "tbc-classic",
+    "positive_supersession_credit": false,
+    "versions": [
+      "2.5.4",
+      "2.5.5",
+      "2.5.6"
+    ]
+  },
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/2.5.3-api-changes.txt",
+    "sha256": "4df3fd26e2a6f8667fdc0894e6f760338fc99bf68e7eebf89e83a3b9623c6e72",
+    "extractor_flags": [
+      "--text-only",
+      "--canonical-patch-navigation"
+    ],
+    "limit": "Stock plaintext intentionally omits inventories; complete raw-row ledger and register retain them."
+  },
+  "source_rows": [
+    {
+      "source_id": "p253-source-001",
+      "wikitext_line": 1,
+      "source_text": "{{apichanges|2.5.3|prev=2.5.2|next=2.5.4}}",
+      "kind": "navigation-template",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Literal 2.5.3 prev=2.5.2 next=2.5.4 navigation, not expanded template content or successor proof."
+    },
+    {
+      "source_id": "p253-source-003",
+      "wikitext_line": 3,
+      "source_text": "==Summary==",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-004",
+      "wikitext_line": 4,
+      "source_text": "* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate.",
+      "kind": "summary-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate: loader inheritance, resulting methods/backdrops and native equivalence UNPROVEN."
+    },
+    {
+      "source_id": "p253-source-006",
+      "wikitext_line": 6,
+      "source_text": "==Resources==",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-007",
+      "wikitext_line": 7,
+      "source_text": "* TOC: <code>20503</code>",
+      "kind": "source-resource",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Literal TOC/diff/deprecation resource; linked content not expanded and runtime correspondence UNPROVEN."
+    },
+    {
+      "source_id": "p253-source-008",
+      "wikitext_line": 8,
+      "source_text": "* Diffs: [https://github.com/Gethe/wow-ui-source/commit/8b868aab5774a5e8adbf3ba35260ec93a28ac600 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/4f90d395c056b689b1a003e868c0df1a0dfeb6b2 BlizzardInterfaceResources]",
+      "kind": "source-resource",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Literal TOC/diff/deprecation resource; linked content not expanded and runtime correspondence UNPROVEN."
+    },
+    {
+      "source_id": "p253-source-009",
+      "wikitext_line": 9,
+      "source_text": "* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/classic/Interface/AddOns/Blizzard_Deprecated/Deprecated_2_5_3.lua Deprecated_2_5_3.lua]",
+      "kind": "source-resource",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Literal TOC/diff/deprecation resource; linked content not expanded and runtime correspondence UNPROVEN."
+    },
+    {
+      "source_id": "p253-source-010",
+      "wikitext_line": 10,
+      "source_text": "* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/2.5.3-Consolidated-UI-Changes 2.5.3 Consolidated UI Changes]",
+      "kind": "linked-resource",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "External community changes not expanded or pinned at linked content; contracts UNPROVEN."
+    },
+    {
+      "source_id": "p253-source-011",
+      "wikitext_line": 11,
+      "source_text": "<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-013",
+      "wikitext_line": 13,
+      "source_text": "==Global API==",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-014",
+      "wikitext_line": 14,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-015",
+      "wikitext_line": 15,
+      "source_text": "|+ 2.5.2 (40011) &rarr; 2.5.3 (41812) Jan  7 2022",
+      "kind": "build-caption",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Literal 2.5.2 (40011) to 2.5.3 (41812), Jan 7 2022 caption; not an interface/profile inference."
+    },
+    {
+      "source_id": "p253-source-016",
+      "wikitext_line": 16,
+      "source_text": "|- class=\"mw-customtoggle-global-c\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-017",
+      "wikitext_line": 17,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(20)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-018",
+      "wikitext_line": 18,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(3)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-019",
+      "wikitext_line": 19,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-020",
+      "wikitext_line": 20,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-021",
+      "wikitext_line": 21,
+      "source_text": ": {{api|t=a|C_BehavioralMessaging.SendNotificationReceipt}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_BehavioralMessaging.SendNotificationReceipt-21"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-022",
+      "wikitext_line": 22,
+      "source_text": ": {{api|t=a|C_Club.FocusCommunityStreams}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Club.FocusCommunityStreams-22"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-023",
+      "wikitext_line": 23,
+      "source_text": ": {{api|t=a|C_Club.UnfocusAllStreams}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Club.UnfocusAllStreams-23"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-024",
+      "wikitext_line": 24,
+      "source_text": ": {{api|t=a|C_Commentator.SetBlocklistedAuras}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Commentator.SetBlocklistedAuras-24"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-025",
+      "wikitext_line": 25,
+      "source_text": ": {{api|t=a|C_Commentator.SetBlocklistedCooldowns}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Commentator.SetBlocklistedCooldowns-25"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-026",
+      "wikitext_line": 26,
+      "source_text": ": {{api|t=a|C_GamePad.ClearLedColor}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_GamePad.ClearLedColor-26"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-027",
+      "wikitext_line": 27,
+      "source_text": ": {{api|t=a|C_GamePad.GetLedColor}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_GamePad.GetLedColor-27"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-028",
+      "wikitext_line": 28,
+      "source_text": ": {{api|t=a|C_GamePad.SetLedColor}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_GamePad.SetLedColor-28"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-029",
+      "wikitext_line": 29,
+      "source_text": ": {{api|t=a|C_GamePad.SetVibration}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_GamePad.SetVibration-29"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-030",
+      "wikitext_line": 30,
+      "source_text": ": {{api|t=a|C_GamePad.StopVibration}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_GamePad.StopVibration-30"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-031",
+      "wikitext_line": 31,
+      "source_text": ": {{api|t=a|C_LFGList.IsLookingForGroupEnabled}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_LFGList.IsLookingForGroupEnabled-31"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-032",
+      "wikitext_line": 32,
+      "source_text": ": {{api|t=a|C_Seasons.GetActiveSeason}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Seasons.GetActiveSeason-32"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-033",
+      "wikitext_line": 33,
+      "source_text": ": {{api|t=a|C_Seasons.HasActiveSeason}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Seasons.HasActiveSeason-33"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-034",
+      "wikitext_line": 34,
+      "source_text": ": {{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_SocialRestrictions.AcknowledgeRegionalChatDisabled-34"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-035",
+      "wikitext_line": 35,
+      "source_text": ": {{api|t=a|C_SocialRestrictions.IsChatDisabled}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_SocialRestrictions.IsChatDisabled-35"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-036",
+      "wikitext_line": 36,
+      "source_text": ": {{api|t=a|C_SocialRestrictions.SetChatDisabled}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_SocialRestrictions.SetChatDisabled-36"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-037",
+      "wikitext_line": 37,
+      "source_text": ": {{api|t=a|GetFirstBagBankSlotIndex}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-GetFirstBagBankSlotIndex-37"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-038",
+      "wikitext_line": 38,
+      "source_text": ": {{api|t=a|securecallfunction}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-securecallfunction-38"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-039",
+      "wikitext_line": 39,
+      "source_text": ": {{api|t=a|secureexecuterange}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-secureexecuterange-39"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-040",
+      "wikitext_line": 40,
+      "source_text": ": {{api|t=a|TradeSkillOnlyShowMakeable}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-TradeSkillOnlyShowMakeable-40"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-041",
+      "wikitext_line": 41,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-042",
+      "wikitext_line": 42,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-043",
+      "wikitext_line": 43,
+      "source_text": ": {{api|t=a|AcknowledgeAADCAlert}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-AcknowledgeAADCAlert-43"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-044",
+      "wikitext_line": 44,
+      "source_text": ": {{api|t=a|C_Commentator.SetBlacklistedAuras}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Commentator.SetBlacklistedAuras-44"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-045",
+      "wikitext_line": 45,
+      "source_text": ": {{api|t=a|C_Commentator.SetBlacklistedCooldowns}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-global-api-C_Commentator.SetBlacklistedCooldowns-45"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-046",
+      "wikitext_line": 46,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-047",
+      "wikitext_line": 47,
+      "source_text": "|}",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-049",
+      "wikitext_line": 49,
+      "source_text": "==Widgets==",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-050",
+      "wikitext_line": 50,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-051",
+      "wikitext_line": 51,
+      "source_text": "|- class=\"mw-customtoggle-widgets\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-052",
+      "wikitext_line": 52,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(2)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-053",
+      "wikitext_line": 53,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(0)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-054",
+      "wikitext_line": 54,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widgets\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-055",
+      "wikitext_line": 55,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-056",
+      "wikitext_line": 56,
+      "source_text": ": {{api|t=w|FontString:GetTextScale}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-widgets-FontString:GetTextScale-56"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-057",
+      "wikitext_line": 57,
+      "source_text": ": {{api|t=w|FontString:SetTextScale}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-widgets-FontString:SetTextScale-57"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-058",
+      "wikitext_line": 58,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-059",
+      "wikitext_line": 59,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-060",
+      "wikitext_line": 60,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-061",
+      "wikitext_line": 61,
+      "source_text": "|}",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-063",
+      "wikitext_line": 63,
+      "source_text": "==Events==",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-064",
+      "wikitext_line": 64,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-065",
+      "wikitext_line": 65,
+      "source_text": "|- class=\"mw-customtoggle-events\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-066",
+      "wikitext_line": 66,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(2)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-067",
+      "wikitext_line": 67,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(1)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-068",
+      "wikitext_line": 68,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-069",
+      "wikitext_line": 69,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-070",
+      "wikitext_line": 70,
+      "source_text": ": {{api|t=e|NOTIFY_CHAT_SUPPRESSED}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-events-NOTIFY_CHAT_SUPPRESSED-70"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-071",
+      "wikitext_line": 71,
+      "source_text": ": {{api|t=e|UNIT_HEAL_PREDICTION}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-events-UNIT_HEAL_PREDICTION-71"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-072",
+      "wikitext_line": 72,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-073",
+      "wikitext_line": 73,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-074",
+      "wikitext_line": 74,
+      "source_text": ": {{api|t=e|SHOW_AADC_ALERT}}",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-events-SHOW_AADC_ALERT-74"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-075",
+      "wikitext_line": 75,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-076",
+      "wikitext_line": 76,
+      "source_text": "|}",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-078",
+      "wikitext_line": 78,
+      "source_text": "==CVars==",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-079",
+      "wikitext_line": 79,
+      "source_text": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-080",
+      "wikitext_line": 80,
+      "source_text": "|- class=\"mw-customtoggle-cvars\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-081",
+      "wikitext_line": 81,
+      "source_text": "! style=\"width: 50%\" | <font color=\"lightgreen\">Added</font> <small>(18)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-082",
+      "wikitext_line": 82,
+      "source_text": "! style=\"width: 50%\" | <font color=\"pink\">Removed</font> <small>(3)</small>",
+      "kind": "inventory-header",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Source numerical header reconciled against own literal inventory; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-083",
+      "wikitext_line": 83,
+      "source_text": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-cvars\"",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-084",
+      "wikitext_line": 84,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-085",
+      "wikitext_line": 85,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0.333333</span></code><br><small>Lowest render scale DynamicRenderScale can use</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-DynamicRenderScaleMin-85"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-086",
+      "wikitext_line": 86,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar DynamicRenderScale|DynamicRenderScale]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-DynamicRenderScale-86"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-087",
+      "wikitext_line": 87,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Disable use of texture heaps and force the fallback path</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-FrameBufferCacheForceNoHeaps-87"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-088",
+      "wikitext_line": 88,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadCameraLookMaxPitch|GamePadCameraLookMaxPitch]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Max pitch 'Look' stick can adjust camera angle</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadCameraLookMaxPitch-88"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-089",
+      "wikitext_line": 89,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadCameraLookMaxYaw|GamePadCameraLookMaxYaw]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Max yaw 'Look' stick can adjust camera angle</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadCameraLookMaxYaw-89"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-090",
+      "wikitext_line": 90,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadCursorForTargeting|GamePadCursorForTargeting]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code><br><small>Enable GamePad controlled cursor for spell targeting (1=enable, 2=start-at-target)</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadCursorForTargeting-90"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-091",
+      "wikitext_line": 91,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadFaceMovementMaxAngleCombat|GamePadFaceMovementMaxAngleCombat]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">180</span></code><br><small>Max movement to camera angle to face movement direction instead of camera direction, in combat. 0 = always, 180 = never (115 allows using strafe with quick turn around)</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadFaceMovementMaxAngleCombat-91"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-092",
+      "wikitext_line": 92,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadFaceMovementMaxAngle|GamePadFaceMovementMaxAngle]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Max movement to camera angle to face movement direction instead of camera direction. 0 = always, 180 = never (115 allows using strafe with quick turn around)</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadFaceMovementMaxAngle-92"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-093",
+      "wikitext_line": 93,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadFactionColor|GamePadFactionColor]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code><br><small>Enable setting GamePad's led color to match current faction</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadFactionColor-93"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-094",
+      "wikitext_line": 94,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadTouchCursorEnable|GamePadTouchCursorEnable]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code><br><small>Enable cursor control with GamePad's touch pad</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadTouchCursorEnable-94"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-095",
+      "wikitext_line": 95,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar GamePadVibrationStrength|GamePadVibrationStrength]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code><br><small>GamePad vibration effect strength</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadVibrationStrength-95"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-096",
+      "wikitext_line": 96,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar ResampleAlwaysSharpen|ResampleAlwaysSharpen]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code><br><small>Run sharpness pass, even if not using AMD FSR Upscale [0,1]</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-ResampleAlwaysSharpen-96"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-097",
+      "wikitext_line": 97,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar ResampleSharpness|ResampleSharpness]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0.2</span></code><br><small>FSR sharpness strength [0.0-2.0]. 0 is full strength. -1 to disable.</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-ResampleSharpness-97"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-098",
+      "wikitext_line": 98,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">0</span></code>, Scope: <span class=\"apitype\">Account</span><br><small>Seen the alert indicating chat has been disabled by default. (UK AADC)</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-seenRegionalChatDisabled-98"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-099",
+      "wikitext_line": 99,
+      "source_text": ": <span class=\"tttemplatelink\">[[CVar telemetryTargetPackage|telemetryTargetPackage]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">Blizzard.Telemetry.Wow_Mainline</span></code><br><small>The Package we want to send telemetry to e.g. Wow_Mainline or Wow_Classic</small></span>",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-telemetryTargetPackage-99"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-100",
+      "wikitext_line": 100,
+      "source_text": ": [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-FrameBufferCacheGpuFootprint-100"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-101",
+      "wikitext_line": 101,
+      "source_text": ": [[CVar GxFrameStats|GxFrameStats]]",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GxFrameStats-101"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-102",
+      "wikitext_line": 102,
+      "source_text": ": [[CVar seenSoMNotification|seenSoMNotification]]",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-seenSoMNotification-102"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-103",
+      "wikitext_line": 103,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-104",
+      "wikitext_line": 104,
+      "source_text": "| valign=\"top\" | <div style=\"margin-left:-1.5em\">",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-105",
+      "wikitext_line": 105,
+      "source_text": ": [[CVar GamePadFaceMovementThreshold|GamePadFaceMovementThreshold]]",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadFaceMovementThreshold-105"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-106",
+      "wikitext_line": 106,
+      "source_text": ": [[CVar GamePadForceXInput|GamePadForceXInput]]",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-GamePadForceXInput-106"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-107",
+      "wikitext_line": 107,
+      "source_text": ": [[CVar seenAADCAlert|seenAADCAlert]]",
+      "kind": "inventory-contract",
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "inventory_ids": [
+        "wt-cvars-seenAADCAlert-107"
+      ],
+      "note": "Literal publication/removal claim only. Linked signatures, payloads, state effects, validation, security and native equivalence UNPROVEN; retained CVar defaults/descriptions are source claims, not measured behavior."
+    },
+    {
+      "source_id": "p253-source-108",
+      "wikitext_line": 108,
+      "source_text": "</div>",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    },
+    {
+      "source_id": "p253-source-109",
+      "wikitext_line": 109,
+      "source_text": "|}",
+      "kind": "editorial-markup",
+      "status": "metadata-only",
+      "capabilities": [],
+      "inventory_ids": [],
+      "note": "Heading/table/HTML/comment syntax preserved verbatim; no runtime credit."
+    }
+  ],
+  "inventory": {
+    "enumerated_api_occurrences": 49,
+    "by_section": {
+      "global-api": 23,
+      "widgets": 2,
+      "events": 3,
+      "cvars": 21
+    },
+    "by_direction": {
+      "added": 42,
+      "removed": 7
+    },
+    "header_counts": [
+      {
+        "section": "global-api",
+        "direction": "added",
+        "header_count": 20,
+        "parsed_count": 20
+      },
+      {
+        "section": "global-api",
+        "direction": "removed",
+        "header_count": 3,
+        "parsed_count": 3
+      },
+      {
+        "section": "widgets",
+        "direction": "added",
+        "header_count": 2,
+        "parsed_count": 2
+      },
+      {
+        "section": "widgets",
+        "direction": "removed",
+        "header_count": 0,
+        "parsed_count": 0
+      },
+      {
+        "section": "events",
+        "direction": "added",
+        "header_count": 2,
+        "parsed_count": 2
+      },
+      {
+        "section": "events",
+        "direction": "removed",
+        "header_count": 1,
+        "parsed_count": 1
+      },
+      {
+        "section": "cvars",
+        "direction": "added",
+        "header_count": 18,
+        "parsed_count": 18
+      },
+      {
+        "section": "cvars",
+        "direction": "removed",
+        "header_count": 3,
+        "parsed_count": 3
+      }
+    ],
+    "explicit_signatures": 0,
+    "unspecified_callable_signatures": 25,
+    "cvar_defaults": 15,
+    "local_summary_contracts": 1,
+    "content_transclusions": 0,
+    "register_created": true
+  },
+  "contracts": [
+    {
+      "source_id": "wt-global-api-C_BehavioralMessaging.SendNotificationReceipt-21",
+      "symbol": "C_BehavioralMessaging.SendNotificationReceipt",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.FocusCommunityStreams-22",
+      "symbol": "C_Club.FocusCommunityStreams",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.UnfocusAllStreams-23",
+      "symbol": "C_Club.UnfocusAllStreams",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlocklistedAuras-24",
+      "symbol": "C_Commentator.SetBlocklistedAuras",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlocklistedCooldowns-25",
+      "symbol": "C_Commentator.SetBlocklistedCooldowns",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.ClearLedColor-26",
+      "symbol": "C_GamePad.ClearLedColor",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.GetLedColor-27",
+      "symbol": "C_GamePad.GetLedColor",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.SetLedColor-28",
+      "symbol": "C_GamePad.SetLedColor",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.SetVibration-29",
+      "symbol": "C_GamePad.SetVibration",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.StopVibration-30",
+      "symbol": "C_GamePad.StopVibration",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.IsLookingForGroupEnabled-31",
+      "symbol": "C_LFGList.IsLookingForGroupEnabled",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Seasons.GetActiveSeason-32",
+      "symbol": "C_Seasons.GetActiveSeason",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Seasons.HasActiveSeason-33",
+      "symbol": "C_Seasons.HasActiveSeason",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_SocialRestrictions.AcknowledgeRegionalChatDisabled-34",
+      "symbol": "C_SocialRestrictions.AcknowledgeRegionalChatDisabled",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_SocialRestrictions.IsChatDisabled-35",
+      "symbol": "C_SocialRestrictions.IsChatDisabled",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_SocialRestrictions.SetChatDisabled-36",
+      "symbol": "C_SocialRestrictions.SetChatDisabled",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-GetFirstBagBankSlotIndex-37",
+      "symbol": "GetFirstBagBankSlotIndex",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-securecallfunction-38",
+      "symbol": "securecallfunction",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-secureexecuterange-39",
+      "symbol": "secureexecuterange",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-TradeSkillOnlyShowMakeable-40",
+      "symbol": "TradeSkillOnlyShowMakeable",
+      "section": "global-api",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-AcknowledgeAADCAlert-43",
+      "symbol": "AcknowledgeAADCAlert",
+      "section": "global-api",
+      "direction": "removed",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlacklistedAuras-44",
+      "symbol": "C_Commentator.SetBlacklistedAuras",
+      "section": "global-api",
+      "direction": "removed",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlacklistedCooldowns-45",
+      "symbol": "C_Commentator.SetBlacklistedCooldowns",
+      "section": "global-api",
+      "direction": "removed",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-widgets-FontString:GetTextScale-56",
+      "symbol": "FontString:GetTextScale",
+      "section": "widgets",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-widgets-FontString:SetTextScale-57",
+      "symbol": "FontString:SetTextScale",
+      "section": "widgets",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-events-NOTIFY_CHAT_SUPPRESSED-70",
+      "symbol": "NOTIFY_CHAT_SUPPRESSED",
+      "section": "events",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-events-UNIT_HEAL_PREDICTION-71",
+      "symbol": "UNIT_HEAL_PREDICTION",
+      "section": "events",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-events-SHOW_AADC_ALERT-74",
+      "symbol": "SHOW_AADC_ALERT",
+      "section": "events",
+      "direction": "removed",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-DynamicRenderScaleMin-85",
+      "symbol": "DynamicRenderScaleMin",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0.333333",
+      "page_scope": null,
+      "page_description": "Lowest render scale DynamicRenderScale can use",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-DynamicRenderScale-86",
+      "symbol": "DynamicRenderScale",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0",
+      "page_scope": null,
+      "page_description": "Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-FrameBufferCacheForceNoHeaps-87",
+      "symbol": "FrameBufferCacheForceNoHeaps",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0",
+      "page_scope": null,
+      "page_description": "Disable use of texture heaps and force the fallback path",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadCameraLookMaxPitch-88",
+      "symbol": "GamePadCameraLookMaxPitch",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0",
+      "page_scope": null,
+      "page_description": "Max pitch 'Look' stick can adjust camera angle",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadCameraLookMaxYaw-89",
+      "symbol": "GamePadCameraLookMaxYaw",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0",
+      "page_scope": null,
+      "page_description": "Max yaw 'Look' stick can adjust camera angle",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadCursorForTargeting-90",
+      "symbol": "GamePadCursorForTargeting",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "1",
+      "page_scope": null,
+      "page_description": "Enable GamePad controlled cursor for spell targeting (1=enable, 2=start-at-target)",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovementMaxAngleCombat-91",
+      "symbol": "GamePadFaceMovementMaxAngleCombat",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "180",
+      "page_scope": null,
+      "page_description": "Max movement to camera angle to face movement direction instead of camera direction, in combat. 0 = always, 180 = never (115 allows using strafe with quick turn around)",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovementMaxAngle-92",
+      "symbol": "GamePadFaceMovementMaxAngle",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0",
+      "page_scope": null,
+      "page_description": "Max movement to camera angle to face movement direction instead of camera direction. 0 = always, 180 = never (115 allows using strafe with quick turn around)",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadFactionColor-93",
+      "symbol": "GamePadFactionColor",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "1",
+      "page_scope": null,
+      "page_description": "Enable setting GamePad's led color to match current faction",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadTouchCursorEnable-94",
+      "symbol": "GamePadTouchCursorEnable",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "1",
+      "page_scope": null,
+      "page_description": "Enable cursor control with GamePad's touch pad",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadVibrationStrength-95",
+      "symbol": "GamePadVibrationStrength",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "1",
+      "page_scope": null,
+      "page_description": "GamePad vibration effect strength",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-ResampleAlwaysSharpen-96",
+      "symbol": "ResampleAlwaysSharpen",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0",
+      "page_scope": null,
+      "page_description": "Run sharpness pass, even if not using AMD FSR Upscale [0,1]",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-ResampleSharpness-97",
+      "symbol": "ResampleSharpness",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0.2",
+      "page_scope": null,
+      "page_description": "FSR sharpness strength [0.0-2.0]. 0 is full strength. -1 to disable.",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-seenRegionalChatDisabled-98",
+      "symbol": "seenRegionalChatDisabled",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "0",
+      "page_scope": "Account",
+      "page_description": "Seen the alert indicating chat has been disabled by default. (UK AADC)",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-telemetryTargetPackage-99",
+      "symbol": "telemetryTargetPackage",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": "Blizzard.Telemetry.Wow_Mainline",
+      "page_scope": null,
+      "page_description": "The Package we want to send telemetry to e.g. Wow_Mainline or Wow_Classic",
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-FrameBufferCacheGpuFootprint-100",
+      "symbol": "FrameBufferCacheGpuFootprint",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GxFrameStats-101",
+      "symbol": "GxFrameStats",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-seenSoMNotification-102",
+      "symbol": "seenSoMNotification",
+      "section": "cvars",
+      "direction": "added",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovementThreshold-105",
+      "symbol": "GamePadFaceMovementThreshold",
+      "section": "cvars",
+      "direction": "removed",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-GamePadForceXInput-106",
+      "symbol": "GamePadForceXInput",
+      "section": "cvars",
+      "direction": "removed",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "wt-cvars-seenAADCAlert-107",
+      "symbol": "seenAADCAlert",
+      "section": "cvars",
+      "direction": "removed",
+      "status": "UNPROVEN",
+      "signature": null,
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "page_default": null,
+      "page_scope": null,
+      "page_description": null,
+      "state_transitions": null,
+      "validation": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Literal source claim only; linked documentation not expanded; callable signatures, event payloads, operational CVar state/default enforcement, security and native contracts UNPROVEN."
+    },
+    {
+      "source_id": "p253-source-004",
+      "kind": "template-inheritance-removal",
+      "templates": [
+        "SharedTooltipTemplate",
+        "GameTooltipTemplate"
+      ],
+      "removed_parent": "BackdropTemplate",
+      "status": "UNPROVEN",
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "capabilities": [],
+      "limit": "Exact summary claim retained. Actual template ancestry, inherited API/backdrop behavior and native equivalence UNPROVEN."
+    }
+  ],
+  "linked_contracts": [
+    {
+      "wikitext_line": 8,
+      "url": "https://github.com/Gethe/wow-ui-source/commit/8b868aab5774a5e8adbf3ba35260ec93a28ac600",
+      "label": "wow-ui-source",
+      "status": "UNPROVEN",
+      "expanded": false,
+      "limit": "Linked diff/deprecated/community contracts not pinned or expanded; identities, signatures, state/security/native effects UNPROVEN."
+    },
+    {
+      "wikitext_line": 8,
+      "url": "https://github.com/Ketho/BlizzardInterfaceResources/commit/4f90d395c056b689b1a003e868c0df1a0dfeb6b2",
+      "label": "BlizzardInterfaceResources",
+      "status": "UNPROVEN",
+      "expanded": false,
+      "limit": "Linked diff/deprecated/community contracts not pinned or expanded; identities, signatures, state/security/native effects UNPROVEN."
+    },
+    {
+      "wikitext_line": 9,
+      "url": "https://github.com/Gethe/wow-ui-source/blob/classic/Interface/AddOns/Blizzard_Deprecated/Deprecated_2_5_3.lua",
+      "label": "Deprecated_2_5_3.lua",
+      "status": "UNPROVEN",
+      "expanded": false,
+      "limit": "Linked diff/deprecated/community contracts not pinned or expanded; identities, signatures, state/security/native effects UNPROVEN."
+    },
+    {
+      "wikitext_line": 10,
+      "url": "https://github.com/Stanzilla/WoWUIBugs/wiki/2.5.3-Consolidated-UI-Changes",
+      "label": "2.5.3 Consolidated UI Changes",
+      "status": "UNPROVEN",
+      "expanded": false,
+      "limit": "Linked diff/deprecated/community contracts not pinned or expanded; identities, signatures, state/security/native effects UNPROVEN."
+    }
+  ]
+}

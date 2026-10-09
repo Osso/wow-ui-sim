@@ -17,6 +17,10 @@ Created [bounded audit](investigations/patch-2-5-5-api-audit.md) and own spec/le
 
 ## [2026-10-09] proof status | Retail 3.3.5/3.3.3 and Wrath 3.4.2 follow-up
 
+## [2026-10-09] investigation | Patch 2.5.3 TBC Classic SOURCE contracts
+
+[Audit](investigations/patch-2-5-3-api-audit.md): frozen 53568/523812, literal TOC 20503; 103 nonblank rows, 49 inventory occurrences, eight headers, one summary and 25 unspecified callable signatures. All 50 substantive contracts UNPROVEN. Frozen configuration Anniversary11507 is not TBC205xx/native or unsupported-API proof. Only pending same-history 2.5.4/2.5.5/2.5.6 successors; own frozen inputs independent of sibling. Source-only RED/GREEN/replay proof ledger; main owns integration/native/final gates.
+
 Canonical `2b0a8caef`: [3.3.5](investigations/patch-3-3-5-api-audit.md#integrated-proof-status--2026-10-09) / [3.3.3](investigations/patch-3-3-3-api-audit.md#integrated-proof-status--2026-10-09) link independent 221 fresh historical/default+opt-in CLI PASS and current publication receipts. Original 25/22 seals unchanged; 124 rows 80/44 and 36 rows 25/11 unchanged. Actual successor inputs at `81ee0471d` / `7c8b423fb` have zero tuple and bare-symbol overlap. Historical headers/signatures/semantic/native gaps untouched; no model closure. [3.4.2 follow-up](investigations/patch-3-4-2-api-audit.md#integrated-proof-status--2026-10-09) retains aggregate compiler RED and whole-file Wrath guard boundary; at `f1adc06a5` retail prefork publication PASS 72/72, Mists `--tests` check exit 0, six inherited iced manifest warnings only/no non-vendor warnings. No runtime change or fresh 6/6 Wrath rerun. Verifier 224 review pending; main portable gate at `399263988` RUNNING, latest CI pending, old Garrison/prefork and inherited integration/lib failures unresolved. No parent/native/full handoff acceptance. Docs-only; no tests/gates run; historical captured claims/receipts unchanged.
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 

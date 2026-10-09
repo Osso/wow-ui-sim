@@ -1,0 +1,26 @@
+{
+  "schema": "bounded-source-proof/v1",
+  "patch": "2.5.3",
+  "scope": [
+    "own frozen source/contract/configured-interface accounting",
+    "own serialized seal/tamper/archive replay"
+  ],
+  "proof_ledger": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p253-source",
+      "phase": "RED",
+      "revision": "d0725eb00",
+      "exit": 1,
+      "tests": 7,
+      "result": "Seven expected assertions: own source ledger absent. No module/import error.",
+      "log": "red.log",
+      "invalidated_by": "Implementation adds ledger; RED retained as development history."
+    }
+  ],
+  "excluded_gates": "No runtime/profile/shared classifier/shim/native probes; no broad/check/lint/profile/startup/full/final gates; no delegation/model CLIs/ops/push/merge/deploy."
+}

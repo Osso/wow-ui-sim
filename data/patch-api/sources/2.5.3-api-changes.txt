@@ -1,0 +1,12 @@
+Patch 2.5.3 API changes
+
+== Summary ==
+* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate.
+
+== Resources ==
+* TOC: 20503
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Deprecated_2_5_3.lua
+* Community patch notes: 2.5.3 Consolidated UI Changes
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+

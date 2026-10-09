@@ -1,0 +1,469 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "2.5.3",
+  "client_line": "tbc-classic",
+  "source": {
+    "path": "data/patch-api/sources/2.5.3-api-changes.wikitext",
+    "revid": 523812,
+    "sha256": "f922ba1f9ee5e22f6a6c5a70bf8b5fe614b76a2a993ff5ee68149250198a2ca1"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 20,
+      "parsed_count": 20
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 18,
+      "parsed_count": 18
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_BehavioralMessaging.SendNotificationReceipt-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BehavioralMessaging.SendNotificationReceipt",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-C_Club.FocusCommunityStreams-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.FocusCommunityStreams",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_Club.UnfocusAllStreams-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.UnfocusAllStreams",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlocklistedAuras-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Commentator.SetBlocklistedAuras",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlocklistedCooldowns-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Commentator.SetBlocklistedCooldowns",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_GamePad.ClearLedColor-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.ClearLedColor",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_GamePad.GetLedColor-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.GetLedColor",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_GamePad.SetLedColor-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.SetLedColor",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_GamePad.SetVibration-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.SetVibration",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_GamePad.StopVibration-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.StopVibration",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_LFGList.IsLookingForGroupEnabled-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.IsLookingForGroupEnabled",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_Seasons.GetActiveSeason-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Seasons.GetActiveSeason",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_Seasons.HasActiveSeason-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Seasons.HasActiveSeason",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_SocialRestrictions.AcknowledgeRegionalChatDisabled-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SocialRestrictions.AcknowledgeRegionalChatDisabled",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_SocialRestrictions.IsChatDisabled-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SocialRestrictions.IsChatDisabled",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_SocialRestrictions.SetChatDisabled-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SocialRestrictions.SetChatDisabled",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-GetFirstBagBankSlotIndex-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetFirstBagBankSlotIndex",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-securecallfunction-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "securecallfunction",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-secureexecuterange-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "secureexecuterange",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-TradeSkillOnlyShowMakeable-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TradeSkillOnlyShowMakeable",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-AcknowledgeAADCAlert-43",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "AcknowledgeAADCAlert",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlacklistedAuras-44",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Commentator.SetBlacklistedAuras",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlacklistedCooldowns-45",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Commentator.SetBlacklistedCooldowns",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-widgets-FontString:GetTextScale-56",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:GetTextScale",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-widgets-FontString:SetTextScale-57",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:SetTextScale",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-events-NOTIFY_CHAT_SUPPRESSED-70",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NOTIFY_CHAT_SUPPRESSED",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-events-UNIT_HEAL_PREDICTION-71",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_HEAL_PREDICTION",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-events-SHOW_AADC_ALERT-74",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SHOW_AADC_ALERT",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-cvars-DynamicRenderScaleMin-85",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DynamicRenderScaleMin",
+      "annotation": "",
+      "wikitext_line": 85,
+      "page_default": "0.333333"
+    },
+    {
+      "id": "wt-cvars-DynamicRenderScale-86",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DynamicRenderScale",
+      "annotation": "",
+      "wikitext_line": 86,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-FrameBufferCacheForceNoHeaps-87",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "FrameBufferCacheForceNoHeaps",
+      "annotation": "",
+      "wikitext_line": 87,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadCameraLookMaxPitch-88",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadCameraLookMaxPitch",
+      "annotation": "",
+      "wikitext_line": 88,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadCameraLookMaxYaw-89",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadCameraLookMaxYaw",
+      "annotation": "",
+      "wikitext_line": 89,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadCursorForTargeting-90",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadCursorForTargeting",
+      "annotation": "",
+      "wikitext_line": 90,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GamePadFaceMovementMaxAngleCombat-91",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadFaceMovementMaxAngleCombat",
+      "annotation": "",
+      "wikitext_line": 91,
+      "page_default": "180"
+    },
+    {
+      "id": "wt-cvars-GamePadFaceMovementMaxAngle-92",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadFaceMovementMaxAngle",
+      "annotation": "",
+      "wikitext_line": 92,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadFactionColor-93",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadFactionColor",
+      "annotation": "",
+      "wikitext_line": 93,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GamePadTouchCursorEnable-94",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadTouchCursorEnable",
+      "annotation": "",
+      "wikitext_line": 94,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GamePadVibrationStrength-95",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadVibrationStrength",
+      "annotation": "",
+      "wikitext_line": 95,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-ResampleAlwaysSharpen-96",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ResampleAlwaysSharpen",
+      "annotation": "",
+      "wikitext_line": 96,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-ResampleSharpness-97",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ResampleSharpness",
+      "annotation": "",
+      "wikitext_line": 97,
+      "page_default": "0.2"
+    },
+    {
+      "id": "wt-cvars-seenRegionalChatDisabled-98",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenRegionalChatDisabled",
+      "annotation": "",
+      "wikitext_line": 98,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-telemetryTargetPackage-99",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "telemetryTargetPackage",
+      "annotation": "",
+      "wikitext_line": 99,
+      "page_default": "Blizzard.Telemetry.Wow_Mainline"
+    },
+    {
+      "id": "wt-cvars-FrameBufferCacheGpuFootprint-100",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "FrameBufferCacheGpuFootprint",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-cvars-GxFrameStats-101",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxFrameStats",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-cvars-seenSoMNotification-102",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenSoMNotification",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-cvars-GamePadFaceMovementThreshold-105",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GamePadFaceMovementThreshold",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-cvars-GamePadForceXInput-106",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GamePadForceXInput",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-cvars-seenAADCAlert-107",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "seenAADCAlert",
+      "annotation": "",
+      "wikitext_line": 107
+    }
+  ]
+}
