@@ -8,7 +8,7 @@ Account for frozen Warcraft Wiki page `355030` / revision `3422177`, TOC `30402`
 - [x] Preserve all literal inventory occurrences, eight numerical headers, CVar default/scope/category/description fields, and every nonblank source line; derive counts from serialized inputs.
 - [x] Reject missing/altered inventory or prose, invented signatures or publication/behavior credit, wrong profiles and foreign successors.
 - [x] Keep supported Wrath profile / configured interface separate from historical TOC, documentation-only cache observation, runtime and native proof.
-- [ ] Replay sealed historical own inputs independently of current tools, caches, global registers or original Git objects; reject serialized source and proof-log tampering.
+- [x] Replay sealed historical own inputs independently of current tools, caches, global registers or original Git objects; reject serialized source and proof-log tampering.
 
 ## How it works
 

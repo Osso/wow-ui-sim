@@ -1,0 +1,18 @@
+[
+  {
+    "target": "data/patch-api/sources/3.4.2-page-coverage.json",
+    "exit_code": 1,
+    "expected_rejection": "seal: data/patch-api/sources/3.4.2-page-coverage.json",
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py\", line 185, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py\", line 180, in main\n    sealed_inputs = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py\", line 175, in check_seals\n    assert digest((ROOT / path).read_bytes()) == expected, f'seal: {path}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: data/patch-api/sources/3.4.2-page-coverage.json\n",
+    "restored_sha256": "41d65a8488c65cc122bcb63c3b94ab1ccab6fbdfc863286c03e5ac6c14c7b254"
+  },
+  {
+    "target": "data/patch-api/evidence/3.4.2-session-2026-10-09/green.log",
+    "exit_code": 1,
+    "expected_rejection": "seal: data/patch-api/evidence/3.4.2-session-2026-10-09/green.log",
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py\", line 185, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py\", line 180, in main\n    sealed_inputs = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p342-source/data/patch-api/evidence/3.4.2-session-2026-10-09/validate.py\", line 175, in check_seals\n    assert digest((ROOT / path).read_bytes()) == expected, f'seal: {path}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: data/patch-api/evidence/3.4.2-session-2026-10-09/green.log\n",
+    "restored_sha256": "943bfd84cf31ecbbd74baf7c7e37ed10f8e8ec14856f6c30dea13da136475926"
+  }
+]

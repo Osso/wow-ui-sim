@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 3.4.2 Wrath Classic source audit
 
-[Audit](investigations/patch-3-4-2-api-audit.md): revision 3422177 / TOC 30402; 155 inventory occurrences, two prose limits, 51 metadata/context rows. All eight headers match; 109 added/46 removed. Separate Wrath source inventory preserves CVar metadata; no runtime publication/native credit or retirements. Actual unmerged 3.4.3 successor names no members; integration queued after it. Supported Wrath 38001 and 42 documentation-only cache files are not parity proof. Own serialized source fixtures 10/10; replay/tamper proof pending. Coordinator owns runtime harness/final gates.
+[Audit](investigations/patch-3-4-2-api-audit.md): revision 3422177 / TOC 30402; 155 inventory occurrences, two prose limits, 51 metadata/context rows. All eight headers match; 109 added/46 removed. Separate Wrath source inventory preserves CVar metadata; no runtime publication/native credit or retirements. Actual unmerged 3.4.3 successor names no members; integration queued after it. Supported Wrath 38001 and 42 documentation-only cache files are not parity proof. Own serialized source fixtures 10/10; historical replay/extraction pass, both disk tamper seals reject and original bytes restored. Compact 23-input evidence. Coordinator owns runtime harness/final gates.
 
 ## [2026-10-09] investigation | Patch 4.3.4 bounded API audit
 
