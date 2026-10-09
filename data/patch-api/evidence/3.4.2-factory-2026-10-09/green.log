@@ -1,0 +1,125 @@
+
+running 6 tests
+test bare_wrath_factories_probe_literal_widget_owners ... ok
+test cvar_defaults_remain_separate_from_publication ... ok
+test foreign_successors_do_not_remove_wrath_publication ... ok
+test patch_3_4_2_exact_factory_publication_gaps ... ok
+test wrath_event_acceptance_is_nondiscriminating ... ok
+test wrath_factory_rejects_retail_inventory - should panic ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p342-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 23.47s
+     Running tests/patch_3_4_2_factory.rs (target/debug/deps/patch_3_4_2_factory-2c733b0057bc895f)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.10ms
+[  0.002s] [Startup] rilua VM created in 107.15µs
+[  0.002s] [Startup] builtin frames initialized in 85.78µs
+[  0.002s] [Startup] template registry cleared in 4.42µs
+[  0.002s] [Startup] intrinsic templates registered in 12.84µs
+[  0.002s] [Startup] initial app_data lua handle installed in 3.22µs
+[  0.127s] [Startup] init_lua_state complete in 124.79ms
+[  0.127s] [Startup] final app_data lua handle installed in 411.00ns
+[  0.127s] [Startup] initial screen globals installed in 220.61µs
+[  0.127s] [Startup] WowLuaEnv::new complete
+wt-widgets-Region:EnableMouseMotion-126: ("object-method", "Region; lookup=function", true, None, None)
+wt-widgets-Region:IsMouseMotionFocus-127: ("object-method", "Region; lookup=function", true, None, None)
+wt-widgets-AnimationGroup:GetElapsed-128: ("object-method", "AnimationGroup; lookup=function", true, None, None)
+wt-widgets-EditBox:OnUiMapChanged-129: ("object-method", "EditBox; lookup=nil", false, None, None)
+wt-widgets-EditBox:GetFogOfWarBackgroundAtlas-130: ("object-method", "EditBox; lookup=function", true, None, None)
+wt-widgets-EditBox:GetFogOfWarBackgroundTexture-131: ("object-method", "EditBox; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:GetFogOfWarMaskAtlas-132: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:GetFogOfWarMaskTexture-133: ("object-method", "FogOfWarFrame; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:GetMaskScalar-134: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:GetUiMapID-135: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundAtlas-136: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundTexture-137: ("object-method", "FogOfWarFrame; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarMaskAtlas-138: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarMaskTexture-139: ("object-method", "FogOfWarFrame; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:SetMaskScalar-140: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetUiMapID-141: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-GameTooltip:SetQuestLogRewardSpell-144: ("object-method", "GameTooltip; lookup=nil", true, None, None)
+wt-widgets-GameTooltip:SetQuestRewardSpell-145: ("object-method", "GameTooltip; lookup=nil", true, None, None)
+[  0.141s] [Startup] WowLuaEnv::new begin
+[  0.143s] [Startup] SimState::default complete in 1.62ms
+[  0.143s] [Startup] rilua VM created in 74.74µs
+[  0.143s] [Startup] builtin frames initialized in 28.96µs
+[  0.143s] [Startup] template registry cleared in 4.58µs
+[  0.143s] [Startup] intrinsic templates registered in 6.40µs
+[  0.143s] [Startup] initial app_data lua handle installed in 321.00ns
+[  0.214s] [Startup] init_lua_state complete in 70.70ms
+[  0.214s] [Startup] final app_data lua handle installed in 231.00ns
+[  0.214s] [Startup] initial screen globals installed in 83.96µs
+[  0.214s] [Startup] WowLuaEnv::new complete
+[  0.228s] [Startup] WowLuaEnv::new begin
+[  0.230s] [Startup] SimState::default complete in 1.71ms
+[  0.230s] [Startup] rilua VM created in 85.05µs
+[  0.230s] [Startup] builtin frames initialized in 42.04µs
+[  0.230s] [Startup] template registry cleared in 4.74µs
+[  0.230s] [Startup] intrinsic templates registered in 8.90µs
+[  0.230s] [Startup] initial app_data lua handle installed in 300.00ns
+[  0.334s] [Startup] init_lua_state complete in 104.31ms
+[  0.334s] [Startup] final app_data lua handle installed in 391.00ns
+[  0.334s] [Startup] initial screen globals installed in 212.32µs
+[  0.334s] [Startup] WowLuaEnv::new complete
+[  0.341s] [Startup] WowLuaEnv::new begin
+[  0.343s] [Startup] SimState::default complete in 1.57ms
+[  0.343s] [Startup] rilua VM created in 80.57µs
+[  0.343s] [Startup] builtin frames initialized in 34.03µs
+[  0.343s] [Startup] template registry cleared in 4.80µs
+[  0.343s] [Startup] intrinsic templates registered in 6.06µs
+[  0.343s] [Startup] initial app_data lua handle installed in 591.00ns
+[  0.420s] [Startup] init_lua_state complete in 77.16ms
+[  0.420s] [Startup] final app_data lua handle installed in 260.00ns
+[  0.421s] [Startup] initial screen globals installed in 98.93µs
+[  0.421s] [Startup] WowLuaEnv::new complete
+CVar default mismatch wt-cvars-EnableAirlockLogging-178: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-friendInvitesCollapsed_WowLabs-180: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-guildAnnounceMemberDeaths-182: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-GxFrameEndMode-183: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-NamePlateClassificationScale-185: page=Some("1.0"), observed=None
+CVar default mismatch wt-cvars-partyInvitesCollapsed_WowLabs-186: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-pendingInviteInfoShown_WowLabs-187: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-TargetAutoLock-191: page=Some("1"), observed=Some("0")
+CVar default mismatch wt-cvars-vrsValarEnvLuma-192: page=Some("0.05"), observed=None
+CVar default mismatch wt-cvars-vrsValarK-193: page=Some("2.13"), observed=None
+CVar default mismatch wt-cvars-vrsValarSensitivityThreshold-194: page=Some("0.31"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseAsyncCompute-195: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseMotionVectors-196: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseWeberFechner-197: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarWeberFechnerConstant-198: page=Some("1.0"), observed=None
+[  0.476s] [Startup] WowLuaEnv::new begin
+[  0.477s] [Startup] SimState::default complete in 1.57ms
+[  0.477s] [Startup] rilua VM created in 81.53µs
+[  0.477s] [Startup] builtin frames initialized in 39.16µs
+[  0.477s] [Startup] template registry cleared in 4.19µs
+[  0.477s] [Startup] intrinsic templates registered in 6.59µs
+[  0.477s] [Startup] initial app_data lua handle installed in 340.00ns
+[  0.558s] [Startup] init_lua_state complete in 80.15ms
+[  0.558s] [Startup] final app_data lua handle installed in 341.00ns
+[  0.558s] [Startup] initial screen globals installed in 96.97µs
+[  0.558s] [Startup] WowLuaEnv::new complete
+[  0.563s] [Startup] WowLuaEnv::new begin
+[  0.565s] [Startup] SimState::default complete in 1.95ms
+[  0.565s] [Startup] rilua VM created in 83.34µs
+[  0.565s] [Startup] builtin frames initialized in 40.13µs
+[  0.565s] [Startup] template registry cleared in 4.77µs
+[  0.565s] [Startup] intrinsic templates registered in 7.38µs
+[  0.565s] [Startup] initial app_data lua handle installed in 501.00ns
+[  0.645s] [Startup] init_lua_state complete in 79.69ms
+[  0.645s] [Startup] final app_data lua handle installed in 181.00ns
+[  0.645s] [Startup] initial screen globals installed in 100.62µs
+[  0.645s] [Startup] WowLuaEnv::new complete
+
+thread 'wrath_factory_rejects_retail_inventory' (1987038) panicked at tests/common/publication_sweep.rs:530:5:
+register client line does not match active profile
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

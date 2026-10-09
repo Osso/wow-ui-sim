@@ -1,0 +1,116 @@
+
+running 4 tests
+test bare_wrath_factories_probe_literal_widget_owners ... ok
+test foreign_successors_do_not_remove_wrath_publication ... FAILED
+test patch_3_4_2_exact_factory_publication_gaps ... FAILED
+test wrath_factory_rejects_retail_inventory - should panic ... ok
+
+failures:
+
+failures:
+    foreign_successors_do_not_remove_wrath_publication
+    patch_3_4_2_exact_factory_publication_gaps
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.01s
+
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p342-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 34.31s
+     Running tests/patch_3_4_2_factory.rs (target/debug/deps/patch_3_4_2_factory-2c733b0057bc895f)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 2.59ms
+[  0.003s] [Startup] rilua VM created in 135.88µs
+[  0.003s] [Startup] builtin frames initialized in 118.78µs
+[  0.003s] [Startup] template registry cleared in 8.50µs
+[  0.003s] [Startup] intrinsic templates registered in 10.40µs
+[  0.003s] [Startup] initial app_data lua handle installed in 772.00ns
+[  0.359s] [Startup] init_lua_state complete in 355.84ms
+[  0.359s] [Startup] final app_data lua handle installed in 922.00ns
+[  0.359s] [Startup] initial screen globals installed in 316.50µs
+[  0.359s] [Startup] WowLuaEnv::new complete
+wt-widgets-Region:EnableMouseMotion-126: ("object-method", "Region; lookup=function", true, None, None)
+wt-widgets-Region:IsMouseMotionFocus-127: ("object-method", "Region; lookup=function", true, None, None)
+wt-widgets-AnimationGroup:GetElapsed-128: ("object-method", "AnimationGroup; lookup=function", true, None, None)
+wt-widgets-EditBox:OnUiMapChanged-129: ("object-method", "EditBox; lookup=nil", false, None, None)
+wt-widgets-EditBox:GetFogOfWarBackgroundAtlas-130: ("object-method", "EditBox; lookup=function", true, None, None)
+wt-widgets-EditBox:GetFogOfWarBackgroundTexture-131: ("object-method", "EditBox; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:GetFogOfWarMaskAtlas-132: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:GetFogOfWarMaskTexture-133: ("object-method", "FogOfWarFrame; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:GetMaskScalar-134: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:GetUiMapID-135: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundAtlas-136: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundTexture-137: ("object-method", "FogOfWarFrame; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarMaskAtlas-138: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetFogOfWarMaskTexture-139: ("object-method", "FogOfWarFrame; lookup=nil", false, None, None)
+wt-widgets-FogOfWarFrame:SetMaskScalar-140: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-FogOfWarFrame:SetUiMapID-141: ("object-method", "FogOfWarFrame; lookup=function", true, None, None)
+wt-widgets-GameTooltip:SetQuestLogRewardSpell-144: ("object-method", "GameTooltip; lookup=nil", true, None, None)
+wt-widgets-GameTooltip:SetQuestRewardSpell-145: ("object-method", "GameTooltip; lookup=nil", true, None, None)
+[  0.392s] [Startup] WowLuaEnv::new begin
+[  0.396s] [Startup] SimState::default complete in 3.53ms
+[  0.396s] [Startup] rilua VM created in 162.66µs
+[  0.396s] [Startup] builtin frames initialized in 140.10µs
+[  0.396s] [Startup] template registry cleared in 11.99µs
+[  0.396s] [Startup] intrinsic templates registered in 17.43µs
+[  0.396s] [Startup] initial app_data lua handle installed in 1.61µs
+[  0.565s] [Startup] init_lua_state complete in 168.88ms
+[  0.565s] [Startup] final app_data lua handle installed in 922.00ns
+[  0.565s] [Startup] initial screen globals installed in 209.92µs
+[  0.565s] [Startup] WowLuaEnv::new complete
+
+thread 'foreign_successors_do_not_remove_wrath_publication' (1961538) panicked at tests/patch_3_4_2_factory.rs:63:70:
+called `Result::unwrap()` on an `Err` value: Lua(Syntax(SyntaxError { message: "'end' expected (to close 'function' at line 1) near '='", source: "=(string)", line: 2, raw_message: None }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.581s] [Startup] WowLuaEnv::new begin
+[  0.584s] [Startup] SimState::default complete in 2.60ms
+[  0.584s] [Startup] rilua VM created in 171.37µs
+[  0.584s] [Startup] builtin frames initialized in 88.98µs
+[  0.584s] [Startup] template registry cleared in 8.38µs
+[  0.584s] [Startup] intrinsic templates registered in 15.80µs
+[  0.584s] [Startup] initial app_data lua handle installed in 1.01µs
+[  0.729s] [Startup] init_lua_state complete in 144.56ms
+[  0.729s] [Startup] final app_data lua handle installed in 611.00ns
+[  0.729s] [Startup] initial screen globals installed in 165.71µs
+[  0.729s] [Startup] WowLuaEnv::new complete
+CVar default mismatch wt-cvars-EnableAirlockLogging-178: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-friendInvitesCollapsed_WowLabs-180: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-guildAnnounceMemberDeaths-182: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-GxFrameEndMode-183: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-NamePlateClassificationScale-185: page=Some("1.0"), observed=None
+CVar default mismatch wt-cvars-partyInvitesCollapsed_WowLabs-186: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-pendingInviteInfoShown_WowLabs-187: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-TargetAutoLock-191: page=Some("1"), observed=Some("0")
+CVar default mismatch wt-cvars-vrsValarEnvLuma-192: page=Some("0.05"), observed=None
+CVar default mismatch wt-cvars-vrsValarK-193: page=Some("2.13"), observed=None
+CVar default mismatch wt-cvars-vrsValarSensitivityThreshold-194: page=Some("0.31"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseAsyncCompute-195: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseMotionVectors-196: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseWeberFechner-197: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarWeberFechnerConstant-198: page=Some("1.0"), observed=None
+
+thread 'patch_3_4_2_exact_factory_publication_gaps' (1961544) panicked at tests/common/publication_sweep.rs:559:5:
+assertion `left == right` failed: new gaps: ["wt-cvars-EnableAirlockLogging-178", "wt-cvars-GxFrameEndMode-183", "wt-cvars-NamePlateClassificationScale-185", "wt-cvars-friendInvitesCollapsed_WowLabs-180", "wt-cvars-guildAnnounceMemberDeaths-182", "wt-cvars-partyInvitesCollapsed_WowLabs-186", "wt-cvars-pendingInviteInfoShown_WowLabs-187", "wt-cvars-vrsValarEnvLuma-192", "wt-cvars-vrsValarK-193", "wt-cvars-vrsValarSensitivityThreshold-194", "wt-cvars-vrsValarUseAsyncCompute-195", "wt-cvars-vrsValarUseMotionVectors-196", "wt-cvars-vrsValarUseWeberFechner-197", "wt-cvars-vrsValarWeberFechnerConstant-198", "wt-events-SOCIAL_ITEM_RECEIVED-162", "wt-events-TWITTER_LINK_RESULT-163", "wt-events-TWITTER_POST_RESULT-164", "wt-events-TWITTER_STATUS_UPDATE-165", "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-20", "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-28", "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-29", "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-30", "wt-global-api-C_CameraDefaults.GetCameraFOVDefaults-32", "wt-global-api-C_CharacterServices.AssignPFCDistribution-86", "wt-global-api-C_CharacterServices.AssignRaceOrFactionChangeDistribution-34", "wt-global-api-C_ChatInfo.GetChatLineSenderGUID-35", "wt-global-api-C_ChatInfo.GetChatLineSenderName-36", "wt-global-api-C_ChatInfo.IsChatLineCensored-38", "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByID-40", "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByTag-41", "wt-global-api-C_ConsoleScriptCollection.GetElements-42", "wt-global-api-C_ConsoleScriptCollection.GetScriptData-43", "wt-global-api-C_GenericWidgetDisplay.Acknowledge-45", "wt-global-api-C_GenericWidgetDisplay.Close-46", "wt-global-api-C_GossipInfo.SelectOptionByIndex-47", "wt-global-api-C_GuildInfo.MemberExistsByName-48", "wt-global-api-C_PlayerInfo.CanUseItem-49", "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-51", "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-52", "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-53", "wt-global-api-C_QuestInfoSystem.GetQuestShouldToastCompletion-54", "wt-global-api-C_QuestInfoSystem.HasQuestRewardSpells-55", "wt-global-api-C_Social.GetLastItem-87", "wt-global-api-C_Social.GetLastScreenshot-88", "wt-global-api-C_Social.GetNumCharactersPerMedia-89", "wt-global-api-C_Social.GetScreenshotByIndex-90", "wt-global-api-C_Social.GetTweetLength-91", "wt-global-api-C_Social.IsSocialEnabled-92", "wt-global-api-C_Social.RegisterSocialBrowser-93", "wt-global-api-C_Social.SetTextureToScreenshot-94", "wt-global-api-C_Social.TwitterCheckStatus-95", "wt-global-api-C_Social.TwitterConnect-96", "wt-global-api-C_Social.TwitterDisconnect-97", "wt-global-api-C_Social.TwitterGetMSTillCanPost-98", "wt-global-api-C_Social.TwitterPostAchievement-99", "wt-global-api-C_Social.TwitterPostMessage-100", "wt-global-api-C_Social.TwitterPostScreenshot-101", "wt-global-api-C_SpectatingUI.IsSpectating-56", "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-57", "wt-global-api-C_Texture.ClearTitleIconTexture-58", "wt-global-api-C_Texture.GetTitleIconTexture-59", "wt-global-api-C_Texture.IsTitleIconTextureReady-60", "wt-global-api-C_Texture.SetTitleIconTexture-61", "wt-global-api-C_Traits.GenerateInspectImportString-62", "wt-global-api-C_Traits.IsReadyForCommit-64", "wt-global-api-C_Traits.ResetTreeByCurrency-65", "wt-global-api-GetAddOnMetadata-103", "wt-global-api-GetCurrentGraphicsAPI-67", "wt-global-api-GetEquivalentDynamicDifficultyID-69", "wt-global-api-GetGraphicsCVarValueForQualityLevel-72", "wt-global-api-GetSoundEntryCount-74", "wt-global-api-IsGraphicsCVarValueSupported-75", "wt-global-api-IsGraphicsSettingValueSupported-76", "wt-global-api-IsUsingGamepad-77", "wt-global-api-IsUsingMouse-78", "wt-global-api-QuestFlagsPVP-80", "wt-global-api-StripHyperlinks-81", "wt-global-api-pcallwithenv-79", "wt-widgets-EditBox:GetFogOfWarBackgroundTexture-131", "wt-widgets-EditBox:OnUiMapChanged-129", "wt-widgets-FogOfWarFrame:GetFogOfWarMaskTexture-133", "wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundTexture-137", "wt-widgets-FogOfWarFrame:SetFogOfWarMaskTexture-139"]; resolved/stale gaps: []
+  left: {"wt-cvars-EnableAirlockLogging-178", "wt-cvars-GxFrameEndMode-183", "wt-cvars-NamePlateClassificationScale-185", "wt-cvars-friendInvitesCollapsed_WowLabs-180", "wt-cvars-guildAnnounceMemberDeaths-182", "wt-cvars-partyInvitesCollapsed_WowLabs-186", "wt-cvars-pendingInviteInfoShown_WowLabs-187", "wt-cvars-vrsValarEnvLuma-192", "wt-cvars-vrsValarK-193", "wt-cvars-vrsValarSensitivityThreshold-194", "wt-cvars-vrsValarUseAsyncCompute-195", "wt-cvars-vrsValarUseMotionVectors-196", "wt-cvars-vrsValarUseWeberFechner-197", "wt-cvars-vrsValarWeberFechnerConstant-198", "wt-events-SOCIAL_ITEM_RECEIVED-162", "wt-events-TWITTER_LINK_RESULT-163", "wt-events-TWITTER_POST_RESULT-164", "wt-events-TWITTER_STATUS_UPDATE-165", "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-20", "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-28", "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-29", "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-30", "wt-global-api-C_CameraDefaults.GetCameraFOVDefaults-32", "wt-global-api-C_CharacterServices.AssignPFCDistribution-86", "wt-global-api-C_CharacterServices.AssignRaceOrFactionChangeDistribution-34", "wt-global-api-C_ChatInfo.GetChatLineSenderGUID-35", "wt-global-api-C_ChatInfo.GetChatLineSenderName-36", "wt-global-api-C_ChatInfo.IsChatLineCensored-38", "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByID-40", "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByTag-41", "wt-global-api-C_ConsoleScriptCollection.GetElements-42", "wt-global-api-C_ConsoleScriptCollection.GetScriptData-43", "wt-global-api-C_GenericWidgetDisplay.Acknowledge-45", "wt-global-api-C_GenericWidgetDisplay.Close-46", "wt-global-api-C_GossipInfo.SelectOptionByIndex-47", "wt-global-api-C_GuildInfo.MemberExistsByName-48", "wt-global-api-C_PlayerInfo.CanUseItem-49", "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-51", "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpellInfo-52", "wt-global-api-C_QuestInfoSystem.GetQuestRewardSpells-53", "wt-global-api-C_QuestInfoSystem.GetQuestShouldToastCompletion-54", "wt-global-api-C_QuestInfoSystem.HasQuestRewardSpells-55", "wt-global-api-C_Social.GetLastItem-87", "wt-global-api-C_Social.GetLastScreenshot-88", "wt-global-api-C_Social.GetNumCharactersPerMedia-89", "wt-global-api-C_Social.GetScreenshotByIndex-90", "wt-global-api-C_Social.GetTweetLength-91", "wt-global-api-C_Social.IsSocialEnabled-92", "wt-global-api-C_Social.RegisterSocialBrowser-93", "wt-global-api-C_Social.SetTextureToScreenshot-94", "wt-global-api-C_Social.TwitterCheckStatus-95", "wt-global-api-C_Social.TwitterConnect-96", "wt-global-api-C_Social.TwitterDisconnect-97", "wt-global-api-C_Social.TwitterGetMSTillCanPost-98", "wt-global-api-C_Social.TwitterPostAchievement-99", "wt-global-api-C_Social.TwitterPostMessage-100", "wt-global-api-C_Social.TwitterPostScreenshot-101", "wt-global-api-C_SpectatingUI.IsSpectating-56", "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-57", "wt-global-api-C_Texture.ClearTitleIconTexture-58", "wt-global-api-C_Texture.GetTitleIconTexture-59", "wt-global-api-C_Texture.IsTitleIconTextureReady-60", "wt-global-api-C_Texture.SetTitleIconTexture-61", "wt-global-api-C_Traits.GenerateInspectImportString-62", "wt-global-api-C_Traits.IsReadyForCommit-64", "wt-global-api-C_Traits.ResetTreeByCurrency-65", "wt-global-api-GetAddOnMetadata-103", "wt-global-api-GetCurrentGraphicsAPI-67", "wt-global-api-GetEquivalentDynamicDifficultyID-69", "wt-global-api-GetGraphicsCVarValueForQualityLevel-72", "wt-global-api-GetSoundEntryCount-74", "wt-global-api-IsGraphicsCVarValueSupported-75", "wt-global-api-IsGraphicsSettingValueSupported-76", "wt-global-api-IsUsingGamepad-77", "wt-global-api-IsUsingMouse-78", "wt-global-api-QuestFlagsPVP-80", "wt-global-api-StripHyperlinks-81", "wt-global-api-pcallwithenv-79", "wt-widgets-EditBox:GetFogOfWarBackgroundTexture-131", "wt-widgets-EditBox:OnUiMapChanged-129", "wt-widgets-FogOfWarFrame:GetFogOfWarMaskTexture-133", "wt-widgets-FogOfWarFrame:SetFogOfWarBackgroundTexture-137", "wt-widgets-FogOfWarFrame:SetFogOfWarMaskTexture-139"}
+ right: {}
+[  0.808s] [Startup] WowLuaEnv::new begin
+[  0.811s] [Startup] SimState::default complete in 3.05ms
+[  0.812s] [Startup] rilua VM created in 163.91µs
+[  0.812s] [Startup] builtin frames initialized in 96.66µs
+[  0.812s] [Startup] template registry cleared in 10.12µs
+[  0.812s] [Startup] intrinsic templates registered in 14.04µs
+[  0.812s] [Startup] initial app_data lua handle installed in 761.00ns
+[  0.991s] [Startup] init_lua_state complete in 179.32ms
+[  0.991s] [Startup] final app_data lua handle installed in 1.14µs
+[  0.991s] [Startup] initial screen globals installed in 343.72µs
+[  0.991s] [Startup] WowLuaEnv::new complete
+
+thread 'wrath_factory_rejects_retail_inventory' (1961553) panicked at tests/common/publication_sweep.rs:529:5:
+register client line does not match active profile
+error: test failed, to rerun pass `--test patch_3_4_2_factory`
