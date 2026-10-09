@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/usr/bin/grep",
+    "-n",
+    "-E",
+    "TODO|FIXME|HACK|XXX|except:|allow\\(",
+    "/home/osso/.worktrees/wow-ui-sim-p551-page/tests/patch_5_5_1_publication_sweep.rs",
+    "/home/osso/.worktrees/wow-ui-sim-p551-page/data/patch-api/evidence/5.5.1-session-2026-10-08/validate.py",
+    "/home/osso/.worktrees/wow-ui-sim-p551-page/data/patch-api/evidence/5.5.1-session-2026-10-08/run_proof.py",
+    "/home/osso/.worktrees/wow-ui-sim-p551-page/data/patch-api/evidence/5.5.1-session-2026-10-08/seal_proof.py",
+    "/home/osso/.worktrees/wow-ui-sim-p551-page/data/patch-api/evidence/5.5.1-session-2026-10-08/reproduce_sources.py"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "",
+  "scope": "New discovery test and audit tooling; no flagged markers."
+}

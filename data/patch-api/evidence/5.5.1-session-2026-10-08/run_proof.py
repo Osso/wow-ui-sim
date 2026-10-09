@@ -63,6 +63,8 @@ def worker(group):
         args = ['--no-default-features', '--features', 'sound,gui,casc,client-mists']
         run('mists-pages-final', ['cargo', 'test', *args, '--test', 'integration', 'patch_5_5_', '--', '--nocapture'], 'mists')
         run('format-final', ['cargo', 'fmt', '--check'])
+    elif group == 'gate':
+        run('gate-report', ['python3', '-B', str(ROOT / 'tools/check_patch_validators.py'), 'HEAD'])
     elif group == 'tools':
         run('tools-tests', ['python3', '-B', '-m', 'unittest', 'discover', '-s', 'tools', '-p', 'test_*.py'])
         run('format', ['cargo', 'fmt', '--check'])
