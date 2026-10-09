@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.13.3 literal SOURCE accounting
+
+[Audit](investigations/patch-1-13-3-api-audit.md): frozen identity and own backing-model assessment retained; RED9 for full-page accounting. Preserve dropped event/four CVars separately from historical22-entry default register and existing extractor error; no fabricated signatures/defaults/aliases/history/model/native credit. Same-Era1.13.4 concurrently active, integrated before1.13.3 by main. GREEN/copy/seal/current health development proof pending.
+
 ## [2026-10-09] investigation | Patch 1.14.0 literal SOURCE accounting
 
 [Audit](investigations/patch-1-14-0-api-audit.md): exact frozen identity verified before derivation; own SOURCE RED10/portable RED3 retained.723 inventory occurrences and every row/header/prose/template/link boundary accounted without invented defaults/aliases/models. SOURCE GREEN10/10 at66a5448b0:2983 omissions; portable GREEN3/3 at4e3739d4f: copied SOURCE10/validator, opt-in register/default extractor bytes and both serialized ledger/log rejection/restoration.92 original seals/map unchanged; five separate current receipt seals/93-member archive. Implementation committed before GREEN; zero runtime/model/native credit; main owns integration/native/final gates.
