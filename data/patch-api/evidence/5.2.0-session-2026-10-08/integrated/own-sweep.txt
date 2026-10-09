@@ -1,0 +1,152 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p520-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 30.92s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p520-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.004s] [Startup] SimState::default complete in 3.74ms
+[  0.004s] [Startup] rilua VM created in 166.01µs
+[  0.004s] [Startup] builtin frames initialized in 166.08µs
+[  0.004s] [Startup] template registry cleared in 14.35µs
+[  0.004s] [Startup] intrinsic templates registered in 15.41µs
+[  0.004s] [Startup] initial app_data lua handle installed in 1.24µs
+[  0.247s] [Startup] init_lua_state complete in 242.54ms
+[  0.247s] [Startup] final app_data lua handle installed in 400.00ns
+[  0.247s] [Startup] initial screen globals installed in 262.39µs
+[  0.247s] [Startup] WowLuaEnv::new complete
+[  3.522s] [Startup] apply_post_load_workarounds: begin
+[  3.522s] [Workarounds] starting patch_edit_mode_manager
+[  3.522s] [Workarounds] finished patch_edit_mode_manager in 321.08µs
+[  3.522s] [Workarounds] starting init_edit_mode_layout
+[  3.522s] [EditMode] starting setup_layout_info
+[  3.526s] [EditMode] finished setup_layout_info in 3.64ms
+[  3.526s] [EditMode] starting apply_system_anchors
+[  3.713s] [EditMode] finished apply_system_anchors in 187.60ms
+[  3.713s] [EditMode] starting finalize_action_bar_positions
+[  3.716s] [EditMode] finished finalize_action_bar_positions in 2.40ms
+[  3.716s] [EditMode] starting invoke_anchor_changed_hooks
+[  3.716s] [EditMode] finished invoke_anchor_changed_hooks in 453.09µs
+[  3.716s] [EditMode] starting fix_action_bar_nan_size
+[  3.716s] [EditMode] finished fix_action_bar_nan_size in 46.43µs
+[  3.716s] [EditMode] starting fix_action_bar_scale
+[  3.716s] [EditMode] finished fix_action_bar_scale in 4.55µs
+[  3.716s] [Workarounds] finished init_edit_mode_layout in 194.23ms
+[  3.716s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  3.717s] [Workarounds] finished patch_ui_parent_panel_toggles in 261.79µs
+[  3.717s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  3.717s] [Workarounds] finished patch_uiparent_onupdate_worklists in 98.03µs
+[  3.717s] [Workarounds] starting init_chat_type_colors
+[  3.717s] [Workarounds] finished init_chat_type_colors in 127.19µs
+[  3.717s] [Workarounds] starting patch_chat_voice_button_surface
+[  3.717s] [Workarounds] finished patch_chat_voice_button_surface in 131.93µs
+[  3.717s] [Workarounds] starting patch_item_socketing_tooltips
+[  3.717s] [Workarounds] finished patch_item_socketing_tooltips in 58.80µs
+[  3.717s] [Workarounds] starting patch_character_select_selected_name
+[  3.717s] [Workarounds] finished patch_character_select_selected_name in 29.68µs
+[  3.717s] [Workarounds] starting patch_character_create_defaults
+[  3.717s] [Workarounds] finished patch_character_create_defaults in 228.03µs
+[  3.717s] [Workarounds] starting patch_character_frame_title_refresh
+[  3.723s] [Workarounds] finished patch_character_frame_title_refresh in 5.87ms
+[  3.723s] [Workarounds] starting patch_vignette_pin_template
+[  3.723s] [Workarounds] finished patch_vignette_pin_template in 118.14µs
+[  3.723s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  3.724s] [Workarounds] finished patch_fog_of_war_pin_mixin in 296.86µs
+[  3.724s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  3.730s] [Workarounds] finished patch_map_exploration_pin_mixin in 6.06ms
+[  3.730s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  3.730s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 83.58µs
+[  3.730s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  3.730s] [Workarounds] finished ensure_adventure_map_frame_surface in 518.08µs
+[  3.730s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  3.730s] [Workarounds] finished patch_action_bar_button_event_fanout in 109.84µs
+[  3.730s] [Workarounds] starting patch_paging_controls_page_text
+[  3.730s] [Workarounds] finished patch_paging_controls_page_text in 39.46µs
+[  3.730s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  3.730s] [Workarounds] finished patch_talent_edge_frame_level_sync in 30.83µs
+[  3.730s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  3.731s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 63.40µs
+[  3.731s] [Workarounds] starting patch_game_time_defaults
+[  3.731s] [Workarounds] finished patch_game_time_defaults in 7.04µs
+[  3.731s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  3.731s] [Workarounds] finished patch_tooltip_nineslice_surface in 43.82µs
+[  3.731s] [Workarounds] starting patch_container_frame_token_tracker
+[  3.731s] [Workarounds] finished patch_container_frame_token_tracker in 40.42µs
+[  3.731s] [Workarounds] starting patch_achievement_display_set_achievements
+[  3.731s] [Workarounds] finished patch_achievement_display_set_achievements in 8.72µs
+[  3.731s] [Workarounds] starting patch_housing_dashboard_preload
+[  3.731s] [Workarounds] finished patch_housing_dashboard_preload in 169.48µs
+[  3.731s] [Workarounds] starting patch_lfg_lock_list
+[  3.731s] [Workarounds] finished patch_lfg_lock_list in 41.78µs
+[  3.731s] [Workarounds] starting patch_auction_house_browse_results_event
+[  3.731s] [Workarounds] finished patch_auction_house_browse_results_event in 64.96µs
+[  3.731s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  3.731s] [Workarounds] finished patch_auction_house_search_context_aliases in 28.16µs
+[  3.731s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  3.731s] [Workarounds] finished patch_auth_challenge_frame_parent in 71.12µs
+[  3.731s] [Workarounds] starting patch_settings_surface_defaults
+[  3.731s] [Workarounds] finished patch_settings_surface_defaults in 351.99µs
+[  3.731s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  3.731s] [Workarounds] finished patch_settings_canvas_layout_visibility in 110.69µs
+[  3.731s] [Startup] apply_post_load_workarounds: workarounds complete
+[  3.808s] [Startup] apply_post_load_workarounds: globals restored
+[  3.808s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  3.808s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  3.967s] [Startup] begin login sequence
+[  3.967s] [Startup] Firing ADDON_LOADED
+[  3.967s] [Startup] Firing VARIABLES_LOADED
+[  4.077s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  4.128s] [Startup] Firing UI_SCALE_CHANGED
+[  4.129s] [Startup] Firing PLAYER_LOGIN
+[  4.129s] [Startup] end login sequence in 162.23ms
+[  4.129s] [Startup] begin world enter sequence
+[  4.129s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  4.129s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  4.129s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  4.429s] [EditMode] starting setup_layout_info
+[  4.433s] [EditMode] finished setup_layout_info in 4.26ms
+[  4.433s] [EditMode] starting apply_system_anchors
+[  4.580s] [EditMode] finished apply_system_anchors in 147.21ms
+[  4.580s] [EditMode] starting finalize_action_bar_positions
+[  4.584s] [EditMode] finished finalize_action_bar_positions in 3.28ms
+[  4.584s] [EditMode] starting invoke_anchor_changed_hooks
+[  4.592s] [EditMode] finished invoke_anchor_changed_hooks in 8.43ms
+[  4.592s] [EditMode] starting fix_action_bar_nan_size
+[  4.592s] [EditMode] finished fix_action_bar_nan_size in 95.36µs
+[  4.592s] [EditMode] starting fix_action_bar_scale
+[  4.592s] [EditMode] finished fix_action_bar_scale in 5.64µs
+[  4.592s] [EditMode] starting reapply_player_frame_anchor
+[  4.594s] [EditMode] finished reapply_player_frame_anchor in 1.54ms
+[  4.603s] [Startup] end world enter sequence in 473.19ms
+[  4.603s] [Startup] begin post-login events
+[  4.604s] [Startup] Firing UNIT_AURA
+[  4.604s] [Startup] Firing PET_UI_UPDATE
+[  4.607s] [Startup] Firing BAG_UPDATE_DELAYED
+[  4.608s] [Startup] Firing QUEST_LOG_UPDATE
+[  4.609s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  4.707s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  4.707s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  4.709s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  4.721s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  4.721s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  4.721s] [Startup] Firing UPDATE_BINDINGS
+[  4.725s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  4.728s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  4.728s] [Startup] end post-login events in 125.81ms
+[  4.728s] [Startup] begin close startup special windows
+[  4.729s] [Startup] end close startup special windows in 283.80µs
+[  4.729s] [Startup] begin FIRST_FRAME_RENDERED
+[  4.729s] [Startup] Firing FIRST_FRAME_RENDERED
+[  4.729s] [Startup] end FIRST_FRAME_RENDERED in 186.78µs
+[  4.729s] [Startup] begin unblock hidden splash alerts
+[  4.729s] [Startup] end unblock hidden splash alerts in 16.19µs
+[  4.729s] [Startup] begin post-event workarounds
+[  4.729s] [Startup] end post-event workarounds in 1.20µs
+running 1 tests
+test patch_5_2_0_publication_sweep::patch_5_2_0_publication_sweep ... ok
+
+test result: ok. 1 passed; 0 failed; 1 total

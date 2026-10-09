@@ -1,0 +1,798 @@
+[
+  {
+    "patch": "10.0.0",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+    "error": null,
+    "saved_sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2"
+  },
+  {
+    "patch": "10.0.2",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+    "error": null,
+    "saved_sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb"
+  },
+  {
+    "patch": "10.0.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+    "error": null,
+    "saved_sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20"
+  },
+  {
+    "patch": "10.0.7",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+    "error": null,
+    "saved_sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5"
+  },
+  {
+    "patch": "10.1.0",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+    "error": null,
+    "saved_sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069"
+  },
+  {
+    "patch": "10.1.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+    "error": null,
+    "saved_sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1"
+  },
+  {
+    "patch": "10.1.7",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+    "error": null,
+    "saved_sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a"
+  },
+  {
+    "patch": "10.2.0",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+    "error": null,
+    "saved_sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd"
+  },
+  {
+    "patch": "10.2.5",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+    "error": null,
+    "saved_sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0"
+  },
+  {
+    "patch": "10.2.6",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+    "error": null,
+    "saved_sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1"
+  },
+  {
+    "patch": "10.2.7",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+    "error": null,
+    "saved_sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832"
+  },
+  {
+    "patch": "11.0.0",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+    "error": null,
+    "saved_sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826"
+  },
+  {
+    "patch": "11.0.2",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+    "error": null,
+    "saved_sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18"
+  },
+  {
+    "patch": "11.0.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+    "error": null,
+    "saved_sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4"
+  },
+  {
+    "patch": "11.0.7",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+    "error": null,
+    "saved_sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1"
+  },
+  {
+    "patch": "11.1.0",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+    "error": null,
+    "saved_sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6"
+  },
+  {
+    "patch": "11.1.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+    "error": null,
+    "saved_sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b"
+  },
+  {
+    "patch": "11.1.7",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+    "error": null,
+    "saved_sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b"
+  },
+  {
+    "patch": "11.2.0",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+    "error": null,
+    "saved_sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f"
+  },
+  {
+    "patch": "11.2.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+    "error": null,
+    "saved_sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4"
+  },
+  {
+    "patch": "11.2.7",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+    "error": null,
+    "saved_sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b"
+  },
+  {
+    "patch": "12.0.0",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+    "error": null,
+    "saved_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb"
+  },
+  {
+    "patch": "12.0.1",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+    "error": null,
+    "saved_sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d"
+  },
+  {
+    "patch": "12.0.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": false,
+    "sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a",
+    "error": null,
+    "saved_sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329"
+  },
+  {
+    "patch": "12.0.7",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": false,
+    "sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855",
+    "error": null,
+    "saved_sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e"
+  },
+  {
+    "patch": "12.1.0",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": false,
+    "sha256": null,
+    "error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}",
+    "saved_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b"
+  },
+  {
+    "patch": "5.2.0",
+    "verified_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "recorded_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "c05e3293fec4ce9ad4b0d7b569e3944a65cdcba19edd0f37d8f9147b49bb639a",
+    "error": null,
+    "saved_sha256": "c05e3293fec4ce9ad4b0d7b569e3944a65cdcba19edd0f37d8f9147b49bb639a"
+  },
+  {
+    "patch": "5.3.0",
+    "verified_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "recorded_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "6c1feaa3b840e459c4c21245df30a18164a8f83266396d06131938a95f1f1bb8",
+    "error": null,
+    "saved_sha256": "6c1feaa3b840e459c4c21245df30a18164a8f83266396d06131938a95f1f1bb8"
+  },
+  {
+    "patch": "5.4.0",
+    "verified_flags": [
+      "--retain-patch-diff-reference",
+      "--mists-source-markup"
+    ],
+    "recorded_flags": [
+      "--retain-patch-diff-reference",
+      "--mists-source-markup"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "15226d5fe1409e68ef89c39b94bbb027292bbc5e87da3384f73b0506c939c2e7",
+    "error": null,
+    "saved_sha256": "15226d5fe1409e68ef89c39b94bbb027292bbc5e87da3384f73b0506c939c2e7"
+  },
+  {
+    "patch": "5.4.1",
+    "verified_flags": [
+      "--mists-automated-diff",
+      "--lowercase-reflist"
+    ],
+    "recorded_flags": [
+      "--mists-automated-diff",
+      "--lowercase-reflist"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "2e9a7139991da34deafdfd1e7dabc760b37006791572f259efe34b6c5d5f5e73",
+    "error": null,
+    "saved_sha256": "2e9a7139991da34deafdfd1e7dabc760b37006791572f259efe34b6c5d5f5e73"
+  },
+  {
+    "patch": "5.4.2",
+    "verified_flags": [
+      "--mists-automated-diff"
+    ],
+    "recorded_flags": [
+      "--mists-automated-diff"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980",
+    "error": null,
+    "saved_sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980"
+  },
+  {
+    "patch": "5.4.7",
+    "verified_flags": [
+      "--legacy-api-tables"
+    ],
+    "recorded_flags": [
+      "--legacy-api-tables"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "b622423ac5aa436320fceb5f980588903360079f4be497f65ce13612b838e37b",
+    "error": null,
+    "saved_sha256": "b622423ac5aa436320fceb5f980588903360079f4be497f65ce13612b838e37b"
+  },
+  {
+    "patch": "5.4.8",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+    "error": null,
+    "saved_sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8"
+  },
+  {
+    "patch": "5.5.0",
+    "verified_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "recorded_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "ab12ad3af0590a74f9127ece4fcef9fa2fe445f6ab16b0bac55e3cbf6cb3ca79",
+    "error": null,
+    "saved_sha256": "ab12ad3af0590a74f9127ece4fcef9fa2fe445f6ab16b0bac55e3cbf6cb3ca79"
+  },
+  {
+    "patch": "5.5.1",
+    "verified_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "recorded_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "22d466d5b56253a689ff184bc3fafb11b668bbc7ea7243449f2c17326a72cc19",
+    "error": null,
+    "saved_sha256": "22d466d5b56253a689ff184bc3fafb11b668bbc7ea7243449f2c17326a72cc19"
+  },
+  {
+    "patch": "5.5.2",
+    "verified_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "recorded_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+    "error": null,
+    "saved_sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417"
+  },
+  {
+    "patch": "5.5.3",
+    "verified_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "recorded_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "4e17219957f0a7c416bb68958c42d474b88f5f3ee625060dc92b6c167c3f7b56",
+    "error": null,
+    "saved_sha256": "4e17219957f0a7c416bb68958c42d474b88f5f3ee625060dc92b6c167c3f7b56"
+  },
+  {
+    "patch": "5.5.4",
+    "verified_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "recorded_flags": [
+      "--canonical-patch-navigation"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b",
+    "error": null,
+    "saved_sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b"
+  },
+  {
+    "patch": "6.0.1",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+    "error": null,
+    "saved_sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30"
+  },
+  {
+    "patch": "6.0.2",
+    "verified_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "recorded_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34",
+    "error": null,
+    "saved_sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34"
+  },
+  {
+    "patch": "6.1.0",
+    "verified_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "recorded_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084",
+    "error": null,
+    "saved_sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084"
+  },
+  {
+    "patch": "6.2.0",
+    "verified_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "recorded_flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154",
+    "error": null,
+    "saved_sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154"
+  },
+  {
+    "patch": "6.2.2",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+    "error": null,
+    "saved_sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9"
+  },
+  {
+    "patch": "6.2.4",
+    "verified_flags": [
+      "--preserve-examples",
+      "--retain-patch-diff-reference"
+    ],
+    "recorded_flags": [
+      "--preserve-examples",
+      "--retain-patch-diff-reference"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85",
+    "error": null,
+    "saved_sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85"
+  },
+  {
+    "patch": "7.0.1",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+    "error": null,
+    "saved_sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1"
+  },
+  {
+    "patch": "7.0.3",
+    "verified_flags": [
+      "--legion-prepatch"
+    ],
+    "recorded_flags": [
+      "--legion-prepatch"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
+    "error": null,
+    "saved_sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33"
+  },
+  {
+    "patch": "7.1.0",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+    "error": null,
+    "saved_sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9"
+  },
+  {
+    "patch": "7.2.0",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+    "error": null,
+    "saved_sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6"
+  },
+  {
+    "patch": "7.2.5",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+    "error": null,
+    "saved_sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf"
+  },
+  {
+    "patch": "7.3.0",
+    "verified_flags": [],
+    "recorded_flags": [],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+    "error": null,
+    "saved_sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8"
+  },
+  {
+    "patch": "7.3.2",
+    "verified_flags": [
+      "--retain-reference-notes"
+    ],
+    "recorded_flags": [
+      "--retain-reference-notes"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
+    "error": null,
+    "saved_sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e"
+  },
+  {
+    "patch": "8.0.1",
+    "verified_flags": [
+      "--bfa-prepatch"
+    ],
+    "recorded_flags": [
+      "--bfa-prepatch"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
+    "error": null,
+    "saved_sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4"
+  },
+  {
+    "patch": "8.1.0",
+    "verified_flags": [
+      "--legacy-api-bullets",
+      "--legacy-cvar-tables",
+      "--retain-reference-notes"
+    ],
+    "recorded_flags": [
+      "--legacy-api-bullets",
+      "--legacy-cvar-tables",
+      "--retain-reference-notes"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
+    "error": null,
+    "saved_sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812"
+  },
+  {
+    "patch": "8.1.5",
+    "verified_flags": [
+      "--legacy-api-bullets"
+    ],
+    "recorded_flags": [
+      "--legacy-api-bullets"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+    "error": null,
+    "saved_sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53"
+  },
+  {
+    "patch": "8.2.0",
+    "verified_flags": [
+      "--legacy-api-tables"
+    ],
+    "recorded_flags": [
+      "--legacy-api-tables"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+    "error": null,
+    "saved_sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0"
+  },
+  {
+    "patch": "8.2.5",
+    "verified_flags": [
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "recorded_flags": [
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+    "error": null,
+    "saved_sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e"
+  },
+  {
+    "patch": "8.3.0",
+    "verified_flags": [
+      "--preserve-examples",
+      "--normalize-inventory-headings",
+      "--retain-reference-notes"
+    ],
+    "recorded_flags": [
+      "--preserve-examples",
+      "--normalize-inventory-headings",
+      "--retain-reference-notes"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+    "error": null,
+    "saved_sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3"
+  },
+  {
+    "patch": "8.3.7",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+    "error": null,
+    "saved_sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2"
+  },
+  {
+    "patch": "9.0.1",
+    "verified_flags": [
+      "--normalize-inventory-headings",
+      "--preserve-examples"
+    ],
+    "recorded_flags": [
+      "--normalize-inventory-headings",
+      "--preserve-examples"
+    ],
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+    "error": null,
+    "saved_sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0"
+  },
+  {
+    "patch": "9.0.2",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+    "error": null,
+    "saved_sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6"
+  },
+  {
+    "patch": "9.0.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+    "error": null,
+    "saved_sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce"
+  },
+  {
+    "patch": "9.1.0",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+    "error": null,
+    "saved_sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783"
+  },
+  {
+    "patch": "9.1.5",
+    "verified_flags": [],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+    "error": null,
+    "saved_sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba"
+  },
+  {
+    "patch": "9.2.0",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+    "error": null,
+    "saved_sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e"
+  },
+  {
+    "patch": "9.2.5",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+    "error": null,
+    "saved_sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518"
+  },
+  {
+    "patch": "9.2.7",
+    "verified_flags": [
+      "--preserve-examples"
+    ],
+    "recorded_flags": null,
+    "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+    "byte_identical": true,
+    "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+    "error": null,
+    "saved_sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b"
+  }
+]

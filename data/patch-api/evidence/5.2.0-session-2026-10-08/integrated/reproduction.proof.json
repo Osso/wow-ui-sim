@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p520-page/data/patch-api/evidence/5.2.0-session-2026-10-08/integrated/reproduce_sources.py"
+  ],
+  "revision": "68fccd5cfbe2c79b188993e541569c4a5a1de880",
+  "scope": "reproduction",
+  "cwd": ".",
+  "target": "dedicated p520-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "reproduction.txt",
+  "log_sha256": "d529d930e80e77d6bb613f219a99ae47a62f6c3ec4ff0666afc1893784f743c5",
+  "seconds": 3.231132364991936,
+  "invalidated": false
+}
