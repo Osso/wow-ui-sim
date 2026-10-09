@@ -913,3 +913,14 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] investigation | Era Patch 1.15.3 literal SOURCE accounting
 
 [Audit](investigations/patch-1-15-3-api-audit.md): frozen593663/6114194,11503; six rows/five UNPROVEN summary/link contracts. Dragonflight10.2.7 and Cataclysm4.4.0 subset references unexpanded; distinct Gethe4.4.0/Ketho1.15.2 bases retained. SOURCE-only, own RED10/GREEN10 at4b957a6cf; portable RED3/GREEN3 and copied10/default bytes at7621e4627. Serialized ledger/log reject/restored,50 original seals unchanged;51-member archive/six later receipt seals. Zero runtime/model/native credit. Main owns six ordered Era successors and final gates.
+## [2026-10-09] source audit | Patch 1.15.2 literal SOURCE
+
+[Audit](investigations/patch-1-15-2-api-audit.md): frozen583919/6061806 identity/hashes verified; six nonblank rows, four UNPROVEN summary/link contracts, two headers and navigation. Dragonflight10.2.6 subset unexpanded; no explicit APIs/signatures or runtime/model/native credit. Own RED9/portable RED3 retained; GREEN/copied seals pending. Main owns Era integration/native/final gates.
+
+## [2026-10-09] development proof | Era 1.15.2 SOURCE
+
+[Audit](investigations/patch-1-15-2-api-audit.md): own SOURCE GREEN9/9 at24f83c282;20 omissions rejected; historical default register empty, not API compatibility proof. Original54 seals/55-member archive retained; copied GREEN pending. Four contracts UNPROVEN; no runtime/model/native or integration credit.
+
+## [2026-10-09] copied SOURCE proof | Patch 1.15.2
+
+[Audit](investigations/patch-1-15-2-api-audit.md): SOURCE9/9 at24f83c282; portable3/3 at7724baf8a includes copied SOURCE9/9/validator/default-byte replay and serialized ledger/log seal rejections/exact restorations. Original54 seals/55-member archive unchanged; six later receipts sealed separately. Six source rows/four contracts UNPROVEN, Dragonflight10.2.6 subset unexpanded; zero runtime/model/native credit. Main owns Era successor integration/native/final gates.

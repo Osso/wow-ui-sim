@@ -1,0 +1,35 @@
+test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register) ... FAIL
+test_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored) ... FAIL
+test_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored) ... FAIL
+
+======================================================================
+FAIL: test_copied_source_and_default_register (__main__.PortableSource.test_copied_source_and_default_register)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/test_portable.py", line 25, in setUp
+    self.assertTrue(OPTIONS.archive.is_file(), 'own replay archive absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : own replay archive absent
+
+======================================================================
+FAIL: test_serialized_ledger_omission_rejected_and_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/test_portable.py", line 25, in setUp
+    self.assertTrue(OPTIONS.archive.is_file(), 'own replay archive absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : own replay archive absent
+
+======================================================================
+FAIL: test_serialized_log_fabrication_rejected_and_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/test_portable.py", line 25, in setUp
+    self.assertTrue(OPTIONS.archive.is_file(), 'own replay archive absent')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : own replay archive absent
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)

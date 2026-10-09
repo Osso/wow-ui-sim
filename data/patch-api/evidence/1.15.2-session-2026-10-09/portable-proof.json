@@ -1,0 +1,33 @@
+{
+  "scope": "1.15.2 copied historical SOURCE only; not native/integration/final gates",
+  "revision": "7724baf8a1603e66abf2bf429b9e0069fa9fb4df",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/replay-archive.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1152-page/target/p1152-source-replay",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-controls.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1152-page",
+  "exit_code": 0,
+  "log": "portable-controls.log",
+  "controls": "portable-controls.json",
+  "original_seals": 54,
+  "original_map_sha256": "f2bd6c1e49c59b00bcc573a246bde14659f9820b984dba1bcb47837acdb4000b",
+  "originals_unchanged": true,
+  "copied_tests": {
+    "portable": 3,
+    "source": 9
+  },
+  "omission_controls": 20,
+  "tamper_controls": [
+    "serialized ledger contract omission rejected/restored",
+    "serialized GREEN log fabrication rejected/restored"
+  ],
+  "historical_default_flags": [],
+  "historical_default_byte_identical": true
+}
