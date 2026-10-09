@@ -6,9 +6,9 @@ Pinned pageid 423274 revision 4065122 and separately pinned transcluded diff pag
 
 The main page describes loot specialization, stable expansion, embedded support browsing, trade-link encoding and an InterfaceOptions ordering bug. Its diff is a separate source, not silently expanded HTML. Original responses and both raw pages are retained in the [session evidence](../../../data/patch-api/evidence/5.3.0-session-2026-10-08/).
 
-The register contains 44 occurrences: 15 global APIs, 3 FrameXML functions, 9 events, 14 widget methods and 3 widget handlers. Every table header count matches the parsed count. `parse_mists_automated_diff` and its opt-in dispatch are copied byte-identically from p542-page at a016e9393943de703ae070d8ce33b5497113c3fc; `--mists-diff` dispatch comes byte-identically from p540-page at 9698f09862b6cd91b4f87e840295a3fce304940a. New `parse_mists_widget_handlers`/`--mists-widget-handlers` behavior is additive and opt-in. Handler symbols retain Browser ownership and `widget-script` kind.
+The register contains 44 occurrences: 15 global APIs, 3 FrameXML functions, 9 events, 14 widget methods and 3 widget handlers. Every table header count matches the parsed count. After rebasing onto master `a82b8eb1c`, `parse_mists_automated_diff` and `--mists-diff` are inherited unchanged from master; their formerly byte-identical branch copies were dropped. Only `parse_mists_widget_handlers`/`--mists-widget-handlers` is additive and opt-in. Handler symbols retain Browser ownership and `widget-script` kind.
 
-Queued retail placeholders start `later_registers` in order: 5.4.0, 5.4.1, 5.4.2, followed by real 5.4.7, 5.4.8, 6.0.1 and subsequent retail registers. Classic registers are excluded.
+Real merged retail registers start `later_registers` in order: 5.4.0, 5.4.1, 5.4.2, followed by 5.4.7, 5.4.8, 6.0.1 and subsequent retail registers. Classic registers are excluded. The refreshed 5.3.0 sweep retains exactly the historical 44 observations and 15 publication gaps; these later audits introduce no attributable replacements.
 
 ## Capability coverage
 
@@ -43,7 +43,7 @@ GNU `/usr/bin/grep -RInwF` scans retain untruncated qualified and bare-name resu
 
 `git ls-tree`/`git show` scans at base 896086537 and pinned p542/p541/p540 revisions find no re-addition in the retail chain. No new retirement action was necessary; existing absence remains the target.
 
-## Verification
+## Historical verification
 
 Source reproduction: 59 registers byte-identical; 56 extracts match, with the exact inherited 12.0.5/12.0.7/12.1.0 failures preserved. All six `tools/test_*.py` scripts pass (89 fixtures). Targeted acceptance passes: 58 publication cases, one cached and one bare behavior case, one existing PvP startup unit test, warning-clean non-vendor Mists check and format. Negative control changes only GetPVPRoles to a missing name and raises the non-ok set from 15 to 16; every other observation is identical. Own portability gate passes at 8fdf8c185: 44/44 validators in a clean checkout and 45/45 after synthetic later audit, with zero failures. Own immutable log tampering is rejected and exact restoration passes. All audit gates are complete; 15 publication gaps and six prose contracts remain explicitly pending, not falsely modeled. Master baseline gate passed 43/43 clean and 44/44 later (including its synthetic audit).
 

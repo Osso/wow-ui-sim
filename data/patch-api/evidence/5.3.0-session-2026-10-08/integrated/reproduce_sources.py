@@ -100,6 +100,18 @@ def preserve(extractor, revision):
     dump('p530-extract-preservation.json', modes)
 
 
+def reproduce_supplemental(extractor, revision):
+    provenance = read(SOURCES / '5.4.0-api-changes.provenance.json')
+    flags = provenance['diff_source']['extractor_flags']
+    generated = outcome(extractor.extract_text,
+                        (SOURCES / '5.4.0-api-changes-diff.wikitext').read_text(), flags)
+    saved = digest((SOURCES / '5.4.0-api-changes-diff.txt').read_bytes())
+    assert generated['error'] is None and generated['sha256'] == saved
+    dump('supplemental-extract-reproduction.json', {
+        'revision': revision, 'path': 'data/patch-api/sources/5.4.0-api-changes-diff.txt',
+        'flags': flags, 'byte_identical': True, 'sha256': saved})
+
+
 def main():
     spec = importlib.util.spec_from_file_location('extractor', ROOT / 'tools/extract_patch_non_inventory.py')
     extractor = importlib.util.module_from_spec(spec)
@@ -107,6 +119,7 @@ def main():
     revision = git('rev-parse', 'HEAD').decode().strip()
     result = reproduce(extractor, revision)
     preserve(extractor, revision)
+    reproduce_supplemental(extractor, revision)
     print(json.dumps(result))
 
 

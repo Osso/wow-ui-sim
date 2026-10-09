@@ -86,6 +86,10 @@ def main():
         else:
             assert row['byte_identical'] and row['error'] is None
     assert sorted(row['patch'] for row in extracts if not row['byte_identical']) == ['12.0.5', '12.0.7', '12.1.0']
+    supplemental = read('supplemental-extract-reproduction.json')
+    assert supplemental['flags'] == pinned(revision,
+        'data/patch-api/sources/5.4.0-api-changes.provenance.json')['diff_source']['extractor_flags']
+    assert supplemental['byte_identical'] and supplemental['sha256'] == digest(blob(revision, supplemental['path']))
     preservation = read('p530-input-preservation.json')
     assert {row['path'] for row in preservation['rows']} == set(names(master, 'data/patch-api/sources'))
     for row in preservation['rows']:
