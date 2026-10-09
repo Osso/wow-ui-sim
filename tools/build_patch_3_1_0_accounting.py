@@ -2,6 +2,7 @@
 
 No native or modeled behavior is inferred from a callable/absent identity.
 """
+import argparse
 from collections import Counter
 import importlib.util
 import json
@@ -39,9 +40,17 @@ def semantic_limit(section, subsection):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--current-radians', action='store_true',
+                        help='Use separate current observations and bounded configured-radians proof; original archive unchanged')
+    args = parser.parse_args()
+    observations = EVIDENCE / ('current/publication-green-results.json' if args.current_radians else 'own-sweep-green-results.json')
+    if args.current_radians:
+        receipt = json.loads((EVIDENCE / 'current/model-green-receipt.json').read_bytes())
+        assert receipt['exit_code'] == 0, 'configured-radians state proof missing'
     raw = (SOURCES / '3.1.0-api-changes.wikitext').read_text()
     register = json.loads((SOURCES / '3.1.0-wikitext-register.json').read_text())
-    observed = json.loads((EVIDENCE / 'own-sweep-green-results.json').read_text())
+    observed = json.loads(observations.read_text())
     entries = register['entries']
     by_line = {row['wikitext_line']: row for row in entries}
     assert set(observed) == {row['id'] for row in entries}
@@ -84,12 +93,22 @@ def main():
     extracts = extractor.seed_rows(text, '3.1.0')
     for row in extracts:
         row.update(status='metadata-only', capabilities=[], note='Rendered full-source mirror. Original nonblank raw-line and signature IDs retain all semantics and precise limits; no duplicate credit.')
+    if args.current_radians:
+        for row in signatures:
+            if row['symbol'] == 'GetPlayerFacing' and row['wikitext_line'] in (239, 241):
+                row.update(status='bounded-coverage', capabilities=['modeled-radians-state-read'],
+                           note='Configured current player orientation reads unchanged at 0, pi/2 and pi, with one result; targeted Lua/Rust state proof. Native 2009 PTR correction, unavailable/default behavior, movement production and security remain UNPROVEN.')
+        for row in raw_rows:
+            if row['subsection'] == 'GetPlayerFacing() UPDATE' and not row['source_text'].startswith('==='):
+                row['note'] = 'Current configured-radians state read has separate signature proof; native PTR correction and unavailable/default/security behavior remain UNPROVEN.'
     signature_ledger = [{k: row[k] for k in ('source_id', 'status', 'capabilities', 'note')} for row in signatures]
     ledger = inventory + extracts + raw_rows + signature_ledger
     assert len({row['source_id'] for row in ledger}) == len(ledger)
     write_json(SOURCES / '3.1.0-signatures.json', dict(schema='patch-api-literal-signatures/v1', signatures=signatures))
+    policy = ('Own publication and configured-radians state only. Historical/native/security parity and other model contracts remain UNPROVEN.'
+              if args.current_radians else 'Own observed publication only. Raw lines and literal fragments include questions/headings/examples without promoting them to contracts. Native/model/security parity UNPROVEN.')
     write_json(SOURCES / '3.1.0-page-coverage.json', dict(schema='patch-api-page-coverage/v1', patch='3.1.0', client_line='retail',
-        proof_policy='Own observed publication only. Raw lines and literal fragments include questions/headings/examples without promoting them to contracts. Native/model/security parity UNPROVEN.', source_rows=ledger))
+        proof_policy=policy, source_rows=ledger))
     print(json.dumps(dict(inventory=len(inventory), extracts=len(extracts), raw_nonblank=len(raw_rows),
                           signatures=len(signatures), ledger=len(ledger), statuses=dict(Counter(row['status'] for row in ledger)))))
 
