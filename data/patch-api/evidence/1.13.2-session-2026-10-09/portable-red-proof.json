@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/originals.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/target/p1132-portable-red",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/portable-red-receipts.json",
+    "--cwd",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "15d12138f56ac2db90499303a80d9b702ccf4e5b",
+  "exit_code": 1,
+  "scope": "3 portable fixture REDs: own original archive absent, no runtime/native credit"
+}
