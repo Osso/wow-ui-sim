@@ -131,9 +131,12 @@
     },
     {
       "source_id": "wt-global-api-CollapseSkillHeader-22",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "Two unused no-op globals explicitly removed by pinned page; retail-only registration exclusion implemented after failing factory test. Targeted GREEN proof pending."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence",
+        "modern-retail-retirement"
+      ],
+      "note": "Factory and cached retail absence pass at d2dfdb4a4; Mists factory retains both callable original no-ops. No other Classic client execution or historical stateful skill-header behavior claim."
     },
     {
       "source_id": "wt-global-api-CollapseTrainerSkillLine-23",
@@ -145,9 +148,12 @@
     },
     {
       "source_id": "wt-global-api-ExpandSkillHeader-24",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "Two unused no-op globals explicitly removed by pinned page; retail-only registration exclusion implemented after failing factory test. Targeted GREEN proof pending."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence",
+        "modern-retail-retirement"
+      ],
+      "note": "Factory and cached retail absence pass at d2dfdb4a4; Mists factory retains both callable original no-ops. No other Classic client execution or historical stateful skill-header behavior claim."
     },
     {
       "source_id": "wt-global-api-ExpandTrainerSkillLine-25",

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_0_1_publication_sweep",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "environment": {
+    "P401_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/fabricated-register.json",
+    "P401_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/publication-negative-results.json"
+  },
+  "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+  "scope": "own negative control or Classic cached skill-header preservation only",
+  "exit": 1,
+  "log": "publication-negative.log",
+  "log_sha256": "950ed2b1709053d64a4df080ce2bba29b4abb7b81ea3ecd2b31d2d8eab5d9bbe"
+}

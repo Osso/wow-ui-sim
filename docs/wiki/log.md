@@ -681,3 +681,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 ## 2026-10-09 — Retail Patch 4.0.1 bounded retirements
 
 [[patch-4-0-1-api-audit]]: 419 observations/119 initial mismatches, complete 197-symbol scans, two unused no-op skill headers excluded on modern retail only. 117 publication gaps/four prose limits/one signature gap remain explicit. Parser fixtures 75/75; factory RED retained.
+
+## 2026-10-09 — Retail Patch 4.0.1 targeted GREEN
+
+[[patch-4-0-1-api-audit]]: retail factory 1/1, cached cases 2/2, Mists factory 1/1; exact gaps 119 → 117, scratch negative 117 → 118. Mists cached target requires retail and is not executed. Four historical prose/one signature/native limits remain; no broad/final gate.

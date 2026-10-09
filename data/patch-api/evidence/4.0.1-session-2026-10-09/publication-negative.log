@@ -1,0 +1,162 @@
+running 1 tests
+test patch_4_0_1_publication_sweep::patch_4_0_1_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["wt-global-api-CanBeRaidTarget-102"]; resolved/stale gaps: []
+  left: {"wt-events-ARTIFACT_COMPLETE-371", "wt-events-ARTIFACT_DIG_SITE_UPDATED-372", "wt-events-ARTIFACT_HISTORY_READY-373", "wt-events-CHAT_MSG_COMBAT_GUILD_XP_GAIN-377", "wt-global-api-AddAutoQuestPopUp-93", "wt-global-api-ArchaeologyGetIconInfo-94", "wt-global-api-ArchaeologyMapUpdateAll-95", "wt-global-api-ArcheologyGetVisibleBlobID-96", "wt-global-api-CalendarGetGuildEventInfo-99", "wt-global-api-CalendarGetGuildEventSelectionInfo-100", "wt-global-api-CalendarGetNumGuildEvents-101", "wt-global-api-CanBeRaidTarget-102", "wt-global-api-CanItemBeSocketedToArtifact-103", "wt-global-api-CanTransform-105", "wt-global-api-CastGlyphByID-108", "wt-global-api-CastGlyphByName-109", "wt-global-api-ClearRaidMarker-110", "wt-global-api-CollapseGuildTradeSkillHeader-113", "wt-global-api-CommentatorStartWargame-114", "wt-global-api-ExpandGuildTradeSkillHeader-117", "wt-global-api-GetActiveArtifactByRace-120", "wt-global-api-GetAvailableLocales-128", "wt-global-api-GetCVarBitfield-132", "wt-global-api-GetCemeteryPreference-134", "wt-global-api-GetCurrentLevelFeatures-139", "wt-global-api-GetDebugAnimationStats-142", "wt-global-api-GetDemotionRank-145", "wt-global-api-GetEclipseDirection-149", "wt-global-api-GetFlyoutID-151", "wt-global-api-GetGlyphClearInfo-154", "wt-global-api-GetGuildBankWithdrawGoldLimit-159", "wt-global-api-GetGuildFactionInfo-163", "wt-global-api-GetGuildLevelEnabled-165", "wt-global-api-GetGuildMemberRecipes-167", "wt-global-api-GetGuildNewsFilters-168", "wt-global-api-GetGuildNewsMemberName-170", "wt-global-api-GetGuildNewsSort-171", "wt-global-api-GetGuildPerkInfo-172", "wt-global-api-GetGuildRecipeInfoPostQuery-173", "wt-global-api-GetGuildRecipeMember-174", "wt-global-api-GetGuildRewardInfo-175", "wt-global-api-GetGuildRosterLargestAchievementPoints-177", "wt-global-api-GetGuildTradeSkillInfo-179", "wt-global-api-GetMonitorAspectRatio-185", "wt-global-api-GetMonitorCount-186", "wt-global-api-GetMonitorName-187", "wt-global-api-GetNumFlyouts-193", "wt-global-api-GetNumGlyphs-194", "wt-global-api-GetNumGuildRewards-197", "wt-global-api-GetNumGuildTradeSkill-198", "wt-global-api-GetNumQuestCurrencies-200", "wt-global-api-GetNumSkillLines-45", "wt-global-api-GetPlayerTradeCurrency-208", "wt-global-api-GetPromotionRank-213", "wt-global-api-GetQuestLogIndexByID-217", "wt-global-api-GetQuestLogPortraitTurnIn-220", "wt-global-api-GetQuestLogRewardHonor-50", "wt-global-api-GetQuestPortraitGiver-223", "wt-global-api-GetQuestPortraitTurnIn-224", "wt-global-api-GetRatedBattleGroundInfo-225", "wt-global-api-GetRewardNumSkillUps-229", "wt-global-api-GetRewardSkillLineID-230", "wt-global-api-GetSavedInstanceChatLink-232", "wt-global-api-GetSavedInstanceEncounterInfo-233", "wt-global-api-GetSelectedGlyphSpellIndex-235", "wt-global-api-GetSelectedSkill-52", "wt-global-api-GetSkillLineInfo-54", "wt-global-api-GetSpellBookItemInfo-239", "wt-global-api-GetSpellBookItemTexture-241", "wt-global-api-GetTargetTradeCurrency-248", "wt-global-api-GetTradeSkillSubClassFilteredSlots-250", "wt-global-api-GetWarGameQueueStatus-253", "wt-global-api-GuildNewsSetSticky-258", "wt-global-api-InGuildParty-261", "wt-global-api-InitiateRolePoll-262", "wt-global-api-IsAchievementEligible-263", "wt-global-api-IsBattlefieldArena-66", "wt-global-api-IsCemeterySelectionAvailable-265", "wt-global-api-IsDualWielding-266", "wt-global-api-IsGlyphFlagSet-268", "wt-global-api-IsInAuthenticatedRank-270", "wt-global-api-IsTradeSkillGuild-274", "wt-global-api-JoinArena-276", "wt-global-api-JoinRatedBattlefield-277", "wt-global-api-MouseOverrideCinematicDisable-279", "wt-global-api-OldAbandonQuest-280", "wt-global-api-PlaceRaidMarker-283", "wt-global-api-PlaySoundKitID-284", "wt-global-api-PlayerHasHearthstone-285", "wt-global-api-PortGraveyard-286", "wt-global-api-QuestGetAutoLaunched-291", "wt-global-api-QuestIsFromAreaTrigger-292", "wt-global-api-QuestLogShouldShowPortrait-293", "wt-global-api-RefreshWorldMap-295", "wt-global-api-RemoveAutoQuestPopU)
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.55s
+     Running tests/prefork_full_ui.rs (target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.15ms
+[  0.002s] [Startup] rilua VM created in 95.94µs
+[  0.002s] [Startup] builtin frames initialized in 66.14µs
+[  0.002s] [Startup] template registry cleared in 6.52µs
+[  0.002s] [Startup] intrinsic templates registered in 5.41µs
+[  0.002s] [Startup] initial app_data lua handle installed in 221.00ns
+[  0.108s] [Startup] init_lua_state complete in 105.54ms
+[  0.108s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.108s] [Startup] initial screen globals installed in 78.36µs
+[  0.108s] [Startup] WowLuaEnv::new complete
+[  2.157s] [Startup] apply_post_load_workarounds: begin
+[  2.157s] [Workarounds] starting patch_edit_mode_manager
+[  2.157s] [Workarounds] finished patch_edit_mode_manager in 255.11µs
+[  2.157s] [Workarounds] starting init_edit_mode_layout
+[  2.157s] [EditMode] starting setup_layout_info
+[  2.160s] [EditMode] finished setup_layout_info in 2.74ms
+[  2.160s] [EditMode] starting apply_system_anchors
+[  2.279s] [EditMode] finished apply_system_anchors in 118.88ms
+[  2.279s] [EditMode] starting finalize_action_bar_positions
+[  2.281s] [EditMode] finished finalize_action_bar_positions in 1.53ms
+[  2.281s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.281s] [EditMode] finished invoke_anchor_changed_hooks in 355.72µs
+[  2.281s] [EditMode] starting fix_action_bar_nan_size
+[  2.281s] [EditMode] finished fix_action_bar_nan_size in 37.76µs
+[  2.281s] [EditMode] starting fix_action_bar_scale
+[  2.281s] [EditMode] finished fix_action_bar_scale in 4.32µs
+[  2.281s] [Workarounds] finished init_edit_mode_layout in 123.91ms
+[  2.281s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.281s] [Workarounds] finished patch_ui_parent_panel_toggles in 202.63µs
+[  2.281s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.281s] [Workarounds] finished patch_uiparent_onupdate_worklists in 82.43µs
+[  2.281s] [Workarounds] starting init_chat_type_colors
+[  2.281s] [Workarounds] finished init_chat_type_colors in 101.32µs
+[  2.281s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.281s] [Workarounds] finished patch_chat_voice_button_surface in 98.90µs
+[  2.281s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.281s] [Workarounds] finished patch_item_socketing_tooltips in 49.55µs
+[  2.281s] [Workarounds] starting patch_character_select_selected_name
+[  2.281s] [Workarounds] finished patch_character_select_selected_name in 26.64µs
+[  2.281s] [Workarounds] starting patch_character_create_defaults
+[  2.282s] [Workarounds] finished patch_character_create_defaults in 190.79µs
+[  2.282s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.288s] [Workarounds] finished patch_character_frame_title_refresh in 6.16ms
+[  2.288s] [Workarounds] starting patch_vignette_pin_template
+[  2.288s] [Workarounds] finished patch_vignette_pin_template in 83.66µs
+[  2.288s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.288s] [Workarounds] finished patch_fog_of_war_pin_mixin in 233.09µs
+[  2.288s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.293s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.82ms
+[  2.293s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.293s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 55.48µs
+[  2.293s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.293s] [Workarounds] finished ensure_adventure_map_frame_surface in 411.10µs
+[  2.293s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.294s] [Workarounds] finished patch_action_bar_button_event_fanout in 85.97µs
+[  2.294s] [Workarounds] starting patch_paging_controls_page_text
+[  2.294s] [Workarounds] finished patch_paging_controls_page_text in 33.53µs
+[  2.294s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.294s] [Workarounds] finished patch_talent_edge_frame_level_sync in 25.35µs
+[  2.294s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.294s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 53.93µs
+[  2.294s] [Workarounds] starting patch_game_time_defaults
+[  2.294s] [Workarounds] finished patch_game_time_defaults in 6.09µs
+[  2.294s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.294s] [Workarounds] finished patch_tooltip_nineslice_surface in 36.48µs
+[  2.294s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.294s] [Workarounds] finished patch_container_frame_token_tracker in 34.42µs
+[  2.294s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.294s] [Workarounds] finished patch_achievement_display_set_achievements in 7.28µs
+[  2.294s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.294s] [Workarounds] finished patch_housing_dashboard_preload in 143.07µs
+[  2.294s] [Workarounds] starting patch_lfg_lock_list
+[  2.294s] [Workarounds] finished patch_lfg_lock_list in 30.19µs
+[  2.294s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.294s] [Workarounds] finished patch_auction_house_browse_results_event in 55.29µs
+[  2.294s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.294s] [Workarounds] finished patch_auction_house_search_context_aliases in 24.58µs
+[  2.294s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.294s] [Workarounds] finished patch_auth_challenge_frame_parent in 61.65µs
+[  2.294s] [Workarounds] starting patch_settings_surface_defaults
+[  2.294s] [Workarounds] finished patch_settings_surface_defaults in 290.21µs
+[  2.294s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.294s] [Workarounds] finished patch_settings_canvas_layout_visibility in 94.82µs
+[  2.294s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.350s] [Startup] apply_post_load_workarounds: globals restored
+[  2.350s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.350s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.481s] [Startup] begin login sequence
+[  2.481s] [Startup] Firing ADDON_LOADED
+[  2.481s] [Startup] Firing VARIABLES_LOADED
+[  2.603s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.657s] [Startup] Firing UI_SCALE_CHANGED
+[  2.658s] [Startup] Firing PLAYER_LOGIN
+[  2.658s] [Startup] end login sequence in 177.08ms
+[  2.658s] [Startup] begin world enter sequence
+[  2.658s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.658s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.658s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.906s] [EditMode] starting setup_layout_info
+[  2.909s] [EditMode] finished setup_layout_info in 3.54ms
+[  2.909s] [EditMode] starting apply_system_anchors
+[  3.035s] [EditMode] finished apply_system_anchors in 125.80ms
+[  3.035s] [EditMode] starting finalize_action_bar_positions
+[  3.037s] [EditMode] finished finalize_action_bar_positions in 2.32ms
+[  3.037s] [EditMode] starting invoke_anchor_changed_hooks
+[  3.043s] [EditMode] finished invoke_anchor_changed_hooks in 5.40ms
+[  3.043s] [EditMode] starting fix_action_bar_nan_size
+[  3.043s] [EditMode] finished fix_action_bar_nan_size in 64.92µs
+[  3.043s] [EditMode] starting fix_action_bar_scale
+[  3.043s] [EditMode] finished fix_action_bar_scale in 4.83µs
+[  3.043s] [EditMode] starting reapply_player_frame_anchor
+[  3.044s] [EditMode] finished reapply_player_frame_anchor in 1.33ms
+[  3.052s] [Startup] end world enter sequence in 393.98ms
+[  3.052s] [Startup] begin post-login events
+[  3.053s] [Startup] Firing UNIT_AURA
+[  3.054s] [Startup] Firing PET_UI_UPDATE
+[  3.057s] [Startup] Firing BAG_UPDATE_DELAYED
+[  3.058s] [Startup] Firing QUEST_LOG_UPDATE
+[  3.059s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  3.141s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  3.141s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  3.142s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  3.153s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  3.153s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  3.153s] [Startup] Firing UPDATE_BINDINGS
+[  3.156s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  3.158s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  3.159s] [Startup] end post-login events in 106.44ms
+[  3.159s] [Startup] begin close startup special windows
+[  3.159s] [Startup] end close startup special windows in 249.42µs
+[  3.159s] [Startup] begin FIRST_FRAME_RENDERED
+[  3.159s] [Startup] Firing FIRST_FRAME_RENDERED
+[  3.159s] [Startup] end FIRST_FRAME_RENDERED in 157.35µs
+[  3.159s] [Startup] begin unblock hidden splash alerts
+[  3.159s] [Startup] end unblock hidden splash alerts in 13.18µs
+[  3.159s] [Startup] begin post-event workarounds
+[  3.159s] [Startup] end post-event workarounds in 671.00ns
+
+thread 'main' (1319679) panicked at /home/osso/.worktrees/wow-ui-sim-p401-source/tests/common/publication_sweep.rs:544:5:
+assertion `left == right` failed: new gaps: ["wt-global-api-CanBeRaidTarget-102"]; resolved/stale gaps: []
+  left: {"wt-events-ARTIFACT_COMPLETE-371", "wt-events-ARTIFACT_DIG_SITE_UPDATED-372", "wt-events-ARTIFACT_HISTORY_READY-373", "wt-events-CHAT_MSG_COMBAT_GUILD_XP_GAIN-377", "wt-global-api-AddAutoQuestPopUp-93", "wt-global-api-ArchaeologyGetIconInfo-94", "wt-global-api-ArchaeologyMapUpdateAll-95", "wt-global-api-ArcheologyGetVisibleBlobID-96", "wt-global-api-CalendarGetGuildEventInfo-99", "wt-global-api-CalendarGetGuildEventSelectionInfo-100", "wt-global-api-CalendarGetNumGuildEvents-101", "wt-global-api-CanBeRaidTarget-102", "wt-global-api-CanItemBeSocketedToArtifact-103", "wt-global-api-CanTransform-105", "wt-global-api-CastGlyphByID-108", "wt-global-api-CastGlyphByName-109", "wt-global-api-ClearRaidMarker-110", "wt-global-api-CollapseGuildTradeSkillHeader-113", "wt-global-api-CommentatorStartWargame-114", "wt-global-api-ExpandGuildTradeSkillHeader-117", "wt-global-api-GetActiveArtifactByRace-120", "wt-global-api-GetAvailableLocales-128", "wt-global-api-GetCVarBitfield-132", "wt-global-api-GetCemeteryPreference-134", "wt-global-api-GetCurrentLevelFeatures-139", "wt-global-api-GetDebugAnimationStats-142", "wt-global-api-GetDemotionRank-145", "wt-global-api-GetEclipseDirection-149", "wt-global-api-GetFlyoutID-151", "wt-global-api-GetGlyphClearInfo-154", "wt-global-api-GetGuildBankWithdrawGoldLimit-159", "wt-global-api-GetGuildFactionInfo-163", "wt-global-api-GetGuildLevelEnabled-165", "wt-global-api-GetGuildMemberRecipes-167", "wt-global-api-GetGuildNewsFilters-168", "wt-global-api-GetGuildNewsMemberName-170", "wt-global-api-GetGuildNewsSort-171", "wt-global-api-GetGuildPerkInfo-172", "wt-global-api-GetGuildRecipeInfoPostQuery-173", "wt-global-api-GetGuildRecipeMember-174", "wt-global-api-GetGuildRewardInfo-175", "wt-global-api-GetGuildRosterLargestAchievementPoints-177", "wt-global-api-GetGuildTradeSkillInfo-179", "wt-global-api-GetMonitorAspectRatio-185", "wt-global-api-GetMonitorCount-186", "wt-global-api-GetMonitorName-187", "wt-global-api-GetNumFlyouts-193", "wt-global-api-GetNumGlyphs-194", "wt-global-api-GetNumGuildRewards-197", "wt-global-api-GetNumGuildTradeSkill-198", "wt-global-api-GetNumQuestCurrencies-200", "wt-global-api-GetNumSkillLines-45", "wt-global-api-GetPlayerTradeCurrency-208", "wt-global-api-GetPromotionRank-213", "wt-global-api-GetQuestLogIndexByID-217", "wt-global-api-GetQuestLogPortraitTurnIn-220", "wt-global-api-GetQuestLogRewardHonor-50", "wt-global-api-GetQuestPortraitGiver-223", "wt-global-api-GetQuestPortraitTurnIn-224", "wt-global-api-GetRatedBattleGroundInfo-225", "wt-global-api-GetRewardNumSkillUps-229", "wt-global-api-GetRewardSkillLineID-230", "wt-global-api-GetSavedInstanceChatLink-232", "wt-global-api-GetSavedInstanceEncounterInfo-233", "wt-global-api-GetSelectedGlyphSpellIndex-235", "wt-global-api-GetSelectedSkill-52", "wt-global-api-GetSkillLineInfo-54", "wt-global-api-GetSpellBookItemInfo-239", "wt-global-api-GetSpellBookItemTexture-241", "wt-global-api-GetTargetTradeCurrency-248", "wt-global-api-GetTradeSkillSubClassFilteredSlots-250", "wt-global-api-GetWarGameQueueStatus-253", "wt-global-api-GuildNewsSetSticky-258", "wt-global-api-InGuildParty-261", "wt-global-api-InitiateRolePoll-262", "wt-global-api-IsAchievementEligible-263", "wt-global-api-IsBattlefieldArena-66", "wt-global-api-IsCemeterySelectionAvailable-265", "wt-global-api-IsDualWielding-266", "wt-global-api-IsGlyphFlagSet-268", "wt-global-api-IsInAuthenticatedRank-270", "wt-global-api-IsTradeSkillGuild-274", "wt-global-api-JoinArena-276", "wt-global-api-JoinRatedBattlefield-277", "wt-global-api-MouseOverrideCinematicDisable-279", "wt-global-api-OldAbandonQuest-280", "wt-global-api-PlaceRaidMarker-283", "wt-global-api-PlaySoundKitID-284", "wt-global-api-PlayerHasHearthstone-285", "wt-global-api-PortGraveyard-286", "wt-global-api-QuestGetAutoLaunched-291", "wt-global-api-QuestIsFromAreaTrigger-292", "wt-global-api-QuestLogShouldShowPortrait-293", "wt-global-api-RefreshWorldMap-295", "wt-global-api-RemoveAutoQuestPopUp-296", "wt-global-api-ResistancePercent-304", "wt-global-api-SetAutoDeclineGuildInvites-306", "wt-global-api-SetCVarBitfield-307", "wt-global-api-SetCemeteryPreference-308", "wt-global-api-SetGlyphFilter-311", "wt-global-api-SetGlyphNameFilter-312", "wt-global-api-SetGuildBankTabItemWithdraw-313", "wt-global-api-SetGuildBankWithdrawGoldLimit-314", "wt-global-api-SetGuildNewsFilter-315", "wt-global-api-SetGuildTradeSkillCategoryFilter-316", "wt-global-api-SetGuildTradeSkillItemNameFilter-317", "wt-global-api-SetSpellbookPetAction-324", "wt-global-api-ShowQuestComplete-327", "wt-global-api-ShowQuestOffer-328", "wt-global-api-SortGuildTradeSkill-331", "wt-global-api-StartWarGame-333", "wt-global-api-ToggleGlyphFilter-335", "wt-global-api-Transform-336", "wt-global-api-UnitAttackerListCount-339", "wt-global-api-UnitAttackerListInfo-340", "wt-global-api-UnitSetRole-348", "wt-global-api-ViewGuildRecipes-349", "wt-global-api-WarGameRespond-350"}
+ right: {"wt-events-ARTIFACT_COMPLETE-371", "wt-events-ARTIFACT_DIG_SITE_UPDATED-372", "wt-events-ARTIFACT_HISTORY_READY-373", "wt-events-CHAT_MSG_COMBAT_GUILD_XP_GAIN-377", "wt-global-api-AddAutoQuestPopUp-93", "wt-global-api-ArchaeologyGetIconInfo-94", "wt-global-api-ArchaeologyMapUpdateAll-95", "wt-global-api-ArcheologyGetVisibleBlobID-96", "wt-global-api-CalendarGetGuildEventInfo-99", "wt-global-api-CalendarGetGuildEventSelectionInfo-100", "wt-global-api-CalendarGetNumGuildEvents-101", "wt-global-api-CanItemBeSocketedToArtifact-103", "wt-global-api-CanTransform-105", "wt-global-api-CastGlyphByID-108", "wt-global-api-CastGlyphByName-109", "wt-global-api-ClearRaidMarker-110", "wt-global-api-CollapseGuildTradeSkillHeader-113", "wt-global-api-CommentatorStartWargame-114", "wt-global-api-ExpandGuildTradeSkillHeader-117", "wt-global-api-GetActiveArtifactByRace-120", "wt-global-api-GetAvailableLocales-128", "wt-global-api-GetCVarBitfield-132", "wt-global-api-GetCemeteryPreference-134", "wt-global-api-GetCurrentLevelFeatures-139", "wt-global-api-GetDebugAnimationStats-142", "wt-global-api-GetDemotionRank-145", "wt-global-api-GetEclipseDirection-149", "wt-global-api-GetFlyoutID-151", "wt-global-api-GetGlyphClearInfo-154", "wt-global-api-GetGuildBankWithdrawGoldLimit-159", "wt-global-api-GetGuildFactionInfo-163", "wt-global-api-GetGuildLevelEnabled-165", "wt-global-api-GetGuildMemberRecipes-167", "wt-global-api-GetGuildNewsFilters-168", "wt-global-api-GetGuildNewsMemberName-170", "wt-global-api-GetGuildNewsSort-171", "wt-global-api-GetGuildPerkInfo-172", "wt-global-api-GetGuildRecipeInfoPostQuery-173", "wt-global-api-GetGuildRecipeMember-174", "wt-global-api-GetGuildRewardInfo-175", "wt-global-api-GetGuildRosterLargestAchievementPoints-177", "wt-global-api-GetGuildTradeSkillInfo-179", "wt-global-api-GetMonitorAspectRatio-185", "wt-global-api-GetMonitorCount-186", "wt-global-api-GetMonitorName-187", "wt-global-api-GetNumFlyouts-193", "wt-global-api-GetNumGlyphs-194", "wt-global-api-GetNumGuildRewards-197", "wt-global-api-GetNumGuildTradeSkill-198", "wt-global-api-GetNumQuestCurrencies-200", "wt-global-api-GetNumSkillLines-45", "wt-global-api-GetPlayerTradeCurrency-208", "wt-global-api-GetPromotionRank-213", "wt-global-api-GetQuestLogIndexByID-217", "wt-global-api-GetQuestLogPortraitTurnIn-220", "wt-global-api-GetQuestLogRewardHonor-50", "wt-global-api-GetQuestPortraitGiver-223", "wt-global-api-GetQuestPortraitTurnIn-224", "wt-global-api-GetRatedBattleGroundInfo-225", "wt-global-api-GetRewardNumSkillUps-229", "wt-global-api-GetRewardSkillLineID-230", "wt-global-api-GetSavedInstanceChatLink-232", "wt-global-api-GetSavedInstanceEncounterInfo-233", "wt-global-api-GetSelectedGlyphSpellIndex-235", "wt-global-api-GetSelectedSkill-52", "wt-global-api-GetSkillLineInfo-54", "wt-global-api-GetSpellBookItemInfo-239", "wt-global-api-GetSpellBookItemTexture-241", "wt-global-api-GetTargetTradeCurrency-248", "wt-global-api-GetTradeSkillSubClassFilteredSlots-250", "wt-global-api-GetWarGameQueueStatus-253", "wt-global-api-GuildNewsSetSticky-258", "wt-global-api-InGuildParty-261", "wt-global-api-InitiateRolePoll-262", "wt-global-api-IsAchievementEligible-263", "wt-global-api-IsBattlefieldArena-66", "wt-global-api-IsCemeterySelectionAvailable-265", "wt-global-api-IsDualWielding-266", "wt-global-api-IsGlyphFlagSet-268", "wt-global-api-IsInAuthenticatedRank-270", "wt-global-api-IsTradeSkillGuild-274", "wt-global-api-JoinArena-276", "wt-global-api-JoinRatedBattlefield-277", "wt-global-api-MouseOverrideCinematicDisable-279", "wt-global-api-OldAbandonQuest-280", "wt-global-api-PlaceRaidMarker-283", "wt-global-api-PlaySoundKitID-284", "wt-global-api-PlayerHasHearthstone-285", "wt-global-api-PortGraveyard-286", "wt-global-api-QuestGetAutoLaunched-291", "wt-global-api-QuestIsFromAreaTrigger-292", "wt-global-api-QuestLogShouldShowPortrait-293", "wt-global-api-RefreshWorldMap-295", "wt-global-api-RemoveAutoQuestPopUp-296", "wt-global-api-ResistancePercent-304", "wt-global-api-SetAutoDeclineGuildInvites-306", "wt-global-api-SetCVarBitfield-307", "wt-global-api-SetCemeteryPreference-308", "wt-global-api-SetGlyphFilter-311", "wt-global-api-SetGlyphNameFilter-312", "wt-global-api-SetGuildBankTabItemWithdraw-313", "wt-global-api-SetGuildBankWithdrawGoldLimit-314", "wt-global-api-SetGuildNewsFilter-315", "wt-global-api-SetGuildTradeSkillCategoryFilter-316", "wt-global-api-SetGuildTradeSkillItemNameFilter-317", "wt-global-api-SetSpellbookPetAction-324", "wt-global-api-ShowQuestComplete-327", "wt-global-api-ShowQuestOffer-328", "wt-global-api-SortGuildTradeSkill-331", "wt-global-api-StartWarGame-333", "wt-global-api-ToggleGlyphFilter-335", "wt-global-api-Transform-336", "wt-global-api-UnitAttackerListCount-339", "wt-global-api-UnitAttackerListInfo-340", "wt-global-api-UnitSetRole-348", "wt-global-api-ViewGuildRecipes-349", "wt-global-api-WarGameRespond-350"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.worktrees/wow-ui-sim-p401-source/target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 patch_4_0_1_publication_sweep --nocapture` (exit status: 1)

@@ -1,0 +1,64 @@
+"""Pinned Cataclysm NEW/REMOVED inventories and retained breaking prose."""
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class CataclysmTests(unittest.TestCase):
+    def test_labeled_inventories_and_breaking_references(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'source.wikitext'
+            source.write_text('{{apichanges|4.0.1|next=4.1.0}}\n'
+                              '== Breaking changes ==\n'
+                              '* {{api|GetItemCooldown}} accepts numeric IDs.\n'
+                              '* Use {{api|t=e|UNIT_POWER}} instead.\n'
+                              '== Global API == <!-- generated -->\n'
+                              ': REMOVED {{api|getglobal}}\n'
+                              ': NEW {{api|GetMastery}}\n'
+                              '== Events == <!-- generated -->\n'
+                              ': REMOVED {{api|t=e|UNIT_MANA}}\n'
+                              ': NEW {{api|t=e|UNIT_POWER}}\n')
+            output = Path(directory) / 'register.json'
+            result = subprocess.run([sys.executable, '-B', str(ROOT / 'tools/gen_patch_wikitext_register.py'),
+                                     '4.0.1', str(source), '1271877', str(output),
+                                     '--cataclysm-labeled-inventory', '--client-line', 'retail'],
+                                    capture_output=True, text=True, cwd=ROOT)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            rows = json.loads(output.read_text())['entries']
+            self.assertEqual([(row['section'], row['direction'], row['symbol'], row['wikitext_line'])
+                              for row in rows], [
+                ('global-api', 'changed', 'GetItemCooldown', 3),
+                ('events', 'changed', 'UNIT_POWER', 4),
+                ('global-api', 'removed', 'getglobal', 6),
+                ('global-api', 'added', 'GetMastery', 7),
+                ('events', 'removed', 'UNIT_MANA', 9),
+                ('events', 'added', 'UNIT_POWER', 10)])
+            self.assertEqual(len({row['id'] for row in rows}), len(rows))
+
+    def test_extract_keeps_prose_and_generated_build_context(self):
+        import extract_patch_non_inventory as extractor
+        raw = ('{{apichanges|4.0.1|next=4.1.0}}\n'
+               '== Breaking changes ==\n* {{api|GetItemCooldown}} accepts numeric IDs.\n'
+               '== Global API == <!-- Automatically generated: 4.0.1.13066 -->\n'
+               ': NEW {{api|GetMastery}}\n'
+               '== Events == <!-- Automatically generated: 4.0.1.13066 -->\n'
+               ': REMOVED {{api|t=e|UNIT_MANA}}\n')
+        text = extractor.extract_text(raw, cataclysm_labeled_inventory=True)
+        self.assertIn('* GetItemCooldown accepts numeric IDs.', text)
+        self.assertIn('4.0.1.13066', text)
+        self.assertNotIn('GetMastery', text)
+        self.assertNotIn('UNIT_MANA', text)
+
+    def test_default_parser_does_not_adopt_new_inventory(self):
+        import gen_patch_wikitext_register as generator
+        raw = '== Global API == <!-- generated -->\n: NEW {{api|GetMastery}}\n'
+        self.assertEqual(generator.split_sections(raw), {})
+
+
+if __name__ == '__main__':
+    unittest.main()

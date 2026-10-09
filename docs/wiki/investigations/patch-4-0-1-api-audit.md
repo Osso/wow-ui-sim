@@ -12,11 +12,17 @@ Existing colon/indented-list and combat-restriction flags do not parse NEW/REMOV
 
 Complete 197-symbol expected-absence scans cover 2,551 cached retail Lua files plus complete src/tests Rust/Lua/XML, including Lua strings. Fully qualified and bare spellings coincide for these global/event names. `rg` is unavailable; recorded Python regex uses ASCII whole-word boundaries and retains all matching lines, file hashes and paths in `retirement-scans.json` (1.1 MB).
 
-Only CollapseSkillHeader/ExpandSkillHeader are retired: explicit source removals, no cached retail/test callers, only two no-op registrations. Factory RED proves both were callable. A separate 4.0.1 list gates modern-retail registration exclusion; Classic unchanged. GREEN proof is pending this implementation commit.
+Only CollapseSkillHeader/ExpandSkillHeader are retired: explicit source removals, no cached retail/test callers, only two no-op registrations. Factory RED proves both were callable. A separate 4.0.1 list gates modern-retail registration exclusion; Classic unchanged. Targeted GREEN at d2dfdb4a4: retail factory 1/1, retail prefork 2/2 (own sweep plus cached retirement), Mists factory 1/1. Only the two expected source rows change; gaps 119 → 117. Mists cached prefork is blocked by the target's required client-retail feature, not executed; no other Classic runtime proof.
 
 The remaining 117 publication gaps have individual observations and domain/consumer reasons in the page ledger. Current consumers preserve GetQuestLogRewardHonor and later-retired CVar bitfield aliases; existing state APIs with tests are not swept into the unused-no-op change. Inventory identities alone provide no primary call signatures or state contracts for adding missing gameplay models. No new constants, aliases, shims or fallback behavior.
 
 Four historical breaking statements remain separate native limits: implicit script globals; legacy per-power event non-emission and replacement payload/order; numeric-only GetItemCooldown; protected buff/weapon-enchant cancellation. C_Item.GetItemCooldown currently ignores its itemInfo and returns constants: no item cooldown backing model exists here, so narrowing its current retail input based on a 2010 statement would be unsound. Dedicated signature row preserves this gap. No native client, structure or enum parity claim.
+
+## Targeted evidence
+
+[Command receipts](../../../data/patch-api/evidence/4.0.1-session-2026-10-09/) retain exact argv, revisions, environment, scope and logs. Negative scratch register changes one published symbol without changing row count: exact gaps 117 → 118, own sweep fails as required. Ledger derives 428 source IDs: 302 bounded publication/absence rows, 117 publication gaps, four prose limits, one separate signature gap and four metadata rows. No structure/enumeration statements exist in this pinned page.
+
+Inherited iced manifest deprecations remain unsuppressed. No check/lint/type/readability/coverage, broad/all-publication suite, startup smoke, full-suite or final acceptance gate. Main owns integration and final verification.
 
 ## Successor boundary
 

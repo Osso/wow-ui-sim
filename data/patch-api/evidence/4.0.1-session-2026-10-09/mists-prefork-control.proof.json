@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_0_1_skill_headers_cached_surface",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "environment": {},
+  "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+  "scope": "own negative control or Classic cached skill-header preservation only",
+  "exit": 101,
+  "log": "mists-prefork-control.log",
+  "log_sha256": "bdfb377d63611ee0cd8db586033075a54d334e4e3377735acc0d336bde380bdb"
+}

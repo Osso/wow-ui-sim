@@ -1,0 +1,27 @@
+
+running 1 test
+test patch_4_0_1_retirements::patch_4_0_1_skill_headers_factory_surface ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8183 filtered out; finished in 0.13s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p401-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 45s
+     Running tests/integration.rs (target/debug/deps/integration-f15e4c1da9a8b8f4)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.76ms
+[  0.002s] [Startup] rilua VM created in 114.41µs
+[  0.002s] [Startup] builtin frames initialized in 74.10µs
+[  0.002s] [Startup] template registry cleared in 8.26µs
+[  0.003s] [Startup] intrinsic templates registered in 1.14ms
+[  0.003s] [Startup] initial app_data lua handle installed in 551.00ns
+[  0.123s] [Startup] init_lua_state complete in 119.85ms
+[  0.123s] [Startup] final app_data lua handle installed in 191.00ns
+[  0.123s] [Startup] initial screen globals installed in 98.23µs
+[  0.123s] [Startup] WowLuaEnv::new complete

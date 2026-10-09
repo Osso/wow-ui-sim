@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_4_0_1",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p401-source",
+  "environment": {
+    "P401_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p401-source/data/patch-api/evidence/4.0.1-session-2026-10-09/publication-green-results.json"
+  },
+  "revision": "d2dfdb4a46cf8de969344a2b7d9194cb2d403688",
+  "scope": "targeted own publication or skill-header behavior only",
+  "exit": 0,
+  "log": "retail-prefork-green.log",
+  "log_sha256": "2ba09c82026a5d8f58fc3346a4a588b449d324e4a249610ad16e10f01f48404b"
+}

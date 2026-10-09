@@ -7,7 +7,7 @@ Account for the complete pinned historical retail page, revision 1271877, in `da
 - [x] Retain explicit NEW/REMOVED source occurrences and typed Breaking changes references, with source lines and unique IDs.
 - [x] Keep default generator/extractor behavior unchanged; new Cataclysm handling is opt-in.
 - [x] Retain all four breaking statements, navigation and both generated-build contexts outside inventory.
-- [ ] Probe publication/absence in cached retail Game after retail-only successors; require exact known-gap equality.
+- [x] Probe publication/absence in cached retail Game after retail-only successors; require exact known-gap equality.
 - [ ] Keep pending 4.1.0, 4.2.0, 4.3.0 and 4.3.4 placeholders in order before actual 5.0.1/later retail registers; main replaces on integration.
 
 ## How it works
@@ -33,7 +33,7 @@ Account for the complete pinned historical retail page, revision 1271877, in `da
 
 ## Known gaps (current cycle)
 
-- [ ] Exclude CollapseSkillHeader/ExpandSkillHeader no-op registration on modern retail after complete caller/cache scans, without changing Classic behavior.
+- [x] Exclude CollapseSkillHeader/ExpandSkillHeader no-op registration on modern retail after complete caller/cache scans; Mists factory preservation passes. Other Classic client execution remains unverified.
 - [ ] Four breaking statements and one historical numeric-only input contract remain native/model limits; 117 publication mismatches retained in exact gap ledger.
 
 ## Out of scope
