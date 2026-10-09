@@ -1,0 +1,12 @@
+{
+  "identity": [
+    480026,
+    4615755,
+    "2023-07-10T10:27:33Z"
+  ],
+  "base": "17cc9b0f20869d34b5445adf87a89a27afd565be",
+  "raw_sha256": "8af5d8d0d80a74eece469856cdd39ed0652f834669f7e7f759f34774dc15791e",
+  "response_sha256": "2abbe023bd2dd2e7a1ee2c47a8500553e4d1e4eccc33b450e06f2ebc37f5e0d6",
+  "body_exact": true,
+  "scope": "identity pin before any accounting derivation"
+}
