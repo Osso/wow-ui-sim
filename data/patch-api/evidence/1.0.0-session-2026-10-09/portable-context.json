@@ -1,0 +1,19 @@
+{
+  "scope": "immutable original SOURCE evidence; later receipts excluded",
+  "original_source_green_revision": "039cfa29d",
+  "archive_sha256": "4db3045271c7043291e49572e571a18a0e507a6f8c6fb29e879c8a2e3ff95f0b",
+  "archive_bytes": 155329,
+  "archive_members": 43,
+  "original_seals": 42,
+  "original_seals_sha256": "c60a8cc891f28dd3b8175982a293463f636d7abda2382a019c944a28391c694d",
+  "original_base": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+  "excluded_runtime_paths": [
+    ".git",
+    "target",
+    "Interface",
+    "current tools",
+    "credentials"
+  ],
+  "default_register_entries": 0,
+  "default_extract_bytes": 104
+}

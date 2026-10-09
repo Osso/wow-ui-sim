@@ -43,6 +43,6 @@
     "(?i)(?:password|api_key|access_token)\\s*[:=]\\s*[\"'][^\"']{8,}[\"']"
   ],
   "artifact_matches": [],
-  "scope": "original evidence/full streams before first commit; detector-literal review excluded",
+  "scope": "all original evidence and full streams before immutable sealing; detector-literal review excluded",
   "limit": "bounded pattern scan, not exhaustive secret detection; streams unaltered"
 }
