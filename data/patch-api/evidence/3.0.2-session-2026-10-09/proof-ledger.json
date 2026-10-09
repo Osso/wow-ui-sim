@@ -1,0 +1,68 @@
+{
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p302-source",
+  "implementation_revision": "6027d1349c757fccaf43040012ed112abb054cb3",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_2_source.py"
+      ],
+      "revision": "ab37ab930",
+      "result": "RED 4 expected missing-parser/flag failures",
+      "receipt": "red.log",
+      "validity": "historical"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_2_source.py"
+      ],
+      "revision": "74684cc53",
+      "result": "GREEN 4/4",
+      "receipt": "green.log",
+      "validity": "original parser scope; expanded assertions proved separately"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py"
+      ],
+      "revision": "d18cf30fc",
+      "result": "RED 4 expected missing-validator failures",
+      "receipt": "accounting-red.log",
+      "validity": "historical"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_2_source.py"
+      ],
+      "revision": "6027d1349c757fccaf43040012ed112abb054cb3",
+      "result": "GREEN 4/4 including 346 labeled rows and unchanged default bytes",
+      "receipt": "expanded-source-green.log",
+      "validity": "current code; later docs/log-only changes do not invalidate"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py"
+      ],
+      "revision": "6027d1349c757fccaf43040012ed112abb054cb3",
+      "result": "GREEN 4/4; 1292 omission controls; false credit/Classic rejection; relocated no-Git replay; 4 serialized seal rejections and byte restorations",
+      "receipt": "accounting-green.log",
+      "validity": "current source/code/input scope; later docs/log-only changes do not invalidate"
+    }
+  ],
+  "original_seals": 36,
+  "closure_seals": 1,
+  "green_receipt_seals": 2,
+  "native_observations": 0,
+  "runtime_observations": 0,
+  "meaningful_closures": 0,
+  "omitted_gates": "broad/check/lint/readability/profile/startup/full-suite/final acceptance are main-owned"
+}

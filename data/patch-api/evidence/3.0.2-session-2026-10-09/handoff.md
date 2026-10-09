@@ -27,4 +27,11 @@ Every command below uses explicit owned cwd and argv via Pyrun; tests scoped to 
 | `python3 -B data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py` | d18cf30fc test-first | RED 4 expected missing-validator failures; accounting-red.log | Historical RED retained |
 | Generator argv in provenance, own frozen raw/output and opt-in flags | staged source-accounting implementation | exit 0; generator.log | No runtime proof |
 
-Complete accounting GREEN/tamper/reproduction receipts will be appended after the coherent implementation commit. No historical-native profile was invented. Main must not present this source result as native/API compatibility completion.
+| `python3 -B tools/test_patch_3_0_2_source.py` | 6027d1349 expanded concrete frozen assertions | GREEN 4/4; expanded-source-green.log | No later source change |
+| `python3 -B data/patch-api/evidence/3.0.2-session-2026-10-09/test_accounting.py` | 6027d1349 complete frozen replay | GREEN 4/4; accounting-green.log; 1,292 omission controls, false-credit/foreign-successor rejection | No later code/input changes |
+
+Relocated fresh process has only copied evidence, an empty PATH, no Git/target/current mutable files. Initial replay succeeds; serialized ledger, original green log, raw source and frozen generator each reject at their exact seal. Each restoration asserts byte equality and successful fresh-process replay. All tampering occurs in disposable copied evidence, not owned originals. Test assertions provide source-accounting proof, not native/publication observations.
+
+Original 36-input seals and one closure seal stay byte-identical to 6027d1349. `receipt-seals.json` separately seals the two later GREEN logs; no historical RED/GREEN artifact was edited. Python formatter executables were absent; new Python was manually formatted before commit. No Rust code/test files added, so no profile-only file guard was needed.
+
+No historical-native profile was invented. Main must not present this source result as native/API compatibility completion. Bounded source accounting delivered; main integration and native/current behavior acceptance remain open.

@@ -6,7 +6,7 @@ Frozen page **482353**, revision **4638841**, timestamp **2020-02-23T21:55:29Z**
 
 | Surface | Count | Proof level |
 |---|---:|---|
-| Nonblank source rows | 431 | Exact ordered bytes/line identities retained; accounting tests pending |
+| Nonblank source rows | 431 | Exact ordered bytes/line identities retained; accounting GREEN 4/4 |
 | Metadata | 42 | 41 literal headings plus navigation/attribution; no numeric inventory-count headers |
 | Substantive source rows | 389 | UNPROVEN; no positive publication-only/native claim |
 | Inventory occurrences | 373 | 346 labeled rows plus 27 summary-reference occurrences; opt-in parser GREEN 4/4 |
@@ -43,7 +43,7 @@ Queued main-owned inputs: **3.0.3 → 3.0.8 → 3.1.0 → 3.2.0**. First two hav
 
 Evidence `original/` preserves response/raw/manifest/registry, original ledger/gaps/register/extract, successor/queue inputs and code snapshots. `closures/claims.json` has its own seal file and explicitly empty model/native claims. `validate.py` loads only these archives and frozen parser/extractor code, not Git, target, current source files or a mutable registry. SHA256 seals detect byte drift relative to this commit; they are not signed native attestations.
 
-Parser RED/GREEN 4/4 retained. Complete-accounting and relocated tamper tests are pending at this implementation commit. No broad/check/lint/readability/profile/startup/full-suite/final gates are run by this bounded agent. [Handoff](../../../data/patch-api/evidence/3.0.2-session-2026-10-09/handoff.md) records exact revisions and command proof ledger after targeted tests.
+At `6027d1349`, expanded parser GREEN 4/4 and complete-accounting GREEN 4/4. All 1,292 single-row omission controls reject; false credit and Classic successor reject. Relocated replay has no Git/target/current files; four serialized source/ledger/log/tool tamper controls reject at their exact seal and restore bytes, with successful fresh-process replay after each. Original 36 seals plus one closure seal remain unchanged; two subsequent GREEN logs have separate receipt seals. No broad/check/lint/readability/profile/startup/full-suite/final gates are run by this bounded agent. [Handoff](../../../data/patch-api/evidence/3.0.2-session-2026-10-09/handoff.md) records exact revisions and command proof ledger after targeted tests.
 
 ## Sources
 - [Frozen raw](../../../data/patch-api/source-cache/legacy-2026-10-09/3.0.2-wikitext.txt), [response](../../../data/patch-api/source-cache/legacy-2026-10-09/3.0.2-response.json), [capture manifest](../../../data/patch-api/source-cache/legacy-2026-10-09/manifest.json).

@@ -4,10 +4,10 @@ Frozen page 482353/revision 4638841 (`2020-02-23T21:55:29Z`) is historical retai
 
 ## What it must do
 - [x] Opt-in launch parser retains labeled NEW/UPDATED/MODIFIED/REMOVED, bare unknowns, template-linked calls, missing bullet, handlers and literal summary references; default bytes remain unchanged.
-- [ ] Account every nonblank source row, header, inventory occurrence, signature and substantive prose/qualification independently, without repairing literal typos or inconsistent returns.
-- [ ] Preserve original ledger/gaps/source/code/input/log archives separately from closure claims, with byte seals and Git-free fresh-process replay.
-- [ ] Reject serialized source, ledger, log and tool tampering; restore exact bytes before continuing replay.
-- [ ] Restrict successor interpretation to retail; actual 3.3.0/3.3.3/3.3.5/4.0.1 inputs and ordered 3.0.3/3.0.8/3.1.0/3.2.0 placeholders do not prove runtime/native parity.
+- [x] Account every nonblank source row, header, inventory occurrence, signature and substantive prose/qualification independently, without repairing literal typos or inconsistent returns.
+- [x] Preserve original ledger/gaps/source/code/input/log archives separately from closure claims, with byte seals and Git-free fresh-process replay.
+- [x] Reject serialized source, ledger, log and tool tampering; restore exact bytes before continuing replay.
+- [x] Restrict successor interpretation to retail; actual 3.3.0/3.3.3/3.3.5/4.0.1 inputs and ordered 3.0.3/3.0.8/3.1.0/3.2.0 placeholders do not prove runtime/native parity.
 
 ## How it works
 - [Audit and coverage matrix](../wiki/investigations/patch-3-0-2-api-audit.md)

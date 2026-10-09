@@ -1,0 +1,9 @@
+test_complete_accounting_and_separate_limits (__main__.AccountingTests.test_complete_accounting_and_separate_limits) ... ok
+test_every_literal_row_occurrence_signature_and_prose_required (__main__.AccountingTests.test_every_literal_row_occurrence_signature_and_prose_required) ... ok
+test_git_free_replay_and_serialized_tampers_restore_bytes (__main__.AccountingTests.test_git_free_replay_and_serialized_tampers_restore_bytes) ... ok
+test_positive_credit_and_foreign_successor_rejected (__main__.AccountingTests.test_positive_credit_and_foreign_successor_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 8.057s
+
+OK
