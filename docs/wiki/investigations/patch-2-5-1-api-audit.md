@@ -62,6 +62,10 @@ Historical replay retains 29 original source/config/tool/ledger/test/log seals u
 
 Ledger tamper changes linked contract native equivalence; log tamper fabricates native credit. Both exit 1 at the exact file seal. Exact original bytes and SHA-256 values restored; no original seal, log or source-proof receipt rewritten afterward. [Receipt seals](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/receipt-seals.json) separately bind later validator/portable logs, proof ledgers, archive and original seals map. Seals are integrity assertions against committed maps, not external cryptographic authenticity or native correctness.
 
+## Main integration — 2026-10-09
+
+[Actual same-TBC successor comparison](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/integrated/successor-comparison.json) retains three section/symbol row pairs with 2.5.2, two with 2.5.3 and three with 2.5.4. Integrated 2.5.5/2.5.6 have zero explicit API identities. These source directions earn no runtime retirement, modeled behavior or native compatibility credit. Original 29 seals and seven separate receipt seals remain unchanged; SOURCE replay gate pending. Source TOC 20501 remains distinct from configured Anniversary 11507.
+
 ## Sources
 
 - [Frozen original wikitext](../../../data/patch-api/source-cache/legacy-2026-10-09/2.5.1-wikitext.txt).
