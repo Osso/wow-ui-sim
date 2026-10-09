@@ -1,0 +1,21 @@
+{
+  "revision": "e345059e18a4b1f544fcd1dc8a079fde256a1df1",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 54
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 55
+    }
+  },
+  "prior_validators": 52,
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py"
+  ],
+  "largest_written_evidence_file_bytes": 482854
+}
