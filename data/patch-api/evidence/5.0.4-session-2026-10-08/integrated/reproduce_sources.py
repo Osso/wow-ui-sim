@@ -1,0 +1,127 @@
+"""Reproduce recorded artifacts and preserve the complete pre-audit source set."""
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+sys.dont_write_bytecode = True
+ROOT = Path(__file__).resolve().parents[5]
+HERE = Path(__file__).resolve().parent
+SOURCES = ROOT / 'data/patch-api/sources'
+BASE = '1c9984d2e8a5e672c5109d2234197303e6190317'
+
+
+def read(path):
+    return json.loads(path.read_text())
+
+
+def dump(name, value):
+    (HERE / name).write_text(json.dumps(value, indent=2) + '\n')
+
+
+def digest(value):
+    return hashlib.sha256(value).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=ROOT)
+
+
+def outcome(extract, raw, flags):
+    options = {flag.removeprefix('--').replace('-', '_'): True for flag in flags}
+    try:
+        return {'sha256': digest(extract(raw, **options).encode()), 'error': None}
+    except ValueError as error:
+        return {'sha256': None, 'error': str(error)}
+
+
+def reproduce(extractor, revision):
+    prior = read(HERE.parent / 'reproduction.json')
+    recipes = {r['patch']: {'verified_flags': r['generator_flags']} for r in prior}
+    extracts = {r['patch']: r for r in prior}
+    registers, saved = [], []
+    with tempfile.TemporaryDirectory(prefix='p504-reproduction-') as temporary:
+        for path in sorted(SOURCES.glob('*-wikitext-register.json')):
+            patch = path.name.removesuffix('-wikitext-register.json')
+            provenance = read(SOURCES / f'{patch}-api-changes.provenance.json')
+            flags = provenance.get('generator_flags')
+            verified = flags if flags is not None else recipes[patch]['verified_flags']
+            output = Path(temporary) / path.name
+            command = ['python3', '-B', str(ROOT / 'tools/gen_patch_wikitext_register.py'), patch,
+                       str(SOURCES / f'{patch}-api-changes.wikitext'), str(read(path)['source']['revid']),
+                       str(output), *verified]
+            result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+            identical = result.returncode == 0 and output.read_bytes() == path.read_bytes()
+            registers.append({'patch': patch, 'verified_flags': verified, 'recorded_flags': flags,
+                              'revision': revision, 'exit': result.returncode, 'byte_identical': identical,
+                              'sha256': digest(path.read_bytes()), 'stderr': result.stderr})
+            assert identical, registers[-1]
+            flags = provenance.get('extractor_flags')
+            verified = flags if flags is not None else extracts[patch]['extractor_flags']
+            generated = outcome(extractor.extract_text,
+                                (SOURCES / f'{patch}-api-changes.wikitext').read_text(), verified)
+            text_digest = digest((SOURCES / f'{patch}-api-changes.txt').read_bytes())
+            identical = generated['sha256'] == text_digest
+            saved.append({'patch': patch, 'verified_flags': verified, 'recorded_flags': flags,
+                          'revision': revision, 'byte_identical': identical,
+                          'sha256': text_digest, **generated, 'saved_sha256': text_digest})
+            if patch in extracts:
+                assert identical == extracts[patch]['extract_identical'], saved[-1]
+            else:
+                assert identical, saved[-1]
+    dump('p504-register-reproduction.json', registers)
+    dump('p504-saved-extract-reproduction.json', saved)
+    return {'registers': len(registers), 'extracts': sum(r['byte_identical'] for r in saved),
+            'inherited_extract_failures': [r['patch'] for r in saved if not r['byte_identical']]}
+
+
+def preserve(extractor, revision):
+    paths = git('ls-tree', '-r', '--name-only', BASE, 'data/patch-api/sources').decode().splitlines()
+    rows, modes = [], []
+    namespace = {'__name__': 'historical_extractor', '__file__': str(ROOT / 'tools/extract_patch_non_inventory.py')}
+    exec(compile(git('show', f'{BASE}:tools/extract_patch_non_inventory.py'), 'historical_extractor', 'exec'), namespace)
+    for path in paths:
+        before = git('show', f'{BASE}:{path}')
+        after = (ROOT / path).read_bytes()
+        assert before == after, path
+        rows.append({'path': path, 'before_sha256': digest(before), 'after_sha256': digest(after)})
+        if path.endswith('-api-changes.wikitext'):
+            provenance = read(ROOT / path.replace('-api-changes.wikitext', '-api-changes.provenance.json'))
+            flags = {(), ('--preserve-examples',), tuple(provenance.get('extractor_flags', []))}
+            for mode in sorted(flags):
+                previous = outcome(namespace['extract_text'], before.decode(), mode)
+                current = outcome(extractor.extract_text, before.decode(), mode)
+                assert previous == current, (path, mode)
+                modes.append({'path': path, 'flags': mode, 'before': previous, 'after': current})
+    dump('p504-input-preservation.json', {'base_revision': BASE, 'audit_revision': revision, 'rows': rows})
+    dump('p504-extract-preservation.json', modes)
+
+
+def reproduce_supplemental(extractor, revision):
+    provenance = read(SOURCES / '5.4.0-api-changes.provenance.json')
+    flags = provenance['diff_source']['extractor_flags']
+    generated = outcome(extractor.extract_text,
+                        (SOURCES / '5.4.0-api-changes-diff.wikitext').read_text(), flags)
+    saved = digest((SOURCES / '5.4.0-api-changes-diff.txt').read_bytes())
+    assert generated['error'] is None and generated['sha256'] == saved
+    dump('supplemental-extract-reproduction.json', {
+        'revision': revision, 'path': 'data/patch-api/sources/5.4.0-api-changes-diff.txt',
+        'flags': flags, 'byte_identical': True, 'sha256': saved})
+
+
+def main():
+    spec = importlib.util.spec_from_file_location('extractor', ROOT / 'tools/extract_patch_non_inventory.py')
+    extractor = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(extractor)
+    revision = git('rev-parse', 'HEAD').decode().strip()
+    result = reproduce(extractor, revision)
+    preserve(extractor, revision)
+    reproduce_supplemental(extractor, revision)
+    print(json.dumps(result))
+
+
+if __name__ == '__main__':
+    main()
