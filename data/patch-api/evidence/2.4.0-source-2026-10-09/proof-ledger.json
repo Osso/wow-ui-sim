@@ -58,5 +58,17 @@
     "scope": "archived default byte/error comparison against f95eed96e and all recorded parser outputs, source-only",
     "result": "see original/parser-replay.json and .log",
     "invalidated_by": null
+  },
+  {
+    "revision": "44efecb5a3f164bf23d782a7486d50acbe63cbb9",
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_4_replay.py"
+    ],
+    "exit": 0,
+    "scope": "fresh copied Git-free replay; nine serialized tamper/reject/restore controls; literal omission rejection",
+    "result": "...\n----------------------------------------------------------------------\nRan 3 tests in 3.120s\n\nOK\n",
+    "invalidated_by": null
   }
 ]

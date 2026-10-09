@@ -1,0 +1,25 @@
+FF
+======================================================================
+FAIL: test_complete_extract_preserves_literal_texture_and_events (__main__.SourceTests.test_complete_extract_preserves_literal_texture_and_events)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_source.py", line 50, in test_complete_extract_preserves_literal_texture_and_events
+    self.assertIn('retail_240_summary', extractor.extract_text.__kwdefaults__,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  'missing opt-in full historical extract')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'retail_240_summary' not found in {'preserve_examples': False, 'normalize_inventory_headings': False, 'retain_reference_notes': False, 'legacy_api_tables': False, 'legacy_api_bullets': False, 'legacy_cvar_tables': False, 'bfa_prepatch': False, 'legion_prepatch': False, 'retain_patch_diff_reference': False, 'canonical_patch_navigation': False, 'mists_automated_diff': False, 'lowercase_reflist': False, 'mists_source_markup': False, 'cataclysm_labeled_inventory': False, 'wrath_summary_markup': False, 'numbered_reflist': False} : missing opt-in full historical extract
+
+======================================================================
+FAIL: test_literal_occurrences_are_opt_in (__main__.SourceTests.test_literal_occurrences_are_opt_in)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_source.py", line 17, in test_literal_occurrences_are_opt_in
+    self.assertIsNotNone(parse, 'missing opt-in historical Retail 2.4.0 parser')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : missing opt-in historical Retail 2.4.0 parser
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.009s
+
+FAILED (failures=2)
