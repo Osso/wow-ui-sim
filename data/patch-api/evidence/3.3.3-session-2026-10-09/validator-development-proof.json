@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "tools/test_patch_3_3_3_validator.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p333-source",
+  "revision": "e8905b8f39385a636a89d22aee4304a5a3ddbd07",
+  "scope": "own stdlib fresh-process detached history replay, drift independence, eight serialized tamper/restoration controls and missing original gap rejection",
+  "exit": 0,
+  "artifact": "validator-green.txt",
+  "limits": "targeted development fixture only; no current runtime/integration/native/final gate",
+  "input_seals": {
+    "validator-green.txt": {
+      "sha256": "0b7207e8641b0bf60d4746978d0ecc6e1d67310852989749bf4b27a8964d28ca",
+      "bytes": 98
+    },
+    "validate.py": {
+      "sha256": "d285d1f5a7424c3ef0622f1bdb6b064d0c908dcf9a07f347d615d381c4321a77",
+      "bytes": 11422
+    },
+    "historical-inputs.json": {
+      "sha256": "8ddf62eec48165353245af754f82833d0c1adb2be054c90b6ccf0a3deb26ee04",
+      "bytes": 17209
+    }
+  },
+  "test_sha256": "92287d20e89f8f11aa195444130ee543eba6693638b538ab09577d45a466b031"
+}

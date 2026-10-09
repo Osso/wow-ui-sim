@@ -8,7 +8,7 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 - [x] Full source, rendered extract, signatures, prose and editorial headers receive explicit dispositions.
 - [x] Only actual later retail registers supersede, with 3.3.5 then 4.0.1 placeholders preceding actual 4.1.0 onward; never Wrath Classic 3.4.x or other Classic histories.
 - [x] Existing pet scalar has one return and tracks two explicit seeded values after full cached-retail UI loading; no new model/native credit.
-- [ ] Portable historical replay derives counts and validates sealed source/log receipts without Git, target or mutable current accounting inputs.
+- [x] Portable historical replay derives counts and validates sealed source/log receipts without Git, target or mutable current accounting inputs.
 
 ## How it works
 
@@ -17,14 +17,15 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 ## Implementation inventory
 
 - `tools/gen_patch_wikitext_register.py`: opt-in `--historical-api-headings`.
-- `data/patch-api/sources/3.3.3-*`: frozen input, provenance and publication register.
+- `data/patch-api/sources/3.3.3-*`: frozen input, provenance, register, signatures and complete ledger.
+- `data/patch-api/evidence/3.3.3-session-2026-10-09/validate.py`: self-contained frozen historical evidence validator; not a current-head/native gate.
 
 ## Tests asserting this spec
 
 - `tools/test_patch_3_3_3_source.py`: full pinned page and unrelated-section exclusion, GREEN 2/2.
 - `tests/patch_3_3_3_publication_sweep.rs`: RED 11 exact gaps; reviewed GREEN 1/1; fabricated-global negative 11 → 12 rejected.
 - `tests/patch_3_3_3_behavior.rs`: existing pet scalar at full cached-UI load boundary, GREEN 1/1.
-- `tools/test_patch_3_3_3_validator.py`: detached fresh-process replay and serialized tamper/restoration, RED then implementation pending.
+- `tools/test_patch_3_3_3_validator.py`: detached fresh-process replay, synthetic later drift, eight serialized tamper/restoration controls and missing-gap rejection; RED then GREEN 1/1 at `e8905b8f3`.
 
 ## Known gaps (current cycle)
 
