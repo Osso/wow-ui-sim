@@ -15,6 +15,13 @@ def git(root, *args):
                                    text=True)
 
 
+def oversized_evidence(root):
+    """Limit every tracked evidence artifact, not just JSON or validator inputs."""
+    paths = git(root, 'ls-files', '-z', '--', 'data/patch-api/evidence').split('\0')
+    return [{'path': name, 'bytes': (root / name).stat().st_size}
+            for name in paths if name and (root / name).stat().st_size > 5_000_000]
+
+
 def run_validators(root):
     results = []
     for path in sorted((root / 'data/patch-api/evidence').rglob('validate.py')):
@@ -55,14 +62,16 @@ def commit_later_audit(root):
 
 
 def check_revision(root, revision):
-    report = {'revision': revision, 'phases': {}, 'summary': {}}
+    report = {'revision': revision, 'phases': {}, 'summary': {}, 'oversized_evidence': {}}
     with tempfile.TemporaryDirectory(prefix='patch-validator-gate-') as directory:
         checkout = Path(directory) / 'checkout'
         try:
             report['revision'] = git(root, 'rev-parse', '--verify', revision + '^{commit}').strip()
             git(root, 'worktree', 'add', '--detach', str(checkout), report['revision'])
+            report['oversized_evidence']['clean'] = oversized_evidence(checkout)
             report['phases']['clean'] = run_validators(checkout)
             report['later_revision'] = commit_later_audit(checkout)
+            report['oversized_evidence']['later_audit'] = oversized_evidence(checkout)
             report['phases']['later_audit'] = run_validators(checkout)
         except (subprocess.CalledProcessError, OSError, ValueError) as error:
             report['error'] = str(error)
@@ -78,6 +87,7 @@ def check_revision(root, revision):
         report['summary'][phase] = {'passed': sum(row['exit'] == 0 for row in results),
                                     'failed': sum(row['exit'] != 0 for row in results)}
     report['status'] = 'FAIL' if 'error' in report or any(
+        report['oversized_evidence'].values()) or any(
         counts['failed'] for counts in report['summary'].values()) else 'PASS'
     return report
 

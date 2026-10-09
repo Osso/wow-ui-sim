@@ -10,7 +10,7 @@ GATE = Path(__file__).with_name('check_patch_validators.py')
 
 
 class CheckPatchValidatorsTests(unittest.TestCase):
-    def run_gate(self, validator, ignored=False, revision='HEAD'):
+    def run_gate(self, validator, ignored=False, revision='HEAD', evidence_size=None):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             def git(*args):
@@ -28,6 +28,8 @@ class CheckPatchValidatorsTests(unittest.TestCase):
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(content)
+            if evidence_size is not None:
+                (root / 'data/patch-api/evidence/1.0.0-session/large.bin').write_bytes(b'x' * evidence_size)
             self.assertTrue(GATE.is_file(), 'fresh-checkout gate has not been implemented')
             shutil.copyfile(GATE, root / 'tools/check_patch_validators.py')
             git('add', '.')
@@ -68,6 +70,20 @@ assert subprocess.check_output(['git', 'show', revision + ':src/c_api/mod.rs'], 
         self.assertEqual(result.returncode, 1, result.stderr)
         self.assertEqual(report['summary']['clean']['failed'], 0)
         self.assertEqual(report['summary']['later_audit']['failed'], 1)
+
+    def test_oversized_tracked_evidence_fails_and_reports_path(self):
+        result, report = self.run_gate('pass\n', evidence_size=5_000_001)
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(report['oversized_evidence']['clean'],
+                         [{'path': 'data/patch-api/evidence/1.0.0-session/large.bin',
+                           'bytes': 5_000_001}])
+        self.assertEqual(report['oversized_evidence']['later_audit'],
+                         report['oversized_evidence']['clean'])
+
+    def test_exact_size_limit_passes(self):
+        result, report = self.run_gate('pass\n', evidence_size=5_000_000)
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(report['oversized_evidence'], {'clean': [], 'later_audit': []})
 
     def test_invalid_revision_reports_error_and_leaves_no_worktree(self):
         result, report = self.run_gate('pass\n', revision='not-a-revision')
