@@ -17,7 +17,7 @@ fn existing_era_totem_info_tracks_slot_replacement_expiry_and_removal() {
         duration: 1.0,
         icon: 135128,
     });
-    let first: (bool, String, f64, f64, u32) = env
+    let first: (bool, String, f64, f64, i32) = env
         .eval("return GetTotemInfo(1)")
         .expect("read active host slot");
     assert_eq!(first, (true, "Healing Stream".into(), now, 3600.0, 135127));
