@@ -69,6 +69,62 @@ class ReplayTests(unittest.TestCase):
                     self.assertEqual((restored.returncode, restored.stdout), (0, clean.stdout),
                                      restored.stderr)
 
+    def test_current_closure_copied_source_and_log_seals(self):
+        validator = HERE / 'current/validate.py'
+        self.assertTrue(validator.exists(), 'separate current source validator missing')
+        original = json.loads((HERE / 'historical-inputs.json').read_text())
+        current = json.loads((HERE / 'current/inputs.json').read_text())
+        with tempfile.TemporaryDirectory(prefix='p201-current-') as directory:
+            root = Path(directory)
+            here = root / REL
+            (here / 'current').mkdir(parents=True)
+            for name in [*original['sealed_files'], 'historical-inputs.json', 'validate.py']:
+                shutil.copyfile(HERE / name, here / name)
+            for name in [*current['sealed_files'], 'inputs.json', 'validate.py']:
+                shutil.copyfile(HERE / 'current' / name, here / 'current' / name)
+            argv = [sys.executable, '-I', '-B', str(here / 'current/validate.py')]
+            env = dict(os.environ, PATH='/p201-no-git-or-tools', PYTHONPATH='')
+
+            def replay():
+                return subprocess.run(argv, cwd=root, env=env, capture_output=True, text=True)
+
+            clean = replay()
+            self.assertEqual(clean.returncode, 0, clean.stderr)
+            counts = json.loads(clean.stdout)
+            self.assertEqual((counts['references'], counts['occurrences']), (12, 295))
+            self.assertEqual((counts['current_gap_records'], counts['archived_source_cases']), (793, 6))
+            self.assertFalse((root / '.git').exists())
+            self.assertFalse((root / 'target').exists())
+            for name in [*current['sealed_files'], 'inputs.json']:
+                target = here / 'current' / name
+                content = target.read_bytes()
+                try:
+                    target.write_bytes(content + b'\nTAMPER\n')
+                    changed = replay()
+                    self.assertNotEqual(changed.returncode, 0)
+                    self.assertIn('current manifest seal' if name == 'inputs.json'
+                                  else 'current sealed input: ' + name, changed.stderr)
+                finally:
+                    target.write_bytes(content)
+                self.assertEqual(target.read_bytes(), content)
+                restored = replay()
+                self.assertEqual((restored.returncode, restored.stdout), (0, clean.stdout), restored.stderr)
+        spec = importlib.util.spec_from_file_location('p201_current', validator)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        expected, gaps = module.load_accounting(HERE / 'current')
+        for group in ['source_rows', 'occurrences', 'signature_rows', 'headers', 'references']:
+            for index in range(len(expected[group])):
+                changed = copy.deepcopy(expected)
+                del changed[group][index]
+                with self.assertRaises(AssertionError):
+                    module.verify_current(changed, gaps, expected)
+        for index in range(len(gaps)):
+            changed = copy.deepcopy(gaps)
+            del changed[index]
+            with self.assertRaises(AssertionError):
+                module.verify_current(expected, changed, expected)
+
     def test_every_serialized_row_and_credit_is_required(self):
         path = self.require_validator()
         spec = importlib.util.spec_from_file_location('p201_replay', path)
