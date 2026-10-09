@@ -1,0 +1,212 @@
+[
+  {
+    "branch": "279a38f3d",
+    "revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
+    "matching_registers": [
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-InActiveBattlefield-76",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "InActiveBattlefield",
+            "annotation": "",
+            "wikitext_line": 76
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+        "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-C_LossOfControl.GetEventInfo-588",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetEventInfo",
+            "annotation": "",
+            "wikitext_line": 588
+          },
+          {
+            "id": "wt-global-api-C_LossOfControl.GetNumEvents-589",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetNumEvents",
+            "annotation": "",
+            "wikitext_line": 589
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "branch": "p520-page",
+    "revision": "c38a57fa5ff1570cdaf5493d66ddf9076f81d8e5",
+    "matching_registers": [
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-InActiveBattlefield-76",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "InActiveBattlefield",
+            "annotation": "",
+            "wikitext_line": 76
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+        "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-C_LossOfControl.GetEventInfo-588",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetEventInfo",
+            "annotation": "",
+            "wikitext_line": 588
+          },
+          {
+            "id": "wt-global-api-C_LossOfControl.GetNumEvents-589",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetNumEvents",
+            "annotation": "",
+            "wikitext_line": 589
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "branch": "p530-page",
+    "revision": "c237c344eb1e2fb008be02cdd8c44e72f51c40c4",
+    "matching_registers": [
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-InActiveBattlefield-76",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "InActiveBattlefield",
+            "annotation": "",
+            "wikitext_line": 76
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+        "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-C_LossOfControl.GetEventInfo-588",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetEventInfo",
+            "annotation": "",
+            "wikitext_line": 588
+          },
+          {
+            "id": "wt-global-api-C_LossOfControl.GetNumEvents-589",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetNumEvents",
+            "annotation": "",
+            "wikitext_line": 589
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "branch": "p540-page",
+    "revision": "9698f09862b6cd91b4f87e840295a3fce304940a",
+    "matching_registers": [
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-InActiveBattlefield-76",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "InActiveBattlefield",
+            "annotation": "",
+            "wikitext_line": 76
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+        "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-C_LossOfControl.GetEventInfo-588",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetEventInfo",
+            "annotation": "",
+            "wikitext_line": 588
+          },
+          {
+            "id": "wt-global-api-C_LossOfControl.GetNumEvents-589",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetNumEvents",
+            "annotation": "",
+            "wikitext_line": 589
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "branch": "p541-page",
+    "revision": "1452ef875dca6ed8bc167c0734223b951cfd1437",
+    "matching_registers": [
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-InActiveBattlefield-76",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "InActiveBattlefield",
+            "annotation": "",
+            "wikitext_line": 76
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+        "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+        "matching_rows": [
+          {
+            "id": "wt-global-api-C_LossOfControl.GetEventInfo-588",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetEventInfo",
+            "annotation": "",
+            "wikitext_line": 588
+          },
+          {
+            "id": "wt-global-api-C_LossOfControl.GetNumEvents-589",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_LossOfControl.GetNumEvents",
+            "annotation": "",
+            "wikitext_line": 589
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,3 @@
+src/lua_api/globals/stubs/global_stubs.rs:112:    "InActiveBattlefield",
+tests/mists_world_map_panel.rs:45:            if InActiveBattlefield() then
+tests/data/patch_8_1_5_sweep_known_gaps.json:17:  "wt-global-api-InActiveBattlefield-76",

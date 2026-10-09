@@ -1,0 +1,48 @@
+src/iced_app/update_cooldown_tests.rs:143:        cooldown:SetCooldown(GetTime() - {elapsed}, {duration}, {mod_rate})
+src/iced_app/update_cooldown_tests.rs:162:            {name}:SetCooldown(GetTime() - {elapsed}, {duration}, {mod_rate})
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:45:    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(92)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:51:    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(91)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:57:    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(90)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:63:    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownAbbrevThreshold(59)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:69:    let env = setup("cooldown:SetCountdownAbbrevThreshold(3601); cooldown:SetCooldown(0, 91)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:71:    env.exec("cooldown:SetCooldown(0, 4000)").unwrap();
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:77:    let env = setup("cooldown:SetCooldown(0, 59); cooldown:SetCountdownAbbrevThreshold(60)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:80:    env.exec("cooldown:SetCooldown(0, 3599); cooldown:SetCountdownAbbrevThreshold(3600)")
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:87:    let env = setup("cooldown:SetCooldown(0, 90.25); cooldown:SetCountdownAbbrevThreshold(100)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:90:    env.exec("cooldown:SetCooldown(0, 59.25)").unwrap();
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:96:    let env = setup("cooldown:SetCooldown(0, 91)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:120:    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetCountdownMillisecondsThreshold(3)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:136:        cooldown:SetCooldown(0, 1234.5)
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:150:    let env = setup("cooldown:SetCooldown(0, 91)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:171:    let env = setup("cooldown:SetCooldown(0, 91); cooldown:SetMinimumCountdownDuration(91000)");
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:213:            pair[1]:SetCooldown(0, 1234.5)
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:237:        cooldown:SetCooldown(0, 10, 2)
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:264:        cooldown:SetCooldown(0, 1234.5)
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:288:        cooldown:SetCooldown(0, 1234.5)
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:306:        cooldown:SetCooldown(0, 10)
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:326:        cooldown:SetCooldown(0, 10)
+src/iced_app/quad_builders_cooldown/countdown_formatter_tests.rs:352:        cooldown:SetCooldown(0, 1234.5)
+src/iced_app/app_tests.rs:73:            cooldown:SetCooldown(GetTime(), 30)
+src/iced_app/app_tests.rs:95:            cooldown:SetCooldown(GetTime() - 11, 10, 0.5)
+src/iced_app/app_tests.rs:117:            cooldown:SetCooldown(GetTime() - 5.1, 10, 2)
+src/iced_app/app_tests.rs:141:            cooldown:SetCooldown(GetTime(), 30)
+src/iced_app/app_tests.rs:160:            DirtyTickCooldown:SetCooldown(GetTime(), 30)
+src/lua_api/frame/methods/widgets/cooldown.rs:734:    ("SetCooldown", set_cooldown),
+src/lua_api/env_init/shared_bootstrap.lua:929:      self:SetCooldown(start, duration, modRate)
+src/lua_api/env_init/shared_bootstrap.lua:939:    self:SetCooldown(0, 0)
+src/lua_api/env_init/shared_bootstrap.lua:947:    self:SetCooldown(GetTime() - (seconds * Saturate(percentage)), seconds)
+src/widget/frame.rs:500:    /// Cooldown modRate value from SetCooldown* APIs.
+tests/cooldown_widget.rs:80:        DirectClear:SetCooldown(12.5, 6.25, 2.5)
+tests/cooldown_widget.rs:107:        DirectSet:SetCooldown(12.5, 6.25, 2.5)
+tests/cooldown_widget.rs:122:    env.exec("DirectSet:SetCooldown(20.25, 3.5); assert(DirectSet:GetCooldownDuration() == 3500)")
+tests/cooldown_widget.rs:136:        DirectDuration:SetCooldown(12.5, 6.25, 2.5)
+tests/cooldown_widget.rs:190:        PreserveCooldown:SetCooldown(7, 9, 2)
+tests/cooldown_widget.rs:191:        ClearCooldown:SetCooldown(11, 15, 3)
+tests/cooldown_widget.rs:206:            "ClearCooldown:SetCooldown(11, 15, 3); ClearCooldown:SetCooldownFromDurationObject({arguments})"
+tests/cooldown_widget.rs:226:        OtherCooldown:SetCooldown(7, 9, 2)
+tests/cooldown_widget.rs:236:            "UpdatedCooldown:SetCooldown(11, 15, 2); UpdatedCooldown:SetCooldownFromDurationObject({arguments})"
+tests/cooldown_widget.rs:258:                cd:SetCooldown(7, 9, 2)
+tests/cooldown_probes.rs:140:        cooldown:SetCooldown(start, 60)
+tests/message_frame.rs:71:        cooldown:SetCooldown(12, 8, 2)
+tests/patch_12_0_1_secure_delegate.rs:10:        ProbeNormal:SetCooldown(10, 20)
+tests/patch_12_0_1_secure_delegate.rs:22:                function() ProbeNormal:SetCooldown(info.startTime, info.duration) end,

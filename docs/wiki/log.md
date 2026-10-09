@@ -554,3 +554,7 @@ Integrated real 5.3.0–5.4.2 registers against pinned master 5e4e82ef6. Exact 5
 5.2.0 integrated acceptance: retail branch/master 62/62 and 61/61; Mists 6/6 each. All 65 other pages/9,990 observations identical. Own prefork 2/2, integration 1/1, Python 98/98, format and Mists check pass; zero non-vendor warnings. Negative rejects exactly 55 → 56. Historical 294 artifacts unchanged; compact mapping 15,523 bytes, largest evidence 568,492 bytes.
 
 5.2.0 integrated portability gate at f4c9e5b5048de4812411c8ebe677a7c33debe4c5: PASS 56/56 clean, 57/57 synthetic later audit, zero failures. Integrated own-sweep log tampering rejected at exact seal; original bytes restored. All acceptance inputs committed; pinned prior-validator inventory 54. No runtime/vendor edits, push, merge or agents.
+
+## 2026-10-08 — Retail Patch 5.1.0 audit
+
+Pinned retail 2012 source/diff, added exhaustive ledger and prefork sweep. Two no-consumer C_PetJournal ID spellings retired at namespace synthesis boundary; existing interval model gets bounded behavior coverage. See [[patch-5-1-0-api-audit]]; targeted acceptance pending.

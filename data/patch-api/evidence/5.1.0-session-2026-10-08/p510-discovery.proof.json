@@ -1,0 +1,15 @@
+{
+  "revision": "ed2e9e69afc757c8a24f60494fa6e3cd83a4781d",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_1_0"
+  ],
+  "exit": 1,
+  "elapsed_seconds": 326.44555830955505,
+  "log": "p510-discovery.log",
+  "sha256": "e851123239405c01fc79bbb41f03fd8553130eaca30a06ed56ed95cfddf85714"
+}

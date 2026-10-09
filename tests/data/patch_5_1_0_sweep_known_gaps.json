@@ -1,1 +1,19 @@
-[]
+[
+  "diff-wt-framexml-ShowFriendshipReputationTooltip-54",
+  "diff-wt-global-api-C_LossOfControl.GetEventInfo-10",
+  "diff-wt-global-api-C_LossOfControl.GetNumEvents-11",
+  "diff-wt-global-api-C_PetJournal.FindPetIDByName-12",
+  "diff-wt-global-api-C_PetJournal.GetOwnedBattlePetString-14",
+  "diff-wt-global-api-C_PetJournal.GetPetTeamAverageLevel-16",
+  "diff-wt-global-api-FlyoutHasSpell-21",
+  "diff-wt-global-api-GetHomePartyInfo-24",
+  "diff-wt-global-api-InActiveBattlefield-27",
+  "diff-wt-global-api-IsLFGComplete-28",
+  "diff-wt-global-api-IsTradeSkillRepeating-29",
+  "diff-wt-global-api-PickupPetSpell-30",
+  "diff-wt-global-api-SetTradeSkillRepeatCount-31",
+  "diff-wt-global-api-UnitBattlePetSpeciesID-32",
+  "diff-wt-widgets-Path:GetControlPoints-94",
+  "wt-global-api-HasOverrideUI-14",
+  "wt-global-api-UnitBattlePetSpeciesID-9"
+]

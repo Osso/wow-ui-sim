@@ -1,0 +1,1077 @@
+src/iced_app/resize_event_tests.rs:53:            frame:SetScript("OnEvent", function(_, event)
+src/iced_app/resize_event_tests.rs:93:                frame:SetScript("OnEvent", function(_, event, name, value)
+src/iced_app/resize_event_tests.rs:141:        frame:SetScript("OnEvent", function(_, event)
+src/iced_app/casting/interrupted_tests.rs:14:        cancellationListener:SetScript("OnEvent", function(_, event, ...)
+src/iced_app/casting/tests.rs:12:        f:SetScript('OnEvent', function(_, event, ...)
+src/iced_app/casting/duration_tests.rs:20:        frame:SetScript('OnEvent', function(_, event, unit, guid, spell)
+src/iced_app/casting/duration_tests.rs:71:        frame:SetScript('OnEvent', function(_, event)
+src/iced_app/casting/input_tests.rs:15:        f:SetScript('OnEvent', function(_, event, ...)
+src/iced_app/casting/input_tests.rs:142:        listener:SetScript('OnEvent', function()
+src/iced_app/app_tests.rs:234:            frame:SetScript("OnEvent", function()
+src/xml/types_support.rs:188:    #[serde(rename = "OnEvent", default)]
+src/c_api/c_arrow_callout_manager.rs:9://!   the payload (mirrors `ArrowCalloutFrameManager:OnEvent` at
+src/c_api/c_spell_book.rs:366:        for handler in get_scripts_for_dispatch(state, widget_id, "OnEvent") {
+src/c_api/c_spell.rs:440:        for handler in get_scripts_for_dispatch(state, widget_id, "OnEvent") {
+src/c_api/item_spell/c_equipment_set.rs:95:        for handler in get_scripts_for_dispatch(state, widget_id, "OnEvent") {
+src/event/mod.rs:91:    OnEvent,
+src/event/mod.rs:192:    ("OnEvent", ScriptHandler::OnEvent),
+src/lua_api/script_helpers/event_dispatch.rs:75:    let handlers = get_scripts_for_dispatch(state, widget_id, "OnEvent");
+src/lua_api/script_helpers/tests.rs:141:        "OnEvent",
+src/lua_api/script_helpers/tests.rs:146:        get_script_binding(lua.state_mut(), 42, "OnEvent", ScriptBinding::Normal),
+src/lua_api/script_helpers/tests.rs:174:        table_get_str(lua.state_mut(), frame_table, "OnEvent"),
+src/lua_api/script_helpers/tests.rs:183:    remove_script_binding(lua.state_mut(), 42, "OnEvent", ScriptBinding::Normal);
+src/lua_api/script_helpers/tests.rs:185:        get_script_binding(lua.state_mut(), 42, "OnEvent", ScriptBinding::Normal),
+src/lua_api/frame/methods/text_attribute_event/events.rs:339:    // the frame-style common handlers (OnEvent, OnShow, OnEnter, ...). Real
+src/lua_api/frame/methods/text_attribute_event/events.rs:460:            | "OnEvent"
+src/lua_api/env_events.rs:436:        let handlers = get_scripts_for_dispatch(lua.state_mut(), widget_id, "OnEvent");
+src/lua_api/env_events.rs:444:                &mut lua, widget_id, addon_idx, "OnEvent", handler, &call_args,
+src/lua_api/env_events.rs:577:    let event = if handler_name == "OnEvent" {
+src/lua_api/env_events.rs:604:            frame:SetScript('OnEvent', function(_, event, unit, info)
+src/lua_api/script_helpers.rs:510:        "OnEvent" => Some(b"OnEvent"),
+src/lua_api/workarounds/temporary/dispatcher_surface.rs:87:    self.EventFrame:SetScript("OnEvent", function(_, event, ...)
+src/lua_api/workarounds/temporary/dispatcher_surface.rs:88:      self:OnEvent(event, ...)
+src/lua_api/workarounds/temporary/dispatcher_surface.rs:108:          self:OnEvent("OnUpdate", elapsed)
+src/lua_api/workarounds/temporary/dispatcher_surface.rs:155:  function dispatcher:OnEvent(event, ...)
+src/lua_api/workarounds/temporary/glue_character_select_defaults.rs:82:    if type(frame) == "table" and type(frame.OnEvent) == "function" then
+src/lua_api/workarounds/temporary/glue_character_select_defaults.rs:83:      frame:OnEvent(event, ...)
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:54:        frame:OnEvent(event, unpack(args))
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:89:ActionBarButtonEventsFrameMixin.OnEvent = on_event
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:97:    ActionBarButtonEventsFrame.OnEvent = on_event
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:101:        ActionBarButtonEventsFrame:SetScript("OnEvent", on_event)
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:139:                    OnEvent = function(self, event, value)
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:148:                    OnEvent = function(self, event, value)
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:176:                ActionBarButtonEventsFrame:OnEvent("ACTIONBAR_SLOT_CHANGED", 7)
+src/lua_api/workarounds/temporary/action_bar_button_event_fanout.rs:217:            .eval("return ActionBarButtonEventsFrame.scripts.OnEvent ~= nil")
+src/lua_api/workarounds/temporary/ui_frame_manager_defaults.rs:30:if rawget(UIFrameManager, "OnEvent") == nil then
+src/lua_api/workarounds/temporary/ui_frame_manager_defaults.rs:31:    function UIFrameManager:OnEvent(event, ...)
+src/lua_api/workarounds/temporary/ui_frame_manager_defaults.rs:105:                UIFrameManager:OnEvent("FRAME_MANAGER_UPDATE_FRAME", "tutorial", true)
+src/lua_api/workarounds/temporary/housing_dashboard_preload.rs:85:        if HouseFinderFrame and type(HouseFinderFrame.OnEvent) == "function" then
+src/lua_api/workarounds/temporary/housing_dashboard_preload.rs:86:            HouseFinderFrame:OnEvent("NEIGHBORHOOD_LIST_UPDATED", Enum.HousingResult.Success, HOUSING_SIM_NEIGHBORHOODS)
+src/lua_api/workarounds/temporary/housing_dashboard_preload.rs:125:            if HouseFinderFrame and type(HouseFinderFrame.OnEvent) == "function" then
+src/lua_api/workarounds/temporary/housing_dashboard_preload.rs:126:                HouseFinderFrame:OnEvent("HOUSE_FINDER_NEIGHBORHOOD_DATA_RECIEVED", mapPlotData)
+src/lua_api/workarounds/temporary/housing_dashboard_preload.rs:203:                OnEvent = function(self, eventName, ...)
+src/lua_api/workarounds/temporary/housing_catalog_state.lua:326:    on_event = frame:GetScript("OnEvent")
+src/lua_api/workarounds/temporary/combat_log_state.rs:370:                frame:SetScript("OnEvent", function(_, event_name, ...)
+src/lua_api/globals/missing_surface/traits.rs:40:        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
+src/lua_api/globals/targeting_verbs.rs:195:        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
+src/lua_api/globals/create_frame/template_chain.rs:665:        ("OnEvent", scripts.on_event.last()),
+src/lua_api/globals/mail_verbs.rs:44:        for handler in get_scripts_for_dispatch(state, widget_id, "OnEvent") {
+src/lua_api/globals/quest_surface/handlers.rs:212:        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
+src/lua_api/globals/real/shapeshift.rs:14://!   so `StanceBarMixin:OnEvent` re-runs `Update`.
+src/lua_api/globals/admin_collections.rs:248:        for handler in get_scripts_for_dispatch(state, widget_id, "OnEvent") {
+src/lua_api/globals/guild_verbs.rs:153:/// the event, expecting the OnEvent handler to run before the panel is shown.
+src/lua_api/globals/lfg_list.rs:40:        let Some(handler) = get_dispatch_script(state, widget_id, "OnEvent") else {
+src/lua_api/loader_env.rs:177:                    state, widget_id, "OnEvent",
+src/lua_api/env_init/shared_bootstrap.lua:553:      dispatcher:SetScript("OnEvent", function(_, event, ...)
+src/lua_api/env_init/shared_bootstrap.lua:684:      frame:GetScript("OnEvent")(frame, "VARIABLES_LOADED")
+src/lua_api/env_rilua.rs:266:            frame:SetScript("OnEvent", function(_, _, value)
+src/loader/tests/runtime_template_parenting.rs:215:                    <OnEvent method="RuntimeMethodScriptTemplate_OnEvent"/>
+src/loader/tests/runtime_template_parenting.rs:237:            local onEvent = frame:GetScript("OnEvent")
+src/loader/tests/runtime_template_parenting.rs:238:            assert(type(onEvent) == "function", "OnEvent method script should be installed")
+src/loader/tests/xml_basics_extra.rs:769:                    <OnEvent>ONEVENT = true</OnEvent>
+src/loader/tests/xml_basics_extra.rs:781:    for handler in &["OnLoad", "OnEvent", "OnUpdate", "OnShow", "OnHide"] {
+src/loader/tests/wow_api_equipment_set.rs:211:            f:SetScript("OnEvent", function(self) self.count = self.count + 1 end)
+src/loader/tests/runtime_template_misc.rs:450:                        <OnEvent method="OnEvent_Intrinsic"/>
+src/loader/tests/runtime_template_misc.rs:461:            local handler = PartitionedMethodFrame:GetScript("OnEvent")
+src/loader/tests/runtime_template_misc.rs:462:            assert(type(handler) == "function", "OnEvent method binding should install a handler")
+src/loader/tests/runtime_templates.rs:658:                    <OnEvent method="RuntimeMethodScriptTemplate_OnEvent"/>
+src/loader/tests/runtime_templates.rs:680:            local onEvent = frame:GetScript("OnEvent")
+src/loader/tests/runtime_templates.rs:681:            assert(type(onEvent) == "function", "OnEvent method script should be installed")
+src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs:45:        frame:SetScript("OnEvent", function(_, event, ...)
+src/loader/tests/wow_api_globals/runtime_subsystems.rs:204:                "OnLoad", "OnUpdate", "OnEvent", "OnPlay", "OnPause", "OnStop",
+src/loader/tests/wow_api_globals/runtime_subsystems.rs:208:                OnLoad = true, OnUpdate = true, OnEvent = false, OnPlay = true,
+src/loader/tests/wow_api_globals/runtime_subsystems.rs:213:                OnLoad = true, OnUpdate = true, OnEvent = false, OnPlay = true,
+src/loader/tests/wow_api_globals/runtime_subsystems.rs:218:                OnLoad = true, OnUpdate = true, OnEvent = true, OnPlay = false,
+src/loader/tests/wow_api_globals/startup_globals.rs:259:            readyFrame:SetScript("OnEvent", function(self, event, ...)
+src/loader/tests/wow_api_globals/housing_event_dispatch.rs:32:                frame:SetScript("OnEvent", function(_, event_name, ...)
+src/loader/helpers.rs:527:        "OnEvent" => "self, event, ...",
+src/loader/helpers.rs:636:            ("OnEvent", scripts.on_event.last()),
+src/mists/post_load.lua:69:  function FogOfWarFrameMixin:OnEvent(event, ...)
+src/mists/compat_bootstrap.lua:360:    if type(guildFinder.OnEvent) == "function" and C_ClubFinder and Enum and Enum.ClubFinderRequestType then
+src/mists/compat_bootstrap.lua:361:      guildFinder:OnEvent("CLUB_FINDER_PLAYER_PENDING_LIST_RECIEVED", Enum.ClubFinderRequestType.Guild)
+src/mists/compat_bootstrap.lua:362:      guildFinder:OnEvent("CLUB_FINDER_CLUB_LIST_RETURNED", Enum.ClubFinderRequestType.Guild)
+src/mists/compat_bootstrap.lua:1646:if PriestBarMixin.OnEvent == nil then
+src/mists/compat_bootstrap.lua:1647:  function PriestBarMixin:OnEvent()
+src/bin/wow_sim/addon_loading/tests.rs:196:        "order = {'A'}; loadedEvents = {}; local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) loadedEvents[name] = true end)",
+src/bin/wow_sim/addon_loading/tests.rs:292:        "local f = CreateFrame('Frame'); f:RegisterEvent('ADDON_LOADED'); f:SetScript('OnEvent', function(_, _, name) if name == 'EventBroken' or name == 'NestedCaller' then error('event failure') end end)",
+src/bin/wow_cli/audit_api/scanner.rs:10:    "OnLoad", "OnClick", "OnShow", "OnHide", "OnEvent", "OnUpdate", "OnEnter", "OnLeave",
+tests/sim_commands_achievement_debug.rs:52:            toast:SetScript("OnEvent", function(self, event, achievementID)
+tests/forever_auto_roll.rs:150:        assert(type(AutoRollFrame:GetScript('OnEvent')) == 'function')
+tests/p1207_remaining_timeline_color_event.rs:13:        listener:SetScript('OnEvent', function(_, name, ...)
+tests/p1207_remaining_timeline_color_event.rs:26:        debug.setobjecttaint(listener:GetScript('OnEvent'), 'TimelineObserver')
+tests/blizzard_end_of_match_ui_loads.rs:249:         EndOfMatchFrameMixin (the singleton's mixin, drives OnLoad/OnEvent/TryShow), \
+tests/protected_frame_enforcement.rs:162:            listener:SetScript("OnEvent", function(_, _, _, func)
+tests/protected_frame_enforcement.rs:218:            listener:SetScript("OnEvent", function()
+tests/protected_frame_enforcement.rs:256:            listener:SetScript("OnEvent", function()
+tests/protected_frame_enforcement.rs:295:            listener:SetScript("OnEvent", function(_, _, _, func)
+tests/protected_frame_enforcement.rs:336:            listener:SetScript("OnEvent", function(_, _, _, func)
+tests/protected_frame_enforcement.rs:381:            listener:SetScript("OnEvent", function() blocked = blocked + 1 end)
+tests/protected_frame_enforcement.rs:411:            listener:SetScript("OnEvent", function(_, _, _, func)
+tests/protected_frame_enforcement.rs:466:            listener:SetScript("OnEvent", function(_, _, _, func)
+tests/blizzard_obliterum_ui_loads.rs:253:             at module top: ObliterumForgeMixin (line 9, owns OnLoad / OnEvent / OnShow / \
+tests/blizzard_obliterum_ui_loads.rs:256:             ObliterumForgeItemSlotMixin (line 59, owns OnLoad / OnEvent / RefreshIcon / \
+tests/wowforever_finite_constants.rs:67:            frame:SetScript("OnEvent", function(self, name, first, second)
+tests/wowforever_finite_constants.rs:97:        frame:SetScript("OnEvent", function(self, event, ...)
+tests/wowforever_finite_constants.rs:130:        frame:SetScript("OnEvent", function(self, event, ...)
+tests/blizzard_major_factions_loads.rs:376:             14-method surface: lifecycle (OnShow / OnHide / OnEvent), interaction (OnEnter \
+tests/blizzard_major_factions_loads.rs:504:             MAJOR_FACTION_UNLOCKED + wires ShowAnim:OnFinished, OnEvent re-fires \
+tests/blizzard_covenant_toasts_loads.rs:179:                and type(CovenantChoiceToastMixin.OnEvent) == 'function' \
+tests/blizzard_covenant_toasts_loads.rs:190:         COVENANT_CHOSEN; OnEvent dispatching COVENANT_CHOSEN→PlayCovenantChoiceToast; OnHide \
+tests/blizzard_covenant_toasts_loads.rs:208:                and type(CovenantRenownToastMixin.OnEvent) == 'function' \
+tests/blizzard_covenant_toasts_loads.rs:225:         COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED; OnEvent gating new>old AND new>1 then calling \
+tests/blizzard_subscription_interstitial_ui_loads.rs:33:    "OnEvent",
+tests/blizzard_subscription_interstitial_ui_loads.rs:310:             EventRegistry, OnEvent branches on SHOW_SUBSCRIPTION_INTERSTITIAL \
+tests/blizzard_party_pose_ui_loads.rs:295:             ReloadPartyPose / OnLoad / OnEvent / OnKeyDown / Dismiss; orchestrates the \
+tests/blizzard_durability_frame_loads.rs:282:                    type(DurabilityFrameMixin.OnEvent), \
+tests/blizzard_durability_frame_loads.rs:300:         OnEvent, OnEnter (tooltip), OnLeave (tooltip hide), SetAlerts (the main per-event \
+tests/p1207_b15_encounter_end.rs:33:        listener:SetScript('OnEvent', receive)
+tests/blizzard_item_interaction_ui_loads.rs:39:    "OnEvent",
+tests/blizzard_item_interaction_ui_loads.rs:102:const CONVERSION_OUTPUT_METHODS: &[&str] = &["RefreshIcon", "OnEvent", "OnEnter", "OnLeave"];
+tests/blizzard_item_interaction_ui_loads.rs:342:             methods (interaction-type / cost / charge accessors, OnEvent / OnShow / OnHide \
+tests/blizzard_item_interaction_ui_loads.rs:486:             the output-slot mixin owns 4 methods (RefreshIcon / OnEvent / OnEnter / OnLeave). \
+tests/blizzard_item_interaction_ui_loads.rs:487:             OnEvent listens for ITEM_INTERACTION_ITEM_CONVERSION_RESULT to paint the converted \
+tests/blizzard_auction_house_item_search.rs:32:listener:SetScript("OnEvent", function(_, _, payload)
+tests/blizzard_quick_join_loads.rs:341:             owning the QuickJoinFrame OnLoad/OnShow/OnHide/OnEvent state \
+tests/channel_lifecycle.rs:15:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/event_gc_rooting.rs:17:        first:SetScript('OnEvent', function() error('audit native first listener') end)
+tests/event_gc_rooting.rs:20:        second:SetScript('OnEvent', function(_, event, unit, info)
+tests/event_gc_rooting.rs:50:        first:SetScript('OnEvent', function() error('audit first listener') end)
+tests/event_gc_rooting.rs:53:        second:SetScript('OnEvent', function(_, event, unit, info)
+tests/c_vehicle_possession_globals.rs:132:         f:SetScript('OnEvent', function(_, _, unit) table.insert(events_seen, unit) end)\n\
+tests/c_vehicle_possession_globals.rs:156:         f:SetScript('OnEvent', function(_, _, unit) table.insert(events_seen, unit) end)\n\
+tests/key_dispatch.rs:242:        listener:SetScript("OnEvent", function()
+tests/blizzard_report_frame_glue_loads.rs:33:    "OnEvent",
+tests/blizzard_report_frame_glue_loads.rs:425:             OnLoad/OnHide/OnEvent are the lifecycle handlers wired through the inherited \
+tests/blizzard_delves_companion_configuration_loads.rs:166:                and type(DelvesCompanionConfigurationFrameMixin.OnEvent) == 'function' \
+tests/blizzard_delves_companion_configuration_loads.rs:176:         TRAIT_TREE_CHANGED) / OnHide / OnEvent / Refresh (drives the per-slot widget \
+tests/blizzard_delves_companion_configuration_loads.rs:219:                and type(CompanionConfigSlotTemplateMixin.OnEvent) == 'function' \
+tests/blizzard_delves_companion_configuration_loads.rs:246:         CompanionConfigSlotTemplateMixin with 16 methods (OnLoad / OnEvent / OnShow / OnHide \
+tests/c_azerite_essence.rs:103:    f:SetScript("OnEvent", function(_, _, prev, new)
+tests/c_azerite_essence.rs:114:    f:SetScript("OnEvent", function(_, event, a, b)
+tests/c_azerite_essence.rs:127:    f:SetScript("OnEvent", function(_, _) forge_close_count = forge_close_count + 1 end)
+tests/c_azerite_essence.rs:134:    f:SetScript("OnEvent", function(_, _, id) table.insert(unlock_log, id) end)
+tests/equipment_set_command.rs:94:        frame:SetScript('OnEvent', function(_, event, success, id)
+tests/blizzard_wow_survey_ui_loads.rs:37:const SURVEY_MIXIN_METHODS: &[&str] = &["OnLoad", "OnEvent", "OnClick"];
+tests/blizzard_wow_survey_ui_loads.rs:72:         `WowSurveyStatusFrame:OnEvent` so the status pulse appears the same frame the \
+tests/blizzard_wow_survey_ui_loads.rs:137:         attaches OnLoad/OnEvent/OnClick to it BEFORE \
+tests/patch_12_1_0_struct_shapes.rs:73:        frame:SetScript("OnEvent", function(_, _, ...)
+tests/patch_12_1_0_struct_shapes.rs:690:        frame:SetScript("OnEvent", function(_, _, created)
+tests/forbidden_aspect_creation.rs:204:        state.individualFrame:SetScript('OnEvent', function(_, event)
+tests/forbidden_aspect_creation.rs:208:        state.unitFrame:SetScript('OnEvent', function(_, event, unit)
+tests/forbidden_aspect_creation.rs:212:        state.allFrame:SetScript('OnEvent', function(_, event)
+tests/forbidden_aspect_creation.rs:310:        state.frames.individual:SetScript('OnEvent', function() state.individual = state.individual + 1 end)
+tests/forbidden_aspect_creation.rs:311:        state.frames.unit:SetScript('OnEvent', function(_, _, unit)
+tests/forbidden_aspect_creation.rs:315:        state.frames.all:SetScript('OnEvent', function() state.all = state.all + 1 end)
+tests/blizzard_item_upgrade_ui_loads.rs:39:    "OnEvent",
+tests/blizzard_item_upgrade_ui_loads.rs:357:         (OnLoad / OnShow / OnHide / OnEvent / OnConfirm), the upgrade-level state machine \
+tests/blizzard_auction_house_cancel_auction.rs:51:listener:SetScript("OnEvent", function(_, eventName, payload)
+tests/blizzard_spectate_frame_loads.rs:31:    "OnEvent",
+tests/blizzard_spectate_frame_loads.rs:318:             handlers (OnLoad / OnShow / OnEvent / OnUpdate); 1 input \
+tests/channel_reentrancy.rs:14:        listener:SetScript('OnEvent', function(_, event)
+tests/channel_reentrancy.rs:35:        listener:SetScript('OnEvent', function()
+tests/channel_reentrancy.rs:55:        listener:SetScript('OnEvent', function(_, event, _, _, spell)
+tests/rot_damage.rs:83:        f:SetScript("OnEvent", function(self, event, unit)
+tests/rot_damage.rs:122:        f:SetScript("OnEvent", function(self, event, unit)
+tests/rot_damage.rs:160:    assert!(died, "OnEvent handler should have detected death");
+tests/targeting_verbs.rs:432:                    assert(type(TargetFrameMixin.OnEvent) == "function")
+tests/targeting_verbs.rs:448:                    frame:SetScript("OnEvent", TargetFrameMixin.OnEvent)
+tests/targeting_verbs.rs:452:                    frame:HookScript("OnEvent", function(self, event)
+tests/targeting_verbs.rs:595:        frame:SetScript('OnEvent', function() raidIconEvents = raidIconEvents + 1 end)
+tests/targeting_verbs.rs:623:        frame:SetScript('OnEvent', function(_, event, ...)
+tests/blizzard_quest_navigation_loads.rs:263:                and type(SuperTrackedFrameMixin.OnEvent) == 'function' \
+tests/blizzard_quest_navigation_loads.rs:279:         3 script handlers (OnLoad/OnEvent/OnUpdate) wired via XML <Scripts> + 9 \
+tests/blizzard_housing_dashboard_loads.rs:344:            "OnEvent",
+tests/blizzard_housing_dashboard_loads.rs:360:         HOUSE_LEVEL_REWARDS_UPDATED via OnEvent",
+tests/blizzard_housing_dashboard_loads.rs:387:            "OnEvent",
+tests/blizzard_housing_dashboard_loads.rs:495:            "OnEvent",
+tests/blizzard_housing_dashboard_loads.rs:562:            "OnEvent",
+tests/blizzard_housing_dashboard_loads.rs:647:            "OnEvent",
+tests/tooltip_full_env_helpers.rs:201:        if BuffFrame:IsEventRegistered("UNIT_AURA") and BuffFrame:GetScript("OnEvent") then
+tests/tooltip_full_env_helpers.rs:202:            BuffFrame:GetScript("OnEvent")(BuffFrame, "UNIT_AURA", "player", updateInfo)
+tests/blizzard_frame_stack_loads.rs:66:         the OnEvent handler which only fires when the user toggles framestack"
+tests/blizzard_frame_stack_loads.rs:199:         TOGGLE_FRAMESTACK OnEvent handler via `C_AddOns.LoadAddOn(...)` — it is a \
+tests/unit_auras_private.rs:15:        all:SetScript('OnEvent', function(_, event, unit, auraID)
+tests/unit_auras_private.rs:20:        player:SetScript('OnEvent', function(_, event, unit, auraID)
+tests/unit_auras_private.rs:58:        all:SetScript('OnEvent', record(allEvents))
+tests/unit_auras_private.rs:61:        player:SetScript('OnEvent', record(playerEvents))
+tests/unit_auras_private.rs:64:        target:SetScript('OnEvent', record(targetEvents))
+tests/blizzard_housing_bulletin_board_loads.rs:323:        "OnEvent",
+tests/blizzard_housing_bulletin_board_loads.rs:338:             drives the bulletin-board frame: OnEvent dispatches NEIGHBORHOOD_INFO_UPDATED to \
+tests/blizzard_housing_bulletin_board_loads.rs:361:        "OnEvent",
+tests/blizzard_housing_bulletin_board_loads.rs:434:        "OnEvent",
+tests/blizzard_housing_bulletin_board_loads.rs:447:             each scroll-box entry: OnShow / OnHide / OnEvent wire the (currently empty) \
+tests/blizzard_housing_bulletin_board_loads.rs:471:        "OnEvent",
+tests/blizzard_housing_bulletin_board_loads.rs:490:             PendingInviteTemplate; OnEvent handles 3 events (NEIGHBORHOOD_INVITE_RESPONSE \
+tests/blizzard_spell_diminish_ui_loads.rs:40:    "OnEvent",
+tests/blizzard_spell_diminish_ui_loads.rs:419:             XML-wired script handlers (OnLoad/OnShow/OnHide/OnEvent), \
+tests/blizzard_housing_templates_loads.rs:445:        "OnEvent",
+tests/blizzard_housing_templates_loads.rs:461:             non-virtual top-banner frame: OnLoad / OnEvent lifecycle, \
+tests/forbidden_aspect_enforcement.rs:56:            frame:SetScript('OnEvent', AddonFn(Record(name .. ':addonEvent')))
+tests/forbidden_aspect_enforcement.rs:60:        secureEvent:SetScript('OnEvent', Record('AspectRestrictedSecureEvent:secureEvent'))
+tests/mouse_tm_commands.rs:13:        frame:SetScript('OnEvent', function(_, event)
+tests/tracked_recipes.rs:51:        f:SetScript("OnEvent", function(_, _event, recipeID, tracked)
+tests/tracked_recipes.rs:195:            f:SetScript("OnEvent", function(_, _event, recipeID, tracked)
+tests/c_glyph_globals.rs:112:         f:SetScript('OnEvent', function(_, _, sid) table.insert(events_seen, sid) end)\n\
+tests/c_glyph_globals.rs:149:         f:SetScript('OnEvent', function(_, _, sid) table.insert(events_seen, sid) end)\n\
+tests/c_glyph_globals.rs:172:         f:SetScript('OnEvent', function(_, _, sid) table.insert(events_seen, sid) end)\n\
+tests/wowforever_gamepad_constants.rs:88:            listener:SetScript("OnEvent", function(_, received, a, b)
+tests/wowforever_gamepad_constants.rs:111:            listener:SetScript("OnEvent", function() changes = changes + 1 end)
+tests/c_anima_diversion.rs:4://! (`AnimaDiversionFrameMixin:OnEvent`, `:UpdateBolsterProgress`,
+tests/blizzard_queue_status_frame_loads.rs:363:             registration plus the OnEvent dispatcher routing each queue \
+tests/blizzard_housing_market_cart_loads.rs:265:            "OnEvent",
+tests/blizzard_housing_market_cart_loads.rs:284:         / OnEvent), Hearthsteel virtual-currency refresh ticker (StartCurrencyRefreshTicker / \
+tests/chat_lockdown_ready_checks.rs:16:        readyObserver:SetScript("OnEvent", function(_, event, ...)
+tests/blizzard_housing_cornerstone_loads.rs:269:        "OnEvent",
+tests/blizzard_housing_cornerstone_loads.rs:296:        "OnEvent",
+tests/blizzard_housing_cornerstone_loads.rs:360:    for method in ["OnEvent", "OnShow", "OnHide"] {
+tests/blizzard_housing_cornerstone_loads.rs:389:    for method in ["OnShow", "OnHide", "OnEvent", "UpdateHouseInfo"] {
+tests/quest_async.rs:38:            f:SetScript("OnEvent", function(_, event, id, ok)
+tests/quest_async.rs:93:            f:SetScript("OnEvent", function(_, event, id, ok)
+tests/group_verbs.rs:206:            frame:SetScript("OnEvent", function(_, firedEvent)
+tests/blizzard_recruit_a_friend_loads.rs:486:                    type(RecruitAFriendFrameMixin.OnEvent) == 'function'",
+tests/blizzard_recruit_a_friend_loads.rs:498:         OnEvent (dispatches the 6 registered events to UpdateRAFInfo / \
+tests/blizzard_auction_house_commodity_purchase.rs:34:listener:SetScript("OnEvent", function(_, _, payload)
+tests/blizzard_auction_house_commodity_purchase.rs:61:listener:SetScript("OnEvent", function(_, _, payload)
+tests/encounter_timeline_tracks.rs:43:        listener:SetScript('OnEvent', function(_,event,eventID)
+tests/encounter_timeline_tracks.rs:94:        frame:SetScript('OnEvent',function(_,event,view)
+tests/encounter_timeline_tracks.rs:149:        frame:SetScript('OnEvent',function(_,_,eventID)
+tests/encounter_timeline_tracks.rs:178:        listener:SetScript('OnEvent',function(_,event,view)
+tests/set_cvar_global.rs:101:            frame:SetScript("OnEvent", function(_, event, name, value)
+tests/c_unit_auras_admin.rs:278:            listener:SetScript("OnEvent", function(_, event, unit, updateInfo)
+tests/blizzard_shared_widget_frames_loads.rs:154:         parser sees a nil mixin and the OnLoad / OnEvent / OnHide handlers \
+tests/blizzard_shared_widget_frames_loads.rs:292:        for method in ["OnLoad", "OnEvent", "OnHide", "Setup", "SetupButtons"] {
+tests/blizzard_shared_widget_frames_loads.rs:301:                 OnLoad registers GENERIC_WIDGET_DISPLAY_SHOW; OnEvent dispatches \
+tests/blizzard_auction_house_browse_query.rs:26:listener:SetScript("OnEvent", function()
+tests/blizzard_maw_buffs_loads.rs:34:    "OnEvent",
+tests/blizzard_maw_buffs_loads.rs:332:             methods spanning lifecycle (OnLoad registers UNIT_AURA + GLOBAL_MOUSE_DOWN, OnEvent \
+tests/blizzard_matchmaking_queue_display_loads.rs:59:    "OnEvent",
+tests/blizzard_matchmaking_queue_display_loads.rs:72:    "OnEvent",
+tests/party_loot_method.rs:17:        listener:SetScript('OnEvent', function()
+tests/blizzard_behavioral_messaging_loads.rs:145:            "BehavioralMessagingTray:OnEvent('BEHAVIORAL_NOTIFICATION', 'ComplaintWarning_Social', 1)",
+tests/blizzard_behavioral_messaging_loads.rs:147:        .expect("OnEvent dispatch should run");
+tests/blizzard_behavioral_messaging_loads.rs:152:            "BehavioralMessagingTray:OnEvent emitted Lua errors:\n  {}",
+tests/startup_api_events.rs:22:             receiver:SetScript('OnEvent', function(_, name, value) \
+tests/quest_accept_confirmation.rs:17:        listener:SetScript("OnEvent", function(_, event, ...)
+tests/house_exterior_attached_decor.rs:141:            listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_attached_decor.rs:872:            listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_attached_decor.rs:918:                listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_attached_decor.rs:1195:            listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_attached_decor.rs:1328:            listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_attached_decor.rs:1468:            listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_attached_decor.rs:1538:            listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_attached_decor.rs:1701:            listener:SetScript('OnEvent', function(_, event, result)
+tests/house_exterior_attached_decor.rs:1732:            listener:SetScript('OnEvent', function(_, event, ...)
+tests/blizzard_glue_collections_loads.rs:289:        "OnEvent",
+tests/unit_cast_durations.rs:179:        frame:SetScript('OnEvent', function(_, event, unit, guid, spell, a, b)
+tests/blizzard_guild_rename_loads.rs:303:        "OnEvent",
+tests/blizzard_guild_rename_loads.rs:337:             frame lifecycle (OnLoad/OnShow/OnHide/OnEvent), mode-frame dispatch (Add/Update \
+tests/blizzard_item_button_loads.rs:118:    "OnEvent",
+tests/blizzard_item_button_loads.rs:449:         the four `<OnLoad/OnShow/OnHide/OnEvent method=\"...\">` script bindings"
+tests/blizzard_item_button_loads.rs:465:             OnEvent plays the burst effect (175) when the enchanted item matches \
+tests/blizzard_map_canvas_loads/support.rs:55:    &["Init", "IsCVarSet", "OnShow", "OnHide", "OnEvent"];
+tests/store_api.rs:6:    listener:SetScript("OnEvent", function(_, event, ...)
+tests/blizzard_communities_loads.rs:226:                and type(CommunitiesFrameMixin.OnEvent) == 'function' \
+tests/blizzard_communities_loads.rs:245:        "CommunitiesFrameMixin should expose its core 12 methods (OnLoad/OnShow/OnHide/OnEvent/\
+tests/blizzard_azerite_essence_ui_on_mouse_up_clears_pending.rs:31:                        listener:SetScript("OnEvent", function(_, _, previousID, newID)
+tests/blizzard_customization_ui_loads.rs:224:                and type(CustomizationAudioInterfaceMixin.OnEvent) == 'function' \
+tests/blizzard_customization_ui_loads.rs:244:         CustomizationAudioInterfaceMixin (line 7, 9 methods — OnEvent dispatching \
+tests/test_premade_groups.rs:67:            f:SetScript("OnEvent", function(self, event)
+tests/test_premade_groups.rs:316:            f:SetScript("OnEvent", function(self, event, rid, newStatus, oldStatus, name)
+tests/perf/event_dispatch.rs:62:                frame:SetScript("OnEvent", function()
+tests/perf/event_dispatch.rs:83:                local handler = frame:GetScript("OnEvent")
+tests/blizzard_inspect_ui_loads.rs:370:             slot wires the same 5 OnLoad/OnEvent/OnClick/OnEnter/OnLeave handlers via the \
+tests/blizzard_quest_timer_loads.rs:153:         the OnLoad/OnEvent/OnUpdate/Update/UpdateQuestTimers state machine), \
+tests/blizzard_stable_ui_loads.rs:51:    "OnEvent",
+tests/blizzard_stable_ui_loads.rs:417:             family, OnEvent dispatches PET_STABLE_SHOW/CLOSED/UPDATE etc.), \
+tests/blizzard_stable_ui_loads.rs:528:             OnShow, OnHide, OnEvent to gate availability on \
+tests/blizzard_stable_ui_loads.rs:534:    let extra_methods = ["OnShow", "OnHide", "OnEvent", "Refresh"];
+tests/blizzard_game_menu_loads.rs:359:                    type(GameMenuFrameMixin.OnEvent) == 'function'",
+tests/blizzard_game_menu_loads.rs:371:         (line 34 — symmetric unregister + UpdateMicroButtons), OnEvent (line 46 — \
+tests/blizzard_new_player_experience_guide_loads.rs:283:             methods (OnLoad / OnEvent / OnShow / OnHide / SetStateInternal / \
+tests/housing_pending_decor.rs:760:    pendingListener:SetScript('OnEvent', function(_, event) pendingEvents[#pendingEvents + 1] = event end)
+tests/blizzard_housing_inspect_mode_ui_loads.rs:245:            "OnEvent",
+tests/blizzard_housing_inspect_mode_ui_loads.rs:265:         CatalogShopFrame.VisibilityUpdated), OnEvent (dispatches the 2 frame events), \
+tests/blizzard_housing_inspect_mode_ui_loads.rs:332:             array (lines 3-7 of the .lua) which contains exactly these 2 events; OnEvent then \
+tests/blizzard_house_editor_loads.rs:288:        "OnEvent",
+tests/blizzard_house_editor_loads.rs:309:             keyed on Enum.HouseEditorMode; OnEvent dispatches HOUSE_EDITOR_MODE_CHANGED to \
+tests/party_countdown.rs:13:    countdownObserver:SetScript('OnEvent', function(_, event, ...)
+tests/blizzard_game_tooltip_loads.rs:311:         RefreshDataNextUpdate/OnEvent/SetWorldCursor and the GetItem/GetSpell/GetUnit \
+tests/blizzard_game_tooltip_loads.rs:331:                    type(GameTooltipDataMixin.OnEvent) == 'function', \
+tests/blizzard_game_tooltip_loads.rs:344:         rebuilds), OnEvent (line 955 — handles TOOLTIP_DATA_UPDATE by calling \
+tests/blizzard_runeforge_ui_loads.rs:458:         dimensions 588×676. Carries the OnLoad/OnShow/OnHide/OnEvent script bindings"
+tests/blizzard_azerite_essence_ui_unlock_milestone.rs:38:                        listener:SetScript("OnEvent", function(_, _, milestoneID)
+tests/encounter_timeline_script.rs:103:        listener:SetScript("OnEvent", function(_, event, payload)
+tests/encounter_timeline_script.rs:138:        listener:SetScript("OnEvent", function(_,_, id)
+tests/blizzard_order_hall_ui_loads.rs:276:             OnLoad / OnEvent / OnShow / OnHide / Refresh / SetUseThemedTextures / etc.; \
+tests/blizzard_compact_raid_frames_loads.rs:141:                and type(CompactRaidFrameContainerMixin.OnEvent) == 'function' \
+tests/blizzard_compact_raid_frames_loads.rs:167:         lifecycle (OnLoad/OnEvent/OnSizeChanged), group-mode/filter/sort setters, layout \
+tests/blizzard_auction_house_mixin_methods.rs:11:    "OnEvent",
+tests/blizzard_item_belt_frame_loads.rs:39:const ITEM_BELT_FRAME_METHODS: &[&str] = &["OnShow", "OnHide", "OnEvent", "UpdateSpectateState"];
+tests/blizzard_item_belt_frame_loads.rs:279:             unregisters the same set and chains HUDInventoryBarMixin.OnHide; OnEvent chains \
+tests/blizzard_item_belt_frame_loads.rs:280:             HUDInventoryBarMixin.OnEvent then routes the three plunderstorm events) plus \
+tests/xml_templates/inline_advanced/advanced_bindings.rs:436:            <OnEvent></OnEvent>
+tests/blizzard_covenant_preview_ui_loads.rs:136:                and type(CovenantPreviewFrameMixin.OnEvent) == 'function' \
+tests/blizzard_covenant_preview_ui_loads.rs:156:         cleans up + calls C_CovenantPreview.CloseFromUI; OnEvent dispatch; HandleEscape; \
+tests/patch_5_4_8_combat_restrictions.rs:36:            frame:SetScript('OnEvent', function() events = events + 1 end)
+tests/professions_api.rs:683:        f:SetScript("OnEvent", function(_, _event, recipeID, tracked)
+tests/c_shapeshift_globals.rs:194:            f:SetScript("OnEvent", function() fired = true end)
+tests/social_probes.rs:152:            listener:SetScript("OnEvent", function(self, event, unit)
+tests/blizzard_game_mode_select_loads.rs:353:                    type(GameModeFrameMixin.OnEvent) == 'function'",
+tests/blizzard_game_mode_select_loads.rs:368:         on ESCAPE fires the GameModeFrame.Hide EventRegistry trigger), OnEvent (line \
+tests/arrow_callout_manager.rs:91:            ArrowCalloutFrameManager:SetScript("OnEvent", function(self, eventName, payload)
+tests/blizzard_encounter_warnings_loads.rs:251:                    type(EncounterWarningsSystemFrameMixin.OnEvent) == 'function'",
+tests/blizzard_encounter_warnings_loads.rs:257:        "EncounterWarningsSystemFrameMixin must define OnLoad / OnShow / OnHide / OnEvent — \
+tests/blizzard_housing_house_finder_loads.rs:310:            "OnEvent",
+tests/blizzard_housing_house_finder_loads.rs:320:        "HouseFinderFrameMixin owns 16 methods driving the umbrella panel: OnLoad / OnEvent / \
+tests/blizzard_housing_house_finder_loads.rs:381:            "OnEvent",
+tests/blizzard_housing_house_finder_loads.rs:467:            "OnEvent",
+tests/blizzard_housing_house_finder_loads.rs:473:         SetSelectedPin (track which pin is highlighted), OnEvent / RemoveAllData / \
+tests/housing_storage_entry_updated.rs:77:        storageListener:SetScript('OnEvent', function(_, event, ...)
+tests/housing_storage_entry_updated.rs:285:        storageListener:SetScript('OnEvent', function(_, event, ...)
+tests/housing_storage_entry_updated.rs:390:        listener:SetScript('OnEvent', function() events = events + 1 end)
+tests/c_wow_token_public.rs:15:    buy_listener:SetScript("OnEvent", function(_, _, result)
+tests/c_wow_token_public.rs:25:    price_listener:SetScript("OnEvent", function(_, _, result)
+tests/blizzard_rpe_turn_strafe_loads.rs:27:    "OnEvent",
+tests/blizzard_rpe_turn_strafe_loads.rs:263:         GameDialog.lua) and then receives 6 method overrides (OnLoad/OnShow/OnHide/OnEvent/ \
+tests/blizzard_rpe_turn_strafe_loads.rs:366:            && xml_text.contains("<OnEvent method=\"OnEvent\"/>"),
+tests/blizzard_rpe_turn_strafe_loads.rs:367:        "RPETurnStrafeStyleFrameTemplate must wire OnShow/OnHide/OnEvent via mixin-method \
+tests/talent_change_events.rs:29:    tracker:SetScript("OnEvent", function(self, event, ...)
+tests/blizzard_housing_create_neighborhood_loads.rs:270:             collision with subclass OnLoad/OnEvent/OnShow handlers chained via inherit=append; \
+tests/blizzard_housing_create_neighborhood_loads.rs:303:    for method in ["OnLoad", "SetCharterInfo", "OnShow", "OnHide", "OnEvent"] {
+tests/blizzard_housing_create_neighborhood_loads.rs:319:             OnHide unregisters + C_Housing.OnCharterConfirmationClosed; OnEvent dispatches \
+tests/blizzard_housing_create_neighborhood_loads.rs:359:        "OnEvent",
+tests/blizzard_housing_create_neighborhood_loads.rs:376:             OnEvent dispatches name-validated → show ConfirmationFrame on success or \
+tests/blizzard_housing_create_neighborhood_loads.rs:395:        "OnEvent",
+tests/blizzard_housing_create_neighborhood_loads.rs:410:             HOUSING_CREATENEIGHBORHOOD_CHARTER_CONFIRMBUTTON); OnEvent dispatches \
+tests/c_club_probes.rs:352:            listener:SetScript("OnEvent", function(self, event, clubId, streamId, messageId)
+tests/blizzard_generic_trait_ui_loads.rs:323:                    type(GenericTraitFrameMixin.OnEvent) == 'function', \
+tests/blizzard_generic_trait_ui_loads.rs:335:         TalentFrameBaseMixin.OnEvent(self, event, ...)). The 7 lifecycle methods drive the \
+tests/blizzard_auction_house_dependencies.rs:55:        frame:SetScript("OnEvent", function(_, _, addonName)
+tests/c_action_bar_slot_mutation.rs:67:            frame:SetScript("OnEvent", function(_, _, slot)
+tests/c_action_bar_slot_mutation.rs:89:            frame:SetScript("OnEvent", function(_, _, slot)
+tests/c_action_bar_slot_mutation.rs:110:            frame:SetScript("OnEvent", function(_, _, slot)
+tests/blizzard_delves_difficulty_picker_loads.rs:133:                and type(DelvesDifficultyPickerFrameMixin.OnEvent) == 'function' \
+tests/blizzard_delves_difficulty_picker_loads.rs:155:         DelvesDifficultyPickerFrameMixin with the full lifecycle (OnLoad / OnEvent / OnShow / \
+tests/admin_spell_effects_api.rs:93:            f:SetScript("OnEvent", function(self, event, unit)
+tests/admin_spell_effects_api.rs:203:            f:SetScript("OnEvent", function(self, event, unit)
+tests/c_arrow_callout_manager.rs:86:        listener:SetScript("OnEvent", function(_, event, payload)
+tests/c_arrow_callout_manager.rs:115:        listener:SetScript("OnEvent", function(_, event, calloutID)
+tests/c_arrow_callout_manager.rs:137:        listener:SetScript("OnEvent", function(_, event, id)
+tests/blizzard_transform_manipulator_loads.rs:34:            "OnEvent",
+tests/blizzard_remix_artifact_ui_loads.rs:402:                and type(RemixArtifactFrameMixin.OnEvent) == 'function' \
+tests/blizzard_remix_artifact_ui_loads.rs:412:        "RemixArtifactFrameMixin must expose OnLoad / OnShow / OnHide / OnEvent / UpdateTraitTree \
+tests/blizzard_remix_artifact_ui_loads.rs:417:         TalentFrameBaseMixin.OnLoad(self) / OnShow(self) / OnHide(self) / OnEvent(self, ...) \
+tests/blizzard_remix_artifact_ui_loads.rs:472:         RemixArtifactModelMixin.OnLoad / OnEvent / OnModelLoaded"
+tests/gamepad_mapped_state.rs:90:        observer:SetScript('OnEvent', function(self, event, ...)
+tests/c_auction_house_browse_query.rs:66:    listener:SetScript("OnEvent", function() count = count + 1 end)
+tests/c_auction_house_browse_query.rs:151:        throttle_listener:SetScript("OnEvent", function() throttle_count = throttle_count + 1 end)
+tests/c_auction_house_browse_query.rs:175:        listener:SetScript("OnEvent", function(_, _, payload)
+tests/c_auction_house_browse_query.rs:215:        item_listener:SetScript("OnEvent", function() item_count = item_count + 1 end)
+tests/c_auction_house_browse_query.rs:218:        throttle_listener:SetScript("OnEvent", function() throttle_count = throttle_count + 1 end)
+tests/c_auction_house_browse_query.rs:240:        item_listener:SetScript("OnEvent", function() item_count = item_count + 1 end)
+tests/c_auction_house_browse_query.rs:243:        failure_listener:SetScript("OnEvent", function() failure_count = failure_count + 1 end)
+tests/c_auction_house_browse_query.rs:262:        listener:SetScript("OnEvent", function(_, _, payload)
+tests/c_auction_house_browse_query.rs:300:        throttle_listener:SetScript("OnEvent", function() throttle_count = throttle_count + 1 end)
+tests/blizzard_hybrid_minimap_loads.rs:33:    "OnEvent",
+tests/blizzard_hybrid_minimap_loads.rs:239:             XML-wired script handlers (OnLoad / OnShow / OnHide / OnEvent / OnUpdate) plus 8 \
+tests/admin_pvp_guild_api.rs:305:            f:SetScript("OnEvent", function() fired = true end)
+tests/admin_pvp_guild_api.rs:328:            f:SetScript("OnEvent", function() fired = true end)
+tests/admin_pvp_guild_api.rs:351:            f:SetScript("OnEvent", function() fired = true end)
+tests/blizzard_text_status_bar_loads.rs:313:         InitializeTextStatusBar, OnEvent → TextStatusBarOnEvent, \
+tests/patch_12_1_0_deprecated_wrappers.rs:212:            if type(header:GetScript("OnEvent")) ~= "function" then return "group-inherit" end
+tests/blizzard_zone_ability_loads.rs:33:    "OnEvent",
+tests/blizzard_zone_ability_loads.rs:46:    "OnEvent",
+tests/blizzard_zone_ability_loads.rs:195:         first, the mixin reference would resolve to nil and OnLoad/OnEvent script handlers \
+tests/blizzard_zone_ability_loads.rs:403:             handlers (OnLoad/OnShow/OnHide/OnEvent/OnClick/OnDragStart/OnEnter/OnLeave) to the \
+tests/blizzard_zone_ability_loads.rs:454:         OnLoad/OnEvent script bindings to ZoneAbilityFrameMixin"
+tests/c_auction_house_item_search.rs:327:            listener:SetScript("OnEvent", function(_, _, payload)
+tests/c_auction_house_item_search.rs:381:            listener:SetScript("OnEvent", function() count = count + 1 end)
+tests/cast_events_identity.rs:15:        frame:SetScript('OnEvent', function(self, event, ...) record(event, ...) end)
+tests/blizzard_restricted_addon_environment_loads.rs:796:             SecureGroup/Aura templates host the OnLoad/OnEvent/OnShow/OnUpdate/ \
+tests/party_connection.rs:15:        listener:SetScript("OnEvent", function(_, event, ...)
+tests/c_auction_house_sell_cancel.rs:48:    created_listener:SetScript("OnEvent", function(_, _, id)
+tests/c_auction_house_sell_cancel.rs:54:    owned_listener:SetScript("OnEvent", function() owned_count = owned_count + 1 end)
+tests/c_auction_house_sell_cancel.rs:191:        listener:SetScript("OnEvent", function() owned_count = owned_count + 1 end)
+tests/c_auction_house_sell_cancel.rs:231:        cancel_listener:SetScript("OnEvent", function(_, _, id)
+tests/c_auction_house_sell_cancel.rs:237:        owned_listener:SetScript("OnEvent", function() owned_count = owned_count + 1 end)
+tests/c_auction_house_sell_cancel.rs:285:        listener:SetScript("OnEvent", function() canceled_count = canceled_count + 1 end)
+tests/c_auction_house_sell_cancel.rs:309:        listener:SetScript("OnEvent", function() canceled_count = canceled_count + 1 end)
+tests/patch_12_0_0_crafting_shapes.rs:336:        frame:SetScript('OnEvent',function(_,_,data) CraftingResults[#CraftingResults+1]=data end)
+tests/patch_12_0_0_crafting_shapes.rs:405:        frame:SetScript('OnEvent',function() CraftingEventCount=CraftingEventCount+1 end)
+tests/blizzard_guild_bank_ui_loads.rs:269:        "OnEvent",
+tests/blizzard_guild_bank_ui_loads.rs:288:             OnLoad/OnEvent/OnShow/OnHide for visibility, Update/UpdateTabs/UpdateTabard for \
+tests/keyboard.rs:680:        f:SetScript("OnEvent", function(self, event)
+tests/housing.rs:46:        f:SetScript('OnEvent', function(_, event, ...)
+tests/housing.rs:170:        f:SetScript('OnEvent', function(_, event)
+tests/housing.rs:244:        f:SetScript('OnEvent', function() replyEvents = replyEvents + 1 end)
+tests/server_snapshot_import.rs:73:        listener:SetScript('OnEvent', function(_, event, bag)
+tests/house_exterior_core_fixture.rs:45:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/house_exterior_core_fixture.rs:460:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/blizzard_damage_meter_loads.rs:154:                and type(DamageMeterMixin.OnEvent) == 'function' \
+tests/blizzard_damage_meter_loads.rs:184:         via CVarCallbackRegistry; OnEvent dispatching PLAYER_IN_COMBAT_CHANGED / \
+tests/blizzard_damage_meter_loads.rs:209:                and type(DamageMeterSessionWindowMixin.OnEvent) == 'function' \
+tests/blizzard_damage_meter_loads.rs:225:         OnHide/OnEvent), the damageMeterType / sessionType / sessionID accessors \
+tests/blizzard_damage_meter_loads.rs:243:                and type(DamageMeterSourceWindowMixin.OnEvent) == 'function' \
+tests/autoroll_compat.rs:56:        -- AutoRoll pattern: methods on frame table, dispatched via OnEvent
+tests/autoroll_compat.rs:66:        main:SetScript("OnEvent", function(self, event, ...)
+tests/autoroll_compat.rs:95:        _G.testFrame:SetScript("OnEvent", function(self, event)
+tests/blizzard_report_frame_shared_loads.rs:36:    "OnEvent",
+tests/patch_12_0_5_navigation_aura_entry.rs:44:        EntryObserver:SetScript('OnEvent', function(self, event)
+tests/blizzard_map_canvas_loads.rs:469:            "OnEvent",
+tests/blizzard_map_canvas_loads.rs:489:         data-provider surface forward, then OnShow/OnHide/OnEvent override the lifecycle \
+tests/blizzard_map_canvas_loads.rs:504:             CVar-name registration, IsCVarSet reads GetCVarBool, OnShow/OnHide/OnEvent \
+tests/blizzard_major_factions_loads/support.rs:29:    "OnEvent",
+tests/blizzard_major_factions_loads/support.rs:46:    "OnEvent",
+tests/blizzard_major_factions_loads/support.rs:63:    "OnEvent",
+tests/blizzard_major_factions_loads/support.rs:70:    "OnEvent",
+tests/blizzard_major_factions_loads/support.rs:80:    "OnEvent",
+tests/blizzard_covenant_renown_loads.rs:121:         HeaderFrame must be reachable for the OnEvent dispatch hover-tooltip refresh"
+tests/blizzard_covenant_renown_loads.rs:137:                and type(CovenantRenownMixin.OnEvent) == 'function' \
+tests/blizzard_azerite_essence_ui_activate_essence.rs:44:                        listener:SetScript("OnEvent", function(_, event, first, second)
+tests/blizzard_dispatcher_loads.rs:68:         game types because the dispatch primitives (CreateFrame, hooksecurefunc, OnEvent) \
+tests/blizzard_azerite_respec_ui_show_failed_func_routes.rs:26:                        listener:SetScript("OnEvent", function()
+tests/wowtoken_secure.rs:6:    listener:SetScript("OnEvent", function(_, event)
+tests/patch_12_1_0_aura_secret_context.rs:188:        frame:SetScript('OnEvent', function(_, _, unit, info)
+tests/admin_encounter_api.rs:22:            f:SetScript("OnEvent", function(self, event, eid, ename, diff, size, success)
+tests/admin_encounter_api.rs:45:            f:SetScript("OnEvent", function(self, event, eid, ename)
+tests/admin_encounter_api.rs:72:        frame:SetScript("OnEvent", function(_, event, ...)
+tests/admin_encounter_api.rs:111:        frame:SetScript("OnEvent", function(_, event, ...)
+tests/admin_encounter_api.rs:156:        frame:SetScript("OnEvent", function() events = events + 1 end)
+tests/admin_encounter_api.rs:177:        frame:SetScript("OnEvent", function(_, event, ...)
+tests/admin_encounter_api.rs:206:            f:SetScript("OnEvent", function(self, event, id, time)
+tests/admin_encounter_api.rs:302:            f:SetScript("OnEvent", function(self, event, handle)
+tests/blizzard_auction_house_post_item.rs:41:listener:SetScript("OnEvent", function(_, eventName, auctionID)
+tests/blizzard_azerite_respec_ui_mixins_exposed.rs:48:                            "OnEvent",
+tests/blizzard_recent_allies_loads.rs:346:                    type(RecentAlliesListMixin.OnEvent) == 'function'",
+tests/blizzard_recent_allies_loads.rs:353:         <Scripts> block in Templates.xml:27-32 (OnLoad/OnShow/OnHide/OnEvent). The \
+tests/spell_api.rs:281:            f:SetScript("OnEvent", function(_, event)
+tests/spell_api.rs:486:            f:SetScript("OnEvent", function(_, event)
+tests/blizzard_money_receipt_loads.rs:268:             inside the mixin methods (BeginTracking / Display / OnEvent crafting branch)"
+tests/blizzard_money_receipt_loads.rs:295:             keying and ReceiptMixin:OnEvent silently no-ops on every interaction"
+tests/addon_nil_symbol_report.rs:224:frame:SetScript("OnEvent", function(_, _, addonName)
+tests/addon_nil_symbol_report.rs:239:frame:SetScript("OnEvent", function(_, _, addonName)
+tests/blizzard_combat_log_loads.rs:149:                and type(CombatLogDriverMixin.OnEvent) == 'function' \
+tests/blizzard_combat_log_loads.rs:160:        "CombatLogDriverMixin and its OnLoad/OnEvent/OnCombatLog* methods should be defined \
+tests/rilua_rows.rs:188:        BudgetFrame:SetScript('OnEvent', handler)
+tests/patch_7_0_3_behavior.rs:31:listener:SetScript('OnEvent', function() calls = calls + 1 end)
+tests/hook_script.rs:301:        return f:HasScript("OnShow") and f:HasScript("OnUpdate") and f:HasScript("OnEvent")
+tests/hook_script.rs:307:        "Frame should support base handlers OnShow, OnUpdate, OnEvent"
+tests/test_addon.rs:37:        -- Manually trigger the loader's OnEvent through the registry cache.
+tests/test_addon.rs:45:                local handler = frame:GetScript("OnEvent")
+tests/blizzard_housing_charter_loads.rs:294:        "OnEvent",
+tests/blizzard_housing_charter_loads.rs:316:             OnCloseClicked HideUIPanels self + plays HOUSING_CHARTER_BUTTON; OnEvent \
+tests/blizzard_housing_charter_loads.rs:341:        "HousingCharterMixin must expose `:SetCharterInfo()` — called by OnEvent in response \
+tests/blizzard_commentator_loads.rs:169:                and type(CommentatorMixin.OnEvent) == 'function' \
+tests/blizzard_commentator_loads.rs:195:         (OnLoad/OnEvent/OnUpdate/ResetInternal/SwapTeams/ObservePlayer/Set{{Default,Bindings,CVars}}/\
+tests/blizzard_report_frame_loads.rs:35:    "OnEvent",
+tests/blizzard_console_loads.rs:136:                and type(DeveloperConsoleMixin.OnEvent) == 'function' \
+tests/blizzard_console_loads.rs:163:         (OnLoad/OnEvent), message handling (AddMessage/AddMessageInternal/Clear/RefreshMessageFrame), \
+tests/blizzard_deprecated_arena_ui_loads.rs:234:                and type(ArenaEnemyMatchFramesContainerMixin.OnEvent) == 'function' \
+tests/blizzard_deprecated_arena_ui_loads.rs:248:                and type(ArenaEnemyPetFrameMixin.OnEvent) == 'function' \
+tests/blizzard_deprecated_arena_ui_loads.rs:252:                and type(ArenaEnemyPrepFramesContainerMixin.OnEvent) == 'function' \
+tests/blizzard_deprecated_arena_ui_loads.rs:261:         ArenaEnemyMatchFramesContainerMixin (OnLoad / OnEvent / CheckEffectiveEnableState / \
+tests/blizzard_deprecated_arena_ui_loads.rs:265:         (OnLoad / OnEvent / Update — line 362), ArenaEnemyPrepFramesContainerMixin (OnLoad / \
+tests/blizzard_deprecated_arena_ui_loads.rs:266:         OnEvent / UpdateFrames / GetBestAnchorUnitFrameForOppponent — line 444)"
+tests/blizzard_pet_battle_ui_loads.rs:137:         via in-world combat triggers (not a panel button) so the OnLoad / OnEvent \
+tests/blizzard_pet_battle_ui_loads.rs:286:         OnEvent / PetBattleAbilityButton_OnClick / PetBattleFrameTurnTimer_OnUpdate \
+tests/blizzard_pet_battle_ui_loads.rs:434:             critical ones are the OnLoad / OnEvent / OnShow / OnHide / Display / \
+tests/blizzard_timerunning_character_create_loads.rs:289:             — 3), FirstTimeDialogMixin (OnLoad/OnShow/OnEvent/\
+tests/blizzard_timerunning_character_create_loads.rs:292:             (OnLoad/OnShow/OnEvent — 3), EventBannerMixin (OnLoad/\
+tests/blizzard_timerunning_character_create_loads.rs:293:             OnEvent/UpdateShown/UpdateTimeLeft/OnEnter/OnLeave/OnClick \
+tests/guild_verbs.rs:190:            f:SetScript("OnEvent", function(self, event)
+tests/forever_forbidden_consumers.rs:57:        assert(container:GetScript('OnEvent', 1) == nil, 'native container has no normal OnEvent')
+tests/forever_forbidden_consumers.rs:58:        assert(type(container:GetScript('OnEvent', 0)) == 'function'
+tests/forever_forbidden_consumers.rs:59:            or type(container:GetScript('OnEvent', 2)) == 'function', 'native intrinsic binding missing')
+tests/blizzard_script_errors_frame_loads.rs:392:             DisplayMessageInternal with ErrorMessageType, registers OnEvent for \
+tests/blizzard_script_errors_frame_loads.rs:526:         dispatches LUA_WARNING events to the OnEvent script wired at line 47, \
+tests/xml_parsing.rs:130:                    <OnEvent method="OnEvent"/>
+tests/xml_parsing.rs:148:        // Check OnEvent uses method reference
+tests/xml_parsing.rs:149:        let on_event = scripts.on_event.first().expect("Expected OnEvent");
+tests/xml_parsing.rs:150:        assert_eq!(on_event.method.as_deref(), Some("OnEvent"));
+tests/blizzard_boost_tutorial_loads.rs:93:             and type(BoostTutorial.OnEvent) == 'function' \
+tests/blizzard_ui/blizzard_animadiversionui/surface_mixins.rs:16:    "OnEvent",
+tests/blizzard_ui/blizzard_animadiversionui/surface_mixins.rs:34:    "OnEvent",
+tests/blizzard_ui/blizzard_animadiversionui/surface_mixins.rs:77:    "OnEvent",
+tests/blizzard_ui/blizzard_animadiversionui/surface_mixins.rs:106:    "OnEvent",
+tests/blizzard_ui/blizzard_animadiversionui/behavior_onevent_currency_update_refreshes.rs:1://! `AnimaDiversionFrameMixin:OnEvent("CURRENCY_DISPLAY_UPDATE")` behavior probes.
+tests/blizzard_ui/blizzard_animadiversionui/behavior_onevent_currency_update_refreshes.rs:48:frame:OnEvent("CURRENCY_DISPLAY_UPDATE")
+tests/blizzard_ui/blizzard_animadiversionui/behavior_onevent_anima_close_hides_panel.rs:1://! `AnimaDiversionFrameMixin:OnEvent("ANIMA_DIVERSION_CLOSE")` behavior probes.
+tests/blizzard_ui/blizzard_accountsaveui/surface_mixins.rs:21://! function AccountSaveFrameMixin:OnEvent(event, ...)            (line 125)
+tests/blizzard_ui/blizzard_accountsaveui/surface_mixins.rs:48:    "OnEvent",
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_errors.rs:35://! `OnEvent` routes the non-Success branch of `ACCOUNT_SAVE_RESULT`
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_errors.rs:40://! through `OnEvent` rather than calling the method directly proves
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_errors.rs:51://! of `OnEvent`) also calls `StaticPopup_Hide("ACCOUNT_SAVE_IN_PROGRESS")`,
+tests/blizzard_ui/blizzard_accountsaveui/surface_events.rs:22://! distinct dispatch path in `OnEvent`: `ACCOUNT_SAVE_ENABLED_UPDATE` and
+tests/blizzard_ui/blizzard_accountsaveui/surface_events.rs:62:                 lines 40-42). All three events drive a distinct OnEvent \
+tests/blizzard_ui/blizzard_accountsaveui/behavior_success_popup_launch_url.rs:23://! `OnEvent` calls `StaticPopup_Show("ACCOUNT_SAVE_SUCCESS", successMessage,
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_event.rs:9://! function AccountSaveFrameMixin:OnEvent(event, ...)
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_event.rs:38://! The XML wires `<OnEvent method="OnEvent"/>`
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_event.rs:44://! `OnEvent` always calls `UpdateAccountState` at the end, which can
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_event.rs:112:            "OnEvent must call StaticPopup_Show with `which = \"ACCOUNT_SAVE_SUCCESS\"` when \
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_event.rs:115:             never reached StaticPopup_Show — either the OnEvent handler isn't wired \
+tests/blizzard_ui/blizzard_accountsaveui/behavior_save_result_event.rs:116:             (XML `<OnEvent method=\"OnEvent\"/>` regression) or the `result == \
+tests/blizzard_ui/blizzard_arrow_callout_frame/surface_frames.rs:41:expect(frame and frame.OnEvent == ArrowCalloutMixin.OnEvent, "manager OnEvent mixin method")
+tests/blizzard_ui/blizzard_arrow_callout_frame/surface_frames.rs:43:expect(frame and type(frame:GetScript("OnEvent")) == "function", "manager OnEvent script")
+tests/blizzard_ui/blizzard_arrow_callout_frame/surface_globals.rs:9:    &["OnLoad", "OnEvent", "HideCallout", "Setup", "AnchorCallout"];
+tests/blizzard_ui/blizzard_adventuremap/surface_mixins.rs:10:    "OnEvent",
+tests/blizzard_ui/blizzard_adventuremap/surface_mixins.rs:39:    "OnEvent",
+tests/blizzard_ui/blizzard_adventuremap/behavior_quest_choice_provider_quest_accepted_event_removes_pin.rs:57:provider:OnEvent("QUEST_ACCEPTED", questID)
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_extra_actionbar_event.rs:20:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/surface_frames.rs:18:                    type(frame and frame:GetScript("OnEvent")) == "function"
+tests/blizzard_ui/blizzard_actionbarcontroller/surface_frames.rs:37:            "ActionBarController XML must wire the OnEvent script handler"
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_reset_to_default.rs:18:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_settings_loaded_registers_callbacks.rs:44:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_update_override_unskinned_uses_main.rs:24:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_update_bonus_resets_icon_intro_tracker.rs:29:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_shapeshift_events_update_stance_bar.rs:32:                ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_player_entering_world_runs_update_all.rs:17:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_unit_displaypower_updates_vehicle_mana.rs:28:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_pet_battle_close_validates_transition.rs:20:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_pet_battle_close_validates_transition.rs:37:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_possess_event_updates_possess_and_stance.rs:25:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_pet_battle_open_hides_override.rs:26:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_update_vehicle_unskinned_uses_vehicle_index.rs:23:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_update_override_skinned.rs:21:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_update_temp_shapeshift_uses_temp_index.rs:22:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_update_bonus_uses_bonus_index_when_page_one.rs:35:        ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_update_vehicle_skinned.rs:28:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_actionbarcontroller/behavior_page_changed_routes_to_update_all.rs:18:            ActionBarController:GetScript("OnEvent")(
+tests/blizzard_ui/blizzard_achievementui/behavior_comparison_set.rs:218:             with scripts `OnLoad`/`OnEvent`/`OnShow`/`OnHide` (xml:2303-2306) bound to \
+tests/blizzard_ui/blizzard_achievementui/behavior_criteria_update_event.rs:39://! XML binding (xml:1795): `<OnEvent function="AchievementFrameAchievements_OnEvent"/>`.
+tests/blizzard_ui/blizzard_achievementui/behavior_criteria_update_event.rs:198:             `<OnEvent function=\"AchievementFrameAchievements_OnEvent\"/>`). Got \
+tests/blizzard_ui/blizzard_achievementui/behavior_comparison_clear.rs:49://!     <OnEvent function="AchievementFrameComparison_OnEvent"/>
+tests/blizzard_ui/blizzard_achievementui/behavior_comparison_portrait.rs:23://! -- lua:2814-2832 (OnEvent — three call sites)
+tests/blizzard_ui/blizzard_achievementui/behavior_comparison_portrait.rs:216:             (`<OnEvent function=\"AchievementFrameComparison_OnEvent\"/>`). Owns three \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:47://!   `ADDON_LOADED` is registered, the OnEvent script is wired, and the
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:54://!   AND the OnEvent dispatch arms become live for the first time on
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:86:/// `ADDON_LOADED` is registered, OnEvent script is wired, `_OnEvent`
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:155:                 branch does at `Cata/Blizzard_AchievementUI.lua:525-530`. The OnEvent \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:163:                 which point the spec needs updating to reflect that the OnEvent \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:171:                "return type(_G[{FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:173:            .expect("`GetScript(\"OnEvent\")` must run cleanly on AchievementFrameAchievements");
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:177:            "Expected `{FRAME_NAME}:GetScript(\"OnEvent\")` to be a function after \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:179:             line 1795 wires `<OnEvent function=\"AchievementFrameAchievements_OnEvent\"/>` \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:180:             — the OnEvent script attaches at XML parse time. Without an OnEvent \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:184:             `<OnEvent>` element, the loader stopped wiring `<OnEvent function=...>` \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:198:             at file scope. This is the global the XML `<OnEvent function=\"...\"/>` \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:225:/// `<OnShow>` — there is **no `<OnEvent>` script**. So the
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:226:/// `ADDON_LOADED` registration is dispatched against a nil OnEvent
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:229:/// dead leftover. Either way, a future XML edit adding an OnEvent
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:231:/// `GetScript("OnEvent") == nil` tripwire catches.
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:239:/// 3. `type(:GetScript("OnEvent")) == "nil"` — tripwire for a future
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:240:///    XML change adding an OnEvent script (which would mean Blizzard
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:292:                "return type(_G[{CATEGORIES_FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:294:            .expect("`GetScript(\"OnEvent\")` must run cleanly on AchievementFrameCategories");
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:298:            "Expected `{CATEGORIES_FRAME_NAME}:GetScript(\"OnEvent\")` to be nil \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:301:             and `<OnShow>` — there is no `<OnEvent>` script. The registered \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:302:             ADDON_LOADED event is therefore dispatched against a nil OnEvent \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:304:             means a future XML edit added an OnEvent script (or an inherited \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:308:             and the spec needs updating to describe what the OnEvent dispatch does."
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:347:/// `<OnLoad>`, `<OnEvent>`, `<OnShow>`, `<OnHide>`.
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:368:/// 3. `type(:GetScript("OnEvent")) == "function"` — XML wires OnEvent
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:423:             INSPECT_ACHIEVEMENT_READY registered, the OnEvent dispatch arm at \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:431:                "return type(_G[{COMPARISON_FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:433:            .expect("`GetScript(\"OnEvent\")` must run cleanly on AchievementFrameComparison");
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:437:            "Expected `{COMPARISON_FRAME_NAME}:GetScript(\"OnEvent\")` to be a \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:440:             `<OnEvent function=\"AchievementFrameComparison_OnEvent\"/>` — the \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:441:             OnEvent script attaches at XML parse time. Without an OnEvent script, \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:445:             either the XML dropped the `<OnEvent>` element, the loader stopped \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:446:             wiring `<OnEvent function=...>` children, or the global handler \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:463:             `<OnEvent function=\"...\"/>` element resolves against during \
+tests/blizzard_ui/blizzard_achievementui/surface_events.rs:496:                 the OnEvent dispatch arm for `{event}` is now live whenever the \
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:35://! XML binding (xml:1795): `<OnEvent function="AchievementFrameAchievements_OnEvent"/>`.
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:215:             `<OnEvent function=\"AchievementFrameAchievements_OnEvent\"/>`). Got \
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:18://!    events fire through the `:OnEvent` script-handler path;
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:24://! 2. **Dispatcher is `AccountStoreItemDisplayMixin:OnEvent`.** The
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:91://!   `AccountStoreItemDisplayMixin.OnEvent(StoreDisplay, "ACCOUNT_STORE_TRANSACTION_ERROR", 7)`,
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:97://!   replaces `StaticPopup_Show` with a tracker, invokes OnEvent
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:329:            AccountStoreItemDisplayMixin.OnEvent(
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:337:        .expect("Direct OnEvent invocation must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:350:             AccountStoreItemDisplayMixin.OnEvent with event=ACCOUNT_STORE_TRANSACTION_ERROR \
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:352:             would prove the OnEvent body's third branch was bypassed; a value > 1 would prove \
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:389:            AccountStoreItemDisplayMixin.OnEvent(
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:392:            AccountStoreItemDisplayMixin.OnEvent(
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:398:        .expect("Two-call OnEvent invocation must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_transaction_error.rs:409:            "Expected the two `StaticPopup_Show` calls (one per OnEvent invocation, with \
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/account_store.rs:5://! `OnLoad`, `OnShow`, `OnHide`, `OnEvent`,
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/account_store.rs:20://! | `OnEvent`           | absent — `OnLoad` never calls `RegisterEvent`, so no script-handler `OnEvent` body is needed. |
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/account_store.rs:72:        "OnEvent",
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/account_store.rs:75:         UIPanelWindows write), so the panel does not need an OnEvent script-handler body",
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/item_display.rs:10://! The mixin's frame-event dispatch (`OnEvent`), the EventRegistry
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/item_display.rs:33://! | `OnEvent`                 | `Blizzard_AccountStoreItemDisplay.lua:80`                   | Dispatches the three registered frame events: `ACCOUNT_STORE_CURRENCY_AVAILABLE_UPDATED` re-runs `UpdateCurrencyAvailable` when the currencyID matches; `ACCOUNT_STORE_FRONT_UPDATED` flips `areItemsAvailable` and re-runs `OnCategorySelected` with `forceUpdate=true`; `ACCOUNT_STORE_TRANSACTION_ERROR` shows the static popup. Without this method the registered events would fire with no handler. |
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/item_display.rs:95:        "OnEvent",
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/item_display.rs:186:                 mixin's lifecycle (OnLoad/OnShow/OnHide), frame-event dispatch (OnEvent), \
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/base_card.rs:10://! `OnHide`, `OnEvent`, `OnUpdate`, `OnMouseWheel`) and the override
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/base_card.rs:30://! | `OnEvent`             | `Blizzard_AccountStoreCardTemplates.lua:109`                 | Dispatches the two registered frame events: `UI_MODEL_SCENE_INFO_UPDATED` re-runs `UpdateCardDisplay`, `ACCOUNT_STORE_ITEM_INFO_UPDATED` re-runs `SetItemID` when the event itemID matches `self.itemInfo.id`. |
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/base_card.rs:88:        "OnEvent",
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/base_card.rs:160:                 (OnLoad/OnShow/OnHide), frame-event dispatch (OnEvent), override hook \
+tests/blizzard_ui/blizzard_accountstore/surface_mixins/base_card.rs:164:                 specialization. For example, dropping `OnEvent` would leave \
+tests/blizzard_ui/blizzard_accountstore/surface_globals.rs:181:                 build on `AccountStoreBaseCardMixin` for shared OnLoad/OnEnter/OnLeave/OnEvent \
+tests/blizzard_ui/blizzard_accountstore/surface_events.rs:73://!    `:OnEvent` script-handler path; `EventRegistry` callbacks fire
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:5://! `STORE_FRONT_STATE_UPDATED` drives `AccountStoreMixin:OnEvent` to
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:7://! the plan claims an `AccountStoreMixin:OnEvent` method exists and
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:12://! 1. **`AccountStoreMixin:OnEvent` does not exist.**
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:17://!    `OnEvent` method. Verified via
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:19://!    — the entire mixin has zero `OnEvent` declaration.
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:29://!    too, so a regression that ADDS a stub OnEvent is caught even
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:35://!      registers it; the OnEvent at lines 130-132 sets
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:38://!      a frame-events array; the OnEvent at line 2489 dispatches to
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:41://!      registers it; the OnEvent at lines 95-97 toggles a button.
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:72://!   asserts `AccountStoreMixin.OnEvent` is nil and the five actual
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:93://!   `AccountStoreMixin:OnEvent` is what doesn't.
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:102://!   future regression added a stub `OnEvent` that called
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:123:            .eval("return type(AccountStoreMixin.OnEvent)")
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:124:            .expect("type(AccountStoreMixin.OnEvent) probe must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:128:            "Expected `type(AccountStoreMixin.OnEvent) == \"nil\"` (PLAN.md spec/source mismatch \
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:129:             tripwire — the plan names `AccountStoreMixin:OnEvent` as the entry point that handles \
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:132:             OnEvent method — only OnLoad/OnShow/OnHide/SetStoreFrontID/SetFullscreenMode), got \
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:134:             `:OnEvent` method (forcing a re-pin against the new mixin contract), or (b) some \
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:135:             other addon monkey-patched `AccountStoreMixin.OnEvent` (a behavior leak across \
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:232:             actually DOES exist; the PLAN's claim about `AccountStoreMixin:OnEvent` is what \
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:290:             `Blizzard_AccountStore` lane registers for the event AND no `AccountStoreMixin:OnEvent` \
+tests/blizzard_ui/blizzard_accountstore/behavior_storefront_state_event.rs:292:             a future regression added a stub `AccountStoreMixin:OnEvent` that calls \
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:16://!    line 115 (called from inside `:OnEvent` after the itemID
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:67://!   plausibly-named methods (RefreshSelectedCard, OnEvent) are
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:73://!   `AccountStoreBaseCardMixin.OnEvent(stub_self, "ACCOUNT_STORE_ITEM_INFO_UPDATED", item_id)`
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:79://!   replaces SetItemID with a tracker; invokes OnEvent with an
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:125:             `AccountStoreBaseCardMixin:OnEvent` at \
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:145:        "OnEvent",
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:209:            AccountStoreBaseCardMixin.OnEvent(
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:217:        .expect("Direct OnEvent invocation must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:230:             AccountStoreBaseCardMixin.OnEvent with event=ACCOUNT_STORE_ITEM_INFO_UPDATED and \
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:248:             itemID passed to OnEvent and equal to `stub_card.itemInfo.id`), got \
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:272:            AccountStoreBaseCardMixin.OnEvent(
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:280:        .expect("Non-matching OnEvent invocation must run cleanly");
+tests/blizzard_ui/blizzard_accountstore/behavior_item_info_updated.rs:288:            "Expected ZERO `SetItemID` calls after firing OnEvent with itemID={EVENT_ITEM_ID} \
+tests/blizzard_ui/blizzard_actionstatus/surface_frames.rs:8:    "OnEvent",
+tests/blizzard_ui/blizzard_actionstatus/surface_frames.rs:16:const ACTION_STATUS_SCRIPT_HANDLERS: &[&str] = &["OnLoad", "OnEvent", "OnUpdate"];
+tests/blizzard_ui/blizzard_actionstatus/behavior_screenshot_started_hides_frame.rs:29:            "`ActionStatusMixin:OnEvent` must call `ActionStatus:Hide()` when \
+tests/blizzard_ui/blizzard_actionstatus/surface_globals.rs:8:    "OnEvent",
+tests/blizzard_ui/blizzard_artifact_ui/surface_globals.rs:19:    "OnEvent",
+tests/blizzard_ui/blizzard_artifact_ui/behavior_artifact_update_when_hidden_shows_panel.rs:107:    ArtifactFrame:OnEvent("ARTIFACT_UPDATE", false)
+tests/blizzard_ui/blizzard_artifact_ui/behavior_artifact_update_when_hidden_shows_panel.rs:141:    ArtifactFrame:OnEvent("ARTIFACT_UPDATE", false)
+tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:148:             `MainActionBarMixin:OnLoad`/`OnEvent`/`OnShow` at `Shared/MainActionBar.lua`, \
+tests/blizzard_ui/blizzard_actionbar/surface_frames.rs:610:                 OnLoad/OnEvent path would crash with a nil-method error during the \
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:43:            "OnEvent",
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:64:            "OnEvent",
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:104:            "OnEvent",
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:365:/// real impl). The remaining 9 (`OnLoad`, `OnEvent`, `OnEnter`,
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:377:    "OnEvent",
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:550:            "OnEvent",
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:580:            "OnEvent",
+tests/blizzard_ui/blizzard_actionbar/surface_mixins.rs:622:            "OnEvent",
+tests/blizzard_ui/blizzard_actionbar/behavior_stance_select.rs:108://!      or its OnLoad didn't register the event, or its OnEvent dispatch
+tests/blizzard_ui/blizzard_actionbar/behavior_stance_select.rs:319:             stopped registering UPDATE_SHAPESHIFT_FORM, the OnEvent \
+tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:48://! 4. `ExpBarMixin:OnEvent` (`Shared/ExpBar.lua:57-66`) routes both
+tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:98://!    declared at `Mainline/ExpBar.xml:20-37`. Its OnEvent
+tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:127://! registering `PLAYER_XP_UPDATE` (lua:53) or `OnEvent` drops the
+tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:211://! - `ExpBarMixin:OnEvent` drops the `PLAYER_XP_UPDATE` arm (lua:63):
+tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:366:         (registration → OnEvent → Update → UnitXP chain) — see header \
+tests/blizzard_ui/blizzard_actionbar/behavior_xp_bar_update.rs:437:         0.347, in [0.01, 0.99]); false means OnLoad/OnEvent registration \
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:4://! with a matching `houseGUID` payload makes `HouseFavorBarMixin:OnEvent`
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:30://! `HouseFavorBarMixin:OnEvent` (lua:51-66) routes `HOUSE_LEVEL_FAVOR_UPDATED`:
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:92://!   `OnEvent`.
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:93://! - `OnEvent` drops the `HOUSE_LEVEL_FAVOR_UPDATED` arm (lua:52-57) →
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:98://! `dispatch_event_now` → frame's `OnEvent` dispatch with a Lua table arg.
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:124://! - `OnEvent` arm at lua:52-57 stops routing
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:203:         non-nil means an unexpected dispatch reached OnEvent — see header \
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:258:         {PAYLOAD_HOUSE_FAVOR} (OnEvent stored the payload at lua:55); \
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:259:         mismatch means OnEvent's GUID-match guard or assignment regressed \
+tests/blizzard_ui/blizzard_actionbar/behavior_house_favor_bar.rs:271:         {PAYLOAD_HOUSE_LEVEL} (OnEvent stored the payload at lua:55) — see \
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:3://! `ArtifactBarMixin:OnEvent`'s `if self:IsVisible()` gate, and firing
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:46://! `ArtifactBarMixin:OnEvent` (lua:64-75) gates dispatch on
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:130://! - `OnEvent` drops the `ARTIFACT_XP_UPDATE` arm (lua:66) → no dispatch.
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:131://! - `OnEvent` inverts the `if self:IsVisible()` guard (lua:65) → events
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:156://! - `OnEvent` drops the `ARTIFACT_XP_UPDATE` arm (lua:66) → same symptom.
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:157://! - `OnEvent`'s `if self:IsVisible()` guard inverts (lua:65) → the test
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:242:         OnEvent — see header observation 2."
+tests/blizzard_ui/blizzard_actionbar/behavior_artifact_bar.rs:292:         `IsVisible() == true` so OnEvent's `if self:IsVisible()` guard \
+tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs:65://!    `ActionBarButtonEventsFrameMixin:OnEvent` (lua:220-225) fans
+tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs:67://!    `OnEvent` (lua:966-976), which gates on
+tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs:134://!   via `OnEvent` lua:972-976 → `:UpdateAction(true)` → `:Update()`. It
+tests/blizzard_ui/blizzard_actionbar/behavior_extra_action_bar.rs:175://!    Pins `ActionBarButtonEventsFrame` → `ExtraActionButton1:OnEvent` →
+tests/blizzard_ui/blizzard_actionbar/behavior_vehicle_leave_button.rs:148://! its `OnEvent` body is a catch-all `self:Update()` call (lua:25-27)
+tests/blizzard_ui/blizzard_actionbar/behavior_page_change.rs:16://!    `ACTIONBAR_PAGE_CHANGED`. Its `OnEvent` body at lua:30-32 takes the
+tests/blizzard_ui/blizzard_actionbar/behavior_page_change.rs:109:                MainActionBar:HookScript("OnEvent", function(self, event)
+tests/blizzard_ui/blizzard_actionbar/behavior_page_change.rs:122:             test can hook its OnEvent. Created by `MainActionBarMixin:OnLoad` \
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:36://! 4. `PetActionBarMixin:OnEvent` at `PetActionBar.lua:70-91` routes
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:100://! `PET_BAR_UPDATE` (lua:55) or where `OnEvent` (lua:72) drops the event
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:102://! registration and the OnEvent dispatch are still wired.
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:126://!      `PetActionBar:OnEvent`, the `PET_BAR_UPDATE` arm at lua:72 ran
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:143://!     observations 3 and 4 fail (no OnEvent listener picks up the fire),
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:145://!   - `PetActionBarMixin:OnEvent` drops the `PET_BAR_UPDATE` arm or the
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:242:            .expect("PET_BAR_UPDATE fire must dispatch cleanly to PetActionBar:OnEvent");
+tests/blizzard_ui/blizzard_actionbar/behavior_pet_bar_update.rs:257:             (PetActionBar.lua:55), `OnEvent` dropped the PET_BAR_UPDATE arm \
+tests/blizzard_ui/blizzard_actionbar/behavior_main_bar_buttons.rs:19://!    `OnEvent` (`ActionBarButtonEventsFrameMixin:OnEvent`, lua:220) fans
+tests/blizzard_ui/blizzard_actionbar/behavior_main_bar_buttons.rs:20://!    `ACTIONBAR_SLOT_CHANGED` to every registered button's own `OnEvent`.
+tests/blizzard_ui/blizzard_actionbar/behavior_main_bar_buttons.rs:22://! 3. The button's `OnEvent` (lua:966-976) gates on
+tests/blizzard_ui/blizzard_actionbar/behavior_main_bar_buttons.rs:45://! registered button's OnEvent gate at lua:973 takes the `arg1 == 0` short-
+tests/blizzard_ui/blizzard_actionbar/behavior_main_bar_buttons.rs:135:             (router OnEvent at Shared/ActionButton.lua:220) and dispatches \
+tests/blizzard_ui/blizzard_actionbar/behavior_main_bar_buttons.rs:136:             to each registered button's own OnEvent at lua:966-976, which \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:3://! its `OnEvent` script wiring. Where PLAN under-counts the source's
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:43:/// silently breaking the mixin's `OnEvent` fan-out at lua:220-225.
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:48:/// surface and the OnEvent script wiring. **Spec/source mismatch** —
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:51:/// PLAN-named (7) + source-additional (3) + OnEvent script (1).
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:81:                 OnLoad dispatch regressed. Without `{event}`, the OnEvent fan-out at \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:83:                 frame:OnEvent(event, ...) end`) silently drops `{event}`."
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:109:                "return type(_G[{FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:111:            .expect("`GetScript(\"OnEvent\")` must run cleanly on ActionBarButtonEventsFrame");
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:115:            "Expected `{FRAME_NAME}:GetScript(\"OnEvent\")` to be a function after \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:117:             wires `<OnEvent method=\"OnEvent\"/>` against the mixin's OnEvent at \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:144:/// at lua:291-308 still classifies it as a spellcast for OnEvent
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:212:/// surface, the OnEvent script wiring, and the commented-out
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:229:/// **OnEvent script (1):** `type(:GetScript("OnEvent")) == "function"`
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:230:/// — XML at xml:99 wires `<OnEvent method="OnEvent"/>` against the
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:231:/// mixin's `OnEvent` body at lua:310.
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:277:                 Without `{event}` registered, the OnEvent dispatch at lua:310-336 — \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:311:                "return type(_G[{ACTION_EVENTS_FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:313:            .expect("`GetScript(\"OnEvent\")` must run cleanly on ActionBarActionEventsFrame");
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:317:            "Expected `{ACTION_EVENTS_FRAME_NAME}:GetScript(\"OnEvent\")` to be a \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:320:             `<OnEvent method=\"OnEvent\"/>` against the mixin's `OnEvent` body at \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:326:             (lua:331-335). Without an OnEvent script wired, all 34 registered events \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:355:/// wires `<OnLoad method="OnLoad" inherit="prepend"/>` plus an OnEvent
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:373:/// 4. `type(:GetScript("OnEvent")) == "function"` — XML wires OnEvent
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:425:                 call was removed. Without `{event}` registered, the OnEvent dispatch \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:435:                "return type(_G[{MAIN_ACTION_BAR_FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:437:            .expect("`GetScript(\"OnEvent\")` must run cleanly on MainActionBar");
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:441:            "Expected `{MAIN_ACTION_BAR_FRAME_NAME}:GetScript(\"OnEvent\")` to be a \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:444:             `<OnEvent method=\"OnEvent\" inherit=\"prepend\"/>` against the mixin's \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:445:             `OnEvent` body at `Shared/MainActionBar.lua:30`. The body has explicit \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:451:             faction's bar art. Without an OnEvent script wired, both registered \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:470:/// `<OnLoad ... inherit="prepend"/>` + OnEvent at xml:34; the
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:473:/// registered, OnEvent script wired (single arm at lua:12-14).
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:504:                 Without `{event}`, the single OnEvent arm at lua:12-14 \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:511:                "return type(_G[{STANCE_BAR_FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:513:            .expect("`GetScript(\"OnEvent\")` must run cleanly on StanceBar");
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:517:            "Expected `{STANCE_BAR_FRAME_NAME}:GetScript(\"OnEvent\")` to be a function \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:520:             `<OnEvent method=\"OnEvent\" inherit=\"prepend\"/>` against the mixin's \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:521:             `OnEvent` body at `Shared/StanceBar.lua:11` — a single \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:547:/// Source-additional events PLAN omits. Each has an OnEvent dispatch
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:568:/// source-additional (4), OnEvent script (1).
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:599:                 OnEvent dispatch at lua:70-91 silently drops `{event}` from the \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:621:                 OnEvent dispatch at lua:72-90 has arms for all four — dropping any \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:628:                "return type(_G[{PET_ACTION_BAR_FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:630:            .expect("`GetScript(\"OnEvent\")` must run cleanly on PetActionBar");
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:634:            "Expected `{PET_ACTION_BAR_FRAME_NAME}:GetScript(\"OnEvent\")` to be a \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:637:             `<OnEvent method=\"OnEvent\" inherit=\"prepend\"/>` against the mixin's \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:638:             `OnEvent` body at `Shared/PetActionBar.lua:70` — explicit arms for every \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:664:/// no event registrations of its own. OnEvent at lua:25-27 has a single
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:668:/// 5 registrations, OnEvent script (1).
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:701:                 OnEvent body at lua:25-27 is a single catch-all `self:Update();` — \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:709:                "return type(_G[{VEHICLE_LEAVE_FRAME_NAME:?}]:GetScript(\"OnEvent\"))"
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:711:            .expect("`GetScript(\"OnEvent\")` must run cleanly on VehicleLeaveButton");
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:715:            "Expected `{VEHICLE_LEAVE_FRAME_NAME}:GetScript(\"OnEvent\")` to be a \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:717:             `{VEHICLE_LEAVE_SCRIPTS_XML_SITE}:15` wires `<OnEvent method=\"OnEvent\"/>` \
+tests/blizzard_ui/blizzard_actionbar/surface_events.rs:719:             against the mixin's `OnEvent` body at `Shared/VehicleLeaveButton.lua:25` — \
+tests/blizzard_ui/blizzard_actionbar/behavior_reputation_bar_update.rs:95://! refresh path is via `StatusTrackingManagerMixin:OnEvent`
+tests/blizzard_ui/blizzard_actionbar/behavior_honor_bar_update.rs:21://! `HonorBarMixin:OnEvent` (lua:40-50) dispatches to `Update()` on
+tests/blizzard_ui/blizzard_actionbar/behavior_honor_bar_update.rs:64://! or the `OnEvent` arm at lua:46-49 would silently drop the refresh.
+tests/blizzard_ui/blizzard_actionbar/behavior_honor_bar_update.rs:66://! event also exercises `lua_api::env::fire_event` → frame's `OnEvent`
+tests/blizzard_ui/blizzard_actionbar/behavior_honor_bar_update.rs:87://! - `OnEvent` arm at lua:46-49 stops routing `HONOR_XP_UPDATE` to
+tests/blizzard_ui/blizzard_actionbar/behavior_honor_bar_update.rs:178:         (0, {NEW_HONOR_MAX}) (registration → OnEvent → Update → \
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:4://! `AZERITE_ITEM_EXPERIENCE_CHANGED` makes `AzeriteBarMixin:OnEvent` →
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:38://! `AzeriteBarMixin:OnEvent` (lua:63-79) gates dispatch on
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:89://! bar never wires up; (2) `OnEvent` dropping the
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:91://! reaches `Update`; (3) `OnEvent`'s `if self:IsVisible()` guard at
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:103://!    ran, so OnEvent's `PLAYER_ENTERING_WORLD` arm never ran Update.
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:115://! - `OnEvent` drops the `AZERITE_ITEM_EXPERIENCE_CHANGED` arm (lua:65-66)
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:117://! - `OnEvent`'s `if self:IsVisible()` guard at lua:64 inverts → the
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:192:         means an unexpected dispatch reached OnEvent — see header \
+tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:232:         `IsVisible() == true` so OnEvent's `if self:IsVisible()` guard \
+tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:82://! the harness's startup `PLAYER_ENTERING_WORLD` runs OnEvent ->
+tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:83://! `UpdateBarsShown` (manager OnEvent runs that for every registered event
+tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:96://! `TRACKED_HOUSE_CHANGED` and waiting for OnEvent dispatch) isolates the
+tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:97://! pin to the priority-sort + truncation logic. The OnEvent path is
+tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:99://! `OnShow -> RegisterFrameForEvents -> OnEvent -> Update`, so adding an
+tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:100://! OnEvent fire here would just duplicate that coverage.
+tests/blizzard_ui/blizzard_actionbar/behavior_status_bar_swap.rs:212:         eligible); got {length} -- startup OnEvent did not run \
+tests/blizzard_ui/blizzard_async_request/behavior_response_event_other_name_ignored.rs:26:                request:GetScript("OnEvent")(request, "PLAYER_LOGOUT")
+tests/blizzard_ui/blizzard_async_request/behavior_response_event_other_name_ignored.rs:56:        "direct non-response OnEvent dispatch must not invoke the callback"
+tests/blizzard_ui/blizzard_async_request/behavior_response_callback_can_restart.rs:31:                request:GetScript("OnEvent")(request, "PLAYER_LOGIN")
+tests/blizzard_housing_house_settings_loads.rs:275:            "OnEvent",
+tests/blizzard_housing_house_settings_loads.rs:287:         OnEvent / OnShow / OnHide lifecycle, SetHouseInfo (populate from \
+tests/combo_points.rs:56:        frame:SetScript('OnEvent', function()
+tests/transmog_outfit_lifecycle.rs:14:        frame:SetScript('OnEvent', function(_, event, id) events[#events+1] = {event, id} end)
+tests/transmog_outfit_lifecycle.rs:54:        frame:SetScript('OnEvent', function(_, _, slot, kind, option) saved = {slot,kind,option} end)
+tests/blizzard_player_choice_loads.rs:540:         PlayerChoiceFrameMixin:OnEvent walks through the SetupFrame path"
+tests/error_handler.rs:62:            f:SetScript("OnEvent", function() end)
+tests/error_handler.rs:99:    // Rust fires an event, Lua OnEvent handler errors, error handler called.
+tests/error_handler.rs:110:        f:SetScript("OnEvent", function(self, event)
+tests/error_handler.rs:145:        f:SetScript("OnEvent", function()
+tests/error_handler.rs:181:        f:SetScript("OnEvent", function()
+tests/error_handler.rs:192:        msg.contains("[OnEvent] frame=ContextErrorFrame addon=__BuiltIn"),
+tests/error_handler.rs:213:        function mixin:OnEvent()
+tests/error_handler.rs:220:        frame:SetScript("OnEvent", frame.OnEvent)
+tests/error_handler.rs:240:    // Verify that when OnEvent errors, the error handler is called
+tests/error_handler.rs:250:        f:SetScript("OnEvent", function(self, event, addonName)
+tests/error_handler.rs:312:        f1:SetScript("OnEvent", function() error("error from frame 1") end)
+tests/error_handler.rs:316:        f2:SetScript("OnEvent", function() error("error from frame 2") end)
+tests/error_handler.rs:356:        f:SetScript("OnEvent", function() EVENT_RECEIVED = true end)
+tests/error_handler.rs:382:        f:SetScript("OnEvent", function() error("boom") end)
+tests/error_handler.rs:507:        f:SetScript("OnEvent", function()
+tests/blizzard_micro_menu_loads.rs:86:const CONTAINER_MIXIN_METHODS: &[&str] = &["OnLoad", "OnEvent", "Layout", "GetPosition"];
+tests/blizzard_micro_menu_loads.rs:511:        "MicroMenuContainerMixin must publish 4 methods as functions: OnLoad (registers          PLAYER_LEVEL_UP + TRIAL_STATUS_UPDATE), OnEvent (calls UpdateMicroButtons),          Layout (custom GridLayout that accounts for hidden buttons and the QueueStatusButton          tacked on the side), GetPosition (maps screen quadrant to MicroMenuPositionEnum).          Failed: {:?}",
+tests/blizzard_auction_house_place_bid.rs:37:listener:SetScript("OnEvent", function(_, eventName, payload)
+tests/blizzard_kiosk_loads.rs:36:    "OnEvent",
+tests/blizzard_kiosk_loads.rs:49:    "OnEvent",
+tests/blizzard_kiosk_loads.rs:62:    "OnEvent",
+tests/blizzard_kiosk_loads.rs:312:         sound-kit ID at file scope. KioskFrameMixin:OnEvent passes this to PlaySound when \
+tests/blizzard_kiosk_loads.rs:377:         via `KioskFrameMixin.OnEvent(self, event, ...)`; GameKioskFrameMixin extends it via \
+tests/blizzard_kiosk_loads.rs:388:             11 methods: lifecycle (OnLoad / OnEvent — OnLoad registers the 8 KIOSK_SESSION_* \
+tests/blizzard_kiosk_loads.rs:389:             + TOGGLE_CONSOLE + DEBUG_MENU_TOGGLED events; OnEvent dispatches the warning / \
+tests/blizzard_kiosk_loads.rs:422:             methods. OnEvent extends KioskFrameMixin.OnEvent (manual delegation, not \
+tests/blizzard_kiosk_loads.rs:442:         11 base methods, then attaches 5 game-specific methods (OnLoad / OnEvent override the \
+tests/blizzard_kiosk_loads.rs:457:             KIOSK_HOUSING_RESET), OnEvent (extends base via manual delegation, dispatches \
+tests/blizzard_kiosk_loads.rs:542:             KIOSK_SESSION_* events through GameKioskFrameMixin:OnEvent rather than per-mixin \
+tests/blizzard_subtitles_loads.rs:37:    "OnEvent",
+tests/blizzard_subtitles_loads.rs:207:             EventRegistry callbacks; OnEvent dispatches between \
+tests/blizzard_secure_transfer_ui_loads.rs:335:             ShowFrame); 5 script handlers (SecureTransferDialog_OnLoad / OnEvent / \
+tests/blizzard_secure_transfer_ui_loads.rs:362:         OnEvent in response to SECURE_TRANSFER_CONFIRM_* server events"
+tests/rilua_admin_split_smoke.rs:109:            frame:SetScript("OnEvent", function(self, event, interactionType)
+tests/rilua_admin_split_smoke.rs:144:            frame:SetScript("OnEvent", function(self, event, a1, a2)
+tests/blizzard_glue_parent_loads.rs:97:         and SUBSCRIPTION_CHANGED_KICK_IMMINENT event branches in GlueParentMixin:OnEvent)"
+tests/blizzard_glue_parent_loads.rs:149:         check that Mainline\\GlueParent.lua's GlueParentMixin:OnEvent path immediately invokes \
+tests/blizzard_glue_parent_loads.rs:305:        "OnEvent",
+tests/blizzard_glue_parent_loads.rs:319:             wires AddStaticEventMethod for 3 EventRegistry channels), OnEvent (the 11-branch \
+tests/blizzard_azerite_respec_ui_confirm_clears_selection.rs:56:                        eventFrame:SetScript("OnEvent", function(_, event, location)
+tests/blizzard_azerite_respec_ui_confirm_clears_selection.rs:60:                        local originalOnEvent = AzeriteRespecFrame.OnEvent
+tests/blizzard_azerite_respec_ui_confirm_clears_selection.rs:61:                        AzeriteRespecFrame.OnEvent = function(self, event, location)
+tests/c_artifact_ui_panel/relics_and_mutators.rs:216:        listener:SetScript("OnEvent", function(_, event, newItem)
+tests/c_artifact_ui_panel/relics_and_mutators.rs:245:        listener:SetScript("OnEvent", function(_, event)
+tests/c_artifact_ui_panel/relics_and_mutators.rs:265:        listener:SetScript("OnEvent", function(_, event)
+tests/system_api.rs:323:            frame:SetScript("OnEvent", function(self, event, isInitial, isReloadUI)
+tests/c_auction_house_commodity_search.rs:225:            listener:SetScript("OnEvent", function(_, _, payload)
+tests/blizzard_macro_ui_loads.rs:44:    "OnEvent",
+tests/blizzard_macro_ui_loads.rs:353:         4 lifecycle hooks (OnLoad / OnShow / OnHide / OnEvent), tab-management \
+tests/lua_error_cli.rs:38:            frame:SetScript('OnEvent', function(_, event, name)
+tests/lua_error_cli.rs:143:            frame:SetScript('OnEvent', function(self)
+tests/blizzard_islands_party_pose_ui_loads.rs:39:    "OnEvent",
+tests/blizzard_covenant_callings_loads.rs:147:                and type(CovenantCallingsMixin.OnEvent) == 'function' \
+tests/blizzard_covenant_callings_loads.rs:164:         COVENANT_CALLINGS_UPDATED / QUEST_TURNED_IN / QUEST_ACCEPTED via FrameUtil; OnEvent \
+tests/blizzard_mirror_timer_loads.rs:35:    "OnEvent",
+tests/blizzard_mirror_timer_loads.rs:315:             container's full responsibility surface: OnLoad / OnEvent are the script \
+tests/blizzard_personal_resource_display_loads.rs:194:         OnEvent chain wires up before PLAYER_ENTERING_WORLD fires"
+tests/loot_method.rs:19:        listener:SetScript("OnEvent", function()
+tests/blizzard_item_socketing_ui_loads.rs:37:    "OnEvent",
+tests/blizzard_item_socketing_ui_loads.rs:46:    "OnEvent",
+tests/blizzard_item_socketing_ui_loads.rs:276:         methods to it. The mixin drives each socket button's lifecycle (OnLoad / OnEvent), \
+tests/blizzard_item_socketing_ui_loads.rs:314:         OnEvent dispatches BIND_CONFIRM / REFUNDABLE_CONFIRM / ACCEPT / SUCCESS / FAILURE, \
+tests/blizzard_item_socketing_ui_loads.rs:351:             `<OnEvent function=\"...\"/>` dispatches the 2 socket events), \
+tests/blizzard_item_socketing_ui_loads.rs:352:             ItemSocketingFrame_Update (called by OnEvent on SOCKET_INFO_UPDATE — drives \
+tests/account_services.rs:161:            f:SetScript("OnEvent", function(self, event, result, folder, file)
+tests/account_services.rs:172:    assert!(received, "OnEvent should fire for ACCOUNT_SAVE_RESULT");
+tests/blizzard_delves_toast_loads.rs:156:                and type(DelvesToastMixin.OnEvent) == 'function' \
+tests/blizzard_delves_toast_loads.rs:168:         subsystem registration + close-button scripts), OnEvent (handles DELVE_ASSIST_ACTION \
+tests/blizzard_delves_toast_loads.rs:222:         missing_enums.lua:662) so DelvesToastMixin.OnEvent's GetFormattedMessage can branch \
+tests/gossip_probes.rs:56:        f:SetScript("OnEvent", function(_, event)
+tests/gossip_probes.rs:77:        f:SetScript("OnEvent", function(_, event)
+tests/c_azerite_empowered_item.rs:163:        frame:SetScript("OnEvent", function() fired = fired + 1 end)
+tests/c_azerite_empowered_item.rs:306:        frame:SetScript("OnEvent", function() fired = fired + 1 end)
+tests/c_azerite_empowered_item.rs:409:        frame:SetScript("OnEvent", function() fired = fired + 1 end)
+tests/animation_anim.rs:280:    // OnFinished}; AnimationGroup adds OnLoop. Neither supports OnEvent or the
+tests/animation_anim.rs:289:        local rejected = { "OnEvent", "OnShow", "OnHide", "OnEnter", "OnLeave" }
+tests/animation_anim.rs:305:        assert(pcall(anim.SetScript, anim, "OnEvent", function() end) == false,
+tests/animation_anim.rs:306:            "Animation SetScript(OnEvent) should error")
+tests/animation_anim.rs:307:        assert(pcall(ag.SetScript, ag, "OnEvent", function() end) == false,
+tests/animation_anim.rs:308:            "AnimationGroup SetScript(OnEvent) should error")
+tests/animation_anim.rs:311:        assert(f:HasScript("OnEvent") == true, "Frame should support OnEvent")
+tests/blizzard_nameplates_loads.rs:338:         mixin=\"NamePlateDriverMixin\">`. Without the named frame, OnEvent / RegisterEvent \
+tests/startup_special_frames.rs:24:        watcher:SetScript("OnEvent", function()
+tests/patch_12_0_0_prose.rs:12:        ProseFrame:SetScript('OnEvent',function(_,event) ProseEvents[#ProseEvents+1]=event end)
+tests/blizzard_login_warning_dialogs_loads.rs:368:        "OnEvent",
+tests/blizzard_login_warning_dialogs_loads.rs:384:             SCREEN_FIRST_DISPLAYED; OnEvent dispatches SCREEN_FIRST_DISPLAYED → \
+tests/blizzard_covenant_sanctum_loads.rs:168:                and type(CovenantSanctumUpgradesTabMixin.OnEvent) == 'function' \
+tests/blizzard_covenant_sanctum_loads.rs:193:         OnEvent + the 4 anima FX dispatchers OnResearchStarted/OnAnimaGained/\
+tests/blizzard_help_frame_loads.rs:289:        "OnEvent",
+tests/blizzard_help_frame_loads.rs:332:             GMTICKET_CHECK_INTERVAL seconds, OnEvent handles UPDATE_WEB_TICKET payloads to \
+tests/blizzard_help_frame_loads.rs:357:             OnEvent toggles visibility based on ticket status (NMI / SURVEY / RESPONSE), \
+tests/recent_allies_location_preference.rs:25:    first:SetScript('OnEvent', function(_, ...) record('first', ...) end)
+tests/recent_allies_location_preference.rs:26:    first:HookScript('OnEvent', function(_, ...) record('hook', ...) end)
+tests/recent_allies_location_preference.rs:27:    second:SetScript('OnEvent', function(_, ...) record('second', ...) end)
+tests/recent_allies_location_preference.rs:76:        frame:SetScript('OnEvent', function() notifications = notifications + 1 end)
+tests/blizzard_hud_inventory_templates_loads.rs:313:            "OnEvent",
+tests/blizzard_hud_inventory_templates_loads.rs:325:         OnHide / OnEvent) plus the public bar API (SetNumItemButtons / GetNumItemButtons / \
+tests/blizzard_hud_inventory_templates_loads.rs:373:        .eval("return type(HUDInventoryBarMixin.OnEvent)")
+tests/blizzard_hud_inventory_templates_loads.rs:374:        .expect("HUDInventoryBarMixin.OnEvent probe should succeed");
+tests/blizzard_hud_inventory_templates_loads.rs:377:        "HUDInventoryBarMixin must carry OnEvent — copied from the first parent \
+tests/patch_12_0_0_cooldown_transitions.rs:63:        frame:SetScript('OnEvent', function()
+tests/blizzard_raid_ui_loads.rs:134:         Blizzard_RaidFrame OnEvent handler at RaidFrame.lua:57-62 only when \
+tests/blizzard_raid_ui_loads.rs:581:             RaidGroupFrame_Update + RaidClassButton_Update). The OnEvent \
+tests/private_aura_anchors.rs:59:            all:SetScript('OnEvent', record(clearedAll))
+tests/private_aura_anchors.rs:62:            player:SetScript('OnEvent', record(clearedPlayer))
+tests/patch_12_1_0_aura_access_restrictions.rs:134:        listener:SetScript('OnEvent', onLogin)
+tests/blizzard_scrapping_machine_ui_loads.rs:35:    "OnEvent",
+tests/blizzard_scrapping_machine_ui_loads.rs:46:    "OnEvent",
+tests/blizzard_scrapping_machine_ui_loads.rs:339:             unit-events for player spell-cast tracking, opens all bags; OnEvent \
+tests/blizzard_scrapping_machine_ui_loads.rs:380:             SCRAPPING_MACHINE_PENDING_ITEM_CHANGED event; OnEvent calls RefreshIcon \
+tests/blizzard_scrapping_machine_ui_loads.rs:440:         Carries OnLoad/OnEvent/OnShow/OnHide script bindings"
+tests/blizzard_money_frame_loads.rs:412:             OnLoadMoneyType / OnEvent / OnEnter / OnLeave / OnHide), state setters \
+tests/test_mail.rs:611:            f:SetScript("OnEvent", function(self, event)
+tests/patch_12_1_0_added_globals.rs:345:        frame:SetScript("OnEvent", function(_, _, unit, info)
+tests/c_pet_bar_globals.rs:54:            frame:SetScript("OnEvent", function() fired = true end)
+tests/c_pet_bar_globals.rs:193:            f:SetScript("OnEvent", function() fired = true end)
+tests/blizzard_static_popup_game_loads.rs:68:    "OnEvent",
+tests/blizzard_static_popup_game_loads.rs:85:    "OnEvent",
+tests/blizzard_torghast_level_picker_loads.rs:287:             Counts cover: FrameMixin (OnLoad/OnEvent/OnShow/\
+tests/transmog_outfit_slots.rs:16:        frame:SetScript('OnEvent', function(_, event, slot, option) events[#events+1] = {event,slot,option} end)
+tests/transmog_outfit_slots.rs:28:        refresh:SetScript('OnEvent', function(_, _, slot, option)
+tests/secure_aura_header_helpers.rs:159:        .expect("real template OnEvent updates a shuffled aura stream");
+tests/secure_aura_header_helpers.rs:445:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/blizzard_auction_house_commodity_search.rs:30:listener:SetScript("OnEvent", function(_, _, payload)
+tests/c_player_interaction_manager_globals.rs:66:        listener:SetScript("OnEvent", function(self, event)
+tests/c_player_interaction_manager_globals.rs:97:        listener:SetScript("OnEvent", function(self, event)
+tests/c_player_interaction_manager_globals.rs:131:        listener:SetScript("OnEvent", function() UNEXPECTED_EVENT_FIRED = true end)
+tests/admin_event_api.rs:13:                <Scripts><OnEvent intrinsicOrder="precall">
+tests/admin_event_api.rs:15:                </OnEvent></Scripts>
+tests/admin_event_api.rs:18:                <Scripts><OnEvent intrinsicOrder="postcall">
+tests/admin_event_api.rs:20:                </OnEvent></Scripts>
+tests/admin_event_api.rs:36:        assert(type(SynchronousEventFrame:GetScript('OnEvent', 0)) == 'function')
+tests/admin_event_api.rs:37:        assert(SynchronousEventFrame:GetScript('OnEvent', 1) == nil)
+tests/admin_event_api.rs:38:        assert(type(SynchronousEventFrame:GetScript('OnEvent', 2)) == 'function')
+tests/admin_event_api.rs:39:        assert(SynchronousEventFrame:GetScript('OnEvent') == nil)
+tests/admin_event_api.rs:61:        frame:SetScript('OnEvent', function(self, event, ...)
+tests/admin_event_api.rs:64:        assert(frame:GetScript('OnEvent') == frame:GetScript('OnEvent', 1))
+tests/admin_event_api.rs:91:        assert(frame:GetScript('OnEvent') == nil)
+tests/admin_event_api.rs:92:        assert(type(frame:GetScript('OnEvent', 0)) == 'function')
+tests/admin_event_api.rs:93:        assert(type(frame:GetScript('OnEvent', 2)) == 'function')
+tests/admin_event_api.rs:123:        frame:SetScript('OnEvent', function() calls[#calls + 1] = 'normal' end)
+tests/admin_event_api.rs:144:        frame:SetScript('OnEvent', function() calls[#calls + 1] = 'normal' end)
+tests/admin_event_api.rs:167:            f:SetScript("OnEvent", function(self, event, a1, a2)
+tests/admin_event_api.rs:192:            f:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:241:            f:SetScript("OnEvent", makeHandler())
+tests/admin_event_api.rs:262:            f:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:267:            f:HookScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:293:                f:SetScript("OnEvent", function(self, event, ...)
+tests/admin_event_api.rs:321:            fa:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:326:            fb:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:351:            f:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:374:            f:SetScript("OnEvent", function(self, event, a1)
+tests/admin_event_api.rs:405:            f:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:428:            f:SetScript("OnEvent", function(self, event, isInitial, isReloadUI)
+tests/admin_event_api.rs:459:            f1:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:464:            f2:SetScript("OnEvent", function(self, event)
+tests/admin_event_api.rs:490:            f:SetScript("OnEvent", function(self, event, unit)
+tests/c_gossip_info_probes.rs:16:        f:SetScript("OnEvent", function(_, event)
+tests/housing_destroy_entry.rs:78:    storageListener:SetScript('OnEvent', function(_, event, ...)
+tests/housing_destroy_entry.rs:425:        storageListener:SetScript('OnEvent', function(_, event, ...)
+tests/housing_destroy_entry.rs:865:        storageListener:HookScript('OnEvent', function() collectgarbage('collect') end)
+tests/patch_1207_b39_b44.rs:28:        B39Frame:SetScript('OnEvent', function(self, event, ...)
+tests/patch_1207_b39_b44.rs:153:        local handler = B39Frame:GetScript('OnEvent')
+tests/patch_1207_b39_b44.rs:353:        B42Frame:SetScript('OnEvent', function(self, event, ...)
+tests/test_crafting.rs:212:            listener:SetScript("OnEvent", function(_, event, unit)
+tests/test_crafting.rs:274:            listener:SetScript("OnEvent", function(_, event, bagID)
+tests/blizzard_override_action_bar_loads.rs:290:             OnEvent / OnShow / OnHide / UpdateMicroButtons / UpdateSkin / SetSkin / \
+tests/blizzard_override_action_bar_loads.rs:293:             background, end caps, dividers, micro-menu strip, and pitch overlay; OnEvent \
+tests/blizzard_warfronts_party_pose_ui_loads.rs:31:    "OnEvent",
+tests/blizzard_warfronts_party_pose_ui_loads.rs:341:         method OnEvent's QUEST_LOOT_RECEIVED branch invokes via `self:AddReward(name, \
+tests/blizzard_mail_frame_loads.rs:99:    "OnEvent",
+tests/c_namespace_noop_replacements.rs:1454:            tracker:OnEvent('PLAYER_ENTERING_WORLD')
+tests/c_namespace_noop_replacements.rs:1463:            tracker:OnEvent('ZONE_CHANGED_NEW_AREA')
+tests/syndicator_addon_loaded.rs:28:        frame:SetScript("OnEvent", function(_, _, addonName)
+tests/test_showuipanel_lod.rs:164:            if ItemSocketingFrame:GetScript("OnEvent") == nil then
+tests/test_showuipanel_lod.rs:168:            ItemSocketingFrame:GetScript("OnEvent")(ItemSocketingFrame, "SOCKET_INFO_UPDATE")
+tests/blizzard_housing_controls_loads.rs:323:        "OnEvent",
+tests/blizzard_azerite_essence_ui_refresh_power_level.rs:80:                env.exec(r#"AzeriteEssenceUI:OnEvent("AZERITE_ITEM_POWER_LEVEL_CHANGED")"#)
+tests/blizzard_contribution_loads.rs:155:                and type(ContributionCollectionMixin.OnEvent) == 'function' \
+tests/blizzard_contribution_loads.rs:170:         OnHide / OnEvent / Update / UpdateSingle / EnumerateContributions / \
+tests/blizzard_contribution_loads.rs:213:                and type(ContributeButtonMixin.OnEvent) == 'function' \
+tests/p1207_ready_check_auth.rs:23:        observer:SetScript('OnEvent', function(_, _, unit, ready)
+tests/blizzard_combat_audio_alerts_loads.rs:93:                and type(CombatAudioAlertManagerMixin.OnEvent) == 'function' \
+tests/blizzard_combat_audio_alerts_loads.rs:101:        "CombatAudioAlertManagerMixin and its OnLoad/OnEvent/Init/Refresh* methods \
+tests/classic_secret_policy.rs:199:        listener:SetScript('OnEvent', function(_, _, _, action)
+tests/patch_11_0_7_publication_fixes.rs:42:        frame:SetScript('OnEvent', function(_, event, ...)
+tests/blizzard_objective_tracker_loads.rs:306:             tracker references C_QuestLog / C_Map / C_Scenario from OnLoad / OnEvent, none \
+tests/blizzard_objective_tracker_loads.rs:403:             OnLoad/OnEvent (registers ZONE_CHANGED_NEW_AREA / ZONE_CHANGED / \
+tests/dispatcher.rs:38:    env.exec("Dispatcher:OnEvent(\"PLAYER_LOGIN\")").unwrap();
+tests/dispatcher.rs:44:    env.exec("Dispatcher:OnEvent(\"PLAYER_LOGIN\")").unwrap();
+tests/dispatcher.rs:143:    env.exec("Dispatcher:OnEvent(\"OnUpdate\", 0.016)").unwrap();
+tests/dispatcher.rs:144:    env.exec("Dispatcher:OnEvent(\"OnUpdate\", 0.016)").unwrap();
+tests/test_sim_commands.rs:250:            f:SetScript("OnEvent", function(self, event, interactionType)
+tests/test_sim_commands.rs:280:            f:SetScript("OnEvent", function(self, event)
+tests/test_sim_commands.rs:332:            f:SetScript("OnEvent", function(self, event)
+tests/test_sim_commands.rs:382:            f:SetScript("OnEvent", function(self, event)
+tests/test_sim_commands.rs:420:            f:SetScript("OnEvent", function(self, event)
+tests/test_sim_commands.rs:448:            f:SetScript("OnEvent", function(self, event)
+tests/test_sim_commands.rs:476:            f:SetScript("OnEvent", function(self, event)
+tests/party_1207_audit.rs:108:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/party_1207_audit.rs:138:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/party_1207_audit.rs:368:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/party_1207_audit.rs:441:        listener:SetScript('OnEvent', function() markerEvents = markerEvents + 1 end)
+tests/blizzard_auction_house_throttle.rs:30:listener:SetScript("OnEvent", function(_, event)
+tests/blizzard_simple_checkout_loads.rs:184:         existing for OnEvent's CATALOG_SHOP path; SimpleCheckout.xml \
+tests/blizzard_simple_checkout_loads.rs:223:         OnEvent's CATALOG_SHOP_OPEN_SIMPLE_CHECKOUT branch. The reverse \
+tests/blizzard_simple_checkout_loads.rs:350:                 type(rawget(se.SimpleCheckoutMixin, 'OnEvent')) == 'function' and \
+tests/blizzard_simple_checkout_loads.rs:360:         CATALOG_SHOP_OPEN_SIMPLE_CHECKOUT, OnEvent dispatches the \
+tests/blizzard_simple_checkout_loads.rs:565:         OnEvent dispatch path calls these methods on `self`, so any \
+tests/p1207_pending_callbacks.rs:19:        Probe:SetScript('OnEvent', function(self, event, unit, amount, flag)
+tests/p1207_pending_callbacks.rs:290:        Probe:SetScript('OnEvent', function()
+tests/p1207_pending_callbacks.rs:308:        Probe:SetScript('OnEvent', function() GetSecurePendingPingOffScreenCallback()() end)
+tests/cmd_option_selected_unit.rs:74:        listener:SetScript('OnEvent', function(_, event)
+tests/blizzard_event_trace_loads.rs:314:         driver: OnLoad/OnShow/OnHide/OnEvent + 50+ methods), \
+tests/blizzard_house_list_loads.rs:256:        "OnEvent",
+tests/blizzard_house_list_loads.rs:276:             external override); OnEvent dispatches VIEW_HOUSES_LIST_RECIEVED [sic] to \
+tests/blizzard_azerite_essence_ui_forge_lifecycle.rs:39:                        listener:SetScript("OnEvent", function(_, event)
+tests/blizzard_islands_queue_ui_loads.rs:49:    "OnEvent",
+tests/blizzard_islands_queue_ui_loads.rs:65:    "OnEvent",
+tests/blizzard_islands_queue_ui_loads.rs:306:             weekly quest tracker frame's lifecycle (OnEvent / OnShow / OnHide), reward \
+tests/blizzard_islands_queue_ui_loads.rs:330:             difficulty selector's lifecycle (OnLoad / OnShow / OnHide / OnEvent), queue-button \
+tests/c_auction_house_bid_purchase.rs:89:    added_listener:SetScript("OnEvent", function(_, _, id)
+tests/c_auction_house_bid_purchase.rs:95:    updated_listener:SetScript("OnEvent", function() bids_updated_count = bids_updated_count + 1 end)
+tests/c_auction_house_bid_purchase.rs:103:    price_listener:SetScript("OnEvent", function() price_count = price_count + 1 end)
+tests/c_auction_house_bid_purchase.rs:106:    quote_listener:SetScript("OnEvent", function() quote_count = quote_count + 1 end)
+tests/c_auction_house_bid_purchase.rs:109:    succeeded_listener:SetScript("OnEvent", function() succeeded_count = succeeded_count + 1 end)
+tests/c_auction_house_bid_purchase.rs:112:    purchased_listener:SetScript("OnEvent", function() purchased_count = purchased_count + 1 end)
+tests/c_auction_house_bid_purchase.rs:239:        listener:SetScript("OnEvent", function(_, _, id)
+tests/blizzard_remix_artifact_tutorial_ui_loads.rs:30:    "OnEvent",
+tests/blizzard_remix_artifact_tutorial_ui_loads.rs:296:             syntax. The XML's `<OnLoad method=\"OnLoad\"/>` and `<OnEvent method=\"OnEvent\"/>` \
+tests/blizzard_remix_artifact_tutorial_ui_loads.rs:395:        xml_text.contains("<OnEvent method=\"OnEvent\"/>"),
+tests/blizzard_remix_artifact_tutorial_ui_loads.rs:396:        "Blizzard_RemixArtifactTutorialUI.xml must wire OnEvent via `<OnEvent method=\"OnEvent\"/>` \
+tests/blizzard_remix_artifact_tutorial_ui_loads.rs:397:         — same mixin-method dispatch path. The OnEvent body branches on event name to \
+tests/blizzard_weekly_rewards_loads.rs:338:                and type(WeeklyRewardsMixin.OnEvent) == 'function' \
+tests/blizzard_weekly_rewards_loads.rs:345:        "WeeklyRewardsMixin must expose its chassis methods (OnLoad / OnShow / OnHide / OnEvent \
+tests/blizzard_level_up_display_loads.rs:158:         implementation that defines the LevelUpDisplay_OnLoad / OnEvent dispatch and \
+tests/c_barber_shop.rs:145:            f:SetScript("OnEvent", function(_, _, ok) got = ok end)
+tests/c_barber_shop.rs:169:            f:SetScript("OnEvent", function() count = count + 1 end)
+tests/c_barber_shop.rs:198:            f:SetScript("OnEvent", function(_, event, ok)
+tests/c_barber_shop.rs:265:            f:SetScript("OnEvent", function() count = count + 1 end)
+tests/c_barber_shop.rs:365:            f:SetScript("OnEvent", function() count = count + 1 end)
+tests/c_barber_shop.rs:384:            f:SetScript("OnEvent", function() count = count + 1 end)
+tests/c_barber_shop.rs:423:            f:SetScript("OnEvent", function() count = count + 1 end)
+tests/c_barber_shop.rs:465:            f:SetScript("OnEvent", function() count = count + 1 end)
+tests/c_barber_shop.rs:484:            f:SetScript("OnEvent", function() count = count + 1 end)
+tests/blizzard_group_finder_loads.rs:389:         mixin with OnLoad / OnShow / OnHide / OnEvent / ScenariosEnabled methods bound by \
+tests/blizzard_group_finder_loads.rs:393:    for method in ["OnLoad", "OnShow", "OnHide", "OnEvent", "ScenariosEnabled"] {
+tests/ui_frame_manager.rs:47:            UIFrameManager:OnEvent("FRAME_MANAGER_UPDATE_FRAME", "tutorial", true)
+tests/mists_social_panels.rs:108:            guildFinder:OnEvent("CLUB_FINDER_PLAYER_PENDING_LIST_RECIEVED", Enum.ClubFinderRequestType.Guild)
+tests/mists_social_panels.rs:110:            guildFinder:OnEvent("CLUB_FINDER_CLUB_LIST_RETURNED", Enum.ClubFinderRequestType.Guild)
+tests/mists_social_panels.rs:146:            guildFinder:OnEvent("CLUB_FINDER_PLAYER_PENDING_LIST_RECIEVED", Enum.ClubFinderRequestType.Community)
+tests/mists_social_panels.rs:148:            guildFinder:OnEvent("CLUB_FINDER_CLUB_LIST_RETURNED", Enum.ClubFinderRequestType.Community)
+tests/blizzard_garrison_ui_loads.rs:537:         GarrisonLandingPageReport_OnLoad / OnShow / OnEvent (the report-tab lifecycle \
+tests/blizzard_minimap_loads.rs:59:    "OnEvent",
+tests/blizzard_minimap_loads.rs:375:         declares `AddonCompartmentMixin = {{ }};` then attaches 5 methods (OnLoad, OnEvent, \
+tests/blizzard_minimap_loads.rs:386:             addon-compartment registration contract: OnLoad / OnEvent are the script \
+tests/blizzard_combat_text_loads.rs:241:                and type(CombatTextMixin.OnEvent) == 'function' \
+tests/blizzard_combat_text_loads.rs:254:        "CombatTextMixin and its 10 methods (OnLoad/OnEvent/OnUpdate/AddMessage/\
+tests/blizzard_ui_frame_manager_loads.rs:31:const UI_FRAME_MANAGER_MIXIN_METHODS: &[&str] = &["OnLoad", "OnEvent", "RegisterFrameForFrameType"];
+tests/blizzard_ui_frame_manager_loads.rs:230:             FRAME_MANAGER_UPDATE_FRAME events. OnEvent dispatches \
+tests/blizzard_ui_frame_manager_loads.rs:281:         Blizzard_UIFrameManager.xml:3 with OnLoad/OnEvent script \
+tests/club_membership.rs:35:        listener:SetScript('OnEvent', function(_, event, club, member)
+tests/club_membership.rs:78:        listener:SetScript('OnEvent', function(_, event, club, member, role)
+tests/club_membership.rs:119:        listener:SetScript('OnEvent', function(_, _, club)
+tests/club_membership.rs:155:        listener:SetScript('OnEvent', function()
+tests/club_membership.rs:191:        listener:SetScript('OnEvent', function() count = count + 1 end)
+tests/club_membership.rs:232:        listener:SetScript('OnEvent', function() events = events + 1 end)
+tests/club_membership.rs:275:        listener:SetScript('OnEvent', function(_, event, club, id, detail)
+tests/club_membership.rs:324:        listener:SetScript('OnEvent', function(_, _, club, member)
+tests/club_membership.rs:343:        listener:SetScript('OnEvent', function() received = received + 1 end)
+tests/club_membership.rs:362:        listener:SetScript('OnEvent', function(_, event, club, id, presence)
+tests/viewed_outfit_selection.rs:87:        listener:SetScript('OnEvent', function(_, event, ...)
+tests/viewed_outfit_selection.rs:143:        listener:SetScript('OnEvent', function() count = count + 1 end)
+tests/blizzard_landing_soulbinds_loads.rs:34:    "OnEvent",
+tests/blizzard_landing_soulbinds_loads.rs:47:    "OnEvent",
+tests/blizzard_landing_soulbinds_loads.rs:326:         (OnEvent / OnShow / OnHide / OnClick / OnEnter / OnLeave / OnMouseDown / \
+tests/blizzard_landing_soulbinds_loads.rs:341:             mixin owns 10 methods: 8 script handlers (OnEvent dispatches \
+tests/blizzard_landing_soulbinds_loads.rs:381:             button mixin owns 9 methods: 6 script handlers (OnEvent dispatches \
+tests/table_util.rs:39:        frame:SetScript("OnEvent", function(_, _, name)
+tests/blizzard_azerite_essence_ui_pending_activation_event.rs:42:                        listener:SetScript("OnEvent", function(_, _, previousID, newID)
+tests/spell_confirmation_prompts.rs:84:        listener:SetScript("OnEvent", function(_, event, ...)

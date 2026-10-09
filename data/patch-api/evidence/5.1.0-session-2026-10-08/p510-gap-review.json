@@ -1,0 +1,342 @@
+[
+  {
+    "source_id": "wt-global-api-UnitBattlePetSpeciesID-9",
+    "symbol": "UnitBattlePetSpeciesID",
+    "reason": "Global absent in both occurrences. Unit identity has no modeled battle-pet species mapping; player or pet GUID alone does not establish species or nonexistent-token behavior.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitBattlePetSpeciesID"
+    }
+  },
+  {
+    "source_id": "wt-global-api-HasOverrideUI-14",
+    "symbol": "HasOverrideUI",
+    "reason": "Global absent. Existing bar visibility/index queries do not establish distinct override-UI mode, and restricted-environment publication/security remain unproved; alias would be a shortcut.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "HasOverrideUI"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LossOfControl.GetEventInfo-10",
+    "symbol": "C_LossOfControl.GetEventInfo",
+    "reason": "Later 9.0.1 expects absence, but ordinary lookup synthesizes a function and cached current Blizzard LossOfControl consumers still call this name. Preserve consumer behavior; no retirement or return-shape parity claimed.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_LossOfControl.GetEventInfo-588",
+      "symbol": "C_LossOfControl.GetEventInfo"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LossOfControl.GetNumEvents-11",
+    "symbol": "C_LossOfControl.GetNumEvents",
+    "reason": "Later 9.0.1 expects absence, but namespace autostub fabricates ordinary lookup. This is the existing later-page gap; this source adds rather than retires it. No unrelated 9.0.1 retirement added.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_LossOfControl.GetNumEvents-589",
+      "symbol": "C_LossOfControl.GetNumEvents"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_PetJournal.FindPetIDByName-12",
+    "symbol": "C_PetJournal.FindPetIDByName",
+    "reason": "Raw missing; namespace lookup is fabricated. No owned-pet GUID/name search model, duplicate-name resolution or input contract is backed; a lookup shim would falsely claim pet identity.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PetJournal.FindPetIDByName"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_PetJournal.GetOwnedBattlePetString-14",
+    "symbol": "C_PetJournal.GetOwnedBattlePetString",
+    "reason": "Raw missing; fabricated lookup. Owned-pet species counts and localized text contract are unmodeled; existing zero-count/default pet journal does not supply owned-pet inventory.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PetJournal.GetOwnedBattlePetString"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_PetJournal.GetPetTeamAverageLevel-16",
+    "symbol": "C_PetJournal.GetPetTeamAverageLevel",
+    "reason": "Raw missing; fabricated lookup. Pet loadout IDs/stats are placeholders, not a modeled three-slot team with live levels; no meaningful average can be derived.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PetJournal.GetPetTeamAverageLevel"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-FlyoutHasSpell-21",
+    "symbol": "FlyoutHasSpell",
+    "reason": "Global absent. No modeled flyout spell membership store and override resolution input; unconditional false would be a shim.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "FlyoutHasSpell"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetHomePartyInfo-24",
+    "symbol": "GetHomePartyInfo",
+    "reason": "Global absent. Current roster data does not model distinct home versus instance party membership/type and historical multiple-result contract; do not equate them.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetHomePartyInfo"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-InActiveBattlefield-27",
+    "symbol": "InActiveBattlefield",
+    "reason": "Later 8.1.5 expects absence but generic global stub remains. Complete caller scan finds the Mists world-map test; consumer rule forbids retirement. No current retail battlefield-state semantics credited.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-InActiveBattlefield-76",
+      "symbol": "InActiveBattlefield"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsLFGComplete-28",
+    "symbol": "IsLFGComplete",
+    "reason": "Global absent. LFG queue data does not model dungeon run completion/outcome; unconditional completion flag would fabricate server lifecycle state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsLFGComplete"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsTradeSkillRepeating-29",
+    "symbol": "IsTradeSkillRepeating",
+    "reason": "Global absent. No legacy crafting repeat job/remaining-count/progress lifecycle backing; current recipe data is not that system.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsTradeSkillRepeating"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-PickupPetSpell-30",
+    "symbol": "PickupPetSpell",
+    "reason": "Global absent. No pet-spell action selection and cursor transfer model; no-op would claim unsupported action mutation.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PickupPetSpell"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetTradeSkillRepeatCount-31",
+    "symbol": "SetTradeSkillRepeatCount",
+    "reason": "Global absent. No repeat crafting job/count validation, completion or cancellation backing. Do not add a setter detached from actual crafting execution.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetTradeSkillRepeatCount"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-UnitBattlePetSpeciesID-32",
+    "symbol": "UnitBattlePetSpeciesID",
+    "reason": "Global absent in both occurrences. Unit identity has no modeled battle-pet species mapping; player or pet GUID alone does not establish species or nonexistent-token behavior.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitBattlePetSpeciesID"
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-ShowFriendshipReputationTooltip-54",
+    "symbol": "ShowFriendshipReputationTooltip",
+    "reason": "Historical FrameXML helper is absent in the current retail preload. Restoring Blizzard helper code or inventing a tooltip shim is not a native API model; the page supplies no successor or current consumer contract.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "ShowFriendshipReputationTooltip"
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Path:GetControlPoints-94",
+    "symbol": "Path:GetControlPoints",
+    "reason": "Method absent. CreateControlPoint creates widget children, but no typed ordered control-point list/order association or native vararg contract is backed; widget children alone are not proof of a path model.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Path; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Path:GetControlPoints"
+    }
+  }
+]

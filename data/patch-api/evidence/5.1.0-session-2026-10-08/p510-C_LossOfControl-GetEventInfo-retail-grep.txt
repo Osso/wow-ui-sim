@@ -1,0 +1,17 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:2744:				local eventInfo = C_Calendar.GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:2780:	local eventInfo = C_Calendar.GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:3517:		local eventInfo = C_Calendar.GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:100:function DeathRecapEntryMixin:GetEventInfo(eventData)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:157:	self.spellId, self.spellName, self.texture = self:GetEventInfo(elementData);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:638:	local eventInfo = self:GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:679:	local eventInfo = self:GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:715:	local eventInfo = self:GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:734:	local eventInfo = self:GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineView.lua:257:	local eventInfo = self:GetEventInfo(eventID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineEventFrame.lua:109:function EncounterTimelineEventFrameMixin:GetEventInfo()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineEventFrame.lua:196:	local eventInfo = self:GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineDataProvider.lua:108:		local eventInfo = C_EncounterTimeline.GetEventInfo(eventID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineDataProvider.lua:135:function EncounterTimelineDataProviderMixin:GetEventInfo(eventID)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTimerEvent.lua:682:	local eventInfo = self:GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTimerEvent.lua:715:	local eventInfo = self:GetEventInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTimerEvent.lua:730:	local eventInfo = self:GetEventInfo();

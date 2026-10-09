@@ -1,0 +1,9 @@
+running 1 tests
+test patch_5_1_0_publication_sweep::patch_5_1_0_publication_sweep ... FAILED (panic: parse known-gap IDs: Error("invalid type: map, expected a sequence", line: 1, column: 0))
+---- patch_5_1_0_publication_sweep::patch_5_1_0_publication_sweep stderr ----
+
+thread 'main' (3323770) panicked at /home/osso/.worktrees/wow-ui-sim-p510-page/tests/common/publication_sweep.rs:522:47:
+parse known-gap IDs: Error("invalid type: map, expected a sequence", line: 1, column: 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 1 failed; 1 total

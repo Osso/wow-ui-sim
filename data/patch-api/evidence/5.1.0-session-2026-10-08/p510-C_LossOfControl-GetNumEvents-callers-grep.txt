@@ -1,0 +1,3 @@
+tests/blizzard_ui/blizzard_apidocumentation_generated/behavior_handle_slash_command_stats_writes_real_counts.rs:49:                   sumSystemMethod("GetNumEvents"),
+tests/blizzard_ui/blizzard_apidocumentation/surface_mixins.rs:80:    "GetNumEvents",
+tests/data/patch_9_0_1_sweep_known_gaps.json:121:  "wt-global-api-C_LossOfControl.GetNumEvents-589",

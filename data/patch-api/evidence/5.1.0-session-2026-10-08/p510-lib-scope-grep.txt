@@ -1,0 +1,122 @@
+src/c_api/c_housing/catalog/queries.rs:45:fn install_searcher_factory(state: &mut LuaState, namespace: Val) -> LuaResult<()> {
+src/c_api/c_housing/exterior/queries.rs:15:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_party_info/ping_restrictions.rs:12:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_party_info/loot_method.rs:28:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_party_info/countdown.rs:23:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/class_talent_commands.rs:15:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/viewed_slots.rs:10:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/situations.rs:11:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/actions.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/lifecycle.rs:11:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/viewed.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/catalog.rs:26:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/imports.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/pending_cost.rs:11:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/slots.rs:97:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_outfit_info/pending.rs:11:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/patch_retired_members.rs:570:pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
+src/c_api/patch_retired_members.rs:614:fn mark_members(state: &mut LuaState, retired: &[(&'static str, &[&str])]) -> LuaResult<()> {
+src/c_api/patch_retired_members.rs:623:fn mark_namespaces_absent(state: &mut LuaState, names: &[&'static str]) -> LuaResult<()> {
+src/c_api/c_ping_secure.rs:122:fn set_namespace_pending_ping_off_screen_callback(state: &mut LuaState) -> LuaResult<u32> {
+src/c_api/c_intl/character_properties.rs:10:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/casing.rs:18:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/transform.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/plurals.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/string_matches.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/breaks.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/number_formatting.rs:9:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/collation.rs:11:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_intl/currency_metadata.rs:10:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/numeric_rule_formatter.rs:24:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_collection/appearance_sources.rs:10:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_transmog_collection/illusions.rs:10:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/abbreviated_number_formatter.rs:19:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/permanent_shims/c_photo_sharing_service.rs:22:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_pvp/active_brawl.rs:12:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/helpers.rs:36:pub(crate) fn ensure_namespace(
+src/c_api/helpers.rs:67:pub(crate) fn mark_namespace_keys_removed(
+src/c_api/c_encounter_warnings.rs:112:    pub(crate) fn register_preview(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_mythic_plus_calendar.rs:31:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/secrets_queries.rs:80:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/action_macros.rs:98:pub fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_tooltip_info_spell_mount.rs:14:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_tooltip_info_indexed_aura.rs:18:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_tooltip_info_item_context.rs:18:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_tooltip_info_aura_instance.rs:14:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_neighborhood_initiative/publication.rs:19:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_encounter_timeline/tracks.rs:7:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_encounter_timeline/visuals.rs:8:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_encounter_timeline/queries.rs:10:pub(super) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/c_api/c_action_bar_spell_slots.rs:9:pub(crate) fn register(state: &mut LuaState, namespace: GcRef<Table>) -> LuaResult<()> {
+src/ptr/compat_bootstrap.rs:50:fn mark_removed_namespace_keys(state: &mut rilua::vm::state::LuaState) -> crate::Result<()> {
+src/lua_api/hot_literals.rs:472:    pub fn namespace(&self, index: usize) -> GcRef<LuaString> {
+src/lua_api/workarounds/temporary/environment_cleanup_restore.rs:31:    fn post_cleanup_restore_preserves_seconds_formatter_namespace_and_factory() {
+src/lua_api/workarounds/temporary/environment_cleanup_restore.rs:113:    fn post_cleanup_restore_does_not_report_its_own_store_namespace_lookup() {
+src/lua_api/workarounds/temporary/character_create_defaults.rs:657:    fn installs_character_creation_namespace_defaults() {
+src/lua_api/workarounds/temporary/secure_transfer_state.rs:133:    fn installs_state_queries_actions_and_namespace_fallback() {
+src/lua_api/workarounds/temporary/auto_complete_defaults.rs:94:    fn bootstrap_keeps_retired_globals_absent_and_namespace_callable() {
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:145:    fn seeds_missing_mount_and_pet_journal_defaults() {
+src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs:55:    fn installs_empty_tracking_namespace_defaults() {
+src/lua_api/workarounds/temporary/tracking_namespace_defaults.rs:81:    fn preserves_existing_tracking_namespace_provider() {
+src/lua_api/workarounds/mod.rs:235:fn apply_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+src/lua_api/workarounds/mod.rs:240:fn apply_core_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+src/lua_api/workarounds/mod.rs:390:fn apply_feature_temporary_namespace_bootstrap(lua: &mut rilua::Lua) -> crate::Result<()> {
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:180:pub(super) fn register_trade_skill_namespace(state: &mut LuaState) -> LuaResult<()> {
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:185:pub(super) fn register_crafting_order_namespace(state: &mut LuaState) -> LuaResult<()> {
+src/lua_api/globals/missing_surface/professions/professions_registration.rs:190:fn register_namespace_methods(
+src/lua_api/globals/missing_surface/delves_ui.rs:612:fn namespace_field(
+src/lua_api/globals/missing_surface/small_namespaces.rs:24:pub(super) fn register_small_namespaces(state: &mut LuaState) -> LuaResult<()> {
+src/lua_api/globals/missing_surface/small_namespaces.rs:45:fn register_flat_namespace(
+src/lua_api/globals/adventure_map.rs:56:fn ensure_namespace_table(state: &mut LuaState) -> GcRef<Table> {
+src/lua_api/globals/state_backed_queries.rs:521:fn ensure_namespace(state: &mut LuaState, name: &'static str) -> GcRef<Table> {
+src/lua_api/globals/wowlabs.rs:80:fn register_namespace(
+src/lua_api/globals/wowlabs.rs:92:fn ensure_namespace_table(state: &mut LuaState, namespace: &'static str) -> GcRef<Table> {
+src/lua_api/globals/missing_surface.rs:223:fn register_world_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
+src/lua_api/globals/missing_surface.rs:266:fn register_social_namespace_surfaces(state: &mut LuaState) -> LuaResult<()> {
+src/lua_api/globals/missing_surface.rs:551:pub(super) fn ensure_namespace(
+src/lua_api/globals/channel_verbs.rs:80:fn ensure_namespace(state: &mut LuaState, name: &'static str) -> GcRef<Table> {
+src/lua_api/globals/channel_verbs.rs:371:fn register_chat_info_namespace(state: &mut LuaState) -> LuaResult<()> {
+src/lua_api/globals/channel_verbs.rs:427:fn register_tts_settings_namespace(state: &mut LuaState) -> LuaResult<()> {
+src/lua_api/globals/stubs/namespace_stubs.rs:314:pub(super) fn register_namespace_stubs(state: &mut LuaState) {
+src/lua_api/globals/stubs/mod.rs:90:fn ensure_namespace_table(state: &mut LuaState, namespace: &'static str) -> GcRef<Table> {
+src/lua_api/globals/stubs/mod.rs:117:fn set_namespace_fn(
+src/lua_api/globals/stubs/mod.rs:161:fn is_nil_namespace(state: &mut LuaState, namespace: &str, method: &str) -> bool {
+src/lua_api/globals/keybindings_c_api.rs:10:fn ensure_namespace_table(state: &mut LuaState, namespace: &'static str) -> GcRef<Table> {
+src/lua_api/globals/keybindings_c_api.rs:84:pub(super) fn register_c_keybindings_namespace(lua: &mut rilua::Lua) -> LuaResult<()> {
+src/lua_api/globals/action_bar_api/registration.rs:185:fn ensure_namespace_table(state: &mut LuaState, namespace: &'static str) -> GcRef<Table> {
+src/lua_api/globals/transmog_outfit_info.rs:41:fn ensure_namespace_table(state: &mut LuaState) -> GcRef<Table> {
+src/lua_api/globals/spell_macro_verbs.rs:35:fn ensure_namespace_table(state: &mut LuaState, namespace: &'static str) -> GcRef<Table> {
+src/lua_api/globals/font_strings_collection/pet_journal.rs:381:pub fn register_rilua_pet_journal(lua: &mut rilua::Lua) -> LuaResult<()> {
+src/lua_api/globals/font_strings_collection/pet_journal.rs:500:fn register_pet_journal_state_stubs(tb: TableBuilder) -> LuaResult<TableBuilder> {
+src/lua_api/globals/set_cvar_verb.rs:358:fn install_c_cvar_namespace(lua: &mut rilua::Lua) -> crate::Result<()> {
+src/lua_api/globals/faction_probes.rs:268:fn register_reputation_namespace(lua: &mut rilua::Lua) -> crate::Result<()> {
+src/lua_api/globals/faction_probes.rs:278:fn reuse_or_create_namespace_table(lua: &mut rilua::Lua, global_name: &str) -> Val {
+src/loader/tests/minimap_specialized.rs:422:fn test_minimap_mask_texture_remains_live_after_retired_texture_setters() {
+src/loader/tests/wow_api_globals/patch_12_1_5_weather.rs:82:fn patch_12_1_5_weather_namespace_absent_on_retail() {
+src/loader/tests/wow_api_globals/startup_namespaces.rs:6:fn test_bootstrap_fills_existing_namespace_defaults() {
+src/loader/tests/wow_api_globals/startup_namespaces.rs:44:fn test_startup_bootstrap_namespaces_exist() {
+src/loader/tests/wow_api_globals/startup_namespaces.rs:124:fn test_startup_service_namespaces_exist() {
+src/loader/tests/wow_api_globals/startup_namespaces.rs:195:fn test_startup_runtime_method_and_namespace_gaps_exist() {
+src/loader/tests/wow_api_globals/startup_globals.rs:538:fn test_patch_12_1_removed_namespace_keys_accept_blizzard_fallback_assignments() {
+src/loader/tests/wow_api_globals/startup_globals.rs:1473:fn test_addon_startup_frame_scale_and_merchant_namespaces_exist() {
+src/loader/tests/wow_api_globals/item_collection_secret_aspects.rs:57:fn assert_numeric_namespace(env: &WowLuaEnv, namespace_name: &str, expected: &[(&str, i64)]) {
+src/loader/tests/wow_api_globals/patch_12_0_0_pet_journal_overlay_tracker_cvar_values.rs:8:fn test_patch_12_0_0_pet_journal_overlay_tracker_cvar_values() {
+src/loader/tests/wow_api_globals/transmog_outfit_enums.rs:71:fn assert_numeric_namespace(env: &WowLuaEnv, namespace_name: &str, expected: &[(&str, i64)]) {
+src/loader/bytecode_cache.rs:176:fn cache_namespace() -> String {
+src/loader/bytecode_cache.rs:180:fn cache_namespace_for_manifest(manifest_dir: &str) -> String {
+src/loader/bytecode_cache.rs:1182:    fn cache_namespace_distinguishes_parallel_worktrees() {
+src/bin/wow_cli/gen_patch_api_docs/records.rs:28:fn qualify(namespace: &str, name: &str) -> String {
+src/bin/wow_cli/gen_patch_api_docs/records.rs:164:fn insert_table(records: &mut Records, table: &Value, namespace: &str) -> Result<()> {
+src/bin/wow_cli/gen_patch_api_docs/tests.rs:229:fn moving_namespace_override_to_parent_is_not_a_contract_change() {
+src/bin/wow_cli/audit_api/gap.rs:87:fn parse_namespace_method_table(
+src/bin/wow_cli/audit_api/gap.rs:238:fn find_missing_c_namespaces(
+src/bin/wow_cli/audit_api/gap.rs:281:fn find_missing_enum_namespaces(
+src/bin/wow_cli/audit_api/patch_source_index.rs:765:    fn excludes_block_comments_long_strings_and_local_namespaces() {
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:72:fn function_namespace(first_line: &str, patterns: &MethodScanPatterns) -> Option<String> {
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:119:fn variable_namespace_map(content: &str, globals_set_c_re: &Regex) -> HashMap<String, String> {
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:127:fn add_single_namespace_alias(
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:176:fn snake_to_c_namespace(snake: &str) -> String {
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:204:fn snake_to_c_namespace_preserves_wow_style_pascal_case() {
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:214:fn register_namespaces(lua: &Lua) {
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:260:fn build_gap_report_includes_only_missing_methods_for_registered_namespaces() {
+src/bin/wow_cli/audit_api/scanner.rs:312:pub fn load_valid_c_namespaces(

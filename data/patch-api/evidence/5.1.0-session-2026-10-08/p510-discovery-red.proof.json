@@ -1,0 +1,14 @@
+{
+  "revision": "95fa268434de15c817834412aa6a8f51b2ab3228",
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_1_0"
+  ],
+  "exit": 1,
+  "log": "p510-discovery-red.log",
+  "sha256": "e023404892afdc86dbea7b7f25dd8c4afe54f064bed6456cceae27b6ce34f907"
+}

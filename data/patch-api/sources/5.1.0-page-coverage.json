@@ -1,0 +1,610 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "5.1.0",
+  "source": "data/patch-api/sources/5.1.0-wikitext-register.json",
+  "source_sha256": "cbff1b9930302a83a78f9fb9c58dbeef8fa80769e08919f4833cee792992fe52",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.1.0-api-changes.txt",
+    "sha256": "5d03f5e9dfa66db18fb5d2c24fec4df9b195aa71d473baab7ad0130d2656ac0e"
+  },
+  "proof_policy": "2012 retail only; current publication is not behavior. Queued retail 5.2.0, 5.3.0, 5.4.0, 5.4.1 placeholders precede 5.4.2 onward. No 5.5.x Classic supersession. Two consumer-free ID spellings retired; precise historical/native/security gaps retained.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-UnitIsBattlePet-9",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-UnitBattlePetSpeciesID-9",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent in both occurrences. Unit identity has no modeled battle-pet species mapping; player or pet GUID alone does not establish species or nonexistent-token behavior."
+    },
+    {
+      "source_id": "wt-global-api-HasVehicleActionBar-11",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-HasOverrideActionBar-12",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-HasTempShapeshiftActionBar-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-HasOverrideUI-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent. Existing bar visibility/index queries do not establish distinct override-UI mode, and restricted-environment publication/security remain unproved; alias would be a shortcut."
+    },
+    {
+      "source_id": "wt-global-api-GetVehicleBarIndex-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-GetOverrideBarIndex-16",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-HasExtraActionBar-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-GetTempShapeshiftBarIndex-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-global-api-CanExitVehicle-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "wt-widgets-Cooldown:SetCooldown-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_LossOfControl.GetEventInfo-10",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later 9.0.1 expects absence, but ordinary lookup synthesizes a function and cached current Blizzard LossOfControl consumers still call this name. Preserve consumer behavior; no retirement or return-shape parity claimed."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_LossOfControl.GetNumEvents-11",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later 9.0.1 expects absence, but namespace autostub fabricates ordinary lookup. This is the existing later-page gap; this source adds rather than retires it. No unrelated 9.0.1 retirement added."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.FindPetIDByName-12",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Raw missing; namespace lookup is fabricated. No owned-pet GUID/name search model, duplicate-name resolution or input contract is backed; a lookup shim would falsely claim pet identity."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetNumCollectedInfo-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetOwnedBattlePetString-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Raw missing; fabricated lookup. Owned-pet species counts and localized text contract are unmodeled; existing zero-count/default pet journal does not supply owned-pet inventory."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetPetSortParameter-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetPetTeamAverageLevel-16",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Raw missing; fabricated lookup. Pet loadout IDs/stats are placeholders, not a modeled three-slot team with live levels; no meaningful average can be derived."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetSummonedPetGUID-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SetPetSortParameter-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SummonPetByGUID-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SummonRandomPet-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-FlyoutHasSpell-21",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent. No modeled flyout spell membership store and override resolution input; unconditional false would be a shim."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetActionLossOfControlCooldown-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence",
+        "current-state-backed-loss-control-interval-read-update-clear"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced. Existing spell/action interval model, read/update/clear only; native CC event production and screen notification unproved."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetFriendshipReputationRanks-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetHomePartyInfo-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent. Current roster data does not model distinct home versus instance party membership/type and historical multiple-result contract; do not equate them."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetPvpPowerDamage-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetPvpPowerHealing-26",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-InActiveBattlefield-27",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later 8.1.5 expects absence but generic global stub remains. Complete caller scan finds the Mists world-map test; consumer rule forbids retirement. No current retail battlefield-state semantics credited."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsLFGComplete-28",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent. LFG queue data does not model dungeon run completion/outcome; unconditional completion flag would fabricate server lifecycle state."
+    },
+    {
+      "source_id": "diff-wt-global-api-IsTradeSkillRepeating-29",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent. No legacy crafting repeat job/remaining-count/progress lifecycle backing; current recipe data is not that system."
+    },
+    {
+      "source_id": "diff-wt-global-api-PickupPetSpell-30",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent. No pet-spell action selection and cursor transfer model; no-op would claim unsupported action mutation."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetTradeSkillRepeatCount-31",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent. No repeat crafting job/count validation, completion or cancellation backing. Do not add a setter detached from actual crafting execution."
+    },
+    {
+      "source_id": "diff-wt-global-api-UnitBattlePetSpeciesID-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Global absent in both occurrences. Unit identity has no modeled battle-pet species mapping; player or pet GUID alone does not establish species or nonexistent-token behavior."
+    },
+    {
+      "source_id": "diff-wt-global-api-UnitIsBattlePet-33",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.GetSummonedPetID-36",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Consumer-free ID spelling retirement; repeated raw/ordinary absence and surviving GUID publication asserted, not summon behavior."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetJournal.SummonPetByID-37",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Consumer-free ID spelling retirement; repeated raw/ordinary absence and surviving GUID publication asserted, not summon behavior."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetFriendshipReputationByID-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-framexml-ConfirmOrLeaveBattlefield-50",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-framexml-ConfirmOrLeaveLFGParty-51",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-framexml-GetRelativeDifficultyColor-52",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-framexml-IsLFGModeActive-53",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-framexml-ShowFriendshipReputationTooltip-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical FrameXML helper is absent in the current retail preload. Restoring Blizzard helper code or inventing a tooltip shim is not a native API model; the page supplies no successor or current consumer contract."
+    },
+    {
+      "source_id": "diff-wt-framexml-ShowStatInCategory-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-framexml-CheckForMapInBlacklist-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-CHAT_MSG_INSTANCE_CHAT_LEADER-70",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-CHAT_MSG_INSTANCE_CHAT-71",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-GROUP_JOINED-72",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-LOSS_OF_CONTROL_ADDED-73",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-LOSS_OF_CONTROL_UPDATE-74",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-PET_BATTLE_LOOT_RECEIVED-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-CHAT_MSG_BATTLEGROUND-78",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-events-CHAT_MSG_BATTLEGROUND_LEADER-79",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-Cooldown:SetLossOfControlCooldown-91",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-GameTooltip:SetUpgradeItem-92",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-Path:CreateControlPoint-93",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-Path:GetControlPoints-94",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Method absent. CreateControlPoint creates widget children, but no typed ordered control-point list/order association or native vararg contract is backed; widget children alone are not proof of a path model."
+    },
+    {
+      "source_id": "diff-wt-widgets-Path:GetCurve-95",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-Path:GetMaxOrder-96",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-Path:SetCurve-97",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-Animation OnEvent-115",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "diff-wt-widgets-AnimationGroup OnEvent-116",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current retail publication/absence only after later retail registers. No historical signature, producer, outputs, security or gameplay parity. Summary annotations retain availability/visibility context; added label is not proof the helper was newly introduced."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/navigation or separately pinned diff boundary; no runtime credit. The register includes that separately fetched inventory."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/navigation or separately pinned diff boundary; no runtime credit. The register includes that separately fetched inventory."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: native loss-of-control producer, CC/interrupt transitions and visible notification; interval query alone is not UI behavior."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: distinct instance/home group routing and chat delivery lifecycle."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: owned-pet GUID identity, name lookup, summons/random/favorite selection and slash-command lifecycle."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/navigation or separately pinned diff boundary; no runtime credit. The register includes that separately fetched inventory."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: battle-pet species identity or restricted-environment access/security; ordinary global publication does not prove the restricted environment."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical prose behavioral contract remains unproved: Cooldown SetCooldown stores timing, but automatic show/hide at activation/completion is not proven by publication or existing timing tests."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical automatic Cooldown show/hide on activation/completion remains unproved; stored timing and publication do not prove visibility lifecycle."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/navigation or separately pinned diff boundary; no runtime credit. The register includes that separately fetched inventory."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/navigation or separately pinned diff boundary; no runtime credit. The register includes that separately fetched inventory."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/navigation or separately pinned diff boundary; no runtime credit. The register includes that separately fetched inventory."
+    }
+  ]
+}

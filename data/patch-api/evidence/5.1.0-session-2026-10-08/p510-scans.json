@@ -1,0 +1,453 @@
+[
+  {
+    "member": "C_PetJournal.GetSummonedPetID",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "C_PetJournal\\.GetSummonedPetID|GetSummonedPetID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-C_PetJournal-GetSummonedPetID-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "C_PetJournal.GetSummonedPetID",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "C_PetJournal\\.GetSummonedPetID|GetSummonedPetID",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-C_PetJournal-GetSummonedPetID-callers-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "C_PetJournal.SummonPetByID",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "C_PetJournal\\.SummonPetByID|SummonPetByID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-C_PetJournal-SummonPetByID-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "C_PetJournal.SummonPetByID",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "C_PetJournal\\.SummonPetByID|SummonPetByID",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-C_PetJournal-SummonPetByID-callers-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "GetFriendshipReputationByID",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "GetFriendshipReputationByID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-GetFriendshipReputationByID-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "GetFriendshipReputationByID",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "GetFriendshipReputationByID",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-GetFriendshipReputationByID-callers-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "CheckForMapInBlacklist",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "CheckForMapInBlacklist",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-CheckForMapInBlacklist-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "CheckForMapInBlacklist",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "CheckForMapInBlacklist",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-CheckForMapInBlacklist-callers-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "CHAT_MSG_BATTLEGROUND",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "CHAT_MSG_BATTLEGROUND",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-CHAT_MSG_BATTLEGROUND-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "CHAT_MSG_BATTLEGROUND",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "CHAT_MSG_BATTLEGROUND",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-CHAT_MSG_BATTLEGROUND-callers-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "CHAT_MSG_BATTLEGROUND_LEADER",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "CHAT_MSG_BATTLEGROUND_LEADER",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-CHAT_MSG_BATTLEGROUND_LEADER-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "CHAT_MSG_BATTLEGROUND_LEADER",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "CHAT_MSG_BATTLEGROUND_LEADER",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-CHAT_MSG_BATTLEGROUND_LEADER-callers-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "Animation OnEvent",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "Animation\\.OnEvent|OnEvent",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "matches": 1719,
+    "path": "p510-Animation-OnEvent-retail-grep.txt",
+    "sha256": "3b4841bc749711fee4233c38bc5e2458053c510046a36021a3ed79d99a40d372"
+  },
+  {
+    "member": "Animation OnEvent",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "Animation\\.OnEvent|OnEvent",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "matches": 1077,
+    "path": "p510-Animation-OnEvent-callers-grep.txt",
+    "sha256": "332fdea98b86637380f9cc9af2e060353d8404145f30c5b31843642d76bdc564"
+  },
+  {
+    "member": "AnimationGroup OnEvent",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "AnimationGroup\\.OnEvent|OnEvent",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "matches": 1719,
+    "path": "p510-AnimationGroup-OnEvent-retail-grep.txt",
+    "sha256": "3b4841bc749711fee4233c38bc5e2458053c510046a36021a3ed79d99a40d372"
+  },
+  {
+    "member": "AnimationGroup OnEvent",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "AnimationGroup\\.OnEvent|OnEvent",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "matches": 1077,
+    "path": "p510-AnimationGroup-OnEvent-callers-grep.txt",
+    "sha256": "332fdea98b86637380f9cc9af2e060353d8404145f30c5b31843642d76bdc564"
+  },
+  {
+    "member": "C_LossOfControl.GetEventInfo",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "C_LossOfControl\\.GetEventInfo|GetEventInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "matches": 17,
+    "path": "p510-C_LossOfControl-GetEventInfo-retail-grep.txt",
+    "sha256": "09e7f003ab9623dba3829616cca078906b3fe9485769c4a139a48ba28a0a150a"
+  },
+  {
+    "member": "C_LossOfControl.GetEventInfo",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "C_LossOfControl\\.GetEventInfo|GetEventInfo",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "matches": 39,
+    "path": "p510-C_LossOfControl-GetEventInfo-callers-grep.txt",
+    "sha256": "37ce77aaf3028c664a78b4b044c45377d67d57fc23062ae75692896222b14adc"
+  },
+  {
+    "member": "C_LossOfControl.GetNumEvents",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "C_LossOfControl\\.GetNumEvents|GetNumEvents",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-C_LossOfControl-GetNumEvents-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "C_LossOfControl.GetNumEvents",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "C_LossOfControl\\.GetNumEvents|GetNumEvents",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "matches": 3,
+    "path": "p510-C_LossOfControl-GetNumEvents-callers-grep.txt",
+    "sha256": "c09bb26444c6b2aaa71f763a5b26db555ec6cd4e68d7835bbcf69968c8fa448f"
+  },
+  {
+    "member": "InActiveBattlefield",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "InActiveBattlefield",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "matches": 0,
+    "path": "p510-InActiveBattlefield-retail-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "InActiveBattlefield",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-E",
+      "--binary-files=without-match",
+      "InActiveBattlefield",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "matches": 3,
+    "path": "p510-InActiveBattlefield-callers-grep.txt",
+    "sha256": "44b2320efdba2b4bf85a39e4d1ecb6b4deeb5e1008f6b4b0afd557954e59405b"
+  }
+]

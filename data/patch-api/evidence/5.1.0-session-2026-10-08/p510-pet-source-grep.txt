@@ -1,0 +1,4 @@
+src/lua_api/globals/stubs/global_stubs.rs:133:    "UnitIsBattlePet",
+src/lua_api/globals/font_strings_collection/pet_journal.rs:491:    .set_function("GetSummonedPetGUID", |_state| Ok(0))?
+src/lua_api/globals/font_strings_collection/pet_journal.rs:495:    .set_function("SummonPetByGUID", |_state| Ok(0))?
+tests/click_targeting.rs:32:                UnitIsBattlePet("player"),

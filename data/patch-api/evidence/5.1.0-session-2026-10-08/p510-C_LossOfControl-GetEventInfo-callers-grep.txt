@@ -1,0 +1,39 @@
+src/c_api/c_encounter_timeline/queries.rs:13:        ("GetEventInfo", info),
+src/lua_api/workarounds/temporary/encounter_state.rs:30:if rawget(C_EncounterTimeline, "GetEventInfo") == nil then
+src/lua_api/workarounds/temporary/encounter_state.rs:31:    function C_EncounterTimeline.GetEventInfo(eventID)
+src/lua_api/workarounds/temporary/encounter_state.rs:133:if rawget(C_EncounterEvents, "GetEventInfo") == nil then
+src/lua_api/workarounds/temporary/encounter_state.rs:134:    function C_EncounterEvents.GetEventInfo(eventID)
+src/lua_api/workarounds/temporary/encounter_state.rs:262:                if C_EncounterTimeline.GetEventInfo(1).spellName ~= "Flash of Light" then
+src/lua_api/workarounds/temporary/encounter_state.rs:275:                local eventInfo = C_EncounterEvents.GetEventInfo(1)
+src/lua_api/globals/missing_surface/encounter_events.rs:25:    table_set_rust_fn_static(state, ns, "GetEventInfo", get_event_info)?;
+tests/p1207_remaining_timeline_color_event.rs:18:            assert(C_EncounterTimeline.GetEventInfo(id) ~= nil)
+tests/encounter_events.rs:18:            local info = C_EncounterEvents.GetEventInfo(first)
+tests/encounter_events.rs:31:        "GetEventInfo should return matching encounterEventID field"
+tests/encounter_events.rs:44:            local info = C_EncounterEvents.GetEventInfo(eventID)
+tests/encounter_events.rs:47:            local colorCleared = C_EncounterEvents.GetEventColor(eventID) == nil and C_EncounterEvents.GetEventInfo(eventID).color == nil
+tests/encounter_events.rs:56:    assert!(info_has_color, "GetEventInfo should reflect override color");
+tests/encounter_events.rs:109:                   C_EncounterEvents.GetEventInfo("not-a-number") == nil,
+tests/encounter_timeline_tracks.rs:44:            assert(T.GetEventInfo(eventID))
+tests/encounter_timeline_tracks.rs:65:    env.exec("assert(T.GetEventState(id)==2 and not T.HasVisibleEvents()); assert(T.GetEventInfo(id))").unwrap();
+tests/encounter_timeline_tracks.rs:67:    env.exec("assert(T.GetEventInfo(id)==nil and timer:GetElapsedDuration()==16)").unwrap();
+tests/encounter_timeline_tracks.rs:130:            local info=T.GetEventInfo(id)
+tests/encounter_timeline_tracks.rs:205:        for _,id in ipairs(old) do assert(T.GetEventInfo(id)==nil) end
+tests/encounter_timeline_view.rs:119:            local info=T.GetEventInfo(id)
+tests/encounter_timeline_script.rs:25:        local info = timeline.GetEventInfo(id)
+tests/encounter_timeline_script.rs:32:        assert(timeline.GetEventInfo(id).duration == 5)
+tests/encounter_timeline_script.rs:34:        local explicit = timeline.GetEventInfo(other)
+tests/encounter_timeline_script.rs:48:        assert(timeline.GetEventInfo(0) == nil and timeline.GetEventTimer(9999) == nil)
+tests/encounter_timeline_script.rs:74:        assert(timer:GetTotalDuration() == 5 and timeline.GetEventInfo(id).duration == 5)
+tests/encounter_timeline_script.rs:89:        assert(timeline.GetEventInfo(id) == nil and timeline.GetEventTimer(id) == nil)
+tests/encounter_timeline_script.rs:105:                assert(timeline.GetEventInfo(payload.id).duration == payload.duration)
+tests/encounter_timeline_script.rs:113:                assert(timeline.GetEventInfo(payload) == nil and timeline.GetEventState(payload) == nil)
+tests/encounter_timeline_script.rs:121:        assert(log[1] == "added" and timeline.GetEventInfo(id).spellName == "Flash of Light")
+tests/encounter_timeline_script.rs:200:        assert(timeline.GetEventInfo(id) == nil and #timeline.GetEventList() == 0)
+tests/encounter_timeline_script.rs:204:        assert(timeline.GetEventInfo(nextID).duration == 3)
+tests/encounter_timeline_script.rs:220:        consumer:Init(timeline.GetEventInfo(id), timeline.GetEventTimer(id),
+tests/encounter_timeline_script.rs:236:    env.exec("assert(timeline.GetEventInfo(id) == nil and consumer:GetEventTimeElapsed() == 4)").unwrap();
+tests/blizzard_death_recap_loads.rs:174:                and type(DeathRecapEntryMixin.GetEventInfo) == 'function' \
+tests/blizzard_death_recap_loads.rs:197:         DEATH_RECAP_DEATH_TT lines; GetEventInfo(eventData) decoding the spell→localized + \
+tests/system_api_seeded.rs:30:        local info = C_EncounterTimeline.GetEventInfo(eventID)
+tests/test_showuipanel_lod.rs:262:            local eventInfo = eventFrame:GetEventInfo()
+tests/data/patch_9_0_1_sweep_known_gaps.json:120:  "wt-global-api-C_LossOfControl.GetEventInfo-588",
