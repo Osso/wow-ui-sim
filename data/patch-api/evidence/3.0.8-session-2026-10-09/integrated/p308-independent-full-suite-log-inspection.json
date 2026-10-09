@@ -1,0 +1,98 @@
+{
+  "log_path": "/home/osso/Projects/wow/full-suite-results/614402d56f726ec34cedea2f28a9609cdd653462.log",
+  "log_sha256": "a3efd6c27231a0b93c2b24064db588278f02a0e7aa5bf31a289969a0c2871bb3",
+  "log_bytes": 2115736,
+  "sections": {
+    "integration": {
+      "failure_count": 23,
+      "failure_ids": [
+        "blizzard_core_frame_lane::lane_dep_edges_pin_canonical_chain",
+        "blizzard_frame_xml_loads::blizzard_frame_xml_toc_is_load_first_with_current_dependencies",
+        "blizzard_reforging_ui_loads::find_toc_file_resolves_classic_suffix_via_fallthrough",
+        "blizzard_ui_blizzard_accountstore::behavior_currency_format::format_currency_display_returns_amount_space_texture_markup_with_size_twelve_twelve_zero_zero",
+        "blizzard_ui_blizzard_achievementui::behavior_search_filter::search_box_text_changed_calls_set_achievement_search_string_when_query_meets_min_length",
+        "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+        "c_api_surface::scenario_defaults_are_not_c_api_temporary_shims",
+        "c_spell_static_fallbacks::test_spell_static_fallback_shims_return_inert_values",
+        "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+        "generated_data_refresh_coverage::generated_lua_refresh_manifest_matches_current_file_contents",
+        "method_diff_coverage::diff_methods_extra_snapshot_matches_current_metatable_surface",
+        "method_diff_coverage::diff_methods_missing_snapshot_matches_current_metatable_surface",
+        "numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text",
+        "on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases",
+        "patch_12_0_7_b23_b28::b28_registered_absent_file_and_unregistered_present_file_are_not_io_queries",
+        "spell_api::test_spell_get_maw_power_border_atlas_by_spell_id_is_stubbed",
+        "spell_api::test_spell_get_spell_charges",
+        "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+        "toplevel_render_groups::native_controls_keep_unraised_and_raised_groups_in_owner_strata",
+        "toplevel_render_groups::screen_roots_do_not_capture_independent_render_groups",
+        "utility_api::test_table_create_returns_empty_mutable_tables_for_capacity_variants",
+        "wowforever_cooldown_categories::forever_cooldown_categories_preserve_other_profiles",
+        "wowforever_table::wowforever_table_does_not_leak_into_earlier_profiles"
+      ],
+      "equal_result": true,
+      "summary_lines": [
+        "     Summary [ 677.787s] 10673 tests run: 10650 passed (8 slow), 23 failed, 19 skipped"
+      ]
+    },
+    "prefork": {
+      "failure_count": 1,
+      "failure_ids": [
+        "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+      ],
+      "equal_result": true,
+      "summary_lines": [
+        "test result: FAILED. 2318 passed; 1 failed; 2319 total"
+      ]
+    },
+    "lib": {
+      "failure_count": 6,
+      "failure_ids": [
+        "loader::tests::wow_api_globals::transmog_situation::test_patch_12_0_0_transmog_situation_enum_values",
+        "lua_api::workarounds::temporary::debug_environment_defaults::tests::installs_debug_environment_defaults",
+        "lua_api::workarounds::temporary::housing_catalog_state::tests::installs_seeded_housing_catalog_surface",
+        "lua_api::workarounds_editmode::tests::apply_system_anchors::cast_and_player::apply_system_anchors_replays_player_frame_size_without_cast_bar_side_effect",
+        "lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_falls_back_to_minus_one_for_nil_singletons",
+        "lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes"
+      ],
+      "equal_result": true,
+      "summary_lines": [
+        "     Summary [  39.231s] 1979 tests run: 1973 passed, 6 failed, 0 skipped"
+      ]
+    }
+  },
+  "exact_publication_count": 74,
+  "additional_cases": [
+    "test patch_10_0_0_publication_sweep::patch_10_0_0_animation_probe_factories ... ok",
+    "test patch_3_1_0_publication_sweep::patch_3_1_0_player_facing_reads_radians_state ... ok"
+  ],
+  "recorded_publication_list_equal": true,
+  "result_sha256_matches": true,
+  "prior_result_path": "/home/osso/Projects/wow/full-suite-results/c17f1b4bb1c66e1b5012b3f301147805153b7f87.json",
+  "prior_result_sha256": "03bc62a239b23ccb9e28ff1ed07e611550ea3170405656468ce04da0b32f1452",
+  "failure_delta_vs_prior": {
+    "integration": {
+      "added": [],
+      "removed": []
+    },
+    "prefork": {
+      "added": [],
+      "removed": []
+    },
+    "lib": {
+      "added": [],
+      "removed": []
+    }
+  },
+  "failures_exactly_equal_prior": true,
+  "runner_master_new_failures": {
+    "integration": [],
+    "prefork": [
+      "blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+    ],
+    "lib": []
+  },
+  "broad_verdict": "FAIL, unchanged baseline; not acceptance",
+  "native_scope": "614402d56f726ec34cedea2f28a9609cdd653462",
+  "later_additions_covered": false
+}

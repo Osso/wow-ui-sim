@@ -1,0 +1,2425 @@
+[
+  {
+    "kind": "register",
+    "patch": "10.0.0",
+    "flags": [
+      "--expand-shared-changes"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.0.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.0",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.0.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+    "saved_sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+    "generated_bytes": 21705,
+    "saved_bytes": 21705,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.0.2",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.2",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+    "saved_sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+    "generated_bytes": 6908,
+    "saved_bytes": 6908,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+    "saved_sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+    "generated_bytes": 2094,
+    "saved_bytes": 2094,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.0.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.0.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.0.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.0.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+    "saved_sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+    "generated_bytes": 85415,
+    "saved_bytes": 85415,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.1.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.1.0",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+    "saved_sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+    "generated_bytes": 12437,
+    "saved_bytes": 12437,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.1.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.1.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+    "saved_sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+    "generated_bytes": 3262,
+    "saved_bytes": 3262,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.1.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.1.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.1.7",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.1.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+    "saved_sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+    "generated_bytes": 3831,
+    "saved_bytes": 3831,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+    "saved_sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+    "generated_bytes": 6822,
+    "saved_bytes": 6822,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.5",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+    "saved_sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+    "generated_bytes": 10335,
+    "saved_bytes": 10335,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.6",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.2.6-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.6",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.2.6-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+    "saved_sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+    "generated_bytes": 5160,
+    "saved_bytes": 5160,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "10.2.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-10.2.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "10.2.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-10.2.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+    "saved_sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+    "generated_bytes": 4224,
+    "saved_bytes": 4224,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.0.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.0.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+    "saved_sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+    "generated_bytes": 13182,
+    "saved_bytes": 13182,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.2",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.2",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+    "saved_sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+    "generated_bytes": 10127,
+    "saved_bytes": 10127,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+    "saved_sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+    "generated_bytes": 911,
+    "saved_bytes": 911,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.0.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.0.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.0.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.0.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+    "saved_sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+    "generated_bytes": 3076,
+    "saved_bytes": 3076,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.1.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.1.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+    "saved_sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+    "generated_bytes": 4192,
+    "saved_bytes": 4192,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.1.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.1.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+    "saved_sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+    "generated_bytes": 4589,
+    "saved_bytes": 4589,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.1.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.1.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.1.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.1.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+    "saved_sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+    "generated_bytes": 1103,
+    "saved_bytes": 1103,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+    "saved_sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+    "generated_bytes": 3095,
+    "saved_bytes": 3095,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.2.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.2.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+    "saved_sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+    "generated_bytes": 1805,
+    "saved_bytes": 1805,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "11.2.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-11.2.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "11.2.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-11.2.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+    "saved_sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+    "generated_bytes": 566,
+    "saved_bytes": 566,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-12.0.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-12.0.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+    "saved_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+    "generated_bytes": 4826,
+    "saved_bytes": 4826,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-12.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-12.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+    "saved_sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+    "generated_bytes": 13940,
+    "saved_bytes": 13940,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-12.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-12.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": false,
+    "generated_sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a",
+    "saved_sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+    "generated_bytes": 21324,
+    "saved_bytes": 31981,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "12.0.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-12.0.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.0.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-12.0.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": false,
+    "generated_sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855",
+    "saved_sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+    "generated_bytes": 8589,
+    "saved_bytes": 8110,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "12.1.0",
+    "flags": [
+      "--inventory-only"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-12.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "12.1.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-12.1.0-result.json",
+    "exit": 1,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": false,
+    "error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}",
+    "saved_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b"
+  },
+  {
+    "kind": "register",
+    "patch": "3.0.3",
+    "flags": [
+      "--legacy-cvar-definitions",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/3.0.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-3.0.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "3.0.3",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/3.0.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-3.0.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "2f8a14f3f5c1593bf7a3d66acb63a6ec0011075752dd75b3a2b8a79f173fe06c",
+    "saved_sha256": "2f8a14f3f5c1593bf7a3d66acb63a6ec0011075752dd75b3a2b8a79f173fe06c",
+    "generated_bytes": 287,
+    "saved_bytes": 287,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "3.0.8",
+    "flags": [
+      "--legacy-labeled-summaries",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/3.0.8-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-3.0.8-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "3.0.8",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/3.0.8-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-3.0.8-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "9342da2cad271e6a4516f26d5c4044332db3a241ea941786909e04be906c49c9",
+    "saved_sha256": "9342da2cad271e6a4516f26d5c4044332db3a241ea941786909e04be906c49c9",
+    "generated_bytes": 3174,
+    "saved_bytes": 3174,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "3.1.0",
+    "flags": [
+      "--legacy-function-labels",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/3.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-3.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "3.1.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/3.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-3.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "6438b46df825e8f6eef09796247bddb91b857cebe390ff6f720cdfd5e656505b",
+    "saved_sha256": "6438b46df825e8f6eef09796247bddb91b857cebe390ff6f720cdfd5e656505b",
+    "generated_bytes": 12350,
+    "saved_bytes": 12350,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "3.2.0",
+    "flags": [
+      "--wrath-retail-change-bullets",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/3.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-3.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "3.2.0",
+    "flags": [
+      "--numbered-reflist"
+    ],
+    "flags_basis": "data/patch-api/sources/3.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-3.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "580a691695ac1c2f535231b8972b0746ada43b6b642bc0ccbb2be971b10523b8",
+    "saved_sha256": "580a691695ac1c2f535231b8972b0746ada43b6b642bc0ccbb2be971b10523b8",
+    "generated_bytes": 3546,
+    "saved_bytes": 3546,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "3.3.0",
+    "flags": [
+      "--wrath-retail-summary",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/3.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-3.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "3.3.0",
+    "flags": [
+      "--wrath-summary-markup"
+    ],
+    "flags_basis": "data/patch-api/sources/3.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-3.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "d1537922d82d18cc8737879f1632b9d56cbd6652912a9217cfabd20c0c9fe3d0",
+    "saved_sha256": "d1537922d82d18cc8737879f1632b9d56cbd6652912a9217cfabd20c0c9fe3d0",
+    "generated_bytes": 2048,
+    "saved_bytes": 2048,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "3.3.3",
+    "flags": [
+      "--historical-api-headings",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/3.3.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-3.3.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "3.3.3",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/3.3.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-3.3.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "19b6ed480844dd02ee2e63527062650c8f15597eb7adeabc53bf6697b9d9354c",
+    "saved_sha256": "19b6ed480844dd02ee2e63527062650c8f15597eb7adeabc53bf6697b9d9354c",
+    "generated_bytes": 1572,
+    "saved_bytes": 1572,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "3.3.5",
+    "flags": [
+      "--legacy-section-lists",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/3.3.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-3.3.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "3.3.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/3.3.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-3.3.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "90264a874817543bed83d3f2b4306e99296587214309b25db3b33ce03e89872b",
+    "saved_sha256": "90264a874817543bed83d3f2b4306e99296587214309b25db3b33ce03e89872b",
+    "generated_bytes": 5243,
+    "saved_bytes": 5243,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "4.0.1",
+    "flags": [
+      "--cataclysm-labeled-inventory",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/4.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-4.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.0.1",
+    "flags": [
+      "--cataclysm-labeled-inventory"
+    ],
+    "flags_basis": "data/patch-api/sources/4.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-4.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "7e998153d8bb163fbb70bd597a6f48ac3dfaf0ec29cbc3eef50adb3e0ee85447",
+    "saved_sha256": "7e998153d8bb163fbb70bd597a6f48ac3dfaf0ec29cbc3eef50adb3e0ee85447",
+    "generated_bytes": 612,
+    "saved_bytes": 612,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "4.1.0",
+    "flags": [
+      "--cataclysm-change-bullets",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/4.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-4.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.1.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/4.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-4.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "756288f8a23a1b6f45db9f54398f05a4daaf20a6838485ca650fc05f30ed332d",
+    "saved_sha256": "756288f8a23a1b6f45db9f54398f05a4daaf20a6838485ca650fc05f30ed332d",
+    "generated_bytes": 3076,
+    "saved_bytes": 3076,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "4.2.0",
+    "flags": [
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/4.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-4.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/4.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-4.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577",
+    "saved_sha256": "1a7d47a325b4900a816b9c3373c3fd9e7a1850e790db02101d1e5591ec6e0577",
+    "generated_bytes": 25,
+    "saved_bytes": 25,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "4.3.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/4.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-4.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.3.0",
+    "flags": [
+      "--legacy-api-tables"
+    ],
+    "flags_basis": "data/patch-api/sources/4.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-4.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "e2a222caa5066efb87658e3af7b65456684164a6fbaa02443e41d6c9cab2ca78",
+    "saved_sha256": "e2a222caa5066efb87658e3af7b65456684164a6fbaa02443e41d6c9cab2ca78",
+    "generated_bytes": 25,
+    "saved_bytes": 25,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "4.3.4",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/4.3.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-4.3.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "4.3.4",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/4.3.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-4.3.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184",
+    "saved_sha256": "8fa5027968deb66a1e30b7b48683e3624ca7a86989c59bec1812826561833184",
+    "generated_bytes": 25,
+    "saved_bytes": 25,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/5.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/5.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "59ab41f9fbd8cc19a5f14810757300a1bdf06474a3282ee27630d025bc97eedc",
+    "saved_sha256": "59ab41f9fbd8cc19a5f14810757300a1bdf06474a3282ee27630d025bc97eedc",
+    "generated_bytes": 34,
+    "saved_bytes": 34,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.0.4",
+    "flags": [
+      "--mists-prepatch",
+      "--mists-diff",
+      "data/patch-api/evidence/5.0.4-session-2026-10-08/diff.wikitext",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.0.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.0.4",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/5.0.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.0.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "f69f6634d8ac6fe789719b20d4da3d5022ec95a2fd936a151a40ca3f7200f54e",
+    "saved_sha256": "f69f6634d8ac6fe789719b20d4da3d5022ec95a2fd936a151a40ca3f7200f54e",
+    "generated_bytes": 5447,
+    "saved_bytes": 5447,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.1.0",
+    "flags": [
+      "--mists-summary",
+      "--mists-diff",
+      "data/patch-api/sources/5.1.0-api-changes-diff.wikitext",
+      "--mists-widget-handlers",
+      "--mists-code-removals",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/5.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.1.0",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/5.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "5d03f5e9dfa66db18fb5d2c24fec4df9b195aa71d473baab7ad0130d2656ac0e",
+    "saved_sha256": "5d03f5e9dfa66db18fb5d2c24fec4df9b195aa71d473baab7ad0130d2656ac0e",
+    "generated_bytes": 1195,
+    "saved_bytes": 1195,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.2.0",
+    "flags": [
+      "--mists-diff",
+      "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
+      "--mists-bare-widget-handlers",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/5.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.2.0",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/5.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "c05e3293fec4ce9ad4b0d7b569e3944a65cdcba19edd0f37d8f9147b49bb639a",
+    "saved_sha256": "c05e3293fec4ce9ad4b0d7b569e3944a65cdcba19edd0f37d8f9147b49bb639a",
+    "generated_bytes": 2040,
+    "saved_bytes": 2040,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.3.0",
+    "flags": [
+      "--mists-diff",
+      "data/patch-api/sources/5.3.0-api-changes.diff.wikitext",
+      "--mists-widget-handlers",
+      "--client-line",
+      "retail"
+    ],
+    "flags_basis": "data/patch-api/sources/5.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.3.0",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/5.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "6c1feaa3b840e459c4c21245df30a18164a8f83266396d06131938a95f1f1bb8",
+    "saved_sha256": "6c1feaa3b840e459c4c21245df30a18164a8f83266396d06131938a95f1f1bb8",
+    "generated_bytes": 908,
+    "saved_bytes": 908,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.0",
+    "flags": [
+      "--mists-summary",
+      "--mists-diff",
+      "data/patch-api/sources/5.4.0-api-changes-diff.wikitext"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.4.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.0",
+    "flags": [
+      "--retain-patch-diff-reference",
+      "--mists-source-markup"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.4.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "15226d5fe1409e68ef89c39b94bbb027292bbc5e87da3384f73b0506c939c2e7",
+    "saved_sha256": "15226d5fe1409e68ef89c39b94bbb027292bbc5e87da3384f73b0506c939c2e7",
+    "generated_bytes": 2541,
+    "saved_bytes": 2541,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.1",
+    "flags": [
+      "--mists-automated-diff"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.4.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.1",
+    "flags": [
+      "--mists-automated-diff",
+      "--lowercase-reflist"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.4.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "2e9a7139991da34deafdfd1e7dabc760b37006791572f259efe34b6c5d5f5e73",
+    "saved_sha256": "2e9a7139991da34deafdfd1e7dabc760b37006791572f259efe34b6c5d5f5e73",
+    "generated_bytes": 460,
+    "saved_bytes": 460,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.2",
+    "flags": [
+      "--mists-automated-diff"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.4.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.2",
+    "flags": [
+      "--mists-automated-diff"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.4.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980",
+    "saved_sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980",
+    "generated_bytes": 618,
+    "saved_bytes": 618,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.7",
+    "flags": [
+      "--legacy-api-tables",
+      "--prose-api-links"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.7-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.4.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.7",
+    "flags": [
+      "--legacy-api-tables"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.7-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.4.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "b622423ac5aa436320fceb5f980588903360079f4be497f65ce13612b838e37b",
+    "saved_sha256": "b622423ac5aa436320fceb5f980588903360079f4be497f65ce13612b838e37b",
+    "generated_bytes": 474,
+    "saved_bytes": 474,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.4.8",
+    "flags": [
+      "--combat-restriction-bullets"
+    ],
+    "flags_basis": "data/patch-api/sources/5.4.8-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.4.8-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.4.8",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/5.4.8-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.4.8-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+    "saved_sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+    "generated_bytes": 939,
+    "saved_bytes": 939,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.0",
+    "flags": [
+      "--client-line",
+      "mists-classic"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.5.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.0",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.5.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "ab12ad3af0590a74f9127ece4fcef9fa2fe445f6ab16b0bac55e3cbf6cb3ca79",
+    "saved_sha256": "ab12ad3af0590a74f9127ece4fcef9fa2fe445f6ab16b0bac55e3cbf6cb3ca79",
+    "generated_bytes": 202,
+    "saved_bytes": 202,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.1",
+    "flags": [
+      "--client-line",
+      "mists-classic"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.5.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.1",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.5.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "22d466d5b56253a689ff184bc3fafb11b668bbc7ea7243449f2c17326a72cc19",
+    "saved_sha256": "22d466d5b56253a689ff184bc3fafb11b668bbc7ea7243449f2c17326a72cc19",
+    "generated_bytes": 105,
+    "saved_bytes": 105,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.2",
+    "flags": [
+      "--client-line",
+      "mists-classic"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.5.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.2",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.5.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+    "saved_sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+    "generated_bytes": 105,
+    "saved_bytes": 105,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.3",
+    "flags": [
+      "--client-line",
+      "mists-classic"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.5.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.3",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.5.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "4e17219957f0a7c416bb68958c42d474b88f5f3ee625060dc92b6c167c3f7b56",
+    "saved_sha256": "4e17219957f0a7c416bb68958c42d474b88f5f3ee625060dc92b6c167c3f7b56",
+    "generated_bytes": 105,
+    "saved_bytes": 105,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "5.5.4",
+    "flags": [
+      "--client-line",
+      "mists-classic"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-5.5.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "5.5.4",
+    "flags": [
+      "--canonical-patch-navigation"
+    ],
+    "flags_basis": "data/patch-api/sources/5.5.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-5.5.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b",
+    "saved_sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b",
+    "generated_bytes": 105,
+    "saved_bytes": 105,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "6.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/6.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-6.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/6.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-6.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+    "saved_sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+    "generated_bytes": 34,
+    "saved_bytes": 34,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "6.0.2",
+    "flags": [
+      "--warlords-prepatch",
+      "--warlords-diff",
+      "data/patch-api/sources/6.0.2-api-changes.diff.wikitext"
+    ],
+    "flags_basis": "data/patch-api/sources/6.0.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-6.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.0.2",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/6.0.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-6.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34",
+    "saved_sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34",
+    "generated_bytes": 6449,
+    "saved_bytes": 6449,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "6.1.0",
+    "flags": [
+      "--colon-api-bullets",
+      "--prose-api-links"
+    ],
+    "flags_basis": "data/patch-api/sources/6.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-6.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.1.0",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/6.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-6.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084",
+    "saved_sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084",
+    "generated_bytes": 652,
+    "saved_bytes": 652,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "6.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/6.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-6.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.2.0",
+    "flags": [
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/6.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-6.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154",
+    "saved_sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154",
+    "generated_bytes": 1028,
+    "saved_bytes": 1028,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "6.2.2",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/6.2.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-6.2.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.2.2",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/6.2.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-6.2.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+    "saved_sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+    "generated_bytes": 24,
+    "saved_bytes": 24,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "6.2.4",
+    "flags": [
+      "--indented-api-lists"
+    ],
+    "flags_basis": "data/patch-api/sources/6.2.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-6.2.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "6.2.4",
+    "flags": [
+      "--preserve-examples",
+      "--retain-patch-diff-reference"
+    ],
+    "flags_basis": "data/patch-api/sources/6.2.4-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-6.2.4-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85",
+    "saved_sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85",
+    "generated_bytes": 2073,
+    "saved_bytes": 2073,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "7.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/7.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-7.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.0.1",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/7.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-7.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+    "saved_sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+    "generated_bytes": 34,
+    "saved_bytes": 34,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "7.0.3",
+    "flags": [
+      "--legion-prepatch"
+    ],
+    "flags_basis": "data/patch-api/sources/7.0.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-7.0.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.0.3",
+    "flags": [
+      "--legion-prepatch"
+    ],
+    "flags_basis": "data/patch-api/sources/7.0.3-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-7.0.3-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
+    "saved_sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
+    "generated_bytes": 3874,
+    "saved_bytes": 3874,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "7.1.0",
+    "flags": [
+      "--top-level-api-bullets",
+      "--legacy-widget-cvar-bullets"
+    ],
+    "flags_basis": "data/patch-api/sources/7.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-7.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.1.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/7.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-7.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+    "saved_sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+    "generated_bytes": 1470,
+    "saved_bytes": 1470,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "7.2.0",
+    "flags": [
+      "--legacy-widget-summaries",
+      "--prose-namespace-migrations"
+    ],
+    "flags_basis": "data/patch-api/sources/7.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-7.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/7.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-7.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+    "saved_sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+    "generated_bytes": 515,
+    "saved_bytes": 515,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "7.2.5",
+    "flags": [
+      "--top-level-api-bullets"
+    ],
+    "flags_basis": "data/patch-api/sources/7.2.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-7.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.2.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/7.2.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-7.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+    "saved_sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+    "generated_bytes": 613,
+    "saved_bytes": 613,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "7.3.0",
+    "flags": [
+      "--legacy-summary-tables"
+    ],
+    "flags_basis": "data/patch-api/sources/7.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-7.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.3.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/7.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-7.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+    "saved_sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+    "generated_bytes": 351,
+    "saved_bytes": 351,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "7.3.2",
+    "flags": [
+      "--prose-api-links"
+    ],
+    "flags_basis": "data/patch-api/sources/7.3.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-7.3.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "7.3.2",
+    "flags": [
+      "--retain-reference-notes"
+    ],
+    "flags_basis": "data/patch-api/sources/7.3.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-7.3.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
+    "saved_sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
+    "generated_bytes": 325,
+    "saved_bytes": 325,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "8.0.1",
+    "flags": [
+      "--bfa-prepatch"
+    ],
+    "flags_basis": "data/patch-api/sources/8.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-8.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.0.1",
+    "flags": [
+      "--bfa-prepatch"
+    ],
+    "flags_basis": "data/patch-api/sources/8.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-8.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
+    "saved_sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
+    "generated_bytes": 2223,
+    "saved_bytes": 2223,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "8.1.0",
+    "flags": [
+      "--legacy-api-bullets",
+      "--legacy-api-renames"
+    ],
+    "flags_basis": "data/patch-api/sources/8.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-8.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.1.0",
+    "flags": [
+      "--legacy-api-bullets",
+      "--legacy-cvar-tables",
+      "--retain-reference-notes"
+    ],
+    "flags_basis": "data/patch-api/sources/8.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-8.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
+    "saved_sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
+    "generated_bytes": 894,
+    "saved_bytes": 894,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "8.1.5",
+    "flags": [
+      "--legacy-api-bullets"
+    ],
+    "flags_basis": "data/patch-api/sources/8.1.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-8.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.1.5",
+    "flags": [
+      "--legacy-api-bullets"
+    ],
+    "flags_basis": "data/patch-api/sources/8.1.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-8.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+    "saved_sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+    "generated_bytes": 457,
+    "saved_bytes": 457,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "8.2.0",
+    "flags": [
+      "--legacy-api-tables"
+    ],
+    "flags_basis": "data/patch-api/sources/8.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-8.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.2.0",
+    "flags": [
+      "--legacy-api-tables"
+    ],
+    "flags_basis": "data/patch-api/sources/8.2.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-8.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+    "saved_sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+    "generated_bytes": 2036,
+    "saved_bytes": 2036,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "8.2.5",
+    "flags": [
+      "--legacy-inventory-labels"
+    ],
+    "flags_basis": "data/patch-api/sources/8.2.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-8.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.2.5",
+    "flags": [
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "flags_basis": "data/patch-api/sources/8.2.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-8.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+    "saved_sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+    "generated_bytes": 1074,
+    "saved_bytes": 1074,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "8.3.0",
+    "flags": [
+      "--legacy-column-headers",
+      "--diff-api-additions"
+    ],
+    "flags_basis": "data/patch-api/sources/8.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-8.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.3.0",
+    "flags": [
+      "--preserve-examples",
+      "--normalize-inventory-headings",
+      "--retain-reference-notes"
+    ],
+    "flags_basis": "data/patch-api/sources/8.3.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-8.3.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+    "saved_sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+    "generated_bytes": 727,
+    "saved_bytes": 727,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "8.3.7",
+    "flags": [
+      "--simple-api-list"
+    ],
+    "flags_basis": "data/patch-api/sources/8.3.7-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-8.3.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "8.3.7",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-8.3.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+    "saved_sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+    "generated_bytes": 168,
+    "saved_bytes": 168,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.0.1",
+    "flags": [
+      "--skip-plain-scripts-label"
+    ],
+    "flags_basis": "data/patch-api/sources/9.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-9.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.0.1",
+    "flags": [
+      "--normalize-inventory-headings",
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/sources/9.0.1-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-extract-9.0.1-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+    "saved_sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+    "generated_bytes": 7082,
+    "saved_bytes": 7082,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.0.2",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/9.0.2-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-9.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.0.2",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-9.0.2-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+    "saved_sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+    "generated_bytes": 383,
+    "saved_bytes": 383,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/sources/9.0.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-9.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.0.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-9.0.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+    "saved_sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+    "generated_bytes": 104,
+    "saved_bytes": 104,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.1.0",
+    "flags": [
+      "--expand-shared-changes",
+      "--skip-plain-scripts-label"
+    ],
+    "flags_basis": "data/patch-api/sources/9.1.0-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-9.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.1.0",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-9.1.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+    "saved_sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+    "generated_bytes": 598,
+    "saved_bytes": 598,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.1.5",
+    "flags": [
+      "--expand-shared-changes",
+      "--capture-span-defaults"
+    ],
+    "flags_basis": "data/patch-api/sources/9.1.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-9.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.1.5",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-9.1.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+    "saved_sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+    "generated_bytes": 1060,
+    "saved_bytes": 1060,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.2.0",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-9.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.2.0",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-9.2.0-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+    "saved_sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+    "generated_bytes": 666,
+    "saved_bytes": 666,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.2.5",
+    "flags": [
+      "--expand-shared-changes",
+      "--separate-inline-structures",
+      "--capture-span-defaults"
+    ],
+    "flags_basis": "data/patch-api/sources/9.2.5-api-changes.provenance.json",
+    "receipt": "/tmp/p308-replay-register-9.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.2.5",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-9.2.5-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+    "saved_sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+    "generated_bytes": 5875,
+    "saved_bytes": 5875,
+    "error": null
+  },
+  {
+    "kind": "register",
+    "patch": "9.2.7",
+    "flags": [],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-register-reproduction.json",
+    "receipt": "/tmp/p308-replay-register-9.2.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true
+  },
+  {
+    "kind": "extract",
+    "patch": "9.2.7",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "flags_basis": "data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json",
+    "receipt": "/tmp/p308-replay-extract-9.2.7-result.json",
+    "exit": 0,
+    "revision": "98f2ef2286de7523a627fa1060a8f548b12a3b1b",
+    "scope_unchanged": true,
+    "byte_identical": true,
+    "generated_sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+    "saved_sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+    "generated_bytes": 620,
+    "saved_bytes": 620,
+    "error": null
+  }
+]

@@ -1,0 +1,1220 @@
+[
+  {
+    "patch": "10.0.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "988230c0030055177eb06dd078a4a905d4043272cea069473a9780ad4b67839c",
+      "bytes": 149771
+    },
+    "new": {
+      "error": null,
+      "sha256": "988230c0030055177eb06dd078a4a905d4043272cea069473a9780ad4b67839c",
+      "bytes": 149771
+    }
+  },
+  {
+    "patch": "10.0.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059",
+      "bytes": 100265
+    },
+    "new": {
+      "error": null,
+      "sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059",
+      "bytes": 100265
+    }
+  },
+  {
+    "patch": "10.0.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+      "bytes": 23709
+    },
+    "new": {
+      "error": null,
+      "sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+      "bytes": 23709
+    }
+  },
+  {
+    "patch": "10.0.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e",
+      "bytes": 17541
+    },
+    "new": {
+      "error": null,
+      "sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e",
+      "bytes": 17541
+    }
+  },
+  {
+    "patch": "10.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+      "bytes": 32016
+    },
+    "new": {
+      "error": null,
+      "sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+      "bytes": 32016
+    }
+  },
+  {
+    "patch": "10.1.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+      "bytes": 25256
+    },
+    "new": {
+      "error": null,
+      "sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+      "bytes": 25256
+    }
+  },
+  {
+    "patch": "10.1.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+      "bytes": 12650
+    },
+    "new": {
+      "error": null,
+      "sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+      "bytes": 12650
+    }
+  },
+  {
+    "patch": "10.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+      "bytes": 35246
+    },
+    "new": {
+      "error": null,
+      "sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+      "bytes": 35246
+    }
+  },
+  {
+    "patch": "10.2.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
+      "bytes": 14602
+    },
+    "new": {
+      "error": null,
+      "sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
+      "bytes": 14602
+    }
+  },
+  {
+    "patch": "10.2.6",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+      "bytes": 50860
+    },
+    "new": {
+      "error": null,
+      "sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+      "bytes": 50860
+    }
+  },
+  {
+    "patch": "10.2.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+      "bytes": 25807
+    },
+    "new": {
+      "error": null,
+      "sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+      "bytes": 25807
+    }
+  },
+  {
+    "patch": "11.0.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186",
+      "bytes": 119913
+    },
+    "new": {
+      "error": null,
+      "sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186",
+      "bytes": 119913
+    }
+  },
+  {
+    "patch": "11.0.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+      "bytes": 9176
+    },
+    "new": {
+      "error": null,
+      "sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+      "bytes": 9176
+    }
+  },
+  {
+    "patch": "11.0.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd",
+      "bytes": 12806
+    },
+    "new": {
+      "error": null,
+      "sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd",
+      "bytes": 12806
+    }
+  },
+  {
+    "patch": "11.0.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+      "bytes": 25372
+    },
+    "new": {
+      "error": null,
+      "sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+      "bytes": 25372
+    }
+  },
+  {
+    "patch": "11.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280",
+      "bytes": 29019
+    },
+    "new": {
+      "error": null,
+      "sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280",
+      "bytes": 29019
+    }
+  },
+  {
+    "patch": "11.1.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703",
+      "bytes": 30829
+    },
+    "new": {
+      "error": null,
+      "sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703",
+      "bytes": 30829
+    }
+  },
+  {
+    "patch": "11.1.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439",
+      "bytes": 12380
+    },
+    "new": {
+      "error": null,
+      "sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439",
+      "bytes": 12380
+    }
+  },
+  {
+    "patch": "11.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+      "bytes": 38613
+    },
+    "new": {
+      "error": null,
+      "sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+      "bytes": 38613
+    }
+  },
+  {
+    "patch": "11.2.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+      "bytes": 39973
+    },
+    "new": {
+      "error": null,
+      "sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+      "bytes": 39973
+    }
+  },
+  {
+    "patch": "11.2.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+      "bytes": 127629
+    },
+    "new": {
+      "error": null,
+      "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+      "bytes": 127629
+    }
+  },
+  {
+    "patch": "12.0.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+      "bytes": 248164
+    },
+    "new": {
+      "error": null,
+      "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+      "bytes": 248164
+    }
+  },
+  {
+    "patch": "12.0.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb",
+      "bytes": 56712
+    },
+    "new": {
+      "error": null,
+      "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb",
+      "bytes": 56712
+    }
+  },
+  {
+    "patch": "12.0.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+      "bytes": 95943
+    },
+    "new": {
+      "error": null,
+      "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+      "bytes": 95943
+    }
+  },
+  {
+    "patch": "12.0.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+      "bytes": 44521
+    },
+    "new": {
+      "error": null,
+      "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+      "bytes": 44521
+    }
+  },
+  {
+    "patch": "12.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "ce28abde1fd9bbb8774a802102e4ab727a4e46157924726b78949123fb6ab029",
+      "bytes": 188574
+    },
+    "new": {
+      "error": null,
+      "sha256": "ce28abde1fd9bbb8774a802102e4ab727a4e46157924726b78949123fb6ab029",
+      "bytes": 188574
+    }
+  },
+  {
+    "patch": "3.0.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "54fcf0179c718ea6885a36545d84ac6fc1843a579ae9ec2cbe9fe7a76fa7256d",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "54fcf0179c718ea6885a36545d84ac6fc1843a579ae9ec2cbe9fe7a76fa7256d",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "3.0.3",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "96bba3270fedf42d454c5373a5b1dd7e8c86af221e85d3295f4329e01bb3e5ad",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "96bba3270fedf42d454c5373a5b1dd7e8c86af221e85d3295f4329e01bb3e5ad",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "3.0.8",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "614206e6b480cc383894fd4431aa9aa16ffb10ba84a3ef8d44855ee0a2323233",
+      "bytes": 295
+    },
+    "new": {
+      "error": null,
+      "sha256": "614206e6b480cc383894fd4431aa9aa16ffb10ba84a3ef8d44855ee0a2323233",
+      "bytes": 295
+    }
+  },
+  {
+    "patch": "3.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "bd1592d99366948faf0e39bf34fece965d75e0cbf54e20332d4edb8f6a3980dd",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "bd1592d99366948faf0e39bf34fece965d75e0cbf54e20332d4edb8f6a3980dd",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "3.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "3ec210b10ecfda111eef61706f3d7133d9d18f97896fa5fabeb37eef94551f67",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "3ec210b10ecfda111eef61706f3d7133d9d18f97896fa5fabeb37eef94551f67",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "3.3.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "7cd42d7a78a17de37f005b3d3ac1806e57825eb74ba1c78abe42f4d0de723e13",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "7cd42d7a78a17de37f005b3d3ac1806e57825eb74ba1c78abe42f4d0de723e13",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "3.3.3",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "79f7c485798c08ebeb1cc3ea99a5b1c0d8152bdd3c221c9faf85f3eee4ebe6ca",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "79f7c485798c08ebeb1cc3ea99a5b1c0d8152bdd3c221c9faf85f3eee4ebe6ca",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "3.3.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "2a221e02427c38d261a60c6d43c6693d8be7c14147e176d36e9ba8d86e95d86d",
+      "bytes": 295
+    },
+    "new": {
+      "error": null,
+      "sha256": "2a221e02427c38d261a60c6d43c6693d8be7c14147e176d36e9ba8d86e95d86d",
+      "bytes": 295
+    }
+  },
+  {
+    "patch": "4.0.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "a2f5c069b7cd0e717efedd44d901f156efe89aefe06f268e5f09d669631cc5a3",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "a2f5c069b7cd0e717efedd44d901f156efe89aefe06f268e5f09d669631cc5a3",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "4.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "badddfc18423310af59fc0c65b73ab363faf32a8ddb690f9c34fec2d78cf4045",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "badddfc18423310af59fc0c65b73ab363faf32a8ddb690f9c34fec2d78cf4045",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "4.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "3a2fbd55eb57631196e06348a0571cc54b42b3ccbc23382bbbf195ca11b6fb9e",
+      "bytes": 14327
+    },
+    "new": {
+      "error": null,
+      "sha256": "3a2fbd55eb57631196e06348a0571cc54b42b3ccbc23382bbbf195ca11b6fb9e",
+      "bytes": 14327
+    }
+  },
+  {
+    "patch": "4.3.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "a3315f75e518d010f3b3e67043db5a7b2f9ecd1406462557fae8ccd45f9a7f67",
+      "bytes": 18471
+    },
+    "new": {
+      "error": null,
+      "sha256": "a3315f75e518d010f3b3e67043db5a7b2f9ecd1406462557fae8ccd45f9a7f67",
+      "bytes": 18471
+    }
+  },
+  {
+    "patch": "4.3.4",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "0e9cd6e45cb995566422e9cf1245745a9ff3506a4a15d60a163f6ede55b6e25b",
+      "bytes": 2925
+    },
+    "new": {
+      "error": null,
+      "sha256": "0e9cd6e45cb995566422e9cf1245745a9ff3506a4a15d60a163f6ede55b6e25b",
+      "bytes": 2925
+    }
+  },
+  {
+    "patch": "5.0.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "2e9a294c4c1f984b039f61abcad1f787d39f179471ebfb83375499343e204431",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "2e9a294c4c1f984b039f61abcad1f787d39f179471ebfb83375499343e204431",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.0.4",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "75eb6104826aad959f6856ac283b0cf42fc75699b444367536d34422a8595e40",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "75eb6104826aad959f6856ac283b0cf42fc75699b444367536d34422a8595e40",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "9a5cf1b8ce7bba3d1e9b75f4d4cb1f8b4f3ae3652200afc78c8295bbed7987be",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "9a5cf1b8ce7bba3d1e9b75f4d4cb1f8b4f3ae3652200afc78c8295bbed7987be",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "ebaaf5be034705cb19941d12ece0fde2a49ae03edf52431e440cf36394a6a24e",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "ebaaf5be034705cb19941d12ece0fde2a49ae03edf52431e440cf36394a6a24e",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.3.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "e0b241a508818e7de0febc5a0bd73e2a98819c06ad9fd1a72a60e5ed96d9546a",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "e0b241a508818e7de0febc5a0bd73e2a98819c06ad9fd1a72a60e5ed96d9546a",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.4.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "8dc87af7629c865bba25408dfd3b5de3a0f0c60f71a89fe06c639f7784853a99",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "8dc87af7629c865bba25408dfd3b5de3a0f0c60f71a89fe06c639f7784853a99",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.4.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "3c868f370ddb4b5563e217937f690083bf071c293d30fb12cd24808fa36ddda6",
+      "bytes": 3767
+    },
+    "new": {
+      "error": null,
+      "sha256": "3c868f370ddb4b5563e217937f690083bf071c293d30fb12cd24808fa36ddda6",
+      "bytes": 3767
+    }
+  },
+  {
+    "patch": "5.4.2",
+    "unchanged": true,
+    "byte_identical": false,
+    "old": {
+      "error": "no symbol reference in: ': StartUnratedArena'"
+    },
+    "new": {
+      "error": "no symbol reference in: ': StartUnratedArena'"
+    }
+  },
+  {
+    "patch": "5.4.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "680e72b77ae7dff9df3513d06fdc1ac0bfc6c8e3afdb0addc0e8aa372e1a4d12",
+      "bytes": 2259
+    },
+    "new": {
+      "error": null,
+      "sha256": "680e72b77ae7dff9df3513d06fdc1ac0bfc6c8e3afdb0addc0e8aa372e1a4d12",
+      "bytes": 2259
+    }
+  },
+  {
+    "patch": "5.4.8",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "c0428a31bd27793e7f79e748911aa6ff0ae6087cb43c27166d3b95a4533280e1",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "c0428a31bd27793e7f79e748911aa6ff0ae6087cb43c27166d3b95a4533280e1",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.5.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "4b3c314649a7cd9fcaa2c654ad845c49c2a7fedf7893b2c868b606d7960776dc",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "4b3c314649a7cd9fcaa2c654ad845c49c2a7fedf7893b2c868b606d7960776dc",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.5.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "b2228c81b711e8b88ef50792eb42ba80d099967d7a6d45423cf892d68222bcce",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "b2228c81b711e8b88ef50792eb42ba80d099967d7a6d45423cf892d68222bcce",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.5.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "dc6c484b6c566f9e1be45f1b1095b65411c27ad7a98d7c83c5208457ba659ba5",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "dc6c484b6c566f9e1be45f1b1095b65411c27ad7a98d7c83c5208457ba659ba5",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.5.3",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "b8c9a493e04537e945171fec0d75167eded00edbeac8383f86d327c1bd95e421",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "b8c9a493e04537e945171fec0d75167eded00edbeac8383f86d327c1bd95e421",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "5.5.4",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "61982771c682f10ea8576e0a4ecd28d4652eb0f5f2eddb59787626fd4a9fb15a",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "61982771c682f10ea8576e0a4ecd28d4652eb0f5f2eddb59787626fd4a9fb15a",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "6.0.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "32a4b6b7db6b7fbb2bc3156514dce47e8679d057b8d911264430d81e5d0186c7",
+      "bytes": 294
+    },
+    "new": {
+      "error": null,
+      "sha256": "32a4b6b7db6b7fbb2bc3156514dce47e8679d057b8d911264430d81e5d0186c7",
+      "bytes": 294
+    }
+  },
+  {
+    "patch": "6.0.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "7d86c90a8c177d58bc497e25586e37ce4cc9157734336ea858519c72eaa13b71",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "7d86c90a8c177d58bc497e25586e37ce4cc9157734336ea858519c72eaa13b71",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "6.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "60bb8072cc12b8c12d7a84a1ae8c93b97e5ba1ccd69e3e070771f1ef5e24959e",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "60bb8072cc12b8c12d7a84a1ae8c93b97e5ba1ccd69e3e070771f1ef5e24959e",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "6.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "b4662f1f6b4abbed24dee47d8fe8f50de184788f93e6798c8e853c011a91e76c",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "b4662f1f6b4abbed24dee47d8fe8f50de184788f93e6798c8e853c011a91e76c",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "6.2.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "4eee04950b20e3bd79f4fd3b724b5c0d4d531c796534e810c090c168f6cbd6f0",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "4eee04950b20e3bd79f4fd3b724b5c0d4d531c796534e810c090c168f6cbd6f0",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "6.2.4",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "5230cdd285255fe59e901070c995d41b3307f3254056f76da9f02174b60ee842",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "5230cdd285255fe59e901070c995d41b3307f3254056f76da9f02174b60ee842",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "7.0.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "0e3321174be76f59454f4257cd2a69b2c878d58409c4a003ee63d004371bcc16",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "0e3321174be76f59454f4257cd2a69b2c878d58409c4a003ee63d004371bcc16",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "7.0.3",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "5f9bee805fea2e366ff0d82b508ebf52ded22312254b98fa59d46481f6148fdf",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "5f9bee805fea2e366ff0d82b508ebf52ded22312254b98fa59d46481f6148fdf",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "7.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "a1da43b6637708cfe2d3bb23566b24d8aecfd68f34fca4901a49ae4bae2b229f",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "a1da43b6637708cfe2d3bb23566b24d8aecfd68f34fca4901a49ae4bae2b229f",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "7.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "86080c95d5ded9bd83ad3ef5afa0305b177b958487b01c587fbdf81a01fc78ae",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "86080c95d5ded9bd83ad3ef5afa0305b177b958487b01c587fbdf81a01fc78ae",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "7.2.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "52b8f692de033969165104a0666aadfcc96a5738fa7f0c2d712bbfa4d3f4f501",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "52b8f692de033969165104a0666aadfcc96a5738fa7f0c2d712bbfa4d3f4f501",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "7.3.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "efa07f29838ab34bf184957164919ba48764f90f32f355ef1d8b1238c0f57899",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "efa07f29838ab34bf184957164919ba48764f90f32f355ef1d8b1238c0f57899",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "7.3.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "e0907507a217ae8724762e54fa48eecf0cf3778fad8a343106b41844dd9dc0f6",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "e0907507a217ae8724762e54fa48eecf0cf3778fad8a343106b41844dd9dc0f6",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "8.0.1",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "2f88be02bd428fb08fa6340a2b19a1e0cbb6609842493368c787c259dabdc4fe",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "2f88be02bd428fb08fa6340a2b19a1e0cbb6609842493368c787c259dabdc4fe",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "8.1.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "527ce1f5a69e409860790e5e418752bb8a78b4c062919caf388af0d6f4b3f87c",
+      "bytes": 7092
+    },
+    "new": {
+      "error": null,
+      "sha256": "527ce1f5a69e409860790e5e418752bb8a78b4c062919caf388af0d6f4b3f87c",
+      "bytes": 7092
+    }
+  },
+  {
+    "patch": "8.1.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "3e7543c8de327e9868188a9c200cfb4abe103564c7721a546df69c6ff26fb3b2",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "3e7543c8de327e9868188a9c200cfb4abe103564c7721a546df69c6ff26fb3b2",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "8.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "d60d8b5d52a9afc69fee21b18e4922a8c0f18b94d34b4f6371c5e972d04c0e0e",
+      "bytes": 15849
+    },
+    "new": {
+      "error": null,
+      "sha256": "d60d8b5d52a9afc69fee21b18e4922a8c0f18b94d34b4f6371c5e972d04c0e0e",
+      "bytes": 15849
+    }
+  },
+  {
+    "patch": "8.2.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "3dc7686951f33c2cea81bbbb48600696bbcbe2785c89cef6351854f380af83cd",
+      "bytes": 46856
+    },
+    "new": {
+      "error": null,
+      "sha256": "3dc7686951f33c2cea81bbbb48600696bbcbe2785c89cef6351854f380af83cd",
+      "bytes": 46856
+    }
+  },
+  {
+    "patch": "8.3.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "2c1045461a4903f86362d32a30f64e2887a17bb67605cdf9f95eb5550cd0aebb",
+      "bytes": 51350
+    },
+    "new": {
+      "error": null,
+      "sha256": "2c1045461a4903f86362d32a30f64e2887a17bb67605cdf9f95eb5550cd0aebb",
+      "bytes": 51350
+    }
+  },
+  {
+    "patch": "8.3.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "2d1e3c957cb4c5fefa6a145a5332f4f98c1114745933441a52ae852948e1e36c",
+      "bytes": 296
+    },
+    "new": {
+      "error": null,
+      "sha256": "2d1e3c957cb4c5fefa6a145a5332f4f98c1114745933441a52ae852948e1e36c",
+      "bytes": 296
+    }
+  },
+  {
+    "patch": "9.0.1",
+    "unchanged": true,
+    "byte_identical": false,
+    "old": {
+      "error": "no symbol reference in: ': Scripts'"
+    },
+    "new": {
+      "error": "no symbol reference in: ': Scripts'"
+    }
+  },
+  {
+    "patch": "9.0.2",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+      "bytes": 18468
+    },
+    "new": {
+      "error": null,
+      "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+      "bytes": 18468
+    }
+  },
+  {
+    "patch": "9.0.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+      "bytes": 6906
+    },
+    "new": {
+      "error": null,
+      "sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+      "bytes": 6906
+    }
+  },
+  {
+    "patch": "9.1.0",
+    "unchanged": true,
+    "byte_identical": false,
+    "old": {
+      "error": "no symbol reference in: ': Scripts'"
+    },
+    "new": {
+      "error": "no symbol reference in: ': Scripts'"
+    }
+  },
+  {
+    "patch": "9.1.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+      "bytes": 41278
+    },
+    "new": {
+      "error": null,
+      "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+      "bytes": 41278
+    }
+  },
+  {
+    "patch": "9.2.0",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+      "bytes": 20318
+    },
+    "new": {
+      "error": null,
+      "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+      "bytes": 20318
+    }
+  },
+  {
+    "patch": "9.2.5",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "8528c9893d26207e2528aafcaa3d18d8e605d2c3ccb71c30f66f85a1d3a25131",
+      "bytes": 22931
+    },
+    "new": {
+      "error": null,
+      "sha256": "8528c9893d26207e2528aafcaa3d18d8e605d2c3ccb71c30f66f85a1d3a25131",
+      "bytes": 22931
+    }
+  },
+  {
+    "patch": "9.2.7",
+    "unchanged": true,
+    "byte_identical": true,
+    "old": {
+      "error": null,
+      "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+      "bytes": 1165
+    },
+    "new": {
+      "error": null,
+      "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+      "bytes": 1165
+    }
+  }
+]
