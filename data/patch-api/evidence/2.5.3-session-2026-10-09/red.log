@@ -1,0 +1,75 @@
+test_config_is_not_native_or_unsupported_proof (__main__.SourceAccounting.test_config_is_not_native_or_unsupported_proof) ... FAIL
+test_every_literal_row_and_credit_rejected (__main__.SourceAccounting.test_every_literal_row_and_credit_rejected) ... FAIL
+test_every_row_required (__main__.SourceAccounting.test_every_row_required) ... FAIL
+test_exact_counts_and_native_limits (__main__.SourceAccounting.test_exact_counts_and_native_limits) ... FAIL
+test_foreign_successor_and_wrong_profile_rejected (__main__.SourceAccounting.test_foreign_successor_and_wrong_profile_rejected) ... FAIL
+test_identity_and_plaintext_tampering_rejected (__main__.SourceAccounting.test_identity_and_plaintext_tampering_rejected) ... FAIL
+test_inventory_headers_defaults_and_signatures_required (__main__.SourceAccounting.test_inventory_headers_defaults_and_signatures_required) ... FAIL
+
+======================================================================
+FAIL: test_config_is_not_native_or_unsupported_proof (__main__.SourceAccounting.test_config_is_not_native_or_unsupported_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py", line 15, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing Patch 2.5.3 source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing Patch 2.5.3 source ledger
+
+======================================================================
+FAIL: test_every_literal_row_and_credit_rejected (__main__.SourceAccounting.test_every_literal_row_and_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py", line 15, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing Patch 2.5.3 source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing Patch 2.5.3 source ledger
+
+======================================================================
+FAIL: test_every_row_required (__main__.SourceAccounting.test_every_row_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py", line 15, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing Patch 2.5.3 source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing Patch 2.5.3 source ledger
+
+======================================================================
+FAIL: test_exact_counts_and_native_limits (__main__.SourceAccounting.test_exact_counts_and_native_limits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py", line 15, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing Patch 2.5.3 source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing Patch 2.5.3 source ledger
+
+======================================================================
+FAIL: test_foreign_successor_and_wrong_profile_rejected (__main__.SourceAccounting.test_foreign_successor_and_wrong_profile_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py", line 15, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing Patch 2.5.3 source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing Patch 2.5.3 source ledger
+
+======================================================================
+FAIL: test_identity_and_plaintext_tampering_rejected (__main__.SourceAccounting.test_identity_and_plaintext_tampering_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py", line 15, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing Patch 2.5.3 source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing Patch 2.5.3 source ledger
+
+======================================================================
+FAIL: test_inventory_headers_defaults_and_signatures_required (__main__.SourceAccounting.test_inventory_headers_defaults_and_signatures_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p253-source/data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py", line 15, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing Patch 2.5.3 source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing Patch 2.5.3 source ledger
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=7)

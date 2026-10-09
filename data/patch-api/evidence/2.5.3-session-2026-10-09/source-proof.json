@@ -20,7 +20,24 @@
       "result": "Seven expected assertions: own source ledger absent. No module/import error.",
       "log": "red.log",
       "invalidated_by": "Implementation adds ledger; RED retained as development history."
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.5.3-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p253-source",
+      "phase": "GREEN",
+      "revision": "a2f9ca391",
+      "scope": "Exact source/register/ledger/configuration; 103 row omissions, 515 literal/credit mutations, 57 inventory/header omissions and every contract field mutation plus identity/history/profile controls.",
+      "exit": 0,
+      "tests": 7,
+      "log": "green.log",
+      "invalidated_by": null
     }
   ],
-  "excluded_gates": "No runtime/profile/shared classifier/shim/native probes; no broad/check/lint/profile/startup/full/final gates; no delegation/model CLIs/ops/push/merge/deploy."
+  "excluded_gates": "No runtime/profile/shared classifier/shim/native probes; no broad/check/lint/profile/startup/full/final gates; no delegation/model CLIs/ops/push/merge/deploy.",
+  "tested_revision": "a2f9ca391",
+  "later_changes": "Source/validator/tests/historical tools/configuration bytes unchanged; only append-only receipt/doc/seal additions follow. Archive freezes original seal map."
 }
