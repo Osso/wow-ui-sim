@@ -842,3 +842,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] proof | Retail 3.0.3 bare factory GREEN
 
 [Separate measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): reviewed test/observations committed before targeted GREEN at `7ac3902cf`, exit 0 3/3; all three sweep observations byte-identical to discovery. One published bindings CVar (`"1"`/`"1"`), two absent exact config/macros names; unknown nil/nil boundary passes. Fresh full streams/receipts/hashes, original 16 seals/eight historical source IDs unchanged. Warnings retained unsuppressed; no runtime changes or final/native/loaded-UI/sync acceptance. Later docs/evidence-only changes do not invalidate targeted proof. Main owns integration/native gates.
+
+## [2026-10-09] investigation | Patch 1.15.6 literal SOURCE accounting
+
+[Audit](investigations/patch-1-15-6-api-audit.md): frozen619994/6281951, TOC11506. Four nonblank rows/three metadata/one UNPROVEN, two unexpanded linked diffs, one navigation template/header; zero explicit APIs/prose/signatures. Configured Era/Anniversary11507 is not native proof. Pending same-Era1.15.7 inflight/1.15.8/1.15.9, no foreign supersession or runtime/model/native credit. Own RED eight expected failures; main integration/native/final gates separate.

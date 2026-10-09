@@ -2937,3 +2937,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Historical retail Patch 3.0.3 source accounting
 
 [Audit](investigations/patch-3-0-3-api-audit.md): frozen page560990/revision5407654, three literal CVar definitions and eight IDs; two metadata/six UNPROVEN publication/semantic records, zero signatures/models/runtime edits. Own source GREEN3/3 and original Git-free copied replay GREEN2/2; 16 seals/93 archived snapshots, 17 serialized tamper/restoration controls. Full101-page handoff registry through1.0.0 retained. [Integrated source proof](investigations/patch-3-0-3-api-audit.md#main-successor-integration--2026-10-09) at `1ba5b6673`: source 3/3, history 2/2, 16 seals pass; synchronization semantics UNPROVEN. Separate factory one-match/two-gap measurement still UNMERGED, not current proof. No Classic supersession or native/final acceptance.
+
+## [2026-10-09] investigation | Patch 1.15.6 literal SOURCE accounting
+
+[Audit](investigations/patch-1-15-6-api-audit.md): frozen619994/6281951, TOC11506. Four nonblank rows/three metadata/one UNPROVEN, two unexpanded linked diffs, one navigation template/header; zero explicit APIs/prose/signatures. Configured Era/Anniversary11507 is not native proof. Pending same-Era1.15.7 inflight/1.15.8/1.15.9, no foreign supersession or runtime/model/native credit. Own RED eight expected failures; main integration/native/final gates separate.
