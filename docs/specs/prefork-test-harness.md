@@ -60,6 +60,8 @@ The Linux prefork test harness provides a reusable custom test-runner contract f
 
 ### Exact startup fixtures (bounded Retail proof at `3de874658`, 2026-10-09)
 
+[Current-epoch migration placement](../../data/test-perf/prefork-migration-status-2026-10-09.md) reconciles all 186 historical MIGRATE/ADAPT names. The original migration plan's four integration statuses and remaining counts are historical, superseded by the exact-fixture placement below; its classifications, timings, source traces and deferrals remain unchanged. Placement coverage does not close acceptance gates.
+
 - [x] Migrate the two chat editbox cases, cast-bar edit-mode case, and Mainline spellbook keybinding case using their original fixture constructors and unchanged assertions, not completed Game preload or post-fork state normalization.
 - [x] Preserve manual chat startup without `UPDATE_CHAT_WINDOWS`, initial SAY/white behavior, original cast-bar startup and anchor transitions, and profile-specific spellbook loading and key dispatch.
 - [x] List each stable case name exactly once in the existing `prefork_full_ui` target and exclude migrated Retail cases from ordinary integration.
