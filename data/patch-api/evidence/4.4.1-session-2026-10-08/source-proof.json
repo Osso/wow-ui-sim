@@ -1,0 +1,155 @@
+{
+  "schema": "patch-source-proof/v1",
+  "patch": "4.4.1",
+  "verified": "2026-10-08",
+  "tested_revision": "8c93152af371ed42406ef865958abbc9a4e5ed49",
+  "source_commit": "5960d3b73c48895dc216c4ecf1afccc8b51aa074",
+  "status": "PASS",
+  "source_identity": {
+    "pageid": 608915,
+    "revid": 6234252,
+    "toc": 40401
+  },
+  "proof_matrix": {
+    "metadata_only_ids": [
+      "source-context-001",
+      "source-context-003",
+      "source-context-004",
+      "source-context-005",
+      "source-context-007",
+      "source-context-008",
+      "source-context-009",
+      "source-context-010",
+      "source-context-011",
+      "source-context-012",
+      "source-context-013",
+      "source-context-014",
+      "source-context-015",
+      "source-context-017",
+      "source-context-018",
+      "source-context-020",
+      "source-context-021"
+    ],
+    "occurrences": [
+      {
+        "source_id": "global-api-added-016",
+        "identity": "C_SpecializationInfo.GetNumSpecializationsForClassID",
+        "direction": "added",
+        "runtime_status": "UNPROVEN"
+      },
+      {
+        "source_id": "global-api-removed-019",
+        "identity": "GetNumSpecializationsForClassID",
+        "direction": "removed",
+        "runtime_status": "UNPROVEN"
+      }
+    ],
+    "direction": "4.4.0 -> 4.4.1",
+    "placeholder_counts": [
+      "x",
+      "x",
+      "x",
+      "x"
+    ],
+    "date_literal": "xxx xx 2024"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p441-page/tools/extract_patch_non_inventory.py",
+        "--patch",
+        "4.4.1",
+        "--text-only",
+        "--canonical-patch-navigation",
+        "--check"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p441-page",
+      "revision": "8c93152af371ed42406ef865958abbc9a4e5ed49",
+      "exit": 0,
+      "result": {
+        "patch": "4.4.1",
+        "rows": 5,
+        "statuses": {
+          "metadata-only": 5
+        }
+      }
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p441-page/tools/check_patch_validators.py",
+        "HEAD"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p441-page",
+      "revision": "8c93152af371ed42406ef865958abbc9a4e5ed49",
+      "exit": 0,
+      "result": {
+        "clean": {
+          "failed": 0,
+          "passed": 60
+        },
+        "later_audit": {
+          "failed": 0,
+          "passed": 61
+        }
+      }
+    }
+  ],
+  "source_tests": {
+    "tests": 4,
+    "negative_cases": 19,
+    "clean_exit": 0,
+    "later_exit": 0,
+    "evidence": "validator-gate.json"
+  },
+  "gate": {
+    "path": "validator-gate.json",
+    "sha256": "0bb664d9fc34cf56e51f815d836ed5eb932e2ee16d6633ccd01ebef17c3f786b",
+    "bytes": 112738,
+    "clean": {
+      "failed": 0,
+      "passed": 60
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 61
+    },
+    "synthetic_later_revision": "e5932ade140441f3b99c2f83e6a4b7f7ce9a6d64",
+    "oversized_evidence": {
+      "clean": [],
+      "later_audit": []
+    }
+  },
+  "shared_inputs": {
+    "revision": "8c93152af371ed42406ef865958abbc9a4e5ed49",
+    "git_blobs": {
+      "tools/check_patch_validators.py": "d841930ec4d15c47e65627fc56a8f9447b588584",
+      "tools/extract_patch_non_inventory.py": "6fcc1724827c7588b91d23e3c815324d86a33b97",
+      "src/client_profile.rs": "bc86dcc5818589705c08ed11b596c8ba3b2f3cf2"
+    }
+  },
+  "preservation": {
+    "source_pin_response_unchanged": true,
+    "wiki_index_log_prior_bytes_preserved": true,
+    "runtime_shared_files_changed": [],
+    "changed_files": [
+      "data/patch-api/evidence/4.4.1-session-2026-10-08/validate.py",
+      "data/patch-api/sources/4.4.1-api-changes.txt",
+      "data/patch-api/sources/4.4.1-page-coverage.json",
+      "docs/specs/patch-4-4-1-source-accounting.md",
+      "docs/wiki/index.md",
+      "docs/wiki/investigations/patch-4-4-1-api-audit.md",
+      "docs/wiki/log.md"
+    ]
+  },
+  "unsupported_runtime_limits": [
+    "No supported Cataclysm Classic runtime profile.",
+    "Both Cata addition publication/behavior and removal absence remain UNPROVEN.",
+    "No signatures, outputs, events, security, cached Cata UI load, behavioral or native-client parity proof.",
+    "No Mists/retail stand-in, live retail retirement, runtime/shared changes, Cargo build, runtime register or retail supersession register."
+  ],
+  "proof_scope_note": "Receipt/documentation-only commits after tested_revision do not change the verified source, ledger, validator, extractor or gate scope. No repeat broad gate is claimed."
+}

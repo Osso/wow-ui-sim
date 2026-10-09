@@ -24,7 +24,7 @@ Account for Warcraft Wiki page 608915, revision 6234252, TOC 40401 at pinned sou
 
 ## Tests asserting this spec
 
-`python3 -B data/patch-api/evidence/4.4.1-session-2026-10-08/validate.py`: four tests, positive external serialized contracts and 19 negative cases. `python3 -B tools/extract_patch_non_inventory.py --patch 4.4.1 --text-only --canonical-patch-navigation --check`: plaintext reproduction. `python3 -B tools/check_patch_validators.py HEAD`: clean and synthetic later-audit portability gate. Final committed receipt records commands/revisions/results; none establishes runtime compatibility.
+`python3 -B data/patch-api/evidence/4.4.1-session-2026-10-08/validate.py`: four tests, positive external serialized contracts and 19 negative cases. `python3 -B tools/extract_patch_non_inventory.py --patch 4.4.1 --text-only --canonical-patch-navigation --check`: plaintext reproduction. `python3 -B tools/check_patch_validators.py HEAD`: clean and synthetic later-audit portability gate. [Final receipt](../../data/patch-api/evidence/4.4.1-session-2026-10-08/source-proof.json) records commands/revisions/results: four own tests, 19 negative cases, extractor exit 0, clean 60/60 and later 61/61 at `8c93152af`. None establishes runtime compatibility.
 
 ## Known gaps (current cycle)
 
