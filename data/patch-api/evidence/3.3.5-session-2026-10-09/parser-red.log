@@ -1,0 +1,48 @@
+F
+======================================================================
+FAIL: test_section_lists_keep_signatures_and_changed_prose_without_expanding_links (tools.test_patch_3_3_5_register.LegacySectionListsTests.test_section_lists_keep_signatures_and_changed_prose_without_expanding_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p335-source/tools/test_patch_3_3_5_register.py", line 36, in test_section_lists_keep_signatures_and_changed_prose_without_expanding_links
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : usage: gen_patch_wikitext_register.py [-h] [--inventory-only]
+                                      [--expand-shared-changes]
+                                      [--separate-inline-structures]
+                                      [--capture-span-defaults]
+                                      [--skip-plain-scripts-label]
+                                      [--simple-api-list]
+                                      [--legacy-column-headers]
+                                      [--diff-api-additions]
+                                      [--legacy-inventory-labels]
+                                      [--legacy-api-tables]
+                                      [--cataclysm-change-bullets]
+                                      [--legacy-api-bullets]
+                                      [--legacy-api-renames] [--bfa-prepatch]
+                                      [--prose-api-links]
+                                      [--legacy-summary-tables]
+                                      [--top-level-api-bullets]
+                                      [--legacy-widget-summaries]
+                                      [--prose-namespace-migrations]
+                                      [--legacy-widget-cvar-bullets]
+                                      [--legion-prepatch]
+                                      [--indented-api-lists]
+                                      [--colon-api-bullets]
+                                      [--warlords-prepatch]
+                                      [--warlords-diff WARLORDS_DIFF]
+                                      [--combat-restriction-bullets]
+                                      [--client-line {retail,mists-classic,classic-era}]
+                                      [--mists-automated-diff]
+                                      [--mists-prepatch] [--mists-summary]
+                                      [--mists-diff MISTS_DIFF]
+                                      [--mists-widget-handlers]
+                                      [--mists-bare-widget-handlers]
+                                      [--mists-code-removals]
+                                      patch path revid out
+gen_patch_wikitext_register.py: error: unrecognized arguments: --legacy-section-lists
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.086s
+
+FAILED (failures=1)

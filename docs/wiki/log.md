@@ -732,5 +732,5 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 
 ## [2026-10-09] investigation | Historical retail Patch 3.3.5 API audit
 
-[Audit](investigations/patch-3-3-5-api-audit.md): local source identity/hashes validated; opt-in list parser, 124 inventory, 69 signatures and 130 extract rows retained. No Classic supersession, runtime changes or native parity credit. Targeted accounting/proof follows.
+[Audit](investigations/patch-3-3-5-api-audit.md): local source identity/hashes validated; opt-in list parser, 124 inventory, 69 signatures and 130 extract rows retained. No Classic supersession, runtime changes or native parity credit. Accounting now includes the return-only BNFeaturesEnabled fragment: 324 IDs, 80 matches/44 publication gaps, one inspect-throttle semantic gap and 70 signature limits. Full removed-name scans show no consumers; zero model/retirement changes. Own GREEN/negative/replay follows.
 

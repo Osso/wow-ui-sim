@@ -1,0 +1,66 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools/test_patch_3_3_5_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p335-source",
+      "revision": "9ff195d19564bd93fe34546ae97d4ce5660906d2",
+      "scope": "new parser fixture RED, missing opt-in flag",
+      "exit": 1,
+      "artifact": "parser-red.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools/test_patch_3_3_5_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p335-source",
+      "revision": "1658d0e36de1bcfd037e8ac61c494a371cedf5d6",
+      "scope": "new parser fixture GREEN and default byte compatibility",
+      "exit": 0,
+      "artifact": "parser-green.log"
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_3_3_5_publication_sweep",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p335-source",
+      "revision": "f9b98435d0673b36a0472ee78db38998db2740e3",
+      "scope": "own retail publication discovery, expected RED with empty known gaps",
+      "exit": 1,
+      "artifact": "own-sweep-red.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p335-source/target",
+        "P335_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p335-source/data/patch-api/evidence/3.3.5-session-2026-10-09/own-sweep-red-results.json"
+      }
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools/test_patch_3_3_5_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p335-source",
+      "revision": "f9b98435d0673b36a0472ee78db38998db2740e3",
+      "scope": "own portability fixture RED, missing validator",
+      "exit": 1,
+      "artifact": "validator-red.log"
+    }
+  ]
+}

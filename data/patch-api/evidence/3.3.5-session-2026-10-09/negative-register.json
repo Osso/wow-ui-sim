@@ -1,0 +1,1107 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "3.3.5",
+  "source": {
+    "path": "data/patch-api/sources/3.3.5-api-changes.wikitext",
+    "revid": 247986,
+    "sha256": "be6929e3c4d56eab671d5b23149f4a6cca0e625d06c656e6ac3d0cd031c60eea"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-BNAcceptFriendInvite-4",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNAcceptFriendInvite",
+      "annotation": ": [[API BNAcceptFriendInvite|BNAcceptFriendInvite]](inviteId)",
+      "wikitext_line": 4,
+      "signature": "(inviteId)"
+    },
+    {
+      "id": "wt-global-api-BNConnected-5",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNConnected",
+      "annotation": ": isConnected = [[API BNConnected|BNConnected]]()",
+      "wikitext_line": 5,
+      "signature": "()",
+      "returns": "isConnected"
+    },
+    {
+      "id": "wt-global-api-BNCreateConversation-6",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNCreateConversation",
+      "annotation": ": [[API BNCreateConversation|BNCreateConversation]](player1, player2)",
+      "wikitext_line": 6,
+      "signature": "(player1, player2)"
+    },
+    {
+      "id": "wt-global-api-BNDeclineFriendInvite-7",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNDeclineFriendInvite",
+      "annotation": ": [[API BNDeclineFriendInvite|BNDeclineFriendInvite]](inviteId)",
+      "wikitext_line": 7,
+      "signature": "(inviteId)"
+    },
+    {
+      "id": "p335-negative-control",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P335DefinitelyMissingGlobal",
+      "annotation": ": isEnabled = [[API BNFeaturesEnabled|BNFeaturesEnabled]]",
+      "wikitext_line": 8,
+      "returns": "isEnabled"
+    },
+    {
+      "id": "wt-global-api-BNFeaturesEnabledAndConnected-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNFeaturesEnabledAndConnected",
+      "annotation": ": isEnabledAndConnected = [[API BNFeaturesEnabledAndConnected|BNFeaturesEnabledAndConnected]]()",
+      "wikitext_line": 9,
+      "signature": "()",
+      "returns": "isEnabledAndConnected"
+    },
+    {
+      "id": "wt-global-api-BNGetBlockedInfo-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetBlockedInfo",
+      "annotation": ": presenceId, blockName = [[API BNGetBlockedInfo|BNGetBlockedInfo]](blockId)",
+      "wikitext_line": 10,
+      "signature": "(blockId)",
+      "returns": "presenceId, blockName"
+    },
+    {
+      "id": "wt-global-api-BNGetBlockedToonInfo-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetBlockedToonInfo",
+      "annotation": ": blockID, blockName = [[API BNGetBlockedToonInfo|BNGetBlockedToonInfo]](blockId or index)",
+      "wikitext_line": 11,
+      "signature": "(blockId or index)",
+      "returns": "blockID, blockName"
+    },
+    {
+      "id": "wt-global-api-BNGetConversationInfo-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetConversationInfo",
+      "annotation": ": conversationType = [[API BNGetConversationInfo|BNGetConversationInfo]](conversationId)",
+      "wikitext_line": 12,
+      "signature": "(conversationId)",
+      "returns": "conversationType"
+    },
+    {
+      "id": "wt-global-api-BNGetConversationMemberInfo-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetConversationMemberInfo",
+      "annotation": ": accountId, toonId, name = [[API BNGetConversationMemberInfo|BNGetConversationMemberInfo]](conversationId, participantId)",
+      "wikitext_line": 13,
+      "signature": "(conversationId, participantId)",
+      "returns": "accountId, toonId, name"
+    },
+    {
+      "id": "wt-global-api-BNGetCustomMessageTable-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetCustomMessageTable",
+      "annotation": ": BNetBroadcasts, numOnlineBroadcasts, numOfflineBroadcasts = [[API BNGetCustomMessageTable|BNGetCustomMessageTable]]([BNetBroadcasts])",
+      "wikitext_line": 14,
+      "signature": "([BNetBroadcasts])",
+      "returns": "BNetBroadcasts, numOnlineBroadcasts, numOfflineBroadcasts"
+    },
+    {
+      "id": "wt-global-api-BNGetFOFInfo-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetFOFInfo",
+      "annotation": ": friendID, givenName, surname, isMutual = [[API BNGetFOFInfo|BNGetFOFInfo]](presenceId, showMutual, showPotential, friendsIndex)",
+      "wikitext_line": 15,
+      "signature": "(presenceId, showMutual, showPotential, friendsIndex)",
+      "returns": "friendID, givenName, surname, isMutual"
+    },
+    {
+      "id": "wt-global-api-BNGetFriendInfo-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetFriendInfo",
+      "annotation": ": presenceID, givenName, surname = [[API BNGetFriendInfo|BNGetFriendInfo]](friendId)",
+      "wikitext_line": 16,
+      "signature": "(friendId)",
+      "returns": "presenceID, givenName, surname"
+    },
+    {
+      "id": "wt-global-api-BNGetFriendInfoByID-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetFriendInfoByID",
+      "annotation": ": presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText = [[API BNGetFriendInfoByID|BNGetFriendInfoByID]](presenceID)",
+      "wikitext_line": 17,
+      "signature": "(presenceID)",
+      "returns": "presenceID, givenName, surname, toonName, toonID, client, isOnline, lastOnline, isAFK, isDND, messageText, noteText"
+    },
+    {
+      "id": "wt-global-api-BNGetFriendInviteInfo-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetFriendInviteInfo",
+      "annotation": ": inviteId, name, surname, message, timeSent, days = [[API BNGetFriendInviteInfo|BNGetFriendInviteInfo]](offset);",
+      "wikitext_line": 18,
+      "signature": "(offset)",
+      "returns": "inviteId, name, surname, message, timeSent, days"
+    },
+    {
+      "id": "wt-global-api-BNGetFriendToonInfo-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetFriendToonInfo",
+      "annotation": ": hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText = [[API BNGetFriendToonInfo|BNGetFriendToonInfo]](friendId, toonIdx)",
+      "wikitext_line": 19,
+      "signature": "(friendId, toonIdx)",
+      "returns": "hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText"
+    },
+    {
+      "id": "wt-global-api-BNGetInfo-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetInfo",
+      "annotation": ": presenceID, toonID, broadcastText, bnetAFK, bnetDND = [[API BNGetInfo|BNGetInfo]]()",
+      "wikitext_line": 20,
+      "signature": "()",
+      "returns": "presenceID, toonID, broadcastText, bnetAFK, bnetDND"
+    },
+    {
+      "id": "wt-global-api-BNGetMatureLanguageFilter-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetMatureLanguageFilter",
+      "annotation": ": isEnabled = [[API BNGetMatureLanguageFilter|BNGetMatureLanguageFilter]]()",
+      "wikitext_line": 21,
+      "signature": "()",
+      "returns": "isEnabled"
+    },
+    {
+      "id": "wt-global-api-BNGetMaxPlayersInConversation-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetMaxPlayersInConversation",
+      "annotation": ": maxPlayers = [[API BNGetMaxPlayersInConversation|BNGetMaxPlayersInConversation]]();",
+      "wikitext_line": 22,
+      "signature": "()",
+      "returns": "maxPlayers"
+    },
+    {
+      "id": "wt-global-api-BNGetNumBlocked-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumBlocked",
+      "annotation": ": numBlocks = [[API BNGetNumBlocked|BNGetNumBlocked]]();",
+      "wikitext_line": 23,
+      "signature": "()",
+      "returns": "numBlocks"
+    },
+    {
+      "id": "wt-global-api-BNGetNumBlockedToons-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumBlockedToons",
+      "annotation": ": numToonBlocks = [[API BNGetNumBlockedToons|BNGetNumBlockedToons]]()",
+      "wikitext_line": 24,
+      "signature": "()",
+      "returns": "numToonBlocks"
+    },
+    {
+      "id": "wt-global-api-BNGetNumConversationMembers-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumConversationMembers",
+      "annotation": ": numMembers = [[API BNGetNumConversationMembers|BNGetNumConversationMembers]](conversationId)",
+      "wikitext_line": 25,
+      "signature": "(conversationId)",
+      "returns": "numMembers"
+    },
+    {
+      "id": "wt-global-api-BNGetNumFOF-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumFOF",
+      "annotation": ": numMutual, numPotential = [[API BNGetNumFOF|BNGetNumFOF]](presenceId)",
+      "wikitext_line": 26,
+      "signature": "(presenceId)",
+      "returns": "numMutual, numPotential"
+    },
+    {
+      "id": "wt-global-api-BNGetNumFriendInvites-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumFriendInvites",
+      "annotation": ": numPendingInvites = [[API BNGetNumFriendInvites|BNGetNumFriendInvites]]();",
+      "wikitext_line": 27,
+      "signature": "()",
+      "returns": "numPendingInvites"
+    },
+    {
+      "id": "wt-global-api-BNGetNumFriendToons-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumFriendToons",
+      "annotation": ": numToons = [[API BNGetNumFriendToons|BNGetNumFriendToons]](friendId)",
+      "wikitext_line": 28,
+      "signature": "(friendId)",
+      "returns": "numToons"
+    },
+    {
+      "id": "wt-global-api-BNGetNumFriends-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetNumFriends",
+      "annotation": ": numTotal, numOnline = [[API BNGetNumFriends|BNGetNumFriends]]();",
+      "wikitext_line": 29,
+      "signature": "()",
+      "returns": "numTotal, numOnline"
+    },
+    {
+      "id": "wt-global-api-BNGetSelectedFriend-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetSelectedFriend",
+      "annotation": ": friendId = [[API BNGetSelectedFriend|BNGetSelectedFriend]]();",
+      "wikitext_line": 30,
+      "signature": "()",
+      "returns": "friendId"
+    },
+    {
+      "id": "wt-global-api-BNGetSelectedToonBlock-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetSelectedToonBlock",
+      "annotation": ": blockIndex = [[API BNGetSelectedToonBlock|BNGetSelectedToonBlock]]();",
+      "wikitext_line": 31,
+      "signature": "()",
+      "returns": "blockIndex"
+    },
+    {
+      "id": "wt-global-api-BNGetToonInfo-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNGetToonInfo",
+      "annotation": ": hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText, broadcastText, broadcastTime, ? = [[API BNGetToonInfo|BNGetToonInfo]](toonId);",
+      "wikitext_line": 32,
+      "signature": "(toonId)",
+      "returns": "hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level, gameText, broadcastText, broadcastTime, ?"
+    },
+    {
+      "id": "wt-global-api-BNInviteToConversation-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNInviteToConversation",
+      "annotation": ": [[API BNInviteToConversation|BNInviteToConversation]](conversationId, player)",
+      "wikitext_line": 33,
+      "signature": "(conversationId, player)"
+    },
+    {
+      "id": "wt-global-api-BNIsBlocked-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNIsBlocked",
+      "annotation": ": [[API BNIsBlocked|BNIsBlocked]]",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-BNIsFriend-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNIsFriend",
+      "annotation": ": isFriend = [[API BNIsFriend|BNIsFriend]](presenceId)",
+      "wikitext_line": 35,
+      "signature": "(presenceId)",
+      "returns": "isFriend"
+    },
+    {
+      "id": "wt-global-api-BNIsSelf-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNIsSelf",
+      "annotation": ": isSelf = [[API BNIsSelf|BNIsSelf]](presenceId)",
+      "wikitext_line": 36,
+      "signature": "(presenceId)",
+      "returns": "isSelf"
+    },
+    {
+      "id": "wt-global-api-BNIsToonBlocked-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNIsToonBlocked",
+      "annotation": ": isBlocked = [[API BNIsToonBlocked|BNIsToonBlocked]](presenceId)",
+      "wikitext_line": 37,
+      "signature": "(presenceId)",
+      "returns": "isBlocked"
+    },
+    {
+      "id": "wt-global-api-BNLeaveConversation-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNLeaveConversation",
+      "annotation": ": [[API BNLeaveConversation|BNLeaveConversation]](conversationId)",
+      "wikitext_line": 38,
+      "signature": "(conversationId)"
+    },
+    {
+      "id": "wt-global-api-BNListConversation-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNListConversation",
+      "annotation": ": [[API BNListConversation|BNListConversation]](conversationId)",
+      "wikitext_line": 39,
+      "signature": "(conversationId)"
+    },
+    {
+      "id": "wt-global-api-BNRemoveFriend-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNRemoveFriend",
+      "annotation": ": [[API BNRemoveFriend|BNRemoveFriend]](presenceId)",
+      "wikitext_line": 40,
+      "signature": "(presenceId)"
+    },
+    {
+      "id": "wt-global-api-BNReportFriendInvite-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNReportFriendInvite",
+      "annotation": ": [[API BNReportFriendInvite|BNReportFriendInvite]](inviteId)",
+      "wikitext_line": 41,
+      "signature": "(inviteId)"
+    },
+    {
+      "id": "wt-global-api-BNReportPlayer-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNReportPlayer",
+      "annotation": ": [[API BNReportPlayer|BNReportPlayer]](presenceId, reportType, comments)",
+      "wikitext_line": 42,
+      "signature": "(presenceId, reportType, comments)"
+    },
+    {
+      "id": "wt-global-api-BNRequestFOFInfo-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNRequestFOFInfo",
+      "annotation": ": [[API BNRequestFOFInfo|BNRequestFOFInfo]](presenceId)",
+      "wikitext_line": 43,
+      "signature": "(presenceId)"
+    },
+    {
+      "id": "wt-global-api-BNSendConversationMessage-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSendConversationMessage",
+      "annotation": ": [[API BNSendConversationMessage|BNSendConversationMessage]](target, text)",
+      "wikitext_line": 44,
+      "signature": "(target, text)"
+    },
+    {
+      "id": "wt-global-api-BNSendFriendInvite-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSendFriendInvite",
+      "annotation": ": [[API BNSendFriendInvite|BNSendFriendInvite]](name, note)",
+      "wikitext_line": 45,
+      "signature": "(name, note)"
+    },
+    {
+      "id": "wt-global-api-BNSendFriendInviteByID-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSendFriendInviteByID",
+      "annotation": ": [[API BNSendFriendInviteByID|BNSendFriendInviteByID]](presenceId, note)",
+      "wikitext_line": 46,
+      "signature": "(presenceId, note)"
+    },
+    {
+      "id": "wt-global-api-BNSendWhisper-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSendWhisper",
+      "annotation": ": [[API BNSendWhisper|BNSendWhisper]](presenceId, text)",
+      "wikitext_line": 47,
+      "signature": "(presenceId, text)"
+    },
+    {
+      "id": "wt-global-api-BNSetAFK-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetAFK",
+      "annotation": ": [[API BNSetAFK|BNSetAFK]](isAFK)",
+      "wikitext_line": 48,
+      "signature": "(isAFK)"
+    },
+    {
+      "id": "wt-global-api-BNSetBlocked-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetBlocked",
+      "annotation": ": [[API BNSetBlocked|BNSetBlocked]](presenceId, isBlocked)",
+      "wikitext_line": 49,
+      "signature": "(presenceId, isBlocked)"
+    },
+    {
+      "id": "wt-global-api-BNSetCustomMessage-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetCustomMessage",
+      "annotation": ": [[API BNSetCustomMessage|BNSetCustomMessage]](text)",
+      "wikitext_line": 50,
+      "signature": "(text)"
+    },
+    {
+      "id": "wt-global-api-BNSetDND-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetDND",
+      "annotation": ": [[API BNSetDND|BNSetDND]](isDND)",
+      "wikitext_line": 51,
+      "signature": "(isDND)"
+    },
+    {
+      "id": "wt-global-api-BNSetFocus-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetFocus",
+      "annotation": ": [[API BNSetFocus|BNSetFocus]]",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-BNSetFriendNote-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetFriendNote",
+      "annotation": ": [[API BNSetFriendNote|BNSetFriendNote]](presenceId, note)",
+      "wikitext_line": 53,
+      "signature": "(presenceId, note)"
+    },
+    {
+      "id": "wt-global-api-BNSetMatureLanguageFilter-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetMatureLanguageFilter",
+      "annotation": ": [[API BNSetMatureLanguageFilter|BNSetMatureLanguageFilter]](enable)",
+      "wikitext_line": 54,
+      "signature": "(enable)"
+    },
+    {
+      "id": "wt-global-api-BNSetSelectedFriend-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetSelectedFriend",
+      "annotation": ": [[API BNSetSelectedFriend|BNSetSelectedFriend]](id)",
+      "wikitext_line": 55,
+      "signature": "(id)"
+    },
+    {
+      "id": "wt-global-api-BNSetSelectedToonBlock-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetSelectedToonBlock",
+      "annotation": ": [[API BNSetSelectedToonBlock|BNSetSelectedToonBlock]](id)",
+      "wikitext_line": 56,
+      "signature": "(id)"
+    },
+    {
+      "id": "wt-global-api-BNSetToonBlocked-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSetToonBlocked",
+      "annotation": ": [[API BNSetToonBlocked|BNSetToonBlocked]](presenceId, block)",
+      "wikitext_line": 57,
+      "signature": "(presenceId, block)"
+    },
+    {
+      "id": "wt-global-api-CommentatorGetSkirmishMode-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorGetSkirmishMode",
+      "annotation": ": [[API CommentatorGetSkirmishMode|CommentatorGetSkirmishMode]]",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-CommentatorGetSkirmishQueueCount-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorGetSkirmishQueueCount",
+      "annotation": ": [[API CommentatorGetSkirmishQueueCount|CommentatorGetSkirmishQueueCount]]",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-CommentatorGetSkirmishQueuePlayerInfo-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorGetSkirmishQueuePlayerInfo",
+      "annotation": ": [[API CommentatorGetSkirmishQueuePlayerInfo|CommentatorGetSkirmishQueuePlayerInfo]]",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-CommentatorRequestSkirmishMode-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorRequestSkirmishMode",
+      "annotation": ": [[API CommentatorRequestSkirmishMode|CommentatorRequestSkirmishMode]]",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-CommentatorRequestSkirmishQueueData-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorRequestSkirmishQueueData",
+      "annotation": ": [[API CommentatorRequestSkirmishQueueData|CommentatorRequestSkirmishQueueData]]",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-CommentatorSetSkirmishMatchmakingMode-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorSetSkirmishMatchmakingMode",
+      "annotation": ": [[API CommentatorSetSkirmishMatchmakingMode|CommentatorSetSkirmishMatchmakingMode]]",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-CommentatorStartSkirmishMatch-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CommentatorStartSkirmishMatch",
+      "annotation": ": [[API CommentatorStartSkirmishMatch|CommentatorStartSkirmishMatch]]",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-GetAutoCompletePresenceID-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAutoCompletePresenceID",
+      "annotation": ": [[API GetAutoCompletePresenceID|GetAutoCompletePresenceID]](name)",
+      "wikitext_line": 65,
+      "signature": "(name)"
+    },
+    {
+      "id": "wt-global-api-GetChatWindowSavedDimensions-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetChatWindowSavedDimensions",
+      "annotation": ": width, height = [[API GetChatWindowSavedDimensions|GetChatWindowSavedDimensions]](chatFrameId)",
+      "wikitext_line": 66,
+      "signature": "(chatFrameId)",
+      "returns": "width, height"
+    },
+    {
+      "id": "wt-global-api-GetChatWindowSavedPosition-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetChatWindowSavedPosition",
+      "annotation": ": point, xOfs, yOfs = [[API GetChatWindowSavedPosition|GetChatWindowSavedPosition]](chatFrameId)",
+      "wikitext_line": 67,
+      "signature": "(chatFrameId)",
+      "returns": "point, xOfs, yOfs"
+    },
+    {
+      "id": "wt-global-api-IsBNLogin-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsBNLogin",
+      "annotation": ": [[API IsBNLogin|IsBNLogin]]",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-SendSystemMessage-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SendSystemMessage",
+      "annotation": ": [[API SendSystemMessage|SendSystemMessage]](message)",
+      "wikitext_line": 69,
+      "signature": "(message)"
+    },
+    {
+      "id": "wt-global-api-SetChatWindowSavedDimensions-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetChatWindowSavedDimensions",
+      "annotation": ": [[API SetChatWindowSavedDimensions|SetChatWindowSavedDimensions]](chatFrameId, width, height)",
+      "wikitext_line": 70,
+      "signature": "(chatFrameId, width, height)"
+    },
+    {
+      "id": "wt-global-api-SetChatWindowSavedPosition-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetChatWindowSavedPosition",
+      "annotation": ": [[API SetChatWindowSavedPosition|SetChatWindowSavedPosition]](chatFrameId, point, xOfs, yOfs)",
+      "wikitext_line": 71,
+      "signature": "(chatFrameId, point, xOfs, yOfs)"
+    },
+    {
+      "id": "wt-framexml-BNGetSelectedBlock-74",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "BNGetSelectedBlock",
+      "annotation": ": ignoreId = [[API BNGetSelectedBlock|BNGetSelectedBlock]]()",
+      "wikitext_line": 74,
+      "signature": "()",
+      "returns": "ignoreId"
+    },
+    {
+      "id": "wt-framexml-BNSetSelectedBlock-75",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "BNSetSelectedBlock",
+      "annotation": ": [[API BNSetSelectedBlock|BNSetSelectedBlock]](id)",
+      "wikitext_line": 75,
+      "signature": "(id)"
+    },
+    {
+      "id": "wt-framexml-CanCooperateWithToon-76",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "CanCooperateWithToon",
+      "annotation": ": [[API CanCooperateWithToon|CanCooperateWithToon]](toonId)",
+      "wikitext_line": 76,
+      "signature": "(toonId)"
+    },
+    {
+      "id": "wt-framexml-SynchronizeBNetStatus-77",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "SynchronizeBNetStatus",
+      "annotation": ": [[API SynchronizeBNetStatus|SynchronizeBNetStatus]]()",
+      "wikitext_line": 77,
+      "signature": "()"
+    },
+    {
+      "id": "wt-framexml-BetterDate-78",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "BetterDate",
+      "annotation": ": [[API BetterDate|BetterDate]](format, time)",
+      "wikitext_line": 78,
+      "signature": "(format, time)"
+    },
+    {
+      "id": "wt-framexml-GetFixedLink-79",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "GetFixedLink",
+      "annotation": ": link = [[API GetFixedLink|GetFixedLink]](text)",
+      "wikitext_line": 79,
+      "signature": "(text)",
+      "returns": "link"
+    },
+    {
+      "id": "wt-events-BN_BLOCK_LIST_UPDATED-83",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_BLOCK_LIST_UPDATED",
+      "annotation": ": {{api|BN_BLOCK_LIST_UPDATED|t=e}}",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_CLOSED-84",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_CLOSED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_CLOSED|t=e}}",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_CREATE_FAILED-85",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_CREATE_FAILED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_CREATE_FAILED|t=e}}",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_CREATE_SUCCEEDED-86",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_CREATE_SUCCEEDED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_CREATE_SUCCEEDED|t=e}}",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_INVITE_FAILED-87",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_INVITE_FAILED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_INVITE_FAILED|t=e}}",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_INVITE_SUCCEEDED-88",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_INVITE_SUCCEEDED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_INVITE_SUCCEEDED|t=e}}",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_JOINED-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_JOINED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_JOINED|t=e}}",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_LEFT-90",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_LEFT",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_LEFT|t=e}}",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_MEMBER_JOINED-91",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_MEMBER_JOINED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_MEMBER_JOINED|t=e}}",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_MEMBER_LEFT-92",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_MEMBER_LEFT",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_MEMBER_LEFT|t=e}}",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_MEMBER_UPDATED-93",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_MEMBER_UPDATED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_MEMBER_UPDATED|t=e}}",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_MESSAGE_BLOCKED-94",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_MESSAGE_BLOCKED",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_MESSAGE_BLOCKED|t=e}}",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-events-BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE-95",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE",
+      "annotation": ": {{api|BN_CHAT_CHANNEL_MESSAGE_UNDELIVERABLE|t=e}}",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-events-BN_CHAT_WHISPER_UNDELIVERABLE-96",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_WHISPER_UNDELIVERABLE",
+      "annotation": ": {{api|BN_CHAT_WHISPER_UNDELIVERABLE|t=e}}",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-events-BN_CONNECTED-97",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CONNECTED",
+      "annotation": ": {{api|BN_CONNECTED|t=e}}",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-events-BN_CUSTOM_MESSAGE_CHANGED-98",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CUSTOM_MESSAGE_CHANGED",
+      "annotation": ": {{api|BN_CUSTOM_MESSAGE_CHANGED|t=e}}(presenceId)",
+      "wikitext_line": 98,
+      "signature": "(presenceId)"
+    },
+    {
+      "id": "wt-events-BN_CUSTOM_MESSAGE_LOADED-99",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CUSTOM_MESSAGE_LOADED",
+      "annotation": ": {{api|BN_CUSTOM_MESSAGE_LOADED|t=e}}",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-events-BN_DISCONNECTED-100",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_DISCONNECTED",
+      "annotation": ": {{api|BN_DISCONNECTED|t=e}}",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-events-BN_FRIEND_ACCOUNT_OFFLINE-101",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_ACCOUNT_OFFLINE",
+      "annotation": ": {{api|BN_FRIEND_ACCOUNT_OFFLINE|t=e}}(presenceId)",
+      "wikitext_line": 101,
+      "signature": "(presenceId)"
+    },
+    {
+      "id": "wt-events-BN_FRIEND_ACCOUNT_ONLINE-102",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_ACCOUNT_ONLINE",
+      "annotation": ": {{api|BN_FRIEND_ACCOUNT_ONLINE|t=e}}(presenceId)",
+      "wikitext_line": 102,
+      "signature": "(presenceId)"
+    },
+    {
+      "id": "wt-events-BN_FRIEND_INFO_CHANGED-103",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_INFO_CHANGED",
+      "annotation": ": {{api|BN_FRIEND_INFO_CHANGED|t=e}}(presenceId)",
+      "wikitext_line": 103,
+      "signature": "(presenceId)"
+    },
+    {
+      "id": "wt-events-BN_FRIEND_INVITE_ADDED-104",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_INVITE_ADDED",
+      "annotation": ": {{api|BN_FRIEND_INVITE_ADDED|t=e}}",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-events-BN_FRIEND_INVITE_LIST_INITIALIZED-105",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_INVITE_LIST_INITIALIZED",
+      "annotation": ": {{api|BN_FRIEND_INVITE_LIST_INITIALIZED|t=e}}",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-events-BN_FRIEND_INVITE_REMOVED-106",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_INVITE_REMOVED",
+      "annotation": ": {{api|BN_FRIEND_INVITE_REMOVED|t=e}}",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-events-BN_FRIEND_INVITE_SEND_RESULT-107",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_INVITE_SEND_RESULT",
+      "annotation": ": {{api|BN_FRIEND_INVITE_SEND_RESULT|t=e}}",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-events-BN_FRIEND_LIST_SIZE_CHANGED-108",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_LIST_SIZE_CHANGED",
+      "annotation": ": {{api|BN_FRIEND_LIST_SIZE_CHANGED|t=e}}",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-events-BN_FRIEND_TOON_OFFLINE-109",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_TOON_OFFLINE",
+      "annotation": ": {{api|BN_FRIEND_TOON_OFFLINE|t=e}}",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-events-BN_FRIEND_TOON_ONLINE-110",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_FRIEND_TOON_ONLINE",
+      "annotation": ": {{api|BN_FRIEND_TOON_ONLINE|t=e}}",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-events-BN_MATURE_LANGUAGE_FILTER-111",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_MATURE_LANGUAGE_FILTER",
+      "annotation": ": {{api|BN_MATURE_LANGUAGE_FILTER|t=e}}",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-events-BN_NEW_PRESENCE-112",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_NEW_PRESENCE",
+      "annotation": ": {{api|BN_NEW_PRESENCE|t=e}}(presenceId, name)",
+      "wikitext_line": 112,
+      "signature": "(presenceId, name)"
+    },
+    {
+      "id": "wt-events-BN_REQUEST_FOF_FAILED-113",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_REQUEST_FOF_FAILED",
+      "annotation": ": {{api|BN_REQUEST_FOF_FAILED|t=e}}",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-events-BN_REQUEST_FOF_SUCCEEDED-114",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_REQUEST_FOF_SUCCEEDED",
+      "annotation": ": {{api|BN_REQUEST_FOF_SUCCEEDED|t=e}}",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-events-BN_SELF_OFFLINE-115",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_SELF_OFFLINE",
+      "annotation": ": {{api|BN_SELF_OFFLINE|t=e}}",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-events-BN_SELF_ONLINE-116",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_SELF_ONLINE",
+      "annotation": ": {{api|BN_SELF_ONLINE|t=e}}",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-events-BN_SYSTEM_MESSAGE-117",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_SYSTEM_MESSAGE",
+      "annotation": ": {{api|BN_SYSTEM_MESSAGE|t=e}}",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-events-BN_TOON_NAME_UPDATED-118",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_TOON_NAME_UPDATED",
+      "annotation": ": {{api|BN_TOON_NAME_UPDATED|t=e}}(presenceId, name)",
+      "wikitext_line": 118,
+      "signature": "(presenceId, name)"
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_CONVERSATION-119",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_CONVERSATION",
+      "annotation": ": {{api|CHAT_MSG_BN_CONVERSATION|t=e}}",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_CONVERSATION_LIST-120",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_CONVERSATION_LIST",
+      "annotation": ": {{api|CHAT_MSG_BN_CONVERSATION_LIST|t=e}}",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_CONVERSATION_NOTICE-121",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_CONVERSATION_NOTICE",
+      "annotation": ": {{api|CHAT_MSG_BN_CONVERSATION_NOTICE|t=e}}",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_ALERT-122",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_INLINE_TOAST_ALERT",
+      "annotation": ": {{api|CHAT_MSG_BN_INLINE_TOAST_ALERT|t=e}}",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_BROADCAST-123",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_INLINE_TOAST_BROADCAST",
+      "annotation": ": {{api|CHAT_MSG_BN_INLINE_TOAST_BROADCAST|t=e}}",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM-124",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM",
+      "annotation": ": {{api|CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM|t=e}}",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_INLINE_TOAST_CONVERSATION-125",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_INLINE_TOAST_CONVERSATION",
+      "annotation": ": {{api|CHAT_MSG_BN_INLINE_TOAST_CONVERSATION|t=e}}",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_WHISPER-126",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_WHISPER",
+      "annotation": ": {{api|CHAT_MSG_BN_WHISPER|t=e}}",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-events-CHAT_MSG_BN_WHISPER_INFORM-127",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_BN_WHISPER_INFORM",
+      "annotation": ": {{api|CHAT_MSG_BN_WHISPER_INFORM|t=e}}",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-events-COMMENTATOR_SKIRMISH_MODE_REQUEST-128",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMENTATOR_SKIRMISH_MODE_REQUEST",
+      "annotation": ": {{api|COMMENTATOR_SKIRMISH_MODE_REQUEST|t=e}}",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-events-COMMENTATOR_SKIRMISH_QUEUE_REQUEST-129",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMENTATOR_SKIRMISH_QUEUE_REQUEST",
+      "annotation": ": {{api|COMMENTATOR_SKIRMISH_QUEUE_REQUEST|t=e}}",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-NotifyInspect-132",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "NotifyInspect",
+      "annotation": "* It is no longer guaranteed that the server will provide inventory information for every {{api|NotifyInspect}} request; should the server choose to throttle a particular request, events indicating availability of inspection data will not fire.",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-framexml-UIFrameFlashSwitch-135",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "UIFrameFlashSwitch",
+      "annotation": ": [[API UIFrameFlashSwitch|UIFrameFlashSwitch]]",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-framexml-ToggleCombatLog-136",
+      "section": "framexml",
+      "direction": "removed",
+      "symbol": "ToggleCombatLog",
+      "annotation": ": [[API ToggleCombatLog|ToggleCombatLog]]",
+      "wikitext_line": 136
+    }
+  ],
+  "client_line": "retail"
+}

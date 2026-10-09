@@ -2866,5 +2866,5 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] investigation | Historical retail Patch 3.3.5 API audit
 
-[Audit](investigations/patch-3-3-5-api-audit.md): page 25049/revision 247986, 2010 retail (not Wrath Classic). Literal local manifest/content hashes validated before copy. Opt-in sectioned-list parser retains 124 inventory occurrences, 69 signature fragments and unchanged 130-row full extract; no numeric headers. Complete accounting and targeted proof pending; no runtime/retirement changes or integration claim.
+[Audit](investigations/patch-3-3-5-api-audit.md): page 25049/revision 247986, 2010 retail (not Wrath Classic). Literal local manifest/content hashes validated before copy. Opt-in parser retains 124 inventory, 70 signature/return fragments and unchanged 130-row full extract; five named/no numeric headers. Complete 324-ID ledger: 80 publication matches/44 gaps, one inspect-throttle prose gap, 70 signature limits. Own RED discovery and parser GREEN retained; targeted GREEN/negative/replay follows. Zero model closures/runtime/retirement changes; no integration claim.
 

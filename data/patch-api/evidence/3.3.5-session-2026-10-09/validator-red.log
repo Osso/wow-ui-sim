@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_relocated_replay_and_exact_seal_tamper_controls (tools.test_patch_3_3_5_validator.HistoricalReplayTests.test_relocated_replay_and_exact_seal_tamper_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p335-source/tools/test_patch_3_3_5_validator.py", line 17, in test_relocated_replay_and_exact_seal_tamper_controls
+    self.assertTrue(script.exists(), 'own historical validator is not implemented')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : own historical validator is not implemented
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

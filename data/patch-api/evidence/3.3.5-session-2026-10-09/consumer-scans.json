@@ -1,0 +1,2762 @@
+{
+  "src": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p335-source/src",
+    "whole_word_bare_and_qualified": "All names are unqualified; qualified and bare searches identical. Full tree, no truncation.",
+    "hits": [
+      {
+        "path": "c_api/c_auto_complete.rs",
+        "line": 53,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "        \"GetAutoCompletePresenceID\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 198,
+        "symbols": [
+          "BN_BLOCK_LIST_UPDATED"
+        ],
+        "text": "    \"BN_BLOCK_LIST_UPDATED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 200,
+        "symbols": [
+          "BN_CHAT_WHISPER_UNDELIVERABLE"
+        ],
+        "text": "    \"BN_CHAT_WHISPER_UNDELIVERABLE\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 201,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "    \"BN_CONNECTED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 202,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "    \"BN_CUSTOM_MESSAGE_CHANGED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 203,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_LOADED"
+        ],
+        "text": "    \"BN_CUSTOM_MESSAGE_LOADED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 204,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "    \"BN_DISCONNECTED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 205,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_OFFLINE"
+        ],
+        "text": "    \"BN_FRIEND_ACCOUNT_OFFLINE\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 206,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_ONLINE"
+        ],
+        "text": "    \"BN_FRIEND_ACCOUNT_ONLINE\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 207,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "    \"BN_FRIEND_INFO_CHANGED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 208,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "    \"BN_FRIEND_INVITE_ADDED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 209,
+        "symbols": [
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "    \"BN_FRIEND_INVITE_LIST_INITIALIZED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 210,
+        "symbols": [
+          "BN_FRIEND_INVITE_REMOVED"
+        ],
+        "text": "    \"BN_FRIEND_INVITE_REMOVED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 211,
+        "symbols": [
+          "BN_FRIEND_LIST_SIZE_CHANGED"
+        ],
+        "text": "    \"BN_FRIEND_LIST_SIZE_CHANGED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 213,
+        "symbols": [
+          "BN_REQUEST_FOF_SUCCEEDED"
+        ],
+        "text": "    \"BN_REQUEST_FOF_SUCCEEDED\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 318,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_ALERT"
+        ],
+        "text": "    \"CHAT_MSG_BN_INLINE_TOAST_ALERT\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 319,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_BROADCAST"
+        ],
+        "text": "    \"CHAT_MSG_BN_INLINE_TOAST_BROADCAST\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 320,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM"
+        ],
+        "text": "    \"CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 321,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_CONVERSATION"
+        ],
+        "text": "    \"CHAT_MSG_BN_INLINE_TOAST_CONVERSATION\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 322,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER"
+        ],
+        "text": "    \"CHAT_MSG_BN_WHISPER\","
+      },
+      {
+        "path": "event/valid_events_a.rs",
+        "line": 323,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER_INFORM"
+        ],
+        "text": "    \"CHAT_MSG_BN_WHISPER_INFORM\","
+      },
+      {
+        "path": "loader/tests/wow_api_globals/startup_globals.rs",
+        "line": 347,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "                \"GetAutoCompletePresenceID\","
+      },
+      {
+        "path": "loader/tests/wow_api_globals/startup_globals.rs",
+        "line": 396,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil\""
+      },
+      {
+        "path": "loader/tests/wow_api_globals/startup_globals.rs",
+        "line": 401,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=nil,C_ClickBindings.MakeModifiers=nil,C_Spell.GetMawPowerBorderAtlasBySpellID=nil,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=nil,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=nil,GetAutoCompleteRealms=nil,IsRecognizedName=nil\""
+      },
+      {
+        "path": "lua_api/globals/inventory_probes.rs",
+        "line": 11,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "//! - `NotifyInspect(unit)`         \u2014 queue `INSPECT_READY` for inspectable"
+      },
+      {
+        "path": "lua_api/globals/inventory_probes.rs",
+        "line": 317,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "    LuaApiMut::register_function(lua, \"NotifyInspect\", notify_inspect)?;"
+      },
+      {
+        "path": "lua_api/globals/strings/string_data/more_strings.rs",
+        "line": 742,
+        "symbols": [
+          "BetterDate"
+        ],
+        "text": "    // Time manager format strings (used by GameTime_GetFormattedTime / BetterDate)"
+      },
+      {
+        "path": "lua_api/globals/utility_system_spell/mod.rs",
+        "line": 386,
+        "symbols": [
+          "BNFeaturesEnabled"
+        ],
+        "text": "/// BNFeaturesEnabled() \u2014 always false (no Battle.net in sim)."
+      },
+      {
+        "path": "lua_api/globals/utility_system_spell/mod.rs",
+        "line": 392,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "/// BNFeaturesEnabledAndConnected() \u2014 always false."
+      },
+      {
+        "path": "lua_api/globals/utility_system_spell/mod.rs",
+        "line": 398,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "/// BNConnected() \u2014 always true (sim pretends connected)."
+      },
+      {
+        "path": "lua_api/globals/utility_system_spell/mod.rs",
+        "line": 690,
+        "symbols": [
+          "BNFeaturesEnabled"
+        ],
+        "text": "    LuaApiMut::register_function(lua, \"BNFeaturesEnabled\", bn_features_enabled)?;"
+      },
+      {
+        "path": "lua_api/globals/utility_system_spell/mod.rs",
+        "line": 693,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "        \"BNFeaturesEnabledAndConnected\","
+      },
+      {
+        "path": "lua_api/globals/utility_system_spell/mod.rs",
+        "line": 696,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "    LuaApiMut::register_function(lua, \"BNConnected\", bn_connected)?;"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/battle_net_account_defaults.rs",
+        "line": 4,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "//! old global `BNGetInfo` is still only needed as a safe startup probe. Keep its"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/battle_net_account_defaults.rs",
+        "line": 9,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "if BNGetInfo == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/battle_net_account_defaults.rs",
+        "line": 10,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "  function BNGetInfo()"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/battle_net_account_defaults.rs",
+        "line": 42,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "                    isRIDEnabled, isInAllowedRegion, isDND = BNGetInfo()"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 115,
+        "symbols": [
+          "GetChatWindowSavedDimensions"
+        ],
+        "text": "if GetChatWindowSavedDimensions == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 116,
+        "symbols": [
+          "GetChatWindowSavedDimensions"
+        ],
+        "text": "  function GetChatWindowSavedDimensions(id)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 125,
+        "symbols": [
+          "SetChatWindowSavedDimensions"
+        ],
+        "text": "if SetChatWindowSavedDimensions == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 126,
+        "symbols": [
+          "SetChatWindowSavedDimensions"
+        ],
+        "text": "  function SetChatWindowSavedDimensions(id, width, height)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 134,
+        "symbols": [
+          "GetChatWindowSavedPosition"
+        ],
+        "text": "if GetChatWindowSavedPosition == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 135,
+        "symbols": [
+          "GetChatWindowSavedPosition"
+        ],
+        "text": "  function GetChatWindowSavedPosition(id)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 144,
+        "symbols": [
+          "SetChatWindowSavedPosition"
+        ],
+        "text": "if SetChatWindowSavedPosition == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 145,
+        "symbols": [
+          "SetChatWindowSavedPosition"
+        ],
+        "text": "  function SetChatWindowSavedPosition(id, point, xOffset, yOffset)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 197,
+        "symbols": [
+          "SetChatWindowSavedDimensions"
+        ],
+        "text": "                SetChatWindowSavedDimensions(2, 430, 120)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 198,
+        "symbols": [
+          "GetChatWindowSavedDimensions"
+        ],
+        "text": "                local width, height = GetChatWindowSavedDimensions(2)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 201,
+        "symbols": [
+          "SetChatWindowSavedPosition"
+        ],
+        "text": "                SetChatWindowSavedPosition(2, \"BOTTOMLEFT\", 11, 22)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/chat_window_defaults.rs",
+        "line": 202,
+        "symbols": [
+          "GetChatWindowSavedPosition"
+        ],
+        "text": "                local point, xOffset, yOffset = GetChatWindowSavedPosition(2)"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 130,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "if BNGetNumFriends == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 131,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "    function BNGetNumFriends() return 0, 0, 0, 0 end"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 133,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "if BNGetNumFriendInvites == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 134,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "    function BNGetNumFriendInvites() return 0 end"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 136,
+        "symbols": [
+          "BNGetFriendInfo"
+        ],
+        "text": "if BNGetFriendInfo == nil then"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 137,
+        "symbols": [
+          "BNGetFriendInfo"
+        ],
+        "text": "    function BNGetFriendInfo() return nil end"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 311,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "                local bnetTotal, bnetOnline, bnetFavorite, bnetMobile = BNGetNumFriends()"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 313,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "                if BNGetNumFriendInvites() ~= 0 then return \"bnet_invites\" end"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 314,
+        "symbols": [
+          "BNGetFriendInfo"
+        ],
+        "text": "                if BNGetFriendInfo(1) ~= nil then return \"bnet_info\" end"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 358,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "            function BNGetNumFriends() return 5, 4, 3, 2 end"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 389,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "                local total, online, favorite, mobile = BNGetNumFriends()"
+      },
+      {
+        "path": "lua_api/workarounds/temporary/inert_global_defaults.rs",
+        "line": 392,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "                if type(BNGetNumFriendInvites) ~= \"function\" then return \"missing_bnet_default\" end"
+      },
+      {
+        "path": "wrath/compat_bootstrap.lua",
+        "line": 25,
+        "symbols": [
+          "BNGetMaxPlayersInConversation"
+        ],
+        "text": "if BNGetMaxPlayersInConversation == nil then"
+      },
+      {
+        "path": "wrath/compat_bootstrap.lua",
+        "line": 26,
+        "symbols": [
+          "BNGetMaxPlayersInConversation"
+        ],
+        "text": "  function BNGetMaxPlayersInConversation()"
+      }
+    ]
+  },
+  "tests": {
+    "root": "/home/osso/.worktrees/wow-ui-sim-p335-source/tests",
+    "whole_word_bare_and_qualified": "All names are unqualified; qualified and bare searches identical. Full tree, no truncation.",
+    "hits": [
+      {
+        "path": "blizzard_deprecated_auto_complete_loads.rs",
+        "line": 187,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "            \"return type(GetAutoCompletePresenceID) == 'function' \\"
+      },
+      {
+        "path": "blizzard_deprecated_auto_complete_loads.rs",
+        "line": 196,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "         GetAutoCompletePresenceID(name) \u2192 C_AutoComplete.GetAutoCompletePresenceID; \\"
+      },
+      {
+        "path": "blizzard_deprecated_battle_net_loads.rs",
+        "line": 51,
+        "symbols": [
+          "BNSendWhisper",
+          "BNSetCustomMessage"
+        ],
+        "text": "         BNSendWhisper / BNSetCustomMessage globals must install before any chat / messaging \\"
+      },
+      {
+        "path": "blizzard_deprecated_battle_net_loads.rs",
+        "line": 130,
+        "symbols": [
+          "BNSendWhisper"
+        ],
+        "text": "                and type(BNSendWhisper) == 'function' \\"
+      },
+      {
+        "path": "blizzard_deprecated_battle_net_loads.rs",
+        "line": 131,
+        "symbols": [
+          "BNSetCustomMessage"
+        ],
+        "text": "                and type(BNSetCustomMessage) == 'function'\","
+      },
+      {
+        "path": "blizzard_deprecated_battle_net_loads.rs",
+        "line": 139,
+        "symbols": [
+          "BNSendWhisper"
+        ],
+        "text": "         documentation comment on line 9); BNSendWhisper(bnetAccountID, text) \u2192 \\"
+      },
+      {
+        "path": "blizzard_deprecated_battle_net_loads.rs",
+        "line": 140,
+        "symbols": [
+          "BNSetCustomMessage"
+        ],
+        "text": "         C_BattleNet.SendWhisper; BNSetCustomMessage(text) \u2192 C_BattleNet.SetCustomMessage\""
+      },
+      {
+        "path": "blizzard_deprecated_battle_net_loads.rs",
+        "line": 156,
+        "symbols": [
+          "BNSendWhisper",
+          "BNSetCustomMessage"
+        ],
+        "text": "         any legacy chat addon calling BNSendGameData / BNSendWhisper / BNSetCustomMessage \\"
+      },
+      {
+        "path": "blizzard_deprecated_battle_net_loads.rs",
+        "line": 182,
+        "symbols": [
+          "BNSendWhisper",
+          "BNSetCustomMessage"
+        ],
+        "text": "         shim definitions for BNSendGameData / BNSendWhisper / BNSetCustomMessage)\""
+      },
+      {
+        "path": "blizzard_friends_frame_loads.rs",
+        "line": 52,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "         BN_FRIEND_INFO_CHANGED, WHO_LIST_UPDATE) are wired up before the user opens \\"
+      },
+      {
+        "path": "blizzard_friends_frame_loads.rs",
+        "line": 575,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "         FRIENDLIST_UPDATE / BN_FRIEND_INFO_CHANGED / WHO_LIST_UPDATE / \\"
+      },
+      {
+        "path": "blizzard_inspect_ui_loads.rs",
+        "line": 147,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "         from the server via NotifyInspect / INSPECT_READY; no client-side persistence\""
+      },
+      {
+        "path": "blizzard_recruit_a_friend_loads.rs",
+        "line": 74,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "    \"BN_FRIEND_INFO_CHANGED\","
+      },
+      {
+        "path": "blizzard_recruit_a_friend_loads.rs",
+        "line": 562,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "             (BN_FRIEND_INFO_CHANGED \u2014 driven by Blizzard_BNet when a recruit's \\"
+      },
+      {
+        "path": "c_autocomplete.rs",
+        "line": 124,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "            return C_AutoComplete.GetAutoCompletePresenceID(\"Thrall\"),"
+      },
+      {
+        "path": "c_autocomplete.rs",
+        "line": 125,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "                C_AutoComplete.GetAutoCompletePresenceID(\"thrall\"),"
+      },
+      {
+        "path": "c_autocomplete.rs",
+        "line": 126,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "                C_AutoComplete.GetAutoCompletePresenceID(\"Uther\"),"
+      },
+      {
+        "path": "c_autocomplete.rs",
+        "line": 127,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "                C_AutoComplete.GetAutoCompletePresenceID(\"Uther#1000\") == nil,"
+      },
+      {
+        "path": "c_autocomplete.rs",
+        "line": 128,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "                C_AutoComplete.GetAutoCompletePresenceID(\"Arthax\") == nil"
+      },
+      {
+        "path": "c_autocomplete.rs",
+        "line": 131,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "        .expect(\"GetAutoCompletePresenceID should be callable\");"
+      },
+      {
+        "path": "inventory_probes.rs",
+        "line": 154,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "    env.exec(r#\"NotifyInspect(\"player\")\"#).unwrap();"
+      },
+      {
+        "path": "inventory_probes.rs",
+        "line": 175,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "    env.exec(r#\"NotifyInspect(\"target\")\"#).unwrap();"
+      },
+      {
+        "path": "patch_12_0_7_removed_native_surface.rs",
+        "line": 143,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "    assert_native_absent(&env, \"GetAutoCompletePresenceID\");"
+      },
+      {
+        "path": "patch_12_0_7_removed_native_surface.rs",
+        "line": 383,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "        \"GetAutoCompletePresenceID\","
+      },
+      {
+        "path": "patch_12_0_7_removed_native_surface.rs",
+        "line": 392,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "        function C_AutoComplete.GetAutoCompletePresenceID(name, ...)"
+      },
+      {
+        "path": "patch_12_0_7_removed_native_surface.rs",
+        "line": 419,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "        checkPresence(GetAutoCompletePresenceID('Ada-Realm', 'discarded'))"
+      },
+      {
+        "path": "patch_12_0_7_removed_native_surface.rs",
+        "line": 525,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "    \"GetAutoCompletePresenceID\","
+      },
+      {
+        "path": "patch_12_1_0_deprecated_wrappers.rs",
+        "line": 80,
+        "symbols": [
+          "BNGetFriendInviteInfo"
+        ],
+        "text": "        source_id: \"deprecated api-BNGetFriendInviteInfo-386\","
+      },
+      {
+        "path": "patch_12_1_0_deprecated_wrappers.rs",
+        "line": 81,
+        "symbols": [
+          "BNGetFriendInviteInfo"
+        ],
+        "text": "        old_fn: \"BNGetFriendInviteInfo\","
+      },
+      {
+        "path": "patch_12_1_0_deprecated_wrappers.rs",
+        "line": 85,
+        "symbols": [
+          "BNGetFriendInviteInfo"
+        ],
+        "text": "            local n = select(\"#\", BNGetFriendInviteInfo(1))"
+      },
+      {
+        "path": "patch_12_1_0_deprecated_wrappers.rs",
+        "line": 86,
+        "symbols": [
+          "BNGetFriendInviteInfo"
+        ],
+        "text": "            local id, name, isBattleTag, unused, created = BNGetFriendInviteInfo(1)"
+      },
+      {
+        "path": "patch_12_1_0_deprecated_wrappers.rs",
+        "line": 90,
+        "symbols": [
+          "BNGetFriendInviteInfo"
+        ],
+        "text": "            local id2, name2, isBattleTag2 = BNGetFriendInviteInfo(2)"
+      },
+      {
+        "path": "patch_12_1_0_deprecated_wrappers.rs",
+        "line": 92,
+        "symbols": [
+          "BNGetFriendInviteInfo"
+        ],
+        "text": "            if select(\"#\", BNGetFriendInviteInfo(3)) ~= 0 then return \"missing\" end"
+      },
+      {
+        "path": "recent_runtime_bootstrap_boundaries.rs",
+        "line": 111,
+        "symbols": [
+          "GetChatWindowSavedDimensions"
+        ],
+        "text": "            \"function GetChatWindowSavedDimensions\","
+      },
+      {
+        "path": "recent_runtime_bootstrap_boundaries.rs",
+        "line": 115,
+        "symbols": [
+          "SetChatWindowSavedDimensions"
+        ],
+        "text": "            \"function SetChatWindowSavedDimensions\","
+      },
+      {
+        "path": "recent_runtime_bootstrap_boundaries.rs",
+        "line": 119,
+        "symbols": [
+          "GetChatWindowSavedPosition"
+        ],
+        "text": "            \"function GetChatWindowSavedPosition\","
+      },
+      {
+        "path": "recent_runtime_bootstrap_boundaries.rs",
+        "line": 123,
+        "symbols": [
+          "SetChatWindowSavedPosition"
+        ],
+        "text": "            \"function SetChatWindowSavedPosition\","
+      },
+      {
+        "path": "recent_runtime_bootstrap_boundaries.rs",
+        "line": 445,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "        (\"function BNGetInfo\", \"temporary Battle.net account workaround\"),"
+      },
+      {
+        "path": "startup_api_stubs.rs",
+        "line": 376,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "                   BNGetNumFriends()"
+      },
+      {
+        "path": "system_api.rs",
+        "line": 292,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "    // BNGetInfo returns mock data, just verify it doesn't error"
+      },
+      {
+        "path": "system_api.rs",
+        "line": 293,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "    env.exec(\"local info = BNGetInfo()\").unwrap();"
+      },
+      {
+        "path": "system_api_seeded.rs",
+        "line": 136,
+        "symbols": [
+          "BNFeaturesEnabled"
+        ],
+        "text": "    let val: bool = env.eval(\"return BNFeaturesEnabled()\").unwrap();"
+      },
+      {
+        "path": "system_api_seeded.rs",
+        "line": 143,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "    let val: bool = env.eval(\"return BNFeaturesEnabledAndConnected()\").unwrap();"
+      },
+      {
+        "path": "system_api_seeded.rs",
+        "line": 150,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "    let val: bool = env.eval(\"return BNConnected()\").unwrap();"
+      },
+      {
+        "path": "system_api_seeded.rs",
+        "line": 157,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "    let (total, online): (i32, i32) = env.eval(\"return BNGetNumFriends()\").unwrap();"
+      },
+      {
+        "path": "system_api_seeded.rs",
+        "line": 165,
+        "symbols": [
+          "BNGetFriendInfo"
+        ],
+        "text": "    let is_nil: bool = env.eval(\"return BNGetFriendInfo(1) == nil\").unwrap();"
+      },
+      {
+        "path": "test_guild_panel.rs",
+        "line": 162,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "    let connected: bool = env.eval(\"return BNConnected()\").unwrap();"
+      },
+      {
+        "path": "test_guild_panel.rs",
+        "line": 165,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "        \"BNConnected should return true for Communities to work\""
+      }
+    ]
+  },
+  "retail-cache": {
+    "root": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+    "whole_word_bare_and_qualified": "All names are unqualified; qualified and bare searches identical. Full tree, no truncation.",
+    "hits": [
+      {
+        "path": "Blizzard_APIDocumentationGenerated/AutoCompleteDocumentation.lua",
+        "line": 11,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "\t\t\tName = \"GetAutoCompletePresenceID\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua",
+        "line": 976,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_ALERT"
+        ],
+        "text": "\t\t\tLiteralName = \"CHAT_MSG_BN_INLINE_TOAST_ALERT\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua",
+        "line": 1004,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_BROADCAST"
+        ],
+        "text": "\t\t\tLiteralName = \"CHAT_MSG_BN_INLINE_TOAST_BROADCAST\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua",
+        "line": 1032,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM"
+        ],
+        "text": "\t\t\tLiteralName = \"CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua",
+        "line": 1060,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_CONVERSATION"
+        ],
+        "text": "\t\t\tLiteralName = \"CHAT_MSG_BN_INLINE_TOAST_CONVERSATION\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua",
+        "line": 1088,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER"
+        ],
+        "text": "\t\t\tLiteralName = \"CHAT_MSG_BN_WHISPER\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua",
+        "line": 1116,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER_INFORM"
+        ],
+        "text": "\t\t\tLiteralName = \"CHAT_MSG_BN_WHISPER_INFORM\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 439,
+        "symbols": [
+          "BN_BLOCK_LIST_UPDATED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_BLOCK_LIST_UPDATED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 445,
+        "symbols": [
+          "BN_CHAT_WHISPER_UNDELIVERABLE"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_CHAT_WHISPER_UNDELIVERABLE\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 455,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_CONNECTED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 465,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_CUSTOM_MESSAGE_CHANGED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 475,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_LOADED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_CUSTOM_MESSAGE_LOADED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 481,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_DISCONNECTED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 492,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_OFFLINE"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_FRIEND_ACCOUNT_OFFLINE\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 503,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_ONLINE"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_FRIEND_ACCOUNT_ONLINE\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 514,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_FRIEND_INFO_CHANGED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 524,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_FRIEND_INVITE_ADDED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 534,
+        "symbols": [
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_FRIEND_INVITE_LIST_INITIALIZED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 544,
+        "symbols": [
+          "BN_FRIEND_INVITE_REMOVED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_FRIEND_INVITE_REMOVED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 550,
+        "symbols": [
+          "BN_FRIEND_LIST_SIZE_CHANGED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_FRIEND_LIST_SIZE_CHANGED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/FriendListDocumentation.lua",
+        "line": 566,
+        "symbols": [
+          "BN_REQUEST_FOF_SUCCEEDED"
+        ],
+        "text": "\t\t\tLiteralName = \"BN_REQUEST_FOF_SUCCEEDED\","
+      },
+      {
+        "path": "Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+        "line": 1308,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "\t\t\tName = \"NotifyInspect\","
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 81,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\t\tlocal _, battleTag, _, _, _, _, isRIDEnabled = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 82,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\t\tif ( ( battleTag or isRIDEnabled ) and BNFeaturesEnabledAndConnected() ) then"
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 135,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\tif ( BNFeaturesEnabledAndConnected() ) then"
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 141,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\t\tlocal _, battleTag, _, _, _, _, isRIDEnabled = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 207,
+        "symbols": [
+          "BNSendFriendInvite"
+        ],
+        "text": "\t\tBNSendFriendInvite(name, \"\");"
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 219,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal _, battleTag, _, _, _, _, isRIDEnabled = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 231,
+        "symbols": [
+          "BNSendFriendInvite"
+        ],
+        "text": "\t\tBNSendFriendInvite(name, \"\");"
+      },
+      {
+        "path": "Blizzard_AddFriend/AddFriendTemplates.lua",
+        "line": 240,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal _, battleTag, _, _, _, _, isRIDEnabled = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 18,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_ONLINE"
+        ],
+        "text": "\t\tshowToastOnline = { \"BN_FRIEND_ACCOUNT_ONLINE\" },"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 19,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_OFFLINE"
+        ],
+        "text": "\t\tshowToastOffline = { \"BN_FRIEND_ACCOUNT_OFFLINE\" },"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 21,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "\t\tshowToastBroadcast = { \"BN_CUSTOM_MESSAGE_CHANGED\" },"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 22,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED",
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "\t\tshowToastFriendRequest = { \"BN_FRIEND_INVITE_ADDED\", \"BN_FRIEND_INVITE_LIST_INITIALIZED\" },"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 28,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_DISCONNECTED\");"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 39,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tif ( event == \"BN_DISCONNECTED\" ) then"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 43,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_ONLINE"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_ACCOUNT_ONLINE\" ) then"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 48,
+        "symbols": [
+          "BN_FRIEND_ACCOUNT_OFFLINE"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_ACCOUNT_OFFLINE\" ) then"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 53,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "\telseif ( event == \"BN_CUSTOM_MESSAGE_CHANGED\" ) then"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 55,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_INVITE_ADDED\" ) then"
+      },
+      {
+        "path": "Blizzard_BNet/Mainline/BNet.lua",
+        "line": 59,
+        "symbols": [
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_INVITE_LIST_INITIALIZED\" ) then"
+      },
+      {
+        "path": "Blizzard_CatalogShop/Blizzard_CatalogShop.lua",
+        "line": 52,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_DISCONNECTED\");"
+      },
+      {
+        "path": "Blizzard_CatalogShop/Blizzard_CatalogShop.lua",
+        "line": 390,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif event == \"BN_DISCONNECTED\" then"
+      },
+      {
+        "path": "Blizzard_ChatFrame/Shared/TextToSpeechFrame.lua",
+        "line": 34,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER"
+        ],
+        "text": "\t\t[\"CHAT_MSG_BN_WHISPER\"] = true,"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua",
+        "line": 19,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_CONNECTED\");"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua",
+        "line": 20,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_DISCONNECTED\");"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua",
+        "line": 221,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\telseif ( event == \"BN_CONNECTED\" ) then"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua",
+        "line": 227,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif ( event == \"BN_DISCONNECTED\" ) then"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua",
+        "line": 416,
+        "symbols": [
+          "BetterDate"
+        ],
+        "text": "\t\t\t\toutMsg = TimeUtil.BetterDate(chatTimestampFmt, time())..outMsg;"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua",
+        "line": 494,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "\t\t\t\tmessage = format(BN_INLINE_TOAST_FRIEND_PENDING, BNGetNumFriendInvites());"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua",
+        "line": 653,
+        "symbols": [
+          "BetterDate"
+        ],
+        "text": "\t\t\t\t\toutMsg = TimeUtil.BetterDate(chatTimestampFmt, msgTime)..outMsg;"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua",
+        "line": 634,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_ALERT"
+        ],
+        "text": "\t\tchatFrame:AddSingleMessageType(\"CHAT_MSG_BN_INLINE_TOAST_ALERT\");"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua",
+        "line": 1188,
+        "symbols": [
+          "SetChatWindowSavedPosition"
+        ],
+        "text": "\tSetChatWindowSavedPosition(chatFrame:GetID(), vertPoint..horizPoint, xOffset, yOffset);"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua",
+        "line": 1189,
+        "symbols": [
+          "SetChatWindowSavedDimensions"
+        ],
+        "text": "\tSetChatWindowSavedDimensions(chatFrame:GetID(), chatFrame:GetWidth(), chatFrame:GetHeight());"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua",
+        "line": 1198,
+        "symbols": [
+          "GetChatWindowSavedDimensions"
+        ],
+        "text": "\tlocal width, height = GetChatWindowSavedDimensions(chatFrame:GetID());"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua",
+        "line": 1203,
+        "symbols": [
+          "GetChatWindowSavedPosition"
+        ],
+        "text": "\tlocal point, xOffset, yOffset = GetChatWindowSavedPosition(chatFrame:GetID());"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua",
+        "line": 2530,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER_INFORM"
+        ],
+        "text": "\t\t\t\t\tor (event == \"CHAT_MSG_BN_WHISPER_INFORM\" and GetCVar(\"whisperMode\") == \"popout\") ) then"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua",
+        "line": 274,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER"
+        ],
+        "text": "\t\"CHAT_MSG_BN_WHISPER\","
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua",
+        "line": 275,
+        "symbols": [
+          "CHAT_MSG_BN_WHISPER_INFORM"
+        ],
+        "text": "\t\"CHAT_MSG_BN_WHISPER_INFORM\","
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua",
+        "line": 279,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_ALERT"
+        ],
+        "text": "\t\"CHAT_MSG_BN_INLINE_TOAST_ALERT\","
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua",
+        "line": 280,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_BROADCAST"
+        ],
+        "text": "\t\"CHAT_MSG_BN_INLINE_TOAST_BROADCAST\","
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua",
+        "line": 281,
+        "symbols": [
+          "CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM"
+        ],
+        "text": "\t\"CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM\","
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/SlashCommands.lua",
+        "line": 1152,
+        "symbols": [
+          "BNIsFriend"
+        ],
+        "text": "\t\t\tif ( BNIsFriend(bNetIDAccount) ) then"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/SlashCommands.lua",
+        "line": 1153,
+        "symbols": [
+          "SendSystemMessage"
+        ],
+        "text": "\t\t\t\tSendSystemMessage(ERR_CANNOT_IGNORE_BN_FRIEND);"
+      },
+      {
+        "path": "Blizzard_ChatFrameBase/Shared/SlashCommands.lua",
+        "line": 1155,
+        "symbols": [
+          "BNIsBlocked",
+          "BNSetBlocked"
+        ],
+        "text": "\t\t\t\tBNSetBlocked(bNetIDAccount, not BNIsBlocked(bNetIDAccount));"
+      },
+      {
+        "path": "Blizzard_Communities/CommunitiesChatFrame.lua",
+        "line": 340,
+        "symbols": [
+          "BetterDate"
+        ],
+        "text": "\t\toutMessage = TimeUtil.BetterDate(format, message.messageId.epoch / 1000000)..COMMUNITIES_CHAT_MESSAGE_FORMAT:format(link or name, content);"
+      },
+      {
+        "path": "Blizzard_Communities/CommunitiesFrame.lua",
+        "line": 27,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\t\"BN_DISCONNECTED\","
+      },
+      {
+        "path": "Blizzard_Communities/CommunitiesFrame.lua",
+        "line": 251,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif event == \"BN_DISCONNECTED\" then"
+      },
+      {
+        "path": "Blizzard_DeprecatedAutoComplete/Deprecated_AutoComplete.lua",
+        "line": 26,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "function GetAutoCompletePresenceID(name)"
+      },
+      {
+        "path": "Blizzard_DeprecatedAutoComplete/Deprecated_AutoComplete.lua",
+        "line": 27,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "\treturn C_AutoComplete.GetAutoCompletePresenceID(name);"
+      },
+      {
+        "path": "Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua",
+        "line": 13,
+        "symbols": [
+          "BNSendWhisper"
+        ],
+        "text": "BNSendWhisper = function(bnetAccountID, text)"
+      },
+      {
+        "path": "Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua",
+        "line": 17,
+        "symbols": [
+          "BNSetCustomMessage"
+        ],
+        "text": "BNSetCustomMessage = function(text)"
+      },
+      {
+        "path": "Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua",
+        "line": 29,
+        "symbols": [
+          "BNGetFriendInviteInfo"
+        ],
+        "text": "BNGetFriendInviteInfo = function(inviteIndex)"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 5,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\t\"BN_FRIEND_INVITE_ADDED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 6,
+        "symbols": [
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "\t\"BN_FRIEND_INVITE_LIST_INITIALIZED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 11,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\t\"BN_CONNECTED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 12,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\t\"BN_DISCONNECTED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 13,
+        "symbols": [
+          "BN_FRIEND_INVITE_REMOVED"
+        ],
+        "text": "\t\"BN_FRIEND_INVITE_REMOVED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 155,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED",
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "\tlocal eventIndicatesPendingFriendRequest = (event == \"BN_FRIEND_INVITE_ADDED\") or (event == \"BN_FRIEND_INVITE_LIST_INITIALIZED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 166,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "\tlocal numFriendRequests = BNGetNumFriendInvites();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 196,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "\tfor inviteIndex = 1, BNGetNumFriendInvites() do"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 213,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal isRealIDEnabled = select(7, BNGetInfo());"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 285,
+        "symbols": [
+          "BNAcceptFriendInvite"
+        ],
+        "text": "\tBNAcceptFriendInvite(self.inviteID);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+        "line": 523,
+        "symbols": [
+          "BNDeclineFriendInvite"
+        ],
+        "text": "\t\t\tBNDeclineFriendInvite(self.inviteID);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 298,
+        "symbols": [
+          "BN_FRIEND_LIST_SIZE_CHANGED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_FRIEND_LIST_SIZE_CHANGED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 299,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_FRIEND_INFO_CHANGED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 300,
+        "symbols": [
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_FRIEND_INVITE_LIST_INITIALIZED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 301,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_FRIEND_INVITE_ADDED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 302,
+        "symbols": [
+          "BN_FRIEND_INVITE_REMOVED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_FRIEND_INVITE_REMOVED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 303,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_CUSTOM_MESSAGE_CHANGED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 304,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_LOADED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_CUSTOM_MESSAGE_LOADED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 305,
+        "symbols": [
+          "BN_BLOCK_LIST_UPDATED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_BLOCK_LIST_UPDATED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 307,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_CONNECTED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 308,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_DISCONNECTED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 394,
+        "symbols": [
+          "BNFeaturesEnabled"
+        ],
+        "text": "\tif not BNFeaturesEnabled() then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 559,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal bnetAFK, bnetDND = select(5, BNGetInfo());"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 756,
+        "symbols": [
+          "BNDeclineFriendInvite"
+        ],
+        "text": "\t\t\tBNDeclineFriendInvite(self.inviteID);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 801,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "\tlocal numBNetTotal, numBNetOnline, numBNetFavorite, numBNetFavoriteOnline = BNGetNumFriends();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 840,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "\tlocal numInvites = BNGetNumFriendInvites();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 914,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "\tlocal numInvites = BNGetNumFriendInvites();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 916,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\t\tlocal isRIDEnabled = select(7, BNGetInfo());"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 944,
+        "symbols": [
+          "BNGetBlockedInfo"
+        ],
+        "text": "\t\tlocal blockID, blockName = BNGetBlockedInfo(button.index);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 960,
+        "symbols": [
+          "BNGetSelectedBlock"
+        ],
+        "text": "\t\tselectedSquelchIndex = BNGetSelectedBlock();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 984,
+        "symbols": [
+          "BNGetNumBlocked"
+        ],
+        "text": "\tlocal numBlocks = BNGetNumBlocked();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1230,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_INVITE_ADDED\" or event == \"NEW_MATCHMAKING_PARTY_INVITE\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1232,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED",
+          "BN_FRIEND_LIST_SIZE_CHANGED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_LIST_SIZE_CHANGED\" or event == \"BN_FRIEND_INFO_CHANGED\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1236,
+        "symbols": [
+          "BN_FRIEND_LIST_SIZE_CHANGED"
+        ],
+        "text": "\t\tif ( event == \"BN_FRIEND_LIST_SIZE_CHANGED\" and bnetIDAccount ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1242,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "\telseif ( event == \"BN_CUSTOM_MESSAGE_CHANGED\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1249,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_LOADED"
+        ],
+        "text": "\telseif ( event == \"BN_CUSTOM_MESSAGE_LOADED\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1257,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_INVITE_ADDED\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1264,
+        "symbols": [
+          "BN_FRIEND_INVITE_LIST_INITIALIZED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_INVITE_LIST_INITIALIZED\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1266,
+        "symbols": [
+          "BN_FRIEND_INVITE_REMOVED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_INVITE_REMOVED\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1268,
+        "symbols": [
+          "BN_BLOCK_LIST_UPDATED"
+        ],
+        "text": "\telseif ( event == \"IGNORELIST_UPDATE\" or event == \"BN_BLOCK_LIST_UPDATED\" ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1276,
+        "symbols": [
+          "BN_CONNECTED",
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif ( event == \"PLAYER_ENTERING_WORLD\" or event == \"BN_CONNECTED\" or event == \"BN_DISCONNECTED\") then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1279,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\t\tif (event == \"BN_DISCONNECTED\") then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1326,
+        "symbols": [
+          "BNSetSelectedFriend"
+        ],
+        "text": "\t\tBNSetSelectedFriend(id);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1353,
+        "symbols": [
+          "BNSetSelectedBlock"
+        ],
+        "text": "\t\tBNSetSelectedBlock(index);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1396,
+        "symbols": [
+          "BNGetBlockedInfo",
+          "BNGetSelectedBlock"
+        ],
+        "text": "\t\tlocal blockID = BNGetBlockedInfo(BNGetSelectedBlock());"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1397,
+        "symbols": [
+          "BNSetBlocked"
+        ],
+        "text": "\t\tBNSetBlocked(blockID, false);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1423,
+        "symbols": [
+          "BNSetBlocked"
+        ],
+        "text": "\tBNSetBlocked(blockID, false);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1738,
+        "symbols": [
+          "BNFeaturesEnabled"
+        ],
+        "text": "\tif ( BNFeaturesEnabled() ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1739,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\t\tif ( BNConnected() ) then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1741,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\t\t\tlocal _, battleTag = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 1890,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "\tbutton:SetFormattedText(FRIEND_REQUESTS, BNGetNumFriendInvites());"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 2118,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal _, _, _, broadcastText = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 2125,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal _, _, _, broadcastText = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+        "line": 2788,
+        "symbols": [
+          "BNConnected",
+          "BNFeaturesEnabled"
+        ],
+        "text": "\t\tlocal canUseBroadCastFrame = BNFeaturesEnabled() and BNConnected();"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 49,
+        "symbols": [
+          "BN_REQUEST_FOF_SUCCEEDED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_REQUEST_FOF_SUCCEEDED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 50,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_DISCONNECTED\");"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 113,
+        "symbols": [
+          "BN_REQUEST_FOF_SUCCEEDED"
+        ],
+        "text": "\tif event == \"BN_REQUEST_FOF_SUCCEEDED\" then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 126,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif event == \"BN_DISCONNECTED\" then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 178,
+        "symbols": [
+          "BNSendFriendInviteByID"
+        ],
+        "text": "\t\tBNSendFriendInviteByID(self.selection);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 223,
+        "symbols": [
+          "BNGetNumFOF"
+        ],
+        "text": "\tlocal numMutual, numPotential = BNGetNumFOF(bnetIDAccount);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 235,
+        "symbols": [
+          "BNGetFOFInfo"
+        ],
+        "text": "\t\tlocal friendID, accountName, isMutual = BNGetFOFInfo(showMutual, showPotential, index);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua",
+        "line": 271,
+        "symbols": [
+          "BNRequestFOFInfo"
+        ],
+        "text": "\tBNRequestFOFInfo(accountInfo.bnetAccountID);"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
+        "line": 49,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\t\"BN_DISCONNECTED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
+        "line": 50,
+        "symbols": [
+          "BN_FRIEND_LIST_SIZE_CHANGED"
+        ],
+        "text": "\t\"BN_FRIEND_LIST_SIZE_CHANGED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
+        "line": 51,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "\t\"BN_FRIEND_INFO_CHANGED\","
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
+        "line": 313,
+        "symbols": [
+          "BN_FRIEND_LIST_SIZE_CHANGED"
+        ],
+        "text": "\telseif event == \"BN_FRIEND_LIST_SIZE_CHANGED\" then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
+        "line": 320,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif event == \"BN_DISCONNECTED\" then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
+        "line": 322,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "\telseif event == \"BN_FRIEND_INFO_CHANGED\" or event == \"BATTLE_NET_FRIEND_TAG_ENABLED_STATUS_UPDATED\" then"
+      },
+      {
+        "path": "Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua",
+        "line": 383,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "\tlocal totalFriends, _numFriendsOnline, _numFavorites, _numFavoritesOnline = BNGetNumFriends();"
+      },
+      {
+        "path": "Blizzard_Game/Classic/Game.lua",
+        "line": 18,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\t\tif not BNConnected() then"
+      },
+      {
+        "path": "Blizzard_Game/Mainline/Game.lua",
+        "line": 15,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\t\tif not BNConnected() then"
+      },
+      {
+        "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+        "line": 8,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\t\"BN_FRIEND_INVITE_ADDED\","
+      },
+      {
+        "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+        "line": 74,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\tif BNConnected() then"
+      },
+      {
+        "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+        "line": 75,
+        "symbols": [
+          "BNGetNumFriendInvites"
+        ],
+        "text": "\t\tlocal numInvites = BNGetNumFriendInvites() + C_WoWLabsMatchmaking.GetNumPartyInvites();"
+      },
+      {
+        "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+        "line": 132,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\telseif ( event == \"BN_FRIEND_INVITE_ADDED\" or event == \"NEW_MATCHMAKING_PARTY_INVITE\" ) then"
+      },
+      {
+        "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+        "line": 134,
+        "symbols": [
+          "BN_FRIEND_INVITE_ADDED"
+        ],
+        "text": "\t\tlocal text = event == \"BN_FRIEND_INVITE_ADDED\" and TOAST_NEW_FRIEND_INVITE_WOWLABS or TOAST_NEW_PARTY_INVITE_WOWLABS;"
+      },
+      {
+        "path": "Blizzard_InspectUI/Mainline/Blizzard_InspectUI.lua",
+        "line": 12,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "\t\tNotifyInspect(unit);"
+      },
+      {
+        "path": "Blizzard_InspectUI/Mainline/Blizzard_InspectUI.lua",
+        "line": 79,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "\tNotifyInspect(unit);"
+      },
+      {
+        "path": "Blizzard_InspectUI/TBC/Blizzard_InspectUI.lua",
+        "line": 12,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "\t\tNotifyInspect(unit);"
+      },
+      {
+        "path": "Blizzard_InspectUI/TBC/Blizzard_InspectUI.lua",
+        "line": 75,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "\tNotifyInspect(unit);"
+      },
+      {
+        "path": "Blizzard_InspectUI/Vanilla/Blizzard_InspectUI.lua",
+        "line": 6,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "\t\tNotifyInspect(unit);"
+      },
+      {
+        "path": "Blizzard_InspectUI/Vanilla/Blizzard_InspectUI.lua",
+        "line": 61,
+        "symbols": [
+          "NotifyInspect"
+        ],
+        "text": "\tNotifyInspect(unit);"
+      },
+      {
+        "path": "Blizzard_LFGUtil/Classic/LFGUtil.lua",
+        "line": 97,
+        "symbols": [
+          "BNGetFriendInfoByID"
+        ],
+        "text": "\t\tlocal bnetIDAccountFriend, accountName = BNGetFriendInfoByID(bnetIDAccount);"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua",
+        "line": 371,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_DISCONNECTED\");"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua",
+        "line": 372,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_CONNECTED\");"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua",
+        "line": 410,
+        "symbols": [
+          "BN_CONNECTED",
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif ( event == \"BN_DISCONNECTED\" or event == \"BN_CONNECTED\") then"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua",
+        "line": 469,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\telseif ( C_Club.IsEnabled() and not BNConnected() and not C_CVar.GetCVarBool(\"useClassicGuildUI\") ) then"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua",
+        "line": 1078,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_DISCONNECTED\");"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua",
+        "line": 1079,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_CONNECTED\");"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua",
+        "line": 1130,
+        "symbols": [
+          "BN_CONNECTED",
+          "BN_DISCONNECTED"
+        ],
+        "text": "\telseif ( event == \"BN_DISCONNECTED\" or event == \"BN_CONNECTED\") then"
+      },
+      {
+        "path": "Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua",
+        "line": 1184,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\telseif ( C_Club.IsEnabled() and not BNConnected() ) then"
+      },
+      {
+        "path": "Blizzard_QuickJoin/QuickJoinToast.lua",
+        "line": 161,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "\tlocal _, numBNetOnline = BNGetNumFriends();"
+      },
+      {
+        "path": "Blizzard_RecruitAFriend/RecruitAFriendFrame.lua",
+        "line": 41,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "\tself:RegisterEvent(\"BN_FRIEND_INFO_CHANGED\");"
+      },
+      {
+        "path": "Blizzard_RecruitAFriend/RecruitAFriendFrame.lua",
+        "line": 147,
+        "symbols": [
+          "BN_FRIEND_INFO_CHANGED"
+        ],
+        "text": "\telseif event == \"BN_FRIEND_INFO_CHANGED\" then"
+      },
+      {
+        "path": "Blizzard_SettingsDefinitions_Frame/Social.lua",
+        "line": 183,
+        "symbols": [
+          "BetterDate"
+        ],
+        "text": "\t\t\tlocal label = TimeUtil.BetterDate(format, time(exampleTime));"
+      },
+      {
+        "path": "Blizzard_SharedXML/AccountUtil.lua",
+        "line": 42,
+        "symbols": [
+          "GetAutoCompletePresenceID"
+        ],
+        "text": "\treturn C_AutoComplete.GetAutoCompletePresenceID(name);"
+      },
+      {
+        "path": "Blizzard_SharedXML/AccountUtil.lua",
+        "line": 60,
+        "symbols": [
+          "BNGetNumFriends"
+        ],
+        "text": "\tlocal _, numBNetOnline = BNGetNumFriends();"
+      },
+      {
+        "path": "Blizzard_SharedXML/AccountUtil.lua",
+        "line": 83,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal _deprecatedPresenceID, battleTag, _opaqueID, _broadcastText, _isAFK, _isBusy, _isRealIDEnabled = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_SharedXML/AccountUtil.lua",
+        "line": 88,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal _deprecatedPresenceID, _battleTag, _opaqueID, broadcastText, _isAFK, _isBusy, _isRealIDEnabled = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_SharedXML/TimeUtil.lua",
+        "line": 46,
+        "symbols": [
+          "BetterDate"
+        ],
+        "text": "function TimeUtil.BetterDate(formatString, timeVal)"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 265,
+        "symbols": [
+          "BNConnected",
+          "BNFeaturesEnabled"
+        ],
+        "text": "\treturn BNFeaturesEnabled() and BNConnected();"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 279,
+        "symbols": [
+          "BNFeaturesEnabled"
+        ],
+        "text": "\tif not BNFeaturesEnabled() then"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 283,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\tlocal isConnectedToBattleNet = BNConnected();"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 374,
+        "symbols": [
+          "BN_CONNECTED"
+        ],
+        "text": "\t\"BN_CONNECTED\","
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 375,
+        "symbols": [
+          "BN_DISCONNECTED"
+        ],
+        "text": "\t\"BN_DISCONNECTED\","
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 406,
+        "symbols": [
+          "BNFeaturesEnabled"
+        ],
+        "text": "\tlocal battleNetFeaturesEnabled = BNFeaturesEnabled();"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 407,
+        "symbols": [
+          "BNConnected"
+        ],
+        "text": "\tlocal battleNetConnected = BNConnected();"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 508,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "\t\"BN_CUSTOM_MESSAGE_CHANGED\","
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 509,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_LOADED"
+        ],
+        "text": "\t\"BN_CUSTOM_MESSAGE_LOADED\","
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 531,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_CHANGED"
+        ],
+        "text": "\tif event == \"BN_CUSTOM_MESSAGE_CHANGED\" then"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 537,
+        "symbols": [
+          "BN_CUSTOM_MESSAGE_LOADED"
+        ],
+        "text": "\telseif event == \"BN_CUSTOM_MESSAGE_LOADED\" then"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 587,
+        "symbols": [
+          "BN_BLOCK_LIST_UPDATED"
+        ],
+        "text": "\t\"BN_BLOCK_LIST_UPDATED\","
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 730,
+        "symbols": [
+          "BNGetNumBlocked"
+        ],
+        "text": "\tlocal numBattleNetBlocks = BNGetNumBlocked();"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 766,
+        "symbols": [
+          "BNSetSelectedBlock"
+        ],
+        "text": "\t\t\tBNSetSelectedBlock(elementData.blockIndex);"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 806,
+        "symbols": [
+          "BNGetBlockedInfo",
+          "BNGetSelectedBlock"
+        ],
+        "text": "\t\tlocal blockID, _blockedName = BNGetBlockedInfo(BNGetSelectedBlock());"
+      },
+      {
+        "path": "Blizzard_SocialUI/Mainline/SocialUITemplates.lua",
+        "line": 807,
+        "symbols": [
+          "BNSetBlocked"
+        ],
+        "text": "\t\tBNSetBlocked(blockID, false);"
+      },
+      {
+        "path": "Blizzard_SocialUIShared/SocialUIUtil.lua",
+        "line": 77,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal _deprecatedPresenceID, _battleTag, _opaqueID, _broadcastText, isAFK, isBusy, _isRealIDEnabled, isAppearOffline = BNGetInfo();"
+      },
+      {
+        "path": "Blizzard_SocialUIShared/SocialUIUtil.lua",
+        "line": 123,
+        "symbols": [
+          "BNGetBlockedInfo"
+        ],
+        "text": "\tlocal _blockID, blockName = BNGetBlockedInfo(blockIndex);"
+      },
+      {
+        "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+        "line": 1700,
+        "symbols": [
+          "BNSetFriendNote"
+        ],
+        "text": "\t\tBNSetFriendNote(FriendsFrame.NotesID, dialog:GetEditBox():GetText());"
+      },
+      {
+        "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+        "line": 1709,
+        "symbols": [
+          "BNSetFriendNote"
+        ],
+        "text": "\t\tBNSetFriendNote(FriendsFrame.NotesID, editBox:GetText());"
+      },
+      {
+        "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+        "line": 2774,
+        "symbols": [
+          "BNSetBlocked"
+        ],
+        "text": "\t\tBNSetBlocked(inviteID, true);"
+      },
+      {
+        "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+        "line": 2775,
+        "symbols": [
+          "BNDeclineFriendInvite"
+        ],
+        "text": "\t\tBNDeclineFriendInvite(inviteID);"
+      },
+      {
+        "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+        "line": 2826,
+        "symbols": [
+          "BNRemoveFriend"
+        ],
+        "text": "\t\tBNRemoveFriend(bnetIDAccount);"
+      },
+      {
+        "path": "Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua",
+        "line": 1107,
+        "symbols": [
+          "BNSetBlocked"
+        ],
+        "text": "\t\tBNSetBlocked(accountID, false);"
+      },
+      {
+        "path": "Blizzard_StaticPopup_Glue/Mainline/GlueDialogDefs.lua",
+        "line": 128,
+        "symbols": [
+          "BNRemoveFriend"
+        ],
+        "text": "\t\tBNRemoveFriend(bnetIDAccount);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Mainline/ItemRef.lua",
+        "line": 18,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\t\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Mainline/ItemRef.lua",
+        "line": 29,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "function GetFixedLink(text, quality)"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Mainline/ItemRefHandlers.lua",
+        "line": 94,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\tif ( not HandleModifiedItemClick(GetFixedLink(text)) ) then"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Mainline/ItemRefHandlers.lua",
+        "line": 107,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\t\tlocal fixedLink = GetFixedLink(text, tonumber(breedQuality));"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Mainline/ItemRefHandlers.lua",
+        "line": 137,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Mainline/ItemRefHandlers.lua",
+        "line": 252,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Mainline/ItemRefHandlers.lua",
+        "line": 260,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+        "line": 12,
+        "symbols": [
+          "BNIsSelf"
+        ],
+        "text": "\t\t\tif ( isCommunityLink or not BNIsSelf(bnetIDAccount) ) then"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+        "line": 16,
+        "symbols": [
+          "BNIsFriend"
+        ],
+        "text": "\t\t\tif ( BNIsFriend(bnetIDAccount)) then"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+        "line": 84,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\t\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+        "line": 99,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\t\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+        "line": 109,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\t\tlocal fixedLink = GetFixedLink(text, tonumber(quality));"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+        "line": 120,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\t\t\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua",
+        "line": 134,
+        "symbols": [
+          "GetFixedLink"
+        ],
+        "text": "\tlocal fixedLink = GetFixedLink(text);"
+      },
+      {
+        "path": "Blizzard_UnitPopup/Standard/UnitPopupButtons.lua",
+        "line": 186,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\tif not BNFeaturesEnabledAndConnected() or not C_BattleNet.AreTitleFriendsEnabled() or not C_BattleNet.AreTitleFriendCustomNamesEnabled() then"
+      },
+      {
+        "path": "Blizzard_UnitPopup/Standard/UnitPopupButtons.lua",
+        "line": 396,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected(); "
+      },
+      {
+        "path": "Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua",
+        "line": 246,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected(); "
+      },
+      {
+        "path": "Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua",
+        "line": 305,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected(); "
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 676,
+        "symbols": [
+          "BNSetBlocked"
+        ],
+        "text": "\t\tBNSetBlocked(bnetAccountID, false);"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2350,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal battleTag = select(2, BNGetInfo());"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2362,
+        "symbols": [
+          "BNSendFriendInvite"
+        ],
+        "text": "\t\t\t\tBNSendFriendInvite(accountInfo.battleTag);"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2379,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected();"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2393,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal battleTag = select(2, BNGetInfo());"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2403,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected();"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2421,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal battleTag = select(2, BNGetInfo());"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2438,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\tif not BNFeaturesEnabledAndConnected() or not C_BattleNet.AreTitleFriendsEnabled() then"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 2455,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected() and C_BattleNet.AreTitleFriendsEnabled();"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 3743,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected();"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 3753,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\treturn BNFeaturesEnabledAndConnected() and C_BattleNet.AreTitleFriendsEnabled();"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+        "line": 3761,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal battleTag = select(2, BNGetInfo());"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedUtils.lua",
+        "line": 82,
+        "symbols": [
+          "BNFeaturesEnabledAndConnected"
+        ],
+        "text": "\tif not BNFeaturesEnabledAndConnected() then"
+      },
+      {
+        "path": "Blizzard_UnitPopupShared/UnitPopupSharedUtils.lua",
+        "line": 86,
+        "symbols": [
+          "BNGetInfo"
+        ],
+        "text": "\tlocal battleTag = select(2, BNGetInfo());"
+      }
+    ]
+  }
+}
