@@ -1,0 +1,11 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.15.5",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 6235411,
+    "sha256": "8a3bb5c0f6988c8ea87e4a1f80dae053222e39d450aa613d2c9b7ca85d4375d6"
+  },
+  "header_counts": [],
+  "entries": []
+}
