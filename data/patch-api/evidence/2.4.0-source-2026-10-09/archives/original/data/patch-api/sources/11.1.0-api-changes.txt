@@ -1,0 +1,116 @@
+Patch 11.1.0 API changes
+
+== Summary ==
+* Added support for grouping and categorizing addons in the addon list.
+* Added the display of performance metrics to the addon list and game menu microbutton tooltip.
+* Addons that exceed CPU performance thresholds may now trigger an in-game warning dialog suggesting that the user disable the addon.
+
+== Resources ==
+* TOC: 110100
+* Official patch notes: Undermine(d) Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== Addon list changes ==
+
+The addon list now supports grouping and categorizing addons through the use of the new Category and Group TOC file fields.
+
+* Categories will be displayed as headers that can be collapsed or expanded.
+* Groups will be displayed as indented sublists that cannot be collapsed.
+
+=== Addon list categories ===
+
+Membership of categories is controlled though the new Category TOC directive. The content of this directive must at present be a string that will be displayed verbatim in the addon list, with an empty string being equivalent to not having defined a category. The category name can be localized through the use of the existing locale-suffixes used for the Title and Notes directives.
+
+It is strongly recommended that you stick to the translated category names found on the Addon Categories page. This will ensure that your addon is consistently located with other addons in the same category across all locales.
+
+If no Category has been specified or an empty string is used as its value, then the addon will appear at the root of the addon tree list and not be placed under any collapsible headers.
+
+## Interface: [API LatestInterface]
+## Title: My Cool Addon
+## Category: This is a test
+## Category-deDE: Dies ist ein Test
+
+=== Addon list grouping ===
+
+Membership of groups is controlled through the new Group TOC directive. The content of this directive must the base name of another addon. Unlike Category it is not displayed in the addon list, however for grouping to functionally work at least two separate addons must share the same defined Group name.
+
+If no Group has been manually specified, the client will attempt to automatically deduce membership of a group. The list of installed addons will be scanned and to locate pairs of addons where the base name of one addon is a complete prefix of another, and where a dependency relation (optional or required) exists between the two in either direction. See the Group section on the TOC Format page for more in-depth details.
+
+== Consolidated changes ==
+: 11.0.7 (58238) → 11.1.0 (59466) Feb 27 2025
+
+=== Enumerations ===
+ Enum.AccountTransType
+   + SaveWarbandGroups
+ Enum.BattlepetDbFlags
+   - AccountStore
+ Enum.ChrModelFeatureFlags
+   + None
+   + Players
+   # DragonCompanions -> Deprecated0
+ Enum.CompanionRoleType
+   + Tank
+ Enum.CurrencyDestroyReason
+   + HonorLoss
+ Enum.CurrencyFlagsB
+   + CurrencyBForceMaxQuantityOnConversion
+ Enum.GossipNpcOption
+   + ProfessionRespec
+   + Placeholder_1
+   + Placeholder_2
+   + Placeholder_3
+   + Placeholder_4
+ Enum.GossipOptionRecFlags
+   + PlayMovieLabelPrepend
+ Enum.PerksVendorCategoryType
+   + WarbandScene
+ Enum.PlayerInteractionType
+   + ProfessionRespec
+   + PlaceholderType71
+   + PlaceholderType72
+   + PlaceholderType73
+   + PlaceholderType74
+   + PlaceholderType75
+   + PlaceholderType76
+   + PlaceholderType77
+ Enum.PointsModifierSourceType
+   + CurrencyMaxWeeklyDelta
+ Enum.SendAddonMessageResult
+   + NotInGuild
+ Enum.SubcontainerType
+   + CurrencyTransfer
+ Enum.WarbandSceneAnimationEvent
+   + Ffx
+ Enum.WarbandSceneAnimationStandState
+   + SitOnChairLow
+   + SitOnChairMedium
+   + SitOnChairHigh
+
+=== Structures ===
+ AppearanceSourceInfo
+   + canDisplayOnPlayer
+ CovenantData
+   + factionID
+ MajorFactionData
+   + factionFontColor
+   + renownTrackLevelEffectID
+ MountInfo
+   # faction, Type: number -> PvPFaction
+ PetInfo
+   # abilities -> petAbilities
+   + specAbilities
+   + specID
+ PlayerChoiceInfo
+   + showChoicesAsList
+ PlayerChoiceOptionButtonInfo
+   + showCheckmark
+   + hideButtonShowText
+   + listText
+ QuestObjectiveInfo
+   + objectiveType
+ TotemInfoScript
+   + modRate
+ UIWidgetSpellInfo
+   + showAsEarned
+ UnitPowerBarInfo
+   + attachTooltipToBar

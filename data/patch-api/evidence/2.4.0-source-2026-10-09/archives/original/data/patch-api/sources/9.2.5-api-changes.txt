@@ -1,0 +1,150 @@
+Patch 9.2.5 API changes
+
+== Summary ==
+* Significant modifications were made to the UnitPopup menu system. See UnitPopup Changes for more information.
+* Added various APIs relating to cross-faction player co-operation.
+* Added Region:GetSourceLocation() which returns the script name and line where a Region was created.
+* Added a new reusable system for dropdowns that configure list filters.
+* Added a new player name autocompletion flag - AUTO_COMPLETE_RECENT_PLAYER.
+* The GetPlayerAuraBySpellID() API no longer returns information about hidden auras.
+* (9.2.0) Added isFullUpdate and updatedAuras parameters to UNIT_AURA.[https://www.bluetracker.gg/wow/topic/us-en/1205007-new-unit_aura-processing-optimizations/]
+Enums
+* Changed the casing of various LFG enumerations; usages of "Lfg" have been renamed to the fully-uppercase "LFG". The old names are deprecated.
+* Added new enums for calendar events and invites. The old global constants have been deprecated.
+* Added a new enum for LFG filter flags. The old global constants are deprecated.
+
+== Resources ==
+* TOC: 90205
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Deprecated_9_2_5.lua
+* Official patch notes: User Interface and Accessibility
+
+== UnitPopup Changes ==
+[Warning: Secure Execution and Tainting]
+* Modifying UnitPopup menus as described below will taint and break other secure actions in the same menu.
+
+The UnitPopup system has been reworked to cut down on the differences between the Retail and Classic clients. This is a breaking change and may require alterations to addons that were previously modifying global tables to add, remove, or modify buttons on right-click menus for units.
+
+To create a new button to be displayed on unit menus create a mixin that derives from UnitPopupButtonBaseMixin.
+
+```lua
+local CustomMenuButtonMixin = CreateFromMixins(UnitPopupButtonBaseMixin)
+
+function CustomMenuButtonMixin:GetText() return "My Button" end
+function CustomMenuButtonMixin:OnClick() print("Clicked!") end
+```
+
+To then add this button to a menu pre-hook the appropriate GetMenuButtons() method on each menu table that you want to modify. This can also be used to remove or re-order existing buttons within the same menu.
+
+```lua
+-- This example will modify the "Target" unit menu and add the custom button
+-- from the example above as the first button in its list.
+
+local GetTargetMenuButtons = UnitPopupMenuTarget.GetMenuButtons
+
+function UnitPopupMenuTarget:GetMenuButtons()
+    local buttons = GetTargetMenuButtons(self)
+    table.insert(buttons, 1, CustomMenuButtonMixin)
+    return buttons
+end
+```
+
+The list of all unit menu tables can be found split across two files; UnitPopupSharedMenus.lua for menus shared between all client flavors, and UnitPopupMenus.lua for per-client customizations.
+
+== Structures ==
+ AuctionHouseItemClassFilter (C_AuctionHouse.SendBrowseQuery)
+   # inventoryType, Type: number -> Enum.InventoryType
+ CalendarDayEvent
+   # inviteStatus, Type: number -> Enum.CalendarStatus
+   # inviteType, Type: number -> Enum.CalendarInviteType
+ CalendarEventInfo (C_Calendar.GetEventInfo)
+   # repeatOption, Type: number -> Enum.CalendarEventRepeatOptions
+   # inviteStatus, Type: number -> Enum.CalendarStatus
+   # inviteType, Type: number -> Enum.CalendarInviteType
+ CalendarEventInviteInfo (C_Calendar.EventGetInvite)
+   # inviteStatus, Type: number -> Enum.CalendarStatus
+   # type, Type: number -> Enum.CalendarInviteType
+ CalendarGuildEventInfo (C_Calendar.GetGuildEventInfo)
+   # inviteStatus, Type: number -> Enum.CalendarStatus
+ ClubFinderApplicantInfo
+   + faction
+ ClubInfo
+   + crossFaction
+ ClubMemberInfo
+   + faction
+ ClubSettingsInfo
+   + crossFaction
+ GroupFinderActivityInfo (C_LFGList.GetActivityInfoTable, C_LFGList.GetPlaystyleString)
+   # displayType, Type: Enum.LfgListDisplayType -> Enum.LFGListDisplayType
+   + allowCrossFaction
+ LfgCategoryData (C_LFGList.GetLfgCategoryInfo)
+   + allowCrossFaction
+ LfgEntryData (C_LFGList.GetActiveEntryInfo)
+   # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle
+   + isCrossFactionListing
+ LfgSearchResultData (C_LFGList.GetSearchResultInfo)
+   # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle
+   + crossFactionListing
+   + leaderFactionGroup
+ RecruitingClubInfo
+   + isCrossFaction
+ UIWidgetSpellInfo (C_UIWidgetManager.GetSpellDisplayVisualizationInfo)
+   + textFontType
+   + textSizeType
+   + hAlignType
+
+== Enumerations ==
+ + Enum.CalendarTexturesType
+ + Enum.ClientPlatformType
+ + Enum.ClientSceneType
+ + Enum.ItemCreationContext
+ + Enum.ItemModification
+ + Enum.LFGListFilter
+ + Enum.PetBattleQueueStatus
+ + Enum.PvPFaction
+ + Enum.ReportMajorCategory
+ + Enum.ReportMinorCategory
+ + Enum.ReportType
+ - Enum.LfgEntryPlaystyle
+ + Enum.LFGEntryPlaystyle
+ - Enum.LfgListDisplayType
+ + Enum.LFGListDisplayType
+
+ Enum.AuctionHouseFilter
+   + None
+ Enum.BattlePetNpcTeamFlag
+   + NoPlayerXP
+   - NoPlayerXp
+ Enum.BrawlType
+   + LFG
+   - Lfg
+   + SoloShuffle
+ Enum.CalendarCommandType
+   # CalendarCommandCreate -> Create, etc
+ Enum.CalendarErrorType
+   # CalendarErrorSuccess -> Success, etc
+ Enum.CalendarEventBits
+   # CalendarEventBitPlayer -> Player, etc
+ Enum.CalendarEventRepeatOptions
+   # CalendarRepeatNever -> Never, etc
+ Enum.CalendarGetEventType
+   - DefaultCalendarGetEventType
+ Enum.CalendarInviteBits
+   # CalendarInviteBitPendingInvite -> PendingInvite, etc
+ Enum.CalendarInviteSortType
+   # CalendarInviteSortName -> Name, etc
+ Enum.CalendarModeratorStatus
+   # CalendarModeratorNone -> None, etc
+ Enum.ClubErrorType
+   + ErrorClubDoesntAllowCrossFaction
+   + ErrorClubEditHasCrossFactionMembers
+ Enum.CurrencyFlagsB
+   + CurrencyBShowQuestXPGainInTooltip
+   - CurrencyBShowQuestXpGainInTooltip
+ Enum.CurrencySource
+   + LFGReward
+   - LfgReward
+ Enum.QuestSessionResult
+   + RestrictedCrossFaction
+ Enum.UICursorType
+   - CommunitiesStream

@@ -1,0 +1,33 @@
+{
+  "pageid": 422312,
+  "title": "Patch 5.2.0/API changes",
+  "revid": 4057299,
+  "timestamp": "2018-11-26T23:09:55Z",
+  "sha256": "3feae2c6e4d1d07dfdf77e714f904f5b76226a7bd7b7cdabd0e92e7bb8566568",
+  "fetched": "2026-10-08",
+  "fetch_url": "https://warcraft.wiki.gg/api.php",
+  "extractor_flags": [
+    "--retain-patch-diff-reference"
+  ],
+  "generator_flags": [
+    "--mists-diff",
+    "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
+    "--mists-bare-widget-handlers",
+    "--client-line",
+    "retail"
+  ],
+  "client_line": "retail",
+  "toc": 50200,
+  "source_kind": "substantive-page",
+  "toc_source": {
+    "pageid": 79898,
+    "revid": 6902261,
+    "evidence": "data/patch-api/evidence/5.2.0-session-2026-10-08/parent-fetch.json"
+  },
+  "diff_source": {
+    "pageid": 471131,
+    "revid": 4529204,
+    "path": "data/patch-api/sources/5.2.0-api-changes-diff.wikitext",
+    "sha256": "93008d3af7c34e697a0165709a3a87bcea9fde23fde50a59b11234feef52215d"
+  }
+}

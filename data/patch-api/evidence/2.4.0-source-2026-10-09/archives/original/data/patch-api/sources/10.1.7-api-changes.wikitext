@@ -1,0 +1,171 @@
+{{apichanges|10.1.7|prev=10.1.5|next=10.2.0}}
+==Summary==
+* Added a new [[#Ping system|Ping system]].
+* Fixed an issue where ScrollingFontTemplate could allow scrolling out-of-bounds or clip its contents if the frame size or font were modified<ref>WoWUIBugs#450 https://github.com/Stanzilla/WoWUIBugs/issues/450</ref>.
+
+==Resources==
+* TOC: <code>100107</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.1.5..10.1.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.1.5..10.1.7 BlizzardInterfaceResources]
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/23987385/dragonflight-fury-incarnate-content-update-notes-now-live#item12 Dragonflight: Fury Incarnate Content Update Notes]
+
+==Ping system==
+The ping system can be used to communicate contextual notifications to group members visualized via through a UI frame anchored in the game world.
+
+This can be activated by pressing and holding the Ping hotkey (default {{keypress|G}}). Clicking the game world, units, or unit frames will send a ''contextual'' ping, where the type of the ping sent will be automatically inferred based upon what was clicked. Dragging the mouse while clicking will open a ping wheel to manually select the type of ping to send.
+
+The API functions for sending pings are forbidden and may not directly be called by addons. Additionally, the frames used for displaying pings in the game world are [[Object security#Forbidden_objects|forbidden objects]] and cannot be customized.
+
+===Ping receivers===
+Insecure frames can opt-in to be '''ping receivers'''. This permits a ping to be automatically sent when a receiver frame is clicked during a ping interaction, with the target and type of the ping customizable by overriding two methods on the frame itself. Ping receivers can also be used to block ping interactions, preventing pings being sent if the frame is clicked.
+
+To become a ping receiver a frame must meet either of the following conditions, with further details found in the documentation for  {{api|C_PingSecure.GetTargetPingReceiver}}.
+
+# The frame must be marked as top level ({{api|t=w|Frame:SetToplevel}}) and not have the <code>ping-top-level-pass-through</code> attribute set.
+# The frame must have the <code>ping-receiver</code> attribute set.
+
+For convenience, two templates are provided in FrameXML to apply these attributes.
+
+* PingReceiverAttributeTemplate
+* PingTopLevelPassThroughAttributeTemplate
+
+The example below will create an icon in the middle of the screen that sends an "Attack" ping for your current target when clicked with the ping hotkey held.
+
+<syntaxhighlight lang="lua">
+local PingReceiver = CreateFrame("Frame", nil, UIParent, "PingReceiverAttributeTemplate")
+PingReceiver:SetPoint("CENTER")
+PingReceiver:SetSize(64, 64)
+
+local PingReceiverIcon = PingReceiver:CreateTexture()
+PingReceiverIcon:SetAllPoints(PingReceiver)
+PingReceiverIcon:SetTexture([[interface\icons\spell_magic_polymorphrabbit]])
+
+-- This mixin is required to add an additional required "IsPingable" field to the frame.
+--
+-- If this field is not present, the frame will intercept and block pings leading to a
+-- "Can't ping this." message being displayed in the UI errors frame.
+Mixin(PingReceiver, PingableTypeMixin)
+
+-- When contextually pinging, the default ping type for the ping we should send.
+-- This will not be called if the user clicks and drags to open the ping wheel.
+function PingReceiver:GetContextualPingType()
+    return Enum.PingSubjectType.Attack
+end
+
+-- The target that a UI ping redirects to, if the ping should be located over something (or nothing).
+function PingReceiver:GetTargetPingGUID()
+    return UnitGUID("target")
+end
+</syntaxhighlight>
+
+For unit frames, a convenience mixin is also provided (PingableType_UnitFrameMixin) that will provide default implementations of the above functions to automatically ping the unit token stored in the <code>unit</code> field on the frame, and with an appropriate context based upon whether the unit is friendly or hostile.
+
+==Global API==
+{{api ambox|border=red|image=spell_holy_borrowedtime.png|size=48|The listed changes are out of date.}}
+{| class="wikitable" style="min-width: 600px"
+|+ 10.1.5 (50438) &rarr; <font color="#ecbc2a">PTR</font> 10.1.7 (50793) Aug  6 2023
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(19)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_CharacterServices.AssignNameChangeDistribution}}
+: {{api|t=a|C_CharacterServices.CapitalizeCharName}}
+: {{api|t=a|C_Club.DoesAnyCommunityHaveUnreadMessages}}
+: {{api|t=a|C_InterfaceFileManifest.GetInterfaceArtFiles}}
+: {{api|t=a|C_Item.GetItemIDForItemInfo}}
+: {{api|t=a|C_PartyInfo.GetRestrictRaidPings}}
+: {{api|t=a|C_PartyInfo.SetRestrictRaidPings}}
+: {{api|t=a|C_Ping.GetContextualPingTypeForUnit}}
+: {{api|t=a|C_Ping.SendMacroPing}}
+: {{api|t=a|C_Ping.TogglePingListener}}
+: {{api|t=a|C_PingSecure.ClearPendingPingInfo}}
+: {{api|t=a|C_PingSecure.CreateFrame}}
+: {{api|t=a|C_PingSecure.DisplayError}}
+: {{api|t=a|C_PingSecure.GetTargetPingReceiver}}
+: {{api|t=a|C_PingSecure.GetTargetWorldPing}}
+: {{api|t=a|C_PingSecure.GetTargetWorldPingAndSend}}
+: {{api|t=a|C_PingSecure.SendPing}}
+: {{api|t=a|C_PingSecure.SetPendingPingOffScreenCallback}}
+: {{api|t=a|C_PingSecure.SetPingCooldownStartedCallback}}
+: {{api|t=a|C_PingSecure.SetPingPinFrameAddedCallback}}
+: {{api|t=a|C_PingSecure.SetPingPinFrameRemovedCallback}}
+: {{api|t=a|C_PingSecure.SetPingPinFrameScreenClampStateUpdatedCallback}}
+: {{api|t=a|C_PingSecure.SetPingRadialWheelCreatedCallback}}
+: {{api|t=a|C_PingSecure.SetSendMacroPingCallback}}
+: {{api|t=a|C_PingSecure.SetTogglePingListenerCallback}}
+: {{api|t=a|C_TradeSkillUI.CanStoreEnchantInItem}}
+: {{api|t=a|C_Traits.GenerateImportString}}
+: {{api|t=a|C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(6)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|ScriptRegion:SetProtected}}
+: {{api|t=w|EditBox:IsAlphabeticOnly}}
+: {{api|t=w|EditBox:IsNumericFullRange}}
+: {{api|t=w|EditBox:ResetInputMode}}
+: {{api|t=w|EditBox:SetAlphabeticOnly}}
+: {{api|t=w|EditBox:SetNumericFullRange}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(8)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CHAT_MSG_PING}}
+: {{api|t=e|PING_SYSTEM_ERROR}}
+: {{api|t=e|UPDATE_TRADESKILL_CAST_STOPPED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|UPDATE_TRADESKILL_CAST_COMPLETE}}
+: {{api|t=e|UPDATE_TRADESKILL_RECAST}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(8)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=CameraFollowTargetCombat|default=1|scope=Account|cat=4|desc=Camera follow the locked target only during combat.}}
+: {{apitooltip|type=cvar|name=enablePings|default=1|cat=4|desc=Enables ping system.}}
+: {{apitooltip|type=cvar|name=notifiedOfNewMail|default=0|scope=Character|cat=4|desc=Stores whether the player has been previously notified of new mail. Only set to false once everything in their Inbox has been marked as read.}}
+: {{apitooltip|type=cvar|name=pingMode|default=0|cat=4|desc=Determines which mode is used to use the ping system.}}
+: {{apitooltip|type=cvar|name=showPingsInChat|default=1|cat=4|desc=Enables ping details being shown in chat.}}
+: {{apitooltip|type=cvar|name=Sound_EnablePingSounds|default=1|cat=7|desc=Enable Ping Sounds}}
+: {{apitooltip|type=cvar|name=Sound_PingVolume|default=1.0|cat=7|desc=Ping Volume (0.0 to 1.0)}}
+: {{apitooltip|type=cvar|name=useCommentatorSelectionCircles|default=1|cat=4|desc=Determines whether to use the commentator selection circles or the default selection circles while spectating or commentating a wargame}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=useCompactPartyFrames}}
+</div>
+|}
+
+==Enums==
+ Enum.CurrencyFlagsB
+   + <font color="#00b400">FutureCurrencyFlag</font> = 0x10
+   + <font color="#00b400">CurrencyBDontDisplayIfZero</font> = 0x20
+ Enum.PingSubjectType
+   + <font color="#00b400">OnMyWay</font> = 3
+   + <font color="#00b400">AlertThreat</font> = 4
+   + <font color="#00b400">AlertNotThreat</font> = 5
+   - <font color="#ff6767">GroupHere</font>
+
+==References==
+{{Reflist}}

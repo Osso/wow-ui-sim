@@ -1,0 +1,241 @@
+{{apichanges|9.1.5|prev=9.1.0|next=9.2.0}}
+
+==Summary==
+* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate.
+* The guild bank UI has been synchronized with changes made in patch 2.5.2 to use a mixin-based approach.
+* The legacy Looking For Guild and Guild Recruitment APIs and UIs have been removed.
+** The guild finder embedded into the Communities UI still exists.
+* The [[MACRO_eventtrace|event trace]] tool now supports logging events while the frame is hidden. This option is disabled by default.
+:: [[File:EventTrace_logwhilehidden.png|325px]]
+
+* Item upgrade API has been moved to the [[:Category:API namespaces/C_ItemUpgrade|C_ItemUpgrade]] namespace.
+* {{api|DeleteCursorItem}}() is limited to deleting a single item per hardware event.
+* Several APIs, for instance the Auction House API have been /run script [[:Category:API_functions/Protected#NOSCRIPT|protected]].
+
+==Resources==
+* TOC: <code>90105</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/commit/4b8a0a911090d4679db954d61291a852db9542fe wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/197b4317e7e09b825b09173f24d7a008599812be BlizzardInterfaceResources]
+* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/9.1.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_9_1_5.lua Deprecated_9_1_5.lua]
+* Official patch notes: [https://worldofwarcraft.com/en-us/news/23731242/updated-november-1-915-content-update-notes#item17 User Interface and Accessibility]
+* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/9.1.5-Consolidated-UI-Changes 9.1.5 Consolidated UI Changes]
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 9.1.0 (40000) &rarr; 9.1.5 (41031) Nov 10 2021
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(70)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(46)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_BarberShop.MarkCustomizationChoiceAsSeen}}
+: {{api|t=a|C_BarberShop.MarkCustomizationOptionAsSeen}}
+: {{api|t=a|C_BarberShop.SaveSeenChoices}}
+: {{api|t=a|C_BehavioralMessaging.SendNotificationReceipt}}
+: {{api|t=a|C_ChallengeMode.GetMapScoreInfo}}
+: {{api|t=a|C_Club.FocusCommunityStreams}}
+: {{api|t=a|C_Club.UnfocusAllStreams}}
+: {{api|t=a|C_Commentator.SetBlocklistedAuras}}
+: {{api|t=a|C_Commentator.SetBlocklistedCooldowns}}
+: {{api|t=a|C_GamePad.SetVibration}}
+: {{api|t=a|C_GamePad.StopVibration}}
+: {{api|t=a|C_Item.GetCurrentItemTransmogInfo}}
+: {{api|t=a|C_ItemUpgrade.ClearItemUpgrade}}
+: {{api|t=a|C_ItemUpgrade.CloseItemUpgrade}}
+: {{api|t=a|C_ItemUpgrade.GetItemUpgradeCurrentLevel}}
+: {{api|t=a|C_ItemUpgrade.GetItemUpgradeItemInfo}}
+: {{api|t=a|C_ItemUpgrade.GetItemUpgradePvpItemLevelDeltaValues}}
+: {{api|t=a|C_ItemUpgrade.SetItemUpgradeFromCursorItem}}
+: {{api|t=a|C_ItemUpgrade.SetItemUpgradeFromLocation}}
+: {{api|t=a|C_ItemUpgrade.UpgradeItem}}
+: {{api|t=a|C_LFGList.GetActivityFullName}}
+: {{api|t=a|C_LFGList.GetActivityInfoTable}}
+: {{api|t=a|C_LFGList.GetApplicantPvpRatingInfoForListing}}
+: {{api|t=a|C_LFGList.GetKeystoneForActivity}}
+: {{api|t=a|C_LFGList.GetLfgCategoryInfo}}
+: {{api|t=a|C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel}}
+: {{api|t=a|C_LFGList.GetPlaystyleString}}
+: {{api|t=a|C_LFGList.IsPlayerAuthenticatedForLFG}}
+: {{api|t=a|C_LFGList.SetEntryTitle}}
+: {{api|t=a|C_LFGList.ValidateRequiredDungeonScore}}
+: {{api|t=a|C_LFGList.ValidateRequiredPvpRatingForActivity}}
+: {{api|t=a|C_MountJournal.IsTypeChecked}}
+: {{api|t=a|C_MountJournal.IsValidTypeFilter}}
+: {{api|t=a|C_MountJournal.SetAllTypeFilters}}
+: {{api|t=a|C_MountJournal.SetTypeFilter}}
+: {{api|t=a|C_MythicPlus.GetCurrentSeasonValues}}
+: {{api|t=a|C_MythicPlus.GetOwnedKeystoneMapID}}
+: {{api|t=a|C_PlayerMentorship.GetMentorRequirements}}
+: {{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}
+: {{api|t=a|C_SocialRestrictions.IsChatDisabled}}
+: {{api|t=a|C_SocialRestrictions.SetChatDisabled}}
+: {{api|t=a|C_Transmog.ExtractTransmogIDList}}
+: {{api|t=a|C_TransmogCollection.AccountCanCollectSource}}
+: {{api|t=a|C_TransmogCollection.GetItemTransmogInfoListFromOutfitHyperlink}}
+: {{api|t=a|C_TransmogCollection.GetOutfitHyperlinkFromItemTransmogInfoList}}
+: {{api|t=a|C_TransmogCollection.GetSourceItemID}}
+: {{api|t=a|C_TransmogCollection.PlayerHasTransmogByItemInfo}}
+: {{api|t=a|C_TransmogSets.IsSetVisible}}
+: {{api|t=a|C_TTSSettings.GetChannelEnabled}}
+: {{api|t=a|C_TTSSettings.GetCharacterSettingsSaved}}
+: {{api|t=a|C_TTSSettings.GetChatTypeEnabled}}
+: {{api|t=a|C_TTSSettings.GetSetting}}
+: {{api|t=a|C_TTSSettings.GetSpeechRate}}
+: {{api|t=a|C_TTSSettings.GetSpeechVolume}}
+: {{api|t=a|C_TTSSettings.GetVoiceOptionID}}
+: {{api|t=a|C_TTSSettings.GetVoiceOptionName}}
+: {{api|t=a|C_TTSSettings.MarkCharacterSettingsSaved}}
+: {{api|t=a|C_TTSSettings.SetChannelEnabled}}
+: {{api|t=a|C_TTSSettings.SetChannelKeyEnabled}}
+: {{api|t=a|C_TTSSettings.SetChatTypeEnabled}}
+: {{api|t=a|C_TTSSettings.SetDefaultSettings}}
+: {{api|t=a|C_TTSSettings.SetSetting}}
+: {{api|t=a|C_TTSSettings.SetSpeechRate}}
+: {{api|t=a|C_TTSSettings.SetSpeechVolume}}
+: {{api|t=a|C_TTSSettings.SetVoiceOptionName}}
+: {{api|t=a|C_TTSSettings.SetVoiceOption}}
+: {{api|t=a|C_UIWidgetManager.SetProcessingUnitGuid}}
+: {{api|t=a|securecallfunction}}
+: {{api|t=a|secureexecuterange}}
+: {{api|t=a|strsplittable}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AcknowledgeAADCAlert}}
+: {{api|t=a|C_Commentator.SetBlacklistedAuras}}
+: {{api|t=a|C_Commentator.SetBlacklistedCooldowns}}
+: {{api|t=a|C_ItemUpgrade.GetItemLevelIncrement}}
+: {{api|t=a|C_LFGList.GetActivityInfo}}
+: {{api|t=a|C_LFGList.GetCategoryInfo}}
+: {{api|t=a|C_LFGuildInfo.GetRecruitingGuildTabardInfo}}
+: {{api|t=a|C_PlayerMentorship.GetMentorOptionalAchievementIDs}}
+: {{api|t=a|C_Soulbinds.GetConduitChargesCapacity}}
+: {{api|t=a|C_Soulbinds.GetConduitCharges}}
+: {{api|t=a|C_Soulbinds.GetTotalConduitChargesPendingInSoulbind}}
+: {{api|t=a|C_Soulbinds.GetTotalConduitChargesPending}}
+: {{api|t=a|CancelGuildMembershipRequest}}
+: {{api|t=a|ClearItemUpgrade}}
+: {{api|t=a|CloseItemUpgrade}}
+: {{api|t=a|DeclineGuildApplicant}}
+: {{api|t=a|GetGuildApplicantInfo}}
+: {{api|t=a|GetGuildApplicantSelection}}
+: {{api|t=a|GetGuildMembershipRequestInfo}}
+: {{api|t=a|GetGuildMembershipRequestSettings}}
+: {{api|t=a|GetGuildRecruitmentComment}}
+: {{api|t=a|GetGuildRecruitmentSettings}}
+: {{api|t=a|GetItemUpdateLevel}}
+: {{api|t=a|GetItemUpgradeItemInfo}}
+: {{api|t=a|GetItemUpgradeStats}}
+: {{api|t=a|GetLookingForGuildComment}}
+: {{api|t=a|GetLookingForGuildSettings}}
+: {{api|t=a|GetNumGuildApplicants}}
+: {{api|t=a|GetNumGuildMembershipRequests}}
+: {{api|t=a|GetNumRecruitingGuilds}}
+: {{api|t=a|GetRecruitingGuildInfo}}
+: {{api|t=a|GetRecruitingGuildSelection}}
+: {{api|t=a|GetRecruitingGuildSettings}}
+: {{api|t=a|RequestGuildApplicantsList}}
+: {{api|t=a|RequestGuildMembershipList}}
+: {{api|t=a|RequestGuildMembership}}
+: {{api|t=a|RequestGuildRecruitmentSettings}}
+: {{api|t=a|RequestRecruitingGuildsList}}
+: {{api|t=a|SetGuildApplicantSelection}}
+: {{api|t=a|SetGuildRecruitmentComment}}
+: {{api|t=a|SetGuildRecruitmentSettings}}
+: {{api|t=a|SetItemUpgradeFromCursorItem}}
+: {{api|t=a|SetLookingForGuildComment}}
+: {{api|t=a|SetLookingForGuildSettings}}
+: {{api|t=a|SetRecruitingGuildSelection}}
+: {{api|t=a|UpgradeItem}}
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(8)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|DressUpModel:GetObeyHideInTransmogFlag}}
+: {{api|t=w|DressUpModel:GetUseTransmogChoices}}
+: {{api|t=w|DressUpModel:SetObeyHideInTransmogFlag}}
+: {{api|t=w|DressUpModel:SetUseTransmogChoices}}
+: {{api|t=w|ModelSceneActor:GetObeyHideInTransmogFlag}}
+: {{api|t=w|ModelSceneActor:GetUseTransmogChoices}}
+: {{api|t=w|ModelSceneActor:SetObeyHideInTransmogFlag}}
+: {{api|t=w|ModelSceneActor:SetUseTransmogChoices}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(8)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(9)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ALERT_REGIONAL_CHAT_DISABLED}}
+: {{api|t=e|BEHAVIORAL_NOTIFICATION}}
+: {{api|t=e|CHAT_DISABLED_CHANGE_FAILED}}
+: {{api|t=e|CHAT_DISABLED_CHANGED}}
+: {{api|t=e|GAME_PAD_ACTIVE_CHANGED}}
+: {{api|t=e|ITEM_UPGRADE_FAILED}}
+: {{api|t=e|NOTIFY_CHAT_SUPPRESSED}}
+: {{api|t=e|TRANSMOG_COSMETIC_COLLECTION_SOURCE_ADDED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ITEM_UPGRADE_MASTER_UPDATE}}
+: {{api|t=e|LF_GUILD_BROWSE_UPDATED}}
+: {{api|t=e|LF_GUILD_MEMBERSHIP_LIST_CHANGED}}
+: {{api|t=e|LF_GUILD_MEMBERSHIP_LIST_UPDATED}}
+: {{api|t=e|LF_GUILD_POST_UPDATED}}
+: {{api|t=e|LF_GUILD_RECRUIT_LIST_CHANGED}}
+: {{api|t=e|LF_GUILD_RECRUITS_UPDATED}}
+: {{api|t=e|SHOW_AADC_ALERT}}
+: {{api|t=e|SOULBIND_CONDUIT_CHARGES_UPDATED}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(23)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(5)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: <span class="tttemplatelink">[[CVar CameraFollowGamepadAdjustDelay|CameraFollowGamepadAdjustDelay]]</span><span style="display:none">Default: <code><span class="apitype">1.0</span></code>, Scope: <span class="apitype">Account</span><br><small>Delay before follow resuming after manually adjusting the camera with Gamepad input</small></span>
+: <span class="tttemplatelink">[[CVar CameraFollowGamepadAdjustEaseIn|CameraFollowGamepadAdjustEaseIn]]</span><span style="display:none">Default: <code><span class="apitype">1.0</span></code>, Scope: <span class="apitype">Account</span><br><small>Ease-in time for follow resuming after manually adjusting the camera with Gamepad input</small></span>
+: <span class="tttemplatelink">[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]</span><span style="display:none">Default: <code><span class="apitype">0.333333</span></code><br><small>Lowest render scale DynamicRenderScale can use</small></span>
+: <span class="tttemplatelink">[[CVar DynamicRenderScale|DynamicRenderScale]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.</small></span>
+: <span class="tttemplatelink">[[CVar engineSurveyPatch|engineSurveyPatch]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Engine Survey Patch</small></span>
+: <span class="tttemplatelink">[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Disable use of texture heaps and force the fallback path</small></span>
+: <span class="tttemplatelink">[[CVar GamePadCameraLookMaxPitch|GamePadCameraLookMaxPitch]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Max pitch 'Look' stick can adjust camera angle</small></span>
+: <span class="tttemplatelink">[[CVar GamePadCameraLookMaxYaw|GamePadCameraLookMaxYaw]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Max yaw 'Look' stick can adjust camera angle</small></span>
+: <span class="tttemplatelink">[[CVar GamePadCursorForTargeting|GamePadCursorForTargeting]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Enable GamePad controlled cursor for spell targeting</small></span>
+: <span class="tttemplatelink">[[CVar GamePadFaceMovementMaxAngleCombat|GamePadFaceMovementMaxAngleCombat]]</span><span style="display:none">Default: <code><span class="apitype">180</span></code><br><small>Max movement to camera angle to face movement direction instead of camera direction, in combat. 0 = always, 180 = never (115 allows using strafe with quick turn around)</small></span>
+: <span class="tttemplatelink">[[CVar GamePadFaceMovementMaxAngle|GamePadFaceMovementMaxAngle]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Max movement to camera angle to face movement direction instead of camera direction. 0 = always, 180 = never (115 allows using strafe with quick turn around)</small></span>
+: <span class="tttemplatelink">[[CVar GamePadTouchCursorEnable|GamePadTouchCursorEnable]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Enable cursor control with GamePad's touch pad</small></span>
+: <span class="tttemplatelink">[[CVar GamePadVibrationStrength|GamePadVibrationStrength]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>GamePad vibration effect strength</small></span>
+: <span class="tttemplatelink">[[CVar GameplayContext|GameplayContext]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code></span>
+: <span class="tttemplatelink">[[CVar mountJournalTypeFilter|mountJournalTypeFilter]]</span><span style="display:none">Scope: <span class="apitype">Account</span><br><small>Bitfield for which type filters are applied in the mount journal</small></span>
+: <span class="tttemplatelink">[[CVar ResampleAlwaysSharpen|ResampleAlwaysSharpen]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Run sharpness pass, even if not using AMD FSR Upscale [0,1]</small></span>
+: <span class="tttemplatelink">[[CVar ResampleSharpness|ResampleSharpness]]</span><span style="display:none">Default: <code><span class="apitype">0.2</span></code><br><small>FSR sharpness strength [0.0-2.0]. 0 is full strength. -1 to disable.</small></span>
+: <span class="tttemplatelink">[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Seen the alert indicating chat has been disabled by default. (UK AADC)</small></span>
+: <span class="tttemplatelink">[[CVar showOutfitDetails|showOutfitDetails]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Character</span><br><small>Whether or not to show outfit details when the dressing room is opened in maximized mode, default on</small></span>
+: <span class="tttemplatelink">[[CVar TTSUseCharacterSettings|TTSUseCharacterSettings]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Character</span><br><small>If character-specific TTS settings are being used.</small></span>
+
+: Commands
+: [[CVar clearSeenCustomizationChoices|clearSeenCustomizationChoices]]
+: [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]
+: <span class="tttemplatelink">[[CVar GxFrameStats|GxFrameStats]]</span><span style="display:none"><small>Get Engine Frame Stats</small></span>
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: [[CVar AIProcessDebugger|AIProcessDebugger]]
+: [[CVar GamePadFaceMovementThreshold|GamePadFaceMovementThreshold]]
+: [[CVar GamePadForceXInput|GamePadForceXInput]]
+: [[CVar raidOrBattleCount|raidOrBattleCount]]
+: [[CVar seenAADCAlert|seenAADCAlert]]
+</div>
+|}

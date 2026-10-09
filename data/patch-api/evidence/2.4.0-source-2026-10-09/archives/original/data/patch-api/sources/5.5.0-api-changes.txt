@@ -1,0 +1,8 @@
+Patch 5.5.0 API changes
+
+== Summary ==
+* The client has synchronized with changes from Mainline through to Patch 11.1.7.
+
+== Resources ==
+* TOC: 50500
+* Diffs: wow-ui-source, BlizzardInterfaceResources

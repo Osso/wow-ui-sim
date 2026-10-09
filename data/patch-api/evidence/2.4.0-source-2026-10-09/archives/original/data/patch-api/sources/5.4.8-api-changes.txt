@@ -1,0 +1,34 @@
+Patch 5.4.8 API changes
+
+== Breaking changes ==
+A number of console variables can no longer be changed while in combat: [http://us.battle.net/wow/en/forum/topic/12674209697]
+*alwaysShowActionBars
+*bloatnameplates
+*bloatTest
+*bloatthreat
+*consolidateBuffs
+*fullSizeFocusFrame
+*maxAlgoplates
+*nameplateMotion
+*nameplateOverlapH
+*nameplateOverlapV
+*nameplateShowEnemies
+*nameplateShowEnemyGuardians
+*nameplateShowEnemyPets
+*nameplateShowEnemyTotems
+*nameplateShowFriendlyGuardians
+*nameplateShowFriendlyPets
+*nameplateShowFriendlyTotems
+*nameplateShowFriends
+*repositionfrequency
+*showArenaEnemyFrames
+*showArenaEnemyPets
+*showPartyPets
+*showTargetOfTarget
+*targetOfTargetMode
+*uiScale
+*useCompactPartyFrames
+*useUiScale
+
+Other changes:
+*SetUIVisibility(false) is now protected in combat. Add-Ons can still use "SetUIVisibility(true)" while in combat, but you cannot toggle it. [http://us.battle.net/wow/en/forum/topic/12674209697?page=3#46]

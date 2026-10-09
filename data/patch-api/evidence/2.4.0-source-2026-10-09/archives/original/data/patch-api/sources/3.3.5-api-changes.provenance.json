@@ -1,0 +1,19 @@
+{
+  "title": "Patch 3.3.5/API changes",
+  "pageid": 25049,
+  "revid": 247986,
+  "timestamp": "2010-07-10T15:47:20Z",
+  "sha256": "be6929e3c4d56eab671d5b23149f4a6cca0e625d06c656e6ac3d0cd031c60eea",
+  "fetched": "2026-10-09",
+  "fetch_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=247986&format=json",
+  "generator_flags": [
+    "--legacy-section-lists",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [],
+  "client_line": "retail",
+  "source_kind": "substantive-page",
+  "toc": 30305,
+  "toc_note": "Patch-version mapping only; no separately pinned parent-page TOC proof. Historical retail 2010, not Wrath Classic 3.4.x."
+}

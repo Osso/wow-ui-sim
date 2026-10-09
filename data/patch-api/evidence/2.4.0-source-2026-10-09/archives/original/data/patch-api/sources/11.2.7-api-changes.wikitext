@@ -1,0 +1,595 @@
+{{apichanges|11.2.7|prev=11.2.5|next=12.0.0}}
+
+==Summary==
+* Housing.
+* ChatFrame Lua functions have been reorganized into a ChatFrameUtil namespace or moved to new ChatFrame and ChatFrameEditBox mixins.
+
+==Resources==
+* TOC: <code>110207</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24244442/the-warning-content-update-notes#item10 The Warning Content Update Notes]
+<div class="noexcerpt">
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/11.2.5..11.2.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/11.2.5...11.2.7 BlizzardInterfaceResources]
+</div>
+
+==Consolidated changes==
+: <font color="pink">11.2.5 (64502)</font> &rarr; <font color="lightgreen">11.2.7 (64978)</font> Dec 16 2025
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(299)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(7)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ActionBar.IsInterruptAction}}
+: {{api|t=a|C_BattleNet.InstallHighResTextures}}
+: {{api|t=a|C_CurrencyInfo.GetPlayerCurrencyCategoryInfo}}
+: {{api|t=a|C_DyeColor.GetAllDyeColorCategories}}
+: {{api|t=a|C_DyeColor.GetAllDyeColors}}
+: {{api|t=a|C_DyeColor.GetDyeColorCategoryInfo}}
+: {{api|t=a|C_DyeColor.GetDyeColorForItemLocation}}
+: {{api|t=a|C_DyeColor.GetDyeColorForItem}}
+: {{api|t=a|C_DyeColor.GetDyeColorInfo}}
+: {{api|t=a|C_DyeColor.GetDyeColorsInCategory}}
+: {{api|t=a|C_DyeColor.IsDyeColorOwned}}
+: {{api|t=a|C_EncounterJournal.StartArathiRPE}}
+: {{api|t=a|C_GameRules.IsClassAllowedForGameMode}}
+: {{api|t=a|C_GameRules.IsGameModeEnabled}}
+: {{api|t=a|C_GameRules.IsMultiActionBarVisibilityForced}}
+: {{api|t=a|C_GameRules.IsPlunderstorm}}
+: {{api|t=a|C_GameRules.IsStandard}}
+: {{api|t=a|C_GameRules.IsWoWHack}}
+: {{api|t=a|C_HouseEditor.ActivateHouseEditorMode}}
+: {{api|t=a|C_HouseEditor.EnterHouseEditor}}
+: {{api|t=a|C_HouseEditor.GetActiveHouseEditorMode}}
+: {{api|t=a|C_HouseEditor.GetHouseEditorAvailability}}
+: {{api|t=a|C_HouseEditor.GetHouseEditorModeAvailability}}
+: {{api|t=a|C_HouseEditor.IsHouseEditorActive}}
+: {{api|t=a|C_HouseEditor.IsHouseEditorModeActive}}
+: {{api|t=a|C_HouseEditor.IsHouseEditorStatusAvailable}}
+: {{api|t=a|C_HouseEditor.LeaveHouseEditor}}
+: {{api|t=a|C_HouseExterior.CancelActiveExteriorEditing}}
+: {{api|t=a|C_HouseExterior.GetCoreFixtureOptionsInfo}}
+: {{api|t=a|C_HouseExterior.GetCurrentHouseExteriorSize}}
+: {{api|t=a|C_HouseExterior.GetCurrentHouseExteriorTypeName}}
+: {{api|t=a|C_HouseExterior.GetSelectedFixturePointInfo}}
+: {{api|t=a|C_HouseExterior.HasHoveredFixture}}
+: {{api|t=a|C_HouseExterior.HasSelectedFixturePoint}}
+: {{api|t=a|C_HouseExterior.RemoveFixtureFromSelectedPoint}}
+: {{api|t=a|C_HouseExterior.SelectCoreFixtureOption}}
+: {{api|t=a|C_HouseExterior.SelectFixtureOption}}
+: {{api|t=a|C_Housing.AcceptNeighborhoodOwnership}}
+: {{api|t=a|C_Housing.CanEditCharter}}
+: {{api|t=a|C_Housing.CanTakeReportScreenshot}}
+: {{api|t=a|C_Housing.CreateGuildNeighborhood}}
+: {{api|t=a|C_Housing.CreateNeighborhoodCharter}}
+: {{api|t=a|C_Housing.DeclineNeighborhoodOwnership}}
+: {{api|t=a|C_Housing.DoesFactionMatchNeighborhood}}
+: {{api|t=a|C_Housing.EditNeighborhoodCharter}}
+: {{api|t=a|C_Housing.GetCurrentHouseInfo}}
+: {{api|t=a|C_Housing.GetCurrentHouseLevelFavor}}
+: {{api|t=a|C_Housing.GetCurrentHouseRefundAmount}}
+: {{api|t=a|C_Housing.GetCurrentNeighborhoodGUID}}
+: {{api|t=a|C_Housing.GetHouseLevelFavorForLevel}}
+: {{api|t=a|C_Housing.GetHouseLevelRewardsForLevel}}
+: {{api|t=a|C_Housing.GetHousingAccessFlags}}
+: {{api|t=a|C_Housing.GetMaxHouseLevel}}
+: {{api|t=a|C_Housing.GetNeighborhoodTextureSuffix}}
+: {{api|t=a|C_Housing.GetOthersOwnedHouses}}
+: {{api|t=a|C_Housing.GetPlayerOwnedHouses}}
+: {{api|t=a|C_Housing.GetTrackedHouseGuid}}
+: {{api|t=a|C_Housing.GetUIMapIDForNeighborhood}}
+: {{api|t=a|C_Housing.GetVisitCooldownInfo}}
+: {{api|t=a|C_Housing.HasHousingExpansionAccess}}
+: {{api|t=a|C_Housing.HouseFinderDeclineNeighborhoodInvitation}}
+: {{api|t=a|C_Housing.HouseFinderRequestNeighborhoods}}
+: {{api|t=a|C_Housing.HouseFinderRequestReservationAndPort}}
+: {{api|t=a|C_Housing.IsHousingMarketEnabled}}
+: {{api|t=a|C_Housing.IsHousingServiceEnabled}}
+: {{api|t=a|C_Housing.IsInsideHouseOrPlot}}
+: {{api|t=a|C_Housing.IsInsideHouse}}
+: {{api|t=a|C_Housing.IsInsideOwnHouse}}
+: {{api|t=a|C_Housing.IsInsidePlot}}
+: {{api|t=a|C_Housing.IsOnNeighborhoodMap}}
+: {{api|t=a|C_Housing.LeaveHouse}}
+: {{api|t=a|C_Housing.OnCharterConfirmationAccepted}}
+: {{api|t=a|C_Housing.OnCharterConfirmationClosed}}
+: {{api|t=a|C_Housing.OnCreateCharterNeighborhoodClosed}}
+: {{api|t=a|C_Housing.OnCreateGuildNeighborhoodClosed}}
+: {{api|t=a|C_Housing.OnRequestSignatureClicked}}
+: {{api|t=a|C_Housing.OnSignCharterClicked}}
+: {{api|t=a|C_Housing.RelinquishHouse}}
+: {{api|t=a|C_Housing.RequestCurrentHouseInfo}}
+: {{api|t=a|C_Housing.RequestHouseFinderNeighborhoodData}}
+: {{api|t=a|C_Housing.RequestPlayerCharacterList}}
+: {{api|t=a|C_Housing.ReturnAfterVisitingHouse}}
+: {{api|t=a|C_Housing.SaveHouseSettings}}
+: {{api|t=a|C_Housing.SearchBNetFriendNeighborhoodsByID}}
+: {{api|t=a|C_Housing.SearchBNetFriendNeighborhoods}}
+: {{api|t=a|C_Housing.SetTrackedHouseGuid}}
+: {{api|t=a|C_Housing.StartTutorial}}
+: {{api|t=a|C_Housing.TeleportHome}}
+: {{api|t=a|C_Housing.TryRenameNeighborhood}}
+: {{api|t=a|C_Housing.ValidateCreateGuildNeighborhoodSize}}
+: {{api|t=a|C_Housing.ValidateNeighborhoodName}}
+: {{api|t=a|C_Housing.VisitHouse}}
+: {{api|t=a|C_HousingBasicMode.CancelActiveEditing}}
+: {{api|t=a|C_HousingBasicMode.CommitDecorMovement}}
+: {{api|t=a|C_HousingBasicMode.CommitHouseExteriorPosition}}
+: {{api|t=a|C_HousingBasicMode.FinishPlacingNewDecor}}
+: {{api|t=a|C_HousingBasicMode.GetHoveredDecorInfo}}
+: {{api|t=a|C_HousingBasicMode.GetSelectedDecorInfo}}
+: {{api|t=a|C_HousingBasicMode.IsDecorSelected}}
+: {{api|t=a|C_HousingBasicMode.IsGridSnapEnabled}}
+: {{api|t=a|C_HousingBasicMode.IsGridVisible}}
+: {{api|t=a|C_HousingBasicMode.IsHouseExteriorHovered}}
+: {{api|t=a|C_HousingBasicMode.IsHouseExteriorSelected}}
+: {{api|t=a|C_HousingBasicMode.IsHoveringDecor}}
+: {{api|t=a|C_HousingBasicMode.IsNudgeEnabled}}
+: {{api|t=a|C_HousingBasicMode.IsPlacingNewDecor}}
+: {{api|t=a|C_HousingBasicMode.RemoveSelectedDecor}}
+: {{api|t=a|C_HousingBasicMode.RotateDecor}}
+: {{api|t=a|C_HousingBasicMode.RotateHouseExterior}}
+: {{api|t=a|C_HousingBasicMode.SetGridSnapEnabled}}
+: {{api|t=a|C_HousingBasicMode.SetGridVisible}}
+: {{api|t=a|C_HousingBasicMode.SetNudgeEnabled}}
+: {{api|t=a|C_HousingBasicMode.StartPlacingNewDecor}}
+: {{api|t=a|C_HousingCatalog.CanDestroyEntry}}
+: {{api|t=a|C_HousingCatalog.CreateCatalogSearcher}}
+: {{api|t=a|C_HousingCatalog.DestroyEntry}}
+: {{api|t=a|C_HousingCatalog.GetAllFilterTagGroups}}
+: {{api|t=a|C_HousingCatalog.GetCatalogCategoryInfo}}
+: {{api|t=a|C_HousingCatalog.GetCatalogEntryDebugInfoForID}}
+: {{api|t=a|C_HousingCatalog.GetCatalogEntryInfoByItem}}
+: {{api|t=a|C_HousingCatalog.GetCatalogEntryInfoByRecordID}}
+: {{api|t=a|C_HousingCatalog.GetCatalogEntryInfo}}
+: {{api|t=a|C_HousingCatalog.GetCatalogSubcategoryInfo}}
+: {{api|t=a|C_HousingCatalog.GetDecorMaxOwnedCount}}
+: {{api|t=a|C_HousingCatalog.GetDecorTotalOwnedCount}}
+: {{api|t=a|C_HousingCatalog.GetFeaturedBundles}}
+: {{api|t=a|C_HousingCatalog.GetFeaturedDecor}}
+: {{api|t=a|C_HousingCatalog.RequestHousingMarketInfoRefresh}}
+: {{api|t=a|C_HousingCatalog.SearchCatalogCategories}}
+: {{api|t=a|C_HousingCatalog.SearchCatalogSubcategories}}
+: {{api|t=a|C_HousingCleanupMode.GetHoveredDecorInfo}}
+: {{api|t=a|C_HousingCleanupMode.IsHoveringDecor}}
+: {{api|t=a|C_HousingCleanupMode.RemoveSelectedDecor}}
+: {{api|t=a|C_HousingCustomizeMode.ApplyDyeToSelectedDecor}}
+: {{api|t=a|C_HousingCustomizeMode.ApplyThemeToRoom}}
+: {{api|t=a|C_HousingCustomizeMode.ApplyThemeToSelectedRoomComponent}}
+: {{api|t=a|C_HousingCustomizeMode.ApplyWallpaperToAllWalls}}
+: {{api|t=a|C_HousingCustomizeMode.ApplyWallpaperToSelectedRoomComponent}}
+: {{api|t=a|C_HousingCustomizeMode.CancelActiveEditing}}
+: {{api|t=a|C_HousingCustomizeMode.ClearDyesForSelectedDecor}}
+: {{api|t=a|C_HousingCustomizeMode.ClearTargetRoomComponent}}
+: {{api|t=a|C_HousingCustomizeMode.CommitDyesForSelectedDecor}}
+: {{api|t=a|C_HousingCustomizeMode.GetHoveredDecorInfo}}
+: {{api|t=a|C_HousingCustomizeMode.GetHoveredRoomComponentInfo}}
+: {{api|t=a|C_HousingCustomizeMode.GetNumDyesToRemoveOnSelectedDecor}}
+: {{api|t=a|C_HousingCustomizeMode.GetNumDyesToSpendOnSelectedDecor}}
+: {{api|t=a|C_HousingCustomizeMode.GetPreviewDyesOnSelectedDecor}}
+: {{api|t=a|C_HousingCustomizeMode.GetRecentlyUsedDyes}}
+: {{api|t=a|C_HousingCustomizeMode.GetRecentlyUsedThemeSets}}
+: {{api|t=a|C_HousingCustomizeMode.GetRecentlyUsedWallpapers}}
+: {{api|t=a|C_HousingCustomizeMode.GetSelectedDecorInfo}}
+: {{api|t=a|C_HousingCustomizeMode.GetSelectedRoomComponentInfo}}
+: {{api|t=a|C_HousingCustomizeMode.GetThemeSetInfo}}
+: {{api|t=a|C_HousingCustomizeMode.GetWallpapersForRoomComponentType}}
+: {{api|t=a|C_HousingCustomizeMode.IsDecorSelected}}
+: {{api|t=a|C_HousingCustomizeMode.IsHoveringDecor}}
+: {{api|t=a|C_HousingCustomizeMode.IsHoveringRoomComponent}}
+: {{api|t=a|C_HousingCustomizeMode.IsRoomComponentSelected}}
+: {{api|t=a|C_HousingCustomizeMode.RoomComponentSupportsVariant}}
+: {{api|t=a|C_HousingCustomizeMode.SetRoomComponentCeilingType}}
+: {{api|t=a|C_HousingCustomizeMode.SetRoomComponentDoorType}}
+: {{api|t=a|C_HousingDecor.CancelActiveEditing}}
+: {{api|t=a|C_HousingDecor.CommitDecorMovement}}
+: {{api|t=a|C_HousingDecor.GetAllPlacedDecor}}
+: {{api|t=a|C_HousingDecor.GetDecorDebugInfoForGUID}}
+: {{api|t=a|C_HousingDecor.GetDecorIcon}}
+: {{api|t=a|C_HousingDecor.GetDecorInstanceInfoForGUID}}
+: {{api|t=a|C_HousingDecor.GetDecorName}}
+: {{api|t=a|C_HousingDecor.GetHoveredDecorDebugInfo}}
+: {{api|t=a|C_HousingDecor.GetHoveredDecorInfo}}
+: {{api|t=a|C_HousingDecor.GetMaxDecorPlaced}}
+: {{api|t=a|C_HousingDecor.GetMaxPlacementBudget}}
+: {{api|t=a|C_HousingDecor.GetNumDecorPlaced}}
+: {{api|t=a|C_HousingDecor.GetSelectedDecorDebugInfo}}
+: {{api|t=a|C_HousingDecor.GetSelectedDecorInfo}}
+: {{api|t=a|C_HousingDecor.GetSpentPlacementBudget}}
+: {{api|t=a|C_HousingDecor.HasMaxPlacementBudget}}
+: {{api|t=a|C_HousingDecor.IsDecorSelected}}
+: {{api|t=a|C_HousingDecor.IsGridVisible}}
+: {{api|t=a|C_HousingDecor.IsHouseExteriorDoorHovered}}
+: {{api|t=a|C_HousingDecor.IsHouseExteriorHovered}}
+: {{api|t=a|C_HousingDecor.IsHoveringDecor}}
+: {{api|t=a|C_HousingDecor.RemovePlacedDecorEntry}}
+: {{api|t=a|C_HousingDecor.RemoveSelectedDecor}}
+: {{api|t=a|C_HousingDecor.SetGridVisible}}
+: {{api|t=a|C_HousingDecor.SetPlacedDecorEntryHovered}}
+: {{api|t=a|C_HousingDecor.SetPlacedDecorEntrySelected}}
+: {{api|t=a|C_HousingExpertMode.CancelActiveEditing}}
+: {{api|t=a|C_HousingExpertMode.CommitDecorMovement}}
+: {{api|t=a|C_HousingExpertMode.CommitHouseExteriorPosition}}
+: {{api|t=a|C_HousingExpertMode.GetHoveredDecorInfo}}
+: {{api|t=a|C_HousingExpertMode.GetPrecisionSubmodeRestriction}}
+: {{api|t=a|C_HousingExpertMode.GetPrecisionSubmode}}
+: {{api|t=a|C_HousingExpertMode.GetSelectedDecorInfo}}
+: {{api|t=a|C_HousingExpertMode.IsDecorSelected}}
+: {{api|t=a|C_HousingExpertMode.IsGridVisible}}
+: {{api|t=a|C_HousingExpertMode.IsHouseExteriorHovered}}
+: {{api|t=a|C_HousingExpertMode.IsHouseExteriorSelected}}
+: {{api|t=a|C_HousingExpertMode.IsHoveringDecor}}
+: {{api|t=a|C_HousingExpertMode.RemoveSelectedDecor}}
+: {{api|t=a|C_HousingExpertMode.ResetPrecisionChanges}}
+: {{api|t=a|C_HousingExpertMode.SelectNextRotationAxis}}
+: {{api|t=a|C_HousingExpertMode.SetGridVisible}}
+: {{api|t=a|C_HousingExpertMode.SetPrecisionIncrementingActive}}
+: {{api|t=a|C_HousingExpertMode.SetPrecisionSubmode}}
+: {{api|t=a|C_HousingLayout.AnyRoomsOnFloor}}
+: {{api|t=a|C_HousingLayout.CancelActiveLayoutEditing}}
+: {{api|t=a|C_HousingLayout.ConfirmStairChoice}}
+: {{api|t=a|C_HousingLayout.DeselectFloorplan}}
+: {{api|t=a|C_HousingLayout.DeselectRoomOrDoor}}
+: {{api|t=a|C_HousingLayout.GetNumActiveRooms}}
+: {{api|t=a|C_HousingLayout.GetRoomPlacementBudget}}
+: {{api|t=a|C_HousingLayout.GetSelectedDoor}}
+: {{api|t=a|C_HousingLayout.GetSelectedFloorplan}}
+: {{api|t=a|C_HousingLayout.GetSelectedRoom}}
+: {{api|t=a|C_HousingLayout.GetSelectedStairwellRoomCount}}
+: {{api|t=a|C_HousingLayout.GetSpentPlacementBudget}}
+: {{api|t=a|C_HousingLayout.GetViewedFloor}}
+: {{api|t=a|C_HousingLayout.HasAnySelections}}
+: {{api|t=a|C_HousingLayout.HasRoomPlacementBudget}}
+: {{api|t=a|C_HousingLayout.HasSelectedDoor}}
+: {{api|t=a|C_HousingLayout.HasSelectedFloorplan}}
+: {{api|t=a|C_HousingLayout.HasSelectedRoom}}
+: {{api|t=a|C_HousingLayout.HasStairs}}
+: {{api|t=a|C_HousingLayout.HasValidConnection}}
+: {{api|t=a|C_HousingLayout.IsBaseRoom}}
+: {{api|t=a|C_HousingLayout.IsDraggingRoom}}
+: {{api|t=a|C_HousingLayout.MoveDraggedRoom}}
+: {{api|t=a|C_HousingLayout.MoveLayoutCamera}}
+: {{api|t=a|C_HousingLayout.RemoveRoom}}
+: {{api|t=a|C_HousingLayout.RotateFocusedRoom}}
+: {{api|t=a|C_HousingLayout.RotateRoom}}
+: {{api|t=a|C_HousingLayout.SelectFloorplan}}
+: {{api|t=a|C_HousingLayout.SetViewedFloor}}
+: {{api|t=a|C_HousingLayout.StartDrag}}
+: {{api|t=a|C_HousingLayout.StopDraggingRoom}}
+: {{api|t=a|C_HousingLayout.StopDrag}}
+: {{api|t=a|C_HousingLayout.ZoomLayoutCamera}}
+: {{api|t=a|C_HousingNeighborhood.CanReturnAfterVisitingHouse}}
+: {{api|t=a|C_HousingNeighborhood.CancelInviteToNeighborhood}}
+: {{api|t=a|C_HousingNeighborhood.DemoteToResident}}
+: {{api|t=a|C_HousingNeighborhood.GetCornerstoneHouseInfo}}
+: {{api|t=a|C_HousingNeighborhood.GetCornerstoneNeighborhoodInfo}}
+: {{api|t=a|C_HousingNeighborhood.GetCornerstonePurchaseMode}}
+: {{api|t=a|C_HousingNeighborhood.GetCurrentNeighborhoodTextureSuffix}}
+: {{api|t=a|C_HousingNeighborhood.GetDiscountedMovePrice}}
+: {{api|t=a|C_HousingNeighborhood.GetMoveCooldownTime}}
+: {{api|t=a|C_HousingNeighborhood.GetNeighborhoodMapData}}
+: {{api|t=a|C_HousingNeighborhood.GetNeighborhoodName}}
+: {{api|t=a|C_HousingNeighborhood.GetNeighborhoodPlotName}}
+: {{api|t=a|C_HousingNeighborhood.GetPreviousHouseIdentifier}}
+: {{api|t=a|C_HousingNeighborhood.HasPermissionToPurchase}}
+: {{api|t=a|C_HousingNeighborhood.InvitePlayerToNeighborhood}}
+: {{api|t=a|C_HousingNeighborhood.IsNeighborhoodManager}}
+: {{api|t=a|C_HousingNeighborhood.IsNeighborhoodOwner}}
+: {{api|t=a|C_HousingNeighborhood.IsPlayerInOtherPlayersPlot}}
+: {{api|t=a|C_HousingNeighborhood.IsPlotAvailableForPurchase}}
+: {{api|t=a|C_HousingNeighborhood.IsPlotOwnedByPlayer}}
+: {{api|t=a|C_HousingNeighborhood.OnBulletinBoardClosed}}
+: {{api|t=a|C_HousingNeighborhood.PromoteToManager}}
+: {{api|t=a|C_HousingNeighborhood.RequestNeighborhoodInfo}}
+: {{api|t=a|C_HousingNeighborhood.RequestNeighborhoodRoster}}
+: {{api|t=a|C_HousingNeighborhood.RequestPendingNeighborhoodInvites}}
+: {{api|t=a|C_HousingNeighborhood.TransferNeighborhoodOwnership}}
+: {{api|t=a|C_HousingNeighborhood.TryEvictPlayer}}
+: {{api|t=a|C_HousingNeighborhood.TryMoveHouse}}
+: {{api|t=a|C_HousingNeighborhood.TryPurchasePlot}}
+: {{api|t=a|C_Item.IsDecorItem}}
+: {{api|t=a|C_KeyBindings.ActivateBindingContext}}
+: {{api|t=a|C_KeyBindings.DeactivateBindingContext}}
+: {{api|t=a|C_KeyBindings.GetBindingByKey}}
+: {{api|t=a|C_KeyBindings.GetBindingContextForAction}}
+: {{api|t=a|C_KeyBindings.GetSearchTagsForAction}}
+: {{api|t=a|C_KeyBindings.GetTurnStrafeStyle}}
+: {{api|t=a|C_KeyBindings.IsBindingContextActive}}
+: {{api|t=a|C_KeyBindings.SetTurnStrafeStyle}}
+: {{api|t=a|C_KeyBindings.UpdateTurnStrafeBindingsForCharacter}}
+: {{api|t=a|C_PaperDollInfo.IsRangedSlotShown}}
+: {{api|t=a|C_PetJournal.GetNonBattlePetLinkByIndex}}
+: {{api|t=a|C_PlayerInfo.IsPlayerInRPE}}
+: {{api|t=a|C_PlayerInfo.IsReturningCharacter}}
+: {{api|t=a|C_PlayerInfo.IsTutorialsTabAvailable}}
+: {{api|t=a|C_PvP.JoinBattlefield}}
+: {{api|t=a|C_ReportSystem.RequiresScreenshotForReportType}}
+: {{api|t=a|C_ReportSystem.SetScreenshotPreviewTexture}}
+: {{api|t=a|C_ReportSystem.TakeReportScreenshot}}
+: {{api|t=a|C_Spell.GetAuraStatChanges}}
+: {{api|t=a|C_Spell.GetItemModifiedAppearancesApplied}}
+: {{api|t=a|C_Texture.GetAtlasExists}}
+: {{api|t=a|C_UnitAuras.GetUnitAuras}}
+: {{api|t=a|C_VideoOptions.IsSpellVisualDensitySystemSupported}}
+: {{api|t=a|CanUpgradeToCurrentExpansion}}
+: {{api|t=a|ClearOutage}}
+: {{api|t=a|GetAutoDeclineNeighborhoodInvites}}
+: {{api|t=a|GetUpgradeExpansionLevel}}
+: {{api|t=a|OutageDetected}}
+: {{api|t=a|SetAutoDeclineNeighborhoodInvites}}
+: {{api|t=a|SetCursorByMode}}
+: {{api|t=a|ShouldShowExpansionUpgradeBanner}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_CharacterServices.RPEResetCharacter}}
+: {{api|t=a|C_ReturningPlayerUI.AcceptPrompt}}
+: {{api|t=a|C_ReturningPlayerUI.DeclinePrompt}}
+: {{api|t=a|CanUpgradeExpansion}}
+: {{api|t=a|GetBindingByKey}}
+: {{api|t=a|GetSpecChangeCost}}
+: {{api|t=a|JoinBattlefield}}
+</div>
+|}
+ {{api|t=a|C_CatalogShop.OpenCatalogShopInteraction}}
+   + arg 1: <font color="#00b400">shouldAllowMovement</font>
+
+===ScriptObjects===
+{| class="wikitable"
+| <font color="lightgreen">Added</font>
+: [[ScriptObject HousingCatalogSearcher|HousingCatalogSearcher]]
+: [[ScriptObject HousingFixturePointFrame|HousingFixturePointFrame]]
+: [[ScriptObject HousingLayoutPinFrame|HousingLayoutPinFrame]]
+|}
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(4)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Model:SetGradientMask}}
+: {{api|t=w|ModelSceneActorBase:IsPreferringModelCollisionBounds}}
+: {{api|t=w|ModelSceneActorBase:SetGradientMask}}
+: {{api|t=w|ModelSceneActorBase:SetPreferModelCollisionBounds}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(117)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACCOUNT_STORE_FRONT_UPDATED}}
+: {{api|t=e|ACCOUNT_STORE_TRANSACTION_ERROR}}
+: {{api|t=e|ADD_NEIGHBORHOOD_CHARTER_SIGNATURE}}
+: {{api|t=e|AVAILABLE_GAME_MODES_UPDATED}}
+: {{api|t=e|B_NET_NEIGHBORHOOD_LIST_UPDATED}}
+: {{api|t=e|BINDINGS_LOADED}}
+: {{api|t=e|CANCEL_NEIGHBORHOOD_INVITE_RESPONSE}}
+: {{api|t=e|CHALLENGE_MODE_LEADERBOARD_RESULT}}
+: {{api|t=e|CLOSE_CHARTER_CONFIRMATION_UI}}
+: {{api|t=e|CLOSE_CREATE_CHARTER_NEIGHBORHOOD_UI}}
+: {{api|t=e|CLOSE_CREATE_GUILD_NEIGHBORHOOD_UI}}
+: {{api|t=e|CLOSE_PLOT_CORNERSTONE}}
+: {{api|t=e|CREATE_NEIGHBORHOOD_RESULT}}
+: {{api|t=e|CURRENT_HOUSE_INFO_RECIEVED}}
+: {{api|t=e|CURRENT_HOUSE_INFO_UPDATED}}
+: {{api|t=e|DECLINE_NEIGHBORHOOD_INVITATION_RESPONSE}}
+: {{api|t=e|DYE_COLOR_CATEGORY_UPDATED}}
+: {{api|t=e|DYE_COLOR_UPDATED}}
+: {{api|t=e|FORCE_REFRESH_HOUSE_FINDER}}
+: {{api|t=e|GAME_MODE_DISPLAY_MODE_TOGGLE_DISABLED}}
+: {{api|t=e|HOUSE_DECOR_ADDED_TO_CHEST}}
+: {{api|t=e|HOUSE_EDITOR_AVAILABILITY_CHANGED}}
+: {{api|t=e|HOUSE_EDITOR_MODE_CHANGE_FAILURE}}
+: {{api|t=e|HOUSE_EDITOR_MODE_CHANGED}}
+: {{api|t=e|HOUSE_EXTERIOR_POSITION_FAILURE}}
+: {{api|t=e|HOUSE_EXTERIOR_POSITION_SUCCESS}}
+: {{api|t=e|HOUSE_FINDER_NEIGHBORHOOD_DATA_RECIEVED}}
+: {{api|t=e|HOUSE_INFO_UPDATED}}
+: {{api|t=e|HOUSE_LEVEL_CHANGED}}
+: {{api|t=e|HOUSE_LEVEL_FAVOR_UPDATED}}
+: {{api|t=e|HOUSE_PLOT_ENTERED}}
+: {{api|t=e|HOUSE_PLOT_EXITED}}
+: {{api|t=e|HOUSE_RESERVATION_RESPONSE_RECIEVED}}
+: {{api|t=e|HOUSING_BASIC_MODE_HOVERED_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_BASIC_MODE_PLACEMENT_FLAGS_UPDATED}}
+: {{api|t=e|HOUSING_BASIC_MODE_SELECTED_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_CATALOG_CATEGORY_UPDATED}}
+: {{api|t=e|HOUSING_CATALOG_SEARCHER_RELEASED}}
+: {{api|t=e|HOUSING_CATALOG_SUBCATEGORY_UPDATED}}
+: {{api|t=e|HOUSING_CLEANUP_MODE_HOVERED_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_CLEANUP_MODE_TARGET_SELECTED}}
+: {{api|t=e|HOUSING_CORE_FIXTURE_CHANGED}}
+: {{api|t=e|HOUSING_CUSTOMIZE_MODE_HOVERED_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_CUSTOMIZE_MODE_SELECTED_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_CUSTOMIZATION_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_DYE_FAILURE}}
+: {{api|t=e|HOUSING_DECOR_GRID_SNAP_OCCURRED}}
+: {{api|t=e|HOUSING_DECOR_GRID_SNAP_STATUS_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_GRID_VISIBILITY_STATUS_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_NUDGE_STATUS_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_PLACE_FAILURE}}
+: {{api|t=e|HOUSING_DECOR_PLACE_SUCCESS}}
+: {{api|t=e|HOUSING_DECOR_PRECISION_MANIPULATION_EVENT}}
+: {{api|t=e|HOUSING_DECOR_PRECISION_MANIPULATION_STATUS_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_PRECISION_SUBMODE_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_REMOVED}}
+: {{api|t=e|HOUSING_DECOR_SELECT_RESPONSE}}
+: {{api|t=e|HOUSING_EXPERT_MODE_HOVERED_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_EXPERT_MODE_SELECTED_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_FIXTURE_HOVER_CHANGED}}
+: {{api|t=e|HOUSING_FIXTURE_POINT_FRAME_ADDED}}
+: {{api|t=e|HOUSING_FIXTURE_POINT_FRAME_RELEASED}}
+: {{api|t=e|HOUSING_FIXTURE_POINT_FRAMES_RELEASED}}
+: {{api|t=e|HOUSING_FIXTURE_POINT_SELECTION_CHANGED}}
+: {{api|t=e|HOUSING_LAYOUT_DOOR_SELECTED}}
+: {{api|t=e|HOUSING_LAYOUT_DOOR_SELECTION_CHANGED}}
+: {{api|t=e|HOUSING_LAYOUT_DRAG_TARGET_CHANGED}}
+: {{api|t=e|HOUSING_LAYOUT_FLOORPLAN_SELECTION_CHANGED}}
+: {{api|t=e|HOUSING_LAYOUT_NUM_FLOORS_CHANGED}}
+: {{api|t=e|HOUSING_LAYOUT_PIN_FRAME_ADDED}}
+: {{api|t=e|HOUSING_LAYOUT_PIN_FRAME_RELEASED}}
+: {{api|t=e|HOUSING_LAYOUT_PIN_FRAMES_RELEASED}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_COMPONENT_THEME_SET_CHANGED}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_MOVE_INVALID}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_MOVED}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_RECEIVED}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_REMOVED}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_RETURNED}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_SELECTION_CHANGED}}
+: {{api|t=e|HOUSING_LAYOUT_ROOM_SNAPPED}}
+: {{api|t=e|HOUSING_LAYOUT_VIEWED_FLOOR_CHANGED}}
+: {{api|t=e|HOUSING_MARKET_AVAILABILITY_UPDATED}}
+: {{api|t=e|HOUSING_NUM_DECOR_PLACED_CHANGED}}
+: {{api|t=e|HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGE_FAILED}}
+: {{api|t=e|HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGED}}
+: {{api|t=e|HOUSING_SERVICES_AVAILABILITY_UPDATED}}
+: {{api|t=e|HOUSING_STORAGE_ENTRY_UPDATED}}
+: {{api|t=e|HOUSING_STORAGE_UPDATED}}
+: {{api|t=e|MOVE_OUT_RESERVATION_UPDATED}}
+: {{api|t=e|NEIGHBORHOOD_GUILD_SIZE_VALIDATED}}
+: {{api|t=e|NEIGHBORHOOD_INFO_UPDATED}}
+: {{api|t=e|NEIGHBORHOOD_INVITE_RESPONSE}}
+: {{api|t=e|NEIGHBORHOOD_LIST_UPDATED}}
+: {{api|t=e|NEIGHBORHOOD_MAP_DATA_UPDATED}}
+: {{api|t=e|NEIGHBORHOOD_NAME_UPDATED}}
+: {{api|t=e|NEIGHBORHOOD_NAME_VALIDATED}}
+: {{api|t=e|NEW_HOUSING_ITEM_ACQUIRED}}
+: {{api|t=e|NOTIFY_TURN_STRAFE_CHANGE}}
+: {{api|t=e|OPEN_CHARTER_CONFIRMATION_UI}}
+: {{api|t=e|OPEN_CREATE_CHARTER_NEIGHBORHOOD_UI}}
+: {{api|t=e|OPEN_CREATE_GUILD_NEIGHBORHOOD_UI}}
+: {{api|t=e|OPEN_NEIGHBORHOOD_CHARTER_SIGNATURE_REQUEST}}
+: {{api|t=e|OPEN_NEIGHBORHOOD_CHARTER}}
+: {{api|t=e|OPEN_PLOT_CORNERSTONE}}
+: {{api|t=e|PENDING_NEIGHBORHOOD_INVITES_RECIEVED}}
+: {{api|t=e|PLAYER_CHARACTER_LIST_UPDATED}}
+: {{api|t=e|PLAYER_HOUSE_LIST_UPDATED}}
+: {{api|t=e|PURCHASE_PLOT_RESULT}}
+: {{api|t=e|RECEIVED_HOUSE_LEVEL_REWARDS}}
+: {{api|t=e|REPORT_SCREENSHOT_READY}}
+: {{api|t=e|SHOW_NEIGHBORHOOD_OWNERSHIP_TRANSFER_DIALOG}}
+: {{api|t=e|SHOW_PLAYER_EVICTED_DIALOG}}
+: {{api|t=e|SHOW_STAIR_DIRECTION_CONFIRMATION}}
+: {{api|t=e|TRACKED_HOUSE_CHANGED}}
+: {{api|t=e|UPDATE_BULLETIN_BOARD_ROSTER_STATUSES}}
+: {{api|t=e|UPDATE_BULLETIN_BOARD_ROSTER}}
+: {{api|t=e|VIEW_HOUSES_LIST_RECIEVED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|RETURNING_PLAYER_PROMPT}}
+</div>
+|}
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(65)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=accountNeedsTurnStrafeDialog|default=1|scope=Account|cat=4|desc=Whether the account needs to show dialog that turn and strafe keybinds have changed}}
+: {{apitooltip|type=cvar|name=ActionCombatCameraEnable|default=0|desc=enable/disable action combat camera. (default: disabled)}}
+: {{apitooltip|type=cvar|name=assistedCombatHighlightRPE|default=0|scope=Character|cat=4|desc=Will be true if Assisted Highlight was automatically enabled by RPE. Will reset when leaving RPE.}}
+: {{apitooltip|type=cvar|name=cameraDistanceFixedValue|default=-1.000000|scope=Character|cat=4|desc=Fixed camera distance (in yards)}}
+: {{apitooltip|type=cvar|name=characterNeedsTurnStrafeDialog|default=1|scope=Character|cat=4|desc=Whether the character needs to show dialog that turn and strafe keybinds have changed}}
+: {{apitooltip|type=cvar|name=ClientSettings_LowVramActions}}
+: {{apitooltip|type=cvar|name=collapseExpandBuffs|default=1|scope=Character|cat=4|desc=Enables a button to collapse and hide long duration buffs.}}
+: {{apitooltip|type=cvar|name=housingDecorFreePlaceEnabled|default=0|scope=Account|cat=4|desc=Whether or not free placement in decor edit modes is enabled}}
+: {{apitooltip|type=cvar|name=housingDecorGridSnapEnabled|default=0|scope=Account|cat=4|desc=Whether or not snap-to-grid in decor edit modes is enabled}}
+: {{apitooltip|type=cvar|name=housingDecorGridVisible|default=1|scope=Account|cat=4|desc=Whether or not the grid in decor edit modes is visible}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_BaseOrbScale|default=0.080000|cat=4|desc=Base scale of the orb gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_BaseRingScale|default=0.080000|cat=4|desc=Base scale of the ring gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_DistScaleMax|default=2.250000|cat=4|desc=Amount of scale to multiply when we're >= ScaleDistanceMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_DistScaleMin|default=1.000000|cat=4|desc=Amount of scale to multiply when we're <= ScaleDistanceMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightDefault|default=0.800000|cat=10|desc=Intensity of highlight when not hovered/selected/in use}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightDragging|default=1.000000|cat=10|desc=Intensity of highlight when dragging}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightHovered|default=0.900000|cat=10|desc=Intensity of highlight when hovered}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightKeybind|default=1.000000|cat=10|desc=Intensity of highlight when corresponding keybind being pressed}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightSelected|default=1.000000|cat=10|desc=Intensity of highlight when selected}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_OrbPosOffset|default=-0.800000|cat=4|desc=How much offset from the outer edge of the ring's radius the orb should be offset}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_ScaleDistanceMax|default=60.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_ScaleDistanceMin|default=0.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_SnapDegrees|default=15.000000|cat=10|desc=Degrees rotation should snap}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_TextMode|default=1|cat=10|desc=1: curr angle 0-360, 2: curr angle up to -/+ 180, 3: curr delta 0-360, 4: curr delta up to -/+ 180}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_XRayCheckerSize|default=7|cat=4|desc=The size in pixels of the checker squares for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_XRayDarkAlpha|default=0.100000|cat=4|desc=The alpha of the dark square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_XRayLightAlpha|default=0.250000|cat=4|desc=The alpha of the light square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Scale_FrameOffset|default=0.500000|cat=10|desc=Y Offset of scale frame from target}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Scale_Snap|default=0.100000|cat=10|desc=Amount scale should snap (0.1 being 10%, 1 being 100%, etc)}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_SnapOnHold|default=1|cat=10|desc=true: Holding shift turns expert control snapping on, false: Holding shift turns snapping off}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_BaseArrowHeadScale|default=0.250000|cat=4|desc=Base scale of the arrow head gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_BaseArrowStemScale|default=0.300000|cat=4|desc=Base scale of the arrow stem gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_BaseCubeScale|default=0.050000|cat=4|desc=Base scale of the center cube gizmo before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_DistScaleMax|default=8.000000|cat=4|desc=Amount of scale to multiply when we're >= ScaleDistanceMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_DistScaleMin|default=1.000000|cat=4|desc=Amount of scale to multiply when we're <= ScaleDistanceMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightDefault|default=0.800000|cat=4|desc=Intensity of highlight when not hovered/selected/in use}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightDragging|default=1.000000|cat=4|desc=Intensity of highlight when dragging}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightHovered|default=0.900000|cat=4|desc=Intensity of highlight when hovered}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightKeybind|default=1.000000|cat=4|desc=Intensity of highlight when corresponding keybind being pressed}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightSelected|default=1.000000|cat=4|desc=Intensity of highlight when selected}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_MaxDistanceFromCamera|default=1000.000000|cat=4|desc=Hard maximum distance from the camera, beyond which this control can no longer reasonably render or calculate translation}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_Padding|default=0.050000|cat=4|desc=Distance the arrows are offset from the center position}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_ScaleDistanceMax|default=60.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_ScaleDistanceMin|default=0.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_XRayCheckerSize|default=7|cat=4|desc=The size in pixels of the checker squares for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_XRayDarkAlpha|default=0.600000|cat=4|desc=The alpha of the dark square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_XRayLightAlpha|default=0.250000|cat=4|desc=The alpha of the light square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_DefaultDistance|default=50.000000|cat=10|desc=Default height of the layout edit mode camera above the floor}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_DragFriction|default=8.000000|cat=10|desc=How quickly the camera loses drag momentum}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_DragMomentum|default=0.300000|cat=10|desc=How much momentum does the camera have after the user stops dragging}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_MaxDistanceIncr|default=5.000000|cat=10|desc=How much zoom in/out of the layout edit mode camera affects distance from the floor}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_MaxDistance|default=80.000000|cat=10|desc=Maximum height of the layout edit mode camera above the floor}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_MinDistance|default=30.000000|cat=10|desc=Minimum height of the layout edit mode camera above the floor}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_Smoothness|default=15.000000|cat=10|desc=Smoothness factor of layout camera movement}}
+: {{apitooltip|type=cvar|name=housingLayout_Camera_Speed|default=15.000000|cat=10|desc=Units/second that the layout edit mode camera moves}}
+: {{apitooltip|type=cvar|name=housingStoragePanelCollapsed|default=0|cat=4|desc=Whether the housing storage panel is collapsed}}
+: {{apitooltip|type=cvar|name=housingStoragePanelHeight|default=615.000000|scope=Account|cat=4|desc=The saved height of the housing storage panel}}
+: {{apitooltip|type=cvar|name=housingStoragePanelWidth|default=530.000000|scope=Account|cat=4|desc=The saved width of the housing storage panel}}
+: {{apitooltip|type=cvar|name=housingTutorialsEnabled|default=1|cat=4|desc=Housing tutorials enabled or disabled}}
+: {{apitooltip|type=cvar|name=InvalidateDeactivatedHandles|default=1|cat=0|desc=Turn on to treat WowCS Handles as invalid if referring to a deactivated entity}}
+: {{apitooltip|type=cvar|name=RenderScaleDowngradeBackgroundMinSize|default=720|cat=1|desc=Min size (in pixels) we can reduce render scale to when under high VRAM pressure when the game does not has focus}}
+: {{apitooltip|type=cvar|name=RenderScaleDowngradeForegroundMinSize|default=1080|cat=1|desc=Min size (in pixels) we can reduce render scale to when under high VRAM pressure when the game has focus}}
+: {{apitooltip|type=cvar|name=TerrainBlendBakeEnable|default=0|cat=1|desc=Enable pre-blending terrain layers}}
+: {{apitooltip|type=cvar|name=TerrainUnlitShaderEnable|default=0|cat=1|desc=Enable Unlit terrain shader}}
+: {{apitooltip|type=cvar|name=UnitNameFocused|default=1|scope=Account|cat=4}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=alwaysShowActionBars|default=0|scope=Account|cat=4|desc=Whether to always show the action bar grid}}
+</div>
+|}
+
+===Commands===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-commands"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(10)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-commands"
+| valign="top" | <div style="margin-left:-1.5em">
+: ''{{apitooltip|type=command|name=NeighborhoodAddManager|cat=0|desc=Add a neighborhood manager. <PlayerGUID>}}''
+: ''{{apitooltip|type=command|name=NeighborhoodCancelInvitation|cat=0|desc=Cancel invitation sent for a private charter neighborhood <PlayerGUID>}}''
+: ''{{apitooltip|type=command|name=NeighborhoodGetInvites|cat=0|desc=Get all invites for the neighborhood you are in}}''
+: ''{{apitooltip|type=command|name=NeighborhoodInviteResident|cat=0|desc=Invite a resident to a private charter neighborhood <PlayerGUID>}}''
+: ''{{apitooltip|type=command|name=NeighborhoodRemoveManager|cat=0|desc=Remove a neighborhood manager. <PlayerGUIID>}}''
+: ''{{apitooltip|type=command|name=NeighborhoodSetName|cat=0|desc=Renames the current neighborhood <neighborhoodName>}}''
+: ''{{apitooltip|type=command|name=NeighborhoodSetPublic|cat=0|desc=Set the neighborhood to either public <1> or private <2>}}''
+: ''{{apitooltip|type=command|name=OfferNeighborhoodOwnership|cat=0|desc=Offer primary ownership of the neighborhood to another player. <selected target or PlayerGUID>}}''
+: ''{{apitooltip|type=command|name=PlayerDeclineHousingInvitation|cat=0|desc=Decline invitation received for a private charter neighborhood <neighborhoodGUID>}}''
+: ''{{apitooltip|type=command|name=PlayerGetHousingInvitation|cat=0|desc=Retrieve a neighborhood invite if player has one}}''
+</div>
+|}
+
+===Structures===
+ AccountStoreItemInfo
+   + <font color="#00b400">mode</font>
+ BNetGameAccountInfo
+   + <font color="#00b400">classID</font>
+ DifficultyInfo
+   + <font color="#00b400">isUserSelectable</font>
+ PlayerChoiceInfo
+   + <font color="#00b400">requiresSelection</font>

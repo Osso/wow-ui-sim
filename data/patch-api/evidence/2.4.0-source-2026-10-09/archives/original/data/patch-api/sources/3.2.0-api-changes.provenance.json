@@ -1,0 +1,21 @@
+{
+  "pageid": 499137,
+  "title": "Patch 3.2.0/API changes",
+  "revid": 4812266,
+  "timestamp": "2020-09-04T21:33:02Z",
+  "sha256": "5a6674fd08ffd867e894196ed1abf2a599a3a25d32d5db5819387dcda0ad9f71",
+  "fetched": "2026-10-09",
+  "fetch_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4812266&format=json",
+  "generator_flags": [
+    "--wrath-retail-change-bullets",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [
+    "--numbered-reflist"
+  ],
+  "client_line": "retail",
+  "source_kind": "substantive-page",
+  "toc": 30200,
+  "toc_note": "Historical version mapping only; no separately pinned parent-page TOC evidence."
+}

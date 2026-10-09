@@ -1,0 +1,241 @@
+{{apichanges|3.1.0|next=3.1.2|prev=3.0.8|misc=Compiled from [http://forums.worldofwarcraft.com/thread.html?topicId=15443405133 Iriel's post] on the official forums.}}
+
+= Details =
+This thread serves two purposes, firstly it collects together details of the [[API]] level changes in the 3.1 lua environment, and secondly it's a place to gather questions about the functionality of the announced 3.1 features so that the community (or passing blue posters) can try and answer them.
+
+Please keep the thread civil and avoid posting questions about non-UI issues!
+
+Due to limited PTR availability when I was compiling this list it's incomplete
+
+(Created for the 3.1.0-9614 and 9626 builds - 2009-02-28)
+
+== Secure Handlers Updates ==
+Some of the functions removed in 3.0.8 have been restored, and there's some new functionality available. An updated usage document can be found at:
+[http://www.iriel.org/wow/docs/SecureHeadersGuide-3.1-r1.pdf www.iriel.org/wow/docs/SecureHeadersGuide-3.1-r1.pdf]
+
+== Talent Functions ==
+The 3.1 spec switching code introduces 'talent groups' which are sets of talents and glyphs. These are numbered starting at 1.
+* NEW - numGroups = GetNumTalentGroups(isInspect, isPet) -- Gets how many talent groups are available
+* NEW - groupIndex = GetActiveTalentGroup(isInspect ,isPet) -- Get the groupIndex of the active talent group.
+* NEW - SetActiveTalentGroup(groupIndex) -- Set which talent group is active.
+
+The following existing API's have changed to provide talent group and talent preview support:
+* UPDATED - link = GetGlyphLink(index [,talentGroup])
+* UPDATED - enabled, glyphType, glyphSpell, iconFilename = GetGlyphSocketInfo(index [,talentGroup])
+* UPDATED - name, icon, pointsSpent, background, previewPointsSpent = GetTalentTabInfo(tabIndex, isInspect, isPet [,groupIndex])
+* UPDATED - name, iconTexture, tier, column, rank, maxRank, isExceptional, meetsPrereq, previewRank, meetsPreviewPrereq = GetTalentInfo(tabIndex, talentIndex, isInspect, isPet [,groupIndex])
+* UPDATED - tier, column, isLearnable, isPreviewLearnable, ... = GetTalentPrereqs(tabIndex, talentIndex, isInspect, isPet [,groupIndex])
+* UPDATED - link = GetTalentLink(tabIndex, talentIndex, isInspect, isPet [,groupIndex [,isPreview]])
+
+These new API's support preview talent management, when groupIndex is not specified it defaults to the active group:
+* NEW - AddPreviewTalentPoints(tabIndex, talentIndex, points, isPet [,groupIndex]]) -- Add preview points to a talent
+* NEW - points = GetGroupPreviewTalentPointsSpent(tabIndex, isPet [,groupIndex]) -- Gets the number of points spent in a tab
+* NEW - points = GetPreviewTalentPointsSpent(tabIndex, isPet [,groupIndex]) -- Gets the number of points spent overall
+* NEW - points = GetUnspentTalentPoints(isInspect, isPet [,groupIndex]) -- Gets the remaining points
+* NEW - LearnPreviewTalents(isPet) -- Learns the preview talents for the active talent group
+* NEW - ResetGroupPreviewTalentPoints(isPet [,groupIndex]) -- Resets all preview talent points
+* NEW - ResetPreviewTalentPoints(tabIndex, isPet [,groupIndex]) -- Resets a table's preview talent points
+
+== Achievement Functions ==
+* NEW - AddTrackedAchievement
+* NEW - GetNumTrackedAchievements
+* REMOVED - GetTrackedAchievement
+* NEW - GetTrackedAchievements
+* NEW - IsTrackedAchievement
+* NEW - RemoveTrackedAchievement 
+* REMOVED - SetTrackedAchievement 
+
+== Calendar Functions ==
+* REMOVED - CalendarContextEventIsGuildWide
+* NEW - CalendarContextEventGetCalendarType
+* NEW - CalendarContextEventSignUp
+* NEW - CalendarContextInviteType
+* NEW - CalendarEventCanModerate
+* NEW - CalendarEventGetCalendarType
+* NEW - CalendarEventGetInviteResponseTime
+* REMOVED - CalendarEventIsGuildWide
+* NEW - CalendarEventSignUp
+* REMOVED - CalendarNewArenaTeamEvent
+* NEW - CalendarMassInviteArenaTeam
+* NEW - CalendarMassInviteGuild
+* NEW - CalendarNewGuildAnnouncement
+* REMOVED - CalendarNewGuildWideEvent
+
+== Control/Input Functions ==
+* NEW - BindingCommandUsesAngle
+* NEW - BindingCommandUsesPressure
+* NEW - BindingModeEnabled
+* NEW - EnableBindingMode
+* NEW - InvertBindingMode
+* NEW - IsMouseEnabledDefault
+* NEW - IsMouseEnabledTemporary
+* NEW - JoystickGetAxesFromStick
+* NEW - JoystickGetStickFromAxis
+* NEW - JoystickMouseDisable
+* NEW - JoystickName
+* NEW - JoystickSwingCamera
+* NEW - MouseEnableDefault
+* NEW - MouseEnableTemporary
+* NEW - MouseEnableUI
+* REMOVED - ToggleMouseMove 
+
+== Equipment Set Functions ==
+* NEW - DeleteEquipmentSet
+* NEW - EquipmentManagerClearIgnoredSlotsForSave
+* NEW - EquipmentManagerIgnoreSlotForSave
+* NEW - EquipmentManagerIsSlotIgnoredForSave
+* NEW - EquipmentManagerUnignoreSlotForSave
+* NEW - GetEquipmentSetInfo
+* NEW - GetEquipmentSetInfoByName
+* NEW - GetEquipmentSetItemLocations
+* NEW - GetNumEquipmentSets
+* NEW - PickupEquipmentSet
+* NEW - PickupEquipmentSetByName
+* NEW - RenameEquipmentSet
+* NEW - SaveEquipmentSet
+
+== Battleground/Arena Functions ==
+* NEW - GetBattlegroundInfo
+* NEW - GetNumArenaOpponents
+* NEW - GetNumBattlegroundTypes
+* NEW - GetWintergraspWaitTime
+* NEW - RequestBattlegroundInstanceInfo
+
+== Targeting/Interaction Functions ==
+* NEW - CanEjectPassengerFromSeat
+* NEW - EjectPassengerFromSeat
+* NEW - InteractUnit
+* NEW - TargetDirectionEnemy
+* NEW - TargetDirectionFinished
+* NEW - TargetDirectionFriend
+* NEW - TargetNearest
+* NEW - UnitIsTappedByAllThreatList 
+
+== Quest Log Functions ==
+* NEW - GetQuestLogSpecialItemCooldown
+* NEW - GetQuestLogSpecialItemInfo
+* NEW - IsQuestLogSpecialItemInRange
+* NEW - UseQuestLogSpecialItem
+
+== Other Functions ==
+* NEW - AddOrRemoveFriend
+* REMOVED - CheckPetUntrainerDist
+* REMOVED - CollapseAllHeaders
+* NEW - CollapseAllFactionHeaders
+* REMOVED - ConfirmPetUnlearn
+* NEW - ContainerRefundItemPurchase
+* NEW - GetContainerItemPurchaseInfo
+* NEW - GetInstanceLockTimeRemaining
+* NEW - GetMaxArenaCurrency
+* REMOVED - ExpandAllHeaders
+* NEW - ExpandAllFactionHeaders
+* NEW - GetContainerItemID
+* NEW - GetInventoryItemID
+* NEW - GetLFGRoles
+* NEW - IsPlayerResolutionAvailable
+* NEW - RespondInstanceLock
+* NEW - SetLFGRoles
+
+== Slash Commands ==
+=== Switching Talent Specs ===
+ /useTalents 1|2  - 1 == primary spec, 2 == offspec
+
+=== Macro Conditional for which spec ===
+ /cast [spec:1] Lightning Bolt; Healing Wave
+
+== Other Info ==
+=== Target Facing ===
+Quote:
+ Are we going to see a GetTargetFacing() to the API?
+ 
+ The math between the two can be a nice combination to some Class Spell deciding addons and Boss Mod updates.
+
+We've decided specifically not to expose facing information for other units at this time.
+
+=== UnitAura ===
+Quote:
+ As great as having source ids on this is, it'd be really nice to be able to get the same ids 
+ from UnitAura(). I get no end of complaints about how the vehicle debuffs aren't showing as theirs. 
+ While I haven't seen the vehicle fights in Ulduar yet, if they're anything like the Malygos fight 
+ I"m sure I won't stop hearing this complaint.
+ 
+ I know this is sorta a wish list thing but it does seem like a natural progression of giving us 
+ that info with the combat log that the UI should be able to have access to it for usage by frames.
+
+With this in mind, we're making the following change to UnitAura, UnitBuff, and UnitDebuff:
+
+name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitAura("unit", index or ["name", "rank"][, "filter"])
+name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitBuff("unit", index or ["name", "rank"][, "filter"])
+name, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitDebuff("unit", index or ["name", "rank"][, "filter"])
+
+The isMine return value has been changed to caster, where caster is the unit token of the unit that applied the aura. This works for all unit tokens, including "pet" and its incarnations, "focus", and "target".
+
+Most importantly, if the aura was applied by a unit that does not have a token (for instance, a vehicle) but is controlled by one that does (the player), this function will return the token of the unit's controller. In other words, if I'm a shaman and I cast Totem of Wrath, which applies the Totem of Wrath buff, the buff will return the "player" token as its caster unit because totems don't have their own unit tokens.
+
+Auras will also be sorted by the game code in a similar fashion such that the first n auras returned by the unit aura functions will be auras applied by either the player or a unit the player controls or owns (e.g. vehicles, pets, totems).
+
+EDIT: I previously stated the "caster" return for the new UnitAura functions could not be an arena unit token. This is incorrect. The new UnitAura functions will return "arena" tokens when appropriate.
+
+=== Animation and Mouse Hover ===
+n a different topic - The last PTR build included a bunch of changes to the secure handlers code, they're summarized as follows:
+
+1) The SetUpAnimation method that was added in 3.0.8 has been removed (since there's now animation support directly in the UI objects) - Note that the animation API's dont require secure code so there's no explicit functions for them in the secure environment.
+
+2) Many of the information gathering frame methods removed in 3.0.8 have been restored, as has the Show/Hide driver.
+
+3) There's a new driver for performing auto-hide of frames based on mouse hover. Testing today has revealed that there are some bugs which severely limit its usefulness right now (i.e. it's broken), but it should get fixed in a future build.
+
+The hover driver works as follows:
+
+You can register a frame for auto-hiding, specifying an expiration time. Once the mouse enters and then leaves the frame, and stays out of the frame for the expiration time, the frame will be automatically hidden. If the mouse re-enters the frame the expiration time resets.
+
+If the frame is hidden explicitly (and stays hidden for at least one update cycle) then the auto hide is cancelled.
+
+If the frame has moved between when it was registered and when the hiding would occur, the hide is cancelled.
+
+Finally for complex scenarios you can add additional regions to the hover boundary, by adding additional frames to be included in the 'is over' calculation. For a number of reasons the rects of the frames are captured at point of registration and not re-queried afterwards, neither is the visibility of these additional frames important. This provides a fairly flexible way of supporting more or less arbitrary shapes (though there is an overhead in getting too clever, the driver has to check all of the rects)
+
+The methods to control hover registration for normal code (operable when not in combat) are:
+
+RegisterAutoHide(frame, duration) -- Registers a frame for auto-hiding. The duration is in seconds, any previous registration for that frame is replaced.
+UnregisterAutoHide(frame) -- Cancels the auto-hiding for a frame.
+AddToAutoHide(frame, child) -- Adds the rect of a child to the auto-hide footprint of a frame. This can only be called immediately after registration (before the next OnUpdate cycle).
+
+As noted above, the current implementation has a ocuple of bugs which render it largely unusuable right now.
+
+=== DEPRECATED isMine() ===
+Quote:
+ Did something change in how the game communicates the owner of Debuffs on a Mob? 
+ When I ran modless, I found that my DoTs were the first on the mob's frame. 
+
+Yes see,
+[http://forums.worldofwarcraft.com/thread.html?topicId=15443405133&sid=1&pageNo=3#53]
+
+All addons using the old isMine return need to be updated to use caster. It's about a five minute change. Which can be done roughly like so:
+
+local name ame, rank, icon, count, debuffType, duration, expirationTime, caster, isStealable = UnitAura(unit, n, "HELPFUL")
+local isMine = caster == "player"
+
+If you want to be even more advanced you can do:
+ local my_units = {
+   player = true,
+   pet = true,
+   vehicle = true,
+ }
+ local isMine = my_units[caster]
+
+Which will add the ability to pickup your pet and vehicles dots.
+
+=== MISSED ===
+==== GetInventoryItemsForSlot() ====
+btw the list of new API functions in the first post is missing GetInventoryItemsForSlot. Returns a table (and populates one if passed as second parameter) of base item id's indexed by numerical locations.
+
+ table = GetInventoryItemsForSlot(slot[,table])
+
+==== GameTooltip:SetGlyph() ====
+GameTooltip:SetGlyph() Has been updated with a talentGroup parameter now, too.
+
+=== GetPlayerFacing() UPDATE ===
+GetPlayerFacing() should be fixed on the PTRs now, and its return has been changed to radians. 
+
+  local radians = GetPlayerFacing();

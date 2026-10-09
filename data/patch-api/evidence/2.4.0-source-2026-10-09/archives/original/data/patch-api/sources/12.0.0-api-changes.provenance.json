@@ -1,0 +1,14 @@
+{
+  "patch": "12.0.0",
+  "title": "Patch 12.0.0/API changes",
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_12.0.0/API_changes",
+  "wikitext": {
+    "file": "12.0.0-api-changes.wikitext",
+    "method": "MediaWiki action=query prop=revisions rvprop=ids|timestamp|content rvslots=main",
+    "revid": 6747189,
+    "revision_timestamp": "2026-06-18T08:59:26Z",
+    "retrieved": "2026-10-05",
+    "sha256": "74e0dee19960d40c551759c94b06f8393d445781200182b9c5971a64e57b9a19",
+    "register": "12.0.0-wikitext-register.json"
+  }
+}

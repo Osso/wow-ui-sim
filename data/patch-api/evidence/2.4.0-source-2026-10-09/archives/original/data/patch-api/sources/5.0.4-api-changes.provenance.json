@@ -1,0 +1,63 @@
+{
+  "pageid": 385020,
+  "title": "Patch 5.0.4/API changes",
+  "revid": 3706382,
+  "timestamp": "2021-02-12T21:08:15Z",
+  "sha256": "b8ac5f350bba3ac9669428b005ac9d5a2340ff85caed6c2792ab07e1be1264b9",
+  "fetched": "2026-10-08",
+  "fetch_url": "https://warcraft.wiki.gg/api.php",
+  "evidence": "data/patch-api/evidence/5.0.4-session-2026-10-08/source-response.json",
+  "extractor_flags": [
+    "--retain-patch-diff-reference"
+  ],
+  "generator_flags": [
+    "--mists-prepatch",
+    "--mists-diff",
+    "data/patch-api/evidence/5.0.4-session-2026-10-08/diff.wikitext",
+    "--client-line",
+    "retail"
+  ],
+  "client_line": "retail",
+  "toc": 50001,
+  "source_kind": "substantive-page",
+  "toc_source": {
+    "pageid": 24187,
+    "revid": 6423642,
+    "path": "data/patch-api/evidence/5.0.4-session-2026-10-08/parent.wikitext",
+    "sha256": "a2a3ca0dc16d99a4a5e64859a3114ca475f4fb56fe6491a4b0976f5392904649",
+    "evidence": "data/patch-api/evidence/5.0.4-session-2026-10-08/parent-response.json",
+    "note": "The pinned parent explicitly records toc=50001; do not derive 50004 from the page title."
+  },
+  "diff_source": {
+    "pageid": 408285,
+    "revid": 3923766,
+    "path": "data/patch-api/evidence/5.0.4-session-2026-10-08/diff.wikitext",
+    "sha256": "aa98e2b7a47dde4676b77e46e5659a0532a44f68352e5d751db6882e826b1582",
+    "evidence": "data/patch-api/evidence/5.0.4-session-2026-10-08/diff-response.json",
+    "comparison": "4.3.4.15595 -> 5.0.4.16016"
+  },
+  "parsing": {
+    "scope": "Source parsing only. Register directions describe historical page claims, not runtime retirement decisions or behavioral proof. Runtime audit remains pending; no coverage/acceptance ledger created.",
+    "occurrence_ids": "Main occurrences retain wt-<section>-<symbol>-<original-line>; diff occurrences retain diff-wt-<section>-<symbol>-<original-line>. Signatures are separate fields; annotation retains full original prose.",
+    "main_occurrences": 77,
+    "main_directions": {
+      "added": 26,
+      "removed": 26,
+      "changed": 25
+    },
+    "diff_occurrences": 549,
+    "diff_directions": {
+      "added": 454,
+      "removed": 95
+    },
+    "diff_code_wrapped_occurrences": 95,
+    "header_counts": "All eight numerical headers match: Global API 302/78, FrameXML 24/11, events 92/4, widgets 36/2 (added/removed). Every raw colon inventory line has one occurrence.",
+    "main_source_lines": 82,
+    "diff_source_lines": 601,
+    "extract_lines": 82,
+    "extract_nonblank_lines": 73,
+    "extract_context": "Navigation, nine headings, expansion instruction and unexpanded diff reference remain in the extract. Macro conditionals, feature summaries, group category constants, achievement split, FrameXML renames and bug qualifications remain verbatim after markup rendering. Extract line suffixes use the existing seed_rows contract; no audit credit assigned.",
+    "signatures": 5,
+    "removal_rule": "Only explicit arrow/rename clauses or named is-removed clauses produce main-page removals. Successor references and old event names mentioned in observed bugs remain changed/context identities. The achievement split does not remove GetAchievementCriteriaInfo."
+  }
+}

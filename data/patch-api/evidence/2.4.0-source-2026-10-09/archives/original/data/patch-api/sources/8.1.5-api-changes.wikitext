@@ -1,0 +1,92 @@
+{{apichanges|8.1.5|prev=8.1.0|next=8.2.0}}
+
+Diff: 8.1.0 (29482) to 8.1.5 (29701)
+* https://github.com/Gethe/wow-ui-source/commit/93e7041bf9340ca2bcfca8a56feab94ff0bee066
+Blizzard Deprecated
+* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_5.lua
+
+==API==
+====New====
+* {{api|C_AccountInfo.GetIDFromBattleNetAccountGUID}}
+New C_CVar table
+* {{api|C_CVar.GetCVar}}
+* {{api|C_CVar.GetCVarBitfield}}
+* {{api|C_CVar.GetCVarBool}}
+* {{api|C_CVar.GetCVarDefault}}
+* {{api|C_CVar.RegisterCVar}}
+* {{api|C_CVar.ResetTestCVars}}
+* {{api|C_CVar.SetCVar}}
+* {{api|C_CVar.SetCVarBitfield}}
+* {{api|C_ChatInfo.ReplaceIconAndGroupExpressions}}
+New C_ClassColor table
+* {{api|C_ClassColor.GetClassColor}}
+* {{api|C_DateAndTime.GetServerTimeLocal}}
+* {{api|C_EncounterJournal.IsEncounterComplete}}
+New C_ItemSocketInfo table
+* {{api|C_ItemSocketInfo.CompleteSocketing}}
+* {{api|C_MerchantFrame.IsMerchantItemRefundable}}
+* {{api|C_PlayerInfo.UnitIsSameServer}}
+* {{api|C_PvP.GetActiveBrawlInfo}}
+* {{api|C_PvP.GetAvailableBrawlInfo}}
+* {{api|C_PvP.IsActiveBattlefield}}
+* {{api|C_ReportSystem.InitiateReportPlayer}}
+* {{api|C_ReportSystem.SendReportPlayer}}
+* {{api|C_Social.GetLastScreenshotIndex}}
+* {{api|C_Social.GetMaxTweetLength}}
+* {{api|C_Social.GetScreenshotInfoByIndex}}
+* {{api|C_SpecializationInfo.IsInitialized}}
+* {{api|C_TaskQuest.GetQuestTimeLeftSeconds}}
+New C_Texture table
+* {{api|C_Texture.GetAtlasInfo}}
+* {{api|C_ToyBoxInfo.ClearFanfare}}
+* {{api|C_ToyBoxInfo.NeedsFanfare}}
+* {{api|C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo}}
+* {{api|BNGetDisplayName}}
+* {{api|DumpMovementCapture}}
+* {{api|UnitPvpClassification}}
+* {{api|UnitSelectionType}}
+* {{api|UnitTreatAsPlayerForDisplay}}
+* {{api|UnitWidgetSet}}
+
+====Changes====
+?
+
+====Removals====
+* {{api|C_AreaPoiInfo.GetAreaPOITimeLeft}}
+* {{api|C_Calendar.GetDate}}
+* {{api|C_ChatInfo.CanReportPlayer}}
+* {{api|C_ChatInfo.ReportPlayer}}
+* {{api|C_Club.AddClubStreamToChatWindow}}
+* {{api|C_Club.SetCommunityID}}
+* {{api|C_DateAndTime.GetDateFromEpoch}}
+* {{api|C_DateAndTime.GetTodaysDate}}
+* {{api|C_DateAndTime.GetYesterdaysDate}}
+* {{api|C_PvP.GetBrawlInfo}}
+* {{api|C_ReportSystem.ReportPlayer}}
+* {{api|C_Social.GetLastScreenshot}}
+* {{api|C_Social.GetNumCharactersPerMedia}}
+* {{api|C_Social.GetScreenshotByIndex}}
+* {{api|GetAtlasInfo}}
+* {{api|GetCVar}}
+* {{api|GetCVarBitfield}}
+* {{api|GetCVarBool}}
+* {{api|GetCVarDefault}}
+* {{api|GetInspectGlyph}}
+* {{api|HasInspectHonorData}}
+* {{api|InActiveBattlefield}}
+* {{api|RegisterCVar}}
+* {{api|RequestInspectHonorData}}
+* {{api|ResetTestCvars}}
+* {{api|SetCVar}}
+* {{api|SetCVarBitfield}}
+* {{api|gcinfo}}
+
+==Widgets==
+?
+
+==Events==
+* {{api|t=e|NEW_TOY_ADDED}}
+* {{api|t=e|SOCKET_INFO_BIND_CONFIRM}}
+
+==CVars==
+?

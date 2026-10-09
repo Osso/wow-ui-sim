@@ -1,0 +1,10 @@
+Patch 8.3.7 API changes
+
+== Changes ==
+* TOC: 80300
+* BlizzardInterfaceResources: 8.3.7 (35114)
+
+== API ==
+=== New ===
+* GetAreaText()
+* CVar MouseUseLazyRepositioning

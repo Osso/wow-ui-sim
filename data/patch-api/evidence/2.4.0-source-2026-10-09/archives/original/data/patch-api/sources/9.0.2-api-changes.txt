@@ -1,0 +1,15 @@
+Patch 9.0.2 API changes
+
+== Summary ==
+Patch 9.0.2 Shadowlands content patch.
+* TOC: 90002
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== Notable changes ==
+* Help frame overhaul
+* DeleteCursorItem now requires a hardware event
+* Shadowlands feature additions
+
+Most significant changes took place in 9.0.1. See Patch 9.0.1/API changes for more information.
+
+== Global API ==

@@ -1,0 +1,110 @@
+<noinclude>{{Transclude|}}</noinclude>
+== Automated diff ==
+
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.2.0.16650 &rarr; 5.3.0.16965)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 14 new functions
+! style="width: 50%; padding-right: 1em"| 1 removed functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|AcknowledgeSurvey}}
+: {{api|C_PetBattles.CanAcceptQueuedPVPMatch}}
+: {{api|C_Scenario.GetBonusCriteriaInfo}}
+: {{api|C_Scenario.GetBonusStepInfo}}
+: {{api|CanTrackBattlePets}}
+: {{api|GetBattlegroundPoints}}
+: {{api|GetItemUpgradeEffect}}
+: {{api|GetLFGRoleUpdateBattlegroundInfo}}
+: {{api|GetLootSpecialization}}
+: {{api|GetNumItemUpgradeEffects}}
+: {{api|GetPVPRoles}}
+: {{api|GetWebTicket}}
+: {{api|SetLootSpecialization}}
+: {{api|SetPVPRoles}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: PrepVoidStorageForTransmogrify
+</div>
+|}
+=== FrameXML ===
+{| class="wikitable" style="min-width: 600px"
+|+ FrameXML (5.2.0.16650 &rarr; 5.3.0.16965)
+|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 3 new functions
+! style="width: 50%; padding-right: 1em"| 0 removed functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-fxml"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|HideKnowledgeBase}}
+: {{api|PrintLootSpecialization}}
+: {{api|ShowKnowledgeBase}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+
+</div>
+|}
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.2.0.16650 &rarr; 5.3.0.16965)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 8 new events
+! style="width: 50%; padding-right: 1em"| 1 removed events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|BATTLEGROUND_POINTS_UPDATE}}
+: {{api|t=e|BONUS_ROLL_ACTIVATE}}
+: {{api|t=e|BONUS_ROLL_DEACTIVATE}}
+: {{api|t=e|PLAYER_LOOT_SPEC_UPDATED}}
+: {{api|t=e|PVP_ROLE_UPDATE}}
+: {{api|t=e|SIMPLE_BROWSER_WEB_ERROR}}
+: {{api|t=e|SIMPLE_BROWSER_WEB_PROXY_FAILED}}
+: {{api|t=e|UPDATE_WEB_TICKET}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: UNIT_DYNAMIC_FLAGS
+</div>
+|}
+=== Widget API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API (5.2.0.16650 &rarr; 5.3.0.16965)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 14 new methods
+! style="width: 50%; padding-right: 1em"| 0 removed methods
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Browser:ClearCache}}
+: {{api|t=w|Browser:ClearFocus}}
+: {{api|t=w|Browser:CopyExternalLink}}
+: {{api|t=w|Browser:DeleteCookies}}
+: {{api|t=w|Browser:HasConnection}}
+: {{api|t=w|Browser:NavigateBack}}
+: {{api|t=w|Browser:NavigateForward}}
+: {{api|t=w|Browser:NavigateHome}}
+: {{api|t=w|Browser:NavigateReload}}
+: {{api|t=w|Browser:NavigateStop}}
+: {{api|t=w|Browser:OpenExternalLink}}
+: {{api|t=w|Browser:OpenTicket}}
+: {{api|t=w|Browser:SetFocus}}
+: {{api|t=w|Browser:SetZoom}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+
+</div>
+|}
+=== Widget Handlers ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget Handlers (5.2.0.16650 &rarr; 5.3.0.16965)
+|- class="mw-customtoggle-widget-handlers" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em"| 3 new handlers
+! style="width: 50%; padding-right: 1em"| 0 removed handlers
+|- class="mw-collapsible" id="mw-customcollapsible-widget-handlers"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=wh|Browser OnEditFocusGained}}
+: {{api|t=wh|Browser OnEditFocusLost}}
+: {{api|t=wh|Browser OnEscapePressed}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+
+</div>
+|}

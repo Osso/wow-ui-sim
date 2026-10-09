@@ -1,0 +1,15 @@
+Patch 6.2.0 API changes
+
+== New ==
+* New difficulties
+:* Mythic 5-player: difficultyID 23
+:* Timewalker 5-player: difficultyID 24
+
+== Changes ==
+* New item string pieces added (in bold) and upgradeId moved: itemID:enchant:gem1:gem2:gem3:gem4:suffixID:uniqueID:level:specializationID:upgradeType:instanceDifficultyID:numBonusIDs:bonusID1:bonusID2...:upgradeId
+The old upgradeId piece is now placed at the end of all bonusID's. If the upgradeType is 0 then the upgradeId is left off. The specializationID allows other players to view linked gear with the linking player's primary stat and set bonuses. The new upgradeType and upgradeId setup allows timewalking gear to display appropriately when linked between different level players.
+
+* The resulting tooltip from calling GameTooltip:SetHyperlink(link) no longer contains the cost of a spell if the hyperlink is a spell tooltip. GameTooltip:SetSpellByID(id) still contains the cost, though.
+
+== Automated diff ==
+[Transcluded source: Patch 6.2.0/API changes/diff; not expanded]

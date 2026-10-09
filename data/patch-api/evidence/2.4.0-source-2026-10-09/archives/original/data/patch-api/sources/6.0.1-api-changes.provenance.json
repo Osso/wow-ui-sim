@@ -1,0 +1,14 @@
+{
+  "pageid": 3058,
+  "title": "Patch 6.0.1/API changes",
+  "revid": 31159,
+  "timestamp": "2014-08-22T01:10:34Z",
+  "sha256": "4b165c4e4db1de0339eac46999fd4b4dcca1e48384c99e31bb35aae7ad4c2dc5",
+  "fetched_at": "2026-10-08T20:21:03.712734+00:00",
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=3058&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+  "generator_flags": [],
+  "extractor_flags": [],
+  "classification": "redirect-only",
+  "redirect": true,
+  "redirect_target": "Patch 6.0.2/API changes"
+}

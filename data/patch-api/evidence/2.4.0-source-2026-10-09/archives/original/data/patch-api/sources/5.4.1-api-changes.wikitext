@@ -1,0 +1,45 @@
+{{apichanges|5.4.1|next=5.4.2|prev=5.4.0}}
+
+== Breaking changes ==
+* The [[CVar]] "realmName" is no longer queryable in-game with {{api|GetCVar}}. {{api|GetRealmName}} should be used to obtain the realm of the player.
+
+== Bugs ==
+* {{api|C_StorePublic.IsDisabledByParentalControls}} is protected (and called from <code>UpdateMicroButtons</code>, which is frequently called from execution paths tainted by addons).
+
+== Automatic diff ==
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.4.0.17359 &rarr; 5.4.1.17538)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="padding: 0 1em;"| 9 new functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_ProductChoice.GetChoices}}
+: {{api|C_ProductChoice.GetProducts}}
+: {{api|C_ProductChoice.MakeSelection}}
+: {{api|C_RecruitAFriend.CheckEmailEnabled}}
+: {{api|C_RecruitAFriend.GetRecruitInfo}}
+: {{api|C_RecruitAFriend.IsSendingEnabled}}
+: {{api|C_RecruitAFriend.SendRecruit}}
+: {{api|C_StorePublic.IsDisabledByParentalControls}}
+: {{api|SelectedRealmName}}
+</div>
+|}
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.4.0.17359 &rarr; 5.4.1.17538)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="padding: 0 1em;"| 6 new events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|PRODUCT_ASSIGN_TO_TARGET_FAILED}}
+: {{api|t=e|PRODUCT_CHOICE_UPDATE}}
+: {{api|t=e|RECRUIT_A_FRIEND_CAN_EMAIL}}
+: {{api|t=e|RECRUIT_A_FRIEND_INVITATION_FAILED}}
+: {{api|t=e|RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED}}
+: {{api|t=e|RECRUIT_A_FRIEND_SYSTEM_STATUS}}
+</div>
+|}
+
+==References==
+{{reflist}}

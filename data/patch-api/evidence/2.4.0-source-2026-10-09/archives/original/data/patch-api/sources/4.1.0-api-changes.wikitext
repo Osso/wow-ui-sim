@@ -1,0 +1,90 @@
+{{apichanges|4.1.0|prev=4.0.1|next=4.2.0}}
+
+== Breaking changes ==
+* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, hideCaster.
+* Addons are now required to register the prefixes they want to receive {{api|SendAddonMessage}} messages for using {{api| RegisterAddonMessagePrefix}}.
+
+== API changes ==
+* REMOVED {{api|CanTransform}} / {{api|Transform}}; worgen transformation is now treated entirely as a spell.
+* REMOVED {{api|GetPetHappiness}} along with actual pet happiness.
+* REMOVED {{api|RenameEquipmentSet}}
+* NEW calendar extensions
+** {{api|CalendarContextEventCanRemove}}
+** {{api|CalendarEventGetTypesDisplayOrdered}}
+** {{api| GetEventTime}}
+** {{api| GetCurrentEventID}}
+* NEW Looking For Guild / Guild Recruitment API
+** {{api|CancelGuildMembershipRequest}}
+** {{api| DeclineGuildApplicant}}
+** {{api| GetGuildApplicantInfo}}
+** {{api| GetGuildApplicantSelection}}
+** {{api| GetGuildMembershipRequestInfo}}
+** {{api| GetGuildMembershipRequestSettings}}
+** {{api| GetGuildRecruitmentComment}}
+** {{api| GetGuildRecruitmentSettings}}
+** {{api| GetLookingForGuildComment}}
+** {{api| GetLookingForGuildSettings}}
+** {{api| GetNumGuildApplicants}}
+** {{api| GetNumGuildMembershipRequests}}
+** {{api| GetNumRecruitingGuilds}}
+** {{api| GetRecruitingGuildInfo}}
+** {{api| GetRecruitingGuildSelection}}
+** {{api| GetRecruitingGuildSettings}}
+** {{api| GetRecruitingGuildTabardInfo}}
+** {{api| RequestGuildApplicantsList}}
+** {{api| RequestGuildMembership}}
+** {{api| RequestGuildMembershipList}}
+** {{api| RequestGuildRecruitmentSettings}}
+** {{api| RequestRecruitingGuildsList}}
+** {{api| SetGuildApplicantSelection}}
+** {{api| SetGuildRecruitmentComment}}
+** {{api| SetGuildRecruitmentSettings}}
+** {{api| SetLookingForGuildComment}}
+** {{api| SetLookingForGuildSettings}}
+** {{api| SetRecruitingGuildSelection}}
+* NEW Looking for Group Call To Arms (role shortage) API
+** {{api| GetLFGDungeonShortageRewardInfo}}
+** {{api| GetLFGDungeonShortageRewardLink}}
+** {{api| GetLFGRoleShortageRewards}}
+* NEW Guild Challenges API
+** {{api| GetGuildChallengeInfo}}
+** {{api| GetNumGuildChallenges}}
+** {{api| RequestGuildChallengeInfo}}
+* NEW Opt-in Addon Communication API
+** {{api| GetRegisteredAddonMessagePrefixes}}
+** {{api| IsAddonMessagePrefixRegistered}}
+** {{api| RegisterAddonMessagePrefix}}
+
+* NEW {{api|CanEditGuildBankTabInfo}}
+* NEW {{api|CancelEmote}}
+* NEW {{api| ClearAllTracking}}
+* NEW {{api| GetAddOnOptionalDependencies}}
+* NEW {{api| GetDebugSpellEffects}}
+* NEW {{api| GetDungeonForRandomSlot}}
+* NEW {{api| GetGuildBankBonusDepositMoney}}
+* NEW {{api| GetInspectRatedBGData}}
+* NEW {{api| GetMaxAnimFramerate}}
+* NEW {{api| GetNamePlateMotionType}}
+* NEW {{api| GetNetIpTypes}}
+* NEW {{api| GetNumDungeonForRandomSlot}}
+* NEW {{api| GetNumNamePlateMotionTypes}}
+* NEW {{api| GetNumberOfDetailTiles}}
+* NEW {{api| GetTrainerTradeskillRankValues}}
+* NEW {{api| IsIPv6Available}}
+* NEW {{api| IsOnTournamentRealm}}
+* NEW {{api| IsOnePersonParty}}
+* NEW {{api| IsRatedMap}}
+* NEW {{api| IsTrialAccount}}
+* NEW {{api| ModifyEquipmentSet}}
+* NEW {{api| SetBarSlotFromIntro}}
+* NEW {{api| SetGuildMemberRank}}
+* NEW {{api| SetMaxAnimFramerate}}
+* NEW {{api| SetNamePlateMotionType}}
+* NEW {{api| UnitThreatPercentageOfLead}}
+
+== Event changes ==
+* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, shifting existing parameters to the right.
+* REMOVED END_REFUND, items no longer become unrefundable due to enchanting, etc.
+* REMOVED HONOR_CURRENCY_UPDATE, honor now treated as ordinary currency
+* REMOVED INSPECT_TALENT_READY, talent information available by default.
+* REMOVED KNOWN_CURRENCY_TYPES_UPDATE

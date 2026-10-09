@@ -1,0 +1,123 @@
+{{apichanges|2.4.0|next=2.4.2|prev=2.3.0}}
+
+==Significant Changes==
+* The combat logging mechanism is completely overhauled with explicit data instead of text strings delivered to the UI. Highlights include detailed flags indicating relationship of involved units to player, unique identifiers for units with the same name within the combat log -- great for log analysis.<ref>{{Ref web|url=http://forums.worldofwarcraft.com/thread.html?topicId=2968233433&pageNo=1&sid=1#9|date=20071119|archivedate=20071119|archiveurl=http://blue.cardplace.com/newcache/us/2968233433.htm|title=Upcoming 2.4 API changes - concise list}}</ref>
+** [[Patch_2.4.0/Consolidated API changes/Guide to the New Combat Log|Guide to the New Combat Log]]
+* The In-game Interface Options screen is being revamped and the new architecture should allow AddOn authors to modify its contents without the taint issues presented by the current system. Additionally this system will contain an area for AddOn authors to present their own configuration options. Authors interested in this feature should be sure to experiment on the PTRs before patch 2.4 is released so that any issues can be surfaced and discussed. Basic details on how to use this system can be found in code comments in the 2.4 UIOptionsPanels.lua.
+
+==Events==
+* {{api|t=e|PARTY_MEMBER_ENABLE}} and {{api|t=e|PARTY_MEMBER_DISABLE}} will no longer provide information about which party member was enabled or disabled.
+
+==Secure Templates==
+* The SecureStateHeader now provides a mechanism to change its own attributes in response to state changes. 
+
+==Debugging==
+* In 2.4, you'll be able to pass a coroutine as a first (optional) parameter to [[API debugstack|debugstack]]()
+
+==Visual Settings==
+* There's a new cVar unitHighlights; 0 = no model highlighting with Alt-Z, 1 = model highlighting on with Alt-Z. (e.g. /console unitHighlights 1)
+* Players can now toggle the display of Friendly and Enemy player names, as well as their pets and creations. You can toggle cosmetic pet names too. :) 
+
+==Tooltip Methods==
+* NEW - [[API GameTooltip SetTotem|GameTooltip:SetTotem]](slot)
+
+==Font String Display==
+* Textures can now be included in FontStrings locally using a new | escape code: |T<path>:<width>[:<height>:<xOffset>:<yOffset>]|t
+* Selected textures can also be included in Chat messages and sent to other users, the current available textures are represented in a form like: {star} 
+
+==Character Functions==
+* NEW - armorPenetration = [[API GetArmorPenetration|GetArmorPenetration]]()
+
+==Channel Functions==
+* NEW - [[API DeclineInvite|DeclineInvite]](channel)
+
+==Combat Log Functions==
+* NEW - [[API CombatLogAddFilter|CombatLogAddFilter]]
+* NEW - [[API CombatLogAdvanceEntry|CombatLogAdvanceEntry]]
+* NEW - [[API CombatLogClearEntries|CombatLogClearEntries]]
+* NEW - [[API CombatLogGetCurrentEntry|CombatLogGetCurrentEntry]]
+* NEW - [[API CombatLogGetNumEntries|CombatLogGetNumEntries]]
+* NEW - [[API CombatLogGetRetentionTime|CombatLogGetRetentionTime]]
+* NEW - [[API CombatLogResetFilter|CombatLogResetFilter]]
+* NEW - [[API CombatLogSetCurrentEntry|CombatLogSetCurrentEntry]]
+* NEW - [[API CombatLogSetRetentionTime|CombatLogSetRetentionTime]]
+
+==Friend Functions==
+* NEW - [[API SetFriendNotes|SetFriendNotes]]("name" or index, "notes")
+
+==Guild Functions==
+* NEW - canEdit = [[API CanEditGuildTabInfo|CanEditGuildTabInfo]](tab)
+
+==Guild Bank Functions==
+* NEW - [[API QueryGuildBankText|QueryGuildBankText]](tab)
+* NEW - [[SetGuildBankText|SetGuildBankText]](tab, "text")
+
+==Inventory Functions==
+* NEW - freeSlots, itemFamily = [[API GetContainerNumFreeSlots|GetContainerNumFreeSlots]]([[bagIndex]]) -- Returns the number of free slots in a bag, and the type of items that can go in the bag. For [[bagType]], 0 means any item can go in the bag.
+
+==Item Functions==
+* NEW - [[bagType]] = [[API GetItemFamily|GetItemFamily]](itemId or itemName or itemLink or itemString) -- When used with a container, this returns the type of container. When used with an item, it returns the type of container the item can go in. However, [[bagType]] is a bitflag, so [[API GetItemFamily|GetItemFamily]] for something that could go in a quiver ([[bagType]] 1) and an ammo pouch ([[bagType]] 2) would return 3. A bag that can hold both arrows and bullets would also return 3. 
+** 0 = Unspecified (for bags it means any item, for items it means no special bag type)
+** 1 = Quiver
+** 2 = Ammo Pouch
+** 4 = Soul Bag
+** 8 = Leatherworking Bag
+** 16 = Unknown
+** 32 = Herb Bags
+** 64 = Enchanting Bags
+** 128 = Engineering Bag
+** 256 = Keyring
+** 512 = Gem Bag
+** 1024 = Mining Bag
+** 2048 = Unknown
+** 4096 = Vanity Pets
+* NEW - icon = [[API GetItemIcon|GetItemIcon]](itemId or itemName or itemLink or itemString) -- Returns the icon for an item (as long as the item is valid), even if [[API GetItemInfo|GetItemInfo]] returns nil.
+
+==Quest Functions==
+* NEW - questLink = [[API GetQuestLink|GetQuestLink]](questLogId)
+* NEW - [[API GetRewardTitle|GetRewardTitle]]()
+
+==Language Functions==
+* NEW - numLanguages = [[API GetNumLanguages|GetNumLanguages]]()
+
+==Loot Functions==
+* NEW - isOptOutOfLoot = [[API GetOptOutOfLoot|GetOptOutOfLoot]]()
+* NEW - [[API SetOptOutOfLoot|SetOptOutOfLoot]](boolean)
+** false: You are now eliglible for random loot.
+** true: You are now passing on random loot.
+
+==Spell Functions==
+* NEW - name, rank, icon, cost, isFunnel, powerType, castTime, minRange, maxRange = [[API GetSpellInfo|GetSpellInfo]](spellId or spellName or spellLink)
+* NEW - spellLink = [[API GetSpellLink|GetSpellLink]](spellId or spellName or spellLink)
+* NEW - spellLink = [[API GetTalentLink|GetTalentLink]](tab, index[, inspect])
+
+==Summon Functions==
+* NEW - canSummon = [[API CanSummonFriend|CanSummonFriend]]()
+* NEW - [[API SummonFriend|SummonFriend]]()
+
+==Totem Functions==
+* NEW - haveTotem, name, startTime, duration, icon = [[API GetTotemInfo|GetTotemInfo]](slot)
+** 1 = Fire
+** 2 = Earth
+** 3 = Water
+** 4 = Air
+* NEW - timeleft = [[API GetTotemTimeLeft|GetTotemTimeLeft]](slot)
+
+==Unit Functions==
+* NEW - healthMod = [[API GetUnitMaxHealthModifier|GetUnitMaxHealthModifier]]("[[unitId|unit]]")
+* NEW - inRange = [[API UnitInRange|UnitInRange]]("[[unitId|unit]]") -- Determines if a unit is within a (fixed by Blizzard) useful range based on flash heal/cure range) This is now used by the Blizzard Raid UI
+* NEW - classLocal, class = [[API UnitClassBase|UnitClassBase]]("[[unitId|unit]]")
+* NEW - raceLocal, race = [[API UnitRaceBase|UnitRaceBase]]("[[unitId|unit]]")
+* NEW - [[GUID|guid]] = [[API UnitGUID|UnitGUID]]("[[unitId|unit]]") -- Returns a string representing a unique identifier for the given unit. This is the same string that is used in the combat log to identify a unit.
+
+==Unknown Functions==
+* NEW - [[API DeclineName|DeclineName]]("name", gender, declensionSet)
+* NEW - [[API GetNumDeclensionSets|GetNumDeclensionSets]]("name", gender)
+* NEW - [[API CanGrantLevel|CanGrantLevel]]()
+* NEW - [[API GrantLevel|GrantLevel]]()
+* NEW - [[API CommentatorSetCameraCollision|CommentatorSetCameraCollision]]()
+* NEW - [[API CommentatorSetTargetHeightOffset|CommentatorSetTargetHeightOffset]]()
+* NEW - [[API TogglePerformancePause|TogglePerformancePause]]()
+
+==References==
+{{Reflist}}

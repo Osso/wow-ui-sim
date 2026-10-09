@@ -1,0 +1,689 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "4.3.0",
+  "source": {
+    "path": "data/patch-api/sources/4.3.0-api-changes.wikitext",
+    "revid": 1639407,
+    "sha256": "574755049e8851045711fc99cfb2b66db9b5f4818c01ce3ee0c1d3c8478be8a2"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 76,
+      "parsed_count": 76
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 7,
+      "parsed_count": 7
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-ApplyTransmogrifications-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ApplyTransmogrifications",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-BNSendSoR-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSendSoR",
+      "annotation": "",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-CanReplaceGuildMaster-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanReplaceGuildMaster",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-CanSendSoRByText-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanSendSoRByText",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-CanTransmogrifyItemWithItem-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanTransmogrifyItemWithItem",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-CanUpgradeExpansion-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanUpgradeExpansion",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-CanUseVoidStorage-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanUseVoidStorage",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-ClearBattlemaster-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClearBattlemaster",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-ClearTransmogrifySlot-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClearTransmogrifySlot",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-ClearVoidTransferDepositSlot-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClearVoidTransferDepositSlot",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-ClickTransmogrifySlot-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClickTransmogrifySlot",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-ClickVoidStorageSlot-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClickVoidStorageSlot",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-ClickVoidTransferDepositSlot-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClickVoidTransferDepositSlot",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-ClickVoidTransferWithdrawalSlot-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClickVoidTransferWithdrawalSlot",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-CloseTransmogrifyFrame-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CloseTransmogrifyFrame",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-CloseVoidStorageFrame-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CloseVoidStorageFrame",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-EJ_GetClassFilter-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetClassFilter",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-EJ_GetDifficulty-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_GetDifficulty",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-EJ_IsValidInstanceDifficulty-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "EJ_IsValidInstanceDifficulty",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-ExecuteVoidTransfer-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ExecuteVoidTransfer",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-GetAlternatePowerInfoByID-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAlternatePowerInfoByID",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-GetBestRFChoice-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBestRFChoice",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-GetCurrentMapLevelRange-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrentMapLevelRange",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-GetDetailColumnString-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDetailColumnString",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-GetExtraBarOffset-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetExtraBarOffset",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-GetGuildRenameRequired-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildRenameRequired",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-GetItemTransmogrifyInfo-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetItemTransmogrifyInfo",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-GetLFGDungeonEncounterInfo-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGDungeonEncounterInfo",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-GetLFGDungeonNumEncounters-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGDungeonNumEncounters",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-GetMacroIcons-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMacroIcons",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-GetMacroItemIcons-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMacroItemIcons",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-GetMaxBattlefieldID-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMaxBattlefieldID",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-GetMaxMultisampleFormatOnCvar-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMaxMultisampleFormatOnCvar",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-GetMissingLootItemInfo-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMissingLootItemInfo",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-GetMissingLootItemLink-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMissingLootItemLink",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-GetNumMissingLootItems-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumMissingLootItems",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-GetNumRFDungeons-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumRFDungeons",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-GetNumVoidTransferDeposit-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumVoidTransferDeposit",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-GetNumVoidTransferWithdrawal-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumVoidTransferWithdrawal",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-GetOverrideSpellPowerByAP-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetOverrideSpellPowerByAP",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-GetPartyLFGID-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPartyLFGID",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-GetRFDungeonInfo-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRFDungeonInfo",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-GetSheathState-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSheathState",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-GetSpellBaseCooldown-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSpellBaseCooldown",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-GetTransmogrifyCost-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTransmogrifyCost",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-GetTransmogrifySlotInfo-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTransmogrifySlotInfo",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-GetVoidItemHyperlinkString-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetVoidItemHyperlinkString",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-GetVoidItemInfo-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetVoidItemInfo",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-GetVoidTransferCost-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetVoidTransferCost",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-GetVoidTransferDepositInfo-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetVoidTransferDepositInfo",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-GetVoidTransferWithdrawalInfo-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetVoidTransferWithdrawalInfo",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-GuildMasterAbsent-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GuildMasterAbsent",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-GuildRosterSendSoR-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GuildRosterSendSoR",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-HasExtraActionBar-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasExtraActionBar",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-HasLoadedCUFProfiles-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasLoadedCUFProfiles",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-Is64BitClient-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "Is64BitClient",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-IsContainerFiltered-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsContainerFiltered",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-IsEveryoneAssistant-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsEveryoneAssistant",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-IsVoidStorageReady-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsVoidStorageReady",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-ReplaceGuildMaster-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ReplaceGuildMaster",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-SendSoRByText-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SendSoRByText",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-SetActionUIButton-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetActionUIButton",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-SetEveryoneIsAssistant-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetEveryoneIsAssistant",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-SetItemSearch-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetItemSearch",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-SetSelectedScreenResolutionIndex-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetSelectedScreenResolutionIndex",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-SpellGetVisibilityInfo-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SpellGetVisibilityInfo",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-SpellIsSelfBuff-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SpellIsSelfBuff",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-SubmitRequiredGuildRename-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SubmitRequiredGuildRename",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-TestCreatePill-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TestCreatePill",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-UnitAlternatePowerCounterInfo-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitAlternatePowerCounterInfo",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-UnitNumPowerBarTimers-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitNumPowerBarTimers",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-UnitPowerBarTimerInfo-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitPowerBarTimerInfo",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-UnlearnSpecialization-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnlearnSpecialization",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-UnlockVoidStorage-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnlockVoidStorage",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-UseItemForTransmogrify-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UseItemForTransmogrify",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-ValidateTransmogrifications-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ValidateTransmogrifications",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-EJ_SetDifficultyByMask-88",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "EJ_SetDifficultyByMask",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-GetLFDChoiceInfo-89",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetLFDChoiceInfo",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-GetMacroIconInfo-90",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMacroIconInfo",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-GetMacroItemIconInfo-91",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetMacroItemIconInfo",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-GetNumMacroIcons-92",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumMacroIcons",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-GetNumMacroItemIcons-93",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumMacroItemIcons",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-IsIPv6Available-94",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsIPv6Available",
+      "annotation": "",
+      "wikitext_line": 94
+    }
+  ]
+}

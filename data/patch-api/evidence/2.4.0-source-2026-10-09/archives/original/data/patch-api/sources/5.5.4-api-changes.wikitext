@@ -1,0 +1,5 @@
+{{apichanges|prev=5.5.3|5.5.4}}
+
+==Resources==
+* TOC: <code>50504</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/5.5.3..5.5.4 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/5.5.3..5.5.4 BlizzardInterfaceResources]

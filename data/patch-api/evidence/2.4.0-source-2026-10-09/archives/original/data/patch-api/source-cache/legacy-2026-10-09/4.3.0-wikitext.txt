@@ -1,0 +1,96 @@
+{{apichanges|4.3.0|prev=4.2.0|next=4.3.4}}
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(76)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(7)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|ApplyTransmogrifications}}
+: {{api|t=a|BNSendSoR}}
+: {{api|t=a|CanReplaceGuildMaster}}
+: {{api|t=a|CanSendSoRByText}}
+: {{api|t=a|CanTransmogrifyItemWithItem}}
+: {{api|t=a|CanUpgradeExpansion}}
+: {{api|t=a|CanUseVoidStorage}}
+: {{api|t=a|ClearBattlemaster}}
+: {{api|t=a|ClearTransmogrifySlot}}
+: {{api|t=a|ClearVoidTransferDepositSlot}}
+: {{api|t=a|ClickTransmogrifySlot}}
+: {{api|t=a|ClickVoidStorageSlot}}
+: {{api|t=a|ClickVoidTransferDepositSlot}}
+: {{api|t=a|ClickVoidTransferWithdrawalSlot}}
+: {{api|t=a|CloseTransmogrifyFrame}}
+: {{api|t=a|CloseVoidStorageFrame}}
+: {{api|t=a|EJ_GetClassFilter}}
+: {{api|t=a|EJ_GetDifficulty}}
+: {{api|t=a|EJ_IsValidInstanceDifficulty}}
+: {{api|t=a|ExecuteVoidTransfer}}
+: {{api|t=a|GetAlternatePowerInfoByID}}
+: {{api|t=a|GetBestRFChoice}}
+: {{api|t=a|GetCurrentMapLevelRange}}
+: {{api|t=a|GetDetailColumnString}}
+: {{api|t=a|GetExtraBarOffset}}
+: {{api|t=a|GetGuildRenameRequired}}
+: {{api|t=a|GetItemTransmogrifyInfo}}
+: {{api|t=a|GetLFGDungeonEncounterInfo}}
+: {{api|t=a|GetLFGDungeonNumEncounters}}
+: {{api|t=a|GetMacroIcons}}
+: {{api|t=a|GetMacroItemIcons}}
+: {{api|t=a|GetMaxBattlefieldID}}
+: {{api|t=a|GetMaxMultisampleFormatOnCvar}}
+: {{api|t=a|GetMissingLootItemInfo}}
+: {{api|t=a|GetMissingLootItemLink}}
+: {{api|t=a|GetNumMissingLootItems}}
+: {{api|t=a|GetNumRFDungeons}}
+: {{api|t=a|GetNumVoidTransferDeposit}}
+: {{api|t=a|GetNumVoidTransferWithdrawal}}
+: {{api|t=a|GetOverrideSpellPowerByAP}}
+: {{api|t=a|GetPartyLFGID}}
+: {{api|t=a|GetRFDungeonInfo}}
+: {{api|t=a|GetSheathState}}
+: {{api|t=a|GetSpellBaseCooldown}}
+: {{api|t=a|GetTransmogrifyCost}}
+: {{api|t=a|GetTransmogrifySlotInfo}}
+: {{api|t=a|GetVoidItemHyperlinkString}}
+: {{api|t=a|GetVoidItemInfo}}
+: {{api|t=a|GetVoidTransferCost}}
+: {{api|t=a|GetVoidTransferDepositInfo}}
+: {{api|t=a|GetVoidTransferWithdrawalInfo}}
+: {{api|t=a|GuildMasterAbsent}}
+: {{api|t=a|GuildRosterSendSoR}}
+: {{api|t=a|HasExtraActionBar}}
+: {{api|t=a|HasLoadedCUFProfiles}}
+: {{api|t=a|Is64BitClient}}
+: {{api|t=a|IsContainerFiltered}}
+: {{api|t=a|IsEveryoneAssistant}}
+: {{api|t=a|IsVoidStorageReady}}
+: {{api|t=a|ReplaceGuildMaster}}
+: {{api|t=a|SendSoRByText}}
+: {{api|t=a|SetActionUIButton}}
+: {{api|t=a|SetEveryoneIsAssistant}}
+: {{api|t=a|SetItemSearch}}
+: {{api|t=a|SetSelectedScreenResolutionIndex}}
+: {{api|t=a|SpellGetVisibilityInfo}}
+: {{api|t=a|SpellIsSelfBuff}}
+: {{api|t=a|SubmitRequiredGuildRename}}
+: {{api|t=a|TestCreatePill}}
+: {{api|t=a|UnitAlternatePowerCounterInfo}}
+: {{api|t=a|UnitNumPowerBarTimers}}
+: {{api|t=a|UnitPowerBarTimerInfo}}
+: {{api|t=a|UnlearnSpecialization}}
+: {{api|t=a|UnlockVoidStorage}}
+: {{api|t=a|UseItemForTransmogrify}}
+: {{api|t=a|ValidateTransmogrifications}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|EJ_SetDifficultyByMask}}
+: {{api|t=a|GetLFDChoiceInfo}}
+: {{api|t=a|GetMacroIconInfo}}
+: {{api|t=a|GetMacroItemIconInfo}}
+: {{api|t=a|GetNumMacroIcons}}
+: {{api|t=a|GetNumMacroItemIcons}}
+: {{api|t=a|IsIPv6Available}}
+</div>
+|}

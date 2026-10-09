@@ -1,0 +1,787 @@
+<noinclude>{{Transclude|}}</noinclude>
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.4.8.18414 &rarr; 6.0.2.18967)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 374 new functions
+! style="width: 50%; padding-right: 1em;"| 36 removed functions
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|AntiAliasingSupported}}
+: {{api|AutoChooseCurrentGraphicsSetting}}
+: {{api|BNSummonFriendByIndex}}
+: {{api|BreakUpLargeNumbers}}
+: {{api|BuyReagentBank}}
+: {{api|C_Garrison.AddFollowerToMission}}
+: {{api|C_Garrison.AssignFollowerToBuilding}}
+: {{api|C_Garrison.CanGenerateRecruits}}
+: {{api|C_Garrison.CanOpenMissionChest}}
+: {{api|C_Garrison.CanSetRecruitmentPreference}}
+: {{api|C_Garrison.CanUpgradeGarrison}}
+: {{api|C_Garrison.CancelConstruction}}
+: {{api|C_Garrison.CastSpellOnFollower}}
+: {{api|C_Garrison.CloseArchitect}}
+: {{api|C_Garrison.CloseGarrisonTradeskillNPC}}
+: {{api|C_Garrison.CloseMissionNPC}}
+: {{api|C_Garrison.CloseRecruitmentNPC}}
+: {{api|C_Garrison.CloseTradeskillCrafter}}
+: {{api|C_Garrison.GenerateRecruits}}
+: {{api|C_Garrison.GetAvailableMissions}}
+: {{api|C_Garrison.GetAvailableRecruits}}
+: {{api|C_Garrison.GetBasicMissionInfo}}
+: {{api|C_Garrison.GetBuffedFollowersForMission}}
+: {{api|C_Garrison.GetBuildingInfo}}
+: {{api|C_Garrison.GetBuildingLockInfo}}
+: {{api|C_Garrison.GetBuildingSizes}}
+: {{api|C_Garrison.GetBuildingSpecInfo}}
+: {{api|C_Garrison.GetBuildingTimeRemaining}}
+: {{api|C_Garrison.GetBuildingTooltip}}
+: {{api|C_Garrison.GetBuildingUpgradeInfo}}
+: {{api|C_Garrison.GetBuildings}}
+: {{api|C_Garrison.GetBuildingsForPlot}}
+: {{api|C_Garrison.GetBuildingsForSize}}
+: {{api|C_Garrison.GetCompleteMissions}}
+: {{api|C_Garrison.GetFollowerAbilities}}
+: {{api|C_Garrison.GetFollowerAbilityAtIndex}}
+: {{api|C_Garrison.GetFollowerAbilityAtIndexByID}}
+: {{api|C_Garrison.GetFollowerAbilityCounterMechanicInfo}}
+: {{api|C_Garrison.GetFollowerAbilityDescription}}
+: {{api|C_Garrison.GetFollowerAbilityIcon}}
+: {{api|C_Garrison.GetFollowerAbilityIsTrait}}
+: {{api|C_Garrison.GetFollowerAbilityLink}}
+: {{api|C_Garrison.GetFollowerAbilityName}}
+: {{api|C_Garrison.GetFollowerActivationCost}}
+: {{api|C_Garrison.GetFollowerBiasForMission}}
+: {{api|C_Garrison.GetFollowerClassSpec}}
+: {{api|C_Garrison.GetFollowerClassSpecAtlas}}
+: {{api|C_Garrison.GetFollowerClassSpecByID}}
+: {{api|C_Garrison.GetFollowerClassSpecName}}
+: {{api|C_Garrison.GetFollowerDisplayID}}
+: {{api|C_Garrison.GetFollowerDisplayIDByID}}
+: {{api|C_Garrison.GetFollowerInfo}}
+: {{api|C_Garrison.GetFollowerInfoForBuilding}}
+: {{api|C_Garrison.GetFollowerItemLevelAverage}}
+: {{api|C_Garrison.GetFollowerItems}}
+: {{api|C_Garrison.GetFollowerLevel}}
+: {{api|C_Garrison.GetFollowerLevelXP}}
+: {{api|C_Garrison.GetFollowerLink}}
+: {{api|C_Garrison.GetFollowerLinkByID}}
+: {{api|C_Garrison.GetFollowerMissionCompleteInfo}}
+: {{api|C_Garrison.GetFollowerModelItems}}
+: {{api|C_Garrison.GetFollowerName}}
+: {{api|C_Garrison.GetFollowerNameByID}}
+: {{api|C_Garrison.GetFollowerPortraitIconIDByID}}
+: {{api|C_Garrison.GetFollowerQuality}}
+: {{api|C_Garrison.GetFollowerQualityTable}}
+: {{api|C_Garrison.GetFollowerSoftCap}}
+: {{api|C_Garrison.GetFollowerSourceTextByID}}
+: {{api|C_Garrison.GetFollowerStatus}}
+: {{api|C_Garrison.GetFollowerTraitAtIndex}}
+: {{api|C_Garrison.GetFollowerTraitAtIndexByID}}
+: {{api|C_Garrison.GetFollowerXP}}
+: {{api|C_Garrison.GetFollowerXPTable}}
+: {{api|C_Garrison.GetFollowers}}
+: {{api|C_Garrison.GetFollowersTraitsForMission}}
+: {{api|C_Garrison.GetGarrisonInfo}}
+: {{api|C_Garrison.GetGarrisonUpgradeCost}}
+: {{api|C_Garrison.GetInProgressMissions}}
+: {{api|C_Garrison.GetLandingPageItems}}
+: {{api|C_Garrison.GetLandingPageShipmentCount}}
+: {{api|C_Garrison.GetLandingPageShipmentInfo}}
+: {{api|C_Garrison.GetMissionCompleteEncounters}}
+: {{api|C_Garrison.GetMissionDisplayIDs}}
+: {{api|C_Garrison.GetMissionInfo}}
+: {{api|C_Garrison.GetMissionLink}}
+: {{api|C_Garrison.GetMissionMaxFollowers}}
+: {{api|C_Garrison.GetMissionName}}
+: {{api|C_Garrison.GetMissionRewardInfo}}
+: {{api|C_Garrison.GetMissionTimes}}
+: {{api|C_Garrison.GetMissionUncounteredMechanics}}
+: {{api|C_Garrison.GetNumActiveFollowers}}
+: {{api|C_Garrison.GetNumFollowerActivationsRemaining}}
+: {{api|C_Garrison.GetNumFollowerDailyActivations}}
+: {{api|C_Garrison.GetNumFollowers}}
+: {{api|C_Garrison.GetNumFollowersOnMission}}
+: {{api|C_Garrison.GetNumPendingShipments}}
+: {{api|C_Garrison.GetNumShipmentReagents}}
+: {{api|C_Garrison.GetOwnedBuildingInfo}}
+: {{api|C_Garrison.GetOwnedBuildingInfoAbbrev}}
+: {{api|C_Garrison.GetPartyBuffs}}
+: {{api|C_Garrison.GetPartyMissionInfo}}
+: {{api|C_Garrison.GetPendingShipmentInfo}}
+: {{api|C_Garrison.GetPlots}}
+: {{api|C_Garrison.GetPlotsForBuilding}}
+: {{api|C_Garrison.GetPossibleFollowersForBuilding}}
+: {{api|C_Garrison.GetRecruitAbilities}}
+: {{api|C_Garrison.GetRecruiterAbilityCategories}}
+: {{api|C_Garrison.GetRecruiterAbilityList}}
+: {{api|C_Garrison.GetRecruitmentPreferences}}
+: {{api|C_Garrison.GetRewardChance}}
+: {{api|C_Garrison.GetShipmentContainerInfo}}
+: {{api|C_Garrison.GetShipmentItemInfo}}
+: {{api|C_Garrison.GetShipmentReagentCurrencyInfo}}
+: {{api|C_Garrison.GetShipmentReagentInfo}}
+: {{api|C_Garrison.GetShipmentReagentItemLink}}
+: {{api|C_Garrison.GetSpecChangeCost}}
+: {{api|C_Garrison.GetTabForPlot}}
+: {{api|C_Garrison.IsAboveFollowerSoftCap}}
+: {{api|C_Garrison.IsFollowerCollected}}
+: {{api|C_Garrison.IsFollowerUnique}}
+: {{api|C_Garrison.IsInvasionAvailable}}
+: {{api|C_Garrison.IsOnGarrisonMap}}
+: {{api|C_Garrison.IsUsingPartyGarrison}}
+: {{api|C_Garrison.IsVisitGarrisonAvailable}}
+: {{api|C_Garrison.MarkMissionComplete}}
+: {{api|C_Garrison.MissionBonusRoll}}
+: {{api|C_Garrison.PlaceBuilding}}
+: {{api|C_Garrison.RecruitFollower}}
+: {{api|C_Garrison.RemoveFollower}}
+: {{api|C_Garrison.RemoveFollowerFromBuilding}}
+: {{api|C_Garrison.RemoveFollowerFromMission}}
+: {{api|C_Garrison.RequestGarrisonUpgradeable}}
+: {{api|C_Garrison.RequestLandingPageShipmentInfo}}
+: {{api|C_Garrison.RequestShipmentCreation}}
+: {{api|C_Garrison.RequestShipmentInfo}}
+: {{api|C_Garrison.SearchForFollower}}
+: {{api|C_Garrison.SetBuildingActive}}
+: {{api|C_Garrison.SetBuildingSpecialization}}
+: {{api|C_Garrison.SetFollowerFavorite}}
+: {{api|C_Garrison.SetFollowerInactive}}
+: {{api|C_Garrison.SetRecruitmentPreferences}}
+: {{api|C_Garrison.SetUsingPartyGarrison}}
+: {{api|C_Garrison.StartMission}}
+: {{api|C_Garrison.SwapBuildings}}
+: {{api|C_Garrison.UpgradeBuilding}}
+: {{api|C_Garrison.UpgradeGarrison}}
+: {{api|C_LFGList.AcceptInvite}}
+: {{api|C_LFGList.ApplyToGroup}}
+: {{api|C_LFGList.CancelApplication}}
+: {{api|C_LFGList.ClearSearchResults}}
+: {{api|C_LFGList.CreateListing}}
+: {{api|C_LFGList.DeclineApplicant}}
+: {{api|C_LFGList.DeclineInvite}}
+: {{api|C_LFGList.GetActiveEntryInfo}}
+: {{api|C_LFGList.GetActivityGroupInfo}}
+: {{api|C_LFGList.GetActivityInfo}}
+: {{api|C_LFGList.GetActivityInfoExpensive}}
+: {{api|C_LFGList.GetApplicantInfo}}
+: {{api|C_LFGList.GetApplicantMemberInfo}}
+: {{api|C_LFGList.GetApplicantMemberStats}}
+: {{api|C_LFGList.GetApplicants}}
+: {{api|C_LFGList.GetApplicationInfo}}
+: {{api|C_LFGList.GetApplications}}
+: {{api|C_LFGList.GetAvailableActivities}}
+: {{api|C_LFGList.GetAvailableActivityGroups}}
+: {{api|C_LFGList.GetAvailableCategories}}
+: {{api|C_LFGList.GetAvailableRoles}}
+: {{api|C_LFGList.GetCategoryInfo}}
+: {{api|C_LFGList.GetNumApplicants}}
+: {{api|C_LFGList.GetNumApplications}}
+: {{api|C_LFGList.GetNumInvitedApplicantMembers}}
+: {{api|C_LFGList.GetRoleCheckInfo}}
+: {{api|C_LFGList.GetSearchResultEncounterInfo}}
+: {{api|C_LFGList.GetSearchResultFriends}}
+: {{api|C_LFGList.GetSearchResultInfo}}
+: {{api|C_LFGList.GetSearchResultMemberCounts}}
+: {{api|C_LFGList.GetSearchResultMemberInfo}}
+: {{api|C_LFGList.GetSearchResults}}
+: {{api|C_LFGList.HasActivityList}}
+: {{api|C_LFGList.InviteApplicant}}
+: {{api|C_LFGList.IsCurrentlyApplying}}
+: {{api|C_LFGList.RefreshApplicants}}
+: {{api|C_LFGList.RemoveApplicant}}
+: {{api|C_LFGList.RemoveListing}}
+: {{api|C_LFGList.ReportApplicant}}
+: {{api|C_LFGList.ReportSearchResult}}
+: {{api|C_LFGList.RequestAvailableActivities}}
+: {{api|C_LFGList.Search}}
+: {{api|C_LFGList.SetApplicantMemberRole}}
+: {{api|C_LFGList.UpdateListing}}
+: {{api|C_MountJournal.Dismiss}}
+: {{api|C_MountJournal.GetCollectedFilterSetting}}
+: {{api|C_MountJournal.GetIsFavorite}}
+: {{api|C_MountJournal.GetMountInfo}}
+: {{api|C_MountJournal.GetMountInfoExtra}}
+: {{api|C_MountJournal.GetNumMounts}}
+: {{api|C_MountJournal.Pickup}}
+: {{api|C_MountJournal.SetCollectedFilterSetting}}
+: {{api|C_MountJournal.SetIsFavorite}}
+: {{api|C_MountJournal.Summon}}
+: {{api|C_Questline.GetNumAvailableQuestlines}}
+: {{api|C_Questline.GetQuestlineInfoByIndex}}
+: {{api|C_Scenario.GetBonusStepRewardQuestID}}
+: {{api|C_Scenario.GetBonusSteps}}
+: {{api|C_Scenario.GetCriteriaInfoByStep}}
+: {{api|C_Scenario.GetSupersededObjectives}}
+: {{api|C_Scenario.TreatScenarioAsDungeon}}
+: {{api|C_TaskQuest.GetQuestObjectiveStrByQuestID}}
+: {{api|C_TaskQuest.GetQuestTitleByQuestID}}
+: {{api|C_TaskQuest.GetQuestsForPlayerByMapID}}
+: {{api|C_Timer.After}}
+: {{api|C_ToyBox.ClearAllSourceTypesFiltered}}
+: {{api|C_ToyBox.FilterToys}}
+: {{api|C_ToyBox.GetFilterCollected}}
+: {{api|C_ToyBox.GetFilterUncollected}}
+: {{api|C_ToyBox.GetIsFavorite}}
+: {{api|C_ToyBox.GetNumFilteredToys}}
+: {{api|C_ToyBox.GetNumLearnedDisplayedToys}}
+: {{api|C_ToyBox.GetNumTotalDisplayedToys}}
+: {{api|C_ToyBox.GetNumToys}}
+: {{api|C_ToyBox.GetToyFromIndex}}
+: {{api|C_ToyBox.GetToyInfo}}
+: {{api|C_ToyBox.GetToyLink}}
+: {{api|C_ToyBox.HasFavorites}}
+: {{api|C_ToyBox.IsSourceTypeFiltered}}
+: {{api|C_ToyBox.PickupToyBoxItem}}
+: {{api|C_ToyBox.SetAllSourceTypesFiltered}}
+: {{api|C_ToyBox.SetFilterCollected}}
+: {{api|C_ToyBox.SetFilterSourceType}}
+: {{api|C_ToyBox.SetFilterString}}
+: {{api|C_ToyBox.SetFilterUncollected}}
+: {{api|C_ToyBox.SetIsFavorite}}
+: {{api|C_Trophy.MonumentChangeAppearanceToTrophyID}}
+: {{api|C_Trophy.MonumentCloseMonumentUI}}
+: {{api|C_Trophy.MonumentGetCount}}
+: {{api|C_Trophy.MonumentGetSelectedTrophyID}}
+: {{api|C_Trophy.MonumentGetTrophyInfoByIndex}}
+: {{api|C_Trophy.MonumentLoadList}}
+: {{api|C_Trophy.MonumentLoadSelectedTrophyID}}
+: {{api|C_Trophy.MonumentRevertAppearanceToSaved}}
+: {{api|C_Trophy.MonumentSaveSelection}}
+: {{api|C_Vignettes.GetVignetteGUID}}
+: {{api|CanLootUnit}}
+: {{api|CloseQuestChoice}}
+: {{api|ClosestGameObjectPosition}}
+: {{api|ClosestUnitPosition}}
+: {{api|CommentatorFollowUnit}}
+: {{api|DepositReagentBank}}
+: {{api|GMEuropaBugsEnabled}}
+: {{api|GMEuropaComplaintsEnabled}}
+: {{api|GMEuropaSuggestionsEnabled}}
+: {{api|GMEuropaTicketsEnabled}}
+: {{api|GetActiveLootRollIDs}}
+: {{api|GetAddOnEnableState}}
+: {{api|GetAmplify}}
+: {{api|GetArmorEffectiveness}}
+: {{api|GetAtlasInfo}}
+: {{api|GetAvoidance}}
+: {{api|GetBackpackAutosortDisabled}}
+: {{api|GetBagSlotFlag}}
+: {{api|GetBankAutosortDisabled}}
+: {{api|GetBankBagSlotFlag}}
+: {{api|GetBindingText}}
+: {{api|GetBladedArmorEffect}}
+: {{api|GetCleave}}
+: {{api|GetContinentName}}
+: {{api|GetCritChanceProvidesParryEffect}}
+: {{api|GetCurrentGraphicsSetting}}
+: {{api|GetCurrentLevelDraenorTalent}}
+: {{api|GetCurrentMapHeaderIndex}}
+: {{api|GetCurrentRegion}}
+: {{api|GetEquipmentSetIgnoreSlots}}
+: {{api|GetGroupMemberCounts}}
+: {{api|GetHaste}}
+: {{api|GetInsertItemsLeftToRight}}
+: {{api|GetInventoryItemEquippedUnusable}}
+: {{api|GetLFDRoleLockInfo}}
+: {{api|GetLFDRoleRestrictions}}
+: {{api|GetLFGInviteRoleAvailability}}
+: {{api|GetLFGInviteRoleRestrictions}}
+: {{api|GetLegacyRaidDifficultyID}}
+: {{api|GetLifesteal}}
+: {{api|GetLooseMacroIcons}}
+: {{api|GetLooseMacroItemIcons}}
+: {{api|GetLootInfo}}
+: {{api|GetMapHierarchy}}
+: {{api|GetMapSubzones}}
+: {{api|GetMaxRewardCurrencies}}
+: {{api|GetMultistrike}}
+: {{api|GetMultistrikeEffect}}
+: {{api|GetNumQuestLogTasks}}
+: {{api|GetQuestFactionGroup}}
+: {{api|GetQuestLogTaskInfo}}
+: {{api|GetQuestObjectiveInfo}}
+: {{api|GetQuestPOIBlobCount}}
+: {{api|GetQuestPOIs}}
+: {{api|GetQuestProgressBarPercent}}
+: {{api|GetQuestTagInfo}}
+: {{api|GetQuestWatchInfo}}
+: {{api|GetReadiness}}
+: {{api|GetReagentBankCost}}
+: {{api|GetSetBonusesForSpecializationByItemID}}
+: {{api|GetSortBagsRightToLeft}}
+: {{api|GetSpecializationReadinessSpell}}
+: {{api|GetSpeed}}
+: {{api|GetSpellConfirmationPromptsInfo}}
+: {{api|GetSpellsForCharacterUpgradeTier}}
+: {{api|GetSturdiness}}
+: {{api|GetTalentInfoByID}}
+: {{api|GetTalentInfoBySpecialization}}
+: {{api|GetTaskInfo}}
+: {{api|GetTaskPOIs}}
+: {{api|GetTasksTable}}
+: {{api|GetTutorialsEnabled}}
+: {{api|GetVersatilityBonus}}
+: {{api|GetVoidStorageSlotPageIndex}}
+: {{api|GroupHasOfflineMember}}
+: {{api|HasAPEffectsSpellPower}}
+: {{api|HasDraenorZoneAbility}}
+: {{api|HasDualWieldPenalty}}
+: {{api|HasSPEffectsAttackPower}}
+: {{api|HaveQuestData}}
+: {{api|IsAddonVersionCheckEnabled}}
+: {{api|IsArenaSkirmish}}
+: {{api|IsBagSlotFlagEnabledOnOtherBags}}
+: {{api|IsBagSlotFlagEnabledOnOtherBankBags}}
+: {{api|IsBreadcrumbQuest}}
+: {{api|IsCharacterNewlyBoosted}}
+: {{api|IsInventoryItemProfessionBag}}
+: {{api|IsLegacyDifficulty}}
+: {{api|IsMapGarrisonMap}}
+: {{api|IsNPCCrafting}}
+: {{api|IsPlayerInMicroDungeon}}
+: {{api|IsPlayerMoving}}
+: {{api|IsQuestComplete}}
+: {{api|IsQuestHardWatched}}
+: {{api|IsQuestSequenced}}
+: {{api|IsQuestTask}}
+: {{api|IsReagentBankUnlocked}}
+: {{api|IsRestrictedAccount}}
+: {{api|IsStoryQuest}}
+: {{api|IsTestBuild}}
+: {{api|IsUnitOnQuestByQuestID}}
+: {{api|JoinSkirmish}}
+: {{api|PlayerHasToy}}
+: {{api|QuestHasPOIInfo}}
+: {{api|QuestPOIGetSecondaryLocations}}
+: {{api|ReagentBankButtonIDToInvSlotID}}
+: {{api|RequeueSkirmish}}
+: {{api|ResetAddOns}}
+: {{api|SaveAddOns}}
+: {{api|SetAddonVersionCheck}}
+: {{api|SetBackpackAutosortDisabled}}
+: {{api|SetBagSlotFlag}}
+: {{api|SetBankAutosortDisabled}}
+: {{api|SetBankBagSlotFlag}}
+: {{api|SetCurrentGraphicsSetting}}
+: {{api|SetInsertItemsLeftToRight}}
+: {{api|SetLegacyRaidDifficultyID}}
+: {{api|SetSortBagsRightToLeft}}
+: {{api|ShouldHideTalentsTab}}
+: {{api|SortBags}}
+: {{api|SortBankBags}}
+: {{api|SortReagentBankBags}}
+: {{api|SpellIsAlwaysShown}}
+: {{api|StartSpectatorWarGame}}
+: {{api|StartWarGameByName}}
+: {{api|TaxiGetNodeSlot}}
+: {{api|UnitBonusArmor}}
+: {{api|UnitDistanceSquared}}
+: {{api|UnitPosition}}
+: {{api|UseToy}}
+: {{api|UseToyByName}}
+: {{api|strcmputf8i}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: BNGetFriendInviteInfoByAddon
+: C_Scenario.GetBonusCriteriaInfo
+: C_Scenario.GetBonusStepInfo
+: C_Vignettes.GetVignetteInstanceID
+: CloseReforge
+: CommentatorSetBattlemaster
+: CreateArenaTeam
+: DevTest1
+: DownloadSettings
+: GetCurrentGuildPerkIndex
+: GetCurrentMultisampleFormat
+: GetDestinationReforgeStats
+: GetExistingLocales
+: GetGuildLevel
+: GetGuildRosterContribution
+: GetGuildRosterLargestContribution
+: GetMaxMultisampleFormatOnCvar
+: GetMultisampleFormats
+: GetNextGuildPerkIndex
+: GetNumReforgeOptions
+: GetNumTalents
+: GetReforgeItemInfo
+: GetReforgeItemStats
+: GetReforgeOptionInfo
+: GetSourceReforgeStats
+: GetSpecializationNameForClassID
+: QueryGuildXP
+: ReforgeItem
+: SetMultisampleFormat
+: SetReforgeFromCursorItem
+: ShiftQuestWatches
+: TogglePerformanceDisplay
+: UnitGetGuildLevel
+: UnitGetGuildXP
+: UploadSettings
+: debughook
+</div>
+|}
+
+=== FrameXML ===
+{| class="wikitable" style="min-width: 600px"
+|+ FrameXML (5.4.8.18414 &rarr; 6.0.2.18967)
+|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 30 new functions
+! style="width: 50%; padding-right: 1em;"| 14 removed functions
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-global-fxml"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|C_Timer.NewTicker}}
+: {{api|C_Timer.NewTimer}}
+: {{api|CheckBagSettingsTutorial}}
+: {{api|CheckToggleDifficulty}}
+: {{api|GetAvailableAudioLocales}}
+: {{api|GetItemIDFromHyperlink}}
+: {{api|GetLastDraenorSpellTexture}}
+: {{api|GetNewActionHighlightMark}}
+: {{api|GetZoneStoryID}}
+: {{api|HasDraenorZoneSpellOnBar}}
+: {{api|HidePreviewFrame}}
+: {{api|LFDCheckRolesRestricted}}
+: {{api|LFDPopupCheckRoleSelectionValid}}
+: {{api|LFDQueueCheckRoleSelectionValid}}
+: {{api|MarkNewActionHighlight}}
+: {{api|NormalizeLegacyDifficultyID}}
+: {{api|ReagentButtonInventorySlot}}
+: {{api|SearchBagsForItem}}
+: {{api|SearchBagsForItemLink}}
+: {{api|SetCheckButtonIsRadio}}
+: {{api|SetRaidDifficulties}}
+: {{api|ShowQuestLog}}
+: {{api|StoreShowPreview}}
+: {{api|StringToBoolean}}
+: {{api|ToggleGarrisonBuildingUI}}
+: {{api|ToggleGarrisonMissionUI}}
+: {{api|ToggleQuestLog}}
+: {{api|ToggleWorldMap}}
+: {{api|ValueToBoolean}}
+: {{api|nop}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: BreakUpLargeNumbers
+: GetApplicableMultisampleSetting
+: GetBindingText
+: GetKeyRingSize
+: GetMeleeMissChance
+: GetRangedMissChance
+: GetSpellMissChance
+: GetTimerTextColor
+: IsInProvingGround
+: PutKeyInKeyRing
+: ReverseQuestObjective
+: ShowStatInCategory
+: ToggleKeyRing
+: isRaidFinderDungeonDisplayable
+</div>
+|}
+
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.4.8.18414 &rarr; 6.0.2.18967)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 113 new events
+! style="width: 50%; padding-right: 1em;"| 9 removed events
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACCOUNT_CHARACTER_LIST_RECIEVED}}
+: {{api|t=e|ACCOUNT_DATA_RESTORED}}
+: {{api|t=e|ACTIONBAR_SHOW_BOTTOMLEFT}}
+: {{api|t=e|AMPLIFY_UPDATE}}
+: {{api|t=e|AVOIDANCE_UPDATE}}
+: {{api|t=e|BAG_NEW_ITEMS_UPDATED}}
+: {{api|t=e|BAG_SLOT_FLAGS_UPDATED}}
+: {{api|t=e|BANK_BAG_SLOT_FLAGS_UPDATED}}
+: {{api|t=e|BATTLEFIELD_MGR_DROP_TIMER_CANCELED}}
+: {{api|t=e|BATTLEFIELD_MGR_DROP_TIMER_STARTED}}
+: {{api|t=e|BATTLEGROUND_OBJECTIVES_UPDATE}}
+: {{api|t=e|CHALLENGE_MODE_RESET}}
+: {{api|t=e|CHALLENGE_MODE_START}}
+: {{api|t=e|CHARACTER_UNDELETE_FINISHED}}
+: {{api|t=e|CHARACTER_UNDELETE_STATUS_CHANGED}}
+: {{api|t=e|CHARACTER_UPGRADE_SPELL_TIER_SET}}
+: {{api|t=e|CHAR_RESTORE_COMPLETE}}
+: {{api|t=e|CLEAVE_UPDATE}}
+: {{api|t=e|GARRISON_ARCHITECT_CLOSED}}
+: {{api|t=e|GARRISON_ARCHITECT_OPENED}}
+: {{api|t=e|GARRISON_BUILDINGS_SWAPPED}}
+: {{api|t=e|GARRISON_BUILDING_ACTIVATABLE}}
+: {{api|t=e|GARRISON_BUILDING_ACTIVATED}}
+: {{api|t=e|GARRISON_BUILDING_ERROR}}
+: {{api|t=e|GARRISON_BUILDING_LIST_UPDATE}}
+: {{api|t=e|GARRISON_BUILDING_PLACED}}
+: {{api|t=e|GARRISON_BUILDING_REMOVED}}
+: {{api|t=e|GARRISON_BUILDING_UPDATE}}
+: {{api|t=e|GARRISON_FOLLOWER_ADDED}}
+: {{api|t=e|GARRISON_FOLLOWER_LIST_UPDATE}}
+: {{api|t=e|GARRISON_FOLLOWER_REMOVED}}
+: {{api|t=e|GARRISON_FOLLOWER_XP_CHANGED}}
+: {{api|t=e|GARRISON_HIDE_LANDING_PAGE}}
+: {{api|t=e|GARRISON_INVASION_AVAILABLE}}
+: {{api|t=e|GARRISON_INVASION_UNAVAILABLE}}
+: {{api|t=e|GARRISON_LANDINGPAGE_SHIPMENTS}}
+: {{api|t=e|GARRISON_MISSION_BONUS_ROLL_COMPLETE}}
+: {{api|t=e|GARRISON_MISSION_BONUS_ROLL_LOOT}}
+: {{api|t=e|GARRISON_MISSION_COMPLETE_RESPONSE}}
+: {{api|t=e|GARRISON_MISSION_FINISHED}}
+: {{api|t=e|GARRISON_MISSION_LIST_UPDATE}}
+: {{api|t=e|GARRISON_MISSION_NPC_CLOSED}}
+: {{api|t=e|GARRISON_MISSION_NPC_OPENED}}
+: {{api|t=e|GARRISON_MISSION_STARTED}}
+: {{api|t=e|GARRISON_MONUMENT_CLOSE_UI}}
+: {{api|t=e|GARRISON_MONUMENT_LIST_LOADED}}
+: {{api|t=e|GARRISON_MONUMENT_REPLACED}}
+: {{api|t=e|GARRISON_MONUMENT_SELECTED_TROPHY_ID_LOADED}}
+: {{api|t=e|GARRISON_MONUMENT_SHOW_UI}}
+: {{api|t=e|GARRISON_RECALL_PORTAL_LAST_USED_TIME}}
+: {{api|t=e|GARRISON_RECALL_PORTAL_USED}}
+: {{api|t=e|GARRISON_RECRUITMENT_FOLLOWERS_GENERATED}}
+: {{api|t=e|GARRISON_RECRUITMENT_NPC_CLOSED}}
+: {{api|t=e|GARRISON_RECRUITMENT_NPC_OPENED}}
+: {{api|t=e|GARRISON_RECRUITMENT_READY}}
+: {{api|t=e|GARRISON_RECRUIT_FOLLOWER_RESULT}}
+: {{api|t=e|GARRISON_SHOW_LANDING_PAGE}}
+: {{api|t=e|GARRISON_TRADESKILL_NPC_CLOSED}}
+: {{api|t=e|GARRISON_UPDATE}}
+: {{api|t=e|GARRISON_UPGRADEABLE_RESULT}}
+: {{api|t=e|GARRISON_USE_PARTY_GARRISON_CHANGED}}
+: {{api|t=e|HEARTHSTONE_BOUND}}
+: {{api|t=e|HEIRLOOMS_UPDATED}}
+: {{api|t=e|LFG_LIST_ACTIVE_ENTRY_UPDATE}}
+: {{api|t=e|LFG_LIST_APPLICANT_LIST_UPDATED}}
+: {{api|t=e|LFG_LIST_APPLICANT_UPDATED}}
+: {{api|t=e|LFG_LIST_APPLICATION_STATUS_UPDATED}}
+: {{api|t=e|LFG_LIST_AVAILABILITY_UPDATE}}
+: {{api|t=e|LFG_LIST_ENTRY_CREATION_FAILED}}
+: {{api|t=e|LFG_LIST_ENTRY_EXPIRED_TIMEOUT}}
+: {{api|t=e|LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS}}
+: {{api|t=e|LFG_LIST_JOINED_GROUP}}
+: {{api|t=e|LFG_LIST_SEARCH_FAILED}}
+: {{api|t=e|LFG_LIST_SEARCH_RESULTS_RECEIVED}}
+: {{api|t=e|LFG_LIST_SEARCH_RESULT_UPDATED}}
+: {{api|t=e|LFG_ROLE_CHECK_DECLINED}}
+: {{api|t=e|LIFESTEAL_UPDATE}}
+: {{api|t=e|LOOT_READY}}
+: {{api|t=e|MOUNT_CURSOR_CLEAR}}
+: {{api|t=e|MOUNT_JOURNAL_USABILITY_CHANGED}}
+: {{api|t=e|MULTISTRIKE_UPDATE}}
+: {{api|t=e|NPE_TUTORIAL_UPDATE}}
+: {{api|t=e|PARTY_REFER_A_FRIEND_UPDATED}}
+: {{api|t=e|PET_JOURNAL_CAGE_FAILED}}
+: {{api|t=e|PLAYERREAGENTBANKSLOTS_CHANGED}}
+: {{api|t=e|PLAYER_AVG_ITEM_LEVEL_UPDATE}}
+: {{api|t=e|PLAYER_CHARACTER_UPGRADE_TALENT_COUNT_CHANGED}}
+: {{api|t=e|PLAYER_STARTED_MOVING}}
+: {{api|t=e|PLAYER_STOPPED_MOVING}}
+: {{api|t=e|QUESTLINE_UPDATE}}
+: {{api|t=e|QUESTTASK_UPDATE}}
+: {{api|t=e|QUEST_CHOICE_CLOSE}}
+: {{api|t=e|QUEST_REMOVED}}
+: {{api|t=e|QUEST_TURNED_IN}}
+: {{api|t=e|QUEST_WATCH_LIST_CHANGED}}
+: {{api|t=e|QUEST_WATCH_OBJECTIVES_CHANGED}}
+: {{api|t=e|READINESS_UPDATE}}
+: {{api|t=e|REAGENTBANK_PURCHASED}}
+: {{api|t=e|REAGENTBANK_UPDATE}}
+: {{api|t=e|SCENARIO_COMPLETED}}
+: {{api|t=e|SHIPMENT_CRAFTER_CLOSED}}
+: {{api|t=e|SHIPMENT_CRAFTER_INFO}}
+: {{api|t=e|SHIPMENT_CRAFTER_OPENED}}
+: {{api|t=e|SHIPMENT_CRAFTER_REAGENT_UPDATE}}
+: {{api|t=e|SHIPMENT_UPDATE}}
+: {{api|t=e|SHOW_LOOT_TOAST_UPGRADE}}
+: {{api|t=e|SHOW_PVP_FACTION_LOOT_TOAST}}
+: {{api|t=e|SPEED_UPDATE}}
+: {{api|t=e|STURDINESS_UPDATE}}
+: {{api|t=e|SUPER_TRACKED_QUEST_CHANGED}}
+: {{api|t=e|TASK_PROGRESS_UPDATE}}
+: {{api|t=e|TOYS_UPDATED}}
+: {{api|t=e|TRACKED_ACHIEVEMENT_LIST_CHANGED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: ARENA_TEAM_INVITE_REQUEST
+: ARENA_TEAM_ROSTER_UPDATE
+: ARENA_TEAM_UPDATE
+: CHARACTER_UPGRADE_COMPLETE
+: FORGE_MASTER_CLOSED
+: FORGE_MASTER_ITEM_CHANGED
+: FORGE_MASTER_OPENED
+: FORGE_MASTER_SET_ITEM
+: PLAYER_AVG_ITEM_LEVEL_READY
+</div>
+|}
+
+=== Widget API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API (5.4.8.18414 &rarr; 6.0.2.18967)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 42 new methods
+! style="width: 50%; padding-right: 1em;"| 7 removed methods
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Alpha:GetFromAlpha}}
+: {{api|t=w|Alpha:GetToAlpha}}
+: {{api|t=w|Alpha:SetFromAlpha}}
+: {{api|t=w|Alpha:SetToAlpha}}
+: {{api|t=w|Animation:SetChildKey}}
+: {{api|t=w|Animation:SetTarget}}
+: {{api|t=w|Animation:SetTargetKey}}
+: {{api|t=w|AnimationGroup:IsSetToFinalAlpha}}
+: {{api|t=w|AnimationGroup:SetToFinalAlpha}}
+: {{api|t=w|Cooldown:GetCooldownTimes}}
+: {{api|t=w|Cooldown:GetDrawBling}}
+: {{api|t=w|Cooldown:GetDrawEdge}}
+: {{api|t=w|Cooldown:GetDrawSwipe}}
+: {{api|t=w|Cooldown:SetBlingTexture}}
+: {{api|t=w|Cooldown:SetCooldownDuration}}
+: {{api|t=w|Cooldown:SetCooldownUNIX}}
+: {{api|t=w|Cooldown:SetDrawBling}}
+: {{api|t=w|Cooldown:SetDrawEdge}}
+: {{api|t=w|Cooldown:SetDrawSwipe}}
+: {{api|t=w|Cooldown:SetEdgeTexture}}
+: {{api|t=w|Cooldown:SetHideCountdownNumbers}}
+: {{api|t=w|Cooldown:SetSwipeColor}}
+: {{api|t=w|Cooldown:SetSwipeTexture}}
+: {{api|t=w|FontString:GetNumLines}}
+: {{api|t=w|GameTooltip:AdvanceSecondaryCompareItem}}
+: {{api|t=w|GameTooltip:ResetSecondaryCompareItem}}
+: {{api|t=w|GameTooltip:SetCompareItem}}
+: {{api|t=w|GameTooltip:SetCurrencyTokenByID}}
+: {{api|t=w|GameTooltip:SetMountBySpellID}}
+: {{api|t=w|GameTooltip:SetToyByItemID}}
+: {{api|t=w|Minimap:SetQuestBlobOutsideSelectedTexture}}
+: {{api|t=w|Scale:GetFromScale}}
+: {{api|t=w|Scale:GetToScale}}
+: {{api|t=w|Scale:SetFromScale}}
+: {{api|t=w|Scale:SetToScale}}
+: {{api|t=w|SimpleHTML:GetContentHeight}}
+: {{api|t=w|StatusBar:GetStatusBarAtlas}}
+: {{api|t=w|StatusBar:SetStatusBarAtlas}}
+: {{api|t=w|Texture:GetAtlas}}
+: {{api|t=w|Texture:SetAtlas}}
+: {{api|t=w|Texture:SetMask}}
+: {{api|t=w|Texture:SetToFileData}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: Animation:GetProgressWithDelay
+: AnimationGroup:GetInitialOffset
+: AnimationGroup:SetInitialOffset
+: Cooldown:SetBlingDuration
+: Cooldown:SetLossOfControlCooldown
+: GameTooltip:SetHyperlinkCompareItem
+: GameTooltip:SetReforgeItem
+</div>
+|}
+
+=== Lua Enums ===
+{| class="wikitable" style="min-width: 600px"
+|+ Lua Enums (5.4.8.18414 &rarr; 6.0.2.18967)
+|- class="mw-customtoggle-lua-enums" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| New/Changed
+! style="width: 50%; padding-right: 1em;"| Removed
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-lua-enums"
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: [[LE_]] (new)
+:: NUM_ACTIONS_PER_PAGE = 12
+:: NUM_BONUS_ACTION_PAGES = 4
+:: NUM_NORMAL_ACTION_PAGES = 6
+: [[LE_BAG_FILTER_FLAG]] (new)
+:: _IGNORE_CLEANUP = 1
+:: _EQUIPMENT = 2
+:: _CONSUMABLES = 3
+:: _TRADE_GOODS = 4
+:: _JUNK = 5
+: [[LE_CHARACTER_UNDELETE_RESULT]] (new)
+:: _OK = 1
+:: _ERROR_COOLDOWN = 2
+:: _ERROR_CHAR_CREATE = 3
+:: _ERROR_DISABLED = 4
+:: _ERROR_NAME_TAKEN_BY_THIS_ACCOUNT = 5
+:: _ERROR_UNKNOWN = 6
+: [[LE_EXPANSION]] (new)
+:: _CLASSIC = 0
+:: _BURNING_CRUSADE = 1
+:: _WRATH_OF_THE_LICH_KING = 2
+:: _CATACLYSM = 3
+:: _MISTS_OF_PANDARIA = 4
+:: _WARLORDS_OF_DRAENOR = 5
+:: _LEVEL_CURRENT = 5
+: [[LE_FRAME_TUTORIAL]]
+:: _GARRISON_BUILDING = 9 (new)
+:: _GARRISON_MISSION_LIST = 10 (new)
+:: _GARRISON_MISSION_PAGE = 11 (new)
+:: _GARRISON_LANDING = 12 (new)
+:: _GARRISON_ZONE_ABILITY = 13 (new)
+:: _WORLD_MAP_FRAME = 14 (new)
+:: _CLEAN_UP_BAGS = 15 (new)
+:: _BAG_SETTINGS = 16 (new)
+:: _REAGENT_BANK_UNLOCK = 17 (new)
+:: _TOYBOX_FAVORITE = 18 (new)
+:: _TOYBOX_MOUSEWHEEL_PAGING = 19 (new)
+:: _LFG_LIST = 20 (new)
+: [[LE_ITEM_QUALITY]] (new)
+:: _POOR = 0
+:: _COMMON = 1
+:: _UNCOMMON = 2
+:: _RARE = 3
+:: _EPIC = 4
+:: _LEGENDARY = 5
+:: _HEIRLOOM = 7
+: [[LE_LFG_LIST_DISPLAY_TYPE]] (new)
+:: _ROLE_COUNT = 1
+:: _ROLE_ENUMERATE = 2
+:: _CLASS_ENUMERATE = 3
+:: _HIDE_ALL = 4
+: [[LE_LFG_LIST_FILTER]] (new)
+:: _RECOMMENDED = 1
+:: _NOT_RECOMMENDED = 2
+:: _PVE = 4
+:: _PVP = 8
+: [[LE_MOUNT_JOURNAL_FILTER]] (new)
+:: _COLLECTED = 1
+:: _NOT_COLLECTED = 2
+: [[LE_PAN]] (new)
+:: _STEADY = 1
+:: _NONE = 2
+:: _NONE_RANGED = 3
+:: _FAST_SLOW = 4
+:: _SLOW_FAST = 5
+:: _AND_JUMP = 6
+: [[LE_PET_JOURNAL_FLAG]]
+:: _DEFAULT = 262144 (new)
+: [[LE_QUEST_FACTION]] (new)
+:: _ALLIANCE = 1
+:: _HORDE = 2
+: [[LE_QUEST_FREQUENCY]] (new)
+:: _DEFAULT = 1
+:: _DAILY = 2
+:: _WEEKLY = 3
+: [[LE_RAID_BUFF]]
+:: _HASTE = 4 (new)
+:: _CRITICAL_STRIKE = 6 (was 7)
+:: _MASTERY = 7 (was 8)
+:: _MULITSTRIKE = 8 (new)
+:: _VERSATILITY = 9 (new)
+: [[LE_TRACKER_SORTING]] (new)
+:: _MANUAL = 1
+:: _PROXIMITY = 2
+:: _DIFFICULTY_LOW = 3
+:: _DIFFICULTY_HIGH = 4
+: [[LE_UNIT_STAT]] (new)
+:: _STRENGTH = 1
+:: _AGILITY = 2
+:: _STAMINA = 3
+:: _INTELLECT = 4
+:: _SPIRIT = 5
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: [[LE_PET_JOURNAL_FLAG]]
+:: _FAVORITES
+: [[LE_RAID_BUFF]]
+:: _PHYSICAL_HASTE
+:: _SPELL_HASTE
+</div>
+|}

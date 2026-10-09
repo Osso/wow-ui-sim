@@ -1,0 +1,18 @@
+{{apichanges|7.2.0|prev=7.1.0|next=7.3.0}}
+
+==New==
+* New AddOns: Blizzard_APIDocumentation, Blizzard_Contribution, Blizzard_Deprecated
+* New widget type: [[UIOBJECT MaskTexture|MaskTexture]]
+* New texture method: [[API_Texture_SetVertexOffset|texture:SetVertexOffset(vertexIndex, xOffset, yOffset)]]
+
+
+==Changes==
+* All equipment set related API have been moved to the new C_EquipmentSet table. The old API will still be available via Lua versions implemented in Blizzard_Deprecated.
+
+
+==Removals==
+* Voice chat
+* Mac movie recording
+
+==References==
+{{Reflist}}

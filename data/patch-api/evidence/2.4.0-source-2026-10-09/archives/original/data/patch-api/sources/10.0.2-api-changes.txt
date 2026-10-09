@@ -1,0 +1,192 @@
+Patch 10.0.2 API changes
+
+== Summary ==
+* GameTooltip related APIs have been significantly overhauled. Refer to the Tooltip Changes section for more details.
+* Many bag container related APIs have been moved to the C_Container namespace. Additionally, some of these functions now return structured tables instead of multiple values.
+* A new general-purpose UnitTokenFromGUID(unitGUID) function has been added for mapping a unit GUID to a unit token.
+
+== Resources ==
+* 10.0.2 TOC: 100002
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight Pre-Expansion Phase 2 Update Notes
+
+== Tooltip Changes ==
+
+GameTooltip frames no longer expose native methods for retrieving or populating tooltip contents. Instead, a new C_TooltipInfo namespace has been added which provides APIs for retrieving structured data for use in tooltips and a new set of tooltip-related mixins have been added to populate tooltips from these APIs.
+
+=== Custom Tooltip Frames ===
+
+Any addons that are creating GameTooltip frames should now ensure they inherit GameTooltipTemplate. This template has been updated to include the new GameTooltipDataMixin mixin, which provides automatic updates of tooltip contents from the TOOLTIP_DATA_UPDATE event as well as a subset of backwards-compatible methods for retrieving or populating tooltip contents from the new C_TooltipInfo APIs.
+
+=== Scanning Tooltips ===
+The C_TooltipInfo functions can be used to replace existing tooltip scanning techniques, removing the need to create a tooltip frame. The following example will demonstrate extracting information for a unit tooltip on the player.
+
+```lua
+local tooltipData = C_TooltipInfo.GetUnit("player")
+
+TooltipUtil.SurfaceArgs(tooltipData)
+
+for _, line in ipairs(tooltipData.lines) do
+    TooltipUtil.SurfaceArgs(line)
+end
+
+-- The above SurfaceArgs calls are required to assign values to the
+-- 'type', 'guid', and 'leftText' fields seen below.
+
+print("Tooltip Type: ", tooltipData.type)
+print("Unit GUID: ", tooltipData.guid)
+print("Unit Name: ", tooltipData.lines[1].leftText)
+print("Unit Info: ", tooltipData.lines[2].leftText)
+print("Unit Faction: ", tooltipData.lines[3].leftText)
+
+DevTools_Dump({ tooltipData })
+```
+
+ > Tooltip Type: 2 (Enum.TooltipDataType.Unit)
+ > Unit GUID: "Player-4184-00227A8F"
+ > Unit Name: "Sandse"
+ > Unit Info: "Level 70 Gnome Mage (Player)"
+ > Unit Faction: "Alliance"
+
+The tooltipData dump below has been significantly shortened to only show the fields written by TooltipUtil.SurfaceArgs.
+
+ tooltipData = {
+     type = 2,
+     lines = {
+         [1] = {
+             leftText = "Sandse",
+             leftColor = { r = 1, g = 0.81960791349411, b = 0 },
+             type = 2,
+             unitToken = "player",
+         },
+         [2] = {
+             leftColor = { r = 1, g = 1, b = 1 },
+             type = 0,
+             leftText = "Level 70 Gnome Mage (Player)",
+         },
+         [3] = {
+             leftColor = { r = 1, g = 1, b = 1 },
+             type = 0,
+             leftText = "Alliance",
+         },
+     },
+     guid = "Player-4184-00227A8F",
+     healthGUID = "Player-4184-00227A8F",
+ }
+
+=== Tooltip Script Handlers ===
+
+The following GameTooltip script handlers have been removed. This change will not be reflected in the UI XML schema definition until a future patch.
+
+* OnTooltipAddMoney
+* OnTooltipSetAchievement
+* OnTooltipSetEquipmentSet
+* OnTooltipSetItem
+* OnTooltipSetQuest
+* OnTooltipSetSpell
+* OnTooltipSetUnit
+
+Usages of these script handlers should be replaced by registering callbacks with the new TooltipDataProcessor.AddTooltipPostCall function. Note that callbacks registered with this mechanism are global and will be triggered for all tooltips which inherit from GameTooltipTemplate.
+
+```lua
+local function OnTooltipSetItem(tooltip, data)
+    if tooltip == GameTooltip then
+        print("OnTooltipSetItem", tooltip, data)
+    end
+end
+
+-- Replace 'Enum.TooltipDataType.Item' with an appropriate type for the tooltip
+-- data you are wanting to process; eg. use 'Enum.TooltipDataType.Spell' for
+-- replacing usage of OnTooltipSetSpell.
+--
+-- If you wish to respond to all tooltip data updates, you can instead replace
+-- the enum with 'TooltipDataProcessor.AllTypes' (or the string "ALL").
+
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, OnTooltipSetItem)
+```
+
+== Enumerations ==
+ Enum.BattlePetSpeciesFlags
+   + 17: NoWildPetAddsAllowed
+ Enum.BattlepetDbFlags
+   + 11: AcquiredViaLicense
+ Enum.CurrencyDestroyReason
+   + 12: FulfillCraftingOrder
+ Enum.CurrencySource
+   + 57: CraftingOrder
+   + 58: CatalystBalancing
+   + 59: CatalystCraft
+   + 60: ProfessionInitialAward
+   + 61: PlayerTraitRefund
+ Enum.GraphicsValidationResult
+   + 30: LegacyUnsupported
+   + 31: Dx11Unsupported
+   + 33: RemoteDesktopUnsupported
+ Enum.NavigationState
+   + 4: Disabled
+ Enum.ProfTraitPerkNodeFlags
+   + 2: IsMajorBonus
+ Enum.UIItemInteractionFlags
+   + 5: AddCurrency
+   + 6: UsesCharges
+ Enum.UIWidgetTextSizeType
+   + 1: Small12Pt
+   + 2: Medium16Pt
+   + 3: Large24Pt
+   + 4: Huge27Pt
+   + 5: Standard14Pt
+   + 6: Small10Pt
+   + 7: Small11Pt
+   + 8: Medium18Pt
+   + 9: Large20Pt
+   - 1: Small
+   - 2: Medium
+   - 3: Large
+   - 4: Huge
+   - 5: Standard
+ Enum.UIWidgetVisualizationType
+  + 26: TextWithSubtext
+
+== Structures ==
+ AreaPOIInfo (C_AreaPoiInfo.GetAreaPOIInfo)
+   + 10: factionID
+   + 11: isPrimaryMapForPOI
+   + 12: isAlwaysOnFlightmap
+ CharCustomizationChoice (C_BarberShop.GetAvailableCustomizations)
+   + 7: isLocked
+   + 8: lockedText
+   - 7: showLocked
+   - 8: lockedTooltip
+ CraftingCurrencyResultData (TRADE_SKILL_CURRENCY_REWARD_RESULT)
+   + 3: operationID
+   + 4: firstCraftReward
+   + 5: showCurrencyText
+   - 3: associatedItemGUID
+ CraftingItemResultData (TRADE_SKILL_ITEM_CRAFTED_RESULT)
+   + 12: operationID
+   + 13: firstCraftReward
+   - 12: associatedItemGUID
+ CraftingOperationInfo (C_TradeSkillUI.GetCraftingOperationInfo)
+   + 13: guaranteedCraftingQualityID
+ CraftingOrderCustomerOptionInfo (C_CraftingOrders.GetCustomerOptions)
+   + 9: qualityIlvlBonuses
+   + 10: craftingQualityIDs
+   # 13: level, Nilable: false -> true
+ CraftingReagentSlotSchematic (C_TradeSkillUI.GetRecipeSchematic)
+   + 8: orderSource
+ EncounterJournalItemInfo (C_EncounterJournal.GetLootInfo)
+   + 13: displayAsVeryRare
+   + 14: displayAsExtremelyRare
+ ItemInteractionFrameInfo (C_ItemInteraction.GetItemInteractionInfo)
+   + 12: slotTooltip
+ MajorFactionData (C_MajorFactions.GetMajorFactionData)
+   + 6: unlockDescription
+   + 7: unlockOrder
+ QuestInfo (C_QuestLog.GetInfo)
+   + 10: useMinimalHeader
+ TextureAndTextRowVisualizationInfo (C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo)
+   # 3: textSizeType, Type: UIWidgetTextSizeType -> UIWidgetTextureAndTextSizeType
+ TradeSkillRecipeInfo (C_TradeSkillUI.GetRecipeInfo)
+   + 18: skillLineAbilityID
+ TraitDefinitionInfo (C_Traits.GetDefinitionInfo)
+   + 7: subType

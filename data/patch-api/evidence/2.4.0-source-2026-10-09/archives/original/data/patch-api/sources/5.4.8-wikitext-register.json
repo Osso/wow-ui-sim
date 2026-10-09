@@ -1,0 +1,236 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.4.8",
+  "source": {
+    "path": "data/patch-api/sources/5.4.8-api-changes.wikitext",
+    "revid": 1736772,
+    "sha256": "ab39eeb470444d78cd2e15236a46271fa70852c0a24a7c246e54a9b7255c3bf6"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-cvars-alwaysShowActionBars-5",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "alwaysShowActionBars",
+      "annotation": "*[[CVar alwaysShowActionBars|alwaysShowActionBars]]",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-cvars-bloatnameplates-6",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "bloatnameplates",
+      "annotation": "*[[CVar bloatnameplates|bloatnameplates]]",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-cvars-bloatTest-7",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "bloatTest",
+      "annotation": "*[[CVar bloatTest|bloatTest]]",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-cvars-bloatthreat-8",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "bloatthreat",
+      "annotation": "*[[CVar bloatthreat|bloatthreat]]",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-cvars-consolidateBuffs-9",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "consolidateBuffs",
+      "annotation": "*[[CVar consolidateBuffs|consolidateBuffs]]",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-cvars-fullSizeFocusFrame-10",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "fullSizeFocusFrame",
+      "annotation": "*[[CVar fullSizeFocusFrame|fullSizeFocusFrame]]",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-cvars-maxAlgoplates-11",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "maxAlgoplates",
+      "annotation": "*[[CVar maxAlgoplates|maxAlgoplates]]",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-cvars-nameplateMotion-12",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateMotion",
+      "annotation": "*[[CVar nameplateMotion|nameplateMotion]]",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-cvars-nameplateOverlapH-13",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateOverlapH",
+      "annotation": "*[[CVar nameplateOverlapH|nameplateOverlapH]]",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-cvars-nameplateOverlapV-14",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateOverlapV",
+      "annotation": "*[[CVar nameplateOverlapV|nameplateOverlapV]]",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-cvars-nameplateShowEnemies-15",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowEnemies",
+      "annotation": "*[[CVar nameplateShowEnemies|nameplateShowEnemies]]",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-cvars-nameplateShowEnemyGuardians-16",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowEnemyGuardians",
+      "annotation": "*[[CVar nameplateShowEnemyGuardians|nameplateShowEnemyGuardians]]",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-cvars-nameplateShowEnemyPets-17",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowEnemyPets",
+      "annotation": "*[[CVar nameplateShowEnemyPets|nameplateShowEnemyPets]]",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-cvars-nameplateShowEnemyTotems-18",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowEnemyTotems",
+      "annotation": "*[[CVar nameplateShowEnemyTotems|nameplateShowEnemyTotems]]",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-cvars-nameplateShowFriendlyGuardians-19",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowFriendlyGuardians",
+      "annotation": "*[[CVar nameplateShowFriendlyGuardians|nameplateShowFriendlyGuardians]]",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-cvars-nameplateShowFriendlyPets-20",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowFriendlyPets",
+      "annotation": "*[[CVar nameplateShowFriendlyPets|nameplateShowFriendlyPets]]",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-cvars-nameplateShowFriendlyTotems-21",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowFriendlyTotems",
+      "annotation": "*[[CVar nameplateShowFriendlyTotems|nameplateShowFriendlyTotems]]",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-cvars-nameplateShowFriends-22",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "nameplateShowFriends",
+      "annotation": "*[[CVar nameplateShowFriends|nameplateShowFriends]]",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-cvars-repositionfrequency-23",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "repositionfrequency",
+      "annotation": "*[[CVar repositionfrequency|repositionfrequency]]",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-cvars-showArenaEnemyFrames-24",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "showArenaEnemyFrames",
+      "annotation": "*[[CVar showArenaEnemyFrames|showArenaEnemyFrames]]",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-cvars-showArenaEnemyPets-25",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "showArenaEnemyPets",
+      "annotation": "*[[CVar showArenaEnemyPets|showArenaEnemyPets]]",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-cvars-showPartyPets-26",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "showPartyPets",
+      "annotation": "*[[CVar showPartyPets|showPartyPets]]",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-cvars-showTargetOfTarget-27",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "showTargetOfTarget",
+      "annotation": "*[[CVar showTargetOfTarget|showTargetOfTarget]]",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-cvars-targetOfTargetMode-28",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "targetOfTargetMode",
+      "annotation": "*[[CVar targetOfTargetMode|targetOfTargetMode]]",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-cvars-uiScale-29",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "uiScale",
+      "annotation": "*[[CVar uiScale|uiScale]]",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-cvars-useCompactPartyFrames-30",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "useCompactPartyFrames",
+      "annotation": "*[[CVar useCompactPartyFrames|useCompactPartyFrames]]",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-cvars-useUiScale-31",
+      "section": "cvars",
+      "direction": "changed",
+      "symbol": "useUiScale",
+      "annotation": "*[[CVar useUiScale|useUiScale]]",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-SetUIVisibility-34",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SetUIVisibility",
+      "annotation": "*{{api|SetUIVisibility}}(false) is now protected in combat. Add-Ons can still use \"SetUIVisibility(true)\" while in combat, but you cannot toggle it. [http://us.battle.net/wow/en/forum/topic/12674209697?page=3#46]",
+      "wikitext_line": 34
+    }
+  ]
+}

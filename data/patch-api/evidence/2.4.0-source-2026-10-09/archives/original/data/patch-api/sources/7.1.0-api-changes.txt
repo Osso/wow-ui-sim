@@ -1,0 +1,25 @@
+Patch 7.1.0 API changes
+
+== New ==
+* New API: GetPhysicalScreenSize, GetDetailedItemLevelInfo
+* New XML frame attributes: intrinsic, clipChildren
+* New frame methods: frame:SetClipsChildren(boolean), frame:DoesClipChildren()
+* New CVars:
+** NameplatePersonalShowAlways - Determines if the the personal nameplate is always shown.
+** NameplatePersonalShowInCombat - Determines if the the personal nameplate is shown when you enter combat.
+** NameplatePersonalShowWithTarget - Determines if the personal nameplate is shown when selecting a target.
+*** 0 = targeting has no effect, 1 = show on hostile target, 2 = show on any target
+** NameplatePersonalHideDelaySeconds - Determines the length of time in seconds that the personal nameplate will be visible after no visibility conditions are met.
+** NameplatePersonalHideDelayAlpha - Determines the alpha of the personal nameplate after no visibility conditions are met (during the period of time specified by NameplatePersonalHideDelaySeconds).
+
+== Changes ==
+* ScrollingMessageFrame is now implemented in Lua.
+* 'OnEnter' and 'OnLeave' scripts are no longer triggered unless ':EnableMouse(true)' has been set on the frame in question.
+** This has been confirmed as a bug and should be fixed before the patch is released.@TheDanW on #wowuidev
+* GetItemInfo has four new returns: 14: bindType, 15: expacID, 16: itemSetID, 17: isCraftingReagent
+
+== Removals ==
+* TitleRegion
+
+== References ==
+[References list; not expanded]

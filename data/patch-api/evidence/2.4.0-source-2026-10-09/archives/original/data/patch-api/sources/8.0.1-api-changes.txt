@@ -1,0 +1,33 @@
+Patch 8.0.1 API changes
+
+Battle for Azeroth alpha UI changes observations:
+* https://github.com/Ellypse/wow-ui-source/wiki/Battle-for-Azeroth-alpha-UI-changes-observations
+
+== Changes ==
+* SendAddonMessage, RegisterAddonMessagePrefix, IsAddonMessagePrefixRegistered and GetRegisteredAddonMessagePrefixes have been moved inside the new C_ChatInfo namespace.
+* COMBAT_LOG_EVENT_UNFILTERED event no longer provides a loadout. CombatLogGetCurrentEventInfo should be used OnEvent to retrieve that info.
+* Frame:RegisterEvent now raises an error when trying to register an unknown event.
+* UnitAura no longer accepts a spell name as a filter. You can use the new AuraUtil.FindAuraByName instead, implemented in Lua.
+* UNIT_POWER is now UNIT_POWER_UPDATE
+* The limit on the number of chat channels that can be joined by the player has been increased from 10 to 20.
+* C_Vignettes replaced by C_VignetteInfo
+
+== Removals ==
+*"all map API was removed", including functions like GetMapContinents or GetCurrentMapContinent.
+** GetCurrentMapAreaID has been removed. Use C_Map.GetBestMapForUnit("player") to get the current uiMapID for the player or WorldMapFrame:GetMapID() to get the uiMapID map currently displayed in the World Map Frame UI.
+** GetPlayerMapPosition has been removed. Use C_Map.GetPlayerMapPosition(uiMapID, unitToken) to get the position of the unit (only works for the player and party members).
+* EJ_GetCurrentInstance has been removed, use EJ_GetInstanceForMap(C_Map.GetBestMapForUnit("player")) instead to get the current instance ID.
+* GLYPH_ADDED, GLYPH_REMOVED, and GLYPH_UPDATED have been removed.
+* FindSpellOverrideNameByName, FindBaseSpellNameByName, and SearchGuildRecipes have been removed.
+
+== Events ==
+==== Added ====
+These events were added or initially documented in Blizzard API Documentation.
+
+==== Removed ====
+These events were removed.
+
+
+== See also ==
+*[Reference: url=https://us.battle.net/forums/en/wow/topic/20762318007|author=Ythisens|date=2018-04-24 16:45|accessdate=2018-05-12|title=Battle For Azeroth Addon Changes|archiveurl=]
+*[Reference: url=https://www.wowinterface.com/forums/showthread.php?p=331293|author=Ketho|date=2018-07-18|title=Bfa console variables|publisher=WoWInterface]

@@ -1,0 +1,156 @@
+<noinclude>{{Transclude|}}</noinclude>
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.3.0.17128 &rarr; 5.4.0.17359)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 34 new functions
+! style="width: 50%; padding-right: 1em;"| 31 removed functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|BNIsFriendConversationValid}}
+: {{api|C_NewItems.ClearAll}}
+: {{api|C_NewItems.IsNewItem}}
+: {{api|C_NewItems.RemoveNewItem}}
+: {{api|C_Scenario.GetProvingGroundsInfo}}
+: {{api|C_StorePublic.IsEnabled}}
+: {{api|C_Vignettes.GetNumVignettes}}
+: {{api|C_Vignettes.GetVignetteInfoFromInstanceID}}
+: {{api|C_Vignettes.GetVignetteInstanceID}}
+: {{api|CanScanResearchSite}}
+: {{api|GetArchaeologyRaceInfoByID}}
+: {{api|GetAutoCompleteRealms}}
+: {{api|GetBestFlexRaidChoice}}
+: {{api|GetFlexRaidDungeonInfo}}
+: {{api|GetInspectArenaData}}
+: {{api|GetItemSpecInfo}}
+: {{api|GetLFGSuspendedPlayers}}
+: {{api|GetNumFlexRaidDungeons}}
+: {{api|GetNumSavedWorldBosses}}
+: {{api|GetObjectIconTextureCoords}}
+: {{api|GetPersonalRatedInfo}}
+: {{api|GetSavedWorldBossInfo}}
+: {{api|HasBoundGemProposed}}
+: {{api|IsBattlePayItem}}
+: {{api|IsTrackingBattlePets}}
+: {{api|IsWargame}}
+: {{api|JoinSingleLFG}}
+: {{api|LeaveSingleLFG}}
+: {{api|RequestRatedInfo}}
+: {{api|TimeoutResurrect}}
+: {{api|UnitGetTotalHealAbsorbs}}
+: {{api|UnitIsUnconscious}}
+: {{api|UnitRealmRelationship}}
+: {{api|securerandom}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: AcceptArenaTeam
+: ArenaTeamDisband
+: ArenaTeamInviteByName
+: ArenaTeamLeave
+: ArenaTeamRoster
+: ArenaTeamSetLeaderByName
+: ArenaTeamUninviteByName
+: CalendarMassInviteArenaTeam
+: CloseArenaTeamRoster
+: DeclineArenaTeam
+: GetArenaTeam
+: GetArenaTeamGdfInfo
+: GetArenaTeamIndexBySize
+: GetArenaTeamRosterInfo
+: GetArenaTeamRosterSelection
+: GetArenaTeamRosterShowOffline
+: GetInspectArenaTeamData
+: GetNumArenaTeamMembers
+: GetPVPRankInfo
+: GetPVPRankProgress
+: GetPersonalRatedArenaInfo
+: GetPersonalRatedBGInfo
+: GuildUIEnabled
+: RegisterForSave
+: RegisterForSavePerCharacter
+: RequestRatedArenaInfo
+: RequestRatedBattlegroundInfo
+: SetArenaTeamRosterSelection
+: SetArenaTeamRosterShowOffline
+: SortArenaTeamRoster
+: UnitPVPRank
+</div>
+|}
+=== FrameXML ===
+{| class="wikitable" style="min-width: 600px"
+|+ FrameXML (5.3.0.17128 &rarr; 5.4.0.17359)
+|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
+! style="padding: 0 1em;"| 6 new functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-fxml"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|IsInProvingGround}}
+: {{api|SecureCapsuleGet}}
+: {{api|ToggleStoreUI}}
+: {{api|UpdateNewItemList}}
+: {{api|escapePatternSymbols}}
+: {{api|isRaidFinderDungeonDisplayable}}
+</div>
+|}
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.3.0.17128 &rarr; 5.4.0.17359)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="padding: 0 1em;"| 18 new events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ARCHAEOLOGY_FIND_COMPLETE}}
+: {{api|t=e|ARCHAEOLOGY_SURVEY_CAST}}
+: {{api|t=e|ARTIFACT_DIGSITE_COMPLETE}}
+: {{api|t=e|CHAT_COMBAT_MSG_ARENA_POINTS_GAIN}}
+: {{api|t=e|INSTANCE_GROUP_SIZE_CHANGED}}
+: {{api|t=e|PET_BATTLE_PET_TYPE_CHANGED}}
+: {{api|t=e|PROVING_GROUNDS_SCORE_UPDATE}}
+: {{api|t=e|SAVED_VARIABLES_TOO_LARGE}}
+: {{api|t=e|STORE_CONFIRM_PURCHASE}}
+: {{api|t=e|STORE_ORDER_INITIATION_FAILED}}
+: {{api|t=e|STORE_PRODUCTS_UPDATED}}
+: {{api|t=e|STORE_PRODUCT_DELIVERED}}
+: {{api|t=e|STORE_PURCHASE_ERROR}}
+: {{api|t=e|STORE_PURCHASE_LIST_UPDATED}}
+: {{api|t=e|STORE_STATUS_CHANGED}}
+: {{api|t=e|UNIT_HEAL_ABSORB_AMOUNT_CHANGED}}
+: {{api|t=e|VIGNETTE_ADDED}}
+: {{api|t=e|VIGNETTE_REMOVED}}
+</div>
+|}
+=== Widget API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API (5.3.0.17128 &rarr; 5.4.0.17359)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="padding: 0 1em;"| 8 new methods
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Animation:IsForbidden}}
+: {{api|t=w|AnimationGroup:IsForbidden}}
+: {{api|t=w|FontString:IsForbidden}}
+: {{api|t=w|Frame:IsForbidden}}
+: {{api|t=w|GameTooltip:SetUnitConsolidatedBuff}}
+: {{api|t=w|Slider:GetStepsPerPage}}
+: {{api|t=w|Slider:SetStepsPerPage}}
+: {{api|t=w|Texture:IsForbidden}}
+</div>
+|}
+=== Lua Enums ===
+{| class="wikitable" style="min-width: 600px"
+|+ Lua Enums (5.3.0.17128 &rarr; 5.4.0.17359)
+|- class="mw-customtoggle-lua-enums" style="cursor: pointer" 
+! style="padding: 0 1em;"| New
+|- class="mw-collapsible" id="mw-customcollapsible-lua-enums"
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: [[LE_LFG_CATEGORY]]
+:: _FLEXRAID = 5 (new)
+: [[LE_REALM_RELATION]] (new)
+:: _SAME = 1
+:: _COALESCED = 2
+:: _VIRTUAL = 3
+: [[LE_WORLD_ELAPSED_TIMER_TYPE]] (new)
+:: _NONE = 1
+:: _CHALLENGE_MODE = 2
+:: _PROVING_GROUND = 3
+</div>
+|}

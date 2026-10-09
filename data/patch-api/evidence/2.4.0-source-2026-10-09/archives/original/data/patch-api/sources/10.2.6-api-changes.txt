@@ -1,0 +1,151 @@
+Patch 10.2.6 API changes
+
+== Summary ==
+
+* Many global functions have been moved to various C_* namespaces. Refer to Deprecated API.
+
+== Resources ==
+* TOC: 100206
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: None (Dragonflight: Plunderstorm Content Update Notes)
+
+== Diffs ==
+=== Enumerations ===
+ Enum.AccountData
+   + FrontendChatSettings
+ Enum.PointsModifierSourceType
+   + FirstTimeQuestCompletionRewards
+ Enum.SuperTrackingType
+   + PartyMember
+ Enum.UIWidgetScale
+   + OneHundredTen
+   + OneHundredTwenty
+   + OneHundredThirty
+   + OneHundredForty
+   + OneHundredFifty
+   + OneHundredSixty
+   + OneHundredSeventy
+   + OneHundredEighty
+   + OneHundredNinety
+   + TwoHundred
+ Enum.UIWidgetSetLayoutDirection
+   + Overlap
+ Enum.UIWidgetTextureAndTextSizeType
+   + Medium2
+ Enum.UIWidgetVisualizationType
+   # WorldLootObject -> MapPinAnimation
+ Enum.WidgetEnabledState
+   + BrightBlue
+
+=== Structures ===
+ AreaPOIInfo
+   # addPaddingAboveWidgets -> addPaddingAboveTooltipWidgets
+   # widgetSetID -> tooltipWidgetSet
+   + iconWidgetSet
+ EncounterJournalItemInfo
+   + displaySeasonID
+ HorizontalCurrenciesWidgetVisualizationInfo
+   + updateAnimType
+ PartyPoseInfo
+   + extraButtonText
+ TextureAndTextVisualizationInfo
+   + textSizeType
+ UIWidgetCurrencyInfo
+   + textFontType
+   + textSizeType
+ VignetteInfo
+   # addPaddingAboveWidgets -> addPaddingAboveTooltipWidgets
+   # widgetSetID -> tooltipWidgetSet
+   + iconWidgetSet
+
+== Deprecated API ==
+These are functions that were deprecated and will be removed in the future.
+
+Deprecated_10_2_6.lua
+: FrameXML_Debug → C_Debug.FrameXMLDebug
+: GetMawPowerLinkBySpellID → C_Spell.GetMawPowerLinkBySpellID
+: C_AreaPoiInfo.GetAreaPOIInfo
+:: .widgetSetID -> .tooltipWidgetSet
+:: .addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets
+: C_VignetteInfo.GetVignetteInfo
+:: .widgetSetID -> .tooltipWidgetSet
+:: .addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets
+
+Deprecated_CurrencyScript.lua
+: GetCoinIcon → C_CurrencyInfo.GetCoinIcon
+: GetCoinText → C_CurrencyInfo.GetCoinText
+: GetCoinTextureString → C_CurrencyInfo.GetCoinTextureString
+
+Deprecated_GuildScript.lua
+: GuildInvite → C_GuildInfo.Invite
+: GuildUninvite → C_GuildInfo.Uninvite
+: GuildPromote → C_GuildInfo.Promote
+: GuildDemote → C_GuildInfo.Demote
+: GuildSetLeader → C_GuildInfo.SetLeader
+: GuildSetMOTD → C_GuildInfo.SetMOTD
+: GuildLeave → C_GuildInfo.Leave
+: GuildDisband → C_GuildInfo.Disband
+
+Deprecated_ItemScript.lua
+: GetItemQualityColor → C_Item.GetItemQualityColor
+: GetItemInfoInstant → C_Item.GetItemInfoInstant
+: GetItemSetInfo → C_Item.GetItemSetInfo
+: GetItemChildInfo → C_Item.GetItemChildInfo
+: DoesItemContainSpec → C_Item.DoesItemContainSpec
+: GetItemGem → C_Item.GetItemGem
+: GetItemCreationContext → C_Item.GetItemCreationContext
+: GetItemIcon → C_Item.GetItemIconByID
+: GetItemFamily → C_Item.GetItemFamily
+: GetItemSpell → C_Item.GetItemSpell
+: IsArtifactPowerItem → C_Item.IsArtifactPowerItem
+: IsCurrentItem → C_Item.IsCurrentItem
+: IsUsableItem → C_Item.IsUsableItem
+: IsHelpfulItem → C_Item.IsHelpfulItem
+: IsHarmfulItem → C_Item.IsHarmfulItem
+: IsConsumableItem → C_Item.IsConsumableItem
+: IsEquippableItem → C_Item.IsEquippableItem
+: IsEquippedItem → C_Item.IsEquippedItem
+: IsEquippedItemType → C_Item.IsEquippedItemType
+: ItemHasRange → C_Item.ItemHasRange
+: IsItemInRange → C_Item.IsItemInRange
+: GetItemClassInfo → C_Item.GetItemClassInfo
+: GetItemInventorySlotInfo → C_Item.GetItemInventorySlotInfo
+: BindEnchant → C_Item.BindEnchant
+: ActionBindsItem → C_Item.ActionBindsItem
+: ReplaceEnchant → C_Item.ReplaceEnchant
+: ReplaceTradeEnchant → C_Item.ReplaceTradeEnchant
+: ConfirmBindOnUse → C_Item.ConfirmBindOnUse
+: ConfirmOnUse → C_Item.ConfirmOnUse
+: ConfirmNoRefundOnUse → C_Item.ConfirmNoRefundOnUse
+: DropItemOnUnit → C_Item.DropItemOnUnit
+: EndBoundTradeable → C_Item.EndBoundTradeable
+: EndRefund → C_Item.EndRefund
+: GetItemInfo → C_Item.GetItemInfo
+: GetDetailedItemLevelInfo → C_Item.GetDetailedItemLevelInfo
+: GetItemSpecInfo → C_Item.GetItemSpecInfo
+: GetItemUniqueness → C_Item.GetItemUniqueness
+: GetItemCount → C_Item.GetItemCount
+: PickupItem → C_Item.PickupItem
+: GetItemSubClassInfo → C_Item.GetItemSubClassInfo
+: UseItemByName → C_Item.UseItemByName
+: EquipItemByName → C_Item.EquipItemByName
+: ReplaceTradeskillEnchant → C_Item.ReplaceTradeskillEnchant
+: GetItemCooldown → C_Item.GetItemCooldown
+: IsCorruptedItem → C_Item.IsCorruptedItem
+: IsCosmeticItem → C_Item.IsCosmeticItem
+: IsDressableItem → C_Item.IsDressableItem
+
+Deprecated_PvpScript.lua
+: IsSubZonePVPPOI → C_PvP.IsSubZonePVPPOI
+: GetZonePVPInfo → C_PvP.GetZonePVPInfo
+: TogglePVP → C_PvP.TogglePVP
+: SetPVP → C_PvP.SetPVP
+
+Deprecated_SoundScript.lua
+: PlayVocalErrorSoundID → C_Sound.PlayVocalErrorSound
+
+Deprecated_SpellScript.lua
+: TargetSpellReplacesBonusTree → C_Spell.TargetSpellReplacesBonusTree
+: GetMaxSpellStartRecoveryOffset → C_Spell.GetSpellQueueWindow
+: GetSpellQueueWindow → C_Spell.GetSpellQueueWindow
+: GetSchoolString → C_Spell.GetSchoolString

@@ -1,0 +1,14 @@
+Patch 5.4.1 API changes
+
+== Breaking changes ==
+* The CVar "realmName" is no longer queryable in-game with GetCVar. GetRealmName should be used to obtain the realm of the player.
+
+== Bugs ==
+* C_StorePublic.IsDisabledByParentalControls is protected (and called from UpdateMicroButtons, which is frequently called from execution paths tainted by addons).
+
+== Automatic diff ==
+=== Global API ===
+=== Events ===
+
+== References ==
+[References list; not expanded]

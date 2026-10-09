@@ -1,0 +1,661 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "4.1.0",
+  "source": {
+    "path": "data/patch-api/sources/4.1.0-api-changes.wikitext",
+    "revid": 4094671,
+    "sha256": "8d21143deb4422f937bcec0ed3469e02c64115b48ceec5cb9239e2cd0752df1c"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-events-COMBAT_LOG_EVENT-4",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "COMBAT_LOG_EVENT",
+      "annotation": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, hideCaster.",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-events-COMBAT_LOG_EVENT_UNFILTERED-4",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "COMBAT_LOG_EVENT_UNFILTERED",
+      "annotation": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, hideCaster.",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-global-api-SendAddonMessage-5",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "SendAddonMessage",
+      "annotation": "* Addons are now required to register the prefixes they want to receive {{api|SendAddonMessage}} messages for using {{api| RegisterAddonMessagePrefix}}.",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-global-api-RegisterAddonMessagePrefix-5",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "RegisterAddonMessagePrefix",
+      "annotation": "* Addons are now required to register the prefixes they want to receive {{api|SendAddonMessage}} messages for using {{api| RegisterAddonMessagePrefix}}.",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-global-api-CanTransform-8",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CanTransform",
+      "annotation": "* REMOVED {{api|CanTransform}} / {{api|Transform}}; worgen transformation is now treated entirely as a spell.",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-Transform-8",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "Transform",
+      "annotation": "* REMOVED {{api|CanTransform}} / {{api|Transform}}; worgen transformation is now treated entirely as a spell.",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-GetPetHappiness-9",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPetHappiness",
+      "annotation": "* REMOVED {{api|GetPetHappiness}} along with actual pet happiness.",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-RenameEquipmentSet-10",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RenameEquipmentSet",
+      "annotation": "* REMOVED {{api|RenameEquipmentSet}}",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-CalendarContextEventCanRemove-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarContextEventCanRemove",
+      "annotation": "** {{api|CalendarContextEventCanRemove}}",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-CalendarEventGetTypesDisplayOrdered-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CalendarEventGetTypesDisplayOrdered",
+      "annotation": "** {{api|CalendarEventGetTypesDisplayOrdered}}",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-GetEventTime-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetEventTime",
+      "annotation": "** {{api| GetEventTime}}",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-GetCurrentEventID-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrentEventID",
+      "annotation": "** {{api| GetCurrentEventID}}",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-CancelGuildMembershipRequest-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CancelGuildMembershipRequest",
+      "annotation": "** {{api|CancelGuildMembershipRequest}}",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-DeclineGuildApplicant-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DeclineGuildApplicant",
+      "annotation": "** {{api| DeclineGuildApplicant}}",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-GetGuildApplicantInfo-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildApplicantInfo",
+      "annotation": "** {{api| GetGuildApplicantInfo}}",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-GetGuildApplicantSelection-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildApplicantSelection",
+      "annotation": "** {{api| GetGuildApplicantSelection}}",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-GetGuildMembershipRequestInfo-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildMembershipRequestInfo",
+      "annotation": "** {{api| GetGuildMembershipRequestInfo}}",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-GetGuildMembershipRequestSettings-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildMembershipRequestSettings",
+      "annotation": "** {{api| GetGuildMembershipRequestSettings}}",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-GetGuildRecruitmentComment-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildRecruitmentComment",
+      "annotation": "** {{api| GetGuildRecruitmentComment}}",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-GetGuildRecruitmentSettings-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildRecruitmentSettings",
+      "annotation": "** {{api| GetGuildRecruitmentSettings}}",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-GetLookingForGuildComment-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLookingForGuildComment",
+      "annotation": "** {{api| GetLookingForGuildComment}}",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-GetLookingForGuildSettings-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLookingForGuildSettings",
+      "annotation": "** {{api| GetLookingForGuildSettings}}",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-GetNumGuildApplicants-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumGuildApplicants",
+      "annotation": "** {{api| GetNumGuildApplicants}}",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-GetNumGuildMembershipRequests-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumGuildMembershipRequests",
+      "annotation": "** {{api| GetNumGuildMembershipRequests}}",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-GetNumRecruitingGuilds-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumRecruitingGuilds",
+      "annotation": "** {{api| GetNumRecruitingGuilds}}",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-GetRecruitingGuildInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRecruitingGuildInfo",
+      "annotation": "** {{api| GetRecruitingGuildInfo}}",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-GetRecruitingGuildSelection-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRecruitingGuildSelection",
+      "annotation": "** {{api| GetRecruitingGuildSelection}}",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-GetRecruitingGuildSettings-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRecruitingGuildSettings",
+      "annotation": "** {{api| GetRecruitingGuildSettings}}",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-GetRecruitingGuildTabardInfo-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRecruitingGuildTabardInfo",
+      "annotation": "** {{api| GetRecruitingGuildTabardInfo}}",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-RequestGuildApplicantsList-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestGuildApplicantsList",
+      "annotation": "** {{api| RequestGuildApplicantsList}}",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-RequestGuildMembership-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestGuildMembership",
+      "annotation": "** {{api| RequestGuildMembership}}",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-RequestGuildMembershipList-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestGuildMembershipList",
+      "annotation": "** {{api| RequestGuildMembershipList}}",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-RequestGuildRecruitmentSettings-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestGuildRecruitmentSettings",
+      "annotation": "** {{api| RequestGuildRecruitmentSettings}}",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-RequestRecruitingGuildsList-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestRecruitingGuildsList",
+      "annotation": "** {{api| RequestRecruitingGuildsList}}",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-SetGuildApplicantSelection-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetGuildApplicantSelection",
+      "annotation": "** {{api| SetGuildApplicantSelection}}",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-SetGuildRecruitmentComment-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetGuildRecruitmentComment",
+      "annotation": "** {{api| SetGuildRecruitmentComment}}",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-SetGuildRecruitmentSettings-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetGuildRecruitmentSettings",
+      "annotation": "** {{api| SetGuildRecruitmentSettings}}",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-SetLookingForGuildComment-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetLookingForGuildComment",
+      "annotation": "** {{api| SetLookingForGuildComment}}",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-SetLookingForGuildSettings-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetLookingForGuildSettings",
+      "annotation": "** {{api| SetLookingForGuildSettings}}",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-SetRecruitingGuildSelection-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetRecruitingGuildSelection",
+      "annotation": "** {{api| SetRecruitingGuildSelection}}",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-GetLFGDungeonShortageRewardInfo-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGDungeonShortageRewardInfo",
+      "annotation": "** {{api| GetLFGDungeonShortageRewardInfo}}",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-GetLFGDungeonShortageRewardLink-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGDungeonShortageRewardLink",
+      "annotation": "** {{api| GetLFGDungeonShortageRewardLink}}",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-GetLFGRoleShortageRewards-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGRoleShortageRewards",
+      "annotation": "** {{api| GetLFGRoleShortageRewards}}",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-GetGuildChallengeInfo-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildChallengeInfo",
+      "annotation": "** {{api| GetGuildChallengeInfo}}",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-GetNumGuildChallenges-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumGuildChallenges",
+      "annotation": "** {{api| GetNumGuildChallenges}}",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-RequestGuildChallengeInfo-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestGuildChallengeInfo",
+      "annotation": "** {{api| RequestGuildChallengeInfo}}",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-GetRegisteredAddonMessagePrefixes-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRegisteredAddonMessagePrefixes",
+      "annotation": "** {{api| GetRegisteredAddonMessagePrefixes}}",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-IsAddonMessagePrefixRegistered-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsAddonMessagePrefixRegistered",
+      "annotation": "** {{api| IsAddonMessagePrefixRegistered}}",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-RegisterAddonMessagePrefix-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RegisterAddonMessagePrefix",
+      "annotation": "** {{api| RegisterAddonMessagePrefix}}",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-CanEditGuildBankTabInfo-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanEditGuildBankTabInfo",
+      "annotation": "* NEW {{api|CanEditGuildBankTabInfo}}",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-CancelEmote-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CancelEmote",
+      "annotation": "* NEW {{api|CancelEmote}}",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-ClearAllTracking-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClearAllTracking",
+      "annotation": "* NEW {{api| ClearAllTracking}}",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-GetAddOnOptionalDependencies-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAddOnOptionalDependencies",
+      "annotation": "* NEW {{api| GetAddOnOptionalDependencies}}",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-GetDebugSpellEffects-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDebugSpellEffects",
+      "annotation": "* NEW {{api| GetDebugSpellEffects}}",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-GetDungeonForRandomSlot-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDungeonForRandomSlot",
+      "annotation": "* NEW {{api| GetDungeonForRandomSlot}}",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-GetGuildBankBonusDepositMoney-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildBankBonusDepositMoney",
+      "annotation": "* NEW {{api| GetGuildBankBonusDepositMoney}}",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-GetInspectRatedBGData-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetInspectRatedBGData",
+      "annotation": "* NEW {{api| GetInspectRatedBGData}}",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-GetMaxAnimFramerate-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMaxAnimFramerate",
+      "annotation": "* NEW {{api| GetMaxAnimFramerate}}",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-GetNamePlateMotionType-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNamePlateMotionType",
+      "annotation": "* NEW {{api| GetNamePlateMotionType}}",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-GetNetIpTypes-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNetIpTypes",
+      "annotation": "* NEW {{api| GetNetIpTypes}}",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-GetNumDungeonForRandomSlot-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumDungeonForRandomSlot",
+      "annotation": "* NEW {{api| GetNumDungeonForRandomSlot}}",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-GetNumNamePlateMotionTypes-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumNamePlateMotionTypes",
+      "annotation": "* NEW {{api| GetNumNamePlateMotionTypes}}",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-GetNumberOfDetailTiles-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumberOfDetailTiles",
+      "annotation": "* NEW {{api| GetNumberOfDetailTiles}}",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-GetTrainerTradeskillRankValues-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTrainerTradeskillRankValues",
+      "annotation": "* NEW {{api| GetTrainerTradeskillRankValues}}",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-IsIPv6Available-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsIPv6Available",
+      "annotation": "* NEW {{api| IsIPv6Available}}",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-IsOnTournamentRealm-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsOnTournamentRealm",
+      "annotation": "* NEW {{api| IsOnTournamentRealm}}",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-IsOnePersonParty-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsOnePersonParty",
+      "annotation": "* NEW {{api| IsOnePersonParty}}",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-IsRatedMap-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsRatedMap",
+      "annotation": "* NEW {{api| IsRatedMap}}",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-IsTrialAccount-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTrialAccount",
+      "annotation": "* NEW {{api| IsTrialAccount}}",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-ModifyEquipmentSet-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ModifyEquipmentSet",
+      "annotation": "* NEW {{api| ModifyEquipmentSet}}",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-SetBarSlotFromIntro-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetBarSlotFromIntro",
+      "annotation": "* NEW {{api| SetBarSlotFromIntro}}",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-SetGuildMemberRank-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetGuildMemberRank",
+      "annotation": "* NEW {{api| SetGuildMemberRank}}",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-SetMaxAnimFramerate-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetMaxAnimFramerate",
+      "annotation": "* NEW {{api| SetMaxAnimFramerate}}",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-SetNamePlateMotionType-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetNamePlateMotionType",
+      "annotation": "* NEW {{api| SetNamePlateMotionType}}",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-UnitThreatPercentageOfLead-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitThreatPercentageOfLead",
+      "annotation": "* NEW {{api| UnitThreatPercentageOfLead}}",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-events-COMBAT_LOG_EVENT-86",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "COMBAT_LOG_EVENT",
+      "annotation": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, shifting existing parameters to the right.",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-COMBAT_LOG_EVENT_UNFILTERED-86",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "COMBAT_LOG_EVENT_UNFILTERED",
+      "annotation": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, shifting existing parameters to the right.",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-END_REFUND-87",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "END_REFUND",
+      "annotation": "* REMOVED END_REFUND, items no longer become unrefundable due to enchanting, etc.",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-events-HONOR_CURRENCY_UPDATE-88",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "HONOR_CURRENCY_UPDATE",
+      "annotation": "* REMOVED HONOR_CURRENCY_UPDATE, honor now treated as ordinary currency",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-INSPECT_TALENT_READY-89",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "INSPECT_TALENT_READY",
+      "annotation": "* REMOVED INSPECT_TALENT_READY, talent information available by default.",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-KNOWN_CURRENCY_TYPES_UPDATE-90",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "KNOWN_CURRENCY_TYPES_UPDATE",
+      "annotation": "* REMOVED KNOWN_CURRENCY_TYPES_UPDATE",
+      "wikitext_line": 90
+    }
+  ],
+  "client_line": "retail"
+}

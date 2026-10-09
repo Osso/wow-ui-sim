@@ -1,0 +1,45 @@
+Patch 3.3.3 API changes
+
+== New API functions ==
+* CancelSell()
+* forced = ForceGossip()
+* allowed = GetAllowLowLevelRaid()
+* isTrivial, isDaily, isRepeatable = GetAvailableQuestInfo(id)
+* isQuestItem, startsQuestId, isActiveQuest = GetContainerItemQuestInfo(bag, slot)
+* hasWin, winHonor, winArena, lossHonor, lossArena = GetHolidayBGHonorCurrencyBonuses()
+* time = GetLFGDeserterExpiration()
+* time = GetLFGRandomCooldownExpiration()
+* bonus = GetPetSpellBonusDamage()
+* watchIndex = GetQuestWatchIndex(questLogIndex)
+* hasWin, winHonor, winArena, lossHonor, lossArena = GetRandomBGHonorCurrencyBonuses()
+* isDaily = QuestIsDaily()
+* isWeekly = QuestIsWeekly()
+* SetAllowLowLevelRaid(allowed)
+* SetAuctionsTabShowing(isShowing)
+* ShiftQuestWatches(id1, id2)
+* SortBGList()
+* SortQuestWatches()
+* SummonRandomCritter()
+* hasDeserter = UnitHasLFGDeserter("unit")
+* hasRandomCooldown = UnitHasLFGRandomCooldown("unit")
+
+== New events ==
+* AUCTION_HOUSE_DISABLED ()
+* AUCTION_MULTISELL_FAILURE ()
+* AUCTION_MULTISELL_START (total)
+* AUCTION_MULTISELL_UPDATE (done, total)
+* DISABLE_LOW_LEVEL_RAID ()
+* ENABLE_LOW_LEVEL_RAID ()
+* LFG_OPEN_FROM_GOSSIP (dungeonId)
+* PET_SPELL_POWER_UPDATE ()
+* VOTE_KICK_REASON_NEEDED (targetName)
+
+== API function changes ==
+* AcceptProposal() now requires a hardware event
+* GetLFGBootProposal() now returns an additional reason value.
+* UninviteUnit("name" [, "reason"]) added reason argument for LFD kick votes.
+
+== Removed API ==
+* ShowBattlefieldList()
+* Texture:GetTexCoordModifiesRect()
+* Texture:SetTexCoordModifiesRect(modifiesRect)

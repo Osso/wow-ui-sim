@@ -1,0 +1,18 @@
+{{apichanges|1.13.6|prev=1.13.5|next=1.13.7}}
+
+== Summary ==
+Patch 1.13.6 [[Naxxramas (Classic)|Naxxramas]] content patch.
+* TOC: <code>11306</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/d79ae33252279cd117f7a931993b4b1bf6d85b8f...0412f2062bd45a4748276b13436d19cc1fde96a3 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/e92b44417ffc1d4c6df53216c1c3cb4d5195760d BlizzardInterfaceResources]
+
+== CVars ==
+{| class="wikitable" style="min-width: 400px"
+|- class="mw-customtoggle-cvars" style="cursor: pointer" 
+! style="width: 100%; padding-right: 1em;"| 3 new cvars
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=c|nameplateCommentatorMaxDistance}}
+: {{api|t=c|specular}}
+: {{api|t=c|textureErrorColors}}
+</div>
+|}

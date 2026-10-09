@@ -1,0 +1,20 @@
+{
+  "patch": "12.0.7",
+  "title": "Patch 12.0.7/API changes",
+  "page_id": 675928,
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_12.0.7/API_changes",
+  "extract": {
+    "file": "12.0.7-api-changes.txt",
+    "method": "Crawler excerpt (searched 2026-07-06); not a full-page extract",
+    "sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e"
+  },
+  "wikitext": {
+    "file": "12.0.7-api-changes.wikitext",
+    "method": "MediaWiki action=parse prop=wikitext|revid",
+    "revid": 6794100,
+    "retrieved": "2026-10-04",
+    "sha256": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c",
+    "register": "12.0.7-wikitext-register.json",
+    "note": "Holds five collapsed inventories (Global API, ScriptObjects, Widgets, Events, CVars) the crawler excerpt dropped; regenerate the register with tools/gen_patch_wikitext_register.py."
+  }
+}

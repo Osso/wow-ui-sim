@@ -1,0 +1,6 @@
+Patch 9.0.5 API changes
+
+== Summary ==
+* TOC: 90005
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+

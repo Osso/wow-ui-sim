@@ -1,0 +1,298 @@
+{{apichanges|11.2.5|prev=11.2.0|next=11.2.7}}
+
+==Summary==
+* Many item socketing APIs have been relocated to the [[:Category:API_systems/ItemSocketInfo|C_ItemSocketInfo]] namespace.
+
+==Resources==
+* TOC: <code>110205</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24229033/legion-remix-content-update-notes#item4 Legion Remix Content Update Notes]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/11.2.0..11.2.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/11.2.0...11.2.5 BlizzardInterfaceResources]
+* Deprecated APIs:
+** [https://github.com/Gethe/wow-ui-source/blob/11.2.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_2_5.lua Deprecated_11_2_5.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/11.2.5/Interface/AddOns/Blizzard_DeprecatedItemSocketInfo/Deprecated_ItemSocketInfo.lua Deprecated_ItemSocketInfo.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/11.2.5/Interface/AddOns/Blizzard_DeprecatedPetInfo/Deprecated_PetInfo.lua Deprecated_PetInfo.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/11.2.5/Interface/AddOns/Blizzard_DeprecatedWorldElapsedTimerTypes/Deprecated_WorldElapsedTimerTypes.lua Deprecated_WorldElapsedTimerTypes.lua]
+
+==Consolidated changes==
+: <font color="pink">11.2.0 (62438)</font> &rarr; <font color="lightgreen">11.2.5 (63796)</font> Oct 10 2025
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(88)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(16)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AddOns.GetAddOnName}}
+: {{api|t=a|C_AddOns.GetAddOnNotes}}
+: {{api|t=a|C_AddOns.GetAddOnSecurity}}
+: {{api|t=a|C_AddOns.GetAddOnTitle}}
+: {{api|t=a|C_BattleNet.BNCheckBattleTagInviteToRecentAlly}}
+: {{api|t=a|C_CatalogShop.CloseCatalogShopInteraction}}
+: {{api|t=a|C_CatalogShop.GetAvailableCategoryIDs}}
+: {{api|t=a|C_CatalogShop.GetAvailableTransmogRaceInfos}}
+: {{api|t=a|C_CatalogShop.GetCatalogShopProductDisplayInfo}}
+: {{api|t=a|C_CatalogShop.GetCategoryInfo}}
+: {{api|t=a|C_CatalogShop.GetCategorySectionInfo}}
+: {{api|t=a|C_CatalogShop.GetFailureInfo}}
+: {{api|t=a|C_CatalogShop.GetProductAvailabilityTimeRemainingSecs}}
+: {{api|t=a|C_CatalogShop.GetProductIDsForBundle}}
+: {{api|t=a|C_CatalogShop.GetProductIDsForCategorySection}}
+: {{api|t=a|C_CatalogShop.GetProductInfo}}
+: {{api|t=a|C_CatalogShop.GetProductSortOrder}}
+: {{api|t=a|C_CatalogShop.GetSectionIDsForCategory}}
+: {{api|t=a|C_CatalogShop.GetSpellVisualInfoForMount}}
+: {{api|t=a|C_CatalogShop.IsShop2Enabled}}
+: {{api|t=a|C_CatalogShop.OnLegalDisclaimerClicked}}
+: {{api|t=a|C_CatalogShop.OpenCatalogShopInteraction}}
+: {{api|t=a|C_CatalogShop.ProductDisplayedTelemetry}}
+: {{api|t=a|C_CatalogShop.ProductSelectedTelemetry}}
+: {{api|t=a|C_CatalogShop.PurchaseProduct}}
+: {{api|t=a|C_CooldownViewer.GetLayoutData}}
+: {{api|t=a|C_CooldownViewer.SetLayoutData}}
+: {{api|t=a|C_ExternalEventURL.HasURL}}
+: {{api|t=a|C_ExternalEventURL.IsNew}}
+: {{api|t=a|C_ExternalEventURL.LaunchURL}}
+: {{api|t=a|C_Item.IsRelicItem}}
+: {{api|t=a|C_ItemSocketInfo.AcceptSockets}}
+: {{api|t=a|C_ItemSocketInfo.ClickSocketButton}}
+: {{api|t=a|C_ItemSocketInfo.CloseSocketInfo}}
+: {{api|t=a|C_ItemSocketInfo.GetCurrUIType}}
+: {{api|t=a|C_ItemSocketInfo.GetExistingSocketInfo}}
+: {{api|t=a|C_ItemSocketInfo.GetExistingSocketLink}}
+: {{api|t=a|C_ItemSocketInfo.GetNewSocketInfo}}
+: {{api|t=a|C_ItemSocketInfo.GetNewSocketLink}}
+: {{api|t=a|C_ItemSocketInfo.GetNumSockets}}
+: {{api|t=a|C_ItemSocketInfo.GetSocketItemBoundTradeable}}
+: {{api|t=a|C_ItemSocketInfo.GetSocketItemInfo}}
+: {{api|t=a|C_ItemSocketInfo.GetSocketItemRefundable}}
+: {{api|t=a|C_ItemSocketInfo.GetSocketTypes}}
+: {{api|t=a|C_ItemSocketInfo.HasBoundGemProposed}}
+: {{api|t=a|C_ItemSocketInfo.IsArtifactRelicItem}}
+: {{api|t=a|C_LFGList.ReportGroupAsAdvertisement}}
+: {{api|t=a|C_PartyInfo.GetInstanceAbandonVoteCooldownTime}}
+: {{api|t=a|C_PetInfo.GetPetTalentTree}}
+: {{api|t=a|C_PetInfo.PetAssistMode}}
+: {{api|t=a|C_PlayerInfo.IsPlayerInTimerunningHeroicWorldTier}}
+: {{api|t=a|C_RaidLocks.IsRaidLockExtendFeatureEnabled}}
+: {{api|t=a|C_RecentAllies.CanSetRecentAllyNote}}
+: {{api|t=a|C_RecentAllies.GetRecentAllies}}
+: {{api|t=a|C_RecentAllies.GetRecentAllyByFullName}}
+: {{api|t=a|C_RecentAllies.GetRecentAllyByGUID}}
+: {{api|t=a|C_RecentAllies.IsRecentAllyByFullName}}
+: {{api|t=a|C_RecentAllies.IsRecentAllyByGUID}}
+: {{api|t=a|C_RecentAllies.IsRecentAllyDataReady}}
+: {{api|t=a|C_RecentAllies.IsRecentAllyPinned}}
+: {{api|t=a|C_RecentAllies.IsSystemEnabled}}
+: {{api|t=a|C_RecentAllies.IsSystemSupported}}
+: {{api|t=a|C_RecentAllies.SetRecentAllyNote}}
+: {{api|t=a|C_RecentAllies.SetRecentAllyPinned}}
+: {{api|t=a|C_RecentAllies.TryRequestRecentAlliesData}}
+: {{api|t=a|C_RemixArtifactUI.ClearRemixArtifactItem}}
+: {{api|t=a|C_RemixArtifactUI.GetAppearanceInfoByID}}
+: {{api|t=a|C_RemixArtifactUI.GetArtifactArtInfo}}
+: {{api|t=a|C_RemixArtifactUI.GetArtifactItemInfo}}
+: {{api|t=a|C_RemixArtifactUI.GetCurrArtifactItemID}}
+: {{api|t=a|C_RemixArtifactUI.GetCurrItemSpecIndex}}
+: {{api|t=a|C_RemixArtifactUI.GetCurrTraitTreeID}}
+: {{api|t=a|C_RemixArtifactUI.ItemInSlotIsRemixArtifact}}
+: {{api|t=a|C_Texture.SetURLTexture}}
+: {{api|t=a|C_TimerunningUI.GetActiveTimerunningSeasonID}}
+: {{api|t=a|C_Traits.GetConfigVariationID}}
+: {{api|t=a|C_Traits.GetIncreasedTraitData}}
+: {{api|t=a|C_Traits.PurchaseAllRanks}}
+: {{api|t=a|C_Traits.TryPurchaseAllRanks}}
+: {{api|t=a|C_Traits.TryPurchaseToNode}}
+: {{api|t=a|C_Traits.TryRefundToNode}}
+: {{api|t=a|C_UnitAuras.GetUnitAuraBySpellID}}
+: {{api|t=a|C_WowSurvey.OpenSurvey}}
+: {{api|t=a|C_WowSurvey.TriggerSurveyServe}}
+: {{api|t=a|GetAllowRecentAlliesSeeLocation}}
+: {{api|t=a|PlayerIsTimerunning}}
+: {{api|t=a|SetAllowRecentAlliesSeeLocation}}
+: {{api|t=a|table.count}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AcceptSockets}}
+: {{api|t=a|ClickSocketButton}}
+: {{api|t=a|CloseSocketInfo}}
+: {{api|t=a|GetExistingSocketInfo}}
+: {{api|t=a|GetExistingSocketLink}}
+: {{api|t=a|GetNewSocketInfo}}
+: {{api|t=a|GetNewSocketLink}}
+: {{api|t=a|GetNumSockets}}
+: {{api|t=a|GetPetTalentTree}}
+: {{api|t=a|GetSocketItemBoundTradeable}}
+: {{api|t=a|GetSocketItemInfo}}
+: {{api|t=a|GetSocketItemRefundable}}
+: {{api|t=a|GetSocketTypes}}
+: {{api|t=a|HasBoundGemProposed}}
+: {{api|t=a|IsArtifactRelicItem}}
+: {{api|t=a|PetAssistMode}}
+</div>
+|}
+ {{api|t=a|C_AddOns.GetAddOnInfo}}
+   - ret 7: <font color="#ff6767">updateAvailable</font>
+ {{api|t=a|C_ClassTalents.ImportLoadout}}
+   + arg 4: <font color="#00b400">importString</font>
+ {{api|t=a|C_ClassTalents.ViewLoadout}}
+   + arg 2: <font color="#00b400">importString</font>
+ {{api|t=a|C_CooldownViewer.GetCooldownViewerCategorySet}}
+   + arg 2: <font color="#00b400">allowUnlearned</font>
+ {{api|t=a|C_MythicPlus.GetRunHistory}}
+   + arg 3: <font color="#00b400">currentSeasonOnly</font>
+ {{api|t=a|C_QuestInfoSystem.GetQuestClassification}}
+   + arg 2: <font color="#00b400">questInfoID</font>
+ {{api|t=a|table.create}}
+   # arg 2: <font color="#ecbc2a">nodeSizeHint</font>, Nilable: true -> false
+   # ret 1: <font color="#ecbc2a">table</font>, Type: LuaValueVariant -> LuaValueReference
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(6)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|ScriptRegion:SetPointsOffset}}
+: {{api|t=w|ModelScene:GetAllowOverlappedModels}}
+: {{api|t=w|ModelScene:SetAllowOverlappedModels}}
+: {{api|t=w|ModelSceneActor:DetachFromMount}}
+: {{api|t=w|Cooldown:GetMinimumCountdownDuration}}
+: {{api|t=w|Cooldown:SetMinimumCountdownDuration}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=w|ModelSceneActorBase:SetPlayerModelFromGlues}}
+   + arg 6: <font color="#00b400">customRaceID</font>
+ {{api|t=w|ModelSceneActorBase:SetModelByUnit}}
+   + arg 7: <font color="#00b400">customRaceID</font>
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(25)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CATALOG_SHOP_ADD_PENDING_PRODUCT}}
+: {{api|t=e|CATALOG_SHOP_DATA_REFRESH}}
+: {{api|t=e|CATALOG_SHOP_DISABLED}}
+: {{api|t=e|CATALOG_SHOP_FETCH_FAILURE}}
+: {{api|t=e|CATALOG_SHOP_FETCH_SUCCESS}}
+: {{api|t=e|CATALOG_SHOP_OPEN_SIMPLE_CHECKOUT}}
+: {{api|t=e|CATALOG_SHOP_PMT_IMAGE_DOWNLOADED}}
+: {{api|t=e|CATALOG_SHOP_PURCHASE_SUCCESS}}
+: {{api|t=e|CATALOG_SHOP_REBUILD_SCROLL_BOX}}
+: {{api|t=e|CATALOG_SHOP_REMOVE_PENDING_PRODUCT}}
+: {{api|t=e|CATALOG_SHOP_RESULT_ERROR}}
+: {{api|t=e|CATALOG_SHOP_SPECIFIC_PRODUCT_REFRESH}}
+: {{api|t=e|COOLDOWN_VIEWER_DATA_LOADED}}
+: {{api|t=e|LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED}}
+: {{api|t=e|LFG_COOLDOWNS_UPDATED}}
+: {{api|t=e|LFG_LIST_UPDATE_SEARCH_RESULTS}}
+: {{api|t=e|RECENT_ALLIES_CACHE_UPDATE}}
+: {{api|t=e|RECENT_ALLIES_DATA_READY}}
+: {{api|t=e|RECENT_ALLIES_SYSTEM_STATUS_UPDATED}}
+: {{api|t=e|RECENT_ALLY_DATA_UPDATED}}
+: {{api|t=e|REMIX_ARTIFACT_ITEM_SPECS_LOADED}}
+: {{api|t=e|REMIX_ARTIFACT_UPDATE}}
+: {{api|t=e|SOCKET_INFO_UI_EVENT_REGISTRATION_UPDATE}}
+: {{api|t=e|SURVEY_DELIVERED}}
+: {{api|t=e|TRY_PURCHASE_TO_NODE_PARTIAL_SUCCESS}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(13)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(6)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=ClientSettings_AFTERMATH}}
+: {{apitooltip|type=cvar|name=ClientSettings_COPY_QUEUE}}
+: {{apitooltip|type=cvar|name=closedRemixArtifactTutorialFrames|default=0|scope=Character|cat=4|desc=Tutorial bitfield for which Remix Artifacts have been shown so far}}
+: {{apitooltip|type=cvar|name=cooldownViewerShowUnlearned|default=1|scope=Account|cat=4|desc=In the cooldown viewer settings UI, determines whether or not to show unlearned cooldowns}}
+: {{apitooltip|type=cvar|name=GxCompatCopyQueue|default=1|desc=Allows GPU upload work to run on a different GPU work queue}}
+: {{apitooltip|type=cvar|name=hardcoreDeathAlertType|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=hardcoreDeathChatType|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=lastLaunchedExternalEventURL|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=LowLatencyMinInterval|default=0|cat=1|desc=Min frame time (in microseconds) for Low Latency systems. Pass -1 to use monitor's refresh rate.}}
+: {{apitooltip|type=cvar|name=movePadInPressAndHoldMode|default=0|scope=Account|cat=4|desc=When true the MovePad buttons are activated on mouse down and deactivated on mouse up}}
+: {{apitooltip|type=cvar|name=movePadLocked|default=1|scope=Account|cat=4|desc=When false the MovePad can be moved by the player}}
+: {{apitooltip|type=cvar|name=optOutIngameSurveys|default=0|scope=Account|cat=4|desc=Whether we are opted out of receiving surveys.}}
+: {{apitooltip|type=cvar|name=RenderFormat|default=0|cat=1|desc=0 = BGRA8Unorm, 1 = A2BGR10Unorm, 2 = RGBA16F, 3 = RGBA32F}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=advJournalLastOpened|default=0|scope=Account|cat=4|desc=Last time the Adventure Journal opened}}
+: {{apitooltip|type=cvar|name=enableTwitter|default=0|scope=Account|cat=4|desc=Whether Twitter integration is enabled}}
+: {{apitooltip|type=cvar|name=hideAdventureJournalAlerts|default=0|scope=Account|cat=4|desc=Hide alerts shown on the Adventure Journal Microbutton}}
+: {{apitooltip|type=cvar|name=twitterGetConfigTime|default=0|cat=4|desc=Last time that we got Twitter configuration data successfully}}
+: {{apitooltip|type=cvar|name=twitterShortUrlLengthHttps|default=23|cat=4|desc=Number of characters that https URLS get shortened to}}
+: {{apitooltip|type=cvar|name=twitterShortUrlLength|default=23|cat=4|desc=Number of characters that non-https URLS get shortened to}}
+</div>
+|}
+
+===Enums===
+ Enum.AccountData
+   + <font color="#00b400">CooldownManager</font>
+   + <font color="#00b400">CooldownManager2</font>
+   + <font color="#00b400">Shop2PendingOrders</font>
+ Enum.AccountTransType
+   + <font color="#00b400">EventRecords</font>
+ Enum.BonusStatIndex
+   # <font color="#ff6767">SpiritUnused</font> -> <font color="#00b400">Spirit</font>
+ Enum.CooldownSetSpellFlags
+   # <font color="#ff6767">PlaceHolder1</font> -> <font color="#00b400">HideByDefault</font>
+ Enum.ItemCollectionType
+   + <font color="#00b400">ItemCollectionRoom</font>
+   + <font color="#00b400">ItemCollectionExteriorFixture</font>
+   + <font color="#00b400">ItemCollectionRoomThemes</font>
+   + <font color="#00b400">ItemCollectionRoomMaterials</font>
+ Enum.ItemConsumableSubclass
+   + <font color="#00b400">Relic</font>
+ Enum.MinimapTrackingFilter
+   # <font color="#ff6767">QuestPoIs</font> -> <font color="#00b400">QuestPOIs</font>
+ Enum.PerksVendorCategoryType
+   # <font color="#ff6767">Refund</font> -> <font color="#00b400">UnusedPerksVendorCategoryRefundUnused</font>
+ Enum.PhaseReason
+   + <font color="#00b400">TimerunningHwt</font>
+ Enum.QuestTagType
+   + <font color="#00b400">Placeholder_1</font>
+ Enum.ReportType
+   + <font color="#00b400">RecentAlly</font>
+ Enum.TraitCurrencyType
+   + <font color="#00b400">TraitSourcedPlayerDataElement</font>
+ Enum.TraitNodeEntryType
+   + <font color="#00b400">SpendInfinite</font>
+ Enum.TraitNodeFlag
+   + <font color="#00b400">ActiveAtFirstRank</font>
+   + <font color="#00b400">ShowExpandedSelection</font>
+   + <font color="#00b400">HideMaxRank</font>
+ Enum.TraitSystemFlag
+   + <font color="#00b400">AllowEditInChallengeMode</font>
+ Enum.UIModelSceneFlags
+   + <font color="#00b400">NoCameraSpin</font>
+
+===Structures===
+ AddOnInfo
+   - <font color="#ff6767">updateAvailable</font>
+ CooldownViewerCooldown
+   + <font color="#00b400">overrideTooltipSpellID</font>
+   + <font color="#00b400">isKnown</font>
+ GossipQuestUIInfo
+   + <font color="#00b400">questInfoID</font>
+ MythicPlusDate
+   + <font color="#00b400">weekday</font>
+ MythicPlusRunInfo
+   + <font color="#00b400">durationSec</font>
+   + <font color="#00b400">completionDate</font>
+   + <font color="#00b400">season</font>
+ TraitNodeInfo
+   + <font color="#00b400">ranksIncreased</font>
+   + <font color="#00b400">entryIDToRanksIncreased</font>
+ TraitTreeInfo
+   + <font color="#00b400">rootNodeID</font>

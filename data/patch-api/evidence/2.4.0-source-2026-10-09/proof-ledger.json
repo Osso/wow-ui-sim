@@ -34,5 +34,17 @@
     "scope": "50 literal occurrences / 99 nonblank source lines; own generator default byte replay and original extraction error",
     "result": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.100s\n\nOK\n",
     "invalidated_by": null
+  },
+  {
+    "revision": "5f59bfb2fc96ea3b6aa79ecefe54c6ec268953e4",
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_4_replay.py"
+    ],
+    "exit": 1,
+    "scope": "standalone archived replay and serialized ledger/log/parser/source/seal tamper restoration",
+    "result": "FFF\n======================================================================\nFAIL: test_fresh_copy_without_git_target_or_current_sources (__main__.ReplayTests.test_fresh_copy_without_git_target_or_current_sources)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_replay.py\", line 29, in test_fresh_copy_without_git_target_or_current_sources\n    self.assertEqual(result.returncode, 0, result.stderr)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 2 != 0 : /usr/bin/python3: can't open file '/tmp/tmp6zmeym19/historical/validate.py': [Errno 2] No such file or directory\n\n\n======================================================================\nFAIL: test_omitted_literal_line_cannot_become_closure (__main__.ReplayTests.test_omitted_literal_line_cannot_become_closure)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_replay.py\", line 64, in test_omitted_literal_line_cannot_become_closure\n    self.assertTrue(path.exists(), 'missing serialized original ledger')\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : missing serialized original ledger\n\n======================================================================\nFAIL: test_serialized_tamper_rejects_then_restores (__main__.ReplayTests.test_serialized_tamper_rejects_then_restores)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p240-source/tools/test_patch_2_4_replay.py\", line 41, in test_serialized_tamper_rejects_then_restores\n    self.assertEqual(clean.returncode, 0, clean.stderr)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 2 != 0 : /usr/bin/python3: can't open file '/tmp/tmpoyf698cl/historical/validate.py': [Errno 2] No such file or directory\n\n\n----------------------------------------------------------------------\nRan 3 tests in 0.013s\n\nFAILED (failures=3)\n",
+    "invalidated_by": null
   }
 ]

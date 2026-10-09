@@ -1,0 +1,408 @@
+{{apichanges|10.2.6|prev=10.2.5|next=10.2.7}}
+
+==Summary==
+
+* Many global functions have been moved to various C_* namespaces. Refer to [[#Deprecated_API|Deprecated API]].
+
+==Resources==
+* TOC: <code>100206</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.2.5..10.2.6 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.2.5..10.2.6 BlizzardInterfaceResources]
+* Official patch notes: ''None'' <small>([https://worldofwarcraft.blizzard.com/en-us/news/24057476/dragonflight-plunderstorm-content-update-notes-now-live Dragonflight: Plunderstorm Content Update Notes])</small>
+
+==Diffs==
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|+ 10.2.5 (52902) &rarr; 10.2.6 (53840) Mar 18 2024
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(122)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(81)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AddOns.GetScriptsDisallowedForBeta}}
+: {{api|t=a|C_Commentator.ZoomIn_Position}}
+: {{api|t=a|C_Commentator.ZoomOut_Position}}
+: {{api|t=a|C_CurrencyInfo.GetCoinIcon}}
+: {{api|t=a|C_CurrencyInfo.GetCoinTextureString}}
+: {{api|t=a|C_CurrencyInfo.GetCoinText}}
+: {{api|t=a|C_Debug.FrameXMLDebug}}
+: {{api|t=a|C_GameEnvironmentManager.GetCurrentEventRealmQueues}}
+: {{api|t=a|C_GameEnvironmentManager.GetCurrentGameEnvironment}}
+: {{api|t=a|C_GameEnvironmentManager.RequestGameEnvironment}}
+: {{api|t=a|C_GameModeManager.GetCurrentGameMode}}
+: {{api|t=a|C_GameModeManager.GetFeatureSetting}}
+: {{api|t=a|C_GameModeManager.IsFeatureEnabled}}
+: {{api|t=a|C_GuildInfo.Demote}}
+: {{api|t=a|C_GuildInfo.Disband}}
+: {{api|t=a|C_GuildInfo.Invite}}
+: {{api|t=a|C_GuildInfo.Leave}}
+: {{api|t=a|C_GuildInfo.Promote}}
+: {{api|t=a|C_GuildInfo.SetLeader}}
+: {{api|t=a|C_GuildInfo.SetMOTD}}
+: {{api|t=a|C_GuildInfo.Uninvite}}
+: {{api|t=a|C_Item.ActionBindsItem}}
+: {{api|t=a|C_Item.BindEnchant}}
+: {{api|t=a|C_Item.ConfirmBindOnUse}}
+: {{api|t=a|C_Item.ConfirmNoRefundOnUse}}
+: {{api|t=a|C_Item.ConfirmOnUse}}
+: {{api|t=a|C_Item.DoesItemContainSpec}}
+: {{api|t=a|C_Item.DropItemOnUnit}}
+: {{api|t=a|C_Item.EndBoundTradeable}}
+: {{api|t=a|C_Item.EndRefund}}
+: {{api|t=a|C_Item.EquipItemByName}}
+: {{api|t=a|C_Item.GetDetailedItemLevelInfo}}
+: {{api|t=a|C_Item.GetFirstTriggeredSpellForItem}}
+: {{api|t=a|C_Item.GetItemChildInfo}}
+: {{api|t=a|C_Item.GetItemClassInfo}}
+: {{api|t=a|C_Item.GetItemCooldown}}
+: {{api|t=a|C_Item.GetItemCount}}
+: {{api|t=a|C_Item.GetItemCreationContext}}
+: {{api|t=a|C_Item.GetItemFamily}}
+: {{api|t=a|C_Item.GetItemGem}}
+: {{api|t=a|C_Item.GetItemInfoInstant}}
+: {{api|t=a|C_Item.GetItemInfo}}
+: {{api|t=a|C_Item.GetItemInventorySlotInfo}}
+: {{api|t=a|C_Item.GetItemQualityColor}}
+: {{api|t=a|C_Item.GetItemSetInfo}}
+: {{api|t=a|C_Item.GetItemSpecInfo}}
+: {{api|t=a|C_Item.GetItemSpell}}
+: {{api|t=a|C_Item.GetItemSubClassInfo}}
+: {{api|t=a|C_Item.GetItemUniqueness}}
+: {{api|t=a|C_Item.IsArtifactPowerItem}}
+: {{api|t=a|C_Item.IsConsumableItem}}
+: {{api|t=a|C_Item.IsCorruptedItem}}
+: {{api|t=a|C_Item.IsCosmeticItem}}
+: {{api|t=a|C_Item.IsCurrentItem}}
+: {{api|t=a|C_Item.IsEquippableItem}}
+: {{api|t=a|C_Item.IsEquippedItemType}}
+: {{api|t=a|C_Item.IsEquippedItem}}
+: {{api|t=a|C_Item.IsHarmfulItem}}
+: {{api|t=a|C_Item.IsHelpfulItem}}
+: {{api|t=a|C_Item.IsItemInRange}}
+: {{api|t=a|C_Item.IsUsableItem}}
+: {{api|t=a|C_Item.ItemHasRange}}
+: {{api|t=a|C_Item.PickupItem}}
+: {{api|t=a|C_Item.ReplaceEnchant}}
+: {{api|t=a|C_Item.ReplaceTradeEnchant}}
+: {{api|t=a|C_Item.ReplaceTradeskillEnchant}}
+: {{api|t=a|C_Item.UseItemByName}}
+: {{api|t=a|C_Navigation.GetNearestPartyMemberToken}}
+: {{api|t=a|C_PlayerInfo.IsSelfFoundActive}}
+: {{api|t=a|C_PvP.GetZonePVPInfo}}
+: {{api|t=a|C_PvP.IsSubZonePVPPOI}}
+: {{api|t=a|C_PvP.SetPVP}}
+: {{api|t=a|C_PvP.TogglePVP}}
+: {{api|t=a|C_RecruitAFriend.CanSummonFriend}}
+: {{api|t=a|C_RecruitAFriend.GetSummonFriendCooldown}}
+: {{api|t=a|C_RecruitAFriend.IsRecruitAFriendLinked}}
+: {{api|t=a|C_RecruitAFriend.SummonFriend}}
+: {{api|t=a|C_SeasonInfo.GetCurrentDisplaySeasonExpansion}}
+: {{api|t=a|C_SeasonInfo.GetCurrentDisplaySeasonID}}
+: {{api|t=a|C_Sound.PlayVocalErrorSound}}
+: {{api|t=a|C_SpectatingUI.GetSpectateTargetInfo}}
+: {{api|t=a|C_SpectatingUI.GetSpectatingPlayerSpellItemQuality}}
+: {{api|t=a|C_SpectatingUI.LeaveSpectateMode}}
+: {{api|t=a|C_SpectatingUI.SpectateChange}}
+: {{api|t=a|C_Spell.GetMawPowerLinkBySpellID}}
+: {{api|t=a|C_Spell.GetSchoolString}}
+: {{api|t=a|C_Spell.GetSpellQueueWindow}}
+: {{api|t=a|C_Spell.TargetSpellReplacesBonusTree}}
+: {{api|t=a|C_TaskQuest.GetQuestIconUIWidgetSet}}
+: {{api|t=a|C_TaskQuest.GetQuestTooltipUIWidgetSet}}
+: {{api|t=a|C_UIWidgetManager.GetMapPinAnimationWidgetVisualizationInfo}}
+: {{api|t=a|C_WorldLootObject.GetCurrentWorldLootObjectSwapInventoryType}}
+: {{api|t=a|C_WorldLootObject.GetWorldLootObjectInfo}}
+: {{api|t=a|C_WorldLootObject.IsWorldLootObjectInRange}}
+: {{api|t=a|C_WorldLootObject.IsWorldLootObject}}
+: {{api|t=a|C_WorldLootObject.OnWorldLootObjectClick}}
+: {{api|t=a|C_WowLabsDataManager.PushCircleInfoToLua}}
+: {{api|t=a|C_WoWLabsMatchmaking.AcceptPartyInvite}}
+: {{api|t=a|C_WoWLabsMatchmaking.CanEnterMatchmaking}}
+: {{api|t=a|C_WoWLabsMatchmaking.DeclinePartyInvite}}
+: {{api|t=a|C_WoWLabsMatchmaking.GetCurrentParty}}
+: {{api|t=a|C_WoWLabsMatchmaking.GetInQueueTimeStart}}
+: {{api|t=a|C_WoWLabsMatchmaking.GetNumPartyInvites}}
+: {{api|t=a|C_WoWLabsMatchmaking.GetPartyInviteByIndex}}
+: {{api|t=a|C_WoWLabsMatchmaking.GetPartyPlaylistEntry}}
+: {{api|t=a|C_WoWLabsMatchmaking.GetPartySize}}
+: {{api|t=a|C_WoWLabsMatchmaking.IsAloneInWoWLabsParty}}
+: {{api|t=a|C_WoWLabsMatchmaking.IsFindingMatch}}
+: {{api|t=a|C_WoWLabsMatchmaking.IsPartyFull}}
+: {{api|t=a|C_WoWLabsMatchmaking.IsPartyLeader}}
+: {{api|t=a|C_WoWLabsMatchmaking.IsPlayerReady}}
+: {{api|t=a|C_WoWLabsMatchmaking.IsPlayer}}
+: {{api|t=a|C_WoWLabsMatchmaking.IsWowLabsMatchmakingMember}}
+: {{api|t=a|C_WoWLabsMatchmaking.LeaveParty}}
+: {{api|t=a|C_WoWLabsMatchmaking.RemovePlayerFromParty}}
+: {{api|t=a|C_WoWLabsMatchmaking.SendPartyInvite}}
+: {{api|t=a|C_WoWLabsMatchmaking.SetPartyPlaylistEntry}}
+: {{api|t=a|C_WoWLabsMatchmaking.SetPlayerReady}}
+: {{api|t=a|CheckTalentMasterDist}}
+: {{api|t=a|ClassicExpansionAtLeast}}
+: {{api|t=a|GetCameraFOVDefaults}}
+: {{api|t=a|GetClassicExpansionLevel}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|ActionBindsItem}}
+: {{api|t=a|BindEnchant}}
+: {{api|t=a|C_CameraDefaults.GetCameraFOVDefaults}}
+: {{api|t=a|C_TaskQuest.GetUIWidgetSetIDFromQuestID}}
+: {{api|t=a|CanSummonFriend}}
+: {{api|t=a|ConfirmBindOnUse}}
+: {{api|t=a|ConfirmNoRefundOnUse}}
+: {{api|t=a|ConfirmOnUse}}
+: {{api|t=a|DoesItemContainSpec}}
+: {{api|t=a|DropItemOnUnit}}
+: {{api|t=a|DumpMovementCapture}}
+: {{api|t=a|EndBoundTradeable}}
+: {{api|t=a|EndRefund}}
+: {{api|t=a|EquipItemByName}}
+: {{api|t=a|FrameXML_Debug}}
+: {{api|t=a|GetCoinIcon}}
+: {{api|t=a|GetCoinTextureString}}
+: {{api|t=a|GetCoinText}}
+: {{api|t=a|GetDetailedItemLevelInfo}}
+: {{api|t=a|GetItemChildInfo}}
+: {{api|t=a|GetItemClassInfo}}
+: {{api|t=a|GetItemCooldown}}
+: {{api|t=a|GetItemCount}}
+: {{api|t=a|GetItemCreationContext}}
+: {{api|t=a|GetItemFamily}}
+: {{api|t=a|GetItemGem}}
+: {{api|t=a|GetItemIcon}}
+: {{api|t=a|GetItemInfoInstant}}
+: {{api|t=a|GetItemInfo}}
+: {{api|t=a|GetItemInventorySlotInfo}}
+: {{api|t=a|GetItemQualityColor}}
+: {{api|t=a|GetItemSetInfo}}
+: {{api|t=a|GetItemSpecInfo}}
+: {{api|t=a|GetItemSpell}}
+: {{api|t=a|GetItemSubClassInfo}}
+: {{api|t=a|GetItemUniqueness}}
+: {{api|t=a|GetMawPowerLinkBySpellID}}
+: {{api|t=a|GetMaxSpellStartRecoveryOffset}}
+: {{api|t=a|GetSchoolString}}
+: {{api|t=a|GetSpellQueueWindow}}
+: {{api|t=a|GetSummonFriendCooldown}}
+: {{api|t=a|GetZonePVPInfo}}
+: {{api|t=a|GuildDemote}}
+: {{api|t=a|GuildDisband}}
+: {{api|t=a|GuildInvite}}
+: {{api|t=a|GuildLeave}}
+: {{api|t=a|GuildPromote}}
+: {{api|t=a|GuildSetLeader}}
+: {{api|t=a|GuildSetMOTD}}
+: {{api|t=a|GuildUninvite}}
+: {{api|t=a|IsArtifactPowerItem}}
+: {{api|t=a|IsConsumableItem}}
+: {{api|t=a|IsCorruptedItem}}
+: {{api|t=a|IsCosmeticItem}}
+: {{api|t=a|IsCurrentItem}}
+: {{api|t=a|IsDesaturateSupported}}
+: {{api|t=a|IsEquippableItem}}
+: {{api|t=a|IsEquippedItemType}}
+: {{api|t=a|IsEquippedItem}}
+: {{api|t=a|IsHarmfulItem}}
+: {{api|t=a|IsHelpfulItem}}
+: {{api|t=a|IsItemInRange}}
+: {{api|t=a|IsRecruitAFriendLinked}}
+: {{api|t=a|IsSplashFramePrimaryFeatureUnlocked}}
+: {{api|t=a|IsSubZonePVPPOI}}
+: {{api|t=a|IsUsableItem}}
+: {{api|t=a|IsWorldLootObject}}
+: {{api|t=a|ItemHasRange}}
+: {{api|t=a|PickupItem}}
+: {{api|t=a|PlayVocalErrorSoundID}}
+: {{api|t=a|ReplaceEnchant}}
+: {{api|t=a|ReplaceTradeEnchant}}
+: {{api|t=a|ReplaceTradeskillEnchant}}
+: {{api|t=a|ScriptsDisallowedForBeta}}
+: {{api|t=a|SetPVP}}
+: {{api|t=a|SummonFriend}}
+: {{api|t=a|TargetSpellReplacesBonusTree}}
+: {{api|t=a|ToggleAnimKitDisplay}}
+: {{api|t=a|ToggleDebugAIDisplay}}
+: {{api|t=a|TogglePVP}}
+: {{api|t=a|UseItemByName}}
+</div>
+|}
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(1)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|GAME_ENVIRONMENT_SWITCHED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(13)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(3)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=gxMTDecals|default=1|cat=1|desc=Sort and Render decal passes in parallel}}
+: {{apitooltip|type=cvar|name=gxMTMisc|default=1|cat=1|desc=Render miscelleous passes in parallel}}
+: {{apitooltip|type=cvar|name=gxMTOutlines|default=1|cat=1|desc=Render outline passes in parallel}}
+: {{apitooltip|type=cvar|name=gxMTTriggerOnBeginDrawComplete|default=1|cat=1|desc=Use Begin Draw Complete Trigger Mechanism}}
+: {{apitooltip|type=cvar|name=GxSlowShaderWarnThreshold|default=30000|cat=1|desc=Max time (in milliseconds) the shader compile can take before warning via a popup message}}
+: {{apitooltip|type=cvar|name=last_matchmaking_party_size|default=0|cat=4|desc=0=Solo,1=Duo,2=Trio}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2593|default=0|scope=Account|cat=4|desc=Stores the Keg Leg's Crew renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=modelLightShaftsColor|default=0xFFFFFFFF}}
+: {{apitooltip|type=cvar|name=modelLightShaftsSpread|default=32.0}}
+: {{apitooltip|type=cvar|name=partyInvitesCollapsed_Glue|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=telemetryWowlabsPackage|default=Blizzard.Telemetry.Wow_Labs|desc=The secondary package we want to send telemetry to e.g. Wow_Wowlabs}}
+: {{apitooltip|type=cvar|name=telemetryWowPackage|default=Blizzard.Telemetry.Wow_Mainline|desc=The primary package we want to send telemetry to e.g. Wow_Mainline or Wow_Classic}}
+: ''{{apitooltip|type=command|name=testOutput|cat=2|desc=Tests that all output paths work.}}''
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=partyInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=profanityFilter|default=1|scope=Account|cat=4|desc=Whether to enable mature language filtering}}
+: {{apitooltip|type=cvar|name=telemetryTargetPackage|default=Blizzard.Telemetry.Wow_Mainline|desc=The Package we want to send telemetry to e.g. Wow_Mainline or Wow_Classic}}
+</div>
+|}
+
+===Enums===
+ Enum.AccountData
+   + <font color="#00b400">FrontendChatSettings</font>
+ Enum.PointsModifierSourceType
+   + <font color="#00b400">FirstTimeQuestCompletionRewards</font>
+ Enum.SuperTrackingType
+   + <font color="#00b400">PartyMember</font>
+ Enum.UIWidgetScale
+   + <font color="#00b400">OneHundredTen</font>
+   + <font color="#00b400">OneHundredTwenty</font>
+   + <font color="#00b400">OneHundredThirty</font>
+   + <font color="#00b400">OneHundredForty</font>
+   + <font color="#00b400">OneHundredFifty</font>
+   + <font color="#00b400">OneHundredSixty</font>
+   + <font color="#00b400">OneHundredSeventy</font>
+   + <font color="#00b400">OneHundredEighty</font> 
+   + <font color="#00b400">OneHundredNinety</font>
+   + <font color="#00b400">TwoHundred</font>
+ Enum.UIWidgetSetLayoutDirection
+   + <font color="#00b400">Overlap</font>
+ Enum.UIWidgetTextureAndTextSizeType
+   + <font color="#00b400">Medium2</font>
+ Enum.UIWidgetVisualizationType
+   # <font color="#ff6767">WorldLootObject</font> -> <font color="#00b400">MapPinAnimation</font>
+ Enum.WidgetEnabledState
+   + <font color="#00b400">BrightBlue</font>
+
+===Structures===
+ AreaPOIInfo
+   # <font color="#ff6767">addPaddingAboveWidgets</font> -> <font color="#00b400">addPaddingAboveTooltipWidgets</font>
+   # <font color="#ff6767">widgetSetID</font> -> <font color="#00b400">tooltipWidgetSet</font>
+   + <font color="#00b400">iconWidgetSet</font>
+ EncounterJournalItemInfo
+   + <font color="#00b400">displaySeasonID</font>
+ HorizontalCurrenciesWidgetVisualizationInfo
+   + <font color="#00b400">updateAnimType</font>
+ PartyPoseInfo
+   + <font color="#00b400">extraButtonText</font>
+ TextureAndTextVisualizationInfo
+   + <font color="#00b400">textSizeType</font>
+ UIWidgetCurrencyInfo
+   + <font color="#00b400">textFontType</font>
+   + <font color="#00b400">textSizeType</font>
+ VignetteInfo
+   # <font color="#ff6767">addPaddingAboveWidgets</font> -> <font color="#00b400">addPaddingAboveTooltipWidgets</font>
+   # <font color="#ff6767">widgetSetID</font> -> <font color="#00b400">tooltipWidgetSet</font>
+   + <font color="#00b400">iconWidgetSet</font>
+
+==Deprecated API==
+These are functions that were deprecated and will be removed in the future.
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.6/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_2_6.lua Deprecated_10_2_6.lua]</big>
+: {{api|FrameXML_Debug}} → {{api|C_Debug.FrameXMLDebug}}
+: {{api|GetMawPowerLinkBySpellID}} → {{api|C_Spell.GetMawPowerLinkBySpellID}}
+: {{api|C_AreaPoiInfo.GetAreaPOIInfo}}
+:: <code>.widgetSetID -> .tooltipWidgetSet</code>
+:: <code>.addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets</code>
+: {{api|C_VignetteInfo.GetVignetteInfo}}
+:: <code>.widgetSetID -> .tooltipWidgetSet</code>
+:: <code>.addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets</code>
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.6/Interface/AddOns/Blizzard_DeprecatedCurrencyScript/Deprecated_CurrencyScript.lua Deprecated_CurrencyScript.lua]</big>
+: {{api|GetCoinIcon}} → {{api|C_CurrencyInfo.GetCoinIcon}}
+: {{api|GetCoinText}} → {{api|C_CurrencyInfo.GetCoinText}}
+: {{api|GetCoinTextureString}} → {{api|C_CurrencyInfo.GetCoinTextureString}}
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.6/Interface/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua Deprecated_GuildScript.lua]</big>
+: {{api|GuildInvite}} → {{api|C_GuildInfo.Invite}}
+: {{api|GuildUninvite}} → {{api|C_GuildInfo.Uninvite}}
+: {{api|GuildPromote}} → {{api|C_GuildInfo.Promote}}
+: {{api|GuildDemote}} → {{api|C_GuildInfo.Demote}}
+: {{api|GuildSetLeader}} → {{api|C_GuildInfo.SetLeader}}
+: {{api|GuildSetMOTD}} → {{api|C_GuildInfo.SetMOTD}}
+: {{api|GuildLeave}} → {{api|C_GuildInfo.Leave}}
+: {{api|GuildDisband}} → {{api|C_GuildInfo.Disband}}
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.6/Interface/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua Deprecated_ItemScript.lua]</big>
+: {{api|GetItemQualityColor}} → {{api|C_Item.GetItemQualityColor}}
+: {{api|GetItemInfoInstant}} → {{api|C_Item.GetItemInfoInstant}}
+: {{api|GetItemSetInfo}} → {{api|C_Item.GetItemSetInfo}}
+: {{api|GetItemChildInfo}} → {{api|C_Item.GetItemChildInfo}}
+: {{api|DoesItemContainSpec}} → {{api|C_Item.DoesItemContainSpec}}
+: {{api|GetItemGem}} → {{api|C_Item.GetItemGem}}
+: {{api|GetItemCreationContext}} → {{api|C_Item.GetItemCreationContext}}
+: {{api|GetItemIcon}} → {{api|C_Item.GetItemIconByID}}
+: {{api|GetItemFamily}} → {{api|C_Item.GetItemFamily}}
+: {{api|GetItemSpell}} → {{api|C_Item.GetItemSpell}}
+: {{api|IsArtifactPowerItem}} → {{api|C_Item.IsArtifactPowerItem}}
+: {{api|IsCurrentItem}} → {{api|C_Item.IsCurrentItem}}
+: {{api|IsUsableItem}} → {{api|C_Item.IsUsableItem}}
+: {{api|IsHelpfulItem}} → {{api|C_Item.IsHelpfulItem}}
+: {{api|IsHarmfulItem}} → {{api|C_Item.IsHarmfulItem}}
+: {{api|IsConsumableItem}} → {{api|C_Item.IsConsumableItem}}
+: {{api|IsEquippableItem}} → {{api|C_Item.IsEquippableItem}}
+: {{api|IsEquippedItem}} → {{api|C_Item.IsEquippedItem}}
+: {{api|IsEquippedItemType}} → {{api|C_Item.IsEquippedItemType}}
+: {{api|ItemHasRange}} → {{api|C_Item.ItemHasRange}}
+: {{api|IsItemInRange}} → {{api|C_Item.IsItemInRange}}
+: {{api|GetItemClassInfo}} → {{api|C_Item.GetItemClassInfo}}
+: {{api|GetItemInventorySlotInfo}} → {{api|C_Item.GetItemInventorySlotInfo}}
+: {{api|BindEnchant}} → {{api|C_Item.BindEnchant}}
+: {{api|ActionBindsItem}} → {{api|C_Item.ActionBindsItem}}
+: {{api|ReplaceEnchant}} → {{api|C_Item.ReplaceEnchant}}
+: {{api|ReplaceTradeEnchant}} → {{api|C_Item.ReplaceTradeEnchant}}
+: {{api|ConfirmBindOnUse}} → {{api|C_Item.ConfirmBindOnUse}}
+: {{api|ConfirmOnUse}} → {{api|C_Item.ConfirmOnUse}}
+: {{api|ConfirmNoRefundOnUse}} → {{api|C_Item.ConfirmNoRefundOnUse}}
+: {{api|DropItemOnUnit}} → {{api|C_Item.DropItemOnUnit}}
+: {{api|EndBoundTradeable}} → {{api|C_Item.EndBoundTradeable}}
+: {{api|EndRefund}} → {{api|C_Item.EndRefund}}
+: {{api|GetItemInfo}} → {{api|C_Item.GetItemInfo}}
+: {{api|GetDetailedItemLevelInfo}} → {{api|C_Item.GetDetailedItemLevelInfo}}
+: {{api|GetItemSpecInfo}} → {{api|C_Item.GetItemSpecInfo}}
+: {{api|GetItemUniqueness}} → {{api|C_Item.GetItemUniqueness}}
+: {{api|GetItemCount}} → {{api|C_Item.GetItemCount}}
+: {{api|PickupItem}} → {{api|C_Item.PickupItem}}
+: {{api|GetItemSubClassInfo}} → {{api|C_Item.GetItemSubClassInfo}}
+: {{api|UseItemByName}} → {{api|C_Item.UseItemByName}}
+: {{api|EquipItemByName}} → {{api|C_Item.EquipItemByName}}
+: {{api|ReplaceTradeskillEnchant}} → {{api|C_Item.ReplaceTradeskillEnchant}}
+: {{api|GetItemCooldown}} → {{api|C_Item.GetItemCooldown}}
+: {{api|IsCorruptedItem}} → {{api|C_Item.IsCorruptedItem}}
+: {{api|IsCosmeticItem}} → {{api|C_Item.IsCosmeticItem}}
+: {{api|IsDressableItem}} → {{api|C_Item.IsDressableItem}}
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.6/Interface/AddOns/Blizzard_DeprecatedPvpScript/Deprecated_PvpScript.lua Deprecated_PvpScript.lua]</big>
+: {{api|IsSubZonePVPPOI}} → {{api|C_PvP.IsSubZonePVPPOI}}
+: {{api|GetZonePVPInfo}} → {{api|C_PvP.GetZonePVPInfo}}
+: {{api|TogglePVP}} → {{api|C_PvP.TogglePVP}}
+: {{api|SetPVP}} → {{api|C_PvP.SetPVP}}
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.6/Interface/AddOns/Blizzard_DeprecatedSoundScript/Deprecated_SoundScript.lua Deprecated_SoundScript.lua]</big>
+: {{api|PlayVocalErrorSoundID}} → {{api|C_Sound.PlayVocalErrorSound}}
+
+<big>[https://github.com/Gethe/wow-ui-source/blob/10.2.6/Interface/AddOns/Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua Deprecated_SpellScript.lua]</big>
+: {{api|TargetSpellReplacesBonusTree}} → {{api|C_Spell.TargetSpellReplacesBonusTree}}
+: {{api|GetMaxSpellStartRecoveryOffset}} → {{api|C_Spell.GetSpellQueueWindow}}
+: {{api|GetSpellQueueWindow}} → {{api|C_Spell.GetSpellQueueWindow}}
+: {{api|GetSchoolString}} → {{api|C_Spell.GetSchoolString}}

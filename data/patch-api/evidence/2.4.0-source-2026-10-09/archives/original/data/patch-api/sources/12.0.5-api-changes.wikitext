@@ -1,0 +1,952 @@
+{{apichanges|12.0.5|prev=12.0.1|next=12.0.7}}
+
+==Resources==
+* TOC: <code>120005</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24271855/1205-content-update-notes#item13 12.0.5 Content Update Notes]
+<div class="noexcerpt">
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/12.0.1..12.0.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/12.0.1..12.0.5 BlizzardInterfaceResources]
+</div>
+
+==Blue posts==
+===2026-03-12===
+[https://discord.com/channels/327414731654692866/1481702172319027331 {{apisummary.title|Midnight 12.0.5 PTR Changes Episode 1: The Secret Menace}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! With 12.0.5 PTR slated to start today, here is the list of addon API changes you can expect to see in next couple builds, followed by a discussion about some longer-term changes we are considering for the aura system.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|Coming in 12.0.5 PTR 1}}
+{{text|blizz|Numeric Formatting}}
+*We have added three new Lua object types for numeric formatting: {{api|t=sc|AbbreviatedNumberFormatter}}, {{api|t=sc|NumericRuleFormatter}}, and {{api|t=sc|SecondsFormatter}}. These types can be supplied with secret numbers through the Format functions on duration objects.
+*We're considering adjusting the various "display count" APIs (eg. {{api|C_Spell.GetSpellDisplayCount|GetSpellDisplayCount}}) to accept formatter objects, but this would be a breaking change (let us know your thoughts).
+
+{{text|blizz|Spell & Item Charge APIs}}
+*The following APIs will now return a zero-span duration object when the queried spell is at maximum charges: {{api|C_SpellBook.GetSpellBookItemChargeDuration|GetSpellBookItemChargeDuration}}, {{api|C_Spell.GetSpellChargeDuration|GetSpellChargeDuration}}, {{api|C_ActionBar.GetActionChargeDuration|GetActionChargeDuration}}.
+
+{{text|blizz|Duration Objects}}
+*{{api|t=sc|DurationObject|Duration}} objects that measure a zero-span are now considered fully elapsed.
+
+{{text|blizz|Auras}}
+*The <code>isHelpful</code>, <code>isHarmful</code>, <code>isRaid</code>, <code>isNameplateOnly</code>, and <code>isFromPlayerOrPlayerPet</code> booleans on aura data tables are no longer secret.
+
+{{text|blizz|Transmog}}
+*Added [https://www.townlong-yak.com/framexml/12.0.7/Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua#216 GetTransmogOutfitIndex] to the restricted environment. Values returned from this can be used with the new [[MACRO outfit|/outfit]] slash command.
+
+{{text|blizz|Lua Documentation}}
+*Added a new Predicates table to out Lua API documentation, which will provide a description of the restrictions on each API.
+
+{{text|blizz|Misc.}}
+*The {{api|Ambiguate}} function now accepts secrets from addons.
+*Added a {{api|t=w|Cooldown:SetCountdownMillisecondsThreshold(seconds)}} API. When a cooldown frame is rendering a time below this number of seconds, it will be displayed as a decimal value with one decimal place (e.g. "8.7").
+*String formatting APIs no longer honor field width modifiers for secret string values (e.g. the {{api.inline|"%.5s"}} format will no longer truncate a secret string).
+*The {{api|UnitSpellTargetName}} API now only returns names for player units.
+
+{{text|blizz|Bug fixes}}
+The {{api|C_EncounterEvents.GetEventSound}} API no longer errors when called.
+</details>
+<details open>
+{{apisummary.header|Coming in upcoming 12.0.5 PTRs}}
+{{text|blizz|Misc.}}
+*The {{api|UnitTokenFromGUID}} API (and various others) will no longer return arena, nameplate, boss, party, raid, or target-of-target unit tokens when unit identities are secret.
+*[[UnitToken#UnitTokenNamePlate|UnitTokenNamePlate]] APIs will no longer accept party, raid, or target-of-target unit tokens.
+*Addon execution throttles will no longer apply while the {{api|t=e|PLAYER_LOGOUT}} and {{api|t=e|ADDONS_UNLOADING}} events are being processed.
+</details>
+<details open>
+{{apisummary.header|Future Plans}}
+<blockquote {{apisummary.blizzquote}}>
+While we have a variety of plans for future patches (12.0.7 and beyond), including many more quality-of-life fixes for addon developers, we wanted to take a moment to talk about one area in particular that we are putting a lot of thought into: Auras (particularly of the Private variety).
+
+We created the Private Aura system back in 10.1 as a means to prevent addons from automating certain very specific fight mechanics. In some ways Private Auras can be viewed as the beginning of our experimentation with adjusting addon capabilities, and while they certainly had their issues, for the most part they served their purpose (albeit in a rather heavy-handed way). When we started developing the Secret Value system, we had hoped (planned even) to be able to essentially retire the Private Aura system and replace it with just secrets.
+
+Unfortunately, as Midnight Alpha & Beta progressed it became clear that relying on Secret Values alone was not going to be enough to prevent addon automation involving auras. And so, we ended up having to go in almost the exact opposite direction: we made MOST encounter debuffs private auras rather than just a select few. While this approach gave us the security we needed for Midnight Season 1, it also came with some significant downsides. Our own private aura displays don't currently have full parity with normal auras, and they aren’t supported in nameplates. On top of that they also require our encounter designers to be very diligent about flagging almost every encounter debuff as private, which is cumbersome and very easy to get wrong.
+ 
+All this is to say that we are not happy with the current state of auras as they pertain to addons, and we are planning to make some large changes to them. We don't have a hard target yet for when this rework will happen, but just to ease your minds a little it definitely will NOT be in 12.0.5 or 12.0.7. What shape this new aura system will take is also nowhere near decided yet so we won't have any specifics for a while yet, but the overarching goals can be summed up as:
+
+* Auras need to be more secure than they currently are (with less upkeep for designers).
+* Auras still need to be customizable and displayable by addons.
+* And then as a bonus goal we would like auras to be more performant for addons.
+
+We will be consulting with addon developers as we start to plan out work on this new system, so don't worry about this being dropped on you out of the blue. We just wanted to give you an idea of where our heads are at, so it doesn't come as a surprise later.
+
+Oh and just to make Meo happy, Jar Jar would like to say: ''Wesa will have mooie tings to share berry soon!''
+</blockquote>
+</details><br>
+
+===2026-03-25===
+[https://discord.com/channels/327414731654692866/1481702172319027331 {{apisummary.title|Midnight 12.0.5 PTR Changes Episode 2: Attack of the Secrets}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! Below you will find a list of changes we have made to addon restriction APIs in the last two 12.0.5 PTR builds, followed by the changes we plan to make in next week's PTR build. We begin with a few changes we will be hotfixing to live.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|Changes being Hotfixed to 12.0.1}}
+* The following APIs will no longer be able to be called by addons during combat: {{api|C_PartyInfo.PromoteToLeader|PromoteToLeader}}, {{api|C_PartyInfo.PromoteToAssistant|PromoteToAssistant}}, {{api|C_PartyInfo.DemoteAssistant|DemoteAssistant}}, {{api|C_PartyInfo.SetEveryoneIsAssistant|SetEveryoneIsAssistant}}, {{api|C_PartyInfo.DoReadyCheck|DoReadyCheck}}, {{api|C_PartyInfo.ConfirmReadyCheck|ConfirmReadyCheck}}, {{api|C_PartyInfo.ConvertToParty|ConvertToParty}}, {{api|C_PartyInfo.ConvertToRaid|ConvertToRaid}}, {{api|C_PartyInfo.ConfirmConvertToRaid|ConfirmConvertToRaid}}, {{api|C_PartyInfo.DoCountdown}}, {{api|C_PartyInfo.SetRestrictPings}}, {{api|C_PartyInfo.SetLootMethod}}.
+* Text lines in tooltips that contain secret text will no longer remain secret permanently.
+* Fixing a bug where some players randomly become unable to set raid markers until they restart their client.
+</details>
+<details open>
+{{apisummary.header|Changes in 12.0.5 PTR 2 and 3}}
+{{text|blizz|Nameplate HitRect APIs}}
+* Added an API to allow addons to override the offsets of nameplate hit-rects.
+
+{{text|blizz|UnitToken APIs}}
+* The {{api|UnitTokenFromGUID}} API (and various others) no longer return arena, nameplate, boss, party, raid, or target-of-target unit tokens when unit identities are secret.
+* [[UnitToken#UnitTokenNamePlate|UnitTokenNamePlate]] APIs no longer accept party, raid, or target-of-target unit tokens.
+
+{{text|blizz|UnitIsUnit API}}
+* {{api|UnitIsUnit}} now returns secrets if either unit in the comparison is {{api.inline|"targettarget"}} or {{api.inline|"focustarget"}}.
+
+{{text|blizz|Misc}}
+* Added new {{api|t=w|FontString:GetSmoothScaling|Get}}/{{api|t=w|FontString:SetSmoothScaling|SetSmoothScaling}} APIs to font string objects (XML attributes were added for this back in 12.0.0).
+* {{api|C_Navigation.GetNearestPartyMemberToken}} can no longer be called by addons.
+* Added improved error messaging for various security-related errors involving tables.
+* Addons can now use the {{api|table.freeze}}/{{api|table.isfrozen}} APIs to make their own tables read-only.
+* Addon execution throttles will no longer be applied while processing {{api|t=e|PLAYER_LOGOUT}} and {{api|t=e|ADDONS_UNLOADING}} events.
+
+{{text|blizz|Bug fixes}}
+* Using macro conditions with [[MACRO targetmarker|/tm]] commands (e.g. <code>/tm [condition] 1</code>) will no longer cause Lua errors.
+* Fixed an issue with the [https://www.townlong-yak.com/framexml/12.0.7/Blizzard_RestrictedAddOnEnvironment/RestrictedFrames.lua#360 IsUnderMouse]] API where it would incorrectly return false for parent frames that were actually under the mouse.
+</details>
+<details open>
+{{apisummary.header|Changes coming in 12.0.5 PTR 4}}
+{{text|blizz|UnitIsUnit API}}
+* The {{api|UnitIsUnit}} API is being adjusted to apply the following rules:
+** If either unit is one of the following, the comparison is permitted: "player", "pet", "vehicle", "mouseover", "target", "softenemy", "softfriend", "softinteract", "focus", "none", "npc", "questnpc"
+** If either unit is a party/raid token (or a pet of one) and the other is NOT a compound unit token ("boss1target"), nameplate token, or "targettarget"/"focustarget", the comparison is permitted.
+** All other comparisons are disallowed and return <code>nil</code>.
+
+{{text|blizz|Misc}}
+* We are adding 2 new APIs to C_TransmogOutfitInfo: {{api|C_TransmogOutfitInfo.GetOutfitInfoByName|GetOutfitInfoByName}} and {{api|C_TransmogOutfitInfo.GetOutfitInfoByPlayerFacingIndex|GetOutfitInfoByPlayerFacingIndex}}.
+* We are adding a new secure action ({{api.inline|"outfit"}}) for changing/clearing transmog outfits.
+* Permanent auras will be sorted after long duration auras in SecureAuraHeaderTemplate (short < long < permanent).
+* We are adding a new {{api|UnitHasPowerType}} API that returns a non-secret bool indicating if the unit uses a power type.
+* We are adding a new <code>ignoreGCD</code> parameter to APIs that construct and return duration objects for cooldowns.
+* We are adding numeric formatter support for Cooldown frame fontstrings.
+* We are removing the restrictions that we recently placed on the {{api|C_UnitAuras.AddPrivateAuraAnchor|AddPrivateAuraAnchor}}, {{api|C_UnitAuras.RemovePrivateAuraAnchor|RemovePrivateAuraAnchor}} and {{api|C_UnitAuras.SetPrivateWarningTextAnchor|SetPrivateWarningTextAnchor}} APIs.
+** Existing restrictions will remain on the {{api|C_UnitAuras.AddPrivateAuraAppliedSound|AddPrivateAuraAppliedSound}} and {{api|C_UnitAuras.RemovePrivateAuraAppliedSound|RemovePrivateAuraAppliedSound}} APIs.
+
+{{text|blizz|Bug fixes}}
+* ClassTalentHelper functions for changing specializations and loadouts will no longer taint the talent frame or player castbar.
+* Using the [[MACRO equipset|/equipset]] command with an unknown or invalid set name will no longer cause Lua errors.
+* Using macro conditions with [[MACRO outfit|/outfit]] command (e.g. <code>/outfit [@player,noexists] 1</code>) will no longer cause Lua errors.
+* The {{api|GetRaidRosterInfo}} API will no longer return nil for name if the name is not in the name cache yet. Instead, it will return "Unknown" during that period.
+<blockquote {{apisummary.blizzquote}}>
+Jar Jar says: Meesa wishin' Meo a mooey mooey Happy Birthday!!
+</blockquote>
+</details><br>
+
+===2026-03-31===
+[https://discord.com/channels/327414731654692866/1488643216222982267 {{apisummary.title|Midnight 12.0.5 PTR Changes Episode 3: Revenge of the Secrets}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! Below you will find a list of changes we have made to addon restriction APIs in the new 12.0.5 PTR build. We begin with a small change we will be hotfixing to live.
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|Changes being Hotfixed to 12.0.1}}
+* Fixing a bug that would cause tooltips to get marked secret incorrectly when textures were added to them.
+</details>
+<details open>
+{{apisummary.header|Changes in 12.0.5 PTR 4}}
+{{text|blizz|UnitIsUnit API}}
+* The {{api|UnitIsUnit}} API has been adjusted to apply the following rules:
+** If either unit is one of the following, the comparison is permitted: "player", "pet", "vehicle", "mouseover", "target", "softenemy", "softfriend", "softinteract", "focus", "none", "npc", "questnpc"
+** If either unit is a party/raid token (or a pet of one) and the other is NOT a compound unit token ("boss1target"), nameplate token, or "targettarget"/"focustarget", the comparison is permitted.
+All other comparisons are disallowed and return nil.
+
+{{text|blizz|Stat APIs}}
+* Most APIs that return player stats now return secrets if auras are secret. See the Lua documentation files for the full list of APIs affected.
+
+{{text|blizz|Auras}}
+* Aura instance ID values now re-randomize when the player enters an encounter/M+/PvP match.
+* Permanent auras are now sorted after long duration auras in [[SecureAuraHeaderTemplate]] (short < long < permanent).
+
+{{text|blizz|UnitName}}
+* The {{api|UnitName}} API no longer accepts secret unit tokens.
+
+{{text|blizz|Unit Power}}
+* Added a new {{api|UnitHasPowerType}} API that returns a non-secret bool indicating if the unit uses a power type.
+
+{{text|blizz|Cooldowns}}
+* Added a new <code>ignoreGCD</code> parameter to APIs that construct and return duration objects for cooldowns.
+* Added numeric formatter support for Cooldown frame fontstrings.
+
+{{text|blizz|Transmog}}
+* Added 2 new APIs to C_TransmogOutfitInfo: {{api|C_TransmogOutfitInfo.GetOutfitInfoByName|GetOutfitInfoByName}} and {{api|C_TransmogOutfitInfo.GetOutfitInfoByPlayerFacingIndex|GetOutfitInfoByPlayerFacingIndex}}.
+* Added a new secure action "outfit" for changing/clearing transmog outfits.
+
+{{text|blizz|Misc}}
+* Removed the restrictions that we recently placed on the {{api|C_UnitAuras.AddPrivateAuraAnchor|AddPrivateAuraAnchor}}, {{api|C_UnitAuras.RemovePrivateAuraAnchor|RemovePrivateAuraAnchor}}, {{api|C_UnitAuras.SetPrivateWarningTextAnchor|SetPrivateWarningTextAnchor}} and {{api|C_UnitAuras.RemovePrivateAuraAppliedSound|RemovePrivateAuraAppliedSound}} APIs. The {{api|C_UnitAuras.AddPrivateAuraAppliedSound|AddPrivateAuraAppliedSound}} API is still restricted, but this restriction is now only in place during encounters and during M+/PvP matches.
+* The recent restrictions to countdown, ready check, ping and loot method APIs have been loosened to only apply when in chat messaging lockdown rather than in all combat.
+* Added a new {{api|C_ActionBar.UsesActionText}} API and switched to using it inside {{tlygo|ActionBarActionButtonMixin:Update}}. This should fix some Lua errors that were getting thrown for addons in that code due to secrets.
+* Added questID to the {{api|t=e|QUEST_ACCEPT_CONFIRM|QuestAcceptConfirm}} event.
+* Added a secure delegate for {{tlygo|EditModeManagerFrameMixin:ClearSelectedSystem|ClearSelectedSystem}} in EditMode, so addons can call it without taint concerns while not in combat.
+* Add the following insecure templates for addon usage: {{tlygo|InsecureMouseMotionPropagatorTemplate}}, {{tlygo|InsecureMouseClicksPropagatorTemplate}}, {{tlygo|InsecureKeyboardInputPropagatorTemplate}} and {{tlygo|InsecureHyperlinkPropagatorTemplate}}.
+* NPC followers are now treated as player units by nameplates, allowing the {{api|t=c|nameplateUseClassColorForFriendlyPlayerUnitNames}} and {{api|t=c|nameplateShowOnlyNameForFriendlyPlayerUnits}} cvars to work for them.
+
+{{text|blizz|Bug fixes}}
+* ClassTalentHelper functions for changing specializations and loadouts no longer taint the talent frame or player castbar.
+* Using the [[MACRO equipset|/equipset]] command with an unknown or invalid set name no longer causes Lua errors.
+* Using macro conditions with [[MACRO outfit|/outfit]] commands (e.g. <code>/outfit [@player,noexists] 1</code>) no longer causes Lua errors.
+* The {{api|GetRaidRosterInfo}} API no longer returns nil for name if the name is not in the name cache yet. Instead, it will return "Unknown" during that period.
+* Fixed an issue where the {{api|IsInInstance}} API would not always return true when the player was in certain instances (mostly delves).
+* Fixed an issue where the {{api|t=e|UNIT_CONNECTION}} event was not getting sent correctly when a party member disconnected or connected.
+</details><br>
+
+===2026-04-10===
+[https://discord.com/channels/327414731654692866/1492239509264400486 {{apisummary.title|Midnight 12.0.5 Upcoming Restriction Changes}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! Below you will find a small list of changes to addon restriction APIs we will be making to 12.0.5 before it goes live. These changes will likely be in an upcoming 12.0.5 PTR build before they go live (this is not guaranteed though depending on build timing).
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|Changes being Hotfixed to 12.0.5 before it goes live}}
+* Instant-cast spells that are secret will no longer cause the {{api|t=e|UNIT_SPELLCAST_SUCCEEDED}} event to get sent for any units other than the player.
+* The {{api|t=w|ModelSceneActorBase:SetModelByUnit|ModelSceneActor:SetModelByUnit}} and {{api|t=w|PlayerModel:SetUnit|Model:SetUnit}} APIs will no longer accept unit tokens for units which have secret identity.
+** These will not error - instead, they'll return a nil value in-place of the existing <code>success</code> return.
+* Various chat channel APIs are no longer usable while chat lockdown is in effect, or from within macros.
+* Unit identity restrictions have been adjusted; identities are secret while on instanced maps for any unit that isn't the player, their pet/vehicle, or a raid/party member.
+** Previously, identity was restricted on instanced maps for attackable units.
+** Mind control effects on allies no longer impact identity secrecy.
+* Fixed a bug that caused taint logging to stop working after a reload UI.
+* Fixed a bug that caused taint logging to not correctly write messages for tainted reads from tables.
+* Fixed a bug that could cause some auras showing in the cooldown manager to have incorrect tooltips if they were active when an encounter begins.
+</details><br>
+
+===2026-04-17===
+[https://discord.com/channels/327414731654692866/1494427776822935796 {{apisummary.title|Midnight 12.0.5 and Classic PTR Update}}]
+<blockquote {{apisummary.blizzquote}}>
+Hello again from Blizzard! Below you will find a (very) small list of changes to addon restriction APIs we will be making to 12.0.5 before it goes live.
+
+But first, a quick update about what to expect in regard to addon security in the upcoming Classic 5.5.4 PTR (and all future Classic releases).
+
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+</blockquote>
+<details open>
+{{apisummary.header|Addon Security in Classic}}
+By and large, the addon security systems we put in place for Midnight will not be active in Classic. '''The secret value system is entirely disabled on Classic builds''', and any API that returns secrets on Mainline will return non-secrets in Classic.
+
+The new chat restrictions will also be inactive in Classic, and combat log events will work just like they do currently in Classic. Additional restrictions to various APIs added in Midnight (guild APIs, etc.) will also not be active in Classic. The existing pre-Midnight security systems (taint, restricted actions, etc.) will still be active of course. Brand new functionality and objects that were added in Midnight (duration objects, curves, etc. and their associated APIs) will be available in Classic.
+
+One thing to note here is that Lua API documentation files do currently still reference secret values despite them not actually applying in Classic. We are working on fixing that, as well as doing an overall pass to make sure everything is working as expected in Classic. If you notice specific APIs that appear to not be working as expected please pass those along to us in the feedback channel.
+</details>
+<details open>
+{{apisummary.header|Changes being Hotfixed to 12.0.5 before it goes live}}
+* Added a new API {{api|C_ScenarioInfo.GetUnitCriteriaProgressValues(unitToken)}} API which returns the M+ Enemy Forces value of the unit as an int (plain value), float (percent) and string (percent). Returns are secret when unit identity is secret.
+</details>
+
+==Consolidated changes==
+: <font color="pink">12.0.1 (66838)</font> &rarr; <font color="lightgreen">12.0.5 (67602)</font> May 14 2026
+
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(78)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(19)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ActionBar.UsesActionText}}
+: {{api|t=a|C_AutoComplete.GetAutoCompletePresenceID}}
+: {{api|t=a|C_AutoComplete.GetAutoCompleteRealms}}
+: {{api|t=a|C_AutoComplete.GetAutoCompleteResults}}
+: {{api|t=a|C_AutoComplete.IsRecognizedName}}
+: {{api|t=a|C_CatalogShop.IsProductIncludedInAnyBundle}}
+: {{api|t=a|C_ChatInfo.AreOutgoingAddonChatMessagesRestricted}}
+: {{api|t=a|C_ClassTalents.SwitchToLoadoutByIndex}}
+: {{api|t=a|C_ClassTalents.SwitchToLoadoutByName}}
+: {{api|t=a|C_ClassTalents.SwitchToSpecializationByIndex}}
+: {{api|t=a|C_ClassTalents.SwitchToSpecializationByName}}
+: {{api|t=a|C_Commentator.SendAddonMessageLogged}}
+: {{api|t=a|C_Commentator.SendAddonMessage}}
+: {{api|t=a|C_DelvesUI.GetActiveDelveTier}}
+: {{api|t=a|C_DelvesUI.GetDelveEntranceBackgroundWidgetSetID}}
+: {{api|t=a|C_DelvesUI.GetDelveEntranceDescriptionString}}
+: {{api|t=a|C_DelvesUI.GetDelveEntranceHeaderString}}
+: {{api|t=a|C_DelvesUI.GetDelveEntranceMapID}}
+: {{api|t=a|C_DelvesUI.GetDelveEntranceTiers}}
+: {{api|t=a|C_DelvesUI.GetTieredEntranceOptionalAffixTraitTreeID}}
+: {{api|t=a|C_DelvesUI.GetTieredEntranceType}}
+: {{api|t=a|C_DelvesUI.IsDelveEntranceTierEnabled}}
+: {{api|t=a|C_DelvesUI.SelectDelveEntranceTier}}
+: {{api|t=a|C_HouseExterior.IsAnyDecorAttachedToCoreFixture}}
+: {{api|t=a|C_HouseExterior.IsAnyDecorAttachedToDoor}}
+: {{api|t=a|C_HouseExterior.IsAnyDecorAttachedToHouseExterior}}
+: {{api|t=a|C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint}}
+: {{api|t=a|C_HouseExterior.IsExteriorDecorHidden}}
+: {{api|t=a|C_HouseExterior.SetExteriorDecorHidden}}
+: {{api|t=a|C_HousingCatalog.GetAllVariantInfosForEntry}}
+: {{api|t=a|C_HousingCatalog.GetCatalogEntryVariantInfo}}
+: {{api|t=a|C_HousingCatalog.GetFeaturedSmallProducts}}
+: {{api|t=a|C_HousingDecor.GetDecorHyperlink}}
+: {{api|t=a|C_HousingInspectMode.EnterInspectMode}}
+: {{api|t=a|C_HousingInspectMode.ExitInspectMode}}
+: {{api|t=a|C_HousingInspectMode.GetHoveredDecorGUID}}
+: {{api|t=a|C_HousingInspectMode.IsHoveringDecor}}
+: {{api|t=a|C_HousingInspectMode.IsInInspectMode}}
+: {{api|t=a|C_HousingNeighborhood.OnCornerstoneClosed}}
+: {{api|t=a|C_NeighborhoodInitiative.GetAvailableHouseXP}}
+: {{api|t=a|C_PartyInfo.GetLootMethodStyle}}
+: {{api|t=a|C_PartyInfo.IsLootMethodAvailable}}
+: {{api|t=a|C_PhotoSharing.BeginAuthorizationFlow}}
+: {{api|t=a|C_PhotoSharing.ClearAuthorization}}
+: {{api|t=a|C_PhotoSharing.CompleteAuthorizationFlow}}
+: {{api|t=a|C_PhotoSharing.GetCropRatio}}
+: {{api|t=a|C_PhotoSharing.GetPhotoSharingAuthURL}}
+: {{api|t=a|C_PhotoSharing.GetStatus}}
+: {{api|t=a|C_PhotoSharing.IsAuthorized}}
+: {{api|t=a|C_PhotoSharing.IsEnabled}}
+: {{api|t=a|C_PhotoSharing.SetScreenshotPreviewTexture}}
+: {{api|t=a|C_PhotoSharing.TakePhoto}}
+: {{api|t=a|C_PhotoSharing.UploadPhotoToService}}
+: {{api|t=a|C_ScenarioInfo.GetDisplayInfo}}
+: {{api|t=a|C_ScenarioInfo.GetTieredEntranceActiveSpells}}
+: {{api|t=a|C_ScenarioInfo.GetUnitCriteriaProgressValues}}
+: {{api|t=a|C_ScenarioInfo.IsTieredEntranceScenario}}
+: {{api|t=a|C_Secrets.ShouldUnitStatsBeSecret}}
+: {{api|t=a|C_StringUtil.CreateAbbreviatedNumberFormatter}}
+: {{api|t=a|C_StringUtil.CreateNumericRuleFormatter}}
+: {{api|t=a|C_StringUtil.CreateSecondsFormatter}}
+: {{api|t=a|C_StringUtil.GetDefaultAbbreviationBreakpoints}}
+: {{api|t=a|C_TradeInfo.ShouldShowTradeOfferWarning}}
+: {{api|t=a|C_TransmogOutfitInfo.ChangeToOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.ClearOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.GetAllTransmogOutfitOptionSheatheCategoryInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.GetOutfitInfoByName}}
+: {{api|t=a|C_TransmogOutfitInfo.GetOutfitInfoByPlayerFacingIndex}}
+: {{api|t=a|C_TransmogOutfitInfo.SetPendingTransmogSheatheCategory}}
+: {{api|t=a|C_TransmogSets.HasAvailableSets}}
+: {{api|t=a|C_UnitAuras.AddBlockedAura}}
+: {{api|t=a|C_UnitAuras.ClearBlockedAuras}}
+: {{api|t=a|C_UnitAuras.ResetAuraDataProvider}}
+: {{api|t=a|C_UnitAuras.SwitchAuraDataProvider}}
+: {{api|t=a|GetCurrentCinematicSummary}}
+: {{api|t=a|UnitHasPowerType}}
+: {{api|t=a|table.freeze}}
+: {{api|t=a|table.isfrozen}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_GossipInfo.GetActiveDelveGossip}}
+: {{api|t=a|C_GossipInfo.GetGossipDelveMapID}}
+: {{api|t=a|C_HousingCatalog.GetFeaturedDecor}}
+: {{api|t=a|C_HousingPhotoSharing.BeginAuthorizationFlow}}
+: {{api|t=a|C_HousingPhotoSharing.ClearAuthorization}}
+: {{api|t=a|C_HousingPhotoSharing.CompleteAuthorizationFlow}}
+: {{api|t=a|C_HousingPhotoSharing.GetCropRatio}}
+: {{api|t=a|C_HousingPhotoSharing.GetPhotoSharingAuthURL}}
+: {{api|t=a|C_HousingPhotoSharing.IsAuthorized}}
+: {{api|t=a|C_HousingPhotoSharing.IsEnabled}}
+: {{api|t=a|C_HousingPhotoSharing.SetScreenshotPreviewTexture}}
+: {{api|t=a|C_HousingPhotoSharing.TakePhoto}}
+: {{api|t=a|C_HousingPhotoSharing.UploadPhotoToService}}
+: {{api|t=a|C_NamePlateManager.SetNamePlateHitTestFrame}}
+: {{api|t=a|GetAutoCompletePresenceID}}
+: {{api|t=a|GetAutoCompleteRealms}}
+: {{api|t=a|GetAutoCompleteResults}}
+: {{api|t=a|GetMaxCombatRatingBonus}}
+: {{api|t=a|IsRecognizedName}}
+</div>
+|}
+ {{api|C_ActionBar.FindSpellActionButtons}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_ActionBar.GetActionCharges}}
+   <font color="#ecbc2a">SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_ActionBar.GetActionCooldown}}
+   <font color="#ecbc2a">SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_ActionBar.GetActionCooldownDuration}}
+   + <font color="#00b400">arg2 = ignoreGCD</font>
+ {{api|C_ActionBar.GetActionDisplayCount}}
+   <font color="#ecbc2a">SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_ActionBar.GetActionLossOfControlCooldownInfo}}
+   <font color="#ecbc2a">SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_ActionBar.GetActionUseCount}}
+   <font color="#ecbc2a">SecretWhenActionCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_ActionBar.HasSpellActionButtons}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_ActionBar.IsOnBarOrSpecialBar}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_CatalogShop.GetProductInfo}}
+   + <font color="#00b400">HasRestrictions</font>
+ {{api|C_CatalogShop.PurchaseProduct}}
+   + <font color="#00b400">HasRestrictions</font>
+ {{api|C_ChatInfo.InChatMessagingLockdown}}
+   - <font color="#ff6767">ret2 = lockdownReason</font>
+ {{api|C_ChatInfo.ReplaceIconAndGroupExpressions}}
+   + <font color="#00b400">arg2,3 NeverSecret</font>
+ {{api|C_ClickBindings.CanSpellBeClickBound}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_DelvesUI.GetCurioLink}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+   + <font color="#00b400">arg2 NeverSecret</font>
+ {{api|C_DelvesUI.GetTieredEntrancePDEID}}
+   - <font color="#ff6767">MayReturnNothing</font>
+ {{api|C_DelvesUI.HasActiveDelve}}
+   - <font color="#ff6767">arg1 = mapID</font>
+   - <font color="#ff6767">SecretArguments = AllowedWhenUntainted</font>
+ {{api|C_DelvesUI.RequestPartyEligibilityForDelveTiers}}
+   # <font color="#ecbc2a">arg1.Name gossipOption -> mapID</font>
+ {{api|C_HouseExterior.RemoveFixtureFromSelectedPoint}}
+   + <font color="#00b400">arg1 = attachedDecorAction</font>
+   + <font color="#00b400">SecretArguments = AllowedWhenUntainted</font>
+ {{api|C_HouseExterior.SelectCoreFixtureOption}}
+   + <font color="#00b400">arg2 = attachedDecorAction</font>
+ {{api|C_HouseExterior.SelectFixtureOption}}
+   + <font color="#00b400">arg2 = attachedDecorAction</font>
+ {{api|C_HouseExterior.SetHouseExteriorSize}}
+   + <font color="#00b400">arg2 = attachedDecorAction</font>
+ {{api|C_HouseExterior.SetHouseExteriorType}}
+   + <font color="#00b400">arg2 = attachedDecorAction</font>
+ {{api|C_HousingBasicMode.StartPlacingNewDecor}}
+   # <font color="#ecbc2a">arg1.Name catalogEntryID -> catalogEntryVariantID</font>
+   # <font color="#ecbc2a">arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID</font>
+ {{api|C_HousingCatalog.DestroyEntry}}
+   # <font color="#ecbc2a">arg1.Name entryID -> entryVariantID</font>
+   # <font color="#ecbc2a">arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID</font>
+ {{api|C_HousingCatalog.GetCatalogEntryInfoByItem}}
+   - <font color="#ff6767">arg2 = tryGetOwnedInfo</font>
+ {{api|C_HousingCatalog.GetCatalogEntryInfoByRecordID}}
+   - <font color="#ff6767">arg3 = tryGetOwnedInfo</font>
+ {{api|C_HousingCatalog.GetDestroyableInstanceCount}}
+   # <font color="#ecbc2a">arg1.Name entryID -> entryVariantID</font>
+   # <font color="#ecbc2a">arg1.Type HousingCatalogEntryID -> HousingCatalogEntryVariantID</font>
+ {{api|C_MountJournal.GetMountFromSpell}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_QuestInfoSystem.GetQuestLogRewardFavor}}
+   # <font color="#ecbc2a">arg1.Nilable false -> true</font>
+ {{api|C_Spell.GetBaseSpell}}
+   + <font color="#00b400">arg2 NeverSecret</font>
+ {{api|C_Spell.GetMawPowerBorderAtlasBySpellID}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_Spell.GetMawPowerLinkBySpellID}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_Spell.GetSpellCastCount}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_Spell.GetSpellCharges}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_Spell.GetSpellCooldown}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_Spell.GetSpellCooldownDuration}}
+   + <font color="#00b400">arg2 = ignoreGCD</font>
+ {{api|C_Spell.GetSpellDisplayCount}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_Spell.GetSpellLink}}
+   + <font color="#00b400">arg2 NeverSecret</font>
+ {{api|C_Spell.GetSpellLossOfControlCooldownInfo}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_Spell.GetSpellMaxCumulativeAuraApplications}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+   # <font color="#ecbc2a">SecretWhenSpellAuraRestricted -> SecretWhenUnitAuraRestricted</font>
+ {{api|C_SpellBook.GetSpellBookItemCastCount}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_SpellBook.GetSpellBookItemCharges}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_SpellBook.GetSpellBookItemCooldown}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_SpellBook.GetSpellBookItemCooldownDuration}}
+   + <font color="#00b400">arg3 = ignoreGCD</font>
+ {{api|C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo}}
+   # <font color="#ecbc2a">SecretWhenSpellCooldownRestricted -> SecretWhenCooldownsRestricted</font>
+ {{api|C_StringUtil.RemoveContiguousSpaces}}
+   + <font color="#00b400">arg2 NeverSecret</font>
+ {{api|C_TooltipInfo.GetItemByID}}
+   + <font color="#00b400">arg3 = itemContext</font>
+   + <font color="#00b400">arg4 = treasureContextLevel</font>
+ {{api|C_TooltipInfo.GetMountBySpellID}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+   + <font color="#00b400">arg2 NeverSecret</font>
+ {{api|C_TooltipInfo.GetSpellByID}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+   + <font color="#00b400">arg2-6 NeverSecret</font>
+ {{api|C_TooltipInfo.GetUnitAuraByAuraInstanceID}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_TooltipInfo.GetUnitBuff}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+ {{api|C_TooltipInfo.GetUnitBuffByAuraInstanceID}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_TooltipInfo.GetUnitDebuff}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+ {{api|C_TooltipInfo.GetUnitDebuffByAuraInstanceID}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_TransmogCollection.GetIllusions}}
+   + <font color="#00b400">arg1 = category</font>
+   + <font color="#00b400">SecretArguments = AllowedWhenUntainted</font>
+ {{api|C_TransmogOutfitInfo.GetOutfitInfo}}
+   # <font color="#ecbc2a">ret1.Name outfitsInfo -> outfitInfo</font>
+ {{api|C_TransmogOutfitInfo.GetPendingTransmogCost}}
+   + <font color="#00b400">ret2 = modifierFlags</font>
+ {{api|C_UnitAuras.AddPrivateAuraAnchor}}
+   - <font color="#ff6767">HasRestrictions</font>
+ {{api|C_UnitAuras.AuraIsBigDefensive}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_UnitAuras.AuraIsPrivate}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_UnitAuras.DoesAuraHaveExpirationTime}}
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetAuraApplicationDisplayCount}}
+   + <font color="#00b400">arg3 NeverSecret</font>
+   + <font color="#00b400">arg4 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetAuraBaseDuration}}
+   # <font color="#ecbc2a">arg3.Type number -> SpellIdentifier</font>
+ {{api|C_UnitAuras.GetAuraDataByIndex}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetAuraDataBySlot}}
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetAuraDispelTypeColor}}
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetAuraDuration}}
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetAuraSlots}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+ {{api|C_UnitAuras.GetBuffDataByIndex}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetCooldownAuraBySpellID}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_UnitAuras.GetDebuffDataByIndex}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.GetPlayerAuraBySpellID}}
+   # <font color="#ecbc2a">arg1.Type number -> SpellIdentifier</font>
+ {{api|C_UnitAuras.GetRefreshExtendedDuration}}
+   # <font color="#ecbc2a">arg3.Type number -> SpellIdentifier</font>
+ {{api|C_UnitAuras.GetUnitAuraBySpellID}}
+   # <font color="#ecbc2a">arg2.Type number -> SpellIdentifier</font>
+ {{api|C_UnitAuras.IsAuraFilteredOutByInstanceID}}
+   - <font color="#ff6767">arg1 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_UnitAuras.RemovePrivateAuraAnchor}}
+   - <font color="#ff6767">HasRestrictions</font>
+ {{api|C_UnitAuras.RemovePrivateAuraAppliedSound}}
+   - <font color="#ff6767">HasRestrictions</font>
+ {{api|C_UnitAuras.SetPrivateWarningTextAnchor}}
+   - <font color="#ff6767">HasRestrictions</font>
+ {{api|C_UnitAuras.WantsAlteredForm}}
+   # <font color="#ecbc2a">SecretArguments AllowedWhenTainted -> AllowedWhenUntainted</font>
+ {{api|C_VoiceChat.SpeakText}}
+   + <font color="#00b400">arg1,3-5 NeverSecret</font>
+ Localization {{api|BreakUpLargeNumbers}}
+   + <font color="#00b400">arg2 NeverSecret</font>
+ Localization {{api|CreateAbbreviateConfig}}
+   + <font color="#00b400">RequiresRestrictedAbbreviationBreakpoints</font>
+ PlayerScript {{api|Ambiguate}}
+   + <font color="#00b400">arg2 NeverSecret</font>
+   # <font color="#ecbc2a">SecretArguments AllowedWhenUntainted -> AllowedWhenTainted</font>
+ PlayerScript {{api|GetAttackPowerForStat}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetAvoidance}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetBlockChance}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetCombatRating}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetCombatRatingBonus}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetCritChance}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetDodgeChance}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetDodgeChanceFromAttribute}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetExpertise}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetExpertisePercent}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetHaste}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetHitModifier}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetLifesteal}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetManaRegen}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetMastery}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetMasteryEffect}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetMeleeHaste}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetModResilienceDamageReduction}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetOverrideAPBySpellPower}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetOverrideSpellPowerByAP}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetParryChance}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetParryChanceFromAttribute}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetPetMeleeHaste}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetPetSpellBonusDamage}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetPowerRegen}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetPowerRegenForPowerType}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetPvpPowerDamage}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetPvpPowerHealing}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetRangedCritChance}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetRangedHaste}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetShieldBlock}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetSpeed}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetSpellBonusDamage}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetSpellBonusHealing}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetSpellCritChance}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetSpellHitModifier}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetSpellPenetration}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetSturdiness}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|GetVersatilityBonus}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ PlayerScript {{api|PlayerEffectiveAttackPower}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|GetUnitSpeed}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitArmor}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitAttackPower}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitAttackSpeed}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitDamage}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitRangedAttackPower}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitRangedDamage}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitSpellHaste}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitStat}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+ Unit {{api|UnitWeaponAttackPower}}
+   + <font color="#00b400">SecretWhenUnitStatsRestricted</font>
+
+===ScriptObjects===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-scriptobject-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(60)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(6)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-scriptobject-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apilink|t=w|AbbreviatedNumberFormatter:AddBreakpoint|noparens=1}}
+: {{apilink|t=w|AbbreviatedNumberFormatter:ClearBreakpoints|noparens=1}}
+: {{apilink|t=w|AbbreviatedNumberFormatter:Copy|noparens=1}}
+: {{apilink|t=w|AbbreviatedNumberFormatter:GetBreakpoints|noparens=1}}
+: {{apilink|t=w|AbbreviatedNumberFormatter:ResetBreakpoints|noparens=1}}
+: {{apilink|t=w|AbbreviatedNumberFormatter:SetBreakpoints|noparens=1}}
+: {{apilink|t=w|NamePlate:CanChangeHitTestPoints|noparens=1}}
+: {{apilink|t=w|NamePlate:ClearAllHitTestPoints|noparens=1}}
+: {{apilink|t=w|NamePlate:GetHitTestPoints|noparens=1}}
+: {{apilink|t=w|NamePlate:SetAllHitTestPoints|noparens=1}}
+: {{apilink|t=w|NamePlate:SetHitTestPoints|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:IsBaseVariantOnlyActive|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:IsStoredOnlyActive|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:SetBaseVariantOnly|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:SetStoredOnly|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:ToggleBaseVariantOnly|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:ToggleStoredOnly|noparens=1}}
+: {{apilink|t=w|DurationObject:EvaluateTotalDuration|noparens=1}}
+: {{apilink|t=w|DurationObject:FormatElapsedDuration|noparens=1}}
+: {{apilink|t=w|DurationObject:FormatRemainingDuration|noparens=1}}
+: {{apilink|t=w|DurationObject:FormatTotalDuration|noparens=1}}
+: {{apilink|t=w|NumericFormatter:FormatNumber|noparens=1}}
+: {{apilink|t=w|NumericRuleFormatter:AddBreakpoint|noparens=1}}
+: {{apilink|t=w|NumericRuleFormatter:ClearBreakpoints|noparens=1}}
+: {{apilink|t=w|NumericRuleFormatter:Copy|noparens=1}}
+: {{apilink|t=w|NumericRuleFormatter:GetBreakpoints|noparens=1}}
+: {{apilink|t=w|NumericRuleFormatter:SetBreakpoints|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:CanApproximate|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:CanRoundUpIntervals|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:CanRoundUpLastUnit|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:EvaluateDesiredUnitCount|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:EvaluateMaxInterval|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:EvaluateMinInterval|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:FormatZero|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:Format|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetApproximationSeconds|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetConvertToLower|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetDefaultAbbreviation|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetDesiredUnitCountCurve|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetDesiredUnitCount|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetMaxIntervalCurve|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetMaxInterval|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetMillisecondsThreshold|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetMinIntervalCurve|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetMinInterval|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:GetStripIntervalWhitespace|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:Reset|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetApproximationSeconds|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetCanRoundUpIntervals|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetCanRoundUpLastUnit|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetConvertToLower|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetDefaultAbbreviation|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetDesiredUnitCountCurve|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetDesiredUnitCount|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetMaxIntervalCurve|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetMaxInterval|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetMillisecondsThreshold|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetMinIntervalCurve|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetMinInterval|noparens=1}}
+: {{apilink|t=w|SecondsFormatter:SetStripIntervalWhitespace|noparens=1}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apilink|t=w|HousingCatalogSearcher:IsDistinctPerRecordIDActive|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:IsOwnedOnlyActive|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:SetDistinctPerRecordID|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:SetOwnedOnly|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:ToggleDistinctPerRecordID|noparens=1}}
+: {{apilink|t=w|HousingCatalogSearcher:ToggleOwnedOnly|noparens=1}}
+</div>
+|}
+ {{api|AbbreviateConfig:SetAbbreviateNumberData}}
+   + <font color="#00b400">RequiresRestrictedAbbreviationBreakpoints</font>
+ {{api|HousingCatalogSearcher:GetAllSearchItems}}
+   # <font color="#ecbc2a">ret1.Name matchingEntryIDs -> matchingEntryVariantIDs</font>
+   # <font color="#ecbc2a">ret1.InnerType HousingCatalogEntryID -> HousingCatalogEntryVariantID</font>
+ {{api|HousingCatalogSearcher:GetCatalogSearchResults}}
+   # <font color="#ecbc2a">ret1.Name matchingEntryIDs -> matchingEntryVariantIDs</font>
+   # <font color="#ecbc2a">ret1.InnerType HousingCatalogEntryID -> HousingCatalogEntryVariantID</font>
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(11)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|FontString:GetSmoothScaling}}
+: {{api|t=w|FontString:GetUnboundedStringWidthForText}}
+: {{api|t=w|FontString:SetSmoothScaling}}
+: {{api|t=w|ModelSceneActor:SetSheathedCategory}}
+: {{api|t=w|ModelSceneActor:UseUnitSheatheCategory}}
+: {{api|t=w|ModelSceneActorBase:SetGradientMaskWithDyes}}
+: {{api|t=w|Cooldown:GetCountdownAbbrevThreshold}}
+: {{api|t=w|Cooldown:GetCountdownFormatter}}
+: {{api|t=w|Cooldown:GetCountdownMillisecondsThreshold}}
+: {{api|t=w|Cooldown:SetCountdownFormatter}}
+: {{api|t=w|Cooldown:SetCountdownMillisecondsThreshold}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|PlayerModel:SetUnit}}
+   + <font color="#00b400">RequiresDeclassifiedUnitIdentity</font>
+ {{api|Cooldown:GetMinimumCountdownDuration}}
+   # <font color="#ecbc2a">ret1.Type number -> DurationMillisecondsPrimitive</font>
+ {{api|Cooldown:SetCountdownAbbrevThreshold}}
+   # <font color="#ecbc2a">arg1.Type number -> DurationSecondsPrimitive</font>
+ {{api|Cooldown:SetMinimumCountdownDuration}}
+   # <font color="#ecbc2a">arg1.Type number -> DurationMillisecondsPrimitive</font>
+ {{api|ModelSceneActorBase:SetModelByUnit}}
+   + <font color="#00b400">RequiresDeclassifiedUnitIdentity</font>
+ {{api|FontString:GetFont}}
+   # <font color="#ecbc2a">ret1.Type cstring -> FontAsset</font>
+ {{api|FontString:SetFont}}
+   # <font color="#ecbc2a">arg1.Type cstring -> FontAsset</font>
+   # <font color="#ecbc2a">arg2.Type uiUnit -> number</font>
+   # <font color="#ecbc2a">arg3.Nilable false -> true</font>
+   + <font color="#00b400">ret1 = success</font>
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(12)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|AJ_PVP_TRAINING_GROUNDS_ACTION}}
+: {{api|t=e|AURA_DATA_PROVIDER_SWITCH}}
+: {{api|t=e|CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX}}
+: {{api|t=e|CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_NAME}}
+: {{api|t=e|CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_INDEX}}
+: {{api|t=e|CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_NAME}}
+: {{api|t=e|HOUSE_EXTERIOR_DECOR_HIDDEN_CHANGED}}
+: {{api|t=e|HOUSING_INSPECT_MODE_DECOR_HOVERED_CHANGED}}
+: {{api|t=e|HOUSING_INSPECT_MODE_STATE_UPDATED}}
+: {{api|t=e|TRADE_UPDATE_WARNINGS}}
+: {{api|t=e|UNIT_AURA_BLOCK_LIST_CLEARED}}
+: {{api|t=e|UNIT_AURA_BLOCKED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CATALOG_SHOP_PMT_IMAGE_DOWNLOADED}}
+</div>
+|}
+ {{api|t=e|HOUSING_STORAGE_ENTRY_UPDATED}}
+   # <font color="#ecbc2a">[1].Name entryID -> entryVariantID</font>
+   # <font color="#ecbc2a">[1].Type HousingCatalogEntryID -> HousingCatalogEntryVariantID</font>
+ {{api|t=e|QUEST_ACCEPT_CONFIRM}}
+   + <font color="#00b400">[3] = questID</font>
+ {{api|t=e|SPELL_CONFIRMATION_PROMPT}}
+   + <font color="#00b400">[8] = displayItemID</font>
+   + <font color="#00b400">[9] = itemContext</font>
+   + <font color="#00b400">[10] = treasureContextLevel</font>
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(10)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(19)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=addonChallengeModeRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by challenge mode and mythic plus status will be restricted, or may return secrets.}}
+: {{apitooltip|type=cvar|name=addonCombatRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded in combat will be restricted, or may return secrets.}}
+: {{apitooltip|type=cvar|name=addonEncounterRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded in active encounters will be restricted, or may return secrets.}}
+: {{apitooltip|type=cvar|name=addonMapRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by current map type will be restricted, or may return secrets.}}
+: {{apitooltip|type=cvar|name=addonPvPMatchRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by PvP match state will be restricted, or may return secrets.}}
+: {{apitooltip|type=cvar|name=AllowSpectateMode|default=1|cat=4|desc=Enables spectate/commentator camera to be used.}}
+: {{apitooltip|type=cvar|name=endeavorInitiativesLastPointsMap|scope=Account|cat=4|desc=Last seen number of endeavor points in the progress bar per initiative ID}}
+: {{apitooltip|type=cvar|name=houseExterior_Hide_Decor|default=1|scope=Account|cat=4|desc=Whether or not to hide all decor on the plot while in Exterior Customization}}
+: {{apitooltip|type=cvar|name=lastLockedDelvesCompanionAbilities|cat=4|desc=Stores the nodeIDs of the locked delve companion abilities, to highlight them when unlocked.}}
+: {{apitooltip|type=cvar|name=transmogPreviewedWeaponToggle|default=0|scope=Account|cat=4|desc=Whether the transmog ModelScene should show the MH/OH combo or the RangedWeapon}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=activeCUFProfile|cat=4|desc=The last active CUF Profile.}}
+: {{apitooltip|type=cvar|name=cameraDistanceFixedValue|default=-1.000000|scope=Character|cat=4|desc=Fixed camera distance (in yards)}}
+: {{apitooltip|type=cvar|name=currencyTokensBackpack1|cat=4|desc=Currency token types shown on backpack.}}
+: {{apitooltip|type=cvar|name=endeavorInitiativesLastPoints|default=0|scope=Account|cat=4|desc=Last seen number of endeavor points in the progress bar}}
+: {{apitooltip|type=cvar|name=guildRosterView|cat=4|desc=The current guild roster display mode}}
+: {{apitooltip|type=cvar|name=NamePlateHorizontalScale|cat=4|desc=Applied to horizontal size of all nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriends|cat=4}}
+: {{apitooltip|type=cvar|name=NamePlateVerticalScale|cat=4|desc=Applied to vertical size of all nameplates.}}
+: {{apitooltip|type=cvar|name=playerStatLeftDropdown|cat=4|desc=The player stat selected in the left dropdown}}
+: {{apitooltip|type=cvar|name=playerStatRightDropdown|cat=4|desc=The player stat selected in the right dropdown}}
+: {{apitooltip|type=cvar|name=secretChallengeModeRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by challenge mode and mythic plus restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretCombatRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by combat restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretEncounterRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by instance encounter restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretMapRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by map restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretPvPMatchRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by PvP match restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=ShowClassColorInNameplate|cat=4|desc=use this to display the class color in enemy nameplate health bars}}
+: {{apitooltip|type=cvar|name=showTokenFrameHonor|cat=4|desc=The token UI has shown Honor}}
+: {{apitooltip|type=cvar|name=splashScreenNormal|cat=4|desc=Show normal splash screen id}}
+: {{apitooltip|type=cvar|name=unlockedExpansionLandingPages|cat=4|desc=Bitfield for which expansion landing pages have been unlocked/seen by the user}}
+</div>
+|}
+
+===Enums===
+ [[Enum.AbbreviationDataError]]
+   - <font color="#ff6767">InvalidAbbreviation</font>
+ [[Enum.AddOnRestrictionType]]
+   + <font color="#00b400">Chat</font>
+ [[Enum.CurrencyFlagsB]]
+   + <font color="#00b400">CurrencyBNoBonusXP</font>
+ [[Enum.EditModeAccountSetting]]
+   + <font color="#00b400">ShowTotemActionBar</font>
+ [[Enum.EditModeStatusTrackingBarSetting]]
+   + <font color="#00b400">Size</font>
+ [[Enum.EditModeSystem]]
+   + <font color="#00b400">TotemActionBar</font>
+ [[Enum.EditModeUnitFrameSetting]]
+   + <font color="#00b400">BigDefensiveIconSize</font>
+ [[Enum.FragmentID]]
+   + <font color="#00b400">FPathingDynamicLinks</font>
+   + <font color="#00b400">TagHousingDecorProxyGameObject</font>
+ [[Enum.FrameTutorialAccount]]
+   + <font color="#00b400">HousingEndeavorsTabSeen</font>
+ [[Enum.HouseExteriorWMODataFlags]]
+   + <font color="#00b400">HiddenUnlessOwned</font>
+ [[Enum.HouseFinderSuggestionReason]]
+   + <font color="#00b400">HomeOwner</font>
+ [[Enum.HousingDecorPlacementRestriction]]
+   + <font color="#00b400">InvalidLightOverlap</font>
+ [[Enum.HousingItemToastType]]
+   # <font color="#ff6767">House</font> -> <font color="#00b400">HouseType</font>
+ [[Enum.HousingResult]]
+   + <font color="#00b400">BoundToStartingArea</font>
+   + <font color="#00b400">InvalidLightOverlap</font>
+ [[Enum.LootMethodStyles]]
+   + <font color="#00b400">Mainline</font>
+   - <font color="#ff6767">PersonalOnly</font>
+ [[Enum.PhotoSharingUploadStatus]]
+   + <font color="#00b400">Disabled</font>
+ [[Enum.SurveyDeliveryMoment]]
+   + <font color="#00b400">EncounterEnd</font>
+ [[Enum.TransmogIllusionFlags]]
+   + <font color="#00b400">AllowedRangedShieldsHoldables</font>
+ [[Enum.TransmogSituation]]
+   + <font color="#00b400">AllWeather</font>
+   + <font color="#00b400">WeatherClear</font>
+   + <font color="#00b400">WeatherRain</font>
+   + <font color="#00b400">WeatherSnow</font>
+   + <font color="#00b400">WeatherSand</font>
+   + <font color="#00b400">AllTime</font>
+   + <font color="#00b400">TimeMorning</font>
+   + <font color="#00b400">TimeDay</font>
+   + <font color="#00b400">TimeEvening</font>
+   + <font color="#00b400">TimeNight</font>
+ [[Enum.TransmogSituationTrigger]]
+   + <font color="#00b400">Weather</font>
+   + <font color="#00b400">TimeOfDay</font>
+
+===Structures===
+ [[Structure AddPrivateAuraAnchorArgs|AddPrivateAuraAnchorArgs]]
+   + <font color="#00b400">isContainer</font>
+ [[Structure AreaPOIInfo|AreaPOIInfo]]
+   + <font color="#00b400">isSuppressible</font>
+   + <font color="#00b400">isLocked</font>
+ [[Structure CatalogShopProductDisplayInfo|CatalogShopProductDisplayInfo]]
+   + <font color="#00b400">additionalProductPMTURLs</font>
+   + <font color="#00b400">houseTextureAtlas</font>
+ [[Structure CatalogShopProductInfo|CatalogShopProductInfo]]
+   + <font color="#00b400">previewBGOverrideProductURL</font>
+   + <font color="#00b400">previewSmallBGOverrideProductURL</font>
+   + <font color="#00b400">decorQuantity</font>
+   - <font color="#ff6767">consumableQuantity</font>
+ [[Structure DamageMeterCombatSource|DamageMeterCombatSource]]
+   + <font color="#00b400">sourceDisplayType</font>
+ [[Structure HousingBundleInfo|HousingBundleInfo]]
+   + <font color="#00b400">nonDecorProducts</font>
+ [[Structure HousingCatalogCategoryInfo|HousingCatalogCategoryInfo]]
+   # <font color="#ff6767">anyOwnedEntries</font> -> <font color="#00b400">anyStoredEntries</font>
+ [[Structure HousingCatalogEntryID|HousingCatalogEntryID]]
+   - <font color="#ff6767">entrySubtype</font>
+   - <font color="#ff6767">subtypeIdentifier</font>
+ [[Structure HousingCatalogEntryInfo|HousingCatalogEntryInfo]]
+   + <font color="#00b400">recordID</font>
+   + <font color="#00b400">entryType</font>
+   + <font color="#00b400">totalNumStored</font>
+   + <font color="#00b400">totalNumPlaced</font>
+   - <font color="#ff6767">entryID</font>
+   - <font color="#ff6767">showQuantity</font>
+   - <font color="#ff6767">quantity</font>
+   - <font color="#ff6767">numPlaced</font>
+   - <font color="#ff6767">customizations</font>
+   - <font color="#ff6767">dyeIDs</font>
+ [[Structure HousingCatalogSubcategoryInfo|HousingCatalogSubcategoryInfo]]
+   # <font color="#ff6767">anyOwnedEntries</font> -> <font color="#00b400">anyStoredEntries</font>
+ [[Structure HousingCategorySearchInfo|HousingCategorySearchInfo]]
+   # <font color="#ff6767">withOwnedEntriesOnly</font> -> <font color="#00b400">withStoredEntriesOnly</font>
+ [[Structure HousingDecorDyeSlot|HousingDecorDyeSlot]]
+   + <font color="#00b400">dyeColorName</font>
+ [[Structure MajorFactionRenownRewardInfo|MajorFactionRenownRewardInfo]]
+   + <font color="#00b400">isCollected</font>
+ [[Structure PvpBrawlInfo|PvpBrawlInfo]]
+   + <font color="#00b400">shouldHideRewardIcon</font>
+ [[Structure RecentAllyStateData|RecentAllyStateData]]
+   # <font color="#ff6767">hasFriendRequestPending</font> -> <font color="#00b400">friendRequestSentThisSession</font>
+ [[Structure TransmogAppearanceSourceInfoData|TransmogAppearanceSourceInfoData]]
+   + <font color="#00b400">ignoreModelAttachmentChecksForIllusion</font>
+ [[Structure TransmogOutfitEntryInfo|TransmogOutfitEntryInfo]]
+   + <font color="#00b400">playerFacingOutfitIndex</font>
+ [[Structure UnitPrivateAuraAnchorInfo|UnitPrivateAuraAnchorInfo]]
+   + <font color="#00b400">isContainer</font>
+   + <font color="#00b400">parent</font>
+ [[Structure ViewedTransmogOutfitSlotInfo|ViewedTransmogOutfitSlotInfo]]
+   + <font color="#00b400">sheatheCategory</font>

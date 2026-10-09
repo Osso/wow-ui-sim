@@ -1,0 +1,72 @@
+Patch 10.0.5 API changes
+
+== Summary ==
+* Added instanceId to GetSavedInstanceInfo as the 14th return value.
+* Certain items and spells no longer return information from the server. For example itemID 17 still returns true for C_Item.DoesItemExistByID but ITEM_DATA_LOAD_RESULT will have success:false and GetItemInfo will never return information, resulting in ItemMixin:ContinueOnItemLoad never firing the callback.
+
+== Resources ==
+* TOC: 100005
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: 10.0.5 Content Update Notes
+
+== Structures ==
+ Enum.BattlepetDbFlags
+   + 12: TradingPost
+ Enum.CraftingOrderResult
+   + 2: Aborted
+   + 23: InvalidRealm
+   + 42: TargetLocked
+ Enum.CurrencyFlagsB
+   + 4: CurrencyBBattlenetVirtualCurrency
+ Enum.EditModeAccountSetting
+   + 21: ShowReputationBar
+   + 22: ShowDurabilityFrame
+ Enum.EditModeAuraFrameSetting
+   + 8: DeprecatedShowFull
+   - 8: ShowFull
+ Enum.EditModeSystem
+   + 14: MicroMenu
+   + 15: Bags
+   + 16: StatusTrackingBar
+   + 17: DurabilityFrame
+ Enum.HolidayFlags
+   + 7: BeginEventOnlyOnStageChange
+ Enum.QuestTagType
+   + 17: DragonRiderRacing
+ Enum.ReportType
+   + 16: PvPGroupMember
+ Enum.TooltipDataLineType
+   + 22: RestrictedRaceClass
+   + 23: RestrictedFaction
+   + 24: RestrictedSkill
+   + 25: RestrictedPvPMedal
+   + 26: RestrictedReputation
+   + 27: RestrictedSpellKnown
+   + 28: RestrictedLevel
+   + 29: EquipSlot
+   + 30: ItemName
+ Enum.TrackedSpellCategory
+   + 4: RacialAbility
+ Enum.TradeskillRecipeType
+   + 5: Gathering
+ Enum.UICursorType
+   + 21: PerksProgramVendorItem
+
+ Constants.CurrencyConsts.CURRENCY_ID_PERKS_PROGRAM_DISPLAY_INFO = 2032
+ Constants.ProfessionConsts.CRAFTING_ORDER_ITEM_RETENTION = 30
+
+ CraftingItemResultData
+   + 3: qualityProgress
+   + 15: isEnchant
+ CraftingOrderCustomerOptionInfo
+   + 9: canUse
+   + 10: bindOnPickup
+ CraftingRecipeSchematic
+   - 12: hasGatheringOperationInfo
+ ItemUpgradeLevelInfo
+   + 5: currencyCostsToUpgrade
+   + 6: itemCostsToUpgrade
+   - 5: costsToUpgrade
+ TradeSkillRecipeInfo
+   + 33: canCreateMultiple
+   - 33: createsItem

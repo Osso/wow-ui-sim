@@ -1,0 +1,2221 @@
+Patch 10.0.7 API changes
+
+== Summary ==
+* A new advflyable macro conditional has been added, with a corresponding IsAdvancedFlyableArea() function also made available to the restricted environment.
+* The client now supports loading PNG texture assets through TextureBase:SetTexture().
+
+== Resources ==
+* TOC: 100007
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: 10.0.7 Content Update Notes
+
+== Structures ==
+ Enum.GossipOptionRecFlags
+   + 2: HideOptionIDFromClient
+ Enum.ItemGemColor
+   + 26: Primordial
+ Enum.ItemSocketType
+   + 26: Primordial
+ Enum.LanguageFlag
+   + 3: HideLanguageNameInChat
+ Enum.GarrisonType
+   - 2:   Type_6_0
+   - 3:   Type_7_0
+   - 9:   Type_8_0
+   - 111: Type_9_0
+   + 2:   Type_6_0_Garrison
+   + 3:   Type_7_0_Garrison
+   + 9:   Type_8_0_Garrison
+   + 111: Type_9_0_Garrison
+ Enum.GarrisonFollowerType
+   - 1:   FollowerType_6_0
+   - 2:   FollowerType_6_2
+   - 4:   FollowerType_7_0
+   - 22:  FollowerType_8_0
+   - 123: FollowerType_9_0
+   + 1:   FollowerType_6_0_GarrisonFollower
+   + 2:   FollowerType_6_0_Boat
+   + 4:   FollowerType_7_0_GarrisonFollower
+   + 22:  FollowerType_8_0_GarrisonFollower
+   + 123: FollowerType_9_0_GarrisonFollower
+
+ GossipOptionUIInfo
+   # 1: gossipOptionID, Nilable: false -> true
+ ItemKeyInfo
+   # 6: quality, Type: number -> ItemQuality
+ PerksActivityInfo
+   + 8: criteriaList
+ ProfTabInfo
+   + 4: rootIconID
+   + 5: highlights
+ RafInfo
+   - 1: lifetimeMonths
+   - 2: spentMonths
+   - 3: availableMonths
+
+== Type Changes ==
+=== Functions ===
+ C_AccountInfo.GetIDFromBattleNetAccountGUID
+   # arg 1: battleNetAccountGUID, Type: string -> WOWGUID
+ C_AccountInfo.IsGUIDBattleNetAccountType
+   # arg 1: guid, Type: string -> WOWGUID
+ C_AccountInfo.IsGUIDRelatedToLocalAccount
+   # arg 1: guid, Type: string -> WOWGUID
+ C_AchievementInfo.SetPortraitTexture
+   # arg 1: textureObject, Type: table -> SimpleTexture
+ C_AnimaDiversion.GetOriginPosition
+   # ret 1: normalizedPosition, Type: table -> vector2
+ C_AnimaDiversion.GetTextureKit
+   # ret 1: textureKit, Type: string -> textureKit
+ C_ArtifactUI.GetArtifactInfo
+   # ret 4: icon, Type: number -> fileID
+ C_ArtifactUI.GetArtifactXPRewardTargetInfo
+   # ret 2: icon, Type: number -> fileID
+ C_ArtifactUI.GetEquippedArtifactInfo
+   # ret 4: icon, Type: number -> fileID
+ C_ArtifactUI.GetEquippedArtifactRelicInfo
+   # ret 2: icon, Type: number -> fileID
+ C_ArtifactUI.GetItemLevelIncreaseProvidedByRelic
+   # arg 1: itemLinkOrID, Type: string -> ItemInfo
+ C_ArtifactUI.GetPowersAffectedByRelicItemLink
+   # arg 1: relicItemInfo, Type: string -> ItemInfo
+ C_ArtifactUI.GetRelicInfo
+   # ret 2: icon, Type: number -> fileID
+ C_ArtifactUI.GetRelicInfoByItemID
+   # ret 2: icon, Type: number -> fileID
+ C_ArtifactUI.GetRespecArtifactInfo
+   # ret 4: icon, Type: number -> fileID
+ C_ArtifactUI.IsArtifactItem
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_AuctionHouse.CalculateItemDeposit
+   # arg 1: item, Type: table -> ItemLocation
+ C_AuctionHouse.ConfirmPostCommodity
+   # arg 1: item, Type: table -> ItemLocation
+   # arg 4: unitPrice, Type: number -> BigUInteger
+ C_AuctionHouse.ConfirmPostItem
+   # arg 1: item, Type: table -> ItemLocation
+   # arg 4: bid, Type: number -> BigUInteger
+   # arg 5: buyout, Type: number -> BigUInteger
+ C_AuctionHouse.GetAvailablePostCount
+   # arg 1: item, Type: table -> ItemLocation
+ C_AuctionHouse.GetCancelCost
+   # ret 1: cancelCost, Type: number -> BigUInteger
+ C_AuctionHouse.GetItemCommodityStatus
+   # arg 1: item, Type: table -> ItemLocation
+ C_AuctionHouse.GetItemKeyFromItem
+   # arg 1: item, Type: table -> ItemLocation
+ C_AuctionHouse.GetMaxBidItemBid
+   # ret 1: maxBid, Type: number -> BigUInteger
+ C_AuctionHouse.GetMaxBidItemBuyout
+   # ret 1: maxBuyout, Type: number -> BigUInteger
+ C_AuctionHouse.GetMaxCommoditySearchResultPrice
+   # ret 1: maxUnitPrice, Type: number -> BigUInteger
+ C_AuctionHouse.GetMaxItemSearchResultBid
+   # ret 1: maxBid, Type: number -> BigUInteger
+ C_AuctionHouse.GetMaxItemSearchResultBuyout
+   # ret 1: maxBuyout, Type: number -> BigUInteger
+ C_AuctionHouse.GetMaxOwnedAuctionBid
+   # ret 1: maxBid, Type: number -> BigUInteger
+ C_AuctionHouse.GetMaxOwnedAuctionBuyout
+   # ret 1: maxBuyout, Type: number -> BigUInteger
+ C_AuctionHouse.GetReplicateItemInfo
+   # ret 2: texture, Type: number -> fileID
+   # ret 8: minBid, Type: number -> BigUInteger
+   # ret 9: minIncrement, Type: number -> BigUInteger
+   # ret 10: buyoutPrice, Type: number -> BigUInteger
+   # ret 11: bidAmount, Type: number -> BigUInteger
+ C_AuctionHouse.IsSellItemValid
+   # arg 1: item, Type: table -> ItemLocation
+ C_AuctionHouse.PlaceBid
+   # arg 2: bidAmount, Type: number -> BigUInteger
+ C_AuctionHouse.PostCommodity
+   # arg 1: item, Type: table -> ItemLocation
+   # arg 4: unitPrice, Type: number -> BigUInteger
+ C_AuctionHouse.PostItem
+   # arg 1: item, Type: table -> ItemLocation
+   # arg 4: bid, Type: number -> BigUInteger
+   # arg 5: buyout, Type: number -> BigUInteger
+ C_AzeriteEmpoweredItem.CanSelectPower
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.ConfirmAzeriteEmpoweredItemRespec
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.GetAllTierInfo
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.GetAllTierInfoByItemID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_AzeriteEmpoweredItem.GetPowerText
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.HasAnyUnselectedPowers
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.HasBeenViewed
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItem
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_AzeriteEmpoweredItem.IsAzeriteEmpoweredItemByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_AzeriteEmpoweredItem.IsAzeritePreviewSourceDisplayable
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_AzeriteEmpoweredItem.IsPowerSelected
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.SelectPower
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteEmpoweredItem.SetHasBeenViewed
+   # arg 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ C_AzeriteItem.FindActiveAzeriteItem
+   # ret 1: activeAzeriteItemLocation, Type: table -> AzeriteItemLocation
+ C_AzeriteItem.GetAzeriteItemXPInfo
+   # arg 1: azeriteItemLocation, Type: table -> AzeriteItemLocation
+ C_AzeriteItem.GetPowerLevel
+   # arg 1: azeriteItemLocation, Type: table -> AzeriteItemLocation
+ C_AzeriteItem.GetUnlimitedPowerLevel
+   # arg 1: azeriteItemLocation, Type: table -> AzeriteItemLocation
+ C_AzeriteItem.IsAzeriteItem
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_AzeriteItem.IsAzeriteItemByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_AzeriteItem.IsAzeriteItemEnabled
+   # arg 1: azeriteItemLocation, Type: table -> AzeriteItemLocation
+ C_BattleNet.GetAccountInfoByGUID
+   # arg 1: guid, Type: string -> WOWGUID
+ C_BattleNet.GetAccountInfoByID
+   # arg 2: wowAccountGUID, Type: string -> WOWGUID
+ C_BattleNet.GetFriendAccountInfo
+   # arg 2: wowAccountGUID, Type: string -> WOWGUID
+ C_BattleNet.GetGameAccountInfoByGUID
+   # arg 1: guid, Type: string -> WOWGUID
+ C_BehavioralMessaging.SendNotificationReceipt
+   # arg 1: dbId, Type: string -> NotificationDbId
+ C_Calendar.EventGetClubId
+   # ret 1: info, Type: string -> ClubId
+ C_Calendar.EventRemoveInviteByGuid
+   # arg 1: guid, Type: string -> WOWGUID
+ C_Calendar.EventSetClubId
+   # arg 1: clubId, Type: string -> ClubId
+ C_Calendar.GetClubCalendarEvents
+   # arg 1: clubId, Type: string -> ClubId
+ C_Calendar.GetEventIndexInfo
+   # arg 1: eventID, Type: string -> CalendarEventID
+ C_Calendar.GetNextClubId
+   # ret 1: clubId, Type: string -> ClubId
+ C_Calendar.MassInviteCommunity
+   # arg 1: clubId, Type: string -> ClubId
+ C_Calendar.SetNextClubId
+   # arg 1: clubId, Type: string -> ClubId
+ C_ChallengeMode.CanUseKeystoneInCurrentMap
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_ChallengeMode.GetDungeonScoreRarityColor
+   # ret 1: scoreColor, Type: table -> colorRGB
+ C_ChallengeMode.GetKeystoneLevelRarityColor
+   # ret 1: levelScore, Type: table -> colorRGB
+ C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
+   # ret 1: specificDungeonOverallScoreColor, Type: table -> colorRGB
+ C_ChallengeMode.GetSpecificDungeonScoreRarityColor
+   # ret 1: specificDungeonScoreColor, Type: table -> colorRGB
+ C_ChatBubbles.GetAllChatBubbles
+ C_ChatInfo.GetChannelRosterInfo
+   # ret 4: guid, Type: string -> WOWGUID
+ C_ChatInfo.GetClubStreamIDs
+   # arg 1: clubID, Type: string -> ClubId
+ C_ClassColor.GetClassColor
+   # ret 1: classColor, Type: table -> colorRGB
+ C_Club.AcceptInvitation
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.AddClubStreamChatChannel
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.AdvanceStreamViewMarker
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.AssignMemberRole
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.CanResolvePlayerLocationFromClubMessageData
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+   # arg 3: epoch, Type: number -> BigUInteger
+   # arg 4: position, Type: number -> BigUInteger
+ C_Club.CompareBattleNetDisplayName
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.CreateStream
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.CreateTicket
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 4: defaultStreamId, Type: string -> ClubStreamId
+ C_Club.DeclineInvitation
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.DestroyClub
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.DestroyMessage
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.DestroyStream
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.DestroyTicket
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.DoesCommunityHaveMembersOfTheOppositeFaction
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.EditClub
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.EditMessage
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.EditStream
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.FocusStream
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.GetAssignableRoles
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetClubInfo
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetClubMembers
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.GetClubPrivileges
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetClubStreamNotificationSettings
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetGuildClubId
+   # ret 1: guildClubId, Type: string -> ClubId
+ C_Club.GetInfoFromLastCommunityChatLine
+   # ret 2: clubId, Type: string -> ClubId
+   # ret 3: streamId, Type: string -> ClubStreamId
+ C_Club.GetInvitationCandidates
+   # arg 5: clubId, Type: string -> ClubId
+ C_Club.GetInvitationInfo
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetInvitationsForClub
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetMemberInfo
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetMemberInfoForSelf
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetMessageInfo
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.GetMessageRanges
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.GetMessagesBefore
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.GetMessagesInRange
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.GetStreamInfo
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.GetStreamViewMarker
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+   # ret 1: lastReadTime, Type: number -> BigUInteger
+ C_Club.GetStreams
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.GetTickets
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.IsAccountMuted
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.IsBeginningOfStream
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.IsSubscribedToStream
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.KickMember
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.LeaveClub
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.RequestInvitationsForClub
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.RequestMoreMessagesBefore
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.RequestTickets
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.RevokeInvitation
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.SendBattleTagFriendRequest
+   # arg 1: guildClubId, Type: string -> ClubId
+ C_Club.SendCharacterInvitation
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.SendInvitation
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.SendMessage
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.SetAutoAdvanceStreamViewMarker
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_Club.SetAvatarTexture
+   # arg 1: texture, Type: table -> SimpleTexture
+ C_Club.SetClubMemberNote
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.SetClubPresenceSubscription
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.SetClubStreamNotificationSettings
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.SetFavorite
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.SetSocialQueueingEnabled
+   # arg 1: clubId, Type: string -> ClubId
+ C_Club.UnfocusStream
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_ClubFinder.ApplicantAcceptClubInvite
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.ApplicantDeclineClubInvite
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.CancelMembershipRequest
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.DoesPlayerBelongToClubFromClubGUID
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.GetClubTypeFromFinderGUID
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.GetPlayerClubApplicationStatus
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.GetPostingIDFromClubFinderGUID
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.GetRecruitingClubInfoFromClubID
+   # arg 1: clubId, Type: string -> ClubId
+ C_ClubFinder.GetRecruitingClubInfoFromFinderGUID
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.GetStatusOfPostingFromClubId
+   # arg 1: postingID, Type: string -> ClubId
+ C_ClubFinder.HasAlreadyAppliedToLinkedPosting
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.HasPostingBeenDelisted
+   # arg 1: postingID, Type: string -> ClubId
+ C_ClubFinder.IsPostingBanned
+   # arg 1: postingID, Type: string -> ClubId
+ C_ClubFinder.LookupClubPostingFromClubFinderGUID
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.PostClub
+   # arg 1: clubId, Type: string -> ClubId
+ C_ClubFinder.RequestMembershipToClub
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+ C_ClubFinder.RequestPostingInformationFromClubId
+   # arg 1: clubId, Type: string -> ClubId
+ C_ClubFinder.RespondToApplicant
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+   # arg 2: playerGUID, Type: string -> WOWGUID
+ C_ClubFinder.ReturnClubApplicantList
+   # arg 1: clubId, Type: string -> ClubId
+ C_ClubFinder.ReturnPendingClubApplicantList
+   # arg 1: clubId, Type: string -> ClubId
+ C_ClubFinder.SendChatWhisper
+   # arg 1: clubFinderGUID, Type: string -> WOWGUID
+   # arg 2: playerGUID, Type: string -> WOWGUID
+ C_Commentator.FindSpectatedUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.GetAdditionalCameraWeightByToken
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.GetMatchDuration
+   # ret 1: seconds, Type: number -> time_t
+ C_Commentator.GetPlayerAuraInfoByUnit
+   # arg 1: token, Type: string -> UnitToken
+ C_Commentator.GetPlayerCooldownInfoByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.GetPlayerCrowdControlInfoByUnit
+   # arg 1: token, Type: string -> UnitToken
+ C_Commentator.GetPlayerFlagInfoByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.GetPlayerSpellChargesByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.GetStartLocation
+   # ret 1: pos, Type: table -> vector3
+ C_Commentator.GetTeamColor
+   # ret 1: color, Type: table -> colorRGB
+ C_Commentator.GetTeamColorByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+   # ret 1: color, Type: table -> colorRGB
+ C_Commentator.GetTrackedSpellsByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.GetUnitData
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.HasTrackedAuras
+   # arg 1: token, Type: string -> UnitToken
+ C_Commentator.IsTrackedSpellByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Commentator.SetAdditionalCameraWeightByToken
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Console.GetColorFromType
+   # ret 1: color, Type: table -> colorRGB
+ C_Container.ContainerIDToInventoryID
+   # arg 1: containerID, Type: number -> BagIndex
+ C_Container.ContainerRefundItemPurchase
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetBagName
+   # arg 1: bagIndex, Type: number -> BagIndex
+ C_Container.GetBagSlotFlag
+   # arg 1: bagIndex, Type: number -> BagIndex
+ C_Container.GetContainerFreeSlots
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemCooldown
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemDurability
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemEquipmentSetInfo
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemID
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemInfo
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemLink
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemPurchaseCurrency
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemPurchaseInfo
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemPurchaseItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerItemQuestInfo
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.GetContainerNumFreeSlots
+   # arg 1: bagIndex, Type: number -> BagIndex
+ C_Container.GetContainerNumSlots
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.IsBattlePayItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.IsContainerFiltered
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.PickupContainerItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.SetBagPortraitTexture
+   # arg 1: texture, Type: table -> SimpleTexture
+   # arg 2: bagIndex, Type: number -> BagIndex
+ C_Container.SetBagSlotFlag
+   # arg 1: bagIndex, Type: number -> BagIndex
+ C_Container.ShowContainerSellCursor
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.SocketContainerItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.SplitContainerItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_Container.UseContainerItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+   # arg 3: unitToken, Type: string -> UnitToken
+ C_ContributionCollector.GetAtlases
+ C_ContributionCollector.GetState
+   # ret 3: timeOfNextStateChange, Type: number -> time_t
+   # ret 4: startTime, Type: number -> time_t
+ C_CraftingOrders.CalculateCraftingOrderPostingFee
+   # ret 1: deposit, Type: number -> WOWMONEY
+ C_CraftingOrders.CancelOrder
+   # arg 1: orderID, Type: number -> BigUInteger
+ C_CraftingOrders.ClaimOrder
+   # arg 1: orderID, Type: number -> BigUInteger
+ C_CraftingOrders.FulfillOrder
+   # arg 1: orderID, Type: number -> BigUInteger
+ C_CraftingOrders.GetCraftingOrderTime
+   # ret 1: time, Type: number -> BigUInteger
+ C_CraftingOrders.GetNumFavoriteCustomerOptions
+   # ret 1: numFavorites, Type: number -> BigUInteger
+ C_CraftingOrders.OrderCanBeRecrafted
+   # arg 1: orderID, Type: number -> BigUInteger
+ C_CraftingOrders.RejectOrder
+   # arg 1: orderID, Type: number -> BigUInteger
+ C_CraftingOrders.ReleaseOrder
+   # arg 1: orderID, Type: number -> BigUInteger
+ C_Cursor.GetCursorItem
+   # ret 1: item, Type: table -> ItemLocation
+ C_DateAndTime.GetCalendarTimeFromEpoch
+   # arg 1: epoch, Type: number -> BigUInteger
+ C_DateAndTime.GetSecondsUntilDailyReset
+   # ret 1: seconds, Type: number -> time_t
+ C_DateAndTime.GetSecondsUntilWeeklyReset
+   # ret 1: seconds, Type: number -> time_t
+ C_DateAndTime.GetServerTimeLocal
+   # ret 1: serverTimeLocal, Type: number -> time_t
+ C_DeathInfo.GetCorpseMapPosition
+   # ret 1: position, Type: table -> vector2
+ C_DeathInfo.GetDeathReleasePosition
+   # ret 1: position, Type: table -> vector2
+ C_FriendList.IsFriend
+   # arg 1: guid, Type: string -> WOWGUID
+ C_FriendList.IsIgnoredByGuid
+   # arg 1: guid, Type: string -> WOWGUID
+ C_GamePad.GetLedColor
+   # ret 1: color, Type: table -> colorRGB
+ C_GamePad.SetLedColor
+   # arg 1: color, Type: table -> colorRGB
+ C_Garrison.AddFollowerToMission
+   # arg 2: followerID, Type: string -> GarrisonFollower
+ C_Garrison.GetAutoMissionTargetingInfo
+   # arg 2: followerID, Type: string -> GarrisonFollower
+ C_Garrison.GetFollowerAutoCombatSpells
+   # arg 1: garrFollowerID, Type: string -> GarrisonFollower
+ C_Garrison.GetFollowerAutoCombatStats
+   # arg 1: garrFollowerID, Type: string -> GarrisonFollower
+ C_Garrison.GetFollowerMissionCompleteInfo
+   # arg 1: followerID, Type: string -> GarrisonFollower
+ C_Garrison.IsFollowerOnCompletedMission
+   # arg 1: followerID, Type: string -> GarrisonFollower
+ C_Garrison.RemoveFollowerFromMission
+   # arg 2: followerID, Type: string -> GarrisonFollower
+ C_Garrison.RushHealFollower
+   # arg 1: garrFollowerID, Type: string -> GarrisonFollower
+ C_GuildInfo.GetGuildRankOrder
+   # arg 1: guid, Type: string -> WOWGUID
+ C_GuildInfo.GetGuildTabardInfo
+   # arg 1: unit, Type: string -> UnitToken
+ C_GuildInfo.IsGuildRankAssignmentAllowed
+   # arg 1: guid, Type: string -> WOWGUID
+ C_GuildInfo.QueryGuildMemberRecipes
+   # arg 1: guildMemberGUID, Type: string -> WOWGUID
+ C_GuildInfo.RemoveFromGuild
+   # arg 1: guid, Type: string -> WOWGUID
+ C_GuildInfo.SetGuildRankOrder
+   # arg 1: guid, Type: string -> WOWGUID
+ C_GuildInfo.SetNote
+   # arg 1: guid, Type: string -> WOWGUID
+ C_IncomingSummon.HasIncomingSummon
+   # arg 1: unit, Type: string -> UnitToken
+ C_IncomingSummon.IncomingSummonStatus
+   # arg 1: unit, Type: string -> UnitToken
+ C_Item.CanItemTransmogAppearance
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.CanScrapItem
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.CanViewItemPowers
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.DoesItemExist
+   # arg 1: emptiableItemLocation, Type: table -> EmptiableItemLocation
+ C_Item.DoesItemExistByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.DoesItemMatchBonusTreeReplacement
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.GetAppliedItemTransmogInfo
+   # arg 1: itemLoc, Type: table -> ItemLocation
+   # ret 1: info, Type: table -> ItemTransmogInfo
+ C_Item.GetBaseItemTransmogInfo
+   # arg 1: itemLoc, Type: table -> ItemLocation
+   # ret 1: info, Type: table -> ItemTransmogInfo
+ C_Item.GetCurrentItemLevel
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetCurrentItemTransmogInfo
+   # arg 1: itemLoc, Type: table -> ItemLocation
+   # ret 1: info, Type: table -> ItemTransmogInfo
+ C_Item.GetItemConversionOutputIcon
+   # arg 1: itemLoc, Type: table -> ItemLocation
+   # ret 1: icon, Type: number -> fileID
+ C_Item.GetItemGUID
+   # arg 1: itemLocation, Type: table -> ItemLocation
+   # ret 1: itemGUID, Type: string -> WOWGUID
+ C_Item.GetItemID
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetItemIDByGUID
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_Item.GetItemIcon
+   # arg 1: itemLocation, Type: table -> ItemLocation
+   # ret 1: icon, Type: number -> fileID
+ C_Item.GetItemIconByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+   # ret 1: icon, Type: number -> fileID
+ C_Item.GetItemInventoryType
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetItemInventoryTypeByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.GetItemLink
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetItemLinkByGUID
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_Item.GetItemLocation
+   # arg 1: itemGUID, Type: string -> WOWGUID
+   # ret 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetItemMaxStackSize
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetItemMaxStackSizeByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.GetItemName
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetItemNameByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.GetItemQuality
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.GetItemQualityByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.GetItemUniquenessByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.GetLimitedCurrencyItemInfo
+   # arg 1: itemInfo, Type: string -> ItemInfo
+   # ret 2: icon, Type: number -> fileID
+ C_Item.GetStackCount
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.IsAnimaItemByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.IsBound
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.IsDressableItemByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.IsItemConduit
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.IsItemConvertibleAndValidForPlayer
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.IsItemCorrupted
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.IsItemCorruptionRelated
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.IsItemCorruptionResistant
+   # arg 1: itemLoc, Type: table -> ItemLocation
+ C_Item.IsItemDataCached
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.IsItemDataCachedByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.IsItemGUIDInInventory
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_Item.IsItemKeystoneByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.IsItemSpecificToPlayerClass
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.IsLocked
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.LockItem
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.LockItemByGUID
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_Item.RequestLoadItemData
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.RequestLoadItemDataByID
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Item.UnlockItem
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Item.UnlockItemByGUID
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_ItemInteraction.GetItemConversionCurrencyCost
+   # arg 1: item, Type: table -> ItemLocation
+ C_ItemInteraction.SetPendingItem
+   # arg 1: item, Type: table -> ItemLocation
+ C_ItemUpgrade.CanUpgradeItem
+   # arg 1: baseItem, Type: table -> ItemLocation
+ C_ItemUpgrade.SetItemUpgradeFromLocation
+   # arg 1: itemToSet, Type: table -> ItemLocation
+ C_LegendaryCrafting.GetRuneforgeItemPreviewInfo
+   # arg 1: baseItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.GetRuneforgeLegendaryComponentInfo
+   # arg 1: runeforgeLegendary, Type: table -> ItemLocation
+ C_LegendaryCrafting.GetRuneforgeLegendaryCost
+   # arg 1: baseItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.GetRuneforgeLegendaryUpgradeCost
+   # arg 1: runeforgeLegendary, Type: table -> ItemLocation
+   # arg 2: upgradeItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.GetRuneforgeModifierInfo
+   # arg 1: baseItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.GetRuneforgePowers
+   # arg 1: baseItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.IsRuneforgeLegendary
+   # arg 1: item, Type: table -> ItemLocation
+ C_LegendaryCrafting.IsRuneforgeLegendaryMaxLevel
+   # arg 1: runeforgeLegendary, Type: table -> ItemLocation
+ C_LegendaryCrafting.IsUpgradeItemValidForRuneforgeLegendary
+   # arg 1: runeforgeLegendary, Type: table -> ItemLocation
+   # arg 2: upgradeItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.IsValidRuneforgeBaseItem
+   # arg 1: baseItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.MakeRuneforgeCraftDescription
+   # arg 1: baseItem, Type: table -> ItemLocation
+ C_LegendaryCrafting.UpgradeRuneforgeLegendary
+   # arg 1: runeforgeLegendary, Type: table -> ItemLocation
+   # arg 2: upgradeItem, Type: table -> ItemLocation
+ C_LossOfControl.GetActiveLossOfControlDataByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_LossOfControl.GetActiveLossOfControlDataCountByUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Map.GetBestMapForUnit
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_Map.GetMapArtBackgroundAtlas
+   # ret 1: atlasName, Type: string -> textureAtlas
+ C_Map.GetMapArtLayerTextures
+ C_Map.GetMapHighlightInfoAtPosition
+   # ret 1: fileDataID, Type: number -> fileID
+   # ret 2: atlasID, Type: string -> textureAtlas
+ C_Map.GetMapPosFromWorldPos
+   # arg 2: worldPosition, Type: table -> vector2
+   # ret 2: mapPosition, Type: table -> vector2
+ C_Map.GetPlayerMapPosition
+   # arg 2: unitToken, Type: string -> UnitToken
+   # ret 1: position, Type: table -> vector2
+ C_Map.GetUserWaypoint
+   # ret 1: point, Type: table -> UiMapPoint
+ C_Map.GetUserWaypointFromHyperlink
+   # ret 1: point, Type: table -> UiMapPoint
+ C_Map.GetUserWaypointPositionForMap
+   # ret 1: mapPosition, Type: table -> vector2
+ C_Map.GetWorldPosFromMapPos
+   # arg 2: mapPosition, Type: table -> vector2
+   # ret 2: worldPosition, Type: table -> vector2
+ C_Map.SetUserWaypoint
+   # arg 1: point, Type: table -> UiMapPoint
+ C_MapExplorationInfo.GetExploredAreaIDsAtPosition
+   # arg 2: normalizedPosition, Type: table -> vector2
+ C_Minimap.GetTrackingInfo
+   # ret 2: textureFileID, Type: number -> fileID
+ C_ModelInfo.AddActiveModelScene
+   # arg 1: modelSceneFrame, Type: table -> ModelSceneFrame
+ C_ModelInfo.AddActiveModelSceneActor
+   # arg 1: modelSceneFrameActor, Type: table -> ModelSceneFrameActor
+ C_ModelInfo.ClearActiveModelScene
+   # arg 1: modelSceneFrame, Type: table -> ModelSceneFrame
+ C_ModelInfo.ClearActiveModelSceneActor
+   # arg 1: modelSceneFrameActor, Type: table -> ModelSceneFrameActor
+ C_MountJournal.ApplyMountEquipment
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_MountJournal.GetDisplayedMountInfo
+   # ret 3: icon, Type: number -> fileID
+ C_MountJournal.GetMountInfoByID
+   # ret 3: icon, Type: number -> fileID
+ C_MountJournal.IsItemMountEquipment
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_Navigation.GetFrame
+   # ret 1: frame, Type: table -> ScriptRegion
+ C_NewItems.IsNewItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_NewItems.RemoveNewItem
+   # arg 1: containerIndex, Type: number -> BagIndex
+ C_PaperDollInfo.GetInspectAzeriteItemEmpoweredChoices
+   # arg 1: unit, Type: string -> UnitToken
+ C_PaperDollInfo.GetInspectItemLevel
+   # arg 1: unit, Type: string -> UnitToken
+ C_PaperDollInfo.GetStaggerPercentage
+   # arg 1: unit, Type: string -> UnitToken
+ C_PartyInfo.ConfirmInviteTravelPass
+   # arg 2: targetGUID, Type: string -> WOWGUID
+ C_PartyInfo.GetInviteConfirmationInvalidQueues
+   # arg 1: inviteGUID, Type: string -> WOWGUID
+ C_PartyInfo.GetInviteReferralInfo
+   # arg 1: inviteGUID, Type: string -> WOWGUID
+   # ret 1: outReferredByGuid, Type: string -> WOWGUID
+   # ret 5: outClubId, Type: string -> ClubId
+ C_PerksProgram.GetTimeRemaining
+   # ret 1: timeRemaining, Type: number -> time_t
+ C_PerksProgram.GetVendorItemInfoRefundTimeLeft
+   # ret 1: refundTimeRemaining, Type: number -> time_t
+ C_PetBattles.GetIcon
+   # ret 1: iconFileID, Type: number -> fileID
+ C_PetJournal.GetPetAbilityInfo
+   # ret 2: icon, Type: number -> fileID
+ C_PetJournal.GetPetInfoTableByPetID
+   # arg 1: petID, Type: string -> WOWGUID
+ C_PetJournal.GetPetLoadOutInfo
+   # ret 1: petID, Type: string -> WOWGUID
+ C_PetJournal.GetPetSummonInfo
+   # arg 1: battlePetGUID, Type: string -> WOWGUID
+ C_PetJournal.PetIsSummonable
+   # arg 1: battlePetGUID, Type: string -> WOWGUID
+ C_PetJournal.SpellTargetBattlePet
+   # arg 1: battlePetGUID, Type: string -> WOWGUID
+ C_PlayerInfo.GUIDIsPlayer
+   # arg 1: guid, Type: string -> WOWGUID
+ C_PlayerInfo.GetClass
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_PlayerInfo.GetContentDifficultyCreatureForPlayer
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_PlayerInfo.GetName
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+   # arg 1: playerToken, Type: string -> UnitToken
+ C_PlayerInfo.GetRace
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_PlayerInfo.GetSex
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_PlayerInfo.IsConnected
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_PlayerInfo.UnitIsSameServer
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_PlayerInteractionManager.InteractUnit
+   + arg 3: looseTargeting
+ C_PlayerMentorship.GetMentorshipStatus
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_PvP.GetActiveMatchDuration
+   # ret 1: seconds, Type: number -> time_t
+ C_PvP.GetArenaCrowdControlInfo
+   # arg 1: playerToken, Type: string -> UnitToken
+ C_PvP.GetOutdoorPvPWaitTime
+   # ret 1: pvpWaitTime, Type: number -> time_t
+ C_PvP.GetScoreInfoByPlayerGuid
+   # arg 1: guid, Type: string -> WOWGUID
+ C_PvP.RequestCrowdControlSpell
+   # arg 1: playerToken, Type: string -> UnitToken
+ C_QuestItemUse.CanUseQuestItemOnObject
+   # arg 1: item, Type: table -> ItemLocation
+   # arg 2: unit, Type: string -> UnitToken
+ C_QuestLog.IsUnitOnQuest
+   # arg 1: unit, Type: string -> UnitToken
+ C_QuestLog.UnitIsRelatedToActiveQuest
+   # arg 1: unit, Type: string -> UnitToken
+ C_RecruitAFriend.ClaimActivityReward
+   # arg 2: acceptanceID, Type: string -> RecruitAcceptanceID
+ C_RecruitAFriend.ClaimNextReward
+   + arg 1: rafVersion
+ C_RecruitAFriend.GetRecruitActivityRequirementsText
+   # arg 2: acceptanceID, Type: string -> RecruitAcceptanceID
+ C_RecruitAFriend.RemoveRAFRecruit
+   # arg 1: wowAccountGUID, Type: string -> WOWGUID
+ C_ReportSystem.CanReportPlayer
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_ReportSystem.CanReportPlayerForLanguage
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_ReportSystem.SendReport
+   # arg 1: reportInfo, Type: table -> ReportInfo
+   # arg 2: playerLocation, Type: table -> PlayerLocation
+ C_ScrappingMachineUI.GetCurrentPendingScrapItemLocationByIndex
+   # ret 1: itemLoc, Type: table -> ItemLocation
+ C_Social.GetLastAchievement
+   # ret 4: iconFileID, Type: number -> fileID
+ C_Social.GetLastItem
+   # ret 3: iconFileID, Type: number -> fileID
+ C_SocialQueue.GetAllGroups
+ C_SocialQueue.GetGroupForPlayer
+   # arg 1: playerGUID, Type: string -> WOWGUID
+   # ret 1: groupGUID, Type: string -> WOWGUID
+ C_SocialQueue.GetGroupInfo
+   # arg 1: groupGUID, Type: string -> WOWGUID
+   # ret 8: leaderGUID, Type: string -> WOWGUID
+ C_SocialQueue.GetGroupMembers
+   # arg 1: groupGUID, Type: string -> WOWGUID
+ C_SocialQueue.GetGroupQueues
+   # arg 1: groupGUID, Type: string -> WOWGUID
+ C_SocialQueue.RequestToJoin
+   # arg 1: groupGUID, Type: string -> WOWGUID
+ C_SocialQueue.SignalToastDisplayed
+   # arg 1: groupGUID, Type: string -> WOWGUID
+ C_Soulbinds.IsItemConduitByItemInfo
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Sound.PlayItemSound
+   # arg 2: itemLocation, Type: table -> ItemLocation
+ C_SpecializationInfo.GetInspectSelectedPvpTalent
+   # arg 1: inspectedUnit, Type: string -> UnitToken
+ C_Spell.GetMawPowerBorderAtlasBySpellID
+   # ret 1: rarityBorderAtlas, Type: string -> textureAtlas
+ C_System.GetFrameStack
+ C_TTSSettings.ShouldOverrideMessage
+   + arg 2: messageText
+ C_Texture.GetAtlasInfo
+   # arg 1: atlas, Type: string -> textureAtlas
+ C_TooltipComparison.GetItemComparisonDelta
+   # arg 1: comparisonItem, Type: table -> TooltipComparisonItem
+   # arg 2: equippedItem, Type: table -> TooltipComparisonItem
+   # arg 3: pairedItem, Type: table -> TooltipComparisonItem
+ C_TooltipComparison.GetItemComparisonInfo
+   # arg 1: comparisonItem, Type: table -> TooltipComparisonItem
+ C_TooltipInfo.GetBagItem
+   # arg 1: bagIndex, Type: number -> BagIndex
+ C_TooltipInfo.GetBagItemChild
+   # arg 1: bagIndex, Type: number -> BagIndex
+ C_TooltipInfo.GetCompanionPet
+   # arg 1: petGUID, Type: string -> WOWGUID
+ C_TooltipInfo.GetInventoryItem
+   # arg 1: unit, Type: string -> UnitToken
+ C_TooltipInfo.GetItemByGUID
+   # arg 1: guid, Type: string -> WOWGUID
+ C_TooltipInfo.GetRecipeResultItem
+   # arg 3: recraftItemGUID, Type: string -> WOWGUID
+ C_TooltipInfo.GetRecipeResultItemForOrder
+   # arg 3: orderID, Type: number -> BigUInteger
+ C_TooltipInfo.GetRuneforgeResultItem
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_TooltipInfo.GetTransmogrifyItem
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+ C_TooltipInfo.GetUnit
+   # arg 1: unit, Type: string -> UnitToken
+ C_TooltipInfo.GetUnitAura
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_TooltipInfo.GetUnitBuff
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_TooltipInfo.GetUnitDebuff
+   # arg 1: unitToken, Type: string -> UnitToken
+ C_TooltipInfo.GetWeeklyReward
+   # arg 1: itemDBID, Type: string -> WeeklyRewardItemDBID
+ C_TradeSkillUI.CraftEnchant
+   # arg 4: itemTarget, Type: table -> ItemLocation
+ C_TradeSkillUI.CraftRecipe
+   # arg 5: orderID, Type: number -> BigUInteger
+ C_TradeSkillUI.CraftSalvage
+   # arg 3: itemTarget, Type: table -> ItemLocation
+ C_TradeSkillUI.DoesRecraftingRecipeAcceptItem
+   # arg 1: itemLocation, Type: table -> ItemLocation
+ C_TradeSkillUI.GetCraftingOperationInfo
+   # arg 3: allocationItemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.GetCraftingOperationInfoForOrder
+   # arg 3: orderID, Type: number -> BigUInteger
+ C_TradeSkillUI.GetCraftingReagentBonusText
+   # arg 4: allocationItemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.GetEnchantItems
+ C_TradeSkillUI.GetItemCraftedQualityByItemInfo
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_TradeSkillUI.GetItemReagentQualityByItemInfo
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_TradeSkillUI.GetItemSlotModifications
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.GetItemSlotModificationsForOrder
+   # arg 1: orderID, Type: number -> BigUInteger
+ C_TradeSkillUI.GetOriginalCraftRecipeID
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.GetRecipeDescription
+   # arg 3: allocationItemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.GetRecipeOutputItemData
+   # arg 3: allocationItemGUID, Type: string -> WOWGUID
+   # arg 5: recraftOrderID, Type: number -> BigUInteger
+ C_TradeSkillUI.GetRecraftItems
+ C_TradeSkillUI.GetSkillLineForGear
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_TradeSkillUI.IsOriginalCraftRecipeLearned
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.IsRecraftItemEquipped
+   # arg 1: recraftItemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.RecraftRecipe
+   # arg 1: itemGUID, Type: string -> WOWGUID
+ C_TradeSkillUI.RecraftRecipeForOrder
+   # arg 1: orderID, Type: number -> BigUInteger
+   # arg 2: itemGUID, Type: string -> WOWGUID
+ C_Transmog.CanTransmogItem
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_Transmog.CanTransmogItemWithItem
+   # arg 1: targetItemInfo, Type: string -> ItemInfo
+   # arg 2: sourceItemInfo, Type: string -> ItemInfo
+ C_Transmog.ClearPending
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+ C_Transmog.GetPending
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+   # ret 1: pendingInfo, Type: table -> TransmogPendingInfo
+ C_Transmog.GetSlotEffectiveCategory
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+ C_Transmog.GetSlotInfo
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+   # ret 8: texture, Type: number -> fileID
+ C_Transmog.GetSlotUseError
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+ C_Transmog.GetSlotVisualInfo
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+ C_Transmog.IsSlotBeingCollapsed
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+ C_Transmog.SetPending
+   # arg 1: transmogLocation, Type: table -> TransmogLocation
+   # arg 2: pendingInfo, Type: table -> TransmogPendingInfo
+ C_TransmogCollection.GetAppearanceSourceInfo
+   # ret 4: icon, Type: number -> fileID
+ C_TransmogCollection.GetAppearanceSources
+   # arg 3: transmogLocation, Type: table -> TransmogLocation
+ C_TransmogCollection.GetCategoryAppearances
+   # arg 2: transmogLocation, Type: table -> TransmogLocation
+ C_TransmogCollection.GetInspectItemTransmogInfoList
+ C_TransmogCollection.GetItemInfo
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_TransmogCollection.GetItemTransmogInfoListFromOutfitHyperlink
+ C_TransmogCollection.GetOutfitHyperlinkFromItemTransmogInfoList
+ C_TransmogCollection.GetOutfitInfo
+   # ret 2: icon, Type: number -> fileID
+ C_TransmogCollection.GetOutfitItemTransmogInfoList
+ C_TransmogCollection.GetSourceIcon
+   # ret 1: icon, Type: number -> fileID
+ C_TransmogCollection.IsCategoryValidForItem
+   # arg 2: itemInfo, Type: string -> ItemInfo
+ C_TransmogCollection.ModifyOutfit
+ C_TransmogCollection.NewOutfit
+   # arg 2: icon, Type: number -> fileID
+ C_TransmogCollection.PlayerHasTransmogByItemInfo
+   # arg 1: itemInfo, Type: string -> ItemInfo
+ C_UIWidgetManager.SetProcessingUnit
+   # arg 1: unit, Type: string -> UnitToken
+ C_UIWidgetManager.SetProcessingUnitGuid
+   # arg 1: unit, Type: string -> WOWGUID
+ C_UnitAuras.GetAuraDataByAuraInstanceID
+   # ret 1: aura, Type: table -> AuraData
+ C_UnitAuras.GetAuraDataBySlot
+   # ret 1: aura, Type: table -> AuraData
+ C_UnitAuras.GetPlayerAuraBySpellID
+   # ret 1: aura, Type: table -> AuraData
+ C_VideoOptions.GetCurrentGameWindowSize
+   # ret 1: size, Type: table -> vector2
+ C_VideoOptions.GetDefaultGameWindowSize
+   # ret 1: size, Type: table -> vector2
+ C_VideoOptions.GetGameWindowSizes
+ C_VignetteInfo.FindBestUniqueVignette
+ C_VignetteInfo.GetVignetteInfo
+   # arg 1: vignetteGUID, Type: string -> WOWGUID
+ C_VignetteInfo.GetVignettePosition
+   # arg 1: vignetteGUID, Type: string -> WOWGUID
+   # ret 1: vignettePosition, Type: table -> vector2
+ C_VignetteInfo.GetVignettes
+ C_VoiceChat.GetChannelForCommunityStream
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_VoiceChat.GetJoinClubVoiceChannelError
+   # arg 1: clubId, Type: string -> ClubId
+ C_VoiceChat.GetMemberGUID
+   # ret 1: memberGUID, Type: string -> WOWGUID
+ C_VoiceChat.GetMemberID
+   # arg 2: memberGUID, Type: string -> WOWGUID
+ C_VoiceChat.GetMemberVolume
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_VoiceChat.IsChannelJoinPending
+   # arg 2: clubId, Type: string -> ClubId
+   # arg 3: streamId, Type: string -> ClubStreamId
+ C_VoiceChat.IsMemberMuted
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_VoiceChat.IsPlayerUsingVoice
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_VoiceChat.RequestJoinAndActivateCommunityStreamChannel
+   # arg 1: clubId, Type: string -> ClubId
+   # arg 2: streamId, Type: string -> ClubStreamId
+ C_VoiceChat.SetMemberMuted
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_VoiceChat.SetMemberVolume
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_VoiceChat.SetPortraitTexture
+   # arg 1: textureObject, Type: table -> SimpleTexture
+ C_VoiceChat.ToggleMemberMuted
+   # arg 1: playerLocation, Type: table -> PlayerLocation
+ C_WeeklyRewards.GetItemHyperlink
+   # arg 1: itemDBID, Type: string -> WeeklyRewardItemDBID
+ C_WeeklyRewards.GetWeeklyRewardTextureKit
+   # ret 1: uiTextureKit, Type: string -> textureKit
+ C_WowTokenUI.StartTokenSell
+   # arg 1: tokenGUID, Type: string -> WOWGUID
+ GetExpansionTrialInfo
+   # ret 2: expansionTrialRemainingSeconds, Type: number -> time_t
+ GetUnitChargedPowerPoints
+   # arg 1: unit, Type: string -> UnitToken
+ GetUnitEmpowerHoldAtMaxTime
+   # arg 1: unit, Type: string -> UnitToken
+ GetUnitEmpowerMinHoldTime
+   # arg 1: unit, Type: string -> UnitToken
+ GetUnitEmpowerStageDuration
+   # arg 1: unit, Type: string -> UnitToken
+ GetUnitPowerBarInfo
+   # arg 1: unitToken, Type: string -> UnitToken
+ GetUnitPowerBarStrings
+   # arg 1: unitToken, Type: string -> UnitToken
+ GetUnitPowerBarTextureInfo
+   # arg 1: unitToken, Type: string -> UnitToken
+   # ret 1: texture, Type: number -> fileID
+ GetUnitPowerBarTextureInfoByID
+   # ret 1: texture, Type: number -> fileID
+ IsPlayerInGuildFromGUID
+   # arg 1: playerGUID, Type: string -> WOWGUID
+ IsUnitModelReadyForUI
+   # arg 1: unitToken, Type: string -> UnitToken
+ SetPortraitTexture
+   # arg 1: textureObject, Type: table -> SimpleTexture
+   # arg 2: unitToken, Type: string -> UnitToken
+ SetPortraitTextureFromCreatureDisplayID
+   # arg 1: textureObject, Type: table -> SimpleTexture
+ SetUnitCursorTexture
+   # arg 1: textureObject, Type: table -> SimpleTexture
+   # arg 2: unit, Type: string -> UnitToken
+ UnitAlliedRaceInfo
+   # arg 1: unit, Type: string -> UnitToken
+ UnitChromieTimeID
+   # arg 1: unit, Type: string -> UnitToken
+ UnitClass
+   # arg 1: unit, Type: string -> UnitToken
+ UnitClassBase
+   # arg 1: unit, Type: string -> UnitToken
+ UnitInPartyShard
+   # arg 1: unit, Type: string -> UnitToken
+ UnitIsConnected
+   # arg 1: unit, Type: string -> UnitToken
+ UnitIsOwnerOrControllerOfUnit
+   # arg 1: controllingUnit, Type: string -> UnitToken
+   # arg 2: controlledUnit, Type: string -> UnitToken
+ UnitNameplateShowsWidgetsOnly
+   # arg 1: unit, Type: string -> UnitToken
+ UnitPartialPower
+   # arg 1: unitToken, Type: string -> UnitToken
+ UnitPercentHealthFromGUID
+   # arg 1: unitGUID, Type: string -> WOWGUID
+ UnitPhaseReason
+   # arg 1: unit, Type: string -> UnitToken
+ UnitPower
+   # arg 1: unitToken, Type: string -> UnitToken
+ UnitPowerBarID
+   # arg 1: unitToken, Type: string -> UnitToken
+ UnitPowerMax
+   # arg 1: unitToken, Type: string -> UnitToken
+ UnitPvpClassification
+   # arg 1: unit, Type: string -> UnitToken
+ UnitQuestTrivialLevelRange
+   # arg 1: unit, Type: string -> UnitToken
+ UnitQuestTrivialLevelRangeScaling
+   # arg 1: unit, Type: string -> UnitToken
+ UnitSex
+   # arg 1: unit, Type: string -> UnitToken
+ UnitTokenFromGUID
+   # arg 1: unitGUID, Type: string -> WOWGUID
+ UnitTreatAsPlayerForDisplay
+   # arg 1: unit, Type: string -> UnitToken
+ UnitWidgetSet
+   # arg 1: unit, Type: string -> UnitToken
+
+=== Events ===
+ ARENA_COOLDOWNS_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ ARENA_CROWD_CONTROL_SPELL_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED
+   # 1: azeriteEmpoweredItemLocation, Type: table -> AzeriteEmpoweredItemLocation
+ AZERITE_ITEM_EXPERIENCE_CHANGED
+   # 1: azeriteItemLocation, Type: table -> AzeriteItemLocation
+ AZERITE_ITEM_POWER_LEVEL_CHANGED
+   # 1: azeriteItemLocation, Type: table -> AzeriteItemLocation
+ BAG_CLOSED
+   # 1: bagID, Type: number -> BagIndex
+ BAG_UPDATE
+   # 1: bagID, Type: number -> BagIndex
+ BATTLEPET_FORCE_NAME_DECLENSION
+   # 2: battlePetGUID, Type: string -> WOWGUID
+ BEHAVIORAL_NOTIFICATION
+   # 2: dbId, Type: string -> NotificationDbId
+ CHAT_COMBAT_MSG_ARENA_POINTS_GAIN
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_ACHIEVEMENT
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_AFK
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BG_SYSTEM_ALLIANCE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BG_SYSTEM_HORDE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BG_SYSTEM_NEUTRAL
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN_INLINE_TOAST_ALERT
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN_INLINE_TOAST_BROADCAST
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN_INLINE_TOAST_BROADCAST_INFORM
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN_INLINE_TOAST_CONVERSATION
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN_WHISPER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN_WHISPER_INFORM
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_BN_WHISPER_PLAYER_OFFLINE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_CHANNEL
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_CHANNEL_JOIN
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_CHANNEL_LEAVE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_CHANNEL_LIST
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_CHANNEL_NOTICE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_CHANNEL_NOTICE_USER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_COMBAT_FACTION_CHANGE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_COMBAT_HONOR_GAIN
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_COMBAT_MISC_INFO
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_COMBAT_XP_GAIN
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_COMMUNITIES_CHANNEL
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_CURRENCY
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_DND
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_EMOTE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_FILTERED
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_GUILD
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_GUILD_ACHIEVEMENT
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_GUILD_ITEM_LOOTED
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_IGNORED
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_INSTANCE_CHAT
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_INSTANCE_CHAT_LEADER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_LOOT
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_MONEY
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_MONSTER_EMOTE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_MONSTER_PARTY
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_MONSTER_SAY
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_MONSTER_WHISPER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_MONSTER_YELL
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_OFFICER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_OPENING
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_PARTY
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_PARTY_LEADER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_PET_BATTLE_COMBAT_LOG
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_PET_BATTLE_INFO
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_PET_INFO
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_RAID
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_RAID_BOSS_EMOTE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_RAID_BOSS_WHISPER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_RAID_LEADER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_RAID_WARNING
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_RESTRICTED
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_SAY
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_SKILL
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_SYSTEM
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_TARGETICONS
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_TEXT_EMOTE
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_TRADESKILLS
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_VOICE_TEXT
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_WHISPER
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_WHISPER_INFORM
+   # 12: guid, Type: string -> WOWGUID
+ CHAT_MSG_YELL
+   # 12: guid, Type: string -> WOWGUID
+ CLUB_ADDED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_FINDER_APPLICANT_INVITE_RECIEVED
+ CLUB_FINDER_APPLICATIONS_UPDATED
+ CLUB_FINDER_CAN_WHISPER_APPLICANT
+   # 1: applicant, Type: string -> WOWGUID
+ CLUB_FINDER_CLUB_REPORTED
+   # 2: clubFinderGUID, Type: string -> WOWGUID
+ CLUB_FINDER_COMMUNITY_OFFLINE_JOIN
+   # 1: clubId, Type: string -> ClubId
+ CLUB_FINDER_POST_UPDATED
+ CLUB_INVITATIONS_RECEIVED_FOR_CLUB
+   # 1: clubId, Type: string -> ClubId
+ CLUB_INVITATION_REMOVED_FOR_SELF
+   # 1: invitationId, Type: string -> ClubInvitationId
+ CLUB_MEMBER_ADDED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_MEMBER_PRESENCE_UPDATED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_MEMBER_REMOVED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_MEMBER_ROLE_UPDATED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_MEMBER_UPDATED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_MESSAGE_ADDED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_MESSAGE_HISTORY_RECEIVED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_MESSAGE_UPDATED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_REMOVED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_SELF_MEMBER_ROLE_UPDATED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_STREAMS_LOADED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_STREAM_ADDED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_STREAM_REMOVED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_STREAM_SUBSCRIBED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_STREAM_UNSUBSCRIBED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_STREAM_UPDATED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+ CLUB_TICKETS_RECEIVED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_TICKET_CREATED
+   # 1: clubId, Type: string -> ClubId
+ CLUB_UPDATED
+   # 1: clubId, Type: string -> ClubId
+ COMMODITY_PRICE_UPDATED
+   # 1: updatedUnitPrice, Type: number -> BigUInteger
+   # 2: updatedTotalPrice, Type: number -> BigUInteger
+ CRAFTINGORDERS_CLAIMED_ORDER_UPDATED
+   # 1: orderID, Type: number -> BigUInteger
+ CRAFTINGORDERS_CLAIM_ORDER_RESPONSE
+   # 2: orderID, Type: number -> BigUInteger
+ CRAFTINGORDERS_FULFILL_ORDER_RESPONSE
+   # 2: orderID, Type: number -> BigUInteger
+ CRAFTINGORDERS_REJECT_ORDER_RESPONSE
+   # 2: orderID, Type: number -> BigUInteger
+ CRAFTINGORDERS_RELEASE_ORDER_RESPONSE
+   # 2: orderID, Type: number -> BigUInteger
+ CRAFTINGORDERS_UPDATE_CUSTOMER_NAME
+   # 2: orderID, Type: number -> BigUInteger
+ FORBIDDEN_NAME_PLATE_CREATED
+   # 1: namePlateFrame, Type: table -> NamePlateFrame
+ GARRISON_FOLLOWER_ADDED
+   # 1: followerDbID, Type: string -> GarrisonFollower
+   # 7: textureKit, Type: string -> textureKit
+ GARRISON_FOLLOWER_DURABILITY_CHANGED
+   # 2: followerDbID, Type: string -> GarrisonFollower
+ GARRISON_FOLLOWER_HEALED
+   # 1: followerID, Type: string -> GarrisonFollower
+ GARRISON_FOLLOWER_UPGRADED
+   # 1: followerDbID, Type: string -> GarrisonFollower
+ GARRISON_FOLLOWER_XP_CHANGED
+   # 2: followerDbID, Type: string -> GarrisonFollower
+ GARRISON_MISSION_REWARD_INFO
+   # 2: followerDbID, Type: string -> GarrisonFollower
+ GOSSIP_SHOW
+   # 1: uiTextureKit, Type: string -> textureKit
+ GROUP_FORMED
+   # 2: partyGUID, Type: string -> WOWGUID
+ GROUP_JOINED
+   # 2: partyGUID, Type: string -> WOWGUID
+ GROUP_LEFT
+   # 2: partyGUID, Type: string -> WOWGUID
+ HONOR_XP_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ INCOMING_RESURRECT_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ INCOMING_SUMMON_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ INSPECT_ACHIEVEMENT_READY
+   # 1: guid, Type: string -> WOWGUID
+ INSPECT_READY
+   # 1: inspecteeGUID, Type: string -> WOWGUID
+ INVITE_TRAVEL_PASS_CONFIRMATION
+   # 2: targetGUID, Type: string -> WOWGUID
+ ISLAND_AZERITE_GAIN
+   # 4: gainedBy, Type: string -> WOWGUID
+   # 5: gainedFrom, Type: string -> WOWGUID
+ ITEM_CONVERSION_DATA_READY
+   # 1: itemGUID, Type: string -> WOWGUID
+ ITEM_INTERACTION_ITEM_SELECTION_UPDATED
+   # 1: itemLocation, Type: table -> ItemLocation
+ ITEM_LOCKED
+   # 1: bagOrSlotIndex, Type: number -> BagIndex
+ ITEM_LOCK_CHANGED
+   # 1: bagOrSlotIndex, Type: number -> BagIndex
+ ITEM_UNLOCKED
+   # 1: bagOrSlotIndex, Type: number -> BagIndex
+ KNOWN_TITLES_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ LFG_LIST_APPLICATION_STATUS_UPDATED
+   # 4: groupName, Type: string -> kstringLfgListChat
+ LFG_LIST_JOINED_GROUP
+   # 2: groupName, Type: string -> kstringLfgListChat
+ LOSS_OF_CONTROL_COMMENTATOR_ADDED
+   # 1: victim, Type: string -> WOWGUID
+ LOSS_OF_CONTROL_COMMENTATOR_UPDATE
+   # 1: victim, Type: string -> WOWGUID
+ MINIMAP_PING
+   # 1: unitTarget, Type: string -> UnitToken
+ NAME_PLATE_CREATED
+   # 1: namePlateFrame, Type: table -> NamePlateFrame
+ NAVIGATION_FRAME_CREATED
+   # 1: region, Type: table -> ScriptRegion
+ NEW_PET_ADDED
+   # 1: battlePetGUID, Type: string -> WOWGUID
+ OBJECT_ENTERED_AOI
+   # 1: guid, Type: string -> WOWGUID
+ OBJECT_LEFT_AOI
+   # 1: guid, Type: string -> WOWGUID
+ PARTY_INVITE_REQUEST
+   # 7: inviterGUID, Type: string -> WOWGUID
+ PARTY_MEMBER_DISABLE
+   # 1: unitTarget, Type: string -> UnitToken
+ PARTY_MEMBER_ENABLE
+   # 1: unitTarget, Type: string -> UnitToken
+ PET_JOURNAL_AUTO_SLOTTED_PET
+   # 2: battlePetGUID, Type: string -> WOWGUID
+ PET_JOURNAL_PET_DELETED
+   # 1: battlePetGUID, Type: string -> WOWGUID
+ PET_JOURNAL_PET_RESTORED
+   # 1: battlePetGUID, Type: string -> WOWGUID
+ PET_JOURNAL_PET_REVOKED
+   # 1: battlePetGUID, Type: string -> WOWGUID
+ PLAYER_DAMAGE_DONE_MODS
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_FLAGS_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_GAINS_VEHICLE_DATA
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_GUILD_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_LOSES_VEHICLE_DATA
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_PVP_KILLS_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_PVP_RANK_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_REPORT_SUBMITTED
+   # 1: invitedByGUID, Type: string -> WOWGUID
+ PLAYER_SOFT_INTERACT_CHANGED
+   # 1: oldTarget, Type: string -> WOWGUID
+   # 2: newTarget, Type: string -> WOWGUID
+ PLAYER_SPECIALIZATION_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_TRIAL_XP_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ PLAYER_XP_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ PVP_MATCH_COMPLETE
+   # 2: duration, Type: number -> time_t
+ PVP_TIMER_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ QUEST_SESSION_MEMBER_START_RESPONSE
+   # 1: guid, Type: string -> WOWGUID
+ QUEST_SESSION_NOTIFICATION
+   # 2: guid, Type: string -> WOWGUID
+ RAF_ENTITLEMENT_DELIVERED
+   + 6: rafVersion
+ READY_CHECK
+   # 2: readyCheckTimeLeft, Type: number -> time_t
+ READY_CHECK_CONFIRM
+   # 1: unitTarget, Type: string -> UnitToken
+ SOCIAL_QUEUE_UPDATE
+   # 1: groupGUID, Type: string -> WOWGUID
+ START_TIMER
+   # 2: timeRemaining, Type: number -> time_t
+   # 3: totalTime, Type: number -> time_t
+ STREAM_VIEW_MARKER_UPDATED
+   # 1: clubId, Type: string -> ClubId
+   # 2: streamId, Type: string -> ClubStreamId
+   # 3: lastReadTime, Type: number -> BigUInteger
+ TRACKED_ACHIEVEMENT_UPDATE
+   # 3: elapsed, Type: number -> time_t
+ TRADE_SKILL_ITEM_UPDATE
+   # 1: itemGUID, Type: string -> WOWGUID
+ TRANSMOGRIFY_SUCCESS
+   # 1: transmogLocation, Type: table -> TransmogLocation
+ TRANSMOGRIFY_UPDATE
+   # 1: transmogLocation, Type: table -> TransmogLocation
+ UNIT_ABSORB_AMOUNT_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_AREA_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_ATTACK
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_ATTACK_POWER
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_ATTACK_SPEED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_AURA
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_CLASSIFICATION_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_COMBAT
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_CONNECTION
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_CTR_OPTIONS
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_DAMAGE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_DEFENSE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_DISPLAYPOWER
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_ENTERED_VEHICLE
+   # 1: unitTarget, Type: string -> UnitToken
+   # 5: vehicleGUID, Type: string -> WOWGUID
+ UNIT_ENTERING_VEHICLE
+   # 1: unitTarget, Type: string -> UnitToken
+   # 5: vehicleGUID, Type: string -> WOWGUID
+ UNIT_EXITED_VEHICLE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_EXITING_VEHICLE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_FACTION
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_FLAGS
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_FORM_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_HEALTH
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_HEAL_ABSORB_AMOUNT_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_HEAL_PREDICTION
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_INVENTORY_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_LEVEL
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_MANA
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_MAXHEALTH
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_MAXPOWER
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_MODEL_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_NAME_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_OTHER_PARTY_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_PET
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_PET_EXPERIENCE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_PHASE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_PORTRAIT_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_POWER_BAR_HIDE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_POWER_BAR_SHOW
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_POWER_BAR_TIMER_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_POWER_FREQUENT
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_POWER_POINT_CHARGE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_POWER_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_QUEST_LOG_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_RANGEDDAMAGE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_RANGED_ATTACK_POWER
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_RESISTANCES
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_SPELLCAST_CHANNEL_START
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_CHANNEL_STOP
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_CHANNEL_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_DELAYED
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_EMPOWER_START
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_EMPOWER_STOP
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_EMPOWER_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_FAILED
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_FAILED_QUIET
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_INTERRUPTED
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_INTERRUPTIBLE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_SPELLCAST_NOT_INTERRUPTIBLE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_SPELLCAST_SENT
+   # 3: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_START
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_STOP
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELLCAST_SUCCEEDED
+   # 1: unitTarget, Type: string -> UnitToken
+   # 2: castGUID, Type: string -> WOWGUID
+ UNIT_SPELL_HASTE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_STATS
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_TARGET
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_TARGETABLE_CHANGED
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_THREAT_LIST_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ UNIT_THREAT_SITUATION_UPDATE
+   # 1: unitTarget, Type: string -> UnitToken
+ VIGNETTE_MINIMAP_UPDATED
+   # 1: vignetteGUID, Type: string -> WOWGUID
+ VOICE_CHAT_CHANNEL_JOINED
+   # 4: clubId, Type: string -> ClubId
+   # 5: streamId, Type: string -> ClubStreamId
+ VOICE_CHAT_PENDING_CHANNEL_JOIN_STATE
+   # 2: clubId, Type: string -> ClubId
+   # 3: streamId, Type: string -> ClubStreamId
+ VOTE_KICK_REASON_NEEDED
+   # 2: resultGUID, Type: string -> WOWGUID
+ WARGAME_REQUESTED
+   # 3: timeoutSeconds, Type: number -> time_t
+
+=== Structures ===
+ AlliedRaceInfo
+   # 9: crestAtlas, Type: string -> textureAtlas
+   # 10: modelBackgroundAtlas, Type: string -> textureAtlas
+   # 11: bannerColor, Type: table -> colorRGB
+ AlliedRaceRacialAbility
+   # 3: icon, Type: number -> fileID
+ AnchorBinding
+   # 2: relativeTo, Type: table -> ScriptRegion
+   # 4: offsetX, Type: number -> uiUnit
+   # 5: offsetY, Type: number -> uiUnit
+ AnimaDiversionFrameInfo
+   # 1: textureKit, Type: string -> textureKit
+ AnimaDiversionNodeInfo
+   # 7: normalizedPosition, Type: table -> vector2
+ ArdenwealdGardenData
+   # 3: remainingSeconds, Type: number -> time_t
+ AreaPOIInfo
+   # 2: position, Type: table -> vector2
+   # 8: uiTextureKit, Type: string -> textureKit
+ ArtifactAppearanceInfo
+   # 8: swatchColor, Type: table -> colorRGB
+ ArtifactArtInfo
+   # 1: textureKit, Type: string -> textureKit
+   # 3: titleColor, Type: table -> colorRGB
+   # 4: barConnectedColor, Type: table -> colorRGB
+   # 5: barDisconnectedColor, Type: table -> colorRGB
+ ArtifactInfo
+   # 4: icon, Type: number -> fileID
+ ArtifactPowerInfo
+   # 12: position, Type: table -> vector2
+   # 13: offset, Type: table -> vector2
+ ArtifactRelicInfo
+   # 2: icon, Type: number -> fileID
+ AtlasInfo
+   # 9: file, Type: number -> fileID
+ AuctionInfo
+   # 3: minBid, Type: number -> WOWMONEY
+   # 4: bidAmount, Type: number -> WOWMONEY
+   # 5: buyoutAmount, Type: number -> WOWMONEY
+   # 6: bidder, Type: string -> WOWGUID
+ AutoCombatSpellInfo
+   # 8: icon, Type: number -> fileID
+ AutoCombatTroopInfo
+   # 2: followerID, Type: string -> GarrisonFollower
+   # 3: garrFollowerID, Type: string -> GarrisonFollower
+   # 17: classAtlas, Type: string -> textureAtlas
+   # 18: portraitIconID, Type: number -> fileID
+   # 19: textureKit, Type: string -> textureKit
+ AzeriteEssenceInfo
+   # 6: icon, Type: number -> fileID
+ BNetGameAccountInfo
+   # 1: gameAccountID, Nilable: true -> false
+   # 17: playerGuid, Type: string -> WOWGUID
+ BackpackCurrencyInfo
+   # 3: iconFileID, Type: number -> fileID
+ BattlefieldItemReward
+   # 3: texture, Type: number -> fileID
+ BattlefieldVehicleInfo
+   # 5: atlas, Type: string -> textureAtlas
+ BattlemasterListInfo
+   # 5: icon, Type: number -> fileID
+ BidInfo
+   # 5: minBid, Type: number -> BigUInteger
+   # 6: bidAmount, Type: number -> BigUInteger
+   # 7: buyoutAmount, Type: number -> BigUInteger
+   # 8: bidder, Type: string -> WOWGUID
+ BountyInfo
+   # 3: icon, Type: number -> fileID
+ BrowseResultInfo
+   # 4: minPrice, Type: number -> BigUInteger
+ BulletTextListWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ CalendarDayEvent
+   # 1: eventID, Type: string -> CalendarEventID
+   # 9: iconTexture, Type: number -> fileID
+   # 20: clubID, Type: string -> ClubId
+ CalendarEventInviteInfo
+   # 11: guid, Type: string -> WOWGUID
+ CalendarEventTextureInfo
+   # 2: iconTexture, Type: number -> fileID
+ CalendarGuildEventInfo
+   # 1: eventID, Type: string -> CalendarEventID
+   # 11: texture, Type: number -> fileID
+   # 13: clubID, Type: string -> ClubId
+ CalendarHolidayInfo
+   # 3: texture, Type: number -> fileID
+ CampaignInfo
+   # 3: uiTextureKit, Type: string -> textureKit
+ CaptureBarWidgetVisualizationInfo
+   # 12: textureKit, Type: string -> textureKit
+   # 13: frameTextureKit, Type: string -> textureKit
+ CaptureZoneVisualizationInfo
+   # 8: textureKit, Type: string -> textureKit
+   # 9: frameTextureKit, Type: string -> textureKit
+ ChallengeModeCompletionMemberInfo
+   # 1: memberGUID, Type: string -> WOWGUID
+ CharCustomizationCategory
+   # 4: icon, Type: string -> textureAtlas
+   # 5: selectedIcon, Type: string -> textureAtlas
+ CharCustomizationChoice
+   # 5: swatchColor1, Type: table -> colorRGB
+   # 6: swatchColor2, Type: table -> colorRGB
+ CharacterAlternateFormData
+   # 4: createScreenIconAtlas, Type: string -> textureAtlas
+ ChromieTimeExpansionInfo
+   # 4: mapAtlas, Type: string -> textureAtlas
+   # 5: previewAtlas, Type: string -> textureAtlas
+ ClubFinderApplicantInfo
+   # 1: clubFinderGUID, Type: string -> WOWGUID
+   # 2: playerGUID, Type: string -> WOWGUID
+   # 12: lastUpdatedTime, Type: number -> BigInteger
+ ClubInfo
+   # 1: clubId, Type: string -> ClubId
+   # 9: favoriteTimeStamp, Type: number -> BigUInteger
+   # 10: joinTime, Type: number -> BigUInteger
+ ClubInvitationInfo
+   # 1: invitationId, Type: string -> ClubInvitationId
+ ClubMemberInfo
+   # 7: guid, Type: string -> WOWGUID
+ ClubMessageIdentifier
+   # 1: epoch, Type: number -> BigUInteger
+   # 2: position, Type: number -> BigUInteger
+ ClubMessageInfo
+   # 2: content, Type: string -> kstringClubMessage
+ ClubSelfInvitationInfo
+   # 1: invitationId, Type: string -> ClubInvitationId
+ ClubStreamInfo
+   # 1: streamId, Type: string -> ClubStreamId
+   # 6: creationTime, Type: number -> BigUInteger
+ ClubStreamNotificationSetting
+   # 1: streamId, Type: string -> ClubStreamId
+ ClubTicketInfo
+   # 4: creationTime, Type: number -> BigUInteger
+   # 5: expirationTime, Type: number -> BigUInteger
+   # 6: defaultStreamId, Type: string -> ClubStreamId
+ CommoditySearchResultInfo
+   # 3: unitPrice, Type: number -> BigUInteger
+ ContainerItemInfo
+   # 1: iconFileID, Type: number -> fileID
+ ContributionAppearance
+   # 2: stateColor, Type: table -> colorRGB
+   # 5: statusBarAtlas, Type: string -> textureAtlas
+   # 6: borderAtlas, Type: string -> textureAtlas
+   # 7: bannerAtlas, Type: string -> textureAtlas
+ ContributionMapInfo
+   # 2: position, Type: table -> vector2
+ CovenantData
+   # 2: textureKit, Type: string -> textureKit
+ CovenantPreviewInfo
+   # 1: textureKit, Type: string -> textureKit
+   # 7: covenantCrest, Type: string -> textureAtlas
+ CovenantSanctumRenownRewardInfo
+   # 10: icon, Type: number -> fileID
+ CovenantSoulbindInfo
+   # 2: uiTextureKit, Type: string -> textureKit
+ CraftingItemResultData
+   # 5: itemGUID, Type: string -> WOWGUID
+ CraftingOrderBucketInfo
+   # 4: tipAmountAvg, Type: number -> WOWMONEY
+   # 5: tipAmountMax, Type: number -> WOWMONEY
+ CraftingOrderCustomerOptionInfo
+   + 8: iLvlMin
+   + 9: iLvlMax
+   - 8: iLvl
+ CraftingOrderInfo
+   # 1: orderID, Type: number -> BigUInteger
+   # 7: expirationTime, Type: number -> time_t
+   # 8: claimEndTime, Type: number -> time_t
+   # 10: tipAmount, Type: number -> WOWMONEY
+   # 11: consortiumCut, Type: number -> WOWMONEY
+   # 15: customerGuid, Type: string -> WOWGUID
+   # 17: crafterGuid, Type: string -> WOWGUID
+   # 22: outputItemGUID, Type: string -> WOWGUID
+ CraftingOrderMailInfo
+   # 3: commissionPaid, Type: number -> WOWMONEY
+   # 5: crafterGUID, Type: string -> WOWGUID
+   # 7: customerGUID, Type: string -> WOWGUID
+ CraftingTargetItem
+   # 2: itemGUID, Type: string -> WOWGUID
+ CurrencyInfo
+   # 9: iconFileID, Type: number -> fileID
+ DBColorExport
+   # 2: color, Type: table -> colorRGBA
+ DigSiteMapInfo
+   # 2: position, Type: table -> vector2
+ DiscreteProgressStepsVisualizationInfo
+   # 9: textureKit, Type: string -> textureKit
+   # 10: frameTextureKit, Type: string -> textureKit
+ DoubleIconAndTextWidgetVisualizationInfo
+   # 9: textureKit, Type: string -> textureKit
+   # 10: frameTextureKit, Type: string -> textureKit
+ DoubleStateIconRowVisualizationInfo
+   # 6: textureKit, Type: string -> textureKit
+   # 7: frameTextureKit, Type: string -> textureKit
+ DoubleStatusBarWidgetVisualizationInfo
+   # 16: textureKit, Type: string -> textureKit
+   # 17: frameTextureKit, Type: string -> textureKit
+ DungeonEntranceMapInfo
+   # 2: position, Type: table -> vector2
+ EncounterJournalItemInfo
+   # 6: icon, Type: number -> fileID
+ EncounterJournalSectionInfo
+   # 5: abilityIcon, Type: number -> fileID
+ EventToastInfo
+   # 5: iconFileID, Type: number -> fileID
+   # 6: subIcon, Type: string -> textureAtlas
+   # 12: uiTextureKit, Type: string -> textureKit
+   # 24: colorTint, Type: table -> colorRGB
+ ExpansionDisplayInfo
+   # 1: logo, Type: number -> fileID
+   # 2: banner, Type: string -> textureAtlas
+   # 4: highResBackgroundID, Type: number -> fileID
+   # 5: lowResBackgroundID, Type: number -> fileID
+ ExpansionDisplayInfoFeature
+   # 1: icon, Type: number -> fileID
+ FillUpFramesWidgetVisualizationInfo
+   # 11: textureKit, Type: string -> textureKit
+   # 12: frameTextureKit, Type: string -> textureKit
+ FogOfWarInfo
+   # 2: backgroundAtlas, Type: string -> textureAtlas
+   # 3: maskAtlas, Type: string -> textureAtlas
+ FollowerAutoCombatStatsInfo
+   # 4: healingTimestamp, Type: number -> time_t
+ FollowerMissionCompleteInfo
+   # 18: classAtlas, Type: string -> textureAtlas
+   # 19: portraitIconID, Type: number -> fileID
+   # 20: textureKit, Type: string -> textureKit
+ FriendInfo
+   # 6: guid, Type: string -> WOWGUID
+ GarrisonAbilityCounterInfo
+   # 2: icon, Type: number -> fileID
+ GarrisonAbilityInfo
+   # 4: icon, Type: number -> fileID
+ GarrisonEnemyEncounterInfo
+   # 2: displayID, Type: number -> fileID
+   # 3: portraitFileDataID, Type: number -> fileID
+   # 4: textureKit, Type: string -> textureKit
+ GarrisonFollowerDeathInfo
+   # 1: followerID, Type: string -> GarrisonFollower
+ Enum.GarrisonFollowerType
+   + 1: FollowerType_6_0_GarrisonFollower
+   + 2: FollowerType_6_0_Boat
+   + 3: FollowerType_7_0_GarrisonFollower
+   + 4: FollowerType_8_0_GarrisonFollower
+   + 5: FollowerType_9_0_GarrisonFollower
+   - 1: FollowerType_6_0
+   - 2: FollowerType_6_2
+   - 3: FollowerType_7_0
+   - 4: FollowerType_8_0
+   - 5: FollowerType_9_0
+ GarrisonMechanicInfo
+   # 2: icon, Type: number -> fileID
+ GarrisonPlotInstanceMapInfo
+   # 2: position, Type: table -> vector2
+   # 4: atlasName, Type: string -> textureAtlas
+ GarrisonTalentInfo
+   # 12: researchDuration, Type: number -> time_t
+   # 13: startTime, Type: number -> time_t
+   # 14: timeRemaining, Type: number -> time_t
+ GarrisonTalentTreeInfo
+   # 3: textureKit, Type: string -> textureKit
+ Enum.GarrisonType
+   + 1: Type_6_0_Garrison
+   + 2: Type_7_0_Garrison
+   + 3: Type_8_0_Garrison
+   + 4: Type_9_0_Garrison
+   - 1: Type_6_0
+   - 2: Type_7_0
+   - 3: Type_8_0
+   - 4: Type_9_0
+ GenericWidgetDisplayFrameInfo
+   # 2: uiTextureKit, Type: string -> textureKit
+ Enum.GossipOptionRecFlags
+   + 2: HideOptionIDFromClient
+ GossipOptionUIInfo
+   # 1: gossipOptionID, Nilable: false -> true
+   # 3: icon, Type: number -> fileID
+   # 8: overrideIconID, Type: number -> fileID
+ GossipPoiInfo
+   # 3: position, Type: table -> vector2
+ GraveyardMapInfo
+   # 2: position, Type: table -> vector2
+ GuildTabardInfo
+   # 1: backgroundColor, Type: table -> colorRGB
+   # 2: borderColor, Type: table -> colorRGB
+   # 3: emblemColor, Type: table -> colorRGB
+ HTMLContentNode
+   # 2: type, Type: string -> HTMLTextType
+   # 3: align, Type: string -> TBFStyleFlags
+ HonorRewardInfo
+   # 2: badgeFileDataID, Type: number -> fileID
+ HorizontalCurrenciesWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ IconAndTextWidgetVisualizationInfo
+   # 7: textureKit, Type: string -> textureKit
+   # 8: frameTextureKit, Type: string -> textureKit
+ IconTextAndBackgroundWidgetVisualizationInfo
+   # 4: textureKit, Type: string -> textureKit
+   # 5: frameTextureKit, Type: string -> textureKit
+ IconTextAndCurrenciesWidgetVisualizationInfo
+   # 10: textureKit, Type: string -> textureKit
+   # 11: frameTextureKit, Type: string -> textureKit
+ InvasionMapInfo
+   # 3: position, Type: table -> vector2
+   # 4: atlasName, Type: string -> textureAtlas
+ Enum.ItemGemColor
+   + 26: Primordial
+ ItemInteractionFrameInfo
+   # 1: textureKit, Type: string -> textureKit
+ ItemKeyInfo
+   # 6: quality, Type: number -> ItemQuality
+ ItemPurchaseInfo
+   # 1: money, Type: number -> WOWMONEY
+   # 3: refundSeconds, Type: number -> time_t
+ ItemSearchResultInfo
+   # 11: bidder, Type: string -> WOWGUID
+   # 12: minBid, Type: number -> BigUInteger
+   # 13: bidAmount, Type: number -> BigUInteger
+   # 14: buyoutAmount, Type: number -> BigUInteger
+ Enum.ItemSocketType
+   + 26: Primordial
+ LFGDungeonInfo
+   # 2: iconID, Type: number -> fileID
+ Enum.LanguageFlag
+   + 3: HideLanguageNameInChat
+ LevelUpBattlegroundInfo
+   # 2: icon, Type: number -> fileID
+ LfgApplicantData
+   # 6: comment, Type: string -> kstringLfgListApplicant
+ LfgEntryData
+   # 4: name, Type: string -> kstringLfgListApplicant
+   # 5: comment, Type: string -> kstringLfgListApplicant
+   # 6: voiceChat, Type: string -> kstringLfgListApplicant
+   # 7: duration, Type: number -> time_t
+ LfgSearchResultData
+   # 4: name, Type: string -> kstringLfgListSearch
+   # 5: comment, Type: string -> kstringLfgListSearch
+   # 6: voiceChat, Type: string -> kstringLfgListSearch
+   # 17: age, Type: number -> time_t
+ LootJournalItemInfo
+   # 2: icon, Type: number -> fileID
+ MajorFactionData
+   # 11: textureKit, Type: string -> textureKit
+ MajorFactionRenownRewardInfo
+   # 10: icon, Type: number -> fileID
+ MapBannerInfo
+   # 4: uiTextureKit, Type: string -> textureKit
+ MapLinkInfo
+   # 2: position, Type: table -> vector2
+ MapTaxiNodeInfo
+   # 2: position, Type: table -> vector2
+   # 6: textureKit, Type: string -> textureKit
+ MinimapScriptTrackingInfo
+   # 2: textureFileID, Type: number -> fileID
+ MissionDeploymentInfo
+   # 5: environmentTexture, Type: number -> fileID
+   # 6: locTextureKit, Type: string -> textureKit
+ MissionEncounterIconInfo
+   # 1: portraitFileDataID, Type: number -> fileID
+ ModelLight
+   # 2: point, Type: table -> vector3
+   # 4: ambientColor, Type: table -> colorRGB
+   # 6: diffuseColor, Type: table -> colorRGB
+ ModifiedInstanceInfo
+   # 5: uiTextureKit, Type: string -> textureKit
+ MountInfo
+   # 3: icon, Type: number -> fileID
+ NewCraftingOrderInfo
+   # 4: tipAmount, Type: number -> WOWMONEY
+   # 10: recraftItem, Type: string -> WOWGUID
+ OwnedAuctionInfo
+   # 8: bidAmount, Type: number -> BigUInteger
+   # 9: buyoutAmount, Type: number -> BigUInteger
+ PVPScoreInfo
+   # 2: guid, Type: string -> WOWGUID
+ PerksActivityInfo
+   + 8: criteriaList
+ PerksVendorItemInfo
+   # 4: timeRemaining, Type: number -> time_t
+ PetJournalPetInfo
+   # 8: icon, Type: number -> fileID
+ PetTamerMapInfo
+   # 2: position, Type: table -> vector2
+ PlayerChoiceInfo
+   # 1: objectGUID, Type: string -> WOWGUID
+   # 5: uiTextureKit, Type: string -> textureKit
+ PlayerChoiceOptionInfo
+   # 9: uiTextureKit, Type: string -> textureKit
+   # 15: rarityColor, Type: table -> colorRGBA
+ PlayerInfoCharacterData
+   # 4: createScreenIconAtlas, Type: string -> textureAtlas
+ ProfTabInfo
+   + 4: rootIconID
+   + 5: highlights
+ PvpTierInfo
+   # 7: tierIconID, Type: number -> fileID
+ QuestSessionPlayerDetails
+   # 2: guid, Type: string -> WOWGUID
+ QuestTheme
+   # 1: background, Type: string -> textureAtlas
+   # 2: seal, Type: string -> textureAtlas
+   # 4: poiIcon, Type: string -> textureAtlas
+ RafInfo
+   + 1: versions
+   - 1: lifetimeMonths
+   - 2: spentMonths
+   - 3: availableMonths
+   - 5: rewards
+   - 6: nextReward
+ RafRecruit
+   # 2: wowAccountGUID, Type: string -> WOWGUID
+   # 6: acceptanceID, Type: string -> RecruitAcceptanceID
+   + 7: versionRecruited
+ RafReward
+   + 2: rafVersion
+   + 13: canAfford
+   # 19: iconID, Type: number -> fileID
+ RecruitingClubInfo
+   # 1: clubFinderGUID, Type: string -> WOWGUID
+   # 16: lastPosterGUID, Type: string -> WOWGUID
+   # 17: clubId, Type: string -> ClubId
+   # 18: lastUpdatedTime, Type: number -> BigInteger
+ ReplicateItemInfo
+   # 2: texture, Type: number -> fileID
+   # 8: minBid, Type: number -> BigUInteger
+   # 9: minIncrement, Type: number -> BigUInteger
+   # 10: buyoutPrice, Type: number -> BigUInteger
+   # 11: bidAmount, Type: number -> BigUInteger
+ RuneforgeItemPreviewInfo
+   # 1: itemGUID, Type: string -> WOWGUID
+ RuneforgeLegendaryCraftDescription
+   # 1: baseItem, Type: table -> ItemLocation
+ RuneforgePower
+   # 7: iconFileID, Type: number -> fileID
+ ScenarioHeaderCurrenciesAndBackgroundWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ ScenarioHeaderTimerWidgetVisualizationInfo
+   # 8: textureKit, Type: string -> textureKit
+   # 9: frameTextureKit, Type: string -> textureKit
+ ScenarioInformation
+   # 10: uiTextureKit, Type: string -> textureKit
+ ScriptedAnimationEffect
+   # 2: visual, Type: number -> fileID
+ SocialQueueGroupInfo
+   # 8: leaderGUID, Type: string -> WOWGUID
+ SocialQueuePlayerInfo
+   # 1: guid, Type: string -> WOWGUID
+   # 2: clubId, Type: string -> ClubId
+ SoulbindData
+   # 5: textureKit, Type: string -> textureKit
+ SoulbindNode
+   # 4: icon, Type: number -> fileID
+ SpacerVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ SpellDisplayVisualizationInfo
+   # 6: textureKit, Type: string -> textureKit
+   # 7: frameTextureKit, Type: string -> textureKit
+ SpellInfo
+   # 2: iconID, Type: number -> fileID
+ SplashScreenInfo
+   # 1: textureKit, Type: string -> textureKit
+ StackedResourceTrackerWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ StatusBarWidgetVisualizationInfo
+   # 18: textureKit, Type: string -> textureKit
+   # 19: frameTextureKit, Type: string -> textureKit
+ TaxiNodeInfo
+   # 2: position, Type: table -> vector2
+   # 6: textureKit, Type: string -> textureKit
+ TextColumnRowVisualizationInfo
+   # 9: textureKit, Type: string -> textureKit
+   # 10: frameTextureKit, Type: string -> textureKit
+ TextWithStateWidgetVisualizationInfo
+   # 11: textureKit, Type: string -> textureKit
+   # 12: frameTextureKit, Type: string -> textureKit
+ TextWithSubtextWidgetVisualizationInfo
+   # 16: textureKit, Type: string -> textureKit
+   # 17: frameTextureKit, Type: string -> textureKit
+ TextureAndTextRowVisualizationInfo
+   # 7: textureKit, Type: string -> textureKit
+   # 8: frameTextureKit, Type: string -> textureKit
+ TextureAndTextVisualizationInfo
+   # 6: textureKit, Type: string -> textureKit
+   # 7: frameTextureKit, Type: string -> textureKit
+ TextureWithAnimationVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ TooltipComparisonLine
+   # 2: color, Type: table -> colorRGB
+ TooltipDataArg
+   # 6: colorVal, Type: table -> colorRGB
+   # 7: guidVal, Type: string -> WOWGUID
+ TooltipItemComparisonInfo
+   # 2: item, Type: table -> TooltipComparisonItem
+ Enum.TraitSystemFlag
+   + 2: ShowSpendConfirmation
+ TransmogAppearanceSourceInfoData
+   # 4: icon, Type: number -> fileID
+ TransmogIllusionInfo
+   # 3: icon, Type: number -> fileID
+ TransmogOutfitInfo
+   # 2: icon, Type: number -> fileID
+ TransmogSlotInfo
+   # 8: texture, Type: number -> fileID
+ UIModelSceneActorInfo
+   # 3: position, Type: table -> vector3
+ UIModelSceneCameraInfo
+   # 4: target, Type: table -> vector3
+   # 11: zoomedTargetOffset, Type: table -> vector3
+ UIWidgetCurrencyInfo
+   # 1: iconFileID, Type: number -> fileID
+ UiMapHighlightInfo
+   # 1: fileDataID, Type: number -> fileID
+   # 2: atlasID, Type: string -> textureAtlas
+ UnitAuraUpdateInfo
+ UnitPowerBarWidgetVisualizationInfo
+   # 15: textureKit, Type: string -> textureKit
+   # 16: frameTextureKit, Type: string -> textureKit
+ UnlockedAzeriteEmpoweredItems
+   # 1: unlockedItem, Type: table -> AzeriteEmpoweredItemLocation
+ VignetteInfo
+   # 1: vignetteGUID, Type: string -> WOWGUID
+   # 2: objectGUID, Type: string -> WOWGUID
+   # 10: atlasName, Type: string -> textureAtlas
+ VoiceChatChannel
+   # 4: clubId, Type: string -> ClubId
+   # 5: streamId, Type: string -> ClubStreamId
+ WeeklyRewardActivityRewardInfo
+   # 4: itemDBID, Type: string -> WeeklyRewardItemDBID
+ ZoneAbilityInfo
+   # 4: textureKit, Type: string -> textureKit
+ ZoneControlVisualizationInfo
+   # 8: textureKit, Type: string -> textureKit
+   # 9: frameTextureKit, Type: string -> textureKit
+ uiRect
+   # 1: left, Type: number -> uiUnit
+   # 2: bottom, Type: number -> uiUnit
+   # 3: width, Type: number -> uiUnit
+   # 4: height, Type: number -> uiUnit

@@ -1,0 +1,396 @@
+
+== Resources ==
+TOC: 120100
+Official patch notes: Curse of Ula'tek Content Update Notes
+Diffs: wow-ui-source, BlizzardInterfaceResources
+
+
+=== Notes ===
+Added AuraContainer and AuraButton intrinsic frames.
+SVG textures are now supported with the VectorGraphics object type.
+UIParentLoadAddOn has been moved to LoadAddOnWithErrorHandling.
+MouseIsOver has been moved to InputUtil.IsMouseOver.
+CanAccessObject has been replaced with FrameScriptObject:CanBeAccessedInContext.
+Deprecated getglobal and setglobal.
+The Auto Loot setting (CVar autoLootDefault) is now account wide.
+New UI texture filenames will no longer be published to the ManifestInterfaceData DB. Existing filenames will remain available, and this change will not affect players. Addons will still be able to use these textures.
+
+
+== Blue posts ==
+
+
+=== 2026-06-18 ===
+Midnight 12.1.0 PTR Changes 1 (Build 68209)
+
+Hello again from the World of Warcraft UI Engineering team! Today we’d like to talk about a significant set of Aura-related changes coming in 12.1. Most of these changes will be available when PTR launches, with the remaining pieces rolling out over the following few weeks. 
+Why Auras?
+Since the Addon Disarmament project went live with Midnight, Auras (aka buffs and debuffs) have consistently been one of the weakest areas for addon security, with numerous exploits discovered both before launch and since then. The core issue is that, in many cases, simply knowing that any aura is present on a unit (whether it be the player, an enemy, or a raid/party member) is enough to determine that some important combat event has occurred. Aura filters are vital for many legitimate addon use cases, but they also make this problem harder to contain by allowing even more ways to tell if “special aura X” is on a unit, even if the unit has multiple auras on them. 
+Up until now, our solution to this has been to lean on Private Auras. Unfortunately, Private Auras come with several downsides: they are invisible to addons, which prevents customization; they are not supported in every context, such as nameplates; and setting them up across every encounter adds significant setup work for our designers. Secret values were created specifically to protect against cases like this, providing passive protection by default. 
+What is changing?
+We’ll get to the changes to existing APIs shortly, but first, we’d like to introduce a couple of new constructs we are adding to Lua, along with two new object types (Aura Containers and Aura Buttons).
+New Tech: Private Script Objects & The Forbidden Partition
+Private Script Objects are a new construct that lets us split the Lua representation of a script object across multiple Lua tables, or partitions. One of these partitions we call the Forbidden Partition, because it is inaccessible to addons. The Forbidden Partition can contain any kind of value, from mixins to key/value pairs, functions, script handlers, and child objects. This allows us to effectively hide portions of the object from addon code even when the object itself isn’t in the secure environment. 
+New Tech: Forbidden Aspects
+Forbidden Aspects are another new construct that works alongside Private Script Objects. Forbidden Aspects are similar in concept to the Secret Aspects we introduced in Midnight, but instead of causing certain object APIs to return secrets, they prevent addons from using certain functionality entirely. Where Secret Aspects obfuscate data, Forbidden Aspects restrict what addons are allowed to do with an object. 
+There are several Forbidden Aspects being added (details are in the docs), but let’s use the UntrustedScriptExecution Forbidden Aspect as an example. When a frame has the UntrustedScriptExecution Forbidden Aspect applied to it, any script binding handlers set on it (e.g. OnShow, OnLoad, OnSizeChanged) will not be run unless that handler lives in the object’s Forbidden Partition and execution is untainted. In other words, addons cannot install their own script bindings on the object, but our code can.
+New Object Types: Aura Containers & Aura Buttons
+Aura Containers and Aura Buttons are new Lua object types that allow addons to display auras in custom ways. Here’s a small example showing how they can be used:
+
+In the example above, we create an Aura Container, specify that it should track the first 5 helpful auras on the player’s target, and then add 5 Aura Buttons to it. For each Aura Button, we create a texture for the icon and a font string for the duration. The APIs shown here on the Aura Button are just a sample of the APIs provided (full details will be in the docs), but this should give you a sense of what is possible. Note that addon code still has a great deal of control over how the auras are presented, but it doesn’t interact with the underlying aura data at all. This separation is important for security, but it should also make custom aura displays easier to build and more performant. Aura Containers handle the tracking, filtering, and updating of aura assignments internally, so addons can focus more on presentation and less on repeatedly querying, diffing, and refreshing aura state themselves.
+Why Are Aura Containers Safer?
+To answer that, let’s go back to Private Script Objects and Forbidden Aspects again. Aura Buttons and Aura Containers both have Forbidden Aspects applied to them on creation. When an Aura Button is added to an Aura Container using the AddAuraFrame API, it is added to the Forbidden Partition of that Aura Container. This means addon code cannot install script handlers on Aura Buttons to be notified when they show or hide. It also cannot hook functions called on the Aura Button’s mixins or register events on those buttons. While addons can still hold references to those individual Aura Buttons, calling certain APIs on them will be disallowed, and they cannot run logic based on whether those buttons are shown, because IsShown and similar APIs return secrets.
+Which current APIs are changing?
+The main change to existing APIs is that, when auras are secret (during combat, encounters, M+, and PvP matches), all of the UnitAura APIs will now either return full secrets or nil when called by addons. That means that APIs like GetUnitAuras and GetUnitAuraInstanceIDs will return a secret vector, meaning addon code will not be able to determine how many auras it contains or iterate through it for display. Auras we explicitly flag as non-secret will still be returned as non-secret by UnitAura APIs, however.
+Is all this in place in PTR Week 1?
+No, several pieces of this are not currently implemented in the first PTR build but will be coming over the next few weeks. The biggest pieces not in place yet are the changes to the UnitAura APIs. Some Aura Button protections are also not yet in place: their script handlers are protected, but script handlers on their child frames are not, and event registration is still currently allowed. Those protections, along with additional safeguards, will arrive over the next few weeks. In the meantime, though, feel free to start experimenting!
+As always, we are actively seeking your feedback and will be monitoring the ⁠author-wishlist channel, so please share feedback, bugs, and any potential exploits there. Thanks as always for helping us test and improve this system!
+DISCLAIMER: These notes are for addon authors and as such are focused specifically on addon-facing API and security changes only. Changes planned for other parts of the game (UI or otherwise) are not included here.
+
+Interface Texture Filenames
+Starting in 12.1, new interface texture filenames will no longer be published to the ManifestInterfaceData DB, and as a result will not be available via exportinterfacefiles art. Existing filenames will remain in the DB. You may notice that a few entries are still added in 12.1 and over the next few patches, but this is due to those assets already having been added prior to this change being made. We are making this change to prevent leaks caused by texture names containing hints about future content. We understand that this is going to be a somewhat disruptive change for some addon developers, so please let us know your largest pain points and we'll try to make accommodations where possible.
+Other changes in 12.1 PTR 1
+
+We now support showing SVG textures in our UI. They can be used on regular textures (e.g. file="Path/To/Texture.svg") or with a new VectorGraphics object type, which renders them at higher quality.
+Note that the VectorGraphics objects don't currently support all of the APIs on regular Textures (rotation, masking, tex coords, etc.)
+Load-on-Demand addons can now specify that specific files in the TOC should load on startup through a new per-file [Bootstrap] directive.
+This still requires that the addon be enabled in order for these files to load.
+UIParent.lua has been heavily refactored, with all of the code that previously handled loading LoD addons moved into the addons themselves, taking advantage of the new [Bootstrap] directive.
+Added a new API Frame:SetOnUpdateMode(mode), which lets you specify when the OnUpdate script on a frame should run.
+The options are Disabled, RunWhenVisible (default), RunWhenVisibleOnce, RunOnce, and RunAlways
+A new system has been added called the Roleset System, which allows you to tag a frame as being part of a "roleset". You can then use the new C_Roleset.ApplyRolesetFilters to specify which rolesets are currently active.
+Frames in an inactive roleset will never be shown, regardless of their shown state. See Blizzard_UIModeManager.lua for more details and examples.
+Radial masking support has been added to textures and status bars, allowing them to have a radial mask applied to them without the need for hacky uses of cooldowns. Example usage on a texture:
+
+KeyValues can now specify that their value should be pulled directly from the private addon table. Example usage: <KeyValue key="myKey" type="local"/>
+Mixins can now be added on an object using a new <Mixins> element.
+Using this element allows you to use the source="local" specifier to indicate the mixin lives in the private addon table.
+Mixins added on an object (either through the Mixins element or the regular mixin="myMixin" attribute) can also now be nested within tables.
+Example usage:
+
+
+=== 2026-06-23 ===
+Midnight 12.1.0 PTR Changes 2 (Build 68301)
+Quick note: the previously mentioned restrictions to UnitAura APIs are currently planned for PTR 3, so any addons using those APIs should expect significant changes next week.
+Coming in 12.1.0 PTR 2
+
+Aura Buttons now support the following functionality:
+Dispel borders: Using the SetAuraBorder(texture, [options]) API (see DefaultAuraBorderOptions for available options).
+Dispel type text: Using the SetAuraSymbol(fontString, [options]) API (see DefaultAuraSymbolOptions for available options).
+Aura tooltips: Automatically enabled but can be disabled via the SetMouseMotionEnabled API.
+Added the following new Forbidden Aspects:
+UntrustedScriptExecution: When active, addon-installed script handlers on a frame and its children will never be run.
+UntrustedLayoutScriptExecution: When active, addon-installed OnSizeChanged handlers will never be run for a frame, its children, or any frames anchored to either.
+EventRegistrations: When active, addons cannot register a frame for events.
+AlwaysPropagateInput: When active, a frame and its children will always propagate mouse and keyboard input.
+ScriptedInput: When active, addons are not allowed to call input-related APIs (Click, SetFocus, etc.) on a frame or its children.
+QueryFocus: When active, addons cannot query if a frame or its children are the current mouse or keyboard focus.
+Aura Buttons have had the following Forbidden Aspects applied to them: UntrustedScriptExecution, UntrustedLayoutScriptExecution, AlwaysPropagateInput, ScriptedInput, and QueryFocus
+Aura Containers have had the EventRegistrations Forbidden Aspect applied to them.
+Editboxes will no longer auto-focus if they become visible while they have the Shown secret aspect applied.
+API calls such as SetParent and SetPoint will error if an object would implicitly gain any Forbidden Aspects that it does not already have.
+
+
+=== 2026-06-30 ===
+Midnight 12.1.0 PTR Changes 3 (Build 68412)
+Coming in 12.1.0 PTR 3
+
+This week brings the majority of the UnitAura API restrictions (with a few small pieces still remaining). Broadly speaking you can consider APIs that return aura data are no longer safe for addon use while aura data is secret. More specifically:
+C_UnitAura and C_TooltipInfo APIs that provide access to aura data via index, slot, or instance ID will Lua error when called by addons while auras are secret.
+C_UnitAura APIs that provide access to aura data via spell ID or spell name can still be called by addons as before (non-secret spells still return non-secrets).
+The UNIT_AURA event now delivers a fully secret payload while auras are secret. AuraData structs are now always fully secret.
+Added a new ManagedAuraContainer base type, which fully manages the display and layout of AuraButtons.
+The Blizzard Target Frame now uses a ManagedAuraContainer for the display of its auras.
+Fixed a bug where only 14 of the 19 parameters were being passed to ChatFrame message event filter functions.
+Preview of PTR 4
+PTR 4 will add a whole swath of changes for AuraContainers and AuraButtons including:
+
+CustomAuraContainers will be converted to ManagedAuraContainers. As a result, AuraContainers will now handle the creation of AuraButtons entirely on their own.
+AuraContainer support for filtering by Spell ID, dispel type, stealable, and max duration. Some filters will have restrictions - more details to come.
+AuraContainer support for sorting (both sort rule and direction).
+
+
+=== 2026-07-07 ===
+Midnight 12.1.0 PTR Changes 4 (Build 68569)
+Coming in 12.1.0 PTR 4
+This week brings some major changes to AuraContainers and AuraButtons.
+
+AuraContainers now handle the creation and anchoring of all AuraButtons inside of them entirely on their own.
+Addons no longer create AuraButtons directly. The AddAuraFrame API has been removed.
+Added a new construct to AuraContainers: AuraGroups. Broadly speaking, you can think of an AuraGroup as a dynamic, self-managing collection of auras within an AuraContainer.
+AuraContainers can have multiple AuraGroups, each with their own filters and settings.
+Auras from each group are anchored sequentially in the order the groups were added.
+Addons add AuraGroups to AuraContainers using a new API AddAuraGroup(groupKey, filterString, options).
+The groupKey param is an arbitrary addon-defined string used to access the group after creation.
+The filterString param is a standard aura filter string as used today (e.g. "HELPFUL|RAID").
+The options param is a table that can contain a number of optional settings.
+maxFrameCount: The maximum number of aura frames to show in this group
+sortMethod and sortDirection: Used to control how auras in this group are sorted (see new enum AuraContainerSortMethod for choices).
+initializeFrame: A callback function that is called for each AuraButton created.
+templateNames: A list of xml templates to apply to each AuraButton (in addition to CustomAuraButtonTemplate).
+candidateFilters: A table of additional filter information to apply when determining if an aura should be displayed. See ValidateCandidateFilters for the full list of options, but some examples are:
+Include/exclude maps for spell IDs and dispel types.
+maxDuration
+Various boolean values from AuraData (isFromPlayerOrPlayerPet, isRoleAura, isPriorityAura, isStealable, etc.).
+AuraGroups create and anchor AuraButtons in batches of 10 as needed.
+Anchoring of AuraButtons created by an AuraContainer can be adjusted via the SetAuraGroupLayout API (see ValidateAuraGroupLayoutOptions for available options).
+AuraContainers now automatically resize to fit group-based AuraButtons inside of them.
+AuraContainers now treat private auras just like regular auras, allowing them to be shown and sorted normally.
+Added a new construct to AuraContainers: AuraSlots. You can think of AuraSlots as AuraGroups with maxFrameCount set to 1 (they will only ever show a single aura).
+Unlike AuraGroups, addons can manually anchor AuraSlots.
+The AddAuraSlot(slotKey, filterString, options) API is used to add AuraSlots, and it supports most of the same options AddAuraGroup does.
+Added a new API, AddItemEnchantment(itemEnchantmentSlot, options), to AuraContainers, which allows them to show temporary weapon enchants. See ValidateAddItemEnchantmentOptions for the list of options supported.
+Added a new API SetCancelAuraButtons to AuraButtons that can be used to specify which mouse clicks to use to cancel. This can be called on AuraButtons via the initializeFrame callback.
+Other changes
+
+The AddPrivateAuraAppliedSound and RemovePrivateAuraAppliedSound APIs have been renamed to AddAuraAppliedSound and RemoveAuraAppliedSound, and now work on any auras (not just private auras).
+Added support for negating most aura filters using the ! character. So for instance !PLAYER includes only auras NOT cast by the player.
+The UNIT_AURA event now delivers a fully secret payload while auras are secret. AuraData structs are now always fully secret.
+SecureAuraHeaderTemplate has been removed from Mainline (it will still exist for Classic). Addons still using SecureAuraHeaderTemplate should migrate over to using AuraContainers.
+Fixed a crash that happened when attempting to create an AuraContainer in combat.
+Attempting to do so will still generate a Lua error, however (as intended).
+Added a new SecureGroupHeaderTemplate xml template that can be used to safely create a single AuraContainer on UnitFrame creation.
+Resolved an issue where the SetApplicationCount function on CustomAuraButtons would error if not supplied an options table.
+Resolved an issue where ApplyAuraSymbol on CustomAuraButtons was consulting the wrong region (AuraButton) for dispel type validation.
+
+
+=== 2026-07-14 ===
+Midnight 12.1.0 PTR Changes 5 (Build 68675)
+Coming in 12.1.0 PTR 5
+
+Added a new aura filter, DISPELLABLE, which returns auras that have a dispel type of any kind, regardless of whether anyone in the player's raid can dispel it.
+Added back the IMPORTANT aura filter now that it is no longer abusable.
+The RAID_PLAYER_DISPELLABLE aura filter now also returns helpful auras on enemies that are dispellable/stealable by a raid member.
+AuraButtons are now forbidden (meaning APIs called on them via tainted code will Lua error) whenever auras are secret.
+This forbidden state is not applied until after the initializeFrame callback has been called, and AuraButtons return to a non-forbidden state when auras become non-secret again (outside combat, encounters, etc.).
+This change was necessary in order to prevent various exploits.
+It is no longer possible for addons to create new WorldFrame instances via CreateFrame (preventing a crash).
+Made improvements to the error messaging displayed when attempting to call forbidden script APIs on script objects.
+
+
+=== 2026-07-21 ===
+Midnight 12.1.0 PTR Changes 6 (Build 68824)
+Coming in 12.1.0 PTR 6
+
+Added a new GetAuraGroupFrame API to aura containers, which can be used to retrieve a child aura group frame by index.
+Added new ApplicationBar APIs to custom aura buttons that allow addons to show a status bar that tracks their number of applications.
+Added a new SetAuraGroupFilterString API to aura containers, which allows addons to set the filter string after creation.
+Added support for color curves and color maps to the AuraButton:SetAuraBorder API (see CustomAuraButtonDispelTypeTextureOptions in the documentation files for details).
+Addons can now specify custom ordering for the aura groups within an aura container, using the new layoutIndex option in the layout options table.
+Added a new CVar tooltipShowAuraSpellIDsCVar: tooltipShowAuraSpellIDs (Game)Default: 0Show spell IDs in tooltips for unit auras. which causes spell IDs to show in aura tooltips. This cvar will not persist between sessions.
+The AddAuraAppliedSound API has been renamed AddAuraSound and now supports specifying whether the sound should play when an aura is first added, gains an application or removed.
+The RemoveAuraAppliedSound API has been renamed RemoveAuraSound to match.
+Auras flagged as non-secret can now be filtered using excludeSpellIDs and includeSpellIDs without restrictions on any unit.
+Added new APIs FrameScriptObject:HasAccessConstraints and FrameScriptObject:CanBeAccessedInContext to script objects.
+Fixed a bug that was causing the cooldown swipe to show incorrectly in some cases.
+Fixed a bug where calling some APIs (like FormatNumber) with secrets would cause objects to be marked as secret incorrectly (and result in Lua Errors).
+Addons are no longer allowed to reparent aura buttons.
+Temporary Weapon Enchants now support click-to-cancel.
+Boolean candidate filters now support negation by setting the boolean as false (e.g. isStealable = false). Leaving the option as nil will continue to mean "ignore".
+Added new GetActiveBlockedRolesets and GetActiveAllowedRolesets APIs to C_Roleset, which return the list of currently blocked and allowed rolesets.
+Added a new IsRolesetFiltered API on frames, which returns whether the frame is currently filtered by roleset.
+Added a new "alwaysBlocked" roleset, which can be applied to frames to cause them to never show.
+Preview of PTR 7
+
+A number of Unit APIs are being changed to return secret values when the unit's identity is secret. This is being done to prevent various methods of combining these API calls to compare secret units to each other in combat.
+APIs affected: UnitClass, UnitClassBase, UnitIsOwnerOrControllerOfUnit, UnitSex, UnitSexBase, UnitPhaseReason, UnitGroupRolesAssigned, UnitGroupRolesAssignedEnum, UnitIsRaidOfficer, UnitInRaid, UnitIsPVP, UnitRace, UnitIsGroupLeader, UnitIsGroupAssistant, UnitLeadsAnyGroup, UnitGetAvailableRoles, GetInspectSpecialization.
+The GetGuildInfo API is being changed to no longer accept compound unit tokens.
+The following APIs are being changed to return secret values when auras are secret: UnitIsCharmed, UnitIsPossessed.
+Aura Classifications
+Now that custom aura containers can be used to filter and position helpful auras on raid members, we have removed the following healer buffs and HoTs from the "never secret" list:
+
+
+=== 2026-07-23 ===
+Midnight 12.1.0 PTR Changes 7 (Build 68914)
+Coming in 12.1.0 PTR 7
+
+Added support for laying out aura groups in columns.
+Aura containers can now be created by addons during combat.
+Added support for adjusting aura button tooltip anchors.
+Added support for hiding aura button tooltips while in combat.
+Added a new aura instance ID-only sort method for aura containers, which sorts the auras by aura instance ID.
+Added support for showing multiple dispel textures on an aura button.
+Added new APIs to configure custom nineslice, backdrop, or background texture slice assets to use for all aura button tooltips. Note that these are global APIs that apply to all aura buttons (not to individual aura containers).
+Aura buttons now permit native script object API calls - such as SetPoint, SetSize - during UI (re)load, until execution of PLAYER_LOGIN.
+Added a new addon-safe API, ResizeToBoundsRect, which can be used to resize a frame to match the bounds of its children.
+Resolved an issue that was causing addons to not be able to call aura button APIs outside of the initializeFrame callback.
+Resolved an issue where a Lua error would occur when toggling visibility of an aura container while the mouse was over a visible aura button.
+Resolved an issue involving the CastingBarTypeInfo table which was causing taint issues in nameplates.
+Resolved an issue causing Lua errors when addons used PingableUnitFrameTemplate.
+Child components of aura buttons can no longer be re-parented once configured.
+Aura containers that are configured to show aura groups will no longer receive OnSizeChanged updates. Note that this restriction also applies to frames anchored to aura containers (but only after the aura container has an aura group added).
+A number of Unit APIs have been changed to return secret values when the unit's identity is secret. This is being done to prevent various methods of combining these API calls to compare secret units to each other in combat.
+APIs affected: UnitClass, UnitClassBase, UnitIsOwnerOrControllerOfUnit, UnitSex, UnitSexBase, UnitPhaseReason, UnitGroupRolesAssigned, UnitGroupRolesAssignedEnum, UnitIsRaidOfficer, UnitInRaid, UnitIsPVP, UnitRace, UnitIsGroupLeader, UnitIsGroupAssistant, UnitLeadsAnyGroup, UnitGetAvailableRoles, GetInspectSpecialization
+The following APIs now return secret values when auras are secret: UnitIsCharmed, UnitIsPossessed.
+The GetGuildInfo API no longer accepts compound unit tokens.
+The UnitName API will no longer return secrets while in an active PvP match.
+
+
+=== 2026-08-04 ===
+Midnight 12.1.0 PTR 8: Rise of the mouse (Build 69111)
+Coming in 12.1.0 PTR 8
+
+Added APIs to AuraButton that allow addons to show pandemic state via a texture.
+Added stealable and showAlways options for AuraButton borders.
+AuraButton tooltips are now throttled to update once every 200ms instead of every frame.
+When an AuraContainer is disabled, all AuraButtons and ItemEnchantments belonging to it will now be cleared.
+The UnitIsPossessed and UnitIsCharmed APIs no longer return secret values if the unit token passed is "player", "pet", or "vehicle".
+Fixed a bug that was causing addons to not be able to use the new SVG tech.
+Fixed a bug that could sometimes cause the duration text on AuraButtons to incorrectly show as 0.
+Fixed a bug that could cause Lua errors when pinging enemy units represented by addons using PingableUnitFrameTemplate.
+Resolved an exploit involving the use of OnSizeChanged to track the number of auras in an AuraContainer.
+
+
+== Consolidated changes ==
+12.0.7 (68256) → 12.1.0 (69587) Aug 27 2026
+
+
+=== Global API ===
+Disclaimer: Any deprecated functions will still be listed as removed.
+
+
+=== FrameXML ===
+Disclaimer: Any deprecated functions will still be listed as removed.
+
+
+=== ScriptObjects ===
+
+
+=== Widgets ===
+
+
+=== Events ===
+
+
+=== CVars ===
+
+
+=== Enumerations ===
+Enum.ClubStreamType (C_Club.GetStreamInfo, C_Club.GetStreams)
+  + Discord
+Enum.CompanionConfigSlotTypes (C_DelvesUI.GetUnseenCuriosBySlotType, C_DelvesUI.SaveSeenCuriosBySlotType)
+  + Flavor
+Enum.CooldownViewerCategory (C_CooldownViewer.GetCooldownViewerCategorySet, C_CooldownViewer.GetCooldownViewerCooldownInfo)
+  + GroupBuff
+  + SpecAgnosticEssential
+  + SpecAgnosticTracked
+  + EquipSlotEssential
+  + EquipSlotTracked
+Enum.EditModeAccountSetting (C_EditMode.SetAccountSetting)
+  + ShowRaidWarning
+Enum.EditModeMinimapSetting
+  + IconScale
+Enum.EditModeSystem (C_EditMode.ConvertLayoutInfoToString, C_EditMode.ConvertStringToLayoutInfo, C_EditMode.GetLayouts, C_EditMode.SaveLayouts, EDIT_MODE_LAYOUTS_UPDATED)
+  + RaidWarning
+Enum.EditModeUnitFrameSetting
+  - IconSize
+  + BuffIconSize
+  + DebuffIconSize
+Enum.FragmentID
+  + FMapObject
+  + FWorldStateListenerData
+Enum.FrameTutorialAccount
+  + HousingPetBeds
+Enum.HouseFinderSuggestionReason (C_HousingNeighborhood.GetCornerstoneNeighborhoodInfo, B_NET_NEIGHBORHOOD_LIST_UPDATED, NEIGHBORHOOD_INFO_UPDATED, NEIGHBORHOOD_LIST_UPDATED, OPEN_NEIGHBORHOOD_CHARTER, OPEN_NEIGHBORHOOD_CHARTER_SIGNATURE_REQUEST, UPDATE_BULLETIN_BOARD_ROSTER)
+  + Relinquished
+Enum.HousingResult (C_HouseEditor.ActivateHouseEditorMode, C_HouseEditor.EnterHouseEditor, C_HouseEditor.GetHouseEditorAvailability, C_HouseEditor.GetHouseEditorModeAvailability, B_NET_NEIGHBORHOOD_LIST_UPDATED, CREATE_NEIGHBORHOOD_RESULT, HOUSE_EDITOR_MODE_CHANGE_FAILURE, HOUSE_EXTERIOR_POSITION_FAILURE, HOUSE_RESERVATION_RESPONSE_RECIEVED, HOUSE_RESET_FAILED, HOUSING_BLUEPRINT_COLLECTION_FAILURE, HOUSING_BLUEPRINT_CONTENTS_FAILURE, HOUSING_BLUEPRINT_DELETE_FAILURE, HOUSING_BLUEPRINT_EXPORT_FAILURE, HOUSING_BLUEPRINT_IMPORT_FAILURE, HOUSING_BLUEPRINT_RENAME_FAILURE, HOUSING_DECOR_DYE_FAILURE, HOUSING_DECOR_PLACE_FAILURE, HOUSING_DECOR_SELECT_RESPONSE, HOUSING_LAYOUT_ROOM_COMPONENT_THEME_SET_CHANGED, HOUSING_ROOM_COMPONENT_CUSTOMIZATION_CHANGE_FAILED, HOUSING_SET_EXTERIOR_HOUSE_SIZE_RESPONSE, HOUSING_SET_EXTERIOR_HOUSE_TYPE_RESPONSE, HOUSING_SET_FIXTURE_RESPONSE, NEIGHBORHOOD_LIST_UPDATED)
+  + BlueprintGenericImportError
+  + BlueprintStorageLimit
+  + BlueprintTypeInvalid
+  + BlueprintNotFound
+  + InvalidExteriorDocument
+  + BlueprintGenericExportError
+  + InvalidInteriorDocument
+  + BlueprintRequirementsUnmet
+  + RoomPlacementOutOfBounds
+  + BlueprintCodeInvalid
+  + InsufficientRoomBudget
+  + BlueprintLocationInvalid
+  + BlueprintNameInvalid
+  + BlueprintVersionInvalid
+Enum.NamePlateStyle
+  + Classic
+Enum.PingResult (C_PingSecure.SendHitTestPing, C_PingSecure.SendPlayerItemPing, C_PingSecure.SendPlayerSpellPing, C_PingSecure.SendUnitPing, C_PingSecure.SetHitTestTargetAndSendPing)
+  + FailedSilent
+Enum.PingSubjectType (C_Ping.GetDefaultPingOptions, C_Ping.GetTextureKitForType, C_Ping.SendMacroPing, C_PingSecure.SendHitTestPing, C_PingSecure.SendPlayerItemPing, C_PingSecure.SendPlayerSpellPing, C_PingSecure.SendUnitPing, C_PingSecure.SetHitTestTargetAndSendPing)
+  + ActionReady
+  + ActionOnCooldown
+  + ActionUnavailable
+Enum.SecretAspect (FrameScriptObject:HasSecretAspect)
+  + RadialProgress
+Enum.TieredEntranceType (C_DelvesUI.GetTieredEntranceType)
+  + Lairs
+Enum.TooltipDataLineType
+  + ItemSpellTriggerOnUse
+  + ItemSpellTriggerOnEquip
+  + ItemSpellTriggerOnProc
+
+
+=== Structures ===
+AddPrivateAuraAnchorArgs (C_UnitAuras.AddPrivateAuraAnchor)
+  - showCountdownFrame
+  + showDispelIcon
+  + showCooldownEdge
+  + showCooldownFrame
+BNetAccountInfo (C_BattleNet.GetAccountInfoByGUID, C_BattleNet.GetAccountInfoByID, C_BattleNet.GetFriendAccountInfo)
+  + friendLevel
+  + friendTags
+BNetGameAccountInfo (C_BattleNet.GetAccountInfoByGUID, C_BattleNet.GetAccountInfoByID, C_BattleNet.GetFriendAccountInfo, C_BattleNet.GetFriendGameAccountInfo, C_BattleNet.GetGameAccountInfoByGUID, C_BattleNet.GetGameAccountInfoByID)
+  + classFilename
+ChatMessageEventParams
+  + discordInfo
+ClubMemberInfo (C_Club.GetInfoFromLastCommunityChatLine, C_Club.GetInvitationInfo, C_Club.GetInvitationsForClub, C_Club.GetInvitationsForSelf, C_Club.GetMemberInfo, C_Club.GetMemberInfoForSelf, C_Club.GetMessageInfo, C_Club.GetMessagesBefore, C_Club.GetMessagesInRange, C_Club.GetTickets, CLUB_INVITATION_ADDED_FOR_SELF, CLUB_TICKET_CREATED)
+  + discordInfo
+CooldownViewerCooldown (C_CooldownViewer.GetCooldownViewerCooldownInfo)
+  + spellCategoryID
+  + equipSlot
+  + isInvisible
+HousingDecorInstanceInfo (C_HousingBasicMode.GetHoveredDecorInfo, C_HousingBasicMode.GetSelectedDecorInfo, C_HousingCleanupMode.GetHoveredDecorInfo, C_HousingCustomizeMode.GetHoveredDecorInfo, C_HousingCustomizeMode.GetSelectedDecorInfo, C_HousingDecor.GetDecorInstanceInfoForGUID, C_HousingDecor.GetHoveredDecorInfo, C_HousingDecor.GetSelectedDecorInfo, C_HousingExpertMode.GetHoveredDecorInfo, C_HousingExpertMode.GetSelectedDecorInfo)
+  + canAttachPet
+LfgEntryData (C_LFGList.GetActiveEntryInfo)
+  + censored
+LfgSearchResultData (C_LFGList.GetSearchResultInfo)
+  + censored
+PetJournalPetInfo (C_PetJournal.GetPetInfoTableByPetID, C_PetJournal.GetPetInfoTableBySpeciesID)
+  # [3].Nilable false -> true
+  # [4].Nilable false -> true
+  # [5].Nilable false -> true
+  # [6].Nilable false -> true
+  # [7].Nilable false -> true
+  # [9].Type number -> luaIndex
+  # [14].Nilable false -> true
+  + canAttachToDecor
+  + creatureModelScale
+PlaySoundParams (C_Sound.PlaySoundWithOptions)
+  + volumeOverride
+PlayerChoiceInfo (C_PlayerChoice.GetCurrentPlayerChoiceInfo)
+  + hideAnswerArt
+TieredEntranceTierInfo (C_DelvesUI.GetActiveDelveTier, C_DelvesUI.GetDelveEntranceTiers)
+  + overrideTooltipSpellID
+  + isLFG
+UnitPrivateAuraAnchorInfo
+  - showCountdownFrame
+  + showDispelIcon
+  + showCooldownEdge
+  + showCooldownFrame
+
+
+== Deprecated API ==
+Blizzard_Deprecated/Deprecated_12_1_0.lua
+
+getglobal
+setglobal
+
+Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua
+
+BNSendVerifiedBattleTagInvite -> C_BattleNet.SendVerifiedBattleNetFriendInvite
+BNGetFriendInviteInfo -> C_BattleNet.GetFriendInviteInfo
+
+Blizzard_DeprecatedHousing/Deprecated_Housing.lua
+
+C_DyeColor.GetDyeColorForItem -> C_DyeColor.GetDyeColorsForItem
+C_DyeColor.GetDyeColorForItemLocation -> C_DyeColor.GetDyeColorsForItemLocation
+
+Blizzard_DeprecatedRaidWarning/Deprecated_RaidWarning.lua
+
+RaidNotice_AddMessage -> RaidWarningUtil.AddMessage
+RaidNotice_Clear -> RaidWarningFrameMixin:ClearMessages

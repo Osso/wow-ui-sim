@@ -1,0 +1,10 @@
+{{apichanges|8.3.7|prev=8.3.0|next=9.0.1}}
+
+== Changes ==
+* TOC: <code>80300</code>
+* BlizzardInterfaceResources: [https://github.com/Ketho/BlizzardInterfaceResources/commit/db2638d14479e74a1c5eadca0c12e249ce8f45b4 8.3.7 (35114)]
+
+== API ==
+=== New ===
+* {{api|GetAreaText}}()
+* CVar {{api|t=c|MouseUseLazyRepositioning}}

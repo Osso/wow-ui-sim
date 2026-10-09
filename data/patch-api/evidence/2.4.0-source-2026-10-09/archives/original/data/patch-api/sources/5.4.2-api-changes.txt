@@ -1,0 +1,20 @@
+Patch 5.4.2 API changes
+
+== Changes ==
+*random() and Math.random() now point to securerandom(), which is significantly slower. To explicitly use the pre-5.4.2 random, use fastrandom() instead.
+**Fastrandom is no longer accessible in the secure environment
+
+*GetGuildRosterInfo()'s first return value now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+
+== Automated diff ==
+=== Global API ===
+=== FrameXML ===
+=== Events ===
+=== Widget API ===
+=== Lua Enums ===
+: LE_AUTOCOMPLETE_PRIORITY (new)
+:: _OTHER = 1
+:: _INTERACTED = 2
+:: _IN_GROUP = 3
+:: _GUILD = 4
+:: _FRIEND = 5

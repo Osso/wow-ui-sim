@@ -1,0 +1,25 @@
+{{apichanges|5.1.0|prev=5.0.4|next=5.2.0}}
+
+== New features ==
+; Loss of control UI : Notifies the player when their character is affected by crowd control, interrupt, and spell lockout effects.
+; Instance-based chat channels : Separate chat channels for battleground/instance groups.
+; Pet Journal API updates : Pets are now identified using GUIDs (several functions renamed to this effect); added functions to translate a pet name to a pet GUID, and functions and slash commands to summon a random pet: /randompet and /randomfavoritepet.
+
+'''Miscellaneous'''
+* {{api|UnitIsBattlePet}} and {{api|UnitBattlePetSpeciesID}} added, and can be used to identify battle pets.
+* Additional functions are now available within the [[RestrictedEnvironment]]:
+** {{api|HasVehicleActionBar}}
+** {{api|HasOverrideActionBar}}
+** {{api|HasTempShapeshiftActionBar}}
+** {{api|HasOverrideUI}}
+** {{api|GetVehicleBarIndex}}
+** {{api|GetOverrideBarIndex}}
+** {{api|HasExtraActionBar}}
+** {{api|GetTempShapeshiftBarIndex}}
+** {{api|CanExitVehicle}}
+* The {{api|t=w|Cooldown:SetCooldown}} function now automatically shows/hides the Cooldown widget when the cooldown animation is active and when it completes.
+
+== Automated diff ==
+Click on the headers to expand the tables below.
+
+{{:Patch 5.1.0/API changes/diff}}

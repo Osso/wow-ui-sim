@@ -1,0 +1,14 @@
+Patch 7.2.5 API changes
+
+== New ==
+* C_ChatBubbles added with C_ChatBubbles.GetAllChatBubbles()
+* C_Commentator added with various functions.
+* Events added to API documentation
+
+== Changes ==
+* C_ActionBar now includes C_ActionBar.IsOnBarOrSpecialBar()
+* C_Garrison  now includes C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID(), C_Garrison.GetCurrentGarrTalentTreeID() and C_Garrison.GetTalentTreeIDsByClassID()
+* C_LFGList now includes C_LFGList.Search()
+* C_Unit now includes UnitIsOwnerOrControllerOfUnit()
+* C_TransmogSets now includes several added functions.
+* ReloadUI() renamed to C_UI.Reload()

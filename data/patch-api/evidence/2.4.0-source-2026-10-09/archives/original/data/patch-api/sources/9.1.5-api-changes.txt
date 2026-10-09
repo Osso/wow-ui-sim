@@ -1,0 +1,22 @@
+Patch 9.1.5 API changes
+
+== Summary ==
+* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate.
+* The guild bank UI has been synchronized with changes made in patch 2.5.2 to use a mixin-based approach.
+* The legacy Looking For Guild and Guild Recruitment APIs and UIs have been removed.
+** The guild finder embedded into the Communities UI still exists.
+* The event trace tool now supports logging events while the frame is hidden. This option is disabled by default.
+::
+
+* Item upgrade API has been moved to the C_ItemUpgrade namespace.
+* DeleteCursorItem() is limited to deleting a single item per hardware event.
+* Several APIs, for instance the Auction House API have been /run script protected.
+
+== Resources ==
+* TOC: 90105
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Deprecated_9_1_5.lua
+* Official patch notes: User Interface and Accessibility
+* Community patch notes: 9.1.5 Consolidated UI Changes
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+

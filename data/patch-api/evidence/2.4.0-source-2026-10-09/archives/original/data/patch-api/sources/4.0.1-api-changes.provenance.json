@@ -1,0 +1,24 @@
+{
+  "title": "Patch 4.0.1/API changes",
+  "version": "4.0.1",
+  "pageid": 129645,
+  "revid": 1271877,
+  "timestamp": "2012-09-06T23:25:23Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1271877&format=json",
+  "retrieved": "2026-10-09T08:41:58.986692+00:00",
+  "response_sha256": "b32e4728d43a0d1097f79e7a5d7bf55c450bc3db23bbba7de715423d664e1dc4",
+  "wikitext_sha256": "afa56cbdc73d8c84a7f88b3829f5aef8ae18d2f4a83a4bb09747c5bbb251cd69",
+  "wikitext_bytes": 15830,
+  "sha256": "afa56cbdc73d8c84a7f88b3829f5aef8ae18d2f4a83a4bb09747c5bbb251cd69",
+  "client_line": "retail",
+  "generator_flags": [
+    "--cataclysm-labeled-inventory",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [
+    "--cataclysm-labeled-inventory"
+  ],
+  "classification": "historical-retail-api-page",
+  "http_status": 200
+}

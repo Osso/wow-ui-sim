@@ -1,0 +1,30 @@
+Patch 8.2.0 API changes
+
+Blizzard UI post:
+* [Reference: url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara]
+* 8.2 UI patch notes: https://www.wowinterface.com/forums/showthread.php?t=57226
+
+Diffs:
+* 8.1.5 (29981) to 8.2.0 (30920): https://github.com/Gethe/wow-ui-source/commit/f1462fb3976c275e36939507147a0fbba3a30640
+* 8.2.0 (30948): https://github.com/Gethe/wow-ui-source/commit/295545e959e82b9fa43a4cdab4afb80a3b13b02b
+* 8.2.0 (30993): https://github.com/Gethe/wow-ui-source/commit/9eb7d56d256e5b2e20682e4d40f72378e483ea2c
+* Resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/b64b55d7917d7552dda675865210ec404e3ea848
+
+== API ==
+==== Changes ====
+* The TOC version is 80200
+* No files outside of Interface\ can be addressed by file path anymore
+:* GetFileIDFromPath() will no longer work for non-interface file paths. TSquare 2019-04-23. IRC #wowuidev
+:* Paths to Fonts\ are still accessible for FontInstance:SetFont()
+:* Sounds cannot be replaced anymore by dropping a sound file in the Sound\ folder, but they can still be (un)muted with MuteSoundFile() and UnmuteSoundFile().
+* C_ReportSystem.InitiateReportPlayer() and C_ReportSystem.SendReportPlayer() were protected to prevent automating reports, addons have to use C_ReportSystem.OpenReportPlayerDialog() now. TSquare 2019-04-24. IRC #wowuidev
+* Nameplates anchoring is now restricted to only those in the same anchor "family". This was done to disable drawing lines to nameplates. TSquare 2019-05-16. IRC #wowuidev
+* GameTooltip:AddTexture() now supports multiple customizable textures per line.
+* The WorldStateFrame widget functionality was replaced by the UI Widget Manager API.
+* ShowUIPanel() and HideUIPanel() are now protected, they can no longer be called by addons while in combat.
+* /fstack doesn't show the global frame names anymore unless disabling the fstack_preferParentKeys CVar.
+* Deprecated API: Blizzard_Deprecated 8.2.0
+
+
+
+== References ==

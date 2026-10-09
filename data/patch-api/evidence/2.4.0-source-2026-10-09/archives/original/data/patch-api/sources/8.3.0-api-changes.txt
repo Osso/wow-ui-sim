@@ -1,0 +1,21 @@
+Patch 8.3.0 API changes
+
+== Changes ==
+* TOC: 80300
+* The Auction House was revamped [Reference: url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=Kaivax|date=2019-10-07|title=Feedback – Auction House Revamp]
+* Deprecated API: Deprecated_8_3_0.lua
+
+== Diffs ==
+=== 8.2.5 (32978) to 8.3.0 (33062) Jan 14 2020 ===
+: FrameXML, InterfaceResources
+
+=== 8.3.0 (34601) May 29 2020 ===
+: FrameXML, InterfaceResources
+* New functions: C_AzeriteEssence.GetNumUsableEssences, C_Item.IsItemCorruptable, TargetSpellHasApplyCorruption
+
+=== 8.3.0 (34769) Jun 11 2020 ===
+: FrameXML, InterfaceResources
+* New event: LFG_GROUP_DELISTED_LEADERSHIP_CHANGE
+
+== References ==
+[References list; not expanded]

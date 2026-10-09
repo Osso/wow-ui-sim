@@ -1,0 +1,18 @@
+{
+  "pageid": 262849,
+  "title": "Patch 5.4.2/API changes",
+  "revid": 2543251,
+  "timestamp": "2014-02-20T12:32:21Z",
+  "sha256": "0aa82c13e17c30d54797b45ffa769b65b01723e455174f6f2dfa39148671f773",
+  "fetch_url": "https://warcraft.wiki.gg/api.php",
+  "fetched": "2026-10-08",
+  "extractor_flags": [
+    "--mists-automated-diff"
+  ],
+  "generator_flags": [
+    "--mists-automated-diff"
+  ],
+  "classification": "retail-api-change-page",
+  "client_line": "2013 retail Mists of Pandaria",
+  "build": "5.4.2.17688"
+}

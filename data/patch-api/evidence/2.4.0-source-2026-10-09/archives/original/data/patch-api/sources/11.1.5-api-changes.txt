@@ -1,0 +1,114 @@
+Patch 11.1.5 API changes
+
+== Summary ==
+* A new user-configurable color override system has been added. Currently, this system is limited to configuring item quality colors.
+* A new C_EncodingUtil namespace has been added with native APIs for common data compression, encoding, and serialization tasks.
+* A new LoadSavedVariablesFirst TOC directive has been added that will load saved variables before all scripts in an addon.
+* The AllowLoadGameType TOC directive is no longer restricted and can be used by insecure addons.
+* The TOC file format has been expanded with support for inline variables and directives.
+* SecureActionButtonTemplate now supports a per-button configurable useOnKeyDown attribute.
+* The UnitCreatureFamily and UnitCreatureType APIs now return an additional locale-independent value. Additionally, new functions have been added to the C_CreatureInfo namespace.
+* A new C_PetJournal.GetOwnedPetIDs API has been added to obtain a full list of a player's owned battle pets.
+* C_TooltipInfo APIs now include additional line data items for item and upgrade levels (e.g. Explorer 1/8).
+* All base Lua library functions (such as collectgarbage) can no longer be securely hooked.
+* SecureFrameTemplate now explicitly blocks mouse click event propagation.
+
+== Resources ==
+* TOC: 110105
+* Official patch notes: 11.1.5 Update Notes
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+
+== Color Overrides ==
+
+* Users can now reconfigure the colors used in the UI for displaying item qualities.
+* The existing ITEM_QUALITY_COLORS global table will be updated dynamically based upon user configuration, however it may be preferable to instead use the ColorManager.GetColorDataForItemQuality API instead in case this table is later removed.
+* Original item quality colors without user overrides can be obtained via the ColorManager.GetDefaultColorDataForItemQuality API.
+* For cases where item quality colors are displayed in strings, new markup support has been added in the form of |cnIQn:text|r where n corresponds to a numeric Enum.ItemQuality value.
+
+== TOC format changes ==
+
+* File lines now support inline variables that expand out to the current client flavor and game type.
+* File lines now support inline directives that can be used to omit loading individual files under specific client flavors and game types.
+** This is limited to the AllowLoad and AllowLoadGameType directives.
+
+## Interface: [API LatestInterface]
+## Title: My Cool Addon
+
+# This will load "Mainline\File.lua" or "Classic\File.lua"
+# as appropriate for the current client.
+[Family]\File.lua
+
+# This will load "Standard\File.lua", "Mists\File.lua", "Cata\File.lua", ...
+# as appropriate for the current client.
+[Game]\File.lua
+
+# This will only be loaded on Mainline.
+MainlineOnly.lua [AllowLoadGameType mainline]
+
+# This will only be loaded in Vanilla or TBC.
+VanillaOrTBC.lua [AllowLoadGameType vanilla, tbc]
+
+== Function Inheritance Warnings ==
+
+* The client can now be configured to raise script warnings when a frame defined in XML would trigger duplicate calls to identical functions in script handlers.
+** Typically, this occurs when using the inherit attribute on script handlers in conjunction with template inheritance.
+* This functionality is currently disabled by default, and can be configured via CVar frameScriptFunctionInheritanceWarningMode.
+
+== Consolidated changes ==
+: 11.1.0 (59466) → 11.1.5 (61265) Jun  3 2025
+=== Enumerations ===
+ Enum.AccountTransType
+   + Profile
+ Enum.CraftingOrderFlags
+   + None
+ Enum.CurrencySource
+   + RenownRepGainInitialVisibility
+ Enum.EditModeAccountSetting
+   + ShowCooldownViewer
+ Enum.EditModeSystem
+   + CooldownViewer
+ Enum.EventToastDisplayType
+   + Scoreboard
+ Enum.GossipNpcOption
+   + GuildRename
+   + ItemUpgrade
+ Enum.ItemGemColor
+   + FutureUse
+ Enum.ItemSocketType
+   + FutureUse
+ Enum.PerksVendorCategoryType
+   + Stipend
+   + Activity
+   + GmAdjustment
+   + Achievement
+   + Refund
+ Enum.PlayerInteractionType
+   + GuildRename
+ Enum.PointsModifierSourceType
+   + RaidEncounterLevel
+ Enum.TooltipDataLineType
+   + ItemLevel
+   + ItemUpgradeLevel
+ Enum.UIWidgetUpdateAnimType
+   + FlashAndAnimateNumber
+
+=== Structures ===
+ AtlasInfo
+   + elementName
+ PerksVendorItemInfo
+   + invType
+   + quality
+ PerksVendorSubItemInfo
+   # itemAppearanceID -> itemModifiedAppearanceID
+ PlayerChoiceOptionInfo
+   - rarityColor
+ SpellCooldownInfo
+   + activeCategory
+ TextureAndTextVisualizationInfo
+   + textFormatType
+   + updateAnimType
+ TotemInfoScript
+   + spellID
+ WarbandSceneEntry
+   - qualityColor

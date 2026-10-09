@@ -1,0 +1,380 @@
+Patch 10.2.5 API changes
+
+== Summary ==
+* Added a new animation type for animating changes to texture vertex colors. See Vertex color animations.
+* The color picker frame has been reworked. See Color picker changes.
+* The ping system has had a convenience template added for making pingable unit frames, and a few API restrictions relaxed. See Ping system changes.
+* Various functions for querying buffs and debuffs have been deprecated and will be removed in the following expansion. Notably, this includes UnitAura, UnitBuff, and UnitDebuff.
+
+== Resources ==
+* TOC: 100205
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: Seeds of Renewal Content Update Notes
+* Deprecated API: Blizzard_Deprecated
+
+== Vertex color animations ==
+
+A new VertexColor animation type has been added that can be used to animate changes to vertex colors on textures. This appears to be implemented as a simple linear interpolation of the individual RGBA color components without any translation to an alternative color space.
+
+The example below demonstrates a two second looping animation that will transition the vertex color from red to blue and then back again.
+
+```lua
+local Texture = UIParent:CreateTexture()
+Texture:SetTexture([[Interface\Buttons\White8x8]])
+Texture:SetPoint("CENTER")
+Texture:SetSize(128, 128)
+
+local AnimationGroup = Texture:CreateAnimationGroup()
+AnimationGroup:SetLooping("BOUNCE")
+
+local VertexColor = AnimationGroup:CreateAnimation("VertexColor")
+VertexColor:SetStartColor(CreateColor(1, 0, 0))
+VertexColor:SetEndColor(CreateColor(0, 0, 1))
+VertexColor:SetDuration(2)
+
+AnimationGroup:Play()
+```
+
+For usages from XML, refer to the elements shown below.
+
+```xml
+<AnimationGroup looping="BOUNCE">
+    <VertexColor duration="2">
+        <StartColor r="1" g="0" b="0"/>
+        <EndColor r="0" g="0" b="1"/>
+    </VertexColor>
+</AnimationGroup>
+```
+
+== Color picker changes ==
+
+The global color picker frame (ColorPickerFrame) has been overhauled and now includes a hex color input field.
+
+<!-- Would like to use a tlgo link for the new function, but that can't be done just yet. -->
+One notable breaking change is that the OpenColorPicker global function has been relocated to ColorPickerFrame:SetupColorPickerAndShow. This function still accepts exactly the same parameters as before, so addons will only need to rename this reference and should otherwise continue to work.
+
+== Ping system changes ==
+A new convenience template has been added to make it easier to opt unit frames into being ping receivers.
+
+Inheriting from PingableUnitFrameTemplate will now cause intercepted pings to be directed to a unit token controllable via the "unit" attribute on the frame. This change should make it easier for custom unit frames - particularly those created by secure headers - to handle ping interactions correctly without any additional manual setup.
+
+Additionally, the following APIs have been relocated from the C_PingSecure namespace to C_Ping and are now callable by insecure code.
+
+* C_Ping.GetCooldownInfo
+* C_Ping.GetDefaultPingOptions
+* C_Ping.GetTextureKitForType
+
+== Hotfixes ==
+In build 10.2.5 (53441) on 2024-02-23 the following CVars were made secure.
+ autoStand
+ autoUnshift
+ SoftTargetEnemy
+ SoftTargetEnemyRange
+ SoftTargetForce
+ SoftTargetInteract
+ SoftTargetInteractRange
+The synchronizeMacros and synchronizeSettings CVars were removed.
+
+== Diffs ==
+=== Enumerations ===
+ Enum.AccountStateFlags
+   # PerkTablesLoaded -> PerksPastRewardsLoaded = 0x0000000000020000
+   + PerksHeldItemLoaded = 0x0000000400000000
+   + PerksPendingRewardsLoaded = 0x0000000800000000
+   + PerksRefundsLoaded = 0x0000002000000000
+   + BitVectorsLoaded = 0x0000004000000000
+ Enum.CurrencySource
+   # PhBuffer_64 -> SpellSkipLinkedCurrency = 64
+ Enum.UIMapFlag
+   # Deprecated -> DoNotTranslateBranches = 0x200
+
+=== Structures ===
+ EventToastInfo (C_EventToastManager.GetNextToastToDisplay, C_EventToastManager.GetLevelUpDisplayToastsFromLevel)
+   + flags
+ PerksActivityInfo (C_PerksActivities.GetPerksActivityInfo, C_PerksActivities.GetPerksActivitiesInfo)
+   + inProgress
+   + areAllConditionsMet
+   + conditions
+   + eventName
+ PerksProgramItemDisplayInfo (C_PerksProgram.GetPerksProgramItemDisplayInfo)
+   + mainHandItemModifiedAppearanceID
+   + offHandItemModifiedAppearanceID
+ PerksVendorItemInfo (C_PerksProgram.GetVendorItemInfo, C_PerksProgram.GetFrozenPerksVendorItemInfo)
+   + subItemsLoaded
+   + subItems
+ TugOfWarWidgetVisualizationInfo (C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo)
+   + neutralFillStyle
+   + markerArrowShownState
+ UIWidgetItemInfo (C_UIWidgetManager.GetItemDisplayVisualizationInfo)
+   + itemNameTextFontType
+   + itemNameTextSizeType
+   + infoTextFontType
+   + infoTextSizeType
+
+== Deprecated API ==
+These are functions that were deprecated and will be removed in the future.
+
+Deprecated_10_2_5.lua
+: FillLocalizedClassList → LocalizedClassList
+: GetSetBonusesForSpecializationByItemID → C_Item.GetSetBonusesForSpecializationByItemID
+: GetItemStats → C_Item.GetItemStats
+: GetItemStatDelta →  C_Item.GetItemStatDelta
+: UnitAura → C_UnitAuras.GetAuraDataByIndex
+: UnitBuff → C_UnitAuras.GetBuffDataByIndex
+: UnitDebuff → C_UnitAuras.GetDebuffDataByIndex
+: UnitAuraBySlot → C_UnitAuras.GetAuraDataBySlot
+: UnitAuraSlots → C_UnitAuras.GetAuraSlots
+
+== Blizzard Docs ==
+The following APIs are now backfilled in Blizzard_APIDocumentationGenerated.
+ AcceptGuild
+ AcceptResurrect
+ AssistUnit
+ AttackTarget
+ AutoEquipCursorItem
+ C_MacOptions.AreOSShortcutsDisabled
+ C_MacOptions.GetGameBundleName
+ C_MacOptions.HasNewStyleInputMonitoring
+ C_MacOptions.IsInputMonitoringEnabled
+ C_MacOptions.IsMicrophoneEnabled
+ C_MacOptions.IsUniversalAccessEnabled
+ C_MacOptions.OpenInputMonitoring
+ C_MacOptions.OpenMicrophoneRequestDialogue
+ C_MacOptions.OpenUniversalAccess
+ C_MacOptions.SetOSShortcutsDisabled
+ CanEjectPassengerFromSeat
+ CanSwitchVehicleSeat
+ CaseAccentInsensitiveParse
+ ClearTarget
+ ClosestGameObjectPosition
+ ClosestUnitPosition
+ ConfirmTalentWipe
+ DeclineGuild
+ DeclineResurrect
+ Dismount
+ EjectPassengerFromSeat
+ FocusUnit
+ GetAllowLowLevelRaid
+ GetAttackPowerForStat
+ GetAutoDeclineGuildInvites
+ GetAvoidance
+ GetBlockChance
+ GetCombatRating
+ GetCombatRatingBonus
+ GetCombatRatingBonusForCombatRatingValue
+ GetComboPoints
+ GetCorruption
+ GetCorruptionResistance
+ GetCritChance
+ GetCritChanceProvidesParryEffect
+ GetDebugAnimationStats
+ GetDebugPerf
+ GetDebugSpellEffects
+ GetDebugStats
+ GetDebugTargetCustomizationInfo
+ GetDebugUnitInfo
+ GetDodgeChance
+ GetDodgeChanceFromAttribute
+ GetExpertise
+ GetHaste
+ GetHitModifier
+ GetJailersTowerLevel
+ GetLifesteal
+ GetManaRegen
+ GetMastery
+ GetMasteryEffect
+ GetMaxCombatRatingBonus
+ GetMaxPlayerLevel
+ GetMeleeHaste
+ GetModResilienceDamageReduction
+ GetMoney
+ GetNormalizedRealmName
+ GetOverrideAPBySpellPower
+ GetOverrideSpellPowerByAP
+ GetPVPDesired
+ GetPVPGearStatRules
+ GetPVPLifetimeStats
+ GetPVPSessionStats
+ GetPVPTimer
+ GetPVPYesterdayStats
+ GetParryChance
+ GetParryChanceFromAttribute
+ GetPetMeleeHaste
+ GetPetSpellBonusDamage
+ GetPlayerFacing
+ GetPlayerInfoByGUID
+ GetPowerRegen
+ GetPowerRegenForPowerType
+ GetPvpPowerDamage
+ GetPvpPowerHealing
+ GetRangedCritChance
+ GetRangedHaste
+ GetResSicknessDuration
+ GetRestState
+ GetRuneCooldown
+ GetRuneCount
+ GetSheathState
+ GetShieldBlock
+ GetSpeed
+ GetSpellBonusDamage
+ GetSpellBonusHealing
+ GetSpellCritChance
+ GetSpellHitModifier
+ GetSpellPenetration
+ GetSturdiness
+ GetTaxiBenchmarkMode
+ GetUnitHealthModifier
+ GetUnitMaxHealthModifier
+ GetUnitPowerModifier
+ GetUnitSpeed
+ GetVehicleUIIndicator
+ GetVehicleUIIndicatorSeat
+ GetVersatilityBonus
+ GetXPExhaustion
+ HasAPEffectsSpellPower
+ HasDualWieldPenalty
+ HasFullControl
+ HasNoReleaseAura
+ HasSPEffectsAttackPower
+ InitiateRolePoll
+ IsAccountSecured
+ IsAdvancedFlyableArea
+ IsDebugBuild
+ IsDualWielding
+ IsFalling
+ IsFlyableArea
+ IsFlying
+ IsGuildLeader
+ IsInGuild
+ IsInJailersTower
+ IsIndoors
+ IsInsane
+ IsJailersTowerLayerTimeLocked
+ IsLoggedIn
+ IsMounted
+ IsOnGroundFloorInJailersTower
+ IsOutOfBounds
+ IsOutdoors
+ IsPVPTimerRunning
+ IsRangedWeapon
+ IsResting
+ IsStealthed
+ IsSubmerged
+ IsSwimming
+ IsTargetLoose
+ IsXPUserDisabled
+ NoPlayTime
+ PartialPlayTime
+ PlayerCanTeleport
+ PlayerEffectiveAttackPower
+ PlayerIsPVPInactive
+ RepopMe
+ ReportPlayerIsPVPAFK
+ ResistancePercent
+ RespondInstanceLock
+ RetrieveCorpse
+ SelectedRealmName
+ SetAllowLowLevelRaid
+ SetAutoDeclineGuildInvites
+ SetTaxiBenchmarkMode
+ ShowBossFrameWhenUninteractable
+ TargetDirectionEnemy
+ TargetDirectionFinished
+ TargetDirectionFriend
+ TargetLastEnemy
+ TargetLastFriend
+ TargetLastTarget
+ TargetNearest
+ TargetNearestEnemy
+ TargetNearestEnemyPlayer
+ TargetNearestFriend
+ TargetNearestFriendPlayer
+ TargetNearestPartyMember
+ TargetNearestRaidMember
+ TargetPriorityHighlightEnd
+ TargetPriorityHighlightStart
+ TargetToggle
+ TargetUnit
+ TimeoutResurrect
+ ToggleCollision
+ ToggleCollisionDisplay
+ ToggleGravity
+ TogglePlayerBounds
+ TogglePortals
+ ToggleSheath
+ ToggleTris
+ UnitAffectingCombat
+ UnitArmor
+ UnitAttackPower
+ UnitAttackSpeed
+ UnitCastingInfo
+ UnitChannelInfo
+ UnitClassification
+ UnitControllingVehicle
+ UnitCreatureFamily
+ UnitCreatureType
+ UnitDamage
+ UnitDetailedThreatSituation
+ UnitEffectiveLevel
+ UnitFullName
+ UnitGUID
+ UnitGetIncomingHeals
+ UnitGetTotalAbsorbs
+ UnitGetTotalHealAbsorbs
+ UnitHPPerStamina
+ UnitHasRelicSlot
+ UnitHasVehiclePlayerFrameUI
+ UnitHasVehicleUI
+ UnitHealth
+ UnitHealthMax
+ UnitHonor
+ UnitHonorLevel
+ UnitHonorMax
+ UnitInVehicle
+ UnitInVehicleControlSeat
+ UnitInVehicleHidesPetFrame
+ UnitIsBossMob
+ UnitIsControlling
+ UnitIsDead
+ UnitIsDeadOrGhost
+ UnitIsFeignDeath
+ UnitIsGhost
+ UnitIsMercenary
+ UnitIsQuestBoss
+ UnitIsSameServer
+ UnitIsTapDenied
+ UnitIsTrivial
+ UnitIsUnconscious
+ UnitLevel
+ UnitName
+ UnitNameUnmodified
+ UnitNumPowerBarTimers
+ UnitOnTaxi
+ UnitPVPName
+ UnitPosition
+ UnitPowerBarTimerInfo
+ UnitPowerType
+ UnitRace
+ UnitRangedAttackPower
+ UnitRangedDamage
+ UnitRealmRelationship
+ UnitSelectionColor
+ UnitSelectionType
+ UnitSetRole
+ UnitShouldDisplayName
+ UnitSpellHaste
+ UnitStagger
+ UnitStat
+ UnitSwitchToVehicleSeat
+ UnitTargetsVehicleInRaidUI
+ UnitThreatPercentageOfLead
+ UnitThreatSituation
+ UnitTrialXP
+ UnitUsingVehicle
+ UnitVehicleSeatCount
+ UnitVehicleSeatInfo
+ UnitVehicleSkin
+ UnitWeaponAttackPower
+ UnitXP
+ UnitXPMax
+ WorldLootObjectExists

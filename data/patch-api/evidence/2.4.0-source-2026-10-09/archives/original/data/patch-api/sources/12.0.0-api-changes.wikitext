@@ -1,0 +1,1262 @@
+{{apichanges|12.0.0|prev=11.2.7|next=12.0.1}}
+
+==Summary==
+* Addon apocalypse. [[File:Emoji_fatcatfire.png|24px|link=]]
+* [[COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED will error when trying to register them.
+
+==Resources==
+* TOC: <code>120000</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24244455/midnight-pre-expansion-content-update-notes#item13 Midnight Pre-Expansion Content Update Notes]
+<div class="noexcerpt">
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/11.2.7..12.0.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/11.2.7..12.0.0 BlizzardInterfaceResources]
+* Official restriction changes: [[File:Blizz.gif|link=]] [[Patch 12.0.0/Planned API changes|Planned API changes]]
+* Deprecated APIs:
+** [https://github.com/Gethe/wow-ui-source/blob/12.0.0/Interface/AddOns/Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua Deprecated_BattleNet.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/12.0.0/Interface/AddOns/Blizzard_DeprecatedChatInfo/Deprecated_ChatInfo.lua Deprecated_ChatInfo.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/12.0.0/Interface/AddOns/Blizzard_DeprecatedChatInfo/Deprecated_ChatFrame.lua Deprecated_ChatFrame.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/12.0.0/Interface/AddOns/Blizzard_DeprecatedCombatLog/Deprecated_CombatLog.lua Deprecated_CombatLog.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/12.0.0/Interface/AddOns/Blizzard_DeprecatedSpellBook/Deprecated_SpellBook.lua Deprecated_SpellBook.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/12.0.0/Interface/AddOns/Blizzard_DeprecatedInstanceEncounter/Deprecated_InstanceEncounter.lua Deprecated_InstanceEncounter.lua]
+** [https://github.com/Gethe/wow-ui-source/blob/12.0.0/Interface/AddOns/Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua Deprecated_SpellScript.lua]
+</div>
+
+==AddOn security changes==
+
+API changes have been introduced with an aim to limit the ability for addons to perform complex logic and decision making based off combat information.
+
+The changes are not intended to prevent "look and feel" customization of UI elements. As part of this, Blizzard have avoided outright restricting many APIs and moving frames into the secure environment but instead have introduced new technology termed as Secret Values.
+
+===Secret values===
+{{ambox|border=purple|image=|type=[[file:markdown_important.png|32px]] &nbsp;<font color=#AB7DF8>'''Important'''</font><br>[[Secret Values|Secret values]] are a new mechanism that restrict the ability for addons to perform some operations on Lua values on tainted execution paths.|format=tiny}}
+
+==Consolidated changes==
+: <font color="pink">11.2.7 (64978)</font> &rarr; <font color="lightgreen">12.0.0 (65655)</font> Jan 28 2026
+
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(437)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(138)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AbbreviateLargeNumbers}}
+: {{api|t=a|AbbreviateNumbers}}
+: {{api|t=a|AddSourceLocationExclude}}
+: {{api|t=a|C_ActionBar.GetActionAutocast}}
+: {{api|t=a|C_ActionBar.GetActionBarPage}}
+: {{api|t=a|C_ActionBar.GetActionChargeDuration}}
+: {{api|t=a|C_ActionBar.GetActionCharges}}
+: {{api|t=a|C_ActionBar.GetActionCooldownDuration}}
+: {{api|t=a|C_ActionBar.GetActionCooldown}}
+: {{api|t=a|C_ActionBar.GetActionDisplayCount}}
+: {{api|t=a|C_ActionBar.GetActionLossOfControlCooldownDuration}}
+: {{api|t=a|C_ActionBar.GetActionLossOfControlCooldown}}
+: {{api|t=a|C_ActionBar.GetActionTexture}}
+: {{api|t=a|C_ActionBar.GetActionText}}
+: {{api|t=a|C_ActionBar.GetActionUseCount}}
+: {{api|t=a|C_ActionBar.GetBonusBarIndex}}
+: {{api|t=a|C_ActionBar.GetBonusBarOffset}}
+: {{api|t=a|C_ActionBar.GetExtraBarIndex}}
+: {{api|t=a|C_ActionBar.GetMultiCastBarIndex}}
+: {{api|t=a|C_ActionBar.GetOverrideBarIndex}}
+: {{api|t=a|C_ActionBar.GetOverrideBarSkin}}
+: {{api|t=a|C_ActionBar.GetProfessionQualityInfo}}
+: {{api|t=a|C_ActionBar.GetTempShapeshiftBarIndex}}
+: {{api|t=a|C_ActionBar.GetVehicleBarIndex}}
+: {{api|t=a|C_ActionBar.HasAction}}
+: {{api|t=a|C_ActionBar.HasBonusActionBar}}
+: {{api|t=a|C_ActionBar.HasExtraActionBar}}
+: {{api|t=a|C_ActionBar.HasOverrideActionBar}}
+: {{api|t=a|C_ActionBar.HasRangeRequirements}}
+: {{api|t=a|C_ActionBar.HasTempShapeshiftActionBar}}
+: {{api|t=a|C_ActionBar.HasVehicleActionBar}}
+: {{api|t=a|C_ActionBar.IsActionInRange}}
+: {{api|t=a|C_ActionBar.IsAttackAction}}
+: {{api|t=a|C_ActionBar.IsAutoRepeatAction}}
+: {{api|t=a|C_ActionBar.IsConsumableAction}}
+: {{api|t=a|C_ActionBar.IsCurrentAction}}
+: {{api|t=a|C_ActionBar.IsEquippedAction}}
+: {{api|t=a|C_ActionBar.IsEquippedGearOutfitAction}}
+: {{api|t=a|C_ActionBar.IsItemAction}}
+: {{api|t=a|C_ActionBar.IsPossessBarVisible}}
+: {{api|t=a|C_ActionBar.IsStackableAction}}
+: {{api|t=a|C_ActionBar.IsUsableAction}}
+: {{api|t=a|C_ActionBar.RegisterActionUIButton}}
+: {{api|t=a|C_ActionBar.SetActionBarPage}}
+: {{api|t=a|C_ActionBar.UnregisterActionUIButton}}
+: {{api|t=a|C_AdventureMap.GetQuestPortraitInfo}}
+: {{api|t=a|C_BattleNet.SendGameData}}
+: {{api|t=a|C_BattleNet.SendWhisper}}
+: {{api|t=a|C_BattleNet.SetCustomMessage}}
+: {{api|t=a|C_CatalogShop.BulkPurchaseProducts}}
+: {{api|t=a|C_CatalogShop.ConfirmHousingPurchase}}
+: {{api|t=a|C_CatalogShop.GetFirstCategoryByProductID}}
+: {{api|t=a|C_CatalogShop.GetNewProducts}}
+: {{api|t=a|C_CatalogShop.GetProductIDsForCategory}}
+: {{api|t=a|C_CatalogShop.GetRefundableDecors}}
+: {{api|t=a|C_CatalogShop.GetVirtualCurrencyBalance}}
+: {{api|t=a|C_CatalogShop.HasNewProducts}}
+: {{api|t=a|C_CatalogShop.OpenCatalogShopInteractionFromHouse}}
+: {{api|t=a|C_CatalogShop.OpenCatalogShopInteractionFromShop}}
+: {{api|t=a|C_CatalogShop.RefreshRefundableDecors}}
+: {{api|t=a|C_CatalogShop.RefreshVirtualCurrencyBalance}}
+: {{api|t=a|C_CatalogShop.StartHousingVCPurchaseConfirmation}}
+: {{api|t=a|C_CharacterServices.AssignFCMDistribution}}
+: {{api|t=a|C_ChatInfo.CancelEmote}}
+: {{api|t=a|C_ChatInfo.InChatMessagingLockdown}}
+: {{api|t=a|C_ChatInfo.PerformEmote}}
+: {{api|t=a|C_ColorUtil.ConvertHSLToHSV}}
+: {{api|t=a|C_ColorUtil.ConvertHSVToHSL}}
+: {{api|t=a|C_ColorUtil.ConvertHSVToRGB}}
+: {{api|t=a|C_ColorUtil.ConvertRGBToHSV}}
+: {{api|t=a|C_ColorUtil.GenerateTextColorCode}}
+: {{api|t=a|C_ColorUtil.WrapTextInColorCode}}
+: {{api|t=a|C_ColorUtil.WrapTextInColor}}
+: {{api|t=a|C_CombatAudioAlert.GetFormatSetting}}
+: {{api|t=a|C_CombatAudioAlert.GetSpeakerSpeed}}
+: {{api|t=a|C_CombatAudioAlert.GetSpeakerVolume}}
+: {{api|t=a|C_CombatAudioAlert.GetSpecSetting}}
+: {{api|t=a|C_CombatAudioAlert.GetThrottle}}
+: {{api|t=a|C_CombatAudioAlert.IsEnabled}}
+: {{api|t=a|C_CombatAudioAlert.SetFormatSetting}}
+: {{api|t=a|C_CombatAudioAlert.SetSpeakerSpeed}}
+: {{api|t=a|C_CombatAudioAlert.SetSpeakerVolume}}
+: {{api|t=a|C_CombatAudioAlert.SetSpecSetting}}
+: {{api|t=a|C_CombatAudioAlert.SetThrottle}}
+: {{api|t=a|C_CombatAudioAlert.SpeakText}}
+: {{api|t=a|C_CombatLog.ApplyFilterSettings}}
+: {{api|t=a|C_CombatLog.AreFilteredEventsEnabled}}
+: {{api|t=a|C_CombatLog.ClearEntries}}
+: {{api|t=a|C_CombatLog.DoesObjectMatchFilter}}
+: {{api|t=a|C_CombatLog.GetEntryRetentionTime}}
+: {{api|t=a|C_CombatLog.GetMessageLimit}}
+: {{api|t=a|C_CombatLog.IsCombatLogRestricted}}
+: {{api|t=a|C_CombatLog.RefilterEntries}}
+: {{api|t=a|C_CombatLog.SetEntryRetentionTime}}
+: {{api|t=a|C_CombatLog.SetFilteredEventsEnabled}}
+: {{api|t=a|C_CombatLog.SetMessageLimit}}
+: {{api|t=a|C_CombatText.GetActiveUnit}}
+: {{api|t=a|C_CombatText.GetCurrentEventInfo}}
+: {{api|t=a|C_CombatText.SetActiveUnit}}
+: {{api|t=a|C_Commentator.GetCombatEventInfo}}
+: {{api|t=a|C_CooldownViewer.GetValidAlertTypes}}
+: {{api|t=a|C_CreatureInfo.GetCreatureID}}
+: {{api|t=a|C_CurveUtil.CreateColorCurve}}
+: {{api|t=a|C_CurveUtil.CreateCurve}}
+: {{api|t=a|C_CurveUtil.EvaluateColorFromBoolean}}
+: {{api|t=a|C_CurveUtil.EvaluateColorValueFromBoolean}}
+: {{api|t=a|C_CurveUtil.EvaluateGameCurve}}
+: {{api|t=a|C_DamageMeter.GetAvailableCombatSessions}}
+: {{api|t=a|C_DamageMeter.GetCombatSessionFromID}}
+: {{api|t=a|C_DamageMeter.GetCombatSessionFromType}}
+: {{api|t=a|C_DamageMeter.GetCombatSessionSourceFromID}}
+: {{api|t=a|C_DamageMeter.GetCombatSessionSourceFromType}}
+: {{api|t=a|C_DamageMeter.IsDamageMeterAvailable}}
+: {{api|t=a|C_DamageMeter.ResetAllCombatSessions}}
+: {{api|t=a|C_DeathRecap.GetRecapEvents}}
+: {{api|t=a|C_DeathRecap.GetRecapLink}}
+: {{api|t=a|C_DeathRecap.HasRecapEvents}}
+: {{api|t=a|C_DelvesUI.GetLockedTextForCompanion}}
+: {{api|t=a|C_DelvesUI.IsTraitTreeForCompanion}}
+: {{api|t=a|C_DurationUtil.CreateDuration}}
+: {{api|t=a|C_DurationUtil.GetCurrentTime}}
+: {{api|t=a|C_EncounterTimeline.AddEditModeEvents}}
+: {{api|t=a|C_EncounterTimeline.AddScriptEvent}}
+: {{api|t=a|C_EncounterTimeline.CancelAllScriptEvents}}
+: {{api|t=a|C_EncounterTimeline.CancelEditModeEvents}}
+: {{api|t=a|C_EncounterTimeline.CancelScriptEvent}}
+: {{api|t=a|C_EncounterTimeline.FinishScriptEvent}}
+: {{api|t=a|C_EncounterTimeline.GetCurrentTime}}
+: {{api|t=a|C_EncounterTimeline.GetEventCountBySource}}
+: {{api|t=a|C_EncounterTimeline.GetEventInfo}}
+: {{api|t=a|C_EncounterTimeline.GetEventList}}
+: {{api|t=a|C_EncounterTimeline.GetEventState}}
+: {{api|t=a|C_EncounterTimeline.GetEventTimeElapsed}}
+: {{api|t=a|C_EncounterTimeline.GetEventTimeRemaining}}
+: {{api|t=a|C_EncounterTimeline.GetEventTrack}}
+: {{api|t=a|C_EncounterTimeline.GetTrackInfo}}
+: {{api|t=a|C_EncounterTimeline.GetTrackList}}
+: {{api|t=a|C_EncounterTimeline.HasActiveEvents}}
+: {{api|t=a|C_EncounterTimeline.HasAnyEvents}}
+: {{api|t=a|C_EncounterTimeline.HasPausedEvents}}
+: {{api|t=a|C_EncounterTimeline.HasVisibleEvents}}
+: {{api|t=a|C_EncounterTimeline.IsEventBlocked}}
+: {{api|t=a|C_EncounterTimeline.IsFeatureAvailable}}
+: {{api|t=a|C_EncounterTimeline.IsFeatureEnabled}}
+: {{api|t=a|C_EncounterTimeline.PauseScriptEvent}}
+: {{api|t=a|C_EncounterTimeline.ResumeScriptEvent}}
+: {{api|t=a|C_EncounterTimeline.SetEventIconTextures}}
+: {{api|t=a|C_EncounterWarnings.GetEditModeWarningInfo}}
+: {{api|t=a|C_EncounterWarnings.GetSoundKitForSeverity}}
+: {{api|t=a|C_EncounterWarnings.IsFeatureAvailable}}
+: {{api|t=a|C_EncounterWarnings.IsFeatureEnabled}}
+: {{api|t=a|C_EncounterWarnings.PlaySound}}
+: {{api|t=a|C_EventScheduler.CanShowEvents}}
+: {{api|t=a|C_EventUtils.IsCallbackEvent}}
+: {{api|t=a|C_GameRules.IsPersonalResourceDisplayEnabled}}
+: {{api|t=a|C_HouseExterior.GetCurrentHouseExteriorType}}
+: {{api|t=a|C_HouseExterior.GetFixtureDebugInfoForGUID}}
+: {{api|t=a|C_HouseExterior.GetHouseExteriorSizeOptions}}
+: {{api|t=a|C_HouseExterior.GetHouseExteriorTypeOptions}}
+: {{api|t=a|C_HouseExterior.GetHoveredFixtureDebugInfo}}
+: {{api|t=a|C_HouseExterior.GetSelectedFixtureDebugInfo}}
+: {{api|t=a|C_HouseExterior.SetHouseExteriorSize}}
+: {{api|t=a|C_HouseExterior.SetHouseExteriorType}}
+: {{api|t=a|C_Housing.IsHousingMarketShopEnabled}}
+: {{api|t=a|C_Housing.OnHouseFinderClickPlot}}
+: {{api|t=a|C_HousingBasicMode.IsFreePlaceEnabled}}
+: {{api|t=a|C_HousingBasicMode.SetFreePlaceEnabled}}
+: {{api|t=a|C_HousingBasicMode.StartPlacingPreviewDecor}}
+: {{api|t=a|C_HousingCatalog.DeletePreviewCartDecor}}
+: {{api|t=a|C_HousingCatalog.GetBundleInfo}}
+: {{api|t=a|C_HousingCatalog.GetCartSizeLimit}}
+: {{api|t=a|C_HousingCatalog.GetCatalogEntryRefundTimeStampByRecordID}}
+: {{api|t=a|C_HousingCatalog.HasFeaturedEntries}}
+: {{api|t=a|C_HousingCatalog.IsPreviewCartItemShown}}
+: {{api|t=a|C_HousingCatalog.PromotePreviewDecor}}
+: {{api|t=a|C_HousingCatalog.RequestHousingMarketRefundInfo}}
+: {{api|t=a|C_HousingCatalog.SetPreviewCartItemShown}}
+: {{api|t=a|C_HousingCustomizeMode.IsHouseExteriorDoorHovered}}
+: {{api|t=a|C_HousingDecor.EnterPreviewState}}
+: {{api|t=a|C_HousingDecor.ExitPreviewState}}
+: {{api|t=a|C_HousingDecor.GetNumPreviewDecor}}
+: {{api|t=a|C_HousingDecor.IsModeDisabledForPreviewState}}
+: {{api|t=a|C_HousingDecor.IsPreviewState}}
+: {{api|t=a|C_InstanceEncounter.IsEncounterInProgress}}
+: {{api|t=a|C_InstanceEncounter.IsEncounterLimitingResurrections}}
+: {{api|t=a|C_InstanceEncounter.IsEncounterSuppressingRelease}}
+: {{api|t=a|C_InstanceEncounter.ShouldShowTimelineForEncounter}}
+: {{api|t=a|C_Item.IsItemBindToAccount}}
+: {{api|t=a|C_LimitedInput.LimitedInputAllowed}}
+: {{api|t=a|C_MajorFactions.ShouldDisplayMajorFactionAsJourney}}
+: {{api|t=a|C_MajorFactions.ShouldUseJourneyRewardTrack}}
+: {{api|t=a|C_NamePlate.GetNamePlateSize}}
+: {{api|t=a|C_NamePlate.SetNamePlateSize}}
+: {{api|t=a|C_NamePlateManager.GetNamePlateHitTestInsets}}
+: {{api|t=a|C_NamePlateManager.IsNamePlateUnitBehindCamera}}
+: {{api|t=a|C_NamePlateManager.SetNamePlateHitTestFrame}}
+: {{api|t=a|C_NamePlateManager.SetNamePlateHitTestInsets}}
+: {{api|t=a|C_NamePlateManager.SetNamePlateSimplified}}
+: {{api|t=a|C_NeighborhoodInitiative.AddTrackedInitiativeTask}}
+: {{api|t=a|C_NeighborhoodInitiative.GetActiveNeighborhood}}
+: {{api|t=a|C_NeighborhoodInitiative.GetInitiativeActivityLogInfo}}
+: {{api|t=a|C_NeighborhoodInitiative.GetInitiativeTaskChatLink}}
+: {{api|t=a|C_NeighborhoodInitiative.GetInitiativeTaskInfo}}
+: {{api|t=a|C_NeighborhoodInitiative.GetNeighborhoodInitiativeInfo}}
+: {{api|t=a|C_NeighborhoodInitiative.GetRequiredLevel}}
+: {{api|t=a|C_NeighborhoodInitiative.GetTrackedInitiativeTasks}}
+: {{api|t=a|C_NeighborhoodInitiative.IsInitiativeEnabled}}
+: {{api|t=a|C_NeighborhoodInitiative.IsPlayerInNeighborhoodGroup}}
+: {{api|t=a|C_NeighborhoodInitiative.IsViewingActiveNeighborhood}}
+: {{api|t=a|C_NeighborhoodInitiative.PlayerHasInitiativeAccess}}
+: {{api|t=a|C_NeighborhoodInitiative.PlayerMeetsRequiredLevel}}
+: {{api|t=a|C_NeighborhoodInitiative.RemoveTrackedInitiativeTask}}
+: {{api|t=a|C_NeighborhoodInitiative.RequestInitiativeActivityLog}}
+: {{api|t=a|C_NeighborhoodInitiative.RequestNeighborhoodInitiativeInfo}}
+: {{api|t=a|C_NeighborhoodInitiative.SetActiveNeighborhood}}
+: {{api|t=a|C_NeighborhoodInitiative.SetViewingNeighborhood}}
+: {{api|t=a|C_Ping.IsPingSystemEnabled}}
+: {{api|t=a|C_PvP.AreTrainingGroundsEnabled}}
+: {{api|t=a|C_PvP.CanPlayerUseTrainingGroundsUI}}
+: {{api|t=a|C_PvP.GetBattlegroundInfo}}
+: {{api|t=a|C_PvP.GetRandomTrainingGroundRewards}}
+: {{api|t=a|C_PvP.GetTrainingGrounds}}
+: {{api|t=a|C_PvP.HasMatchStarted}}
+: {{api|t=a|C_PvP.HasRandomTrainingGroundWinToday}}
+: {{api|t=a|C_PvP.JoinRandomTrainingGround}}
+: {{api|t=a|C_PvP.JoinTrainingGround}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestLogRewardFavor}}
+: {{api|t=a|C_QuestLog.GetActivePreyQuest}}
+: {{api|t=a|C_Reputation.IsFactionParagonForCurrentPlayer}}
+: {{api|t=a|C_RestrictedActions.CheckAllowProtectedFunctions}}
+: {{api|t=a|C_RestrictedActions.GetAddOnRestrictionState}}
+: {{api|t=a|C_RestrictedActions.IsAddOnRestrictionActive}}
+: {{api|t=a|C_Secrets.GetPowerTypeSecrecy}}
+: {{api|t=a|C_Secrets.GetSpellAuraSecrecy}}
+: {{api|t=a|C_Secrets.GetSpellCastSecrecy}}
+: {{api|t=a|C_Secrets.GetSpellCooldownSecrecy}}
+: {{api|t=a|C_Secrets.HasSecretRestrictions}}
+: {{api|t=a|C_Secrets.ShouldActionCooldownBeSecret}}
+: {{api|t=a|C_Secrets.ShouldAurasBeSecret}}
+: {{api|t=a|C_Secrets.ShouldCooldownsBeSecret}}
+: {{api|t=a|C_Secrets.ShouldSpellAuraBeSecret}}
+: {{api|t=a|C_Secrets.ShouldSpellBookItemCooldownBeSecret}}
+: {{api|t=a|C_Secrets.ShouldSpellCooldownBeSecret}}
+: {{api|t=a|C_Secrets.ShouldTotemSlotBeSecret}}
+: {{api|t=a|C_Secrets.ShouldTotemSpellBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitAuraIndexBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitAuraInstanceBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitAuraSlotBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitComparisonBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitHealthMaxBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitIdentityBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitPowerBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitPowerMaxBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitSpellCastBeSecret}}
+: {{api|t=a|C_Secrets.ShouldUnitSpellCastingBeSecret}}
+: {{api|t=a|C_SettingsUtil.NotifySettingsLoaded}}
+: {{api|t=a|C_SettingsUtil.OpenSettingsPanel}}
+: {{api|t=a|C_Sound.PlaySound}}
+: {{api|t=a|C_Spell.GetSpellChargeDuration}}
+: {{api|t=a|C_Spell.GetSpellCooldownDuration}}
+: {{api|t=a|C_Spell.GetSpellDisplayCount}}
+: {{api|t=a|C_Spell.GetSpellLossOfControlCooldownDuration}}
+: {{api|t=a|C_Spell.GetSpellMaxCumulativeAuraApplications}}
+: {{api|t=a|C_Spell.GetVisibilityInfo}}
+: {{api|t=a|C_Spell.IsConsumableSpell}}
+: {{api|t=a|C_Spell.IsExternalDefensive}}
+: {{api|t=a|C_Spell.IsPriorityAura}}
+: {{api|t=a|C_Spell.IsSelfBuff}}
+: {{api|t=a|C_Spell.IsSpellCrowdControl}}
+: {{api|t=a|C_Spell.IsSpellImportant}}
+: {{api|t=a|C_SpellBook.FindBaseSpellByID}}
+: {{api|t=a|C_SpellBook.FindFlyoutSlotBySpellID}}
+: {{api|t=a|C_SpellBook.FindSpellOverrideByID}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemChargeDuration}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemCooldownDuration}}
+: {{api|t=a|C_SpellBook.GetSpellBookItemLossOfControlCooldownDuration}}
+: {{api|t=a|C_SpellDiminish.GetAllSpellDiminishCategories}}
+: {{api|t=a|C_SpellDiminish.GetSpellDiminishCategoryInfo}}
+: {{api|t=a|C_SpellDiminish.IsSystemSupported}}
+: {{api|t=a|C_SpellDiminish.ShouldTrackSpellDiminishCategory}}
+: {{api|t=a|C_StableInfo.IsBonusPetSlotAvailable}}
+: {{api|t=a|C_StringUtil.EscapeLuaFormatString}}
+: {{api|t=a|C_StringUtil.EscapeLuaPatterns}}
+: {{api|t=a|C_StringUtil.EscapeQuotedCodes}}
+: {{api|t=a|C_StringUtil.FloorToNearestString}}
+: {{api|t=a|C_StringUtil.RemoveContiguousSpaces}}
+: {{api|t=a|C_StringUtil.RoundToNearestString}}
+: {{api|t=a|C_StringUtil.StripHyperlinks}}
+: {{api|t=a|C_StringUtil.TruncateWhenZero}}
+: {{api|t=a|C_StringUtil.WrapString}}
+: {{api|t=a|C_TaskQuest.GetQuestUIWidgetSetByType}}
+: {{api|t=a|C_TooltipComparison.CompareItem}}
+: {{api|t=a|C_TooltipInfo.GetOutfit}}
+: {{api|t=a|C_TooltipInfo.GetUnitAuraByAuraInstanceID}}
+: {{api|t=a|C_TradeSkillUI.GetDependentReagents}}
+: {{api|t=a|C_TradeSkillUI.GetItemCraftedQualityInfo}}
+: {{api|t=a|C_TradeSkillUI.GetItemReagentQualityInfo}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeItemQualityInfo}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeQualityReagentLink}}
+: {{api|t=a|C_TransmogCollection.DeleteCustomSet}}
+: {{api|t=a|C_TransmogCollection.GetCustomSetHyperlinkFromItemTransmogInfoList}}
+: {{api|t=a|C_TransmogCollection.GetCustomSetInfo}}
+: {{api|t=a|C_TransmogCollection.GetCustomSetItemTransmogInfoList}}
+: {{api|t=a|C_TransmogCollection.GetCustomSets}}
+: {{api|t=a|C_TransmogCollection.GetItemTransmogInfoListFromCustomSetHyperlink}}
+: {{api|t=a|C_TransmogCollection.GetNumMaxCustomSets}}
+: {{api|t=a|C_TransmogCollection.IsValidCustomSetName}}
+: {{api|t=a|C_TransmogCollection.IsValidTransmogSource}}
+: {{api|t=a|C_TransmogCollection.ModifyCustomSet}}
+: {{api|t=a|C_TransmogCollection.NewCustomSet}}
+: {{api|t=a|C_TransmogCollection.RenameCustomSet}}
+: {{api|t=a|C_TransmogOutfitInfo.AddNewOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.ChangeDisplayedOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.ChangeViewedOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.ClearAllPendingSituations}}
+: {{api|t=a|C_TransmogOutfitInfo.ClearAllPendingTransmogs}}
+: {{api|t=a|C_TransmogOutfitInfo.ClearDisplayedOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.CommitAndApplyAllPending}}
+: {{api|t=a|C_TransmogOutfitInfo.CommitOutfitInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.CommitPendingSituations}}
+: {{api|t=a|C_TransmogOutfitInfo.GetActiveOutfitID}}
+: {{api|t=a|C_TransmogOutfitInfo.GetAllSlotLocationInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.GetCollectionInfoForSlotAndOption}}
+: {{api|t=a|C_TransmogOutfitInfo.GetCurrentlyViewedOutfitID}}
+: {{api|t=a|C_TransmogOutfitInfo.GetEquippedSlotOptionFromTransmogSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.GetIllusionDefaultIMAIDForCollectionType}}
+: {{api|t=a|C_TransmogOutfitInfo.GetItemModifiedAppearanceEffectiveCategory}}
+: {{api|t=a|C_TransmogOutfitInfo.GetLinkedSlotInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.GetMaxNumberOfTotalOutfitsForSource}}
+: {{api|t=a|C_TransmogOutfitInfo.GetMaxNumberOfUsableOutfits}}
+: {{api|t=a|C_TransmogOutfitInfo.GetNextOutfitCost}}
+: {{api|t=a|C_TransmogOutfitInfo.GetNumberOfOutfitsUnlockedForSource}}
+: {{api|t=a|C_TransmogOutfitInfo.GetOutfitInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.GetOutfitSituationsEnabled}}
+: {{api|t=a|C_TransmogOutfitInfo.GetOutfitSituation}}
+: {{api|t=a|C_TransmogOutfitInfo.GetOutfitsInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.GetPendingTransmogCost}}
+: {{api|t=a|C_TransmogOutfitInfo.GetSecondarySlotState}}
+: {{api|t=a|C_TransmogOutfitInfo.GetSetSourcesForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.GetSlotGroupInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.GetSourceIDsForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.GetTransmogOutfitSlotForInventoryType}}
+: {{api|t=a|C_TransmogOutfitInfo.GetTransmogOutfitSlotFromInventorySlot}}
+: {{api|t=a|C_TransmogOutfitInfo.GetUISituationCategoriesAndOptions}}
+: {{api|t=a|C_TransmogOutfitInfo.GetUnassignedAtlasForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.GetUnassignedDisplayAtlasForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.GetViewedOutfitSlotInfo}}
+: {{api|t=a|C_TransmogOutfitInfo.GetWeaponOptionsForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.HasPendingOutfitSituations}}
+: {{api|t=a|C_TransmogOutfitInfo.HasPendingOutfitTransmogs}}
+: {{api|t=a|C_TransmogOutfitInfo.IsEquippedGearOutfitDisplayed}}
+: {{api|t=a|C_TransmogOutfitInfo.IsEquippedGearOutfitLocked}}
+: {{api|t=a|C_TransmogOutfitInfo.IsLockedOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.IsSlotWeaponSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.IsValidTransmogOutfitName}}
+: {{api|t=a|C_TransmogOutfitInfo.PickupOutfit}}
+: {{api|t=a|C_TransmogOutfitInfo.ResetOutfitSituations}}
+: {{api|t=a|C_TransmogOutfitInfo.RevertPendingTransmog}}
+: {{api|t=a|C_TransmogOutfitInfo.SetOutfitSituationsEnabled}}
+: {{api|t=a|C_TransmogOutfitInfo.SetOutfitToCustomSet}}
+: {{api|t=a|C_TransmogOutfitInfo.SetOutfitToSet}}
+: {{api|t=a|C_TransmogOutfitInfo.SetPendingTransmog}}
+: {{api|t=a|C_TransmogOutfitInfo.SetSecondarySlotState}}
+: {{api|t=a|C_TransmogOutfitInfo.SetViewedWeaponOptionForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.SlotHasSecondary}}
+: {{api|t=a|C_TransmogOutfitInfo.UpdatePendingSituation}}
+: {{api|t=a|C_TransmogSets.GetAvailableSets}}
+: {{api|t=a|C_TransmogSets.GetSetsFilter}}
+: {{api|t=a|C_TransmogSets.IsUsingDefaultSetsFilters}}
+: {{api|t=a|C_TransmogSets.SetDefaultSetsFilters}}
+: {{api|t=a|C_TransmogSets.SetSetsFilter}}
+: {{api|t=a|C_Tutorial.GetCombatEventInfo}}
+: {{api|t=a|C_UIWidgetManager.GetPreyHuntProgressWidgetVisualizationInfo}}
+: {{api|t=a|C_UnitAuras.AuraIsBigDefensive}}
+: {{api|t=a|C_UnitAuras.DoesAuraHaveExpirationTime}}
+: {{api|t=a|C_UnitAuras.GetAuraApplicationDisplayCount}}
+: {{api|t=a|C_UnitAuras.GetAuraBaseDuration}}
+: {{api|t=a|C_UnitAuras.GetAuraDispelTypeColor}}
+: {{api|t=a|C_UnitAuras.GetAuraDuration}}
+: {{api|t=a|C_UnitAuras.GetRefreshExtendedDuration}}
+: {{api|t=a|C_UnitAuras.GetUnitAuraInstanceIDs}}
+: {{api|t=a|C_UnitAuras.TriggerPrivateAuraShowDispelType}}
+: {{api|t=a|C_WeeklyRewards.GetSortedProgressForActivity}}
+: {{api|t=a|CreateAbbreviateConfig}}
+: {{api|t=a|CreateUnitHealPredictionCalculator}}
+: {{api|t=a|GetCollapsingStarCost}}
+: {{api|t=a|IsRaidMarkerSystemEnabled}}
+: {{api|t=a|RegisterEventCallback}}
+: {{api|t=a|RegisterUnitEventCallback}}
+: {{api|t=a|SetCursorPosition}}
+: {{api|t=a|SetTableSecurityOption}}
+: {{api|t=a|ShowCloak}}
+: {{api|t=a|ShowHelm}}
+: {{api|t=a|ShowingCloak}}
+: {{api|t=a|ShowingHelm}}
+: {{api|t=a|SimulateMouseClick}}
+: {{api|t=a|SimulateMouseDown}}
+: {{api|t=a|SimulateMouseUp}}
+: {{api|t=a|SimulateMouseWheel}}
+: {{api|t=a|UnitCastingDuration}}
+: {{api|t=a|UnitChannelDuration}}
+: {{api|t=a|UnitClassFromGUID}}
+: {{api|t=a|UnitCreatureID}}
+: {{api|t=a|UnitEmpoweredChannelDuration}}
+: {{api|t=a|UnitEmpoweredStageDurations}}
+: {{api|t=a|UnitEmpoweredStagePercentages}}
+: {{api|t=a|UnitGetDetailedHealPrediction}}
+: {{api|t=a|UnitHealthMissing}}
+: {{api|t=a|UnitHealthPercent}}
+: {{api|t=a|UnitIsHumanPlayer}}
+: {{api|t=a|UnitIsLieutenant}}
+: {{api|t=a|UnitIsMinion}}
+: {{api|t=a|UnitIsNPCAsPlayer}}
+: {{api|t=a|UnitIsSpellTarget}}
+: {{api|t=a|UnitNameFromGUID}}
+: {{api|t=a|UnitPowerMissing}}
+: {{api|t=a|UnitPowerPercent}}
+: {{api|t=a|UnitSexBase}}
+: {{api|t=a|UnitShouldDisplaySpellTargetName}}
+: {{api|t=a|UnitSpellTargetClass}}
+: {{api|t=a|UnitSpellTargetName}}
+: {{api|t=a|UnitThreatLeadSituation}}
+: {{api|t=a|UnregisterEventCallback}}
+: {{api|t=a|UnregisterUnitEventCallback}}
+: {{api|t=a|canaccessallvalues}}
+: {{api|t=a|canaccesssecrets}}
+: {{api|t=a|canaccesstable}}
+: {{api|t=a|canaccessvalue}}
+: {{api|t=a|dropsecretaccess}}
+: {{api|t=a|hasanysecretvalues}}
+: {{api|t=a|issecrettable}}
+: {{api|t=a|issecretvalue}}
+: {{api|t=a|mapvalues}}
+: {{api|t=a|scrubsecretvalues}}
+: {{api|t=a|secretwrap}}
+: {{api|t=a|securecallmethod}}
+: {{api|t=a|string.concat}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|ActionHasRange}}
+: {{api|t=a|BNSendGameData}}
+: {{api|t=a|BNSendWhisper}}
+: {{api|t=a|BNSetCustomMessage}}
+: {{api|t=a|C_CatalogShop.OpenCatalogShopInteraction}}
+: {{api|t=a|C_EventUtils.NotifySettingsLoaded}}
+: {{api|t=a|C_HouseExterior.GetCurrentHouseExteriorTypeName}}
+: {{api|t=a|C_HousingBasicMode.IsNudgeEnabled}}
+: {{api|t=a|C_HousingBasicMode.SetNudgeEnabled}}
+: {{api|t=a|C_HousingDecor.GetMaxDecorPlaced}}
+: {{api|t=a|C_NamePlate.GetNamePlateEnemyClickThrough}}
+: {{api|t=a|C_NamePlate.GetNamePlateEnemyPreferredClickInsets}}
+: {{api|t=a|C_NamePlate.GetNamePlateEnemySize}}
+: {{api|t=a|C_NamePlate.GetNamePlateFriendlyClickThrough}}
+: {{api|t=a|C_NamePlate.GetNamePlateFriendlyPreferredClickInsets}}
+: {{api|t=a|C_NamePlate.GetNamePlateFriendlySize}}
+: {{api|t=a|C_NamePlate.GetNamePlateSelfClickThrough}}
+: {{api|t=a|C_NamePlate.GetNamePlateSelfPreferredClickInsets}}
+: {{api|t=a|C_NamePlate.GetNamePlateSelfSize}}
+: {{api|t=a|C_NamePlate.GetNumNamePlateMotionTypes}}
+: {{api|t=a|C_NamePlate.SetNamePlateEnemyClickThrough}}
+: {{api|t=a|C_NamePlate.SetNamePlateEnemyPreferredClickInsets}}
+: {{api|t=a|C_NamePlate.SetNamePlateEnemySize}}
+: {{api|t=a|C_NamePlate.SetNamePlateFriendlyClickThrough}}
+: {{api|t=a|C_NamePlate.SetNamePlateFriendlyPreferredClickInsets}}
+: {{api|t=a|C_NamePlate.SetNamePlateFriendlySize}}
+: {{api|t=a|C_NamePlate.SetNamePlateSelfClickThrough}}
+: {{api|t=a|C_NamePlate.SetNamePlateSelfPreferredClickInsets}}
+: {{api|t=a|C_NamePlate.SetNamePlateSelfSize}}
+: {{api|t=a|C_PlayerInfo.CanPlayerUseEventScheduler}}
+: {{api|t=a|C_PlayerInfo.IsExpansionLandingPageUnlockedForPlayer}}
+: {{api|t=a|C_PvP.CanDisplayDamage}}
+: {{api|t=a|C_PvP.CanDisplayHealing}}
+: {{api|t=a|C_PvP.CanDisplayKillingBlows}}
+: {{api|t=a|C_StorePublic.IsDisabledByParentalControls}}
+: {{api|t=a|C_TaskQuest.GetQuestIconUIWidgetSet}}
+: {{api|t=a|C_TaskQuest.GetQuestTooltipUIWidgetSet}}
+: {{api|t=a|C_Texture.GetCraftingReagentQualityChatIcon}}
+: {{api|t=a|C_TooltipInfo.GetTransmogrifyItem}}
+: {{api|t=a|C_TradeSkillUI.GetReagentRequirementItemIDs}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeFixedReagentItemLink}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeQualityReagentItemLink}}
+: {{api|t=a|C_Transmog.ApplyAllPending}}
+: {{api|t=a|C_Transmog.CanTransmogItemWithItem}}
+: {{api|t=a|C_Transmog.CanTransmogItem}}
+: {{api|t=a|C_Transmog.ClearAllPending}}
+: {{api|t=a|C_Transmog.ClearPending}}
+: {{api|t=a|C_Transmog.Close}}
+: {{api|t=a|C_Transmog.GetApplyCost}}
+: {{api|t=a|C_Transmog.GetApplyWarnings}}
+: {{api|t=a|C_Transmog.GetBaseCategory}}
+: {{api|t=a|C_Transmog.GetCreatureDisplayIDForSource}}
+: {{api|t=a|C_Transmog.GetPending}}
+: {{api|t=a|C_Transmog.GetSlotEffectiveCategory}}
+: {{api|t=a|C_Transmog.GetSlotInfo}}
+: {{api|t=a|C_Transmog.GetSlotUseError}}
+: {{api|t=a|C_Transmog.IsSlotBeingCollapsed}}
+: {{api|t=a|C_Transmog.IsTransmogEnabled}}
+: {{api|t=a|C_Transmog.LoadOutfit}}
+: {{api|t=a|C_Transmog.SetPending}}
+: {{api|t=a|C_TransmogCollection.DeleteOutfit}}
+: {{api|t=a|C_TransmogCollection.GetItemTransmogInfoListFromOutfitHyperlink}}
+: {{api|t=a|C_TransmogCollection.GetNumMaxOutfits}}
+: {{api|t=a|C_TransmogCollection.GetOutfitHyperlinkFromItemTransmogInfoList}}
+: {{api|t=a|C_TransmogCollection.GetOutfitInfo}}
+: {{api|t=a|C_TransmogCollection.GetOutfitItemTransmogInfoList}}
+: {{api|t=a|C_TransmogCollection.GetOutfits}}
+: {{api|t=a|C_TransmogCollection.ModifyOutfit}}
+: {{api|t=a|C_TransmogCollection.NewOutfit}}
+: {{api|t=a|C_TransmogCollection.RenameOutfit}}
+: {{api|t=a|CancelEmote}}
+: {{api|t=a|ChangeActionBarPage}}
+: {{api|t=a|CombatLogAddFilter}}
+: {{api|t=a|CombatLogAdvanceEntry}}
+: {{api|t=a|CombatLogClearEntries}}
+: {{api|t=a|CombatLogGetCurrentEntry}}
+: {{api|t=a|CombatLogGetCurrentEventInfo}}
+: {{api|t=a|CombatLogGetNumEntries}}
+: {{api|t=a|CombatLogGetRetentionTime}}
+: {{api|t=a|CombatLogResetFilter}}
+: {{api|t=a|CombatLogSetCurrentEntry}}
+: {{api|t=a|CombatLogSetRetentionTime}}
+: {{api|t=a|CombatLogShowCurrentEntry}}
+: {{api|t=a|CombatLog_Object_IsA}}
+: {{api|t=a|CombatTextSetActiveUnit}}
+: {{api|t=a|DeathRecap_GetEvents}}
+: {{api|t=a|DeathRecap_HasEvents}}
+: {{api|t=a|DoEmote}}
+: {{api|t=a|FindBaseSpellByID}}
+: {{api|t=a|FindFlyoutSlotBySpellID}}
+: {{api|t=a|FindSpellOverrideByID}}
+: {{api|t=a|GetActionAutocast}}
+: {{api|t=a|GetActionBarPage}}
+: {{api|t=a|GetActionCharges}}
+: {{api|t=a|GetActionCooldown}}
+: {{api|t=a|GetActionCount}}
+: {{api|t=a|GetActionLossOfControlCooldown}}
+: {{api|t=a|GetActionTexture}}
+: {{api|t=a|GetActionText}}
+: {{api|t=a|GetBattlegroundInfo}}
+: {{api|t=a|GetBonusBarIndex}}
+: {{api|t=a|GetBonusBarOffset}}
+: {{api|t=a|GetCurrentCombatTextEventInfo}}
+: {{api|t=a|GetDeathRecapLink}}
+: {{api|t=a|GetExtraBarIndex}}
+: {{api|t=a|GetMultiCastBarIndex}}
+: {{api|t=a|GetOverrideBarIndex}}
+: {{api|t=a|GetOverrideBarSkin}}
+: {{api|t=a|GetTempShapeshiftBarIndex}}
+: {{api|t=a|GetVehicleBarIndex}}
+: {{api|t=a|HasAction}}
+: {{api|t=a|HasBonusActionBar}}
+: {{api|t=a|HasExtraActionBar}}
+: {{api|t=a|HasOverrideActionBar}}
+: {{api|t=a|HasTempShapeshiftActionBar}}
+: {{api|t=a|HasVehicleActionBar}}
+: {{api|t=a|IsActionInRange}}
+: {{api|t=a|IsAttackAction}}
+: {{api|t=a|IsAutoRepeatAction}}
+: {{api|t=a|IsConsumableAction}}
+: {{api|t=a|IsConsumableSpell}}
+: {{api|t=a|IsCurrentAction}}
+: {{api|t=a|IsEncounterInProgress}}
+: {{api|t=a|IsEncounterLimitingResurrections}}
+: {{api|t=a|IsEncounterSuppressingRelease}}
+: {{api|t=a|IsEquippedAction}}
+: {{api|t=a|IsItemAction}}
+: {{api|t=a|IsPossessBarVisible}}
+: {{api|t=a|IsStackableAction}}
+: {{api|t=a|IsUsableAction}}
+: {{api|t=a|SetActionUIButton}}
+: {{api|t=a|SetPortraitToTexture}}
+: {{api|t=a|SetRaidTargetProtected}}
+: {{api|t=a|SpellGetVisibilityInfo}}
+: {{api|t=a|SpellIsAlwaysShown}}
+: {{api|t=a|SpellIsPriorityAura}}
+: {{api|t=a|SpellIsSelfBuff}}
+: {{api|t=a|StripHyperlinks}}
+</div>
+|}
+ {{api|t=a|C_Housing.RequestHouseFinderNeighborhoodData}}
+   + arg 2: <font color="#00b400">neighborhoodName</font>
+ {{api|t=a|C_Item.CanItemTransmogAppearance}}
+   # ret 2: <font color="#ecbc2a">errorCode</font>, Type: number -> TransmogOutfitSlotError
+ {{api|t=a|C_Item.GetItemInfo}}
+   + ret 18: <font color="#00b400">itemDescription</font>
+ {{api|t=a|C_LFGList.DoesEntryTitleMatchPrebuiltTitle}}
+   + arg 4: <font color="#00b400">generalPlaystyle</font>
+ {{api|t=a|C_LFGList.GetPlaystyleString}}
+   + arg 2: <font color="#00b400">generalPlaystyle</font>
+ {{api|t=a|C_LFGList.SetEntryTitle}}
+   + arg 4: <font color="#00b400">generalPlaystyle</font>
+ {{api|t=a|C_Reputation.GetFactionParagonInfo}}
+   + ret 6: <font color="#00b400">paragonStorageLevel</font>
+ {{api|t=a|C_Reputation.IsFactionParagon}}
+   # ret 1: <font color="#ff6767">hasParagon</font> -> <font color="#00b400">factionIsParagon</font>
+ {{api|t=a|C_SpecializationInfo.GetSpecializationInfo}}
+   + arg 7: <font color="#00b400">classID</font>
+ {{api|t=a|C_TooltipInfo.GetRecipeResultItem}}
+   # arg 2: <font color="#ff6767">craftingReagents</font> -> <font color="#00b400">reagentInfos</font>
+ {{api|t=a|C_TooltipInfo.GetRecipeResultItemForOrder}}
+   # arg 2: <font color="#ff6767">craftingReagents</font> -> <font color="#00b400">reagentInfos</font>
+ {{api|t=a|C_TradeSkillUI.GetEnchantItems}}
+   + arg 2: <font color="#00b400">craftingReagents</font>
+ {{api|t=a|C_TradeSkillUI.GetRecraftRemovalWarnings}}
+   # arg 2: <font color="#ff6767">replacedItemIDs</font> -> <font color="#00b400">replacedReagents</font>
+ {{api|t=a|C_TradeSkillUI.IsRecraftReagentValid}}
+   # arg 2: <font color="#ff6767">itemID</font> -> <font color="#00b400">reagent</font>
+ {{api|t=a|C_TradeSkillUI.RecraftLimitCategoryValid}}
+   # arg 1: <font color="#ff6767">reagentItemID</font> -> <font color="#00b400">reagent</font>
+ {{api|t=a|C_Transmog.GetSlotVisualInfo}}
+   # ret 1: <font color="#00b400">slotVisualInfo</font>
+ {{api|t=a|C_TransmogCollection.GetAppearanceSourceInfo}}
+   # ret 1: <font color="#00b400">info</font>
+ {{api|t=a|C_UnitAuras.GetUnitAuras}}
+   + arg 4: <font color="#00b400">sortRule</font>
+   + arg 5: <font color="#00b400">sortDirection</font>
+ {{api|t=a|C_VoiceChat.SpeakText}}
+   + arg 5: <font color="#00b400">overlap</font>
+   - arg 3: <font color="#ff6767">destination</font>
+ {{api|t=a|UnitCastingInfo}}
+   # ret 8: <font color="#ecbc2a">notInterruptible</font>, Nilable: false -> true
+   + ret 10: <font color="#00b400">castBarID</font>
+ {{api|t=a|UnitChannelInfo}}
+   # arg 1: <font color="#ff6767">unitToken</font> -> <font color="#00b400">unit</font>
+   # ret 7: <font color="#ecbc2a">notInterruptible</font>, Nilable: false -> true
+   + ret 11: <font color="#00b400">castBarID</font>
+
+===ScriptObjects===
+{| class="wikitable"
+| <font color="lightgreen">Added</font>
+: [[ScriptObject AbbreviateConfig|AbbreviateConfig]]
+: [[ScriptObject ColorCurveObject|ColorCurveObject]]
+: [[ScriptObject CurveObject|CurveObject]]
+: [[ScriptObject CurveObjectBase|CurveObjectBase]]
+: [[ScriptObject DurationObject|DurationObject]]
+: [[ScriptObject UnitHealPredictionCalculator|UnitHealPredictionCalculator]]
+|}
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(28)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|FrameScriptObject:HasAnySecretAspect}}
+: {{api|t=w|FrameScriptObject:HasSecretAspect}}
+: {{api|t=w|FrameScriptObject:HasSecretValues}}
+: {{api|t=w|FrameScriptObject:IsPreventingSecretValues}}
+: {{api|t=w|FrameScriptObject:SetPreventSecretValues}}
+: {{api|t=w|ScriptRegion:IsAnchoringSecret}}
+: {{api|t=w|Region:SetAlphaFromBoolean}}
+: {{api|t=w|Region:SetVertexColorFromBoolean}}
+: {{api|t=w|FontString:GetScaleAnimationMode}}
+: {{api|t=w|FontString:SetScaleAnimationMode}}
+: {{api|t=w|TextureBase:ResetTexCoord}}
+: {{api|t=w|TextureBase:SetSpriteSheetCell}}
+: {{api|t=w|Frame:IsIgnoringChildrenForBounds}}
+: {{api|t=w|Frame:RegisterEventCallback}}
+: {{api|t=w|Frame:RegisterUnitEventCallback}}
+: {{api|t=w|Frame:SetIgnoringChildrenForBounds}}
+: {{api|t=w|Model:SetUseGBuffer}}
+: {{api|t=w|GameTooltip:GetLeftLine}}
+: {{api|t=w|GameTooltip:GetRightLine}}
+: {{api|t=w|Cooldown:GetCountdownFontString}}
+: {{api|t=w|Cooldown:SetCooldownFromDurationObject}}
+: {{api|t=w|Cooldown:SetCooldownFromExpirationTime}}
+: {{api|t=w|Cooldown:SetPaused}}
+: {{api|t=w|StatusBar:GetInterpolatedValue}}
+: {{api|t=w|StatusBar:GetTimerDuration}}
+: {{api|t=w|StatusBar:IsInterpolating}}
+: {{api|t=w|StatusBar:SetTimerDuration}}
+: {{api|t=w|StatusBar:SetToTargetValue}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=w|TextureBase:SetAtlas}}
+   + arg 5: <font color="#00b400">wrapModeHorizontal</font>
+   + arg 6: <font color="#00b400">wrapModeVertical</font>
+ {{api|t=w|StatusBar:SetMinMaxValues}}
+   + arg 3: <font color="#00b400">interpolation</font>
+ {{api|t=w|StatusBar:SetValue}}
+   + arg 2: <font color="#00b400">interpolation</font>
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(76)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(8)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ADDON_RESTRICTION_STATE_CHANGED}}
+: {{api|t=e|BULK_PURCHASE_RESULT_RECEIVED}}
+: {{api|t=e|CATALOG_SHOP_REFUNDABLE_DECORS_UPDATED}}
+: {{api|t=e|CATALOG_SHOP_VIRTUAL_CURRENCY_BALANCE_UPDATE_FAILURE}}
+: {{api|t=e|CATALOG_SHOP_VIRTUAL_CURRENCY_BALANCE_UPDATE}}
+: {{api|t=e|CHAT_MSG_ENCOUNTER_EVENT}}
+: {{api|t=e|COMBAT_LOG_APPLY_FILTER_SETTINGS}}
+: {{api|t=e|COMBAT_LOG_ENTRIES_CLEARED}}
+: {{api|t=e|COMBAT_LOG_EVENT_INTERNAL_UNFILTERED}}
+: {{api|t=e|COMBAT_LOG_MESSAGE_LIMIT_CHANGED}}
+: {{api|t=e|COMBAT_LOG_MESSAGE}}
+: {{api|t=e|COMBAT_LOG_REFILTER_ENTRIES}}
+: {{api|t=e|COMMENTATOR_COMBAT_EVENT}}
+: {{api|t=e|DAMAGE_METER_COMBAT_SESSION_UPDATED}}
+: {{api|t=e|DAMAGE_METER_CURRENT_SESSION_UPDATED}}
+: {{api|t=e|DAMAGE_METER_RESET}}
+: {{api|t=e|ENCOUNTER_STATE_CHANGED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_EVENT_ADDED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_EVENT_BLOCK_STATE_CHANGED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_EVENT_HIGHLIGHT}}
+: {{api|t=e|ENCOUNTER_TIMELINE_EVENT_REMOVED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_EVENT_TRACK_CHANGED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_LAYOUT_UPDATED}}
+: {{api|t=e|ENCOUNTER_TIMELINE_STATE_UPDATED}}
+: {{api|t=e|ENCOUNTER_WARNING}}
+: {{api|t=e|FACTION_STANDING_CHANGED}}
+: {{api|t=e|HOUSE_EXTERIOR_TYPE_UNLOCKED}}
+: {{api|t=e|HOUSE_LEVEL_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_ADD_TO_PREVIEW_LIST}}
+: {{api|t=e|HOUSING_DECOR_FREE_PLACE_STATUS_CHANGED}}
+: {{api|t=e|HOUSING_DECOR_PREVIEW_LIST_REMOVE_FROM_WORLD}}
+: {{api|t=e|HOUSING_DECOR_PREVIEW_LIST_UPDATED}}
+: {{api|t=e|HOUSING_DECOR_PREVIEW_STATE_CHANGED}}
+: {{api|t=e|HOUSING_EXPERT_MODE_PLACEMENT_FLAGS_UPDATED}}
+: {{api|t=e|HOUSING_FIXTURE_UNLOCKED}}
+: {{api|t=e|HOUSING_REFUND_LIST_UPDATED}}
+: {{api|t=e|HOUSING_SET_EXTERIOR_HOUSE_SIZE_RESPONSE}}
+: {{api|t=e|HOUSING_SET_EXTERIOR_HOUSE_TYPE_RESPONSE}}
+: {{api|t=e|HOUSING_SET_FIXTURE_RESPONSE}}
+: {{api|t=e|INITIATIVE_ACTIVITY_LOG_UPDATED}}
+: {{api|t=e|INITIATIVE_COMPLETED}}
+: {{api|t=e|INITIATIVE_TASK_COMPLETED}}
+: {{api|t=e|INITIATIVE_TASKS_TRACKED_LIST_CHANGED}}
+: {{api|t=e|INITIATIVE_TASKS_TRACKED_UPDATED}}
+: {{api|t=e|LEGACY_LOOT_RULES_CHANGED}}
+: {{api|t=e|NAME_PLATE_UNIT_BEHIND_CAMERA_CHANGED}}
+: {{api|t=e|NEIGHBORHOOD_INITIATIVE_UPDATED}}
+: {{api|t=e|PARTY_KILL}}
+: {{api|t=e|PLAYER_TARGET_DIED}}
+: {{api|t=e|REMOVE_NEIGHBORHOOD_CHARTER_SIGNATURE}}
+: {{api|t=e|SECURE_TRANSFER_CONFIRM_HOUSING_PURCHASE}}
+: {{api|t=e|SECURE_TRANSFER_HOUSING_CURRENCY_PURCHASE_CONFIRMATION}}
+: {{api|t=e|SET_SEEN_PRODUCTS}}
+: {{api|t=e|SETTINGS_LOADED}}
+: {{api|t=e|SETTINGS_PANEL_OPEN}}
+: {{api|t=e|SHOW_JOURNEYS_UI}}
+: {{api|t=e|SHOW_NEW_PRODUCT_NOTIFICATION}}
+: {{api|t=e|TOOLTIP_SHOW_ITEM_COMPARISON}}
+: {{api|t=e|TRAINING_GROUNDS_ENABLED_STATUS_UPDATED}}
+: {{api|t=e|TRANSMOG_CUSTOM_SETS_CHANGED}}
+: {{api|t=e|TRANSMOG_DISPLAYED_OUTFIT_CHANGED}}
+: {{api|t=e|TRANSMOG_OUTFITS_CHANGED}}
+: {{api|t=e|TUTORIAL_COMBAT_EVENT}}
+: {{api|t=e|UNIT_DIED}}
+: {{api|t=e|UNIT_LOOT}}
+: {{api|t=e|UNIT_SPELL_DIMINISH_CATEGORY_STATE_UPDATED}}
+: {{api|t=e|UNIT_SPELLCAST_SENT}}
+: {{api|t=e|UPDATE_BULLETIN_BOARD_MEMBER_TYPE}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_CHANGED}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_SECONDARY_SLOTS_CHANGED}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_SITUATIONS_CHANGED}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_SLOT_REFRESH}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_SLOT_SAVE_SUCCESS}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED}}
+: {{api|t=e|VOICE_CHAT_TTS_PLAYBACK_BOOKMARK}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|HOUSE_LEVEL_CHANGED}}
+: {{api|t=e|HOUSING_CATALOG_SEARCHER_RELEASED}}
+: {{api|t=e|HOUSING_DECOR_NUDGE_STATUS_CHANGED}}
+: {{api|t=e|LEARNED_SPELL_IN_TAB}}
+: {{api|t=e|SETTINGS_LOADED}}
+: {{api|t=e|SHOW_DELVES_DISPLAY_UI}}
+: {{api|t=e|TRANSMOG_OUTFITS_CHANGED}}
+: {{api|t=e|UNIT_SPELLCAST_SENT}}
+</div>
+|}
+ {{api|t=e|VOICE_CHAT_TTS_PLAYBACK_FAILED}}
+   - 3: <font color="#ff6767">destination</font>
+ {{api|t=e|VOICE_CHAT_TTS_PLAYBACK_FINISHED}}
+   - 1: <font color="#ff6767">numConsumers</font>
+   - 3: <font color="#ff6767">destination</font>
+ {{api|t=e|VOICE_CHAT_TTS_PLAYBACK_STARTED}}
+   - 1: <font color="#ff6767">numConsumers</font>
+   - 3: <font color="#ff6767">durationMS</font>
+   - 4: <font color="#ff6767">destination</font>
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(137)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(153)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=addonChatRestrictionsForced|default=0|cat=4|desc=If true, force the client into the chat lockdown state. This is provided for addon author testing and will not persist across client restarts.}}
+: {{apitooltip|type=cvar|name=alwaysShowRuneIcons|default=0|scope=Account|cat=10|desc=Show the rune icons on equipment at all times, as opposed to only when the rune UI is open.}}
+: {{apitooltip|type=cvar|name=auctionSortByBuyoutPrice|default=0|scope=Character|cat=4|desc=Sort auction items by buyout price instead of current bid price}}
+: {{apitooltip|type=cvar|name=auctionSortByUnitPrice|default=0|scope=Character|cat=4|desc=Sort auction items by unit price instead of total stack price}}
+: {{apitooltip|type=cvar|name=CAAEnabled|default=0|scope=Account|cat=4|desc=Enable or disable combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAAInterruptCastSuccess|default=0|scope=Account|cat=4|desc=Announce when the target's cast is interrupted}}
+: {{apitooltip|type=cvar|name=CAAInterruptCast|default=0|scope=Account|cat=4|desc=Announce when the target starts casting something interruptible}}
+: {{apitooltip|type=cvar|name=CAAPartyHealthFrequency|default=0|scope=Account|cat=4|desc=Relative frequency at which party health combat audio alerts are read (-10 to 10). -10 halves the frequency and 10 doubles it}}
+: {{apitooltip|type=cvar|name=CAAPartyHealthPercent|default=0|scope=Account|cat=4|desc=Announce party member indices to indicate current health when it's below X percent. Frequency of announcements are affected by remaining health and CAAPartyHealthFrequencySpeed}}
+: {{apitooltip|type=cvar|name=CAAPlayerCastFormat|default=4|scope=Account|cat=4|desc=Format string to use when reading the player's casts}}
+: {{apitooltip|type=cvar|name=CAAPlayerCastMinTime|default=1.500000|scope=Account|cat=4|desc=The player's casts will only be read out if they have a cast time >= this}}
+: {{apitooltip|type=cvar|name=CAAPlayerCastMode|default=0|scope=Account|cat=4|desc=When the player's casts should be announced (0=off, 1=cast start, 2=cast end)}}
+: {{apitooltip|type=cvar|name=CAAPlayerCastThrottle|default=0.000000|scope=Account|cat=4|desc=The player's casts will only be read every X seconds at most}}
+: {{apitooltip|type=cvar|name=CAAPlayerHealthFormat|default=1|scope=Account|cat=4|desc=Format string to use when reading the player's health}}
+: {{apitooltip|type=cvar|name=CAAPlayerHealthPercent|default=0|scope=Account|cat=4|desc=Announce player health every X percent}}
+: {{apitooltip|type=cvar|name=CAAPlayerHealthThrottle|default=0.000000|scope=Account|cat=4|desc=The player's health will only be read every X seconds at most}}
+: {{apitooltip|type=cvar|name=CAAResource1Formats|scope=Character|cat=4|desc=Stores the format string to use (for each spec) when announcing the player's first resource}}
+: {{apitooltip|type=cvar|name=CAAResource1Percents|scope=Character|cat=4|desc=Stores the percentage band sizes to use (for each spec) when announcing the player's first resource }}
+: {{apitooltip|type=cvar|name=CAAResource1Throttle|default=0.000000|scope=Character|cat=4|desc=Updates to the player's first resource will only be read every X seconds at most}}
+: {{apitooltip|type=cvar|name=CAAResource2Formats|scope=Character|cat=4|desc=Stores the format string to use (for each spec) when announcing the player's second resource}}
+: {{apitooltip|type=cvar|name=CAAResource2Percents|scope=Character|cat=4|desc=Stores the percentage band sizes to use (for each spec) when announcing the player's second resource}}
+: {{apitooltip|type=cvar|name=CAAResource2Throttle|default=0.000000|scope=Character|cat=4|desc=Updates to the player's second resource will only be read every X seconds at most}}
+: {{apitooltip|type=cvar|name=CAASayCombatEnd|default=1|scope=Account|cat=4|desc=Announce when combat ends}}
+: {{apitooltip|type=cvar|name=CAASayCombatStart|default=1|scope=Account|cat=4|desc=Announce when combat starts}}
+: {{apitooltip|type=cvar|name=CAASayIfTargeted|scope=Character|cat=4|desc=Stores the 'say if targeted' settings for each spec}}
+: {{apitooltip|type=cvar|name=CAASayTargetName|default=1|scope=Account|cat=4|desc=Say the target's name when a new target is selected}}
+: {{apitooltip|type=cvar|name=CAASpeed|default=0|scope=Account|cat=4|desc=Speed at which combat audio alerts are read (-10 to 10)}}
+: {{apitooltip|type=cvar|name=CAATargetCastFormat|default=0|scope=Account|cat=4|desc=Format string to use when reading the target's casts}}
+: {{apitooltip|type=cvar|name=CAATargetCastMinTime|default=1.500000|scope=Account|cat=4|desc=The target's casts will only be read out if they have a cast time >= this}}
+: {{apitooltip|type=cvar|name=CAATargetCastMode|default=0|scope=Account|cat=4|desc=When the target's casts should be announced (0=off, 1=cast start, 2=cast end)}}
+: {{apitooltip|type=cvar|name=CAATargetCastThrottle|default=0.000000|scope=Account|cat=4|desc=The target's casts will only be read every X seconds at most}}
+: {{apitooltip|type=cvar|name=CAATargetDeathBehavior|default=0|scope=Account|cat=4|desc=Behavior of announcement when target dies (0=default, 1=target dead)}}
+: {{apitooltip|type=cvar|name=CAATargetHealthFormat|default=3|scope=Account|cat=4|desc=Format string to use when reading the target's health}}
+: {{apitooltip|type=cvar|name=CAATargetHealthPercent|default=2|scope=Account|cat=4|desc=Announce target health every X percent}}
+: {{apitooltip|type=cvar|name=CAATargetHealthThrottle|default=0.000000|scope=Account|cat=4|desc=The target's health will only be read every X seconds at most}}
+: {{apitooltip|type=cvar|name=CAAVoice|default=0|scope=Account|cat=4|desc=Voice to use for combat audio alerts}}
+: {{apitooltip|type=cvar|name=CAAVolume|default=100|scope=Account|cat=4|desc=Volume of combat audio alerts (0 to 100)}}
+: {{apitooltip|type=cvar|name=chatBubblesRaid|default=0|scope=Account|cat=4|desc=Whether to show in-game chat bubbles for raid chat}}
+: {{apitooltip|type=cvar|name=combatWarningsEnabled|default=1|scope=Account|cat=4|desc=If set, enables combat warning UI functionality such as the boss timeline or warnings displays}}
+: {{apitooltip|type=cvar|name=damageMeterEnabled|default=0|scope=Character|cat=4|desc=If true, show the damage meter UI.}}
+: {{apitooltip|type=cvar|name=disableSuggestedLevelActivityFilter|default=0|scope=Account|cat=4|desc=Whether to disable filtering the activity list by the user's level.}}
+: {{apitooltip|type=cvar|name=enablePetBattleFloatingCombatText_v2|default=1|cat=4|desc=Whether to show floating combat text for pet battles}}
+: {{apitooltip|type=cvar|name=encounterTimelineEnabled|default=1|scope=Account|cat=4|desc=If true, enable the encounter timeline UI.}}
+: {{apitooltip|type=cvar|name=encounterTimelineHideForOtherRoles|default=0|scope=Account|cat=4|desc=If true, hide encounter timeline events that are relevant for roles other than the player's own group role assignment. Events with no assigned role will always be shown.}}
+: {{apitooltip|type=cvar|name=encounterTimelineHideLongCountdowns|default=0|scope=Account|cat=4|desc=If true, hide all long countdowns from the timeline.}}
+: {{apitooltip|type=cvar|name=encounterTimelineHideQueuedCountdowns|default=0|scope=Account|cat=4|desc=If true, hide all queued countdowns from the timeline.}}
+: {{apitooltip|type=cvar|name=encounterTimelineIconographyEnabled|default=1|scope=Account|cat=4|desc=If true, enable the display of spell support iconography such as role and effect type indicators.}}
+: {{apitooltip|type=cvar|name=encounterWarningsDefaultMessageDuration|default=3500|scope=Account|cat=4|desc=Default duration (in milliseconds) applied to encounter warning text messages}}
+: {{apitooltip|type=cvar|name=encounterWarningsEnabled|default=1|scope=Account|cat=4|desc=If true, enable the display of encounter warning messages}}
+: {{apitooltip|type=cvar|name=encounterWarningsHideIfNotTargetingPlayer|default=0|scope=Account|cat=4|desc=If true, hide messages that aren't actively targeting the player. Messages that have no explicit target will always be shown}}
+: {{apitooltip|type=cvar|name=encounterWarningsLevel|default=0|scope=Account|cat=4|desc=Minimum level of encounter warning severities to be shown}}
+: {{apitooltip|type=cvar|name=endeavorInitiativesLastPoints|default=0|scope=Account|cat=4|desc=Last seen number of endeavor points in the progress bar}}
+: {{apitooltip|type=cvar|name=equipmentManager|default=1|scope=Character|cat=4|desc=Enables the equipment management UI}}
+: {{apitooltip|type=cvar|name=externalDefensivesEnabled|default=0|scope=Character|cat=4|desc=If true, show the external defensives buff tracker UI.}}
+: {{apitooltip|type=cvar|name=floatingCombatTextAuraFade_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextAuras_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamage_v2|default=1|cat=4|desc=Display damage numbers over hostile creatures when damaged}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamageAllAutos_v2|default=1|cat=4|desc=Show all auto-attack numbers, rather than hiding non-event numbers}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamageDirectionalOffset_v2|default=1.000000|cat=4|desc=Amount to offset directional damage numbers when they start}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamageDirectionalScale_v2|default=1.000000|cat=4|desc=Directional damage numbers movement scale (0 = no directional numbers)}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatHealing_v2|default=1|cat=4|desc=Display amount of healing you did to the target}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatHealingAbsorbSelf_v2|default=1|cat=4|desc=Display amount of shield added to yourself.}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatHealingAbsorbTarget_v2|default=1|cat=4|desc=Display amount of shield added to the target.}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatLogPeriodicSpells_v2|default=1|cat=4|desc=Display damage caused by periodic effects}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatState_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextComboPoints_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextDamageReduction_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextDodgeParryMiss_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextEnergyGains_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextFloatMode_v2|default=1|cat=4|desc=The combat text float mode for the player}}
+: {{apitooltip|type=cvar|name=floatingCombatTextFriendlyHealers_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextHonorGains_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextLowManaHealth_v2|default=1|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextPeriodicEnergyGains_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextPetMeleeDamage_v2|default=1|cat=4|desc=Display pet melee damage in the world}}
+: {{apitooltip|type=cvar|name=floatingCombatTextPetSpellDamage_v2|default=1|cat=4|desc=Display pet spell damage in the world}}
+: {{apitooltip|type=cvar|name=floatingCombatTextReactives_v2|default=1|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextRepChanges_v2|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=lastTransmogCustomSetIDNoSpec|scope=Character|cat=4|desc=SetID of the last applied transmog custom set}}
+: {{apitooltip|type=cvar|name=lastTransmogCustomSetIDSpec1|scope=Character|cat=4|desc=SetID of the last applied transmog custom set for the 1st spec}}
+: {{apitooltip|type=cvar|name=lastTransmogCustomSetIDSpec2|scope=Character|cat=4|desc=SetID of the last applied transmog custom set for the 2nd spec}}
+: {{apitooltip|type=cvar|name=lastTransmogCustomSetIDSpec3|scope=Character|cat=4|desc=SetID of the last applied transmog custom set for the 3rd spec}}
+: {{apitooltip|type=cvar|name=lastTransmogCustomSetIDSpec4|scope=Character|cat=4|desc=SetID of the last applied transmog custom set for the 4th spec}}
+: {{apitooltip|type=cvar|name=lastTransmogOutfitIDNoSpec|scope=Character|cat=4|desc=SetID of the last applied transmog outfit}}
+: {{apitooltip|type=cvar|name=lfgListAdvancedFiltersVersion|default=0|scope=Account|cat=4|desc=Version for lfgListAdvancedFilters}}
+: {{apitooltip|type=cvar|name=majorFactionRenownMap|scope=Account|cat=4|desc=Serialized mapping of faction ID to last known renown rank/level. Updated when the Renown UI is closed, used to control animations in the Major Faction UI.}}
+: {{apitooltip|type=cvar|name=minimapTrackedInfov2}}
+: {{apitooltip|type=cvar|name=nameplateAuraScale|default=1.000000|scope=Account|cat=4|desc=Controls the size multiplier for buffs and debuffs on nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateDebuffPadding|default=0|scope=Account|cat=4|desc=The padding between the debuff list and the health bar on nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateShowCastBars|default=1|scope=Character|cat=4|desc=Show cast bars for unit nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateShowClassColor|default=1|cat=4|desc=Used to display the class color in enemy nameplate health bars}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyClassColor|default=1|cat=4|desc=Used to display the class color in friendly nameplate health bars}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyNpcs|default=0|scope=Account|cat=4|desc=Whether nameplates are shown for friendly npcs.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyPlayerGuardians|default=0|scope=Account|cat=4|desc=Whether friendly player guardian nameplates are shown.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyPlayerMinions|default=0|scope=Account|cat=4|desc=Whether friendly player minion nameplates are shown.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyPlayerPets|default=0|scope=Account|cat=4|desc=Whether friendly player pet nameplates are shown.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyPlayers|default=0|scope=Account|cat=4|desc=Whether nameplates are shown for friendly players.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyPlayerTotems|default=0|scope=Account|cat=4|desc=Whether friendly player totem nameplates are shown.}}
+: {{apitooltip|type=cvar|name=nameplateShowOffscreen|default=0|scope=Account|cat=4|desc=When enabled, the nameplate is always shown if owner is in combat with player or player's group member.}}
+: {{apitooltip|type=cvar|name=nameplateShowOnlyNameForFriendlyPlayerUnits|default=0|cat=4|desc=Used to hide every part of the nameplate but the name for friendly player units.}}
+: {{apitooltip|type=cvar|name=nameplateSize|default=1|scope=Account|cat=4|desc=Provides discrete values that are translated into specific horizontal and vertical scales defined in lua for displaying nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateStyle|default=0|scope=Account|cat=4|desc=Determines how nameplate contents are displayed.}}
+: {{apitooltip|type=cvar|name=petJournalFilterVersion|default=0|scope=Account|cat=4|desc=Current filter version. Will reset all filters to their defaults if out of date.}}
+: {{apitooltip|type=cvar|name=raidFramesCenterBigDefensive|default=1|scope=Character|cat=4|desc=Show big defensive raid buffs in the center of the unit frame}}
+: {{apitooltip|type=cvar|name=raidFramesDispelIndicatorOverlay|default=1|scope=Character|cat=4|desc=When showing dispel indicators, also show a color gradient overlay}}
+: {{apitooltip|type=cvar|name=raidFramesDispelIndicatorType|default=2|scope=Character|cat=4|desc=Choose which dispel icon indicators to show in raid frames}}
+: {{apitooltip|type=cvar|name=raidFramesDisplayLargerRoleSpecificDebuffs|default=1|scope=Character|cat=4|desc=Show role-specific debuffs as larger on Raid Frames}}
+: {{apitooltip|type=cvar|name=raidFramesHealthBarColor|default=FF2B9305|scope=Character|cat=4|desc=Colors raid frames with a custom color if the user doesn't want class colors, ARGB format}}
+: {{apitooltip|type=cvar|name=scriptWarnings|default=0|scope=Account|cat=0|desc=Whether or not the UI shows Lua warnings}}
+: {{apitooltip|type=cvar|name=secretChallengeModeRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by challenge mode and mythic plus restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretCombatRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by combat restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretEncounterRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by instance encounter restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretMapRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by map restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=secretPvPMatchRestrictionsForced|default=0|cat=4|desc=If set, APIs guarded by PvP match restrictions will return secrets.}}
+: {{apitooltip|type=cvar|name=showAllItemsInTransmog|default=0|cat=4|desc=Shows all items in the transmogger regardless of armor restrictions}}
+: {{apitooltip|type=cvar|name=showCustomSetDetails|default=1|scope=Character|cat=4|desc=Whether or not to show custom set details when the dressing room is opened in maximized mode, default on}}
+: {{apitooltip|type=cvar|name=Sound_EnableEncounterWarningsSounds|default=1|cat=7|desc=Enable Encounter Warnings Sounds}}
+: {{apitooltip|type=cvar|name=Sound_EncounterWarningsVolume|default=1.000000|cat=7|desc=Encounter Warnings Volume (0.0 to 1.0)}}
+: {{apitooltip|type=cvar|name=spellDiminishPVPEnemiesEnabled|default=1|scope=Character|cat=4|desc=Determines if we should show crowd control diminishing returns on enemy unit frames in arenas}}
+: {{apitooltip|type=cvar|name=spellDiminishPVPOnlyTriggerableByMe|default=0|scope=Character|cat=4|desc=Determines if we should show crowd control diminishing returns for all categories or only the ones you could cause with your spells}}
+: {{apitooltip|type=cvar|name=trackedInitiativeTasks|scope=Character|cat=4|desc=Internal cvar for saving tracked initiative tasks in order}}
+: {{apitooltip|type=cvar|name=transmogHideIgnoredSlots|default=0|scope=Account|cat=4|desc=Whether ignored slots display as hidden or unassigned in the transmog frame}}
+: {{apitooltip|type=cvar|name=transmogrifySetsFilters|default=0|scope=Account|cat=4|desc=Bitfield for which transmog sets filters are applied in the transmog sets tab}}
+: {{apitooltip|type=cvar|name=useCompactPartyFrames}}
+: {{apitooltip|type=cvar|name=WorldTextCritScreenY_v2|default=0.0275|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextGravity_v2|default=0.500000|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextMinAlpha_v2|default=0.500000|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextNonRandomZ_v2|default=2.5|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRampDuration_v2|default=1.000000|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRampPow_v2|default=1.900000|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRampPowCrit_v2|default=8.000000|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRandomXY_v2|default=0.0|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRandomZMax_v2|default=1.5|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRandomZMin_v2|default=0.8|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextScale_v2|default=1.000000|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextScreenY_v2|default=0.015|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextStartPosRandomness_v2|default=1.0|cat=4}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=advancedWatchFrame|default=0|scope=Account|cat=4|desc=Enables advanced Objectives tracking features}}
+: {{apitooltip|type=cvar|name=currencyTokensBackpack1|default=0|scope=Character|cat=4|desc=Currency token types shown on backpack.}}
+: {{apitooltip|type=cvar|name=currencyTokensBackpack2|default=0|scope=Character|cat=4|desc=Currency token types shown on backpack.}}
+: {{apitooltip|type=cvar|name=currencyTokensUnused1|default=0|scope=Character|cat=4|desc=Currency token types marked as unused.}}
+: {{apitooltip|type=cvar|name=currencyTokensUnused2|default=0|scope=Character|cat=4|desc=Currency token types marked as unused.}}
+: {{apitooltip|type=cvar|name=displayedRAFFriendInfo|default=0|scope=Account|cat=4|desc=Stores whether we already told a recruited person about their new BattleTag friend}}
+: {{apitooltip|type=cvar|name=enablePetBattleFloatingCombatText|default=1|scope=Account|cat=4|desc=Whether to show floating combat text for pet battles}}
+: {{apitooltip|type=cvar|name=floatingCombatTextAllSpellMechanics|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextAuras|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamageAllAutos|default=1|scope=Account|cat=4|desc=Show all auto-attack numbers, rather than hiding non-event numbers}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamageDirectionalOffset|default=1|scope=Account|cat=4|desc=Amount to offset directional damage numbers when they start}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamageDirectionalScale|default=1|scope=Account|cat=4|desc=Directional damage numbers movement scale (0 = no directional numbers)}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamageStyle|default=1|scope=Account|cat=4|desc=No longer used}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatDamage|default=1|scope=Account|cat=4|desc=Display damage numbers over hostile creatures when damaged}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatHealingAbsorbSelf|default=1|scope=Account|cat=4|desc=Shows a message when you gain a shield.}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatHealingAbsorbTarget|default=1|scope=Account|cat=4|desc=Display amount of shield added to the target.}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatHealing|default=1|scope=Account|cat=4|desc=Display amount of healing you did to the target}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatLogPeriodicSpells|default=1|scope=Account|cat=4|desc=Display damage caused by periodic effects}}
+: {{apitooltip|type=cvar|name=floatingCombatTextCombatState|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextComboPoints|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextDamageReduction|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextDodgeParryMiss|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextEnergyGains|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextFloatMode|default=1|scope=Account|cat=4|desc=The combat text float mode}}
+: {{apitooltip|type=cvar|name=floatingCombatTextFriendlyHealers|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextHonorGains|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextLowManaHealth|default=1|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextPeriodicEnergyGains|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextPetMeleeDamage|default=1|scope=Account|cat=4|desc=Display pet melee damage in the world}}
+: {{apitooltip|type=cvar|name=floatingCombatTextPetSpellDamage|default=1|scope=Account|cat=4|desc=Display pet spell damage in the world}}
+: {{apitooltip|type=cvar|name=floatingCombatTextReactives|default=1|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextRepChanges|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextSpellMechanicsOther|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=floatingCombatTextSpellMechanics|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=ForceAllowAero|default=0|cat=1|desc=Force Direct X 12 on Windows 7 to not disable Aero theme. You are opting into crashing in some edge cases}}
+: {{apitooltip|type=cvar|name=friendsSmallView|default=0|scope=Character|cat=4|desc=Whether to use smaller buttons in the friends list}}
+: {{apitooltip|type=cvar|name=friendsViewButtons|default=0|scope=Character|cat=4|desc=Whether to show the friends list view buttons}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_BaseOrbScale|default=0.080000|cat=4|desc=Base scale of the orb gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_BaseRingScale|default=0.080000|cat=4|desc=Base scale of the ring gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_DistScaleMax|default=2.250000|cat=4|desc=Amount of scale to multiply when we're >= ScaleDistanceMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_DistScaleMin|default=1.000000|cat=4|desc=Amount of scale to multiply when we're <= ScaleDistanceMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightDefault|default=0.800000|cat=10|desc=Intensity of highlight when not hovered/selected/in use}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightDragging|default=1.000000|cat=10|desc=Intensity of highlight when dragging}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightHovered|default=0.900000|cat=10|desc=Intensity of highlight when hovered}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightKeybind|default=1.000000|cat=10|desc=Intensity of highlight when corresponding keybind being pressed}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_HighlightSelected|default=1.000000|cat=10|desc=Intensity of highlight when selected}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_OrbPosOffset|default=-0.800000|cat=4|desc=How much offset from the outer edge of the ring's radius the orb should be offset}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_ScaleDistanceMax|default=60.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_ScaleDistanceMin|default=0.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_SnapDegrees|default=15.000000|cat=10|desc=Degrees rotation should snap}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_TextMode|default=1|cat=10|desc=1: curr angle 0-360, 2: curr angle up to -/+ 180, 3: curr delta 0-360, 4: curr delta up to -/+ 180}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_XRayCheckerSize|default=7|cat=4|desc=The size in pixels of the checker squares for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_XRayDarkAlpha|default=0.100000|cat=4|desc=The alpha of the dark square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Rotation_XRayLightAlpha|default=0.250000|cat=4|desc=The alpha of the light square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_BaseArrowHeadScale|default=0.250000|cat=4|desc=Base scale of the arrow head gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_BaseArrowStemScale|default=0.300000|cat=4|desc=Base scale of the arrow stem gizmos before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_BaseCubeScale|default=0.050000|cat=4|desc=Base scale of the center cube gizmo before multiplying in distance-based scale}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_DistScaleMax|default=8.000000|cat=4|desc=Amount of scale to multiply when we're >= ScaleDistanceMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_DistScaleMin|default=1.000000|cat=4|desc=Amount of scale to multiply when we're <= ScaleDistanceMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightDefault|default=0.800000|cat=4|desc=Intensity of highlight when not hovered/selected/in use}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightDragging|default=1.000000|cat=4|desc=Intensity of highlight when dragging}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightHovered|default=0.900000|cat=4|desc=Intensity of highlight when hovered}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightKeybind|default=1.000000|cat=4|desc=Intensity of highlight when corresponding keybind being pressed}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_HighlightSelected|default=1.000000|cat=4|desc=Intensity of highlight when selected}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_MaxDistanceFromCamera|default=1000.000000|cat=4|desc=Hard maximum distance from the camera, beyond which this control can no longer reasonably render or calculate translation}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_Padding|default=0.050000|cat=4|desc=Distance the arrows are offset from the center position}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_ScaleDistanceMax|default=60.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMax}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_ScaleDistanceMin|default=0.000000|cat=4|desc=Distance at which we'll multiply control scale by DistScaleMin}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_XRayCheckerSize|default=7|cat=4|desc=The size in pixels of the checker squares for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_XRayDarkAlpha|default=0.600000|cat=4|desc=The alpha of the dark square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=housingExpertGizmos_Translation_XRayLightAlpha|default=0.250000|cat=4|desc=The alpha of the light square checker pattern for obscured transform gizmos.}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2503|default=0|scope=Account|cat=4|desc=Stores the Maruuk Centaur renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2507|default=0|scope=Account|cat=4|desc=Stores the Dragonscale Expedition renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2510|default=0|scope=Account|cat=4|desc=Stores the Valdrakken Accord renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2511|default=0|scope=Account|cat=4|desc=Stores the Iskaara Tuskarr renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2564|default=0|scope=Account|cat=4|desc=Stores the Loamm Niffen renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2570|default=0|scope=Account|cat=4|desc=Stores the Hallowfall Arathi renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2574|default=0|scope=Account|cat=4|desc=Stores the Dream Warden renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2590|default=0|scope=Account|cat=4|desc=Stores the Council of Dornogal renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2593|default=0|scope=Account|cat=4|desc=Stores the Keg Leg's Crew renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2594|default=0|scope=Account|cat=4|desc=Stores the Assembly of the Deeps renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2600|default=0|scope=Account|cat=4|desc=Stores the Severed Threads renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2653|default=0|scope=Account|cat=4|desc=Stores the Cartels of Undermine Rewards renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2658|default=0|scope=Account|cat=4|desc=Stores the K'aresh Trust renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2685|default=0|scope=Account|cat=4|desc=Stores the Gallagio Loyatly Rewards renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2688|default=0|scope=Account|cat=4|desc=Stores the Flame's Radiance renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2736|default=0|scope=Account|cat=4|desc=Stores the Manaforge Vandals renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastTransmogOutfitIDSpec1|scope=Character|cat=4|desc=SetID of the last applied transmog outfit for the 1st spec}}
+: {{apitooltip|type=cvar|name=lastTransmogOutfitIDSpec2|scope=Character|cat=4|desc=SetID of the last applied transmog outfit for the 2nd spec}}
+: {{apitooltip|type=cvar|name=lastTransmogOutfitIDSpec3|scope=Character|cat=4|desc=SetID of the last applied transmog outfit for the 3rd spec}}
+: {{apitooltip|type=cvar|name=lastTransmogOutfitIDSpec4|scope=Character|cat=4|desc=SetID of the last applied transmog outfit for the 4th spec}}
+: {{apitooltip|type=cvar|name=lfgAutoFill|default=0|scope=Account|cat=4|desc=Whether to automatically add party members while looking for a group}}
+: {{apitooltip|type=cvar|name=lfgAutoJoin|default=0|scope=Account|cat=4|desc=Whether to automatically join a party while looking for a group}}
+: {{apitooltip|type=cvar|name=lfGuildComment|scope=Character|cat=4|desc=Stores the player's Looking For Guild comment}}
+: {{apitooltip|type=cvar|name=lfGuildSettings|default=1|scope=Character|cat=4|desc=Bit field of Looking For Guild player settings}}
+: {{apitooltip|type=cvar|name=mapAnimDuration|default=0.12|scope=Account|cat=4|desc=Duration for the alpha animation}}
+: {{apitooltip|type=cvar|name=mapAnimMinAlpha|default=0.35|scope=Account|cat=4|desc=Alpha value to animate to when player moves with windowed world map open}}
+: {{apitooltip|type=cvar|name=mapAnimStartDelay|default=0.0|scope=Account|cat=4|desc=Start delay for the alpha animation}}
+: {{apitooltip|type=cvar|name=minimapAltitudeHintMode|default=0|cat=4|desc=Change minimap altitude difference display. 0=none, 1=darken, 2=arrows}}
+: {{apitooltip|type=cvar|name=minimapShowArchBlobs|default=1|scope=Character|cat=4|desc=Stores whether to show the quest blobs on the minimap.}}
+: {{apitooltip|type=cvar|name=minimapShowQuestBlobs|default=1|scope=Character|cat=4|desc=Stores whether to show the quest blobs on the minimap.}}
+: {{apitooltip|type=cvar|name=nameplateClassResourceTopInset|default=.03|scope=Character|cat=1|desc=The inset from the top (in screen percent) that nameplates are clamped to when class resources are being displayed on them.}}
+: {{apitooltip|type=cvar|name=nameplateGlobalScale|default=1.0|scope=Character|cat=1|desc=Applies global scaling to non-self nameplates, this is applied AFTER selected, min, and max scale.}}
+: {{apitooltip|type=cvar|name=nameplateHideHealthAndPower|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateLargeBottomInset|default=0.15|scope=Character|cat=1|desc=The inset from the bottom (in screen percent) that large nameplates are clamped to.}}
+: {{apitooltip|type=cvar|name=nameplateLargeTopInset|default=0.1|scope=Character|cat=1|desc=The inset from the top (in screen percent) that large nameplates are clamped to.}}
+: {{apitooltip|type=cvar|name=NamePlateMaximumClassificationScale|default=1.25|scope=Character|cat=4|desc=This is the maximum effective scale of the classification icon for nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateMotionSpeed|default=0.025|scope=Character|cat=1|desc=Controls the rate at which nameplate animates into their target locations [0.0-1.0]}}
+: {{apitooltip|type=cvar|name=nameplateMotion|default=0|scope=Character|cat=1|desc=Defines the movement/collision model for nameplates}}
+: {{apitooltip|type=cvar|name=NameplatePersonalClickThrough|default=1|scope=Character|cat=4|desc=When enabled, the personal nameplate is transparent to mouse clicks.}}
+: {{apitooltip|type=cvar|name=NameplatePersonalHideDelayAlpha|default=0.45|scope=Character|cat=4|desc=Determines the alpha of the personal nameplate after no visibility conditions are met (during the period of time specified by NameplatePersonalHideDelaySeconds).}}
+: {{apitooltip|type=cvar|name=NameplatePersonalHideDelaySeconds|default=3.0|scope=Character|cat=4|desc=Determines the length of time in seconds that the personal nameplate will be visible after no visibility conditions are met.}}
+: {{apitooltip|type=cvar|name=NameplatePersonalShowAlways|default=0|scope=Character|cat=4|desc=Determines if the the personal nameplate is always shown.}}
+: {{apitooltip|type=cvar|name=NameplatePersonalShowInCombat|default=1|scope=Character|cat=4|desc=Determines if the the personal nameplate is shown when you enter combat.}}
+: {{apitooltip|type=cvar|name=NameplatePersonalShowWithTarget|default=0|scope=Character|cat=4|desc=Determines if the personal nameplate is shown when selecting a target. 0 = targeting has no effect, 1 = show on hostile target, 2 = show on any target}}
+: {{apitooltip|type=cvar|name=nameplateResourceOnTarget|default=0|scope=Character|cat=4|desc=Nameplate class resource overlay mode. 0=self, 1=target}}
+: {{apitooltip|type=cvar|name=nameplateSelfBottomInset|default=0.2|scope=Character|cat=1|desc=The inset from the bottom (in screen percent) that the self nameplate is clamped to.}}
+: {{apitooltip|type=cvar|name=nameplateSelfScale|default=1.0|scope=Character|cat=1|desc=The scale of the self nameplate.}}
+: {{apitooltip|type=cvar|name=nameplateSelfTopInset|default=0.5|scope=Character|cat=1|desc=The inset from the top (in screen percent) that the self nameplate is clamped to.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyBuffs|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyGuardians|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyMinions|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyNPCs|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyPets|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyTotems|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateShowOnlyNames|default=0|cat=4|desc=Whether to hide the nameplate bars}}
+: {{apitooltip|type=cvar|name=nameplateShowPersonalCooldowns|default=0|scope=Character|cat=4|desc=If set, personal buffs/debuffs will appear above the personal resource display}}
+: {{apitooltip|type=cvar|name=removeChatDelay|default=0|scope=Account|cat=4|desc=Remove Chat Hover Delay}}
+: {{apitooltip|type=cvar|name=ShowClassColorInFriendlyNameplate|default=1|scope=Character|cat=4|desc=use this to display the class color in friendly nameplate health bars}}
+: {{apitooltip|type=cvar|name=ShowNamePlateLoseAggroFlash|default=1|scope=Character|cat=4|desc=When enabled, if you are a tank role and lose aggro, the nameplate with briefly flash.}}
+: {{apitooltip|type=cvar|name=showQuestObjectivesOnMap|default=1|scope=Character|cat=4|desc=Shows quest POIs on the main map.}}
+: {{apitooltip|type=cvar|name=showTokenFrameHonor|default=0|scope=Character|cat=4|desc=The token UI has shown Honor}}
+: {{apitooltip|type=cvar|name=splashScreenBoost|default=0|scope=Character|cat=4|desc=Show boost splash screen id }}
+: {{apitooltip|type=cvar|name=splashScreenSeason|default=1|scope=Character|cat=4|desc=Show season splash screen id}}
+: {{apitooltip|type=cvar|name=TerrainBlendBakeEnable|default=0|cat=1|desc=Enable pre-blending terrain layers}}
+: {{apitooltip|type=cvar|name=TerrainUnlitShaderEnable|default=0|cat=1|desc=Enable Unlit terrain shader}}
+: {{apitooltip|type=cvar|name=trackQuestSorting|default=top|scope=Account|cat=4|desc=Whether to sort the last tracked quest to the top of the quest tracker or use proximity sorting}}
+: {{apitooltip|type=cvar|name=watchFrameBaseAlpha|default=0|scope=Account|cat=4|desc=Objectives frame opacity.}}
+: {{apitooltip|type=cvar|name=watchFrameIgnoreCursor|default=0|scope=Account|cat=4|desc=Disables Objectives frame mouseover and title dropdown.}}
+: {{apitooltip|type=cvar|name=watchFrameState|default=0|scope=Account|cat=4|desc=Stores Objectives frame locked and collapsed states}}
+: {{apitooltip|type=cvar|name=WorldTextCritScreenY|default=0.0275|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextGravity|default=0.5|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextMinAlpha|default=0.5|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextNonRandomZ|default=2.5|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRampDuration|default=1.0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRampPowCrit|default=8.0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRampPow|default=1.9|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRandomXY|default=0.0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRandomZMax|default=1.5|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextRandomZMin|default=0.8|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextScale|default=1.0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextScreenY|default=0.015|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextStartPosRandomness|default=1.0|scope=Account|cat=4}}
+</div>
+|}
+
+===Enums===
+ Enum.CraftingOrderResult
+   + <font color="#00b400">MissingCurrency</font>
+   + <font color="#00b400">TooManyCurrencies</font>
+ Enum.EditModeAccountSetting
+   + <font color="#00b400">ShowPersonalResourceDisplay</font>
+   + <font color="#00b400">ShowEncounterEvents</font>
+   + <font color="#00b400">ShowDamageMeter</font>
+   + <font color="#00b400">ShowExternalDefensives</font>
+ Enum.EditModeSystem
+   + <font color="#00b400">PersonalResourceDisplay</font>
+   + <font color="#00b400">EncounterEvents</font>
+   + <font color="#00b400">DamageMeter</font>
+ Enum.PlayerInteractionType
+   # <font color="#ff6767">PlaceholderType79</font> -> <font color="#00b400">TieredEntrance</font>
+ Enum.QuestTagType
+   # <font color="#ff6767">Placeholder_1</font> -> <font color="#00b400">Prey</font>
+ Enum.SendAddonMessageResult
+   + <font color="#00b400">AddOnMessageLockdown</font>
+   + <font color="#00b400">TargetOffline</font>
+ Enum.SurveyDeliveryMoment
+   + <font color="#00b400">MythicPlusCompleted</font>
+ Enum.TooltipDataLineType
+   + <font color="#00b400">SpellPassive</font>
+   + <font color="#00b400">SpellDescription</font>
+ Enum.TooltipDataType
+   + <font color="#00b400">Outfit</font>
+ Enum.TradeskillRecipeType
+   - <font color="#ff6767">Recraft</font>
+ Enum.UICursorType
+   + <font color="#00b400">Outfit</font>
+ Enum.UIWidgetVisualizationType
+   + <font color="#00b400">PreyHuntProgress</font>
+
+===Structures===
+ AdvancedFilterOptions
+   + <font color="#00b400">generalPlaystyle1</font>
+   + <font color="#00b400">generalPlaystyle2</font>
+   + <font color="#00b400">generalPlaystyle3</font>
+   + <font color="#00b400">generalPlaystyle4</font>
+ CatalogShopCategoryInfo
+   + <font color="#00b400">showPersistentRefundButton</font>
+ CatalogShopProductInfo
+   +  <font color="#00b400">consumableQuantity</font>
+ CooldownViewerCooldown
+   + <font color="#00b400">cooldownID</font>
+   + <font color="#00b400">category</font>
+ CraftingItemSlotModification
+   + <font color="#ff6767">itemID</font> -> <font color="#00b400">reagent</font>
+ CraftingOrderReagentInfo
+   # <font color="#ff6767">reagent</font> -> <font color="#00b400">reagentInfo</font>
+ CraftingReagentInfo
+   + <font color="#ff6767">itemID</font> -> <font color="#00b400">reagent</font>
+ CraftingReagentSlotSchematic
+   + <font color="#00b400">variableQuantities</font>
+ CraftingResourceReturnInfo
+   + <font color="#ff6767">itemID</font> -> <font color="#00b400">reagent</font>
+ ExpansionDisplayInfo
+   + <font color="#00b400">glueAmbianceSoundKit</font>
+   + <font color="#00b400">glueMusicSoundKit</font>
+   + <font color="#00b400">glueCreditsSoundKit</font>
+ ItemInteractionFrameInfo
+   # <font color="#ecbc2a">flags</font>, Type: number -> UIItemInteractionFlags
+ LfgEntryData
+   + <font color="#00b400">generalPlaystyle</font>
+ LfgListingCreateData
+   + <font color="#00b400">generalPlaystyle</font>
+ LfgSearchResultData
+   + <font color="#00b400">generalPlaystyle</font>
+ MajorFactionData
+   + <font color="#00b400">description</font>
+   + <font color="#00b400">highlights</font>
+   + <font color="#00b400">playerCompanionID</font>
+ MajorFactionRenownRewardInfo
+   + <font color="#00b400">rewardType</font>
+ NewCraftingOrderInfo
+   # <font color="#ff6767">reagentItems</font> -> <font color="#00b400">reagentInfos</font>
+ PrivateAuraIconInfo
+   + <font color="#00b400">borderScale</font>
+ RegularReagentInfo
+   + <font color="#ff6767">itemID</font> -> <font color="#00b400">reagent</font>
+ ScheduledEventInfo
+   + <font color="#00b400">eventID</font>
+   + <font color="#00b400">displayInfo</font>
+ SpellCooldownInfo
+   + <font color="#00b400">timeUntilEndOfStartRecovery</font>
+   + <font color="#00b400">isOnGCD</font>
+ TransmogAppearanceSourceInfoData
+   + <font color="#ff6767">itemSubClass</font> -> <font color="#00b400">itemSubclass</font>
+ TransmogSetInfo
+   + <font color="#00b400">grantAsPrecedingVariant</font>
+
+==Deprecated 11.x API==
+These API functions were deprecated in the 11.x patches from the previous expansion and have been removed.
+{| class="darktable"
+|
+'''[https://github.com/Gethe/wow-ui-source/blob/11.0.0/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_0_0.lua Deprecated_11_0_0.lua]'''
+: {{api|GetSpellInfo}} → {{api|C_Spell.GetSpellInfo}}
+: {{api|GetNumSpellTabs}} → {{api|C_SpellBook.GetNumSpellBookSkillLines}}
+: {{api|GetSpellTabInfo}} → {{api|C_SpellBook.GetSpellBookSkillLineInfo}}
+: {{api|GetSpellCooldown}} → {{api|C_Spell.GetSpellCooldown}}
+: {{api|GetSpellBookItemName}} → {{api|C_SpellBook.GetSpellBookItemName}}
+: {{api|GetSpellTexture}} → {{api|C_Spell.GetSpellTexture}}
+: {{api|GetSpellCharges}} → {{api|C_Spell.GetSpellCharges}}
+: {{api|GetSpellDescription}} → {{api|C_Spell.GetSpellDescription}}
+: {{api|GetSpellCount}} → {{api|C_Spell.GetSpellCastCount}}
+: {{api|IsUsableSpell}} → {{api|C_Spell.IsSpellUsable}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/11.0.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_0_5.lua Deprecated_11_0_5.lua]'''
+: {{api|C_TaskQuest.GetQuestsForPlayerByMapID}} → {{api|C_TaskQuest.GetQuestsOnMap}}
+: {{api|GetMerchantItemInfo}} → {{api|C_MerchantFrame.GetItemInfo}}
+: {{api|C_ChallengeMode.GetCompletionInfo}} → {{api|C_ChallengeMode.GetChallengeCompletionInfo}}
+: {{api|C_MythicPlus.IsWeeklyRewardAvailable}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/11.0.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_0_7.lua Deprecated_11_0_7.lua]'''
+: {{api|IsActiveQuestLegendary}} → {{api|C_QuestInfoSystem.GetQuestClassification}}
+: {{api|C_QuestLog.IsLegendaryQuest}} → {{api|C_QuestInfoSystem.GetQuestClassification}}
+: {{api|C_QuestLog.IsQuestRepeatableType}} → {{api|C_QuestLog.IsRepeatableQuest}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/11.1.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_1_5.lua Deprecated_11_1_5.lua]'''
+: {{api|ConsolePrint}} → {{api|C_Log.LogMessage}}
+: {{api|message}} → {{api|SetBasicMessageDialogText}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/11.2.0/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_2_0.lua Deprecated_11_2_0.lua]'''
+: {{api|IsSpellOverlayed}} → {{api|C_SpellActivationOverlay.IsSpellOverlayed}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/11.2.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_2_5.lua Deprecated_11_2_5.lua]'''
+: {{api|IsArtifactRelicItem}} → {{api|C_ItemSocketInfo.IsArtifactRelicItem}}
+|}

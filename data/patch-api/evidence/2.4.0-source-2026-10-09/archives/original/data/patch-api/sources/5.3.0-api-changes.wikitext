@@ -1,0 +1,15 @@
+{{apichanges|5.3.0|prev=5.2.0|next=5.4.0}}
+
+== New Features ==
+* You can now control for which specialization you will receive loot from LFR/Quests.
+* The number of pet stable pages has increased from 2 to 5 (Increasing the number of slots from 20 to 50).
+* Knowledge base and GM tickets now use an embedded web browser to interact with Blizzard's Support website.
+** The embedded browser functionality is encapsulated by the <code>Browser</code> widget type.
+
+== Misc Changes ==
+* [[TradeSkillLink|tradeSkillLink]] encoding changed significantly. The first four fields were re-arranged, and specialization data was added for Cooking.
+
+== Bugs ==
+* If {{api|InterfaceOptionsFrame_OpenToCategory}}(panel) is called before the addon panels list is updated after adding a new panel, the interface options frame will open to another panel. You can work around this behavior by calling the function twice.
+
+{{:Patch 5.3.0/API changes/diff}}

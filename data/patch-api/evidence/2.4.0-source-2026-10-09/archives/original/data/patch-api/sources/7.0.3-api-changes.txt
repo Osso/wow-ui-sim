@@ -1,0 +1,48 @@
+Patch 7.0.3 API changes
+
+== New ==
+* New Widget types: Line - derived from Texture, and UiCamera - derived from Model
+* New Region method: Region:GetDebugName()
+* New Frame methods: Frame:CreateLine(), Frame:GetFlattensRenderLayers(), Frame:SetFlattensRenderLayers()
+* New Texture method: Texture:SetColorTexture()
+* Adventure Map - AddOns/Blizzard_AdventureMap, C_AdventureMap
+* Artifacts - AddOns/Blizzard_ArtifactUI, C_ArtifactUI
+* Wardrobe - AddOns/Blizzard_Collections/Blizzard_Wardrobe, C_Transmog and C_TransmogCollection
+
+* New C_TradeSkillUI table.
+* GetNumQuestLogRewardSpells
+
+== Changes ==
+* Zeroes have been removed from item links. They now look like: |cff0070dd|Hitem:128955::::::::99:577::11::::|h[The Spider Queen's Veil]|h|r
+* The way nameplates are created has changed completely.
+** New addon: Blizzard_Nameplates
+** New events: NAME_PLATE_CREATED, NAME_PLATE_UNIT_ADDED, NAME_PLATE_UNIT_REMOVED
+** Functions like GetNumNamePlateMotionTypes and GetNameplateFrames have been moved to a new C_Nameplates table.
+* The Texture method Texture:SetTexture(R, G, B[, A]) no longer works properly in many cases. Use the new method Texture:SetColorTexture instead.
+* The Texture method Texture:SetTexCoord no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method Texture:SetTexture(texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, Texture:SetVertTile() and Texture:SetHorizTile() might be the intended replacements for this behavior.
+* The Texture method Texture:SetToFileData has been removed and is now handled by Texture:SetTexture instead.
+* GetSpellInfo(spellid) now returns fileID for its 3rd return instead if iconPath.
+* The deprecated animation method Alpha:SetChange has been removed. Use Alpha:SetFromAlpha and/or Alpha:SetToAlpha instead.
+* GetInboxItem now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality, canUse = GetInboxItem(index, itemIndex)
+* GetSendMailItem now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality = GetSendMailItem(sendMailIndex)
+* GetNumDungeonMapLevels now returns an array of level numbers. To get the count of levels, get the length of the returned array
+* GetMapLandmarkInfo now returns a type integer as its first return value, before name which used to be the first return value
+* Frame type Minimap are no longer creatable by CreateFrame and will be ignored in xml files for 3rd party addons.
+* GameTooltip:SetTradeSkillItem(tradeItemIndex[, reagentIndex]) replaced by GameTooltip:SetRecipeReagentItem(recipeID, reagentIndex).
+* GetQuestLogRewardSpell(rewardSpellIndex) requires rewardSpellIndex parameter now
+* GarrisonUI API have been updated and multiple of the C_Garrison.* now requires a LE_* filter and new return values have been added.
+* Some Mountjournal Functions got renamed
+** C_MountJournal.GetMountInfo has been renamed to C_MountJournal.GetMountInfoByID
+** C_MountJournal.GetMountInfoExtra has been renamed to C_MountJournal.GetMountInfoExtraByID
+** C_MountJournal.Summon has been renamed to C_MountJournal.SummonByID
+
+== Removals ==
+* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.
+* GetInventoryItemGems and GetContainerItemGems (but gem information is still apparently extractable from the itemString)
+* GetQuestLogRewardTalents
+* API regarding in-field visibility changes to helms and cloaks:  ShowHelm, ShowCloak, ShowingHelm, ShowingCloak
+* Functions regarding defunct stats Multistrike and Amplify
+* Frame method: Frame:AllowAttributeChanges()
+* Event UNIT_COMBO_POINTS (streamlined into UNIT_POWER)
+* CVar floatingCombatTextComboPoints (streamlined into CVar floatingCombatTextEnergyGains)
+* Model:GetModel() has been replaced by Model:GetModelFileID()

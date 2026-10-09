@@ -1,0 +1,44 @@
+{{apichanges|9.2.7|prev=9.2.5|next=10.0.0}}
+
+==Summary==
+* Blizzard API documentation was moved to [https://github.com/Gethe/wow-ui-source/tree/live/Interface/Addons/Blizzard_APIDocumentationGenerated Blizzard_APIDocumentationGenerated].
+
+==Resources==
+* TOC: <code>90207</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/9.2.5..9.2.7 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/9.2.5..9.2.7 BlizzardInterfaceResources]
+* Official patch notes: [https://worldofwarcraft.com/en-us/news/23833174/shadowlands-927-update-notes-now-live User Interface and Accessibility]
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|+ 9.2.5 (44730) &rarr; 9.2.7 (45114) Aug 13 2022
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(2)</small>
+! style="width: 50%" | <font color="pink">Removed</font>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|AUCTION_HOUSE_PURCHASE_COMPLETED}}
+: {{api|t=e|AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=e|AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION}}
+   + <font color="#00b400">auctionID</font>
+
+==Enums==
+ + <font color="#00b400">Enum.GamePadPowerLevel</font>
+ + <font color="#00b400">Enum.ItemGemColor</font>
+ + <font color="#00b400">Enum.ItemSocketType</font>
+ + <font color="#00b400">Enum.ItemSubclassDisplay</font>
+ + <font color="#00b400">Enum.ItemSubclassFlag</font>
+ # Enum.AuctionHouseError
+   + <font color="#00b400">DoubleBid</font>
+   + <font color="#00b400">FavoritesMaxed</font>
+   + <font color="#00b400">ItemNotAvailable</font>
+ # Enum.ReportType
+   + <font color="#00b400">PvPScoreboard</font>
+
+==Structures==
+ # ItemKeyInfo ({{api|C_AuctionHouse.GetItemKeyInfo}})
+   + <font color="#00b400">itemID</font>
+   + <font color="#00b400">battlePetSpeciesID</font>

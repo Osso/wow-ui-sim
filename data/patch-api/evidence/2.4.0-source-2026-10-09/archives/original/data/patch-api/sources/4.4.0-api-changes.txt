@@ -1,0 +1,16 @@
+Patch 4.4.0 API changes
+
+== Summary ==
+* The client now supports a new _Cata suffix for loading client-specific TOC files.
+* The client now supports comma-delimited Interface versions, allowing addons to declare a TOC file as being compatible with multiple versions or flavors of the game at once.
+* The C_ChatInfo.SendAddonMessage now more aggressively throttles all addon traffic on a per-prefix level, and returns an enum result code instead of a boolean when a message is unable to be queued for transmission. See the Patch 10.2.7 addon messaging changes for more details.
+
+== Resources ==
+* TOC: 40400
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== Breaking changes ==
+
+* The behavior of the legacy _Classic TOC suffix has changed.
+** TOC files with this suffix now load on all Classic client flavors. Previously, they would only load on Classic Era.
+** AddOns which require a TOC file only load on Classic Era should instead use the _Vanilla suffix.

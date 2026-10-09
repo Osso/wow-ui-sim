@@ -1,0 +1,517 @@
+{{apichanges|10.1.0|prev=10.0.7|next=10.1.5}}
+
+==Summary==
+* A new [[#Private Auras|Private Auras]] system has been added to display buffs and debuffs applied to units without exposing information about the aura to addons.
+* A new [[Hyperlinks#addon|addon]] link type has been added for local addon-only chat links.
+* A new [[Hyperlinks#talentbuild|talentbuild]] link type has been added for inspecting loadouts.
+* A new [[#Scroll Templates|ScrollFrame template]] has been added as a replacement for various other templates which are now deprecated.
+* A new set of TOC metadata fields have been added to control the display of an icon in the addon list.
+* A new set of TOC metadata fields have been added to automatically register dropdown entries into the minimap [[Addon compartment]].
+* The addon list no longer displays addons out-of-order if their names contain [[UI escape sequences]].
+* The C_TooltipInfo APIs now return data with all data and line arguments surfaced, removing the need to call <code>TooltipUtil.SurfaceArgs()</code>.
+* The {{api|t=e|TOOLTIP_DATA_UPDATE}} event now has an additional <code>dataInstanceID</code> argument. This can be correlated with a field of the same name on tables returned by the C_TooltipInfo APIs to more accurately process data update events.
+
+==Resources==
+* TOC: <code>100100</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/10.0.7..10.1.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.0.7..10.1.0 BlizzardInterfaceResources]
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/23935248/dragonflight-embers-of-neltharion-content-update-notes#item16 Dragonflight: Embers of Neltharion Content Update Notes]
+
+==Private Auras==
+
+A new private aura system has been added through which the UI can display buffs and debuffs active on units without exposing information on the auras to addons. This works as a separate system to the existing buff and debuff display and must be configured through a set of new APIs.
+
+The following example configures a private aura anchor in the center of the screen for the first private aura applied to the player. A cooldown frame is configured to represent the duration, and the icon is displayed in the center of the frame. A textual duration will be displayed in a fontstring below the icon.
+
+Multiple anchors for a single aura can be created by addons with their own independent settings. The {{api|C_UnitAuras.AddPrivateAuraAnchor}} function returns an ID which can be later supplied to {{api|C_UnitAuras.RemovePrivateAuraAnchor}} to remove the aura display from the UI.
+
+<syntaxhighlight lang="lua">
+local PrivateAuraFrame1 = CreateFrame("Frame", UIParent)
+PrivateAuraFrame1:SetPoint("CENTER")
+PrivateAuraFrame1:SetSize(32, 32)
+
+local auraAnchorID = C_UnitAuras.AddPrivateAuraAnchor({
+    unitToken = "player",
+    auraIndex = 1,
+    parent = PrivateAuraFrame1,
+    showCountdownFrame = true,
+    showCountdownNumbers = true,
+    iconInfo = {
+        iconWidth = 32,
+        iconHeight = 32,
+        iconAnchor = {
+            point = "CENTER",
+            relativeTo = PrivateAuraFrame1,
+            relativePoint = "CENTER",
+            offsetX = 0,
+            offsetY = 0,
+        },
+    },
+    durationAnchor = {
+        point = "TOP",
+        relativeTo = PrivateAuraFrame1,
+        relativePoint = "BOTTOM",
+        offsetX = 0,
+        offsetY = 0,
+    },
+})
+</syntaxhighlight>
+
+A sound alert can be configured to be played upon application of an aura. This works through spell IDs rather than aura indices.  The {{api|C_UnitAuras.AddPrivateAuraAppliedSound}} function returns an ID which can be later supplied to {{api|C_UnitAuras.RemovePrivateAuraAppliedSound}} to disable the sound effect being played.
+
+<syntaxhighlight lang="lua">
+local auraSoundID = C_UnitAuras.AddPrivateAuraAppliedSound({
+    unitToken = "player",
+    spellID = 12345,
+    soundFileName = "Interface\\AddOns\\MyAddOn\\Alert.ogg",
+    outputChannel = "SFX",
+})
+</syntaxhighlight>
+
+Finally, a raid message style alert can be configured to display text when a private aura is applied. Unlike the previous APIs this is a global resource; individual addons cannot configure their own raid message displays for private auras.
+
+<syntaxhighlight lang="lua">
+C_UnitAuras.SetPrivateWarningTextAnchor(UIParent, {
+    point = "CENTER",
+    relativeTo = UIParent,
+    relativePoint = "CENTER",
+    offsetX = 0,
+    offsetY = 0,
+})
+</syntaxhighlight>
+
+==Addon Compartment Changes==
+
+The [[Addon compartment]] has been updated to support automatically registering dropdown entries for addons from [[TOC format|TOC]] fields. The following TOC fields have been added.
+
+{| class="darktable zebra"
+|+
+|-
+! Field Name !! Example Value !! Description
+|-
+| AddonCompartmentFunc || <code>MyAddOn_OnAddonCompartmentClick</code> || The name of a global function to be executed when the compartment dropdown entry is clicked. This field is required.
+|-
+| AddonCompartmentFuncOnEnter || <code>MyAddOn_OnAddonCompartmentEnter</code> || The name of a global function to be executed when the compartment dropdown entry is highlighted. Optional.
+|-
+| AddonCompartmentFuncOnLeave || <code>MyAddOn_OnAddonCompartmentLeave</code> || The name of a global function to be executed when the compartment dropdown entry is no longer highlighted. Optional.
+|-
+| IconTexture || <code>Interface\Icons\TEMP.blp</code> || The full path to a texture file or a file ID to show as an icon in both the addon list and compartment dropdown. Optional.
+|-
+| IconAtlas || <code>TaskPOI-Icon</code>|| The name of a texture [[AtlasID|atlas]] to use as the icon in both the addon list and compartment dropdown. Optional, and is only used if the IconTexture field has not been set.
+|}
+
+The example below demonstrates the use of these TOC fields.
+
+'''<font color="#4ec9b0">MyAddOn.toc</font>'''
+ ## Interface: {{API LatestInterface}}
+ ## Title: My Addon
+ ## Notes: Does something neat
+ ## Author: Your Name
+ <font color="#ecbc2a">## AddonCompartmentFunc: MyAddOn_OnAddonCompartmentClick
+ ## IconTexture: Interface\Icons\TEMP.blp</font>
+ 
+ MyAddOn.lua
+
+'''<font color="#4ec9b0">MyAddOn.lua</font>'''
+<syntaxhighlight lang="lua">
+ function MyAddOn_OnAddonCompartmentClick(addonName, buttonName)
+     print("Hello from the addon compartment!")
+ end
+</syntaxhighlight>
+
+==Addon Chat Links==
+
+A new [[Hyperlinks#addon|addon]] link type has been added to the chat frame infrastructure to better support addon-created chat links. This new link type is local-only and cannot be sent in chat messages. This serves as a replacement for [[Hyperlinks#garrmission|garrmission]] links without needing to rely on their current implementation details to avoid taint.
+
+<syntaxhighlight lang="lua">
+EventRegistry:RegisterCallback("SetItemRef", function(_, link, text, button, chatFrame)
+    local linkType, addonName, linkData = string.split(":", link, 3)
+
+    if linkType == "addon" and addonName == "SomeAddon" then
+        print("Link clicked: ", linkData)
+    end
+end)
+
+ChatFrame1:AddMessage("|cFFFFFF00|Haddon:SomeAddon:hidden-data|h[Some Clickable Message]|h|r")
+</syntaxhighlight>
+
+==Scroll Templates==
+
+A new ScrollFrame template named [https://github.com/Gethe/wow-ui-source/blob/6eca162dbca161e850b735bd5b08039f96caf2df/Interface/SharedXML/SecureUIPanelTemplates.xml#L92 ScrollFrameTemplate] has been added. This serves as a replacement for many old scrolling related templates that are now deprecated as of this patch. This template can be used as a simpler alternative to ScrollBox views, and automatically creates and configures a scrollbar for use with the frame. An Lua example can be found below to demonstrate the use of this new template.
+
+<syntaxhighlight lang="lua">
+local ScrollFrame = CreateFrame("ScrollFrame", nil, UIParent, "ScrollFrameTemplate")
+ScrollFrame:SetSize(300, 300)
+ScrollFrame:SetPoint("CENTER")
+
+local ScrollChild = CreateFrame("Frame")
+ScrollChild:SetSize(300, 600)
+
+local ScrollTexture = ScrollChild:CreateTexture(nil, "OVERLAY")
+ScrollTexture:SetAllPoints(ScrollChild)
+ScrollTexture:SetColorTexture(1, 0, 0, 1)
+ScrollTexture:SetGradient("VERTICAL", CreateColor(1, 0, 0, 1), CreateColor(0, 0, 0, 1))
+
+ScrollFrame:SetScrollChild(ScrollChild)
+</syntaxhighlight>
+
+For XML use cases, refer to the following example.
+
+<syntaxhighlight lang="xml">
+<ScrollFrame name="MyAddon_ScrollFrame" inherits="ScrollFrameTemplate" parent="UIParent">
+    <Size x="300" y="300"/>
+    <Anchors>
+        <Anchor point="CENTER"/>
+    </Anchors>
+    <ScrollChild>
+        <Frame>
+            <Size x="300" y="600"/>
+            <Layers>
+                <Layer level="OVERLAY">
+                    <Texture setAllPoints="true">
+                        <Color r="1"/>
+                        <Gradient orientation="VERTICAL">
+                            <MinColor r="1"/>
+                            <MaxColor r="0"/>
+                        </Gradient>
+                    </Texture>
+                </Layer>
+            </Layers>
+        </Frame>
+    </ScrollChild>
+</ScrollFrame>
+</syntaxhighlight>
+
+The following key values pairs can be assigned via XML to customize the creation of the scrollbar.
+
+{| class="darktable zebra"
+|+
+|-
+! Key !! Description
+|-
+| noScrollBar || If true, don't create a scrollbar when the template is loaded.
+|-
+| scrollBarBottomY || Bottom anchor offest for the scroll bar.
+|-
+| scrollBarHideIfUnscrollable || If true, hide the scrollbar automatically if the scrollframe contents cannot be scrolled.
+|-
+| scrollBarHideTrackIfThumbExceedsTrack || If true, hide the scrollbar track and thumb if the thumb would be too large to fit in the scrollbar.
+|-
+| scrollBarTemplate || The name of a template to instantiate for the scrollbar. Defaults to [https://github.com/Gethe/wow-ui-source/blob/6eca162dbca161e850b735bd5b08039f96caf2df/Interface/SharedXML/Scroll/MinimalScrollBar.xml#L16 MinimalScrollBar].
+|-
+| scrollBarTopY || Top anchor Vertical offset for the scroll bar.
+|-
+| scrollBarX || Left anchor offset for the scroll bar. ||
+|}
+
+==Deprecated Templates==
+
+The following templates have been deprecated and will be removed in a future patch. Many of these can be replaced by ScrollFrameTemplate with minimal changes required.
+
+* FauxScrollFrameTemplate
+* FauxScrollFrameTemplateLight
+* ListScrollFrameTemplate
+* MinimalScrollBarTemplate
+* MinimalScrollBarWithBorderTemplate
+* MinimalScrollFrameTemplate
+* UIPanelInputScrollFrameTemplate
+* UIPanelScrollBarTemplate
+* UIPanelScrollBarTemplateLightBorder
+* UIPanelScrollBarTrimTemplate
+* UIPanelScrollFrameCodeTemplate
+* UIPanelScrollFrameTemplate
+* UIPanelStretchableArtScrollBarTemplate
+
+The [https://github.com/Gethe/wow-ui-source/blob/0b5d4526f16f56a4c652d0d472620d6591a20f7d/Interface/SharedXML/SecureUIPanelTemplates.lua#L67 ScrollFrame_OnLoad] function was renamed to [https://github.com/Gethe/wow-ui-source/blob/6eca162dbca161e850b735bd5b08039f96caf2df/Interface/SharedXML/SecureScrollTemplates.lua#L52 UIPanelScrollFrame_OnLoad], however the old function name was reused and now refers to an entirely new and different function. If you are having issues with multiple scrollbars appearing on a scroll frame, renaming these function calls may be a solution.
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 10.0.7 (48676) &rarr; 10.1.0 (49365) Apr 27 2023
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(64)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(23)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AddOns.GetAddOnMetadata}}
+: {{api|t=a|C_ArrowCalloutManager.AcknowledgeCallout}}
+: {{api|t=a|C_ArrowCalloutManager.HideCallout}}
+: {{api|t=a|C_ArrowCalloutManager.HideWorldLootObjectCallout}}
+: {{api|t=a|C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID}}
+: {{api|t=a|C_ArrowCalloutManager.SwapWorldLootObjectCallout}}
+: {{api|t=a|C_AzeriteItem.IsUnlimitedLevelingUnlocked}}
+: {{api|t=a|C_CharacterServices.AssignRaceOrFactionChangeDistribution}}
+: {{api|t=a|C_ChatInfo.GetColorForChatType}}
+: {{api|t=a|C_ClassTalents.GetTraitTreeForSpec}}
+: {{api|t=a|C_ClassTalents.InitializeViewLoadout}}
+: {{api|t=a|C_ClassTalents.ViewLoadout}}
+: {{api|t=a|C_DateAndTime.AdjustTimeByMonths}}
+: {{api|t=a|C_Debug.ViewInDebugWindow}}
+: {{api|t=a|C_EncounterJournal.OnClose}}
+: {{api|t=a|C_EncounterJournal.OnOpen}}
+: {{api|t=a|C_EncounterJournal.SetTab}}
+: {{api|t=a|C_ExpansionTrial.OnTrialLevelUpDialogClicked}}
+: {{api|t=a|C_ExpansionTrial.OnTrialLevelUpDialogShown}}
+: {{api|t=a|C_GenericWidgetDisplay.Acknowledge}}
+: {{api|t=a|C_GenericWidgetDisplay.Close}}
+: {{api|t=a|C_GuildInfo.MemberExistsByName}}
+: {{api|t=a|C_Item.DoesItemMatchTrackJump}}
+: {{api|t=a|C_ItemUpgrade.GetHighWatermarkForItem}}
+: {{api|t=a|C_ItemUpgrade.GetHighWatermarkForSlot}}
+: {{api|t=a|C_ItemUpgrade.GetHighWatermarkSlotForItem}}
+: {{api|t=a|C_ItemUpgrade.IsItemBound}}
+: {{api|t=a|C_LootHistory.GetAllEncounterInfos}}
+: {{api|t=a|C_LootHistory.GetInfoForEncounter}}
+: {{api|t=a|C_LootHistory.GetLootHistoryTime}}
+: {{api|t=a|C_LootHistory.GetSortedDropsForEncounter}}
+: {{api|t=a|C_LootHistory.GetSortedInfoForDrop}}
+: {{api|t=a|C_Map.GetMapHighlightPulseInfo}}
+: {{api|t=a|C_PartyPose.ExtraAction}}
+: {{api|t=a|C_PartyPose.GetPartyPoseInfoByID}}
+: {{api|t=a|C_PartyPose.HasExtraAction}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestRewardSpellInfo}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestRewardSpells}}
+: {{api|t=a|C_QuestInfoSystem.GetQuestShouldToastCompletion}}
+: {{api|t=a|C_QuestInfoSystem.HasQuestRewardSpells}}
+: {{api|t=a|C_SpectatingUI.IsSpectating}}
+: {{api|t=a|C_Spell.TargetSpellJumpsUpgradeTrack}}
+: {{api|t=a|C_TooltipInfo.GetWorldLootObject}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionInfoByRecipeID}}
+: {{api|t=a|C_TradeSkillUI.GetReagentRequirementItemIDs}}
+: {{api|t=a|C_TradeSkillUI.GetRecraftRemovalWarnings}}
+: {{api|t=a|C_TradeSkillUI.IsEnchantTargetValid}}
+: {{api|t=a|C_TradeSkillUI.IsRecraftReagentValid}}
+: {{api|t=a|C_UIWidgetManager.GetItemDisplayVisualizationInfo}}
+: {{api|t=a|C_UnitAuras.AddPrivateAuraAnchor}}
+: {{api|t=a|C_UnitAuras.AddPrivateAuraAppliedSound}}
+: {{api|t=a|C_UnitAuras.AuraIsPrivate}}
+: {{api|t=a|C_UnitAuras.RemovePrivateAuraAnchor}}
+: {{api|t=a|C_UnitAuras.RemovePrivateAuraAppliedSound}}
+: {{api|t=a|C_UnitAuras.SetPrivateWarningTextAnchor}}
+: {{api|t=a|GetButtonMetatable}}
+: {{api|t=a|GetClassIDFromSpecID}}
+: {{api|t=a|GetEditBoxMetatable}}
+: {{api|t=a|GetFontStringMetatable}}
+: {{api|t=a|GetFrameMetatable}}
+: {{api|t=a|GetSoundEntryCount}}
+: {{api|t=a|IsWorldLootObject}}
+: {{api|t=a|pcallwithenv}}
+: {{api|t=a|StripHyperlinks}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_CharacterServices.AssignPFCDistribution}}
+: {{api|t=a|C_LootHistory.CanMasterLoot}}
+: {{api|t=a|C_LootHistory.GetExpiration}}
+: {{api|t=a|C_LootHistory.GetItem}}
+: {{api|t=a|C_LootHistory.GetNumItems}}
+: {{api|t=a|C_LootHistory.GetPlayerInfo}}
+: {{api|t=a|C_LootHistory.GiveMasterLoot}}
+: {{api|t=a|C_LootHistory.SetExpiration}}
+: {{api|t=a|C_TooltipInfo.GetQuestLogRewardSpell}}
+: {{api|t=a|C_TooltipInfo.GetQuestRewardSpell}}
+: {{api|t=a|GetAddOnMetadata}}
+: {{api|t=a|GetEventCPUUsage}}
+: {{api|t=a|GetFunctionCPUUsage}}
+: {{api|t=a|GetMouseClickFocus}}
+: {{api|t=a|GetMouseMotionFocus}}
+: {{api|t=a|GetNumFrames}}
+: {{api|t=a|GetNumQuestLogRewardSpells}}
+: {{api|t=a|GetNumRewardSpells}}
+: {{api|t=a|GetQuestLogRewardSpell}}
+: {{api|t=a|GetQuestLogSpellLink}}
+: {{api|t=a|GetQuestSpellLink}}
+: {{api|t=a|GetRewardSpell}}
+: {{api|t=a|GetScriptCPUUsage}}
+</div>
+|}
+ {{api|t=a|C_AreaPoiInfo.IsAreaPOITimed}}
+   + ret 2: <font color="#00b400">hideTimerInTooltip</font>
+ {{api|t=a|C_Map.GetMapInfoAtPosition}}
+   + arg 4: <font color="#00b400">ignoreZoneMapPositionData</font>
+ {{api|t=a|C_SpellBook.GetSpellLinkFromSpellID}}
+   + arg 2: <font color="#00b400">glyphID</font>
+ {{api|t=a|C_TradeSkillUI.RecraftRecipe}}
+   + arg 3: <font color="#00b400">removedModifications</font>
+ {{api|t=a|C_TradeSkillUI.RecraftRecipeForOrder}}
+   + arg 4: <font color="#00b400">removedModifications</font>
+ {{api|t=a|C_VignetteInfo.GetVignettePosition}}
+   # ret 1: <font color="#ecbc2a">vignettePosition</font>, Nilable: true -> false
+   + ret 2: <font color="#00b400">vignetteFacing</font>
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(6)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|ScriptRegion:EnableMouseMotion}}
+: {{api|t=w|ScriptRegion:IsMouseMotionFocus}}
+: {{api|t=w|AnimationGroup:GetElapsed}}
+: {{api|t=w|GameTooltip:SetCustomWordWrapMinWidth}}
+: {{api|t=w|ModelSceneActor:ReleaseFrontEndCharacterDisplays}}
+: {{api|t=w|ModelSceneActor:SetFrontEndLobbyModelFromDefaultCharacterDisplay}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(8)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(5)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|LOOT_HISTORY_CLEAR_HISTORY}}
+: {{api|t=e|LOOT_HISTORY_GO_TO_ENCOUNTER}}
+: {{api|t=e|LOOT_HISTORY_UPDATE_DROP}}
+: {{api|t=e|LOOT_HISTORY_UPDATE_ENCOUNTER}}
+: {{api|t=e|NEW_MATCHMAKING_PARTY_INVITE}}
+: {{api|t=e|PLAYER_JOINED_PVP_MATCH}}
+: {{api|t=e|REJECTED_MATCHMAKING_PARTY_INVITE}}
+: {{api|t=e|SHOW_PARTY_POSE_UI}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|LOOT_HISTORY_AUTO_SHOW}}
+: {{api|t=e|LOOT_HISTORY_FULL_UPDATE}}
+: {{api|t=e|LOOT_HISTORY_ROLL_CHANGED}}
+: {{api|t=e|LOOT_HISTORY_ROLL_COMPLETE}}
+: {{api|t=e|PVP_ROLE_POPUP_JOINED_MATCH}}
+</div>
+|}
+ {{api|t=e|ADDON_LOADED}}
+   + 2: <font color="#00b400">containsBindings</font>
+ {{api|t=e|TOOLTIP_DATA_UPDATE}}
+   + 1: <font color="#00b400">dataInstanceID</font>
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(15)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=acknowledgedArrowCallouts|default=0|scope=Character|cat=4|desc=Bit field of Looking for guild player settings}}
+: {{apitooltip|type=cvar|name=dnMTUpdate|default=1|cat=1|desc=Update Daynight in parralel.}}
+: {{apitooltip|type=cvar|name=EnableAirlockLogging|default=0|cat=4|desc=If 1, enables airlock logging, which will print out the various steps as they happen so that timing can be done.}}
+: {{apitooltip|type=cvar|name=friendInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=frontendMatchingModes_WowLabs|default=1|cat=4|desc=0=All,1=DuoOnly,2=TrioOnly,3=DuoAndTrio}}
+: {{apitooltip|type=cvar|name=locateViewerMaxJobs|default=32|cat=1|desc=Maximum job threads for LocateViewer}}
+: {{apitooltip|type=cvar|name=minimapTrackedInfov2}}
+: {{apitooltip|type=cvar|name=nameplateGameObjectMaxDistance|default=30|scope=Character|cat=1|desc=The max distance to show player nameplates for game objects}}
+: {{apitooltip|type=cvar|name=partyInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=pendingInviteInfoShown_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=RAIDshadowBlendCascades|default=0|cat=1|desc=Blend between shadow cascades (0/1)}}
+: {{apitooltip|type=cvar|name=shadowBlendCascades|default=0|cat=1|desc=Blend between shadow cascades (0/1)}}
+: {{apitooltip|type=cvar|name=WalkableSurfacesValidationLog|default=0}}
+: {{apitooltip|type=cvar|name=worldIntersectMaxJobs|default=32|cat=1|desc=Maximum job threads for culling}}
+: {{apitooltip|type=cvar|name=wowLabsClosedTutorials|scope=Character|cat=4|desc=Bitfield for which help frames have been acknowledged by the user, specifically for WoW Labs}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Structures==
+ Enum.BattlepetDeletedReason
+   + <font color="#00b400">TradingPost</font> = 6
+ Enum.CraftingReagentType
+   # <font color="#ff6767">Optional</font> -> <font color="#00b400">Modifying</font> = 0
+   + <font color="#00b400">Automatic</font> = 3
+ Enum.CurrencySource
+   + <font color="#00b400">AccountHwmUpdate</font> = 61
+ Enum.Cursormode
+   + <font color="#00b400">QuestLegendaryCursor</font> = 28
+   + <font color="#00b400">QuestLegendaryTurninCursor</font> = 29
+   + <font color="#00b400">QuestLegendaryErrorCursor</font> = 61
+   + <font color="#00b400">QuestLegendaryTurninErrorCursor</font> = 62
+ Enum.EditModeAccountSetting
+   # <font color="#ff6767">ShowBuffFrame</font> -> <font color="#00b400">ShowBuffsAndDebuffs</font> = 10
+   # <font color="#ff6767">ShowDebuffFrame</font> -> <font color="#00b400">DeprecatedShowDebuffFrame</font> = 11
+   # <font color="#ff6767">ShowReputationBar</font> -> <font color="#00b400">ShowStatusTrackingBar2</font> = 20
+   + <font color="#00b400">EnableAdvancedOptions</font> = 23
+   + <font color="#00b400">ShowPetFrame</font> = 24
+ Enum.EditModeCastBarSetting
+   + <font color="#00b400">ShowCastTime</font> = 2
+ Enum.EditModeLayoutType
+   + <font color="#00b400">Override</font> = 3
+ Enum.EditModeMicroMenuSetting
+   + <font color="#00b400">EyeSize</font> = 3
+ Enum.EditModeMinimapSetting
+   + <font color="#00b400">Size</font> = 2
+ Enum.EditModeObjectiveTrackerSetting
+   + <font color="#00b400">Opacity</font> = 1
+ Enum.EditModeStatusTrackingBarSystemIndices
+   # <font color="#ff6767">ExperienceBar</font> -> <font color="#00b400">StatusTrackingBar1</font> = 1
+   # <font color="#ff6767">ReputationBar</font> -> <font color="#00b400">StatusTrackingBar2</font> = 2
+ Enum.EditModeUnitFrameSystemIndices
+   + <font color="#00b400">Pet</font> = 8
+ Enum.InventoryType
+   # <font color="#ff6767">IndexEquipablespellMobilityType</font> -> <font color="#00b400">IndexEquipablespellWeaponType</font> = 34
+ Enum.PointsModifierSourceType
+   + <font color="#00b400">CreatureHealthMod</font> = 64
+ Enum.PowerType
+   + <font color="#00b400">AlternateQuest</font> = 23
+   + <font color="#00b400">AlternateEncounter</font> = 24
+   + <font color="#00b400">AlternateMount</font> = 25
+ Enum.TooltipDataLineType
+   + <font color="#00b400">Separator</font> = 30
+ Enum.UIMapFlag
+   + <font color="#00b400">AlwaysAllowTaxiPathing</font> = 0x20000
+ Enum.UIWidgetVisualizationType
+   + <font color="#00b400">WorldLootObject</font> = 26
+   + <font color="#00b400">ItemDisplay</font> = 27
+ Enum.VignetteType
+   + <font color="#00b400">FyrakkFlight</font> = 4
+ Enum.WidgetEnabledState
+   # <font color="#ff6767">Enabled</font> -> <font color="#00b400">Yellow</font> = 1
+   # <font color="#ff6767">Gold</font> -> <font color="#00b400">Artifact</font> = 5
+
+ Constants.TraitConsts
+   + <font color="#00b400">VIEW_TRAIT_CONFIG_ID</font> = -3
+
+ AreaPOIInfo
+   + 13: <font color="#00b400">addPaddingAboveWidgets</font>
+ CharCustomizationChoice
+   + 7: <font color="#00b400">soundKit</font>
+ CraftingReagentSlotSchematic
+   + 9: <font color="#00b400">required</font>
+ GenericWidgetDisplayFrameInfo
+   + 6: <font color="#00b400">extraButtonText</font>
+   + 7: <font color="#00b400">closeButtonText</font>
+ ItemUpgradeCurrencyCost
+   + 3: <font color="#00b400">discountInfo</font>
+ ItemUpgradeItemCost
+   + 3: <font color="#00b400">discountInfo</font>
+ ItemUpgradeItemInfo
+   + 5: <font color="#00b400">highWatermarkSlot</font>
+   + 8: <font color="#00b400">minItemLevel</font>
+   + 9: <font color="#00b400">maxItemLevel</font>
+   + 11: <font color="#00b400">customUpgradeString</font>
+   + 12: <font color="#00b400">upgradeCostTypesForSeason</font>
+ MatchPVPStatColumn
+   + 5: <font color="#00b400">tooltipTitle</font>
+ PVPScoreInfo
+   + 17: <font color="#00b400">postmatchMMR</font>
+ PartyPoseInfo
+   + 8: <font color="#00b400">uiTextureKit</font>
+   + 9: <font color="#00b400">titleText</font>
+ PerksActivitiesInfo
+   + 3: <font color="#00b400">secondsRemaining</font>
+ PerksActivityInfo
+   + 7: <font color="#00b400">supersedes</font>
+   + 8: <font color="#00b400">uiPriority</font>
+ ProfessionInfo
+   + 3: <font color="#00b400">sourceCounter</font>
+ QuestInfo
+   + 23: <font color="#00b400">isLegendarySort</font>
+ StatusBarWidgetVisualizationInfo
+   + 17: <font color="#00b400">textEnabledState</font>
+   + 18: <font color="#00b400">textFontType</font>
+   + 19: <font color="#00b400">textSizeType</font>
+ TaxiNodeInfo
+   + 9: <font color="#00b400">isMapLayerTransition</font>
+ UIWidgetSpellInfo
+   # 5: <font color="#ecbc2a">iconSizeType</font>, Type: SpellDisplayIconSizeType -> WidgetIconSizeType
+ UiMapDetails
+   # 5: <font color="#ecbc2a">flags</font>, Type: number -> UIMapFlag
+ VignetteInfo
+   + 16: <font color="#00b400">addPaddingAboveWidgets</font>
