@@ -1,0 +1,179 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "1.15.8",
+  "source": {
+    "title": "Patch 1.15.8/API changes",
+    "version": "1.15.8",
+    "pageid": 686952,
+    "revid": 6778071,
+    "timestamp": "2026-07-22T05:34:51Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6778071&format=json",
+    "retrieved": "2026-10-09T08:51:36.398359+00:00",
+    "response_sha256": "93295622a450cb5faedb68d6ecf65617d987133d1a22ebe71294bbd74a5a92fc",
+    "wikitext_sha256": "9ba11d7e93a8763efb4c4d430e5d44a2cf8711096970ff8170caf6cf190aaa45",
+    "wikitext_bytes": 279,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.8-wikitext.txt"
+  },
+  "source_toc": 11508,
+  "client_line": "UNPROVEN-unexpanded-apichanges",
+  "literal_clients": [],
+  "literal_navigation": {
+    "patch": "1.15.8",
+    "prev": "1.15.7",
+    "next": "1.15.9"
+  },
+  "client_limit": "No named client in literal page. Classic context appears only in separately attributed queued 1.15.9; do not guess from version/TOC or expand template.",
+  "base_revision": "fcdf1d151371e894aa19d800eeaaf17aa0a3674a",
+  "later_registers": [],
+  "queued_successor": {
+    "patch": "1.15.9",
+    "state": "queued-placeholder-awaiting-main-integration",
+    "audit_context": "Classic Era, Season of Discovery, Hardcore literal wording in successor only",
+    "source_audit_report": "07c93b3b5 / 308aeda25 (read-only sibling docs; not own native proof)",
+    "native_proof": false,
+    "main_gates": "unperformed",
+    "applied": false,
+    "source": {
+      "title": "Patch 1.15.9/API changes",
+      "version": "1.15.9",
+      "pageid": 685352,
+      "revid": 6780591,
+      "timestamp": "2026-07-24T15:29:35Z",
+      "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6780591&format=json",
+      "retrieved": "2026-10-09T08:51:36.398273+00:00",
+      "response_sha256": "2691663c5ffc7efbd0b862a8a94dd8632141c55eb7393f2aca8003d3448e6baf",
+      "wikitext_sha256": "beea5ee3ad4a1a10c031cd02777a3d5bc1b5198e4637c713a088c4c9f94423db",
+      "wikitext_bytes": 4085,
+      "response_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-response.json",
+      "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/1.15.9-wikitext.txt"
+    }
+  },
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  },
+  "source_rows": [
+    {
+      "id": "source-001",
+      "line": 1,
+      "literal": "{{apichanges|1.15.8|prev=1.15.7|next=1.15.9}}",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-003",
+      "line": 3,
+      "literal": "==Resources==",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-004",
+      "line": 4,
+      "literal": "* TOC: <code>11508</code>",
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "id": "source-005",
+      "line": 5,
+      "literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.15.7..1.15.8 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.7...1.15.8 BlizzardInterfaceResources]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    }
+  ],
+  "contracts": [
+    {
+      "id": "linked-diff-005-1",
+      "line": 5,
+      "kind": "unexpanded-linked-diff",
+      "label": "wow-ui-source",
+      "target": "https://github.com/Gethe/wow-ui-source/compare/1.15.7..1.15.8",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+    },
+    {
+      "id": "linked-diff-005-2",
+      "line": 5,
+      "kind": "unexpanded-linked-diff",
+      "label": "BlizzardInterfaceResources",
+      "target": "https://github.com/Ketho/BlizzardInterfaceResources/compare/1.15.7...1.15.8",
+      "status": "UNPROVEN",
+      "arguments": null,
+      "returns": null,
+      "event_payloads": null,
+      "state_transitions": null,
+      "security_rules": null,
+      "native_equivalence": null,
+      "limit": "Unexpanded link; identities, changes, signatures, defaults and behavior unspecified."
+    }
+  ],
+  "headers": [
+    {
+      "line": 3,
+      "literal": "==Resources==",
+      "label": "Resources",
+      "numerical_count": null,
+      "status": "metadata-only"
+    }
+  ],
+  "transclusions": [
+    {
+      "line": 1,
+      "literal": "{{apichanges|1.15.8|prev=1.15.7|next=1.15.9}}",
+      "expansion": "UNPROVEN",
+      "role": "navigation-metadata-only"
+    }
+  ],
+  "api_occurrences": [],
+  "signatures": [],
+  "configured_profiles": [
+    {
+      "variant": "Era",
+      "feature": "client-era",
+      "feature_dependencies": [],
+      "cache_subdir": "era",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "manifest_entries": 3981,
+      "native_correspondence": "UNPROVEN"
+    },
+    {
+      "variant": "Anniversary",
+      "feature": "client-anniversary",
+      "feature_dependencies": [],
+      "cache_subdir": "anniversary",
+      "configured_interface": 11507,
+      "manifest_sha256": "88893b67f75cc61d5a465ece771ca194e79c193305dfae48be484c52b1a9f0cd",
+      "manifest_entries": 3981,
+      "native_correspondence": "UNPROVEN"
+    }
+  ],
+  "preservation": "Raw bytes/all occurrences retained; no normalization, aliases, defaults, shims or link/transclusion expansion.",
+  "totals": {
+    "physical_lines": 5,
+    "nonblank_rows": 4,
+    "metadata_rows": 3,
+    "unproven_rows": 1,
+    "contracts": 2,
+    "headers": 1,
+    "numerical_inventory_headers": 0,
+    "api_occurrences": 0,
+    "event_occurrences": 0,
+    "cvar_occurrences": 0,
+    "widget_method_occurrences": 0,
+    "command_occurrences": 0,
+    "signature_declarations": 0,
+    "prose_contracts": 0,
+    "unexpanded_linked_contracts": 2,
+    "unexpanded_transclusions": 1
+  }
+}

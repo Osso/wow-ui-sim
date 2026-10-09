@@ -1022,3 +1022,7 @@ Ingested [audit](investigations/patch-1-13-4-api-audit.md): literal SOURCE bound
 ## 2026-10-09 — Patch1.13.2 frozen SOURCE implementation
 
 Owned p1132-page/base9252c6cc9; exact frozen115161/6471351, literal2758 inventory,2838raw rows; source RED8 retained. No runtime/model/native claims. [Audit](investigations/patch-1-13-2-api-audit.md); portable replay/current subset pending.
+
+## 2026-10-09 — Patch1.13.2 original seals and separate precedence
+
+SOURCE8/8 ata3cc2a2269, existing bare Era storage1/1 at15d12138f, portable3/3 atc5436865b with89original seals. Actual20same-Era ledger comparison derived581identity overlaps/580source occurrences; no historical/native closures. Targeted successor RED3 retained; GREEN pending. [Audit](investigations/patch-1-13-2-api-audit.md).

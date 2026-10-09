@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/originals.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/target/p1132-portable-green",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/portable-receipts.json",
+    "--cwd",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "c5436865bae50882280fa36ca3e1b1569303a558",
+  "exit_code": 0,
+  "scope": "fresh copied historical SOURCE8/default bytes/exception; both serialized disk tampers reject then exact restoration; no runtime/native credit"
+}

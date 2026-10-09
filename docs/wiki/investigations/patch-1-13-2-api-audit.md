@@ -6,7 +6,7 @@ Bounded audit of immutable legacy-2026-10-09 page115161/revision6471351, timesta
 
 | Boundary | Preserved | Proof level |
 |---|---|---|
-| Raw source |2853physical/2838nonblank rows|SOURCE RED8; GREEN pending|
+| Raw source |2853physical/2838nonblank rows|SOURCE RED8/GREEN8 at a3cc2a2269|
 | Global API |121added/2008removed|Identities only, UNPROVEN|
 | Widgets |4added methods;62removed methods/6removed widget types|Original targets/display labels retained separately|
 | Events |8added/449removed|No payload/production/order credit|
@@ -20,7 +20,7 @@ All5011 inventory/prose/link contracts remain UNPROVEN. Ledger derives totals an
 
 ## Models evaluated before changes
 
-[Owned model review](../../../data/patch-api/evidence/1.13.2-session-2026-10-09/model-review.json) and copied source snapshots separate candidates from evidence. Current generic CVar storage offers a cheap existing mutation/query subset, not historical CVar effects. Cloak/helm real inputs are gated on retail-12-0-0: bare Era name availability would be factory-only, so no Era model credit. Legacy crafting wraps modern recipes, fixed Anvil focus and `craft_is_enchanting=false`, not Enchanting/Beast Training parity.
+[Owned model review](../../../data/patch-api/evidence/1.13.2-session-2026-10-09/model-review.json) and copied source snapshots separate candidates from evidence. Current generic CVar storage GREEN1/1 at15d12138f covers SetCVar/GetCVar/GetCVarBool across six explicit0↔1 transitions of alwaysShowTargetNameplate/instantQuestText, including equality with Rust storage. No factory, historical signature, source default, nameplate/quest effects or native credit. Seven existing non-GUI compiler warnings retained, not suppressed. Cloak/helm real inputs are gated on retail-12-0-0: bare Era name availability would be factory-only, so no Era model credit. Legacy crafting wraps modern recipes, fixed Anvil focus and `craft_is_enchanting=false`, not Enchanting/Beast Training parity.
 
 Current focus resolution remains state-backed. Current cast-success suppression allows nonsecret nonplayer completions; it is not the historical player-only wildcard. No `CastingInfo`/`ChannelInfo` standalone implementation or `SendWho` literal registration found in the owned scan. Combat-log storage is not a50-yard spatial/zero-SpellID model. No cheap new historical behavior has a sourced complete failure/lifecycle/signature contract; no runtime edits or guessed guards/aliases/defaults.
 
@@ -28,11 +28,11 @@ Current focus resolution remains state-backed. Current cast-success suppression 
 
 Literal prose says Classic1.13.2 based on8.1.0, demo1.13.0 based on7.3.5; table captions compare8.1.5(29981)→1.13.2(30406). Keep those separate. TOC11302 is not configured Era/Anniversary11507 or native build correspondence. Combat-log hotfix Build32600/Nov20 2019 is not launch baseline.
 
-Same-Era1.13.3/4/5/6/7 and1.14.0..1.15.9 are integrated inputs, frozen/copied here but unapplied. No successor register or runtime epoch applied by this page. Possible subsequent summon/totem/chat/NPC-health changes do not erase original1.13.2 claims. Main integrates1.13.2 before parallel original Retail1.12.0 audit; execution order does not merge semantics. No Retail/TBC/Wrath/Forever supersession, expanded baseline or foreign/native credit.
+Frozen original queue keeps same-Era1.13.3/4/5/6/7 and1.14.0..1.15.9 as integrated inputs, unapplied in original ledger. Separate [actual successor receipt](../../../data/patch-api/evidence/1.13.2-session-2026-10-09/successor-application.json) compares20 exact copied integrated ledgers:581 literal overlaps affecting580 of2758 original occurrences;2178 have no exact overlap. Later directions are retained, never interpreted as semantic/model/native closure. Overlaps:1.13.3=14,1.13.4=15,1.13.5=5,1.14.0=263,1.14.1=1,1.14.3=283; other pages zero. The1.14.3 receipt uses its actual `original/ledger.json` inventory_rows, not foreign2.5.4 linked contents. Contextual1.15.x names and unexpanded subsets supply no added/removed precedence. Targeted successor3 RED retained; GREEN pending. No runtime epoch applied. Possible subsequent summon/totem/chat/NPC-health changes do not erase original1.13.2 claims. Main integrates1.13.2 before parallel original Retail1.12.0 audit; execution order does not merge semantics. No Retail/TBC/Wrath/Forever supersession, expanded baseline or foreign/native credit.
 
 ## Proof epochs
 
-SOURCE RED8 against missing page-local accounting retained. Implementation commit precedes targeted GREEN. Portable replay, serialized ledger/log rejection/restoration, immutable original seals and separate receipts are pending. No broad/check/lint/readability/coverage/final acceptance, delegation, network, push/merge/deploy or other-checkout changes.
+SOURCE RED8 against missing page-local accounting retained; a corrected inventory fixture line143→144 preceded GREEN8 at a3cc2a2269. Current storage GREEN1 at15d12138f. Original89 seals created once atc5436865b; portable3 RED retained, GREEN3 atc5436865b reruns copied SOURCE8 with empty PATH/no Git/target/current tools, historical default-byte/error replay and both disk ledger/log rejections/exact restorations. Original archive90members/779729bytes. Original logs and epoch ledger remain unchanged; subsequent actual-successor/portable GREEN receipts stay outside original seals, with separate receipt seals. No proof backfilled into originals. No broad/check/lint/readability/coverage/final acceptance, delegation, network, push/merge/deploy or other-checkout changes.
 
 ## Sources
 
