@@ -4,11 +4,11 @@ Account for the frozen Warcraft Wiki page without importing linked APIs or nativ
 
 ## What it must do
 
-- [ ] Validate exact page/revision/returned bytes against frozen manifest and registry.
-- [ ] Preserve every literal row, navigation template, header, TOC, summary and link occurrence; explicitly account for zero local API/event/CVar/widget/command/signature declarations.
-- [ ] Keep unspecified Dragonflight10.2.7/Cataclysm4.4.0 subset references unexpanded; preserve differing Gethe4.4.0 and Ketho1.15.2 comparison bases.
-- [ ] Keep configured11507 separate from source11503 and preserve six same-Era successor boundaries without semantic supersession.
-- [ ] Reject omission, fabricated credit and collapsed comparison bases.
+- [x] Validate exact page/revision/returned bytes against frozen manifest and registry.
+- [x] Preserve every literal row, navigation template, header, TOC, summary and link occurrence; explicitly account for zero local API/event/CVar/widget/command/signature declarations.
+- [x] Keep unspecified Dragonflight10.2.7/Cataclysm4.4.0 subset references unexpanded; preserve differing Gethe4.4.0 and Ketho1.15.2 comparison bases.
+- [x] Keep configured11507 separate from source11503 and preserve six same-Era successor boundaries without semantic supersession.
+- [x] Reject omission, fabricated credit and collapsed comparison bases.
 - [ ] Replay copied historical inputs without Git/target/current tools; reject serialized ledger/log tampering and restore exact originals. Keep original seals immutable, later receipts separate.
 
 ## How it works

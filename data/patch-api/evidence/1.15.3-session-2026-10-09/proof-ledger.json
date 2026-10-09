@@ -1,0 +1,86 @@
+{
+  "scope": "1.15.3 SOURCE only",
+  "runs": [
+    {
+      "phase": "RED",
+      "log": "red.log",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "revision": "35365c846cc8cbedcd31f5b86c8328adc29f578d + own unformatted fixtures/scaffold",
+      "exit_code": 1,
+      "result": "expected assertion failures; missing accounting/seal validation",
+      "invalidated_by": "implementation; retained negative control only"
+    },
+    {
+      "phase": "portable-RED",
+      "log": "portable-red.log",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source/red-archive.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/target/p1153-source",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/portable-red-receipts.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "revision": "35365c846cc8cbedcd31f5b86c8328adc29f578d + own unformatted fixtures/scaffold",
+      "exit_code": 1,
+      "result": "expected assertion failures; missing accounting/seal validation",
+      "invalidated_by": "implementation; retained negative control only"
+    },
+    {
+      "phase": "GREEN",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "revision": "4b957a6cffbdd419c6bb575384e32202730c13dd",
+      "exit_code": 0,
+      "log": "green.log",
+      "flags": null,
+      "invalidated_by": null
+    },
+    {
+      "phase": "capture",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/audit.py",
+        "capture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "revision": "4b957a6cffbdd419c6bb575384e32202730c13dd",
+      "exit_code": 0,
+      "log": "capture.log",
+      "flags": null,
+      "invalidated_by": null
+    },
+    {
+      "phase": "historical-default-generator",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.3",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/source.wikitext",
+        "6114194",
+        "/home/osso/.worktrees/wow-ui-sim-p1153-page/data/patch-api/evidence/1.15.3-session-2026-10-09/default-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1153-page",
+      "revision": "4b957a6cffbdd419c6bb575384e32202730c13dd",
+      "exit_code": 0,
+      "log": "default-generator.log",
+      "flags": [],
+      "invalidated_by": null
+    }
+  ]
+}

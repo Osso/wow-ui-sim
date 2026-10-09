@@ -20,7 +20,7 @@ Own copies of Cargo/client-profile and Era/Anniversary manifests retain configur
 
 ## Development proof
 
-Own SOURCE RED10 expected failures and portable RED3 expected failures retained against empty-accounting scaffold. Implementation committed before targeted GREEN. Original proof seals and later receipts will be recorded separately. Completed read-only1.15.5 sibling supplies structure only; no evidence/results copied from it. Shared tools unchanged; own historical generator copied from this branch with default flags. No broad/check/lint/type/final gates.
+Own SOURCE RED10 expected failures and portable RED3 expected failures retained against empty-accounting scaffold. Implementation committed before targeted GREEN. SOURCE GREEN10/10 at `4b957a6cf`; historical default generator flags `[]` produces an empty register (not linked-content/API proof). Original 50 seals / 736246 bytes, map SHA256 `9b1bbd99e9d8ca2625b3d8b7cf60fbf418f1d9f8a297c05afcb11bdb03e83111` created once. Exact commands/revisions/results in own proof-ledger.json; later portable receipts remain separate. Extractor copied unexecuted; no shared-tool/all-flags proof. Completed read-only1.15.5 sibling supplies structure only; no evidence/results copied from it. Shared tools unchanged; own historical generator copied from this branch with default flags. No broad/check/lint/type/final gates.
 
 ## Sources
 

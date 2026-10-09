@@ -1,0 +1,15 @@
+test_collapsed_compare_base_rejected (__main__.SourceAccounting.test_collapsed_compare_base_rejected) ... ok
+test_comparison_bases_remain_distinct (__main__.SourceAccounting.test_comparison_bases_remain_distinct) ... ok
+test_configured_and_successors_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_successors_not_native_or_supersession) ... ok
+test_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok
+test_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok
+test_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok
+test_headers_and_unexpanded_template (__main__.SourceAccounting.test_headers_and_unexpanded_template) ... ok
+test_literal_toc_navigation_and_client_context (__main__.SourceAccounting.test_literal_toc_navigation_and_client_context) ... ok
+test_omissions_and_fabricated_credit_rejected (__main__.SourceAccounting.test_omissions_and_fabricated_credit_rejected) ... ok
+test_subset_summary_and_internal_links_not_backfilled (__main__.SourceAccounting.test_subset_summary_and_internal_links_not_backfilled) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.080s
+
+OK
