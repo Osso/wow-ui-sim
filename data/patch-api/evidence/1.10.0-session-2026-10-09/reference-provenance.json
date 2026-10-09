@@ -1,0 +1,19 @@
+{
+  "frozen_queue": "1.10.1 active sibling at task start, separately retained and unapplied; frozen ledger unchanged",
+  "template": {
+    "version": "1.10.2",
+    "source_head": "d026c9e6a",
+    "merged_base": "f8da74e31",
+    "scope": "methodology only; no imported contracts/receipts"
+  },
+  "target": {
+    "literal": "API change summaries/Historical",
+    "expanded": false,
+    "missing": "pinned revision/content and patch-specific historical delta"
+  },
+  "subsequent_main_message": {
+    "integrated_1101_revision": "3d1a41407",
+    "worktree_removed": true,
+    "effect": "later read-only context only; no frozen queue rewrite, native/model closure or applied successor credit"
+  }
+}
