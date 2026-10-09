@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p501-page/tools/test_patch_5_1_register.py"
+  ],
+  "revision": "f86fe61ebef0c9cbcff753ae83ef607656e736da",
+  "identities": {
+    "src": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+    "tests": "05d874bbace15fcb11cb8a9a978f5b547e1b411a",
+    "tools": "d9207917bcd0f6de544e87829eed6d57ffdf1bfa",
+    "Cargo.toml": "ad3ade576a4d4f822a8a56b9aeee919a4b3e468d",
+    "Cargo.lock": "715e005a0b34809d12002530ae2ed689fcd070c7",
+    "build.rs": "af69ee82c00f65702dd691a97bd6b47d5ba39148",
+    "data/patch-api/sources": "0be7b481e7d3e3f2326255d83705dfef09ae9791"
+  },
+  "exit": 0,
+  "log": "p501-test_patch_5_1_register.log",
+  "log_sha256": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0"
+}
