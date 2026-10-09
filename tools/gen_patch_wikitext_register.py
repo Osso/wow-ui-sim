@@ -986,6 +986,63 @@ def normalize_mists_code_removals(text):
                   r': {{api|\1}}', text, flags=re.M)
 
 
+def parse_legacy_labeled_summaries(text):
+    """Retain labeled 2009 summaries and every reference in general-change prose."""
+    entries = []
+    heading = ''
+    for line_no, line in enumerate(text.splitlines(), 1):
+        if line.startswith('=='):
+            heading = line.strip('= ')
+            continue
+        if not line.startswith('*'):
+            continue
+        label = re.match(r'^\*\s*(NEW|REMOVED)\s*-\s*(.*)', line)
+        references = list(TEMPLATE.finditer(line))
+        if label:
+            direction = 'added' if label[1] == 'NEW' else 'removed'
+            body = label[2]
+            candidates = [(m.group(0), m) for m in references]
+            if not candidates:
+                bare = re.match(r'(?:\[\[)?([A-Za-z_][A-Za-z0-9_:]*)', body)
+                if not bare:
+                    continue
+                candidates = [(bare[1], None)]
+        elif heading == 'General changes' or 'CVars' in line:
+            direction = 'changed'
+            candidates = [(m.group(0), m) for m in references]
+        else:
+            continue
+        for candidate, reference in candidates:
+            params = {}
+            if reference:
+                parts = reference[2].split('|')
+                params = dict(p.split('=', 1) for p in parts if '=' in p)
+                positional = [p for p in parts if '=' not in p]
+                literal = positional[0]
+                symbol = re.sub(r'\(.*', '', positional[-1]).strip()
+            else:
+                symbol = candidate
+                literal = body.split(' - ', 1)[0].strip().strip('[]')
+            section = ('cvars' if params.get('t') == 'c' else
+                       'scriptobjects' if heading == 'Secure Handlers' else
+                       'widgets' if params.get('t') == 'w' else 'global-api')
+            entry = {'id': f'wt-{section}-{symbol}-{line_no}', 'section': section,
+                     'direction': direction, 'symbol': symbol, 'annotation': line,
+                     'wikitext_line': line_no}
+            if '(' in literal:
+                entry['signature'] = literal
+            if label and reference:
+                prefix = line[label.start(2):reference.start()].strip()
+                if prefix.endswith('='):
+                    entry['returns'] = prefix[:-1].strip()
+            if heading == 'Secure Handlers':
+                entry['kind'] = ('secure-handle' if symbol.startswith('FrameHandle:') else
+                                 'secure-control' if symbol.startswith('Control:') or
+                                 symbol == 'SetUpAnimation' else 'template')
+            entries.append(entry)
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -1048,6 +1105,8 @@ def main():
     parser.add_argument('--warlords-prepatch', action='store_true',
                         help='Retain compact Warlords summary references and canonical widget owners; opt-in')
     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
+    parser.add_argument('--legacy-labeled-summaries', action='store_true',
+                        help='Retain 2009 NEW/REMOVED summaries, secure handles and general prose; opt-in')
     parser.add_argument('--legacy-section-lists', action='store_true',
                         help='Retain 2010 sectioned API/event lists and literal signatures; opt-in')
     parser.add_argument('--combat-restriction-bullets', action='store_true',
@@ -1139,6 +1198,8 @@ def main():
         diff_entries, diff_counts = parse_warlords_diff(Path(args.warlords_diff).read_text())
         entries.extend(diff_entries)
         counts.extend(diff_counts)
+    if args.legacy_labeled_summaries:
+        entries, counts = parse_legacy_labeled_summaries(raw.decode('utf-8')), []
     if args.legacy_section_lists:
         entries.extend(parse_legacy_section_lists(raw.decode('utf-8')))
     if args.combat_restriction_bullets:

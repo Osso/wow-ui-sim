@@ -1,0 +1,16 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_3_0_8_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p308-source",
+      "exit": 1,
+      "revision": "ec600ac7da0a9d44c2dcc43e489c83af0763d74c",
+      "scope": "new source test, missing opt-in parser",
+      "artifact": "source-red.log"
+    }
+  ]
+}
