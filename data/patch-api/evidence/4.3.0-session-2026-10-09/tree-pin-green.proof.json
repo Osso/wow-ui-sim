@@ -1,0 +1,21 @@
+{
+  "schema": "bounded-patch-development-proof/v1",
+  "revision": "e06de50ae51b0626a895806f863b685f047a9525",
+  "tree": "ef52051ca8a9f94c8b166ca61194a91f24b9975e",
+  "command": [
+    "python3",
+    "tools/test_patch_4_3_0_accounting.py",
+    "AccountingTests.test_historical_tree_pins_replay_without_git_objects",
+    "AccountingTests.test_historical_tree_entry_tampering_is_rejected"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p430-source",
+  "exit_code": 0,
+  "scope": "two added historical identity fixtures; eight earlier accounting/source/seal fixtures remain valid for unchanged function bodies",
+  "log": "tree-pin-green.log",
+  "log_sha256": "a2a1000090a88e3c6c51339b074973c71cdb4c529ece549003f250f36a5be662",
+  "inputs": {
+    "tools/test_patch_4_3_0_accounting.py": "26331840bf116c4028c641709686d93ccae000368bbfeb43becb81e10248d041",
+    "data/patch-api/evidence/4.3.0-session-2026-10-09/validate.py": "b90115b3c78f946aa2a8ea620e9334ebf782829b4715b126c8c6edb4e024b544",
+    "data/patch-api/evidence/4.3.0-session-2026-10-09/historical-tree-pins.json": "849d74582f2a67f5e75dbee17b9727587e929032c952ec121775ef40f716d067"
+  }
+}

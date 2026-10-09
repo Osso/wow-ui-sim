@@ -13,4 +13,6 @@ Only owned-worktree targeted development tests and formatting. Coordinator owns 
 | `python3 tools/test_patch_4_3_0_accounting.py` | eff4fbe2e; accounting-green.proof.json | GREEN, 8/8; dynamic counts/resolution, missing row, duplicate ID, native-credit rejection, source reproduction, log tamper | Later pin-only addition does not alter these functions |
 | Historical tree-entry tamper fixture | eff4fbe2e + uncommitted tree-pin stub/test; tree-pin-red.log | Expected RED: altered tree identity not rejected by stub | Stub replaced in next coherent commit |
 
+| Two added tree-pin fixtures | e06de50ae51b0626a895806f863b685f047a9525; tree-pin-green.proof.json | GREEN, 2/2; pure tree hash replay and altered-entry rejection | No later validator/test edits |
+
 Original Cargo build emitted six existing `iced-wgpu-patched` manifest deprecation warnings and its summary. No warning suppression or vendor edits. No claim of check/lint/type/readability/coverage, broad publication/full suite, startup smoke, native behavior, CI-green, or final validation gate.

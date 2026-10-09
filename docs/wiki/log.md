@@ -628,3 +628,7 @@ Pinned source retained; default generator handles 83 identities, both headers ma
 ## 2026-10-09 — Patch 4.3.0 bounded discovery
 
 [[patch-4-3-0-api-audit]]: own sweep 1/1 at df53a1b9e; 58/83 observations satisfy publication/absence, 25 precise gaps retained. Seven removals already absent; full cached-retail/src/tests scans saved. No runtime changes or final gate.
+
+## 2026-10-09 — Patch 4.3.0 bounded handoff
+
+[[patch-4-3-0-api-audit]]: focused accounting/source/seal fixtures 8/8 and added tree identity fixtures 2/2. Publication negative 25 → 26 rejected. Compact root-identity manifests retained below 5 MB per artifact. No final gate; queued 4.3.4 replacement and acceptance remain coordinator-owned.
