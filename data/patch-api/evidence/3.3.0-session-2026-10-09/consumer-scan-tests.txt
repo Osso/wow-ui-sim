@@ -1,0 +1,32 @@
+tests/patch_12_1_0_framexml_migrations.rs:24:        assert_eq!(env.eval::<bool>("return InputUtil.IsMouseOver(AuditMouse)").unwrap(), expected);
+tests/patch_12_1_0_framexml_migrations.rs:28:        assert(select('#', InputUtil.IsMouseOver(AuditMouse, 3, 0, 0, 0)) == 1)
+tests/patch_12_1_0_framexml_migrations.rs:29:        assert(InputUtil.IsMouseOver(AuditMouse, 3, 0, 0, 0))
+tests/patch_12_1_0_framexml_migrations.rs:30:        assert(not InputUtil.IsMouseOver(AuditMouse, 0, 3, 0, 0))
+tests/patch_12_1_0_framexml_migrations.rs:32:        assert(not InputUtil.IsMouseOver(AuditMouse, 3, 0, 0, 0))
+tests/blizzard_quick_join_loads.rs:382:             hidden=true (or motionScriptsWhileDisabled=true for the toast)"
+tests/blizzard_housing_bulletin_board_loads.rs:608:             NeighborhoodRosterEntryTemplate (Button registerForClicks=RightButtonUp, \
+tests/blizzard_maw_buffs_loads.rs:442:             MawBuffTemplate (Button, mixin=MawBuffMixin, motionScriptsWhileDisabled=true, \
+tests/blizzard_matchmaking_queue_display_loads.rs:435:             motionScriptsWhileDisabled=true, enableMouse=true); QueueReadyButtonTemplate \
+tests/blizzard_debug_tools_loads.rs:356:                and type(TextureInfoGeneratorMixin.SetCheckIsMouseOverRegion) == 'function' \
+tests/blizzard_debug_tools_loads.rs:357:                and type(TextureInfoGeneratorMixin.ShouldCheckIsMouseOverRegion) == 'function' \
+tests/blizzard_debug_tools_loads.rs:365:         SetCurrentTextureAssets / GetCurrentTextureAssets / SetCheckIsMouseOverRegion / \
+tests/blizzard_debug_tools_loads.rs:366:         ShouldCheckIsMouseOverRegion / ShouldGenerateRegionInfo) — mixed into FrameStackTooltip \
+tests/blizzard_menu_loads.rs:618:             motionScriptsWhileDisabled=true)); Mainline/MenuTemplates.xml declares 3 \
+tests/c_action_bar_state_globals.rs:126:                    .. "[vehicleui] " .. C_ActionBar.GetVehicleBarIndex() .. "; "
+tests/c_action_bar_state_globals.rs:133:            "[overridebar] 14; [vehicleui] 12; [shapeshift] 10; "
+tests/methods_button.rs:520:        local btn = CreateFrame("Button", "TestMotionScriptsWhileDisabled", UIParent)
+tests/methods_button.rs:521:        __motion_default = btn:GetMotionScriptsWhileDisabled()
+tests/methods_button.rs:522:        btn:SetMotionScriptsWhileDisabled(true)
+tests/methods_button.rs:523:        __motion_enabled = btn:GetMotionScriptsWhileDisabled()
+tests/methods_button.rs:524:        btn:SetMotionScriptsWhileDisabled(false)
+tests/methods_button.rs:525:        __motion_disabled = btn:GetMotionScriptsWhileDisabled()
+tests/methods_button.rs:540:        "SetMotionScriptsWhileDisabled(true) should persist true"
+tests/methods_button.rs:544:        "SetMotionScriptsWhileDisabled(false) should clear the flag"
+tests/game_menu.rs:258:                        if not btn:IsMouseOver() then
+tests/scroll_widgets.rs:225:            "return MouseQueryContent:IsMouseOver(), MouseQueryDescendant:IsMouseOver(), \
+tests/scroll_widgets.rs:226:             MouseQueryChrome:IsMouseOver(), MouseQueryViewport:IsMouseOver()",
+tests/scroll_widgets.rs:242:        .eval("return MouseQueryContent:IsMouseOver(), MouseQueryContent:IsMouseOver(0, 3, 0, 0)")
+tests/scroll_widgets.rs:290:        env.eval::<bool>("return ScaledMouseContent:IsMouseOver()")
+tests/blizzard_ui_panel_templates_loads.rs:299:             ButtonWithDisable (motionScriptsWhileDisabled tooltip \
+tests/blizzard_ui/blizzard_achievementui/behavior_expand_collapse.rs:64://!     if (not self:IsMouseOver()) then self.Highlight:Hide() end
+tests/blizzard_ui/blizzard_achievementui/behavior_expand_collapse.rs:202:        row.IsMouseOver = function(self) return false end

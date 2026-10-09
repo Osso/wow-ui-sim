@@ -290,6 +290,34 @@ def parse_cataclysm_change_bullets(text):
     return entries
 
 
+def parse_wrath_retail_summary(text):
+    """Retain literal bare-call, method and event identities in 2009 summaries."""
+    entries = []
+    for number, line in enumerate(text.splitlines(), 1):
+        if not line.startswith('* '):
+            continue
+        symbols = []
+        if line.startswith('* NEW - '):
+            call = re.search(r'\b((?:region|Button|Texture):)?([A-Za-z_]\w*)\(', line)
+            if not call:
+                raise ValueError(f'NEW bullet lacks an API call: {line}')
+            owner, name = call.groups()
+            symbol = ('Region:' if owner == 'region:' else owner or '') + name
+            symbols.append(('widgets' if owner else 'global-api', symbol, 'added'))
+            symbols.extend(('events', event, 'added') for event in
+                           re.findall(r'\b([A-Z][A-Z_]+) event\b', line))
+            replacement = re.search(r'replaces the ([A-Za-z_]\w*) FrameXML', line)
+            if replacement:
+                symbols.append(('framexml', replacement[1], 'changed'))
+        elif 'deprecated GetFrameType method has been completely removed' in line:
+            symbols = [('widgets', 'Frame:GetFrameType', 'removed'),
+                       ('widgets', 'Frame:GetObjectType', 'changed')]
+        for section, symbol, direction in symbols:
+            entry = make_entry(section, direction, number, '{{api|' + symbol + '}}')
+            entries.append(dict(entry, annotation=line))
+    return entries
+
+
 def parse_legacy_api_bullets(text):
     """Retain New/Removals API bullets and unqualified event additions (8.1.5)."""
     entries = []
@@ -961,6 +989,8 @@ def main():
                         help='Retain bare Mists owner/handler removals; opt-in')
     parser.add_argument('--mists-code-removals', action='store_true',
                         help='Normalize 2012 code-wrapped removals in the pinned diff; opt-in')
+    parser.add_argument('--wrath-retail-summary', action='store_true',
+                        help='Retain 2009 bare-call/method/event summary identities; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -989,6 +1019,8 @@ def main():
         entries.extend(parse_historical_api_headings(raw.decode('utf-8')))
     if args.cataclysm_change_bullets:
         entries.extend(parse_cataclysm_change_bullets(raw.decode('utf-8')))
+    if args.wrath_retail_summary:
+        entries.extend(parse_wrath_retail_summary(raw.decode('utf-8')))
     if args.legacy_api_bullets:
         entries.extend(parse_legacy_api_bullets(raw.decode('utf-8')))
     if args.legacy_api_renames:

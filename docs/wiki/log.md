@@ -754,3 +754,7 @@ Added [[patch-4-0-1-api-audit]]: exact supplied source, opt-in labeled inventori
 
 [Audit](investigations/patch-3-3-5-api-audit.md): local source identity/hashes validated; opt-in list parser, 124 inventory, 69 signatures and 130 extract rows retained. No Classic supersession, runtime changes or native parity credit. Accounting now includes the return-only BNFeaturesEnabled fragment: 324 IDs, 80 matches/44 publication gaps, one inspect-throttle semantic gap and 70 signature limits. Full removed-name scans show no consumers; zero model/retirement changes. Own GREEN 1/1, parser 1/1 and existing chat session test 1/1; negative exits 1 with 44 → 45 gaps. Portable replay GREEN 1/1 at 6c5c8fcf9 passes external relocation without Git/target, synthetic future current closures and source/log/ledger/gap/bundle tamper/restoration. Original archived ledger/gaps/receipts are immutable; later replay proof remains separate. No broad/final gates.
 
+
+## [2026-10-09] source audit | Retail Patch 3.3.0
+
+[Audit](investigations/patch-3-3-0-api-audit.md): frozen 522376/6055853 identity and hashes match. Eleven literal identities, full summary extraction with opt-in inline XML/attribution. Development accounting pending; Classic history excluded.

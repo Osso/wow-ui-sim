@@ -130,17 +130,32 @@ def render_mists_source_markup(raw):
                   r'[External link: \1; \2; \3]', raw)
 
 
+def render_wrath_summary_markup(raw):
+    """Keep summary attribution and literal inline XML without changing older extracts."""
+    def navigation(match):
+        parts = match[1].split('|')
+        patch = next(part for part in parts if '=' not in part)
+        misc = next((part[5:] for part in parts if part.startswith('misc=')), '')
+        return f'Patch {patch} API changes\nSource attribution: {misc}'
+    raw = re.sub(r'\{\{apichanges\|([^{}]+)\}\}', navigation, raw)
+    return re.sub(r'<Button\s+[^>]+>',
+                  lambda match: '`' + html.escape(match[0], quote=False) + '`', raw)
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
                  legacy_api_bullets=False, legacy_cvar_tables=False,
                  bfa_prepatch=False, legion_prepatch=False,
                  retain_patch_diff_reference=False, canonical_patch_navigation=False,
                  mists_automated_diff=False, lowercase_reflist=False,
-                 mists_source_markup=False, cataclysm_labeled_inventory=False):
+                 mists_source_markup=False, cataclysm_labeled_inventory=False,
+                 wrath_summary_markup=False):
     if cataclysm_labeled_inventory:
         raw = '\n'.join(line for line in raw.splitlines()
                         if not re.fullmatch(r': (NEW|REMOVED) \{\{api\|[^{}]+\}\}', line)) + '\n'
         raw = canonicalize_patch_navigation(raw)
+    if wrath_summary_markup:
+        raw = render_wrath_summary_markup(raw)
     if mists_source_markup:
         raw = render_mists_source_markup(raw)
     if lowercase_reflist:
@@ -384,6 +399,8 @@ def main():
                         help='Strip explicit NEW/REMOVED rows, retain breaking prose/build context; opt-in')
     parser.add_argument('--mists-source-markup', action='store_true',
                         help='Retain Mists external-link fields and omit noinclude wrappers; opt-in')
+    parser.add_argument('--wrath-summary-markup', action='store_true',
+                        help='Keep 2009 summary attribution and inline Button XML; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -406,7 +423,8 @@ def main():
                         mists_automated_diff=args.mists_automated_diff,
                         lowercase_reflist=args.lowercase_reflist,
                         mists_source_markup=args.mists_source_markup,
-                        cataclysm_labeled_inventory=args.cataclysm_labeled_inventory)
+                        cataclysm_labeled_inventory=args.cataclysm_labeled_inventory,
+                        wrath_summary_markup=args.wrath_summary_markup)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

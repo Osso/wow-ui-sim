@@ -1,0 +1,24 @@
+src/iced_app/mouse_hover_tests.rs:256:            "return __disabled_motion_enter, __disabled_motion_leave, DisabledMotionButton:GetMotionScriptsWhileDisabled()",
+src/iced_app/mouse_hover_tests.rs:276:            DisabledMotionButton:SetMotionScriptsWhileDisabled(true)
+src/iced_app/mouse_hover_tests.rs:292:            "return __disabled_motion_enter, __disabled_motion_leave, DisabledMotionButton:GetMotionScriptsWhileDisabled()",
+src/iced_app/mouse_hover_tests.rs:305:        "GetMotionScriptsWhileDisabled should reflect the opt-in flag"
+src/loader/tests/runtime_template_xml.rs:435:            <CheckButton name="ChatConfigBaseCheckButtonTemplate" motionScriptsWhileDisabled="true" virtual="true">
+src/loader/tests/mod.rs:547:        assert(left and bottom and width and height, "GetRect should resolve layout before IsMouseOver")
+src/loader/tests/mod.rs:553:        "return MouseOverFrame:IsMouseOver()",
+src/loader/tests/mod.rs:558:    let without_offsets: bool = t.env.eval("return MouseOverFrame:IsMouseOver()").unwrap();
+src/loader/tests/mod.rs:562:        "return MouseOverFrame:IsMouseOver(10, 0, 0, 0)",
+src/loader/tests/mod.rs:581:        .eval("return MouseOverUnknownMouseFrame:IsMouseOver()")
+src/loader/tests/mod.rs:585:        "IsMouseOver should be false when no mouse position is available",
+src/loader/tests/mod.rs:605:        .eval("return MouseOverDisabledFrame:IsMouseOver()")
+src/loader/tests/mod.rs:609:        "IsMouseOver should be false when mouse is not enabled on the frame",
+src/loader/tests/mod.rs:616:        "return MouseOverDisabledFrame:IsMouseOver()",
+src/loader/tests/mod.rs:617:        "enabling mouse should allow IsMouseOver to return true inside the frame",
+src/loader/tests/mod.rs:641:        .eval("return MouseOverCleanLayoutFrame:IsMouseOver()")
+src/lua_api/globals/admin_zone_economy.rs:71:/// the simulated cursor. Drives `GetCursorPosition()` and `Region:IsMouseOver`.
+src/lua_api/frame/methods/core_state/mod.rs:150:    table_set_rust_fn_static(state, mt, "IsMouseOver", is_mouse_over)?;
+src/lua_api/frame/methods/core_state/region.rs:2://! IsMouseOver, StopAnimating, GetSourceLocation, Intersects,
+src/lua_api/frame/methods/text_attribute_event/mod.rs:518:        "SetMotionScriptsWhileDisabled",
+src/lua_api/frame/methods/text_attribute_event/mod.rs:524:        "GetMotionScriptsWhileDisabled",
+src/iced_app/mouse_tests/forbidden_aspects.rs:175:            assert(AspectMouseFrame:IsMouseOver(), 'unannotated geometry query stays available')
+src/iced_app/mouse_tests/forbidden_aspects.rs:187:            assert(not AspectMouseFrame:IsMouseOver())
+src/iced_app/mouse_tests/forbidden_aspects.rs:199:            assert(AspectMouseFrame:IsMouseOver())
