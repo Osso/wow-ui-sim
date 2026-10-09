@@ -9,10 +9,11 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 prefork_full_ui_case! {
 fn patch_4_2_0_publication_sweep(env: &WowLuaEnv) {
     let register = include_str!("../data/patch-api/sources/4.2.0-wikitext-register.json");
+    let rows: serde_json::Value = serde_json::from_str(register).expect("4.2.0 register");
     sweep::run_publication_sweep(env, &sweep::SweepSpec {
         register,
         known_gaps: include_str!("data/patch_4_2_0_sweep_known_gaps.json"),
-        row_count: 0,
+        row_count: rows["entries"].as_array().expect("inventory rows").len(),
         register_env: "P420_SWEEP_REGISTER",
         out_env: "P420_SWEEP_OUT",
         later_registers: &[
