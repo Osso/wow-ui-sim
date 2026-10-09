@@ -1,0 +1,95 @@
+test_configuration_cannot_prove_native_or_unsupported_api (__main__.SourceAccounting.test_configuration_cannot_prove_native_or_unsupported_api) ... FAIL
+test_every_nonblank_literal_row_required (__main__.SourceAccounting.test_every_nonblank_literal_row_required) ... FAIL
+test_exact_literal_accounting (__main__.SourceAccounting.test_exact_literal_accounting) ... FAIL
+test_history_and_pending_successors_are_not_supersession (__main__.SourceAccounting.test_history_and_pending_successors_are_not_supersession) ... FAIL
+test_inventory_and_all_headers_reconciled (__main__.SourceAccounting.test_inventory_and_all_headers_reconciled) ... FAIL
+test_literal_status_credit_and_notes_are_exact (__main__.SourceAccounting.test_literal_status_credit_and_notes_are_exact) ... FAIL
+test_plaintext_is_historical_and_linked_content_unexpanded (__main__.SourceAccounting.test_plaintext_is_historical_and_linked_content_unexpanded) ... FAIL
+test_precise_contract_fields_cannot_be_invented (__main__.SourceAccounting.test_precise_contract_fields_cannot_be_invented) ... FAIL
+test_response_identity_and_source_hash (__main__.SourceAccounting.test_response_identity_and_source_hash) ... FAIL
+
+======================================================================
+FAIL: test_configuration_cannot_prove_native_or_unsupported_api (__main__.SourceAccounting.test_configuration_cannot_prove_native_or_unsupported_api)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_every_nonblank_literal_row_required (__main__.SourceAccounting.test_every_nonblank_literal_row_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_exact_literal_accounting (__main__.SourceAccounting.test_exact_literal_accounting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_history_and_pending_successors_are_not_supersession (__main__.SourceAccounting.test_history_and_pending_successors_are_not_supersession)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_inventory_and_all_headers_reconciled (__main__.SourceAccounting.test_inventory_and_all_headers_reconciled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_literal_status_credit_and_notes_are_exact (__main__.SourceAccounting.test_literal_status_credit_and_notes_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_plaintext_is_historical_and_linked_content_unexpanded (__main__.SourceAccounting.test_plaintext_is_historical_and_linked_content_unexpanded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_precise_contract_fields_cannot_be_invented (__main__.SourceAccounting.test_precise_contract_fields_cannot_be_invented)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+======================================================================
+FAIL: test_response_identity_and_source_hash (__main__.SourceAccounting.test_response_identity_and_source_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py", line 14, in setUp
+    self.assertTrue(ledger_path.exists(), 'missing 2.5.1 literal source ledger')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : missing 2.5.1 literal source ledger
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+FAILED (failures=9)

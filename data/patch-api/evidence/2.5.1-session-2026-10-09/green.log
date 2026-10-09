@@ -1,0 +1,14 @@
+test_configuration_cannot_prove_native_or_unsupported_api (__main__.SourceAccounting.test_configuration_cannot_prove_native_or_unsupported_api) ... ok
+test_every_nonblank_literal_row_required (__main__.SourceAccounting.test_every_nonblank_literal_row_required) ... ok
+test_exact_literal_accounting (__main__.SourceAccounting.test_exact_literal_accounting) ... ok
+test_history_and_pending_successors_are_not_supersession (__main__.SourceAccounting.test_history_and_pending_successors_are_not_supersession) ... ok
+test_inventory_and_all_headers_reconciled (__main__.SourceAccounting.test_inventory_and_all_headers_reconciled) ... ok
+test_literal_status_credit_and_notes_are_exact (__main__.SourceAccounting.test_literal_status_credit_and_notes_are_exact) ... ok
+test_plaintext_is_historical_and_linked_content_unexpanded (__main__.SourceAccounting.test_plaintext_is_historical_and_linked_content_unexpanded) ... ok
+test_precise_contract_fields_cannot_be_invented (__main__.SourceAccounting.test_precise_contract_fields_cannot_be_invented) ... ok
+test_response_identity_and_source_hash (__main__.SourceAccounting.test_response_identity_and_source_hash) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.046s
+
+OK

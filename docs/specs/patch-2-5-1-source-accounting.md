@@ -4,10 +4,10 @@ Account for frozen page 71215/revision 701879 (`2022-02-06T21:22:09Z`), separate
 
 ## What it must do
 
-- [ ] Validate frozen identity, response/content hashes and full registry through 1.0.0 before source accounting.
-- [ ] Preserve every nonblank literal row, API occurrence, script, command, header and linked summary; retain unspecified signatures/state/security/native contracts as UNPROVEN.
-- [ ] Separate literal TOC 20501 and navigation from configured profile interfaces; Anniversary 11507 is not presumed TBC 205xx. Profile absence is not an unsupported-API diagnosis.
-- [ ] Keep 2.5.2–2.5.6 as pending same-history main-integration references only; no foreign-history supersession or empty-inventory parity credit.
+- [x] Validate frozen identity, response/content hashes and full registry through 1.0.0 before source accounting.
+- [x] Preserve every nonblank literal row, API occurrence, script, command, header and linked summary; retain unspecified signatures/state/security/native contracts as UNPROVEN.
+- [x] Separate literal TOC 20501 and navigation from configured profile interfaces; Anniversary 11507 is not presumed TBC 205xx. Profile absence is not an unsupported-API diagnosis.
+- [x] Keep 2.5.2–2.5.6 as pending same-history main-integration references only; no foreign-history supersession or empty-inventory parity credit.
 - [ ] Replay sealed original source/config/tool/ledger/log bytes in a fresh copied process without Git, target, current runtime or current mutable tools; reject serialized ledger/log tampering and restore exact bytes.
 
 ## How it works

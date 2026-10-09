@@ -1,0 +1,29 @@
+{
+  "scope": "SOURCE contracts only; no runtime/native/final acceptance",
+  "proofs": [
+    {
+      "revision": "08a957127bd15821dfb3c661ea44ae79324f0585",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p251-source",
+      "exit": 1,
+      "scope": "missing owned literal SOURCE ledger; nine assertion failures expected; no runtime measurement"
+    },
+    {
+      "revision": "985fd2c9502463288324a3fc5d6c4c53e0ddde3f",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p251-source/data/patch-api/evidence/2.5.1-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p251-source",
+      "exit": 0,
+      "log": "green.log",
+      "scope": "nine owned literal/source mutation fixtures; configured snapshot comparison only",
+      "later_changes_invalidate": "any change to sealed source, ledger, validator, historical tools, tests or configuration snapshots"
+    }
+  ]
+}

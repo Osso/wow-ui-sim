@@ -56,7 +56,7 @@ Main owns integration, actual successor evaluation and any later native matching
 
 ## SOURCE proof ledger
 
-[Original proof receipts](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/source-proof.json) record exact revision, argv, scope and logs. Initial tests committed at `08a957127`: nine SOURCE assertions RED because owned literal ledger absent. Implementation GREEN and serialized replay pending; no completion credit yet.
+[Original proof receipts](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/source-proof.json) record exact revision, argv, scope and logs. Initial tests committed at `08a957127`: nine SOURCE assertions RED because owned literal ledger absent. At `985fd2c95`, owned SOURCE fixtures GREEN 9/9, including all 627 single-row omission controls. Serialized replay pending; no native/final acceptance credit.
 
 Historical replay must retain source/config/tool/ledger/log seals; fresh copied process has no Git, target, current runtime/current tools dependency. Ledger and log disk tampering must each reject at the exact seal and restore original bytes. Seals are integrity assertions against the committed map, not external cryptographic authenticity or native correctness.
 
