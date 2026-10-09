@@ -1,0 +1,22 @@
+{
+  "base_revision": "1174d7a8c9adb3a9933729fc256f3cc3614215f8",
+  "scope": "own SOURCE fixtures only; no native/model/final acceptance",
+  "red": {
+    "command": "python3 -B data/patch-api/evidence/1.15.9-session-2026-10-09/test_source_accounting.py",
+    "exit": 1,
+    "failures": 8,
+    "stub": "def build(): return {}"
+  },
+  "green": {
+    "same_command": true,
+    "exit": 0,
+    "tests": 8,
+    "log": "green.log"
+  },
+  "format": "python3 -B -c using ast.unparse(ast.parse(...)); no external formatter installed",
+  "code_hashes": {
+    "audit.py": "ad552f9725599f3a4bbd6188b854dd3906d372faa4b2c1a2ef7cc876234c0238",
+    "test_source_accounting.py": "7089775ad9d343832dcb61eb8a9f308260d5312569ab6747b42e521604842647"
+  },
+  "invalidated": false
+}

@@ -4,6 +4,9 @@
 ## [2026-10-09] investigation | Forever Patch 1.60.1 literal SOURCE accounting
 
 [Audit](investigations/patch-1-60-1-api-audit.md): frozen 707613/6902509; source Forever/Camelot16001, configured `client-wowforever`16001/build69977 distinct from source70205. 1,876 inventory, 2,070 nonblank rows, 1,712 signatures, 211 prose limits, 32 headers/two literal count conflicts and 15 unexpanded reference boundaries. SOURCE RED retained, GREEN 8/8 at `88ce70325`: 5,916 omission controls, fresh copied no-Git/target/current-tools replay, ledger/log tamper rejection and exact restoration. Original 19 seals unchanged; eight separate current receipt seals. UnitName state probe retained but unexecuted (isolated CoW snapshot unsupported), zero model credit. No runtime edits, native/security/loaded-UI or foreign-history credit; main owns successors/integration/native gates.
+## [2026-10-09] investigation | Patch 1.15.9 literal SOURCE audit
+
+[Audit](investigations/patch-1-15-9-api-audit.md): frozen 685352/6780591, TOC11509 and literal Classic Era/Season of Discovery/Hardcore. 37 rows, 14 UNPROVEN contracts, six headers, four API occurrences, three TBC-context CVar/chat examples and one partial UnitAura return removal. Configured Era/Anniversary11507 is not native1.15.9 proof. Own SOURCE RED/GREEN8/8 at 07c93b3b5; historical validator/copy8/8/default-byte replay at 308aeda25. Both serialized ledger/log tampers reject/restored; 18 original + five separate receipt seals, compact 20-member archive. No runtime edits or 2.5.6 receipt backfill; main owns successors/native/integration.
 
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 

@@ -877,3 +877,10 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 - Own source fixtures GREEN 8/8 at `88ce70325`, 5,916 omission controls; copied empty-PATH/no-Git/target/current-tools replay and disk ledger/red-log rejection/exact restoration pass.
 - Original 19 seals remain immutable (largest 3,326,475 bytes); eight independent current receipts/claims seals retained. Full preparation logs compressed losslessly below 5 MB.
 - Existing configured UnitName player-state target is unexecuted: cheap isolated Cargo dependency CoW snapshot failed cross-device, then unsupported on the same filesystem. No original cache/production runtime changes or model/native credit. Scope remains SOURCE only; no broad/final gates.
+## 2026-10-09 — Patch 1.15.9 SOURCE audit
+
+- Added [independent audit](investigations/patch-1-15-9-api-audit.md) and [spec](../specs/patch-1-15-9-source-accounting.md); own literal SOURCE RED/GREEN8/8, no runtime/native/model credit or TBC receipt mutation. Historical controls next.
+
+## 2026-10-09 — Patch 1.15.9 compact historical controls
+
+- [Audit](investigations/patch-1-15-9-api-audit.md): source commit07c93b3b5, original history308aeda25; validator/copy8/8/default bytes pass. Serialized ledger/log reject and restore exactly; 18 original seals unchanged, five later receipt seals, 20-member101361-byte archive. No runtime/native/integration/final gates.
