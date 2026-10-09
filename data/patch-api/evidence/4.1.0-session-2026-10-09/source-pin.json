@@ -1,0 +1,12 @@
+{
+  "title": "Patch 4.1.0/API changes",
+  "version": "4.1.0",
+  "pageid": 426651,
+  "revid": 4094671,
+  "timestamp": "2011-07-24T19:40:04Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4094671&format=json",
+  "retrieved": "2026-10-09T08:41:58.986638+00:00",
+  "response_sha256": "ecb44363e648fbbf80744c8a1df120a8107f822e83fae31dd13ad2ba4604aae6",
+  "wikitext_sha256": "8d21143deb4422f937bcec0ed3469e02c64115b48ceec5cb9239e2cd0752df1c",
+  "wikitext_bytes": 3728
+}
