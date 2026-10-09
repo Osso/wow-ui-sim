@@ -32,6 +32,7 @@ Own prefork filter `patch_4_2_0_publication_sweep`; `tools/test_patch_4_2_0_acco
 
 - [x] Reconcile 4.3.0/4.3.4 successors; `EJ_SetDifficultyByMask` removal resolves one publication gap without modeling historical behavior.
 - [ ] 30 exact current publication gaps remain; immutable historical development evidence retains 31.
+- [ ] Coordinator portability gate and independent verification remain pending; [recorded integrated proof](../wiki/investigations/patch-4-2-0-api-audit.md#integrated-proof-status--2026-10-09) is not final/CI/full-suite acceptance.
 
 ## Out of scope
 

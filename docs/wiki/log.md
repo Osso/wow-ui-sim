@@ -1,3 +1,7 @@
+## [2026-10-09] maintenance | Patch 4.2.0 proof boundaries
+
+[Audit status](investigations/patch-4-2-0-api-audit.md#integrated-proof-status--2026-10-09) links coordinator-owned integrated receipts and historical archive replay without rewriting original evidence. Model placement clarified in [Lua API](../lua-api.md); successor cross-links added. Portability/verifier remain pending; no final/CI/full-suite acceptance claim. Docs-only update.
+
 ## [2026-10-09] integration accounting | Patch 4.2.0 successors
 
 [Audit](investigations/patch-4-2-0-api-audit.md#integrated-successors): actual 4.3.0/4.3.4 registers resolve only `EJ_SetDifficultyByMask` via later removal. Current 35 matches/30 gaps; historical 34/31 observations and 32-gap negative unchanged. Accounting fixtures 6/6; integrated runtime/portability acceptance pending. No new behavior or native parity credit.

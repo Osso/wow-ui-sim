@@ -10,7 +10,10 @@ The WoW UI Simulator provides a Lua API that mirrors World of Warcraft's frame, 
 - `src/lua_api/frame/handle.rs` - Frame userdata (FrameHandle)
 - `src/lua_api/frame/methods/` - All frame methods (14+ submodules)
 - `src/lua_api/globals_legacy.rs` - Main global function registration
-- `src/lua_api/globals/` - API namespace implementations
+- `src/lua_api/globals/real/` - Modeled non-`C_*` globals and mixins
+- `src/c_api/` - First-class `C_*` namespace contracts and backing models
+
+Retail `BNGetFriendIndex` is a modeled legacy global over the existing ordered Battle.net friend list, not a shim or a separate friend model. Placement, mutation proof and inferred unknown-ID behavior are documented in the [Patch 4.2.0 audit](wiki/investigations/patch-4-2-0-api-audit.md#bounded-model-fix).
 
 ---
 
