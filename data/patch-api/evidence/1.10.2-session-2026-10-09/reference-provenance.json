@@ -1,0 +1,26 @@
+[
+  {
+    "path": "docs/wiki/investigations/patch-1-11-0-api-audit.md",
+    "revision": "592bf2e74",
+    "sha256": "d8c798989f2f8ed0a2918ce5df7a1243d323ffb15caccd3fa60ead31d3a7da98",
+    "use": "read-only reference; own tests/receipts executed separately"
+  },
+  {
+    "path": "data/patch-api/evidence/1.11.0-session-2026-10-09/audit.py",
+    "revision": "592bf2e74",
+    "sha256": "3d45dfb50276d5b505c70b82d5654a28ac43af4afdf2b784f5a89c48e6005e19",
+    "use": "read-only reference; own tests/receipts executed separately"
+  },
+  {
+    "path": "data/patch-api/evidence/1.11.0-session-2026-10-09/test_source_accounting.py",
+    "revision": "592bf2e74",
+    "sha256": "800e84336039208dea3c9a30b132bf2dc5d1623d2a2f03b69f816120267c45d5",
+    "use": "read-only reference; own tests/receipts executed separately"
+  },
+  {
+    "path": "data/patch-api/evidence/1.11.0-session-2026-10-09/test_portable.py",
+    "revision": "592bf2e74",
+    "sha256": "dd0d78cc71bc9d7b97049ba47986e7916c090d70291037a835a593351744ca2d",
+    "use": "read-only reference; own tests/receipts executed separately"
+  }
+]
