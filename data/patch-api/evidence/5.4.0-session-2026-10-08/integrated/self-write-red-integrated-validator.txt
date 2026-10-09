@@ -1,0 +1,15 @@
+{"status": "PASS", "inventory": 114, "extract_rows": 45, "retained_gaps": 22, "registers_reproduced": 56, "extracts_reproduced": 53, "removal_scans": 31}
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/validate.py", line 8, in <module>
+    runpy.run_path(str(HERE / 'validate.py'), run_name='__main__')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/integrated/validate.py", line 277, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/integrated/validate.py", line 263, in main
+    assert digest(target.read_bytes()) == expected, 'own evidence tamper: ' + path
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: own evidence tamper: integrated-validator.txt

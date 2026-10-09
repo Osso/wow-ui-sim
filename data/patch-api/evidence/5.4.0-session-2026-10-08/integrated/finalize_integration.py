@@ -34,7 +34,10 @@ def commit(message):
     git('add', SESSION, str(AUDIT.relative_to(ROOT)), 'docs/wiki/index.md', 'docs/wiki/log.md',
         ':!' + SESSION + '/integrated/finalization.txt',
         ':!' + SESSION + '/integrated/finalization.launcher.txt',
-        ':!' + SESSION + '/integrated/finalization.proof.json')
+        ':!' + SESSION + '/integrated/finalization.proof.json',
+        ':!' + SESSION + '/integrated/completion.txt',
+        ':!' + SESSION + '/integrated/completion.launcher.txt',
+        ':!' + SESSION + '/integrated/completion.proof.json')
     print(git('commit', '-m', message), flush=True)
 
 
