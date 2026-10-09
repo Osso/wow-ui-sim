@@ -1,6 +1,14 @@
 # Goal
 
-- [x] Bounded Patch 4.3.4 historical retail source/publication accounting complete; seven precise model gaps remain open. Targeted proof retained for coordinator integration, not final acceptance.
+- [ ] Continue full historical handoff through registry endpoint 1.0.0, including outstanding prefork follow-up, integration, asynchronous full-suite comparison and CI.
+- [x] Patch 4.3.4 historical accounting retained with seven gaps; current retail client clock modeled, leaving six gaps. Native parity remains unproven.
+
+## Coordinator integration
+
+- [x] Clock behavioral proof: 2/2; publication sweep: 66/66; Mists check, retail build and zero-error startup: exit 0; negative control: six to seven gaps, expected exit 1. Separate receipts committed.
+- [x] Independent bounded verification and formatting/readability audit; unchanged historical seals verified.
+- [ ] Finish clean/later validator portability gate, integrate/push 4.3.4, check CI and submit asynchronous full suite.
+- [ ] Integrate 4.3.0 then 4.2.0; replace queued successor registers and retain separate integrated proof.
 
 # Project Plan
 
