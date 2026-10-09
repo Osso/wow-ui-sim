@@ -202,5 +202,38 @@
     },
     "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
     "scope": "bounded Python SOURCE development proof only"
+  },
+  {
+    "label": "green",
+    "revision": "f5b1991fe90d6e3350cfbc2605d7269c156fc22f",
+    "branch": "p110-page",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p110-page",
+    "argv": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p110-page/data/patch-api/evidence/1.1.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "started": "2026-10-09T19:39:28.530511+00:00",
+    "ended": "2026-10-09T19:39:28.623691+00:00",
+    "exit_code": 1,
+    "expected_exit": 0,
+    "hash_scope": {
+      "source.wikitext": "d584c6fd1208de8669c85333f63c3da63bebdd21bd0b3a3e3387a36f3ddf8625",
+      "source-response.json": "9ad4deff959b721b3561d017b1e3613be2b6b35e7d5d27d195639b96af1b7dde",
+      "frozen-manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+      "frozen-registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "source-pin.json": "c36c832ac3e4894ac48ff615bcfbfe65c40f773c6ffa7fee5239f18d094f404c",
+      "audit.py": "936bdb22f20096f9cdea17f72b3566f17137a84e52c0c5289348c26d0928da6f",
+      "test_source_accounting.py": "57f8dd1ba0a6d3efb67e3f305fa96988f1fc93b3640c08bd9f530d8dc903b3bd",
+      "test_portable.py": "96fd320ab6a615f0a4f3340a9fe48c6a6ab18963e6b2a1072d76b45b73c4ff1d",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    },
+    "artifacts": {
+      "green.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "green.stderr": "26b12372db918e01ebfea36f2a3331e395f1799019fa9c0782aa09c286fa5f11",
+      "green.log": "26b12372db918e01ebfea36f2a3331e395f1799019fa9c0782aa09c286fa5f11"
+    },
+    "stream_limit": "full separate streams; combined log stdout then stderr, not chronological interleaving",
+    "scope": "bounded Python SOURCE development proof only"
   }
 ]

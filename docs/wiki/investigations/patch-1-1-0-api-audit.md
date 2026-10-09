@@ -26,7 +26,7 @@ Names: CheckTalentMasterDist, ConfirmSummon, ConfirmTalentWipe, GetAuctionItemLi
 
 Navigation literally says prev1.0.0/next1.2.0; registry has no1.2.0, so no fabricated successor pin. Newer1.3.0 active `p130-page`,1.4.0/1.5.0 pending remain separately queued/unapplied. Original historical Retail2.0.1+ references stay separate; Era1.13.x+, TBC2.5.x, Wrath3.4.x, Cataclysm4.4.x, Mists5.5.x and Forever1.60.1 cannot supply missing historical contracts.
 
-Own SOURCE RED7/portable RED3 at base retained. Historical own-base generator default has zero entries, unlike literal11; default extractor106 bytes. Preserve both default outputs rather than changing shared defaults. Two malformed-input error identities/messages retained. SOURCE GREEN and portable epochs pending; receipts record actual execution revisions and file hash scopes, not later documenting HEAD. No proof credit from setup/help/formatter commands.
+Own SOURCE RED7/portable RED3 at base retained. Historical own-base generator default has zero entries, unlike literal11; default extractor106 bytes. Preserve both default outputs rather than changing shared defaults. Two malformed-input error identities/messages retained. First SOURCE GREEN attempt atf5b1991fe retained one test-order failure: registry naturally queues1.5/1.4/1.3, while the fixture assumed ascending order. Test compares the exact version set without assigning application order; frozen ledger/queue unchanged. Corrected SOURCE GREEN and portable epochs pending; receipts record actual execution revisions and file hash scopes, not later documenting HEAD. No proof credit from setup/help/formatter commands.
 
 ## Sources
 

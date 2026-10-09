@@ -153,7 +153,7 @@ class FrozenSource(unittest.TestCase):
         history = ledger["history"]
         self.assertEqual(history["applied_successors"], [])
         self.assertEqual(
-            [p["version"] for p in history["queued_successor_references"]],
+            sorted(p["version"] for p in history["queued_successor_references"]),
             ["1.3.0", "1.4.0", "1.5.0"],
         )
         self.assertEqual(
