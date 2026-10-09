@@ -1,0 +1,13 @@
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... ok
+test_headers_caption_navigation (__main__.SourceAccounting.test_headers_caption_navigation) ... ok
+test_hidden_defaults_and_prose (__main__.SourceAccounting.test_hidden_defaults_and_prose) ... ok
+test_inventory_and_unspecified_signatures (__main__.SourceAccounting.test_inventory_and_unspecified_signatures) ... ok
+test_links_examples_and_credit (__main__.SourceAccounting.test_links_examples_and_credit) ... ok
+test_profiles_successors (__main__.SourceAccounting.test_profiles_successors) ... ok
+test_response_identity_and_content_tamper (__main__.SourceAccounting.test_response_identity_and_content_tamper) ... ok
+test_rows_lossless (__main__.SourceAccounting.test_rows_lossless) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.193s
+
+OK
