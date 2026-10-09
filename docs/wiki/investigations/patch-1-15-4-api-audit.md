@@ -32,6 +32,14 @@ Five [exact frozen successor inputs](../../../data/patch-api/evidence/1.15.4-ses
 
 Own SOURCE RED nine expected assertion failures; own portable RED three failures for absent archive, retained. Adapter/fixtures AST formatted. SOURCE GREEN **9/9** at `8bb569247`:19 omission controls, eight fabricated/foreign-history controls, five fabricated contract-coverage controls, two identity/content controls. Historical default generator flags[] emits empty inventory, not absence or linked-content compatibility proof. [Original proof ledger](../../../data/patch-api/evidence/1.15.4-session-2026-10-09/proof-ledger.json) records exact commands/cwd/revisions/results. Original **44 seals/701134 bytes**, seal-map SHA256 `3a3f862cae3d7ccedc524f92615ddb71128254b2dbd1705f7772a4b046de1e30`; original files/logs/map immutable. **45-member/107338-byte archive** and [replay instructions](../../../data/patch-api/evidence/1.15.4-session-2026-10-09/REPLAY.md) committed before portable GREEN; current copied receipts remain separate. Historical extractor retained unexecuted. No shared tool/runtime/vendor/cache/Wowless changes or broad/check/lint/type/readability/coverage/startup/final gates.
 
+## Copied historical proof
+
+[Separate portable receipts](../../../data/patch-api/evidence/1.15.4-session-2026-10-09/portable-proof.json) at `b6edd861e`: own portable GREEN **3/3**, fresh copied SOURCE **9/9**, historical validator exit0/default-generator byte-identical with flags[]. Serialized ledger contract omission and fabricated GREEN log rejected at their exact seals; both restored byte-for-byte, validator exit0 after each. Original44 seals/map/logs unchanged; six current receipt seals kept separately in `receipt-seals.json`.
+
+Archive **45 members/107338 bytes**, SHA256 `fbdd2d37d6f0d656bcc6e5173bd891c1497ce230d568382aa2951d90e35eb9b1`. No copied Git/target/current tools/runtime/vendor/cache input; fresh absolute-path Python processes use empty PATH and copied-file-relative adapter/generator inputs. Harness commands use explicit own worktree cwd; disposable copies use own target directory and are cleaned after each fixture.
+
+These are SOURCE development receipts, not native/security/loaded-UI/acceptance proof. Main owns actual Era successor integration and final gates; no linked retail API contracts imported and no runtime gap diagnosed from unspecified subset membership.
+
 ## Sources
 
 - [Spec](../../specs/patch-1-15-4-source-accounting.md).

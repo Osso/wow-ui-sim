@@ -1,0 +1,39 @@
+{
+  "scope": "own copied historical SOURCE only; no native/model/runtime credit",
+  "revision": "b6edd861e6dbf6cf23608315c077fd1f60f244d6",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/replay-archive.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1154-page/target/p1154-source-replay",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1154-page/data/patch-api/evidence/1.15.4-session-2026-10-09/portable-controls.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1154-page",
+  "exit_code": 0,
+  "portable_tests": "3/3",
+  "copied_source_fixtures": "9/9",
+  "default_generator": "byte-identical, flags []",
+  "ledger_tamper": "rejected at ledger.json seal; byte-exact restoration; validator passes",
+  "log_tamper": "rejected at green.log seal; byte-exact restoration; validator passes",
+  "original_seals": 44,
+  "original_bytes": 701134,
+  "original_seal_map_sha256": "3a3f862cae3d7ccedc524f92615ddb71128254b2dbd1705f7772a4b046de1e30",
+  "archive_members": 45,
+  "archive_bytes": 107338,
+  "archive_sha256": "fbdd2d37d6f0d656bcc6e5173bd891c1497ce230d568382aa2951d90e35eb9b1",
+  "receipt": "portable-controls.json",
+  "log": "portable-controls.log",
+  "excluded_inputs": [
+    "Git",
+    "target",
+    "current tools",
+    "runtime",
+    "vendor",
+    "cache"
+  ],
+  "later_changes_invalidate": null
+}

@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.15.4 literal subset SOURCE accounting
 
-[Audit](investigations/patch-1-15-4-api-audit.md): pinned600355/6172581,439 bytes. Six literal rows/five UNPROVEN contracts/two headers, explicit unspecified retail subset attribution separate from Era successor chain. Own SOURCE RED9/portable RED3 retained; SOURCE GREEN9/9 at8bb569247. Original44 seals/701134 bytes and45-member archive; copied portable GREEN pending. No runtime/model/native credit or shared-tool changes; main gates pending.
+[Audit](investigations/patch-1-15-4-api-audit.md): pinned600355/6172581,439 bytes. Six literal rows/five UNPROVEN contracts/two headers, explicit unspecified retail subset attribution separate from Era successor chain. Own SOURCE RED9/portable RED3 retained; SOURCE GREEN9/9 at8bb569247. Portable GREEN3/3 atb6edd861e: copied SOURCE9/validator/default-byte replay; ledger/log seal tamper rejection and exact restoration. Original44 seals/701134 bytes/map/logs unchanged, six separate receipt seals and45-member archive. No runtime/model/native credit or shared-tool changes; main gates pending.
 
 ## [2026-10-09] integration | Separate source/factory and repaired Forever proof epochs
 

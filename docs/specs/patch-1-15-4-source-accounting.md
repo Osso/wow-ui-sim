@@ -8,7 +8,7 @@ Account frozen Warcraft Wiki page600355/revision6172581/timestamp `2024-11-13T21
 - [x] Preserve six nonblank rows, two headers, TOC11504 and unexpanded navigation.
 - [x] Account the unspecified War Within subset summary, two linked retail pages and two unexpanded diffs; invent no APIs, signatures, defaults, aliases or subset membership.
 - [x] Separate configured Era/Anniversary11507 and same-Era successor inputs: queued1.15.5/1.15.6, canonical-integrated1.15.7/1.15.8/1.15.9 not applied here.
-- [ ] Reject omissions/fabricated credit/foreign-history supersession and serialized tampering; preserve original seals/logs and keep current replay receipts separate.
+- [x] Reject omissions/fabricated credit/foreign-history supersession and serialized tampering; preserve original seals/logs and keep current replay receipts separate.
 
 ## How it works
 
@@ -20,7 +20,7 @@ Account frozen Warcraft Wiki page600355/revision6172581/timestamp `2024-11-13T21
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: retained RED nine assertion failures against empty-accounting scaffold. Own `test_portable.py`: RED three assertion failures for absent archive. SOURCE GREEN9/9 at `8bb569247`; 19 omission controls plus fabricated/foreign-credit and identity controls. Original44 seals/701134 bytes,45-member copied archive committed before portable GREEN. No final gates.
+Own `test_source_accounting.py`: retained RED nine assertion failures against empty-accounting scaffold. Own `test_portable.py`: RED three assertion failures for absent archive. SOURCE GREEN9/9 at `8bb569247`; 19 omission controls plus fabricated/foreign-credit and identity controls. Original44 seals/701134 bytes unchanged;45-member copied archive. Portable GREEN3/3 at `b6edd861e`, fresh copied SOURCE9/9/validator/default byte replay, both serialized seal tamper rejections/exact restorations. Six separate current receipt seals. [Exact command/results](../../data/patch-api/evidence/1.15.4-session-2026-10-09/portable-proof.json). No final gates.
 
 ## Known gaps (current cycle)
 
