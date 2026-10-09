@@ -266,5 +266,59 @@
       "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
       "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
     }
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p1101-page/data/patch-api/evidence/1.10.1-session-2026-10-09/test_source_accounting.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1101-page",
+    "revision": "3c927000fd6203425492188f5417be223bf136da",
+    "scope": "own committed SOURCE development GREEN; no broad/final acceptance",
+    "started": "2026-10-09T17:45:04.117568+00:00",
+    "finished": "2026-10-09T17:45:04.205869+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "test_every_boundary_and_derived_count_is_required (__main__.FrozenRedirect.test_every_boundary_and_derived_count_is_required) ... ok\ntest_exact_source_pin_response_registry (__main__.FrozenRedirect.test_exact_source_pin_response_registry) ... ok\ntest_foreign_histories_never_become_successors (__main__.FrozenRedirect.test_foreign_histories_never_become_successors) ... ok\ntest_historical_default_tools_reproduce_exact_bytes (__main__.FrozenRedirect.test_historical_default_tools_reproduce_exact_bytes) ... ok\ntest_literal_redirect_and_empty_publication_inventory (__main__.FrozenRedirect.test_literal_redirect_and_empty_publication_inventory) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.034s\n\nOK\n",
+    "env_key_names": [
+      "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC",
+      "COLORTERM",
+      "DBUS_SESSION_BUS_ADDRESS",
+      "HOME",
+      "LC_CTYPE",
+      "LOGNAME",
+      "MAIL",
+      "MOTD_SHOWN",
+      "NoDefaultCurrentDirectoryInExePath",
+      "PATH",
+      "PI_CODING_AGENT",
+      "PWD",
+      "SHELL",
+      "SHLVL",
+      "SSH_CLIENT",
+      "SSH_CONNECTION",
+      "TERM",
+      "TERM_PROGRAM",
+      "TERM_PROGRAM_VERSION",
+      "TMUX",
+      "TMUX_PANE",
+      "USER",
+      "XDG_RUNTIME_DIR",
+      "XDG_SESSION_CLASS",
+      "XDG_SESSION_ID",
+      "XDG_SESSION_TYPE",
+      "_"
+    ],
+    "hash_scope": {
+      "audit.py": "a766d3afe5420bfb203da1b7c9f3874de3294aab1beb3149d0bb5b68639f33f8",
+      "test_source_accounting.py": "a145fa2b9626513c1682fd92c13e3252f36deb03f410ebd6eeb88e182b8931b9",
+      "capture_defaults.py": "2b8f313a8f2e26a53067fc7d57c2c55899f60771966b243da36434e5a704a0c9",
+      "test_portable.py": "a8f07ecb22c067852aeb8e035efc5f57e7dc43c758164cebfacb22dc77eaf516",
+      "red-scaffold.py": "8396cb77ae996269b50bca2f303f8c441cbd20c38e5c2385a451c222ec43a9cd",
+      "historical-tools/gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+      "historical-tools/extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+    }
   }
 ]

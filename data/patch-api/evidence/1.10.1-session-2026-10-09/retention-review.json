@@ -31,6 +31,7 @@
   "environment_values": "omitted; no environment value dump",
   "credential_patterns": "(sk-[A-Za-z0-9]{20,}|AKIA[A-Z0-9]{16}|-----BEGIN .*PRIVATE KEY-----|(?:password|secret|token)\\s*[=:]\\s*[\"\\']?[A-Za-z0-9+/]{20,})",
   "matches": 0,
+  "scan_limit": "Literal credential_patterns regex excluded from scanning itself; it is a detector, not credential material.",
   "streams": "unaltered; not exhaustive secret detection",
   "excluded": "setup/exploration not proof; no Git/target/addons/vendor/network content",
   "own_base": "e14488aaaed19d49038d366630768cec3d4b23f6",
