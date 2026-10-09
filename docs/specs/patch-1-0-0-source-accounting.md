@@ -8,7 +8,7 @@ Bounded literal accounting of frozen page67688/revision5580410/timestamp2023-10-
 - [x] Account all literal rows, bare names, unspecified signatures, prose/comment, headers, links and navigation without fixing spelling or inventing aliases/defaults/model credit; reject omissions/count mutations/inventions.
 - [x] Preserve frozen task-start queue unapplied and separate original Retail/Era/Forever histories; endpoint does not close parent goal.
 - [x] Replay own-base default tool bytes/errors independently of literal ledger; retain own SOURCE RED/GREEN.
-- [ ] Copy immutable original sealed evidence without Git/target/current tools; portable3 controls must reject serialized ledger/log tampering and restore exact bytes/hashes/map without resealing.
+- [x] Copy immutable original sealed evidence without Git/target/current tools; portable3 controls must reject serialized ledger/log tampering and restore exact bytes/hashes/map without resealing.
 - [ ] Retain original seals/archive independently from later actual revision/cwd/argv/times/full-stream/scoped-hash receipts; environment key names only. Independent metadata acceptance belongs to main.
 
 ## How it works
