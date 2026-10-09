@@ -931,3 +931,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] investigation | Patch1.15.1 frozen source and alias boundary
 
 [Audit](investigations/patch-1-15-1-api-audit.md): frozen577687/5998991;9 rows,2 enum occurrences,7 contracts/no signatures. SOURCE RED8/GREEN8 at3045ff2a9; portable RED3/GREEN3 at714277147, copied SOURCE8/default-byte replay, serialized ledger/log reject/restore;57 immutable originals/9 separate receipt seals. Standalone headless Era GREEN1/1 at714277147: unchanged pinned official Lua uses existing IsPublicBuild=true and raw named values2=2. Two bounded direct-existing-state declaration rows/five UNPROVEN; no native/full-loading/C_Seasons credit. Bare absence loading boundary, not defect. Seven existing simulator warnings +six vendor deprecations retained; main owns integration/native/final gates.
+
+## [2026-10-09] investigation | Patch 1.14.2 frozen SOURCE audit
+
+[Audit](investigations/patch-1-14-2-api-audit.md): frozen236101/2290155, source11402 vs configuredEra11507;36 nonblank/seven inventory/14 UNPROVEN contracts/four unspecified signatures/three hidden defaults. Own SOURCE RED8/GREEN8; no runtime/model/native credit. Portable controls and separate current CVar getters pending; main owns integration/native/gates.

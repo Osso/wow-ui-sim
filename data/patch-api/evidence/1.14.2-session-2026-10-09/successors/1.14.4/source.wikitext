@@ -1,0 +1,10 @@
+{{apichanges|1.14.4|prev=1.14.3|next=1.15.0}}
+
+==Summary==
+* This patch incorporates all API changes from [[World of Warcraft: Wrath of the Lich King Classic|Wrath Classic]] in [[Patch 3.4.0/API changes|Patch 3.4.0]], [[Patch 3.4.1/API changes|Patch 3.4.1]], and [[Patch 3.4.2/API changes|Patch 3.4.2]].
+** A subset of Dragonflight API changes from [[Patch 10.0.0/API changes|Patch 10.0.0]] through to [[Patch 10.1.5/API changes|Patch 10.1.5]] are also included.
+** Refer to the linked articles for guidance on any impactful changes.
+
+==Resources==
+* TOC: <code>11404</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/1.14.3..classic_era_ptr wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/1.14.3..1.14.4 BlizzardInterfaceResources]
