@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py"
+  ],
+  "code_revision": "88ce7032563b32bc0b8ccac8fe0097124abe4d37",
+  "scope": "Own eight SOURCE fixtures; every literal omission, copied Git/target/current-tool-free replay and two disk tampers/exact restoration",
+  "exit_code": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "d411e17716e0db7f32d1847bf410b50505869f593c26af10a79e3481e5b27e2d",
+  "runtime_credit": false
+}

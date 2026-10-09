@@ -1,0 +1,31 @@
+{
+  "source_revision": "88ce7032563b32bc0b8ccac8fe0097124abe4d37",
+  "source_fixtures": {
+    "passed": 8,
+    "failed": 0,
+    "omission_controls": 5916,
+    "copied_fresh_git_target_current_tools_free": true,
+    "serialized_tampers": [
+      "original/ledger.json",
+      "original/red.log"
+    ],
+    "restored_exact_bytes": true,
+    "log": "source-green.log"
+  },
+  "original_sealed_inputs": 19,
+  "largest_original_file": 3326475,
+  "original_seals_mutated": false,
+  "source_tool_flags": [],
+  "model_target_executed": false,
+  "compiler_observed": "rustc1.99.0, not documented1.98.1",
+  "later_changes_invalidate_source_proof": false,
+  "excluded_gates": [
+    "check",
+    "lint",
+    "readability",
+    "coverage",
+    "broad-suite",
+    "startup",
+    "final-acceptance"
+  ]
+}

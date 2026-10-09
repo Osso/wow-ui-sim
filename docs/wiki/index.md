@@ -1,6 +1,9 @@
 ## [2026-10-09] investigation | Historical retail Patch 2.2.0 SOURCE audit
 
 [Audit](investigations/patch-2-2-0-api-audit.md): frozen page184149/revision6428980; 36 inventory, 33 signature limits, 67 raw/67 default-extract rows, 53 prose limits, 11 headings/no numeric counts, 12 modified-click examples. Manifest-linked registry101 ends at1.0.0. SOURCE-only; all substantive contracts UNPROVEN, zero model/native/runtime credit; Classic/queued supersession excluded. Own SOURCE GREEN5/5 at3045ccee9 (279 omission controls), historical/portable GREEN at4f7a2c797: 19 seals, copied no-Git/no-target replay, ledger/log rejection and exact restoration. Archive317490bytes/max109178bytes; 29 literal/4 unspecified signatures. Shared tools unchanged; main owns native/integration/final gates.
+## [2026-10-09] investigation | Forever Patch 1.60.1 literal SOURCE accounting
+
+[Audit](investigations/patch-1-60-1-api-audit.md): frozen 707613/6902509; source Forever/Camelot16001, configured `client-wowforever`16001/build69977 distinct from source70205. 1,876 inventory, 2,070 nonblank rows, 1,712 signatures, 211 prose limits, 32 headers/two literal count conflicts and 15 unexpanded reference boundaries. SOURCE RED retained, GREEN 8/8 at `88ce70325`: 5,916 omission controls, fresh copied no-Git/target/current-tools replay, ledger/log tamper rejection and exact restoration. Original 19 seals unchanged; eight separate current receipt seals. UnitName state probe retained but unexecuted (isolated CoW snapshot unsupported), zero model credit. No runtime edits, native/security/loaded-UI or foreign-history credit; main owns successors/integration/native gates.
 
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 

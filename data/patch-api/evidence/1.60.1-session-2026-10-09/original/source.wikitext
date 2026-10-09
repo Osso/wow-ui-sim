@@ -1,0 +1,2094 @@
+{{apichanges|1.60.1|next=1.60.2}}
+{{#description2:1.60.1 (70205) Oct  2 2026}}
+
+==Resources==
+* TOC: <code>16001</code>
+* Official development notes: [https://us.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-september-24/2360696 WoW Forever Beta Development Notes]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/12.1.5..forever wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/12.1.5..1.60.1 BlizzardInterfaceResources]
+
+===Notable changes===
+* <span style="color:plum">1.60.1 (70170) Oct  1 2026</span>
+** Added <code>WOW_PROJECT_CAMELOT</code> (18) constant.<ref> WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1550603608003842121 WOW_PROJECT_ID for Forever seems to be the same as Retail]</ref>
+** Fixed <code>UnitName("player")</code> returning <code>"Unknown", nil</code> before <code>PLAYER_LOGIN</code> fires.<ref>WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1552849167309606954 UnitName("player") returns "Unknown", nil before PLAYER_LOGIN fires]</ref>
+
+* <span style="color:plum">1.60.1 (70009) Sep 23 2026</span>
+** Fixed SavedVariables not loading.<ref>WoWUIDev #bugs:  [https://discord.com/channels/327414731654692866/1550422504831586415 SavedVariables not loading]</ref>
+** Fixed RestrictedEnvironment not loading.<ref>WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1550273499916927037 RestrictedEnvironment not loading]</ref>
+** Fixed <code>UnitName</code> not being consistent between UnitTokens.<ref>WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1550272311247110274 UnitName is not consistent on Forever Beta between UnitToken]</ref>
+
+==Examples==
+===TOC format===
+The [[TOC_format#AllowLoadGameType|AllowLoadGameType]] directive restricts addons to only load on a specific game type. This way you only need a single TOC file instead of multiple [[TOC_format#Client-specific_TOC_files|client-specific]] TOC files.
+
+📝 Since the <code>camelot</code> (name subject to change) game type is not yet recognized on standard 12.1.5, 12.1.0 and classic clients, this will require excluding the other game types.
+
+* To load an addon only on Forever.
+:<syntaxhighlight lang="wowtoc">
+## AllowLoadGameType: camelot
+## ExcludeLoadGameType: standard, classic
+</syntaxhighlight>
+
+* To load a specific file only on Forever.
+:<syntaxhighlight lang="wowtoc">MyFile.lua [AllowLoadGameType camelot][ExcludeLoadGameType standard, classic]
+</syntaxhighlight>
+
+* To set metadata such as the addon's title only for a specific game type.
+<div style="margin-left:2em">{{markdown_alert|NOTE|Since on the other clients <code>camelot</code> is not yet recognized: 1) Unrecognized game types are loaded anyway and 2) latter lines will overwrite the previous ones.
+<br>This requires the <code>camelot</code> game type to be listed ''first'' or the title would show up as Forever on the other clients if it was listed last.}}</div>
+:<syntaxhighlight lang="wowtoc">
+## Title: My title for Forever [AllowLoadGameType camelot]
+## Title: My title for Midnight [AllowLoadGameType standard]
+## Title: My title for Mists/TBC/Vanilla [AllowLoadGameType classic]
+</syntaxhighlight>
+
+===Game types===
+Checks the current game type in Lua with [[WOW_PROJECT_ID]].
+<syntaxhighlight lang="lua">
+-- with constants
+if WOW_PROJECT_ID == WOW_PROJECT_CAMELOT then
+	-- camelot/forever
+end
+</syntaxhighlight>
+<syntaxhighlight lang="lua">
+-- by interface version
+local version = select(4, GetBuildInfo())
+if version > 16000 and version < 20000 then
+	-- camelot/forever
+end
+</syntaxhighlight>
+Uses TOC variables with {{api|C_AddOns.GetAddOnMetadata}}.
+<syntaxhighlight lang="wowtoc">
+## X-Game: [Game]
+</syntaxhighlight>
+<syntaxhighlight lang="lua">
+if C_AddOns.GetAddOnMetadata("MyAddOn", "X-Game") == "Camelot" then
+	-- camelot/forever
+end
+</syntaxhighlight>
+
+===Rulesets===
+Checks the current ruleset with {{api|C_GameRules.IsGameRuleActive}}.
+<syntaxhighlight lang="lua">
+if C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset) then
+	-- Hardcore
+elseif C_GameRules.IsGameRuleActive(Enum.GameRule.RPRuleset) then
+	-- RP
+elseif C_GameRules.IsGameRuleActive(Enum.GameRule.PvPRuleset) then
+	-- PvP
+else
+	-- PvE
+end
+</syntaxhighlight>
+
+==Blue posts==
+===2026-09-15===
+[https://discord.com/channels/327414731654692866/1549523107520188476 {{apisummary.title|An Update On Secrets In WoW: Forever}}]
+<blockquote {{apisummary.blizzquote}}>
+WoW Forever shares Mainline WoW's UI architecture, including the vast majority of APIs available in 12.1.5. From a UI loading perspective, the easiest way to think about it is that Forever and modern WoW (Midnight) are two game types within the Mainline code family: Camelot (to be renamed before launch) and Standard, respectively.
+
+The addon disarmament changes introduced in Midnight, including secrets, will also be active in Forever.
+
+The AuraContainer/AuraButton changes introduced in 12.1.0 will be available as well, and you can expect similar UI changes in the future to be introduced to both Standard and Forever.
+</blockquote>
+
+===2026-09-24===
+{{bluepost
+|poster=Kaivax
+|date=Sep 24, 2026
+|link=https://us.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-september-24/2360696
+|title=WoW Forever Beta Development Notes – Updated September 24 ''(Build 70009)''
+|body=
+{{apisummary.heading|Cooldown Manager}}
+* The Cooldown Manager in World of Warcraft: Forever is intended to enhance gameplay by pulling critical information from the buff bar or action bar and placing it in a fully customizable location. By default, the Cooldown Manager is disabled, and it can be enabled in Options under the Gameplay Enhancement settings.
+* Druid, Mage, Priest, Warrior, and Warlock are available for testing the Cooldown Manager.
+* Additional classes will become testable in future updates.
+* The most desired feedback for this feature is currently: spells that you wish were tracked by default.
+* The Cooldown Manager does not yet support spell ranks. This will be resolved in a future Beta update.
+{{apisummary.heading|Gamepad Support}}
+* Class specific flyouts have been added to the action bar interface of some classes.
+** Shapeshift flyout for Druids.
+** Pet control and pet spell flyouts for Hunters and Warlocks.
+** Aura flyout for Paladins.
+** Stance flyout for Warriors.
+* The pet bar no longer replaces the bottom gamepad action bar for Hunters and Warlocks.
+* New options have been added to the Gamepad (Alpha) section of the game options.
+** Use Compact Action Bar: Replaces the normal gamepad action bar layout with one that only shows the currently active action bar at any given time.
+** Fixed Party Targeting: While in a non-raid party, rather than having the directional pad act as directions in the party interface, each button on the directional pad is assigned to a specific party member.
+** Swap Target Modifier Sides: Swaps sides of the friendly and hostile targeting modifiers, putting friendly targeting on the right and hostile on the left.
+** Swap Friendly Target Action Sides: Swaps the directional pad and face button actions when using the friendly targeting modifier.
+** Swap Hostile Target Action Sides: Swaps the directional pad and face button actions when using the hostile targeting modifier.
+* Fixed an issue preventing edit mode layouts from being applied while the gamepad UI is enabled.
+* Updated Map and Quest Log bindings.
+** New hover functionality for POI pins.
+* Updated support for Compact Raid Frame Manager and Role Poll Frames.
+}}
+
+===2026-10-02===
+{{bluepost
+|poster=Kaivax
+|date=Oct 2, 2026
+|link=https://us.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-october-1/2360696/4
+|title=WoW Forever Beta Development Notes – Updated October 1 ''(Build 70058)''
+|body=
+{{apisummary.heading|Cooldown Manager}}
+* Racial abilities are now supported.
+* Rogue is now supported.
+* Duplicate entries for each spell rank on already supported classes should no longer be present.
+
+{{apisummary.heading|Gamepad Support}}
+* The pet stable interface has been updated for gamepad support.
+* The gamepad UI bindings are now static, and any gamepad rebinding only affects the keyboard and mouse interface.
+* The compact Raid and Party manager frames have been updated for gamepad support.
+* Fixed an issue preventing macros placed on a gamepad action bar from being able to be moved.
+
+{{apisummary.heading|User Interface}}
+* On the character sheet, when mousing over Spell Damage and Spell Healing, it is now explained that spells cast using spell ranks vastly below your current level receive less benefit from your Spell Damage and Spell Healing and have a reduced chance to activate your Class abilities and Talents. (examples: [[Frostbite]] and [[Omen of Clarity]])
+** ''Developers’ notes: Another example of this reduction in activation chance – Using a Rank 1 Frostbolt at level 60 will result in a 0% chance to get a Frostbite activation. So you now are making a decision between getting a slow off quickly, or using a spell that can potentially get a Frostbite activation, instead of getting both.''
+* Character Creation will display matching icons when Standard Definition models are toggled.
+* Stables frame art has been updated.
+* Combo points on the target frame and Personal Resource Display has updated art.
+* Fixed loot rolls in chat not displaying a player’s full name.
+* The auction house will now correctly display item suffixes.
+}}
+
+==Consolidated changes==
+: [[Patch_12.1.5/API_changes|12.1.5 (69952)]] &rarr; <font color="lightgreen">1.60.1 (70205)</font> Oct  2 2026
+
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(176)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(10)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AccountServices.GetPreferredDatacenterLocalities}}
+: {{api|t=a|C_AccountServices.GetPreferredLocales}}
+: {{api|t=a|C_AccountServices.GetPreferredPlaySettingsFeatures}}
+: {{api|t=a|C_AccountServices.GetPreferredPlaySettings}}
+: {{api|t=a|C_AccountServices.RequestPreferredPlaySettings}}
+: {{api|t=a|C_AccountServices.SetPreferredPlaySettings}}
+: {{api|t=a|C_ActionBar.ShouldShowKeyring}}
+: {{api|t=a|C_AutoLoot.SetUseAutoLootToggle}}
+: {{api|t=a|C_Bank.BankBagTypeAndIDToInvSlot}}
+: {{api|t=a|C_Bank.FetchMaxNumBankTabs}}
+: {{api|t=a|C_Bank.ShouldUsePlayerBagsInBank}}
+: {{api|t=a|C_BattleNet.AreHighResTexturesInstalled}}
+: {{api|t=a|C_BattleNet.IsFriendTagSupportedForCurrentGameType}}
+: {{api|t=a|C_BattleNet.SetBlocked}}
+: {{api|t=a|C_BlizzCon2026.GetExperience}}
+: {{api|t=a|C_BlizzCon2026.IsActive}}
+: {{api|t=a|C_BlizzCon2026.IsColdSwapFeatureEnabled}}
+: {{api|t=a|C_BlizzCon2026.SetExperience}}
+: {{api|t=a|C_CVar.RemoveTempCVar}}
+: {{api|t=a|C_CVar.SetTempCVar}}
+: {{api|t=a|C_CharacterServices.AssignHCTDistribution}}
+: {{api|t=a|C_CharacterServices.GetHardcoreTransferSuperDistrictDestinations}}
+: {{api|t=a|C_CharacterServices.GetPaidCharacterTransferSuperDistrictDestinations}}
+: {{api|t=a|C_CharacterServices.IsRealmlessRealmSelectionEnabled}}
+: {{api|t=a|C_DateAndTime.IsDayTime}}
+: {{api|t=a|C_EditMode.GetEditModeDefaultLayout}}
+: {{api|t=a|C_Flyout.FlyoutHasSpell}}
+: {{api|t=a|C_Flyout.GetFlyoutID}} 
+: {{api|t=a|C_Flyout.GetFlyoutInfo}}
+: {{api|t=a|C_Flyout.GetFlyoutSlotInfo}}
+: {{api|t=a|C_Flyout.GetFlyoutTexture}}
+: {{api|t=a|C_Flyout.GetNumFlyouts}}
+: {{api|t=a|C_FriendList.GetWhoRaceFilters}}
+: {{api|t=a|C_GamePad.GetAllowHoverEventsWithFreeLook}}
+: {{api|t=a|C_GamePad.SetAllowHoverEventsWithFreeLook}}
+: {{api|t=a|C_GameRules.AccountHasSDEnabled}}
+: {{api|t=a|C_GameRules.GetForeverExperiencePreset}}
+: {{api|t=a|C_GameRules.IsHardcoreActive}}
+: {{api|t=a|C_GameRules.IsSDHDToggleEnabled}}
+: {{api|t=a|C_GameRules.IsSelfFoundAllowed}}
+: {{api|t=a|C_GameRules.SetForeverExperiencePreset}}
+: {{api|t=a|C_GameRules.SetSDHDToggleValue}}
+: {{api|t=a|C_GamepadTargeting.Disable}}
+: {{api|t=a|C_GamepadTargeting.Enable}}
+: {{api|t=a|C_GamepadTargeting.HasReticleHoverTarget}}
+: {{api|t=a|C_GamepadTargeting.SetFilter}}
+: {{api|t=a|C_GamepadUI.GetFirstGamepadActionBarStorageSlotIndexForActiveStance}}
+: {{api|t=a|C_GamepadUI.GetFirstGamepadActionStorageSlotIndex}}
+: {{api|t=a|C_GamepadUI.GetFirstGamepadPetActionStorageSlotIndex}}
+: {{api|t=a|C_GamepadUI.IsValidGamepadActionStorageSlotIndex}}
+: {{api|t=a|C_GamepadUI.IsValidGamepadPossessBarStorageSlotIndex}}
+: {{api|t=a|C_GuildInfo.GetPreferredPlaySettingsFeatures}}
+: {{api|t=a|C_GuildInfo.GetPreferredPlaySettings}}
+: {{api|t=a|C_GuildInfo.RequestPreferredPlaySettings}}
+: {{api|t=a|C_GuildInfo.SetPreferredPlaySettings}}
+: {{api|t=a|C_HeirloomInfo.HeirloomsAvailable}}
+: {{api|t=a|C_InputInterfaceStyle.GetCurrentStyle}}
+: {{api|t=a|C_Item.ConfirmDeleteItem}}
+: {{api|t=a|C_Item.DeleteItem}}
+: {{api|t=a|C_Item.GetWeaponEnchantInfo}}
+: {{api|t=a|C_LFGListRoles.GetRoles}}
+: {{api|t=a|C_LFGListRoles.GetSavedRoles}}
+: {{api|t=a|C_LFGListRoles.SetRoles}}
+: {{api|t=a|C_LootFrame.TryAutoLoot}}
+: {{api|t=a|C_MajorFactions.GetMajorFactionProgressionInfo}}
+: {{api|t=a|C_MajorFactions.GetTotalReputationForRenownLevel}}
+: {{api|t=a|C_MountJournal.HasDisplayableMount}}
+: {{api|t=a|C_MountJournal.MountEquipmentAvailable}}
+: {{api|t=a|C_NameUtil.ReplaceSurnameSeparatorWithLinkSeparator}} 
+: {{api|t=a|C_PaperDollInfo.AmmoNeeded}}
+: {{api|t=a|C_PaperDollInfo.CursorCanGoInSlot}}
+: {{api|t=a|C_PartyInfo.IsRaidListEnabled}}
+: {{api|t=a|C_PartyInfo.IsRaidListSupported}}
+: {{api|t=a|C_PetInfo.CanPetEatItem}}
+: {{api|t=a|C_PetInfo.GetPetFoodTypes}}
+: {{api|t=a|C_PetInfo.GetPetHappiness}}
+: {{api|t=a|C_PetInfo.GetPetLoyalty}}
+: {{api|t=a|C_PetInfo.GetPetTrainingPoints}}
+: {{api|t=a|C_PetInfo.GetPetUIModelSceneID}}
+: {{api|t=a|C_PlayerInfo.ShouldDisplaySurname}}
+: {{api|t=a|C_PlayerInteractionManager.ShardTransferConfirm}}
+: {{api|t=a|C_PvP.GetRandomTrainingGroundArenaRewards}}
+: {{api|t=a|C_PvP.GetRandomTrainingGroundBGRewards}}
+: {{api|t=a|C_PvP.HasRandomTrainingGroundArenaWinToday}}
+: {{api|t=a|C_PvP.HasRandomTrainingGroundBGWinToday}}
+: {{api|t=a|C_PvP.JoinRandomTrainingGroundBG}}
+: {{api|t=a|C_QuestLog.GetQuestTimers}}
+: {{api|t=a|C_QuestLog.GetTrivialRange}}
+: {{api|t=a|C_QuestLog.IsEliteQuest}}
+: {{api|t=a|C_RaidLocks.IsRaidLockExtendFeatureSupported}}
+: {{api|t=a|C_RecentAllies.IsInteractionCategoryFilterSupportedForCurrentGameType}}
+: {{api|t=a|C_SeasonInfo.GetTimeUntilCurrentPVPSeasonEnd}}
+: {{api|t=a|C_SkillInfo.AbandonSkill}}
+: {{api|t=a|C_SkillInfo.CollapseSkillHeader}}
+: {{api|t=a|C_SkillInfo.ExpandSkillHeader}}
+: {{api|t=a|C_SkillInfo.GetNumSkillLines}}
+: {{api|t=a|C_SkillInfo.GetSelectedSkill}}
+: {{api|t=a|C_SkillInfo.GetSkillLineInfoByID}}
+: {{api|t=a|C_SkillInfo.GetSkillLineInfo}}
+: {{api|t=a|C_SkillInfo.SetSelectedSkill}}
+: {{api|t=a|C_SocialRestrictions.AcknowledgeAgeVerificationRestriction}}
+: {{api|t=a|C_SocialRestrictions.IsAgeVerificationRestrictedMinor}}
+: {{api|t=a|C_SocialRestrictions.IsAgeVerificationRestricted}}
+: {{api|t=a|C_SpecializationInfo.GetAllClassIDs}}
+: {{api|t=a|C_SpecializationInfo.GetCombatConfigIDForSpecGroup}}
+: {{api|t=a|C_SpecializationInfo.HasPlayerEarnedATalentPoint}}
+: {{api|t=a|C_SpecializationInfo.IsSpecSelectionEnabled}}
+: {{api|t=a|C_SpecializationInfo.SetActiveSpecGroup}}
+: {{api|t=a|C_Spell.CancelAutoRepeatSpell}}
+: {{api|t=a|C_Spell.CancelItemTempEnchantment}}
+: 🆕 {{api|t=a|C_Spell.GetItemCooldown}}
+: {{api|t=a|C_Spell.GetTargetSpellID}}
+: {{api|t=a|C_Spell.IsActiveSpell}}
+: {{api|t=a|C_Spell.PlaceTargetingSpellAtCursor}}
+: {{api|t=a|C_SpellBook.AbortSpellIntro}}
+: {{api|t=a|C_SpellBook.GetClassSkillLineInfo}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemLooseFlyoutMember}}
+: {{api|t=a|C_SpellBook.IsSpellBookItemLowRank}}
+: {{api|t=a|C_SpellBook.SetBarSlotFromIntro}}
+: {{api|t=a|C_StableInfo.BuyStableSlot}}
+: {{api|t=a|C_StableInfo.GetNextStableSlotCost}}
+: {{api|t=a|C_StableInfo.GetNumStableSlots}}
+: {{api|t=a|C_SwingTimer.EnableRangeCheck}}
+: {{api|t=a|C_SwingTimer.IsTargetWithinSwingRange}}
+: {{api|t=a|C_ToyBoxInfo.HasAnyToy}}
+: {{api|t=a|C_TradeSkillUI.CanTradeSkillShowCraftingUI}}
+: {{api|t=a|C_Trainer.GetCategorizeTrainerUI}}
+: {{api|t=a|C_Trainer.GetTrainerType}}
+: {{api|t=a|C_Trainer.SetCategorizeTrainerUI}}
+: {{api|t=a|C_Traits.GetGroupCurrencyInfo}}
+: {{api|t=a|C_Traits.GetGroupDisplayInfoByTreeID}}
+: {{api|t=a|C_Traits.GetMaxAvailableTraitCurrency}}
+: {{api|t=a|C_Traits.GetTraitCurrencyForAchievement}}
+: {{api|t=a|C_TransmogCollection.HasAnyAppearance}}
+: {{api|t=a|C_TransmogOutfitInfo.GetOptionsForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.SetViewedOptionForSlot}}
+: {{api|t=a|C_TransmogSets.HasAnyValidSets}}
+: {{api|t=a|C_UnitAuras.GetRefreshCarryOverDuration}}
+: {{api|t=a|C_VideoOptions.AreHighResTexturesAvailable}}
+: {{api|t=a|C_VideoOptions.IsLinearEnabledOnStart}}
+: {{api|t=a|C_VideoOptions.IsOutlineModeSupported}}
+: {{api|t=a|C_VideoOptions.IsPBRWaterSupported}}
+: {{api|t=a|C_VideoOptions.IsSecondaryLightingSupported}}
+: {{api|t=a|C_WarbandScene.WarbandScenesAvailable}}
+: {{api|t=a|C_WowTokenUI.ShouldDisplayInAuctionHouse}}
+: {{api|t=a|CanPortGraveyard}}
+: {{api|t=a|GetArmorPenetration}}
+: {{api|t=a|GetCritChanceFromStat}}
+: {{api|t=a|GetEvictionTimeRemaining}}
+: {{api|t=a|GetHealthRegenFromSpirit}}
+: {{api|t=a|GetHealthRegen}}
+: {{api|t=a|GetManaRegenFromSpirit}}
+: {{api|t=a|GetNextAvailableRaidTargetMarkerIndex}}
+: {{api|t=a|GetPetHitChanceModifier}}
+: {{api|t=a|GetPetSpellHitChanceModifier}}
+: {{api|t=a|GetRangedAttackPowerForStat}}
+: {{api|t=a|GetRangedHitModifier}}
+: {{api|t=a|GetSpellCritChanceFromStat}}
+: {{api|t=a|GetTextureMetatable}}
+: {{api|t=a|PlatformIsHandheld}}
+: {{api|t=a|ReagentsFromBankAllowed}}
+: {{api|t=a|RegionalUniqueNamesEnabled}}
+: {{api|t=a|SetPreferredGamepadInteractTarget}}
+: {{api|t=a|ShouldDisplayRaidRolesInSocialFrame}}
+: {{api|t=a|ShouldDisplayStoryModeTooltipInSocialFrame}}
+: {{api|t=a|ToggleSit}}
+: {{api|t=a|UIReload}}
+: {{api|t=a|UnitDefenseSkill}}
+: {{api|t=a|UnitHasEffectivelyTankAura}}
+: {{api|t=a|UnitHasLootInteraction}}
+: {{api|t=a|UnitHasMouseoverHighlight}}
+: {{api|t=a|UnitIsInInteractRange}}
+: {{api|t=a|UnitResistance}}
+: 🆕 {{api|t=a|UnitUsesAmmo}}
+: {{api|t=a|require}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AbandonSkill}}
+: {{api|t=a|BNSetBlocked}}
+: {{api|t=a|C_PaperDollInfo.CanCursorCanGoInSlot}}
+: {{api|t=a|C_PvP.GetRandomTrainingGroundRewards}}
+: {{api|t=a|C_PvP.HasRandomTrainingGroundWinToday}}
+: {{api|t=a|C_PvP.JoinRandomTrainingGroundBattleground}}
+: {{api|t=a|C_TransmogOutfitInfo.GetWeaponOptionsForSlot}}
+: {{api|t=a|C_TransmogOutfitInfo.SetViewedWeaponOptionForSlot}}
+: {{api|t=a|GetPetFoodTypes}}
+: {{api|t=a|SetBarSlotFromIntro}}
+</div>
+|}
+
+===FrameXML===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-framexml"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(471)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1041)</small>
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-framexml"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{tlygo|AchievementFrame_GetOverridePoints}}
+: {{tlygo|AchievementFrame_SetDateCompleted}}
+: {{tlygo|AchievementFrame_ShowAsComplete}}
+: {{tlygo|AchievementFrame_ShowDateCompleted}}
+: {{tlygo|ActionButtonUtil.GetActionBarStatusForFlyoutFromGamepadBars}}
+: {{tlygo|ActionButtonUtil.GetActionBarStatusForPetActionFromGamepadBars}}
+: {{tlygo|ActionButtonUtil.GetActionBarStatusForSpellFromGamepadBars}}
+: {{tlygo|ActionButtonUtil.GetActionBarStatusFromMkbBars}}
+: {{tlygo|ActionButtonUtil.GetMkbActionBarsForFlyout}}
+: {{tlygo|ActionButtonUtil.GetMkbActionBarsForPetAction}}
+: {{tlygo|ActionButtonUtil.GetMkbActionBarsForSpell}}
+: {{tlygo|ActionButtonUtil.IsSpellOnAnyActiveMkbActionBar}}
+: {{tlygo|ChangeMultiCastActionPage}}
+: {{tlygo|CharacterCritChanceFrame_OnEnter}}
+: {{tlygo|CharacterDefenseFrame_OnEnter}}
+: {{tlygo|CharacterFrame_GetTab}}
+: {{tlygo|CharacterHasteFrame_OnEnter}}
+: {{tlygo|CharacterHitFrame_OnEnter}}
+: {{tlygo|ChatFrameUtil.GetTabAlphas}}
+: {{tlygo|ChatFrameUtil.IsTabAlerting}}
+: {{tlygo|ChatFrameUtil.SetTabAlerting}}
+: {{tlygo|ChatFrameUtil.SetTabAlphas}}
+: {{tlygo|ChatFrameUtil.StartFlash}}
+: {{tlygo|ChatFrameUtil.StartSyncedFlash}}
+: {{tlygo|ChatFrameUtil.StopFlash}}
+: {{tlygo|CheckHardcoreGuildLeadStatus}}
+: {{tlygo|ClassTalentUtil.GetSpendSoundKitID}}
+: {{tlygo|ClassTrainerFrame_InitCategoryButton}}
+: {{tlygo|ClassTrainerFrame_UpdateTrainingPoints}}
+: {{tlygo|CollectionsJournal_CheckAndDisplayTabs}}
+: {{tlygo|CollectionsJournal_ClickTab}}
+: {{tlygo|CollectionsJournal_GetTab_Internal}}
+: {{tlygo|CollectionsJournal_HideTab_Internal}}
+: {{tlygo|CollectionsJournal_OnLoad}}
+: {{tlygo|CollectionsJournal_SearchBox_OnLoad}}
+: {{tlygo|CollectionsJournal_SetNumTabs_Internal}}
+: {{tlygo|CollectionsJournal_SetTab_Internal}}
+: {{tlygo|CollectionsJournal_ShowTab_Internal}}
+: {{tlygo|CollectionsMicroButton_CanAlertBeShown}}
+: {{tlygo|CollectionsUtil.IsJournalDisabled}}
+: {{tlygo|CollectionWardrobeUtil.CompareAppearance}}
+: {{tlygo|ColorPickerSoftCursor_OnUpdate}}
+: {{tlygo|CombatAudioAlertUtil.EnumeratePulseHealthPercentInfo}}
+: {{tlygo|CombatAudioAlertUtil.GetCurrentPulseHealthPercentInfo}}
+: {{tlygo|CombatAudioAlertUtil.GetPulseHealthPercentInfo}}
+: {{tlygo|CombatAudioAlertUtil.GetPulseHealthSoundKit}}
+: {{tlygo|CombatAudioAlertUtil.SetPulseHealthSoundKit}}
+: {{tlygo|CombatText_UpdateDisplayedMessages}}
+: {{tlygo|ComboFrame_ApplyOverrides}}
+: {{tlygo|CommunitiesFrame_ShouldDisplayPersonalAchievements}}
+: {{tlygo|CommunitiesGuildPreferredPlaySettingsFrame_OnDatacenterApplyButtonClick}}
+: {{tlygo|CommunitiesGuildPreferredPlaySettingsFrame_OnDatacenterApplyButtonEnter}}
+: {{tlygo|CommunitiesGuildPreferredPlaySettingsFrame_OnDatacenterApplyButtonLeave}}
+: {{tlygo|CommunitiesGuildPreferredPlaySettingsFrame_OnLocaleApplyButtonClick}}
+: {{tlygo|CommunitiesGuildPreferredPlaySettingsFrame_OnLocaleApplyButtonEnter}}
+: {{tlygo|CommunitiesGuildPreferredPlaySettingsFrame_OnLocaleApplyButtonLeave}}
+: {{tlygo|CompactRaidFrameManager_InitializeGamepad}}
+: {{tlygo|CompactRaidFrameManager_RefreshGroundTargetingBinding}}
+: {{tlygo|CompactRaidFrameManager_RefreshOpenBinding}}
+: {{tlygo|CompactRaidFrameManager_RefreshSmartNavJumps}}
+: {{tlygo|CompactRaidFrameManager_RegisterForTransitions}}
+: {{tlygo|CompactRaidFrameManager_SetupExpandBinding}}
+: {{tlygo|CompactRaidFrameManager_SetupFrameFooter}}
+: {{tlygo|CompactRaidFrameManager_SetupGamepad}}
+: {{tlygo|CompactRaidFrameManager_SetupGroundTargetingBinding}}
+: {{tlygo|ContainerFrame_AddButtons_BagCleanup}}
+: {{tlygo|ContainerFrame_AddButtons_BagFilters}}
+: {{tlygo|ContainerFrame_UpdatePortraitPosition}}
+: {{tlygo|DifficultyUtil.HasAnyUserSelectableDifficulties}}
+: {{tlygo|DressUpFrames_UsesClassBackgrounds}}
+: {{tlygo|DumpGamepadBindingsToClipboard}}
+: {{tlygo|DumpGamepadBindingsToWindow}}
+: {{tlygo|EditModeUtil.CalculateCenterManagedSystemWidth}}
+: {{tlygo|EditModeUtil.GetBottomActionBarHierarchy}}
+: {{tlygo|EditModeUtil.GetBottomActionBars}}
+: {{tlygo|EditModeUtil.GetCenterManagedSystems}}
+: {{tlygo|EditModeUtil.IsCenterManagedFrame}}
+: {{tlygo|EquipmentFlyoutPopoutButton_OnStateChanged}}
+: {{tlygo|EquipmentFlyoutPopoutButton_RefreshVisualState}}
+: {{tlygo|ExpectedSpellResistance}}
+: {{tlygo|Expertise_OnEnter}}
+: {{tlygo|FCFTab_GetChatTabByID}}
+: {{tlygo|FrameUtil.GetScreenQuadrant}}
+: {{tlygo|FriendsListUtil.CanAddFriendRequestSenderToBattleNetBlockList}}
+: {{tlygo|GamepadActionBarBindingUtil.AssignActionToGamepadPossessBarSlot}}
+: {{tlygo|GamepadActionBarBindingUtil.AssignActionToGamepadStandardSlot}}
+: {{tlygo|GamepadActionBarBindingUtil.ClearActionFromGamepadSlot}}
+: {{tlygo|GamepadActionBarBindingUtil.GetGamepadStorageSlotIndexFromPageAndPageUnitSlotID}}
+: {{tlygo|GamepadActionBarBindingUtil.GetUnbindErrorMessage}}
+: {{tlygo|GamepadActionBarBindingUtil.IsBindablePageUnitSlotID}}
+: {{tlygo|GamepadActionBarBindingUtil.IsReservedPageUnitSlotID}}
+: {{tlygo|GamepadActionBarBindingUtil.IsStandardGamepadPageNum}}
+: {{tlygo|GamepadActionBarBindingUtil.IsValidGamepadPageNumber}}
+: {{tlygo|GamepadActionBarBindingUtil.IsValidGamepadPageUnitSlotID}}
+: {{tlygo|GamepadActionBarStyleUtil.ApplyCollapsedActionBarStyle}}
+: {{tlygo|GamepadActionBarStyleUtil.ApplyExpandedActionBarStyle}}
+: {{tlygo|GamepadActionBarStyleUtil.ApplyExtraButtonStyles}}
+: {{tlygo|GamepadGroupLootFrame_SetupGamepad}}
+: {{tlygo|GameTooltip_AddLineWithInputIcon}}
+: {{tlygo|GearSetButton_OnDoubleClick}}
+: {{tlygo|GearSetButton_OnDrag}}
+: {{tlygo|GetBackgroundTexCoordsForRole}}
+: {{tlygo|GetBagIDFromBankTypeAndSlot}}
+: {{tlygo|GetBindWarning}}
+: {{tlygo|GetBossPortraitFrameData}}
+: {{tlygo|GetDeathStaticPopup}}
+: {{tlygo|GetGeneralPlaystyleString}}
+: {{tlygo|GetKeyRingSize}}
+: {{tlygo|GetNextFriendlyRaidTargetMarkerIndex}}
+: {{tlygo|GetNextHostileRaidTargetMarkerIndex}}
+: {{tlygo|GetRaceAtlas}}
+: {{tlygo|GetTexCoordsForRoleSmallCircle}}
+: {{tlygo|GetTexCoordsForRoleSmall}}
+: {{tlygo|GetTexCoordsForRole}}
+: {{tlygo|GroupFinderVanillaStyle_LoadUI}}
+: {{tlygo|GroupLootContainer_InitGamepad}}
+: {{tlygo|GroupLootContainer_RefreshRolls}}
+: {{tlygo|GroupLootContainer_RemoveAllRolls}}
+: {{tlygo|GroupLootContainer_UninitGamepad}}
+: {{tlygo|GroupLootFrame_SetupItemDisplay}}
+: {{tlygo|GroupLootFrameIconFrame_OnEnter}}
+: {{tlygo|HasMultiCastActionBar}}
+: {{tlygo|HasMultiCastActionPage}}
+: {{tlygo|InputUtil.GetAnchorPositionAtCursor}}
+: {{tlygo|InputUtil.GetCurrentInterfaceStyle}}
+: {{tlygo|InputUtil.IsGamepadUIEnabled}}
+: {{tlygo|InputUtil.IsGamepadUISupported}}
+: {{tlygo|InputUtil.IsMKBUIEnabled}}
+: {{tlygo|InputUtil.RegisterForHighPrioInterfaceTransitions}}
+: {{tlygo|InputUtil.RegisterForInterfaceTransitions}}
+: {{tlygo|InputUtil.RegisterGamepadDeviceConnectedCallback}}
+: {{tlygo|InputUtil.RegisterGamepadInit}}
+: {{tlygo|InputUtil.RegisterGamepadSetup}}
+: {{tlygo|InputUtil.RegisterGamepadUninit}}
+: {{tlygo|InputUtil.RegisterInterfaceTransitionCallback}}
+: {{tlygo|InputUtil.RegisterMKBInit}}
+: {{tlygo|InputUtil.RegisterMKBSetup}}
+: {{tlygo|InputUtil.RegisterMKBUninit}}
+: {{tlygo|InputUtil.Transition}}
+: {{tlygo|InspectFrame_GetGuildTabIndex}}
+: {{tlygo|InspectFrame_GetPaperDollTabIndex}}
+: {{tlygo|InspectGuildFrame_ShowPoints}}
+: {{tlygo|InspectGuildFrame_ShowRealm}}
+: {{tlygo|ItemButtonUtil.ClearPendingItemSelectionSource}}
+: {{tlygo|ItemButtonUtil.ConsumePendingItemSelectionSource}}
+: {{tlygo|ItemButtonUtil.GetPendingItemSelectionSource}}
+: {{tlygo|ItemButtonUtil.IsItemSelectionSourceTrackingEnabled}}
+: {{tlygo|ItemButtonUtil.MarkItemSelectionFromActionBarItem}}
+: {{tlygo|ItemButtonUtil.MarkItemSelectionFromBag}}
+: {{tlygo|ItemButtonUtil.ShouldOpenBagsForEnchantSelection}}
+: {{tlygo|ItemButtonUtil.ShouldOpenCharacterFrameForEnchantSelection}}
+: {{tlygo|ItemTextFrame_NextPageOnClick}}
+: {{tlygo|ItemTextFrame_PrevPageOnClick}}
+: {{tlygo|Kiosk_HandlePlayerEnteringWorld}}
+: {{tlygo|LegacyChallengeViewedUtil.CategoryHasUnviewedChallenges}}
+: {{tlygo|LegacyChallengeViewedUtil.HasAnyUnviewedChallenges}}
+: {{tlygo|LegacyChallengeViewedUtil.MarkCategoryViewed}}
+: {{tlygo|LegacyChallengeViewedUtil.SignalUnviewedChallengesUpdated}}
+: {{tlygo|LegacySystemFrame_LoadUI}}
+: {{tlygo|LFGBrowse_DoSearch}}
+: {{tlygo|LFGBrowseActivityDropDownResetButton_OnClick}}
+: {{tlygo|LFGBrowseCategoryButton_OnClick}}
+: {{tlygo|LFGBrowseGroupDataDisplay_Update}}
+: {{tlygo|LFGBrowseGroupDataDisplayComment_Update}}
+: {{tlygo|LFGBrowseGroupDataDisplayEnumerate_Update}}
+: {{tlygo|LFGBrowseGroupDataDisplayPlayerCount_Update}}
+: {{tlygo|LFGBrowseGroupDataDisplayRoleCount_Update}}
+: {{tlygo|LFGBrowseGroupDataDisplaySolo_Update}}
+: {{tlygo|LFGBrowseSearchButton_OnClick}}
+: {{tlygo|LFGBrowseSearchEntry_Init}}
+: {{tlygo|LFGBrowseSearchEntry_OnClick}}
+: {{tlygo|LFGBrowseSearchEntry_OnEnter}}
+: {{tlygo|LFGBrowseSearchEntry_OnEvent}}
+: {{tlygo|LFGBrowseSearchEntry_OnLeave}}
+: {{tlygo|LFGBrowseSearchEntry_OnLoad}}
+: {{tlygo|LFGBrowseSearchEntry_SetSelection}}
+: {{tlygo|LFGBrowseSearchEntry_Update}}
+: {{tlygo|LFGBrowseSearchEntryTooltip_Load}}
+: {{tlygo|LFGBrowseSearchEntryTooltip_UpdateAndShow}}
+: {{tlygo|LFGBrowseUtil_GetBestDisplayTypeForActivityIDs}}
+: {{tlygo|LFGBrowseUtil_GetInviteActionForResult}}
+: {{tlygo|LFGBrowseUtil_MapRoleStatesToRoleIcons}}
+: {{tlygo|LFGBrowseUtil_ReportAdvertisement}}
+: {{tlygo|LFGBrowseUtil_ReportListing}}
+: {{tlygo|LFGBrowseUtil_SortSearchResults}}
+: {{tlygo|LFGListingActivityView_ActivityFiltersChanged}}
+: {{tlygo|LFGListingActivityView_CanPostWithCurrentComment}}
+: {{tlygo|LFGListingActivityView_InitActivityButton}}
+: {{tlygo|LFGListingActivityView_InitActivityGroupButton}}
+: {{tlygo|LFGListingActivityView_OnLoad}}
+: {{tlygo|LFGListingActivityView_OnPlayStyleSelectedInternal}}
+: {{tlygo|LFGListingActivityView_OnShow}}
+: {{tlygo|LFGListingActivityView_SetupPlayStyleDropdown}}
+: {{tlygo|LFGListingActivityView_UpdateActivities}}
+: {{tlygo|LFGListingBackButton_OnClick}}
+: {{tlygo|LFGListingBackButton_OnEvent}}
+: {{tlygo|LFGListingBackButton_OnLoad}}
+: {{tlygo|LFGListingBackButton_UpdateText}}
+: {{tlygo|LFGListingCategorySelection_ActivityFiltersChanged}}
+: {{tlygo|LFGListingCategorySelection_AddButton}}
+: {{tlygo|LFGListingCategorySelection_OnShow}}
+: {{tlygo|LFGListingCategorySelection_UpdateCategoryButtons}}
+: {{tlygo|LFGListingCategorySelectionButton_OnClick}}
+: {{tlygo|LFGListingComment_GetComment}}
+: {{tlygo|LFGListingComment_OnMouseDown}}
+: {{tlygo|LFGListingComment_OnTextChanged}}
+: {{tlygo|LFGListingLockedView_OnEvent}}
+: {{tlygo|LFGListingLockedView_OnLoad}}
+: {{tlygo|LFGListingLockedView_RefreshContent}}
+: {{tlygo|LFGListingLockedView_SafeAcquireFrame}}
+: {{tlygo|LFGListingLockedView_SetLineContent}}
+: {{tlygo|LFGListingNewPlayerFriendlyButtonCheckButton_OnClick}}
+: {{tlygo|LFGListingNewPlayerFriendlyButtonCheckButton_OnShow}}
+: {{tlygo|LFGListingPostButton_OnClick}}
+: {{tlygo|LFGListingPostButton_OnEvent}}
+: {{tlygo|LFGListingPostButton_OnLoad}}
+: {{tlygo|LFGListingPostButton_UpdateText}}
+: {{tlygo|LFGListingRoleDropdown_SetupDropdown}}
+: {{tlygo|LFGListingRoleIcon_UpdateRoleTexture}}
+: {{tlygo|LFGListingRolePollButton_OnClick}}
+: {{tlygo|LFGListingRolePollButton_OnEvent}}
+: {{tlygo|LFGListingRolePollButton_OnLoad}}
+: {{tlygo|LFGListingRolePollButton_UpdateEnableState}}
+: {{tlygo|LFGListingUtil_CanEditListing}}
+: {{tlygo|LFGParentFrame_SearchActiveEntry}}
+: {{tlygo|LFGParentFrameTab1_OnClick}}
+: {{tlygo|LFGParentFrameTab2_OnClick}}
+: {{tlygo|LFGParentFrameTab3_OnClick}}
+: {{tlygo|LFGUtil_GetActivityGroupForActivity}}
+: {{tlygo|LFGUtil_GetActivityInfoName}}
+: {{tlygo|LFGUtil_GetFilteredActivities}}
+: {{tlygo|LFGUtil_OrganizeActivitiesByActivityGroup}}
+: {{tlygo|LFGUtil_SortActivityGroupIDs}}
+: {{tlygo|LFGUtil_SortActivityIDs}}
+: {{tlygo|LFGVanilla_ShowFrame}}
+: {{tlygo|LFGVanilla_ToggleFrame}}
+: {{tlygo|LFGWhoListFilterUtil.GetTopMostMapID}}
+: {{tlygo|LFGWhoListFilterUtil.GetTopMostUIMapType}}
+: {{tlygo|LFGWhoListFilterUtil.GetWhoFilters}}
+: {{tlygo|LFGWhoListFilterUtil.InitClassFilters}}
+: {{tlygo|LFGWhoListFilterUtil.InitMapFilters}}
+: {{tlygo|LFGWhoListFilterUtil.InitRaceFilters}}
+: {{tlygo|LFGWhoListFilterUtil.InitSortOptions}}
+: {{tlygo|LFGWhoListFilterUtil.MapHasSelectableChildren}}
+: {{tlygo|LFGWhoListFilterUtil.ResetFilters}}
+: {{tlygo|LFGWhoListFilterUtil.SetAllClassesFiltered}}
+: {{tlygo|LFGWhoListFilterUtil.SetAllMapsFiltered}}
+: {{tlygo|LFGWhoListFilterUtil.SetAllRacesFiltered}}
+: {{tlygo|LFGWhoListFilterUtil.SetupFilterMenu}}
+: {{tlygo|MainActionBar_InitializeGamepad}}
+: {{tlygo|MainActionBar_InitializeMKB}}
+: {{tlygo|MainActionBar_UnInitializeMKB}}
+: {{tlygo|MasterLooterFrame_SelectLootRecipient}}
+: {{tlygo|MasterLooterPlayerButton_OnClick}}
+: {{tlygo|MasterLooterPlayerButton_OnEnter}}
+: {{tlygo|MasterLooterPlayerButton_OnLeave}}
+: {{tlygo|MasterLooterPlayerButton_OnMouseDown}}
+: {{tlygo|MasterLooterPlayerButton_OnMouseUp}}
+: {{tlygo|MenuUtil.CreateRedHighlightButton}}
+: {{tlygo|MenuUtil.CreateSearchEntry}}
+: {{tlygo|MerchantFrame_InitializeGamepad}}
+: {{tlygo|MerchantFrame_RegisterTransitions}}
+: {{tlygo|MerchantFrame_SetupGamepad}}
+: {{tlygo|MerchantFrame_UninitializeGamepad}}
+: {{tlygo|MerchantItemButton_BuyMultipleStacks}}
+: {{tlygo|MerchantRepairItemButton_OnClick}}
+: {{tlygo|MinimapButton_OnMouseDown}}
+: {{tlygo|MinimapButton_OnMouseUp}}
+: {{tlygo|ModelSceneUtil.SetPlayerActor}}
+: {{tlygo|MultiCastActionBarFrame_OnEvent}}
+: {{tlygo|MultiCastActionBarFrame_OnLoad}}
+: {{tlygo|MultiCastActionBarFrame_OnUpdate}}
+: {{tlygo|MultiCastActionBarFrame_Update}}
+: {{tlygo|MultiCastActionButton_OnEnter}}
+: {{tlygo|MultiCastActionButton_OnEvent}}
+: {{tlygo|MultiCastActionButton_OnLeave}}
+: {{tlygo|MultiCastActionButton_OnLoad}}
+: {{tlygo|MultiCastActionButton_OnPostClick}}
+: {{tlygo|MultiCastActionButton_OnShow}}
+: {{tlygo|MultiCastActionButton_Update}}
+: {{tlygo|MultiCastActionButtonDown}}
+: {{tlygo|MultiCastActionButtonUp}}
+: {{tlygo|MultiCastFlyoutButton_OnClick}}
+: {{tlygo|MultiCastFlyoutButton_OnEnter}}
+: {{tlygo|MultiCastFlyoutButton_OnLeave}}
+: {{tlygo|MultiCastFlyoutButton_OnLoad}}
+: {{tlygo|MultiCastFlyoutButton_SetTooltip}}
+: {{tlygo|MultiCastFlyoutFrame_Hide}}
+: {{tlygo|MultiCastFlyoutFrame_LoadPageSpells}}
+: {{tlygo|MultiCastFlyoutFrame_LoadSlotSpells}}
+: {{tlygo|MultiCastFlyoutFrame_OnEnter}}
+: {{tlygo|MultiCastFlyoutFrame_OnHide}}
+: {{tlygo|MultiCastFlyoutFrame_OnLeave}}
+: {{tlygo|MultiCastFlyoutFrame_OnShow}}
+: {{tlygo|MultiCastFlyoutFrame_OnUpdate}}
+: {{tlygo|MultiCastFlyoutFrame_ToggleFlyout}}
+: {{tlygo|MultiCastFlyoutFrameCloseButton_OnClick}}
+: {{tlygo|MultiCastFlyoutFrameOpenButton_Hide}}
+: {{tlygo|MultiCastFlyoutFrameOpenButton_OnClick}}
+: {{tlygo|MultiCastFlyoutFrameOpenButton_OnLeave}}
+: {{tlygo|MultiCastFlyoutFrameOpenButton_Show}}
+: {{tlygo|MultiCastRecallSpellButton_OnClick}}
+: {{tlygo|MultiCastRecallSpellButton_OnLoad}}
+: {{tlygo|MultiCastRecallSpellButton_Update}}
+: {{tlygo|MultiCastRecallSpellButtonUp}}
+: {{tlygo|MultiCastSlotButton_OnEnter}}
+: {{tlygo|MultiCastSlotButton_OnEvent}}
+: {{tlygo|MultiCastSlotButton_OnLeave}}
+: {{tlygo|MultiCastSlotButton_Update}}
+: {{tlygo|MultiCastSpellButton_OnEnter}}
+: {{tlygo|MultiCastSpellButton_OnEvent}}
+: {{tlygo|MultiCastSpellButton_OnLeave}}
+: {{tlygo|MultiCastSpellButton_OnLoad}}
+: {{tlygo|MultiCastSpellButton_SetTooltip}}
+: {{tlygo|MultiCastSpellButton_UpdateCooldown}}
+: {{tlygo|MultiCastSpellButton_UpdateState}}
+: {{tlygo|MultiCastSummonSpellButton_OnClick}}
+: {{tlygo|MultiCastSummonSpellButton_OnEnter}}
+: {{tlygo|MultiCastSummonSpellButton_OnEvent}}
+: {{tlygo|MultiCastSummonSpellButton_OnLeave}}
+: {{tlygo|MultiCastSummonSpellButton_OnLoad}}
+: {{tlygo|MultiCastSummonSpellButton_Update}}
+: {{tlygo|MultiCastSummonSpellButtonUp}}
+: {{tlygo|NameUtil.FormatUnitNameForDisplay}}
+: {{tlygo|NameUtil.GetFullNameWithoutRealm}}
+: {{tlygo|NameUtil.GetUnitFirstName}}
+: {{tlygo|NameUtil.GetUnmodifiedUnitFullName}}
+: {{tlygo|NameUtil.IsPlayerMe}}
+: {{tlygo|NameUtil.SplitPlayerNameIntoParts}}
+: {{tlygo|NavBar_GetButton}}
+: {{tlygo|NavBar_GetNumButtons}}
+: {{tlygo|NineSliceUtil.UpdateCornerCropping}}
+: {{tlygo|PaperDollAmmoSlotButton_OnLoad}}
+: {{tlygo|PaperDollAmmoSlotButton_OnShow}}
+: {{tlygo|PaperDollEquipmentManagerPaneNewSet_OnClick}}
+: {{tlygo|PaperDollFrame_ExpertiseOnEnter}}
+: {{tlygo|PaperDollFrame_GetDamage}}
+: {{tlygo|PaperDollFrame_OnModelLoaded}}
+: {{tlygo|PaperDollFrame_SetArmorPenetration}}
+: {{tlygo|PaperDollFrame_SetDefense}}
+: {{tlygo|PaperDollFrame_SetDodgeTooltip2}}
+: {{tlygo|PaperDollFrame_SetDodgeTooltip}}
+: {{tlygo|PaperDollFrame_SetExpertise}}
+: {{tlygo|PaperDollFrame_SetHitChance}}
+: {{tlygo|PaperDollFrame_SetMainhandDamage}}
+: {{tlygo|PaperDollFrame_SetOffhandDamage}}
+: {{tlygo|PaperDollFrame_SetOnEnter}}
+: {{tlygo|PaperDollFrame_SetParryTooltip2}}
+: {{tlygo|PaperDollFrame_SetParryTooltip}}
+: {{tlygo|PaperDollFrame_SetPetLevel}}
+: {{tlygo|PaperDollFrame_SetPet}}
+: {{tlygo|PaperDollFrame_SetRangedAttackPower}}
+: {{tlygo|PaperDollFrame_SetRangedDamage}}
+: {{tlygo|PaperDollFrame_SetResistanceTooltips}}
+: {{tlygo|PaperDollFrame_SetResistance}}
+: {{tlygo|PaperDollFrame_SetSpellHealing}}
+: {{tlygo|PaperDollFrame_SetSpellPenetration}}
+: {{tlygo|PaperDollFrame_SetStatTooltip2}}
+: {{tlygo|PaperDollFrame_SetStatTooltip}}
+: {{tlygo|PaperDollFrame_SetWeaponSkill}}
+: {{tlygo|PaperDollFrame_ShowFlightSpeed}}
+: {{tlygo|PaperDollFrame_ShowSidebar}}
+: {{tlygo|PaperDollFrame_UpdateSidebarTabLayout}}
+: {{tlygo|PaperDollFrame_UpdateStatsInternal}}
+: {{tlygo|PaperDollItemSlotButton_OnDragStart}}
+: {{tlygo|PaperDollItemSlotButton_OnModifableClick}}
+: {{tlygo|PaperDollItemSlotButton_OnReceiveDrag}}
+: {{tlygo|PaperDollItemSlotButton_OnUpdate}}
+: {{tlygo|PetJournalDragButton_OnClick}}
+: {{tlygo|PetJournalDragButton_OnDragStart}}
+: {{tlygo|PetJournalDragButton_OnEnter}}
+: {{tlygo|PetJournalDragButton_OnEvent}}
+: {{tlygo|PetJournalListItem_OnClick}}
+: {{tlygo|PetJournalSummonButton_OnClick}}
+: {{tlygo|PlayerFrame_GetLevelRGBA}}
+: {{tlygo|PlayerFrame_GetPvPIndicatorElements}}
+: {{tlygo|PlayerFrame_HidePvPFrames}}
+: {{tlygo|PlayerFrame_OnLoadBase}}
+: {{tlygo|PlayerFrame_ShowPrestigeWithAtlas}}
+: {{tlygo|PlayerFrame_ShowPvPIcon}}
+: {{tlygo|PlayerFrame_ShowRoleIconInsideInstances}}
+: {{tlygo|PlayerFrame_UpdatePvPTimerText}}
+: {{tlygo|PutKeyInKeyRing}}
+: {{tlygo|PVP_TryQueueForBattlefield}}
+: {{tlygo|PvPObjectiveBannerFrame_OnAnimFinished}}
+: {{tlygo|PvPObjectiveBannerFrame_PlayBanner}}
+: {{tlygo|PvPObjectiveBannerFrame_StopBanner}}
+: {{tlygo|QuestFrame_ActivateRewardsCursor}}
+: {{tlygo|QuestFrame_GeneralProgressAction}}
+: {{tlygo|QuestFrame_InitializeGamepad}}
+: {{tlygo|QuestFrame_RegisterForTransitions}}
+: {{tlygo|QuestFrame_SelectFocusedButton}}
+: {{tlygo|QuestFrame_SetupGamepad}}
+: {{tlygo|QuestFrame_UninitializeGamepad}}
+: {{tlygo|QuestFrameDetailPanel_OnHide}}
+: {{tlygo|QuestFrameDetailPanel_OnUpdate}}
+: {{tlygo|QuestInfo_FadeInAlphaDependentText}}
+: {{tlygo|QuestInfo_HideAlphaDependentText}}
+: {{tlygo|QuestInfo_ShowAlphaDependentText}}
+: {{tlygo|QuestInfoItem_IsSelected}}
+: {{tlygo|QuestLogQuests_GetQuestButton}}
+: {{tlygo|QuestLogQuests_ShowQuestCount}}
+: {{tlygo|QuestMapLogHeaderButton_CreateContextMenu}}
+: {{tlygo|QuestMapWaypoint_CreateContextMenu}}
+: {{tlygo|QuestUtil.IsQuestTagIconHidden}}
+: {{tlygo|RecentAlliesUtil.GetBestDisplayNameForCharacter}}
+: {{tlygo|RecentAlliesUtil.GetLabelForInteractionCategoryFilter}}
+: {{tlygo|RecentAlliesUtil.GetSupportedInteractionCategoryFiltersForCurrentGameType}}
+: {{tlygo|ResolveAnchor}}
+: {{tlygo|RolePollPopup_InitializeGamepad}}
+: {{tlygo|RolePollPopup_OnHide}}
+: {{tlygo|RolePollPopup_RegisterForTransitions}}
+: {{tlygo|RolePollPopup_SetupGamepad}}
+: {{tlygo|SearchBagsForFirstItem}}
+: {{tlygo|SetLookingForGroupUIAvailable}}
+: {{tlygo|SetQuestTitleLevelAndDifficultyColor}}
+: {{tlygo|ShouldRestedXpBarDisplayWhenOverflowing}}
+: {{tlygo|ShouldShowBattlePetIcon}}
+: {{tlygo|ShouldShowStar}}
+: {{tlygo|ShouldUseSilverUnitFrame}}
+: {{tlygo|ShowHardcoreGuildHandoff}}
+: {{tlygo|SmartNavigation_AddBidirectionalJumpNavigationOverride}}
+: {{tlygo|SmartNavigation_AddIgnoreInputNavigationOverride}}
+: {{tlygo|SmartNavigation_AddJumpNavigationOverride}}
+: {{tlygo|SmartNavigation_CallOutgoingDirNavigationCallbacks}}
+: {{tlygo|SmartNavigation_CanFocusFrame}}
+: {{tlygo|SmartNavigation_ClearIgnoreStatus}}
+: {{tlygo|SmartNavigation_ClearJumpNavigationOverridesInDirection}}
+: {{tlygo|SmartNavigation_ClearJumpNavigationOverrides}}
+: {{tlygo|SmartNavigation_GetNavigationOverrideFrame}}
+: {{tlygo|SmartNavigation_IsCurrentButtonClickable}}
+: {{tlygo|SmartNavigation_IsFrameBlockingSmartNavClick}}
+: {{tlygo|SmartNavigation_IsFrameFocusable}}
+: {{tlygo|SmartNavigation_IsFrameIgnored}}
+: {{tlygo|SmartNavigation_IsFrameNonCollapsingScrollBoxElement}}
+: {{tlygo|SmartNavigation_IsFrameSubSection}}
+: {{tlygo|SmartNavigation_IsIgnoredContainerFrame}}
+: {{tlygo|SmartNavigation_MarkFrameBlockingSmartNavClick}}
+: {{tlygo|SmartNavigation_MarkFrameFocusable}}
+: {{tlygo|SmartNavigation_MarkFrameIgnoredContainerFrame}}
+: {{tlygo|SmartNavigation_MarkFrameIgnored}}
+: {{tlygo|SmartNavigation_MarkFrameNonCollapsingScrollBoxElement}}
+: {{tlygo|SmartNavigation_MarkFrameSubSection}}
+: {{tlygo|SmartNavigation_MarkScrollFrameMaintainPreviousButtonOnScroll}}
+: {{tlygo|SmartNavigation_RegisterOutgoingDirNavCallback}}
+: {{tlygo|SmartNavigation_RegisterOutgoingNavCallback_MultiDir}}
+: {{tlygo|SmartNavigation_ResetData}}
+: {{tlygo|SmartNavigation_SelectScrollBoxCurrentOrTop}}
+: {{tlygo|SmartNavigation_SetButtonFrame}}
+: {{tlygo|SmartNavigation_SetCustomCursorAnchorPointForFrame}}
+: {{tlygo|SmartNavigation_SetDirectionBufferThreshold}}
+: {{tlygo|SmartNavigation_SetReturnFrameFocusButton}}
+: {{tlygo|SmartNavigation_ShouldScrollFrameMaintainPreviousButtonOnScroll}}
+: {{tlygo|SmartNavigation_UseVerticalCursorForFrame}}
+: {{tlygo|SocialUIUtil.GetSupportedBattleNetFriendTagInterestsForCurrentGameType}}
+: {{tlygo|SocialUIUtil.GetSupportedBattleNetFriendTagRolesForCurrentGameType}}
+: {{tlygo|SoftCursor_CreateCircleBounds}}
+: {{tlygo|SoftCursor_CreateRectBounds}}
+: {{tlygo|ToggleGroupFinderFrame}}
+: {{tlygo|ToggleLegacySystemUI}}
+: {{tlygo|ToggleLootRollFrame}}
+: {{tlygo|ToyBox_UpdateProgress}}
+: {{tlygo|TrainerUI_UseCategories}}
+: {{tlygo|UnitFrameUtil.GetArenaOpponentSpecDisplayInfo}}
+: {{tlygo|UnitFrameUtil.GetUnitPvPIndicatorDisplayInfo}}
+: {{tlygo|UnitFrameUtil.GetUnitRoleIconDisplayInfo}}
+: {{tlygo|UnitFrameUtil.UpdateArenaOpponentSpecDisplayName}}
+: {{tlygo|UnitFrameUtil.UpdateArenaOpponentSpecDisplay}}
+: {{tlygo|UnitFrameUtil.UpdateUnitFrameRoleIcon}}
+: {{tlygo|UnitFrameUtil.UpdateUnitPvPIndicator}}
+: {{tlygo|UpdateFloatingCombatTextSafe}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{tlygo|build=12.1.5|AccountStoreUtil.AddCurrencyTotalTooltip}}
+: {{tlygo|build=12.1.5|AccountStoreUtil.CloseStaticPopups}}
+: {{tlygo|build=12.1.5|AccountStoreUtil.FormatCurrencyDisplayWithWarning}}
+: {{tlygo|build=12.1.5|AccountStoreUtil.FormatCurrencyDisplay}}
+: {{tlygo|build=12.1.5|AccountStoreUtil.IsCurrencyAtWarningThreshold}}
+: {{tlygo|build=12.1.5|AccountStoreUtil.SetAccountStoreShown}}
+: {{tlygo|build=12.1.5|AccountStoreUtil.ShowDisabledItemInfoTooltip}}
+: {{tlygo|build=12.1.5|AccountStoreUtil.ToggleAccountStore}}
+: {{tlygo|build=12.1.5|ActionButtonUtil.GetActionBarsForFlyout}}
+: {{tlygo|build=12.1.5|ActionButtonUtil.GetActionBarsForPetAction}}
+: {{tlygo|build=12.1.5|ActionButtonUtil.GetActionBarsForSpell}}
+: {{tlygo|build=12.1.5|ActionButtonUtil.GetActionBarStatusFromBars}}
+: {{tlygo|build=12.1.5|ActionButtonUtil.IsSpellOnAnyActiveActionBar}}
+: {{tlygo|build=12.1.5|AdventureJournal_Reward_OnEnter}}
+: {{tlygo|build=12.1.5|AdventureJournal_Reward_OnLeave}}
+: {{tlygo|build=12.1.5|AdventureJournal_Reward_OnMouseDown}}
+: {{tlygo|build=12.1.5|AreMonthlyActivitiesRestricted}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.AddDecorEntryTooltipTitle}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.AddDecorEntryTooltipTrackingText}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.CompareCatalogEntryVariantIDs}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.FormatPrice}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.FormatRefundTime}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.GetEntryNumStored}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.GetEntryQuantity}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.GetEntryTotalOwned}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.GetInsideAndIsInvalidIndoorsOutdoors}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.OpenCatalogShopForProduct}}
+: {{tlygo|build=12.1.5|Blizzard_HousingCatalogUtil.TrackHousingDecorID}}
+: {{tlygo|build=12.1.5|BuildingSizeForTab}}
+: {{tlygo|build=12.1.5|CanShowEncounterJournal}}
+: {{tlygo|build=12.1.5|CanShowHouseFinderTutorial}}
+: {{tlygo|build=12.1.5|ChallengeMode_LoadUI}}
+: {{tlygo|build=12.1.5|ChallengeModeCompleteBanner_OnAnimOutFinished}}
+: {{tlygo|build=12.1.5|ChallengeModeCompleteBanner_OnChallengeModeCompleted}}
+: {{tlygo|build=12.1.5|CharacterFrameCorruption_OnEnter}}
+: {{tlygo|build=12.1.5|CharacterFrameCorruption_OnEvent}}
+: {{tlygo|build=12.1.5|CharacterFrameCorruption_OnLeave}}
+: {{tlygo|build=12.1.5|CharacterFrameCorruption_OnLoad}}
+: {{tlygo|build=12.1.5|CharacterFrameCorruption_UpdateVisibility}}
+: {{tlygo|build=12.1.5|CheckDisabledHelper}}
+: {{tlygo|build=12.1.5|ClassTrial_ConfirmApplyToken}}
+: {{tlygo|build=12.1.5|ClassTrial_IsExpansionTrialUpgradeDialogShowing}}
+: {{tlygo|build=12.1.5|ClassTrial_SetHasAvailableBoost}}
+: {{tlygo|build=12.1.5|ClassTrial_ShowStoreServices}}
+: {{tlygo|build=12.1.5|CollectionsJournal_CheckAndDisplayHeirloomsTab}}
+: {{tlygo|build=12.1.5|CompactArenaFrame_Generate}}
+: {{tlygo|build=12.1.5|ConquestFrame_EvaluateSeasonState}}
+: {{tlygo|build=12.1.5|ConquestFrame_GetSelectedModeRoleShortageBonus}}
+: {{tlygo|build=12.1.5|ConquestFrame_HasActiveSeason}}
+: {{tlygo|build=12.1.5|ConquestFrame_IsQueueingEnabled}}
+: {{tlygo|build=12.1.5|ConquestFrame_OnEvent}}
+: {{tlygo|build=12.1.5|ConquestFrame_OnHide}}
+: {{tlygo|build=12.1.5|ConquestFrame_OnLoad}}
+: {{tlygo|build=12.1.5|ConquestFrame_OnShow}}
+: {{tlygo|build=12.1.5|ConquestFrame_SelectButton}}
+: {{tlygo|build=12.1.5|ConquestFrame_SetPanelTierInfo}}
+: {{tlygo|build=12.1.5|ConquestFrame_UpdateJoinButton}}
+: {{tlygo|build=12.1.5|ConquestFrame_UpdateSeasonFrames}}
+: {{tlygo|build=12.1.5|ConquestFrame_Update}}
+: {{tlygo|build=12.1.5|ConquestFrameButton_OnClick}}
+: {{tlygo|build=12.1.5|ConquestFrameButton_OnEnter}}
+: {{tlygo|build=12.1.5|ConquestFrameJoinButton_OnClick}}
+: {{tlygo|build=12.1.5|CovenantMissionHealAllButton_OnClick}}
+: {{tlygo|build=12.1.5|CovenantMissionHealAllButton_OnEnter}}
+: {{tlygo|build=12.1.5|CovenantMissionHealAllButton_OnLeave}}
+: {{tlygo|build=12.1.5|CovenantMissionPage_OnHide}}
+: {{tlygo|build=12.1.5|CovenantMissionPage_OnShow}}
+: {{tlygo|build=12.1.5|CovenantMissionUpdateBoardTextures}}
+: {{tlygo|build=12.1.5|DefaultBattlegroundReward_HideTooltip}}
+: {{tlygo|build=12.1.5|DefaultBattlegroundReward_ShowTooltip}}
+: {{tlygo|build=12.1.5|EJ_ContentTab_OnClick}}
+: {{tlygo|build=12.1.5|EJ_ContentTab_SelectAppropriateInstanceTab}}
+: {{tlygo|build=12.1.5|EJ_ContentTab_Select}}
+: {{tlygo|build=12.1.5|EJ_ContentTab_SetEnabled}}
+: {{tlygo|build=12.1.5|EJ_HideLootJournalPanel}}
+: {{tlygo|build=12.1.5|EJ_HideNonInstancePanels}}
+: {{tlygo|build=12.1.5|EJ_HideSuggestPanel}}
+: {{tlygo|build=12.1.5|EJ_HideTutorialsPanel}}
+: {{tlygo|build=12.1.5|EJ_ShowLootJournalPanel}}
+: {{tlygo|build=12.1.5|EJ_ShowTutorialPanel}}
+: {{tlygo|build=12.1.5|EJInstanceSelect_UpdateTitle}}
+: {{tlygo|build=12.1.5|EJNAV_GetEncounterList}}
+: {{tlygo|build=12.1.5|EJNAV_GetInstanceList}}
+: {{tlygo|build=12.1.5|EJNAV_RefreshEncounter}}
+: {{tlygo|build=12.1.5|EJNAV_RefreshInstance}}
+: {{tlygo|build=12.1.5|EJNAV_SelectEncounter}}
+: {{tlygo|build=12.1.5|EJNAV_SelectInstance}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_GetDisplayFrame}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_NextSuggestion}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_OnClick}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_OnEvent}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_OnLoad}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_OnMouseWheel}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_OnShow}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_OpenFrame}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_PrevSuggestion}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_RefreshDisplay}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_RefreshRewards}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_SuggestionTextOnEnter}}
+: {{tlygo|build=12.1.5|EJSuggestFrame_UpdateRewards}}
+: {{tlygo|build=12.1.5|EJSuggestTab_GetPlayerTierIndex}}
+: {{tlygo|build=12.1.5|EJTutorialsFrame_OpenFrame}}
+: {{tlygo|build=12.1.5|EncounterItemTemplate_DividerFrameTipOnEnter}}
+: {{tlygo|build=12.1.5|EncounterJournal_AJ_OnUpdate}}
+: {{tlygo|build=12.1.5|EncounterJournal_AnchorExpansionDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_CheckAndDisplayLootJournalViewDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_CheckAndDisplaySuggestedContentTab}}
+: {{tlygo|build=12.1.5|EncounterJournal_CheckAndDisplayTradingPostTab}}
+: {{tlygo|build=12.1.5|EncounterJournal_CleanBullets}}
+: {{tlygo|build=12.1.5|EncounterJournal_ClearChildHeaders}}
+: {{tlygo|build=12.1.5|EncounterJournal_ClearDetails}}
+: {{tlygo|build=12.1.5|EncounterJournal_ClearSearch}}
+: {{tlygo|build=12.1.5|EncounterJournal_DisableExpansionDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_DisplayCreature}}
+: {{tlygo|build=12.1.5|EncounterJournal_DisplayEncounter}}
+: {{tlygo|build=12.1.5|EncounterJournal_DisplayInstance}}
+: {{tlygo|build=12.1.5|EncounterJournal_EnableExpansionDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_ExpansionDropdown_Select}}
+: {{tlygo|build=12.1.5|EncounterJournal_FindCreatureButtonForDisplayInfo}}
+: {{tlygo|build=12.1.5|EncounterJournal_FocusSectionCallback}}
+: {{tlygo|build=12.1.5|EncounterJournal_FocusSection}}
+: {{tlygo|build=12.1.5|EncounterJournal_GetCreatureButton}}
+: {{tlygo|build=12.1.5|EncounterJournal_GetIconAtlasFromFlag}}
+: {{tlygo|build=12.1.5|EncounterJournal_GetIconFlagFromIndex}}
+: {{tlygo|build=12.1.5|EncounterJournal_GetIconIndexFromFlag}}
+: {{tlygo|build=12.1.5|EncounterJournal_GetLootJournalPanels}}
+: {{tlygo|build=12.1.5|EncounterJournal_GetLootJournalView}}
+: {{tlygo|build=12.1.5|EncounterJournal_GetSearchDisplay}}
+: {{tlygo|build=12.1.5|EncounterJournal_HasChangedContext}}
+: {{tlygo|build=12.1.5|EncounterJournal_HideCreatures}}
+: {{tlygo|build=12.1.5|EncounterJournal_HideGreatVaultButton}}
+: {{tlygo|build=12.1.5|EncounterJournal_IsDungeonTabSelected}}
+: {{tlygo|build=12.1.5|EncounterJournal_IsJourneysTabSelected}}
+: {{tlygo|build=12.1.5|EncounterJournal_IsLootTabSelected}}
+: {{tlygo|build=12.1.5|EncounterJournal_IsRaidTabSelected}}
+: {{tlygo|build=12.1.5|EncounterJournal_IsSuggestTabSelected}}
+: {{tlygo|build=12.1.5|EncounterJournal_ListInstances}}
+: {{tlygo|build=12.1.5|EncounterJournal_LoadUI}}
+: {{tlygo|build=12.1.5|EncounterJournal_Loot_OnClick}}
+: {{tlygo|build=12.1.5|EncounterJournal_Loot_OnUpdate}}
+: {{tlygo|build=12.1.5|EncounterJournal_LootCallback}}
+: {{tlygo|build=12.1.5|EncounterJournal_LootUpdate}}
+: {{tlygo|build=12.1.5|EncounterJournal_MoveSectionUpdate}}
+: {{tlygo|build=12.1.5|EncounterJournal_OnClick}}
+: {{tlygo|build=12.1.5|EncounterJournal_OnEvent}}
+: {{tlygo|build=12.1.5|EncounterJournal_OnFilterChanged}}
+: {{tlygo|build=12.1.5|EncounterJournal_OnHide}}
+: {{tlygo|build=12.1.5|EncounterJournal_OnHyperlinkEnter}}
+: {{tlygo|build=12.1.5|EncounterJournal_OnLoad}}
+: {{tlygo|build=12.1.5|EncounterJournal_OnShow}}
+: {{tlygo|build=12.1.5|EncounterJournal_OpenJournal}}
+: {{tlygo|build=12.1.5|EncounterJournal_OpenToJourney}}
+: {{tlygo|build=12.1.5|EncounterJournal_OpenToPowerID}}
+: {{tlygo|build=12.1.5|EncounterJournal_OpenToTieredEntrance}}
+: {{tlygo|build=12.1.5|EncounterJournal_Refresh}}
+: {{tlygo|build=12.1.5|EncounterJournal_ResetDisplay}}
+: {{tlygo|build=12.1.5|EncounterJournal_ResetHeaders}}
+: {{tlygo|build=12.1.5|EncounterJournal_RestartSearchTracking}}
+: {{tlygo|build=12.1.5|EncounterJournal_SearchUpdate}}
+: {{tlygo|build=12.1.5|EncounterJournal_SelectDifficulty}}
+: {{tlygo|build=12.1.5|EncounterJournal_SelectSearch}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetBullets}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetClassAndSpecFilter}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetDescriptionWithBullets}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetFlagIcon}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetLootJournalView}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetSlotFilterInternal}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetSlotFilter}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetTabEnabled}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetTab}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetTooltipWithCompare}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetupDifficultyDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetupExpansionDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetupLootFilterDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetupLootJournalViewDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetupLootSlotFilterDropdown}}
+: {{tlygo|build=12.1.5|EncounterJournal_SetUpOverview}}
+: {{tlygo|build=12.1.5|EncounterJournal_ShiftHeaders}}
+: {{tlygo|build=12.1.5|EncounterJournal_ShowCreatures}}
+: {{tlygo|build=12.1.5|EncounterJournal_ShowFullSearch}}
+: {{tlygo|build=12.1.5|EncounterJournal_ShowGreatVaultButton}}
+: {{tlygo|build=12.1.5|EncounterJournal_ShowSearch}}
+: {{tlygo|build=12.1.5|EncounterJournal_TabClicked}}
+: {{tlygo|build=12.1.5|EncounterJournal_ToggleHeaders}}
+: {{tlygo|build=12.1.5|EncounterJournal_UpdateButtonState}}
+: {{tlygo|build=12.1.5|EncounterJournal_UpdateDifficulty}}
+: {{tlygo|build=12.1.5|EncounterJournal_UpdateFilterString}}
+: {{tlygo|build=12.1.5|EncounterJournal_UpdatePortraits}}
+: {{tlygo|build=12.1.5|EncounterJournal_UpdateSearchPreview}}
+: {{tlygo|build=12.1.5|EncounterJournal_ValidateSelectedTab}}
+: {{tlygo|build=12.1.5|EncounterJournalBossButton_OnClick}}
+: {{tlygo|build=12.1.5|EncounterJournalBossButton_OnEvent}}
+: {{tlygo|build=12.1.5|EncounterJournalBossButton_OnHide}}
+: {{tlygo|build=12.1.5|EncounterJournalBossButton_OnShow}}
+: {{tlygo|build=12.1.5|EncounterJournalBossButton_UpdateDifficultyOverlay}}
+: {{tlygo|build=12.1.5|EncounterJournalBossButtonDefeatedOverlay_OnEnter}}
+: {{tlygo|build=12.1.5|EncounterJournalInstanceButton_OnClick}}
+: {{tlygo|build=12.1.5|EncounterJournalSearchBox_OnEditFocusGained}}
+: {{tlygo|build=12.1.5|EncounterJournalSearchBox_OnHide}}
+: {{tlygo|build=12.1.5|EncounterJournalSearchBox_OnTextChanged}}
+: {{tlygo|build=12.1.5|EncounterJournalSearchBox_OnUpdate}}
+: {{tlygo|build=12.1.5|EncounterJournalSearchBoxSearchProgressBar_OnUpdate}}
+: {{tlygo|build=12.1.5|EncounterJournalSearchBoxShowAllResults_OnEnter}}
+: {{tlygo|build=12.1.5|EncounterTimelineUtil.CreateTrackInterpolator}}
+: {{tlygo|build=12.1.5|EncounterTimelineUtil.CreateTrackOrientation}}
+: {{tlygo|build=12.1.5|EncounterTimelineUtil.GetIndicatorIconMask}}
+: {{tlygo|build=12.1.5|EncounterTimelineUtil.GetViewTypeFromEditMode}}
+: {{tlygo|build=12.1.5|EncounterTimelineUtil.IsTerminalEventState}}
+: {{tlygo|build=12.1.5|EncounterWarningsUtil.GenerateChatMessageIconMarkup}}
+: {{tlygo|build=12.1.5|EncounterWarningsUtil.GetClassColoredTargetName}}
+: {{tlygo|build=12.1.5|EncounterWarningsUtil.GetFontObjectForSeverity}}
+: {{tlygo|build=12.1.5|EncounterWarningsUtil.GetMaximumTextSizeForSeverity}}
+: {{tlygo|build=12.1.5|EncounterWarningsUtil.GetSeverityFromSystemIndex}}
+: {{tlygo|build=12.1.5|EncounterWarningsUtil.ShouldShowFrameForSystem}}
+: {{tlygo|build=12.1.5|EncounterWarningsUtil.ShowChatMessageForWarning}}
+: {{tlygo|build=12.1.5|EquipmentFlyoutPopoutButton_SetReversed}}
+: {{tlygo|build=12.1.5|ExpansionTrial_LoadUI}}
+: {{tlygo|build=12.1.5|FCFClickAnywhereButton_OnEvent}}
+: {{tlygo|build=12.1.5|FCFClickAnywhereButton_OnLoad}}
+: {{tlygo|build=12.1.5|FCFClickAnywhereButton_UpdateState}}
+: {{tlygo|build=12.1.5|FCFDock_OnLoad}}
+: {{tlygo|build=12.1.5|FormatProfession}}
+: {{tlygo|build=12.1.5|Garrison_GetGoldCostString}}
+: {{tlygo|build=12.1.5|Garrison_GetMaterialCostString}}
+: {{tlygo|build=12.1.5|Garrison_GetTotalCostString}}
+: {{tlygo|build=12.1.5|Garrison_LoadUI}}
+: {{tlygo|build=12.1.5|GarrisonBonusArea_Set}}
+: {{tlygo|build=12.1.5|GarrisonBonusEffectFrame_Set}}
+: {{tlygo|build=12.1.5|GarrisonBuilding_HideLevelTooltip}}
+: {{tlygo|build=12.1.5|GarrisonBuilding_ShowLevelTooltip}}
+: {{tlygo|build=12.1.5|GarrisonBuilding_ToggleTutorial}}
+: {{tlygo|build=12.1.5|GarrisonBuildingAddFollowerButton_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonBuildingAddFollowerButton_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonBuildingAddFollowerButton_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFollowerButton_GetFollowerList}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFollowerButton_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFollowerButton_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFollowerButton_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFollowerList_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFollowerList_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_CancelConfirmation}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_ClearConfirmation}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_ClearPlotHighlights}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_ConfirmBuild}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_ConfirmUpgradeGarrison}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_ConfirmUpgrade}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_HighlightPlots}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_StartUpgrade}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_UpdateBuildingList}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_UpdateCurrency}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_UpdateGarrisonInfo}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_UpdatePlots}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrame_UpdateUpgradeButton}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrameComplete_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrameConfirmation_SetContext}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrameLevelIcon_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrameLevelIcon_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrameTimerCancel_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonBuildingFrameTimerCancel_OnConfirm}}
+: {{tlygo|build=12.1.5|GarrisonBuildingInfoBox_OnDragStart}}
+: {{tlygo|build=12.1.5|GarrisonBuildingInfoBox_OnDragStop}}
+: {{tlygo|build=12.1.5|GarrisonBuildingInfoBox_OnUpdate}}
+: {{tlygo|build=12.1.5|GarrisonBuildingInfoBox_ShowBuilding}}
+: {{tlygo|build=12.1.5|GarrisonBuildingInfoBox_ShowEmptyPlot}}
+: {{tlygo|build=12.1.5|GarrisonBuildingInfoBox_ShowFollowerPortrait}}
+: {{tlygo|build=12.1.5|GarrisonBuildingList_SelectBuilding}}
+: {{tlygo|build=12.1.5|GarrisonBuildingList_SelectTab}}
+: {{tlygo|build=12.1.5|GarrisonBuildingList_Show}}
+: {{tlygo|build=12.1.5|GarrisonBuildingListButton_OnDragStart}}
+: {{tlygo|build=12.1.5|GarrisonBuildingListButton_OnDragStop}}
+: {{tlygo|build=12.1.5|GarrisonBuildingListButton_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonBuildingListButton_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonBuildingListButton_OnMouseDown}}
+: {{tlygo|build=12.1.5|GarrisonBuildingListButton_Select}}
+: {{tlygo|build=12.1.5|GarrisonBuildingPlacer_Clear}}
+: {{tlygo|build=12.1.5|GarrisonBuildingPlacer_OnUpdate}}
+: {{tlygo|build=12.1.5|GarrisonBuildingPlacerFrame_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonBuildingSpec_ConfirmSwitch}}
+: {{tlygo|build=12.1.5|GarrisonBuildingSpec_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonBuildingSpec_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonBuildingTab_OnMouseDown}}
+: {{tlygo|build=12.1.5|GarrisonBuildingTab_Select}}
+: {{tlygo|build=12.1.5|GarrisonBuildingUI_ToggleFrame}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveCreateAllWorkOrders_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplay_SetRequestedNumber}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrame_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrame_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrame_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrame_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrame_TimerUpdate}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrame_ToggleFrame}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrame_Update}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrameDecrement_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveDisplayFrameIncrement_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonCapacitiveStartWorkOrder_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonFollowerFilter_MustHaveZoneSupport}}
+: {{tlygo|build=12.1.5|GarrisonFollowerMission_ResetMissionCompleteEncounter}}
+: {{tlygo|build=12.1.5|GarrisonFollowerPortrait_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonFollowerPortrait_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonFollowerTooltipShow}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReport_GetShipments}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReport_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReport_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReport_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReport_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReport_OnUpdate}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReport_SetTab}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_FormatXPNumbers}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_InitButtonAvailable}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_InitButton}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_UpdateAvailable}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_UpdateItems}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_UpdateMouseOverTooltip}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportList_Update}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportMission_FilterOutCombatAllyMissions}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportMission_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportMission_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportMission_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportMissionReward_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportMissionReward_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportShipment_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageReportTab_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageTab_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonLandingPageTab_SetTab}}
+: {{tlygo|build=12.1.5|GarrisonMissionButton_GetMissionFrame}}
+: {{tlygo|build=12.1.5|GarrisonMissionButton_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonMissionButton_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonMissionButton_SetInProgressTooltip}}
+: {{tlygo|build=12.1.5|GarrisonMissionButtonRewards_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonMissionFrame_ClearMouse}}
+: {{tlygo|build=12.1.5|GarrisonMissionFrame_OnCloseShipyardTutorial}}
+: {{tlygo|build=12.1.5|GarrisonMissionFrame_RandomMissionAdded}}
+: {{tlygo|build=12.1.5|GarrisonMissionFrame_ToggleFrame}}
+: {{tlygo|build=12.1.5|GarrisonMissionList_InitButton}}
+: {{tlygo|build=12.1.5|GarrisonMissionListTab_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonMissionListTab_SetTab}}
+: {{tlygo|build=12.1.5|GarrisonMissionPage_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonMissionPage_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonMissionPage_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonMissionPage_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonMissionPage_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonMissionPage_OnUpdate}}
+: {{tlygo|build=12.1.5|GarrisonMissionPageEnvironment_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonMissionPageFollowerFrame_OnDragStart}}
+: {{tlygo|build=12.1.5|GarrisonMissionPageFollowerFrame_OnDragStop}}
+: {{tlygo|build=12.1.5|GarrisonMissionPageFollowerFrame_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonMissionPageFollowerFrame_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonMissionPageFollowerFrame_OnMouseUp}}
+: {{tlygo|build=12.1.5|GarrisonMissionPageFollowerFrame_OnReceiveDrag}}
+: {{tlygo|build=12.1.5|GarrisonMissionPortrait_SetFollowerPortrait}}
+: {{tlygo|build=12.1.5|GarrisonMissonListTab_SetSelected}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentFrame_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentFrame_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentFrame_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentFrame_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentFrame_SaveSelection}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentFrame_UpdateDisplay}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentFrame_UpdateSelectedTrophyID}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentLeftBtn_OnMouseDown}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentLeftBtn_OnMouseUp}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentLock_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentRightBtn_OnMouseDown}}
+: {{tlygo|build=12.1.5|GarrisonMonuntmentRightBtn_OnMouseUp}}
+: {{tlygo|build=12.1.5|GarrisonPlot_ClearBuilding}}
+: {{tlygo|build=12.1.5|GarrisonPlot_GetFollowerTooltipText}}
+: {{tlygo|build=12.1.5|GarrisonPlot_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonPlot_OnDragStart}}
+: {{tlygo|build=12.1.5|GarrisonPlot_OnDragStop}}
+: {{tlygo|build=12.1.5|GarrisonPlot_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonPlot_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonPlot_OnReceiveDrag}}
+: {{tlygo|build=12.1.5|GarrisonPlot_OnUpdate}}
+: {{tlygo|build=12.1.5|GarrisonPlot_SetBuildingArt}}
+: {{tlygo|build=12.1.5|GarrisonPlot_SetBuilding}}
+: {{tlygo|build=12.1.5|GarrisonPlot_SetGreyedOut}}
+: {{tlygo|build=12.1.5|GarrisonPlot_ShowTooltip}}
+: {{tlygo|build=12.1.5|GarrisonPlot_UpdateBuilding}}
+: {{tlygo|build=12.1.5|GarrisonPortrait_Set}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_ChooseRandomRecruits}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_ChooseRecruits}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_GenerateRecruits}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_HireRecruit}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_OnClickClose}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_SetAbilityPreference}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterFrame_UpdateAbilityEntries}}
+: {{tlygo|build=12.1.5|GarrisonRecruiterType_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonRecruitSelectFrame_GetAbilityUIEntry}}
+: {{tlygo|build=12.1.5|GarrisonRecruitSelectFrame_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonRecruitSelectFrame_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonRecruitSelectFrame_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonRecruitSelectFrame_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonRecruitSelectFrame_UpdateRecruits}}
+: {{tlygo|build=12.1.5|GarrisonShipEquipment_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonShipEquipment_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonShipEquipment_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonShipEquipment_OnReceiveDrag}}
+: {{tlygo|build=12.1.5|GarrisonShipFollowerListButton_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonShipFollowerListButton_OnDragStart}}
+: {{tlygo|build=12.1.5|GarrisonShipFollowerListButton_OnDragStop}}
+: {{tlygo|build=12.1.5|GarrisonShipMissionPageFollowerFrame_OnDragStart}}
+: {{tlygo|build=12.1.5|GarrisonShipMissionPageFollowerFrame_OnDragStop}}
+: {{tlygo|build=12.1.5|GarrisonShipMissionPageFollowerFrame_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonShipMissionPageFollowerFrame_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonShipMissionPageFollowerFrame_OnMouseUp}}
+: {{tlygo|build=12.1.5|GarrisonShipMissionPageFollowerFrame_OnReceiveDrag}}
+: {{tlygo|build=12.1.5|GarrisonShipTrait_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonShipTrait_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonShipTrait_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonShipyard_CalculateExpandedButtonHeight}}
+: {{tlygo|build=12.1.5|GarrisonShipyardFollowerList_InitButton}}
+: {{tlygo|build=12.1.5|GarrisonShipyardFrame_ClearMouse}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_AdjustMissionPositions}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_CheckTutorials}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_OnFogFrameUpdate}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_OnUpdate}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_ResetFogFrame}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_SetClampedPosition}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_SetupBonus}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_SetupFog}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_ShowTutorial}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_UpdateBonusEffects}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_UpdateMissions}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMap_UpdateMissionTime}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_AnchorToBottomWidget}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_SetBottomWidget}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_SetTooltipWidth}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_SetTooltip}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMapMission_UpdateTooltipSize}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMissionPage_OnEvent}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMissionPage_OnHide}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMissionPage_OnLoad}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMissionPage_OnShow}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMissionPage_OnUpdate}}
+: {{tlygo|build=12.1.5|GarrisonShipyardMissionPage_UpdatePortraitPulse}}
+: {{tlygo|build=12.1.5|GarrisonTownHall_GetName}}
+: {{tlygo|build=12.1.5|GarrisonTownHall_OnClick}}
+: {{tlygo|build=12.1.5|GarrisonTownHall_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonTownHall_OnLeave}}
+: {{tlygo|build=12.1.5|GarrisonTownHall_Select}}
+: {{tlygo|build=12.1.5|GarrisonTownHall_StartUpgrade}}
+: {{tlygo|build=12.1.5|GarrisonTownHall_UpdateNameBanner}}
+: {{tlygo|build=12.1.5|GarrisonTownHallBoxMouseOver_GetColor}}
+: {{tlygo|build=12.1.5|GarrisonTownHallBoxMouseOver_OnEnter}}
+: {{tlygo|build=12.1.5|GarrisonTownHallUpgradeButton_OnEnter}}
+: {{tlygo|build=12.1.5|GetEJTierDataTableID}}
+: {{tlygo|build=12.1.5|GetEJTierData}}
+: {{tlygo|build=12.1.5|GetLFGLockedDescription}}
+: {{tlygo|build=12.1.5|GetLFGLockedTooltip}}
+: {{tlygo|build=12.1.5|GetLFGStringFromEnum}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_EvaluateButtonVisibility}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_EvaluateHelpTips}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_GetSelectedIndex}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_GetSelection}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_OnEvent}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_OnLoad}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_OnShow}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_SelectGroupButton}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_ShowGroupFrame}}
+: {{tlygo|build=12.1.5|GroupFinderFrame_Update}}
+: {{tlygo|build=12.1.5|GroupFinderFrameButton_SetEnabled}}
+: {{tlygo|build=12.1.5|GroupFinderFrameGroupButton_OnClick}}
+: {{tlygo|build=12.1.5|GroupFinderFrameGroupButton_OnEnter}}
+: {{tlygo|build=12.1.5|HideGarrisonMissionFrames}}
+: {{tlygo|build=12.1.5|HideGarrisonShipyardFrame}}
+: {{tlygo|build=12.1.5|HonorFrame_GetSelectedModeRoleShortageBonus}}
+: {{tlygo|build=12.1.5|HonorFrame_InitSpecificButton}}
+: {{tlygo|build=12.1.5|HonorFrame_OnEvent}}
+: {{tlygo|build=12.1.5|HonorFrame_OnLoad}}
+: {{tlygo|build=12.1.5|HonorFrame_OnShow}}
+: {{tlygo|build=12.1.5|HonorFrame_Queue}}
+: {{tlygo|build=12.1.5|HonorFrame_SetTypeInternal}}
+: {{tlygo|build=12.1.5|HonorFrame_SetType}}
+: {{tlygo|build=12.1.5|HonorFrame_UpdateQueueButtons}}
+: {{tlygo|build=12.1.5|HonorFrameBonusFrame_OnEvent}}
+: {{tlygo|build=12.1.5|HonorFrameBonusFrame_OnHide}}
+: {{tlygo|build=12.1.5|HonorFrameBonusFrame_OnShow}}
+: {{tlygo|build=12.1.5|HonorFrameBonusFrame_SelectButton}}
+: {{tlygo|build=12.1.5|HonorFrameBonusFrame_SetButtonState}}
+: {{tlygo|build=12.1.5|HonorFrameBonusFrame_Update}}
+: {{tlygo|build=12.1.5|HonorFrameSpecificBattlegroundButton_OnClick}}
+: {{tlygo|build=12.1.5|HonorFrameSpecificList_FindAndSelectBattleground}}
+: {{tlygo|build=12.1.5|HonorFrameSpecificList_Update}}
+: {{tlygo|build=12.1.5|HouseEditorFrame_GetFrame}}
+: {{tlygo|build=12.1.5|HouseEditorFrame_IsShown}}
+: {{tlygo|build=12.1.5|HouseFinderFrame_LoadUI}}
+: {{tlygo|build=12.1.5|HousingBulletinBoardFrame_LoadUI}}
+: {{tlygo|build=12.1.5|HousingBulletinBoardRosterColumnDisplay_OnClick}}
+: {{tlygo|build=12.1.5|HousingControls_LoadUI}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ActivateHouseEditorMode}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.HandleRotateBasicDecorSelectionLeftKeybind}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.HandleRotateBasicDecorSelectionRightKeybind}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.IsBlueprintCollectionAvailable}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.IsBlueprintOperationInProgress}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.IsHouseEditorModeAvailable}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.IsHousingMarketShopAvailable}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.LeaveHouseEditor}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.MoveLayoutCameraFloor}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.OpenFrameToTaskID}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.PreviewHousingCatalogEntryInfo}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.PreviewHousingCatalogEntryVariantID}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.PreviewHousingDecorID}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.PreviewHousingItem}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.RemoveSelectedDecor}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.RotateBasicDecorSelection}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.SetExpertDecorSubmode}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.SetFreePlaceEnabled}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.SetGridSnapEnabled}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.SetGridVisible}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ShowBlueprintExport}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ShowBlueprintImport}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ShowBlueprintRoomExport}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ShowFixtureDecorActionConfirmation}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ToggleHouseEditor}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ToggleHousingDashboard}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.TryOpenBlueprintCollection}}
+: {{tlygo|build=12.1.5|HousingFramesUtil.ZoomLayoutCamera}}
+: {{tlygo|build=12.1.5|HousingTutorialUtil.BoughtHouseQuestComplete}}
+: {{tlygo|build=12.1.5|HousingTutorialUtil.GetFrameFromData}}
+: {{tlygo|build=12.1.5|HousingTutorialUtil.HousingDecorQuestTutorialComplete}}
+: {{tlygo|build=12.1.5|HousingTutorialUtil.IsModeValidForTutorial}}
+: {{tlygo|build=12.1.5|HousingTutorialUtil.ResetAllDecorTutorials}}
+: {{tlygo|build=12.1.5|InboxFrame_Update}}
+: {{tlygo|build=12.1.5|InboxGetMoreMail}}
+: {{tlygo|build=12.1.5|InboxNextPage}}
+: {{tlygo|build=12.1.5|InboxPrevPage}}
+: {{tlygo|build=12.1.5|InspectFrame_OnEvent}}
+: {{tlygo|build=12.1.5|InspectFrame_OnHide}}
+: {{tlygo|build=12.1.5|InspectFrame_OnLoad}}
+: {{tlygo|build=12.1.5|InspectFrame_OnShow}}
+: {{tlygo|build=12.1.5|InspectFrame_OnUpdate}}
+: {{tlygo|build=12.1.5|InspectFrame_UnitChanged}}
+: {{tlygo|build=12.1.5|InspectFrame_UpdateTabs}}
+: {{tlygo|build=12.1.5|InspectPaperDollFrame_OnEvent}}
+: {{tlygo|build=12.1.5|InspectPaperDollFrame_OnLoad}}
+: {{tlygo|build=12.1.5|InspectPaperDollFrame_OnShow}}
+: {{tlygo|build=12.1.5|InspectPaperDollFrame_SetLevel}}
+: {{tlygo|build=12.1.5|InspectPaperDollFrame_UpdateButtons}}
+: {{tlygo|build=12.1.5|IsActivityLockedForCustomText}}
+: {{tlygo|build=12.1.5|ItemTextFrame_OnEvent}}
+: {{tlygo|build=12.1.5|ItemTextFrame_OnLoad}}
+: {{tlygo|build=12.1.5|ItemTextFrame_OnUpdate}}
+: {{tlygo|build=12.1.5|KioskFrame_HandlePlayerEnteringWorld}}
+: {{tlygo|build=12.1.5|LFD_CURRENT_FILTER}}
+: {{tlygo|build=12.1.5|LFDCheckRolesRestricted}}
+: {{tlygo|build=12.1.5|LFDFrame_DisplayDungeonByID}}
+: {{tlygo|build=12.1.5|LFDFrame_OnEvent}}
+: {{tlygo|build=12.1.5|LFDFrame_OnLoad}}
+: {{tlygo|build=12.1.5|LFDFrame_OnShow}}
+: {{tlygo|build=12.1.5|LFDFramePopupRoleCheckButton_OnClick}}
+: {{tlygo|build=12.1.5|LFDFrameRoleCheckButton_OnClick}}
+: {{tlygo|build=12.1.5|LFDGetNumDungeons}}
+: {{tlygo|build=12.1.5|LFDPopupCheckRoleSelectionValid}}
+: {{tlygo|build=12.1.5|LFDPopupRoleCheckButton_OnEnter}}
+: {{tlygo|build=12.1.5|LFDQueueCheckRoleSelectionValid}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_GetRoles}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_Join}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_OnHide}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_OnLoad}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_OnShow}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_SetRoles}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_SetTypeFollowerDungeon}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_SetTypeInternal}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_SetTypeRandomDungeon}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_SetTypeSpecificDungeon}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_SetType}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_UpdateRoleButtons}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_UpdateRoleButton}}
+: {{tlygo|build=12.1.5|LFDQueueFrame_Update}}
+: {{tlygo|build=12.1.5|LFDQueueFrameDungeonChoiceEnableButton_OnClick}}
+: {{tlygo|build=12.1.5|LFDQueueFrameDungeonListButton_OnEnter}}
+: {{tlygo|build=12.1.5|LFDQueueFrameExpandOrCollapseButton_OnClick}}
+: {{tlygo|build=12.1.5|LFDQueueFrameFindGroupButton_Update}}
+: {{tlygo|build=12.1.5|LFDQueueFrameFollowerList_InitButton}}
+: {{tlygo|build=12.1.5|LFDQueueFrameList_Update}}
+: {{tlygo|build=12.1.5|LFDQueueFrameRandom_UpdateFrame}}
+: {{tlygo|build=12.1.5|LFDQueueFrameRandomCooldownFrame_OnEvent}}
+: {{tlygo|build=12.1.5|LFDQueueFrameRandomCooldownFrame_OnLoad}}
+: {{tlygo|build=12.1.5|LFDQueueFrameRandomCooldownFrame_OnUpdate}}
+: {{tlygo|build=12.1.5|LFDQueueFrameRandomCooldownFrame_Update}}
+: {{tlygo|build=12.1.5|LFDQueueFrameSpecificList_InitButton}}
+: {{tlygo|build=12.1.5|LFDRoleButton_OnEnter}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopup_GetRolesChecked}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopup_OnEvent}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopup_OnHide}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopup_OnShow}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopup_UpdateAcceptButton}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopup_Update}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopupAccept_OnClick}}
+: {{tlygo|build=12.1.5|LFDRoleCheckPopupDecline_OnClick}}
+: {{tlygo|build=12.1.5|LFG_BuildSelectedEntriesList}}
+: {{tlygo|build=12.1.5|LFG_DisplayGroupLeaderWarning}}
+: {{tlygo|build=12.1.5|LFG_HasRequiredGroupSize}}
+: {{tlygo|build=12.1.5|LFG_IsHeroicScenario}}
+: {{tlygo|build=12.1.5|LFG_IsRandomDungeonDisplayable}}
+: {{tlygo|build=12.1.5|LFG_JoinDungeon}}
+: {{tlygo|build=12.1.5|LFG_QueueForInstanceIfEnabled}}
+: {{tlygo|build=12.1.5|LFG_SetRoleIconIncentive}}
+: {{tlygo|build=12.1.5|LFG_TryGetCrossFactionQueueFailureMessage}}
+: {{tlygo|build=12.1.5|LFG_UpdateAllRoleCheckboxes}}
+: {{tlygo|build=12.1.5|LFG_UpdateFindGroupButtons}}
+: {{tlygo|build=12.1.5|LFG_UpdateFramesIfShown}}
+: {{tlygo|build=12.1.5|LFG_UpdateLockedOutPanels}}
+: {{tlygo|build=12.1.5|LFG_UpdateQueuedList}}
+: {{tlygo|build=12.1.5|LFG_UpdateRoleCheckboxes}}
+: {{tlygo|build=12.1.5|LFG_UpdateRolesChangeable}}
+: {{tlygo|build=12.1.5|LFGBackfillCover_SetUp}}
+: {{tlygo|build=12.1.5|LFGBackfillCover_Update}}
+: {{tlygo|build=12.1.5|LFGConstructDeclinedMessage}}
+: {{tlygo|build=12.1.5|LFGCooldownCover_ChangeSettings}}
+: {{tlygo|build=12.1.5|LFGCooldownCover_OnEvent}}
+: {{tlygo|build=12.1.5|LFGCooldownCover_OnUpdate}}
+: {{tlygo|build=12.1.5|LFGCooldownCover_SetUp}}
+: {{tlygo|build=12.1.5|LFGCooldownCover_Update}}
+: {{tlygo|build=12.1.5|LFGDebug}}
+: {{tlygo|build=12.1.5|LFGDungeonList_DisableEntries}}
+: {{tlygo|build=12.1.5|LFGDungeonList_EvaluateListState}}
+: {{tlygo|build=12.1.5|LFGDungeonList_SetDungeonEnabled}}
+: {{tlygo|build=12.1.5|LFGDungeonList_SetHeaderCollapsed}}
+: {{tlygo|build=12.1.5|LFGDungeonList_SetHeaderEnabled}}
+: {{tlygo|build=12.1.5|LFGDungeonList_Setup}}
+: {{tlygo|build=12.1.5|LFGDungeonListButton_OnEnter}}
+: {{tlygo|build=12.1.5|LFGDungeonListButton_SetDungeon}}
+: {{tlygo|build=12.1.5|LFGDungeonListCheckButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyDialog_UpdateInstanceInfo}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyDialog_UpdateRewards}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyDialogInstanceInfo_OnEnter}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyDialogReward_OnEnter}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyDialogReward_SetMisc}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyDialogReward_SetReward}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyPopup_OnFail}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyPopup_OnUpdate}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyPopup_Update}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyStatus_ResetReadyStates}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyStatusGrouped_UpdateIcon}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyStatusIndividual_UpdateIcon}}
+: {{tlygo|build=12.1.5|LFGDungeonReadyStatusRoleless_UpdateCount}}
+: {{tlygo|build=12.1.5|LFGEventFrame_OnEvent}}
+: {{tlygo|build=12.1.5|LFGEventFrame_OnLoad}}
+: {{tlygo|build=12.1.5|LFGIsIDHeader}}
+: {{tlygo|build=12.1.5|LFGList_DefaultFilterFunction}}
+: {{tlygo|build=12.1.5|LFGList_ReportAdvertisement}}
+: {{tlygo|build=12.1.5|LFGList_ReportApplicant}}
+: {{tlygo|build=12.1.5|LFGList_ReportListing}}
+: {{tlygo|build=12.1.5|LFGListApplicantMember_OnEnter}}
+: {{tlygo|build=12.1.5|LFGListApplicantMember_OnMouseDown}}
+: {{tlygo|build=12.1.5|LFGListApplicationDialog_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListApplicationDialog_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListApplicationDialog_Show}}
+: {{tlygo|build=12.1.5|LFGListApplicationDialog_UpdateRoles}}
+: {{tlygo|build=12.1.5|LFGListApplicationDialog_UpdateValidState}}
+: {{tlygo|build=12.1.5|LFGListApplicationDialogSignUpButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_InitButton}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_OnShow}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_OpenEditMode}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateApplicantMember}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateApplicant}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateAvailability}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateGroupData}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateInfo}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateInviteState}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateResultList}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateResults}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewer_UpdateRoleIcons}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewerEditButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewerRemoveEntryButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListApplicationViewerUtil_GetButtonHeight}}
+: {{tlygo|build=12.1.5|LFGListCanChangeLanguages}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_AddButton}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_OnShow}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_SelectCategory}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_StartFindGroup}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_StartFindScenarioGroup}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_UpdateCategoryButtons}}
+: {{tlygo|build=12.1.5|LFGListCategorySelection_UpdateNavButtons}}
+: {{tlygo|build=12.1.5|LFGListCategorySelectionButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListCategorySelectionFindGroupButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListCategorySelectionStartGroupButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListEditBox_AddToTabCategory}}
+: {{tlygo|build=12.1.5|LFGListEditBox_OnTabPressed}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_CheckAutoCreate}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_ClearAutoCreateMode}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_ClearFocus}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_Clear}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_GetAutoCreateDataQuest}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_GetAutoCreateDataScenario}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_GetAutoCreateData}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_GetSanitizedName}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_IsAutoCreateMode}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_IsEditMode}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_ListGroupInternal}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_ListGroup}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_ListScenarioGroupInternal}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_OnPlayStyleSelectedInternal}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_OnShow}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_Select}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetAutoCreateDataInternal}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetAutoCreateMode}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetBaseFilters}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetEditMode}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetTitleFromActivityInfo}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetupActivityDropdown}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetupGroupDropdown}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_SetupPlayStyleDropdown}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_Show}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_UpdateAuthenticatedState}}
+: {{tlygo|build=12.1.5|LFGListEntryCreation_UpdateValidState}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_Accept}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_Cancel}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_InitButton}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_Select}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_SetButtonSelected}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_Show}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationActivityFinder_UpdateMatching}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationCancelButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListEntryCreationListGroupButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListFilterChoices}}
+: {{tlygo|build=12.1.5|LFGListFrame_BeginFindQuestGroup}}
+: {{tlygo|build=12.1.5|LFGListFrame_BeginFindScenarioGroup}}
+: {{tlygo|build=12.1.5|LFGListFrame_CheckPendingQuestIDSearch}}
+: {{tlygo|build=12.1.5|LFGListFrame_CheckPendingScenarioIDSearch}}
+: {{tlygo|build=12.1.5|LFGListFrame_FixPanelValid}}
+: {{tlygo|build=12.1.5|LFGListFrame_GetBestPanel}}
+: {{tlygo|build=12.1.5|LFGListFrame_GetChatMessageForSearchStatusChange}}
+: {{tlygo|build=12.1.5|LFGListFrame_GetPendingQuestIDSearch}}
+: {{tlygo|build=12.1.5|LFGListFrame_GetPendingScenarioIDSearch}}
+: {{tlygo|build=12.1.5|LFGListFrame_IsPanelValid}}
+: {{tlygo|build=12.1.5|LFGListFrame_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListFrame_OnHide}}
+: {{tlygo|build=12.1.5|LFGListFrame_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListFrame_OnShow}}
+: {{tlygo|build=12.1.5|LFGListFrame_SetActivePanel}}
+: {{tlygo|build=12.1.5|LFGListFrame_SetBaseFilters}}
+: {{tlygo|build=12.1.5|LFGListFrame_SetPendingQuestIDSearch}}
+: {{tlygo|build=12.1.5|LFGListFrame_SetPendingScenarioIDSearch}}
+: {{tlygo|build=12.1.5|LFGListGroupDataDisplay_Update}}
+: {{tlygo|build=12.1.5|LFGListGroupDataDisplayEnumerate_Update}}
+: {{tlygo|build=12.1.5|LFGListGroupDataDisplayPlayerCount_Update}}
+: {{tlygo|build=12.1.5|LFGListGroupDataDisplayRoleCount_Update}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_Accept}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_Acknowledge}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_CheckPending}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_Decline}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_Show}}
+: {{tlygo|build=12.1.5|LFGListInviteDialog_UpdateOfflineNotice}}
+: {{tlygo|build=12.1.5|LFGListNothingAvailable_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListNothingAvailable_Update}}
+: {{tlygo|build=12.1.5|LFGListPVEStub_OnShow}}
+: {{tlygo|build=12.1.5|LFGListPVPStub_OnShow}}
+: {{tlygo|build=12.1.5|LFGListRemoveCollapsedChildren}}
+: {{tlygo|build=12.1.5|LFGListRemoveHeadersWithoutChildren}}
+: {{tlygo|build=12.1.5|LFGListRequirement_Validate}}
+: {{tlygo|build=12.1.5|LFGListRoleButtonCheckButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListSearchAutoCompleteButton_OnClick}}
+: {{tlygo|build=12.1.5|LFGListSearchEntry_CreateContextMenu}}
+: {{tlygo|build=12.1.5|LFGListSearchEntry_OnClick}}
+: {{tlygo|build=12.1.5|LFGListSearchEntry_OnEnter}}
+: {{tlygo|build=12.1.5|LFGListSearchEntry_OnLeave}}
+: {{tlygo|build=12.1.5|LFGListSearchEntry_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListSearchEntry_UpdateExpiration}}
+: {{tlygo|build=12.1.5|LFGListSearchEntry_Update}}
+: {{tlygo|build=12.1.5|LFGListSearchEntryUtil_GetFriendList}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_AutoCompleteAdvance}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_Clear}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_CreateGroupInstead}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_DoSearch}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_EvaluateTutorial}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_InitButton}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_OnEvent}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_OnLoad}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_OnShow}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_SelectResult}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_SetCategory}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_SetupLanguageFilter}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_SignUp}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_UpdateAutoComplete}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_UpdateButtonStatus}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_UpdateResultList}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_UpdateResults}}
+: {{tlygo|build=12.1.5|LFGListSearchPanel_ValidateSelected}}
+: {{tlygo|build=12.1.5|LFGListSearchPanelSearchBox_OnArrowPressed}}
+: {{tlygo|build=12.1.5|LFGListSearchPanelSearchBox_OnEditFocusGained}}
+: {{tlygo|build=12.1.5|LFGListSearchPanelSearchBox_OnEditFocusLost}}
+: {{tlygo|build=12.1.5|LFGListSearchPanelSearchBox_OnEnterPressed}}
+: {{tlygo|build=12.1.5|LFGListSearchPanelSearchBox_OnTabPressed}}
+: {{tlygo|build=12.1.5|LFGListSearchPanelSearchBox_OnTextChanged}}
+: {{tlygo|build=12.1.5|LFGListSearchPanelUtil_CanSelectResult}}
+: {{tlygo|build=12.1.5|LFGListUpdateHeaderEnabledAndLockedStates}}
+: {{tlygo|build=12.1.5|LFGListUtil_AppendStatistic}}
+: {{tlygo|build=12.1.5|LFGListUtil_AugmentWithBest}}
+: {{tlygo|build=12.1.5|LFGListUtil_CanListGroup}}
+: {{tlygo|build=12.1.5|LFGListUtil_CanSearchForGroup}}
+: {{tlygo|build=12.1.5|LFGListUtil_FindQuestGroup}}
+: {{tlygo|build=12.1.5|LFGListUtil_FindScenarioGroup}}
+: {{tlygo|build=12.1.5|LFGListUtil_GetActiveQueueMessage}}
+: {{tlygo|build=12.1.5|LFGListUtil_GetCurrentExpansion}}
+: {{tlygo|build=12.1.5|LFGListUtil_GetDecoratedCategoryName}}
+: {{tlygo|build=12.1.5|LFGListUtil_GetQuestCategoryData}}
+: {{tlygo|build=12.1.5|LFGListUtil_GetQuestDescription}}
+: {{tlygo|build=12.1.5|LFGListUtil_IsAppEmpowered}}
+: {{tlygo|build=12.1.5|LFGListUtil_IsEntryEmpowered}}
+: {{tlygo|build=12.1.5|LFGListUtil_IsStatusInactive}}
+: {{tlygo|build=12.1.5|LFGListUtil_OpenBestWindow}}
+: {{tlygo|build=12.1.5|LFGListUtil_SetAutoAccept}}
+: {{tlygo|build=12.1.5|LFGListUtil_SetSearchEntryTooltip}}
+: {{tlygo|build=12.1.5|LFGListUtil_SortActivitiesByRelevancyCB}}
+: {{tlygo|build=12.1.5|LFGListUtil_SortActivitiesByRelevancy}}
+: {{tlygo|build=12.1.5|LFGListUtil_SortApplicantsCB}}
+: {{tlygo|build=12.1.5|LFGListUtil_SortApplicants}}
+: {{tlygo|build=12.1.5|LFGListUtil_SortSearchResultsCB}}
+: {{tlygo|build=12.1.5|LFGListUtil_SortSearchResults}}
+: {{tlygo|build=12.1.5|LFGListUtil_ValidateHonorLevelReq}}
+: {{tlygo|build=12.1.5|LFGListUtil_ValidateLevelReq}}
+: {{tlygo|build=12.1.5|LFGListUtil_ValidateMythicPlusRatingReq}}
+: {{tlygo|build=12.1.5|LFGListUtil_ValidatePvPLevelReq}}
+: {{tlygo|build=12.1.5|LFGListUtil_ValidatePvpRatingReq}}
+: {{tlygo|build=12.1.5|LFGQueueFrame_UpdateLFGDungeonList}}
+: {{tlygo|build=12.1.5|LFGRandomList_OnEnter}}
+: {{tlygo|build=12.1.5|LFGRewardsFrame_AdjustFont}}
+: {{tlygo|build=12.1.5|LFGRewardsFrame_EstimateRemainingCompletions}}
+: {{tlygo|build=12.1.5|LFGRewardsFrame_OnLoad}}
+: {{tlygo|build=12.1.5|LFGRewardsFrame_SetItemButton}}
+: {{tlygo|build=12.1.5|LFGRewardsFrame_UpdateFrame}}
+: {{tlygo|build=12.1.5|LFGRewardsFrameEncounterList_OnEnter}}
+: {{tlygo|build=12.1.5|LFGRoleCheckPopup_UpdatePvPRoles}}
+: {{tlygo|build=12.1.5|LFGRoleCheckPopup_UpdateRoleButton}}
+: {{tlygo|build=12.1.5|LFGRoleIconIncentive_OnEnter}}
+: {{tlygo|build=12.1.5|LFGSpecificChoiceEnableButton_SetIsRadio}}
+: {{tlygo|build=12.1.5|LootJournalItemButton_OnUpdate}}
+: {{tlygo|build=12.1.5|LootJournalItemButtonTemplate_OnEnter}}
+: {{tlygo|build=12.1.5|LootJournalItemButtonTemplate_OnLeave}}
+: {{tlygo|build=12.1.5|MailFrame_OnEvent}}
+: {{tlygo|build=12.1.5|MailFrame_OnLoad}}
+: {{tlygo|build=12.1.5|MailFrame_OnMouseWheel}}
+: {{tlygo|build=12.1.5|MailFrame_RefreshInbox}}
+: {{tlygo|build=12.1.5|MailFrame_UpdateTrialState}}
+: {{tlygo|build=12.1.5|MasterLooterPlayerFrame_OnClick}}
+: {{tlygo|build=12.1.5|MonthlyActivities_ToggleTutorial}}
+: {{tlygo|build=12.1.5|MonthlyActivitiesFrame_OpenFrameToActivity}}
+: {{tlygo|build=12.1.5|MonthlyActivitiesFrame_OpenFrame}}
+: {{tlygo|build=12.1.5|MythicPlusSeasonChangeNoticeOnCloseClick}}
+: {{tlygo|build=12.1.5|NextTier_OnEnter}}
+: {{tlygo|build=12.1.5|OpenEncounterJournalToJourney}}
+: {{tlygo|build=12.1.5|OpenEncounterJournalToTieredEntrance}}
+: {{tlygo|build=12.1.5|OpenMail_Delete}}
+: {{tlygo|build=12.1.5|OpenMail_GetItemCounts}}
+: {{tlygo|build=12.1.5|OpenMail_Reply}}
+: {{tlygo|build=12.1.5|OpenMail_ReportSpam}}
+: {{tlygo|build=12.1.5|OpenMail_Update}}
+: {{tlygo|build=12.1.5|OpenMailFrame_IsValidMailID}}
+: {{tlygo|build=12.1.5|OpenMailFrame_OnHide}}
+: {{tlygo|build=12.1.5|OpenMailFrame_UpdateButtonPositions}}
+: {{tlygo|build=12.1.5|PaperDollFrame_SidebarTab_OnEnter}}
+: {{tlygo|build=12.1.5|PerksProgram_GetPlayerActorLabelTag}}
+: {{tlygo|build=12.1.5|PerksProgram_TranslateDisplayInfo}}
+: {{tlygo|build=12.1.5|PerksProgramFrame_LoadUI}}
+: {{tlygo|build=12.1.5|PerksProgramUtil.ItemAppearancesHaveSameCategory}}
+: {{tlygo|build=12.1.5|PetJournal_GetPetAbilityHyperlink}}
+: {{tlygo|build=12.1.5|PetJournal_HideAbilityTooltip}}
+: {{tlygo|build=12.1.5|PetJournal_ShowAbilityCompareTooltip}}
+: {{tlygo|build=12.1.5|PetJournal_ShowAbilityTooltip}}
+: {{tlygo|build=12.1.5|PetJournal_ShowPetSelect}}
+: {{tlygo|build=12.1.5|PetJournal_ToggleTutorial}}
+: {{tlygo|build=12.1.5|PetJournal_UpdateFindBattleButton}}
+: {{tlygo|build=12.1.5|PetJournal_UpdatePetAbility}}
+: {{tlygo|build=12.1.5|PetJournal_UpdatePetLoadOut}}
+: {{tlygo|build=12.1.5|PetJournalAchievementStatus_OnClick}}
+: {{tlygo|build=12.1.5|PetJournalAchievementStatus_OnEnter}}
+: {{tlygo|build=12.1.5|PetJournalAchievementStatus_OnLeave}}
+: {{tlygo|build=12.1.5|PetJournalFilterDropdown_GetBattlePetsFilter}}
+: {{tlygo|build=12.1.5|PetJournalFilterDropdown_GetNonCombatPetsFilter}}
+: {{tlygo|build=12.1.5|PetJournalFilterDropdown_SetBattlePetsFilter}}
+: {{tlygo|build=12.1.5|PetJournalFilterDropdown_SetNonCombatPetsFilter}}
+: {{tlygo|build=12.1.5|PetJournalFindBattle_OnEnter}}
+: {{tlygo|build=12.1.5|PetJournalFindBattle_Update}}
+: {{tlygo|build=12.1.5|PetJournalLoadout_GetRequiredLevel}}
+: {{tlygo|build=12.1.5|PetJournalLoadOut_MenuRegion_OnMouseUp}}
+: {{tlygo|build=12.1.5|PetJournalRequirement_ShowRequirementToolTip}}
+: {{tlygo|build=12.1.5|PhotoSharingFrame_EscapePressed}}
+: {{tlygo|build=12.1.5|ProfessionsBookFrame_OnEvent}}
+: {{tlygo|build=12.1.5|ProfessionsBookFrame_OnHide}}
+: {{tlygo|build=12.1.5|ProfessionsBookFrame_OnLoad}}
+: {{tlygo|build=12.1.5|ProfessionsBookFrame_OnShow}}
+: {{tlygo|build=12.1.5|ProfessionsBookFrame_PlayCloseSound}}
+: {{tlygo|build=12.1.5|ProfessionsBookFrame_PlayOpenSound}}
+: {{tlygo|build=12.1.5|ProfessionsBookFrame_Update}}
+: {{tlygo|build=12.1.5|PVEFrame_HideLeftInset}}
+: {{tlygo|build=12.1.5|PVEFrame_ShowFrame}}
+: {{tlygo|build=12.1.5|PVEFrame_ShowLeftInset}}
+: {{tlygo|build=12.1.5|PVEFrame_TabOnClick}}
+: {{tlygo|build=12.1.5|PVEFrame_ToggleFrame}}
+: {{tlygo|build=12.1.5|PVPCasualActivityButton_OnEnter}}
+: {{tlygo|build=12.1.5|PVPConquestLockTooltipShow}}
+: {{tlygo|build=12.1.5|PVPNewSeasonPopupOnClick}}
+: {{tlygo|build=12.1.5|PvPObjectiveBannerFrame_OnAnimFinished}}
+: {{tlygo|build=12.1.5|PvPObjectiveBannerFrame_PlayBanner}}
+: {{tlygo|build=12.1.5|PvPObjectiveBannerFrame_StopBanner}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_GetSelection}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_OnEvent}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_OnLoad}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_OnShow}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_SelectButton}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_SetCategoryButtonState}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_SetPrestige}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_ShowFrame}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_UpdateAnchoringForAvailableModes}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_UpdateTitle}}
+: {{tlygo|build=12.1.5|PVPQueueFrame_Update}}
+: {{tlygo|build=12.1.5|PVPQueueFrameButton_OnClick}}
+: {{tlygo|build=12.1.5|PVPQueueFrameButton_OnEnter}}
+: {{tlygo|build=12.1.5|PVPQueueFrameButton_OnLeave}}
+: {{tlygo|build=12.1.5|PVPRatedTier_OnEnter}}
+: {{tlygo|build=12.1.5|PVPRewardEnlistmentBonus_OnEnter}}
+: {{tlygo|build=12.1.5|PVPUI_LoadUI}}
+: {{tlygo|build=12.1.5|PVPUIFrame_AddItemWait}}
+: {{tlygo|build=12.1.5|PVPUIFrame_ConfigureRewardFrame}}
+: {{tlygo|build=12.1.5|PVPUIFrame_EvaluateHelpTips}}
+: {{tlygo|build=12.1.5|PVPUIFrame_OnEvent}}
+: {{tlygo|build=12.1.5|PVPUIFrame_OnHide}}
+: {{tlygo|build=12.1.5|PVPUIFrame_OnLoad}}
+: {{tlygo|build=12.1.5|PVPUIFrame_OnShow}}
+: {{tlygo|build=12.1.5|PVPUIFrame_RoleButtonClicked}}
+: {{tlygo|build=12.1.5|PVPUIFrame_SetRoles}}
+: {{tlygo|build=12.1.5|PVPUIFrame_ToggleFrame}}
+: {{tlygo|build=12.1.5|PVPUIFrame_UpdateAvailableRoles}}
+: {{tlygo|build=12.1.5|PVPUIFrame_UpdateRolesChangeable}}
+: {{tlygo|build=12.1.5|PVPUIFrame_UpdateRoleShortages}}
+: {{tlygo|build=12.1.5|PVPUIFrame_UpdateSelectedRoles}}
+: {{tlygo|build=12.1.5|QuestLogPopupDetailFrame_IsShowingQuest}}
+: {{tlygo|build=12.1.5|QuestLogPopupDetailFrame_OnHide}}
+: {{tlygo|build=12.1.5|QuestLogPopupDetailFrame_Show}}
+: {{tlygo|build=12.1.5|QuestLogPopupDetailFrame_Update}}
+: {{tlygo|build=12.1.5|RaidFinder_UpdateRoleButton}}
+: {{tlygo|build=12.1.5|RaidFinderFrame_OnEvent}}
+: {{tlygo|build=12.1.5|RaidFinderFrame_OnHide}}
+: {{tlygo|build=12.1.5|RaidFinderFrame_OnLoad}}
+: {{tlygo|build=12.1.5|RaidFinderFrame_OnShow}}
+: {{tlygo|build=12.1.5|RaidFinderFrame_UpdateAvailability}}
+: {{tlygo|build=12.1.5|RaidFinderFrameFindRaidButton_Update}}
+: {{tlygo|build=12.1.5|RaidFinderFrameRoleCheckButton_OnClick}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrame_Join}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrame_OnLoad}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrame_OnShow}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrame_SetRaidInternal}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrame_SetRaid}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrame_SetRoles}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrame_UpdateRoles}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameCooldownAdditionalPlayers_OnEnter}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameCooldownFrame_OnEvent}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameCooldownFrame_OnLoad}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameCooldownFrame_OnUpdate}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameCooldownFrame_Update}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameIneligibleFrame_SetIneligibility}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameIneligibleFrame_SetQueueRestriction}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameIneligibleFrame_UpdateFrame}}
+: {{tlygo|build=12.1.5|RaidFinderQueueFrameRewards_UpdateFrame}}
+: {{tlygo|build=12.1.5|RaidFinderRoleButton_OnEnter}}
+: {{tlygo|build=12.1.5|RemixArtifactTutorialUI_LoadUI}}
+: {{tlygo|build=12.1.5|RemixArtifactUI_LoadUI}}
+: {{tlygo|build=12.1.5|RemixArtifactUtil.GetEdgeTemplateType}}
+: {{tlygo|build=12.1.5|RemixArtifactUtil.GetTemplateForTalentType}}
+: {{tlygo|build=12.1.5|ScenarioFinderFrame_OnEvent}}
+: {{tlygo|build=12.1.5|ScenarioFinderFrame_OnLoad}}
+: {{tlygo|build=12.1.5|ScenarioFinderFrame_OnShow}}
+: {{tlygo|build=12.1.5|ScenarioFinderFrame_UpdateAvailability}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_Join}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_OnLoad}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_OnShow}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_SetTypeInternal}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_SetTypeRandom}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_SetTypeSpecific}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_SetType}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrame_Update}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameChoiceButton_OnEnter}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameChoiceEnableButton_OnClick}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameExpandOrCollapseButton_OnClick}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameFindGroupButton_OnClick}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameFindGroupButton_OnEnter}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameFindGroupButton_Update}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameRandom_UpdateFrame}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameRandomRandomList_OnEnter}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameSpecific_Update}}
+: {{tlygo|build=12.1.5|ScenarioQueueFrameSpecificList_InitButton}}
+: {{tlygo|build=12.1.5|SCENARIOS_CURRENT_FILTER}}
+: {{tlygo|build=12.1.5|ScenariosGetNumDungeons}}
+: {{tlygo|build=12.1.5|SendMailMailButton_OnClick}}
+: {{tlygo|build=12.1.5|ShowAdventureMapFrameForFollowerType}}
+: {{tlygo|build=12.1.5|ShowChallengesKeystoneFrame}}
+: {{tlygo|build=12.1.5|ShowGarrisonCapacitiveDisplayFrame}}
+: {{tlygo|build=12.1.5|ShowGarrisonMissionFrameForFollowerType}}
+: {{tlygo|build=12.1.5|ShowGarrisonRecruiterFrame}}
+: {{tlygo|build=12.1.5|ShowGarrisonShipyardFrame}}
+: {{tlygo|build=12.1.5|ShowPerksProgramFrame}}
+: {{tlygo|build=12.1.5|ShowRemixArtifactFrame}}
+: {{tlygo|build=12.1.5|SocialUIUtil.GetBattleNetFriendTagInterestsUIOrder}}
+: {{tlygo|build=12.1.5|SocialUIUtil.GetBattleNetFriendTagRoleUIOrder}}
+: {{tlygo|build=12.1.5|SortItemSetItems}}
+: {{tlygo|build=12.1.5|ToggleCovenantMissionUI}}
+: {{tlygo|build=12.1.5|ToggleEncounterJournal}}
+: {{tlygo|build=12.1.5|ToggleExpansionLandingPage}}
+: {{tlygo|build=12.1.5|ToggleGarrisonBuildingUI}}
+: {{tlygo|build=12.1.5|ToggleGarrisonMissionUI}}
+: {{tlygo|build=12.1.5|ToggleLFDParentFrame}}
+: {{tlygo|build=12.1.5|TogglePVPUI}}
+: {{tlygo|build=12.1.5|ToyBox_UpdateProgressBar}}
+: {{tlygo|build=12.1.5|UpdateHousingTutorials}}
+: {{tlygo|build=12.1.5|WhoFrameColumn_SetWidth}}
+: {{tlygo|build=12.1.5|WhoFrameDropdown_Initialize}}
+: {{tlygo|build=12.1.5|WhoFrameDropdown_OnEnter}}
+: {{tlygo|build=12.1.5|WhoFrameDropdown_OnLeave}}
+: {{tlygo|build=12.1.5|WhoFrameDropdown_OnLoad}}
+: {{tlygo|build=12.1.5|WhoFrameDropdown_OnShow}}
+: {{tlygo|build=12.1.5|WhoList_InitButton}}
+: {{tlygo|build=12.1.5|WhoList_SetSelectedButton}}
+: {{tlygo|build=12.1.5|WhoList_Update}}
+: {{tlygo|build=12.1.5|WhoListButton_SetSelected}}
+</div>
+|}
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(7)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|ScriptRegion:FocusEnter}}
+: {{api|t=w|ScriptRegion:FocusExit}}
+: {{api|t=w|ScriptRegion:MouseDown}}
+: {{api|t=w|ScriptRegion:MouseUp}}
+: {{api|t=w|ModelSceneActorBase:SetModelByUnitCreatureDisplayID}}
+: {{api|t=w|Minimap:SetUsingSoftCursor}}
+: {{api|t=w|Minimap:UpdateMouseoverAtPoint}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(24)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ALERT_AGE_VERIFICATION_RESTRICTED}}
+: {{api|t=e|BC_26_COLD_SWAP_FEATURE_ENABLED_CHANGED}}
+: {{api|t=e|BC_26_EXPERIENCE_CHANGED}}
+: {{api|t=e|CHAT_MSG_COLLECTED_APPEARANCE}}
+: {{api|t=e|DIEL_CYCLE_CHANGED}}
+: {{api|t=e|GAME_PAD_ALLOW_HOVER_EVENTS_WITH_FREE_LOOK_CHANGED}}
+: {{api|t=e|GAME_RULES_CHANGED}}
+: {{api|t=e|GAMEPAD_POSSESS_BAR_OVERRIDE_CHANGED}}
+: {{api|t=e|GAMEPAD_STANCE_BAR_OVERRIDE_CHANGED}}
+: {{api|t=e|GLOBAL_REGION_MOUSE_DOWN}}
+: {{api|t=e|GLOBAL_REGION_MOUSE_UP}}
+: {{api|t=e|GUILD_PREFERRED_PLAY_SETTINGS_UPDATED}}
+: {{api|t=e|INPUT_DEVICE_INTERFACE_TRANSITION}}
+: {{api|t=e|LFG_LIST_ROLE_UPDATE}}
+: {{api|t=e|LFG_LIST_SHOW_SEARCH}}
+: {{api|t=e|PET_STATS_UPDATE}}
+: 🆕 {{api|t=e|PLAYER_PVP_FLAG_CHANGED}}
+: {{api|t=e|PLAYER_SWING_RANGE_UPDATE}}
+: {{api|t=e|PLAYER_SWING}}
+: {{api|t=e|SHARD_TRANSFER_IMMINENT}}
+: {{api|t=e|SHARD_TRANSFER}}
+: {{api|t=e|SOCIAL_UI_RAID_LIST_SYSTEM_STATUS_UPDATED}}
+: {{api|t=e|UNIT_HAPPINESS}}
+: {{api|t=e|UNIT_PET_TRAINING_POINTS}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_SLOT_OPTION_CHANGED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|PET_SPELL_POWER_UPDATE}}
+: {{api|t=e|VIEWED_TRANSMOG_OUTFIT_SLOT_WEAPON_OPTION_CHANGED}}
+</div>
+|}
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(138)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(7)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: ''{{apitooltip|type=command|name=dumpSmallAlloc|cat=4}}''
+: {{apitooltip|type=cvar|name=BlizzCon2026ColdSwapFeatureEnabled|default=1|cat=10|desc=Feature flag for ColdSwap.}}
+: {{apitooltip|type=cvar|name=BlizzCon2026Experience|default=0|cat=10|desc=Which experience the system is currently targeting.}}
+: {{apitooltip|type=cvar|name=bloomEnable|default=0|cat=1|desc=Enable/disable bloom}}
+: {{apitooltip|type=cvar|name=bloomUserMult|default=1|cat=1|desc=Bloom Intensity graphics setting multiplier}}
+: {{apitooltip|type=cvar|name=CAAPulsePlayerHealthPercent|default=0|scope=Account|cat=4|desc=Play a looping pulse sound once the player's health is below X percent. The pulse gets faster as health drops}}
+: {{apitooltip|type=cvar|name=CAAPulsePlayerHealthVolume|default=100|scope=Account|cat=4|desc=Volume of the player health pulse combat audio alert (0 to 100)}}
+: {{apitooltip|type=cvar|name=CameraFollowPitchOffset|default=15.000000|scope=Account|cat=4|desc=Controls the pitch offset in degrees that the camera will move towards}}
+: {{apitooltip|type=cvar|name=canUseQuestItemWithLeftClick|default=0|cat=4|desc=Whether you can use a quest item by left clicking on a relevant creature.}}
+: {{apitooltip|type=cvar|name=categorizeTrainerUI|default=0|scope=Account|cat=4|desc=If true, shows categories for the trainer UI.}}
+: {{apitooltip|type=cvar|name=characterFrameCollapsed|default=0|scope=Character|cat=4|desc=Whether or not to show the character stats page}}
+: {{apitooltip|type=cvar|name=classicStyleWorldText|default=0|cat=4|desc=Whether to have floating world text (such as combat text) display as it does in Classic or in Retail}}
+: {{apitooltip|type=cvar|name=ClientSettings_LOW_LATENCY_CBS_BY_API_MASK}}
+: {{apitooltip|type=cvar|name=ClientSettings_LOW_LATENCY_CBS_BY_GPU_CATEGORY}}
+: {{apitooltip|type=cvar|name=ClientSettings_RGB10A2_API}}
+: {{apitooltip|type=cvar|name=ClientSettings_RGB10A2_CAT}}
+: {{apitooltip|type=cvar|name=deemphasizeOffspecPrimaryStats|default=0|scope=Account|cat=4|desc=Tooltips gray or hide primary stats not used by your spec}}
+: {{apitooltip|type=cvar|name=defaultReputationSortType|default=2|scope=Account|cat=4|desc=Which sort type option to default to for reputations}}
+: {{apitooltip|type=cvar|name=disableHorizonStart|default=0|cat=1|desc=disable "full fog" distance }}
+: {{apitooltip|type=cvar|name=displayFreeBagSlots|default=0|scope=Account|cat=4|desc=Whether or not the backpack button should indicate how many inventory slots you've got free}}
+: {{apitooltip|type=cvar|name=displayTemporaryEnchantIcon|default=1|cat=4|desc=If true, will display the icon of the temporary enchant instead of the item it's on.}}
+: {{apitooltip|type=cvar|name=enableCollectionToasts|default=1|scope=Account|cat=4|desc=If enabled, toasts for collection items being unlocked will popup.}}
+: {{apitooltip|type=cvar|name=enableLearnedRecipeToasts|default=1|scope=Account|cat=4|desc=If enabled, toasts for learning new recipes will popup.}}
+: {{apitooltip|type=cvar|name=enableLootToasts|default=1|scope=Account|cat=4|desc=If enabled, toasts for loot being received will popup.}}
+: {{apitooltip|type=cvar|name=encounterTimelineIconographyHiddenMask|scope=Account|cat=4|desc=Bitmask of support iconography to be disabled for timeline events.}}
+: {{apitooltip|type=cvar|name=GamePadBackend|default=0|cat=4|desc=Which GamePad backend to use (0=Default, 1=SDL, 2=Paddle)}}
+: {{apitooltip|type=cvar|name=GamePadBackPedalThreshold|default=0.600000|cat=4|desc=Stick magnitude threshold to face the movement direction instead of back pedal}}
+: {{apitooltip|type=cvar|name=GamepadCameraFollowOnStick|default=0|scope=Account|cat=4|desc=Enable camera to follow target as though being pushed/pulled along on a stick}}
+: {{apitooltip|type=cvar|name=GamepadCameraFollowPitchOffset|default=15.000000|scope=Account|cat=4|desc=Controls the pitch offset in degrees that the camera will move towards}}
+: {{apitooltip|type=cvar|name=GamepadCameraSavedDistance|default=5.550000|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=GamepadCameraSavedPetBattleDistance|default=10.000000|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=GamepadCameraSavedPitch|default=10.000000|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=GamepadCameraSavedVehicleDistance|default=-1.000000|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=GamepadCompassCustomFilterBoss|default=0|scope=Character|cat=4|desc=Adds Boss icons to the compass's custom filter.}}
+: {{apitooltip|type=cvar|name=GamepadCompassCustomFilterCritter|default=0|scope=Character|cat=4|desc=Adds Critter icons to the compass's custom filter.}}
+: {{apitooltip|type=cvar|name=GamepadCompassCustomFilterEnemy|default=0|scope=Character|cat=4|desc=Adds Enemy icons to the compass's custom filter.}}
+: {{apitooltip|type=cvar|name=GamepadCompassCustomFilterFriendly|default=0|scope=Character|cat=4|desc=Adds Friendly icons to the compass's custom filter.}}
+: {{apitooltip|type=cvar|name=GamepadCompassCustomFilterParty|default=0|scope=Character|cat=4|desc=Adds Party icons to the compass's custom filter.}}
+: {{apitooltip|type=cvar|name=GamepadConstrainedGroundTargetDistanceYds|default=20.000000|cat=4|desc=[Gamepad Specific] Distance at which to constrain AOE spell range to.}}
+: {{apitooltip|type=cvar|name=GamepadConstrainedGroundTargetEnabled|default=1|cat=4|desc=[Gamepad Specific] Whether AOE offer constrained-range casting.}}
+: {{apitooltip|type=cvar|name=GamepadConstrainedGroundTargetMaxRange|default=100.000000|cat=4|desc=[Gamepad Specific] Max Range at which to AOE spells become cursor-targeted.}}
+: {{apitooltip|type=cvar|name=GamepadDisableTooltips|default=0|cat=4|desc=Disables tooltips in gamepad mode when in a focused menu.}}
+: {{apitooltip|type=cvar|name=GamePadFaceMovementFreeFlying|default=1|cat=4|desc=Always face movement direction when free flying and not in combat}}
+: {{apitooltip|type=cvar|name=GamePadFaceMovementMount|default=1|cat=4|desc=Always face movement direction when riding a land mount}}
+: {{apitooltip|type=cvar|name=GamePadFaceMovementSwimming|default=1|cat=4|desc=Always face movement direction when swimming and not in combat}}
+: {{apitooltip|type=cvar|name=GamepadFocusStateColor|default=1|scope=Character|cat=4|desc=Determines which focus state color to use.}}
+: {{apitooltip|type=cvar|name=GamepadFocusStateOpacity|default=0.500000|scope=Character|cat=4|desc=Determines opacity to use for focus state. Set to 0 for no glow.}}
+: {{apitooltip|type=cvar|name=GamepadHudModifierUsesToggle|default=0|scope=Character|cat=4|desc=Allows the HUD Modifier state to be toggled on/off when tapped instead of when held/released.}}
+: {{apitooltip|type=cvar|name=gamepadInvertPitch|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=gamepadInvertYaw|default=0|cat=4}}
+: {{apitooltip|type=cvar|name=GamepadMapEdgePanDistance|default=50.000000|cat=4|desc=The distance from the edge of the map screen that will cause it to pan.}}
+: {{apitooltip|type=cvar|name=GamepadMapScrollSpeedFullScreen|default=1000.000000|cat=4|desc=How fast the map is scrolled when the map is full screen.}}
+: {{apitooltip|type=cvar|name=GamepadMapScrollSpeed|default=400.000000|cat=4|desc=How fast the map is scrolled.}}
+: {{apitooltip|type=cvar|name=GamepadMapZoomSpeed|default=2.000000|cat=4|desc=How fast the map is zoomed in or out.}}
+: {{apitooltip|type=cvar|name=GamepadPossessBarOverride|default=1|scope=Character|cat=4|desc=Specifies which of the gamepad action bars is overriden by the possess action bar when it is available.}}
+: {{apitooltip|type=cvar|name=GamepadPreferScreenTargeting|default=0|scope=Character|cat=4|desc=Use Screen Targeting instead of the Targeting Radial.}}
+: {{apitooltip|type=cvar|name=GamepadRaidTargetingHoverMode|default=0|scope=Character|cat=4|desc=When raid targeting spells will target the indicated player without changing the player's current target.}}
+: {{apitooltip|type=cvar|name=GamepadRaidTargetingStyle|default=1|scope=Character|cat=4|desc=The type of targeting style to use when targeting players in a raid group.}}
+: {{apitooltip|type=cvar|name=GamepadShowActionBarButtonPrompts|default=0|scope=Character|cat=4|desc=Indicates if the input prompts should be displayed on the active gamepad action bar.}}
+: {{apitooltip|type=cvar|name=GamepadShowActionBarHighlight|default=1|scope=Character|cat=4|desc=Indicates if the highlight should be displayed on the active gamepad action bar.}}
+: {{apitooltip|type=cvar|name=GamepadShowActionBarScaling|default=1|scope=Character|cat=4|desc=Indicates if the scaling should be enabled on the active gamepad action bar.}}
+: {{apitooltip|type=cvar|name=GamepadShowAutoAuraTooltip|default=1|scope=Account|cat=4|desc=Whether to automatically show buff tooltips for Gamepad UI}}
+: {{apitooltip|type=cvar|name=GamepadShowEmptyActionbars|default=1|scope=Character|cat=4|desc=Show additional action bars even if they have no abilities bound.}}
+: {{apitooltip|type=cvar|name=GamepadShowPersistentInputLegend|default=1|scope=Character|cat=4|desc=Indicates if the list of gamepad actions should always be shown on screen.}}
+: {{apitooltip|type=cvar|name=GamepadStanceBarOverride|default=3|scope=Character|cat=4|desc=Specifies which of the gamepad action bars is overriden by the stance action bar when it is available.}}
+: {{apitooltip|type=cvar|name=GamepadSwapFriendlyTargetActions|default=0|cat=4|desc=Swaps the dpad and face button actions when holding the friendly target modifier.}}
+: {{apitooltip|type=cvar|name=GamepadSwapHostileTargetActions|default=0|cat=4|desc=Swaps the dpad and face button actions when holding the hostile target modifier.}}
+: {{apitooltip|type=cvar|name=GamepadSwapTargetModifiers|default=0|cat=4|desc=Swaps the friendly and hostile target modifiers.}}
+: {{apitooltip|type=cvar|name=GamepadTabFriendlyTargetAction|default=1|cat=4|desc=Tab target friendlies on target action release}}
+: {{apitooltip|type=cvar|name=GamepadTabHostileTargetAction|default=1|cat=4|desc=Tab target hostiles on target action release}}
+: {{apitooltip|type=cvar|name=GamepadTargetingAnalogDeadzone|default=0.600000|cat=4|desc=Magnitude of input the stick must receive for analog targeting to take effect (0.0-1.0)}}
+: {{apitooltip|type=cvar|name=GamepadTargetingAnalogPullbackThreshold|default=0.100000|cat=4|desc=Magnitude difference at which analog targeting turns itself off (0.0-1.0)}}
+: {{apitooltip|type=cvar|name=GamepadTargetingModifierVisualDelay|default=0.350000|scope=Character|cat=4|desc=The duration that the Targeting Modifier can be held before updating the UI. Releasing within this window will tab target.}}
+: {{apitooltip|type=cvar|name=GamePadTouchCursorAccel|default=1.000000|desc=Cursor acceleration for touchpad control}}
+: {{apitooltip|type=cvar|name=GamePadTouchCursorMoveThreshold|default=0.042000|desc=Change before touchpad moves the cursor (larger for easier taps)}}
+: {{apitooltip|type=cvar|name=GamePadTouchCursorSpeed|default=1.000000|desc=Cursor speed for touchpad control}}
+: {{apitooltip|type=cvar|name=GamePadTouchTapButtons|default=0|desc=Enable touch tap to press TouchPad buttons}}
+: {{apitooltip|type=cvar|name=GamePadTouchTapMaxMs|default=200|desc=Max time in ms for a touch to register a tap/click}}
+: {{apitooltip|type=cvar|name=GamePadTouchTapOnlyClick|default=1|desc=Only use taps for cursor clicks, do not use tap presses}}
+: {{apitooltip|type=cvar|name=GamePadTouchTapRightClick|default=0|desc=Taps for cursor clicks are right clicks instead of left clicks}}
+: {{apitooltip|type=cvar|name=GamepadUseCompactActionBar|default=0|scope=Character|cat=4|desc=Enables a more compact action bar layout, that only displays the currently active bar.}}
+: {{apitooltip|type=cvar|name=GamepadUsePartyTargeting|default=1|cat=4|desc=If enabled, target specific party members with the dpad rather than using directional targeting}}
+: {{apitooltip|type=cvar|name=giQuality|default=2}}
+: {{apitooltip|type=cvar|name=graphicsBloomUserMult|default=1}}
+: {{apitooltip|type=cvar|name=graphicsLightMode|default=2}}
+: {{apitooltip|type=cvar|name=graphicsPBRLiquidDetail|default=1}}
+: {{apitooltip|type=cvar|name=GxCompatLowLatencyCallbacks|default=0|desc=Allows GPU -> CPU readbacks to be checked for more frequently rather than always taking the max GPU frame latency}}
+: {{apitooltip|type=cvar|name=hasSelectedExperiencePreset|default=0|cat=4|desc=Whether this client has selected an experience preset (Classic or Modern) yet.}}
+: {{apitooltip|type=cvar|name=HDRBrightness|default=203|cat=1|desc=Brightness level to use when rendering in HDR, specified in nits (cd/m^2). Only used if useHDRBrightness is set.}}
+: {{apitooltip|type=cvar|name=HDRFactor|default=2.000000|cat=1|desc=Factor adjusting how far above SDR lighting HDR is allowed to push. Will be clamped to the monitor's peak brightness.}}
+: {{apitooltip|type=cvar|name=HDROutput|default=0|cat=1|desc=Enables HDR output if supported by the monitor and render settings}}
+: {{apitooltip|type=cvar|name=HDRPeakBrightness|default=400|cat=1|desc=Peak brightness the monitor is able to display when rendering in HDR, specified in nits (cd/m^2). Only used if useHDRPeakBrightness is set.}}
+: {{apitooltip|type=cvar|name=InputDeviceInterfaceStyle|default=0|cat=10|desc=Switches between the interface types for different devices}}
+: {{apitooltip|type=cvar|name=instantQuestText|default=1|scope=Account|cat=4|desc=Whether to instantly show quest text instead of fading it in.}}
+: {{apitooltip|type=cvar|name=KioskCanAutoDeleteCharacters|default=1|cat=10|desc=Determines if characters will be deleted after a session restart. Defaults to 'true'.}}
+: {{apitooltip|type=cvar|name=KioskCharacterTemplateSet1|default=0|cat=10|desc=Character template set ID 1 to select at character creation. Defaults to 0.}}
+: {{apitooltip|type=cvar|name=KioskCharacterTemplateSet2|default=0|cat=10|desc=Character template set ID 2 to select at character creation. Defaults to 0.}}
+: {{apitooltip|type=cvar|name=KioskWarmupSeconds|default=15.000000|cat=10|desc=Seconds to lockdown controls on the welcome screen. Defaults to 15.}}
+: {{apitooltip|type=cvar|name=linear|default=1|cat=1|desc=Linear: %d. 0- disabled (live), 1- linear}}
+: {{apitooltip|type=cvar|name=minFontHeight|default=0.000000|cat=4|desc=Minimum font size. Any font with a height smaller than this will have it clamped to this value.}}
+: {{apitooltip|type=cvar|name=nameplateBottomInset|default=0.100000|cat=4|desc=The inset from the bottom (in screen percent) that nameplates are clamped to.}}
+: {{apitooltip|type=cvar|name=nameplateMotionSpeed|default=0.025000|cat=4|desc=Controls the rate at which nameplate animates into their target locations [0.0-1.0]}}
+: {{apitooltip|type=cvar|name=nameplateTopInset|default=0.080000|cat=4|desc=The inset from the top (in screen percent) that nameplates are clamped to.}}
+: {{apitooltip|type=cvar|name=onlyShowCollectedItemsInJournal|default=1|scope=Account|cat=4|desc=For all Collections, only display items that this account has already collected.}}
+: {{apitooltip|type=cvar|name=outlineModeShowLootEffectWhenDisabled|default=0|scope=Account|cat=4|desc=When Outline Mode is disabled, replace passive outlines with loot sparkles}}
+: {{apitooltip|type=cvar|name=pbrLiquidDetail|default=0}}
+: {{apitooltip|type=cvar|name=RAIDbloomUserMult|default=1|cat=1|desc=Bloom Intensity graphics setting multiplier}}
+: {{apitooltip|type=cvar|name=RAIDgiQuality|default=2}}
+: {{apitooltip|type=cvar|name=raidGraphicsBloomUserMult|default=1}}
+: {{apitooltip|type=cvar|name=raidGraphicsLightMode|default=2}}
+: {{apitooltip|type=cvar|name=raidGraphicsPBRLiquidDetail|default=1}}
+: {{apitooltip|type=cvar|name=RAIDpbrLiquidDetail|default=0}}
+: {{apitooltip|type=cvar|name=RAIDRenderFormat|default=2|cat=1|desc=0 = BGRA8Unorm, 1 = A2BGR10Unorm, 2 = RGBA16F, 3 = RGBA32F}}
+: {{apitooltip|type=cvar|name=seenAgeVerificationRestrictionState|default=0|scope=Account|cat=4|desc=Last acknowledged Age Verification restriction state.}}
+: {{apitooltip|type=cvar|name=ShowAllSpellRanks|default=0|scope=Account|cat=4|desc=show either all spell ranks, or only the highest rank}}
+: {{apitooltip|type=cvar|name=showKeyring|default=0|scope=Account|cat=4|desc=Show the keyring button}}
+: {{apitooltip|type=cvar|name=showLootSpam|default=1|scope=Account|cat=4|desc=Whether to show full loot rolls in chat.}}
+: {{apitooltip|type=cvar|name=showMaxLevelAnnouncements|default=1|scope=Account|cat=4|desc=Enables a chat message and sound when someone reaches max level on the realm.}}
+: {{apitooltip|type=cvar|name=showQuestDifficultyColor|default=1|scope=Character|cat=4|desc=Stores whether to show quest difficulty color in the quest log and quest text}}
+: {{apitooltip|type=cvar|name=showQuestLevel|default=0|scope=Character|cat=4|desc=Stores whether to show quest levels in the quest list and quest text}}
+: {{apitooltip|type=cvar|name=showSwingTimer|default=0|scope=Account|cat=4|desc=Whether the swing timer is visible}}
+: {{apitooltip|type=cvar|name=showTaxiNodeLearnedIcon|default=0|cat=4|desc=Whether to show an icon over flightmasters' heads when the taxipath has been learned.}}
+: {{apitooltip|type=cvar|name=SmartNavigationCursorAnchor|default=5|cat=4|desc=What edge of the cursor to anchor to the button.}}
+: {{apitooltip|type=cvar|name=SmartNavigationCursorAppearance|default=2|cat=4|desc=What appearance for the cursor to take.}}
+: {{apitooltip|type=cvar|name=SmartNavigationCursorButtonAnchor|default=1|cat=4|desc=Where in relation to the button to anchor the cursor.}}
+: {{apitooltip|type=cvar|name=SmartNavigationCursorFlipHorizontal|default=0|cat=4|desc=Flips smart cursor horizontally, making left right.}}
+: {{apitooltip|type=cvar|name=SmartNavigationCursorFlipVertical|default=0|cat=4|desc=Flips smart cursor vertically, making up down.}}
+: {{apitooltip|type=cvar|name=SmartNavigationCursorRotationAngle|default=0.000000|cat=4|desc=How much to rotate the smart cursor, in degrees.}}
+: {{apitooltip|type=cvar|name=SmartNavigationCursorScale|default=2.000000|cat=4|desc=How much scale the cursor.}}
+: {{apitooltip|type=cvar|name=SmartNavigationScrollSpeed|default=5000.000000|cat=4|desc=How fast areas are scrolled using the right stick.}}
+: {{apitooltip|type=cvar|name=SoftTargetInteractOnlyInRange|default=0|scope=Account|cat=4|desc=Sets if soft interacts should only be set for targets that are in interact range.}}
+: {{apitooltip|type=cvar|name=spellBookHideFlyouts|default=1|scope=Account|cat=4|desc=If true, Flyout icons will be hidden and member spells will be shown loose in the spellbook.}}
+: {{apitooltip|type=cvar|name=targetHighlightAlwaysShown|default=1|scope=Account|cat=4|desc=If enabled, targeted units have a highlight applied regardless of Outline Mode settings.}}
+: {{apitooltip|type=cvar|name=tooltipPointsShowMinAndMax|default=1|cat=4|desc=True shows tooltip token $s as '[min] to [max]', False shows as '[avg]'}}
+: {{apitooltip|type=cvar|name=UnitSurnameOwn|default=1|scope=Account|cat=4|desc=show player surname over head}}
+: {{apitooltip|type=cvar|name=useHDRBrightness|default=0|cat=1|desc=Whether HDRBrightness should be used to override the monitor's detected brightness level.}}
+: {{apitooltip|type=cvar|name=useHDRPeakBrightness|default=0|cat=1|desc=Whether HDRPeakBrightness should be used to override the monitor's detected peak brightness level.}}
+: {{apitooltip|type=cvar|name=winePlatformTTS|default=0|cat=4|desc=Use Windows TTS on Wine. Disabled by default as it can cause crashes.}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=cacaoBilateralSimilarityDistanceSigma|default=0.01|cat=1|desc=CACAO Sigma squared value for use in bilateral upsampler giving similarity weighting for neighbouring pixels. Should be greater than 0.0.}}
+: {{apitooltip|type=cvar|name=SSAOType|default=0|cat=1|desc=Screen-Space Ambient Occlusion Type}}
+: {{apitooltip|type=cvar|name=useShadowMapping|default=1|cat=1|desc=Use shadow mapping}}
+: {{apitooltip|type=cvar|name=volumeFogDisableLightScattering|default=0|cat=1|desc=0: vf point light scattering enabled. 1: disabled}}
+: {{apitooltip|type=cvar|name=volumeFogDisableNoise|default=0|cat=1|desc=0: vf noise enabled. 1: noise disabled}}
+: {{apitooltip|type=cvar|name=volumeFogDisableShadows|default=0|cat=1|desc=0: vf shadows enabled. 1: shadows disabled}}
+: {{apitooltip|type=cvar|name=volumeFogUse16BitTexture|default=1|cat=1|desc=0: 8 bit. 1: 16 bit. REQUIRES gxRestart}}
+</div>
+|}
+
+==References==
+{{reflist}}

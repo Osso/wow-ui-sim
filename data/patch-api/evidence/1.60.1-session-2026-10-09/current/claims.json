@@ -1,0 +1,19 @@
+{
+  "meaningful_closures": [],
+  "runtime_changes": [],
+  "native_claims": [],
+  "retirements": [],
+  "source_accounting_is_not_publication": true,
+  "model_candidate": {
+    "source_line": 12,
+    "api": "UnitName(\"player\")",
+    "status": "NOT EXECUTED",
+    "target": "patch_1_60_1_source_model",
+    "reason": "Cheap isolated CoW package-home snapshot rejected by filesystem; original package/runtime caches protected.",
+    "credit_limits": [
+      "Configured name only if later executed",
+      "No arity/realm/Unknown default/token-alias/security/native/loaded-UI credit"
+    ]
+  },
+  "all_original_contracts_remain_UNPROVEN": true
+}

@@ -1,0 +1,13 @@
+test_every_nonblank_occurrence_header_signature_prose_and_reference_required (__main__.SourceTests.test_every_nonblank_occurrence_header_signature_prose_and_reference_required) ... ok
+test_foreign_history_native_and_publication_credit_rejected (__main__.SourceTests.test_foreign_history_native_and_publication_credit_rejected) ... ok
+test_frozen_response_manifest_registry (__main__.SourceTests.test_frozen_response_manifest_registry) ... ok
+test_git_free_fresh_replay_and_disk_tamper_restore (__main__.SourceTests.test_git_free_fresh_replay_and_disk_tamper_restore) ... ok
+test_literal_duplicate_and_malformed_fixture_preserved (__main__.SourceTests.test_literal_duplicate_and_malformed_fixture_preserved) ... ok
+test_literal_inventory_headers_and_command (__main__.SourceTests.test_literal_inventory_headers_and_command) ... ok
+test_signatures_do_not_invent_parameters_or_return_tuples (__main__.SourceTests.test_signatures_do_not_invent_parameters_or_return_tuples) ... ok
+test_unexpanded_link_and_template_boundaries (__main__.SourceTests.test_unexpanded_link_and_template_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.592s
+
+OK

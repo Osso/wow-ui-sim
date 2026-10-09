@@ -182,11 +182,6 @@ harness = false
 required-features = ["client-retail"]
 
 [[test]]
-name = "patch_1_60_1_source_model"
-path = "patch-tests/patch_1_60_1_source_model.rs"
-required-features = ["client-wowforever"]
-
-[[test]]
 name = "patch_12_1_audit"
 path = "patch-tests/patch_12_1.rs"
 required-features = ["client-ptr"]
@@ -262,16 +257,6 @@ name = "classic_guild_roster_selection"
 path = "tests/classic_guild_roster_selection.rs"
 
 [[test]]
-name = "patch_3_0_3_factory"
-path = "tests/patch_3_0_3_factory.rs"
-required-features = ["client-retail"]
-
-[[test]]
-name = "patch_3_0_2_factory"
-path = "tests/patch_3_0_2_factory.rs"
-required-features = ["client-retail"]
-
-[[test]]
 name = "patch_3_4_1_factory"
 path = "tests/patch_3_4_1_factory.rs"
 required-features = ["client-wrath"]
@@ -298,8 +283,3 @@ quote = "1"
 
 [patch.crates-io]
 iced_wgpu = { path = "iced-wgpu-patched" }
-
-[[test]]
-name = "patch_2_4_2_factory"
-path = "tests/patch_2_4_2_factory.rs"
-required-features = ["client-retail"]

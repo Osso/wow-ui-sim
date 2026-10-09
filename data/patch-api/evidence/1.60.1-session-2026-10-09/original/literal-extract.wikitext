@@ -1,0 +1,194 @@
+{{apichanges|1.60.1|next=1.60.2}}
+{{#description2:1.60.1 (70205) Oct  2 2026}}
+==Resources==
+* TOC: <code>16001</code>
+* Official development notes: [https://us.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-september-24/2360696 WoW Forever Beta Development Notes]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/12.1.5..forever wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/12.1.5..1.60.1 BlizzardInterfaceResources]
+===Notable changes===
+* <span style="color:plum">1.60.1 (70170) Oct  1 2026</span>
+** Added <code>WOW_PROJECT_CAMELOT</code> (18) constant.<ref> WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1550603608003842121 WOW_PROJECT_ID for Forever seems to be the same as Retail]</ref>
+** Fixed <code>UnitName("player")</code> returning <code>"Unknown", nil</code> before <code>PLAYER_LOGIN</code> fires.<ref>WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1552849167309606954 UnitName("player") returns "Unknown", nil before PLAYER_LOGIN fires]</ref>
+* <span style="color:plum">1.60.1 (70009) Sep 23 2026</span>
+** Fixed SavedVariables not loading.<ref>WoWUIDev #bugs:  [https://discord.com/channels/327414731654692866/1550422504831586415 SavedVariables not loading]</ref>
+** Fixed RestrictedEnvironment not loading.<ref>WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1550273499916927037 RestrictedEnvironment not loading]</ref>
+** Fixed <code>UnitName</code> not being consistent between UnitTokens.<ref>WoWUIDev #bugs: [https://discord.com/channels/327414731654692866/1550272311247110274 UnitName is not consistent on Forever Beta between UnitToken]</ref>
+==Examples==
+===TOC format===
+The [[TOC_format#AllowLoadGameType|AllowLoadGameType]] directive restricts addons to only load on a specific game type. This way you only need a single TOC file instead of multiple [[TOC_format#Client-specific_TOC_files|client-specific]] TOC files.
+📝 Since the <code>camelot</code> (name subject to change) game type is not yet recognized on standard 12.1.5, 12.1.0 and classic clients, this will require excluding the other game types.
+* To load an addon only on Forever.
+:<syntaxhighlight lang="wowtoc">
+## AllowLoadGameType: camelot
+## ExcludeLoadGameType: standard, classic
+</syntaxhighlight>
+* To load a specific file only on Forever.
+:<syntaxhighlight lang="wowtoc">MyFile.lua [AllowLoadGameType camelot][ExcludeLoadGameType standard, classic]
+</syntaxhighlight>
+* To set metadata such as the addon's title only for a specific game type.
+<div style="margin-left:2em">{{markdown_alert|NOTE|Since on the other clients <code>camelot</code> is not yet recognized: 1) Unrecognized game types are loaded anyway and 2) latter lines will overwrite the previous ones.
+<br>This requires the <code>camelot</code> game type to be listed ''first'' or the title would show up as Forever on the other clients if it was listed last.}}</div>
+:<syntaxhighlight lang="wowtoc">
+## Title: My title for Forever [AllowLoadGameType camelot]
+## Title: My title for Midnight [AllowLoadGameType standard]
+## Title: My title for Mists/TBC/Vanilla [AllowLoadGameType classic]
+</syntaxhighlight>
+===Game types===
+Checks the current game type in Lua with [[WOW_PROJECT_ID]].
+<syntaxhighlight lang="lua">
+-- with constants
+if WOW_PROJECT_ID == WOW_PROJECT_CAMELOT then
+	-- camelot/forever
+end
+</syntaxhighlight>
+<syntaxhighlight lang="lua">
+-- by interface version
+local version = select(4, GetBuildInfo())
+if version > 16000 and version < 20000 then
+	-- camelot/forever
+end
+</syntaxhighlight>
+Uses TOC variables with {{api|C_AddOns.GetAddOnMetadata}}.
+<syntaxhighlight lang="wowtoc">
+## X-Game: [Game]
+</syntaxhighlight>
+<syntaxhighlight lang="lua">
+if C_AddOns.GetAddOnMetadata("MyAddOn", "X-Game") == "Camelot" then
+	-- camelot/forever
+end
+</syntaxhighlight>
+===Rulesets===
+Checks the current ruleset with {{api|C_GameRules.IsGameRuleActive}}.
+<syntaxhighlight lang="lua">
+if C_GameRules.IsGameRuleActive(Enum.GameRule.HardcoreRuleset) then
+	-- Hardcore
+elseif C_GameRules.IsGameRuleActive(Enum.GameRule.RPRuleset) then
+	-- RP
+elseif C_GameRules.IsGameRuleActive(Enum.GameRule.PvPRuleset) then
+	-- PvP
+else
+	-- PvE
+end
+</syntaxhighlight>
+==Blue posts==
+===2026-09-15===
+[https://discord.com/channels/327414731654692866/1549523107520188476 {{apisummary.title|An Update On Secrets In WoW: Forever}}]
+<blockquote {{apisummary.blizzquote}}>
+WoW Forever shares Mainline WoW's UI architecture, including the vast majority of APIs available in 12.1.5. From a UI loading perspective, the easiest way to think about it is that Forever and modern WoW (Midnight) are two game types within the Mainline code family: Camelot (to be renamed before launch) and Standard, respectively.
+The addon disarmament changes introduced in Midnight, including secrets, will also be active in Forever.
+The AuraContainer/AuraButton changes introduced in 12.1.0 will be available as well, and you can expect similar UI changes in the future to be introduced to both Standard and Forever.
+</blockquote>
+===2026-09-24===
+{{bluepost
+|poster=Kaivax
+|date=Sep 24, 2026
+|link=https://us.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-september-24/2360696
+|title=WoW Forever Beta Development Notes – Updated September 24 ''(Build 70009)''
+|body=
+{{apisummary.heading|Cooldown Manager}}
+* The Cooldown Manager in World of Warcraft: Forever is intended to enhance gameplay by pulling critical information from the buff bar or action bar and placing it in a fully customizable location. By default, the Cooldown Manager is disabled, and it can be enabled in Options under the Gameplay Enhancement settings.
+* Druid, Mage, Priest, Warrior, and Warlock are available for testing the Cooldown Manager.
+* Additional classes will become testable in future updates.
+* The most desired feedback for this feature is currently: spells that you wish were tracked by default.
+* The Cooldown Manager does not yet support spell ranks. This will be resolved in a future Beta update.
+{{apisummary.heading|Gamepad Support}}
+* Class specific flyouts have been added to the action bar interface of some classes.
+** Shapeshift flyout for Druids.
+** Pet control and pet spell flyouts for Hunters and Warlocks.
+** Aura flyout for Paladins.
+** Stance flyout for Warriors.
+* The pet bar no longer replaces the bottom gamepad action bar for Hunters and Warlocks.
+* New options have been added to the Gamepad (Alpha) section of the game options.
+** Use Compact Action Bar: Replaces the normal gamepad action bar layout with one that only shows the currently active action bar at any given time.
+** Fixed Party Targeting: While in a non-raid party, rather than having the directional pad act as directions in the party interface, each button on the directional pad is assigned to a specific party member.
+** Swap Target Modifier Sides: Swaps sides of the friendly and hostile targeting modifiers, putting friendly targeting on the right and hostile on the left.
+** Swap Friendly Target Action Sides: Swaps the directional pad and face button actions when using the friendly targeting modifier.
+** Swap Hostile Target Action Sides: Swaps the directional pad and face button actions when using the hostile targeting modifier.
+* Fixed an issue preventing edit mode layouts from being applied while the gamepad UI is enabled.
+* Updated Map and Quest Log bindings.
+** New hover functionality for POI pins.
+* Updated support for Compact Raid Frame Manager and Role Poll Frames.
+}}
+===2026-10-02===
+{{bluepost
+|poster=Kaivax
+|date=Oct 2, 2026
+|link=https://us.forums.blizzard.com/en/wow/t/wow-forever-beta-development-notes-%E2%80%93-updated-october-1/2360696/4
+|title=WoW Forever Beta Development Notes – Updated October 1 ''(Build 70058)''
+|body=
+{{apisummary.heading|Cooldown Manager}}
+* Racial abilities are now supported.
+* Rogue is now supported.
+* Duplicate entries for each spell rank on already supported classes should no longer be present.
+{{apisummary.heading|Gamepad Support}}
+* The pet stable interface has been updated for gamepad support.
+* The gamepad UI bindings are now static, and any gamepad rebinding only affects the keyboard and mouse interface.
+* The compact Raid and Party manager frames have been updated for gamepad support.
+* Fixed an issue preventing macros placed on a gamepad action bar from being able to be moved.
+{{apisummary.heading|User Interface}}
+* On the character sheet, when mousing over Spell Damage and Spell Healing, it is now explained that spells cast using spell ranks vastly below your current level receive less benefit from your Spell Damage and Spell Healing and have a reduced chance to activate your Class abilities and Talents. (examples: [[Frostbite]] and [[Omen of Clarity]])
+** ''Developers’ notes: Another example of this reduction in activation chance – Using a Rank 1 Frostbolt at level 60 will result in a 0% chance to get a Frostbite activation. So you now are making a decision between getting a slow off quickly, or using a spell that can potentially get a Frostbite activation, instead of getting both.''
+* Character Creation will display matching icons when Standard Definition models are toggled.
+* Stables frame art has been updated.
+* Combo points on the target frame and Personal Resource Display has updated art.
+* Fixed loot rolls in chat not displaying a player’s full name.
+* The auction house will now correctly display item suffixes.
+}}
+==Consolidated changes==
+: [[Patch_12.1.5/API_changes|12.1.5 (69952)]] &rarr; <font color="lightgreen">1.60.1 (70205)</font> Oct  2 2026
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(176)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(10)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+===FrameXML===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-framexml"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(471)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1041)</small>
+|- class="mw-collapsible mw-collapsed" id="mw-customcollapsible-framexml"
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(7)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(24)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(138)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(7)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+==References==
+{{reflist}}

@@ -1,0 +1,105 @@
+test_every_nonblank_occurrence_header_signature_prose_and_reference_required (__main__.SourceTests.test_every_nonblank_occurrence_header_signature_prose_and_reference_required) ... FAIL
+test_foreign_history_native_and_publication_credit_rejected (__main__.SourceTests.test_foreign_history_native_and_publication_credit_rejected) ... FAIL
+test_frozen_response_manifest_registry (__main__.SourceTests.test_frozen_response_manifest_registry) ... FAIL
+test_git_free_fresh_replay_and_disk_tamper_restore (__main__.SourceTests.test_git_free_fresh_replay_and_disk_tamper_restore) ... FAIL
+test_literal_duplicate_and_malformed_fixture_preserved (__main__.SourceTests.test_literal_duplicate_and_malformed_fixture_preserved) ... FAIL
+test_literal_inventory_headers_and_command (__main__.SourceTests.test_literal_inventory_headers_and_command) ... FAIL
+test_signatures_do_not_invent_parameters_or_return_tuples (__main__.SourceTests.test_signatures_do_not_invent_parameters_or_return_tuples) ... FAIL
+test_unexpanded_link_and_template_boundaries (__main__.SourceTests.test_unexpanded_link_and_template_boundaries) ... FAIL
+
+======================================================================
+FAIL: test_every_nonblank_occurrence_header_signature_prose_and_reference_required (__main__.SourceTests.test_every_nonblank_occurrence_header_signature_prose_and_reference_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 47, in test_every_nonblank_occurrence_header_signature_prose_and_reference_required
+    module = self.validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+======================================================================
+FAIL: test_foreign_history_native_and_publication_credit_rejected (__main__.SourceTests.test_foreign_history_native_and_publication_credit_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 70, in test_foreign_history_native_and_publication_credit_rejected
+    module = self.validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+======================================================================
+FAIL: test_frozen_response_manifest_registry (__main__.SourceTests.test_frozen_response_manifest_registry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 26, in test_frozen_response_manifest_registry
+    result = self.validator().replay(EVIDENCE)
+             ~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+======================================================================
+FAIL: test_git_free_fresh_replay_and_disk_tamper_restore (__main__.SourceTests.test_git_free_fresh_replay_and_disk_tamper_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 107, in test_git_free_fresh_replay_and_disk_tamper_restore
+    self.validator()
+    ~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+======================================================================
+FAIL: test_literal_duplicate_and_malformed_fixture_preserved (__main__.SourceTests.test_literal_duplicate_and_malformed_fixture_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 82, in test_literal_duplicate_and_malformed_fixture_preserved
+    module = self.validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+======================================================================
+FAIL: test_literal_inventory_headers_and_command (__main__.SourceTests.test_literal_inventory_headers_and_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 33, in test_literal_inventory_headers_and_command
+    result = self.validator().replay(EVIDENCE)
+             ~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+======================================================================
+FAIL: test_signatures_do_not_invent_parameters_or_return_tuples (__main__.SourceTests.test_signatures_do_not_invent_parameters_or_return_tuples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 57, in test_signatures_do_not_invent_parameters_or_return_tuples
+    self.validator().replay(EVIDENCE)
+    ~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+======================================================================
+FAIL: test_unexpanded_link_and_template_boundaries (__main__.SourceTests.test_unexpanded_link_and_template_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 101, in test_unexpanded_link_and_template_boundaries
+    module = self.validator()
+  File "/home/osso/.worktrees/wow-ui-sim-p1601-source/data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py", line 19, in validator
+    self.assertTrue(path.exists(), 'frozen Forever source validator missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : frozen Forever source validator missing
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+FAILED (failures=8)

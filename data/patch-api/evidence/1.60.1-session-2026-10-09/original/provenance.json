@@ -1,0 +1,28 @@
+{
+  "base_revision": "66a5c16599cdf48243ebf8348e78cd3e3c829c26",
+  "source_tool_revision": "66a5c16599cdf48243ebf8348e78cd3e3c829c26",
+  "source_parser_flags": [],
+  "source_parser_changes": [],
+  "extract": "literal unexpanded non-inventory mirror; no shared extractor changes",
+  "configured_feature": "client-wowforever",
+  "configured_interface": 16001,
+  "configured_version": "1.60.1",
+  "configured_compatibility_build": "69977",
+  "source_build": "70205",
+  "native_interface": "NOT MEASURED",
+  "runtime_publication": "NOT MEASURED",
+  "loaded_ui": "NOT MEASURED",
+  "runtime_changes": [],
+  "actual_successors": [],
+  "pending_navigation": [
+    "1.60.2"
+  ],
+  "production_policy_inferred": false,
+  "red_command": [
+    "python3",
+    "-B",
+    "data/patch-api/evidence/1.60.1-session-2026-10-09/test_source.py"
+  ],
+  "red_exit": 1,
+  "red_failures": 8
+}
