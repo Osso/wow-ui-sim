@@ -2831,3 +2831,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] source audit | Retail Patch 4.1.0
 
 [Audit](investigations/patch-4-1-0-api-audit.md): local pinned revision 4094671; opt-in Cataclysm bullet parser, complete default extraction. Accounting/development tests pending; no runtime/native proof.
+
+## [2026-10-09] development | Retail Patch 4.1.0 accounting
+
+[Audit](investigations/patch-4-1-0-api-audit.md): 81 publication occurrences, 86 extraction rows, four signatures; 171 IDs, 31 publication/eight prose/four signature limits. Retail happiness absence fixed, Mists state retained. Own prefork 1/1, retail 1/1, Mists 2/2, parser 1/1; negative 31→32. Main owns final acceptance and queued successor integration.

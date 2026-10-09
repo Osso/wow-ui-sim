@@ -4,12 +4,12 @@ Account for the pinned historical retail [source](../../data/patch-api/sources/4
 
 ## What it must do
 
-- [ ] Opt-in parsing retains NEW groups, whitespace-padded references, multi-name removals and changed combat-log events with original source lines; default generator bytes remain unchanged.
+- [x] Opt-in parsing retains NEW groups, whitespace-padded references, multi-name removals and changed combat-log events with original source lines; default generator bytes remain unchanged.
 - [ ] Every register identity and retained prose statement has explicit coverage or a precise gap.
 - [ ] The sweep applies only later retail registers, ordered 4.2.0, 4.3.0, 4.3.4 then 5.0.1 onward; queued pages receive no fabricated successor credit.
 - [ ] Evidence validation derives counts from sealed source/accounting files and rejects tampering.
 
-- [ ] Retail raw and ordinary `GetPetHappiness` lookups are absent; non-retail default/seeded pet-state outputs are unchanged.
+- [x] Retail raw and ordinary `GetPetHappiness` lookups are absent; non-retail default/seeded pet-state outputs are unchanged.
 
 ## How it works
 

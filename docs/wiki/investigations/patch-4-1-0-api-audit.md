@@ -20,3 +20,21 @@ Existing flags produce an empty register for the page's `API changes` / `Event c
 ## Bounded retirement
 
 `GetPetHappiness` is incorrectly registered in retail despite explicit 4.1.0 removal. Full cached-retail/source/tests whole-word scans are retained in [retirement scans](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/retirement-scans.json). Zero cached consumers; three test references become Classic-only and a retail raw/lookup absence case is added. Qualified and bare identities are identical for this unnamespaced global. Registration/handler are gated only under `client-retail`; pet state and non-retail behavior remain intact. No Blizzard wrapper or cache edit. Unit RED reproduces publication; GREEN pending. `Transform` and `END_REFUND` have cached bare matches, so no additional retirement changes.
+
+## Capability matrix — implementation evidence
+
+| Statements/cases | Closed/accounted | Still missing | Proof |
+|---|---|---|---|
+| Publication inventory | 81 occurrences, 50 current-retail publication/absence observations | 31 mismatches: 27 global occurrences, four combat-log event occurrences | Own prefork 1/1; results and exact known-gap set |
+| `GetPetHappiness` removal | Retail raw/lookup absence; Mists default/seeded state unchanged | Native historical pet lifecycle unproven | Retail 1/1; Mists 2/2; full cached/src/tests pre-change scans |
+| Retained full-page extraction | 86 nonempty rows; 78 metadata/cross-reference rows | Eight substantive prose rows | Data ledger; no behavioral credit from repeated API references |
+| Combat-log signatures | Four named occurrences, both events on source lines 4/86 | hideCaster position 3 and following-argument shift native contract | Source only; current retail intentionally rejects script registrations |
+| Negative publication control | 31 → 32 gaps, exact fabricated global | No missing-case acceptance | Required exit 1; committed fixture unchanged |
+
+[Ledger](../../../data/patch-api/sources/4.1.0-page-coverage.json): **171 IDs = 81 inventory + 86 full-extract + 4 signature**; **50 bounded-coverage / 78 metadata-only / 43 audit-pending**. Callable no-ops, defaults and vendor deprecation wrappers receive publication-only credit, never modeled behavior. Precise per-row gap notes identify missing producer/state or unpinned input/output contracts; no speculative aliases, constants or shims added.
+
+[Command ledger](../../../data/patch-api/evidence/4.1.0-session-2026-10-09/command-ledger.json) pins revisions, commands, scopes, exits and retained logs. Development proof at `4f806105b`: parser fixture 1/1 at `84564092e`, own prefork 1/1, retail pet absence 1/1, supported Mists pet tests 2/2, negative exit 1. Headless attempts fail in pre-existing GUI-dependent harness construction; supported profiles subsequently pass. Formatting ran before code commits. No check/lint/readability/coverage/broad/all-publication/smoke/full-suite/final gate was run; main owns acceptance. Six inherited iced manifest warnings retained and unsuppressed. Native 2011 client receipts are absent.
+
+## Integration boundary
+
+Three ordered comments reserve 4.2.0, 4.3.0, 4.3.4 before the actual 5.0.1+ retail successor chain. Main reports 4.3.4 runtime acceptance committed October 9, 2026; integration replaces the comment using its real register. No queued-page supersession credit, rebase, Classic successor, or future GetSessionTime closure is incorporated here. Historical observations must remain preserved if main changes later expectations.

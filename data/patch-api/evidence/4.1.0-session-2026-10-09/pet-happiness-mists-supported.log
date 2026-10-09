@@ -1,0 +1,39 @@
+
+running 2 tests
+test pet_stats::get_pet_happiness_reads_pet_state ... ok
+test pet_stats::get_pet_happiness_defaults_zero ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 8181 filtered out; finished in 0.18s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p410-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 25s
+     Running tests/integration.rs (target/debug/deps/integration-f15e4c1da9a8b8f4)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.05ms
+[  0.002s] [Startup] SimState::default complete in 2.01ms
+[  0.002s] [Startup] rilua VM created in 123.07µs
+[  0.002s] [Startup] rilua VM created in 121.06µs
+[  0.002s] [Startup] builtin frames initialized in 62.71µs
+[  0.002s] [Startup] template registry cleared in 6.45µs
+[  0.002s] [Startup] builtin frames initialized in 73.10µs
+[  0.002s] [Startup] template registry cleared in 1.80µs
+[  0.003s] [Startup] intrinsic templates registered in 1.18ms
+[  0.003s] [Startup] intrinsic templates registered in 1.19ms
+[  0.003s] [Startup] initial app_data lua handle installed in 1.22µs
+[  0.003s] [Startup] initial app_data lua handle installed in 251.00ns
+[  0.172s] [Startup] init_lua_state complete in 168.64ms
+[  0.172s] [Startup] final app_data lua handle installed in 371.00ns
+[  0.172s] [Startup] initial screen globals installed in 125.92µs
+[  0.172s] [Startup] WowLuaEnv::new complete
+[  0.173s] [Startup] init_lua_state complete in 169.91ms
+[  0.173s] [Startup] final app_data lua handle installed in 361.00ns
+[  0.174s] [Startup] initial screen globals installed in 109.91µs
+[  0.174s] [Startup] WowLuaEnv::new complete

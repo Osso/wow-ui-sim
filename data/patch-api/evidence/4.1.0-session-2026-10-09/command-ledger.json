@@ -1,0 +1,163 @@
+{
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p410-source",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "tools/test_patch_4_1_register.py"
+      ],
+      "revision": "84564092e",
+      "scope": "opt-in parser fixture and default byte preservation",
+      "exit": 0,
+      "artifact": "parser-green.txt"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "client-retail",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_1_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "0622d93f4",
+      "scope": "headless own sweep build attempt only; pre-existing GUI-gated registry errors; zero runtime cases",
+      "exit": 101,
+      "artifact": "own-sweep-red.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_1_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "0622d93f4",
+      "scope": "own cached-retail RED; 32 unreviewed gaps against empty fixture",
+      "exit": 1,
+      "artifact": "own-sweep-default-red.log",
+      "env": {
+        "P410_SWEEP_OUT": "own-sweep-red-results.json"
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "integration",
+        "--",
+        "get_pet_happiness",
+        "--nocapture"
+      ],
+      "revision": "4f806105b^",
+      "scope": "pet happiness RED; new absence test plus staged cfg-gated Classic tests; tests/pet_stats.rs uncommitted at invocation",
+      "exit": 101,
+      "artifact": "pet-happiness-red.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "integration",
+        "--",
+        "get_pet_happiness",
+        "--nocapture"
+      ],
+      "revision": "4f806105b",
+      "scope": "retail raw/ordinary happiness absence; 1 passed",
+      "exit": 0,
+      "artifact": "pet-happiness-green.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_4_1_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "4f806105b",
+      "scope": "own cached-retail sweep; 1 passed; known gap set exact",
+      "exit": 0,
+      "artifact": "own-sweep-green.log",
+      "env": {
+        "P410_SWEEP_OUT": "own-sweep-green-results.json"
+      }
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "client-mists",
+        "--test",
+        "integration",
+        "--",
+        "get_pet_happiness",
+        "--nocapture"
+      ],
+      "revision": "4f806105b",
+      "scope": "headless Mists build attempt only; existing game_menu imports GUI dependency without feature; zero runtime cases",
+      "exit": 101,
+      "artifact": "pet-happiness-mists.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--test",
+        "integration",
+        "--",
+        "get_pet_happiness",
+        "--nocapture"
+      ],
+      "revision": "4f806105b",
+      "scope": "two existing Mists pet-state behaviors; 2 passed",
+      "exit": 0,
+      "artifact": "pet-happiness-mists-supported.log"
+    },
+    {
+      "command": [
+        "timeout",
+        "90",
+        "target/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+        "patch_4_1_0_publication_sweep",
+        "--nocapture"
+      ],
+      "revision": "4f806105b",
+      "scope": "same default-profile test artifact; fabricated added global produces 32 gaps versus reviewed 31; failure required",
+      "exit": 1,
+      "artifact": "negative.log",
+      "env": {
+        "P410_SWEEP_REGISTER": "negative-register.json",
+        "P410_SWEEP_OUT": "negative-results.json"
+      }
+    }
+  ],
+  "proof_scope_note": "Subsequent accounting/documentation does not alter runtime/parser proof scope. No broad/check/lint/readability/coverage/final acceptance. Source/prose/native gaps are not test passes."
+}
