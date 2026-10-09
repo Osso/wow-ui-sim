@@ -6,7 +6,7 @@ Pinned supplied page 499137, revision 4812266, timestamp 2020-09-04T21:33:02Z. R
 
 Opt-in `--wrath-retail-change-bullets` retains labelled function/event/quoted-array occurrences and literal source signatures. Source spelling `GetDifficutlyColor` remains unchanged. `UnitIsPlusMob` is **changed**, not removed: source says “updated or removed” and explicitly questions removal. Undocumented functions receive changed publication expectations, not invented addition dates. Default whole-page extraction fails on `{{Reflist|2}}`. New opt-in `--numbered-reflist` preserves its column count and unexpanded-citation boundary without changing default behavior.
 
-Queued retail successor slots are 3.3.0, 3.3.3, 3.3.5 and 4.0.1, in that order. Actual 4.1.0 onward is used now. Wrath Classic 3.4.x is a separate history, not a successor.
+Current sweep uses actual ordered 3.3.0, 3.3.3, 3.3.5 and 4.0.1 before 4.1.0 onward. Main added these after rebase onto `864b4f7e4`. The first three have zero section/symbol overlap; 4.0.1 removes END_REFUND, already expected absent under a newer original successor (`wt-events-END_REFUND-87`). This adds provenance, not a model closure; current runtime proof is separate. Generator merge preserves both independent Wrath-retail summary/change-bullet parsers; extractor merge preserves Cataclysm inventory, Wrath summary and numbered-reference opt-ins. Original archives, seals and queued-capture receipts remain unchanged; current-byte replay is required. Wrath Classic 3.4.x is a separate history, not a successor.
 
 ## Capability matrix — original development boundary
 
