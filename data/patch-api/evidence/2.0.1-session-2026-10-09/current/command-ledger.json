@@ -1,0 +1,55 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_replay.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "71700993676e44c704fb6a1fce0a44ba4eed76a7",
+    "exit_code": 0,
+    "log": "replay-green.log",
+    "scope": "Original historical fixtures 2/2; 1655 omission controls, four decoded corruption/overclaim controls, 19 serialized tamper/restorations; no final gate.",
+    "later_changes": "Original sealed scope immutable; current source remains at 5075cf42b. Later docs/receipts do not invalidate these scopes."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "7e3d66d3a5f1c18e5fc46be02fa34ac295993c48",
+    "exit_code": 1,
+    "log": "literal-boundary-red.log",
+    "scope": "Current literal refinement RED; one expected failure/five passes.",
+    "later_changes": "Original sealed scope immutable; current source remains at 5075cf42b. Later docs/receipts do not invalidate these scopes."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "5075cf42b395c7acabc7ac78f92a803a5c33a993",
+    "exit_code": 0,
+    "log": "literal-boundary-green.log",
+    "scope": "Current SOURCE GREEN 6/6; current copied tool/source fixtures identical to this scope.",
+    "later_changes": "Original sealed scope immutable; current source remains at 5075cf42b. Later docs/receipts do not invalidate these scopes."
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_0_1_replay.py",
+      "ReplayTests.test_current_closure_copied_source_and_log_seals"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p201-source",
+    "revision": "7afa9df388daafe337827a4cfb0df52acdb29478",
+    "exit_code": 1,
+    "log": "current-replay-red.log",
+    "scope": "Current missing-validator RED, one expected failure.",
+    "later_changes": "Original sealed scope immutable; current source remains at 5075cf42b. Later docs/receipts do not invalidate these scopes."
+  }
+]
