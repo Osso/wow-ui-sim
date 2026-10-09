@@ -1,0 +1,6 @@
+{"copied_replay": "PASS", "counts": {"actual_retail_successors": 74, "command_receipts": 4, "contract_gap_records": 344, "extract_rows": 150, "inventory_directions": {"added": 55, "changed": 29, "removed": 8}, "inventory_rows": 92, "inventory_sections": {"commands": 18, "cvars": 2, "events": 2, "global-api": 56, "scriptobjects": 8, "widgets": 6}, "ledger_rows": 392, "ledger_statuses": {"UNPROVEN": 220, "cross-reference-only": 150, "metadata-only": 22}, "literal_call_spans": 44, "meaningful_closures": 0, "named_headers": 19, "native_observations": 0, "numerical_inventory_headers": 0, "proof_boundary": "SOURCE-only", "queued_main_owned": 7, "raw_nonblank_rows": 150, "runtime_observations": 0, "same_symbol_overlap_occurrences": 18, "sealed_files": 18, "signature_rows": 124, "snapshots": 101, "unspecified_signature_records": 49}, "future_drift": "identical", "missing_gap_restoration": "PASS", "no_git_target_current": true, "tamper_restore_controls": 19}
+.
+----------------------------------------------------------------------
+Ran 1 test in 2.074s
+
+OK

@@ -1,0 +1,65 @@
+[
+  {
+    "revision": "0af6dc600",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_1_0_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+    "phase": "RED-with-fixture-path-error",
+    "exit_code": 1,
+    "log": "source-red.log",
+    "log_sha256": "b609222be34a2884f07c3d63d00418fbbf4b76da8b2803bd1d1e740bc5c6cf47",
+    "scope": "Owned literal parser and bounded recorded/default template bytes; no runtime/native/final gate",
+    "later_changes_invalidate": "Only relevant parser/test/source or recorded template byte changes; documentation does not invalidate."
+  },
+  {
+    "revision": "d33481554",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_1_0_source.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+    "phase": "RED",
+    "exit_code": 1,
+    "log": "source-red-corrected.log",
+    "log_sha256": "17594cb99691b3c70fb230e4c45e9dd24f56009a433f8b353e75ff21dbf28856",
+    "scope": "Owned literal parser and bounded recorded/default template bytes; no runtime/native/final gate",
+    "later_changes_invalidate": "Only relevant parser/test/source or recorded template byte changes; documentation does not invalidate."
+  },
+  {
+    "revision": "3f32a7629",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_1_0_source.py",
+      "LiteralSourceTests.test_literal_inventory_and_default_bytes",
+      "LiteralSourceTests.test_recorded_template_outputs",
+      "LiteralSourceTests.test_wrath_template_default_isolation"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+    "phase": "parser-template-GREEN",
+    "exit_code": 0,
+    "log": "source-green.log",
+    "log_sha256": "89d79feb3f9f4d5bed17f078329c6f6a7f786ac18d354f60aad23051c243b39e",
+    "scope": "Owned literal parser and bounded recorded/default template bytes; no runtime/native/final gate",
+    "later_changes_invalidate": "Only relevant parser/test/source or recorded template byte changes; documentation does not invalidate."
+  },
+  {
+    "revision": "322cac662",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_1_0_validator.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+    "phase": "copied-replay-RED",
+    "exit_code": 1,
+    "log": "validator-red.log",
+    "log_sha256": "83a01238cac09d1c078ddafcf4d384cb464a7dac45d3eed4465d0c991bddce51",
+    "scope": "Owned copied historical fixture, expected missing validator; no runtime/native/final gate",
+    "later_changes_invalidate": "RED is immutable original development evidence; GREEN appended separately."
+  }
+]

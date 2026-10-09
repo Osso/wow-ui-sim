@@ -1,0 +1,81 @@
+FFE
+======================================================================
+ERROR: test_recorded_template_outputs (__main__.LiteralSourceTests.test_recorded_template_outputs) (patch='3.4.0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p210-source/tools/test_patch_2_1_0_source.py", line 90, in test_recorded_template_outputs
+    provenance = json.loads((sources / f'{patch}-api-changes.provenance.json').read_text())
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/osso/.worktrees/wow-ui-sim-p210-source/data/patch-api/sources/3.4.0-api-changes.provenance.json'
+
+======================================================================
+FAIL: test_full_accounting_and_omission_controls (__main__.LiteralSourceTests.test_full_accounting_and_omission_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p210-source/tools/test_patch_2_1_0_source.py", line 48, in test_full_accounting_and_omission_controls
+    self.assertTrue(path.exists(), 'own sealed source validator is missing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : own sealed source validator is missing
+
+======================================================================
+FAIL: test_literal_inventory_and_default_bytes (__main__.LiteralSourceTests.test_literal_inventory_and_default_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p210-source/tools/test_patch_2_1_0_source.py", line 29, in test_literal_inventory_and_default_bytes
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : usage: gen_patch_wikitext_register.py [-h] [--inventory-only]
+                                      [--expand-shared-changes]
+                                      [--separate-inline-structures]
+                                      [--capture-span-defaults]
+                                      [--skip-plain-scripts-label]
+                                      [--simple-api-list]
+                                      [--legacy-column-headers]
+                                      [--diff-api-additions]
+                                      [--legacy-inventory-labels]
+                                      [--legacy-api-tables]
+                                      [--historical-api-headings]
+                                      [--cataclysm-change-bullets]
+                                      [--wrath-retail-change-bullets]
+                                      [--legacy-api-bullets]
+                                      [--legacy-api-renames] [--bfa-prepatch]
+                                      [--prose-api-links]
+                                      [--legacy-summary-tables]
+                                      [--top-level-api-bullets]
+                                      [--legacy-widget-summaries]
+                                      [--prose-namespace-migrations]
+                                      [--legacy-widget-cvar-bullets]
+                                      [--legion-prepatch]
+                                      [--indented-api-lists]
+                                      [--cataclysm-labeled-inventory]
+                                      [--legacy-function-labels]
+                                      [--colon-api-bullets]
+                                      [--warlords-prepatch]
+                                      [--warlords-diff WARLORDS_DIFF]
+                                      [--legacy-labeled-summaries]
+                                      [--legacy-cvar-definitions]
+                                      [--legacy-section-lists]
+                                      [--combat-restriction-bullets]
+                                      [--client-line {retail,mists-classic,classic-era}]
+                                      [--mists-automated-diff]
+                                      [--mists-prepatch] [--mists-summary]
+                                      [--mists-diff MISTS_DIFF]
+                                      [--mists-widget-handlers]
+                                      [--mists-bare-widget-handlers]
+                                      [--mists-code-removals]
+                                      [--wrath-retail-summary]
+                                      [--wrath-launch-inventory]
+                                      patch path revid out
+gen_patch_wikitext_register.py: error: unrecognized arguments: --legacy-retail-profiling-summary
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.167s
+
+FAILED (failures=2, errors=1)

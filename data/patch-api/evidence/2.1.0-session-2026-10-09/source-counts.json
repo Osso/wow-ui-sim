@@ -1,0 +1,33 @@
+{
+  "inventory_rows": 92,
+  "inventory_sections": {
+    "global-api": 56,
+    "cvars": 2,
+    "widgets": 6,
+    "scriptobjects": 8,
+    "commands": 18,
+    "events": 2
+  },
+  "inventory_directions": {
+    "added": 55,
+    "changed": 29,
+    "removed": 8
+  },
+  "raw_nonblank_rows": 150,
+  "extract_rows": 150,
+  "ledger_rows": 392,
+  "ledger_statuses": {
+    "metadata-only": 22,
+    "UNPROVEN": 220,
+    "cross-reference-only": 150
+  },
+  "named_headers": 19,
+  "numerical_inventory_headers": 0,
+  "signature_rows": 124,
+  "literal_call_spans": 44,
+  "unspecified_signature_records": 49,
+  "contract_gap_records": 344,
+  "meaningful_closures": 0,
+  "runtime_observations": 0,
+  "native_observations": 0
+}

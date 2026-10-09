@@ -1,0 +1,126 @@
+{
+  "schema": "patch-source-development-proof/v1",
+  "patch": "2.1.0",
+  "client_line": "retail",
+  "original_manifest_sha256": "5cad83b824fe801c48079998bb96e9d142f3eba76e13a7053ef2a9d27ad4f640",
+  "original_seals_unchanged": 18,
+  "commands": [
+    {
+      "revision": "0af6dc600",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_1_0_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+      "phase": "RED-with-fixture-path-error",
+      "exit_code": 1,
+      "log": "source-red.log",
+      "log_sha256": "b609222be34a2884f07c3d63d00418fbbf4b76da8b2803bd1d1e740bc5c6cf47",
+      "scope": "Owned literal parser and bounded recorded/default template bytes; no runtime/native/final gate",
+      "later_changes_invalidate": "Only relevant parser/test/source or recorded template byte changes; documentation does not invalidate."
+    },
+    {
+      "revision": "d33481554",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_1_0_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+      "phase": "RED",
+      "exit_code": 1,
+      "log": "source-red-corrected.log",
+      "log_sha256": "17594cb99691b3c70fb230e4c45e9dd24f56009a433f8b353e75ff21dbf28856",
+      "scope": "Owned literal parser and bounded recorded/default template bytes; no runtime/native/final gate",
+      "later_changes_invalidate": "Only relevant parser/test/source or recorded template byte changes; documentation does not invalidate."
+    },
+    {
+      "revision": "3f32a7629",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_1_0_source.py",
+        "LiteralSourceTests.test_literal_inventory_and_default_bytes",
+        "LiteralSourceTests.test_recorded_template_outputs",
+        "LiteralSourceTests.test_wrath_template_default_isolation"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+      "phase": "parser-template-GREEN",
+      "exit_code": 0,
+      "log": "source-green.log",
+      "log_sha256": "89d79feb3f9f4d5bed17f078329c6f6a7f786ac18d354f60aad23051c243b39e",
+      "scope": "Owned literal parser and bounded recorded/default template bytes; no runtime/native/final gate",
+      "later_changes_invalidate": "Only relevant parser/test/source or recorded template byte changes; documentation does not invalidate."
+    },
+    {
+      "revision": "322cac662",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_1_0_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+      "phase": "copied-replay-RED",
+      "exit_code": 1,
+      "log": "validator-red.log",
+      "log_sha256": "83a01238cac09d1c078ddafcf4d384cb464a7dac45d3eed4465d0c991bddce51",
+      "scope": "Owned copied historical fixture, expected missing validator; no runtime/native/final gate",
+      "later_changes_invalidate": "RED is immutable original development evidence; GREEN appended separately."
+    },
+    {
+      "revision": "ab51d7373",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_1_0_source.py",
+        "LiteralSourceTests.test_full_accounting_and_omission_controls"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+      "phase": "full-accounting-GREEN",
+      "exit_code": 0,
+      "log": "accounting-green.log",
+      "log_sha256": "892a8bb3448948580ca0247dab7a65ca7bd59ea172c16232651d41b64560a533",
+      "scope": "Owned SOURCE-only accounting or isolated copied-process fixture; no runtime/native/final gates",
+      "later_changes_invalidate": "Relevant tested code/input bytes only; later receipt/docs do not invalidate.",
+      "code_sha256": {
+        "tools/gen_patch_wikitext_register.py": "fcdbf6570aa8d00348f0c2adae7f3678681b2eaa0378ada17eff63f9c95f9cb4",
+        "tools/build_patch_2_1_0_accounting.py": "7c5ab0335fc04d9d32892e3b8be214b1464575748ec4c5e2bdf7c7f83e22921a",
+        "tools/test_patch_2_1_0_source.py": "09aeeff59e931ff0d7e261a3c8897051c89e551df7ebf6b60991044375283b39",
+        "tools/test_patch_2_1_0_validator.py": "1f07de363189145382fd8cce13c096867e8a4db01cc5179cc20b3264e6f6b455",
+        "data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py": "38d196a8e64c08631f08067d9a31c4a37d908ff5af6af14d302fe7ab0b289b29",
+        "data/patch-api/evidence/2.1.0-session-2026-10-09/historical-inputs.json": "5cad83b824fe801c48079998bb96e9d142f3eba76e13a7053ef2a9d27ad4f640"
+      }
+    },
+    {
+      "revision": "ab51d7373",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/test_patch_2_1_0_validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+      "phase": "copied-replay-GREEN",
+      "exit_code": 0,
+      "log": "validator-green.log",
+      "log_sha256": "820c9dd6d972e5b128bec076464f9a9b20d4eee08ea34580a865b4b02856e20f",
+      "scope": "Owned SOURCE-only accounting or isolated copied-process fixture; no runtime/native/final gates",
+      "later_changes_invalidate": "Relevant tested code/input bytes only; later receipt/docs do not invalidate.",
+      "code_sha256": {
+        "tools/gen_patch_wikitext_register.py": "fcdbf6570aa8d00348f0c2adae7f3678681b2eaa0378ada17eff63f9c95f9cb4",
+        "tools/build_patch_2_1_0_accounting.py": "7c5ab0335fc04d9d32892e3b8be214b1464575748ec4c5e2bdf7c7f83e22921a",
+        "tools/test_patch_2_1_0_source.py": "09aeeff59e931ff0d7e261a3c8897051c89e551df7ebf6b60991044375283b39",
+        "tools/test_patch_2_1_0_validator.py": "1f07de363189145382fd8cce13c096867e8a4db01cc5179cc20b3264e6f6b455",
+        "data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py": "38d196a8e64c08631f08067d9a31c4a37d908ff5af6af14d302fe7ab0b289b29",
+        "data/patch-api/evidence/2.1.0-session-2026-10-09/historical-inputs.json": "5cad83b824fe801c48079998bb96e9d142f3eba76e13a7053ef2a9d27ad4f640"
+      }
+    }
+  ],
+  "source_fixtures": "4 distinct tests GREEN (3 parser/template at 3f32a7629 + 1 accounting at ab51d7373); no redundant rerun",
+  "omission_controls": 971,
+  "overclaim_controls": 1,
+  "serialized_tamper_restore_controls": 19,
+  "missing_gap_restoration": true,
+  "copied_git_target_current_absent": true,
+  "runtime_native_model_credit": 0
+}

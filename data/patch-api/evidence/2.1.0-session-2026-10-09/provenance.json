@@ -1,0 +1,22 @@
+{
+  "title": "Patch 2.1.0/API changes",
+  "version": "2.1.0",
+  "pageid": 279373,
+  "revid": 6767102,
+  "timestamp": "2026-07-09T22:15:03Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6767102&format=json",
+  "retrieved": "2026-10-09T08:51:36.394375+00:00",
+  "response_sha256": "a22acbf5a295e4414d512c3487506101dc6d991a8950159f88fb78f3e8a45c82",
+  "wikitext_sha256": "4731263a025f95ff2c7cdb3f734817d7eefa0e4d16b88231c809f2b11a9bed98",
+  "wikitext_bytes": 15431,
+  "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.1.0-response.json",
+  "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.1.0-wikitext.txt",
+  "sha256": "4731263a025f95ff2c7cdb3f734817d7eefa0e4d16b88231c809f2b11a9bed98",
+  "client_line": "retail",
+  "generator_flags": [
+    "--legacy-retail-profiling-summary",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": []
+}

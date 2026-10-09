@@ -1161,6 +1161,63 @@ def parse_retail_240_summary(text):
     return entries
 
 
+def parse_legacy_retail_profiling_summary(text):
+    """Retain literal 2007 labels and named summary contracts, never expand links.
+
+    Prose references are contextual contracts, not inferred publication changes.
+    Wildcard removals remain one method-family token; spellings are not corrected.
+    """
+    entries = []
+    heading = ''
+    directions = {'NEW': 'added', 'UPDATED': 'changed', 'REMOVED': 'removed'}
+    for number, line in enumerate(text.splitlines(), 1):
+        if line.startswith('=='):
+            heading = line.strip('= ')
+            continue
+        references = []
+        label = re.match(r'^\* (NEW|UPDATED|REMOVED)\s*[-:]\s*(.*)', line)
+        if label:
+            call = re.search(r'([A-Za-z_][\w:*]*)\(', label[2])
+            if not call:
+                raise ValueError(f'missing literal labeled call at line {number}')
+            symbol = call[1]
+            section = 'widgets' if ':' in symbol else 'global-api'
+            references.append((symbol, section, directions[label[1]], 'labeled-call', None))
+        elif heading in ('Observed additions', 'Observed removals'):
+            match = LINK.search(line)
+            if match:
+                direction = 'added' if heading == 'Observed additions' else 'removed'
+                references.append((match[1], 'global-api', direction, 'observed-name', None))
+        else:
+            cvar = re.search(r'\b([A-Za-z_]\w*) cvar\b', line)
+            if cvar:
+                references.append((cvar[1], 'cvars', 'changed', 'prose-cvar', None))
+            if heading == 'Macros' or (heading == 'Raid Support Commands' and re.match(r'^\* /[a-z]+\b', line)):
+                for match in re.finditer(r'/[a-z]+\b', line):
+                    direction = 'added' if heading == 'Raid Support Commands' or 'New slash command' in line else 'changed'
+                    references.append((match[0], 'commands', direction, 'command-prose', match.start()))
+            if heading in ('Secure Templates', 'Raid Support Commands'):
+                for match in re.finditer(r'\bSecure\w+Template\b', line):
+                    added = 'with the addition of' in line and match.start() > line.index('with the addition of')
+                    references.append((match[0], 'scriptobjects', 'added' if added else 'changed', 'template-prose', match.start()))
+                if 'RegisterStateDriver(' in line:
+                    references.append(('RegisterStateDriver', 'global-api', 'added', 'example-state-driver', None))
+            if heading == 'Bug Fixes':
+                for match in re.finditer(r'\bPLAYER_[A-Z_]+\b', line):
+                    references.append((match[0], 'events', 'changed', 'event-order-prose', match.start()))
+                if 'ScrollFrame:SetScrollChild(' in line:
+                    references.append(('ScrollFrame:SetScrollChild', 'widgets', 'changed', 'prose-call', None))
+        for symbol, section, direction, kind, start in references:
+            identity = f'wt-{section}-{symbol}-{number}'
+            if start is not None:
+                identity += f'-{start}'
+            entries.append({'id': identity, 'section': section, 'direction': direction,
+                            'symbol': symbol, 'annotation': line, 'wikitext_line': number,
+                            'kind': 'method-family' if '*' in symbol else kind,
+                            'publication_boundary': 'literal-contract-only' if kind not in ('labeled-call', 'observed-name') else 'source-claim-only'})
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -1254,6 +1311,8 @@ def main():
                         help='Retain 2008 retail New/Changed API bullets; opt-in')
     parser.add_argument('--retail-240-summary', action='store_true',
                         help='Retain 2008 Retail literal references including contextual repeats; opt-in')
+    parser.add_argument('--legacy-retail-profiling-summary', action='store_true',
+                        help='Retain literal 2007 profiling, widget, template and command summaries; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -1371,6 +1430,8 @@ def main():
                 entry['id'] = 'diff-' + entry['id']
         entries.extend(handler_entries)
         counts.extend(handler_counts)
+    if args.legacy_retail_profiling_summary:
+        entries, counts = parse_legacy_retail_profiling_summary(raw.decode('utf-8')), []
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

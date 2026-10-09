@@ -854,3 +854,11 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] proof | Retail 3.0.3 bare factory GREEN
 
 [Separate measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): reviewed test/observations committed before targeted GREEN at `7ac3902cf`, exit 0 3/3; all three sweep observations byte-identical to discovery. One published bindings CVar (`"1"`/`"1"`), two absent exact config/macros names; unknown nil/nil boundary passes. Fresh full streams/receipts/hashes, original 16 seals/eight historical source IDs unchanged. Warnings retained unsuppressed; no runtime changes or final/native/loaded-UI/sync acceptance. Later docs/evidence-only changes do not invalidate targeted proof. Main owns integration/native gates.
+
+## 2026-10-09 — historical retail 2.1.0 source ingest
+
+[Audit](investigations/patch-2-1-0-api-audit.md) and [spec](../specs/patch-2-1-0-source-accounting.md): full raw/default-rendered accounting; profiling/secure/template/macro/layout/fix boundaries preserved; no linked expansion or runtime/native observations. Source-only targeted proof pending.
+
+## 2026-10-09 — historical retail 2.1.0 bounded development proof
+
+[Audit](investigations/patch-2-1-0-api-audit.md): 92 occurrences/150 raw rows/19 headers/124 signature records, 344 source gaps. Four distinct source fixtures and copied-process fixture GREEN; 971 omissions, one overclaim and 19 serialized seal/manifest tamper-restorations pass. Original 18 seals/101 snapshots unchanged; later receipts separate. Zero runtime/native/model credit; main publication/native/integration gates remain unowned by this source slice.
