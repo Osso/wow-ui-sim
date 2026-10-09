@@ -1,0 +1,1395 @@
+{
+  "patch": "4.1.0",
+  "source_revid": 4094671,
+  "proof_policy": "Bounded current-retail publication/absence and Classic control; no historical/native model credit from callable placeholders.",
+  "source_rows": [
+    {
+      "source_id": "wt-events-COMBAT_LOG_EVENT-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current retail deliberately rejects script registration in src/event/valid_events.rs:70; no legacy third-parameter payload/native proof. Later callback-only semantics are not 2011 event parity.",
+      "wikitext_line": 4
+    },
+    {
+      "source_id": "wt-events-COMBAT_LOG_EVENT_UNFILTERED-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current retail deliberately rejects script registration in src/event/valid_events.rs:70; no legacy third-parameter payload/native proof. Later callback-only semantics are not 2011 event parity.",
+      "wikitext_line": 4
+    },
+    {
+      "source_id": "wt-global-api-SendAddonMessage-5",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 5
+    },
+    {
+      "source_id": "wt-global-api-RegisterAddonMessagePrefix-5",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No prefix-registration capacity/validation and incoming-message filter model. Source demands opt-in receipt; a global alias/no-op does not satisfy it.",
+      "wikitext_line": 5
+    },
+    {
+      "source_id": "wt-global-api-CanTransform-8",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 8
+    },
+    {
+      "source_id": "wt-global-api-Transform-8",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 8
+    },
+    {
+      "source_id": "wt-global-api-GetPetHappiness-9",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence",
+        "classic-state-preserved"
+      ],
+      "note": "Explicit 4.1.0 removal: retail raw/ordinary lookup absent; two Mists existing default/seeded pet-state tests pass. No native 2011 pet lifecycle proof.",
+      "wikitext_line": 9
+    },
+    {
+      "source_id": "wt-global-api-RenameEquipmentSet-10",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 10
+    },
+    {
+      "source_id": "wt-global-api-CalendarContextEventCanRemove-12",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical calendar context permission/removal state and legacy alias are absent. Current C_Calendar publication is not the 2011 permission contract.",
+      "wikitext_line": 12
+    },
+    {
+      "source_id": "wt-global-api-CalendarEventGetTypesDisplayOrdered-13",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical display-ordered calendar event-type catalog/legacy alias has no pinned ordering or return contract.",
+      "wikitext_line": 13
+    },
+    {
+      "source_id": "wt-global-api-GetEventTime-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pinned legacy event-time tuple/input contract; current clock/calendar data is not sufficient for an unverified alias.",
+      "wikitext_line": 14
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentEventID-15",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical calendar context selected-event identity contract/legacy alias is absent.",
+      "wikitext_line": 15
+    },
+    {
+      "source_id": "wt-global-api-CancelGuildMembershipRequest-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 17
+    },
+    {
+      "source_id": "wt-global-api-DeclineGuildApplicant-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 18
+    },
+    {
+      "source_id": "wt-global-api-GetGuildApplicantInfo-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 19
+    },
+    {
+      "source_id": "wt-global-api-GetGuildApplicantSelection-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 20
+    },
+    {
+      "source_id": "wt-global-api-GetGuildMembershipRequestInfo-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 21
+    },
+    {
+      "source_id": "wt-global-api-GetGuildMembershipRequestSettings-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 22
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRecruitmentComment-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 23
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRecruitmentSettings-24",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 24
+    },
+    {
+      "source_id": "wt-global-api-GetLookingForGuildComment-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 25
+    },
+    {
+      "source_id": "wt-global-api-GetLookingForGuildSettings-26",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 26
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildApplicants-27",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 27
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildMembershipRequests-28",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 28
+    },
+    {
+      "source_id": "wt-global-api-GetNumRecruitingGuilds-29",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 29
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildInfo-30",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 30
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildSelection-31",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 31
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildSettings-32",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 32
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildTabardInfo-33",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 33
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildApplicantsList-34",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 34
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildMembership-35",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 35
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildMembershipList-36",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 36
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildRecruitmentSettings-37",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 37
+    },
+    {
+      "source_id": "wt-global-api-RequestRecruitingGuildsList-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 38
+    },
+    {
+      "source_id": "wt-global-api-SetGuildApplicantSelection-39",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 39
+    },
+    {
+      "source_id": "wt-global-api-SetGuildRecruitmentComment-40",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 40
+    },
+    {
+      "source_id": "wt-global-api-SetGuildRecruitmentSettings-41",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 41
+    },
+    {
+      "source_id": "wt-global-api-SetLookingForGuildComment-42",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 42
+    },
+    {
+      "source_id": "wt-global-api-SetLookingForGuildSettings-43",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 43
+    },
+    {
+      "source_id": "wt-global-api-SetRecruitingGuildSelection-44",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 44
+    },
+    {
+      "source_id": "wt-global-api-GetLFGDungeonShortageRewardInfo-46",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Role-shortage reward item/quantity/type output contract and reward producer are not modeled.",
+      "wikitext_line": 46
+    },
+    {
+      "source_id": "wt-global-api-GetLFGDungeonShortageRewardLink-47",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Role-shortage reward-link producer and index/role contract are not modeled.",
+      "wikitext_line": 47
+    },
+    {
+      "source_id": "wt-global-api-GetLFGRoleShortageRewards-48",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 48
+    },
+    {
+      "source_id": "wt-global-api-GetGuildChallengeInfo-50",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 50
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildChallenges-51",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 51
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildChallengeInfo-52",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 52
+    },
+    {
+      "source_id": "wt-global-api-GetRegisteredAddonMessagePrefixes-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No registered incoming-prefix set/enumeration model; legacy sender log is not opt-in reception.",
+      "wikitext_line": 54
+    },
+    {
+      "source_id": "wt-global-api-IsAddonMessagePrefixRegistered-55",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No registered incoming-prefix membership model; legacy sender log is not opt-in reception.",
+      "wikitext_line": 55
+    },
+    {
+      "source_id": "wt-global-api-RegisterAddonMessagePrefix-56",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No prefix-registration capacity/validation and incoming-message filter model. Source demands opt-in receipt; a global alias/no-op does not satisfy it.",
+      "wikitext_line": 56
+    },
+    {
+      "source_id": "wt-global-api-CanEditGuildBankTabInfo-58",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No historical tab-specific edit-permission contract and legacy alias; guild roster membership alone does not establish edit authority.",
+      "wikitext_line": 58
+    },
+    {
+      "source_id": "wt-global-api-CancelEmote-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 59
+    },
+    {
+      "source_id": "wt-global-api-ClearAllTracking-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 60
+    },
+    {
+      "source_id": "wt-global-api-GetAddOnOptionalDependencies-61",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 61
+    },
+    {
+      "source_id": "wt-global-api-GetDebugSpellEffects-62",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Debug spell-effect enumeration/output contract is not pinned or modeled.",
+      "wikitext_line": 62
+    },
+    {
+      "source_id": "wt-global-api-GetDungeonForRandomSlot-63",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical random-LFG slot to dungeon-ID catalog mapping is not modeled.",
+      "wikitext_line": 63
+    },
+    {
+      "source_id": "wt-global-api-GetGuildBankBonusDepositMoney-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Guild-bank bonus-deposit producer/accounting and historical money output contract are not modeled.",
+      "wikitext_line": 64
+    },
+    {
+      "source_id": "wt-global-api-GetInspectRatedBGData-65",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 65
+    },
+    {
+      "source_id": "wt-global-api-GetMaxAnimFramerate-66",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pinned animation-rate setting range/units and engine scheduling contract; frame animation elapsed time does not define this setting.",
+      "wikitext_line": 66
+    },
+    {
+      "source_id": "wt-global-api-GetNamePlateMotionType-67",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical nameplate motion selection/read contract and motion-type catalog are absent.",
+      "wikitext_line": 67
+    },
+    {
+      "source_id": "wt-global-api-GetNetIpTypes-68",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No client network transport/session IP-family state or historical output tuple contract.",
+      "wikitext_line": 68
+    },
+    {
+      "source_id": "wt-global-api-GetNumDungeonForRandomSlot-69",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical random-LFG per-slot candidate-dungeon catalog/count is not modeled.",
+      "wikitext_line": 69
+    },
+    {
+      "source_id": "wt-global-api-GetNumNamePlateMotionTypes-70",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical supported nameplate motion-type catalog/count is absent; do not invent a fixed count.",
+      "wikitext_line": 70
+    },
+    {
+      "source_id": "wt-global-api-GetNumberOfDetailTiles-71",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No 3D terrain detail-tile renderer/capability model or historical count contract; 2D UI rendering is not terrain.",
+      "wikitext_line": 71
+    },
+    {
+      "source_id": "wt-global-api-GetTrainerTradeskillRankValues-72",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No historical trainer recipe/rank selection output tuple contract or rank producer.",
+      "wikitext_line": 72
+    },
+    {
+      "source_id": "wt-global-api-IsIPv6Available-73",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No client transport IPv6-availability probe; host socket support is not the client contract.",
+      "wikitext_line": 73
+    },
+    {
+      "source_id": "wt-global-api-IsOnTournamentRealm-74",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 74
+    },
+    {
+      "source_id": "wt-global-api-IsOnePersonParty-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 75
+    },
+    {
+      "source_id": "wt-global-api-IsRatedMap-76",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 76
+    },
+    {
+      "source_id": "wt-global-api-IsTrialAccount-77",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 77
+    },
+    {
+      "source_id": "wt-global-api-ModifyEquipmentSet-78",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing equipment-set state does not establish this historical modification argument/slot/update contract; legacy global absent.",
+      "wikitext_line": 78
+    },
+    {
+      "source_id": "wt-global-api-SetBarSlotFromIntro-79",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No historical introductory-action-slot assignment contract or intro-action producer.",
+      "wikitext_line": 79
+    },
+    {
+      "source_id": "wt-global-api-SetGuildMemberRank-80",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pinned historical member-selector/rank mutation/permission contract for this legacy global.",
+      "wikitext_line": 80
+    },
+    {
+      "source_id": "wt-global-api-SetMaxAnimFramerate-81",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pinned animation-rate setting range/units and engine scheduling contract; a stored constant or unused setter would not model it.",
+      "wikitext_line": 81
+    },
+    {
+      "source_id": "wt-global-api-SetNamePlateMotionType-82",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical nameplate motion selection/write contract and motion-type catalog are absent.",
+      "wikitext_line": 82
+    },
+    {
+      "source_id": "wt-global-api-UnitThreatPercentageOfLead-83",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 83
+    },
+    {
+      "source_id": "wt-events-COMBAT_LOG_EVENT-86",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current retail deliberately rejects script registration in src/event/valid_events.rs:70; no legacy third-parameter payload/native proof. Later callback-only semantics are not 2011 event parity.",
+      "wikitext_line": 86
+    },
+    {
+      "source_id": "wt-events-COMBAT_LOG_EVENT_UNFILTERED-86",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current retail deliberately rejects script registration in src/event/valid_events.rs:70; no legacy third-parameter payload/native proof. Later callback-only semantics are not 2011 event parity.",
+      "wikitext_line": 86
+    },
+    {
+      "source_id": "wt-events-END_REFUND-87",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 87
+    },
+    {
+      "source_id": "wt-events-HONOR_CURRENCY_UPDATE-88",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 88
+    },
+    {
+      "source_id": "wt-events-INSPECT_TALENT_READY-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 89
+    },
+    {
+      "source_id": "wt-events-KNOWN_CURRENCY_TYPES_UPDATE-90",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Cached current-retail publication/absence only after recorded later-retail supersession. Callable defaults, no-ops and deprecation wrappers do not prove a historical model, output, signature or security contract.",
+      "wikitext_line": 90
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit.",
+      "wikitext_line": 1,
+      "statement": "Patch 4.1.0 API changes"
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "wikitext_line": 3,
+      "statement": "== Breaking changes =="
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Both combat-log events gain hideCaster at argument 3; exact reordering/value semantics lack a 2011 native receipt. Current retail callback-only event policy is not historical payload proof.",
+      "wikitext_line": 4,
+      "statement": "* COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, hideCaster."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Opt-in prefix receipt requires registration before incoming CHAT_MSG_ADDON dispatch. Existing global sender records/emits locally without a prefix-registration state/filter; the 2011 reception contract remains unmodeled.",
+      "wikitext_line": 5,
+      "statement": "* Addons are now required to register the prefixes they want to receive SendAddonMessage messages for using  RegisterAddonMessagePrefix."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "wikitext_line": 7,
+      "statement": "== API changes =="
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CanTransform/Transform are absent today, but the described worgen spell-only transformation lifecycle is not modeled/proven. Cached Transform matches are retained; no deletion based on name alone.",
+      "wikitext_line": 8,
+      "statement": "* REMOVED CanTransform / Transform; worgen transformation is now treated entirely as a spell."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail GetPetHappiness absence is fixed and Mists state retained; removal of actual historical pet-happiness mechanics/native lifecycle is not claimed.",
+      "wikitext_line": 9,
+      "statement": "* REMOVED GetPetHappiness along with actual pet happiness."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RenameEquipmentSet-10. No separate behavioral/signature statement.",
+      "wikitext_line": 10,
+      "statement": "* REMOVED RenameEquipmentSet"
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Category heading for subsequent API inventory; no extra runtime contract.",
+      "wikitext_line": 11,
+      "statement": "* NEW calendar extensions"
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-CalendarContextEventCanRemove-12. No separate behavioral/signature statement.",
+      "wikitext_line": 12,
+      "statement": "** CalendarContextEventCanRemove"
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-CalendarEventGetTypesDisplayOrdered-13. No separate behavioral/signature statement.",
+      "wikitext_line": 13,
+      "statement": "** CalendarEventGetTypesDisplayOrdered"
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetEventTime-14. No separate behavioral/signature statement.",
+      "wikitext_line": 14,
+      "statement": "**  GetEventTime"
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetCurrentEventID-15. No separate behavioral/signature statement.",
+      "wikitext_line": 15,
+      "statement": "**  GetCurrentEventID"
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Category heading for subsequent API inventory; no extra runtime contract.",
+      "wikitext_line": 16,
+      "statement": "* NEW Looking For Guild / Guild Recruitment API"
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-CancelGuildMembershipRequest-17. No separate behavioral/signature statement.",
+      "wikitext_line": 17,
+      "statement": "** CancelGuildMembershipRequest"
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-DeclineGuildApplicant-18. No separate behavioral/signature statement.",
+      "wikitext_line": 18,
+      "statement": "**  DeclineGuildApplicant"
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildApplicantInfo-19. No separate behavioral/signature statement.",
+      "wikitext_line": 19,
+      "statement": "**  GetGuildApplicantInfo"
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildApplicantSelection-20. No separate behavioral/signature statement.",
+      "wikitext_line": 20,
+      "statement": "**  GetGuildApplicantSelection"
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildMembershipRequestInfo-21. No separate behavioral/signature statement.",
+      "wikitext_line": 21,
+      "statement": "**  GetGuildMembershipRequestInfo"
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildMembershipRequestSettings-22. No separate behavioral/signature statement.",
+      "wikitext_line": 22,
+      "statement": "**  GetGuildMembershipRequestSettings"
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildRecruitmentComment-23. No separate behavioral/signature statement.",
+      "wikitext_line": 23,
+      "statement": "**  GetGuildRecruitmentComment"
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildRecruitmentSettings-24. No separate behavioral/signature statement.",
+      "wikitext_line": 24,
+      "statement": "**  GetGuildRecruitmentSettings"
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetLookingForGuildComment-25. No separate behavioral/signature statement.",
+      "wikitext_line": 25,
+      "statement": "**  GetLookingForGuildComment"
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetLookingForGuildSettings-26. No separate behavioral/signature statement.",
+      "wikitext_line": 26,
+      "statement": "**  GetLookingForGuildSettings"
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNumGuildApplicants-27. No separate behavioral/signature statement.",
+      "wikitext_line": 27,
+      "statement": "**  GetNumGuildApplicants"
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNumGuildMembershipRequests-28. No separate behavioral/signature statement.",
+      "wikitext_line": 28,
+      "statement": "**  GetNumGuildMembershipRequests"
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNumRecruitingGuilds-29. No separate behavioral/signature statement.",
+      "wikitext_line": 29,
+      "statement": "**  GetNumRecruitingGuilds"
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetRecruitingGuildInfo-30. No separate behavioral/signature statement.",
+      "wikitext_line": 30,
+      "statement": "**  GetRecruitingGuildInfo"
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetRecruitingGuildSelection-31. No separate behavioral/signature statement.",
+      "wikitext_line": 31,
+      "statement": "**  GetRecruitingGuildSelection"
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetRecruitingGuildSettings-32. No separate behavioral/signature statement.",
+      "wikitext_line": 32,
+      "statement": "**  GetRecruitingGuildSettings"
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetRecruitingGuildTabardInfo-33. No separate behavioral/signature statement.",
+      "wikitext_line": 33,
+      "statement": "**  GetRecruitingGuildTabardInfo"
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RequestGuildApplicantsList-34. No separate behavioral/signature statement.",
+      "wikitext_line": 34,
+      "statement": "**  RequestGuildApplicantsList"
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RequestGuildMembership-35. No separate behavioral/signature statement.",
+      "wikitext_line": 35,
+      "statement": "**  RequestGuildMembership"
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RequestGuildMembershipList-36. No separate behavioral/signature statement.",
+      "wikitext_line": 36,
+      "statement": "**  RequestGuildMembershipList"
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RequestGuildRecruitmentSettings-37. No separate behavioral/signature statement.",
+      "wikitext_line": 37,
+      "statement": "**  RequestGuildRecruitmentSettings"
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RequestRecruitingGuildsList-38. No separate behavioral/signature statement.",
+      "wikitext_line": 38,
+      "statement": "**  RequestRecruitingGuildsList"
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetGuildApplicantSelection-39. No separate behavioral/signature statement.",
+      "wikitext_line": 39,
+      "statement": "**  SetGuildApplicantSelection"
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetGuildRecruitmentComment-40. No separate behavioral/signature statement.",
+      "wikitext_line": 40,
+      "statement": "**  SetGuildRecruitmentComment"
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetGuildRecruitmentSettings-41. No separate behavioral/signature statement.",
+      "wikitext_line": 41,
+      "statement": "**  SetGuildRecruitmentSettings"
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetLookingForGuildComment-42. No separate behavioral/signature statement.",
+      "wikitext_line": 42,
+      "statement": "**  SetLookingForGuildComment"
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetLookingForGuildSettings-43. No separate behavioral/signature statement.",
+      "wikitext_line": 43,
+      "statement": "**  SetLookingForGuildSettings"
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetRecruitingGuildSelection-44. No separate behavioral/signature statement.",
+      "wikitext_line": 44,
+      "statement": "**  SetRecruitingGuildSelection"
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Category heading for subsequent API inventory; no extra runtime contract.",
+      "wikitext_line": 45,
+      "statement": "* NEW Looking for Group Call To Arms (role shortage) API"
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetLFGDungeonShortageRewardInfo-46. No separate behavioral/signature statement.",
+      "wikitext_line": 46,
+      "statement": "**  GetLFGDungeonShortageRewardInfo"
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetLFGDungeonShortageRewardLink-47. No separate behavioral/signature statement.",
+      "wikitext_line": 47,
+      "statement": "**  GetLFGDungeonShortageRewardLink"
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetLFGRoleShortageRewards-48. No separate behavioral/signature statement.",
+      "wikitext_line": 48,
+      "statement": "**  GetLFGRoleShortageRewards"
+    },
+    {
+      "source_id": "prose-undated-049",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Category heading for subsequent API inventory; no extra runtime contract.",
+      "wikitext_line": 49,
+      "statement": "* NEW Guild Challenges API"
+    },
+    {
+      "source_id": "prose-undated-050",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildChallengeInfo-50. No separate behavioral/signature statement.",
+      "wikitext_line": 50,
+      "statement": "**  GetGuildChallengeInfo"
+    },
+    {
+      "source_id": "prose-undated-051",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNumGuildChallenges-51. No separate behavioral/signature statement.",
+      "wikitext_line": 51,
+      "statement": "**  GetNumGuildChallenges"
+    },
+    {
+      "source_id": "prose-undated-052",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RequestGuildChallengeInfo-52. No separate behavioral/signature statement.",
+      "wikitext_line": 52,
+      "statement": "**  RequestGuildChallengeInfo"
+    },
+    {
+      "source_id": "prose-undated-053",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Category heading for subsequent API inventory; no extra runtime contract.",
+      "wikitext_line": 53,
+      "statement": "* NEW Opt-in Addon Communication API"
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetRegisteredAddonMessagePrefixes-54. No separate behavioral/signature statement.",
+      "wikitext_line": 54,
+      "statement": "**  GetRegisteredAddonMessagePrefixes"
+    },
+    {
+      "source_id": "prose-undated-055",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-IsAddonMessagePrefixRegistered-55. No separate behavioral/signature statement.",
+      "wikitext_line": 55,
+      "statement": "**  IsAddonMessagePrefixRegistered"
+    },
+    {
+      "source_id": "prose-undated-056",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-RegisterAddonMessagePrefix-56. No separate behavioral/signature statement.",
+      "wikitext_line": 56,
+      "statement": "**  RegisterAddonMessagePrefix"
+    },
+    {
+      "source_id": "prose-undated-058",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-CanEditGuildBankTabInfo-58. No separate behavioral/signature statement.",
+      "wikitext_line": 58,
+      "statement": "* NEW CanEditGuildBankTabInfo"
+    },
+    {
+      "source_id": "prose-undated-059",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-CancelEmote-59. No separate behavioral/signature statement.",
+      "wikitext_line": 59,
+      "statement": "* NEW CancelEmote"
+    },
+    {
+      "source_id": "prose-undated-060",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-ClearAllTracking-60. No separate behavioral/signature statement.",
+      "wikitext_line": 60,
+      "statement": "* NEW  ClearAllTracking"
+    },
+    {
+      "source_id": "prose-undated-061",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetAddOnOptionalDependencies-61. No separate behavioral/signature statement.",
+      "wikitext_line": 61,
+      "statement": "* NEW  GetAddOnOptionalDependencies"
+    },
+    {
+      "source_id": "prose-undated-062",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetDebugSpellEffects-62. No separate behavioral/signature statement.",
+      "wikitext_line": 62,
+      "statement": "* NEW  GetDebugSpellEffects"
+    },
+    {
+      "source_id": "prose-undated-063",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetDungeonForRandomSlot-63. No separate behavioral/signature statement.",
+      "wikitext_line": 63,
+      "statement": "* NEW  GetDungeonForRandomSlot"
+    },
+    {
+      "source_id": "prose-undated-064",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetGuildBankBonusDepositMoney-64. No separate behavioral/signature statement.",
+      "wikitext_line": 64,
+      "statement": "* NEW  GetGuildBankBonusDepositMoney"
+    },
+    {
+      "source_id": "prose-undated-065",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetInspectRatedBGData-65. No separate behavioral/signature statement.",
+      "wikitext_line": 65,
+      "statement": "* NEW  GetInspectRatedBGData"
+    },
+    {
+      "source_id": "prose-undated-066",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetMaxAnimFramerate-66. No separate behavioral/signature statement.",
+      "wikitext_line": 66,
+      "statement": "* NEW  GetMaxAnimFramerate"
+    },
+    {
+      "source_id": "prose-undated-067",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNamePlateMotionType-67. No separate behavioral/signature statement.",
+      "wikitext_line": 67,
+      "statement": "* NEW  GetNamePlateMotionType"
+    },
+    {
+      "source_id": "prose-undated-068",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNetIpTypes-68. No separate behavioral/signature statement.",
+      "wikitext_line": 68,
+      "statement": "* NEW  GetNetIpTypes"
+    },
+    {
+      "source_id": "prose-undated-069",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNumDungeonForRandomSlot-69. No separate behavioral/signature statement.",
+      "wikitext_line": 69,
+      "statement": "* NEW  GetNumDungeonForRandomSlot"
+    },
+    {
+      "source_id": "prose-undated-070",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNumNamePlateMotionTypes-70. No separate behavioral/signature statement.",
+      "wikitext_line": 70,
+      "statement": "* NEW  GetNumNamePlateMotionTypes"
+    },
+    {
+      "source_id": "prose-undated-071",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetNumberOfDetailTiles-71. No separate behavioral/signature statement.",
+      "wikitext_line": 71,
+      "statement": "* NEW  GetNumberOfDetailTiles"
+    },
+    {
+      "source_id": "prose-undated-072",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-GetTrainerTradeskillRankValues-72. No separate behavioral/signature statement.",
+      "wikitext_line": 72,
+      "statement": "* NEW  GetTrainerTradeskillRankValues"
+    },
+    {
+      "source_id": "prose-undated-073",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-IsIPv6Available-73. No separate behavioral/signature statement.",
+      "wikitext_line": 73,
+      "statement": "* NEW  IsIPv6Available"
+    },
+    {
+      "source_id": "prose-undated-074",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-IsOnTournamentRealm-74. No separate behavioral/signature statement.",
+      "wikitext_line": 74,
+      "statement": "* NEW  IsOnTournamentRealm"
+    },
+    {
+      "source_id": "prose-undated-075",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-IsOnePersonParty-75. No separate behavioral/signature statement.",
+      "wikitext_line": 75,
+      "statement": "* NEW  IsOnePersonParty"
+    },
+    {
+      "source_id": "prose-undated-076",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-IsRatedMap-76. No separate behavioral/signature statement.",
+      "wikitext_line": 76,
+      "statement": "* NEW  IsRatedMap"
+    },
+    {
+      "source_id": "prose-undated-077",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-IsTrialAccount-77. No separate behavioral/signature statement.",
+      "wikitext_line": 77,
+      "statement": "* NEW  IsTrialAccount"
+    },
+    {
+      "source_id": "prose-undated-078",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-ModifyEquipmentSet-78. No separate behavioral/signature statement.",
+      "wikitext_line": 78,
+      "statement": "* NEW  ModifyEquipmentSet"
+    },
+    {
+      "source_id": "prose-undated-079",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetBarSlotFromIntro-79. No separate behavioral/signature statement.",
+      "wikitext_line": 79,
+      "statement": "* NEW  SetBarSlotFromIntro"
+    },
+    {
+      "source_id": "prose-undated-080",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetGuildMemberRank-80. No separate behavioral/signature statement.",
+      "wikitext_line": 80,
+      "statement": "* NEW  SetGuildMemberRank"
+    },
+    {
+      "source_id": "prose-undated-081",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetMaxAnimFramerate-81. No separate behavioral/signature statement.",
+      "wikitext_line": 81,
+      "statement": "* NEW  SetMaxAnimFramerate"
+    },
+    {
+      "source_id": "prose-undated-082",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-SetNamePlateMotionType-82. No separate behavioral/signature statement.",
+      "wikitext_line": 82,
+      "statement": "* NEW  SetNamePlateMotionType"
+    },
+    {
+      "source_id": "prose-undated-083",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-global-api-UnitThreatPercentageOfLead-83. No separate behavioral/signature statement.",
+      "wikitext_line": 83,
+      "statement": "* NEW  UnitThreatPercentageOfLead"
+    },
+    {
+      "source_id": "source-context-085",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "wikitext_line": 85,
+      "statement": "== Event changes =="
+    },
+    {
+      "source_id": "prose-undated-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Both combat-log events insert a third argument and shift following arguments. No 2011 legacy payload dispatch or native ordering proof.",
+      "wikitext_line": 86,
+      "statement": "* COMBAT_LOG_EVENT and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, shifting existing parameters to the right."
+    },
+    {
+      "source_id": "prose-undated-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "END_REFUND is non-registerable today, but cached retail references remain; enchanting/item-refund expiry lifecycle change is not modeled/proven.",
+      "wikitext_line": 87,
+      "statement": "* REMOVED END_REFUND, items no longer become unrefundable due to enchanting, etc."
+    },
+    {
+      "source_id": "prose-undated-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "HONOR_CURRENCY_UPDATE is absent today; honor conversion to ordinary currency and its lifecycle/event routing are not proven by absence.",
+      "wikitext_line": 88,
+      "statement": "* REMOVED HONOR_CURRENCY_UPDATE, honor now treated as ordinary currency"
+    },
+    {
+      "source_id": "prose-undated-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "INSPECT_TALENT_READY is absent today; automatic talent-information availability/inspect lifecycle is not proven by event absence.",
+      "wikitext_line": 89,
+      "statement": "* REMOVED INSPECT_TALENT_READY, talent information available by default."
+    },
+    {
+      "source_id": "prose-undated-090",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Inventory occurrence retained in full extraction; publication accounting lives in wt-events-KNOWN_CURRENCY_TYPES_UPDATE-90. No separate behavioral/signature statement.",
+      "wikitext_line": 90,
+      "statement": "* REMOVED KNOWN_CURRENCY_TYPES_UPDATE"
+    },
+    {
+      "source_id": "signature-COMBAT_LOG_EVENT-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 4,
+      "statement": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, hideCaster.",
+      "note": "Third argument is hideCaster; source provides no complete old/new tuple. Current retail non-registerable events and publication sweep do not exercise this historical call boundary."
+    },
+    {
+      "source_id": "signature-COMBAT_LOG_EVENT_UNFILTERED-4",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 4,
+      "statement": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, hideCaster.",
+      "note": "Third argument is hideCaster; source provides no complete old/new tuple. Current retail non-registerable events and publication sweep do not exercise this historical call boundary."
+    },
+    {
+      "source_id": "signature-COMBAT_LOG_EVENT-86",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 86,
+      "statement": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, shifting existing parameters to the right.",
+      "note": "Third argument is new, with existing parameters shifted right; source provides no complete old/new tuple. Current retail non-registerable events and publication sweep do not exercise this historical call boundary."
+    },
+    {
+      "source_id": "signature-COMBAT_LOG_EVENT_UNFILTERED-86",
+      "status": "audit-pending",
+      "capabilities": [],
+      "wikitext_line": 86,
+      "statement": "* [[API COMBAT_LOG_EVENT|COMBAT_LOG_EVENT]] and COMBAT_LOG_EVENT_UNFILTERED have a new third parameter, shifting existing parameters to the right.",
+      "note": "Third argument is new, with existing parameters shifted right; source provides no complete old/new tuple. Current retail non-registerable events and publication sweep do not exercise this historical call boundary."
+    }
+  ]
+}
