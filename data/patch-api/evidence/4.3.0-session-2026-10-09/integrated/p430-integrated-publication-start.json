@@ -1,0 +1,16 @@
+{
+  "revision": "288bb3af3981f0039a502ac053f4203eee077570",
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p430-source",
+  "env": {
+    "P430_SWEEP_OUT": "/tmp/p430-integrated-publication-results.json"
+  }
+}
