@@ -31,6 +31,12 @@ class HistoricalReplayTests(unittest.TestCase):
             self.assertEqual(summary['publication_rows'], 110)
             self.assertEqual(summary['raw_nonblank'], 189)
             self.assertEqual(summary['signature_fragments'], 33)
+            coverage = json.loads((evidence / 'historical-page-coverage.json').read_bytes())
+            rows = {row['source_id']: row for row in coverage['source_rows']}
+            self.assertEqual(rows['raw-line-013']['status'], 'audit-pending')
+            self.assertIn('unnamed restored methods', rows['raw-line-013']['note'])
+            self.assertIn('controller fallback', rows['raw-line-171']['note'])
+            self.assertEqual(summary['modeled_closures'], 0)
             (root / 'current-page-coverage.json').write_text('{"all-native-contracts":"closed"}')
             (root / 'current-known-gaps.json').write_text('[]')
             (root / '3.3.5-wikitext-register.json').write_text('{"future":"closures"}')

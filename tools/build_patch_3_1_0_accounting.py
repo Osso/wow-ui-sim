@@ -71,7 +71,7 @@ def main():
                                    wikitext_line=number, source_text=line, fragment=call[0],
                                    source_role='identity/question/heading/empty-call' if identity_only else 'literal-arguments',
                                    status='audit-pending', capabilities=[], note=limit))
-        metadata = bool(heading or number in by_line or number < 16)
+        metadata = bool(heading or number in by_line or number < 12)
         note = ('Literal source line; inventory/signature IDs carry separate proof limits. ' + limit
                 if number in by_line else ('Source context/navigation/editorial only.' if metadata else limit))
         raw_rows.append(dict(source_id=f'raw-line-{number:03}', wikitext_line=number, source_text=line,
