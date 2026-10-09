@@ -2798,4 +2798,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] integration | Retail Patch 5.0.4 refresh
 
-[Audit](investigations/patch-5-0-4-api-audit.md): pinned master 1c9984d2e; two merged 5.1.0 pet-ID retirements resolve 159 → 157 gaps, no new gaps or retirements. Historical tree/blob receipts preserved; bounded acceptance refresh in progress.
+[Audit](investigations/patch-5-0-4-api-audit.md): pinned master 1c9984d2e; two merged 5.1.0 pet-ID retirements resolve 159 → 157 gaps, no new gaps or retirements. All 67 other pages / 10,216 observations equal master byte-for-byte. Retail 64/64, Mists 6/6, own cached/bare 2/1, pet-battle integration/prefork/library 36/7/2, namespace 24, Python 115 pass; 68 registers/65 extracts reproduce with three inherited failures. Format/default/Mists checks and startup [] pass, zero non-vendor warnings. Negative rejects 157 → 158. Historical byte streams and compact object pins preserved; final portability/tamper gate pending.
