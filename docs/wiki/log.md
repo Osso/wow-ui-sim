@@ -820,3 +820,9 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 Added [bounded audit](investigations/patch-2-5-4-api-audit.md), spec and own literal ledger: 461 rows/412 occurrences/414 UNPROVEN contracts, separate actual configured interfaces, 8/8 source-only GREEN. Historical seals/copy controls recorded by own proof artifacts; native/integration owned by main.
 
 Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied members pass without Git/target/current tools/runtime; serialized ledger/proof/GREEN-log tampering rejected and restored exactly. Original seals remain unchanged; supplemental portable receipts separately sealed. SOURCE-only; native/main integration gates remain open.
+
+## 2026-10-09 — 1.60.1 literal SOURCE accounting
+
+- Frozen 707613/6902509 byte pins and 101-page registry endpoint retained offline; no shared generator default/flag changes.
+- Full row/signature/prose/header/reference ledger, two literal count mismatches and configured/source/native identity separation added in [audit](investigations/patch-1-60-1-api-audit.md).
+- Owned SOURCE RED 8 failures retained; narrow existing-model player-name probe added, no production runtime change or native credit.

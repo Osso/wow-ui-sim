@@ -1,0 +1,21 @@
+{
+  "accounting.py": "b99e49fae3d2fc9a3a1e7f064a0f6f6d917d1af63082a1b981b29bae534c72e1",
+  "historical-gen_patch_wikitext_register.py": "bdcf987489d2491a349817b429d579980680e1259063985e7a424568dc165fda",
+  "original/code/Cargo.toml": "2533154ff605dde03d1e87fb0e77dd803420b7b90b57381cdee539be34742920",
+  "original/code/src__client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+  "original/code/src__lua_api__globals__group_queries.rs": "e6b6fba04bcc93bc831508d2d2df28f55778fb34e440ac11ac4e390a72fc2648",
+  "original/code/src__lua_api__workarounds__temporary__client_info_defaults.rs": "47e6bf8a208954086fd6ff595dfbf3a24564b12ccba7535bf4c619b7b4c113d7",
+  "original/gaps.json": "627ccf2446ff844c7b68657cdc221f7c4c8ae7a3a8dad0463e154820a60e5e68",
+  "original/ledger.json": "cdeab8bb41e813c01bc5c4242850eadb4d144d897d55143b29f55bcd29c58f04",
+  "original/literal-extract.wikitext": "0ab92b5085a8990dc1e0f3e32d10267761688af739b4fd6c2a670d447dffcfe0",
+  "original/manifest.json": "b07fc204377842c8d5303f9cd4597acba02290bbe6874efe4ab160143c27d6ba",
+  "original/provenance.json": "dc8e84593ed1abccccbf417cf773aa4d426d363ad6bc6c5f098d2baeb8e7f6b3",
+  "original/red.log": "fe8fce4d1d1adae50fc2758271002597bbf82cc48e02b8570a8e691e371e222d",
+  "original/register.json": "e8417487e3f0449522602880d8b04f00a1d208d8f3247d5f8f74919265279071",
+  "original/registry.json": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+  "original/response.json": "687133019ca6e39cfe2c2902fd398ac2c6f161cab5aed52e7809ca562c6ea5e5",
+  "original/source-pin.json": "a39f9823c87e9ff6d6ddb9c7632200ccca88f5b824eee5553314ce02b30a893f",
+  "original/source.wikitext": "f0e3dc86be50c02dbbc2a5962adda9cf96aa8f3a3959995a4cf7a6a9c8b43ce7",
+  "test_source.py": "f4f779dabdf4d6975b6dce33a105c69c6f081df4ccc7ace0e4dd280df8547bf0",
+  "validate.py": "5c32a232227ffc5841d3428289cb283f39a83f30f6c294123f4732dabef50d0b"
+}

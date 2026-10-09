@@ -182,11 +182,6 @@ harness = false
 required-features = ["client-retail"]
 
 [[test]]
-name = "patch_1_60_1_source_model"
-path = "patch-tests/patch_1_60_1_source_model.rs"
-required-features = ["client-wowforever"]
-
-[[test]]
 name = "patch_12_1_audit"
 path = "patch-tests/patch_12_1.rs"
 required-features = ["client-ptr"]
