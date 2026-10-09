@@ -226,24 +226,27 @@ mod tests {
         let probe = format!(
             "local traceDebugGettersEnabled = {trace_enabled}\n{}",
             r#"
-                local function traceDebugGetters(phase)
+                local function traceDebugGetters(phase, marker)
                     if not traceDebugGettersEnabled then return end
                     print("[DebugGetterProbe]", phase, "GetCallstackHeight",
                         type(_G.GetCallstackHeight), tostring(_G.GetCallstackHeight))
                     print("[DebugGetterProbe]", phase, "GetErrorCallstackHeight",
                         type(_G.GetErrorCallstackHeight), tostring(_G.GetErrorCallstackHeight))
+                    print("[DebugGetterProbe]", phase, "marker", type(marker), tostring(marker))
+                    print("[DebugGetterProbe]", phase, "secretwrap",
+                        type(_G.secretwrap), tostring(_G.secretwrap))
                 end
-                traceDebugGetters("probe_start")
+                traceDebugGetters("probe_start", nil)
                 local marker = function() return "wrapped" end
                 if CreateSecureDelegate(marker)() ~= "wrapped" then return "secure_delegate" end
-                traceDebugGetters("after_secure_delegate")
+                traceDebugGetters("after_secure_delegate", marker)
                 if type(GetButtonMetatable()) ~= "table" then return "button_metatable" end
-                traceDebugGetters("after_button_metatable")
+                traceDebugGetters("after_button_metatable", marker)
                 if type(GetEditBoxMetatable()) ~= "table" then return "editbox_metatable" end
-                traceDebugGetters("after_editbox_metatable")
+                traceDebugGetters("after_editbox_metatable", marker)
                 if secretwrap(marker)() ~= "wrapped" then return "secretwrap" end
-                traceDebugGetters("after_secretwrap")
-                traceDebugGetters("before_callstack_height")
+                traceDebugGetters("after_secretwrap", marker)
+                traceDebugGetters("before_callstack_height", marker)
                 if GetCallstackHeight() ~= 0 then return "callstack_height" end
                 if GetErrorCallstackHeight() ~= 0 then return "error_callstack_height" end
                 if type(debugstack) ~= "function" then return "debugstack_type" end
