@@ -39,3 +39,11 @@ Own portability fixture first fails because the validator is missing, then passe
 ## See Also
 
 - [[patch-3-3-5-api-audit]], [[patch-4-0-1-api-audit]], [[patch-4-1-0-api-audit]] — actual integrated retail successors, separate from Wrath Classic history.
+
+## Integrated proof status — 2026-10-09
+
+Canonical snapshot `2b0a8caef`. Independent verifier 221 [report](../../../data/patch-api/evidence/3.3.3-session-2026-10-09/integrated/p333-independent-report.md) and [receipt](../../../data/patch-api/evidence/3.3.3-session-2026-10-09/integrated/p333-independent-receipt.json) at `7c8b423fb` record fresh historical validator and default/opt-in real-source CLI byte-identity PASS. All 22 original seals remain unchanged; original receipts are immutable. Retained relocation/tamper fixtures were not rerun. Actual 3.3.5 and 4.0.1 were added at `7c8b423fb`; added inputs have zero `(section,symbol)` and bare-symbol overlap with all 36 own occurrences. No changed expectation or model closure.
+
+[Current publication results](../../../data/patch-api/evidence/3.3.3-session-2026-10-09/integrated/current-publication-results.json) and [scope receipt](../../../data/patch-api/evidence/3.3.3-session-2026-10-09/integrated/current-publication-scope.json) record 36 rows, 25 matches/11 gaps, unchanged from original discovery. At `f1adc06a5`, current retail prefork publication passes 72/72; this is simulator publication proof only. [Aggregate profile follow-up](patch-3-4-2-api-audit.md#integrated-proof-status--2026-10-09) records Mists `--tests` check exit 0, six inherited iced manifest warnings only and no non-vendor warnings; verifier 224 review pending. Headers, signatures and semantic/native proof limits remain untouched.
+
+Main portable gate at `399263988` remains RUNNING at this snapshot; latest CI pending, old full-suite Garrison/prefork and inherited integration/library failures unresolved. No parent acceptance, native parity or full handoff acceptance. Historical captured claims above retain their original scope and revisions.

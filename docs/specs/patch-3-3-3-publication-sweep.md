@@ -32,6 +32,10 @@ Account for the frozen 2010 retail [page](../../data/patch-api/sources/3.3.3-api
 - [ ] Historical signatures and producers require established contracts and behavior evidence; no native 2010 receipt supplied.
 - [ ] Eleven current publication mismatches, three changed-prose contracts and 35 signature rows remain pending; existing scalar read does not establish historical native/event behavior.
 
+## Current proof status — 2026-10-09
+
+[Integrated receipts and boundaries](../wiki/investigations/patch-3-3-3-api-audit.md#integrated-proof-status--2026-10-09): fresh bounded historical/tool replay PASS; current 36-row publication remains 25 matches/11 gaps. Current retail prefork 72/72 and Mists `--tests` check exit 0 are separate from historical/native proof. No new model closure; shared portable gate RUNNING, latest CI and independent profile review pending. No parent/native/full handoff acceptance.
+
 ## Out of scope
 
 Classic supersession, guessed models, shims, fallbacks, vendor/cache changes, broad gates, deploy/push/merge and coordinator integration.

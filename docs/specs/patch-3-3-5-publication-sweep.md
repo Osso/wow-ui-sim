@@ -23,6 +23,10 @@ Audit pinned page 25049/revision 247986 (2010-07-10T15:47:20Z). [Audit](../wiki/
 
 Own publication GREEN 1/1 (80 matches / 44 known gaps), parser 1/1, existing temporary chat state 1/1; negative rejects 44 → 45 gaps. Full ledger has 324 IDs and no new modeled closures. Portable validator GREEN 1/1 at 6c5c8fcf9 covers clean relocation, synthetic future closures and all five tamper/restoration controls. Receipt is separate from frozen original command ledger; main owns current coordinator/final proof.
 
+## Current proof status — 2026-10-09
+
+[Integrated receipts and boundaries](../wiki/investigations/patch-3-3-5-api-audit.md#integrated-proof-status--2026-10-09): fresh bounded historical/tool replay PASS; current 124-row publication remains 80 matches/44 gaps. Current retail prefork 72/72 and Mists `--tests` check exit 0 are separate from historical/native proof. No new model closure; shared portable gate RUNNING, latest CI and independent profile review pending. No parent/native/full handoff acceptance.
+
 ## Limits
 
 No linked contract expansion, invented service/state model, compatibility shim, vendor/cache writes, Classic mutation, broad/final acceptance, push or merge. Existing saved chat geometry is temporary session-only behavior, not account persistence. Inspect throttling requires a server request/response model; no promise of an event on every request.
