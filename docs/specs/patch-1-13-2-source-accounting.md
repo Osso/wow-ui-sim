@@ -4,9 +4,9 @@ Bounded Classic Era source audit from the [immutable pin](../../data/patch-api/e
 
 ## What it must do
 
-- [ ] Preserve exact frozen manifest/response/wikitext identity and hashes plus manifest-linked101-page registry.
-- [ ] Account for every raw row, inventory/signature/default/prose/headings/counts/captions/template/link/reference occurrence without expansion, invented aliases or default credit.
-- [ ] Derive totals and reject every omission/fabricated capability; replay unchanged default register bytes and extractor failure.
+- [x] Preserve exact frozen manifest/response/wikitext identity and hashes plus manifest-linked101-page registry.
+- [x] Account for every raw row, inventory/signature/default/prose/headings/counts/captions/template/link/reference occurrence without expansion, invented aliases or default credit.
+- [x] Derive totals and reject every omission/fabricated capability; replay unchanged default register bytes and extractor failure.
 - [ ] Copy historical replay without Git/target/current tools, reject disk ledger/log tampers and restore exact bytes under original seals.
 - [ ] Keep original seals immutable; later receipts separate.
 - [ ] Test only existing current Era generic CVar state mutations separately from historical signatures/defaults/effects/native parity.
@@ -24,7 +24,8 @@ Bounded Classic Era source audit from the [immutable pin](../../data/patch-api/e
 ## Tests asserting this spec
 
 - Same evidence directory `test_source_accounting.py`: eight SOURCE fixtures, every occurrence omission and fabricated-credit controls.
-- Portable replay fixture and standalone current Era test added in subsequent bounded steps.
+- `patch-tests/patch_1_13_2_cvar_state.rs`: own bare Era generic CVar storage transitions; no source default/effect/native/signature credit.
+- Portable replay fixture added in subsequent bounded step.
 
 ## Known gaps (current cycle)
 
