@@ -1,0 +1,733 @@
+{
+  "patch": "3.3.3",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-CancelSell-4",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Historical global sell-quote lifecycle is not specified; current C_AuctionHouse.CancelSell is a different namespace and cannot establish 2010 global behavior. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-CancelSell-4",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical global sell-quote lifecycle is not specified; current C_AuctionHouse.CancelSell is a different namespace and cannot establish 2010 global behavior. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-ForceGossip-5",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "No historical forced-gossip selection/lifecycle or event contract is pinned; later retail removal supplies absence credit only. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-ForceGossip-5",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No historical forced-gossip selection/lifecycle or event contract is pinned; later retail removal supplies absence credit only. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetAllowLowLevelRaid-6",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing low-level raid opt-in state, initial value and argument domain; getter signature alone does not establish native state lifecycle. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetAllowLowLevelRaid-6",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing low-level raid opt-in state, initial value and argument domain; getter signature alone does not establish native state lifecycle. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetAvailableQuestInfo-7",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Source specifies isTrivial/isDaily/isRepeatable triple by id; current quest model publication does not establish 2010 id interpretation and repeatability output. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetAvailableQuestInfo-7",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source specifies isTrivial/isDaily/isRepeatable triple by id; current quest model publication does not establish 2010 id interpretation and repeatability output. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetContainerItemQuestInfo-8",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Historical bag/slot quest-item tuple and startsQuestId absence sentinel unpinned; later removal, not C_Container behavior parity. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetContainerItemQuestInfo-8",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical bag/slot quest-item tuple and startsQuestId absence sentinel unpinned; later removal, not C_Container behavior parity. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetHolidayBGHonorCurrencyBonuses-9",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing holiday battleground victory/reward fixture and honor/arena currency tuple rules. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetHolidayBGHonorCurrencyBonuses-9",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing holiday battleground victory/reward fixture and honor/arena currency tuple rules. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetLFGDeserterExpiration-10",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Published legacy temporary default is not a deserter clock/penalty producer; expiration units and no-penalty sentinel not pinned. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetLFGDeserterExpiration-10",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Published legacy temporary default is not a deserter clock/penalty producer; expiration units and no-penalty sentinel not pinned. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetLFGRandomCooldownExpiration-11",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current LFG state read exists, but historical cooldown trigger, absolute-time basis and no-cooldown sentinel not pinned. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetLFGRandomCooldownExpiration-11",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current LFG state read exists, but historical cooldown trigger, absolute-time basis and no-cooldown sentinel not pinned. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetPetSpellBonusDamage-12",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Existing explicit pet.spell_bonus_damage scalar model; own full cached-UI arity/value test pending. No historical native or PET_SPELL_POWER_UPDATE producer evidence. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetPetSpellBonusDamage-12",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing explicit pet.spell_bonus_damage scalar model; own full cached-UI arity/value test pending. No historical native or PET_SPELL_POWER_UPDATE producer evidence. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestWatchIndex-13",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retail removal expectation mismatches retained callable quest watch implementation; 3.3.3 did not remove this API, so no retirement authorized here. Historical questLogIndex/watch order contract remains unproven. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetQuestWatchIndex-13",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later retail removal expectation mismatches retained callable quest watch implementation; 3.3.3 did not remove this API, so no retirement authorized here. Historical questLogIndex/watch order contract remains unproven. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetRandomBGHonorCurrencyBonuses-14",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing random battleground win state and honor/arena bonus reward fixture and tuple rules. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetRandomBGHonorCurrencyBonuses-14",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing random battleground win state and honor/arena bonus reward fixture and tuple rules. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-QuestIsDaily-15",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing current quest-dialog daily query surface; source supplies no selection or no-quest sentinel contract. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-QuestIsDaily-15",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing current quest-dialog daily query surface; source supplies no selection or no-quest sentinel contract. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-QuestIsWeekly-16",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing current quest-dialog weekly query surface; source supplies no selection or no-quest sentinel contract. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-QuestIsWeekly-16",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing current quest-dialog weekly query surface; source supplies no selection or no-quest sentinel contract. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-SetAllowLowLevelRaid-17",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing modeled low-level raid preference lifecycle and input validation; source does not tie setter transitions to ENABLE/DISABLE events. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-SetAllowLowLevelRaid-17",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing modeled low-level raid preference lifecycle and input validation; source does not tie setter transitions to ENABLE/DISABLE events. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-SetAuctionsTabShowing-18",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Later removal only; historical visibility scheduling side effects and argument domain are not specified. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-SetAuctionsTabShowing-18",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later removal only; historical visibility scheduling side effects and argument domain are not specified. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-ShiftQuestWatches-19",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Later removal only; historical watch identity/index interpretation and reordering side effects are not pinned. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-ShiftQuestWatches-19",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later removal only; historical watch identity/index interpretation and reordering side effects are not pinned. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-SortBGList-20",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing battleground-list sort surface, comparator and stable-order/tie rules; no invented sorter. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-SortBGList-20",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing battleground-list sort surface, comparator and stable-order/tie rules; no invented sorter. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-SortQuestWatches-21",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later removal expectation mismatches retained no-op; source does not authorize removal in 3.3.3 and supplies no watch sort comparator. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-SortQuestWatches-21",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later removal expectation mismatches retained no-op; source does not authorize removal in 3.3.3 and supplies no watch sort comparator. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-SummonRandomCritter-22",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing companion candidate filtering/random-selection/cooldown and summon lifecycle; no guessed pet choice. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-SummonRandomCritter-22",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing companion candidate filtering/random-selection/cooldown and summon lifecycle; no guessed pet choice. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-UnitHasLFGDeserter-23",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current always-false placeholder is not modeled per-unit deserter penalty state; unit-token/expiration semantics not pinned. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-UnitHasLFGDeserter-23",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current always-false placeholder is not modeled per-unit deserter penalty state; unit-token/expiration semantics not pinned. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-UnitHasLFGRandomCooldown-24",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current token-aware LFG cooldown read exists, but historical penalty trigger and unit identity contract are not pinned. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-UnitHasLFGRandomCooldown-24",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current token-aware LFG cooldown read exists, but historical penalty trigger and unit identity contract are not pinned. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_DISABLED-27",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Auction-house disable producer/timing and payload arity are unproven. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-AUCTION_HOUSE_DISABLED-27",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Auction-house disable producer/timing and payload arity are unproven. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-AUCTION_MULTISELL_FAILURE-28",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Multisell transaction failure producer, rollback and ordering are unproven. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-AUCTION_MULTISELL_FAILURE-28",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Multisell transaction failure producer, rollback and ordering are unproven. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-AUCTION_MULTISELL_START-29",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Multisell transaction producer and total count meaning/order are unproven. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-AUCTION_MULTISELL_START-29",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Multisell transaction producer and total count meaning/order are unproven. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-AUCTION_MULTISELL_UPDATE-30",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Multisell transaction producer and done/total progress ordering are unproven. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-AUCTION_MULTISELL_UPDATE-30",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Multisell transaction producer and done/total progress ordering are unproven. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-DISABLE_LOW_LEVEL_RAID-31",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "No established low-level raid preference event trigger or ordering. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-DISABLE_LOW_LEVEL_RAID-31",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No established low-level raid preference event trigger or ordering. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-ENABLE_LOW_LEVEL_RAID-32",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "No established low-level raid preference event trigger or ordering. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-ENABLE_LOW_LEVEL_RAID-32",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No established low-level raid preference event trigger or ordering. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-LFG_OPEN_FROM_GOSSIP-33",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "No historical gossip-to-LFG producer or dungeonId propagation proof. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-LFG_OPEN_FROM_GOSSIP-33",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No historical gossip-to-LFG producer or dungeonId propagation proof. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-PET_SPELL_POWER_UPDATE-34",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Pet scalar state exists; no established event producer or historical update ordering. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-PET_SPELL_POWER_UPDATE-34",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Pet scalar state exists; no established event producer or historical update ordering. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-events-VOTE_KICK_REASON_NEEDED-35",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "No modeled boot-vote reason request producer or targetName propagation. Observed pcall=true; return=true; registered=true. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-VOTE_KICK_REASON_NEEDED-35",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No modeled boot-vote reason request producer or targetName propagation. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-AcceptProposal-38",
+      "capabilities": [
+        "publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Hardware event requirement is explicit; historical input-context authorization and proposal transition/error outcomes are unproven. Observed raw=function; lookup=function. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-AcceptProposal-38",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Hardware event requirement is explicit; historical input-context authorization and proposal transition/error outcomes are unproven. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-GetLFGBootProposal-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing boot-vote producer and getter; added reason return position and complete tuple shape not given. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-GetLFGBootProposal-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing boot-vote producer and getter; added reason return position and complete tuple shape not given. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-UninviteUnit-40",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Optional reason for LFD kick votes is explicit; current Blizzard deprecated wrapper is preserved. No historical vote initiator/reason propagation lifecycle proof. Observed raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedPartyInfo/Deprecated_PartyInfo.lua. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-UninviteUnit-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Optional reason for LFD kick votes is explicit; current Blizzard deprecated wrapper is preserved. No historical vote initiator/reason propagation lifecycle proof. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-global-api-ShowBattlefieldList-43",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Source explicitly removes global; current raw and ordinary lookups absent. No historical removal timing or native receipt. Observed raw=nil; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-ShowBattlefieldList-43",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source explicitly removes global; current raw and ordinary lookups absent. No historical removal timing or native receipt. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-widgets-Texture:GetTexCoordModifiesRect-44",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Source explicitly removes method; current Texture lookup absent. No historical native geometry or Classic proof. Observed Texture; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-Texture:GetTexCoordModifiesRect-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source explicitly removes method; current Texture lookup absent. No historical native geometry or Classic proof. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetTexCoordModifiesRect-45",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Source explicitly removes method; current Texture lookup absent. No historical native geometry or Classic proof. Observed Texture; lookup=nil. Publication/absence only; no signature or native credit."
+    },
+    {
+      "source_id": "signature-Texture:SetTexCoordModifiesRect-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source explicitly removes method; current Texture lookup absent. No historical native geometry or Classic proof. Literal input/output or event signature preserved; historical behavior unproven."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-CancelSell-4; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-ForceGossip-5; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetAllowLowLevelRaid-6; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetAvailableQuestInfo-7; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetContainerItemQuestInfo-8; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetHolidayBGHonorCurrencyBonuses-9; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetLFGDeserterExpiration-10; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetLFGRandomCooldownExpiration-11; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetPetSpellBonusDamage-12; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetQuestWatchIndex-13; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-GetRandomBGHonorCurrencyBonuses-14; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-QuestIsDaily-15; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-QuestIsWeekly-16; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-SetAllowLowLevelRaid-17; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-SetAuctionsTabShowing-18; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-ShiftQuestWatches-19; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-SortBGList-20; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-SortQuestWatches-21; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-SummonRandomCritter-22; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-UnitHasLFGDeserter-23; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-UnitHasLFGRandomCooldown-24; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "source-context-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-AUCTION_HOUSE_DISABLED-27; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-AUCTION_MULTISELL_FAILURE-28; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-AUCTION_MULTISELL_START-29; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-AUCTION_MULTISELL_UPDATE-30; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-DISABLE_LOW_LEVEL_RAID-31; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-ENABLE_LOW_LEVEL_RAID-32; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-LFG_OPEN_FROM_GOSSIP-33; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-PET_SPELL_POWER_UPDATE-34; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-VOTE_KICK_REASON_NEEDED-35; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "source-context-037",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Hardware event requirement is explicit; historical input-context authorization and proposal transition/error outcomes are unproven."
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing boot-vote producer and getter; added reason return position and complete tuple shape not given."
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Optional reason for LFD kick votes is explicit; current Blizzard deprecated wrapper is preserved. No historical vote initiator/reason propagation lifecycle proof."
+    },
+    {
+      "source_id": "source-context-042",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-ShowBattlefieldList-43; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-Texture:GetTexCoordModifiesRect-44; no duplicate behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Signature cross-reference to signature-Texture:SetTexCoordModifiesRect-45; no duplicate behavioral credit."
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "patch": "3.3.3",
+  "signatures": [
+    {
+      "source_id": "signature-CancelSell-4",
+      "symbol": "CancelSell",
+      "wikitext_line": 4,
+      "source_text": "* {{api|CancelSell}}()",
+      "note": "Historical global sell-quote lifecycle is not specified; current C_AuctionHouse.CancelSell is a different namespace and cannot establish 2010 global behavior."
+    },
+    {
+      "source_id": "signature-ForceGossip-5",
+      "symbol": "ForceGossip",
+      "wikitext_line": 5,
+      "source_text": "* forced = {{api|ForceGossip}}()",
+      "note": "No historical forced-gossip selection/lifecycle or event contract is pinned; later retail removal supplies absence credit only."
+    },
+    {
+      "source_id": "signature-GetAllowLowLevelRaid-6",
+      "symbol": "GetAllowLowLevelRaid",
+      "wikitext_line": 6,
+      "source_text": "* allowed = {{api|GetAllowLowLevelRaid}}()",
+      "note": "Missing low-level raid opt-in state, initial value and argument domain; getter signature alone does not establish native state lifecycle."
+    },
+    {
+      "source_id": "signature-GetAvailableQuestInfo-7",
+      "symbol": "GetAvailableQuestInfo",
+      "wikitext_line": 7,
+      "source_text": "* isTrivial, isDaily, isRepeatable = {{api|GetAvailableQuestInfo}}(id)",
+      "note": "Source specifies isTrivial/isDaily/isRepeatable triple by id; current quest model publication does not establish 2010 id interpretation and repeatability output."
+    },
+    {
+      "source_id": "signature-GetContainerItemQuestInfo-8",
+      "symbol": "GetContainerItemQuestInfo",
+      "wikitext_line": 8,
+      "source_text": "* isQuestItem, startsQuestId, isActiveQuest = {{api|GetContainerItemQuestInfo}}(bag, slot)",
+      "note": "Historical bag/slot quest-item tuple and startsQuestId absence sentinel unpinned; later removal, not C_Container behavior parity."
+    },
+    {
+      "source_id": "signature-GetHolidayBGHonorCurrencyBonuses-9",
+      "symbol": "GetHolidayBGHonorCurrencyBonuses",
+      "wikitext_line": 9,
+      "source_text": "* hasWin, winHonor, winArena, lossHonor, lossArena = {{api|GetHolidayBGHonorCurrencyBonuses}}()",
+      "note": "Missing holiday battleground victory/reward fixture and honor/arena currency tuple rules."
+    },
+    {
+      "source_id": "signature-GetLFGDeserterExpiration-10",
+      "symbol": "GetLFGDeserterExpiration",
+      "wikitext_line": 10,
+      "source_text": "* time = {{api|GetLFGDeserterExpiration}}()",
+      "note": "Published legacy temporary default is not a deserter clock/penalty producer; expiration units and no-penalty sentinel not pinned."
+    },
+    {
+      "source_id": "signature-GetLFGRandomCooldownExpiration-11",
+      "symbol": "GetLFGRandomCooldownExpiration",
+      "wikitext_line": 11,
+      "source_text": "* time = {{api|GetLFGRandomCooldownExpiration}}()",
+      "note": "Current LFG state read exists, but historical cooldown trigger, absolute-time basis and no-cooldown sentinel not pinned."
+    },
+    {
+      "source_id": "signature-GetPetSpellBonusDamage-12",
+      "symbol": "GetPetSpellBonusDamage",
+      "wikitext_line": 12,
+      "source_text": "* bonus = {{api|GetPetSpellBonusDamage}}()",
+      "note": "Existing explicit pet.spell_bonus_damage scalar model; own full cached-UI arity/value test pending. No historical native or PET_SPELL_POWER_UPDATE producer evidence."
+    },
+    {
+      "source_id": "signature-GetQuestWatchIndex-13",
+      "symbol": "GetQuestWatchIndex",
+      "wikitext_line": 13,
+      "source_text": "* watchIndex = {{api|GetQuestWatchIndex}}(questLogIndex)",
+      "note": "Later retail removal expectation mismatches retained callable quest watch implementation; 3.3.3 did not remove this API, so no retirement authorized here. Historical questLogIndex/watch order contract remains unproven."
+    },
+    {
+      "source_id": "signature-GetRandomBGHonorCurrencyBonuses-14",
+      "symbol": "GetRandomBGHonorCurrencyBonuses",
+      "wikitext_line": 14,
+      "source_text": "* hasWin, winHonor, winArena, lossHonor, lossArena = {{api|GetRandomBGHonorCurrencyBonuses}}()",
+      "note": "Missing random battleground win state and honor/arena bonus reward fixture and tuple rules."
+    },
+    {
+      "source_id": "signature-QuestIsDaily-15",
+      "symbol": "QuestIsDaily",
+      "wikitext_line": 15,
+      "source_text": "* isDaily = {{api|QuestIsDaily}}()",
+      "note": "Missing current quest-dialog daily query surface; source supplies no selection or no-quest sentinel contract."
+    },
+    {
+      "source_id": "signature-QuestIsWeekly-16",
+      "symbol": "QuestIsWeekly",
+      "wikitext_line": 16,
+      "source_text": "* isWeekly = {{api|QuestIsWeekly}}()",
+      "note": "Missing current quest-dialog weekly query surface; source supplies no selection or no-quest sentinel contract."
+    },
+    {
+      "source_id": "signature-SetAllowLowLevelRaid-17",
+      "symbol": "SetAllowLowLevelRaid",
+      "wikitext_line": 17,
+      "source_text": "* {{api|SetAllowLowLevelRaid}}(allowed)",
+      "note": "Missing modeled low-level raid preference lifecycle and input validation; source does not tie setter transitions to ENABLE/DISABLE events."
+    },
+    {
+      "source_id": "signature-SetAuctionsTabShowing-18",
+      "symbol": "SetAuctionsTabShowing",
+      "wikitext_line": 18,
+      "source_text": "* {{api|SetAuctionsTabShowing}}(isShowing)",
+      "note": "Later removal only; historical visibility scheduling side effects and argument domain are not specified."
+    },
+    {
+      "source_id": "signature-ShiftQuestWatches-19",
+      "symbol": "ShiftQuestWatches",
+      "wikitext_line": 19,
+      "source_text": "* {{api|ShiftQuestWatches}}(id1, id2)",
+      "note": "Later removal only; historical watch identity/index interpretation and reordering side effects are not pinned."
+    },
+    {
+      "source_id": "signature-SortBGList-20",
+      "symbol": "SortBGList",
+      "wikitext_line": 20,
+      "source_text": "* {{api|SortBGList}}()",
+      "note": "Missing battleground-list sort surface, comparator and stable-order/tie rules; no invented sorter."
+    },
+    {
+      "source_id": "signature-SortQuestWatches-21",
+      "symbol": "SortQuestWatches",
+      "wikitext_line": 21,
+      "source_text": "* {{api|SortQuestWatches}}()",
+      "note": "Later removal expectation mismatches retained no-op; source does not authorize removal in 3.3.3 and supplies no watch sort comparator."
+    },
+    {
+      "source_id": "signature-SummonRandomCritter-22",
+      "symbol": "SummonRandomCritter",
+      "wikitext_line": 22,
+      "source_text": "* {{api|SummonRandomCritter}}()",
+      "note": "Missing companion candidate filtering/random-selection/cooldown and summon lifecycle; no guessed pet choice."
+    },
+    {
+      "source_id": "signature-UnitHasLFGDeserter-23",
+      "symbol": "UnitHasLFGDeserter",
+      "wikitext_line": 23,
+      "source_text": "* hasDeserter = {{api|UnitHasLFGDeserter}}(\"unit\")",
+      "note": "Current always-false placeholder is not modeled per-unit deserter penalty state; unit-token/expiration semantics not pinned."
+    },
+    {
+      "source_id": "signature-UnitHasLFGRandomCooldown-24",
+      "symbol": "UnitHasLFGRandomCooldown",
+      "wikitext_line": 24,
+      "source_text": "* hasRandomCooldown = {{api|UnitHasLFGRandomCooldown}}(\"unit\")",
+      "note": "Current token-aware LFG cooldown read exists, but historical penalty trigger and unit identity contract are not pinned."
+    },
+    {
+      "source_id": "signature-AUCTION_HOUSE_DISABLED-27",
+      "symbol": "AUCTION_HOUSE_DISABLED",
+      "wikitext_line": 27,
+      "source_text": "* {{api|AUCTION_HOUSE_DISABLED|t=e}} ()",
+      "note": "Auction-house disable producer/timing and payload arity are unproven."
+    },
+    {
+      "source_id": "signature-AUCTION_MULTISELL_FAILURE-28",
+      "symbol": "AUCTION_MULTISELL_FAILURE",
+      "wikitext_line": 28,
+      "source_text": "* {{api|AUCTION_MULTISELL_FAILURE|t=e}} ()",
+      "note": "Multisell transaction failure producer, rollback and ordering are unproven."
+    },
+    {
+      "source_id": "signature-AUCTION_MULTISELL_START-29",
+      "symbol": "AUCTION_MULTISELL_START",
+      "wikitext_line": 29,
+      "source_text": "* {{api|AUCTION_MULTISELL_START|t=e}} (total)",
+      "note": "Multisell transaction producer and total count meaning/order are unproven."
+    },
+    {
+      "source_id": "signature-AUCTION_MULTISELL_UPDATE-30",
+      "symbol": "AUCTION_MULTISELL_UPDATE",
+      "wikitext_line": 30,
+      "source_text": "* {{api|AUCTION_MULTISELL_UPDATE|t=e}} (done, total)",
+      "note": "Multisell transaction producer and done/total progress ordering are unproven."
+    },
+    {
+      "source_id": "signature-DISABLE_LOW_LEVEL_RAID-31",
+      "symbol": "DISABLE_LOW_LEVEL_RAID",
+      "wikitext_line": 31,
+      "source_text": "* {{api|DISABLE_LOW_LEVEL_RAID|t=e}} ()",
+      "note": "No established low-level raid preference event trigger or ordering."
+    },
+    {
+      "source_id": "signature-ENABLE_LOW_LEVEL_RAID-32",
+      "symbol": "ENABLE_LOW_LEVEL_RAID",
+      "wikitext_line": 32,
+      "source_text": "* {{api|ENABLE_LOW_LEVEL_RAID|t=e}} ()",
+      "note": "No established low-level raid preference event trigger or ordering."
+    },
+    {
+      "source_id": "signature-LFG_OPEN_FROM_GOSSIP-33",
+      "symbol": "LFG_OPEN_FROM_GOSSIP",
+      "wikitext_line": 33,
+      "source_text": "* {{api|LFG_OPEN_FROM_GOSSIP|t=e}} (dungeonId)",
+      "note": "No historical gossip-to-LFG producer or dungeonId propagation proof."
+    },
+    {
+      "source_id": "signature-PET_SPELL_POWER_UPDATE-34",
+      "symbol": "PET_SPELL_POWER_UPDATE",
+      "wikitext_line": 34,
+      "source_text": "* {{api|PET_SPELL_POWER_UPDATE|t=e}} ()",
+      "note": "Pet scalar state exists; no established event producer or historical update ordering."
+    },
+    {
+      "source_id": "signature-VOTE_KICK_REASON_NEEDED-35",
+      "symbol": "VOTE_KICK_REASON_NEEDED",
+      "wikitext_line": 35,
+      "source_text": "* {{api|VOTE_KICK_REASON_NEEDED|t=e}} (targetName)",
+      "note": "No modeled boot-vote reason request producer or targetName propagation."
+    },
+    {
+      "source_id": "signature-AcceptProposal-38",
+      "symbol": "AcceptProposal",
+      "wikitext_line": 38,
+      "source_text": "* {{api|AcceptProposal}}() now requires a hardware event",
+      "note": "Hardware event requirement is explicit; historical input-context authorization and proposal transition/error outcomes are unproven."
+    },
+    {
+      "source_id": "signature-GetLFGBootProposal-39",
+      "symbol": "GetLFGBootProposal",
+      "wikitext_line": 39,
+      "source_text": "* {{api|GetLFGBootProposal}}() now returns an additional ''reason'' value.",
+      "note": "Missing boot-vote producer and getter; added reason return position and complete tuple shape not given."
+    },
+    {
+      "source_id": "signature-UninviteUnit-40",
+      "symbol": "UninviteUnit",
+      "wikitext_line": 40,
+      "source_text": "* {{api|UninviteUnit}}(\"name\" [, \"reason\"]) added reason argument for LFD kick votes.",
+      "note": "Optional reason for LFD kick votes is explicit; current Blizzard deprecated wrapper is preserved. No historical vote initiator/reason propagation lifecycle proof."
+    },
+    {
+      "source_id": "signature-ShowBattlefieldList-43",
+      "symbol": "ShowBattlefieldList",
+      "wikitext_line": 43,
+      "source_text": "* {{api|ShowBattlefieldList}}()",
+      "note": "Source explicitly removes global; current raw and ordinary lookups absent. No historical removal timing or native receipt."
+    },
+    {
+      "source_id": "signature-Texture:GetTexCoordModifiesRect-44",
+      "symbol": "Texture:GetTexCoordModifiesRect",
+      "wikitext_line": 44,
+      "source_text": "* {{api|Texture:GetTexCoordModifiesRect|t=w}}()",
+      "note": "Source explicitly removes method; current Texture lookup absent. No historical native geometry or Classic proof."
+    },
+    {
+      "source_id": "signature-Texture:SetTexCoordModifiesRect-45",
+      "symbol": "Texture:SetTexCoordModifiesRect",
+      "wikitext_line": 45,
+      "source_text": "* {{api|Texture:SetTexCoordModifiesRect|t=w}}(modifiesRect)",
+      "note": "Source explicitly removes method; current Texture lookup absent. No historical native geometry or Classic proof."
+    }
+  ]
+}

@@ -10,6 +10,20 @@ Existing heading/bullet parsers produce no inventory or misclassify all identiti
 
 Qualified and bare whole-word scans across all cached retail Lua find zero references to the three source-removed identities. Whole `src/` and `tests/` scans also find no implementation or consumer. No retirement edit is needed or performed; runtime absence is not inferred from these scans. No Classic or deprecation wrapper changes. Scan receipts are under [own evidence](../../../data/patch-api/evidence/3.3.3-session-2026-10-09/).
 
+## Capability matrix — development discovery
+
+| Source contract | Accounted | Missing / proof limit |
+|---|---|---|
+| Named inventory | 36 occurrences; 25 current publication/absence matches | 11 exact gaps; discovery RED at `27cb4e078` |
+| Full raw/rendered extract | 41 nonempty rows: navigation, four headers, 36 bullets | Three changed prose contracts remain unproven; 33 signature cross-references get no duplicate credit |
+| Literal signatures | 36 separately retained records | Historical/native input/output and nine event producers unproven |
+| Source removals | Three current absence observations | No retirement edit or native timing proof |
+| Existing pet scalar | State-backed legacy global in `globals/real/pet_stats.rs` | Own full cached-UI arity/value test pending; no new model |
+
+[Ledger](../../../data/patch-api/sources/3.3.3-page-coverage.json): 113 IDs; 25 bounded publication, 50 pending, 38 metadata. Nine missing globals and two retained callable/no-op identities against later-removal expectations form the 11 publication gaps. `GetQuestWatchIndex` and `SortQuestWatches` are not source removals in 3.3.3, so no retirement is authorized. `UninviteUnit` is a cached Blizzard deprecation wrapper and preserved. All gaps name the missing contract/state/producer; no invented sorter, low-level-raid preference lifecycle or reward fixture.
+
+Own runtime compiled pinned Git dependencies and executed successfully; absent reference clones are not a runtime blocker. Only discovery assertion fails as expected. Six inherited iced manifest warnings remain untouched. No broad gate or host configuration change.
+
 ## Sources
 
 - [Pinned source](../../../data/patch-api/sources/3.3.3-api-changes.wikitext).
