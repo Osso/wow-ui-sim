@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.15.7 literal SOURCE audit
 
-[Audit](investigations/patch-1-15-7-api-audit.md): frozen626071/6778069; TOC11507, four nonblank rows/three metadata/one UNPROVEN, two unexpanded diff contracts, one header/navigation template. No explicit API/signature/prose declarations or runtime/model/native credit. Era/Anniversary11507 configuration is not native parity; same-Era1.15.8/1.15.9 pending only. Own SOURCE RED8/GREEN8 at `767c22561`; original28 seals and 29-member archive retained. Portable3 RED, GREEN pending; main owns integration/acceptance.
+[Audit](investigations/patch-1-15-7-api-audit.md): frozen626071/6778069; TOC11507, four nonblank rows/three metadata/one UNPROVEN, two unexpanded diff contracts, one header/navigation template. No explicit API/signature/prose declarations or runtime/model/native credit. Era/Anniversary11507 configuration is not native parity; same-Era1.15.8/1.15.9 pending only. Own SOURCE RED8/GREEN8 at `767c22561`; original28 seals and 29-member archive retained. Portable3 RED/GREEN at `ac1465079`: copied SOURCE8/default-byte replay and both disk seal controls reject/restore; original28/map unchanged. Separate receipts sealed; main owns integration/acceptance.
 
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 

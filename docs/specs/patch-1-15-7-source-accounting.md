@@ -8,7 +8,7 @@ Account frozen page 626071 / revision 6778069 / timestamp `2026-07-22T05:34:20Z`
 - [x] Derive TOC 11507 and navigation from literal text; leave unnamed client line UNPROVEN, without inference from numbers.
 - [x] Account Resources header, two unexpanded diff contracts and unexpanded navigation; invent no API/event/CVar/widget/command/signature/prose declarations.
 - [x] Separate configured Era/Anniversary 11507 from native measurement; retain same-Era 1.15.8/1.15.9 pending main integration only, with no applied or foreign supersession.
-- [ ] Reject omitted rows/contracts/headers, fabricated credit, source/revision tampering; retain immutable logs/seals and copied Git/target/current-tool-free replay with disk ledger/log tamper rejection and exact restoration.
+- [x] Reject omitted rows/contracts/headers, fabricated credit, source/revision tampering; retain immutable logs/seals and copied Git/target/current-tool-free replay with disk ledger/log tamper rejection and exact restoration.
 
 ## How it works
 
@@ -21,7 +21,7 @@ Account frozen page 626071 / revision 6778069 / timestamp `2026-07-22T05:34:20Z`
 
 ## Tests asserting this spec
 
-`python3 -B data/patch-api/evidence/1.15.7-session-2026-10-09/test_source_accounting.py`: eight own SOURCE-only fixtures; RED eight assertion failures against empty accounting retained. GREEN SOURCE8/8 at `767c22561`; optional default generator flags `[]` capture empty inventory only. Original28 input seals frozen; portable RED3/3 retained, copied replay and disk tamper GREEN pending.
+`python3 -B data/patch-api/evidence/1.15.7-session-2026-10-09/test_source_accounting.py`: eight own SOURCE-only fixtures; RED eight assertion failures against empty accounting retained. GREEN SOURCE8/8 at `767c22561`; optional default generator flags `[]` capture empty inventory only. Original28 input seals frozen; portable RED3/3 retained. At `ac1465079`, own portable GREEN3/3 passes copied SOURCE8/8 and default byte replay; both disk ledger/log controls reject and restore exact bytes. Original28 inputs/map unchanged; archive29 members/100,146 bytes. [Exact commands/logs/hashes](../../data/patch-api/evidence/1.15.7-session-2026-10-09/portable-proof.json) and [revision/receipt scope](../../data/patch-api/evidence/1.15.7-session-2026-10-09/portable-context.json) retained separately, not final acceptance.
 
 ## Known gaps (current cycle)
 

@@ -1,0 +1,21 @@
+{
+  "tested_revision": "ac1465079",
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/test_portable.py",
+    "/home/osso/.worktrees/wow-ui-sim-p1157-page/data/patch-api/evidence/1.15.7-session-2026-10-09/portable-proof.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page",
+  "result": "exit0 / portable3/3, copied SOURCE8/8 and default byte replay",
+  "scope": "SOURCE-only development, not native/final/main integration",
+  "original_seals": 28,
+  "original_seals_sha256": "cd8556292209dbe1808f0cdf942465d2d7d25a16bdb77a55db8ab7c7ea3ea0af",
+  "original_inputs_unchanged": true,
+  "archive_members": 29,
+  "archive_bytes": 100146,
+  "archive_sha256": "912ada8d0d390aa4c51e6e4735a5b36ddadf2c3be2a716b0b976a9c24d603005",
+  "receipts": "portable-proof.json",
+  "log": "portable-green.log",
+  "later_changes": "documentation and separately sealed receipts only; SOURCE8 and portable3 proof scopes unchanged"
+}

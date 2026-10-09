@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.15.7 frozen SOURCE accounting
 
-[Audit](investigations/patch-1-15-7-api-audit.md): own p1157-page from2d83b9b808; frozen626071/6778069 hashes verified, four rows/three metadata/one UNPROVEN and two linked diff contracts fully literal. No declared API/signature/prose behavior or runtime/native measurement. Eight SOURCE fixtures RED/GREEN at `767c22561`; default generator flags[] produce empty inventory, not parity. Original28 input seals and compact29-member archive retained; pending1.15.8/1.15.9 only, copied replay/disk tamper GREEN pending. Shared tools/vendor/cache untouched; main owns integration/final gates.
+[Audit](investigations/patch-1-15-7-api-audit.md): own p1157-page from2d83b9b808; frozen626071/6778069 hashes verified, four rows/three metadata/one UNPROVEN and two linked diff contracts fully literal. No declared API/signature/prose behavior or runtime/native measurement. Eight SOURCE fixtures RED/GREEN at `767c22561`; default generator flags[] produce empty inventory, not parity. Original28 input seals and compact29-member archive retained; pending1.15.8/1.15.9 only. At `ac1465079`, portable GREEN3/3 passes copied SOURCE8/default-byte replay and exact disk ledger/log seal rejection/restoration; original28/map unchanged. Later receipts separately sealed. Shared tools/vendor/cache untouched; main owns integration/final gates.
 
 ## [2026-10-09] documentation | Bounded retail 3.1.0/3.0.8/3.0.3/3.0.2 proof status
 

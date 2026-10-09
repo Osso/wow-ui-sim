@@ -1,0 +1,10 @@
+test_fresh_git_free_source_and_default_generator_replay (__main__.PortableSource.test_fresh_git_free_source_and_default_generator_replay) ... ok
+test_serialized_ledger_omission_rejected_then_restored (__main__.PortableSource.test_serialized_ledger_omission_rejected_then_restored) ... ok
+test_serialized_log_fabrication_rejected_then_restored (__main__.PortableSource.test_serialized_log_fabrication_rejected_then_restored) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.321s
+
+OK
+
+exit_code=0

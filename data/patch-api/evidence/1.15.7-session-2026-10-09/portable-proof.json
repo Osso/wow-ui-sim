@@ -1,0 +1,117 @@
+{
+  "scope": "fresh copied SOURCE-only development controls",
+  "success": true,
+  "tests": 3,
+  "receipts": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn",
+      "PATH": "/nonexistent",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 28,\n  \"totals\": {\n    \"physical_lines\": 5,\n    \"nonblank_rows\": 4,\n    \"metadata_rows\": 3,\n    \"unproven_rows\": 1,\n    \"contracts\": 2,\n    \"headers\": 1,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 0,\n    \"unexpanded_linked_contracts\": 2,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn",
+      "PATH": "/nonexistent",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_configured_and_queued_not_native_or_supersession (__main__.SourceAccounting.test_configured_and_queued_not_native_or_supersession) ... ok\ntest_exact_literal_rows (__main__.SourceAccounting.test_exact_literal_rows) ... ok\ntest_frozen_identity_and_content_tampering (__main__.SourceAccounting.test_frozen_identity_and_content_tampering) ... ok\ntest_full_scope_counts (__main__.SourceAccounting.test_full_scope_counts) ... ok\ntest_headers_and_unexpanded_navigation_preserved (__main__.SourceAccounting.test_headers_and_unexpanded_navigation_preserved) ... ok\ntest_link_occurrences_do_not_expand_into_api_contracts (__main__.SourceAccounting.test_link_occurrences_do_not_expand_into_api_contracts) ... ok\ntest_literal_toc_does_not_invent_client_name (__main__.SourceAccounting.test_literal_toc_does_not_invent_client_name) ... ok\ntest_omissions_fabricated_credit_and_foreign_history_rejected (__main__.SourceAccounting.test_omissions_fabricated_credit_and_foreign_history_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.052s\n\nOK\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.7",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn/source.wikitext",
+        "6778069",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn/replayed-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmp4a4tpqqn",
+      "PATH": "/nonexistent",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpaddb1ajx/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpaddb1ajx",
+      "PATH": "/nonexistent",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpaddb1ajx/audit.py\", line 113, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpaddb1ajx/audit.py\", line 109, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpaddb1ajx/audit.py\", line 101, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "tampered_file": "ledger.json",
+      "original_sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+      "tampered_sha256": "68be30c9abaec9dff3965bceb558ebc440d4bafa4026ee4f3301a8c215f9ed74",
+      "rejected": true
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpaddb1ajx/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpaddb1ajx",
+      "PATH": "/nonexistent",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 28,\n  \"totals\": {\n    \"physical_lines\": 5,\n    \"nonblank_rows\": 4,\n    \"metadata_rows\": 3,\n    \"unproven_rows\": 1,\n    \"contracts\": 2,\n    \"headers\": 1,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 0,\n    \"unexpanded_linked_contracts\": 2,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored_file": "ledger.json",
+      "restored_sha256": "2ae2feb0f8e401e1af3bf409715b93aec16d4ecf2afad0613e82e72c8c77afa1",
+      "original_seals_sha256": "cd8556292209dbe1808f0cdf942465d2d7d25a16bdb77a55db8ab7c7ea3ea0af"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpedtrtsdi/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpedtrtsdi",
+      "PATH": "/nonexistent",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpedtrtsdi/audit.py\", line 113, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpedtrtsdi/audit.py\", line 109, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpedtrtsdi/audit.py\", line 101, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "tampered_file": "green.log",
+      "original_sha256": "f74794c089209757ad7583055ffcb405529add00f54abb24bf0c1a1972368f12",
+      "tampered_sha256": "675b26d1d83da3b8be53b4aa07448ece0a73ca1a477e43461e3fb036be6016f3",
+      "rejected": true
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpedtrtsdi/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1157-page/target/source-replay-1.15.7/tmpedtrtsdi",
+      "PATH": "/nonexistent",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 28,\n  \"totals\": {\n    \"physical_lines\": 5,\n    \"nonblank_rows\": 4,\n    \"metadata_rows\": 3,\n    \"unproven_rows\": 1,\n    \"contracts\": 2,\n    \"headers\": 1,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"prose_contracts\": 0,\n    \"unexpanded_linked_contracts\": 2,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored_file": "green.log",
+      "restored_sha256": "f74794c089209757ad7583055ffcb405529add00f54abb24bf0c1a1972368f12",
+      "original_seals_sha256": "cd8556292209dbe1808f0cdf942465d2d7d25a16bdb77a55db8ab7c7ea3ea0af"
+    }
+  ]
+}
