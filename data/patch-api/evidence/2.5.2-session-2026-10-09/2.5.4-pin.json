@@ -1,0 +1,14 @@
+{
+  "title": "Patch 2.5.4/API changes",
+  "version": "2.5.4",
+  "pageid": 515131,
+  "revid": 4967736,
+  "timestamp": "2023-06-20T22:06:32Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=4967736&format=json",
+  "retrieved": "2026-10-09T08:51:36.393675+00:00",
+  "response_sha256": "e72b07ad6e287743b2f2d17b1d2ad200442cd893cbe6bfa83ba71203a272ffbc",
+  "wikitext_sha256": "c4e57ba61e46af02c1f0fb48d6b6048d540898f2eea08694b95b5321f2b47766",
+  "wikitext_bytes": 23192,
+  "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.4-response.json",
+  "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.5.4-wikitext.txt"
+}
