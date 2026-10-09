@@ -2819,3 +2819,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] integration | Patch 5.0.1 redirect audit
 
 [Audit](investigations/patch-5-0-1-api-audit.md#integration-and-portability--2026-10-09): canonical `60c203907` rebase, actual 5.0.4 successor at `4cfd86bb2`; zero API rows/one redirect context unchanged. Compact historical replay and absent-object fresh-clone proof recorded through `a0ca448c4`. Retained integrated [own-sweep receipt](../../data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/own-sweep.proof.json) records 1 passed/0 failed with exit explicitly null. Shared gate at `a0ca448c4` [log](../../data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/validator-gate.log)/[SHA-sealed receipt](../../data/patch-api/evidence/5.0.1-session-2026-10-08/integrated/validator-gate.proof.json): exit 0, clean 64/64 and synthetic-later 65/65, zero failures. Independent verifier 159 checked applicability at `189283bce`: 119 retained files/eight archive IDs/seals match, no integration blocker. Historical counts/gaps/extraction limits preserved; zero API rows/one context give no API/native parity or CI-green credit.
+
+## [2026-10-09] investigation | Patch 4.3.0 bounded API audit
+
+[Audit](investigations/patch-4-3-0-api-audit.md): pinned revision 1639407; default parser accounts 76 additions/seven removals. Own discovery pending; no native parity or final gate.

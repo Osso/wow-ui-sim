@@ -620,3 +620,7 @@ Rebased onto 7c3bbbfd3, retaining both parser behaviors and wiki histories. Real
 ## [2026-10-09] development proof | Bounded Patch 4.3.4 API audit
 
 [Audit](investigations/patch-4-3-4-api-audit.md): exact 11 inventory/12 ledger IDs; seven gaps, three retail supersessions and one current absence, zero prose/signature contracts or runtime fixes/retirements. Discovery RED at 5c3bccdf7; own reviewed GREEN 1/1 and negative 7 → 8 at 04f6f5ce1. Own default register/extract replay byte-identical; exact logs, derived accounting, full caller scans and 274,982-byte sparse historical archive retain 74 input files including 64 retail successors. Formatter passes. No unmodeled/native parity, dedicated validator or final acceptance claim; coordinator owns broad/check/Classic/smoke/CI gates. No push/merge/deploy/delegation.
+
+## 2026-10-09 — Patch 4.3.0 source accounting
+
+Pinned source retained; default generator handles 83 identities, both headers match. Existing extractor retains navigation only. [[patch-4-3-0-api-audit]]; own discovery pending.
