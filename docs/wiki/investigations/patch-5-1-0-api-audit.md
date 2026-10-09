@@ -31,6 +31,10 @@ Addons-enabled startup is **not clean**: both pinned master and branch report th
 
 All runtime changes are the two retirement markers. No new gameplay model, vendor change, full integration suite, push, merge or delegation. The existing action/spell interval model supplies meaningful bounded read/update/clear behavior, not native 2012 parity.
 
+## Integration refresh
+
+Rebased onto master `7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a`. Both merged parser behaviors remain available; `--mists-code-removals` stays opt-in. Real retail 5.2.0, 5.3.0, 5.4.0 and 5.4.1 registers replace queued placeholders. Classic 5.5.x remains outside the retail successor chain. Eleven original/rebased identities and original artifacts are preserved in [integrated evidence](../../../data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/). Refreshed retirement scans and acceptance are in progress, using this worktree's own `target/`; no canonical/sibling/vendor writes, push, merge or delegation.
+
 ## Sources
 
 - [Pinned provenance](../../../data/patch-api/sources/5.1.0-api-changes.provenance.json).

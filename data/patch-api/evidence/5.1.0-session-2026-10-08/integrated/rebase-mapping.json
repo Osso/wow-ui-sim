@@ -1,0 +1,340 @@
+{
+  "master_revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+  "original_tip": "c47b8d04f4e0e9edfe16d07b618565b5cce6d0ae",
+  "commits": [
+    {
+      "recorded_revision": "2f28287e233c73044c6d686d9a69bf4a8cc5dac8",
+      "rebased_revision": "6225e16074c2971b0229dce8e05f3ac898e5646c",
+      "subject": "Pin retail 5.1.0 source and parse transcluded API removals",
+      "recorded_patch_id": "3906a3f6c45d720ab607a40b94dfbb82d0373c35",
+      "rebased_patch_id": "e26ac94d3a95703442e23a05bf1d9a63ca37c979",
+      "rebased_tree": "4ed1d49a2f3df6e836535220aec29a6ea9b12adf",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "a9bad4c24c7dfb387f992a335f21b19275e161ea",
+          "rebased_tree": "4a72f423ab099d559f337af60ee56c53489b7c16"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "47b133a054704fea22d60f54c8da5e83834356bd",
+          "rebased_tree": "3d90a3818c7578ad91e148e3b8be0fd1435a9788"
+        },
+        "docs/wiki": {
+          "recorded_tree": "9f0098293bdb0be33b4093ec5f4b5309a5833ddc",
+          "rebased_tree": "0c6a24d26cf60e0b3a5bc6fed12f3cfd10cfe103"
+        }
+      },
+      "historical_patch": "historical-2f28287e2.patch",
+      "conflict_reason": "Keep merged master parser behaviors and wiki entries alongside opt-in 5.1.0 additions."
+    },
+    {
+      "recorded_revision": "ed2e9e69afc757c8a24f60494fa6e3cd83a4781d",
+      "rebased_revision": "77d7b4846b52ae156685cdec24db43493bdb7c93",
+      "subject": "Add retail 5.1.0 prefork discovery sweep",
+      "recorded_patch_id": "4bf044cd8477b97f877bc6184cb313dc1a868ba1",
+      "rebased_patch_id": "4bf044cd8477b97f877bc6184cb313dc1a868ba1",
+      "rebased_tree": "0e4795c04cb81739458199edb5bc547352e3240a",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "fb9fe4a8a5927819d67a8bcab4a53573aa7e097d",
+          "rebased_tree": "884a25a22e98f0f18e616a3ca0e60ee2d617e304"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "47b133a054704fea22d60f54c8da5e83834356bd",
+          "rebased_tree": "3d90a3818c7578ad91e148e3b8be0fd1435a9788"
+        },
+        "docs/wiki": {
+          "recorded_tree": "9f0098293bdb0be33b4093ec5f4b5309a5833ddc",
+          "rebased_tree": "0c6a24d26cf60e0b3a5bc6fed12f3cfd10cfe103"
+        }
+      }
+    },
+    {
+      "recorded_revision": "95fa268434de15c817834412aa6a8f51b2ab3228",
+      "rebased_revision": "d36dbf2abc3d0824d9fe5bf8dc7712ecd7f43b88",
+      "subject": "Use sequence-shaped empty discovery gap fixture",
+      "recorded_patch_id": "2ee79da94c93b98b3912a22a4d7b34f1aecf924f",
+      "rebased_patch_id": "2ee79da94c93b98b3912a22a4d7b34f1aecf924f",
+      "rebased_tree": "8b910573a461039b48760f07b297726482a491a6",
+      "directories": {
+        "src": {
+          "recorded_tree": "e844bc945964e31498916724dd0cea95e009ec54",
+          "rebased_tree": "e844bc945964e31498916724dd0cea95e009ec54"
+        },
+        "tests": {
+          "recorded_tree": "fbc8b2ead9a053fbdd7189e2db1a4b7d0785a434",
+          "rebased_tree": "1785be4b147e39caff26ba79621bdfeb01a11db9"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "47b133a054704fea22d60f54c8da5e83834356bd",
+          "rebased_tree": "3d90a3818c7578ad91e148e3b8be0fd1435a9788"
+        },
+        "docs/wiki": {
+          "recorded_tree": "9f0098293bdb0be33b4093ec5f4b5309a5833ddc",
+          "rebased_tree": "0c6a24d26cf60e0b3a5bc6fed12f3cfd10cfe103"
+        }
+      }
+    },
+    {
+      "recorded_revision": "87d67403e8c0e7a1189bd4f61fdbac50d44d8d9f",
+      "rebased_revision": "d6da966f23cd74cab6b35ec848039c99255ca343",
+      "subject": "Retire unused pet ID aliases and account for retail 5.1.0 gaps",
+      "recorded_patch_id": "5d1eedbd46eea02f5f6e80f17527c49067dc4d31",
+      "rebased_patch_id": "16500e6abe26749d47f2453e066b25b6a4349c48",
+      "rebased_tree": "897bb73a3c7caba9dce845bb1a6fc3f60a538fd4",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "67d064c3f1a918dad2e1fedf251ba329d8308c01",
+          "rebased_tree": "d448ff08c6bcd097efda02e4a19b77d3748813bf"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b33ee56cd94a0aba3e3c9f63a16266393534059a",
+          "rebased_tree": "085f257e3c4d74f74b7dec1a224ed7d68ca97f55"
+        }
+      },
+      "historical_patch": "historical-87d67403e.patch",
+      "conflict_reason": "Keep merged master parser behaviors and wiki entries alongside opt-in 5.1.0 additions."
+    },
+    {
+      "recorded_revision": "3e6f493c1d2c9f133254699d7d752c06a3b2ac42",
+      "rebased_revision": "f803f12d7c3a301130a62e9e9f9a5bfa1e37e754",
+      "subject": "Add pinned reproduction and streamed proof receipts for 5.1.0",
+      "recorded_patch_id": "70cf05bb7290c42b7b2a4b6bff90a3e486c72ff8",
+      "rebased_patch_id": "70cf05bb7290c42b7b2a4b6bff90a3e486c72ff8",
+      "rebased_tree": "3e450996e6ad170a46c28c1873dadf8a923d9baf",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "67d064c3f1a918dad2e1fedf251ba329d8308c01",
+          "rebased_tree": "d448ff08c6bcd097efda02e4a19b77d3748813bf"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b33ee56cd94a0aba3e3c9f63a16266393534059a",
+          "rebased_tree": "085f257e3c4d74f74b7dec1a224ed7d68ca97f55"
+        }
+      }
+    },
+    {
+      "recorded_revision": "47887bbecdf334c17fdb82546daecb110c92ef5f",
+      "rebased_revision": "c7a81d15f630f8a46fe12107b95c4e9104f9f8b4",
+      "subject": "Pin injected negative register before final counterexample proof",
+      "recorded_patch_id": "c8ae84abd793a04df012c35caff704490195bb3c",
+      "rebased_patch_id": "c8ae84abd793a04df012c35caff704490195bb3c",
+      "rebased_tree": "8c7c772e62cff4fce33366c5e2f53d26b094dc61",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "67d064c3f1a918dad2e1fedf251ba329d8308c01",
+          "rebased_tree": "d448ff08c6bcd097efda02e4a19b77d3748813bf"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b33ee56cd94a0aba3e3c9f63a16266393534059a",
+          "rebased_tree": "085f257e3c4d74f74b7dec1a224ed7d68ca97f55"
+        }
+      }
+    },
+    {
+      "recorded_revision": "e75738c1c881975761506e333db5caa51b1d18bc",
+      "rebased_revision": "f3a88d69b525c45b7307d0b2f66c7e3d5e9132b9",
+      "subject": "Pin complete addon input manifest for stable startup comparison",
+      "recorded_patch_id": "41a221ac701ef493c14b01ba22ce7d161ee44962",
+      "rebased_patch_id": "41a221ac701ef493c14b01ba22ce7d161ee44962",
+      "rebased_tree": "831a3de428d6fba1b960ab3375285315b944543d",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "67d064c3f1a918dad2e1fedf251ba329d8308c01",
+          "rebased_tree": "d448ff08c6bcd097efda02e4a19b77d3748813bf"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b33ee56cd94a0aba3e3c9f63a16266393534059a",
+          "rebased_tree": "085f257e3c4d74f74b7dec1a224ed7d68ca97f55"
+        }
+      }
+    },
+    {
+      "recorded_revision": "cca7dbab4c45506abf1d134befb7855beff681e0",
+      "rebased_revision": "f0177eb264c1c282e0625db3f1ad2d1c3d4723e0",
+      "subject": "Retain targeted 5.1.0 proofs and startup drift diagnosis",
+      "recorded_patch_id": "6aadfd42b166ca303ba003e831168b8451d4a3a9",
+      "rebased_patch_id": "6aadfd42b166ca303ba003e831168b8451d4a3a9",
+      "rebased_tree": "1dc662a578f489c930e84466829dc795f25a41f6",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "f3c5a4ff89bd5934e216c1d9c21899d51b8157a2",
+          "rebased_tree": "30ecfc16be1ee436244d59ea3f2443737ff9f121"
+        },
+        "docs/wiki": {
+          "recorded_tree": "b33ee56cd94a0aba3e3c9f63a16266393534059a",
+          "rebased_tree": "085f257e3c4d74f74b7dec1a224ed7d68ca97f55"
+        }
+      }
+    },
+    {
+      "recorded_revision": "eb39e1eb56c886966c402a2f167fd0c1f865717d",
+      "rebased_revision": "5a7a0c7886cec365acce569128834d973b2d69bf",
+      "subject": "Record controlled master-equivalent startup and targeted audit proof",
+      "recorded_patch_id": "9e55b7f9541d5ba47ea2e52737d38e96314c6a1d",
+      "rebased_patch_id": "9e55b7f9541d5ba47ea2e52737d38e96314c6a1d",
+      "rebased_tree": "d11c32762ef16ce15c82d80ee0639a43fee74995",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "f3c5a4ff89bd5934e216c1d9c21899d51b8157a2",
+          "rebased_tree": "30ecfc16be1ee436244d59ea3f2443737ff9f121"
+        },
+        "docs/wiki": {
+          "recorded_tree": "e45ca60aa68f5cac2b160687b934d0cd4ba933ce",
+          "rebased_tree": "902510eb39fe02f96b1f9c3ccb17475fc3bba6f6"
+        }
+      }
+    },
+    {
+      "recorded_revision": "460f599815b9c6104d22743b6dc48bc6a6e08093",
+      "rebased_revision": "7f94dd5a086941078d1fcc1188b4ee20b4d970db",
+      "subject": "Seal portable historical 5.1.0 audit validator",
+      "recorded_patch_id": "ae082f481fac754b0deb527b860d9cd022621524",
+      "rebased_patch_id": "ae082f481fac754b0deb527b860d9cd022621524",
+      "rebased_tree": "41c44eca4a3231f5dca81d584f9756ca95d01259",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "f3c5a4ff89bd5934e216c1d9c21899d51b8157a2",
+          "rebased_tree": "30ecfc16be1ee436244d59ea3f2443737ff9f121"
+        },
+        "docs/wiki": {
+          "recorded_tree": "e45ca60aa68f5cac2b160687b934d0cd4ba933ce",
+          "rebased_tree": "902510eb39fe02f96b1f9c3ccb17475fc3bba6f6"
+        }
+      }
+    },
+    {
+      "recorded_revision": "c47b8d04f4e0e9edfe16d07b618565b5cce6d0ae",
+      "rebased_revision": "0933a0ce40b8fe8cb48e0e66d2aa67667fab358b",
+      "subject": "Record passing 5.1.0 portability gates and final audit limits",
+      "recorded_patch_id": "f8f9288e304ce7165a722b6d07ec923ae134de18",
+      "rebased_patch_id": "f8f9288e304ce7165a722b6d07ec923ae134de18",
+      "rebased_tree": "862160f91cd2b57c8e0608f93a0a246efa415873",
+      "directories": {
+        "src": {
+          "recorded_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+          "rebased_tree": "f696a92562e3023ba0abec6d7fd14ea7c79455db"
+        },
+        "tests": {
+          "recorded_tree": "d3cb0130c089d6a19c6957c9ed82fe03f9598f6f",
+          "rebased_tree": "ce65ec110e63a1a124dbdd6ea371d95333383fe0"
+        },
+        "tools": {
+          "recorded_tree": "1af850f6705ed1ba11b33173aa863703a9ea63f1",
+          "rebased_tree": "0d2050a5ecfe586ea631ddc97707d6874daf5aec"
+        },
+        "data/patch-api/sources": {
+          "recorded_tree": "f3c5a4ff89bd5934e216c1d9c21899d51b8157a2",
+          "rebased_tree": "30ecfc16be1ee436244d59ea3f2443737ff9f121"
+        },
+        "docs/wiki": {
+          "recorded_tree": "05ef32837e44e0b6020ea4ecf8bca5c08ecb0929",
+          "rebased_tree": "9671711395b85f038d1e5e4d7968665f30b9fdca"
+        }
+      }
+    }
+  ]
+}
