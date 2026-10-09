@@ -44,6 +44,10 @@ Three actual serialized mutations — ledger native credit, source-proof native 
 
 Main still owns integration of pending 2.5.5/2.5.6 references and any matching-client native/publication/state gate. Zero meaningful runtime models are established by these symbol-only additions; no API unsupported diagnosis, positive empty inventory, native parity or final acceptance credit.
 
+## Main integration — 2026-10-09
+
+Actual same-line 2.5.5/2.5.6 sources are integrated; neither supplies explicit API identities. No member supersession or native/model closure follows. Source inventory and all original seals/receipts remain unchanged; no shared parser/runtime changes. SOURCE replay gate pending. Source TOC 20504 is not configured Anniversary 11507; no surrogate or foreign-line probe earns compatibility credit.
+
 ## Sources
 - [Spec](../../specs/patch-2-5-4-source-accounting.md) — scope and testable source contract.
 - [Literal ledger](../../../data/patch-api/sources/2.5.4-page-coverage.json) — complete rows/API/header/contract accounting.
