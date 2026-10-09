@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/check_history_clone.py"
+  ],
+  "revision": "29376f6d3c721faf372577e27a9ef1875468d4a2",
+  "scope": "history-without-original-objects",
+  "cwd": ".",
+  "target": "dedicated p541-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "history-without-original-objects.txt",
+  "log_sha256": "693e6e41e299329a59d60988fecedbcdf15f85ed81a0e8c666a028ce1d2b2402",
+  "seconds": 41.813209191997885,
+  "invalidated": false
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/replay_history.py"
+  ],
+  "revision": "d856059c2e5fa2ef234a9b0599227fc772aada90",
+  "scope": "historical-replay",
+  "cwd": ".",
+  "target": "dedicated p541-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "historical-replay.txt",
+  "log_sha256": "028e1a4a5d7f44318030f1e20c6cd2f63ad18241ccaddfd4d6265105ecebc965",
+  "seconds": 24.640790450001077,
+  "invalidated": false
+}

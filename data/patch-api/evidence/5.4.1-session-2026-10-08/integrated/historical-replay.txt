@@ -1,0 +1,1 @@
+{"extract_rows": 10, "extracts_reproduced": 52, "inventory": 15, "new_retirements": 0, "publication_gaps": 2, "registers_reproduced": 55, "scans": 72, "status": "PASS", "sweep_cases": 56}

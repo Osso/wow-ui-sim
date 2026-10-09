@@ -1,4 +1,5 @@
 """Read-only integrated 5.4.1 proof; all shared inputs resolve at pinned Git revisions."""
+import ast
 import hashlib
 import json
 from pathlib import Path
@@ -110,6 +111,27 @@ def verify_sources(context):
     return len(registers), sum(row['byte_identical'] for row in extracts)
 
 
+def verify_tool_origin(context):
+    provenance = read('tool-provenance.json')
+    recorded = pinned(context['runtime_revision'], 'data/patch-api/sources/5.4.1-api-changes.provenance.json')
+    assert provenance['generator_flags'] == recorded['generator_flags']
+    assert provenance['extractor_flags'] == recorded['extractor_flags']
+    assert provenance['only_new_opt_in'] == '--lowercase-reflist'
+    assert blob(context['master_revision'], 'tools/gen_patch_wikitext_register.py') == blob(context['runtime_revision'], 'tools/gen_patch_wikitext_register.py')
+    historical = {row['function']: row['sha256'] for row in json.loads((HISTORY / 'parser-origin.json').read_text())}
+    for row in provenance['rows']:
+        assert row['origin_revision'] == context['master_revision']
+        assert row['audit_revision'] == context['runtime_revision']
+        assert row['origin_patch'] == '5.4.2' and row['function_byte_identical']
+        for revision in (row['origin_revision'], row['audit_revision']):
+            source = blob(revision, row['path']).decode()
+            node = next(node for node in ast.parse(source).body if isinstance(node, ast.FunctionDef) and node.name == row['function'])
+            body = '\n'.join(source.splitlines()[node.lineno - 1:node.end_lineno]) + '\n'
+            assert digest(body.encode()) == row['function_sha256'] == historical[row['function']]
+    for path, minimum in [('docs/wiki/index.md', 2751), ('docs/wiki/log.md', 508)]:
+        assert len(blob(context['seal_revision'], path).decode().splitlines()) >= minimum
+
+
 def verify_sweeps(context):
     revision = context['runtime_revision']
     pages = read('gap-comparison.json')
@@ -209,6 +231,7 @@ def main():
         assert digest(target.read_bytes()) == expected, 'own evidence tamper: ' + path
     commits, external = verify_mapping()
     registers, extracts = verify_sources(context)
+    verify_tool_origin(context)
     pages = verify_sweeps(context)
     receipts, prior = verify_receipts(context)
     print(json.dumps({'status': 'PASS', 'mapped_commits': commits, 'external_commits': external,
