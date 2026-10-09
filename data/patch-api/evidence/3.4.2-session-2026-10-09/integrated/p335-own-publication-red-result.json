@@ -1,0 +1,14 @@
+{
+  "exit": 101,
+  "argv": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_3_3_5",
+    "--nocapture"
+  ],
+  "stdout": "",
+  "stderr": "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition\nwarning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition\nwarning: `iced_wgpu` (manifest) generated 6 warnings\n   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p335-source)\nerror[E0432]: unresolved import `publication_sweep::run_factory_publication_sweep`\n   --> /home/osso/.worktrees/wow-ui-sim-p335-source/tests/patch_3_4_2_factory.rs:6:36\n    |\n  6 |     Entry, SweepSpec, probe_entry, run_factory_publication_sweep, run_publication_sweep,\n    |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no `run_factory_publication_sweep` in `patch_3_4_2_factory::publication_sweep`\n    |\nnote: found an item that was configured out\n   --> /home/osso/.worktrees/wow-ui-sim-p335-source/tests/common/publication_sweep.rs:520:15\n    |\n519 | #[cfg(feature = \"client-wrath\")]\n    |       ------------------------ the item is gated behind the `client-wrath` feature\n520 | pub(crate) fn run_factory_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {\n    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nhelp: a similar name exists in the module\n    |\n  6 -     Entry, SweepSpec, probe_entry, run_factory_publication_sweep, run_publication_sweep,\n  6 +     Entry, SweepSpec, probe_entry, run_publication_sweep, run_publication_sweep,\n    |\n\nFor more information about this error, try `rustc --explain E0432`.\nerror: could not compile `wow-ui-sim` (test \"prefork_full_ui\") due to 1 previous error\n"
+}
