@@ -7,7 +7,7 @@ Account frozen Warcraft Wiki page583919/revision6061806/timestamp `2024-06-12T18
 - [x] Validate exact manifest/registry/response/raw identity and hashes; preserve every literal row/header/template/link.
 - [x] Account unspecified Dragonflight10.2.6 subset without importing linked contracts, signatures, defaults, aliases or model credit.
 - [x] Separate source TOC11502 from configured Era/Anniversary11507; preserve seven same-Era successor boundaries without applying supersession.
-- [ ] Demonstrate own SOURCE RED/GREEN, copied no-Git replay/default-byte reproduction and serialized ledger/log tamper rejection/exact restoration; original seals immutable, later receipts separate.
+- [x] Demonstrate own SOURCE RED/GREEN, copied no-Git replay/default-byte reproduction and serialized ledger/log tamper rejection/exact restoration; original seals immutable, later receipts separate.
 
 ## How it works
 
@@ -19,7 +19,7 @@ Account frozen Warcraft Wiki page583919/revision6061806/timestamp `2024-06-12T18
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py` and `test_portable.py`. RED9/9 and portable RED3/3 expected assertion failures retained. SOURCE GREEN9/9 at `24f83c282`;21 omission controls. Original54 seals and55-member archive immutable; copied GREEN/tamper receipts pending.
+Own `test_source_accounting.py` and `test_portable.py`. RED9/9 and portable RED3/3 expected assertion failures retained. SOURCE GREEN9/9 at `24f83c282`;20 omission controls. At `7724baf8a`, portable GREEN3/3 covers fresh copied SOURCE9/9, validator/default-byte replay and both serialized seal rejections/exact restorations. Original54 seals and55-member archive unchanged; six separate receipt seals. Exact commands/logs in own proof-ledger.json and portable-proof.json. No final gates.
 
 ## Known gaps (current cycle)
 
