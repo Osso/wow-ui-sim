@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.13.6 literal SOURCE accounting
+
+[Audit](investigations/patch-1-13-6-api-audit.md): exact frozen manifest/response/body verified before derivation; own RED7 fixtures retained. Three publication-only CVar names and Naxxramas attribution have no local defaults/signatures/effects. Own historical defaults and ordered same-Era successor inputs retained, no foreign/linked expansion or runtime edits. GREEN/replay pending; main owns integration/native/final gates.
+
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE accounting
 
 [Audit](investigations/patch-1-15-0-api-audit.md): exact source verified before derivation; own inputs and RED fixtures retained. Seasonal-rune namespace addition and distinct Wrath/Dragonflight claims fully accounted without linked/native/runtime proof. Own SOURCE GREEN10/10 atba551827d; portable GREEN3/3 ate6bf4be1c includes copied SOURCE/default-byte replay and serialized ledger/log rejection/exact restoration. Original64 seals unchanged, five separate current receipt seals and65-member archive. No runtime edits or final gates.

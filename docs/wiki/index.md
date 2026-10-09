@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.13.6 literal SOURCE audit
+
+[Audit](investigations/patch-1-13-6-api-audit.md): frozen461367/4435603,827 bytes; three added CVars, zero sourced defaults/signatures/examples, seven UNPROVEN contracts, two headers/one matching count, three unexpanded links/four templates. Own SOURCE RED retained; GREEN/portable proof pending. Ordered same-Era successors unapplied; zero runtime/model/native credit. Main owns integration/native/final gates.
+
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE audit
 
 [Audit](investigations/patch-1-15-0-api-audit.md): frozen564510/5950848,915 bytes; ten rows, eleven UNPROVEN prose/link boundaries, explicit C_Engraving namespace/functions unspecified. Wrath3.4.3 all-inclusion claim distinct from Dragonflight10.1.7..10.2.0 subset, neither expanded. Own SOURCE RED10/portable RED3 retained; SOURCE GREEN10/10 atba551827d, portable GREEN3/3 ate6bf4be1c: copied SOURCE/default-byte replay and ledger/log tamper rejection/exact restoration. Original64 seals unchanged; five separate receipts,65-member archive. No seasonal-rune/native/model credit; main owns successor/integration/final gates.

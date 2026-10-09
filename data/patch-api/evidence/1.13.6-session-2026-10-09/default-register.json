@@ -1,0 +1,36 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.13.6",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 4435603,
+    "sha256": "21a9bf3248ca5db0bee46c5fec4d0332744a6e089a52e17b38dde8dbebc4e4c9"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-cvars-nameplateCommentatorMaxDistance-14",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "nameplateCommentatorMaxDistance",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-cvars-specular-15",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "specular",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-cvars-textureErrorColors-16",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "textureErrorColors",
+      "annotation": "",
+      "wikitext_line": 16
+    }
+  ]
+}
