@@ -1,0 +1,42 @@
+
+FFFF
+======================================================================
+FAIL: test_new_runtime_gap_is_rejected (__main__.AccountingTests.test_new_runtime_gap_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p430-source/tools/test_patch_4_3_0_accounting.py", line 42, in test_new_runtime_gap_is_rejected
+    with self.assertRaisesRegex(AssertionError, 'gap IDs'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_missing_occurrence_is_rejected (__main__.AccountingTests.test_missing_occurrence_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p430-source/tools/test_patch_4_3_0_accounting.py", line 47, in test_missing_occurrence_is_rejected
+    with self.assertRaisesRegex(AssertionError, 'ledger IDs'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_false_native_credit_is_rejected (__main__.AccountingTests.test_false_native_credit_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p430-source/tools/test_patch_4_3_0_accounting.py", line 54, in test_false_native_credit_is_rejected
+    with self.assertRaisesRegex(AssertionError, 'publication-only credit'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_duplicate_result_occurrence_is_not_collapsed (__main__.AccountingTests.test_duplicate_result_occurrence_is_not_collapsed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p430-source/tools/test_patch_4_3_0_accounting.py", line 60, in test_duplicate_result_occurrence_is_not_collapsed
+    with self.assertRaisesRegex(AssertionError, 'duplicate register IDs'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=4)

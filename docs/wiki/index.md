@@ -2822,4 +2822,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] investigation | Patch 4.3.0 bounded API audit
 
-[Audit](investigations/patch-4-3-0-api-audit.md): pinned revision 1639407; default parser accounts 76 additions/seven removals. Own discovery pending; no native parity or final gate.
+[Audit](investigations/patch-4-3-0-api-audit.md): pinned revision 1639407; default parser accounts 76 additions/seven removals. Own sweep 1/1; 58 publication/absence observations, 25 precise gaps and one metadata ID. Zero runtime changes/native parity; coordinator owns final gate.

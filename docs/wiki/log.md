@@ -624,3 +624,7 @@ Rebased onto 7c3bbbfd3, retaining both parser behaviors and wiki histories. Real
 ## 2026-10-09 — Patch 4.3.0 source accounting
 
 Pinned source retained; default generator handles 83 identities, both headers match. Existing extractor retains navigation only. [[patch-4-3-0-api-audit]]; own discovery pending.
+
+## 2026-10-09 — Patch 4.3.0 bounded discovery
+
+[[patch-4-3-0-api-audit]]: own sweep 1/1 at df53a1b9e; 58/83 observations satisfy publication/absence, 25 precise gaps retained. Seven removals already absent; full cached-retail/src/tests scans saved. No runtime changes or final gate.
