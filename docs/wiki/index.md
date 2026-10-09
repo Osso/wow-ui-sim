@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-1-14-0-api-audit.md): frozen71995/710568;776 literal rows/723 inventory,560 unspecified signature records,163 unknown CVar defaults,8 matching count headers,720 unexpanded templates/10 links. Foreign2.5.2 baseline claim separate from unapplied same-Era1.14.1..1.15.9. Own SOURCE RED10/GREEN10 at66a5448b0:2983 omissions; portable RED3/GREEN3 at4e3739d4f: copied SOURCE10, byte replay, serialized ledger/log rejection/restoration.92 original +5 separate receipt seals;93-member215960byte archive. Zero runtime/model/native credit; shared tools unchanged; main owns integration/gates.
 
+## [2026-10-09] investigation | Patch 1.13.6 literal SOURCE audit
+
+[Audit](investigations/patch-1-13-6-api-audit.md): frozen461367/4435603,827 bytes; three added CVars, zero sourced defaults/signatures/examples, seven UNPROVEN contracts, two headers/one matching count, three unexpanded links/four templates. Own SOURCE RED retained; GREEN7/7 atd69734ceb,55 omission controls. Portable GREEN3/3 at271ed3a03: copied SOURCE/default-byte replay and both serialized seal rejections/restorations. Original88 seals unchanged. Current Era getters: two published/one missing; strict exact gap/observations GREEN1/1 at2d2659297, unchanged unknown control1/1 ate44841ae3. Source defaults unspecified; no modeled effects/native credit. Ordered same-Era successors unapplied. Main owns integration/native/final gates.
+
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE audit
 
 [Audit](investigations/patch-1-15-0-api-audit.md): frozen564510/5950848,915 bytes; ten rows, eleven UNPROVEN prose/link boundaries, explicit C_Engraving namespace/functions unspecified. Wrath3.4.3 all-inclusion claim distinct from Dragonflight10.1.7..10.2.0 subset, neither expanded. Own SOURCE RED10/portable RED3 retained; SOURCE GREEN10/10 atba551827d, portable GREEN3/3 ate6bf4be1c: copied SOURCE/default-byte replay and ledger/log tamper rejection/exact restoration. Original64 seals unchanged; five separate receipts,65-member archive. No seasonal-rune/native/model credit; main owns successor/integration/final gates.

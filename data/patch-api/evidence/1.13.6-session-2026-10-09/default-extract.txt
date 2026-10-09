@@ -1,0 +1,8 @@
+Patch 1.13.6 API changes
+
+== Summary ==
+Patch 1.13.6 Naxxramas content patch.
+* TOC: 11306
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+
+== CVars ==

@@ -1,0 +1,102 @@
+test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected) ... FAIL
+test_exact_response_identity_and_content (__main__.SourceAccounting.test_exact_response_identity_and_content) ... FAIL
+test_headers_and_navigation (__main__.SourceAccounting.test_headers_and_navigation) ... FAIL
+test_lossless_rows (__main__.SourceAccounting.test_lossless_rows) ... FAIL
+test_profiles_and_separate_successors (__main__.SourceAccounting.test_profiles_and_separate_successors) ... FAIL
+test_prose_links_and_templates (__main__.SourceAccounting.test_prose_links_and_templates) ... FAIL
+test_three_cvars_no_invented_defaults (__main__.SourceAccounting.test_three_cvars_no_invented_defaults) ... FAIL
+
+======================================================================
+FAIL: test_every_omission_and_fabrication_rejected (__main__.SourceAccounting.test_every_omission_and_fabrication_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py", line 49, in test_every_omission_and_fabrication_rejected
+    self.assertIn('contracts',original)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+======================================================================
+FAIL: test_exact_response_identity_and_content (__main__.SourceAccounting.test_exact_response_identity_and_content)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py", line 64, in test_exact_response_identity_and_content
+    self.assertIn('source',audit.build())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source' not found in {}
+
+======================================================================
+FAIL: test_headers_and_navigation (__main__.SourceAccounting.test_headers_and_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py", line 24, in test_headers_and_navigation
+    self.assertEqual([h['label'] for h in ledger.get('headers', [])], ['Summary','CVars'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['Summary', 'CVars']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'Summary'
+
+- []
++ ['Summary', 'CVars']
+
+======================================================================
+FAIL: test_lossless_rows (__main__.SourceAccounting.test_lossless_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py", line 12, in test_lossless_rows
+    self.assertEqual([(r['line'], r['literal']) for r in audit.build().get('source_rows', [])], expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|1.13.6|prev=1.13.5|next[916 chars]|}')]
+
+Second list contains 16 additional elements.
+First extra element 0:
+(1, '{{apichanges|1.13.6|prev=1.13.5|next=1.13.7}}')
+
+Diff is 1048 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_profiles_and_separate_successors (__main__.SourceAccounting.test_profiles_and_separate_successors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py", line 41, in test_profiles_and_separate_successors
+    self.assertEqual([(p['feature'],p['configured_interface']) for p in ledger.get('configured_profiles',[])],[('client-era',11507),('client-anniversary',11507)])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [('client-era', 11507), ('client-anniversary', 11507)]
+
+Second list contains 2 additional elements.
+First extra element 0:
+('client-era', 11507)
+
+- []
++ [('client-era', 11507), ('client-anniversary', 11507)]
+
+======================================================================
+FAIL: test_prose_links_and_templates (__main__.SourceAccounting.test_prose_links_and_templates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py", line 31, in test_prose_links_and_templates
+    self.assertEqual(len(ledger.get('links', [])),3)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 3
+
+======================================================================
+FAIL: test_three_cvars_no_invented_defaults (__main__.SourceAccounting.test_three_cvars_no_invented_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1136-page/data/patch-api/evidence/1.13.6-session-2026-10-09/test_source_accounting.py", line 16, in test_three_cvars_no_invented_defaults
+    self.assertEqual([i['symbol'] for i in ledger.get('inventory', [])], ['nameplateCommentatorMaxDistance','specular','textureErrorColors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['nameplateCommentatorMaxDistance', 'specular', 'textureErrorColors']
+
+Second list contains 3 additional elements.
+First extra element 0:
+'nameplateCommentatorMaxDistance'
+
+- []
++ ['nameplateCommentatorMaxDistance', 'specular', 'textureErrorColors']
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=7)

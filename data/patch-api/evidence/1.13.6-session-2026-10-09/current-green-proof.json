@@ -1,0 +1,30 @@
+{
+  "revision": "2d26592973222294fab6db12b76b064c2fca6695",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-era",
+    "--test",
+    "patch_1_13_6_factory",
+    "exact_current_era_publication_gaps",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1136-page",
+  "exit_code": 0,
+  "tests": 1,
+  "result": "GREEN",
+  "scope": "exact three current Era observations and one publication gap; raw getters functions; unknown-name control1/1 remains valid from e44841ae3",
+  "unchanged_observations": true,
+  "known_gaps": [
+    "wt-cvars-nameplateCommentatorMaxDistance-14"
+  ],
+  "invalidated_prior": "primary expected zero-gap fixture; unknown negative behavior unchanged",
+  "model_credit": 0,
+  "native_credit": 0
+}

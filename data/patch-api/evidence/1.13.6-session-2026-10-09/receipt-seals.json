@@ -1,0 +1,31 @@
+{
+  "scope": "later inputs/receipts only; original88 SOURCE seals immutable",
+  "files": {
+    "HANDOFF.md": "224536fa01c11963edfee6396f96695454126a9b49d874df3770a58c8ce9e0b5",
+    "REPLAY.md": "a3b6f2cdcb23c43ec4e4e05a4fc96d3b6e4f05535ff032693fc9d995f3568ab2",
+    "archive-pin.json": "ba74524c3f2d545fd4c916633173f3033b9bebd3a6504e3762adcb49d762d58c",
+    "current-era-green-observations.json": "949e0ac2fb461367c21f0ea67aed8a65a37a3cd1f8714e82fb4e06af6b5af8b1",
+    "current-era-green.log": "e2911f70101c937d17e0a989397da055559ad2e94c92f985d3a065022009c790",
+    "current-era-red-observations.json": "949e0ac2fb461367c21f0ea67aed8a65a37a3cd1f8714e82fb4e06af6b5af8b1",
+    "current-era-red.log": "409dc89dca5a5ce1ba85ad164021a92da55257b5dfa207b53487932191a6cacc",
+    "current-green-proof.json": "367d1e3de6269c5eeacc2341422142bfe6044a79f1c7e475c254d40d5a708fd7",
+    "current-inputs/Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "current-inputs/Cargo.toml": "c11ae33e335e33e3733292625c55c37d70b3caa9bcb19252684536d99a62d3ba",
+    "current-inputs/patch-tests/patch_1_13_6_factory.rs": "2c6d223d025cc97f264616d485a5b5813ff5d3ddeadcb999c581de9702e7f695",
+    "current-inputs/src/client_profile.rs": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+    "current-inputs/src/cvars.rs": "4a9c33eb99b1aafd4fbc22e8cb3929d2e98608c3bfa2c3c99ec1ea6df8abc89c",
+    "current-inputs/src/cvars.yaml": "598bed1386eaa5f5a4a97aaff1ed5dee974663a016791e12a6d480cda42c4636",
+    "current-inputs/src/lua_api/globals/set_cvar_verb.rs": "e3f5df9076269e557e11ea63ecce0ab03174937df5c0e10b8b13b13f169f08a0",
+    "current-inputs/src/lua_api/workarounds/temporary/client_info_defaults.rs": "47e6bf8a208954086fd6ff595dfbf3a24564b12ccba7535bf4c619b7b4c113d7",
+    "current-inputs/tests/common/publication_probe.rs": "462b4dc464e9facf09b21f230101aabb43dc03f901971deb1d1a798b3d0a2969",
+    "current-known-gaps.json": "cc13920121e5647ca712a40ad9e9e6e279adb3cec962594a7a4b059221e7107c",
+    "current-red-proof.json": "d23592d83e99302a0e5607601a05f6dcbf9f6c531cca97ecf9961301240236fa",
+    "current-reviewed-observations.json": "769b35e52926dea492a44278b7df8d753f91ec0d31a99a9618075a900456cbdd",
+    "current-source-scan.json": "0b3f4f56798bf2715f5855e000ded527a361a289abb3b3fb0ad9ea7e6e8e7ab1",
+    "portable-controls.json": "c8fc43316230db6c7c432ccb55fd430242ccff6c9c2bffba28dd4bf03bb54520",
+    "portable-green.log": "cbf94a191ab83a304ad9e9af08702a111b8147510590b6abd604d8eee97919ec",
+    "portable-proof.json": "93cbd1d14d540f655f393d9a96d9db993f321cf0ba224a791e3acfb7b90a1981",
+    "replay-archive.tar.gz": "39dcdfe8e94e08c7635047840e868ee2e9c1f0eff5c4b22fe92f52fdfb49efc1",
+    "seals.json": "4de0fc3e4a2c0fa4e1fb7cd0c99f97f9723e6cf2589d390660e9b0f55bf33419"
+  }
+}

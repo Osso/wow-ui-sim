@@ -1,0 +1,21 @@
+{
+  "revision": "e44841ae3330519ab311ef2c85346d0ca4880d60",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-era",
+    "--test",
+    "patch_1_13_6_factory",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1136-page",
+  "exit_code": 101,
+  "scope": "current bare Era only; expected initially unreviewed exact-gap RED",
+  "log": "current-era-red.log"
+}

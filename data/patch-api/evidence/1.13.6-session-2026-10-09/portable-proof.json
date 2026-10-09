@@ -1,0 +1,10 @@
+{
+  "revision": "271ed3a03f03910c7abf63e9274ee7daa233c706",
+  "tests": 3,
+  "result": "GREEN",
+  "scope": "copied own SOURCE7, unchanged generator/extractor bytes, two serialized seal rejections/exact restorations; no Git/target/current-tools",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1136-page",
+  "original_seals": 88,
+  "archive_members": 89,
+  "archive_sha256": "39dcdfe8e94e08c7635047840e868ee2e9c1f0eff5c4b22fe92f52fdfb49efc1"
+}
