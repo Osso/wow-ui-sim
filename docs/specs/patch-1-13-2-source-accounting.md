@@ -9,7 +9,8 @@ Bounded Classic Era source audit from the [immutable pin](../../data/patch-api/e
 - [x] Derive totals and reject every omission/fabricated capability; replay unchanged default register bytes and extractor failure.
 - [x] Copy historical replay without Git/target/current tools, reject disk ledger/log tampers and restore exact bytes under original seals.
 - [x] Keep original seals immutable; later receipts separate.
-- [ ] Apply actual same-Era identity/direction precedence separately, with no foreign/model/native closure or original-seal mutation.
+- [x] Apply actual same-Era identity/direction precedence separately, with no foreign/model/native closure or original-seal mutation.
+- [x] Validate separate receipts with derived counts and reject stale/default/factory or invented native/current-effect observations.
 - [x] Test only existing current Era generic CVar state mutations separately from historical signatures/defaults/effects/native parity.
 
 ## How it works
@@ -28,6 +29,7 @@ Bounded Classic Era source audit from the [immutable pin](../../data/patch-api/e
 - `patch-tests/patch_1_13_2_cvar_state.rs`: own bare Era generic CVar storage transitions; no source default/effect/native/signature credit.
 - Same evidence directory `test_portable.py`: fresh copied SOURCE8/default replay and both disk seal rejections/exact restorations.
 - Same evidence directory `test_successors.py`: actual same-Era order/overlaps, every omission, foreign-credit rejection and original seals unchanged.
+- Same evidence directory `test_validator.py`: derived source/successor/replay counts, exact restoration receipts and concrete current-storage negative controls.
 
 ## Known gaps (current cycle)
 

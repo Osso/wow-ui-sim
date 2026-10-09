@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1132-page/data/patch-api/evidence/1.13.2-session-2026-10-09/test_validator.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1132-page",
+  "revision": "f73ba78a5c0148e9b106c8a30293df76bb8d0642",
+  "exit_code": 0,
+  "scope": "three targeted receipt-validator development fixtures; counts derived; all original89/separate receipt seals and storage negative controls; no main/final gate"
+}
