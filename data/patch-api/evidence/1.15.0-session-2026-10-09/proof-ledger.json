@@ -35,7 +35,7 @@
     },
     {
       "phase": "historical default generator capture",
-      "revision": "precommit working adapter; generator bytes frozen from base0b64e636c",
+      "revision": "0b64e636c16c59e90e3406e7ff557e94cd7732a8",
       "command": [
         "python3",
         "-B",
@@ -49,7 +49,22 @@
       "exit_code": 0,
       "generator_flags": [],
       "result": "empty default inventory; explicit prose C_Engraving preserved only in own ledger",
-      "log": "default-generator.log"
+      "log": "default-generator.log",
+      "scope": "exact copied historical generator at base; no adapter fixture gate",
+      "generator_sha256": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6"
+    },
+    {
+      "phase": "SOURCE GREEN",
+      "revision": "ba551827d69b622d64b49365c0877b729324ca10",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/data/patch-api/evidence/1.15.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "exit_code": 0,
+      "result": "10/10 PASS; 41 omission controls,16 fabricated/history controls and2 source identity/content controls; no runtime/model/native credit",
+      "log": "green.log"
     }
   ]
 }

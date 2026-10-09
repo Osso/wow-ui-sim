@@ -24,7 +24,9 @@ Own frozen Cargo/client-profile/Era/Anniversary manifests record configured11507
 
 ## Development proof
 
-Own SOURCE RED10 expected assertion failures against retained empty scaffold; portable RED3 absent-archive failures retained. Own implementation/fixtures formatted and committed before GREEN. Targeted proof pending; no broad/check/lint/type/coverage/acceptance gate. Historical default generator retained separately; empty default inventory cannot erase explicit prose namespace. Historical extractor retained unexecuted; shared tools untouched.
+Own SOURCE RED10 expected assertion failures against retained empty scaffold at `b3dbc542b`; portable RED3 absent-archive failures retained. AST-formatted own adapter/fixtures committed before SOURCE GREEN **10/10** at `ba551827d`:41 omission controls,16 fabricated-credit/history controls, two source identity/content controls. Exact commands/revisions/results in [original proof ledger](../../../data/patch-api/evidence/1.15.0-session-2026-10-09/proof-ledger.json). Historical default generator flags[] emits an empty inventory; cannot erase explicit prose namespace. Historical extractor retained unexecuted; shared tools untouched. No broad/check/lint/type/coverage/acceptance gate.
+
+Original **64 seals/1384285 bytes** created once; map SHA256 `3c3c95d9e23ce4f7b9ace7e4b95a4c4802321020f1bf08c835f9ed591d978dd2`. Original inputs/logs/seals immutable. **65-member/320174-byte archive**, SHA256 `516fc8b25a999c97678b18f3aea4e8c59aaac2736ae5613a9b9bdcdb6688ecc4`, committed before portable GREEN. [Replay instructions](../../../data/patch-api/evidence/1.15.0-session-2026-10-09/REPLAY.md) document explicit own cwd and copied-file-relative inputs. Portable GREEN pending; later receipts/seals remain separate.
 
 ## Sources
 

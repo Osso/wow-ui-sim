@@ -1,0 +1,9 @@
+{
+  "scope": "original immutable SOURCE replay inputs",
+  "original_files": 64,
+  "original_bytes": 1384285,
+  "seal_map_sha256": "3c3c95d9e23ce4f7b9ace7e4b95a4c4802321020f1bf08c835f9ed591d978dd2",
+  "archive_members": 65,
+  "archive_bytes": 320174,
+  "archive_sha256": "516fc8b25a999c97678b18f3aea4e8c59aaac2736ae5613a9b9bdcdb6688ecc4"
+}

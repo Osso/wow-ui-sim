@@ -4,12 +4,12 @@ Bounded Era audit of exact Warcraft Wiki page564510/revision5950848, timestamp20
 
 ## What it must do
 
-- [ ] Validate exact manifest, response, raw bytes and registry identity before derivation.
-- [ ] Preserve all literal rows/prose/links/templates/headers/TOC and explicit namespace inventory; leave unspecified signatures unknown.
-- [ ] Preserve Wrath3.4.3 all-inclusion claim separately from Dragonflight10.1.7 through10.2.0 unspecified subset; expand neither history.
-- [ ] Record C_Engraving seasonal-rune model requirement without inventing members or treating generic namespace fallback as model/native proof.
-- [ ] Separate configured11507 and nine same-Era successor boundaries from source11500/native/supersession credit.
-- [ ] Reject omissions, fabricated credit and collapsed histories.
+- [x] Validate exact manifest, response, raw bytes and registry identity before derivation.
+- [x] Preserve all literal rows/prose/links/templates/headers/TOC and explicit namespace inventory; leave unspecified signatures unknown.
+- [x] Preserve Wrath3.4.3 all-inclusion claim separately from Dragonflight10.1.7 through10.2.0 unspecified subset; expand neither history.
+- [x] Record C_Engraving seasonal-rune model requirement without inventing members or treating generic namespace fallback as model/native proof.
+- [x] Separate configured11507 and nine same-Era successor boundaries from source11500/native/supersession credit.
+- [x] Reject omissions, fabricated credit and collapsed histories.
 - [ ] Replay copied sealed inputs without Git/current tools; reject serialized ledger/log tampering and restore exact bytes. Preserve original seals and separate later receipts.
 
 ## How it works

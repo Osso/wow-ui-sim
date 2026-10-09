@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE audit
 
-[Audit](investigations/patch-1-15-0-api-audit.md): frozen564510/5950848,915 bytes; ten rows, eleven UNPROVEN prose/link boundaries, explicit C_Engraving namespace/functions unspecified. Wrath3.4.3 all-inclusion claim distinct from Dragonflight10.1.7..10.2.0 subset, neither expanded. Own SOURCE RED10/portable RED3 retained; GREEN pending. No seasonal-rune/native/model credit; main owns successor/integration/final gates.
+[Audit](investigations/patch-1-15-0-api-audit.md): frozen564510/5950848,915 bytes; ten rows, eleven UNPROVEN prose/link boundaries, explicit C_Engraving namespace/functions unspecified. Wrath3.4.3 all-inclusion claim distinct from Dragonflight10.1.7..10.2.0 subset, neither expanded. Own SOURCE RED10/portable RED3 retained; SOURCE GREEN10/10 atba551827d, original64 seals and65-member copied replay archive retained; portable GREEN pending. No seasonal-rune/native/model credit; main owns successor/integration/final gates.
 
 ## [2026-10-09] investigation | Patch 1.15.4 literal subset SOURCE audit
 
