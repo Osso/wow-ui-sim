@@ -1,6 +1,9 @@
 ## [2026-10-09] investigation | Patch 1.15.8 literal SOURCE audit
 
 [Audit](investigations/patch-1-15-8-api-audit.md): frozen 686952/6778071, literal TOC11508; four nonblank rows, one header, two UNPROVEN diff contracts and unexpanded navigation. No local API/event/CVar/widget/command/signature/prose declarations. Literal page lacks client name; configured Era/Anniversary11507 and queued sibling1.15.9 Classic context separated from native/integration credit. Own SOURCE RED retained; GREEN8/8 at `384699f11`, original23 seals (660,202 bytes); at `b02477039` both serialized tamper rejections/restorations and fresh no-Git/target historical replay pass (24 members, five separate receipt seals). Main owns successor/native/integration; zero runtime/model/native credit. No runtime/shared-tool changes or final gates.
+## [2026-10-09] investigation | Patch 1.15.7 frozen SOURCE accounting
+
+[Audit](investigations/patch-1-15-7-api-audit.md): own p1157-page from2d83b9b808; frozen626071/6778069 hashes verified, four rows/three metadata/one UNPROVEN and two linked diff contracts fully literal. No declared API/signature/prose behavior or runtime/native measurement. Eight SOURCE fixtures RED/GREEN at `767c22561`; default generator flags[] produce empty inventory, not parity. Original28 input seals and compact29-member archive retained; pending1.15.8/1.15.9 only. At `ac1465079`, portable GREEN3/3 passes copied SOURCE8/default-byte replay and exact disk ledger/log seal rejection/restoration; original28/map unchanged. Later receipts separately sealed. Shared tools/vendor/cache untouched; main owns integration/final gates.
 
 ## [2026-10-09] documentation | Bounded retail 3.1.0/3.0.8/3.0.3/3.0.2 proof status
 
