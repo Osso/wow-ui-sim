@@ -1,0 +1,8 @@
+{
+  "patch": "1.15.9",
+  "state": "actual-canonical-input-not-applied",
+  "applied": false,
+  "native_proof": false,
+  "history": "same-Era-only",
+  "canonical_ledger_sha256": "fe98aaabb773e2bf486747dd0aa2c01bcd25164f12a2319e5503f569c91f1138"
+}

@@ -3023,3 +3023,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.14.4 copied SOURCE proof
 
 [Audit](investigations/patch-1-14-4-api-audit.md): portable3/3 atfb6e6ba53; copied SOURCE11/11/validator/default-byte replay and both serialized ledger/log seal rejections/exact restorations. Original67 seals unchanged;68-member archive, four separate current receipt seals. Wrath all-change inclusion and Dragonflight subset stay distinct/unexpanded; eleven contracts UNPROVEN. No runtime/model/native/foreign supersession; main owns ordered Era integration/gates.
+
+## [2026-10-09] investigation | Frozen Era1.14.1 accounting
+
+[Audit](investigations/patch-1-14-1-api-audit.md): exact102588/1010974;114 nonblank/59 inventory,6 headings/8 numerical headers, literal typo/default/prose/link/template boundaries. SOURCE-only RED8/GREEN8,353 omission controls; portable and existing-state probe pending. No runtime/shared-tool changes, native or foreign-history credit.

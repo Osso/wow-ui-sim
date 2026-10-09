@@ -1,0 +1,120 @@
+{{apichanges|1.14.1|prev=1.14.0|next=1.14.2}}
+
+==Summary==
+* Added [[:Category:API namespaces/C_Seasons|C_Seasons]] to support Classic Era [[Season of Mastery]].
+* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate, see this [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes#tooltip-backdrop-changes section] for solutions.
+* The event trace tool now supports logging events while the frame is hidden. This option is disabled by default.
+
+==Resources==
+* TOC: <code>11401</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/commit/b00df2a627cc7b57cdb45aec60ced39e59f4877f wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/3988081e4f766fb43f634449602f06ced2205e46 BlizzardInterfaceResources]
+* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/1.14.1-Consolidated-UI-Changes 1.14.1 Consolidated UI Changes]
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 1.14.0 (39958) &rarr; 1.14.1 (41030) Nov 10 2021
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(14)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(3)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_BehavioralMessaging.SendNotificationReceipt}}
+: {{api|t=a|C_Club.FocusCommunityStreams}}
+: {{api|t=a|C_Club.UnfocusAllStreams}}
+: {{api|t=a|C_Commentator.SetBlocklistedAuras}}
+: {{api|t=a|C_Commentator.SetBlocklistedCooldowns}}
+: {{Wow-inline}} {{api|t=a|C_LFGList.IsLookingForGroupEnabled}}
+: {{Wow-inline}} {{api|t=a|C_Seasons.GetActiveSeason}}
+: {{Wow-inline}} {{api|t=a|C_Seasons.HasActiveSeason}}
+: {{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}
+: {{api|t=a|C_SocialRestrictions.IsChatDisabled}}
+: {{api|t=a|C_SocialRestrictions.SetChatDisabled}}
+: {{Wow-inline}} {{api|t=a|GetFirstBagBankSlotIndex}}
+: {{api|t=a|securecallfunction}}
+: {{api|t=a|secureexecuterange}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AcknowledgeAADCAlert}}
+: {{api|t=a|C_Commentator.SetBlacklistedAuras}}
+: {{api|t=a|C_Commentator.SetBlacklistedCooldowns}}
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(2)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|FontString:GetTextScale}}
+: {{api|t=w|FontStringSetTextScale}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(31)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|AVATAR_LIST_UPDATED}}
+: {{api|t=e|CLUB_ADDED}}
+: {{api|t=e|CLUB_ERROR}}
+: {{api|t=e|CLUB_INVITATION_ADDED_FOR_SELF}}
+: {{api|t=e|CLUB_INVITATION_REMOVED_FOR_SELF}}
+: {{api|t=e|CLUB_INVITATIONS_RECEIVED_FOR_CLUB}}
+: {{api|t=e|CLUB_MEMBER_ADDED}}
+: {{api|t=e|CLUB_MEMBER_PRESENCE_UPDATED}}
+: {{api|t=e|CLUB_MEMBER_REMOVED}}
+: {{api|t=e|CLUB_MEMBER_ROLE_UPDATED}}
+: {{api|t=e|CLUB_MEMBER_UPDATED}}
+: {{api|t=e|CLUB_MESSAGE_ADDED}}
+: {{api|t=e|CLUB_MESSAGE_HISTORY_RECEIVED}}
+: {{api|t=e|CLUB_MESSAGE_UPDATED}}
+: {{api|t=e|CLUB_REMOVED_MESSAGE}}
+: {{api|t=e|CLUB_REMOVED}}
+: {{api|t=e|CLUB_SELF_MEMBER_ROLE_UPDATED}}
+: {{api|t=e|CLUB_STREAM_ADDED}}
+: {{api|t=e|CLUB_STREAM_REMOVED}}
+: {{api|t=e|CLUB_STREAM_SUBSCRIBED}}
+: {{api|t=e|CLUB_STREAM_UNSUBSCRIBED}}
+: {{api|t=e|CLUB_STREAM_UPDATED}}
+: {{api|t=e|CLUB_STREAMS_LOADED}}
+: {{api|t=e|CLUB_TICKET_CREATED}}
+: {{api|t=e|CLUB_TICKET_RECEIVED}}
+: {{api|t=e|CLUB_TICKETS_RECEIVED}}
+: {{api|t=e|CLUB_UPDATED}}
+: {{api|t=e|INITIAL_CLUBS_LOADED}}
+: {{api|t=e|NOTIFY_CHAT_SUPPRESSED}}
+: {{api|t=e|STREAM_VIEW_MARKER_UPDATED}}
+: {{api|t=e|UNIT_HEAL_PREDICTION}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|SHOW_AADC_ALERT}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(7)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: <span class="tttemplatelink">[[CVar DynamicRenderScaleMin|DynamicRenderScaleMin]]</span><span style="display:none">Default: <code><span class="apitype">0.333333</span></code><br><small>Lowest render scale DynamicRenderScale can use</small></span>
+: <span class="tttemplatelink">[[CVar DynamicRenderScale|DynamicRenderScale]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Lowers render scale if GPU bound to hit Target FPS. Note this feature is in BETA. Known issues: May cause hitching. May behave poorly with vsync on.</small></span>
+: <span class="tttemplatelink">[[CVar FrameBufferCacheForceNoHeaps|FrameBufferCacheForceNoHeaps]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Disable use of texture heaps and force the fallback path</small></span>
+: <span class="tttemplatelink">[[CVar seenRegionalChatDisabled|seenRegionalChatDisabled]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Seen the alert indicating chat has been disabled by default. (UK AADC)</small></span>
+: [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]
+: [[CVar GxFrameStats|GxFrameStats]]
+: {{Wow-inline}} [[CVar seenSoMNotification|seenSoMNotification]]
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: [[CVar seenAADCAlert|seenAADCAlert]]
+</div>
+|}

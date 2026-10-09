@@ -1,0 +1,537 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.14.1",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 1010974,
+    "sha256": "41c615541135cabceb8ff85bb0ff633ffa8d4eafe861e724d6fdf60e739d8559"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 14,
+      "parsed_count": 14
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 31,
+      "parsed_count": 31
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 7,
+      "parsed_count": 7
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_BehavioralMessaging.SendNotificationReceipt-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BehavioralMessaging.SendNotificationReceipt",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_Club.FocusCommunityStreams-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.FocusCommunityStreams",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_Club.UnfocusAllStreams-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.UnfocusAllStreams",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlocklistedAuras-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Commentator.SetBlocklistedAuras",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlocklistedCooldowns-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Commentator.SetBlocklistedCooldowns",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_LFGList.IsLookingForGroupEnabled-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.IsLookingForGroupEnabled",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_Seasons.GetActiveSeason-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Seasons.GetActiveSeason",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_Seasons.HasActiveSeason-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Seasons.HasActiveSeason",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_SocialRestrictions.AcknowledgeRegionalChatDisabled-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SocialRestrictions.AcknowledgeRegionalChatDisabled",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_SocialRestrictions.IsChatDisabled-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SocialRestrictions.IsChatDisabled",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_SocialRestrictions.SetChatDisabled-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SocialRestrictions.SetChatDisabled",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-GetFirstBagBankSlotIndex-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetFirstBagBankSlotIndex",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-securecallfunction-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "securecallfunction",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-secureexecuterange-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "secureexecuterange",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-AcknowledgeAADCAlert-38",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "AcknowledgeAADCAlert",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlacklistedAuras-39",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Commentator.SetBlacklistedAuras",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SetBlacklistedCooldowns-40",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Commentator.SetBlacklistedCooldowns",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-widgets-FontString:GetTextScale-51",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:GetTextScale",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-widgets-FontStringSetTextScale-52",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontStringSetTextScale",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-events-AVATAR_LIST_UPDATED-65",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AVATAR_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-events-CLUB_ADDED-66",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_ADDED",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-events-CLUB_ERROR-67",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_ERROR",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-events-CLUB_INVITATION_ADDED_FOR_SELF-68",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_INVITATION_ADDED_FOR_SELF",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-events-CLUB_INVITATION_REMOVED_FOR_SELF-69",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_INVITATION_REMOVED_FOR_SELF",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-events-CLUB_INVITATIONS_RECEIVED_FOR_CLUB-70",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_INVITATIONS_RECEIVED_FOR_CLUB",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_ADDED-71",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_ADDED",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_PRESENCE_UPDATED-72",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_PRESENCE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_REMOVED-73",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_REMOVED",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_ROLE_UPDATED-74",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_ROLE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-events-CLUB_MEMBER_UPDATED-75",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MEMBER_UPDATED",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-events-CLUB_MESSAGE_ADDED-76",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MESSAGE_ADDED",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-events-CLUB_MESSAGE_HISTORY_RECEIVED-77",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MESSAGE_HISTORY_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-events-CLUB_MESSAGE_UPDATED-78",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_MESSAGE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-events-CLUB_REMOVED_MESSAGE-79",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_REMOVED_MESSAGE",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-events-CLUB_REMOVED-80",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_REMOVED",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-events-CLUB_SELF_MEMBER_ROLE_UPDATED-81",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_SELF_MEMBER_ROLE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_ADDED-82",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_ADDED",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_REMOVED-83",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_REMOVED",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_SUBSCRIBED-84",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_SUBSCRIBED",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_UNSUBSCRIBED-85",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_UNSUBSCRIBED",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-events-CLUB_STREAM_UPDATED-86",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAM_UPDATED",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-CLUB_STREAMS_LOADED-87",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_STREAMS_LOADED",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-events-CLUB_TICKET_CREATED-88",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_TICKET_CREATED",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-CLUB_TICKET_RECEIVED-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_TICKET_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-CLUB_TICKETS_RECEIVED-90",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_TICKETS_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-events-CLUB_UPDATED-91",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_UPDATED",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-events-INITIAL_CLUBS_LOADED-92",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INITIAL_CLUBS_LOADED",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-events-NOTIFY_CHAT_SUPPRESSED-93",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NOTIFY_CHAT_SUPPRESSED",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-events-STREAM_VIEW_MARKER_UPDATED-94",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STREAM_VIEW_MARKER_UPDATED",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-events-UNIT_HEAL_PREDICTION-95",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_HEAL_PREDICTION",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-events-SHOW_AADC_ALERT-98",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SHOW_AADC_ALERT",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-cvars-DynamicRenderScaleMin-109",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DynamicRenderScaleMin",
+      "annotation": "",
+      "wikitext_line": 109,
+      "page_default": "0.333333"
+    },
+    {
+      "id": "wt-cvars-DynamicRenderScale-110",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DynamicRenderScale",
+      "annotation": "",
+      "wikitext_line": 110,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-FrameBufferCacheForceNoHeaps-111",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "FrameBufferCacheForceNoHeaps",
+      "annotation": "",
+      "wikitext_line": 111,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-seenRegionalChatDisabled-112",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenRegionalChatDisabled",
+      "annotation": "",
+      "wikitext_line": 112,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-FrameBufferCacheGpuFootprint-113",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "FrameBufferCacheGpuFootprint",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-cvars-GxFrameStats-114",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxFrameStats",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-cvars-seenSoMNotification-115",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenSoMNotification",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-cvars-seenAADCAlert-118",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "seenAADCAlert",
+      "annotation": "",
+      "wikitext_line": 118
+    }
+  ]
+}
