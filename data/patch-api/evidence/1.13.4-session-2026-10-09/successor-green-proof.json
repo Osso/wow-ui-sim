@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_successors.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791564214.1217024,
+  "end_epoch": 1791564216.0583503,
+  "revision": "acddd6ef677615965401b8a731c0ebc4ff862714",
+  "exit_code": 0,
+  "scope": "separate actual Era literal precedence only; zero native/model closure"
+}

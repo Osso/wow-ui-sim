@@ -43,11 +43,14 @@ class PortableSource(unittest.TestCase):
         return result
 
     def test_copied_source_and_default_register(self):
-        result = self.execute(self.copied / 'audit.py')
+        result = self.execute(self.copied / 'validator.py')
         self.assertEqual(result.returncode, 0, result.stderr)
         fixtures = self.execute(self.copied / 'test_source_accounting.py')
         self.assertEqual(fixtures.returncode, 0, fixtures.stderr)
         self.assertIn('Ran 8 tests', fixtures.stderr)
+        successors = self.execute(self.copied / 'test_successors.py')
+        self.assertEqual(successors.returncode, 0, successors.stderr)
+        self.assertIn('Ran 3 tests', successors.stderr)
         output = self.copied / 'reproduced-register.json'
         generated = self.execute(self.copied / 'historical-tools/gen_patch_wikitext_register.py', '1.13.4', self.copied / 'source.wikitext', '3216451', output)
         self.assertEqual(generated.returncode, 0, generated.stderr)
@@ -62,14 +65,14 @@ class PortableSource(unittest.TestCase):
         original = path.read_bytes()
         path.write_bytes(changed)
         try:
-            result = self.execute(self.copied / 'audit.py')
+            result = self.execute(self.copied / 'validator.py')
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(f'seal: {name}', result.stderr)
         finally:
             path.write_bytes(original)
         self.assertEqual(path.read_bytes(), original)
         self.check_originals()
-        restored = self.execute(self.copied / 'audit.py')
+        restored = self.execute(self.copied / 'validator.py')
         self.assertEqual(restored.returncode, 0, restored.stderr)
         RECEIPTS.append({'restored': name, 'sha256': digest(path.read_bytes()), 'all_original_seals': len(self.seals)})
 

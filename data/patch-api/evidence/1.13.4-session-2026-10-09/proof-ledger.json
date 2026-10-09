@@ -1,0 +1,151 @@
+{
+  "scope": "original bounded development SOURCE/current Era observations; no final/native acceptance",
+  "entries": [
+    {
+      "file": "era-totems-proof.json",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "client-era",
+        "--target-dir",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/target",
+        "--test",
+        "patch_1_13_4_totems",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791563599.6530766,
+      "end_epoch": 1791563699.2217891,
+      "revision": "d478d50f7",
+      "exit_code": 101,
+      "scope": "existing current Era GetTotemInfo host slot lifecycle only; no native historical signature/default or other totem method credit"
+    },
+    {
+      "file": "era-totems-green-proof.json",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--no-default-features",
+        "--features",
+        "client-era",
+        "--target-dir",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/target",
+        "--test",
+        "patch_1_13_4_totems",
+        "--",
+        "--nocapture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791563716.405308,
+      "end_epoch": 1791563717.3497257,
+      "revision": "ce0c5c59a432cc497e58eb882419af5b92dea0cc",
+      "exit_code": 0,
+      "scope": "existing current Era host slot lifecycle only; no native historical contract"
+    },
+    {
+      "file": "source-red-proof.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791563809.4259923,
+      "end_epoch": 1791563809.4595563,
+      "exit_code": 1,
+      "revision": "ce0c5c59a",
+      "scope": "missing SOURCE accounting development RED"
+    },
+    {
+      "file": "source-green-proof.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791563998.5832474,
+      "end_epoch": 1791564005.1683917,
+      "exit_code": 0,
+      "revision": "c9c0262e371aef82a8a04f9edf1181f0b6a9ca41",
+      "scope": "SOURCE 8 tests and occurrence controls, no final/native acceptance"
+    },
+    {
+      "file": "successor-red-proof.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_successors.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791564157.3577206,
+      "end_epoch": 1791564157.4281683,
+      "revision": "c9c0262e3",
+      "exit_code": 1,
+      "scope": "targeted development missing serialized application/archive boundary"
+    },
+    {
+      "file": "successor-green-proof.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_successors.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791564214.1217024,
+      "end_epoch": 1791564216.0583503,
+      "revision": "acddd6ef677615965401b8a731c0ebc4ff862714",
+      "exit_code": 0,
+      "scope": "separate actual Era literal precedence only; zero native/model closure"
+    },
+    {
+      "file": "portable-red-proof.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/originals.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/portable-red-receipts.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791564157.4288743,
+      "end_epoch": 1791564157.4928427,
+      "revision": "c9c0262e3",
+      "exit_code": 1,
+      "scope": "targeted development missing serialized application/archive boundary"
+    },
+    {
+      "file": "derivation-command.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/audit.py",
+        "capture"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791563926.404072,
+      "end_epoch": 1791563926.5126357,
+      "exit_code": 0,
+      "revision": "ce0c5c59a",
+      "working_tree": "new SOURCE implementation; not a committed GREEN"
+    }
+  ],
+  "later_invalidations": [],
+  "formatters": [
+    "rustfmt --edition 2024 patch-tests/patch_1_13_4_totems.rs",
+    "Python AST serialize own audit/test/application/validator files only"
+  ],
+  "warning_policy": "6 pre-existing library warnings, 1 binary unused import and 6 vendor manifest deprecations retained; no suppression",
+  "successor_application": "18 actual same-Era ledgers separately; 1.14.0 removes C_Commentator.GetUnitTeamIndex only; no model/native credit"
+}
