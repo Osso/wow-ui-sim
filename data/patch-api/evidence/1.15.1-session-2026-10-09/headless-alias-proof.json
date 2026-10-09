@@ -1,0 +1,42 @@
+{
+  "revision": "71427714747ac3840d38dd5a1a88a8e905fe936d",
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "client-era",
+    "--test",
+    "patch_1_15_1_alias",
+    "official_public_build_deprecation_preserves_numeric_season_alias",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1151-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p1151-page/target",
+  "exit_code": 0,
+  "scope": "unchanged official deprecation under initialized headless Era; not full addon loading/native/C_Seasons",
+  "log": "headless-alias.log",
+  "asserted_observations": {
+    "before": {
+      "IsPublicBuild": true,
+      "SeasonOfDiscovery_type": "number",
+      "SeasonOfDiscovery": 2,
+      "Placeholder_absent": true
+    },
+    "after_unchanged_official_Lua": {
+      "SeasonOfDiscovery_type": "number",
+      "SeasonOfDiscovery": 2,
+      "Placeholder_type": "number",
+      "Placeholder": 2,
+      "equal": true
+    }
+  },
+  "warnings": {
+    "simulator_library": 6,
+    "simulator_binary": 1,
+    "vendor_manifest_deprecations": 6,
+    "warning_free": false
+  }
+}

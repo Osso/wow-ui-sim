@@ -1,0 +1,20 @@
+{
+  "revision": "71427714747ac3840d38dd5a1a88a8e905fe936d",
+  "proofs": [
+    {
+      "artifact": "portable-proof.json",
+      "result": "GREEN3/3; copied SOURCE8/default byte replay, disk ledger/log rejection/exact restoration",
+      "scope": "historical copied source inputs;no runtime"
+    },
+    {
+      "artifact": "headless-alias-proof.json",
+      "result": "GREEN1/1",
+      "scope": "unchanged official Lua + current existing headless Era public-build/enum state; actual raw numeric named values2=2",
+      "later_changes": "documentation/receipt changes only; Cargo/fixture/runtime unchanged, proof remains valid"
+    }
+  ],
+  "final_gates": "not performed; main-owned",
+  "original_seals": 57,
+  "original_seals_immutable": true,
+  "warnings": "7 existing simulator +6 vendor manifest deprecations; retained and not suppressed"
+}

@@ -8,7 +8,8 @@ Account frozen Warcraft Wiki page577687/revision5998991/timestamp `2024-04-03T08
 - [x] Preserve all nine nonblank rows, two named enum occurrences, three prose contracts, four unexpanded links, two headers and navigation template; invent no signatures/numeric values/subset membership.
 - [x] Preserve concrete Placeholder → SeasonOfDiscovery alias-continuity contract, separate from unspecified Dragonflight10.2.5 subset and deprecated-file link.
 - [x] Separate configured Era/Anniversary11507, in-flight1.15.2, queued1.15.3 and integrated1.15.4–9 inputs from native/integration proof.
-- [ ] Reject omissions, invented credit/values/foreign supersession and disk tampering; replay copied historical inputs without Git/target/current tools, retaining immutable original seals.
+- [x] Reject omissions, invented credit/values/foreign supersession and disk tampering; replay copied historical inputs without Git/target/current tools, retaining immutable original seals.
+- [x] Execute unchanged pinned official deprecation with existing headless Era IsPublicBuild=true and raw finite SeasonOfDiscovery=2; assert raw Placeholder=2 and numeric alias equality. No mock flags or native numeric inference.
 
 ## How it works
 
@@ -16,11 +17,11 @@ Account frozen Warcraft Wiki page577687/revision5998991/timestamp `2024-04-03T08
 
 ## Implementation inventory
 
-`data/patch-api/evidence/1.15.1-session-2026-10-09/`: literal adapter, frozen inputs, source tests and independent external-primary-source pin. No simulator implementation changes.
+`data/patch-api/evidence/1.15.1-session-2026-10-09/`: literal adapter, frozen inputs, source/portable tests and independent external-primary-source pin. `patch-tests/patch_1_15_1_alias.rs` and Cargo standalone Era target: direct existing-state alias proof. No simulator implementation changes.
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py`: RED8/8 retained; SOURCE GREEN8/8 at `3045ff2a9`, 29 omission controls and fabricated-credit/value/supersession rejection. `test_portable.py` RED3 retained; GREEN pending. `patch-tests/patch_1_15_1_alias.rs`: unchanged pinned official deprecation against existing headless Era enum/public-build state, raw numeric values and alias equality; execution pending. No native numerical contract asserted.
+Own `test_source_accounting.py`: RED8/8 retained; SOURCE GREEN8/8 at `3045ff2a9`, 29 omission controls and fabricated-credit/value/supersession rejection. `test_portable.py` RED3 retained; GREEN3/3 at `714277147`, copied SOURCE8/default-byte replay and both serialized seal tamper rejections/exact restorations. `patch-tests/patch_1_15_1_alias.rs` GREEN1/1 at `714277147` under `--no-default-features --features client-era --test patch_1_15_1_alias`; unchanged official deprecation against actual headless Era state proves raw named numeric values2/equality. No native numerical contract asserted. Original57 seals/1069714bytes remain immutable; later receipts separately sealed. Seven existing simulator warnings and six vendor-manifest deprecations retained; no warning-free/final-gate claim.
 
 ## Known gaps (current cycle)
 
