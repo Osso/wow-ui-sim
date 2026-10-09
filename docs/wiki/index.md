@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Historical retail Patch 2.2.0 SOURCE audit
+
+[Audit](investigations/patch-2-2-0-api-audit.md): frozen page184149/revision6428980; 36 inventory, 33 signature limits, 67 raw/67 default-extract rows, 53 prose limits, 11 headings/no numeric counts, 12 modified-click examples. Manifest-linked registry101 ends at1.0.0. SOURCE-only; all substantive contracts UNPROVEN, zero model/native/runtime credit; Classic/queued supersession excluded. Owned RED5/5 recorded; targeted GREEN/compact portable receipts pending. Shared tools unchanged; main owns native/integration/final gates.
+
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 
 [Audit](investigations/patch-3-0-8-api-audit.md): frozen page 95599/revision 947144; 56 inventory, 30 labeled signature fragments/26 unspecified signature records, 57 raw and 57 rendered nonblank lines, 226 ledger IDs (22 bounded/97 pending/107 metadata). Own default-retail GREEN 2/2 covers reviewed 34-gap publication and existing Frame empty-handler HookScript subset; no new model or universal/native parity. Negative exactly 34 → 35. Source GREEN 1/1 preserves opt-in/default bytes; historical portability GREEN 1/1 at `98800469b` rejects/restores all 25 sealed files plus manifest and missing gaps. Headless aggregate GUI compile boundary recorded; default retail works. Queued 3.1.0 mentions GetGlyphLink/SetUpAnimation, not supersession; 3.2.0/3.3.0 placeholders and main-owned integration remain. Wrath Classic excluded. No broad/final gates.

@@ -1,0 +1,2880 @@
+{
+  "schema": "patch-source-accounting/v1",
+  "patch": "2.2.0",
+  "source": {
+    "title": "Patch 2.2.0/API changes",
+    "version": "2.2.0",
+    "pageid": 184149,
+    "revid": 6428980,
+    "timestamp": "2025-08-03T13:04:54Z",
+    "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=6428980&format=json",
+    "retrieved": "2026-10-09T08:51:36.394271+00:00",
+    "response_sha256": "b8f11baba49fa1fde43e31089b3da183c8c547475c97bdd4769493f51e10a3f4",
+    "wikitext_sha256": "8cbaf1b10b334913ff4a0f2c4ede58fad8b862c7f01f78d32088e5b8fe06590d",
+    "wikitext_bytes": 7518,
+    "response_path": "data/patch-api/source-cache/legacy-2026-10-09/2.2.0-response.json",
+    "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/2.2.0-wikitext.txt"
+  },
+  "code_revision": "dd8ca0f19e9f0172851116a7bfae43792a1b78b4",
+  "client_line": "historical-retail",
+  "source_era": "2007 retail",
+  "scope": "SOURCE-only",
+  "later_registers": [],
+  "successor_queue": [
+    "2.3.0",
+    "2.4.0",
+    "2.4.2",
+    "3.0.x"
+  ],
+  "runtime_observations": 0,
+  "native_observations": 0,
+  "model_credit": 0,
+  "inventory_rows": [
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-007-01",
+      "wikitext_line": 7,
+      "symbol": "IsLeftShiftKeyDown",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "linked_page": "API IsLeftShiftKeyDown",
+      "fragment": "IsLeftShiftKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-007-02",
+      "wikitext_line": 7,
+      "symbol": "IsRightShiftKeyDown",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "linked_page": "API IsRightShiftKeyDown",
+      "fragment": "IsRightShiftKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-007-03",
+      "wikitext_line": 7,
+      "symbol": "IsLeftControlKeyDown",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "linked_page": "API IsLeftControlKeyDown",
+      "fragment": "IsLeftControlKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-007-04",
+      "wikitext_line": 7,
+      "symbol": "IsRightControlKeyDown",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "linked_page": "API IsRightControlKeyDown",
+      "fragment": "IsRightControlKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-007-05",
+      "wikitext_line": 7,
+      "symbol": "IsLeftAltKeyDown",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "linked_page": "API IsLeftAltKeyDown",
+      "fragment": "IsLeftAltKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-007-06",
+      "wikitext_line": 7,
+      "symbol": "IsRightAltKeyDown",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "linked_page": "API IsRightAltKeyDown",
+      "fragment": "IsRightAltKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-017-01",
+      "wikitext_line": 17,
+      "symbol": "GetNumModifiedClickActions",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* count = [[API GetNumModifiedClickActions|GetNumModifiedClickActions()]]",
+      "linked_page": "API GetNumModifiedClickActions",
+      "fragment": "GetNumModifiedClickActions()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-018-01",
+      "wikitext_line": 18,
+      "symbol": "GetModifiedClickAction",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* action = [[API GetModifiedClickAction|GetModifiedClickAction(index)]]",
+      "linked_page": "API GetModifiedClickAction",
+      "fragment": "GetModifiedClickAction(index)"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-019-01",
+      "wikitext_line": 19,
+      "symbol": "SetModifiedClick",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* [[API SetModifiedClick|SetModifiedClick(\"action\", \"binding\")]]",
+      "linked_page": "API SetModifiedClick",
+      "fragment": "SetModifiedClick(\"action\", \"binding\")"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-020-01",
+      "wikitext_line": 20,
+      "symbol": "GetModifiedClick",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* binding = [[API GetModifiedClick|GetModifiedClick(\"action\")]]",
+      "linked_page": "API GetModifiedClick",
+      "fragment": "GetModifiedClick(\"action\")"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-021-01",
+      "wikitext_line": 21,
+      "symbol": "IsModifiedClick",
+      "kind": "global-api",
+      "direction": "added",
+      "source_text": "* active = [[API IsModifiedClick|IsModifiedClick([\"action\"])]] ",
+      "linked_page": "API IsModifiedClick",
+      "fragment": "IsModifiedClick([\"action\"])"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-026-01",
+      "wikitext_line": 26,
+      "symbol": "SaveBindings",
+      "kind": "global-api",
+      "direction": "context",
+      "source_text": "* [[API SaveBindings|SaveBindings(]][[API GetCurrentBindingSet|GetCurrentBindingSet())]]",
+      "linked_page": "API SaveBindings",
+      "fragment": "SaveBindings("
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-026-02",
+      "wikitext_line": 26,
+      "symbol": "GetCurrentBindingSet",
+      "kind": "global-api",
+      "direction": "context",
+      "source_text": "* [[API SaveBindings|SaveBindings(]][[API GetCurrentBindingSet|GetCurrentBindingSet())]]",
+      "linked_page": "API GetCurrentBindingSet",
+      "fragment": "GetCurrentBindingSet())"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-041-01",
+      "wikitext_line": 41,
+      "symbol": "SetAutoLootToggleKey",
+      "kind": "global-api",
+      "direction": "replaced",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "linked_page": "API SetAutoLootToggleKey",
+      "fragment": "SetAutoLootToggleKey()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-041-02",
+      "wikitext_line": 41,
+      "symbol": "GetAutoLootToggleKey",
+      "kind": "global-api",
+      "direction": "replaced",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "linked_page": "API GetAutoLootToggleKey",
+      "fragment": "GetAutoLootToggleKey()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-041-03",
+      "wikitext_line": 41,
+      "symbol": "IsAutoLootKeyDown",
+      "kind": "global-api",
+      "direction": "replaced",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "linked_page": "API IsAutoLootKeyDown",
+      "fragment": "IsAutoLootKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-041-04",
+      "wikitext_line": 41,
+      "symbol": "SetActionSelfCastKey",
+      "kind": "global-api",
+      "direction": "replaced",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "linked_page": "API SetActionSelfCastKey",
+      "fragment": "SetActionSelfCastKey()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-041-05",
+      "wikitext_line": 41,
+      "symbol": "GetActionSelfCastKey",
+      "kind": "global-api",
+      "direction": "replaced",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "linked_page": "API GetActionSelfCastKey",
+      "fragment": "GetActionSelfCastKey()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-041-06",
+      "wikitext_line": 41,
+      "symbol": "IsActionSelfCastKeyDown",
+      "kind": "global-api",
+      "direction": "replaced",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "linked_page": "API IsActionSelfCastKeyDown",
+      "fragment": "IsActionSelfCastKeyDown()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-044-01",
+      "wikitext_line": 44,
+      "symbol": "pitchLimit",
+      "kind": "cvar-setting",
+      "direction": "changed",
+      "source_text": "* The pitchLimit setting will be re-enabled. ",
+      "linked_page": null,
+      "fragment": null,
+      "default": null
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-057-01",
+      "wikitext_line": 57,
+      "symbol": "GetItemInfo",
+      "kind": "global-api",
+      "direction": "context",
+      "source_text": "* You will be able to use item:N, where N is the ID of the item, instead of the item name in macros. One of the advantages of this is that it will work even if you don't currently have the item, as long as it is in your item cache (e.g. GetItemInfo(\"item:N\") returns non-nil) ",
+      "linked_page": null,
+      "fragment": "GetItemInfo(\"item:N\")"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-062-01",
+      "wikitext_line": 62,
+      "symbol": "Frame:RegisterEvent",
+      "kind": "widget-method",
+      "direction": "changed",
+      "source_text": "* [[API Frame RegisterEvent|Frame:RegisterEvent()]] and [[API Frame UnregisterEvent|Frame:UnregisterEvent()]] have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0. ",
+      "linked_page": "API Frame RegisterEvent",
+      "fragment": "Frame:RegisterEvent()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-062-02",
+      "wikitext_line": 62,
+      "symbol": "Frame:UnregisterEvent",
+      "kind": "widget-method",
+      "direction": "changed",
+      "source_text": "* [[API Frame RegisterEvent|Frame:RegisterEvent()]] and [[API Frame UnregisterEvent|Frame:UnregisterEvent()]] have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0. ",
+      "linked_page": "API Frame UnregisterEvent",
+      "fragment": "Frame:UnregisterEvent()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-062-03",
+      "wikitext_line": 62,
+      "symbol": "OnShow",
+      "kind": "widget-script",
+      "direction": "changed",
+      "source_text": "* [[API Frame RegisterEvent|Frame:RegisterEvent()]] and [[API Frame UnregisterEvent|Frame:UnregisterEvent()]] have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0. ",
+      "linked_page": null,
+      "fragment": "OnShow()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-062-04",
+      "wikitext_line": 62,
+      "symbol": "OnHide",
+      "kind": "widget-script",
+      "direction": "changed",
+      "source_text": "* [[API Frame RegisterEvent|Frame:RegisterEvent()]] and [[API Frame UnregisterEvent|Frame:UnregisterEvent()]] have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0. ",
+      "linked_page": null,
+      "fragment": "OnHide()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-063-01",
+      "wikitext_line": 63,
+      "symbol": "OnUpdate",
+      "kind": "widget-script",
+      "direction": "changed",
+      "source_text": "* The game tooltip now handles periodic updates directly instead of requiring OnUpdate functions in each button that might have a tooltip. Many of the related OnEnter functions now take a 'self' parameter, so AddOns will need to be updated to reflect this change. ",
+      "linked_page": null,
+      "fragment": null
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-063-02",
+      "wikitext_line": 63,
+      "symbol": "OnEnter",
+      "kind": "widget-script",
+      "direction": "changed",
+      "source_text": "* The game tooltip now handles periodic updates directly instead of requiring OnUpdate functions in each button that might have a tooltip. Many of the related OnEnter functions now take a 'self' parameter, so AddOns will need to be updated to reflect this change. ",
+      "linked_page": null,
+      "fragment": null
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-065-01",
+      "wikitext_line": 65,
+      "symbol": "Frame:SetClampRectInsets",
+      "kind": "widget-method",
+      "direction": "added",
+      "source_text": "* NEW - [[API Frame SetClampRectInsets|Frame:SetClampRectInsets(left, right, top, bottom)]] -- Set the portion of a frame which is clamped to the screen. ",
+      "linked_page": "API Frame SetClampRectInsets",
+      "fragment": "Frame:SetClampRectInsets(left, right, top, bottom)"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-066-01",
+      "wikitext_line": 66,
+      "symbol": "Frame:GetClampRectInsets",
+      "kind": "widget-method",
+      "direction": "added",
+      "source_text": "* NEW - left, right, top, bottom = [[API Frame GetClampRectInsets|Frame:GetClampRectInsets()]] - Get the portion of a frame which is clamped to the screen. ",
+      "linked_page": "API Frame GetClampRectInsets",
+      "fragment": "Frame:GetClampRectInsets()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-067-01",
+      "wikitext_line": 67,
+      "symbol": "Frame:GetAttribute",
+      "kind": "widget-method",
+      "direction": "changed",
+      "source_text": "* NEW VERSION - value = [[API Frame GetAttribute|Frame:GetAttribute(prefix, name, suffix)]] - Performs an attribute wildcard search (prefix..name..suffix, \"*\"..name..suffix, prefix..name..\"*\", \"*\"..name..\"*\", name) and returns the first result found (Added to optimize SecureButton_GetModifiedAttrbute)",
+      "linked_page": "API Frame GetAttribute",
+      "fragment": "Frame:GetAttribute(prefix, name, suffix)"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-067-02",
+      "wikitext_line": 67,
+      "symbol": "SecureButton_GetModifiedAttrbute",
+      "kind": "secure-helper",
+      "direction": "changed",
+      "source_text": "* NEW VERSION - value = [[API Frame GetAttribute|Frame:GetAttribute(prefix, name, suffix)]] - Performs an attribute wildcard search (prefix..name..suffix, \"*\"..name..suffix, prefix..name..\"*\", \"*\"..name..\"*\", name) and returns the first result found (Added to optimize SecureButton_GetModifiedAttrbute)",
+      "linked_page": null,
+      "fragment": null
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-073-01",
+      "wikitext_line": 73,
+      "symbol": "GetPoint",
+      "kind": "widget-method",
+      "direction": "context",
+      "source_text": "To fix the frame positioning in your addons save the relativepoint argument in addition to the X and Y coordinates from GetPoint()",
+      "linked_page": null,
+      "fragment": "GetPoint()"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-076-01",
+      "wikitext_line": 76,
+      "symbol": "UNIT_SPELLCAST_*",
+      "kind": "event-family",
+      "direction": "changed",
+      "source_text": "* All UNIT_SPELLCAST_* events now have the name and rank of the spell as arg2 and arg3. ",
+      "linked_page": null,
+      "fragment": null,
+      "expanded_members": null,
+      "partial_payload": {
+        "arg2": "spell name",
+        "arg3": "spell rank"
+      }
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-082-01",
+      "wikitext_line": 82,
+      "symbol": "RegisterStateDriver",
+      "kind": "global-api",
+      "direction": "changed",
+      "source_text": "* RegisterStateDriver can be used with a state of \"visibility\" to show and hide frames based on arbitrary macro conditionals, e.g. RegisterStateDriver(MyBadTargetFrame, \"visibility\", \"[exists,harm] show; hide\") ",
+      "linked_page": null,
+      "fragment": null
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-082-02",
+      "wikitext_line": 82,
+      "symbol": "RegisterStateDriver",
+      "kind": "global-api",
+      "direction": "changed",
+      "source_text": "* RegisterStateDriver can be used with a state of \"visibility\" to show and hide frames based on arbitrary macro conditionals, e.g. RegisterStateDriver(MyBadTargetFrame, \"visibility\", \"[exists,harm] show; hide\") ",
+      "linked_page": null,
+      "fragment": "RegisterStateDriver(MyBadTargetFrame, \"visibility\", \"[exists,harm] show; hide\")"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "id": "source-083-01",
+      "wikitext_line": 83,
+      "symbol": "SecureStateHeader",
+      "kind": "secure-template",
+      "direction": "changed",
+      "source_text": "* The unit setting support in SecureStateHeader now uses \"clear\" instead of \"none\" to specify that the unit attribute should be set to nil, to resolve a conflict with use of \"none\" as a valid unit. ",
+      "linked_page": null,
+      "fragment": null
+    }
+  ],
+  "signature_ledger": [
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-007-01",
+      "symbol": "IsLeftShiftKeyDown",
+      "wikitext_line": 7,
+      "fragment": "IsLeftShiftKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-007-02",
+      "symbol": "IsRightShiftKeyDown",
+      "wikitext_line": 7,
+      "fragment": "IsRightShiftKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-007-03",
+      "symbol": "IsLeftControlKeyDown",
+      "wikitext_line": 7,
+      "fragment": "IsLeftControlKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-007-04",
+      "symbol": "IsRightControlKeyDown",
+      "wikitext_line": 7,
+      "fragment": "IsRightControlKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-007-05",
+      "symbol": "IsLeftAltKeyDown",
+      "wikitext_line": 7,
+      "fragment": "IsLeftAltKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-007-06",
+      "symbol": "IsRightAltKeyDown",
+      "wikitext_line": 7,
+      "fragment": "IsRightAltKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-017-01",
+      "symbol": "GetNumModifiedClickActions",
+      "wikitext_line": 17,
+      "fragment": "GetNumModifiedClickActions()",
+      "return_fragment": "count",
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-018-01",
+      "symbol": "GetModifiedClickAction",
+      "wikitext_line": 18,
+      "fragment": "GetModifiedClickAction(index)",
+      "return_fragment": "action",
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-019-01",
+      "symbol": "SetModifiedClick",
+      "wikitext_line": 19,
+      "fragment": "SetModifiedClick(\"action\", \"binding\")",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-020-01",
+      "symbol": "GetModifiedClick",
+      "wikitext_line": 20,
+      "fragment": "GetModifiedClick(\"action\")",
+      "return_fragment": "binding",
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-021-01",
+      "symbol": "IsModifiedClick",
+      "wikitext_line": 21,
+      "fragment": "IsModifiedClick([\"action\"])",
+      "return_fragment": "active",
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-026-01",
+      "symbol": "SaveBindings",
+      "wikitext_line": 26,
+      "fragment": "SaveBindings(",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-026-02",
+      "symbol": "GetCurrentBindingSet",
+      "wikitext_line": 26,
+      "fragment": "GetCurrentBindingSet())",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-041-01",
+      "symbol": "SetAutoLootToggleKey",
+      "wikitext_line": 41,
+      "fragment": "SetAutoLootToggleKey()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-041-02",
+      "symbol": "GetAutoLootToggleKey",
+      "wikitext_line": 41,
+      "fragment": "GetAutoLootToggleKey()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-041-03",
+      "symbol": "IsAutoLootKeyDown",
+      "wikitext_line": 41,
+      "fragment": "IsAutoLootKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-041-04",
+      "symbol": "SetActionSelfCastKey",
+      "wikitext_line": 41,
+      "fragment": "SetActionSelfCastKey()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-041-05",
+      "symbol": "GetActionSelfCastKey",
+      "wikitext_line": 41,
+      "fragment": "GetActionSelfCastKey()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-041-06",
+      "symbol": "IsActionSelfCastKeyDown",
+      "wikitext_line": 41,
+      "fragment": "IsActionSelfCastKeyDown()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-057-01",
+      "symbol": "GetItemInfo",
+      "wikitext_line": 57,
+      "fragment": "GetItemInfo(\"item:N\")",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-062-01",
+      "symbol": "Frame:RegisterEvent",
+      "wikitext_line": 62,
+      "fragment": "Frame:RegisterEvent()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-062-02",
+      "symbol": "Frame:UnregisterEvent",
+      "wikitext_line": 62,
+      "fragment": "Frame:UnregisterEvent()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-062-03",
+      "symbol": "OnShow",
+      "wikitext_line": 62,
+      "fragment": "OnShow()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-062-04",
+      "symbol": "OnHide",
+      "wikitext_line": 62,
+      "fragment": "OnHide()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-063-01",
+      "symbol": "OnUpdate",
+      "wikitext_line": 63,
+      "fragment": null,
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-063-02",
+      "symbol": "OnEnter",
+      "wikitext_line": 63,
+      "fragment": null,
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": "self; unspecified affected OnEnter functions",
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-065-01",
+      "symbol": "Frame:SetClampRectInsets",
+      "wikitext_line": 65,
+      "fragment": "Frame:SetClampRectInsets(left, right, top, bottom)",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-066-01",
+      "symbol": "Frame:GetClampRectInsets",
+      "wikitext_line": 66,
+      "fragment": "Frame:GetClampRectInsets()",
+      "return_fragment": "left, right, top, bottom",
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-067-01",
+      "symbol": "Frame:GetAttribute",
+      "wikitext_line": 67,
+      "fragment": "Frame:GetAttribute(prefix, name, suffix)",
+      "return_fragment": "value",
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-067-02",
+      "symbol": "SecureButton_GetModifiedAttrbute",
+      "wikitext_line": 67,
+      "fragment": null,
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-073-01",
+      "symbol": "GetPoint",
+      "wikitext_line": 73,
+      "fragment": "GetPoint()",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-082-01",
+      "symbol": "RegisterStateDriver",
+      "wikitext_line": 82,
+      "fragment": null,
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "inventory_id": "source-082-02",
+      "symbol": "RegisterStateDriver",
+      "wikitext_line": 82,
+      "fragment": "RegisterStateDriver(MyBadTargetFrame, \"visibility\", \"[exists,harm] show; hide\")",
+      "return_fragment": null,
+      "arguments": null,
+      "returns": null,
+      "partial_input": null,
+      "complete_contract": false
+    }
+  ],
+  "headers": [
+    {
+      "wikitext_line": 3,
+      "title": "Key Bindings",
+      "source_text": "== Key Bindings ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 9,
+      "title": "Modified Clicks",
+      "source_text": "==Modified Clicks==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 43,
+      "title": "Settings",
+      "source_text": "== Settings ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 46,
+      "title": "Bug Fixes",
+      "source_text": "== Bug Fixes ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 51,
+      "title": "Targetting",
+      "source_text": "== Targetting ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 54,
+      "title": "Macros",
+      "source_text": "== Macros ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 61,
+      "title": "Frame Support",
+      "source_text": "== Frame Support ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 75,
+      "title": "Events",
+      "source_text": "== Events ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 78,
+      "title": "Protected Functions",
+      "source_text": "== Protected Functions ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 81,
+      "title": "Secure Drivers",
+      "source_text": "== Secure Drivers ==",
+      "declared_count": null
+    },
+    {
+      "wikitext_line": 85,
+      "title": "References",
+      "source_text": "==References==",
+      "declared_count": null
+    }
+  ],
+  "header_counts": [],
+  "prose_ledger": [
+    {
+      "source_id": "raw-004",
+      "wikitext_line": 4,
+      "section": "Key Bindings",
+      "source_text": "The game will distinguish between '''right''' and '''left''' modifier keys: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-005",
+      "wikitext_line": 5,
+      "section": "Key Bindings",
+      "source_text": "* Key bindings and modified clicks may optionally specify <code>LSHIFT</code>, <code>RSHIFT</code>, <code>LCTRL</code>, <code>RCTRL</code>, <code>LALT</code>, <code>RALT</code> instead of the normal <code>SHIFT</code>, <code>CTRL</code>, <code>ALT</code> modifiers. The default UI will not set L/R modifiers and will continue to use the normal (either side) modifiers. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-006",
+      "wikitext_line": 6,
+      "section": "Key Bindings",
+      "source_text": "* Macro conditionals may use <code>lshift</code>, <code>rshift</code>, <code>lctrl</code>, <code>rctrl</code>, <code>lalt</code>, <code>ralt</code> in addition to the normal modifiers. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-007",
+      "wikitext_line": 7,
+      "section": "Key Bindings",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "inventory_ids": [
+        "source-007-01",
+        "source-007-02",
+        "source-007-03",
+        "source-007-04",
+        "source-007-05",
+        "source-007-06"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-010",
+      "wikitext_line": 10,
+      "section": "Modified Clicks",
+      "source_text": "There will be a unified system for customizing modified clicks in the UI: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-012",
+      "wikitext_line": 12,
+      "section": "Modified Clicks",
+      "source_text": "Modified Clicks are specified using a new section in Bindings.xml, e.g. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-013",
+      "wikitext_line": 13,
+      "section": "Modified Clicks",
+      "source_text": " &lt;ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/&gt;",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-014",
+      "wikitext_line": 14,
+      "section": "Modified Clicks",
+      "source_text": "These click actions are context sensitive, and Lua code chooses which action is appropriate based on the current context. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-017",
+      "wikitext_line": 17,
+      "section": "Modified Clicks",
+      "source_text": "* count = [[API GetNumModifiedClickActions|GetNumModifiedClickActions()]]",
+      "inventory_ids": [
+        "source-017-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-018",
+      "wikitext_line": 18,
+      "section": "Modified Clicks",
+      "source_text": "* action = [[API GetModifiedClickAction|GetModifiedClickAction(index)]]",
+      "inventory_ids": [
+        "source-018-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-019",
+      "wikitext_line": 19,
+      "section": "Modified Clicks",
+      "source_text": "* [[API SetModifiedClick|SetModifiedClick(\"action\", \"binding\")]]",
+      "inventory_ids": [
+        "source-019-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-020",
+      "wikitext_line": 20,
+      "section": "Modified Clicks",
+      "source_text": "* binding = [[API GetModifiedClick|GetModifiedClick(\"action\")]]",
+      "inventory_ids": [
+        "source-020-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-021",
+      "wikitext_line": 21,
+      "section": "Modified Clicks",
+      "source_text": "* active = [[API IsModifiedClick|IsModifiedClick([\"action\"])]] ",
+      "inventory_ids": [
+        "source-021-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-023",
+      "wikitext_line": 23,
+      "section": "Modified Clicks",
+      "source_text": "A \"binding\" is in the form of <code>MOD-BUTTONX</code>, e.g. <code>CTRL-BUTTON1</code>, or a simple modifier, e.g. <code>CTRL</code>",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-025",
+      "wikitext_line": 25,
+      "section": "Modified Clicks",
+      "source_text": "These modified click bindings are loaded and saved with the normal key bindings, so if you make changes you'll need to save them with: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-026",
+      "wikitext_line": 26,
+      "section": "Modified Clicks",
+      "source_text": "* [[API SaveBindings|SaveBindings(]][[API GetCurrentBindingSet|GetCurrentBindingSet())]]",
+      "inventory_ids": [
+        "source-026-01",
+        "source-026-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-028",
+      "wikitext_line": 28,
+      "section": "Modified Clicks",
+      "source_text": "The Blizzard code has been reworked to use the following modified click actions: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-029",
+      "wikitext_line": 29,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SELFCAST\" default=\"ALT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-030",
+      "wikitext_line": 30,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"AUTOLOOTTOGGLE\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-031",
+      "wikitext_line": 31,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"STICKYCAMERA\" default=\"CTRL\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-032",
+      "wikitext_line": 32,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"CHATLINK\" default=\"SHIFT-BUTTON1\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-033",
+      "wikitext_line": 33,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-034",
+      "wikitext_line": 34,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SOCKETITEM\" default=\"SHIFT-BUTTON2\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-035",
+      "wikitext_line": 35,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SPLITSTACK\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-036",
+      "wikitext_line": 36,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"PICKUPACTION\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-037",
+      "wikitext_line": 37,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"COMPAREITEMS\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-038",
+      "wikitext_line": 38,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"OPENALLBAGS\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-039",
+      "wikitext_line": 39,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"QUESTWATCHTOGGLE\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-041",
+      "wikitext_line": 41,
+      "section": "Modified Clicks",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "inventory_ids": [
+        "source-041-01",
+        "source-041-02",
+        "source-041-03",
+        "source-041-04",
+        "source-041-05",
+        "source-041-06"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-044",
+      "wikitext_line": 44,
+      "section": "Settings",
+      "source_text": "* The pitchLimit setting will be re-enabled. ",
+      "inventory_ids": [
+        "source-044-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-047",
+      "wikitext_line": 47,
+      "section": "Bug Fixes",
+      "source_text": "* Fixed issue where frame sizes/positions aren't correctly recalculated on demand. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-048",
+      "wikitext_line": 48,
+      "section": "Bug Fixes",
+      "source_text": "* Fixed unnecessary chopping of FontString contents when scaled. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-049",
+      "wikitext_line": 49,
+      "section": "Bug Fixes",
+      "source_text": "* Fixed mishandling of doublewide frames when opening game menu.",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-052",
+      "wikitext_line": 52,
+      "section": "Targetting",
+      "source_text": "* If you specify a target for a spell cast in a macro that does not exist, it will show an error instead of defaulting to your current target. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-055",
+      "wikitext_line": 55,
+      "section": "Macros",
+      "source_text": "* Conditional macros with multiple targets will use the appropriate context sensitive target for visual range feedback. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-056",
+      "wikitext_line": 56,
+      "section": "Macros",
+      "source_text": "* The entire dynamic macro update system has been moved into highly optimized C++ for 2.2, resulting in a roughly 100x speedup (That's times, not percent). Please keep an eye out for bugs in macro options and dynamic feedback, since it's all completely rewritten from scratch. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-057",
+      "wikitext_line": 57,
+      "section": "Macros",
+      "source_text": "* You will be able to use item:N, where N is the ID of the item, instead of the item name in macros. One of the advantages of this is that it will work even if you don't currently have the item, as long as it is in your item cache (e.g. GetItemInfo(\"item:N\") returns non-nil) ",
+      "inventory_ids": [
+        "source-057-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-058",
+      "wikitext_line": 58,
+      "section": "Macros",
+      "source_text": "* All macro conditional names are now lower-case only. - Previously mixed case conditionals (e.g. Stance) were allowed, now they will only be recognized in their lower case form (e.g. stance). ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-059",
+      "wikitext_line": 59,
+      "section": "Macros",
+      "source_text": "* The modifier conditional supports the new named conditionals, these are case sensitive and the standard UI ones are all uppercase (e.g. [modifier:SELFCAST]) ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-062",
+      "wikitext_line": 62,
+      "section": "Frame Support",
+      "source_text": "* [[API Frame RegisterEvent|Frame:RegisterEvent()]] and [[API Frame UnregisterEvent|Frame:UnregisterEvent()]] have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0. ",
+      "inventory_ids": [
+        "source-062-01",
+        "source-062-02",
+        "source-062-03",
+        "source-062-04"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-063",
+      "wikitext_line": 63,
+      "section": "Frame Support",
+      "source_text": "* The game tooltip now handles periodic updates directly instead of requiring OnUpdate functions in each button that might have a tooltip. Many of the related OnEnter functions now take a 'self' parameter, so AddOns will need to be updated to reflect this change. ",
+      "inventory_ids": [
+        "source-063-01",
+        "source-063-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-064",
+      "wikitext_line": 64,
+      "section": "Frame Support",
+      "source_text": "* Frame positions are saved relative to the nearest corner rather than the upper left corner, so that they don't move when changing resolution and screen aspect ratio. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-065",
+      "wikitext_line": 65,
+      "section": "Frame Support",
+      "source_text": "* NEW - [[API Frame SetClampRectInsets|Frame:SetClampRectInsets(left, right, top, bottom)]] -- Set the portion of a frame which is clamped to the screen. ",
+      "inventory_ids": [
+        "source-065-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-066",
+      "wikitext_line": 66,
+      "section": "Frame Support",
+      "source_text": "* NEW - left, right, top, bottom = [[API Frame GetClampRectInsets|Frame:GetClampRectInsets()]] - Get the portion of a frame which is clamped to the screen. ",
+      "inventory_ids": [
+        "source-066-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-067",
+      "wikitext_line": 67,
+      "section": "Frame Support",
+      "source_text": "* NEW VERSION - value = [[API Frame GetAttribute|Frame:GetAttribute(prefix, name, suffix)]] - Performs an attribute wildcard search (prefix..name..suffix, \"*\"..name..suffix, prefix..name..\"*\", \"*\"..name..\"*\", name) and returns the first result found (Added to optimize SecureButton_GetModifiedAttrbute)",
+      "inventory_ids": [
+        "source-067-01",
+        "source-067-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-070",
+      "wikitext_line": 70,
+      "section": "Frame Support",
+      "source_text": "* Extra notes on the new Frame positioning",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-071",
+      "wikitext_line": 71,
+      "section": "Frame Support",
+      "source_text": "Frame positions are actually saved relative to the following points:",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-072",
+      "wikitext_line": 72,
+      "section": "Frame Support",
+      "source_text": "TOPLEFT, TOP, TOPRIGHT, LEFT, CENTER, RIGHT, BOTTOMLEFT, BOTTOM and BOTTOMRIGHT not only the corners.",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-073",
+      "wikitext_line": 73,
+      "section": "Frame Support",
+      "source_text": "To fix the frame positioning in your addons save the relativepoint argument in addition to the X and Y coordinates from GetPoint()",
+      "inventory_ids": [
+        "source-073-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-076",
+      "wikitext_line": 76,
+      "section": "Events",
+      "source_text": "* All UNIT_SPELLCAST_* events now have the name and rank of the spell as arg2 and arg3. ",
+      "inventory_ids": [
+        "source-076-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-079",
+      "wikitext_line": 79,
+      "section": "Protected Functions",
+      "source_text": "* Picking up pet actions, spells, actions, and macros are all protected actions while in combat. This fixes a macro conditional logic exploit. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-082",
+      "wikitext_line": 82,
+      "section": "Secure Drivers",
+      "source_text": "* RegisterStateDriver can be used with a state of \"visibility\" to show and hide frames based on arbitrary macro conditionals, e.g. RegisterStateDriver(MyBadTargetFrame, \"visibility\", \"[exists,harm] show; hide\") ",
+      "inventory_ids": [
+        "source-082-01",
+        "source-082-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    },
+    {
+      "source_id": "raw-083",
+      "wikitext_line": 83,
+      "section": "Secure Drivers",
+      "source_text": "* The unit setting support in SecureStateHeader now uses \"clear\" instead of \"none\" to specify that the unit attribute should be set to nil, to resolve a conflict with use of \"none\" as a valid unit. ",
+      "inventory_ids": [
+        "source-083-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Full literal claim/example; no runtime/native/performance proof."
+    }
+  ],
+  "source_rows": [
+    {
+      "source_id": "raw-001",
+      "wikitext_line": 1,
+      "section": null,
+      "source_text": "{{apichanges|2.2.0|next=2.3.0|prev=2.1.0}}",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-003",
+      "wikitext_line": 3,
+      "section": "Key Bindings",
+      "source_text": "== Key Bindings ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-004",
+      "wikitext_line": 4,
+      "section": "Key Bindings",
+      "source_text": "The game will distinguish between '''right''' and '''left''' modifier keys: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-005",
+      "wikitext_line": 5,
+      "section": "Key Bindings",
+      "source_text": "* Key bindings and modified clicks may optionally specify <code>LSHIFT</code>, <code>RSHIFT</code>, <code>LCTRL</code>, <code>RCTRL</code>, <code>LALT</code>, <code>RALT</code> instead of the normal <code>SHIFT</code>, <code>CTRL</code>, <code>ALT</code> modifiers. The default UI will not set L/R modifiers and will continue to use the normal (either side) modifiers. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-006",
+      "wikitext_line": 6,
+      "section": "Key Bindings",
+      "source_text": "* Macro conditionals may use <code>lshift</code>, <code>rshift</code>, <code>lctrl</code>, <code>rctrl</code>, <code>lalt</code>, <code>ralt</code> in addition to the normal modifiers. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-007",
+      "wikitext_line": 7,
+      "section": "Key Bindings",
+      "source_text": "* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] ",
+      "inventory_ids": [
+        "source-007-01",
+        "source-007-02",
+        "source-007-03",
+        "source-007-04",
+        "source-007-05",
+        "source-007-06"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-009",
+      "wikitext_line": 9,
+      "section": "Modified Clicks",
+      "source_text": "==Modified Clicks==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-010",
+      "wikitext_line": 10,
+      "section": "Modified Clicks",
+      "source_text": "There will be a unified system for customizing modified clicks in the UI: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-012",
+      "wikitext_line": 12,
+      "section": "Modified Clicks",
+      "source_text": "Modified Clicks are specified using a new section in Bindings.xml, e.g. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-013",
+      "wikitext_line": 13,
+      "section": "Modified Clicks",
+      "source_text": " &lt;ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/&gt;",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-014",
+      "wikitext_line": 14,
+      "section": "Modified Clicks",
+      "source_text": "These click actions are context sensitive, and Lua code chooses which action is appropriate based on the current context. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-016",
+      "wikitext_line": 16,
+      "section": "Modified Clicks",
+      "source_text": "Script API:",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-017",
+      "wikitext_line": 17,
+      "section": "Modified Clicks",
+      "source_text": "* count = [[API GetNumModifiedClickActions|GetNumModifiedClickActions()]]",
+      "inventory_ids": [
+        "source-017-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-018",
+      "wikitext_line": 18,
+      "section": "Modified Clicks",
+      "source_text": "* action = [[API GetModifiedClickAction|GetModifiedClickAction(index)]]",
+      "inventory_ids": [
+        "source-018-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-019",
+      "wikitext_line": 19,
+      "section": "Modified Clicks",
+      "source_text": "* [[API SetModifiedClick|SetModifiedClick(\"action\", \"binding\")]]",
+      "inventory_ids": [
+        "source-019-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-020",
+      "wikitext_line": 20,
+      "section": "Modified Clicks",
+      "source_text": "* binding = [[API GetModifiedClick|GetModifiedClick(\"action\")]]",
+      "inventory_ids": [
+        "source-020-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-021",
+      "wikitext_line": 21,
+      "section": "Modified Clicks",
+      "source_text": "* active = [[API IsModifiedClick|IsModifiedClick([\"action\"])]] ",
+      "inventory_ids": [
+        "source-021-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-023",
+      "wikitext_line": 23,
+      "section": "Modified Clicks",
+      "source_text": "A \"binding\" is in the form of <code>MOD-BUTTONX</code>, e.g. <code>CTRL-BUTTON1</code>, or a simple modifier, e.g. <code>CTRL</code>",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-025",
+      "wikitext_line": 25,
+      "section": "Modified Clicks",
+      "source_text": "These modified click bindings are loaded and saved with the normal key bindings, so if you make changes you'll need to save them with: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-026",
+      "wikitext_line": 26,
+      "section": "Modified Clicks",
+      "source_text": "* [[API SaveBindings|SaveBindings(]][[API GetCurrentBindingSet|GetCurrentBindingSet())]]",
+      "inventory_ids": [
+        "source-026-01",
+        "source-026-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-028",
+      "wikitext_line": 28,
+      "section": "Modified Clicks",
+      "source_text": "The Blizzard code has been reworked to use the following modified click actions: ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-029",
+      "wikitext_line": 29,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SELFCAST\" default=\"ALT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-030",
+      "wikitext_line": 30,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"AUTOLOOTTOGGLE\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-031",
+      "wikitext_line": 31,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"STICKYCAMERA\" default=\"CTRL\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-032",
+      "wikitext_line": 32,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"CHATLINK\" default=\"SHIFT-BUTTON1\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-033",
+      "wikitext_line": 33,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-034",
+      "wikitext_line": 34,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SOCKETITEM\" default=\"SHIFT-BUTTON2\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-035",
+      "wikitext_line": 35,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SPLITSTACK\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-036",
+      "wikitext_line": 36,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"PICKUPACTION\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-037",
+      "wikitext_line": 37,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"COMPAREITEMS\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-038",
+      "wikitext_line": 38,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"OPENALLBAGS\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-039",
+      "wikitext_line": 39,
+      "section": "Modified Clicks",
+      "source_text": "* <code>&lt;ModifiedClick action=\"QUESTWATCHTOGGLE\" default=\"SHIFT\"/&gt;</code> ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-041",
+      "wikitext_line": 41,
+      "section": "Modified Clicks",
+      "source_text": "This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]",
+      "inventory_ids": [
+        "source-041-01",
+        "source-041-02",
+        "source-041-03",
+        "source-041-04",
+        "source-041-05",
+        "source-041-06"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-043",
+      "wikitext_line": 43,
+      "section": "Settings",
+      "source_text": "== Settings ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-044",
+      "wikitext_line": 44,
+      "section": "Settings",
+      "source_text": "* The pitchLimit setting will be re-enabled. ",
+      "inventory_ids": [
+        "source-044-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-046",
+      "wikitext_line": 46,
+      "section": "Bug Fixes",
+      "source_text": "== Bug Fixes ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-047",
+      "wikitext_line": 47,
+      "section": "Bug Fixes",
+      "source_text": "* Fixed issue where frame sizes/positions aren't correctly recalculated on demand. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-048",
+      "wikitext_line": 48,
+      "section": "Bug Fixes",
+      "source_text": "* Fixed unnecessary chopping of FontString contents when scaled. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-049",
+      "wikitext_line": 49,
+      "section": "Bug Fixes",
+      "source_text": "* Fixed mishandling of doublewide frames when opening game menu.",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-051",
+      "wikitext_line": 51,
+      "section": "Targetting",
+      "source_text": "== Targetting ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-052",
+      "wikitext_line": 52,
+      "section": "Targetting",
+      "source_text": "* If you specify a target for a spell cast in a macro that does not exist, it will show an error instead of defaulting to your current target. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-054",
+      "wikitext_line": 54,
+      "section": "Macros",
+      "source_text": "== Macros ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-055",
+      "wikitext_line": 55,
+      "section": "Macros",
+      "source_text": "* Conditional macros with multiple targets will use the appropriate context sensitive target for visual range feedback. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-056",
+      "wikitext_line": 56,
+      "section": "Macros",
+      "source_text": "* The entire dynamic macro update system has been moved into highly optimized C++ for 2.2, resulting in a roughly 100x speedup (That's times, not percent). Please keep an eye out for bugs in macro options and dynamic feedback, since it's all completely rewritten from scratch. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-057",
+      "wikitext_line": 57,
+      "section": "Macros",
+      "source_text": "* You will be able to use item:N, where N is the ID of the item, instead of the item name in macros. One of the advantages of this is that it will work even if you don't currently have the item, as long as it is in your item cache (e.g. GetItemInfo(\"item:N\") returns non-nil) ",
+      "inventory_ids": [
+        "source-057-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-058",
+      "wikitext_line": 58,
+      "section": "Macros",
+      "source_text": "* All macro conditional names are now lower-case only. - Previously mixed case conditionals (e.g. Stance) were allowed, now they will only be recognized in their lower case form (e.g. stance). ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-059",
+      "wikitext_line": 59,
+      "section": "Macros",
+      "source_text": "* The modifier conditional supports the new named conditionals, these are case sensitive and the standard UI ones are all uppercase (e.g. [modifier:SELFCAST]) ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-061",
+      "wikitext_line": 61,
+      "section": "Frame Support",
+      "source_text": "== Frame Support ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-062",
+      "wikitext_line": 62,
+      "section": "Frame Support",
+      "source_text": "* [[API Frame RegisterEvent|Frame:RegisterEvent()]] and [[API Frame UnregisterEvent|Frame:UnregisterEvent()]] have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0. ",
+      "inventory_ids": [
+        "source-062-01",
+        "source-062-02",
+        "source-062-03",
+        "source-062-04"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-063",
+      "wikitext_line": 63,
+      "section": "Frame Support",
+      "source_text": "* The game tooltip now handles periodic updates directly instead of requiring OnUpdate functions in each button that might have a tooltip. Many of the related OnEnter functions now take a 'self' parameter, so AddOns will need to be updated to reflect this change. ",
+      "inventory_ids": [
+        "source-063-01",
+        "source-063-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-064",
+      "wikitext_line": 64,
+      "section": "Frame Support",
+      "source_text": "* Frame positions are saved relative to the nearest corner rather than the upper left corner, so that they don't move when changing resolution and screen aspect ratio. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-065",
+      "wikitext_line": 65,
+      "section": "Frame Support",
+      "source_text": "* NEW - [[API Frame SetClampRectInsets|Frame:SetClampRectInsets(left, right, top, bottom)]] -- Set the portion of a frame which is clamped to the screen. ",
+      "inventory_ids": [
+        "source-065-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-066",
+      "wikitext_line": 66,
+      "section": "Frame Support",
+      "source_text": "* NEW - left, right, top, bottom = [[API Frame GetClampRectInsets|Frame:GetClampRectInsets()]] - Get the portion of a frame which is clamped to the screen. ",
+      "inventory_ids": [
+        "source-066-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-067",
+      "wikitext_line": 67,
+      "section": "Frame Support",
+      "source_text": "* NEW VERSION - value = [[API Frame GetAttribute|Frame:GetAttribute(prefix, name, suffix)]] - Performs an attribute wildcard search (prefix..name..suffix, \"*\"..name..suffix, prefix..name..\"*\", \"*\"..name..\"*\", name) and returns the first result found (Added to optimize SecureButton_GetModifiedAttrbute)",
+      "inventory_ids": [
+        "source-067-01",
+        "source-067-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-070",
+      "wikitext_line": 70,
+      "section": "Frame Support",
+      "source_text": "* Extra notes on the new Frame positioning",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-071",
+      "wikitext_line": 71,
+      "section": "Frame Support",
+      "source_text": "Frame positions are actually saved relative to the following points:",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-072",
+      "wikitext_line": 72,
+      "section": "Frame Support",
+      "source_text": "TOPLEFT, TOP, TOPRIGHT, LEFT, CENTER, RIGHT, BOTTOMLEFT, BOTTOM and BOTTOMRIGHT not only the corners.",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-073",
+      "wikitext_line": 73,
+      "section": "Frame Support",
+      "source_text": "To fix the frame positioning in your addons save the relativepoint argument in addition to the X and Y coordinates from GetPoint()",
+      "inventory_ids": [
+        "source-073-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-075",
+      "wikitext_line": 75,
+      "section": "Events",
+      "source_text": "== Events ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-076",
+      "wikitext_line": 76,
+      "section": "Events",
+      "source_text": "* All UNIT_SPELLCAST_* events now have the name and rank of the spell as arg2 and arg3. ",
+      "inventory_ids": [
+        "source-076-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-078",
+      "wikitext_line": 78,
+      "section": "Protected Functions",
+      "source_text": "== Protected Functions ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-079",
+      "wikitext_line": 79,
+      "section": "Protected Functions",
+      "source_text": "* Picking up pet actions, spells, actions, and macros are all protected actions while in combat. This fixes a macro conditional logic exploit. ",
+      "inventory_ids": [],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-081",
+      "wikitext_line": 81,
+      "section": "Secure Drivers",
+      "source_text": "== Secure Drivers ==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-082",
+      "wikitext_line": 82,
+      "section": "Secure Drivers",
+      "source_text": "* RegisterStateDriver can be used with a state of \"visibility\" to show and hide frames based on arbitrary macro conditionals, e.g. RegisterStateDriver(MyBadTargetFrame, \"visibility\", \"[exists,harm] show; hide\") ",
+      "inventory_ids": [
+        "source-082-01",
+        "source-082-02"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-083",
+      "wikitext_line": 83,
+      "section": "Secure Drivers",
+      "source_text": "* The unit setting support in SecureStateHeader now uses \"clear\" instead of \"none\" to specify that the unit attribute should be set to nil, to resolve a conflict with use of \"none\" as a valid unit. ",
+      "inventory_ids": [
+        "source-083-01"
+      ],
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-085",
+      "wikitext_line": 85,
+      "section": "References",
+      "source_text": "==References==",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    },
+    {
+      "source_id": "raw-086",
+      "wikitext_line": 86,
+      "section": "References",
+      "source_text": "http://forums.worldofwarcraft.com/thread.html?topicId=102909678&sid=1",
+      "inventory_ids": [],
+      "status": "metadata-only",
+      "capabilities": []
+    }
+  ],
+  "modified_click_examples": [
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-013",
+      "action": "DRESSUP",
+      "default": "CTRL-BUTTON1",
+      "source_text": " &lt;ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/&gt;"
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-029",
+      "action": "SELFCAST",
+      "default": "ALT",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SELFCAST\" default=\"ALT\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-030",
+      "action": "AUTOLOOTTOGGLE",
+      "default": "SHIFT",
+      "source_text": "* <code>&lt;ModifiedClick action=\"AUTOLOOTTOGGLE\" default=\"SHIFT\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-031",
+      "action": "STICKYCAMERA",
+      "default": "CTRL",
+      "source_text": "* <code>&lt;ModifiedClick action=\"STICKYCAMERA\" default=\"CTRL\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-032",
+      "action": "CHATLINK",
+      "default": "SHIFT-BUTTON1",
+      "source_text": "* <code>&lt;ModifiedClick action=\"CHATLINK\" default=\"SHIFT-BUTTON1\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-033",
+      "action": "DRESSUP",
+      "default": "CTRL-BUTTON1",
+      "source_text": "* <code>&lt;ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-034",
+      "action": "SOCKETITEM",
+      "default": "SHIFT-BUTTON2",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SOCKETITEM\" default=\"SHIFT-BUTTON2\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-035",
+      "action": "SPLITSTACK",
+      "default": "SHIFT",
+      "source_text": "* <code>&lt;ModifiedClick action=\"SPLITSTACK\" default=\"SHIFT\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-036",
+      "action": "PICKUPACTION",
+      "default": "SHIFT",
+      "source_text": "* <code>&lt;ModifiedClick action=\"PICKUPACTION\" default=\"SHIFT\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-037",
+      "action": "COMPAREITEMS",
+      "default": "SHIFT",
+      "source_text": "* <code>&lt;ModifiedClick action=\"COMPAREITEMS\" default=\"SHIFT\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-038",
+      "action": "OPENALLBAGS",
+      "default": "SHIFT",
+      "source_text": "* <code>&lt;ModifiedClick action=\"OPENALLBAGS\" default=\"SHIFT\"/&gt;</code> "
+    },
+    {
+      "status": "UNPROVEN",
+      "capabilities": [],
+      "note": "Literal source only; linked member contracts unexpanded; no runtime/native proof.",
+      "source_id": "raw-039",
+      "action": "QUESTWATCHTOGGLE",
+      "default": "SHIFT",
+      "source_text": "* <code>&lt;ModifiedClick action=\"QUESTWATCHTOGGLE\" default=\"SHIFT\"/&gt;</code> "
+    }
+  ],
+  "extractor_flags": [],
+  "extract_sha256": "81f818306650ef12bfff4d5ff5240ed41663f11a8efc5c10b502dfd03c75cc58",
+  "extract_rows": [
+    {
+      "source_id": "extract-001",
+      "line": 1,
+      "text": "Patch 2.2.0 API changes",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-003",
+      "line": 3,
+      "text": "== Key Bindings ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-004",
+      "line": 4,
+      "text": "The game will distinguish between right and left modifier keys:",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-005",
+      "line": 5,
+      "text": "* Key bindings and modified clicks may optionally specify LSHIFT, RSHIFT, LCTRL, RCTRL, LALT, RALT instead of the normal SHIFT, CTRL, ALT modifiers. The default UI will not set L/R modifiers and will continue to use the normal (either side) modifiers.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-006",
+      "line": 6,
+      "text": "* Macro conditionals may use lshift, rshift, lctrl, rctrl, lalt, ralt in addition to the normal modifiers.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-007",
+      "line": 7,
+      "text": "* There are several new API functions to query each modifier individually: IsLeftShiftKeyDown(), IsRightShiftKeyDown(), IsLeftControlKeyDown(), IsRightControlKeyDown(), IsLeftAltKeyDown(), IsRightAltKeyDown()",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-009",
+      "line": 9,
+      "text": "== Modified Clicks ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-010",
+      "line": 10,
+      "text": "There will be a unified system for customizing modified clicks in the UI:",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-012",
+      "line": 12,
+      "text": "Modified Clicks are specified using a new section in Bindings.xml, e.g.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-013",
+      "line": 13,
+      "text": " <ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-014",
+      "line": 14,
+      "text": "These click actions are context sensitive, and Lua code chooses which action is appropriate based on the current context.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-016",
+      "line": 16,
+      "text": "Script API:",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-017",
+      "line": 17,
+      "text": "* count = GetNumModifiedClickActions()",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-018",
+      "line": 18,
+      "text": "* action = GetModifiedClickAction(index)",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-019",
+      "line": 19,
+      "text": "* SetModifiedClick(\"action\", \"binding\")",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-020",
+      "line": 20,
+      "text": "* binding = GetModifiedClick(\"action\")",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-021",
+      "line": 21,
+      "text": "* active = [[API IsModifiedClick|IsModifiedClick([\"action\"])]]",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-023",
+      "line": 23,
+      "text": "A \"binding\" is in the form of MOD-BUTTONX, e.g. CTRL-BUTTON1, or a simple modifier, e.g. CTRL",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-025",
+      "line": 25,
+      "text": "These modified click bindings are loaded and saved with the normal key bindings, so if you make changes you'll need to save them with:",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-026",
+      "line": 26,
+      "text": "* SaveBindings(GetCurrentBindingSet())",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-028",
+      "line": 28,
+      "text": "The Blizzard code has been reworked to use the following modified click actions:",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-029",
+      "line": 29,
+      "text": "* <ModifiedClick action=\"SELFCAST\" default=\"ALT\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-030",
+      "line": 30,
+      "text": "* <ModifiedClick action=\"AUTOLOOTTOGGLE\" default=\"SHIFT\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-031",
+      "line": 31,
+      "text": "* <ModifiedClick action=\"STICKYCAMERA\" default=\"CTRL\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-032",
+      "line": 32,
+      "text": "* <ModifiedClick action=\"CHATLINK\" default=\"SHIFT-BUTTON1\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-033",
+      "line": 33,
+      "text": "* <ModifiedClick action=\"DRESSUP\" default=\"CTRL-BUTTON1\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-034",
+      "line": 34,
+      "text": "* <ModifiedClick action=\"SOCKETITEM\" default=\"SHIFT-BUTTON2\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-035",
+      "line": 35,
+      "text": "* <ModifiedClick action=\"SPLITSTACK\" default=\"SHIFT\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-036",
+      "line": 36,
+      "text": "* <ModifiedClick action=\"PICKUPACTION\" default=\"SHIFT\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-037",
+      "line": 37,
+      "text": "* <ModifiedClick action=\"COMPAREITEMS\" default=\"SHIFT\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-038",
+      "line": 38,
+      "text": "* <ModifiedClick action=\"OPENALLBAGS\" default=\"SHIFT\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-039",
+      "line": 39,
+      "text": "* <ModifiedClick action=\"QUESTWATCHTOGGLE\" default=\"SHIFT\"/>",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-041",
+      "line": 41,
+      "text": "This system replaces the following functions: SetAutoLootToggleKey(), GetAutoLootToggleKey(), IsAutoLootKeyDown(), SetActionSelfCastKey(), GetActionSelfCastKey(), IsActionSelfCastKeyDown()",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-043",
+      "line": 43,
+      "text": "== Settings ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-044",
+      "line": 44,
+      "text": "* The pitchLimit setting will be re-enabled.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-046",
+      "line": 46,
+      "text": "== Bug Fixes ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-047",
+      "line": 47,
+      "text": "* Fixed issue where frame sizes/positions aren't correctly recalculated on demand.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-048",
+      "line": 48,
+      "text": "* Fixed unnecessary chopping of FontString contents when scaled.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-049",
+      "line": 49,
+      "text": "* Fixed mishandling of doublewide frames when opening game menu.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-051",
+      "line": 51,
+      "text": "== Targetting ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-052",
+      "line": 52,
+      "text": "* If you specify a target for a spell cast in a macro that does not exist, it will show an error instead of defaulting to your current target.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-054",
+      "line": 54,
+      "text": "== Macros ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-055",
+      "line": 55,
+      "text": "* Conditional macros with multiple targets will use the appropriate context sensitive target for visual range feedback.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-056",
+      "line": 56,
+      "text": "* The entire dynamic macro update system has been moved into highly optimized C++ for 2.2, resulting in a roughly 100x speedup (That's times, not percent). Please keep an eye out for bugs in macro options and dynamic feedback, since it's all completely rewritten from scratch.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-057",
+      "line": 57,
+      "text": "* You will be able to use item:N, where N is the ID of the item, instead of the item name in macros. One of the advantages of this is that it will work even if you don't currently have the item, as long as it is in your item cache (e.g. GetItemInfo(\"item:N\") returns non-nil)",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-058",
+      "line": 58,
+      "text": "* All macro conditional names are now lower-case only. - Previously mixed case conditionals (e.g. Stance) were allowed, now they will only be recognized in their lower case form (e.g. stance).",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-059",
+      "line": 59,
+      "text": "* The modifier conditional supports the new named conditionals, these are case sensitive and the standard UI ones are all uppercase (e.g. [modifier:SELFCAST])",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-061",
+      "line": 61,
+      "text": "== Frame Support ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-062",
+      "line": 62,
+      "text": "* Frame:RegisterEvent() and Frame:UnregisterEvent() have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-063",
+      "line": 63,
+      "text": "* The game tooltip now handles periodic updates directly instead of requiring OnUpdate functions in each button that might have a tooltip. Many of the related OnEnter functions now take a 'self' parameter, so AddOns will need to be updated to reflect this change.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-064",
+      "line": 64,
+      "text": "* Frame positions are saved relative to the nearest corner rather than the upper left corner, so that they don't move when changing resolution and screen aspect ratio.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-065",
+      "line": 65,
+      "text": "* NEW - Frame:SetClampRectInsets(left, right, top, bottom) -- Set the portion of a frame which is clamped to the screen.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-066",
+      "line": 66,
+      "text": "* NEW - left, right, top, bottom = Frame:GetClampRectInsets() - Get the portion of a frame which is clamped to the screen.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-067",
+      "line": 67,
+      "text": "* NEW VERSION - value = Frame:GetAttribute(prefix, name, suffix) - Performs an attribute wildcard search (prefix..name..suffix, \"*\"..name..suffix, prefix..name..\"*\", \"*\"..name..\"*\", name) and returns the first result found (Added to optimize SecureButton_GetModifiedAttrbute)",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-070",
+      "line": 70,
+      "text": "* Extra notes on the new Frame positioning",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-071",
+      "line": 71,
+      "text": "Frame positions are actually saved relative to the following points:",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-072",
+      "line": 72,
+      "text": "TOPLEFT, TOP, TOPRIGHT, LEFT, CENTER, RIGHT, BOTTOMLEFT, BOTTOM and BOTTOMRIGHT not only the corners.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-073",
+      "line": 73,
+      "text": "To fix the frame positioning in your addons save the relativepoint argument in addition to the X and Y coordinates from GetPoint()",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-075",
+      "line": 75,
+      "text": "== Events ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-076",
+      "line": 76,
+      "text": "* All UNIT_SPELLCAST_* events now have the name and rank of the spell as arg2 and arg3.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-078",
+      "line": 78,
+      "text": "== Protected Functions ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-079",
+      "line": 79,
+      "text": "* Picking up pet actions, spells, actions, and macros are all protected actions while in combat. This fixes a macro conditional logic exploit.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-081",
+      "line": 81,
+      "text": "== Secure Drivers ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-082",
+      "line": 82,
+      "text": "* RegisterStateDriver can be used with a state of \"visibility\" to show and hide frames based on arbitrary macro conditionals, e.g. RegisterStateDriver(MyBadTargetFrame, \"visibility\", \"[exists,harm] show; hide\")",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-083",
+      "line": 83,
+      "text": "* The unit setting support in SecureStateHeader now uses \"clear\" instead of \"none\" to specify that the unit attribute should be set to nil, to resolve a conflict with use of \"none\" as a valid unit.",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-085",
+      "line": 85,
+      "text": "== References ==",
+      "status": "UNPROVEN",
+      "capabilities": []
+    },
+    {
+      "source_id": "extract-086",
+      "line": 86,
+      "text": "http://forums.worldofwarcraft.com/thread.html?topicId=102909678&sid=1",
+      "status": "UNPROVEN",
+      "capabilities": []
+    }
+  ],
+  "limits": [
+    "No linked-page expansion or concrete UNIT_SPELLCAST family enumeration.",
+    "Split SaveBindings call fragments are not reconstructed member signatures.",
+    "Empty parentheses in source are not zero-arity/type/return proofs.",
+    "Source replacement is not a current-retail removal or a supersession proof.",
+    "No explicit console/slash command inventory; macro syntax is prose, not commands.",
+    "Default extractor preserves optional IsModifiedClick link markup verbatim.",
+    "2007 historical retail is neither Classic 2.5/Wrath 3.4/Era nor modern native retail."
+  ]
+}

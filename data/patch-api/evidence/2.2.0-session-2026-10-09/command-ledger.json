@@ -1,0 +1,17 @@
+{
+  "schema": "bounded-development-proof/v1",
+  "base_revision": "dd8ca0f19e9f0172851116a7bfae43792a1b78b4",
+  "proofs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "data/patch-api/evidence/2.2.0-session-2026-10-09/test_source_accounting.py"
+      ],
+      "scope": "initial test fixture; validator absent",
+      "result": "RED 5/5 expected assertions",
+      "log": "source-red.log",
+      "invalidated_by": "validator implementation; retained development RED, not current pass"
+    }
+  ]
+}

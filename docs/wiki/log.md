@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Historical retail Patch 2.2.0 SOURCE audit
+
+[Audit](investigations/patch-2-2-0-api-audit.md): frozen source/registry identity and literal accounting added; owned SOURCE RED5/5, shared generator/extractor unchanged. Initial implementation before targeted GREEN; all native/model contracts UNPROVEN. Main owns integration/final gates.
+
 ## [2026-10-09] measurement | Separate Wrath 3.4.1 bare factory
 
 [Current measurement](investigations/patch-3-4-1-api-audit.md#separate-current-factory-measurement--2026-10-09): `p341-factory` from `f95eed96e`; fresh 333 literal occurrences, discovery RED at `467acfa6e` (239 classifier matches/94 gaps), 15 separately published default-string differences (eight numeric-format-only/seven numeric differences). Only two actual 3.4.2 successor removals; 3.4.3 zero identities, no foreign-history credit. Bare Wrath38001, not native30401/loaded UI; event and Command-catalog limitations explicit. Original 19 historical seals/ledger/counts unchanged, no models/shims/runtime/vendor/cache edits. Exact receipts in fresh proof ledger; targeted GREEN 6/6 exit 0 at `da31b9ed1`, all 333 observations equal RED discovery; direct preservation checks all 19 original seals. No test-input change afterward. Main owns integration/native final gates.

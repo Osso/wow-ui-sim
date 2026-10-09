@@ -1,0 +1,86 @@
+{{apichanges|2.2.0|next=2.3.0|prev=2.1.0}}
+
+== Key Bindings ==
+The game will distinguish between '''right''' and '''left''' modifier keys: 
+* Key bindings and modified clicks may optionally specify <code>LSHIFT</code>, <code>RSHIFT</code>, <code>LCTRL</code>, <code>RCTRL</code>, <code>LALT</code>, <code>RALT</code> instead of the normal <code>SHIFT</code>, <code>CTRL</code>, <code>ALT</code> modifiers. The default UI will not set L/R modifiers and will continue to use the normal (either side) modifiers. 
+* Macro conditionals may use <code>lshift</code>, <code>rshift</code>, <code>lctrl</code>, <code>rctrl</code>, <code>lalt</code>, <code>ralt</code> in addition to the normal modifiers. 
+* There are several new API functions to query each modifier individually: [[API IsLeftShiftKeyDown|IsLeftShiftKeyDown()]], [[API IsRightShiftKeyDown|IsRightShiftKeyDown()]], [[API IsLeftControlKeyDown|IsLeftControlKeyDown()]], [[API IsRightControlKeyDown|IsRightControlKeyDown()]], [[API IsLeftAltKeyDown|IsLeftAltKeyDown()]], [[API IsRightAltKeyDown|IsRightAltKeyDown()]] 
+
+==Modified Clicks==
+There will be a unified system for customizing modified clicks in the UI: 
+
+Modified Clicks are specified using a new section in Bindings.xml, e.g. 
+ &lt;ModifiedClick action="DRESSUP" default="CTRL-BUTTON1"/&gt;
+These click actions are context sensitive, and Lua code chooses which action is appropriate based on the current context. 
+
+Script API:
+* count = [[API GetNumModifiedClickActions|GetNumModifiedClickActions()]]
+* action = [[API GetModifiedClickAction|GetModifiedClickAction(index)]]
+* [[API SetModifiedClick|SetModifiedClick("action", "binding")]]
+* binding = [[API GetModifiedClick|GetModifiedClick("action")]]
+* active = [[API IsModifiedClick|IsModifiedClick(["action"])]] 
+
+A "binding" is in the form of <code>MOD-BUTTONX</code>, e.g. <code>CTRL-BUTTON1</code>, or a simple modifier, e.g. <code>CTRL</code>
+
+These modified click bindings are loaded and saved with the normal key bindings, so if you make changes you'll need to save them with: 
+* [[API SaveBindings|SaveBindings(]][[API GetCurrentBindingSet|GetCurrentBindingSet())]]
+
+The Blizzard code has been reworked to use the following modified click actions: 
+* <code>&lt;ModifiedClick action="SELFCAST" default="ALT"/&gt;</code> 
+* <code>&lt;ModifiedClick action="AUTOLOOTTOGGLE" default="SHIFT"/&gt;</code> 
+* <code>&lt;ModifiedClick action="STICKYCAMERA" default="CTRL"/&gt;</code> 
+* <code>&lt;ModifiedClick action="CHATLINK" default="SHIFT-BUTTON1"/&gt;</code> 
+* <code>&lt;ModifiedClick action="DRESSUP" default="CTRL-BUTTON1"/&gt;</code> 
+* <code>&lt;ModifiedClick action="SOCKETITEM" default="SHIFT-BUTTON2"/&gt;</code> 
+* <code>&lt;ModifiedClick action="SPLITSTACK" default="SHIFT"/&gt;</code> 
+* <code>&lt;ModifiedClick action="PICKUPACTION" default="SHIFT"/&gt;</code> 
+* <code>&lt;ModifiedClick action="COMPAREITEMS" default="SHIFT"/&gt;</code> 
+* <code>&lt;ModifiedClick action="OPENALLBAGS" default="SHIFT"/&gt;</code> 
+* <code>&lt;ModifiedClick action="QUESTWATCHTOGGLE" default="SHIFT"/&gt;</code> 
+
+This system replaces the following functions: [[API SetAutoLootToggleKey|SetAutoLootToggleKey()]], [[API GetAutoLootToggleKey|GetAutoLootToggleKey()]], [[API IsAutoLootKeyDown|IsAutoLootKeyDown()]], [[API SetActionSelfCastKey|SetActionSelfCastKey()]], [[API GetActionSelfCastKey|GetActionSelfCastKey()]], [[API IsActionSelfCastKeyDown|IsActionSelfCastKeyDown()]]
+
+== Settings ==
+* The pitchLimit setting will be re-enabled. 
+
+== Bug Fixes ==
+* Fixed issue where frame sizes/positions aren't correctly recalculated on demand. 
+* Fixed unnecessary chopping of FontString contents when scaled. 
+* Fixed mishandling of doublewide frames when opening game menu.
+
+== Targetting ==
+* If you specify a target for a spell cast in a macro that does not exist, it will show an error instead of defaulting to your current target. 
+
+== Macros ==
+* Conditional macros with multiple targets will use the appropriate context sensitive target for visual range feedback. 
+* The entire dynamic macro update system has been moved into highly optimized C++ for 2.2, resulting in a roughly 100x speedup (That's times, not percent). Please keep an eye out for bugs in macro options and dynamic feedback, since it's all completely rewritten from scratch. 
+* You will be able to use item:N, where N is the ID of the item, instead of the item name in macros. One of the advantages of this is that it will work even if you don't currently have the item, as long as it is in your item cache (e.g. GetItemInfo("item:N") returns non-nil) 
+* All macro conditional names are now lower-case only. - Previously mixed case conditionals (e.g. Stance) were allowed, now they will only be recognized in their lower case form (e.g. stance). 
+* The modifier conditional supports the new named conditionals, these are case sensitive and the standard UI ones are all uppercase (e.g. [modifier:SELFCAST]) 
+
+== Frame Support ==
+* [[API Frame RegisterEvent|Frame:RegisterEvent()]] and [[API Frame UnregisterEvent|Frame:UnregisterEvent()]] have been optimized and can be used in conjunction with OnShow() and OnHide() to greatly improve performance of the UI. This technique has been used to optimize the bank, bags, inventory, spellbook, and unit frames for a decent speed improvement in 2.2.0. 
+* The game tooltip now handles periodic updates directly instead of requiring OnUpdate functions in each button that might have a tooltip. Many of the related OnEnter functions now take a 'self' parameter, so AddOns will need to be updated to reflect this change. 
+* Frame positions are saved relative to the nearest corner rather than the upper left corner, so that they don't move when changing resolution and screen aspect ratio. 
+* NEW - [[API Frame SetClampRectInsets|Frame:SetClampRectInsets(left, right, top, bottom)]] -- Set the portion of a frame which is clamped to the screen. 
+* NEW - left, right, top, bottom = [[API Frame GetClampRectInsets|Frame:GetClampRectInsets()]] - Get the portion of a frame which is clamped to the screen. 
+* NEW VERSION - value = [[API Frame GetAttribute|Frame:GetAttribute(prefix, name, suffix)]] - Performs an attribute wildcard search (prefix..name..suffix, "*"..name..suffix, prefix..name.."*", "*"..name.."*", name) and returns the first result found (Added to optimize SecureButton_GetModifiedAttrbute)
+
+
+* Extra notes on the new Frame positioning
+Frame positions are actually saved relative to the following points:
+TOPLEFT, TOP, TOPRIGHT, LEFT, CENTER, RIGHT, BOTTOMLEFT, BOTTOM and BOTTOMRIGHT not only the corners.
+To fix the frame positioning in your addons save the relativepoint argument in addition to the X and Y coordinates from GetPoint()
+
+== Events ==
+* All UNIT_SPELLCAST_* events now have the name and rank of the spell as arg2 and arg3. 
+
+== Protected Functions ==
+* Picking up pet actions, spells, actions, and macros are all protected actions while in combat. This fixes a macro conditional logic exploit. 
+
+== Secure Drivers ==
+* RegisterStateDriver can be used with a state of "visibility" to show and hide frames based on arbitrary macro conditionals, e.g. RegisterStateDriver(MyBadTargetFrame, "visibility", "[exists,harm] show; hide") 
+* The unit setting support in SecureStateHeader now uses "clear" instead of "none" to specify that the unit attribute should be set to nil, to resolve a conflict with use of "none" as a valid unit. 
+
+==References==
+http://forums.worldofwarcraft.com/thread.html?topicId=102909678&sid=1
