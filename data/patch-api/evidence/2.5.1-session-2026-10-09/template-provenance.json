@@ -1,0 +1,22 @@
+{
+  "343-canonical/validate.py": {
+    "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/3.4.3-session-2026-10-09/validate.py",
+    "sha256": "f0fe151506f54ed57995c33ffa521be183a982072c70c90aa6442bdd935abe3e",
+    "use": "read-only template; not a replay dependency"
+  },
+  "343-canonical/test_source_accounting.py": {
+    "path": "/home/osso/Projects/wow/wow-ui-sim/data/patch-api/evidence/3.4.3-session-2026-10-09/test_source_accounting.py",
+    "sha256": "9c796eed4a36c30acde0526e8553dcbd0a2cf7b33742e8ed5fddd130d0b51e4f",
+    "use": "read-only template; not a replay dependency"
+  },
+  "256-sibling/validate.py": {
+    "path": "/home/osso/.worktrees/wow-ui-sim-p256-source/data/patch-api/evidence/2.5.6-session-2026-10-09/validate.py",
+    "sha256": "42c010057ec8a03fb54083ddca5d7381aa59a7098414da2426562af26e397d5b",
+    "use": "read-only template; not a replay dependency"
+  },
+  "256-sibling/test_source_accounting.py": {
+    "path": "/home/osso/.worktrees/wow-ui-sim-p256-source/data/patch-api/evidence/2.5.6-session-2026-10-09/test_source_accounting.py",
+    "sha256": "6b6ebf4b505b73be82dd4137b62d0e03d712a3bd8471930682673f4c604103ba",
+    "use": "read-only template; not a replay dependency"
+  }
+}

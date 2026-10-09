@@ -1,0 +1,12 @@
+{
+  "scope": "pre-implementation frozen identity/hash/returned-content validation",
+  "result": "PASS",
+  "pageid": 71215,
+  "revid": 701879,
+  "timestamp": "2022-02-06T21:22:09Z",
+  "wikitext_sha256": "994581e0b655316f1038f136ee4a9dd49fa4eabffc3ddcbeb92b0b13e7939daf",
+  "response_sha256": "de095f3c391a05dbeef9d43d32e10bbda74fed3570d4c2c2817bc1c42b60a230",
+  "registry_pages": 101,
+  "registry_boundary": "1.0.0",
+  "registry_sha256": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+}

@@ -1,0 +1,9 @@
+Patch 2.5.1 API changes
+
+== Summary ==
+* TOC: 20501
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated APIs: Deprecated_2_5_1.lua
+* Community patch notes: 2.5.1 Consolidated UI Changes
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/DiffWikitext/DiffWikitext.lua -->
+

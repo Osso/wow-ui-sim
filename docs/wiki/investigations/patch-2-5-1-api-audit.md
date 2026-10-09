@@ -1,0 +1,73 @@
+# TBC Classic Patch 2.5.1 SOURCE audit
+
+Frozen page 71215/revision 701879, timestamp `2022-02-06T21:22:09Z`, audited as separate TBC Classic history. SOURCE/configuration accounting only; no runtime/native proof or unsupported-API diagnosis. [Spec](../../specs/patch-2-5-1-source-accounting.md); [literal ledger](../../../data/patch-api/sources/2.5.1-page-coverage.json).
+
+## Provenance and boundaries
+
+Identity/hash checked before implementation against committed [manifest](../../../data/patch-api/source-cache/legacy-2026-10-09/manifest.json) and response. Wikitext: 24,490 bytes, SHA-256 `994581e0b655316f1038f136ee4a9dd49fa4eabffc3ddcbeb92b0b13e7939daf`; response `de095f3c391a05dbeef9d43d32e10bbda74fed3570d4c2c2817bc1c42b60a230`. Full frozen registry has 101 entries through 1.0.0; registry hash `e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c`.
+
+Source literally says `* TOC: <code>20501</code>` and `{{apichanges|2.5.1|prev=1.13.7|next=2.5.2}}`. It does not spell out a client-line label. `tbc-classic` is the bounded audit label based on that context, not a new shared runtime classification. No configured profile selected. Navigation from 1.13.7 does not grant Era 1.x supersession.
+
+Read-only templates: canonical 3.4.3 source accounting and sibling 2.5.6 evidence. Own historical copies of generator/extractor/config/registry/response permit reproduction without sibling branches or Git artifacts. Original source cache, shared tools and runtime untouched.
+
+## Literal coverage matrix
+
+| Source feature | Exact coverage | Proof level |
+|---|---:|---|
+| Global API | 301 added / 38 removed | Names/direction only; all 339 contracts UNPROVEN |
+| Widgets | 36 added / 8 removed | 40 methods plus four added scripts; all 44 contracts UNPROVEN |
+| Events | 33 added / 9 removed | 42 names; payload/trigger/order/security UNPROVEN |
+| CVars/commands | 116 added / 32 removed | 100/18 CVars plus 16/14 commands; defaults/effects/permissions UNPROVEN |
+| Remaining source | Three linked summary rows and 51 metadata rows | Links unexpanded; every nonblank literal row retained |
+
+627 literal rows in total, 576 UNPROVEN and 51 metadata-only. Eight numerical headers reconcile. 573 occurrences are not 573 unique names: direction, section, source line and command/script kind preserved, including `graphicsTextureFiltering` on both sides and `UpdateWindow` as global and command. Source contains zero explicit signatures and zero content transclusions. Navigation template is context, not expanded content. Empty-signature inventory is not positive API parity.
+
+API name rows cannot establish arguments, returns, errors, state transitions or security. Script/event rows cannot establish payload or dispatch lifecycle. CVar rows cannot establish defaults, accepted values or persistence. Command rows cannot establish syntax or effects. Added/removed publication itself has not been measured.
+
+## Linked contracts
+
+- Diffs row retains both exact compare URLs; neither diff payload is retained. Changed members/signatures, model/state/security contracts UNPROVEN.
+- Deprecated APIs row retains literal `Deprecated_2_5_1.lua` classic-branch URL, not a pinned linked payload. Wrappers, migration semantics and removed-member behavior UNPROVEN.
+- Community notes row retains literal consolidated-notes wiki URL, not its revision/content. Unenumerated summary changes, state/security/native semantics UNPROVEN.
+
+No linked content reconstructed; local literal source ledger preserves full URLs even though supplemental plaintext renders link labels. No public/current network fetch used.
+
+## Historical configured profiles
+
+Verified from own copied `src/client_profile.rs`, Cargo feature graph and committed manifest bytes at base `f95eed96e`, not from live caches or executable probes.
+
+| Profile | Configured interface | Manifest paths / TOCs |
+|---|---:|---:|
+| Retail | 120100 | 4041 / 394 |
+| PTR | 120105 | 4025 / 374 |
+| Wrath | 38001 | 3981 / 360 |
+| Mists | 50504 | 3981 / 360 |
+| Era | 11507 | 3981 / 360 |
+| Anniversary | 11507 | 3981 / 360 |
+| Forever | 16001 | 4398 / 349 |
+
+Manifest entries are committed paths, not observed loaded files or TOC contents. Anniversary 11507 is not presumed TBC 205xx. No dedicated matching profile is evidenced by this copied configuration; that is not a blanket unsupported-API diagnosis. Cache/runtime/model/native/full-UI measurements not performed. Native profile correspondence remains UNPROVEN.
+
+## Successors and ownership
+
+2.5.2, 2.5.3, 2.5.4, 2.5.5 and 2.5.6 are pending same-TBC-history main-integration references only, without register or supersession credit. Retail 3.x, Cata 4.x, Wrath 3.4 and Era 1.x never supersede this ledger. No retirement or runtime change.
+
+Main owns integration, actual successor evaluation and any later native matching-client measurement/profile decision. This branch does not run native probes, broad/check/lint/profile/startup/full-suite/final gates or operations.
+
+## SOURCE proof ledger
+
+[Original proof receipts](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/source-proof.json) record exact revision, argv, scope and logs. Initial tests committed at `08a957127`: nine SOURCE assertions RED because owned literal ledger absent. Implementation GREEN and serialized replay pending; no completion credit yet.
+
+Historical replay must retain source/config/tool/ledger/log seals; fresh copied process has no Git, target, current runtime/current tools dependency. Ledger and log disk tampering must each reject at the exact seal and restore original bytes. Seals are integrity assertions against the committed map, not external cryptographic authenticity or native correctness.
+
+## Sources
+
+- [Frozen original wikitext](../../../data/patch-api/source-cache/legacy-2026-10-09/2.5.1-wikitext.txt).
+- [Owned source pin/response/config snapshots](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/source-pin.json).
+- [Full historical registry](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/frozen-registry.json).
+- [Configured profile observation](../../../data/patch-api/evidence/2.5.1-session-2026-10-09/profile-observation.json).
+
+## See Also
+
+- [[patch-3-4-3-api-audit]] — source-only template, distinct Wrath history.
+- [[client-profiles]] — runtime profile architecture; not native TBC proof.

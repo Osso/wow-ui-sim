@@ -22,6 +22,9 @@
 ## [2026-10-09] investigation | Patch 2.5.2 Classic/TBC SOURCE audit
 
 [Audit](investigations/patch-2-5-2-api-audit.md): frozen 69347/682905, TOC 20502. 198 nonblank rows, 145 API occurrences, eight reconciled headers, 33 removals; 146 UNPROVEN/52 metadata, 83 unspecified callable signatures, 151 contract limits. Separate Anniversary 11507 configuration; no native/runtime/model or unsupported-API diagnosis. Only frozen 2.5.3–2.5.6 pending main references; no foreign supersession. Own SOURCE GREEN 7/7 at 9d42dda13; validator 54 seals. At 14447f7b2 both serialized tampers reject/restore; fresh historical replay passes 57 seals, outer 61. Original tested bytes unchanged; no native or broad/final gate.
+## [2026-10-09] investigation | TBC Classic 2.5.1 SOURCE contracts
+
+[Audit](investigations/patch-2-5-1-api-audit.md): frozen page 71215/revision 701879, literal TOC 20501. 627 literal rows, 573 inventory occurrences, three linked summaries and eight reconciled headers; 576 contracts UNPROVEN. Seven configured interfaces kept separate, Anniversary 11507 not presumed TBC. Same-history 2.5.2–2.5.6 pending main integration only; no foreign supersession/runtime/native credit. Own source RED retained; GREEN/sealed fresh replay pending.
 
 ## [2026-10-09] investigation | Patch 3.4.2 Wrath Classic source audit
 
