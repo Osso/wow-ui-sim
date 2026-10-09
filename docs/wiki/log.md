@@ -18,6 +18,10 @@
 
 [Audit](investigations/patch-3-4-2-api-audit.md): frozen identity/hashes validated before copy; 155 explicit inventory/208 nonblank rows, two substantive summaries and all CVar fields retained. Shared tooling lacks Wrath publication classification, so no retail stand-in or runtime claim. Actual 3.4.3 successor retained reference-only; integration queued after it. Targeted derived-accounting RED fails as expected; owned serialized fixtures GREEN 10/10 at 4429022ea. Historical replay/extraction pass at f9905c3a3; own serialized ledger/GREEN-log tamper controls reject exact seals and restore bytes. Compact 23-input historical evidence; all runtime/native measurements remain unperformed. No runtime/vendor/shared-tool changes.
 
+## [2026-10-09] ingest | Patch 3.4.1 Wrath Classic frozen source accounting
+
+[Audit](investigations/patch-3-4-1-api-audit.md): verified literal identity/hash before copy; 333 inventory/376 raw rows, two prose limits, 211 absent signatures, 62 literal CVar defaults. Headers 146/65, 35/9, 63/15 reconcile; CVar added includes LogFps command. Own serialized source-accounting RED then GREEN 7/7; exact extraction and sealed historical replay exit 0. No native/runtime publication, behavior or removal proof; no runtime/vendor/cache edits or broad/final gate. Parent integrates after separate 3.4.2.
+
 ## [2026-10-09] maintenance | Patch 4.3.4 modeled client clock
 
 [Audit](investigations/patch-4-3-4-api-audit.md#coordinator-client-clock-model): retail-only `GetSessionTime` uses existing client-state elapsed clock; primary API 254254/revision 6809914 supplies numeric seconds/client-open origin, not locale gating or integer granularity. Behavioral RED nil-call, GREEN 2/2 at `160f8209c`; binding/tests unchanged at `575a93e30`. Current six-gap fixture distinguished from sealed historical seven-gap evidence. No native uptime equivalence or global acceptance claim; broader publication/Mists/check/build gates remain coordinator-owned and pending. Docs-only update.

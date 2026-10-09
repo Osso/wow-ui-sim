@@ -1,0 +1,14 @@
+{
+  "title": "Patch 3.4.1/API changes",
+  "version": "3.4.1",
+  "pageid": 379792,
+  "revid": 3656581,
+  "timestamp": "2023-05-04T13:15:35Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=3656581&format=json",
+  "retrieved": "2026-10-09T08:51:36.392706+00:00",
+  "response_sha256": "8fd09b4b807c4191b62843d4e2dbfc18a5313e15796a6e284e24016694e99afe",
+  "wikitext_sha256": "b336b152bea05e3609de06ac3971a98e7d2584129e4e3b74a5c333c6fc060ed1",
+  "wikitext_bytes": 21020,
+  "response_path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.1-response.json",
+  "wikitext_path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.1-wikitext.txt"
+}

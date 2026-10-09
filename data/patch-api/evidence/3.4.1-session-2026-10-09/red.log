@@ -1,0 +1,15 @@
+test_literal_counts_and_command_in_cvar_header (__main__.SourceAccounting.test_literal_counts_and_command_in_cvar_header) ... FAIL
+
+======================================================================
+FAIL: test_literal_counts_and_command_in_cvar_header (__main__.SourceAccounting.test_literal_counts_and_command_in_cvar_header)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p341-source/data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py", line 30, in test_literal_counts_and_command_in_cvar_header
+    self.assertEqual(result.get("inventory_occurrences"), 333)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 333
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

@@ -1,0 +1,14 @@
+{
+  "profile": "wrath",
+  "feature": "client-wrath",
+  "supported_profile": true,
+  "source_toc": 30401,
+  "configured_interface": 38001,
+  "cache_subdir": "wrath",
+  "code_revision": "e7eb38c362be230b00af4096ac8092b9dd147200",
+  "client_profile_sha256": "8f603ce85c8b4d67f2fdbc15194d47f0d3365f0c96d7dd85ce21e3a893554839",
+  "runtime_observations": 0,
+  "native_observations": 0,
+  "cache_inspected": false,
+  "note": "Supported profile observed in src/client_profile.rs; source TOC is not the configured interface. No runtime/cache/native measurement."
+}

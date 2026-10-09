@@ -1,0 +1,12 @@
+test_every_inventory_prose_signature_and_source_row_required (__main__.SourceAccounting.test_every_inventory_prose_signature_and_source_row_required) ... ok
+test_invented_behavior_or_signature_credit_rejected (__main__.SourceAccounting.test_invented_behavior_or_signature_credit_rejected) ... ok
+test_literal_counts_and_command_in_cvar_header (__main__.SourceAccounting.test_literal_counts_and_command_in_cvar_header) ... ok
+test_literal_cvar_metadata_and_command_retained (__main__.SourceAccounting.test_literal_cvar_metadata_and_command_retained) ... ok
+test_literal_identity_and_hash_tampering_rejected (__main__.SourceAccounting.test_literal_identity_and_hash_tampering_rejected) ... ok
+test_profile_support_is_not_runtime_or_native_credit (__main__.SourceAccounting.test_profile_support_is_not_runtime_or_native_credit) ... ok
+test_wrong_profile_or_foreign_supersession_rejected (__main__.SourceAccounting.test_wrong_profile_or_foreign_supersession_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 3.271s
+
+OK

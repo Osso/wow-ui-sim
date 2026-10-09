@@ -1,0 +1,109 @@
+{
+  "schema": "bounded-source-proof/v1",
+  "patch": "3.4.1",
+  "execution_revision": "e7eb38c362be230b00af4096ac8092b9dd147200 with own uncommitted implementation",
+  "content_scope": "Exact owned source, validator, tests, historical tools and profile bytes sealed by seals.json; subsequent receipt/doc additions do not invalidate this content proof.",
+  "summary": {
+    "cvar_defaults": 62,
+    "directions": {
+      "added": 244,
+      "removed": 89
+    },
+    "explicit_signatures": 0,
+    "header_counts": [
+      {
+        "direction": "added",
+        "header_count": 146,
+        "parsed_count": 146,
+        "section": "global-api"
+      },
+      {
+        "direction": "removed",
+        "header_count": 65,
+        "parsed_count": 65,
+        "section": "global-api"
+      },
+      {
+        "direction": "added",
+        "header_count": 35,
+        "parsed_count": 35,
+        "section": "events"
+      },
+      {
+        "direction": "removed",
+        "header_count": 9,
+        "parsed_count": 9,
+        "section": "events"
+      },
+      {
+        "direction": "added",
+        "header_count": 63,
+        "parsed_count": 63,
+        "section": "cvars"
+      },
+      {
+        "direction": "removed",
+        "header_count": 15,
+        "parsed_count": 15,
+        "section": "cvars"
+      }
+    ],
+    "inventory_occurrences": 333,
+    "kinds": {
+      "command": 1,
+      "cvars": 77,
+      "events": 44,
+      "global-api": 211
+    },
+    "native_observations": 0,
+    "prose_limits": 2,
+    "removal_occurrences": 89,
+    "runtime_observations": 0,
+    "signature_limits": 211,
+    "source_rows": 376,
+    "statuses": {
+      "UNPROVEN": 335,
+      "metadata-only": 41
+    }
+  },
+  "proof_ledger": [
+    {
+      "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py SourceAccounting.test_literal_counts_and_command_in_cvar_header",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "phase": "RED",
+      "exit": 1,
+      "log": "red.log",
+      "result": "One missing-count assertion failure against temporary empty validator; replaced by implementation.",
+      "invalidated_by": "validator implementation supersedes expected RED"
+    },
+    {
+      "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/test_source_accounting.py",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "phase": "GREEN",
+      "exit": 0,
+      "log": "green.log",
+      "result": "7/7 targeted serialized source-accounting tests pass.",
+      "invalidated_by": null
+    },
+    {
+      "command": "python3 tools/extract_patch_non_inventory.py --patch 3.4.1 --text-only --canonical-patch-navigation --check",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "phase": "recorded source extraction",
+      "exit": 0,
+      "log": "extractor.log",
+      "result": "Six extract rows; raw widget prose retained separately, not erased.",
+      "invalidated_by": null
+    },
+    {
+      "command": "python3 data/patch-api/evidence/3.4.1-session-2026-10-09/validate.py",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p341-source",
+      "phase": "historical source replay",
+      "exit": 0,
+      "log": "validator.log",
+      "result": "Derived 333 occurrences, 376 source rows, two prose and 211 signature limits.",
+      "invalidated_by": null
+    }
+  ],
+  "formatting": "Python manually formatted; ruff/black unavailable. No Rust changes or cargo formatter.",
+  "excluded_gates": "No publication/check/build/readability/smoke/startup/final gate or native/runtime replay."
+}
