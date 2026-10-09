@@ -1,0 +1,70 @@
+{
+  "schema": "sha256-artifact-receipt/v1",
+  "scope": "Fresh measurement files only; excludes itself to avoid recursive self-sealing",
+  "artifacts": {
+    "README.md": {
+      "sha256": "658c4b37e580af69ebf8777e8b2b02428e7e9ea9b442a7b8235182e4dc6f0bcb",
+      "bytes": 2293
+    },
+    "development-proof-ledger.json": {
+      "sha256": "d4ccf03f5f125ed4c8138cd28823b1028238ff4d73e6cc84681768aa717e2203",
+      "bytes": 5316
+    },
+    "discovery-command.json": {
+      "sha256": "e2d0183967687ca7116471e82529de9417c9783a18902670d299b206fb988916",
+      "bytes": 1443
+    },
+    "discovery-observations.json": {
+      "sha256": "419fb83d6b99e361c1e86b0cb589d156a3c64ec731ff38e1496a6d280519290d",
+      "bytes": 1282
+    },
+    "discovery.stderr.log": {
+      "sha256": "eaacea06c27f0d15213824f7e6ebb548e5b608bb620fce6e5916f0a94cbd57b6",
+      "bytes": 15693
+    },
+    "discovery.stdout.log": {
+      "sha256": "094d342e5ab1830a0c7fecd8952dc8055d1bfc97deb46f0903213157188a3cd7",
+      "bytes": 298
+    },
+    "final-preservation.json": {
+      "sha256": "ed45aaa36b1df94fef0a27bef091da56de75863647685d2a31ff07c56deec381",
+      "bytes": 428
+    },
+    "green-command.json": {
+      "sha256": "8677ea53684bb98f4bba069a20f4c901c80c52103c70e08d0615bb1f75d907f0",
+      "bytes": 2365
+    },
+    "green-observations.json": {
+      "sha256": "419fb83d6b99e361c1e86b0cb589d156a3c64ec731ff38e1496a6d280519290d",
+      "bytes": 1282
+    },
+    "green.stderr.log": {
+      "sha256": "17463118baa2b36ade30e80791d8a19939d1e6ec70953aed8d0f5dac0b425346",
+      "bytes": 7030
+    },
+    "green.stdout.log": {
+      "sha256": "bc7e6a740f7d155d1ae731a15c731e4dd935aac48742f540880d34d972685658",
+      "bytes": 273
+    },
+    "inventory.json": {
+      "sha256": "3257d2c52611bd8e8fbf869a8001edb36291a9af1a453f772c9e0c74738203ca",
+      "bytes": 1412
+    },
+    "known-gaps.json": {
+      "sha256": "7e4f9e5356a5106a8f4e4071a5b3a0b2fae6b32da2d9ab2980702b1a0f06e634",
+      "bytes": 70
+    },
+    "measurement-ledger.json": {
+      "sha256": "1c1a0c1c40a679182faf51993f1795760ee9ca52f9f0fb8f3bb2482ee53fe89a",
+      "bytes": 2522
+    },
+    "preserved-inputs.json": {
+      "sha256": "30316930834b6822a30408ca10d128a58fe06bb6e2a8642ce54a0a9115c1f60c",
+      "bytes": 2773
+    },
+    "reviewed-values.json": {
+      "sha256": "5e0368a2d88b14c9721f2e60bf74bc69e0e4e56ca66f353301374ccd288d3cf4",
+      "bytes": 626
+    }
+  }
+}

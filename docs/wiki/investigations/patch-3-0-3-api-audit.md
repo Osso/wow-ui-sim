@@ -30,6 +30,20 @@ The post-implementation GREEN receipt remains separate from the original sealed 
 
 Rebased source slice retains both 3.0.8 labeled-summary and 3.0.3 CVar-definition opt-in parsers. [Actual successor comparison](../../../data/patch-api/evidence/3.0.3-session-2026-10-09/integrated/successor-closure.json) pins 3.0.8/3.1.0/3.2.0/3.3.0 registers and finds zero exact symbol overlap. Original 16 seals and six UNPROVEN records remain unchanged. [Retained independent report](../../../data/patch-api/evidence/3.0.8-session-2026-10-09/integrated/p308-independent-report.md): source fixtures 3/3, historical fixtures 2/2 and 16-seal replay pass at `1ba5b6673`. All synchronization semantics remain UNPROVEN. Separate new factory measurement (one match/two gaps) is still UNMERGED and is not current integrated proof. No native synchronization/model credit or final acceptance.
 
+## Separate supported retail factory measurement — 2026-10-09
+
+Standalone retail-only `tests/patch_3_0_3_factory.rs` in `p303-factory`, base `1ba5b6673`, reuses the shared classifier without cached publishers/deprecation aliases. Exact copied own inventory has no aliases/defaults/successors. Empty-gap discovery at `2f8f3596d` compiles and exits 101: sweep fails with exactly two new gaps, fabricated unknown control passes (1/2 tests). Full stdout/stderr, revision/cwd/environment/argv and hashes are retained in the [fresh development ledger](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/development-proof-ledger.json).
+
+| Exact name | Publication classifier | Observed value | Observed default | Semantic proof |
+|---|---|---|---|---|
+| `syncronizeConfig` | Gap | nil | nil | UNPROVEN |
+| `synchronizeBindings` | Match | `"1"` | `"1"` | UNPROVEN |
+| `synchronizeMacros` | Gap | nil | nil | UNPROVEN |
+
+[Fresh measurement ledger](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/measurement-ledger.json) assigns separate measurement IDs linked to the original three inventory IDs. Exact three-result regression and reviewed two-gap set committed at `7ac3902cf`; targeted GREEN exit 0, 3/3, including fabricated unknown nil/nil control. All three sweep observations byte-identical to discovery. Only targeted RED/GREEN and test-file formatting run; no check/lint/readability/broad/startup/final gates. Later docs/evidence-only changes preserve this proof scope. Source policy 0/1 disables/enables synchronization but specifies no default; current string `"1"` is observation, not a historical default claim. `P303_FABRICATED_UNKNOWN_CVAR` yields `(cvar, value/default queried, false, nil, nil)`.
+
+Original 16 seals, historical manifest bytes and all eight source ledger IDs verified unchanged in [preservation receipt](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/preserved-inputs.json). Historical UNPROVEN statuses remain unchanged. No arbitrary SetCVar experiment: arbitrary local storage would not establish synchronization. No runtime/model/shim/vendor/cache edits, spelling correction or loaded-UI/native/server/persistence credit. Headless full-prefork GUI errors are a different harness, not this measurement. Six inherited iced manifest warnings, five pre-existing library dead-code warnings, one pre-existing binary unused import and six unused cached-sweep helper warnings appear in discovery; none suppressed or patched. Main owns integration/native acceptance.
+
 ## Sources
 
 - [Exact page](../../../data/patch-api/sources/3.0.3-api-changes.wikitext).

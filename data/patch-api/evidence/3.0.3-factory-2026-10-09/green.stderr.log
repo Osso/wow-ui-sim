@@ -1,0 +1,131 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p303-factory)
+warning: constant `PROVENANCE_SCHEMA` is never used
+  --> src/blizzard_ui_sync.rs:28:7
+   |
+28 | const PROVENANCE_SCHEMA: &str = "1";
+   |       ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+   --> src/blizzard_ui_sync.rs:180:8
+    |
+179 | impl CacheProvenance {
+    | -------------------- associated function in this implementation
+180 |     fn new(
+    |        ^^^
+
+warning: function `remove_missing_marker` is never used
+   --> src/blizzard_ui_sync.rs:663:4
+    |
+663 | fn remove_missing_marker(path: &Path) {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `ensure_known_asset_cached` is never used
+  --> src/casc_asset_fallback.rs:93:15
+   |
+93 | pub(crate) fn ensure_known_asset_cached(_path: &str, _out_path: &Path) -> Option<PathBuf> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `encoding_key_hex` is never read
+  --> src/render/font.rs:44:5
+   |
+41 | struct WowFontFile {
+   |        ----------- field in this struct
+...
+44 |     encoding_key_hex: Option<&'static str>,
+   |     ^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (lib) generated 5 warnings
+warning: unused import: `wow_ui_sim::saved_variables::SavedVariablesManager`
+  --> src/bin/wow_sim/main.rs:20:5
+   |
+20 | use wow_ui_sim::saved_variables::SavedVariablesManager;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `read_deprecated_aliases` is never used
+   --> tests/common/publication_sweep.rs:429:15
+    |
+429 | pub(crate) fn read_deprecated_aliases(env: &WowLuaEnv) -> BTreeMap<String, (String, String)> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `addon_is_loaded` is never used
+   --> tests/common/publication_sweep.rs:458:4
+    |
+458 | fn addon_is_loaded(env: &WowLuaEnv, name: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `read_sorted_dir` is never used
+   --> tests/common/publication_sweep.rs:463:4
+    |
+463 | fn read_sorted_dir(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `deprecation_files` is never used
+   --> tests/common/publication_sweep.rs:472:4
+    |
+472 | fn deprecation_files(dir: &std::path::Path) -> Vec<std::path::PathBuf> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `parse_deprecated_alias` is never used
+   --> tests/common/publication_sweep.rs:489:4
+    |
+489 | fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, String))> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_publication_sweep` is never used
+   --> tests/common/publication_sweep.rs:514:15
+    |
+514 | pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: `wow-ui-sim` (bin "wow-sim") generated 1 warning (run `cargo fix --bin "wow-sim" -p wow-ui-sim` to apply 1 suggestion)
+warning: `wow-ui-sim` (test "patch_3_0_3_factory") generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 13.51s
+     Running tests/patch_3_0_3_factory.rs (target/p303-factory/debug/deps/patch_3_0_3_factory-ad7d39ee43e3acc9)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.91ms
+[  0.002s] [Startup] rilua VM created in 85.32µs
+[  0.002s] [Startup] builtin frames initialized in 62.04µs
+[  0.002s] [Startup] template registry cleared in 5.93µs
+[  0.002s] [Startup] intrinsic templates registered in 4.77µs
+[  0.002s] [Startup] initial app_data lua handle installed in 410.00ns
+[  0.092s] [Startup] init_lua_state complete in 90.28ms
+[  0.092s] [Startup] final app_data lua handle installed in 171.00ns
+[  0.092s] [Startup] initial screen globals installed in 50.44µs
+[  0.092s] [Startup] WowLuaEnv::new complete
+exact three factory values/defaults: [{"default":null,"detail":"value/default queried","id":"wt-cvars-syncronizeConfig-4","kind":"cvar","published":false,"symbol":"syncronizeConfig","value":null},{"default":"1","detail":"value/default queried","id":"wt-cvars-synchronizeBindings-5","kind":"cvar","published":true,"symbol":"synchronizeBindings","value":"1"},{"default":null,"detail":"value/default queried","id":"wt-cvars-synchronizeMacros-6","kind":"cvar","published":false,"symbol":"synchronizeMacros","value":null}]
+[  0.097s] [Startup] WowLuaEnv::new begin
+[  0.098s] [Startup] SimState::default complete in 1.10ms
+[  0.098s] [Startup] rilua VM created in 61.03µs
+[  0.098s] [Startup] builtin frames initialized in 20.48µs
+[  0.098s] [Startup] template registry cleared in 2.86µs
+[  0.098s] [Startup] intrinsic templates registered in 4.98µs
+[  0.098s] [Startup] initial app_data lua handle installed in 180.00ns
+[  0.147s] [Startup] init_lua_state complete in 49.01ms
+[  0.147s] [Startup] final app_data lua handle installed in 160.00ns
+[  0.147s] [Startup] initial screen globals installed in 49.24µs
+[  0.147s] [Startup] WowLuaEnv::new complete
+fabricated unknown CVar: ("cvar", "value/default queried", false, None, None)
+[  0.150s] [Startup] WowLuaEnv::new begin
+[  0.151s] [Startup] SimState::default complete in 1.06ms
+[  0.151s] [Startup] rilua VM created in 56.46µs
+[  0.151s] [Startup] builtin frames initialized in 17.77µs
+[  0.151s] [Startup] template registry cleared in 1.98µs
+[  0.151s] [Startup] intrinsic templates registered in 4.03µs
+[  0.151s] [Startup] initial app_data lua handle installed in 70.00ns
+[  0.200s] [Startup] init_lua_state complete in 48.26ms
+[  0.200s] [Startup] final app_data lua handle installed in 171.00ns
+[  0.200s] [Startup] initial screen globals installed in 48.54µs
+[  0.200s] [Startup] WowLuaEnv::new complete

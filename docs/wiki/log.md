@@ -826,3 +826,15 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 Added [bounded audit](investigations/patch-2-5-4-api-audit.md), spec and own literal ledger: 461 rows/412 occurrences/414 UNPROVEN contracts, separate actual configured interfaces, 8/8 source-only GREEN. Historical seals/copy controls recorded by own proof artifacts; native/integration owned by main.
 
 Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied members pass without Git/target/current tools/runtime; serialized ledger/proof/GREEN-log tampering rejected and restored exactly. Original seals remain unchanged; supplemental portable receipts separately sealed. SOURCE-only; native/main integration gates remain open.
+
+## [2026-10-09] measurement | Retail 3.0.3 bare factory discovery
+
+[Separate measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): standalone retail factory target, exact three source CVars and unknown negative control; discovery pending. Fresh proof directory, no runtime edits or inherited native/full-UI proof. Original seals/IDs preserved.
+
+## [2026-10-09] measurement | Retail 3.0.3 factory discovery results
+
+[Separate measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): empty-gap discovery at `2f8f3596d` exit 101, 1/2 tests; exactly one match/two gaps. Bindings value/default `"1"`, exact misspelled config/macros nil/nil. Unknown control passes; reviewed exact-result regression added, GREEN pending commit. Fresh ledger/full streams/hashes; original 16 seals/eight historical IDs preserved. No runtime changes, sync/native/full-UI proof or warning suppression.
+
+## [2026-10-09] proof | Retail 3.0.3 bare factory GREEN
+
+[Separate measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): reviewed test/observations committed before targeted GREEN at `7ac3902cf`, exit 0 3/3; all three sweep observations byte-identical to discovery. One published bindings CVar (`"1"`/`"1"`), two absent exact config/macros names; unknown nil/nil boundary passes. Fresh full streams/receipts/hashes, original 16 seals/eight historical source IDs unchanged. Warnings retained unsuppressed; no runtime changes or final/native/loaded-UI/sync acceptance. Later docs/evidence-only changes do not invalidate targeted proof. Main owns integration/native gates.

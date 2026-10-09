@@ -515,8 +515,8 @@ pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     run_sweep(env, spec, || read_deprecated_aliases(env));
 }
 
-/// Bare Wrath factory measurement: no cached publisher/deprecation files are consulted.
-#[cfg(feature = "client-wrath")]
+/// Bare factory measurement: no cached publisher/deprecation files are consulted.
+#[cfg(any(feature = "client-wrath", feature = "client-retail"))]
 pub(crate) fn run_factory_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     run_sweep(env, spec, BTreeMap::new);
 }

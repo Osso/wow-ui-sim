@@ -1,0 +1,81 @@
+{
+  "base_revision": "1ba5b66735ab09e6fcd7208f8e720662278eb3d6",
+  "original_manifest_sha256": "e2ff038493ccdbe9ba04ec35c301c82aaee6a127a1ec905fa237fb6ce22cc525",
+  "original_16_seals": {
+    "source-pin.json": {
+      "sha256": "6932d9006f1692bd5dce8864897fe58a05e413781630628a7744531a759d06e5",
+      "bytes": 725
+    },
+    "source-response.json": {
+      "sha256": "7f92737b406439465ce223f4318208c045fe17afd0bca363ca6b3a4fe891599f",
+      "bytes": 706
+    },
+    "source.wikitext": {
+      "sha256": "434740b793ade76d3c459f142cf07577accd6da23c9f97be5fc4ff2d69d59911",
+      "bytes": 431
+    },
+    "register.json": {
+      "sha256": "3257d2c52611bd8e8fbf869a8001edb36291a9af1a453f772c9e0c74738203ca",
+      "bytes": 1412
+    },
+    "extract.txt": {
+      "sha256": "2f8a14f3f5c1593bf7a3d66acb63a6ec0011075752dd75b3a2b8a79f173fe06c",
+      "bytes": 287
+    },
+    "provenance.json": {
+      "sha256": "14ee198b3044d39a0060c8aba6cde798c357ff5c142ba33399930168d1f314b5",
+      "bytes": 952
+    },
+    "default-register.json": {
+      "sha256": "b557cfde525aa7eda310fb844df02067cabf95f29f26e7505f8e3d16da4d8660",
+      "bytes": 311
+    },
+    "historical-page-coverage.json": {
+      "sha256": "554ee5c4f056b8ecfe494df84bbe4f3df88420078039149fc20dea5ecaf44ab3",
+      "bytes": 4759
+    },
+    "historical-known-gaps.json": {
+      "sha256": "8f41bb0359aee76534eb68ace1373b75108ab202d10e5afdc32e493fc9436a0f",
+      "bytes": 1868
+    },
+    "successor-boundary.json": {
+      "sha256": "ae62c62a86bff6889e0c8ebca757382317b6a15da710a9005f72d5c147ebf0ac",
+      "bytes": 5509
+    },
+    "backing-state-review.json": {
+      "sha256": "7735aa3ea248a620838ada8af1d9e0dd414841a34829c0c55d505a4348ddc8d9",
+      "bytes": 1215
+    },
+    "command-ledger.json": {
+      "sha256": "9a87fc1e112d6b1820ed1605b0b0ac701aeb5ab24b695237c5d6b681d15da867",
+      "bytes": 1431
+    },
+    "source-red.log": {
+      "sha256": "c8f02adfd07145a1ebbd6664bda3b6829b2a63891516ffb965bfd88852c0cd71",
+      "bytes": 6243
+    },
+    "source-green.log": {
+      "sha256": "a5df4aeae73efa8b0e5f974800dd17edf52f0fd474a8a19db091e31811579c11",
+      "bytes": 101
+    },
+    "validator-red.log": {
+      "sha256": "a8a58a55225a3e550976a07179f57aef04792e1f608ea2d3909496f4acda6db1",
+      "bytes": 1962
+    },
+    "historical-bundle.json.gz": {
+      "sha256": "897b297a957278d57f152654cd45fb11edcb801d95f93f95403db792959e07a4",
+      "bytes": 340952
+    }
+  },
+  "original_eight_ledger_ids": [
+    "wt-cvars-syncronizeConfig-4",
+    "wt-cvars-synchronizeBindings-5",
+    "wt-cvars-synchronizeMacros-6",
+    "raw-3.0.3-001",
+    "raw-3.0.3-003",
+    "raw-3.0.3-004",
+    "raw-3.0.3-005",
+    "raw-3.0.3-006"
+  ],
+  "source_ledger_sha256": "554ee5c4f056b8ecfe494df84bbe4f3df88420078039149fc20dea5ecaf44ab3"
+}
