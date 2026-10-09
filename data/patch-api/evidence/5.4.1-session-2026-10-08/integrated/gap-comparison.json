@@ -1318,10 +1318,8 @@
   },
   {
     "patch": "5.5.4",
-    "observations": 1,
-    "gaps": [
-      "own"
-    ],
+    "observations": 0,
+    "gaps": [],
     "unchanged_vs_master": true
   },
   {

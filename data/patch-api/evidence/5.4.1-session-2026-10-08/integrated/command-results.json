@@ -316,10 +316,10 @@
       "--",
       "publication_sweep"
     ],
-    "revision": "295bbf29a884d5e2505ff83676ec6f32a856157e",
+    "revision": "d333bbe8a09d69392dbbdad4c87f0329fecee029",
     "exit": 0,
     "test_results": [
-      "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 8176 filtered out; finished in 0.90s"
+      "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 8176 filtered out; finished in 0.50s"
     ],
     "python_tests": [],
     "warnings": [
@@ -347,7 +347,7 @@
     "revision": "279a38f3d560e00e954d7dfb96e81f6be3668dd1",
     "exit": 0,
     "test_results": [
-      "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 8176 filtered out; finished in 1.52s"
+      "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 8176 filtered out; finished in 0.66s"
     ],
     "python_tests": [],
     "warnings": [
@@ -391,6 +391,18 @@
       "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/preserve_history.py"
     ],
     "revision": "5767b8089714760a8292d58794f2602e07864e15",
+    "exit": 0,
+    "test_results": [],
+    "python_tests": [],
+    "warnings": []
+  },
+  "mists-routing-correction": {
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/integrated/rerun_mists_sweeps.py"
+    ],
+    "revision": "d333bbe8a09d69392dbbdad4c87f0329fecee029",
     "exit": 0,
     "test_results": [],
     "python_tests": [],
