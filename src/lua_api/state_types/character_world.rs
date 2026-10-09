@@ -265,8 +265,7 @@ pub struct PlayerState {
     pub movement: MovementState,
     #[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
     pub movement_speeds: MovementSpeeds,
-    /// Explicit player orientation; unknown initially by simulator policy.
-    #[cfg(feature = "client-wowforever")]
+    /// Explicit player orientation in radians; unknown initially by simulator policy.
     pub facing: Option<f64>,
     pub active_spec_index: i32,
     pub pending_spec_change: Option<i32>,

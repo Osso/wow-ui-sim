@@ -53,7 +53,7 @@ pub mod net_stats;
 pub(crate) mod performance_inputs;
 pub mod pet_bar;
 pub mod pet_stats;
-#[cfg(feature = "client-wowforever")]
+#[cfg(any(feature = "client-retail", feature = "client-wowforever"))]
 pub mod player_facing;
 pub mod player_identity;
 pub mod player_probes;
