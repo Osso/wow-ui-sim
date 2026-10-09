@@ -1,0 +1,16 @@
+own-sweep 0
+all-sweeps 0
+prefork-patch_5_4_1 0
+integration-patch_5_4_1 0
+negative 1
+test_check_patch_validators 0
+test_extract_patch_non_inventory 0
+test_gen_patch_wikitext_register 0
+test_patch_audit_validation 0
+test_patch_mists_register 0
+test_patch_warlords_register 0
+format 0
+mists-check 0
+master-all-sweeps 0
+mists-all-sweeps 0
+master-mists-all-sweeps 0

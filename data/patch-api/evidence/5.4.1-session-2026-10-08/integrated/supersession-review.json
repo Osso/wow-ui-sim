@@ -1,0 +1,12 @@
+{
+  "integrated_registers": [
+    "5.4.2",
+    "5.4.7",
+    "5.4.8"
+  ],
+  "before_gaps": 2,
+  "after_gaps": 2,
+  "observation_changes": {},
+  "replacements": [],
+  "reason": "No 5.4.1 symbol occurs in the three newly integrated later registers; neither existing backing-state gap is resolved. Historical gap fixtures and ledger remain unchanged."
+}
