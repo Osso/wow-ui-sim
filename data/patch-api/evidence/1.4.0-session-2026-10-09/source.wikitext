@@ -1,0 +1,42 @@
+{{apichanges|patch=1.4.0|prev=1.3.0|next=1.5.0|misc=Adapted from an [https://www.wowinterface.com/forums/showthread.php?t=645 archived copy] (by [[WoWInterface]]) of a forum post originally written [[Iriel]]}}
+
+== New ==
+; Battlefields
+*{{api|AcceptBattlefieldPort(accept)}} - Called with true to accept porting into a battlefield, or false to reject/leave queue.
+*{{api|GetBattlefieldEstimatedWaitTime()}} - Get estimated wait for entry into the battlefield.
+*{{api|GetBattlefieldInfo(index)}} - Get detailed information about a battlefield.
+*{{api|GetBattlefieldInstanceExpiration()}} - Get shutdown timer for the battlefield instance
+*{{api|GetBattlefieldInstanceInfo(index)}} - Get information about a battlefield instance.
+*{{api|GetBattlefieldPortExpiration()}} - Get the number of milliseconds before the battlefield port expires.
+*{{api|GetBattlefieldStatus()}} - Get status information for the battlefield
+*{{api|ShowBattlefieldList()}} - Request list of available battlefield instances.
+
+
+; PvP Stats
+*{{api|GetPVPLastWeekStats()}} - Get the statistics about your PvP contribution for last week.
+*{{api|GetPVPLifetimeStats()}} - Get the statistics about your lifetimes PvP contribution
+*{{api|GetPVPRankInfo(rank [, unit])}} - Get information about a specific rank (Second arg not used by UI)
+*{{api|GetPVPSessionStats()}} - Get the statistics about your PvP contribution for this session.
+*{{api|GetPVPYesterdayStats()}} - Get the statistics about your PvP contribution for yesterday.
+*{{api|UnitPVPRank("unit")}} - Return PVP rank information for a unit.
+*RegisterEvent("{{api|t=e|PLAYER_PVP_KILLS_CHANGED}}");
+*RegisterEvent("{{api|t=e|PLAYER_PVP_RANK_CHANGED}}");
+
+
+; Character inspection and honor data
+*{{api|ClearInspectPlayer()}} Clears the player currently being inspected (Called on hide of inspect frame)
+*{{api|GetInspectHonorData()}} - Get the honor information about the inspected unit (Phew!)
+*{{api|HasInspectHonorData()}} - Determine if the inspected unit's honor data has been loaded.
+*{{api|RequestInspectHonorData()}} - Request honor data for inspected unit.
+*{{api|GetWeaponEnchantInfo()}} - Get lots of information about weapon enchantments and charges.
+*RegisterEvent("{{api|t=e|INSPECT_HONOR_UPDATE}}");
+
+
+; Miscellaneous
+*{{api|GetCurrentMultisampleFormat()}} - Get current multi-sampling (antialiasing) format.
+*{{api|GetMultisampleFormats()}} - Get the available multi-sample formats.
+*{{api|SetEuropeanNumbers(...)}} - New API function - unknown purpose
+*{{api|SetMultisampleFormat(index)}} - Select multi-sample (antialias) format to use.
+
+== Changed ==
+*{{api|TogglePVP()}} - Replaced <code>EnablePVP()</code> to toggle PVP status

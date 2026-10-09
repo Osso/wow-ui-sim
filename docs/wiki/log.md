@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.4.0 frozen literal SOURCE accounting
+
+[Audit](investigations/patch-1-4-0-api-audit.md): frozen316397/3052898,2670bytes;34 literal rows/27 inventory/25 signatures/25 prose/6 headers/3 links/2 navigation/28 templates/32UNPROVEN contracts. Not a redirect; optional-unit/default/native limits explicit. Own SOURCE RED7/portableRED3 and default-byte/error captures retained; implementation precedes GREEN. Static single-argument AcceptBattlefieldPort candidate reported; no runtime/model/native credit. Queued1.5.0 separately unapplied, main owns integration/independent acceptance.
+
 ## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
 
 [Audit](investigations/patch-1-9-0-api-audit.md) records exact45byte frozen redirect, all literal/empty boundaries and precise UNPROVEN target contracts. Own SOURCE RED5+identityRED1 and portableRED3 retained; default bytes/errors captured, SOURCE GREEN6/6 at4e3807887; fresh copied SOURCE6/portable3/default-byte/error replay at011964fcb and both serialized ledger/log tamper rejection/exact restoration. Original30 seals/31-member51,931byte archive unchanged, later receipts separately retained. No runtime/shared-tool changes or foreign-history supersession; newer1.10.0 separately unapplied.

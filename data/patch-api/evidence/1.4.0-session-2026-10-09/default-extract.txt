@@ -1,0 +1,42 @@
+Patch patch=1.4.0 API changes
+
+== New ==
+; Battlefields
+*AcceptBattlefieldPort(accept) - Called with true to accept porting into a battlefield, or false to reject/leave queue.
+*GetBattlefieldEstimatedWaitTime() - Get estimated wait for entry into the battlefield.
+*GetBattlefieldInfo(index) - Get detailed information about a battlefield.
+*GetBattlefieldInstanceExpiration() - Get shutdown timer for the battlefield instance
+*GetBattlefieldInstanceInfo(index) - Get information about a battlefield instance.
+*GetBattlefieldPortExpiration() - Get the number of milliseconds before the battlefield port expires.
+*GetBattlefieldStatus() - Get status information for the battlefield
+*ShowBattlefieldList() - Request list of available battlefield instances.
+
+
+; PvP Stats
+*GetPVPLastWeekStats() - Get the statistics about your PvP contribution for last week.
+*GetPVPLifetimeStats() - Get the statistics about your lifetimes PvP contribution
+*GetPVPRankInfo(rank [, unit]) - Get information about a specific rank (Second arg not used by UI)
+*GetPVPSessionStats() - Get the statistics about your PvP contribution for this session.
+*GetPVPYesterdayStats() - Get the statistics about your PvP contribution for yesterday.
+*UnitPVPRank("unit") - Return PVP rank information for a unit.
+*RegisterEvent("PLAYER_PVP_KILLS_CHANGED");
+*RegisterEvent("PLAYER_PVP_RANK_CHANGED");
+
+
+; Character inspection and honor data
+*ClearInspectPlayer() Clears the player currently being inspected (Called on hide of inspect frame)
+*GetInspectHonorData() - Get the honor information about the inspected unit (Phew!)
+*HasInspectHonorData() - Determine if the inspected unit's honor data has been loaded.
+*RequestInspectHonorData() - Request honor data for inspected unit.
+*GetWeaponEnchantInfo() - Get lots of information about weapon enchantments and charges.
+*RegisterEvent("INSPECT_HONOR_UPDATE");
+
+
+; Miscellaneous
+*GetCurrentMultisampleFormat() - Get current multi-sampling (antialiasing) format.
+*GetMultisampleFormats() - Get the available multi-sample formats.
+*SetEuropeanNumbers(...) - New API function - unknown purpose
+*SetMultisampleFormat(index) - Select multi-sample (antialias) format to use.
+
+== Changed ==
+*TogglePVP() - Replaced EnablePVP() to toggle PVP status
