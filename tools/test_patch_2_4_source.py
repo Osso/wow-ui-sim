@@ -16,8 +16,8 @@ class SourceTests(unittest.TestCase):
         parse = getattr(generator, 'parse_retail_240_summary', None)
         self.assertIsNotNone(parse, 'missing opt-in historical Retail 2.4.0 parser')
         entries = parse(RAW.read_text())
-        self.assertEqual(len(entries), 49)
-        self.assertEqual(len({row['id'] for row in entries}), 49)
+        self.assertEqual(len(entries), 50)
+        self.assertEqual(len({row['id'] for row in entries}), 50)
         self.assertEqual([(r['symbol'], r['direction']) for r in entries[:5]], [
             ('PARTY_MEMBER_ENABLE', 'changed'), ('PARTY_MEMBER_DISABLE', 'changed'),
             ('debugstack', 'changed'), ('unitHighlights', 'added'),
@@ -48,7 +48,8 @@ class SourceTests(unittest.TestCase):
     def test_complete_extract_preserves_literal_texture_and_events(self):
         import extract_patch_non_inventory as extractor
         raw = RAW.read_text()
-        default = extractor.extract_text(raw)
+        with self.assertRaisesRegex(ValueError, 'unhandled template:.*combat logging'):
+            extractor.extract_text(raw)
         try:
             text = extractor.extract_text(raw, retail_240_summary=True)
         except TypeError:
@@ -59,7 +60,8 @@ class SourceTests(unittest.TestCase):
                         '2048 = Unknown', '4096 = Vanity Pets', 'canEdit =',
                         'topicId=2968233433', 'UIOptionsPanels.lua', 'SetGuildBankText'):
             self.assertIn(literal, text)
-        self.assertEqual(extractor.extract_text(raw), default)
+        with self.assertRaisesRegex(ValueError, 'unhandled template:.*combat logging'):
+            extractor.extract_text(raw)
 
 
 if __name__ == '__main__':
